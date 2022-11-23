@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397F51C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B5EC433D6;
-	Wed, 23 Nov 2022 09:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A064E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B03BC433C1;
+	Wed, 23 Nov 2022 09:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196850;
-	bh=ieKEiCQ92ybc/58omtdR6pRssEpPgoR+qhXi7FBD2nY=;
+	s=korg; t=1669196853;
+	bh=aP7aSIxkv2UW3X52PHr26yg33DA7BJkUejYm3Wd3hVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUdSWM864P2Xj0hU0C1udYk/guuVWNtvbWm0v7qNXc20olqOCjRytv6zE5s2/2QnW
-	 2/RROWvTsH3rtA2HdvNd5LyWJv01nzeNgbpXUVaDBsfl4zAkSDfJVfGYyf/55hR93g
-	 e48sA3NKZCLHJXJx8AYD3PXKtnhFOJ1EvtjFl+e8=
+	b=VYnR1Rw72ZkTwOmOQAhp6ZTFwE1irg4ulkXEvumVI6Lw//ZLl58vN4yU+iHphlTta
+	 KRHZc8R3+3/M39hYsH5WBpOFaDcnwNbLO2yfmqxCnTp+JdkNpezRFe4OCJ0oaLaowL
+	 RK9I1hTPTvpNHhBlimKdCR126Lqli14CkKhUlrgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 110/314] scsi: scsi_transport_sas: Fix error handling in sas_phy_add()
-Date: Wed, 23 Nov 2022 09:49:15 +0100
-Message-Id: <20221123084630.487898042@linuxfoundation.org>
+Subject: [PATCH 6.0 101/314] tty: n_gsm: fix sleep-in-atomic-context bug in gsm_control_send
+Date: Wed, 23 Nov 2022 09:49:06 +0100
+Message-Id: <20221123084630.070182052@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,75 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 5d7bebf2dfb0dc97aac1fbace0910e557ecdb16f ]
+[ Upstream commit 7b7dfe4833c70a11cdfa51b38705103bd31eddaa ]
 
-If transport_add_device() fails in sas_phy_add(), the kernel will crash
-trying to delete the device in transport_remove_device() called from
-sas_remove_host().
+The function gsm_dlci_t1() is a timer handler that runs in an
+atomic context, but it calls "kzalloc(..., GFP_KERNEL)" that
+may sleep. As a result, the sleep-in-atomic-context bug will
+happen. The process is shown below:
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 61 PID: 42829 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc1+ #173
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_phy_delete+0x30/0x60 [scsi_transport_sas]
- do_sas_phy_delete+0x6c/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x40/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- hisi_sas_remove+0x40/0x68 [hisi_sas_main]
- hisi_sas_v2_remove+0x20/0x30 [hisi_sas_v2_hw]
- platform_remove+0x2c/0x60
+gsm_dlci_t1()
+ gsm_dlci_open()
+  gsm_modem_update()
+   gsm_modem_upd_via_msc()
+    gsm_control_send()
+     kzalloc(sizeof(.., GFP_KERNEL) //may sleep
 
-Fix this by checking and handling return value of transport_add_device()
-in sas_phy_add().
+This patch changes the gfp_t parameter of kzalloc() from GFP_KERNEL to
+GFP_ATOMIC in order to mitigate the bug.
 
-Fixes: c7ebbbce366c ("[SCSI] SAS transport class")
-Suggested-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221107124828.115557-1-yangyingliang@huawei.com
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://lore.kernel.org/r/20221002040709.27849-1-duoming@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_sas.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/tty/n_gsm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 2f88c61216ee..74b99f2b0b74 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -722,12 +722,17 @@ int sas_phy_add(struct sas_phy *phy)
- 	int error;
- 
- 	error = device_add(&phy->dev);
--	if (!error) {
--		transport_add_device(&phy->dev);
--		transport_configure_device(&phy->dev);
-+	if (error)
-+		return error;
-+
-+	error = transport_add_device(&phy->dev);
-+	if (error) {
-+		device_del(&phy->dev);
-+		return error;
- 	}
-+	transport_configure_device(&phy->dev);
- 
--	return error;
-+	return 0;
- }
- EXPORT_SYMBOL(sas_phy_add);
- 
+diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
+index 01c112e2e214..2a0de70e0be4 100644
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -1670,7 +1670,7 @@ static struct gsm_control *gsm_control_send(struct gsm_mux *gsm,
+ 		unsigned int command, u8 *data, int clen)
+ {
+ 	struct gsm_control *ctrl = kzalloc(sizeof(struct gsm_control),
+-						GFP_KERNEL);
++						GFP_ATOMIC);
+ 	unsigned long flags;
+ 	if (ctrl == NULL)
+ 		return NULL;
 -- 
 2.35.1
 
