@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1521C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F73C433C1;
-	Wed, 23 Nov 2022 09:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348951C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E553C433D6;
+	Wed, 23 Nov 2022 09:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195055;
-	bh=eF1j130c0SZailNo6oQfzBp+HT2TeZ5zTXO6Y/j4im8=;
+	s=korg; t=1669195059;
+	bh=bd3ntbbQYOuOvmoZf9fzo++h3Jhhk5K/ZRBajluowik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyuOyt0kUPllFlUpdKekN0uDX5vaFt2aG2qfI4SYE6J8BbYloRf3aQ4AsJAz2GUzn
-	 ww7Qz2iNx59PvEFN/BhmhW1gGGv2/f4nriROJA7HIYbXHsXkGgBWmnr0eOqDQvBGAh
-	 /vvBYXgGfQlyi+LXZ1i/PlBJXJdKhUMVy6zPOAuo=
+	b=cOKC329iqqL/fIPDfsix2+/1HVRQvyn32t9uEq+r+gc3p27ycuPx6GtfFRGayVMLw
+	 PGxnd51/iBP1976h+uKkgKf59UhWvb2TjWrwuKKbE1yhRQlq9mlEcnjewBmSgD0WV2
+	 SjTC4uivTTd9wq3gx9bx3fflLsSYui44vukJbblY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 127/156] iio: trigger: sysfs: fix possible memory leak in iio_sysfs_trig_init()
-Date: Wed, 23 Nov 2022 09:51:24 +0100
-Message-Id: <20221123084602.523536130@linuxfoundation.org>
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 136/156] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
+Date: Wed, 23 Nov 2022 09:51:33 +0100
+Message-Id: <20221123084602.831695465@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,55 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-commit efa17e90e1711bdb084e3954fa44afb6647331c0 upstream.
+commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
 
-dev_set_name() allocates memory for name, it need be freed
-when device_add() fails, call put_device() to give up the
-reference that hold in device_initialize(), so that it can
-be freed in kobject_cleanup() when the refcount hit to 0.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before amd_probe() returns. There is no problem for the 'smbus_dev ==
+NULL' branch because pci_dev_put() can also handle the NULL input
+parameter case.
 
-Fault injection test can trigger this:
-
-unreferenced object 0xffff8e8340a7b4c0 (size 32):
-  comm "modprobe", pid 243, jiffies 4294678145 (age 48.845s)
-  hex dump (first 32 bytes):
-    69 69 6f 5f 73 79 73 66 73 5f 74 72 69 67 67 65  iio_sysfs_trigge
-    72 00 a7 40 83 8e ff ff 00 86 13 c4 f6 ee ff ff  r..@............
-  backtrace:
-    [<0000000074999de8>] __kmem_cache_alloc_node+0x1e9/0x360
-    [<00000000497fd30b>] __kmalloc_node_track_caller+0x44/0x1a0
-    [<000000003636c520>] kstrdup+0x2d/0x60
-    [<0000000032f84da2>] kobject_set_name_vargs+0x1e/0x90
-    [<0000000092efe493>] dev_set_name+0x4e/0x70
-
-Fixes: 1f785681a870 ("staging:iio:trigger sysfs userspace trigger rework.")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221022074212.1386424-1-yangyingliang@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/trigger/iio-trig-sysfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/trigger/iio-trig-sysfs.c
-+++ b/drivers/iio/trigger/iio-trig-sysfs.c
-@@ -209,9 +209,13 @@ static int iio_sysfs_trigger_remove(int
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -1795,6 +1795,8 @@ static int amd_probe(struct sdhci_pci_ch
+ 		}
+ 	}
  
- static int __init iio_sysfs_trig_init(void)
- {
-+	int ret;
- 	device_initialize(&iio_sysfs_trig_dev);
- 	dev_set_name(&iio_sysfs_trig_dev, "iio_sysfs_trigger");
--	return device_add(&iio_sysfs_trig_dev);
-+	ret = device_add(&iio_sysfs_trig_dev);
-+	if (ret)
-+		put_device(&iio_sysfs_trig_dev);
-+	return ret;
- }
- module_init(iio_sysfs_trig_init);
++	pci_dev_put(smbus_dev);
++
+ 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
+ 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
  
 
 
