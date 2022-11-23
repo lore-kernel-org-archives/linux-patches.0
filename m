@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF37B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30E0C433C1;
-	Wed, 23 Nov 2022 08:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADC47B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D636C433D6;
+	Wed, 23 Nov 2022 08:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193796;
-	bh=BqmV0dlf0J2tKlVx2gqvDigoQunsxpVZJo54U8idNFY=;
+	s=korg; t=1669193800;
+	bh=SMWqaG948K6Oo6/qf/8XNZCDvp7xcEwJU5AQA2r9KB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZLNFvr1JB1qMeD1knIoPmaZRFzma8xGQGAn5vSj5cn4hj7Qjli2nZUSK6JKbq9r9
-	 PqyjwuJ35vbQeXGHjhL11Be5+1QjiyQhw9aJEvclTl7/4rKicpewtaTd+kUs8gptx7
-	 yWieXB2A6KGZ9iDaiO1PKvIjJo0y2twzlc5+6s7Q=
+	b=JELV52jUnW2/cIeRjCHdkmcw5EPk6dUbKPGZAbPSCGQTr0aIO5C9dfYN86sV/bkBB
+	 JcjI76fGrSBRwmjYBas6wgE9R2Q5zU/2cjf+ySXMdU29FEuJBWk7NNdX+bmb2Ib7EE
+	 jRxUMgCFHpZEA64wtPGJ9h2SzPlDqArHuvdl37KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Vishnu Dasa <vdasa@vmware.com>
-Subject: [PATCH 4.9 64/76] misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram()
-Date: Wed, 23 Nov 2022 09:51:03 +0100
-Message-Id: <20221123084548.853224949@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+f816fa82f8783f7a02bb@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.9 65/76] nilfs2: fix use-after-free bug of ns_writer on remount
+Date: Wed, 23 Nov 2022 09:51:04 +0100
+Message-Id: <20221123084548.883635673@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -36,77 +36,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit e5b0d06d9b10f5f43101bd6598b076c347f9295f upstream.
+commit 8cccf05fe857a18ee26e20d11a8455a73ffd4efd upstream.
 
-`struct vmci_event_qp` allocated by qp_notify_peer() contains padding,
-which may carry uninitialized data to the userspace, as observed by
-KMSAN:
+If a nilfs2 filesystem is downgraded to read-only due to metadata
+corruption on disk and is remounted read/write, or if emergency read-only
+remount is performed, detaching a log writer and synchronizing the
+filesystem can be done at the same time.
 
-  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user ./include/linux/instrumented.h:121
-   instrument_copy_to_user ./include/linux/instrumented.h:121
-   _copy_to_user+0x5f/0xb0 lib/usercopy.c:33
-   copy_to_user ./include/linux/uaccess.h:169
-   vmci_host_do_receive_datagram drivers/misc/vmw_vmci/vmci_host.c:431
-   vmci_host_unlocked_ioctl+0x33d/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:925
-   vfs_ioctl fs/ioctl.c:51
-  ...
+In these cases, use-after-free of the log writer (hereinafter
+nilfs->ns_writer) can happen as shown in the scenario below:
 
-  Uninit was stored to memory at:
-   kmemdup+0x74/0xb0 mm/util.c:131
-   dg_dispatch_as_host drivers/misc/vmw_vmci/vmci_datagram.c:271
-   vmci_datagram_dispatch+0x4f8/0xfc0 drivers/misc/vmw_vmci/vmci_datagram.c:339
-   qp_notify_peer+0x19a/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1479
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
-   vmci_qp_broker_alloc+0x96/0xd0 drivers/misc/vmw_vmci/vmci_queue_pair.c:1940
-   vmci_host_do_alloc_queuepair drivers/misc/vmw_vmci/vmci_host.c:488
-   vmci_host_unlocked_ioctl+0x24fd/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:927
-  ...
+ Task1                               Task2
+ --------------------------------    ------------------------------
+ nilfs_construct_segment
+   nilfs_segctor_sync
+     init_wait
+     init_waitqueue_entry
+     add_wait_queue
+     schedule
+                                     nilfs_remount (R/W remount case)
+				       nilfs_attach_log_writer
+                                         nilfs_detach_log_writer
+                                           nilfs_segctor_destroy
+                                             kfree
+     finish_wait
+       _raw_spin_lock_irqsave
+         __raw_spin_lock_irqsave
+           do_raw_spin_lock
+             debug_spin_lock_before  <-- use-after-free
 
-  Local variable ev created at:
-   qp_notify_peer+0x54/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1456
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+While Task1 is sleeping, nilfs->ns_writer is freed by Task2.  After Task1
+waked up, Task1 accesses nilfs->ns_writer which is already freed.  This
+scenario diagram is based on the Shigeru Yoshida's post [1].
 
-  Bytes 28-31 of 48 are uninitialized
-  Memory access of size 48 starts at ffff888035155e00
-  Data copied to user address 0000000020000100
+This patch fixes the issue by not detaching nilfs->ns_writer on remount so
+that this UAF race doesn't happen.  Along with this change, this patch
+also inserts a few necessary read-only checks with superblock instance
+where only the ns_writer pointer was used to check if the filesystem is
+read-only.
 
-Use memset() to prevent the infoleaks.
-
-Also speculatively fix qp_notify_peer_local(), which may suffer from the
-same problem.
-
-Reported-by: syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Fixes: 06164d2b72aa ("VMCI: queue pairs implementation.")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
-Link: https://lore.kernel.org/r/20221104175849.2782567-1-glider@google.com
+Link: https://syzkaller.appspot.com/bug?id=79a4c002e960419ca173d55e863bd09e8112df8b
+Link: https://lkml.kernel.org/r/20221103141759.1836312-1-syoshida@redhat.com [1]
+Link: https://lkml.kernel.org/r/20221104142959.28296-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+f816fa82f8783f7a02bb@syzkaller.appspotmail.com
+Reported-by: Shigeru Yoshida <syoshida@redhat.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_queue_pair.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nilfs2/segment.c |   15 ++++++++-------
+ fs/nilfs2/super.c   |    2 --
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
-+++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
-@@ -952,6 +952,7 @@ static int qp_notify_peer_local(bool att
- 	u32 context_id = vmci_get_context_id();
- 	struct vmci_event_qp ev;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -329,7 +329,7 @@ void nilfs_relax_pressure_in_lock(struct
+ 	struct the_nilfs *nilfs = sb->s_fs_info;
+ 	struct nilfs_sc_info *sci = nilfs->ns_writer;
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(context_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
-@@ -1563,6 +1564,7 @@ static int qp_notify_peer(bool attach,
- 	 * kernel.
- 	 */
+-	if (!sci || !sci->sc_flush_request)
++	if (sb->s_flags & MS_RDONLY || unlikely(!sci) || !sci->sc_flush_request)
+ 		return;
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(peer_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
+ 	set_bit(NILFS_SC_PRIOR_FLUSH, &sci->sc_flags);
+@@ -2252,7 +2252,7 @@ int nilfs_construct_segment(struct super
+ 	struct nilfs_transaction_info *ti;
+ 	int err;
+ 
+-	if (!sci)
++	if (sb->s_flags & MS_RDONLY || unlikely(!sci))
+ 		return -EROFS;
+ 
+ 	/* A call inside transactions causes a deadlock. */
+@@ -2291,7 +2291,7 @@ int nilfs_construct_dsync_segment(struct
+ 	struct nilfs_transaction_info ti;
+ 	int err = 0;
+ 
+-	if (!sci)
++	if (sb->s_flags & MS_RDONLY || unlikely(!sci))
+ 		return -EROFS;
+ 
+ 	nilfs_transaction_lock(sb, &ti, 0);
+@@ -2788,11 +2788,12 @@ int nilfs_attach_log_writer(struct super
+ 
+ 	if (nilfs->ns_writer) {
+ 		/*
+-		 * This happens if the filesystem was remounted
+-		 * read/write after nilfs_error degenerated it into a
+-		 * read-only mount.
++		 * This happens if the filesystem is made read-only by
++		 * __nilfs_error or nilfs_remount and then remounted
++		 * read/write.  In these cases, reuse the existing
++		 * writer.
+ 		 */
+-		nilfs_detach_log_writer(sb);
++		return 0;
+ 	}
+ 
+ 	nilfs->ns_writer = nilfs_segctor_new(sb, root);
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -1147,8 +1147,6 @@ static int nilfs_remount(struct super_bl
+ 	if ((*flags & MS_RDONLY) == (sb->s_flags & MS_RDONLY))
+ 		goto out;
+ 	if (*flags & MS_RDONLY) {
+-		/* Shutting down log writer */
+-		nilfs_detach_log_writer(sb);
+ 		sb->s_flags |= MS_RDONLY;
+ 
+ 		/*
 
 
