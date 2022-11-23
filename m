@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C717B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729C9C433D6;
-	Wed, 23 Nov 2022 08:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFC37B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB64C433C1;
+	Wed, 23 Nov 2022 08:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193760;
-	bh=gDs1PHCKooCABvtqijtCQmt71YcV3VtQUnNa7OGn8Gc=;
+	s=korg; t=1669193764;
+	bh=TEURjGQO3dqJ+4eEBIAatQl+3ox4X0Z8BqFmI8rV6CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyVIsCp7jo9crNdyvxvmTvpkMHhTEGDINsHQMKW9PU//3DKFbe4NwbfXVdTf64f3Z
-	 gyxYskvj/gIo2UK+VgagH35M/ZwFRr2ERuMY1VbV8JjWkds8fseRIwBSLmNuijyA2+
-	 /BcWEia0nSMPDptqnUDVr72SMrfTwfeHqgSmO6vs=
+	b=oosLkK5SmpO0D1UnkCMOgJOwmahEa4u+sKSiu3pdlUsG8dUuSm7I7tsXX+o3mhG4f
+	 e2G1ja3BQl8a8vgUxAGEBEDC9mWSifK0TBYfX3bugcT0NeJzMUNlJE6eFMVvgP1XuM
+	 S0okNKzLeSbXdosqCXg39s0x7IY7PJYeNoJ8rMjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.9 52/76] USB: serial: option: add u-blox LARA-R6 00B modem
-Date: Wed, 23 Nov 2022 09:50:51 +0100
-Message-Id: <20221123084548.468140973@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 4.9 25/76] dmaengine: at_hdmac: Fix completion of unissued descriptor in case of errors
+Date: Wed, 23 Nov 2022 09:50:24 +0100
+Message-Id: <20221123084547.552269894@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,38 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit d9e37a5c4d80ea25a7171ab8557a449115554e76 upstream.
+commit ef2cb4f0ce479f77607b04c4b0414bf32f863ee8 upstream.
 
-The official LARA-R6 (00B) modem uses 0x908b PID. LARA-R6 00B does not
-implement a QMI interface on port 4, the reservation (RSVD(4)) has been
-added to meet other companies that implement QMI on that interface.
+In case the controller detected an error, the code took the chance to move
+all the queued (submitted) descriptors to the active (issued) list. This
+was wrong as if there were any descriptors in the submitted list they were
+moved to the issued list without actually issuing them to the controller,
+thus a completion could be raised without even fireing the descriptor.
 
-LARA-R6 00B USB composition exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-13-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/at_hdmac.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1117,6 +1117,8 @@ static const struct usb_device_id option
- 	/* u-blox products using Qualcomm vendor ID */
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R410M),
- 	  .driver_info = RSVD(1) | RSVD(3) },
-+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x908b),	/* u-blox LARA-R6 00B */
-+	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* Quectel products using Quectel vendor ID */
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -557,10 +557,6 @@ static void atc_handle_error(struct at_d
+ 	bad_desc = atc_first_active(atchan);
+ 	list_del_init(&bad_desc->desc_node);
+ 
+-	/* As we are stopped, take advantage to push queued descriptors
+-	 * in active_list */
+-	list_splice_init(&atchan->queue, atchan->active_list.prev);
+-
+ 	/* Try to restart the controller */
+ 	if (!list_empty(&atchan->active_list))
+ 		atc_dostart(atchan, atc_first_active(atchan));
 
 
