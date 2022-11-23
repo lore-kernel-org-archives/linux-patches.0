@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3AA1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CA9C433D7;
-	Wed, 23 Nov 2022 09:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D87F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CA0C43145;
+	Wed, 23 Nov 2022 09:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194677;
-	bh=n0NW3gTG2p2nOkbjrhCJuQx4QvPExat8Ld2yX9bAP+g=;
+	s=korg; t=1669194680;
+	bh=aoNIfstFJaw6s/CMJvUQSKT+Q2V32rZKbtW1JkDTiUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+i1Y9lq1zcL5VCnhzhBOmK6G6+AhpfwOSC3LKK2yGL39MKXtTrzUx4aq5i3xm5oe
-	 4/4bEYofMra3HB9O8B9OlXhvduU1JlAmQ3IXTpguiW8w275uULPkvamWNU7A5qv5I5
-	 cI7bMGdisCJD4Cw7W0iLl7MTLRL9NFgCfWbf5skg=
+	b=mRIMbtbqfJY/vzy0c5++CN+abfxkqoh7Q0J6b5Ju31QJykVXuXzb25Mkimio/+rC/
+	 9jlmw6UtSe9b7w9jv/xN6W/lZfJDs0f1PkaZml8bpYspyBQtnYn3gFfI5izCyn1Cwm
+	 8MG9YOqyVnAbcXWaSXGsYJ+e2bAUvGu08LYtKR20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Dave Chinner <dchinner@redhat.com>,
+	Brian Foster <bfoster@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 005/156] xfs: preserve inode versioning across remounts
-Date: Wed, 23 Nov 2022 09:49:22 +0100
-Message-Id: <20221123084558.041330504@linuxfoundation.org>
+Subject: [PATCH 5.4 006/156] xfs: drain the buf delwri queue before xfsaild idles
+Date: Wed, 23 Nov 2022 09:49:23 +0100
+Message-Id: <20221123084558.082635022@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -38,54 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 4750a171c3290f9bbebca16c6372db723a4cfa3b upstream.
+commit f376b45e861d8b7b34bf0eceeecfdd00dbe65cde upstream.
 
-[ For 5.4.y, SB_I_VERSION should be set in xfs_fs_remount() ]
+xfsaild is racy with respect to transaction abort and shutdown in
+that the task can idle or exit with an empty AIL but buffers still
+on the delwri queue. This was partly addressed by cancelling the
+delwri queue before the task exits to prevent memory leaks, but it's
+also possible for xfsaild to empty and idle with buffers on the
+delwri queue. For example, a transaction that pins a buffer that
+also happens to sit on the AIL delwri queue will explicitly remove
+the associated log item from the AIL if the transaction aborts. The
+side effect of this is an unmount hang in xfs_wait_buftarg() as the
+associated buffers remain held by the delwri queue indefinitely.
+This is reproduced on repeated runs of generic/531 with an fs format
+(-mrmapbt=1 -bsize=1k) that happens to also reproduce transaction
+aborts.
 
-The MS_I_VERSION mount flag is exposed via the VFS, as documented
-in the mount manpages etc; see the iversion and noiversion mount
-options in mount(8).
+Update xfsaild to not idle until both the AIL and associated delwri
+queue are empty and update the push code to continue delwri queue
+submission attempts even when the AIL is empty. This allows the AIL
+to eventually release aborted buffers stranded on the delwri queue
+when they are unlocked by the associated transaction. This should
+have no significant effect on normal runtime behavior because the
+xfsaild currently idles only when the AIL is empty and in practice
+the AIL is rarely empty with a populated delwri queue. The items
+must be AIL resident to land in the queue in the first place and
+generally aren't removed until writeback completes.
 
-As a result, mount -o remount looks for this option in /proc/mounts
-and will only send the I_VERSION flag back in during remount it it
-is present.  Since it's not there, a remount will /remove/ the
-I_VERSION flag at the vfs level, and iversion functionality is lost.
+Note that the pre-existing delwri queue cancel logic in the exit
+path is retained because task stop is external, could technically
+come at any point, and xfsaild is still responsible to release its
+buffer references before it exits.
 
-xfs v5 superblocks intend to always have i_version enabled; it is
-set as a default at mount time, but is lost during remount for the
-reasons above.
-
-The generic fix would be to expose this documented option in
-/proc/mounts, but since that was rejected, fix it up again in the
-xfs remount path instead, so that at least xfs won't suffer from
-this misbehavior.
-
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Brian Foster <bfoster@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_super.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/xfs/xfs_trans_ail.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -1228,6 +1228,10 @@ xfs_fs_remount(
- 	char			*p;
- 	int			error;
+--- a/fs/xfs/xfs_trans_ail.c
++++ b/fs/xfs/xfs_trans_ail.c
+@@ -402,16 +402,10 @@ xfsaild_push(
+ 	target = ailp->ail_target;
+ 	ailp->ail_target_prev = target;
  
-+	/* version 5 superblocks always support version counters. */
-+	if (XFS_SB_VERSION_NUM(&mp->m_sb) == XFS_SB_VERSION_5)
-+		*flags |= SB_I_VERSION;
++	/* we're done if the AIL is empty or our push has reached the end */
+ 	lip = xfs_trans_ail_cursor_first(ailp, &cur, ailp->ail_last_pushed_lsn);
+-	if (!lip) {
+-		/*
+-		 * If the AIL is empty or our push has reached the end we are
+-		 * done now.
+-		 */
+-		xfs_trans_ail_cursor_done(&cur);
+-		spin_unlock(&ailp->ail_lock);
++	if (!lip)
+ 		goto out_done;
+-	}
+ 
+ 	XFS_STATS_INC(mp, xs_push_ail);
+ 
+@@ -493,6 +487,8 @@ xfsaild_push(
+ 			break;
+ 		lsn = lip->li_lsn;
+ 	}
 +
- 	/* First, check for complete junk; i.e. invalid options */
- 	error = xfs_test_remount_options(sb, options);
- 	if (error)
++out_done:
+ 	xfs_trans_ail_cursor_done(&cur);
+ 	spin_unlock(&ailp->ail_lock);
+ 
+@@ -500,7 +496,6 @@ xfsaild_push(
+ 		ailp->ail_log_flush++;
+ 
+ 	if (!count || XFS_LSN_CMP(lsn, target) >= 0) {
+-out_done:
+ 		/*
+ 		 * We reached the target or the AIL is empty, so wait a bit
+ 		 * longer for I/O to complete and remove pushed items from the
+@@ -592,7 +587,8 @@ xfsaild(
+ 		 */
+ 		smp_rmb();
+ 		if (!xfs_ail_min(ailp) &&
+-		    ailp->ail_target == ailp->ail_target_prev) {
++		    ailp->ail_target == ailp->ail_target_prev &&
++		    list_empty(&ailp->ail_buf_list)) {
+ 			spin_unlock(&ailp->ail_lock);
+ 			freezable_schedule();
+ 			tout = 0;
 
 
