@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7A1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DCEC433D6;
-	Wed, 23 Nov 2022 09:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456DC1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84434C433C1;
+	Wed, 23 Nov 2022 09:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194533;
-	bh=3Ndx+Do8OTWaPgxdYjnJkVscxvOkk74ue/alVLjWIAE=;
+	s=korg; t=1669194537;
+	bh=6QqdkLRmgk+TgWmk16E7hamPY8XXEoMQdN8mYGlQn7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDgpQrZDslYCGJVNw6vgcYlfZbv2j4eh8VezcW9NQ+x6PQJLUeSTaApT0cskeWoQS
-	 GxUQ3UOYRpbRs0JlxHrkUa2hTNbRukMt18gCUfoPqgyLyXw1cERl4mxSbiMVJNZENX
-	 GA0mntyvvUGXdwieUWmmCtI6tDXStvhES1jQKTc0=
+	b=G0x6L+RLGyvOGRWAk+xUXEtFBjRM6IB4tJ1bY6Dg5IacS/pTxgl54a665OXAxcBLk
+	 QnikCViObB6b1spK03KgXpdHi0VIMWlOPZ0+jpdOUg7ktP9aJj/LwIrjmQc/Ozwq3/
+	 x5kYhu0dKh/eHKFYtZV3THniNXw7mUwyk3QNwjfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Tom Herbert <tom@herbertland.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 104/114] kcm: avoid potential race in kcm_tx_work
-Date: Wed, 23 Nov 2022 09:51:31 +0100
-Message-Id: <20221123084555.884267805@linuxfoundation.org>
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.19 078/114] ring_buffer: Do not deactivate non-existant pages
+Date: Wed, 23 Nov 2022 09:51:05 +0100
+Message-Id: <20221123084554.984744927@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -36,72 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-commit ec7eede369fe5b0d085ac51fdbb95184f87bfc6c upstream.
+commit 56f4ca0a79a9f1af98f26c54b9b89ba1f9bcc6bd upstream.
 
-syzbot found that kcm_tx_work() could crash [1] in:
+rb_head_page_deactivate() expects cpu_buffer to contain a valid list of
+->pages, so verify that the list is actually present before calling it.
 
-	/* Primarily for SOCK_SEQPACKET sockets */
-	if (likely(sk->sk_socket) &&
-	    test_bit(SOCK_NOSPACE, &sk->sk_socket->flags)) {
-<<*>>	clear_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-		sk->sk_write_space(sk);
-	}
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-I think the reason is that another thread might concurrently
-run in kcm_release() and call sock_orphan(sk) while sk is not
-locked. kcm_tx_work() find sk->sk_socket being NULL.
+Link: https://lkml.kernel.org/r/20221114143129.3534443-1-d-tatianin@yandex-team.ru
 
-[1]
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:86 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-Write of size 8 at addr 0000000000000008 by task kworker/u4:3/53
-
-CPU: 0 PID: 53 Comm: kworker/u4:3 Not tainted 5.19.0-rc3-next-20220621-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: kkcmd kcm_tx_work
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-kasan_report+0xbe/0x1f0 mm/kasan/report.c:495
-check_region_inline mm/kasan/generic.c:183 [inline]
-kasan_check_range+0x13d/0x180 mm/kasan/generic.c:189
-instrument_atomic_write include/linux/instrumented.h:86 [inline]
-clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-process_one_work+0x996/0x1610 kernel/workqueue.c:2289
-worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-kthread+0x2e9/0x3a0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
-</TASK>
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Link: https://lore.kernel.org/r/20221012133412.519394-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 77ae365eca895 ("ring-buffer: make lockless")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1845,10 +1845,10 @@ static int kcm_release(struct socket *so
- 	kcm = kcm_sk(sk);
- 	mux = kcm->mux;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1328,9 +1328,9 @@ static void rb_free_cpu_buffer(struct ri
  
-+	lock_sock(sk);
- 	sock_orphan(sk);
- 	kfree_skb(kcm->seq_skb);
+ 	free_buffer_page(cpu_buffer->reader_page);
  
--	lock_sock(sk);
- 	/* Purge queue under lock to avoid race condition with tx_work trying
- 	 * to act when queue is nonempty. If tx_work runs after this point
- 	 * it will just return.
+-	rb_head_page_deactivate(cpu_buffer);
+-
+ 	if (head) {
++		rb_head_page_deactivate(cpu_buffer);
++
+ 		list_for_each_entry_safe(bpage, tmp, head, list) {
+ 			list_del_init(&bpage->list);
+ 			free_buffer_page(bpage);
 
 
