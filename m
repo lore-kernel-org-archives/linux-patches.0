@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D08F1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC105C433D7;
-	Wed, 23 Nov 2022 09:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC07E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F091C433D7;
+	Wed, 23 Nov 2022 09:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197194;
-	bh=DzdurgrY6s4J5MLc/utmj4OMQtaOkNdIs2TXiFiM0Pc=;
+	s=korg; t=1669197197;
+	bh=6WXuu1TguYy4wHxQm4CIqH6Wif6rr0iBUDt7RiXs5Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKt1jqzcBSojDkzDVNEREH9XEhdHOW5otyfj1zxQeJwn4Mp5QlX5kf+CequH78HEc
-	 bGJAqatuV8kdT6BvltsO2wSxzpTHjm+0KSzYEQzHT9zVDobAVIYkRSHxsi7iDmwZsV
-	 qqrYIsYtxzh8CT+rl1P/68TYfkqLNLzg6bWO1M/4=
+	b=cYWpV7Nqd/PMi5+cR17eoFB1g3Gw6Ahb4ck9jOKSaoIvI+oIaO3JVu3uYjMWvHgGM
+	 Qgw7jdRqnZsRHZASwVO2HosPWSMl6ow3rKfMr/7aVTlq+7q32FgKssOafJJDKIJU0j
+	 9ZRLAyobqhYOm4wcQsqZJmuwkngkm/ANoBmD6Fdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Agner <stefan@agner.ch>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.0 224/314] Revert "usb: dwc3: disable USB core PHY management"
-Date: Wed, 23 Nov 2022 09:51:09 +0100
-Message-Id: <20221123084635.675105859@linuxfoundation.org>
+	stable@kernel.org,
+	Janne Grunau <j@jannau.net>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sven Peter <sven@svenpeter.dev>
+Subject: [PATCH 6.0 225/314] usb: dwc3: Do not get extcon device when usb-role-switch is used
+Date: Wed, 23 Nov 2022 09:51:10 +0100
+Message-Id: <20221123084635.721307731@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,71 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Janne Grunau <j@jannau.net>
 
-commit 5c294de36e7fb3e0cba0c4e1ef9a5f57bc080d0f upstream.
+commit d68cc25b7c7fb3034c5a5b5f350a0b858c6d5a45 upstream.
 
-This reverts commit 6000b8d900cd5f52fbcd0776d0cc396e88c8c2ea.
+The change breaks device tree based platforms with PHY device and use
+usb-role-switch instead of an extcon switch. extcon_find_edev_by_node()
+will return EPROBE_DEFER if it can not find a device so probing without
+an extcon device will be deferred indefinitely. Fix this by
+explicitly checking for usb-role-switch.
+At least the out-of-tree USB3 support on Apple silicon based platforms
+using dwc3 with tipd USB Type-C and PD controller is affected by this
+issue.
 
-The offending commit disabled the USB core PHY management as the dwc3
-already manages the PHYs in question.
-
-Unfortunately some platforms have started relying on having USB core
-also controlling the PHY and this is specifically currently needed on
-some Exynos platforms for PHY calibration or connected device may fail
-to enumerate.
-
-The PHY calibration was previously handled in the dwc3 driver, but to
-work around some issues related to how the dwc3 driver interacts with
-xhci (e.g. using multiple drivers) this was moved to USB core by commits
-34c7ed72f4f0 ("usb: core: phy: add support for PHY calibration") and
-a0a465569b45 ("usb: dwc3: remove generic PHY calibrate() calls").
-
-The same PHY obviously should not be controlled from two different
-places, which for example do no agree on the PHY mode or power state
-during suspend, but as the offending patch was backported to stable,
-let's revert it for now.
-
-Reported-by: Stefan Agner <stefan@agner.ch>
-Link: https://lore.kernel.org/lkml/808bdba846bb60456adf10a3016911ee@agner.ch/
-Fixes: 6000b8d900cd ("usb: dwc3: disable USB core PHY management")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: d182c2e1bc92 ("usb: dwc3: Don't switch OTG -> peripheral if extcon is present")
+Cc: stable@kernel.org
+Signed-off-by: Janne Grunau <j@jannau.net>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20221103144648.14197-1-johan+linaro@kernel.org
+Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Link: https://lore.kernel.org/r/20221106214804.2814-1-j@jannau.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/host.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/usb/dwc3/core.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -11,13 +11,8 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1711,6 +1711,16 @@ static struct extcon_dev *dwc3_get_extco
+ 		return extcon_get_extcon_dev(name);
  
--#include "../host/xhci-plat.h"
- #include "core.h"
- 
--static const struct xhci_plat_priv dwc3_xhci_plat_priv = {
--	.quirks = XHCI_SKIP_PHY_INIT,
--};
--
- static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
- 					int irq, char *name)
- {
-@@ -97,11 +92,6 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		goto err;
- 	}
- 
--	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_priv,
--					sizeof(dwc3_xhci_plat_priv));
--	if (ret)
--		goto err;
--
- 	memset(props, 0, sizeof(struct property_entry) * ARRAY_SIZE(props));
- 
- 	if (dwc->usb3_lpm_capable)
+ 	/*
++	 * Check explicitly if "usb-role-switch" is used since
++	 * extcon_find_edev_by_node() can not be used to check the absence of
++	 * an extcon device. In the absence of an device it will always return
++	 * EPROBE_DEFER.
++	 */
++	if (IS_ENABLED(CONFIG_USB_ROLE_SWITCH) &&
++	    device_property_read_bool(dev, "usb-role-switch"))
++		return NULL;
++
++	/*
+ 	 * Try to get an extcon device from the USB PHY controller's "port"
+ 	 * node. Check if it has the "port" node first, to avoid printing the
+ 	 * error message from underlying code, as it's a valid case: extcon
 
 
