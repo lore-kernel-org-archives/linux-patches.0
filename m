@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5611C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A650DC433D7;
-	Wed, 23 Nov 2022 09:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0540F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9A9C433D6;
+	Wed, 23 Nov 2022 09:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195985;
-	bh=WKy/QIwOLmozVOUmRd2OzMBA0ZXu92OC9RsslkRq8iw=;
+	s=korg; t=1669195988;
+	bh=dK9aI4+GTmYx8RbS7O1E/uW9R1LSW26QIfZslMRmk0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eg147kruCxHNJygu0jZ7VH4Jfz/q6GFCxiVi5I/ejnKAkmB1sF7vRp4hOR1OzGbVe
-	 Wcr52BPzqR5fEPN79PiF5GQFXXMUC+YG/f1oWm81fvGn7TWoikgsuAJfm/OXOkPvWZ
-	 lFaZZVpYwOcpSB7F2OGndq+Zvjxz5FwAfJjGiAkc=
+	b=amMyJLtW/nhDYPBwslYZ9iAFehut7hLNygHGuArCE36h7NCZ2OLrPBgA0hFcW1qqj
+	 QTdXVraDbK9hrKU1T74r4TX5QzJVTvPbLBhYUB2vkdGA84hzhnbodQiHIyXzy8ZsXX
+	 LPEjLW4CCg+kCYjxqKmWifyw6PeXIv3EA49nO60c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/181] net: caif: fix double disconnect client in chnl_net_open()
-Date: Wed, 23 Nov 2022 09:50:50 +0100
-Message-Id: <20221123084606.088904555@linuxfoundation.org>
+Subject: [PATCH 5.15 088/181] bnxt_en: Remove debugfs when pci_register_driver failed
+Date: Wed, 23 Nov 2022 09:50:51 +0100
+Message-Id: <20221123084606.137104415@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,35 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 8fbb53c8bfd8c56ecf1f78dc821778b58f505503 ]
+[ Upstream commit 991aef4ee4f6eb999924f429b943441a32835c8f ]
 
-When connecting to client timeout, disconnect client for twice in
-chnl_net_open(). Remove one. Compile tested only.
+When pci_register_driver failed, we need to remove debugfs,
+which will caused a resource leak, fix it.
 
-Fixes: 2aa40aef9deb ("caif: Use link layer MTU instead of fixed MTU")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Resource leak logs as follows:
+[   52.184456] debugfs: Directory 'bnxt_en' with parent '/' already present!
+
+Fixes: cabfb09d87bd ("bnxt_en: add debugfs support for DIM")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/chnl_net.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/caif/chnl_net.c b/net/caif/chnl_net.c
-index 414dc5671c45..2de6b44deb2c 100644
---- a/net/caif/chnl_net.c
-+++ b/net/caif/chnl_net.c
-@@ -310,9 +310,6 @@ static int chnl_net_open(struct net_device *dev)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index db1864a3f64a..117f5cc7c180 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -13697,8 +13697,16 @@ static struct pci_driver bnxt_pci_driver = {
  
- 	if (result == 0) {
- 		pr_debug("connect timeout\n");
--		caif_disconnect_client(dev_net(dev), &priv->chnl);
--		priv->state = CAIF_DISCONNECTED;
--		pr_debug("state disconnected\n");
- 		result = -ETIMEDOUT;
- 		goto error;
- 	}
+ static int __init bnxt_init(void)
+ {
++	int err;
++
+ 	bnxt_debug_init();
+-	return pci_register_driver(&bnxt_pci_driver);
++	err = pci_register_driver(&bnxt_pci_driver);
++	if (err) {
++		bnxt_debug_exit();
++		return err;
++	}
++
++	return 0;
+ }
+ 
+ static void __exit bnxt_exit(void)
 -- 
 2.35.1
 
