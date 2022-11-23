@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1BB1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEF6C433C1;
-	Wed, 23 Nov 2022 09:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B9A1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A55BC433D7;
+	Wed, 23 Nov 2022 09:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194099;
-	bh=3pgFapKWXGD7DgJ2qq8pOHNgYYj/fdXcT+Ss17NNl6I=;
+	s=korg; t=1669194103;
+	bh=hiLYMyPW2D4iP5KTP6ogPeDTfnXA+eY98B09LNN8qsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgA0zY1Ts3YZPPTWKZP5fFumbyZ9D/+ayU3IuYLLHWDZ/AQvSwYT8hy4dVFB4E9xy
-	 8Ce0ygpbOOnr9MslJCwM6wJu63yiB8j6Mg1H1hvuTFuAcTgqx5FCwXsNpsRaNbJTW4
-	 wwbgxoYEkyP2VNB7vUu/dPskRrY7+VW/dmE29Tvs=
+	b=OZ+JVEsWcxEyCK3xccezkDy4wFurUrZ/qpaUNZeQxtJIkdDNdcMv+NVcGHgDx3MfN
+	 Pp8cXabR8OEkXF7C8sQA3jRey9Ympl+PswVGgLnmI1nBXgVTknvBnr4s8GBv6sj8Bk
+	 1oCHi9MLF9LD5WMY1MUOA+CsjVMPX4/5drLhH48M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.14 71/88] mmc: core: properly select voltage range without power cycle
-Date: Wed, 23 Nov 2022 09:51:08 +0100
-Message-Id: <20221123084551.118408086@linuxfoundation.org>
+Subject: [PATCH 4.14 72/88] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
+Date: Wed, 23 Nov 2022 09:51:09 +0100
+Message-Id: <20221123084551.159993125@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -34,47 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yann Gautier <yann.gautier@foss.st.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
+commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
 
-In mmc_select_voltage(), if there is no full power cycle, the voltage
-range selected at the end of the function will be on a single range
-(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
-the mask shift should be reduced by 1.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before amd_probe() returns. There is no problem for the 'smbus_dev ==
+NULL' branch because pci_dev_put() can also handle the NULL input
+parameter case.
 
-This issue was triggered by using a specific SD-card (Verbatim Premium
-16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
-and there is no power cycle. And the card was failing to switch to
-high-speed mode. When adding the range 3.2V/3.3V for this card with the
-proposed shift change, the card can switch to high-speed mode.
-
-Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
+Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
+Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1463,7 +1463,13 @@ u32 mmc_select_voltage(struct mmc_host *
- 		mmc_power_cycle(host, ocr);
- 	} else {
- 		bit = fls(ocr) - 1;
--		ocr &= 3 << bit;
-+		/*
-+		 * The bit variable represents the highest voltage bit set in
-+		 * the OCR register.
-+		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
-+		 * we must shift the mask '3' with (bit - 1).
-+		 */
-+		ocr &= 3 << (bit - 1);
- 		if (bit != host->ios.vdd)
- 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -1277,6 +1277,8 @@ static int amd_probe(struct sdhci_pci_ch
+ 		}
  	}
+ 
++	pci_dev_put(smbus_dev);
++
+ 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
+ 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
+ 
 
 
