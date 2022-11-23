@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1363C1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C907C433D6;
-	Wed, 23 Nov 2022 09:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A48E1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D889C433D6;
+	Wed, 23 Nov 2022 09:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196016;
-	bh=CII2yEocRWRKpqzQibF+7nd83tedl5rn8QvbHukedx8=;
+	s=korg; t=1669196020;
+	bh=gi5P4OAPwMamd83ml8Ecx26GVKfsP21eNmi7b2AhGJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwak9flshminpwyQCXZG2S5rIg6eHKjuaZYagDA2itKXfmr0jjkyXTlLno5cWgp6g
-	 In0QLb/MDPvAY4X/u1PhkSNft8SBsI9KMaK0gNrqxdtjgtB7+LhM1q2pyCAUQ5uRey
-	 KJZfGSBTitJjF5oFv5o04KAWKCWROGGwymYQ5erE=
+	b=FEuk4S7eZbD9PFcX/J2/MCI6dBohbH46ZnVh8EGU08Q2fZJwTPhgfbtrHO0YNvX0m
+	 Uunt8WJX2nt4kzaXteaDUGSrfp+q1ZAnQ9n8sMp5cx5e6NhhAaFZWUmvgwgToPKVye
+	 tN0EvN2MSr2a4CEr8umKcK6kNCgDHvn5npgSDX+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shang XiaoJing <shangxiaojing@huawei.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/181] drm/drv: Fix potential memory leak in drm_dev_init()
-Date: Wed, 23 Nov 2022 09:50:29 +0100
-Message-Id: <20221123084605.208791479@linuxfoundation.org>
+Subject: [PATCH 5.15 067/181] drm: Fix potential null-ptr-deref in drm_vblank_destroy_worker()
+Date: Wed, 23 Nov 2022 09:50:30 +0100
+Message-Id: <20221123084605.250150181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,55 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit ff963634f7b2e0dc011349abb3fb81a0d074f443 ]
+[ Upstream commit 4979524f5a2a8210e87fde2f642b0dc060860821 ]
 
-drm_dev_init() will add drm_dev_init_release() as a callback. When
-drmm_add_action() failed, the release function won't be added. As the
-result, the ref cnt added by device_get() in drm_dev_init() won't be put
-by drm_dev_init_release(), which leads to the memleak. Use
-drmm_add_action_or_reset() instead of drmm_add_action() to prevent
-memleak.
+drm_vblank_init() call drmm_add_action_or_reset() with
+drm_vblank_init_release() as action. If __drmm_add_action() failed, will
+directly call drm_vblank_init_release() with the vblank whose worker is
+NULL. As the resule, a null-ptr-deref will happen in
+kthread_destroy_worker(). Add the NULL check before calling
+drm_vblank_destroy_worker().
 
-unreferenced object 0xffff88810bc0c800 (size 2048):
-  comm "modprobe", pid 8322, jiffies 4305809845 (age 15.292s)
-  hex dump (first 32 bytes):
-    e8 cc c0 0b 81 88 ff ff ff ff ff ff 00 00 00 00  ................
-    20 24 3c 0c 81 88 ff ff 18 c8 c0 0b 81 88 ff ff   $<.............
-  backtrace:
-    [<000000007251f72d>] __kmalloc+0x4b/0x1c0
-    [<0000000045f21f26>] platform_device_alloc+0x2d/0xe0
-    [<000000004452a479>] platform_device_register_full+0x24/0x1c0
-    [<0000000089f4ea61>] 0xffffffffa0736051
-    [<00000000235b2441>] do_one_initcall+0x7a/0x380
-    [<0000000001a4a177>] do_init_module+0x5c/0x230
-    [<000000002bf8a8e2>] load_module+0x227d/0x2420
-    [<00000000637d6d0a>] __do_sys_finit_module+0xd5/0x140
-    [<00000000c99fc324>] do_syscall_64+0x3f/0x90
-    [<000000004d85aa77>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+BUG: null-ptr-deref
+KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
+CPU: 5 PID: 961 Comm: modprobe Not tainted 6.0.0-11331-gd465bff130bf-dirty
+RIP: 0010:kthread_destroy_worker+0x25/0xb0
+  Call Trace:
+    <TASK>
+    drm_vblank_init_release+0x124/0x220 [drm]
+    ? drm_crtc_vblank_restore+0x8b0/0x8b0 [drm]
+    __drmm_add_action_or_reset+0x41/0x50 [drm]
+    drm_vblank_init+0x282/0x310 [drm]
+    vkms_init+0x35f/0x1000 [vkms]
+    ? 0xffffffffc4508000
+    ? lock_is_held_type+0xd7/0x130
+    ? __kmem_cache_alloc_node+0x1c2/0x2b0
+    ? lock_is_held_type+0xd7/0x130
+    ? 0xffffffffc4508000
+    do_one_initcall+0xd0/0x4f0
+    ...
+    do_syscall_64+0x35/0x80
+    entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: 2cbf7fc6718b ("drm: Use drmm_ for drm_dev_init cleanup")
+Fixes: 5e6c2b4f9161 ("drm/vblank: Add vblank works")
 Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221101070716.9189-2-shangxiaojing@huawei.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20221101070716.9189-3-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_internal.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index b3a1636d1b98..6f1791613757 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -614,7 +614,7 @@ static int drm_dev_init(struct drm_device *dev,
- 	mutex_init(&dev->clientlist_mutex);
- 	mutex_init(&dev->master_mutex);
+diff --git a/drivers/gpu/drm/drm_internal.h b/drivers/gpu/drm/drm_internal.h
+index d05e6a5b6687..f97a0875b9a1 100644
+--- a/drivers/gpu/drm/drm_internal.h
++++ b/drivers/gpu/drm/drm_internal.h
+@@ -104,7 +104,8 @@ static inline void drm_vblank_flush_worker(struct drm_vblank_crtc *vblank)
  
--	ret = drmm_add_action(dev, drm_dev_init_release, NULL);
-+	ret = drmm_add_action_or_reset(dev, drm_dev_init_release, NULL);
- 	if (ret)
- 		return ret;
+ static inline void drm_vblank_destroy_worker(struct drm_vblank_crtc *vblank)
+ {
+-	kthread_destroy_worker(vblank->worker);
++	if (vblank->worker)
++		kthread_destroy_worker(vblank->worker);
+ }
  
+ int drm_vblank_worker_init(struct drm_vblank_crtc *vblank);
 -- 
 2.35.1
 
