@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639931C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25CDC433C1;
-	Wed, 23 Nov 2022 09:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8C01C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FA4C433C1;
+	Wed, 23 Nov 2022 09:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195806;
-	bh=Xhot2VfNAB4AkgKvs9OLpBqEMJ/DuE/cQX3zOo1+Ab4=;
+	s=korg; t=1669195809;
+	bh=bwniiVUicEb3OdOZqT9IS4aUQ8kgjUeyrLgypQZJfWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCKwTniqYXK2zwFPR6pOFysAgqSs2kLkxhQV7QRyWewC0KX43EHsnvbfCKF/RaHFx
-	 uMd516Igog+mId7IupeoR05eMDpVoKJiUizHHCTSMkNuynYhOMnCgrnYqL5uSAsYYy
-	 LQ3st2v3eLMBHEIGVOjtmvVJGryLiWNzOHHaxido=
+	b=h3r+T+dGUc1UJYXUJrmY8G1LWESLO8veHxDvPKbffwzfVewxBFkWNsIjVM3pzzTBS
+	 J4TP/WZ6D9xuyk9geO+7G1bKlZekHX1UrltZTCfrfrN81Hin7qf9WX218dQMfUD+H3
+	 IQz2W1lYeYAgWl6YF8j5v8DUawkEWqidmPQ1GdvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/181] arm64: dts: qcom: sa8155p-adp: Specify which LDO modes are allowed
-Date: Wed, 23 Nov 2022 09:50:01 +0100
-Message-Id: <20221123084604.005025185@linuxfoundation.org>
+Subject: [PATCH 5.15 039/181] arm64: dts: qcom: sm8150-xperia-kumano: Specify which LDO modes are allowed
+Date: Wed, 23 Nov 2022 09:50:02 +0100
+Message-Id: <20221123084604.044529057@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -39,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit bd9f3dcf42d943b53190f99bcdbcfe98a56ac4cd ]
+[ Upstream commit aa30e786202e4ed1df980442d305658441f65859 ]
 
 This board uses RPMH, specifies "regulator-allow-set-load" for LDOs,
 but doesn't specify any modes with "regulator-allowed-modes".
@@ -53,45 +53,24 @@ fully restore old functionality.
 
 Let's re-enable the old functionality by fixing the dts.
 
-NOTE: while here, let's also remove the nonsensical
-"regulator-allow-set-load" on the fixed regulator "vreg_s4a_1p8".
-
 [1] https://lore.kernel.org/r/20220824142229.RFT.v2.2.I6f77860e5cd98bf5c67208fa9edda4a08847c304@changeid
 
-Fixes: 5b85e8f2225c ("arm64: dts: qcom: sa8155p-adp: Add base dts file")
+Fixes: d0a6ce59ea4e ("arm64: dts: qcom: sm8150: Add support for SONY Xperia 1 / 5 (Kumano platform)")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220829094903.v2.1.Id59c32b560c4662d8b3697de2bd494d08d654806@changeid
+Link: https://lore.kernel.org/r/20220829094903.v2.4.I51d60414a42ba9e3008e208d60a04c9ffc425fa7@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-index 5ae2ddc65f7e..56a789a5789e 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -43,7 +43,6 @@ vreg_s4a_1p8: smps4 {
- 
- 		regulator-always-on;
- 		regulator-boot-on;
--		regulator-allow-set-load;
- 
- 		vin-supply = <&vreg_3p3>;
- 	};
-@@ -114,6 +113,9 @@ vreg_l5a_0p88: ldo5 {
- 			regulator-max-microvolt = <880000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 			regulator-allow-set-load;
-+			regulator-allowed-modes =
-+			    <RPMH_REGULATOR_MODE_LPM
-+			     RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l7a_1p8: ldo7 {
-@@ -129,6 +131,9 @@ vreg_l10a_2p96: ldo10 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+index 014fe3a31548..fb6e5a140c9f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
+@@ -348,6 +348,9 @@ vreg_l6c_2p9: ldo6 {
  			regulator-max-microvolt = <2960000>;
  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
  			regulator-allow-set-load;
@@ -100,19 +79,9 @@ index 5ae2ddc65f7e..56a789a5789e 100644
 +			     RPMH_REGULATOR_MODE_HPM>;
  		};
  
- 		vreg_l11a_0p8: ldo11 {
-@@ -235,6 +240,9 @@ vreg_l5c_1p2: ldo5 {
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 			regulator-allow-set-load;
-+			regulator-allowed-modes =
-+			    <RPMH_REGULATOR_MODE_LPM
-+			     RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l7c_1p8: ldo7 {
-@@ -250,6 +258,9 @@ vreg_l8c_1p2: ldo8 {
- 			regulator-max-microvolt = <1200000>;
+ 		vreg_l7c_3p0: ldo7 {
+@@ -367,6 +370,9 @@ vreg_l9c_2p9: ldo9 {
+ 			regulator-max-microvolt = <2960000>;
  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
  			regulator-allow-set-load;
 +			regulator-allowed-modes =
