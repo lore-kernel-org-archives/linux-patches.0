@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715E11C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFCDC433C1;
-	Wed, 23 Nov 2022 09:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7A41C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E780C433D7;
+	Wed, 23 Nov 2022 09:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196260;
-	bh=8HKXCGGVFpmxdo+NKF8LQteVHYmNXwRyQa8UNM5udUs=;
+	s=korg; t=1669196264;
+	bh=qamekBnLTOxdoKN8MH7bW1uz8tCruoDYwcdhw1C4anY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L46VQ1N83zL1Cn5cMIsWXHqJwmJTrgXxEWDNWdn8A3TJGN5l3neJ9LA/hzGrs7yft
-	 soIDsYUcuhLPE6WM4fXltiGWTfyX/euOCF9lyIAIEuNWzBPH05IceVUwHD7/ktZGp4
-	 mhy4s39PljHDr/1ZcLdNnyNAUQUfCV1FYR9UTKQo=
+	b=ef41pOCLbfbqYtvPcCVVz/TfbZEn2L51DnHgiNPdBJnoghZWOXz0WrraTECFNRuWU
+	 OSdQXhtA3UxBLvLSU4KduVoPA3ZeyGQ+NIFKkftmTWAFb0BeAQbB9RZEPGBXjt7RaM
+	 n30p5q4h7OZAV2S0v9og6U5ZwBzUgf1YvZGzkj6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 5.15 132/181] usb: chipidea: fix deadlock in ci_otg_del_timer
-Date: Wed, 23 Nov 2022 09:51:35 +0100
-Message-Id: <20221123084608.052025424@linuxfoundation.org>
+	Li Jun <jun.li@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Subject: [PATCH 5.15 133/181] usb: cdns3: host: fix endless superspeed hub port reset
+Date: Wed, 23 Nov 2022 09:51:36 +0100
+Message-Id: <20221123084608.092902786@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,56 +36,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Li Jun <jun.li@nxp.com>
 
-commit 7a58b8d6021426b796eebfae80983374d9a80a75 upstream.
+commit 9d5333c931347005352d5b8beaa43528c94cfc9c upstream.
 
-There is a deadlock in ci_otg_del_timer(), the process is
-shown below:
+When usb 3.0 hub connect with one USB 2.0 device and NO USB 3.0 device,
+some usb hub reports endless port reset message.
 
-    (thread 1)                  |        (thread 2)
-ci_otg_del_timer()              | ci_otg_hrtimer_func()
-  ...                           |
-  spin_lock_irqsave() //(1)     |  ...
-  ...                           |
-  hrtimer_cancel()              |  spin_lock_irqsave() //(2)
-  (block forever)
+[  190.324169] usb 2-1: new SuperSpeed USB device number 88 using xhci-hcd
+[  190.352834] hub 2-1:1.0: USB hub found
+[  190.356995] hub 2-1:1.0: 4 ports detected
+[  190.700056] usb 2-1: USB disconnect, device number 88
+[  192.472139] usb 2-1: new SuperSpeed USB device number 89 using xhci-hcd
+[  192.500820] hub 2-1:1.0: USB hub found
+[  192.504977] hub 2-1:1.0: 4 ports detected
+[  192.852066] usb 2-1: USB disconnect, device number 89
 
-We hold ci->lock in position (1) and use hrtimer_cancel() to
-wait ci_otg_hrtimer_func() to stop, but ci_otg_hrtimer_func()
-also need ci->lock in position (2). As a result, the
-hrtimer_cancel() in ci_otg_del_timer() will be blocked forever.
+The reason is the runtime pm state of USB2.0 port is active and
+USB 3.0 port is suspend, so parent device is active state.
 
-This patch extracts hrtimer_cancel() from the protection of
-spin_lock_irqsave() in order that the ci_otg_hrtimer_func()
-could obtain the ci->lock.
+ cat /sys/bus/platform/devices/5b110000.usb/5b130000.usb/xhci-hcd.1.auto/usb2/power/runtime_status
 
-What`s more, there will be no race happen. Because the
-"next_timer" is always under the protection of
-spin_lock_irqsave() and we only check whether "next_timer"
-equals to NUM_OTG_FSM_TIMERS in the following code.
+ suspended
 
-Fixes: 3a316ec4c91c ("usb: chipidea: use hrtimer for otg fsm timers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20220918033312.94348-1-duoming@zju.edu.cn
+ cat /sys/bus/platform/devices/5b110000.usb/5b130000.usb/xhci-hcd.1.auto/usb1/power/runtime_status
+
+ active
+
+ cat /sys/bus/platform/devices/5b110000.usb/5b130000.usb/xhci-hcd.1.auto/power/runtime_status
+
+ active
+
+ cat /sys/bus/platform/devices/5b110000.usb/5b130000.usb/power/runtime_status
+
+ active
+
+So xhci_cdns3_suspend_quirk() have not called. U3 configure is not applied.
+
+move U3 configure into host start. Reinit again in resume function in case
+controller power lost during suspend.
+
+Cc: stable@vger.kernel.org 5.10
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Acked-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20221026190749.2280367-1-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/otg_fsm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/cdns3/host.c |   56 +++++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
---- a/drivers/usb/chipidea/otg_fsm.c
-+++ b/drivers/usb/chipidea/otg_fsm.c
-@@ -256,8 +256,10 @@ static void ci_otg_del_timer(struct ci_h
- 	ci->enabled_otg_timer_bits &= ~(1 << t);
- 	if (ci->next_otg_timer == t) {
- 		if (ci->enabled_otg_timer_bits == 0) {
-+			spin_unlock_irqrestore(&ci->lock, flags);
- 			/* No enabled timers after delete it */
- 			hrtimer_cancel(&ci->otg_fsm_hrtimer);
-+			spin_lock_irqsave(&ci->lock, flags);
- 			ci->next_otg_timer = NUM_OTG_FSM_TIMERS;
- 		} else {
- 			/* Find the next timer */
+--- a/drivers/usb/cdns3/host.c
++++ b/drivers/usb/cdns3/host.c
+@@ -23,11 +23,37 @@
+ #define CFG_RXDET_P3_EN		BIT(15)
+ #define LPM_2_STB_SWITCH_EN	BIT(25)
+ 
+-static int xhci_cdns3_suspend_quirk(struct usb_hcd *hcd);
++static void xhci_cdns3_plat_start(struct usb_hcd *hcd)
++{
++	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
++	u32 value;
++
++	/* set usbcmd.EU3S */
++	value = readl(&xhci->op_regs->command);
++	value |= CMD_PM_INDEX;
++	writel(value, &xhci->op_regs->command);
++
++	if (hcd->regs) {
++		value = readl(hcd->regs + XECP_AUX_CTRL_REG1);
++		value |= CFG_RXDET_P3_EN;
++		writel(value, hcd->regs + XECP_AUX_CTRL_REG1);
++
++		value = readl(hcd->regs + XECP_PORT_CAP_REG);
++		value |= LPM_2_STB_SWITCH_EN;
++		writel(value, hcd->regs + XECP_PORT_CAP_REG);
++	}
++}
++
++static int xhci_cdns3_resume_quirk(struct usb_hcd *hcd)
++{
++	xhci_cdns3_plat_start(hcd);
++	return 0;
++}
+ 
+ static const struct xhci_plat_priv xhci_plat_cdns3_xhci = {
+ 	.quirks = XHCI_SKIP_PHY_INIT | XHCI_AVOID_BEI,
+-	.suspend_quirk = xhci_cdns3_suspend_quirk,
++	.plat_start = xhci_cdns3_plat_start,
++	.resume_quirk = xhci_cdns3_resume_quirk,
+ };
+ 
+ static int __cdns_host_init(struct cdns *cdns)
+@@ -89,32 +115,6 @@ err1:
+ 	return ret;
+ }
+ 
+-static int xhci_cdns3_suspend_quirk(struct usb_hcd *hcd)
+-{
+-	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
+-	u32 value;
+-
+-	if (pm_runtime_status_suspended(hcd->self.controller))
+-		return 0;
+-
+-	/* set usbcmd.EU3S */
+-	value = readl(&xhci->op_regs->command);
+-	value |= CMD_PM_INDEX;
+-	writel(value, &xhci->op_regs->command);
+-
+-	if (hcd->regs) {
+-		value = readl(hcd->regs + XECP_AUX_CTRL_REG1);
+-		value |= CFG_RXDET_P3_EN;
+-		writel(value, hcd->regs + XECP_AUX_CTRL_REG1);
+-
+-		value = readl(hcd->regs + XECP_PORT_CAP_REG);
+-		value |= LPM_2_STB_SWITCH_EN;
+-		writel(value, hcd->regs + XECP_PORT_CAP_REG);
+-	}
+-
+-	return 0;
+-}
+-
+ static void cdns_host_exit(struct cdns *cdns)
+ {
+ 	kfree(cdns->xhci_plat_data);
 
 
