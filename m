@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ADC1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0A2C433D6;
-	Wed, 23 Nov 2022 09:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24E71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57073C433C1;
+	Wed, 23 Nov 2022 09:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195403;
-	bh=ZDEjWfNXwpVT0d/r4wzQ9qp++kxgxyPEkOBZM8Wb6FM=;
+	s=korg; t=1669195406;
+	bh=lVxztbdhR8r9C+L6fx7lC9VlKZ6hqZuFCXdNheytFPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ya6EyJOqyyVsCuqV0DewgVIIgwJ4o2GK4IyEe/plpUffuM22gmkuHqr9qjMUhrJKR
-	 fY6WyRDxieYJyFhg7G4muioUKUBv1d3Kbeb03eKTQNMXpe+A5tKzEou7g97gbBMmb2
-	 cBt2ov3rizeGEavm3aYZ8uXdT93JP9hZsvnEIC6o=
+	b=eOuyMASC8dqhjbCibirwy07M+IKqTHDY3iAlf0cs8eUGZj00dYl0kTAeeVCi/vjMJ
+	 nK8J4nnxE219DmUkzABKvSHqDByJsfBqWeJdaB0SVckpUHmG+ASeHX+KgCfwNE8/di
+	 M083MUYVBxHO8sqdnevlL/mXoD0a4Hh+8Oi0rPs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/149] platform/x86/intel: pmc: Dont unconditionally attach Intel PMC when virtualized
-Date: Wed, 23 Nov 2022 09:50:58 +0100
-Message-Id: <20221123084600.568019262@linuxfoundation.org>
+Subject: [PATCH 5.10 076/149] cifs: add check for returning value of SMB2_close_init
+Date: Wed, 23 Nov 2022 09:50:59 +0100
+Message-Id: <20221123084600.687164709@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,69 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Pau Monné <roger.pau@citrix.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit 2dbfb3f33350e1e868d3d7ed4c176d8777150878 ]
+[ Upstream commit d520de6cb42e88a1d008b54f935caf9fc05951da ]
 
-The current logic in the Intel PMC driver will forcefully attach it
-when detecting any CPU on the intel_pmc_core_platform_ids array,
-even if the matching ACPI device is not present.
+If the returning value of SMB2_close_init is an error-value,
+exit the function.
 
-There's no checking in pmc_core_probe() to assert that the PMC device
-is present, and hence on virtualized environments the PMC device
-probes successfully, even if the underlying registers are not present.
-Before commit 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI
-with CPUID enumeration") the driver would check for the presence of a
-specific PCI device, and that prevented the driver from attaching when
-running virtualized.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix by only forcefully attaching the PMC device when not running
-virtualized.  Note that virtualized platforms can still get the device
-to load if the appropriate ACPI device is present on the tables
-provided to the VM.
+Fixes: 352d96f3acc6 ("cifs: multichannel: move channel selection above transport layer")
 
-Make an exception for the Xen initial domain, which does have full
-hardware access, and hence can attach to the PMC if present.
-
-Fixes: 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI with CPUID enumeration")
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Acked-by: David E. Box <david.e.box@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110163145.80374-1-roger.pau@citrix.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_pmc_core_pltdrv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/cifs/smb2ops.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/intel_pmc_core_pltdrv.c b/drivers/platform/x86/intel_pmc_core_pltdrv.c
-index 15ca8afdd973..ddfba38c2104 100644
---- a/drivers/platform/x86/intel_pmc_core_pltdrv.c
-+++ b/drivers/platform/x86/intel_pmc_core_pltdrv.c
-@@ -18,6 +18,8 @@
- #include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 11efd5289ec4..1cc823e96065 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1266,6 +1266,8 @@ smb2_set_ea(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rqst[2].rq_nvec = 1;
+ 	rc = SMB2_close_init(tcon, server,
+ 			     &rqst[2], COMPOUND_FID, COMPOUND_FID, false);
++	if (rc)
++		goto sea_exit;
+ 	smb2_set_related(&rqst[2]);
  
-+#include <xen/xen.h>
-+
- static void intel_pmc_core_release(struct device *dev)
- {
- 	kfree(dev);
-@@ -53,6 +55,13 @@ static int __init pmc_core_platform_init(void)
- 	if (acpi_dev_present("INT33A1", NULL, -1))
- 		return -ENODEV;
- 
-+	/*
-+	 * Skip forcefully attaching the device for VMs. Make an exception for
-+	 * Xen dom0, which does have full hardware access.
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR) && !xen_initial_domain())
-+		return -ENODEV;
-+
- 	if (!x86_match_cpu(intel_pmc_core_platform_ids))
- 		return -ENODEV;
- 
+ 	rc = compound_send_recv(xid, ses, server,
 -- 
 2.35.1
 
