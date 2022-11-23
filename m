@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5EE1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E45C433D6;
-	Wed, 23 Nov 2022 09:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA411C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:02:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EB0C433D6;
+	Wed, 23 Nov 2022 09:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194135;
-	bh=2yUZ0Gp9sgv67cCr2F+XSXvXjP4KLd8KPn60qmdRxRQ=;
+	s=korg; t=1669194138;
+	bh=W6wmzkYCv/AMLPLOaIwgBtqOPiV6VZOuARrUfUaadY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vA1xQeMpAVWuyLO9/eGXd6SPl1RNlHvD33Fpxaa0gOsSFGV0fVkS6pP4AJULPAk/f
-	 2i1Gz494BvEU9Htm2pf4u/0hgy1KV7Q4kNu5vHHv+/4oJNmr8hL74t9Ua8lRk7PTyl
-	 FLV7VI2m7lvM7ByB4LcaIxM0hNLQ+3hlr/FXDD/A=
+	b=DvZOsrR/zpySeSXYms0KVz1SPsi/HoT/zM29XRZ5xAIvkeRJ3yOaV+yC66z3mLjFg
+	 NmfI7EuHPp/s/WCN7eopQZQ9C0LUKvnRz1TY40pqiATgEB9gBUAztl9aQwityZShcU
+	 SBS5tNbzMIfSItsS82lplH7fHu2GoZzhjwAOVgtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com,
-	shaozhengchao <shaozhengchao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Tom Herbert <tom@herbertland.com>,
-	Cong Wang <cong.wang@bytedance.com>
-Subject: [PATCH 4.14 80/88] kcm: close race conditions on sk_receive_queue
-Date: Wed, 23 Nov 2022 09:51:17 +0100
-Message-Id: <20221123084551.448710790@linuxfoundation.org>
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 52/88] cifs: Fix wrong return value checking when GETFLAGS
+Date: Wed, 23 Nov 2022 09:50:49 +0100
+Message-Id: <20221123084550.324830565@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -37,165 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 5121197ecc5db58c07da95eb1ff82b98b121a221 upstream.
+[ Upstream commit 92bbd67a55fee50743b42825d1c016e7fd5c79f9 ]
 
-sk->sk_receive_queue is protected by skb queue lock, but for KCM
-sockets its RX path takes mux->rx_lock to protect more than just
-skb queue. However, kcm_recvmsg() still only grabs the skb queue
-lock, so race conditions still exist.
+The return value of CIFSGetExtAttr is negative, should be checked
+with -EOPNOTSUPP rather than EOPNOTSUPP.
 
-We can teach kcm_recvmsg() to grab mux->rx_lock too but this would
-introduce a potential performance regression as struct kcm_mux can
-be shared by multiple KCM sockets.
-
-So we have to enforce skb queue lock in requeue_rx_msgs() and handle
-skb peek case carefully in kcm_wait_data(). Fortunately,
-skb_recv_datagram() already handles it nicely and is widely used by
-other sockets, we can just switch to skb_recv_datagram() after
-getting rid of the unnecessary sock lock in kcm_recvmsg() and
-kcm_splice_read(). Side note: SOCK_DONE is not used by KCM sockets,
-so it is safe to get rid of this check too.
-
-I ran the original syzbot reproducer for 30 min without seeing any
-issue.
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com
-Reported-by: shaozhengchao <shaozhengchao@huawei.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Link: https://lore.kernel.org/r/20221114005119.597905-1-xiyou.wangcong@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 64a5cfa6db94 ("Allow setting per-file compression via SMB2/3")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c |   60 +++++++-----------------------------------------------
- 1 file changed, 8 insertions(+), 52 deletions(-)
+ fs/cifs/ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -224,7 +224,7 @@ static void requeue_rx_msgs(struct kcm_m
- 	struct sk_buff *skb;
- 	struct kcm_sock *kcm;
+diff --git a/fs/cifs/ioctl.c b/fs/cifs/ioctl.c
+index 54f32f9143a9..5a7020e767e4 100644
+--- a/fs/cifs/ioctl.c
++++ b/fs/cifs/ioctl.c
+@@ -149,7 +149,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 					rc = put_user(ExtAttrBits &
+ 						FS_FL_USER_VISIBLE,
+ 						(int __user *)arg);
+-				if (rc != EOPNOTSUPP)
++				if (rc != -EOPNOTSUPP)
+ 					break;
+ 			}
+ #endif /* CONFIG_CIFS_POSIX */
+@@ -178,7 +178,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 			 *		       pSMBFile->fid.netfid,
+ 			 *		       extAttrBits,
+ 			 *		       &ExtAttrMask);
+-			 * if (rc != EOPNOTSUPP)
++			 * if (rc != -EOPNOTSUPP)
+ 			 *	break;
+ 			 */
  
--	while ((skb = __skb_dequeue(head))) {
-+	while ((skb = skb_dequeue(head))) {
- 		/* Reset destructor to avoid calling kcm_rcv_ready */
- 		skb->destructor = sock_rfree;
- 		skb_orphan(skb);
-@@ -1085,53 +1085,18 @@ out_error:
- 	return err;
- }
- 
--static struct sk_buff *kcm_wait_data(struct sock *sk, int flags,
--				     long timeo, int *err)
--{
--	struct sk_buff *skb;
--
--	while (!(skb = skb_peek(&sk->sk_receive_queue))) {
--		if (sk->sk_err) {
--			*err = sock_error(sk);
--			return NULL;
--		}
--
--		if (sock_flag(sk, SOCK_DONE))
--			return NULL;
--
--		if ((flags & MSG_DONTWAIT) || !timeo) {
--			*err = -EAGAIN;
--			return NULL;
--		}
--
--		sk_wait_data(sk, &timeo, NULL);
--
--		/* Handle signals */
--		if (signal_pending(current)) {
--			*err = sock_intr_errno(timeo);
--			return NULL;
--		}
--	}
--
--	return skb;
--}
--
- static int kcm_recvmsg(struct socket *sock, struct msghdr *msg,
- 		       size_t len, int flags)
- {
-+	int noblock = flags & MSG_DONTWAIT;
- 	struct sock *sk = sock->sk;
- 	struct kcm_sock *kcm = kcm_sk(sk);
- 	int err = 0;
--	long timeo;
- 	struct strp_msg *stm;
- 	int copied = 0;
- 	struct sk_buff *skb;
- 
--	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
--
--	lock_sock(sk);
--
--	skb = kcm_wait_data(sk, flags, timeo, &err);
-+	skb = skb_recv_datagram(sk, flags, noblock, &err);
- 	if (!skb)
- 		goto out;
- 
-@@ -1162,14 +1127,11 @@ msg_finished:
- 			/* Finished with message */
- 			msg->msg_flags |= MSG_EOR;
- 			KCM_STATS_INCR(kcm->stats.rx_msgs);
--			skb_unlink(skb, &sk->sk_receive_queue);
--			kfree_skb(skb);
- 		}
- 	}
- 
- out:
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return copied ? : err;
- }
- 
-@@ -1177,9 +1139,9 @@ static ssize_t kcm_splice_read(struct so
- 			       struct pipe_inode_info *pipe, size_t len,
- 			       unsigned int flags)
- {
-+	int noblock = flags & MSG_DONTWAIT;
- 	struct sock *sk = sock->sk;
- 	struct kcm_sock *kcm = kcm_sk(sk);
--	long timeo;
- 	struct strp_msg *stm;
- 	int err = 0;
- 	ssize_t copied;
-@@ -1187,11 +1149,7 @@ static ssize_t kcm_splice_read(struct so
- 
- 	/* Only support splice for SOCKSEQPACKET */
- 
--	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
--
--	lock_sock(sk);
--
--	skb = kcm_wait_data(sk, flags, timeo, &err);
-+	skb = skb_recv_datagram(sk, flags, noblock, &err);
- 	if (!skb)
- 		goto err_out;
- 
-@@ -1219,13 +1177,11 @@ static ssize_t kcm_splice_read(struct so
- 	 * finish reading the message.
- 	 */
- 
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return copied;
- 
- err_out:
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return err;
- }
- 
+-- 
+2.35.1
+
 
 
