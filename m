@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367851C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AEEC433D6;
-	Wed, 23 Nov 2022 09:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174AA1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6908FC433C1;
+	Wed, 23 Nov 2022 09:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195191;
-	bh=iH5pRu/Qm6PDTYS5IDVqIZpylnS22TVALPbkNjuUfwI=;
+	s=korg; t=1669195194;
+	bh=Ho1dAhjOTbjMhnAGRIHqcSukLkGM2w9YjMXGNhLKLfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBifbZtc9dG0BjK5eKkRbWB+q3r15LGKK9D2axzx8lLov+glRwu72U/T3jrHxjt4B
-	 cltqnON4TKe4MWT9tIX8iIyMJUrV1lZKZRkt362QY/uIfs713cQL8dJD2E36zY1Fsl
-	 os0ZFkMPhXySYg8xJY8LdAzjhrjnd0I+b0XxBGwc=
+	b=V5tVyJXiaiWrXiIGdEFQUoZDcoQS0xKuFj/jAcfvVUBxr87kVs1y0bvf46k2TPhMu
+	 6Il7g5bZ7nSUg0nxteBbPxpWBEBWlC+phbDv4ZrmOGQ18zCtJ8ydrp0+Ta0u4CHFvh
+	 dLcRufvIYngvOT7ZSrohNYY0xW8oiRLFxsGrWWNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/149] ASoC: rt1308-sdw: add the default value of some registers
-Date: Wed, 23 Nov 2022 09:49:58 +0100
-Message-Id: <20221123084558.538500761@linuxfoundation.org>
+Subject: [PATCH 5.10 016/149] drm/amd/display: Remove wrong pipe control lock
+Date: Wed, 23 Nov 2022 09:49:59 +0100
+Message-Id: <20221123084558.578282184@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,39 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 75d8b1662ca5c20cf8365575222abaef18ff1f50 ]
+[ Upstream commit ca08a1725d0d78efca8d2dbdbce5ea70355da0f2 ]
 
-The driver missed the default value of register 0xc070/0xc360.
-This patch adds that default value to avoid invalid register access
-when the device doesn't be enumerated yet.
-BugLink: https://github.com/thesofproject/linux/issues/3924
+When using a device based on DCN32/321,
+we have an issue where a second
+4k@60Hz display does not light up,
+and the system becomes unresponsive
+for a few minutes. In the debug process,
+it was possible to see a hang
+in the function dcn20_post_unlock_program_front_end
+in this part:
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20221019095715.31082-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
+	&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
+	mdelay(1);
+}
+
+The hubp_is_flip_pending always returns positive
+for waiting pending flips which is a symptom of
+pipe hang. Additionally, the dmesg log shows
+this message after a few minutes:
+
+  BUG: soft lockup - CPU#4 stuck for 26s!
+  ...
+  [  +0.000003]  dcn20_post_unlock_program_front_end+0x112/0x340 [amdgpu]
+  [  +0.000171]  dc_commit_state_no_check+0x63d/0xbf0 [amdgpu]
+  [  +0.000155]  ? dc_validate_global_state+0x358/0x3d0 [amdgpu]
+  [  +0.000154]  dc_commit_state+0xe2/0xf0 [amdgpu]
+
+This confirmed the hypothesis that we had a pipe
+hanging somewhere. Next, after checking the
+ftrace entries, we have the below weird
+sequence:
+
+ [..]
+  2)               |        dcn10_lock_all_pipes [amdgpu]() {
+  2)   0.120 us    |          optc1_is_tg_enabled [amdgpu]();
+  2)               |          dcn20_pipe_control_lock [amdgpu]() {
+  2)               |            dc_dmub_srv_clear_inbox0_ack [amdgpu]() {
+  2)   0.121 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
+  2)   0.551 us    |            }
+  2)               |            dc_dmub_srv_send_inbox0_cmd [amdgpu]() {
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
+  2)   0.511 us    |            }
+  2)               |            dc_dmub_srv_wait_for_inbox0_ack [amdgpu]() {
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+ [..]
+
+We are not expected to read from dmub register
+so many times and for so long. From the trace log,
+it was possible to identify that the function
+dcn20_pipe_control_lock was triggering the dmub
+operation when it was unnecessary and causing
+the hang issue. This commit drops the unnecessary
+dmub code and, consequently, fixes the second display not
+lighting up the issue.
+
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1308-sdw.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt1308-sdw.h b/sound/soc/codecs/rt1308-sdw.h
-index c5ce75666dcc..98293d73ebab 100644
---- a/sound/soc/codecs/rt1308-sdw.h
-+++ b/sound/soc/codecs/rt1308-sdw.h
-@@ -139,9 +139,11 @@ static const struct reg_default rt1308_reg_defaults[] = {
- 	{ 0x3005, 0x23 },
- 	{ 0x3008, 0x02 },
- 	{ 0x300a, 0x00 },
-+	{ 0xc000 | (RT1308_DATA_PATH << 4), 0x00 },
- 	{ 0xc003 | (RT1308_DAC_SET << 4), 0x00 },
- 	{ 0xc001 | (RT1308_POWER << 4), 0x00 },
- 	{ 0xc002 | (RT1308_POWER << 4), 0x00 },
-+	{ 0xc000 | (RT1308_POWER_STATUS << 4), 0x00 },
- };
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index 8f66eef0c683..c6c4888c6665 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -1746,7 +1746,7 @@ void dcn20_post_unlock_program_front_end(
  
- #define RT1308_SDW_OFFSET 0xc000
+ 			for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
+ 					&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
+-				mdelay(1);
++				udelay(1);
+ 		}
+ 	}
+ 
 -- 
 2.35.1
 
