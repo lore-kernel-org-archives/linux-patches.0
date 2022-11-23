@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174AA1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6908FC433C1;
-	Wed, 23 Nov 2022 09:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410F31C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A5DC433C1;
+	Wed, 23 Nov 2022 09:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195194;
-	bh=Ho1dAhjOTbjMhnAGRIHqcSukLkGM2w9YjMXGNhLKLfQ=;
+	s=korg; t=1669195199;
+	bh=LgMUgg/+5y397hDU/smMENBCrQ6Rjl70WCDY5o3gVxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V5tVyJXiaiWrXiIGdEFQUoZDcoQS0xKuFj/jAcfvVUBxr87kVs1y0bvf46k2TPhMu
-	 6Il7g5bZ7nSUg0nxteBbPxpWBEBWlC+phbDv4ZrmOGQ18zCtJ8ydrp0+Ta0u4CHFvh
-	 dLcRufvIYngvOT7ZSrohNYY0xW8oiRLFxsGrWWNY=
+	b=GRbFIVcmXKi85+c4ywrqo7DKgoNL7FPxyLCmAf4VAZe1ZTP/xUshrhyx1vdvmYpHn
+	 MzwEe52PAgbrMudLwys9j4Im9AjmDwQ+f40OU2FxHlaZPd4TgiBW2YPLxo1OI0DORx
+	 6wMRqBAFqq5fSQixuIDxOmbPq7trsgqYHfYn4Dvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gonzalo Siero Humet <gsierohu@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/149] drm/amd/display: Remove wrong pipe control lock
-Date: Wed, 23 Nov 2022 09:49:59 +0100
-Message-Id: <20221123084558.578282184@linuxfoundation.org>
+Subject: [PATCH 5.10 017/149] NFSv4: Retry LOCK on OLD_STATEID during delegation return
+Date: Wed, 23 Nov 2022 09:50:00 +0100
+Message-Id: <20221123084558.617372500@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,92 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit ca08a1725d0d78efca8d2dbdbce5ea70355da0f2 ]
+[ Upstream commit f5ea16137a3fa2858620dc9084466491c128535f ]
 
-When using a device based on DCN32/321,
-we have an issue where a second
-4k@60Hz display does not light up,
-and the system becomes unresponsive
-for a few minutes. In the debug process,
-it was possible to see a hang
-in the function dcn20_post_unlock_program_front_end
-in this part:
+There's a small window where a LOCK sent during a delegation return can
+race with another OPEN on client, but the open stateid has not yet been
+updated.  In this case, the client doesn't handle the OLD_STATEID error
+from the server and will lose this lock, emitting:
+"NFS: nfs4_handle_delegation_recall_error: unhandled error -10024".
 
-for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
-	&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
-	mdelay(1);
-}
+Fix this by sending the task through the nfs4 error handling in
+nfs4_lock_done() when we may have to reconcile our stateid with what the
+server believes it to be.  For this case, the result is a retry of the
+LOCK operation with the updated stateid.
 
-The hubp_is_flip_pending always returns positive
-for waiting pending flips which is a symptom of
-pipe hang. Additionally, the dmesg log shows
-this message after a few minutes:
-
-  BUG: soft lockup - CPU#4 stuck for 26s!
-  ...
-  [  +0.000003]  dcn20_post_unlock_program_front_end+0x112/0x340 [amdgpu]
-  [  +0.000171]  dc_commit_state_no_check+0x63d/0xbf0 [amdgpu]
-  [  +0.000155]  ? dc_validate_global_state+0x358/0x3d0 [amdgpu]
-  [  +0.000154]  dc_commit_state+0xe2/0xf0 [amdgpu]
-
-This confirmed the hypothesis that we had a pipe
-hanging somewhere. Next, after checking the
-ftrace entries, we have the below weird
-sequence:
-
- [..]
-  2)               |        dcn10_lock_all_pipes [amdgpu]() {
-  2)   0.120 us    |          optc1_is_tg_enabled [amdgpu]();
-  2)               |          dcn20_pipe_control_lock [amdgpu]() {
-  2)               |            dc_dmub_srv_clear_inbox0_ack [amdgpu]() {
-  2)   0.121 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
-  2)   0.551 us    |            }
-  2)               |            dc_dmub_srv_send_inbox0_cmd [amdgpu]() {
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
-  2)   0.511 us    |            }
-  2)               |            dc_dmub_srv_wait_for_inbox0_ack [amdgpu]() {
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
- [..]
-
-We are not expected to read from dmub register
-so many times and for so long. From the trace log,
-it was possible to identify that the function
-dcn20_pipe_control_lock was triggering the dmub
-operation when it was unnecessary and causing
-the hang issue. This commit drops the unnecessary
-dmub code and, consequently, fixes the second display not
-lighting up the issue.
-
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Gonzalo Siero Humet <gsierohu@redhat.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 8f66eef0c683..c6c4888c6665 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1746,7 +1746,7 @@ void dcn20_post_unlock_program_front_end(
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 03f09399abf4..36af3734ac87 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7014,6 +7014,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ {
+ 	struct nfs4_lockdata *data = calldata;
+ 	struct nfs4_lock_state *lsp = data->lsp;
++	struct nfs_server *server = NFS_SERVER(d_inode(data->ctx->dentry));
  
- 			for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
- 					&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
--				mdelay(1);
-+				udelay(1);
- 		}
- 	}
+ 	dprintk("%s: begin!\n", __func__);
  
+@@ -7023,8 +7024,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ 	data->rpc_status = task->tk_status;
+ 	switch (task->tk_status) {
+ 	case 0:
+-		renew_lease(NFS_SERVER(d_inode(data->ctx->dentry)),
+-				data->timestamp);
++		renew_lease(server, data->timestamp);
+ 		if (data->arg.new_lock && !data->cancelled) {
+ 			data->fl.fl_flags &= ~(FL_SLEEP | FL_ACCESS);
+ 			if (locks_lock_inode_wait(lsp->ls_state->inode, &data->fl) < 0)
+@@ -7045,6 +7045,8 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ 			if (!nfs4_stateid_match(&data->arg.open_stateid,
+ 						&lsp->ls_state->open_stateid))
+ 				goto out_restart;
++			else if (nfs4_async_handle_error(task, server, lsp->ls_state, NULL) == -EAGAIN)
++				goto out_restart;
+ 		} else if (!nfs4_stateid_match(&data->arg.lock_stateid,
+ 						&lsp->ls_stateid))
+ 				goto out_restart;
 -- 
 2.35.1
 
