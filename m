@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8D61C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30E7C433D6;
-	Wed, 23 Nov 2022 09:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD961C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A9EC433C1;
+	Wed, 23 Nov 2022 09:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194932;
-	bh=Odw+5txMGFMaUrxUv5r22ashupFIb3WYBnLMKsTOdg8=;
+	s=korg; t=1669194935;
+	bh=3dqV5Rg6/xW6/M99/NzkK3SyfyeJFf+tFQTjV0uagzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIvGTisqdM4TMZgOglQGF+cSslFkwEwvf8+zvgwuX0VUUUDgjoY0oZ9h404/RVYgZ
-	 B6zsX8Ge0E5YJy5akgNoEud3kmpS8WQ9nqY+CldOYUYlJ8kd755Qi3Zs8Z9uf93Gk6
-	 cX1Vi3MZLgXfvmj2z4ZRe0eJkYC6pWvRXgHezrx8=
+	b=oQW1Rp/uIb3ijm6M+Ti734fEtFPirwF0oHL2t7kfwQBqm0TnRpeSO3ovTwgJ5ngX5
+	 oAZTNERBvLYBRgoGSjkBaDDbacze1QUrKoeRWIcvts4L13bhVoaUvG3qASxfWtciGo
+	 O47wfVkkhNGE+cLlB+2g9Lb0ZKk4jYoGaqu4AeeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 060/156] dmaengine: at_hdmac: Fix impossible condition
-Date: Wed, 23 Nov 2022 09:50:17 +0100
-Message-Id: <20221123084600.122044755@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 094/156] arm64: dts: imx8mm: Fix NAND controller size-cells
+Date: Wed, 23 Nov 2022 09:50:51 +0100
+Message-Id: <20221123084601.374073384@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,55 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@microchip.com>
+From: Marek Vasut <marex@denx.de>
 
-commit 28cbe5a0a46a6637adbda52337d7b2777fc04027 upstream.
+[ Upstream commit 1610233bc2c2cae2dff9e101e6ea5ef69cceb0e9 ]
 
-The iterator can not be greater than ATC_MAX_DSCR_TRIALS, as the for loop
-will stop when i == ATC_MAX_DSCR_TRIALS. While here, use the common "i"
-name for the iterator.
+The NAND controller size-cells should be 0 per DT bindings.
+Fix the following warning produces by DT bindings check:
+"
+nand-controller@33002000: #size-cells:0:0: 0 was expected
+nand-controller@33002000: Unevaluated properties are not allowed ('#address-cells', '#size-cells' were unexpected)
+"
+Fix the missing space in node name too.
 
-Fixes: 93dce3a6434f ("dmaengine: at_hdmac: fix residue computation")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Cc: stable@vger.kernel.org
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-15-tudor.ambarus@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a05ea40eb384e ("arm64: dts: imx: Add i.mx8mm dtsi support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_hdmac.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -308,7 +308,8 @@ static int atc_get_bytes_left(struct dma
- 	struct at_desc *desc_first = atc_first_active(atchan);
- 	struct at_desc *desc;
- 	int ret;
--	u32 ctrla, dscr, trials;
-+	u32 ctrla, dscr;
-+	unsigned int i;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index 7b178a77cc71..304399686c5a 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -838,10 +838,10 @@ dma_apbh: dma-controller@33000000 {
+ 			clocks = <&clk IMX8MM_CLK_NAND_USDHC_BUS_RAWNAND_CLK>;
+ 		};
  
- 	/*
- 	 * If the cookie doesn't match to the currently running transfer then
-@@ -378,7 +379,7 @@ static int atc_get_bytes_left(struct dma
- 		dscr = channel_readl(atchan, DSCR);
- 		rmb(); /* ensure DSCR is read before CTRLA */
- 		ctrla = channel_readl(atchan, CTRLA);
--		for (trials = 0; trials < ATC_MAX_DSCR_TRIALS; ++trials) {
-+		for (i = 0; i < ATC_MAX_DSCR_TRIALS; ++i) {
- 			u32 new_dscr;
- 
- 			rmb(); /* ensure DSCR is read after CTRLA */
-@@ -404,7 +405,7 @@ static int atc_get_bytes_left(struct dma
- 			rmb(); /* ensure DSCR is read before CTRLA */
- 			ctrla = channel_readl(atchan, CTRLA);
- 		}
--		if (unlikely(trials >= ATC_MAX_DSCR_TRIALS))
-+		if (unlikely(i == ATC_MAX_DSCR_TRIALS))
- 			return -ETIMEDOUT;
- 
- 		/* for the first descriptor we can be more accurate */
+-		gpmi: nand-controller@33002000{
++		gpmi: nand-controller@33002000 {
+ 			compatible = "fsl,imx8mm-gpmi-nand", "fsl,imx7d-gpmi-nand";
+ 			#address-cells = <1>;
+-			#size-cells = <1>;
++			#size-cells = <0>;
+ 			reg = <0x33002000 0x2000>, <0x33004000 0x4000>;
+ 			reg-names = "gpmi-nand", "bch";
+ 			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.35.1
+
 
 
