@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CA51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9207C433C1;
-	Wed, 23 Nov 2022 09:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FDC1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39179C433D6;
+	Wed, 23 Nov 2022 09:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194789;
-	bh=KfUir19TSvhmNm+dwMk976J/jmUEZp/swwa4ZEnU1Ws=;
+	s=korg; t=1669194792;
+	bh=EQuquYpOFErvQ9LwwZhl7Qzo5P3w1LAmHOOkud6qvug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZrbqB8UpeYBmSu9+xB6G3uS13veZEtpydexrgMxfdU9OfgTpYuhFF8H1C7qSyUSW
-	 i0KIbHDCPTEXaC5mrgFCN6mlHnyUOSPGkUwWXpnVS8BBv6MfdJ8A0fpmnYUyAfACjo
-	 3LOZGt0uds7n6eImgSXpc3NgPbw8zStd6uFZ6WuY=
+	b=HvwWMCi9qX8pzMdQmD0b7590Sw1GI7oVnWJUldurqeICdLxxIuygW63F1IqrpTFaY
+	 e2uz4DSX9y3duNtXg9iHvkY84dULkK1AClDNHh5Ul6/nkGeaeiubsIb4a4VyYrcn+J
+	 761tMGpnYo9KW8vorhIvMTtlKd4HxaoSSF40Ep0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/156] cxgb4vf: shut down the adapter when t4vf_update_port_info() failed in cxgb4vf_open()
-Date: Wed, 23 Nov 2022 09:49:49 +0100
-Message-Id: <20221123084559.111679716@linuxfoundation.org>
+Subject: [PATCH 5.4 033/156] ethernet: s2io: disable napi when start nic failed in s2io_card_up()
+Date: Wed, 23 Nov 2022 09:49:50 +0100
+Message-Id: <20221123084559.146073430@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -37,34 +37,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit c6092ea1e6d7bd12acd881f6aa2b5054cd70e096 ]
+[ Upstream commit 0348c1ab980c1d43fb37b758d4b760990c066cb5 ]
 
-When t4vf_update_port_info() failed in cxgb4vf_open(), resources applied
-during adapter goes up are not cleared. Fix it. Only be compiled, not be
-tested.
+When failed to start nic or add interrupt service routine in
+s2io_card_up() for opening device, napi isn't disabled. When open
+s2io device next time, it will trigger a BUG_ON()in napi_enable().
+Compile tested only.
 
-Fixes: 18d79f721e0a ("cxgb4vf: Update port information in cxgb4vf_open()")
+Fixes: 5f490c968056 ("S2io: Fixed synchronization between scheduling of napi with card reset and close")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109012100.99132-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20221109023741.131552-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/neterion/s2io.c | 29 +++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c b/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
-index f4d41f968afa..97963d9a6d16 100644
---- a/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
-@@ -860,7 +860,7 @@ static int cxgb4vf_open(struct net_device *dev)
- 	 */
- 	err = t4vf_update_port_info(pi);
- 	if (err < 0)
--		return err;
-+		goto err_unwind;
+diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
+index 71ab4e9c9a17..69316ddcf067 100644
+--- a/drivers/net/ethernet/neterion/s2io.c
++++ b/drivers/net/ethernet/neterion/s2io.c
+@@ -7122,9 +7122,8 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 		if (ret) {
+ 			DBG_PRINT(ERR_DBG, "%s: Out of memory in Open\n",
+ 				  dev->name);
+-			s2io_reset(sp);
+-			free_rx_buffers(sp);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_fill_buff;
+ 		}
+ 		DBG_PRINT(INFO_DBG, "Buf in ring:%d is %d:\n", i,
+ 			  ring->rx_bufs_left);
+@@ -7162,18 +7161,16 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	/* Enable Rx Traffic and interrupts on the NIC */
+ 	if (start_nic(sp)) {
+ 		DBG_PRINT(ERR_DBG, "%s: Starting NIC failed\n", dev->name);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
  
- 	/*
- 	 * Note that this interface is up and start everything up ...
+ 	/* Add interrupt service routine */
+ 	if (s2io_add_isr(sp) != 0) {
+ 		if (sp->config.intr_type == MSI_X)
+ 			s2io_rem_isr(sp);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
+ 
+ 	timer_setup(&sp->alarm_timer, s2io_alarm_handle, 0);
+@@ -7193,6 +7190,20 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	}
+ 
+ 	return 0;
++
++err_out:
++	if (config->napi) {
++		if (config->intr_type == MSI_X) {
++			for (i = 0; i < sp->config.rx_ring_num; i++)
++				napi_disable(&sp->mac_control.rings[i].napi);
++		} else {
++			napi_disable(&sp->napi);
++		}
++	}
++err_fill_buff:
++	s2io_reset(sp);
++	free_rx_buffers(sp);
++	return ret;
+ }
+ 
+ /**
 -- 
 2.35.1
 
