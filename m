@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118581C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F39DC433D6;
-	Wed, 23 Nov 2022 09:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832D31C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD66C433C1;
+	Wed, 23 Nov 2022 09:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194964;
-	bh=UJ1sGY7g+iSRsMuaTL8OjLlq9GGCn0ZfR0MOc+I0c0Q=;
+	s=korg; t=1669194969;
+	bh=wCVdgwiJ/EwrXbviQJQqdh0LIonAo6Ex+YMrEKfxM3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPVfr9aAWdLf7je7iF/TfM59fSC+7JbBN9ThcERFTPxnsSCCjWlMmpJ6FSj2uN0KI
-	 OaQFtFzhH6+jJ61aOt0b37h0sS6aDyNxpU93rEEFfyUfcwP7ssfE8iz+s5fHKvwKjF
-	 zJ57PDtoHcz7ezyYCCxvoIVabpJElb5/0R5DGoi4=
+	b=R4yNESFuQCOSYO+++Gsanf34hHBig26IibkTd/9HQJ8qiUt3Od0YVYo5Xh2VyMMC7
+	 laL2lt5CamgBBcTtGjVOwXl19iqxciwRAUAQb2dnJU8JUzfKOnWp9tkSFLpw0nUbQx
+	 ZoGfQnKAGstqsteD7+HiX5dTJPfm269PQQ50gdRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/156] cifs: add check for returning value of SMB2_set_info_init
-Date: Wed, 23 Nov 2022 09:51:07 +0100
-Message-Id: <20221123084601.944955651@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	Wang Wensheng <wangwensheng4@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 111/156] ftrace: Fix the possible incorrect kernel message
+Date: Wed, 23 Nov 2022 09:51:08 +0100
+Message-Id: <20221123084601.973954584@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,39 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Wang Wensheng <wangwensheng4@huawei.com>
 
-[ Upstream commit a51e5d293dd1c2e7bf6f7be788466cd9b5d280fb ]
+commit 08948caebe93482db1adfd2154eba124f66d161d upstream.
 
-If the returning value of SMB2_set_info_init is an error-value,
-exit the function.
+If the number of mcount entries is an integer multiple of
+ENTRIES_PER_PAGE, the page count showing on the console would be wrong.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Link: https://lkml.kernel.org/r/20221109094434.84046-2-wangwensheng4@huawei.com
 
-Fixes: 0967e5457954 ("cifs: use a compound for setting an xattr")
-
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: 5821e1b74f0d0 ("function tracing: fix wrong pos computing when read buffer has been fulfilled")
+Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/ftrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 6039b0cdfe04..d67676545a42 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -1216,6 +1216,8 @@ smb2_set_ea(const unsigned int xid, struct cifs_tcon *tcon,
- 				COMPOUND_FID, current->tgid,
- 				FILE_FULL_EA_INFORMATION,
- 				SMB2_O_INFO_FILE, 0, data, size);
-+	if (rc)
-+		goto sea_exit;
- 	smb2_set_next_command(tcon, &rqst[1]);
- 	smb2_set_related(&rqst[1]);
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -6259,7 +6259,7 @@ void __init ftrace_init(void)
+ 	}
  
--- 
-2.35.1
-
+ 	pr_info("ftrace: allocating %ld entries in %ld pages\n",
+-		count, count / ENTRIES_PER_PAGE + 1);
++		count, DIV_ROUND_UP(count, ENTRIES_PER_PAGE));
+ 
+ 	last_ftrace_enabled = ftrace_enabled = 1;
+ 
 
 
