@@ -1,32 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2601C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8D8C433D6;
-	Wed, 23 Nov 2022 09:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBE91C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CAFC433C1;
+	Wed, 23 Nov 2022 09:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195695;
-	bh=jdepuo9T4awDM7oIK5MRYrYymrclLBoyMtuB7F+7Lyc=;
+	s=korg; t=1669195698;
+	bh=CNxJezKuED/bDQlgejURa2Kwlr4D7fRFShNox5V0EdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXeDFSslT+i0M+r2WcvrerDNjKlahYuVj6JKHIDy7lL1IAm3OcFDFO1P8Mr6b9JDs
-	 TdqtXck8zTAK7QOLUnR4Kw4d7FhjZNsGd1n31FmuF+uOmNyF86CjrH5h1r3cozTouV
-	 3oboYo2LgqMotMPvx/iYgTzBSsHMwC1WYYaA6H4U=
+	b=YoiJ8+sKIe81vKNS3VnH4GbAn539gR5OMxGMsz7eF0JSzourG0Q9Cya5/wwy2H49i
+	 11TGVP7hO+2q5bj2CF9lqJkXkEXusEBuEQIkh9rzMLVNihyX6VnodLjv9Zr60/YsoN
+	 fJ55AcmDsIZ8L45amAUEZ/fKGswxU7KTewGUQ3lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Vishnu Dasa <vdasa@vmware.com>
-Subject: [PATCH 5.10 124/149] misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram()
-Date: Wed, 23 Nov 2022 09:51:47 +0100
-Message-Id: <20221123084602.395324698@linuxfoundation.org>
+	Yang Shi <shy828301@gmail.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Subject: [PATCH 5.15 001/181] mm: hwpoison: refactor refcount check handling
+Date: Wed, 23 Nov 2022 09:49:24 +0100
+Message-Id: <20221123084602.759286745@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
-References: <20221123084557.945845710@linuxfoundation.org>
+In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
+References: <20221123084602.707860461@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,77 +44,244 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Yang Shi <shy828301@gmail.com>
 
-commit e5b0d06d9b10f5f43101bd6598b076c347f9295f upstream.
+commit dd0f230a0a80ff396c7ce587f16429f2a8131344 upstream.
 
-`struct vmci_event_qp` allocated by qp_notify_peer() contains padding,
-which may carry uninitialized data to the userspace, as observed by
-KMSAN:
+Memory failure will report failure if the page still has extra pinned
+refcount other than from hwpoison after the handler is done.  Actually
+the check is not necessary for all handlers, so move the check into
+specific handlers.  This would make the following keeping shmem page in
+page cache patch easier.
 
-  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user ./include/linux/instrumented.h:121
-   instrument_copy_to_user ./include/linux/instrumented.h:121
-   _copy_to_user+0x5f/0xb0 lib/usercopy.c:33
-   copy_to_user ./include/linux/uaccess.h:169
-   vmci_host_do_receive_datagram drivers/misc/vmw_vmci/vmci_host.c:431
-   vmci_host_unlocked_ioctl+0x33d/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:925
-   vfs_ioctl fs/ioctl.c:51
-  ...
+There may be expected extra pin for some cases, for example, when the
+page is dirty and in swapcache.
 
-  Uninit was stored to memory at:
-   kmemdup+0x74/0xb0 mm/util.c:131
-   dg_dispatch_as_host drivers/misc/vmw_vmci/vmci_datagram.c:271
-   vmci_datagram_dispatch+0x4f8/0xfc0 drivers/misc/vmw_vmci/vmci_datagram.c:339
-   qp_notify_peer+0x19a/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1479
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
-   vmci_qp_broker_alloc+0x96/0xd0 drivers/misc/vmw_vmci/vmci_queue_pair.c:1940
-   vmci_host_do_alloc_queuepair drivers/misc/vmw_vmci/vmci_host.c:488
-   vmci_host_unlocked_ioctl+0x24fd/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:927
-  ...
-
-  Local variable ev created at:
-   qp_notify_peer+0x54/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1456
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
-
-  Bytes 28-31 of 48 are uninitialized
-  Memory access of size 48 starts at ffff888035155e00
-  Data copied to user address 0000000020000100
-
-Use memset() to prevent the infoleaks.
-
-Also speculatively fix qp_notify_peer_local(), which may suffer from the
-same problem.
-
-Reported-by: syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Fixes: 06164d2b72aa ("VMCI: queue pairs implementation.")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
-Link: https://lore.kernel.org/r/20221104175849.2782567-1-glider@google.com
+Link: https://lkml.kernel.org/r/20211020210755.23964-5-shy828301@gmail.com
+Signed-off-by: Yang Shi <shy828301@gmail.com>
+Signed-off-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Suggested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_queue_pair.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/memory-failure.c |   93 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 64 insertions(+), 29 deletions(-)
 
---- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
-+++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
-@@ -852,6 +852,7 @@ static int qp_notify_peer_local(bool att
- 	u32 context_id = vmci_get_context_id();
- 	struct vmci_event_qp ev;
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -811,12 +811,44 @@ static int truncate_error_page(struct pa
+ 	return ret;
+ }
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(context_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
-@@ -1465,6 +1466,7 @@ static int qp_notify_peer(bool attach,
- 	 * kernel.
++struct page_state {
++	unsigned long mask;
++	unsigned long res;
++	enum mf_action_page_type type;
++
++	/* Callback ->action() has to unlock the relevant page inside it. */
++	int (*action)(struct page_state *ps, struct page *p);
++};
++
++/*
++ * Return true if page is still referenced by others, otherwise return
++ * false.
++ *
++ * The extra_pins is true when one extra refcount is expected.
++ */
++static bool has_extra_refcount(struct page_state *ps, struct page *p,
++			       bool extra_pins)
++{
++	int count = page_count(p) - 1;
++
++	if (extra_pins)
++		count -= 1;
++
++	if (count > 0) {
++		pr_err("Memory failure: %#lx: %s still referenced by %d users\n",
++		       page_to_pfn(p), action_page_types[ps->type], count);
++		return true;
++	}
++
++	return false;
++}
++
+ /*
+  * Error hit kernel page.
+  * Do nothing, try to be lucky and not touch this instead. For a few cases we
+  * could be more sophisticated.
+  */
+-static int me_kernel(struct page *p, unsigned long pfn)
++static int me_kernel(struct page_state *ps, struct page *p)
+ {
+ 	unlock_page(p);
+ 	return MF_IGNORED;
+@@ -825,9 +857,9 @@ static int me_kernel(struct page *p, uns
+ /*
+  * Page in unknown state. Do nothing.
+  */
+-static int me_unknown(struct page *p, unsigned long pfn)
++static int me_unknown(struct page_state *ps, struct page *p)
+ {
+-	pr_err("Memory failure: %#lx: Unknown page state\n", pfn);
++	pr_err("Memory failure: %#lx: Unknown page state\n", page_to_pfn(p));
+ 	unlock_page(p);
+ 	return MF_FAILED;
+ }
+@@ -835,7 +867,7 @@ static int me_unknown(struct page *p, un
+ /*
+  * Clean (or cleaned) page cache page.
+  */
+-static int me_pagecache_clean(struct page *p, unsigned long pfn)
++static int me_pagecache_clean(struct page_state *ps, struct page *p)
+ {
+ 	int ret;
+ 	struct address_space *mapping;
+@@ -872,9 +904,13 @@ static int me_pagecache_clean(struct pag
+ 	 *
+ 	 * Open: to take i_rwsem or not for this? Right now we don't.
  	 */
+-	ret = truncate_error_page(p, pfn, mapping);
++	ret = truncate_error_page(p, page_to_pfn(p), mapping);
+ out:
+ 	unlock_page(p);
++
++	if (has_extra_refcount(ps, p, false))
++		ret = MF_FAILED;
++
+ 	return ret;
+ }
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(peer_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
+@@ -883,7 +919,7 @@ out:
+  * Issues: when the error hit a hole page the error is not properly
+  * propagated.
+  */
+-static int me_pagecache_dirty(struct page *p, unsigned long pfn)
++static int me_pagecache_dirty(struct page_state *ps, struct page *p)
+ {
+ 	struct address_space *mapping = page_mapping(p);
+ 
+@@ -927,7 +963,7 @@ static int me_pagecache_dirty(struct pag
+ 		mapping_set_error(mapping, -EIO);
+ 	}
+ 
+-	return me_pagecache_clean(p, pfn);
++	return me_pagecache_clean(ps, p);
+ }
+ 
+ /*
+@@ -949,9 +985,10 @@ static int me_pagecache_dirty(struct pag
+  * Clean swap cache pages can be directly isolated. A later page fault will
+  * bring in the known good data from disk.
+  */
+-static int me_swapcache_dirty(struct page *p, unsigned long pfn)
++static int me_swapcache_dirty(struct page_state *ps, struct page *p)
+ {
+ 	int ret;
++	bool extra_pins = false;
+ 
+ 	ClearPageDirty(p);
+ 	/* Trigger EIO in shmem: */
+@@ -959,10 +996,17 @@ static int me_swapcache_dirty(struct pag
+ 
+ 	ret = delete_from_lru_cache(p) ? MF_FAILED : MF_DELAYED;
+ 	unlock_page(p);
++
++	if (ret == MF_DELAYED)
++		extra_pins = true;
++
++	if (has_extra_refcount(ps, p, extra_pins))
++		ret = MF_FAILED;
++
+ 	return ret;
+ }
+ 
+-static int me_swapcache_clean(struct page *p, unsigned long pfn)
++static int me_swapcache_clean(struct page_state *ps, struct page *p)
+ {
+ 	int ret;
+ 
+@@ -970,6 +1014,10 @@ static int me_swapcache_clean(struct pag
+ 
+ 	ret = delete_from_lru_cache(p) ? MF_FAILED : MF_RECOVERED;
+ 	unlock_page(p);
++
++	if (has_extra_refcount(ps, p, false))
++		ret = MF_FAILED;
++
+ 	return ret;
+ }
+ 
+@@ -979,7 +1027,7 @@ static int me_swapcache_clean(struct pag
+  * - Error on hugepage is contained in hugepage unit (not in raw page unit.)
+  *   To narrow down kill region to one page, we need to break up pmd.
+  */
+-static int me_huge_page(struct page *p, unsigned long pfn)
++static int me_huge_page(struct page_state *ps, struct page *p)
+ {
+ 	int res;
+ 	struct page *hpage = compound_head(p);
+@@ -990,7 +1038,7 @@ static int me_huge_page(struct page *p,
+ 
+ 	mapping = page_mapping(hpage);
+ 	if (mapping) {
+-		res = truncate_error_page(hpage, pfn, mapping);
++		res = truncate_error_page(hpage, page_to_pfn(p), mapping);
+ 		unlock_page(hpage);
+ 	} else {
+ 		res = MF_FAILED;
+@@ -1008,6 +1056,9 @@ static int me_huge_page(struct page *p,
+ 		}
+ 	}
+ 
++	if (has_extra_refcount(ps, p, false))
++		res = MF_FAILED;
++
+ 	return res;
+ }
+ 
+@@ -1033,14 +1084,7 @@ static int me_huge_page(struct page *p,
+ #define slab		(1UL << PG_slab)
+ #define reserved	(1UL << PG_reserved)
+ 
+-static struct page_state {
+-	unsigned long mask;
+-	unsigned long res;
+-	enum mf_action_page_type type;
+-
+-	/* Callback ->action() has to unlock the relevant page inside it. */
+-	int (*action)(struct page *p, unsigned long pfn);
+-} error_states[] = {
++static struct page_state error_states[] = {
+ 	{ reserved,	reserved,	MF_MSG_KERNEL,	me_kernel },
+ 	/*
+ 	 * free pages are specially detected outside this table:
+@@ -1100,19 +1144,10 @@ static int page_action(struct page_state
+ 			unsigned long pfn)
+ {
+ 	int result;
+-	int count;
+ 
+ 	/* page p should be unlocked after returning from ps->action().  */
+-	result = ps->action(p, pfn);
++	result = ps->action(ps, p);
+ 
+-	count = page_count(p) - 1;
+-	if (ps->action == me_swapcache_dirty && result == MF_DELAYED)
+-		count--;
+-	if (count > 0) {
+-		pr_err("Memory failure: %#lx: %s still referenced by %d users\n",
+-		       pfn, action_page_types[ps->type], count);
+-		result = MF_FAILED;
+-	}
+ 	action_result(pfn, ps->type, result);
+ 
+ 	/* Could do more checks here if page looks ok */
 
 
