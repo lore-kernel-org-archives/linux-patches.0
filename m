@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAAE1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F89C433D6;
-	Wed, 23 Nov 2022 09:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F10E1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB12C433D6;
+	Wed, 23 Nov 2022 09:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194435;
-	bh=17nVzYZDlxOShlzcokmJyNZashaE+MB7kmghc896PYg=;
+	s=korg; t=1669194439;
+	bh=7r+6km4b+vXIeOkkyXEJz4P9pHvEd5OlxAOs/eJBiio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=seRVJ7ngoiahmY9gq9Mk6J2QtNnXvw0SA+4VM1jafVWiuiCLHnYxK/MQo0CpEEoaR
-	 01jC8zY/obFhWo5B3+qnUIR1EF+nDkrdl7QS0y/e2voCpHu3K+M5j6/teEtkSfmLs/
-	 Ah75xyzvpCv46zHDnxQQOYCi0U25dI0dfM+ps1xk=
+	b=k0kapvSycom8wiFPthK+oHhHd8ZRFGdDSJ9p65Pzb7LVdJeUvV3QyJ1TOUJCfRq+Q
+	 CZz1vjyddr4Ab28cZhhqTEQ1CjK15+jr2LASjVaCQlq2i2imPEmtJQJ6/iLXvLXwX/
+	 gQw7OdW/ZIhNLUamCp4vsF0CTF35vcYtpTXmaDpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Lima <mauro.lima@eclypsium.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 046/114] spi: intel: Fix the offset to get the 64K erase opcode
-Date: Wed, 23 Nov 2022 09:50:33 +0100
-Message-Id: <20221123084553.687405407@linuxfoundation.org>
+Subject: [PATCH 4.19 047/114] selftests/futex: fix build for clang
+Date: Wed, 23 Nov 2022 09:50:34 +0100
+Message-Id: <20221123084553.718406284@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -36,36 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mauro Lima <mauro.lima@eclypsium.com>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-[ Upstream commit 6a43cd02ddbc597dc9a1f82c1e433f871a2f6f06 ]
+[ Upstream commit 03cab65a07e083b6c1010fbc8f9b817e9aca75d9 ]
 
-According to documentation, the 64K erase opcode is located in VSCC
-range [16:23] instead of [8:15].
-Use the proper value to shift the mask over the correct range.
+Don't use the test-specific header files as source files to force a
+target dependency, as clang will complain if more than one source file
+is used for a compile command with a single '-o' flag.
 
-Signed-off-by: Mauro Lima <mauro.lima@eclypsium.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221012152135.28353-1-mauro.lima@eclypsium.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use the proper Makefile variables instead as defined in
+tools/testing/selftests/lib.mk.
+
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Reviewed-by: André Almeida <andrealmeid@igalia.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/intel-spi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/futex/functional/Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/intel-spi.c b/drivers/mtd/spi-nor/intel-spi.c
-index d60cbf23d9aa..642a6f9071f2 100644
---- a/drivers/mtd/spi-nor/intel-spi.c
-+++ b/drivers/mtd/spi-nor/intel-spi.c
-@@ -116,7 +116,7 @@
- #define ERASE_OPCODE_SHIFT		8
- #define ERASE_OPCODE_MASK		(0xff << ERASE_OPCODE_SHIFT)
- #define ERASE_64K_OPCODE_SHIFT		16
--#define ERASE_64K_OPCODE_MASK		(0xff << ERASE_OPCODE_SHIFT)
-+#define ERASE_64K_OPCODE_MASK		(0xff << ERASE_64K_OPCODE_SHIFT)
+diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
+index 30996306cabc..479531f5865d 100644
+--- a/tools/testing/selftests/futex/functional/Makefile
++++ b/tools/testing/selftests/futex/functional/Makefile
+@@ -3,11 +3,11 @@ INCLUDES := -I../include -I../../
+ CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE -pthread $(INCLUDES)
+ LDFLAGS := $(LDFLAGS) -pthread -lrt
  
- #define INTEL_SPI_TIMEOUT		5000 /* ms */
- #define INTEL_SPI_FIFO_SZ		64
+-HEADERS := \
++LOCAL_HDRS := \
+ 	../include/futextest.h \
+ 	../include/atomic.h \
+ 	../include/logging.h
+-TEST_GEN_FILES := \
++TEST_GEN_PROGS := \
+ 	futex_wait_timeout \
+ 	futex_wait_wouldblock \
+ 	futex_requeue_pi \
+@@ -21,5 +21,3 @@ TEST_PROGS := run.sh
+ top_srcdir = ../../../../..
+ KSFT_KHDR_INSTALL := 1
+ include ../../lib.mk
+-
+-$(TEST_GEN_FILES): $(HEADERS)
 -- 
 2.35.1
 
