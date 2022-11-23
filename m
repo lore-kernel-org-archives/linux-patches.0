@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280957B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E39DC433C1;
-	Wed, 23 Nov 2022 08:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEB27B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB907C433C1;
+	Wed, 23 Nov 2022 08:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193870;
-	bh=tE2HAV8kIHJPsljpL3zxwrQsBovYKkLHTnkuxp7icLQ=;
+	s=korg; t=1669193874;
+	bh=ygAm6RSXQl/9LMN/0inpIbPnjcUxOb4cxbIGJebeWA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2n/9bpVhXtaquRHV+cM0O33yURaP9654mwtg5qGqDHEAVP6ldFte2nBAo0K2NdCJ
-	 XORWa6NgiEmC/UhbJP8RCp5ev3yarC48WPIph9XDkn5mJr7989r/4jAaFSRz5TvVN+
-	 RyT+xREnWlEIw8DTrUk39+JXqUjNLZoGW9ts+Ynk=
+	b=CBXofmviSn1tHBz/Ax2/dtiVYbSELWP5Np3Cv+AGghNGgW8mMrxV68pp7GIElZx09
+	 G0kznsGKESEGxg+f6IXuCvGMz7NTjqdq0mc2TMPTP1lPmngaEeX0AQZG+JdONHRBnt
+	 Ux+S798ckZSfZ2eYfQYHmgwS7VCJ5UCsiorQqjRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.9 53/76] USB: serial: option: add u-blox LARA-L6 modem
-Date: Wed, 23 Nov 2022 09:50:52 +0100
-Message-Id: <20221123084548.503575213@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 01/88] HID: hyperv: fix possible memory leak in mousevsc_probe()
+Date: Wed, 23 Nov 2022 09:49:58 +0100
+Message-Id: <20221123084548.595390964@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
-References: <20221123084546.742331901@linuxfoundation.org>
+In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
+References: <20221123084548.535439312@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,73 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
+[ Upstream commit b5bcb94b0954a026bbd671741fdb00e7141f9c91 ]
 
-Add LARA-L6 PIDs for three different USB compositions.
+If hid_add_device() returns error, it should call hid_destroy_device()
+to free hid_dev which is allocated in hid_allocate_device().
 
-LARA-L6 module can be configured (by AT interface) in three different
-USB modes:
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
-interfaces
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
-interfaces and 1 RmNet virtual network interface
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-
-In default mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-
-In RmNet mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-[ johan: drop PID defines in favour of comments ]
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 74c4fb058083 ("HID: hv_mouse: Properly add the hid device")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hid/hid-hyperv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -165,6 +165,8 @@ static void option_instat_callback(struc
- #define NOVATELWIRELESS_PRODUCT_G2		0xA010
- #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
+diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
+index 220b3e5c9c39..d8ebaa5d8b58 100644
+--- a/drivers/hid/hid-hyperv.c
++++ b/drivers/hid/hid-hyperv.c
+@@ -500,7 +500,7 @@ static int mousevsc_probe(struct hv_device *device,
  
-+#define UBLOX_VENDOR_ID				0x1546
-+
- /* AMOI PRODUCTS */
- #define AMOI_VENDOR_ID				0x1614
- #define AMOI_PRODUCT_H01			0x0800
-@@ -1121,6 +1123,12 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
-+	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
-+	  .driver_info = RSVD(4) },
- 	/* Quectel products using Quectel vendor ID */
- 	{ USB_DEVICE(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21),
- 	  .driver_info = RSVD(4) },
+ 	ret = hid_add_device(hid_dev);
+ 	if (ret)
+-		goto probe_err1;
++		goto probe_err2;
+ 
+ 
+ 	ret = hid_parse(hid_dev);
+-- 
+2.35.1
+
 
 
