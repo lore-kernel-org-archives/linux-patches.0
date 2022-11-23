@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFBE1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:40:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4A7C433C1;
-	Wed, 23 Nov 2022 09:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A881C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:40:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E393AC433D6;
+	Wed, 23 Nov 2022 09:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196406;
-	bh=GnFHhqJgy5Blx6aSCEt1Q21ZwsxFFTu/xTF3zjzbjCI=;
+	s=korg; t=1669196409;
+	bh=BlHBcJB8ZwkL6rjtBjKyyCuYCrVc9UriR2h3+tIdkQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/5hgRoJLrmh4IYclkc8pByuOoHLikjPLNlFZ+rZwPK4RKdGlcS1TfHqkFL2Gf+PS
-	 CdNdykFI2e0bAcpriZxAF47BfBcpTBdDGVBikD06KB4IgGW4BRQVSPchLjFPBjiWO8
-	 A1N55hgj4UGcPnwr9BBOaKMw1Vg+jw72omU3xNK8=
+	b=Y4VSffoTHa6L80/tv8pjSDwEP4Xs6UTWV/+QZYAKapTnTmIV8IzvmCNN4NaDz/2av
+	 aUwt6uSlR0YWZRIom+C5GhgBy8/eeywyITmr6dpjJNl1NZucvtVDn3o1YIVpPdMyfF
+	 /PJi1OwoDskfhnkopGIj2pte8sMmlzNnGDMMSFag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 022/314] ASoC: rt1308-sdw: add the default value of some registers
-Date: Wed, 23 Nov 2022 09:47:47 +0100
-Message-Id: <20221123084626.512339686@linuxfoundation.org>
+Subject: [PATCH 6.0 005/314] ASoC: wm5110: Revert "ASoC: wm5110: Fix PM disable depth imbalance in wm5110_probe"
+Date: Wed, 23 Nov 2022 09:47:30 +0100
+Message-Id: <20221123084625.736512022@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,40 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 75d8b1662ca5c20cf8365575222abaef18ff1f50 ]
+[ Upstream commit 7d4e966f4cd73ff69bf06934e8e14a33fb7ef447 ]
 
-The driver missed the default value of register 0xc070/0xc360.
-This patch adds that default value to avoid invalid register access
-when the device doesn't be enumerated yet.
-BugLink: https://github.com/thesofproject/linux/issues/3924
+This reverts commit 86b46bf1feb83898d89a2b4a8d08d21e9ea277a7.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20221019095715.31082-1-shumingf@realtek.com
+The pm_runtime_disable is redundant when error returns in
+wm5110_probe, we just revert the old patch to fix it.
+
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221010114852.88127-3-zhangqilong3@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1308-sdw.h | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/wm5110.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt1308-sdw.h b/sound/soc/codecs/rt1308-sdw.h
-index 6668e19d85d4..b5f231f708cb 100644
---- a/sound/soc/codecs/rt1308-sdw.h
-+++ b/sound/soc/codecs/rt1308-sdw.h
-@@ -139,10 +139,12 @@ static const struct reg_default rt1308_reg_defaults[] = {
- 	{ 0x3005, 0x23 },
- 	{ 0x3008, 0x02 },
- 	{ 0x300a, 0x00 },
-+	{ 0xc000 | (RT1308_DATA_PATH << 4), 0x00 },
- 	{ 0xc003 | (RT1308_DAC_SET << 4), 0x00 },
- 	{ 0xc000 | (RT1308_POWER << 4), 0x00 },
- 	{ 0xc001 | (RT1308_POWER << 4), 0x00 },
- 	{ 0xc002 | (RT1308_POWER << 4), 0x00 },
-+	{ 0xc000 | (RT1308_POWER_STATUS << 4), 0x00 },
- };
+diff --git a/sound/soc/codecs/wm5110.c b/sound/soc/codecs/wm5110.c
+index fc634c995834..f3f4a10bf0f7 100644
+--- a/sound/soc/codecs/wm5110.c
++++ b/sound/soc/codecs/wm5110.c
+@@ -2457,6 +2457,9 @@ static int wm5110_probe(struct platform_device *pdev)
+ 		regmap_update_bits(arizona->regmap, wm5110_digital_vu[i],
+ 				   WM5110_DIG_VU, WM5110_DIG_VU);
  
- #define RT1308_SDW_OFFSET 0xc000
++	pm_runtime_enable(&pdev->dev);
++	pm_runtime_idle(&pdev->dev);
++
+ 	ret = arizona_request_irq(arizona, ARIZONA_IRQ_DSP_IRQ1,
+ 				  "ADSP2 Compressed IRQ", wm5110_adsp2_irq,
+ 				  wm5110);
+@@ -2489,9 +2492,6 @@ static int wm5110_probe(struct platform_device *pdev)
+ 		goto err_spk_irqs;
+ 	}
+ 
+-	pm_runtime_enable(&pdev->dev);
+-	pm_runtime_idle(&pdev->dev);
+-
+ 	return ret;
+ 
+ err_spk_irqs:
 -- 
 2.35.1
 
