@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B0F1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2142C433C1;
-	Wed, 23 Nov 2022 09:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0621C33
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE4AC433D6;
+	Wed, 23 Nov 2022 09:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197482;
-	bh=8c+6djlqgElR9yErWZlCKtrSSvUjTzJ5YFeukv8w3Wg=;
+	s=korg; t=1669197485;
+	bh=524KJ0GvA9MOIvlIeW3/G8LyQQ3ZrlW2tM5Z43f4KK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrTnJL6NIbz6x5FsmcHjhNmBPMWT7dHML6hlqQTI5CmHcyV8+9yfYFPonMiutzD2a
-	 o8F5dhPTSZuFAI0efxM0op9kDtxCUqTR8SDL+YVVIKky4Sq2H0RnkGvtsXPFhqbDof
-	 Dm9gu6Cu26fehMs+7/RlVNxYVp/jz2rWGjRysH1E=
+	b=LrdyYntrYsMEtHyeAkxLZNe/Vabj6S6qFKITxS8NgHHpPaYTs2aU8s5l1uKIOLjBt
+	 6lXh5DDoE5hgdP6I2PkjHVlnQLMPMO4CxE7DP1xA5CJ8j4hCos6eDroRFjZFJpzaZn
+	 x8GN9w1OTACxOEvb89Rx9bh1558HXGM1Ltoo0xc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@fb.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Rik van Riel <riel@surriel.com>
-Subject: [PATCH 6.0 276/314] blk-cgroup: properly pin the parent in blkcg_css_online
-Date: Wed, 23 Nov 2022 09:52:01 +0100
-Message-Id: <20221123084638.040660384@linuxfoundation.org>
+	=?UTF-8?q?Borys=20Pop=C5=82awski?= <borysp@invisiblethingslab.com>,
+	Borislav Petkov <bp@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.0 277/314] x86/sgx: Add overflow check in sgx_validate_offset_length()
+Date: Wed, 23 Nov 2022 09:52:02 +0100
+Message-Id: <20221123084638.078879506@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,37 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Mason <clm@fb.com>
+From: Borys Popławski <borysp@invisiblethingslab.com>
 
-commit d7dbd43f4a828fa1d9a8614d5b0ac40aee6375fe upstream.
+commit f0861f49bd946ff94fce4f82509c45e167f63690 upstream.
 
-blkcg_css_online is supposed to pin the blkcg of the parent, but
-397c9f46ee4d refactored things and along the way, changed it to pin the
-css instead.  This results in extra pins, and we end up leaking blkcgs
-and cgroups.
+sgx_validate_offset_length() function verifies "offset" and "length"
+arguments provided by userspace, but was missing an overflow check on
+their addition. Add it.
 
-Fixes: 397c9f46ee4d ("blk-cgroup: move blkcg_{pin,unpin}_online out of line")
-Signed-off-by: Chris Mason <clm@fb.com>
-Spotted-by: Rik van Riel <riel@surriel.com>
-Cc: <stable@vger.kernel.org> # v5.19+
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Link: https://lore.kernel.org/r/20221114181930.2093706-1-clm@fb.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c6d26d370767 ("x86/sgx: Add SGX_IOC_ENCLAVE_ADD_PAGES")
+Signed-off-by: Borys Popławski <borysp@invisiblethingslab.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: stable@vger.kernel.org # v5.11+
+Link: https://lore.kernel.org/r/0d91ac79-6d84-abed-5821-4dbe59fa1a38@invisiblethingslab.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/sgx/ioctl.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1251,7 +1251,7 @@ static int blkcg_css_online(struct cgrou
- 	 * parent so that offline always happens towards the root.
- 	 */
- 	if (parent)
--		blkcg_pin_online(css);
-+		blkcg_pin_online(&parent->css);
- 	return 0;
- }
+--- a/arch/x86/kernel/cpu/sgx/ioctl.c
++++ b/arch/x86/kernel/cpu/sgx/ioctl.c
+@@ -356,6 +356,9 @@ static int sgx_validate_offset_length(st
+ 	if (!length || !IS_ALIGNED(length, PAGE_SIZE))
+ 		return -EINVAL;
+ 
++	if (offset + length < offset)
++		return -EINVAL;
++
+ 	if (offset + length - PAGE_SIZE >= encl->size)
+ 		return -EINVAL;
  
 
 
