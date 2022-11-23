@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0540F1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9A9C433D6;
-	Wed, 23 Nov 2022 09:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471E11C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAACC433D7;
+	Wed, 23 Nov 2022 09:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195988;
-	bh=dK9aI4+GTmYx8RbS7O1E/uW9R1LSW26QIfZslMRmk0s=;
+	s=korg; t=1669195992;
+	bh=XfMfgMe8lbKu34voISkyYmbekNIIsZxoeYhUhW5IZ+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amMyJLtW/nhDYPBwslYZ9iAFehut7hLNygHGuArCE36h7NCZ2OLrPBgA0hFcW1qqj
-	 QTdXVraDbK9hrKU1T74r4TX5QzJVTvPbLBhYUB2vkdGA84hzhnbodQiHIyXzy8ZsXX
-	 LPEjLW4CCg+kCYjxqKmWifyw6PeXIv3EA49nO60c=
+	b=dXd9yahAXTrmzHHQE6VtbgIflLAqV0GgtLscJKXzUsZHGOILmGbFmlHXQFsyZwBCI
+	 tOFFgfh3oZ1GcIsq6oiLOCO2nr9PAMnPOXvOSzIViscLEqDJ8siXGpZf+2Cr5wecik
+	 n5F9JTq0koG+ZspjLV7gLJXDDD/DSmMJiVAW7CMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/181] bnxt_en: Remove debugfs when pci_register_driver failed
-Date: Wed, 23 Nov 2022 09:50:51 +0100
-Message-Id: <20221123084606.137104415@linuxfoundation.org>
+Subject: [PATCH 5.15 089/181] net: mhi: Fix memory leak in mhi_net_dellink()
+Date: Wed, 23 Nov 2022 09:50:52 +0100
+Message-Id: <20221123084606.176445831@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,48 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 991aef4ee4f6eb999924f429b943441a32835c8f ]
+[ Upstream commit f7c125bd79f50ec6094761090be81d02726ec6f4 ]
 
-When pci_register_driver failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+MHI driver registers network device without setting the
+needs_free_netdev flag, and does NOT call free_netdev() when
+unregisters network device, which causes a memory leak.
 
-Resource leak logs as follows:
-[   52.184456] debugfs: Directory 'bnxt_en' with parent '/' already present!
+This patch calls free_netdev() to fix it since netdev_priv
+is used after unregister.
 
-Fixes: cabfb09d87bd ("bnxt_en: add debugfs support for DIM")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Fixes: 13adac032982 ("net: mhi_net: Register wwan_ops for link creation")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/mhi_net.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index db1864a3f64a..117f5cc7c180 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -13697,8 +13697,16 @@ static struct pci_driver bnxt_pci_driver = {
+diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
+index aaa628f859fd..f84554aa02af 100644
+--- a/drivers/net/mhi_net.c
++++ b/drivers/net/mhi_net.c
+@@ -343,6 +343,8 @@ static void mhi_net_dellink(struct mhi_device *mhi_dev, struct net_device *ndev)
  
- static int __init bnxt_init(void)
- {
-+	int err;
+ 	kfree_skb(mhi_netdev->skbagg_head);
+ 
++	free_netdev(ndev);
 +
- 	bnxt_debug_init();
--	return pci_register_driver(&bnxt_pci_driver);
-+	err = pci_register_driver(&bnxt_pci_driver);
-+	if (err) {
-+		bnxt_debug_exit();
-+		return err;
-+	}
-+
-+	return 0;
+ 	dev_set_drvdata(&mhi_dev->dev, NULL);
  }
  
- static void __exit bnxt_exit(void)
 -- 
 2.35.1
 
