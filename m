@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AA41C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FA0C433C1;
-	Wed, 23 Nov 2022 09:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204C01C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD65C433D6;
+	Wed, 23 Nov 2022 09:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197253;
-	bh=8vxs2esCDra+Z5MC0ms9XSKHHJLKZjYIdX5Bv0ktD/M=;
+	s=korg; t=1669197256;
+	bh=DJXZ58Qia/mujVLNLhDP8xMbLJ6eJy/f2sTwrkgyJAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmfCT4Zha2Dl2reJiMBAimQisS+OP4SUM1eiQX43Cmtk/FNkhfZcW8mHY2HX5gZPs
-	 D6ESiVAc/+mFASjpl7pes1npkSyfPNIIDyoW+h82PGCQ3AFjkbdEIzxdqmjad0IYGC
-	 VC3snxpX17ulMmz8CsPblb4Pfkc9mlrlgpewgqUA=
+	b=xg3haM3f8aXhRDdATFGHTEYkQBUEg4ffdQFKoOxh4O9sucO53JgQIX0dy1mn1ITbU
+	 Swo9E0bArch7ajKo28E0ydufrHZb8qpvt5GourYEt3QdK22uhQSGHyFYDt38CJ2Q7t
+	 CBkiuHzwW79vPv7J5xGfa5RMjqKDOanSee9WnYzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 211/314] drm/amd/pm: enable runpm support over BACO for SMU13.0.0
-Date: Wed, 23 Nov 2022 09:50:56 +0100
-Message-Id: <20221123084635.092211523@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	fengguang.wu@intel.com,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 202/314] tracing: Fix memory leak in test_gen_synth_cmd() and test_empty_synth_event()
+Date: Wed, 23 Nov 2022 09:50:47 +0100
+Message-Id: <20221123084634.709312652@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,178 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit 8652da45d09abe1b3174dbb80dc5176b8c3fa08e upstream.
+commit a4527fef9afe5c903c718d0cd24609fe9c754250 upstream.
 
-Enable SMU13.0.0 runpm support.
+test_gen_synth_cmd() only free buf in fail path, hence buf will leak
+when there is no failure. Add kfree(buf) to prevent the memleak. The
+same reason and solution in test_empty_synth_event().
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+unreferenced object 0xffff8881127de000 (size 2048):
+  comm "modprobe", pid 247, jiffies 4294972316 (age 78.756s)
+  hex dump (first 32 bytes):
+    20 67 65 6e 5f 73 79 6e 74 68 5f 74 65 73 74 20   gen_synth_test
+    20 70 69 64 5f 74 20 6e 65 78 74 5f 70 69 64 5f   pid_t next_pid_
+  backtrace:
+    [<000000004254801a>] kmalloc_trace+0x26/0x100
+    [<0000000039eb1cf5>] 0xffffffffa00083cd
+    [<000000000e8c3bc8>] 0xffffffffa00086ba
+    [<00000000c293d1ea>] do_one_initcall+0xdb/0x480
+    [<00000000aa189e6d>] do_init_module+0x1cf/0x680
+    [<00000000d513222b>] load_module+0x6a50/0x70a0
+    [<000000001fd4d529>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000b36c4c0f>] do_syscall_64+0x3f/0x90
+    [<00000000bbf20cf3>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+unreferenced object 0xffff8881127df000 (size 2048):
+  comm "modprobe", pid 247, jiffies 4294972324 (age 78.728s)
+  hex dump (first 32 bytes):
+    20 65 6d 70 74 79 5f 73 79 6e 74 68 5f 74 65 73   empty_synth_tes
+    74 20 20 70 69 64 5f 74 20 6e 65 78 74 5f 70 69  t  pid_t next_pi
+  backtrace:
+    [<000000004254801a>] kmalloc_trace+0x26/0x100
+    [<00000000d4db9a3d>] 0xffffffffa0008071
+    [<00000000c31354a5>] 0xffffffffa00086ce
+    [<00000000c293d1ea>] do_one_initcall+0xdb/0x480
+    [<00000000aa189e6d>] do_init_module+0x1cf/0x680
+    [<00000000d513222b>] load_module+0x6a50/0x70a0
+    [<000000001fd4d529>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000b36c4c0f>] do_syscall_64+0x3f/0x90
+    [<00000000bbf20cf3>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Link: https://lkml.kernel.org/r/20221117012346.22647-2-shangxiaojing@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Cc: <fengguang.wu@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 9fe41efaca08 ("tracing: Add synth event generation test module")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h        |    8 +++++
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_v11_0.h         |   10 ------
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h         |   11 +-----
- drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c       |    2 -
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c       |    9 +++++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   30 +++++++++++++++++--
- 6 files changed, 50 insertions(+), 20 deletions(-)
+ kernel/trace/synth_event_gen_test.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-@@ -1372,6 +1372,14 @@ enum smu_cmn2asic_mapping_type {
- 	CMN2ASIC_MAPPING_WORKLOAD,
- };
+--- a/kernel/trace/synth_event_gen_test.c
++++ b/kernel/trace/synth_event_gen_test.c
+@@ -120,15 +120,13 @@ static int __init test_gen_synth_cmd(voi
  
-+enum smu_baco_seq {
-+	BACO_SEQ_BACO = 0,
-+	BACO_SEQ_MSR,
-+	BACO_SEQ_BAMACO,
-+	BACO_SEQ_ULPS,
-+	BACO_SEQ_COUNT,
-+};
-+
- #define MSG_MAP(msg, index, valid_in_vf) \
- 	[SMU_MSG_##msg] = {1, (index), (valid_in_vf)}
- 
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v11_0.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v11_0.h
-@@ -147,14 +147,6 @@ struct smu_11_5_power_context {
- 	uint32_t	max_fast_ppt_limit;
- };
- 
--enum smu_v11_0_baco_seq {
--	BACO_SEQ_BACO = 0,
--	BACO_SEQ_MSR,
--	BACO_SEQ_BAMACO,
--	BACO_SEQ_ULPS,
--	BACO_SEQ_COUNT,
--};
--
- #if defined(SWSMU_CODE_LAYER_L2) || defined(SWSMU_CODE_LAYER_L3)
- 
- int smu_v11_0_init_microcode(struct smu_context *smu);
-@@ -257,7 +249,7 @@ int smu_v11_0_baco_enter(struct smu_cont
- int smu_v11_0_baco_exit(struct smu_context *smu);
- 
- int smu_v11_0_baco_set_armd3_sequence(struct smu_context *smu,
--				      enum smu_v11_0_baco_seq baco_seq);
-+				      enum smu_baco_seq baco_seq);
- 
- int smu_v11_0_mode1_reset(struct smu_context *smu);
- 
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-@@ -123,14 +123,6 @@ struct smu_13_0_power_context {
- 	enum smu_13_0_power_state power_state;
- };
- 
--enum smu_v13_0_baco_seq {
--	BACO_SEQ_BACO = 0,
--	BACO_SEQ_MSR,
--	BACO_SEQ_BAMACO,
--	BACO_SEQ_ULPS,
--	BACO_SEQ_COUNT,
--};
--
- #if defined(SWSMU_CODE_LAYER_L2) || defined(SWSMU_CODE_LAYER_L3)
- 
- int smu_v13_0_init_microcode(struct smu_context *smu);
-@@ -217,6 +209,9 @@ int smu_v13_0_set_azalia_d3_pme(struct s
- int smu_v13_0_get_max_sustainable_clocks_by_dc(struct smu_context *smu,
- 					       struct pp_smu_nv_clock_table *max_clocks);
- 
-+int smu_v13_0_baco_set_armd3_sequence(struct smu_context *smu,
-+				      enum smu_baco_seq baco_seq);
-+
- bool smu_v13_0_baco_is_support(struct smu_context *smu);
- 
- enum smu_baco_state smu_v13_0_baco_get_state(struct smu_context *smu);
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-@@ -1576,7 +1576,7 @@ int smu_v11_0_set_azalia_d3_pme(struct s
- }
- 
- int smu_v11_0_baco_set_armd3_sequence(struct smu_context *smu,
--				      enum smu_v11_0_baco_seq baco_seq)
-+				      enum smu_baco_seq baco_seq)
- {
- 	return smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_ArmD3, baco_seq, NULL);
- }
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -2219,6 +2219,15 @@ int smu_v13_0_gfx_ulv_control(struct smu
+ 	/* Now generate a gen_synth_test event */
+ 	ret = synth_event_trace_array(gen_synth_test, vals, ARRAY_SIZE(vals));
+- out:
++ free:
++	kfree(buf);
  	return ret;
+  delete:
+ 	/* We got an error after creating the event, delete it */
+ 	synth_event_delete("gen_synth_test");
+- free:
+-	kfree(buf);
+-
+-	goto out;
++	goto free;
  }
  
-+int smu_v13_0_baco_set_armd3_sequence(struct smu_context *smu,
-+				      enum smu_baco_seq baco_seq)
-+{
-+	return smu_cmn_send_smc_msg_with_param(smu,
-+					       SMU_MSG_ArmD3,
-+					       baco_seq,
-+					       NULL);
-+}
-+
- bool smu_v13_0_baco_is_support(struct smu_context *smu)
- {
- 	struct smu_baco_context *smu_baco = &smu->smu_baco;
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -120,6 +120,7 @@ static struct cmn2asic_msg_mapping smu_v
- 	MSG_MAP(Mode1Reset,			PPSMC_MSG_Mode1Reset,                  0),
- 	MSG_MAP(PrepareMp1ForUnload,		PPSMC_MSG_PrepareMp1ForUnload,         0),
- 	MSG_MAP(DFCstateControl,		PPSMC_MSG_SetExternalClientDfCstateAllow, 0),
-+	MSG_MAP(ArmD3,				PPSMC_MSG_ArmD3,                       0),
- };
+ /*
+@@ -227,15 +225,13 @@ static int __init test_empty_synth_event
  
- static struct cmn2asic_mapping smu_v13_0_0_clk_map[SMU_CLK_COUNT] = {
-@@ -1566,6 +1567,31 @@ static int smu_v13_0_0_set_power_profile
- 					       NULL);
+ 	/* Now trace an empty_synth_test event */
+ 	ret = synth_event_trace_array(empty_synth_test, vals, ARRAY_SIZE(vals));
+- out:
++ free:
++	kfree(buf);
+ 	return ret;
+  delete:
+ 	/* We got an error after creating the event, delete it */
+ 	synth_event_delete("empty_synth_test");
+- free:
+-	kfree(buf);
+-
+-	goto out;
++	goto free;
  }
  
-+static int smu_v13_0_0_baco_enter(struct smu_context *smu)
-+{
-+	struct smu_baco_context *smu_baco = &smu->smu_baco;
-+	struct amdgpu_device *adev = smu->adev;
-+
-+	if (adev->in_runpm && smu_cmn_is_audio_func_enabled(adev))
-+		return smu_v13_0_baco_set_armd3_sequence(smu,
-+				smu_baco->maco_support ? BACO_SEQ_BAMACO : BACO_SEQ_BACO);
-+	else
-+		return smu_v13_0_baco_enter(smu);
-+}
-+
-+static int smu_v13_0_0_baco_exit(struct smu_context *smu)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+
-+	if (adev->in_runpm && smu_cmn_is_audio_func_enabled(adev)) {
-+		/* Wait for PMFW handling for the Dstate change */
-+		usleep_range(10000, 11000);
-+		return smu_v13_0_baco_set_armd3_sequence(smu, BACO_SEQ_ULPS);
-+	} else {
-+		return smu_v13_0_baco_exit(smu);
-+	}
-+}
-+
- static bool smu_v13_0_0_is_mode1_reset_supported(struct smu_context *smu)
- {
- 	struct amdgpu_device *adev = smu->adev;
-@@ -1827,8 +1853,8 @@ static const struct pptable_funcs smu_v1
- 	.baco_is_support = smu_v13_0_baco_is_support,
- 	.baco_get_state = smu_v13_0_baco_get_state,
- 	.baco_set_state = smu_v13_0_baco_set_state,
--	.baco_enter = smu_v13_0_baco_enter,
--	.baco_exit = smu_v13_0_baco_exit,
-+	.baco_enter = smu_v13_0_0_baco_enter,
-+	.baco_exit = smu_v13_0_0_baco_exit,
- 	.mode1_reset_is_support = smu_v13_0_0_is_mode1_reset_supported,
- 	.mode1_reset = smu_v13_0_mode1_reset,
- 	.set_mp1_state = smu_v13_0_0_set_mp1_state,
+ static struct synth_field_desc create_synth_test_fields[] = {
 
 
