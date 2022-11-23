@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BA01C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97264C433D6;
-	Wed, 23 Nov 2022 09:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6F31C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071ABC433D7;
+	Wed, 23 Nov 2022 09:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196214;
-	bh=8DHrVtwZi9i0+QFz294GizastENKta+GWXf6gL2zSfA=;
+	s=korg; t=1669196218;
+	bh=EKZ4cdmEZz25H9XGgwx9cNIJnnHiTuH/vUNa9qb7MUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzaEoTboZtrN1r3gMNHXc47zkvphL/X2thPUDQah2A/sAjFNGw3Cv/aClDy1hzJFn
-	 de5ccWwhQ4tECOo4pJk0CtvL5duSEjvMDUHvTP3y/VU6PQylp0doQDmIJCrU2ubgCq
-	 T4cuwXa1vm58L7Q/Vt1AvMadRVs9ETxu8oJhsU7E=
+	b=e5sNTm1xtP4EdRSTH5pxgSbcPk/yDl+0HcsaZfQC5NU/PlsnCe9XSPm/Es/cmHxiK
+	 Y5uHPqX5fcCb91hX6TfXpfYCmvavUo0wu9SZQCF575bW0zmXSf6RG6/rxOtFDsC4tU
+	 mGS0jVkG1s9LgGk7vr3E081iWBMarYpaEjyEjANA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
+	Chevron Li <chevron.li@bayhubtech.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 151/181] mmc: core: properly select voltage range without power cycle
-Date: Wed, 23 Nov 2022 09:51:54 +0100
-Message-Id: <20221123084608.878217130@linuxfoundation.org>
+Subject: [PATCH 5.15 152/181] mmc: sdhci-pci-o2micro: fix card detect fail issue caused by CD# debounce timeout
+Date: Wed, 23 Nov 2022 09:51:55 +0100
+Message-Id: <20221123084608.915508900@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,47 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yann Gautier <yann.gautier@foss.st.com>
+From: Chevron Li <chevron.li@bayhubtech.com>
 
-commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
+commit 096cc0cddf58232bded309336961784f1d1c85f8 upstream.
 
-In mmc_select_voltage(), if there is no full power cycle, the voltage
-range selected at the end of the function will be on a single range
-(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
-the mask shift should be reduced by 1.
+The SD card is recognized failed sometimes when resume from suspend.
+Because CD# debounce time too long then card present report wrong.
+Finally, card is recognized failed.
 
-This issue was triggered by using a specific SD-card (Verbatim Premium
-16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
-and there is no power cycle. And the card was failing to switch to
-high-speed mode. When adding the range 3.2V/3.3V for this card with the
-proposed shift change, the card can switch to high-speed mode.
-
-Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
+Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
+Link: https://lore.kernel.org/r/20221104095512.4068-1-chevron.li@bayhubtech.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-o2micro.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1132,7 +1132,13 @@ u32 mmc_select_voltage(struct mmc_host *
- 		mmc_power_cycle(host, ocr);
- 	} else {
- 		bit = fls(ocr) - 1;
--		ocr &= 3 << bit;
-+		/*
-+		 * The bit variable represents the highest voltage bit set in
-+		 * the OCR register.
-+		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
-+		 * we must shift the mask '3' with (bit - 1).
-+		 */
-+		ocr &= 3 << (bit - 1);
- 		if (bit != host->ios.vdd)
- 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
- 	}
+--- a/drivers/mmc/host/sdhci-pci-o2micro.c
++++ b/drivers/mmc/host/sdhci-pci-o2micro.c
+@@ -31,6 +31,7 @@
+ #define O2_SD_CAPS		0xE0
+ #define O2_SD_ADMA1		0xE2
+ #define O2_SD_ADMA2		0xE7
++#define O2_SD_MISC_CTRL2	0xF0
+ #define O2_SD_INF_MOD		0xF1
+ #define O2_SD_MISC_CTRL4	0xFC
+ #define O2_SD_MISC_CTRL		0x1C0
+@@ -830,6 +831,12 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		/* Set Tuning Windows to 5 */
+ 		pci_write_config_byte(chip->pdev,
+ 				O2_SD_TUNING_CTRL, 0x55);
++		//Adjust 1st and 2nd CD debounce time
++		pci_read_config_dword(chip->pdev, O2_SD_MISC_CTRL2, &scratch_32);
++		scratch_32 &= 0xFFE7FFFF;
++		scratch_32 |= 0x00180000;
++		pci_write_config_dword(chip->pdev, O2_SD_MISC_CTRL2, scratch_32);
++		pci_write_config_dword(chip->pdev, O2_SD_DETECT_SETTING, 1);
+ 		/* Lock WP */
+ 		ret = pci_read_config_byte(chip->pdev,
+ 					   O2_SD_LOCK_WP, &scratch);
 
 
