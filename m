@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C901C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDF5C433C1;
-	Wed, 23 Nov 2022 09:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE19B1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E38C433C1;
+	Wed, 23 Nov 2022 09:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195446;
-	bh=5Dxmk//3PQMX+XETAnqxYTqImGXetVOfadvJO6eHdrU=;
+	s=korg; t=1669195450;
+	bh=B6ZsIzFNVc1hIi1Xu/sy1XrxnPud0tnjwQVloDLXRCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrUThuX0yRmMGjd/F+OP9/JstV6y1R8Dw9LOhfw5rtcSKSUGPECCNDV3RUiAAxr8/
-	 bngqz79YC1jfeu02+M6voFnRaZtZrL1cBKDOTMU1ZcFwOVIbFjrXPdTZ90T7vfIG72
-	 XzjHGy2Lntrjg46VmnZBJs7AXq7osVbVZcfuyPHY=
+	b=ZlzvHHbEAlgsUTagGFxbaCgGjwuHK9qs6IZLUMPC1CtZV8WBxLs75Gcgt31bEBzN3
+	 xNllD9aoHK4uRViP3Zy4pwqoKRjy2B6cxi+citi6pcGdfnxXTSuFYEVgqi8SKk9aLA
+	 H0En6fPdePxIcLu7ccRtpitLVSJQc+orAkqKp3Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Primiano Tucci <primiano@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 086/149] tracing/ring-buffer: Have polling block on watermark
-Date: Wed, 23 Nov 2022 09:51:09 +0100
-Message-Id: <20221123084601.076833504@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 060/149] ata: libata-transport: fix error handling in ata_tlink_add()
+Date: Wed, 23 Nov 2022 09:50:43 +0100
+Message-Id: <20221123084600.087753720@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,187 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 42fb0a1e84ff525ebe560e2baf9451ab69127e2b upstream.
+[ Upstream commit cf0816f6322c5c37ee52655f928e91ecf32da103 ]
 
-Currently the way polling works on the ring buffer is broken. It will
-return immediately if there's any data in the ring buffer whereas a read
-will block until the watermark (defined by the tracefs buffer_percent file)
-is hit.
+In ata_tlink_add(), the return value of transport_add_device() is
+not checked. As a result, it causes null-ptr-deref while removing
+the module, because transport_remove_device() is called to remove
+the device that was not added.
 
-That is, a select() or poll() will return as if there's data available,
-but then the following read will block. This is broken for the way
-select()s and poll()s are supposed to work.
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+CPU: 33 PID: 13850 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #12
+pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x48/0x39c
+lr : device_del+0x44/0x39c
+Call trace:
+ device_del+0x48/0x39c
+ attribute_container_class_device_del+0x28/0x40
+ transport_remove_classdev+0x60/0x7c
+ attribute_container_device_trigger+0x118/0x120
+ transport_remove_device+0x20/0x30
+ ata_tlink_delete+0x88/0xb0 [libata]
+ ata_tport_delete+0x2c/0x60 [libata]
+ ata_port_detach+0x148/0x1b0 [libata]
+ ata_pci_remove_one+0x50/0x80 [libata]
+ ahci_remove_one+0x4c/0x8c [ahci]
 
-Have the polling on the ring buffer also block the same way reads and
-splice does on the ring buffer.
+Fix this by checking and handling return value of transport_add_device()
+in ata_tlink_add().
 
-Link: https://lkml.kernel.org/r/20221020231427.41be3f26@gandalf.local.home
-
-Cc: Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Primiano Tucci <primiano@google.com>
-Cc: stable@vger.kernel.org
-Fixes: 1e0d6714aceb7 ("ring-buffer: Do not wake up a splice waiter when page is not full")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9027470b886 ("[libata] Add ATA transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |    2 -
- kernel/trace/ring_buffer.c  |   55 ++++++++++++++++++++++++++++----------------
- kernel/trace/trace.c        |    2 -
- 3 files changed, 38 insertions(+), 21 deletions(-)
+ drivers/ata/libata-transport.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -99,7 +99,7 @@ __ring_buffer_alloc(unsigned long size,
- 
- int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full);
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table);
-+			  struct file *filp, poll_table *poll_table, int full);
- void ring_buffer_wake_waiters(struct trace_buffer *buffer, int cpu);
- 
- #define RING_BUFFER_ALL_CPUS -1
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -784,6 +784,21 @@ size_t ring_buffer_nr_dirty_pages(struct
- 	return cnt - read;
- }
- 
-+static __always_inline bool full_hit(struct trace_buffer *buffer, int cpu, int full)
-+{
-+	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
-+	size_t nr_pages;
-+	size_t dirty;
-+
-+	nr_pages = cpu_buffer->nr_pages;
-+	if (!nr_pages || !full)
-+		return true;
-+
-+	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+
-+	return (dirty * 100) > (full * nr_pages);
-+}
-+
- /*
-  * rb_wake_up_waiters - wake up tasks waiting for ring buffer input
-  *
-@@ -912,22 +927,20 @@ int ring_buffer_wait(struct trace_buffer
- 		    !ring_buffer_empty_cpu(buffer, cpu)) {
- 			unsigned long flags;
- 			bool pagebusy;
--			size_t nr_pages;
--			size_t dirty;
-+			bool done;
- 
- 			if (!full)
- 				break;
- 
- 			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
- 			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
--			nr_pages = cpu_buffer->nr_pages;
--			dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+			done = !pagebusy && full_hit(buffer, cpu, full);
-+
- 			if (!cpu_buffer->shortest_full ||
- 			    cpu_buffer->shortest_full > full)
- 				cpu_buffer->shortest_full = full;
- 			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
--			if (!pagebusy &&
--			    (!nr_pages || (dirty * 100) > full * nr_pages))
-+			if (done)
- 				break;
- 		}
- 
-@@ -953,6 +966,7 @@ int ring_buffer_wait(struct trace_buffer
-  * @cpu: the cpu buffer to wait on
-  * @filp: the file descriptor
-  * @poll_table: The poll descriptor
-+ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-  *
-  * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-  * as data is added to any of the @buffer's cpu buffers. Otherwise
-@@ -962,14 +976,15 @@ int ring_buffer_wait(struct trace_buffer
-  * zero otherwise.
-  */
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table)
-+			  struct file *filp, poll_table *poll_table, int full)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct rb_irq_work *work;
- 
--	if (cpu == RING_BUFFER_ALL_CPUS)
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
- 		work = &buffer->irq_work;
--	else {
-+		full = 0;
-+	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 			return -EINVAL;
- 
-@@ -977,8 +992,14 @@ __poll_t ring_buffer_poll_wait(struct tr
- 		work = &cpu_buffer->irq_work;
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index da1b144d8288..e386e5f35015 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -428,7 +428,9 @@ int ata_tlink_add(struct ata_link *link)
+ 		goto tlink_err;
  	}
  
--	poll_wait(filp, &work->waiters, poll_table);
--	work->waiters_pending = true;
-+	if (full) {
-+		poll_wait(filp, &work->full_waiters, poll_table);
-+		work->full_waiters_pending = true;
-+	} else {
-+		poll_wait(filp, &work->waiters, poll_table);
-+		work->waiters_pending = true;
-+	}
-+
- 	/*
- 	 * There's a tight race between setting the waiters_pending and
- 	 * checking if the ring buffer is empty.  Once the waiters_pending bit
-@@ -994,6 +1015,9 @@ __poll_t ring_buffer_poll_wait(struct tr
- 	 */
- 	smp_mb();
+-	transport_add_device(dev);
++	error = transport_add_device(dev);
++	if (error)
++		goto tlink_transport_err;
+ 	transport_configure_device(dev);
  
-+	if (full)
-+		return full_hit(buffer, cpu, full) ? EPOLLIN | EPOLLRDNORM : 0;
-+
- 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
- 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
- 		return EPOLLIN | EPOLLRDNORM;
-@@ -3033,10 +3057,6 @@ static void rb_commit(struct ring_buffer
- static __always_inline void
- rb_wakeups(struct trace_buffer *buffer, struct ring_buffer_per_cpu *cpu_buffer)
- {
--	size_t nr_pages;
--	size_t dirty;
--	size_t full;
--
- 	if (buffer->irq_work.waiters_pending) {
- 		buffer->irq_work.waiters_pending = false;
- 		/* irq_work_queue() supplies it's own memory barriers */
-@@ -3060,10 +3080,7 @@ rb_wakeups(struct trace_buffer *buffer,
- 
- 	cpu_buffer->last_pages_touch = local_read(&cpu_buffer->pages_touched);
- 
--	full = cpu_buffer->shortest_full;
--	nr_pages = cpu_buffer->nr_pages;
--	dirty = ring_buffer_nr_dirty_pages(buffer, cpu_buffer->cpu);
--	if (full && nr_pages && (dirty * 100) <= full * nr_pages)
-+	if (!full_hit(buffer, cpu_buffer->cpu, cpu_buffer->shortest_full))
- 		return;
- 
- 	cpu_buffer->irq_work.wakeup_full = true;
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6263,7 +6263,7 @@ trace_poll(struct trace_iterator *iter,
- 		return EPOLLIN | EPOLLRDNORM;
- 	else
- 		return ring_buffer_poll_wait(iter->array_buffer->buffer, iter->cpu_file,
--					     filp, poll_table);
-+					     filp, poll_table, iter->tr->buffer_percent);
- }
- 
- static __poll_t
+ 	ata_for_each_dev(ata_dev, link, ALL) {
+@@ -443,6 +445,7 @@ int ata_tlink_add(struct ata_link *link)
+ 		ata_tdev_delete(ata_dev);
+ 	}
+ 	transport_remove_device(dev);
++  tlink_transport_err:
+ 	device_del(dev);
+   tlink_err:
+ 	transport_destroy_device(dev);
+-- 
+2.35.1
+
 
 
