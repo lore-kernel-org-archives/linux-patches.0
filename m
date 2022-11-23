@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5281C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690B9C433C1;
-	Wed, 23 Nov 2022 09:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621271C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE164C433D6;
+	Wed, 23 Nov 2022 09:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196774;
-	bh=3tLvJtMNbBd47YR9+bv6xKmABh2xvsfhJQRQlVP21c8=;
+	s=korg; t=1669196778;
+	bh=mLO1JiiEIsXuH2DETePX1+A5i5ebwP1JmEG93V3NDpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kb/6qWU2HKGqfhq+9WirBv1IYpDGcfonUaG6tmEzgai+w91vgaUhhbcdd5AGWosQG
-	 YUk4Wl6jDd+ekiQrRtq64oVTE/N4E4yZ2n8gJ1M/eC/QyF5h2MuLbTknKrs5E04Lpu
-	 Qg2vcc6HV0iqQK9detE3ocxEecGEMIoaLjwBb98c=
+	b=N3XRF2dRSFbxm4HZ40GN3K/T4MAEEBnAwiOq9apzsJtLiKDHRckbgJJUeWpPlwtTV
+	 1g49vNNaLW5iW5QVQYsNOZjFPn0/3IocsJIEN7BVyyKuwgADEM5wwFTgC+Lp0ljF4R
+	 ea9/f2mb3HLs34WcHYNsYonxSW/ocwLTEHz1fHNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Montleon <jmontleo@redhat.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 103/314] ASoC: rt5677: fix legacy dai naming
-Date: Wed, 23 Nov 2022 09:49:08 +0100
-Message-Id: <20221123084630.162795459@linuxfoundation.org>
+Subject: [PATCH 6.0 121/314] nvmet: fix a memory leak
+Date: Wed, 23 Nov 2022 09:49:26 +0100
+Message-Id: <20221123084630.997878052@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,54 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Montleon <jmontleo@redhat.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit a1dca8774faf3f77eb34fa0ac6f3e2b82290b1e4 ]
+[ Upstream commit e65fdf530f55c5e387db14470a59a399faa29613 ]
 
-Starting with 6.0-rc1 the CPU DAI is not registered and the sound
-card is unavailable. Adding legacy_dai_naming causes it to function
-properly again.
+We need to also free the dhchap_ctrl_secret when releasing nvmet_host.
+kmemleak complaint:
+--
+unreferenced object 0xffff99b1cbca5140 (size 64):
+  comm "check", pid 4864, jiffies 4305092436 (age 2913.583s)
+  hex dump (first 32 bytes):
+    44 48 48 43 2d 31 3a 30 30 3a 65 36 2b 41 63 44  DHHC-1:00:e6+AcD
+    39 76 47 4d 52 57 59 78 67 54 47 44 51 59 47 78  9vGMRWYxgTGDQYGx
+  backtrace:
+    [<00000000c07d369d>] kstrdup+0x2e/0x60
+    [<000000001372171c>] 0xffffffffc0cceec6
+    [<0000000010dbf50b>] 0xffffffffc0cc6783
+    [<000000007465e93c>] configfs_write_iter+0xb1/0x120
+    [<0000000039c23f62>] vfs_write+0x2be/0x3c0
+    [<000000002da4351c>] ksys_write+0x5f/0xe0
+    [<00000000d5011e32>] do_syscall_64+0x38/0x90
+    [<00000000503870cf>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: fc34ece41f71 ("ASoC: Refactor non_legacy_dai_naming flag")
-Signed-off-by: Jason Montleon <jmontleo@redhat.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221103144612.4431-2-jmontleo@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5677-spi.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/nvme/target/configfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt5677-spi.c b/sound/soc/codecs/rt5677-spi.c
-index 8f3993a4c1cc..d25703dd7499 100644
---- a/sound/soc/codecs/rt5677-spi.c
-+++ b/sound/soc/codecs/rt5677-spi.c
-@@ -396,15 +396,16 @@ static int rt5677_spi_pcm_probe(struct snd_soc_component *component)
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 2bcd60758919..7f52d9dac443 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -1811,6 +1811,7 @@ static void nvmet_host_release(struct config_item *item)
+ 
+ #ifdef CONFIG_NVME_TARGET_AUTH
+ 	kfree(host->dhchap_secret);
++	kfree(host->dhchap_ctrl_secret);
+ #endif
+ 	kfree(host);
  }
- 
- static const struct snd_soc_component_driver rt5677_spi_dai_component = {
--	.name		= DRV_NAME,
--	.probe		= rt5677_spi_pcm_probe,
--	.open		= rt5677_spi_pcm_open,
--	.close		= rt5677_spi_pcm_close,
--	.hw_params	= rt5677_spi_hw_params,
--	.hw_free	= rt5677_spi_hw_free,
--	.prepare	= rt5677_spi_prepare,
--	.pointer	= rt5677_spi_pcm_pointer,
--	.pcm_construct	= rt5677_spi_pcm_new,
-+	.name			= DRV_NAME,
-+	.probe			= rt5677_spi_pcm_probe,
-+	.open			= rt5677_spi_pcm_open,
-+	.close			= rt5677_spi_pcm_close,
-+	.hw_params		= rt5677_spi_hw_params,
-+	.hw_free		= rt5677_spi_hw_free,
-+	.prepare		= rt5677_spi_prepare,
-+	.pointer		= rt5677_spi_pcm_pointer,
-+	.pcm_construct		= rt5677_spi_pcm_new,
-+	.legacy_dai_naming	= 1,
- };
- 
- /* Select a suitable transfer command for the next transfer to ensure
 -- 
 2.35.1
 
