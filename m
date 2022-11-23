@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2A1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D15C433C1;
-	Wed, 23 Nov 2022 09:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3CA1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCA1C433D7;
+	Wed, 23 Nov 2022 09:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194557;
-	bh=XLhMLZb6XiLLtPgxe/0OyAMI6SvnqSR49NwowbBrBYg=;
+	s=korg; t=1669194561;
+	bh=QFGnn7q7ymSY6xi5+Jbc9Eit6+uYnFqG2uPeexq/A+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkjfFnDe4sOJhvJSGgdA3VU0Aw1oreA60PWyktaZr5ICahxRQ8iAV7Ps6xQNqsXPq
-	 GpktRCoLPVB4O24XmlLYSlxJ1hYfCx/Ph0PCpTYVPxYJtikwc75eh1Nc5NKa+BK5id
-	 kkXJv9ILf/ZdIDK5nUW4ayNi/cCax1sugNFJzT2g=
+	b=q3NDcPpyN/tlb4Gmvt/DYfx5BnvNkbAZfAoLXvk+Uoae4k3hqKaQ4JlaZhxmDHw4r
+	 qcgMfSszllcFAY1rsVhgLLtNYnSr2PePoz6Yl6tntAc7510lKHoqpMUwlCl8dCyCoD
+	 cd1JWShzq8tg7TSNYdjajaJ9LFd8amrsL8wTvcRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 082/114] USB: serial: option: add Sierra Wireless EM9191
-Date: Wed, 23 Nov 2022 09:51:09 +0100
-Message-Id: <20221123084555.135761368@linuxfoundation.org>
+Subject: [PATCH 4.19 083/114] USB: serial: option: remove old LARA-R6 PID
+Date: Wed, 23 Nov 2022 09:51:10 +0100
+Message-Id: <20221123084555.184666369@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,55 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
+commit 2ec106b96afc19698ff934323b633c0729d4c7f8 upstream.
 
-Add support for the AT and diag ports, similar to other qualcomm SDX55
-modems. In QDL mode, the modem uses a different device ID and support
-is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
-add EM9191 QDL support").
+Remove the UBLOX_PRODUCT_R6XX 0x90fa association since LARA-R6 00B final
+product uses a new USB composition with different PID. 0x90fa PID used
+only by LARA-R6 internal prototypes.
 
-T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1199 ProdID=90d3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9191
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
+Move 0x90fa PID directly in the option_ids array since used by other
+Qualcomm based modem vendors as pointed out in:
 
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+  https://lore.kernel.org/all/6572c4e6-d8bc-b8d3-4396-d879e4e76338@gmail.com
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/serial/option.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -581,6 +581,9 @@ static void option_instat_callback(struc
- #define OPPO_VENDOR_ID				0x22d9
- #define OPPO_PRODUCT_R11			0x276c
+@@ -240,7 +240,6 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_UC15			0x9090
+ /* These u-blox products use Qualcomm's vendor ID */
+ #define UBLOX_PRODUCT_R410M			0x90b2
+-#define UBLOX_PRODUCT_R6XX			0x90fa
+ /* These Yuga products use Qualcomm's vendor ID */
+ #define YUGA_PRODUCT_CLM920_NC5			0x9625
  
-+/* Sierra Wireless products */
-+#define SIERRA_VENDOR_ID			0x1199
-+#define SIERRA_PRODUCT_EM9191			0x90d3
- 
- /* Device flags */
- 
-@@ -2176,6 +2179,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+@@ -1127,7 +1126,7 @@ static const struct usb_device_id option
+ 	/* u-blox products using Qualcomm vendor ID */
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R410M),
+ 	  .driver_info = RSVD(1) | RSVD(3) },
+-	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R6XX),
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
+ 	/* Quectel products using Quectel vendor ID */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
 
 
