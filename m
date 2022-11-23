@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49F61C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D134C433B5;
-	Wed, 23 Nov 2022 09:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871111C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CE5C433C1;
+	Wed, 23 Nov 2022 09:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195015;
-	bh=EufkLu5hVpvvcFy8TLrG9xryAqrRtRYayvU23nKa1Bs=;
+	s=korg; t=1669195019;
+	bh=V17UdKcr17cJJO81G71Avd8cF26LZvzq6YnUjnmlBjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Her8Cw9G6Bp7/vBVMAMlizavLZXm2N0Gg2vW3p9EUn2YR4e7TesVX8akHij/3Xq5j
-	 kRRd6VjlO2K/OU8uNU5HKv6yOCP+AgYTzyw+GLHaW7cPqVRFyUGm1YhGR9l4HSiFHL
-	 I4SOhz0kdCsWaGCG05iT2+62kNiJHatIKwnocqCs=
+	b=egOeWw9UYZ0c7fhk25VfGgNR35MnKoim1j6ELsOkmCpl5o8pSrM0e+ylob81i20q4
+	 XLK7LDzCOCYk5fDf/dxCO7+g707aR6s/DT2UP92Dtd8xkksQmohyaxbO7xEvt2ugqF
+	 ydt/oAYHbitp7iPbd/QjiXCU0S2MZcvId5Pw8SgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/156] ata: libata-transport: fix double ata_host_put() in ata_tport_add()
-Date: Wed, 23 Nov 2022 09:50:53 +0100
-Message-Id: <20221123084601.452347106@linuxfoundation.org>
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 123/156] USB: serial: option: add Fibocom FM160 0x0111 composition
+Date: Wed, 23 Nov 2022 09:51:20 +0100
+Message-Id: <20221123084602.388699646@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,66 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-[ Upstream commit 8c76310740807ade5ecdab5888f70ecb6d35732e ]
+commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
 
-In the error path in ata_tport_add(), when calling put_device(),
-ata_tport_release() is called, it will put the refcount of 'ap->host'.
+Add support for the following Fibocom FM160 composition:
 
-And then ata_host_put() is called again, the refcount is decreased
-to 0, ata_host_release() is called, all ports are freed and set to
-null.
+0x0111: MBIM + MODEM + DIAG + AT
 
-When unbinding the device after failure, ata_host_stop() is called
-to release the resources, it leads a null-ptr-deref(), because all
-the ports all freed and null.
+T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
+S:  Manufacturer=Fibocom
+S:  Product=Fibocom FM160 Modem_SN:12345678
+S:  SerialNumber=12345678
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-CPU: 7 PID: 18671 Comm: modprobe Kdump: loaded Tainted: G            E      6.1.0-rc3+ #8
-pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : ata_host_stop+0x3c/0x84 [libata]
-lr : release_nodes+0x64/0xd0
-Call trace:
- ata_host_stop+0x3c/0x84 [libata]
- release_nodes+0x64/0xd0
- devres_release_all+0xbc/0x1b0
- device_unbind_cleanup+0x20/0x70
- really_probe+0x158/0x320
- __driver_probe_device+0x84/0x120
- driver_probe_device+0x44/0x120
- __driver_attach+0xb4/0x220
- bus_for_each_dev+0x78/0xdc
- driver_attach+0x2c/0x40
- bus_add_driver+0x184/0x240
- driver_register+0x80/0x13c
- __pci_register_driver+0x4c/0x60
- ahci_pci_driver_init+0x30/0x1000 [ahci]
-
-Fix this by removing redundant ata_host_put() in the error path.
-
-Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-transport.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
-index c4f36312b8a4..1069cda6ff36 100644
---- a/drivers/ata/libata-transport.c
-+++ b/drivers/ata/libata-transport.c
-@@ -317,7 +317,6 @@ int ata_tport_add(struct device *parent,
-  tport_err:
- 	transport_destroy_device(dev);
- 	put_device(dev);
--	ata_host_put(ap->host);
- 	return error;
- }
- 
--- 
-2.35.1
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2179,6 +2179,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
++	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
 
 
