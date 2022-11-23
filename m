@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227697B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BE8C433D7;
-	Wed, 23 Nov 2022 08:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473E97B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916EAC433C1;
+	Wed, 23 Nov 2022 08:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193682;
-	bh=gIJTAyOHPUI5ysHKZPrNJ7u/FgXcUIj68v3gpahNHQ8=;
+	s=korg; t=1669193686;
+	bh=Qo6rh4RU7MYzl1T+wYKdrOqxVI39UBgwMWchG2Us1NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEyFRKpLm02htprALrS+MlHBLlLEoPMqp2an3/S3DTirL5QGcYjKY4rDl2+HFdKou
-	 Ry557trQ2yEdUOi6aYOAb9/nZlUQ+ppv4dtFTo5YGEQsqB28TQrSa4vPl/ONi0c1Jd
-	 JVVv5JZV58xuUM4WYV4dCq5fu5NFU/B2cdWAgWV8=
+	b=KsKjIqEsctmF9NzohRzDda2L3ytZCgo8feYH/pfq/cJMLt+uImZpbJYHzhIb46ADZ
+	 4a1O0lQ8jB86LGmaQrkGZEbDtBpHC8fPnHEHePhGMglJMV1JyZ0nZu9sJxXdefxkU2
+	 kBvivBopi2P1R2h1t/W0mTrqZuZUJ04XGRgYkH1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Tedd Ho-Jeong An <tedd.an@intel.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 32/76] Bluetooth: L2CAP: Fix l2cap_global_chan_by_psm
-Date: Wed, 23 Nov 2022 09:50:31 +0100
-Message-Id: <20221123084547.789393351@linuxfoundation.org>
+Subject: [PATCH 4.9 33/76] ASoC: core: Fix use-after-free in snd_soc_exit()
+Date: Wed, 23 Nov 2022 09:50:32 +0100
+Message-Id: <20221123084547.821814930@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,32 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit f937b758a188d6fd328a81367087eddbb2fce50f ]
+[ Upstream commit 6ec27c53886c8963729885bcf2dd996eba2767a7 ]
 
-l2cap_global_chan_by_psm shall not return fixed channels as they are not
-meant to be connected by (S)PSM.
+KASAN reports a use-after-free:
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+BUG: KASAN: use-after-free in device_del+0xb5b/0xc60
+Read of size 8 at addr ffff888008655050 by task rmmod/387
+CPU: 2 PID: 387 Comm: rmmod
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+<TASK>
+dump_stack_lvl+0x79/0x9a
+print_report+0x17f/0x47b
+kasan_report+0xbb/0xf0
+device_del+0xb5b/0xc60
+platform_device_del.part.0+0x24/0x200
+platform_device_unregister+0x2e/0x40
+snd_soc_exit+0xa/0x22 [snd_soc_core]
+__do_sys_delete_module.constprop.0+0x34f/0x5b0
+do_syscall_64+0x3a/0x90
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+...
+</TASK>
+
+It's bacause in snd_soc_init(), snd_soc_util_init() is possble to fail,
+but its ret is ignored, which makes soc_dummy_dev unregistered twice.
+
+snd_soc_init()
+    snd_soc_util_init()
+        platform_device_register_simple(soc_dummy_dev)
+        platform_driver_register() # fail
+    	platform_device_unregister(soc_dummy_dev)
+    platform_driver_register() # success
+...
+snd_soc_exit()
+    snd_soc_util_exit()
+    # soc_dummy_dev will be unregistered for second time
+
+To fix it, handle error and stop snd_soc_init() when util_init() fail.
+Also clean debugfs when util_init() or driver_register() fail.
+
+Fixes: fb257897bf20 ("ASoC: Work around allmodconfig failure")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221028031603.59416-1-chenzhongjin@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-core.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 693344984035..c230f89e7238 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1824,7 +1824,7 @@ static struct l2cap_chan *l2cap_global_chan_by_psm(int state, __le16 psm,
- 		if (link_type == LE_LINK && c->src_type == BDADDR_BREDR)
- 			continue;
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index 81c3aa167038..033253de5d4b 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -3931,10 +3931,23 @@ EXPORT_SYMBOL_GPL(snd_soc_of_get_dai_link_codecs);
  
--		if (c->psm == psm) {
-+		if (c->chan_type != L2CAP_CHAN_FIXED && c->psm == psm) {
- 			int src_match, dst_match;
- 			int src_any, dst_any;
+ static int __init snd_soc_init(void)
+ {
++	int ret;
++
+ 	snd_soc_debugfs_init();
+-	snd_soc_util_init();
++	ret = snd_soc_util_init();
++	if (ret)
++		goto err_util_init;
+ 
+-	return platform_driver_register(&soc_driver);
++	ret = platform_driver_register(&soc_driver);
++	if (ret)
++		goto err_register;
++	return 0;
++
++err_register:
++	snd_soc_util_exit();
++err_util_init:
++	snd_soc_debugfs_exit();
++	return ret;
+ }
+ module_init(snd_soc_init);
  
 -- 
 2.35.1
