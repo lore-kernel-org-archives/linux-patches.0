@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CF41C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC421C433D6;
-	Wed, 23 Nov 2022 09:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31561C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:06:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290A4C433D6;
+	Wed, 23 Nov 2022 09:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194389;
-	bh=vB/f+8HfOGiH6qbwX0kUKIjkv3oXAruNrWdvCA/nlzU=;
+	s=korg; t=1669194392;
+	bh=6hxc6MPuHJj9vFFflZOhIMbK1Bnk4vLqq1DobuXLxT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVDaI9nSAuqoXLqHcDTwb9wDEiveD/TANQJ5qmVTZa0b0m2mwQSBPEv5xYhBHY/U8
-	 KH0Ia4gMJ6Vw9Af9EoL1C7iKPEit8CFx3eiW1a1bI7d47uPmFGggKbgbmQjkHX8Hvv
-	 0qvFBj4YAOFaKPu6KEUqI2qLwPyogBFEUqpehBq0=
+	b=rtPi3RQS+8j3ZGfRbEddC9fFNO9mqnMnvQVRs4SnPKn8EHHIkWU95fdlTiOoC1dKb
+	 Ogu2nPqas+KfzMLniRXQam2rvBSuXljcwk9Pdz6CTX3ObImugRU5vHhPZipvLmrUxV
+	 aTltoLcJhKKCjtdBgl8z/25HKx35bsBhL6opIvRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/114] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
-Date: Wed, 23 Nov 2022 09:50:50 +0100
-Message-Id: <20221123084554.398220150@linuxfoundation.org>
+Subject: [PATCH 4.19 064/114] ata: libata-transport: fix double ata_host_put() in ata_tport_add()
+Date: Wed, 23 Nov 2022 09:50:51 +0100
+Message-Id: <20221123084554.446886094@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -35,45 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
+[ Upstream commit 8c76310740807ade5ecdab5888f70ecb6d35732e ]
 
-Here is the BUG report by KASAN about null pointer dereference:
+In the error path in ata_tport_add(), when calling put_device(),
+ata_tport_release() is called, it will put the refcount of 'ap->host'.
 
-BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
-Read of size 1 at addr 0000000000000000 by task python3/2640
-Call Trace:
- strcmp
- __of_find_property
- of_find_property
- pinctrl_dt_to_map
+And then ata_host_put() is called again, the refcount is decreased
+to 0, ata_host_release() is called, all ports are freed and set to
+null.
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-So directly return ENOMEM, if kasprintf() return NULL pointer.
+When unbinding the device after failure, ata_host_stop() is called
+to release the resources, it leads a null-ptr-deref(), because all
+the ports all freed and null.
 
-Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+CPU: 7 PID: 18671 Comm: modprobe Kdump: loaded Tainted: G            E      6.1.0-rc3+ #8
+pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : ata_host_stop+0x3c/0x84 [libata]
+lr : release_nodes+0x64/0xd0
+Call trace:
+ ata_host_stop+0x3c/0x84 [libata]
+ release_nodes+0x64/0xd0
+ devres_release_all+0xbc/0x1b0
+ device_unbind_cleanup+0x20/0x70
+ really_probe+0x158/0x320
+ __driver_probe_device+0x84/0x120
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xb4/0x220
+ bus_for_each_dev+0x78/0xdc
+ driver_attach+0x2c/0x40
+ bus_add_driver+0x184/0x240
+ driver_register+0x80/0x13c
+ __pci_register_driver+0x4c/0x60
+ ahci_pci_driver_init+0x30/0x1000 [ahci]
+
+Fix this by removing redundant ata_host_put() in the error path.
+
+Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/devicetree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/libata-transport.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index 177ee1136e34..6f5acfcba57c 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -235,6 +235,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
-+		if (!propname)
-+			return -ENOMEM;
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index 43a91495ee67..f04f4f977400 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -317,7 +317,6 @@ int ata_tport_add(struct device *parent,
+  tport_err:
+ 	transport_destroy_device(dev);
+ 	put_device(dev);
+-	ata_host_put(ap->host);
+ 	return error;
+ }
+ 
 -- 
 2.35.1
 
