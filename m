@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C145F1C29;
-	Wed, 23 Nov 2022 09:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEAFC433D6;
-	Wed, 23 Nov 2022 09:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCEA1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB438C433D6;
+	Wed, 23 Nov 2022 09:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194848;
-	bh=PEHzwfO/VIiHVS3KPMtQeWVmGCOUzoW4YxeEJJBvGXo=;
+	s=korg; t=1669194852;
+	bh=mBMxvOdaYARyoLBecNfLqpjoFwYzmtsFdHD5cc88Tlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztK9fU/AktMg2LwtgZWqKk4puqvo2AOk8/xwzCA7vwNBdgJwmtFWRp72DSPAu497s
-	 ATw5JRykUM3dTUZWCLrx5QCVb3deUMrGU2l11M/uXT9RdubnsGSWXHjMKhrqgV4XmI
-	 hS+pCyI3HCTe3i+T1vcZxBS0uKLGGUywtOtCZmcw=
+	b=UmgF60HJkt2tGXZ52neAxJpJABBUtoDx0tAWESKwdZsRjSE9ve5Sg1X2uk4E4OSlO
+	 IzQlq/8UeECvJ7XEzWZV5fihjrVwqaTdVjsJZU4L/mZZZvap9IiM3hzMKj5XxUcwx+
+	 yjVG1zu1MAYaulm7mhGal7BKt8afDhQz23Knlzf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	llvm@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 078/156] drm/imx: imx-tve: Fix return type of imx_tve_connector_mode_valid
-Date: Wed, 23 Nov 2022 09:50:35 +0100
-Message-Id: <20221123084600.825057559@linuxfoundation.org>
+Subject: [PATCH 5.4 079/156] btrfs: remove pointless and double ulist frees in error paths of qgroup tests
+Date: Wed, 23 Nov 2022 09:50:36 +0100
+Message-Id: <20221123084600.865767688@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -39,51 +35,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Huckleberry <nhuck@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit fc007fb815ab5395c3962c09b79a1630b0fbed9c ]
+[ Upstream commit d0ea17aec12ea0f7b9d2ed727d8ef8169d1e7699 ]
 
-The mode_valid field in drm_connector_helper_funcs is expected to be of
-type:
-enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
-                                     struct drm_display_mode *mode);
+Several places in the qgroup self tests follow the pattern of freeing the
+ulist pointer they passed to btrfs_find_all_roots() if the call to that
+function returned an error. That is pointless because that function always
+frees the ulist in case it returns an error.
 
-The mismatched return type breaks forward edge kCFI since the underlying
-function definition does not match the function hook definition.
+Also In some places like at test_multiple_refs(), after a call to
+btrfs_qgroup_account_extent() we also leave "old_roots" and "new_roots"
+pointing to ulists that were freed, because btrfs_qgroup_account_extent()
+has freed those ulists, and if after that the next call to
+btrfs_find_all_roots() fails, we call ulist_free() on the "old_roots"
+ulist again, resulting in a double free.
 
-The return type of imx_tve_connector_mode_valid should be changed from
-int to enum drm_mode_status.
+So remove those calls to reduce the code size and avoid double ulist
+free in case of an error.
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1703
-Cc: llvm@lists.linux.dev
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220913205544.155106-1-nhuck@google.com
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/imx-tve.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/tests/qgroup-tests.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/imx-tve.c b/drivers/gpu/drm/imx/imx-tve.c
-index f91c3eb7697b..cc300ed456e1 100644
---- a/drivers/gpu/drm/imx/imx-tve.c
-+++ b/drivers/gpu/drm/imx/imx-tve.c
-@@ -237,8 +237,9 @@ static int imx_tve_connector_get_modes(struct drm_connector *connector)
- 	return ret;
- }
+diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
+index f312ed5abb19..f6169bece7c0 100644
+--- a/fs/btrfs/tests/qgroup-tests.c
++++ b/fs/btrfs/tests/qgroup-tests.c
+@@ -230,7 +230,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+ 			false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -246,7 +245,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 			false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -258,18 +256,19 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 		return ret;
+ 	}
  
--static int imx_tve_connector_mode_valid(struct drm_connector *connector,
--					struct drm_display_mode *mode)
-+static enum drm_mode_status
-+imx_tve_connector_mode_valid(struct drm_connector *connector,
-+			     struct drm_display_mode *mode)
- {
- 	struct imx_tve *tve = con_to_tve(connector);
- 	unsigned long rate;
++	/* btrfs_qgroup_account_extent() always frees the ulists passed to it. */
++	old_roots = NULL;
++	new_roots = NULL;
++
+ 	if (btrfs_verify_qgroup_counts(fs_info, BTRFS_FS_TREE_OBJECTID,
+ 				nodesize, nodesize)) {
+ 		test_err("qgroup counts didn't match expected values");
+ 		return -EINVAL;
+ 	}
+-	old_roots = NULL;
+-	new_roots = NULL;
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+ 			false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -284,7 +283,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 			false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -335,7 +333,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+ 			false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -351,7 +348,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 			false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -372,7 +368,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+ 			false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -388,7 +383,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 			false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -415,7 +409,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+ 			false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -431,7 +424,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 			false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
