@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B1E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3CFC433C1;
-	Wed, 23 Nov 2022 09:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BA71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9046C433C1;
+	Wed, 23 Nov 2022 09:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195227;
-	bh=7KTEvaEN6pllnL953loH5YZMkruYuS0cDZuxGKvU1Qw=;
+	s=korg; t=1669195231;
+	bh=6xSy77Aw6z0fpoypOrp9uPxk6VC+ci3iUBhretptsqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4L2WO26eqCu2PLV8zsU74j6LY1UVJC7cBYcYDAqnL8nJl58aFZD/EZDydmPACjQe
-	 CxyqjoAAN59luNDN83c5L3G8pIf392LNOQXsw5yNwQmg6t9PFy6Ytr8wJkEFY21xyr
-	 Zj9ae/XKuYdfy2BDo3NtJHYomaO2u7vBRpKNtRjw=
+	b=Dg4pNU3PNUB+tBBypJCAwAE3ZCfa7pxd0WrTTBgw1qUI/M9gfiOfbJbT29VxchJF2
+	 Alk7pY+SDy+TuOgVSDB1fwd+0HfzXa9zP6SbwrotfdB+hK3cjOzY5SJ7VPPymK8pNM
+	 k1KWZU1KY87NYGATeECzqcx5q3qI683+gzLHnelQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhang Qilong <zhangqilong3@huawei.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/149] ASoC: wm8997: Revert "ASoC: wm8997: Fix PM disable depth imbalance in wm8997_probe"
-Date: Wed, 23 Nov 2022 09:49:46 +0100
-Message-Id: <20221123084558.086437589@linuxfoundation.org>
+Subject: [PATCH 5.10 004/149] ASoC: mt6660: Keep the pm_runtime enables before component stuff in mt6660_i2c_probe
+Date: Wed, 23 Nov 2022 09:49:47 +0100
+Message-Id: <20221123084558.125414426@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -38,46 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 68ce83e3bb26feba0fcdd59667fde942b3a600a1 ]
+[ Upstream commit c4ab29b0f3a6f1e167c5a627f7cd036c1d2b7d65 ]
 
-This reverts commit 41a736ac20602f64773e80f0f5b32cde1830a44a.
-
-The pm_runtime_disable is redundant when error returns in
-wm8997_probe, we just revert the old patch to fix it.
+It would be better to keep the pm_runtime enables before the
+IRQ and component stuff. Both of those could start triggering
+PM runtime events.
 
 Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221010114852.88127-4-zhangqilong3@huawei.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221008140522.134912-1-zhangqilong3@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8997.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/mt6660.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8997.c b/sound/soc/codecs/wm8997.c
-index 07378714b013..229f2986cd96 100644
---- a/sound/soc/codecs/wm8997.c
-+++ b/sound/soc/codecs/wm8997.c
-@@ -1156,6 +1156,9 @@ static int wm8997_probe(struct platform_device *pdev)
- 		regmap_update_bits(arizona->regmap, wm8997_digital_vu[i],
- 				   WM8997_DIG_VU, WM8997_DIG_VU);
- 
-+	pm_runtime_enable(&pdev->dev);
-+	pm_runtime_idle(&pdev->dev);
-+
- 	arizona_init_common(arizona);
- 
- 	ret = arizona_init_vol_limit(arizona);
-@@ -1174,9 +1177,6 @@ static int wm8997_probe(struct platform_device *pdev)
- 		goto err_spk_irqs;
+diff --git a/sound/soc/codecs/mt6660.c b/sound/soc/codecs/mt6660.c
+index e18a58868273..3cee2ea4b85d 100644
+--- a/sound/soc/codecs/mt6660.c
++++ b/sound/soc/codecs/mt6660.c
+@@ -504,14 +504,14 @@ static int mt6660_i2c_probe(struct i2c_client *client,
+ 		dev_err(chip->dev, "read chip revision fail\n");
+ 		goto probe_fail;
  	}
++	pm_runtime_set_active(chip->dev);
++	pm_runtime_enable(chip->dev);
  
--	pm_runtime_enable(&pdev->dev);
--	pm_runtime_idle(&pdev->dev);
--
+ 	ret = devm_snd_soc_register_component(chip->dev,
+ 					       &mt6660_component_driver,
+ 					       &mt6660_codec_dai, 1);
+-	if (!ret) {
+-		pm_runtime_set_active(chip->dev);
+-		pm_runtime_enable(chip->dev);
+-	}
++	if (ret)
++		pm_runtime_disable(chip->dev);
+ 
  	return ret;
  
- err_spk_irqs:
 -- 
 2.35.1
 
