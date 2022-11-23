@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00361C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371FEC433C1;
-	Wed, 23 Nov 2022 09:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71F01C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFA0C433C1;
+	Wed, 23 Nov 2022 09:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194255;
-	bh=xyIqQROCqa729HDL6Jul9/otBWrSig47Pk599ClpMjk=;
+	s=korg; t=1669194259;
+	bh=Ow6bm9sate6P/YdaHpGnT3KY7AexazLac8KcHVBJgW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diftH5YO5+lih+ch3zhgo91WVtssSrX+Rn4wSOUTSH5CnILoD/WblrAe3ypP/x+Ko
-	 9dHuC3RHRav7xtxxII402hQHqptrmC8Tn5liUCr1cCX3Q9lGPiX4g7QKOJbZI7wftP
-	 GH4jlkRGC+BJtesikqcCvMOPztROVEXC6rZI7E5A=
+	b=P19I/vPVrcwL8fL5fb8mzOs0EyhBOOVvck+KB7RVyT7r91EzbAsZz54dhkgyitIVY
+	 sEyacC+5PG2DuHafjBbTtx5IiwddYaEZ6Bv/sbp6qtfMhX1B0Zjt5uluQdy7kkoul/
+	 xIl/xPqJRZA3XaIjoJ3a3q5Xsjyk4jYpoTp9QupU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Wenhui <zhaowenhui8@huawei.com>,
-	xiafukun <xiafukun@huawei.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 4.19 027/114] vmlinux.lds.h: Fix placement of .data..decrypted section
-Date: Wed, 23 Nov 2022 09:50:14 +0100
-Message-Id: <20221123084552.925933761@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 028/114] nilfs2: fix deadlock in nilfs_count_free_blocks()
+Date: Wed, 23 Nov 2022 09:50:15 +0100
+Message-Id: <20221123084552.970307455@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -37,52 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 000f8870a47bdc36730357883b6aef42bced91ee upstream.
+commit 8ac932a4921a96ca52f61935dbba64ea87bbd5dc upstream.
 
-Commit d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-fixed an orphan section warning by adding the '.data..decrypted' section
-to the linker script under the PERCPU_DECRYPTED_SECTION define but that
-placement introduced a panic with !SMP, as the percpu sections are not
-instantiated with that configuration so attempting to access variables
-defined with DEFINE_PER_CPU_DECRYPTED() will result in a page fault.
+A semaphore deadlock can occur if nilfs_get_block() detects metadata
+corruption while locating data blocks and a superblock writeback occurs at
+the same time:
 
-Move the '.data..decrypted' section to the DATA_MAIN define so that the
-variables in it are properly instantiated at boot time with
-CONFIG_SMP=n.
+task 1                               task 2
+------                               ------
+* A file operation *
+nilfs_truncate()
+  nilfs_get_block()
+    down_read(rwsem A) <--
+    nilfs_bmap_lookup_contig()
+      ...                            generic_shutdown_super()
+                                       nilfs_put_super()
+                                         * Prepare to write superblock *
+                                         down_write(rwsem B) <--
+                                         nilfs_cleanup_super()
+      * Detect b-tree corruption *         nilfs_set_log_cursor()
+      nilfs_bmap_convert_error()             nilfs_count_free_blocks()
+        __nilfs_error()                        down_read(rwsem A) <--
+          nilfs_set_error()
+            down_write(rwsem B) <--
 
-Cc: stable@vger.kernel.org
-Fixes: d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-Link: https://lore.kernel.org/cbbd3548-880c-d2ca-1b67-5bb93b291d5f@huawei.com/
-Debugged-by: Ard Biesheuvel <ardb@kernel.org>
-Reported-by: Zhao Wenhui <zhaowenhui8@huawei.com>
-Tested-by: xiafukun <xiafukun@huawei.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221108174934.3384275-1-nathan@kernel.org
+                           *** DEADLOCK ***
+
+Here, nilfs_get_block() readlocks rwsem A (= NILFS_MDT(dat_inode)->mi_sem)
+and then calls nilfs_bmap_lookup_contig(), but if it fails due to metadata
+corruption, __nilfs_error() is called from nilfs_bmap_convert_error()
+inside the lock section.
+
+Since __nilfs_error() calls nilfs_set_error() unless the filesystem is
+read-only and nilfs_set_error() attempts to writelock rwsem B (=
+nilfs->ns_sem) to write back superblock exclusively, hierarchical lock
+acquisition occurs in the order rwsem A -> rwsem B.
+
+Now, if another task starts updating the superblock, it may writelock
+rwsem B during the lock sequence above, and can deadlock trying to
+readlock rwsem A in nilfs_count_free_blocks().
+
+However, there is actually no need to take rwsem A in
+nilfs_count_free_blocks() because it, within the lock section, only reads
+a single integer data on a shared struct with
+nilfs_sufile_get_ncleansegs().  This has been the case after commit
+aa474a220180 ("nilfs2: add local variable to cache the number of clean
+segments"), that is, even before this bug was introduced.
+
+So, this resolves the deadlock problem by just not taking the semaphore in
+nilfs_count_free_blocks().
+
+Link: https://lkml.kernel.org/r/20221029044912.9139-1-konishi.ryusuke@gmail.com
+Fixes: e828949e5b42 ("nilfs2: call nilfs_error inside bmap routines")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>	[2.6.38+
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/the_nilfs.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -242,6 +242,7 @@
- #define DATA_DATA							\
- 	*(.xiptext)							\
- 	*(DATA_MAIN)							\
-+	*(.data..decrypted)						\
- 	*(.ref.data)							\
- 	*(.data..shared_aligned) /* percpu related */			\
- 	MEM_KEEP(init.data*)						\
-@@ -843,7 +844,6 @@
- #ifdef CONFIG_AMD_MEM_ENCRYPT
- #define PERCPU_DECRYPTED_SECTION					\
- 	. = ALIGN(PAGE_SIZE);						\
--	*(.data..decrypted)						\
- 	*(.data..percpu..decrypted)					\
- 	. = ALIGN(PAGE_SIZE);
- #else
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -695,9 +695,7 @@ int nilfs_count_free_blocks(struct the_n
+ {
+ 	unsigned long ncleansegs;
+ 
+-	down_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
+ 	ncleansegs = nilfs_sufile_get_ncleansegs(nilfs->ns_sufile);
+-	up_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
+ 	*nblocks = (sector_t)ncleansegs * nilfs->ns_blocks_per_segment;
+ 	return 0;
+ }
 
 
