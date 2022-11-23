@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D6A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B65C433D6;
-	Wed, 23 Nov 2022 09:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682211C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0196C433D6;
+	Wed, 23 Nov 2022 09:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195644;
-	bh=8wCkvObLbpL4wpI+hldIh7N2f735q+jhKExN6id9lbA=;
+	s=korg; t=1669195648;
+	bh=GOYcDVhZ7jfrsTZdANAjsfmoOyuJ3zC0Mbai4ur7/BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1DKxaj1yK+AOnpW/XJKY5FwdAVCU2dA42hIO+ouHnAXuzgdbP3qNEu78dH15fYA5
-	 H6PpZJtvUgrgj/ZvAD04yy+w9YjVcbcI25gCdzB50Nt0IlqOG5JyD9aCx2Iozp7kKe
-	 EliIpX47erdZtFNpT/xv03cVEyuwMBENinDQ8tHA=
+	b=SalWrUJPQ80TzcwOcgT3l55oSOYy7gvmqQtV+3RTgUsJMBy0D8cibT/Fs8Wrxy6mG
+	 bGUesMRSWwLaN57oU2uDS08kXc/IJ2OugOKvif2+AeDdfpRBKRyX/AQ8fU7sl9Hy5t
+	 E/rsPaIvXrrO7iWa1u+FXOCoqoGV3OXkHLyp/djc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 5.10 126/149] nvme: restrict management ioctls to admin
-Date: Wed, 23 Nov 2022 09:51:49 +0100
-Message-Id: <20221123084602.455840533@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 5.10 144/149] gfs2: Switch from strlcpy to strscpy
+Date: Wed, 23 Nov 2022 09:52:07 +0100
+Message-Id: <20221123084603.092759876@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,41 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 23e085b2dead13b51fe86d27069895b740f749c0 upstream.
+commit 204c0300c4e99707e9fb6e57840aa1127060e63f upstream.
 
-The passthrough commands already have this restriction, but the other
-operations do not. Require the same capabilities for all users as all of
-these operations, which include resets and rescans, can be disruptive.
+Switch from strlcpy to strscpy and make sure that @count is the size of
+the smaller of the source and destination buffers.  This prevents
+reading beyond the end of the source buffer when the source string isn't
+null terminated.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Found by a modified version of syzkaller.
+
+Suggested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/gfs2/ops_fstype.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3330,11 +3330,17 @@ static long nvme_dev_ioctl(struct file *
- 	case NVME_IOCTL_IO_CMD:
- 		return nvme_dev_user_cmd(ctrl, argp);
- 	case NVME_IOCTL_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		dev_warn(ctrl->device, "resetting controller\n");
- 		return nvme_reset_ctrl_sync(ctrl);
- 	case NVME_IOCTL_SUBSYS_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		return nvme_reset_subsystem(ctrl);
- 	case NVME_IOCTL_RESCAN:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		nvme_queue_scan(ctrl);
- 		return 0;
- 	default:
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -384,8 +384,10 @@ static int init_names(struct gfs2_sbd *s
+ 	if (!table[0])
+ 		table = sdp->sd_vfs->s_id;
+ 
+-	strlcpy(sdp->sd_proto_name, proto, GFS2_FSNAME_LEN);
+-	strlcpy(sdp->sd_table_name, table, GFS2_FSNAME_LEN);
++	BUILD_BUG_ON(GFS2_LOCKNAME_LEN > GFS2_FSNAME_LEN);
++
++	strscpy(sdp->sd_proto_name, proto, GFS2_LOCKNAME_LEN);
++	strscpy(sdp->sd_table_name, table, GFS2_LOCKNAME_LEN);
+ 
+ 	table = sdp->sd_table_name;
+ 	while ((table = strchr(table, '/')))
+@@ -1417,13 +1419,13 @@ static int gfs2_parse_param(struct fs_co
+ 
+ 	switch (o) {
+ 	case Opt_lockproto:
+-		strlcpy(args->ar_lockproto, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_lockproto, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_locktable:
+-		strlcpy(args->ar_locktable, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_locktable, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_hostdata:
+-		strlcpy(args->ar_hostdata, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_hostdata, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_spectator:
+ 		args->ar_spectator = 1;
 
 
