@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD7E1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5435C433C1;
-	Wed, 23 Nov 2022 09:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BA11C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05D7C433D6;
+	Wed, 23 Nov 2022 09:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197415;
-	bh=G6hue6ehH9qHTe38OMAlsZguvfZF3JRc32DvI9h0NzU=;
+	s=korg; t=1669197418;
+	bh=V/E7gC8wwvqQxhNAieJMwoG+iMmGKTqbNcRFMWo+wOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6OD2h55k9mHg1oJPVCuLB3Tu2B1vA5gFg/NiEX2HR0xif+O2QJ4Sn0hQP4j//iG0
-	 iD/0U4UH+k0K1o2OcB12+V9oh3UZouHKxbOeWCfETinXD+ClmnC5ZLGMyfNXUprqLZ
-	 4H0IzZFrVEi3vldxZXc3xLLV+E84MQKoV6U47XSw=
+	b=KBoxFZhrl8qU4pbgv5pD+/WpSyJvtfttWBaWFNn80e8r3RZlFL2+0GsRfCZGKwG6G
+	 zGca9jdZSdTD4d4dXAsAMDm9/yNDKZfns0ySXj2Iz82Z/oCM6bOVVa1ZRBI1+9vAEP
+	 i9aLX0KfNJXQvv1/i0yBFUQ3fL/PvuqJrZMGe6z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chevron Li <chevron.li@bayhubtech.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 270/314] mmc: sdhci-pci-o2micro: fix card detect fail issue caused by CD# debounce timeout
-Date: Wed, 23 Nov 2022 09:51:55 +0100
-Message-Id: <20221123084637.763652562@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 288/314] ring-buffer: Include dropped pages in counting dirty patches
+Date: Wed, 23 Nov 2022 09:52:13 +0100
+Message-Id: <20221123084638.568027807@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,45 +34,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chevron Li <chevron.li@bayhubtech.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 096cc0cddf58232bded309336961784f1d1c85f8 upstream.
+[ Upstream commit 31029a8b2c7e656a0289194ef16415050ae4c4ac ]
 
-The SD card is recognized failed sometimes when resume from suspend.
-Because CD# debounce time too long then card present report wrong.
-Finally, card is recognized failed.
+The function ring_buffer_nr_dirty_pages() was created to find out how many
+pages are filled in the ring buffer. There's two running counters. One is
+incremented whenever a new page is touched (pages_touched) and the other
+is whenever a page is read (pages_read). The dirty count is the number
+touched minus the number read. This is used to determine if a blocked task
+should be woken up if the percentage of the ring buffer it is waiting for
+is hit.
 
-Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221104095512.4068-1-chevron.li@bayhubtech.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The problem is that it does not take into account dropped pages (when the
+new writes overwrite pages that were not read). And then the dirty pages
+will always be greater than the percentage.
+
+This makes the "buffer_percent" file inaccurate, as the number of dirty
+pages end up always being larger than the percentage, event when it's not
+and this causes user space to be woken up more than it wants to be.
+
+Add a new counter to keep track of lost pages, and include that in the
+accounting of dirty pages so that it is actually accurate.
+
+Link: https://lkml.kernel.org/r/20221021123013.55fb6055@gandalf.local.home
+
+Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-o2micro.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/trace/ring_buffer.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/mmc/host/sdhci-pci-o2micro.c
-+++ b/drivers/mmc/host/sdhci-pci-o2micro.c
-@@ -32,6 +32,7 @@
- #define O2_SD_CAPS		0xE0
- #define O2_SD_ADMA1		0xE2
- #define O2_SD_ADMA2		0xE7
-+#define O2_SD_MISC_CTRL2	0xF0
- #define O2_SD_INF_MOD		0xF1
- #define O2_SD_MISC_CTRL4	0xFC
- #define O2_SD_MISC_CTRL		0x1C0
-@@ -874,6 +875,12 @@ static int sdhci_pci_o2_probe(struct sdh
- 		/* Set Tuning Windows to 5 */
- 		pci_write_config_byte(chip->pdev,
- 				O2_SD_TUNING_CTRL, 0x55);
-+		//Adjust 1st and 2nd CD debounce time
-+		pci_read_config_dword(chip->pdev, O2_SD_MISC_CTRL2, &scratch_32);
-+		scratch_32 &= 0xFFE7FFFF;
-+		scratch_32 |= 0x00180000;
-+		pci_write_config_dword(chip->pdev, O2_SD_MISC_CTRL2, scratch_32);
-+		pci_write_config_dword(chip->pdev, O2_SD_DETECT_SETTING, 1);
- 		/* Lock WP */
- 		ret = pci_read_config_byte(chip->pdev,
- 					   O2_SD_LOCK_WP, &scratch);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index c7e17f9f4935..0b93dc17457d 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -519,6 +519,7 @@ struct ring_buffer_per_cpu {
+ 	local_t				committing;
+ 	local_t				commits;
+ 	local_t				pages_touched;
++	local_t				pages_lost;
+ 	local_t				pages_read;
+ 	long				last_pages_touch;
+ 	size_t				shortest_full;
+@@ -894,10 +895,18 @@ size_t ring_buffer_nr_pages(struct trace_buffer *buffer, int cpu)
+ size_t ring_buffer_nr_dirty_pages(struct trace_buffer *buffer, int cpu)
+ {
+ 	size_t read;
++	size_t lost;
+ 	size_t cnt;
+ 
+ 	read = local_read(&buffer->buffers[cpu]->pages_read);
++	lost = local_read(&buffer->buffers[cpu]->pages_lost);
+ 	cnt = local_read(&buffer->buffers[cpu]->pages_touched);
++
++	if (WARN_ON_ONCE(cnt < lost))
++		return 0;
++
++	cnt -= lost;
++
+ 	/* The reader can read an empty page, but not more than that */
+ 	if (cnt < read) {
+ 		WARN_ON_ONCE(read > cnt + 1);
+@@ -2031,6 +2040,7 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
+ 			 */
+ 			local_add(page_entries, &cpu_buffer->overrun);
+ 			local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
++			local_inc(&cpu_buffer->pages_lost);
+ 		}
+ 
+ 		/*
+@@ -2515,6 +2525,7 @@ rb_handle_head_page(struct ring_buffer_per_cpu *cpu_buffer,
+ 		 */
+ 		local_add(entries, &cpu_buffer->overrun);
+ 		local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
++		local_inc(&cpu_buffer->pages_lost);
+ 
+ 		/*
+ 		 * The entries will be zeroed out when we move the
+@@ -5265,6 +5276,7 @@ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
+ 	local_set(&cpu_buffer->committing, 0);
+ 	local_set(&cpu_buffer->commits, 0);
+ 	local_set(&cpu_buffer->pages_touched, 0);
++	local_set(&cpu_buffer->pages_lost, 0);
+ 	local_set(&cpu_buffer->pages_read, 0);
+ 	cpu_buffer->last_pages_touch = 0;
+ 	cpu_buffer->shortest_full = 0;
+-- 
+2.35.1
+
 
 
