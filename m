@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06E81C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E595C433C1;
-	Wed, 23 Nov 2022 09:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E3F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73DAC433D6;
+	Wed, 23 Nov 2022 09:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195378;
-	bh=lkMK0xkhMTN/jpraeZPPD6HepizLa+NhnYCPB1crPH8=;
+	s=korg; t=1669195382;
+	bh=RoFuUrufAlG9t6dyMmbyx35+A2lobnEKWufNseV0HjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5UbrVL+PYK+mwzbKDnMAfJDlpIIiScAFbO7cD7qB0CXlUBXhcLsfaH662jePa4II
-	 xB7inv93fKz0RCD+rl4rCvUNvyiCTTlmPe2UyQQ96sHnWRuQ7ckUbjs+Wlsu4CmsZz
-	 t4LYNHYOII2GJyhJazmWU4rzVvvJJXvZbBJDH+V4=
+	b=Ts4NTwPksuIwLf8ONdhuI/OQF+GdcG+7cJHC65+Dav14mopDrCIjfOIK1KTOKZp6z
+	 TGPrO8bK+2mGMjP/1cTugloi0XTd+xZHTLhwdl5GNI9Yuf30OqhAWBzzJpNZbEESG9
+	 Q8wwVQnC9L21biIsODr9sbr45nKnP2xMhQlFnA48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuang Wang <nashuiliang@gmail.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/149] net: macvlan: Use built-in RCU list checking
-Date: Wed, 23 Nov 2022 09:50:51 +0100
-Message-Id: <20221123084600.359858310@linuxfoundation.org>
+Subject: [PATCH 5.10 069/149] net: caif: fix double disconnect client in chnl_net_open()
+Date: Wed, 23 Nov 2022 09:50:52 +0100
+Message-Id: <20221123084600.389248306@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,53 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuang Wang <nashuiliang@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 5df1341ea822292275c56744aab9c536d75c33be ]
+[ Upstream commit 8fbb53c8bfd8c56ecf1f78dc821778b58f505503 ]
 
-hlist_for_each_entry_rcu() has built-in RCU and lock checking.
+When connecting to client timeout, disconnect client for twice in
+chnl_net_open(). Remove one. Compile tested only.
 
-Pass cond argument to hlist_for_each_entry_rcu() to silence false
-lockdep warning when CONFIG_PROVE_RCU_LIST is enabled.
-
-Execute as follow:
-
- ip link add link eth0 type macvlan mode source macaddr add <MAC-ADDR>
-
-The rtnl_lock is held when macvlan_hash_lookup_source() or
-macvlan_fill_info_macaddr() are called in the non-RCU read side section.
-So, pass lockdep_rtnl_is_held() to silence false lockdep warning.
-
-Fixes: 79cf79abce71 ("macvlan: add source mode")
-Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
+Fixes: 2aa40aef9deb ("caif: Use link layer MTU instead of fixed MTU")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/caif/chnl_net.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 6b269a72388b..5d6b4f76b519 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -139,7 +139,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
- 	u32 idx = macvlan_eth_hash(addr);
- 	struct hlist_head *h = &vlan->port->vlan_source_hash[idx];
+diff --git a/net/caif/chnl_net.c b/net/caif/chnl_net.c
+index 42dc080a4dbb..806fb4d84fd3 100644
+--- a/net/caif/chnl_net.c
++++ b/net/caif/chnl_net.c
+@@ -315,9 +315,6 @@ static int chnl_net_open(struct net_device *dev)
  
--	hlist_for_each_entry_rcu(entry, h, hlist) {
-+	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
- 		if (ether_addr_equal_64bits(entry->addr, addr) &&
- 		    entry->vlan == vlan)
- 			return entry;
-@@ -1614,7 +1614,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
- 	struct hlist_head *h = &vlan->port->vlan_source_hash[i];
- 	struct macvlan_source_entry *entry;
- 
--	hlist_for_each_entry_rcu(entry, h, hlist) {
-+	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
- 		if (entry->vlan != vlan)
- 			continue;
- 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
+ 	if (result == 0) {
+ 		pr_debug("connect timeout\n");
+-		caif_disconnect_client(dev_net(dev), &priv->chnl);
+-		priv->state = CAIF_DISCONNECTED;
+-		pr_debug("state disconnected\n");
+ 		result = -ETIMEDOUT;
+ 		goto error;
+ 	}
 -- 
 2.35.1
 
