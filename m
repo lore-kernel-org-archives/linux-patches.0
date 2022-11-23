@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283147B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162FDC433C1;
-	Wed, 23 Nov 2022 08:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1071C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE213C433D6;
+	Wed, 23 Nov 2022 08:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193965;
-	bh=Tq6UTvV/U2fHils2tZDK+ExsX83NX/T6fR7K3h6E4wM=;
+	s=korg; t=1669193968;
+	bh=8wkmgLIUz/8ONLcdxFh5UBQs2mnb8QbTZn5857tQxEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqTPRW7CW1wkZJBNsansQNc0i8Z1ovPEN9BSRrs5T4SEJteTaDWyh+Y6xecQWMfO7
-	 2ISDdNKskT+rB0iWFTg9AudNEDRlZ/NV4xs6D6khBP3IJ6NRKQAh04+jMqFYyz4MOB
-	 r5AyU9K4vhh9vmFo8GFQp9P1h7EMNwSQVrS9C/p8=
+	b=G4Nk4aV926EO5day92S8wca6rfPgTvr9Ig7oK3kw7FHPalasRTq/jmF0Csn3Qw3rG
+	 wPdkvTueqNPVPotgo8T6hJ4Vt1g9zukK2G9hl7Y8ePJhc6mbScWzNBCmAXjAPuwNex
+	 z/t4iMZEePD05sMI425uWw4sUWWblnZnd0vfP2/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 33/88] selftests/futex: fix build for clang
-Date: Wed, 23 Nov 2022 09:50:30 +0100
-Message-Id: <20221123084549.622699254@linuxfoundation.org>
+Subject: [PATCH 4.14 34/88] rtc: cmos: fix build on non-ACPI platforms
+Date: Wed, 23 Nov 2022 09:50:31 +0100
+Message-Id: <20221123084549.654394516@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -36,49 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit 03cab65a07e083b6c1010fbc8f9b817e9aca75d9 ]
+[ Upstream commit db4e955ae333567dea02822624106c0b96a2f84f ]
 
-Don't use the test-specific header files as source files to force a
-target dependency, as clang will complain if more than one source file
-is used for a compile command with a single '-o' flag.
+Now that rtc_wake_setup is called outside of cmos_wake_setup, it also need
+to be defined on non-ACPI platforms.
 
-Use the proper Makefile variables instead as defined in
-tools/testing/selftests/lib.mk.
-
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20221018203512.2532407-1-alexandre.belloni@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-cmos.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index ff8feca49746..ad175add3f1d 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -3,11 +3,11 @@ INCLUDES := -I../include -I../../
- CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE -pthread $(INCLUDES)
- LDFLAGS := $(LDFLAGS) -pthread -lrt
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 5e2ee430b3f8..655caf2cf1e6 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1189,6 +1189,9 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ {
+ }
  
--HEADERS := \
-+LOCAL_HDRS := \
- 	../include/futextest.h \
- 	../include/atomic.h \
- 	../include/logging.h
--TEST_GEN_FILES := \
-+TEST_GEN_PROGS := \
- 	futex_wait_timeout \
- 	futex_wait_wouldblock \
- 	futex_requeue_pi \
-@@ -19,5 +19,3 @@ TEST_GEN_FILES := \
- TEST_PROGS := run.sh
++static void rtc_wake_setup(struct device *dev)
++{
++}
+ #endif
  
- include ../../lib.mk
--
--$(TEST_GEN_FILES): $(HEADERS)
+ #ifdef	CONFIG_PNP
 -- 
 2.35.1
 
