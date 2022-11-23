@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020D51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B54C433C1;
-	Wed, 23 Nov 2022 09:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD431C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E931FC433C1;
+	Wed, 23 Nov 2022 09:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195363;
-	bh=11D0frR9o1KerfcfDxeXEfRTqdAKc6lEFS6JHA74m38=;
+	s=korg; t=1669195367;
+	bh=d0zj5rT3Hd8veX7kySCjO6ZD/o9+VkfEgKeQuMfbh/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATY65OLyBWDJNwlv3zfOhLHHHMuVr8M9YaI3L1tCne4anzyhNvgBD56gyh83af+Y3
-	 S0XymyIqiZgqY/gOCsfRecWrYe3aTk0HSOjorCgxlbnJJ8qL/29a0irMIY7GaiZYLe
-	 VX65LFRxXPBumkNTdUmyjSrvBCoDIKqpIg97hK0o=
+	b=aZlvUiq8EuvfExoNTKgFi+DfpHi4lFKaNTOIYipPKUACIkc+P4kJ834liFbtgrNq9
+	 31KwN0HPoofLirkSzdpbwQrN606KcEnLErxXXQev+B97/aBph9AjJy1iHXHb2+Gtbx
+	 kqaynQoUSX7p+Z+XNR+VXKW/aFHhOK5VyK8ErDV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Sergeyev <sergeev917@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/149] ASoC: core: Fix use-after-free in snd_soc_exit()
-Date: Wed, 23 Nov 2022 09:50:16 +0100
-Message-Id: <20221123084559.180006129@linuxfoundation.org>
+Subject: [PATCH 5.10 024/149] ALSA: hda/realtek: fix speakers and micmute on HP 855 G8
+Date: Wed, 23 Nov 2022 09:50:07 +0100
+Message-Id: <20221123084558.880131844@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,87 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Alexander Sergeyev <sergeev917@gmail.com>
 
-[ Upstream commit 6ec27c53886c8963729885bcf2dd996eba2767a7 ]
+[ Upstream commit 91502a9a0b0d5252cf3f32ebd898823c2f5aadab ]
 
-KASAN reports a use-after-free:
+There are several PCI ids associated with HP EliteBook 855 G8 Notebook
+PC. Commit 0e68c4b11f1e6 ("ALSA: hda/realtek: fix mute/micmute LEDs for
+HP 855 G8") covers 0x103c:0x8896, while this commit covers 0x103c:0x8895
+which needs some additional work on top of the quirk from 0e68c4b11f1e6.
 
-BUG: KASAN: use-after-free in device_del+0xb5b/0xc60
-Read of size 8 at addr ffff888008655050 by task rmmod/387
-CPU: 2 PID: 387 Comm: rmmod
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
-<TASK>
-dump_stack_lvl+0x79/0x9a
-print_report+0x17f/0x47b
-kasan_report+0xbb/0xf0
-device_del+0xb5b/0xc60
-platform_device_del.part.0+0x24/0x200
-platform_device_unregister+0x2e/0x40
-snd_soc_exit+0xa/0x22 [snd_soc_core]
-__do_sys_delete_module.constprop.0+0x34f/0x5b0
-do_syscall_64+0x3a/0x90
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-...
-</TASK>
+Note that the device can boot up with working speakers and micmute LED
+without this patch, but the success rate would be quite low (order of
+16 working boots across 709 boots) at least for the built-in drivers
+scenario. This also means that there are some timing issues during early
+boot and this patch is a workaround.
 
-It's bacause in snd_soc_init(), snd_soc_util_init() is possble to fail,
-but its ret is ignored, which makes soc_dummy_dev unregistered twice.
+With this patch applied speakers and headphones are consistenly working,
+as well as mute/micmute LEDs and the internal microphone.
 
-snd_soc_init()
-    snd_soc_util_init()
-        platform_device_register_simple(soc_dummy_dev)
-        platform_driver_register() # fail
-    	platform_device_unregister(soc_dummy_dev)
-    platform_driver_register() # success
-...
-snd_soc_exit()
-    snd_soc_util_exit()
-    # soc_dummy_dev will be unregistered for second time
-
-To fix it, handle error and stop snd_soc_init() when util_init() fail.
-Also clean debugfs when util_init() or driver_register() fail.
-
-Fixes: fb257897bf20 ("ASoC: Work around allmodconfig failure")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221028031603.59416-1-chenzhongjin@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alexander Sergeyev <sergeev917@gmail.com>
+Link: https://lore.kernel.org/r/20220114165050.ouw2nknuspclynro@localhost.localdomain
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index a6d6d10cd471..e9da95ebccc8 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -3178,10 +3178,23 @@ EXPORT_SYMBOL_GPL(snd_soc_of_get_dai_link_codecs);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index e3f6b930ad4a..d427e8939a0e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6883,6 +6883,7 @@ enum {
+ 	ALC256_FIXUP_MIC_NO_PRESENCE_AND_RESUME,
+ 	ALC285_FIXUP_LEGION_Y9000X_SPEAKERS,
+ 	ALC285_FIXUP_LEGION_Y9000X_AUTOMUTE,
++	ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED,
+ };
  
- static int __init snd_soc_init(void)
- {
-+	int ret;
-+
- 	snd_soc_debugfs_init();
--	snd_soc_util_init();
-+	ret = snd_soc_util_init();
-+	if (ret)
-+		goto err_util_init;
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -8693,6 +8694,16 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC
+ 	},
++	[ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x19 },
++			 { 0x20, AC_VERB_SET_PROC_COEF, 0x8e11 },
++			 { }
++		},
++		.chained = true,
++		.chain_id = ALC285_FIXUP_HP_MUTE_LED,
++	},
+ };
  
--	return platform_driver_register(&soc_driver);
-+	ret = platform_driver_register(&soc_driver);
-+	if (ret)
-+		goto err_register;
-+	return 0;
-+
-+err_register:
-+	snd_soc_util_exit();
-+err_util_init:
-+	snd_soc_debugfs_exit();
-+	return ret;
- }
- module_init(snd_soc_init);
- 
+ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+@@ -8915,6 +8926,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
 -- 
 2.35.1
 
