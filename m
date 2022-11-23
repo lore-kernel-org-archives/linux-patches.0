@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF40B1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53313C433D7;
-	Wed, 23 Nov 2022 09:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B351C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54708C433C1;
+	Wed, 23 Nov 2022 09:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195946;
-	bh=fJ0lPZa0ylFVhACa79Ytd26siB75fd7+pfkuz5h4/NE=;
+	s=korg; t=1669195950;
+	bh=FzlzNwFEQZf+iUksPz8L9P4mFXjh2drbjWh1XaP4tc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f005kb4DPck8A8BCg7PqeoTJO+vDRk4vUEO7BLfiIF6LnIzenUm9LFpeCW3pc3i28
-	 xxNswP2kUAOFX5x/cch1Vbs7BdkSlq0waVnWTyLeZXnWTCBg/MG5HIVVvjQ/VET3Ut
-	 LbRLiXIcbMTh8h5d0hc6hdHC5u5ceqWER7VCuOfM=
+	b=mitcosYxp3pxp1dM32gf+A0/porIyjP0gUTuZqBsfBJMjhqYgbeVqCnQ2lNX5UyDR
+	 W5fiYyYJZ9OZqTKiTJ8plt6lUP0DBVlCxI17QedFo91LtD8+HSGQr3ei3ttB0CgR6I
+	 85Jzz01hHFYnqHUM0J8sRMw4aY/8oPms+ymW24Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/181] MIPS: Loongson64: Add WARN_ON on kexec related kmalloc failed
-Date: Wed, 23 Nov 2022 09:50:40 +0100
-Message-Id: <20221123084605.681210545@linuxfoundation.org>
+Subject: [PATCH 5.15 078/181] bpf: Initialize same number of free nodes for each pcpu_freelist
+Date: Wed, 23 Nov 2022 09:50:41 +0100
+Message-Id: <20221123084605.727587405@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,50 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit fa706927f4722a2df723b2a28d139b1904a3e7fa ]
+[ Upstream commit 4b45cd81f737d79d0fbfc0d320a1e518e7f0bbf0 ]
 
-Add WARN_ON on kexec related kmalloc failed, avoid to pass NULL pointer
-to following memcpy and loongson_kexec_prepare.
+pcpu_freelist_populate() initializes nr_elems / num_possible_cpus() + 1
+free nodes for some CPUs, and then possibly one CPU with fewer nodes,
+followed by remaining cpus with 0 nodes. For example, when nr_elems == 256
+and num_possible_cpus() == 32, CPU 0~27 each gets 9 free nodes, CPU 28 gets
+4 free nodes, CPU 29~31 get 0 free nodes, while in fact each CPU should get
+8 nodes equally.
 
-Fixes: 6ce48897ce47 ("MIPS: Loongson64: Add kexec/kdump support")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+This patch initializes nr_elems / num_possible_cpus() free nodes for each
+CPU firstly, then allocates the remaining free nodes by one for each CPU
+until no free nodes left.
+
+Fixes: e19494edab82 ("bpf: introduce percpu_freelist")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221110122128.105214-1-xukuohai@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/loongson64/reset.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/bpf/percpu_freelist.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/arch/mips/loongson64/reset.c b/arch/mips/loongson64/reset.c
-index 758d5d26aaaa..e420800043b0 100644
---- a/arch/mips/loongson64/reset.c
-+++ b/arch/mips/loongson64/reset.c
-@@ -16,6 +16,7 @@
- #include <asm/bootinfo.h>
- #include <asm/idle.h>
- #include <asm/reboot.h>
-+#include <asm/bug.h>
+diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
+index 3d897de89061..bbab8bb4b2fd 100644
+--- a/kernel/bpf/percpu_freelist.c
++++ b/kernel/bpf/percpu_freelist.c
+@@ -102,22 +102,21 @@ void pcpu_freelist_populate(struct pcpu_freelist *s, void *buf, u32 elem_size,
+ 			    u32 nr_elems)
+ {
+ 	struct pcpu_freelist_head *head;
+-	int i, cpu, pcpu_entries;
++	unsigned int cpu, cpu_idx, i, j, n, m;
  
- #include <loongson.h>
- #include <boot_param.h>
-@@ -159,8 +160,17 @@ static int __init mips_reboot_setup(void)
+-	pcpu_entries = nr_elems / num_possible_cpus() + 1;
+-	i = 0;
++	n = nr_elems / num_possible_cpus();
++	m = nr_elems % num_possible_cpus();
  
- #ifdef CONFIG_KEXEC
- 	kexec_argv = kmalloc(KEXEC_ARGV_SIZE, GFP_KERNEL);
-+	if (WARN_ON(!kexec_argv))
-+		return -ENOMEM;
-+
- 	kdump_argv = kmalloc(KEXEC_ARGV_SIZE, GFP_KERNEL);
-+	if (WARN_ON(!kdump_argv))
-+		return -ENOMEM;
-+
- 	kexec_envp = kmalloc(KEXEC_ENVP_SIZE, GFP_KERNEL);
-+	if (WARN_ON(!kexec_envp))
-+		return -ENOMEM;
-+
- 	fw_arg1 = KEXEC_ARGV_ADDR;
- 	memcpy(kexec_envp, (void *)fw_arg2, KEXEC_ENVP_SIZE);
++	cpu_idx = 0;
+ 	for_each_possible_cpu(cpu) {
+-again:
+ 		head = per_cpu_ptr(s->freelist, cpu);
+-		/* No locking required as this is not visible yet. */
+-		pcpu_freelist_push_node(head, buf);
+-		i++;
+-		buf += elem_size;
+-		if (i == nr_elems)
+-			break;
+-		if (i % pcpu_entries)
+-			goto again;
++		j = n + (cpu_idx < m ? 1 : 0);
++		for (i = 0; i < j; i++) {
++			/* No locking required as this is not visible yet. */
++			pcpu_freelist_push_node(head, buf);
++			buf += elem_size;
++		}
++		cpu_idx++;
+ 	}
+ }
  
 -- 
 2.35.1
