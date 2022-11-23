@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A621C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90690C433D6;
-	Wed, 23 Nov 2022 09:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710801C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FF4C433C1;
+	Wed, 23 Nov 2022 09:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196231;
-	bh=RsrxBSghMIT4uqZH8mhZ/Ys5yWsObvaYrQHpDecn6MA=;
+	s=korg; t=1669196235;
+	bh=SiTJ9C3dPn9HvqBY93Akj6RRkHk43y2HXNtW85w7ibM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOznN0/eGOhbnUn43NN15jEDwDKbkkCHEs4bmvrlwMG1BXUCOoxuc/e8v4WDDJ+4+
-	 +4LOg7GmyDIAqqhcrKoLYOCqLiuHZ+iUDe57PQshoOuKdYEY4+tG8Z0RHZZ68wstqd
-	 t5jl/otkAx/hbCsr6BZjK1jOomOrMX6EHd2cfZR4=
+	b=VzbLi6/m27Zu1hBD33ytN8e98Gyznn579NFGRaVSfY++3JcMFWS0hEMI7sFHIxHLG
+	 bChj3TaZP1ja+IxmcRCK9lQuIo5P8p6FSxwzE0d++7wWquAJFKa8ki4KEcHgIpKd9a
+	 Yy8sARazF1RulEDTEhFNfaJaRVZIlw8QCtL1Cw1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
-	Vishnu Dasa <vdasa@vmware.com>
-Subject: [PATCH 5.15 155/181] misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram()
-Date: Wed, 23 Nov 2022 09:51:58 +0100
-Message-Id: <20221123084609.041518621@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 129/181] USB: serial: option: add u-blox LARA-L6 modem
+Date: Wed, 23 Nov 2022 09:51:32 +0100
+Message-Id: <20221123084607.933780767@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,77 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit e5b0d06d9b10f5f43101bd6598b076c347f9295f upstream.
+commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
 
-`struct vmci_event_qp` allocated by qp_notify_peer() contains padding,
-which may carry uninitialized data to the userspace, as observed by
-KMSAN:
+Add LARA-L6 PIDs for three different USB compositions.
 
-  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user ./include/linux/instrumented.h:121
-   instrument_copy_to_user ./include/linux/instrumented.h:121
-   _copy_to_user+0x5f/0xb0 lib/usercopy.c:33
-   copy_to_user ./include/linux/uaccess.h:169
-   vmci_host_do_receive_datagram drivers/misc/vmw_vmci/vmci_host.c:431
-   vmci_host_unlocked_ioctl+0x33d/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:925
-   vfs_ioctl fs/ioctl.c:51
-  ...
+LARA-L6 module can be configured (by AT interface) in three different
+USB modes:
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
+interfaces
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
+interfaces and 1 RmNet virtual network interface
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
+interface and 1 CDC-ECM virtual network interface
 
-  Uninit was stored to memory at:
-   kmemdup+0x74/0xb0 mm/util.c:131
-   dg_dispatch_as_host drivers/misc/vmw_vmci/vmci_datagram.c:271
-   vmci_datagram_dispatch+0x4f8/0xfc0 drivers/misc/vmw_vmci/vmci_datagram.c:339
-   qp_notify_peer+0x19a/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1479
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
-   vmci_qp_broker_alloc+0x96/0xd0 drivers/misc/vmw_vmci/vmci_queue_pair.c:1940
-   vmci_host_do_alloc_queuepair drivers/misc/vmw_vmci/vmci_host.c:488
-   vmci_host_unlocked_ioctl+0x24fd/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:927
-  ...
+In default mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
 
-  Local variable ev created at:
-   qp_notify_peer+0x54/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1456
-   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
-   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+In RmNet mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: RMNET interface
 
-  Bytes 28-31 of 48 are uninitialized
-  Memory access of size 48 starts at ffff888035155e00
-  Data copied to user address 0000000020000100
+In CDC-ECM mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: CDC-ECM interface
 
-Use memset() to prevent the infoleaks.
-
-Also speculatively fix qp_notify_peer_local(), which may suffer from the
-same problem.
-
-Reported-by: syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Fixes: 06164d2b72aa ("VMCI: queue pairs implementation.")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
-Link: https://lore.kernel.org/r/20221104175849.2782567-1-glider@google.com
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+[ johan: drop PID defines in favour of comments ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_queue_pair.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/option.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
-+++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
-@@ -854,6 +854,7 @@ static int qp_notify_peer_local(bool att
- 	u32 context_id = vmci_get_context_id();
- 	struct vmci_event_qp ev;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -162,6 +162,8 @@ static void option_instat_callback(struc
+ #define NOVATELWIRELESS_PRODUCT_G2		0xA010
+ #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(context_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
-@@ -1467,6 +1468,7 @@ static int qp_notify_peer(bool attach,
- 	 * kernel.
- 	 */
- 
-+	memset(&ev, 0, sizeof(ev));
- 	ev.msg.hdr.dst = vmci_make_handle(peer_id, VMCI_EVENT_HANDLER);
- 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 					  VMCI_CONTEXT_RESOURCE_ID);
++#define UBLOX_VENDOR_ID				0x1546
++
+ /* AMOI PRODUCTS */
+ #define AMOI_VENDOR_ID				0x1614
+ #define AMOI_PRODUCT_H01			0x0800
+@@ -1130,6 +1132,12 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
++	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
++	  .driver_info = RSVD(4) },
+ 	/* Quectel products using Quectel vendor ID */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
+ 	  .driver_info = NUMEP2 },
 
 
