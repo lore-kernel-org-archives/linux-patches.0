@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709741C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB81EC433D6;
-	Wed, 23 Nov 2022 09:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460B91C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D00C433C1;
+	Wed, 23 Nov 2022 09:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194717;
-	bh=WPdsSyHXSMGlDKvu9WpZHFxwiKQwr6xg09XRJX9Erxs=;
+	s=korg; t=1669194721;
+	bh=6DBce3Np4iCU3dai7/tRp+8qyWX52YBi5mB9EWiI2+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OufCgTqUJlP5C+5DSqr76YHv3Q0VW+5o4d6ItEXhxdkEjsqcxP9zfiJf5+Q47iFAt
-	 9g8VhZtjG06/fC6JV35Dxv8ct5FtqqraNBrYI4YID4FNKIMtZQwQT/LHdc31Kpr7PD
-	 GmNVWwIDIYtrcAH9ZcPHRUJZKfX25nHf9hIcjzaI=
+	b=YcI2vf9ruQQx6v//08azbkDY4g89nBJ52oUJlivWUuNziD0nF9epj8WpzJjeg+5ro
+	 B+nyttHrnfHtND6Lhc0hs5iHBNkqtX2E0RN14Cp66mIFu1SoFsTZBAaDvo+/eg4IHf
+	 61yXJr7oKmSsFS+V7U26tP6GBmU7Xc2Q4Va+GrDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 042/156] mmc: sdhci-tegra: Fix SDHCI_RESET_ALL for CQHCI
-Date: Wed, 23 Nov 2022 09:49:59 +0100
-Message-Id: <20221123084559.438579398@linuxfoundation.org>
+	Xian Wang <dev@xianwang.io>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 043/156] ALSA: hda/ca0132: add quirk for EVGA Z390 DARK
+Date: Wed, 23 Nov 2022 09:50:00 +0100
+Message-Id: <20221123084559.468517675@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,59 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Xian Wang <dev@xianwang.io>
 
-commit 836078449464e6af3b66ae6652dae79af176f21e upstream.
+commit 0c423e2ffa7edd3f8f9bcf17ce73fa9c7509b99e upstream.
 
-[[ NOTE: this is completely untested by the author, but included solely
-    because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
-    SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
-    drivers using CQHCI might benefit from a similar change, if they
-    also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
-    bug on at least MSM, Arasan, and Intel hardware. ]]
+The Z390 DARK mainboard uses a CA0132 audio controller. The quirk is
+needed to enable surround sound and 3.5mm headphone jack handling in
+the front audio connector as well as in the rear of the board when in
+stereo mode.
 
-SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
-tracking that properly in software. When out of sync, we may trigger
-various timeouts.
+Page 97 of the linked manual contains instructions to setup the
+controller.
 
-It's not typical to perform resets while CQE is enabled, but this may
-occur in some suspend or error recovery scenarios.
-
-Include this fix by way of the new sdhci_and_cqhci_reset() helper.
-
-This patch depends on (and should not compile without) the patch
-entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
-CQHCI".
-
-Fixes: 3c4019f97978 ("mmc: tegra: HW Command Queue Support for Tegra SDMMC")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Xian Wang <dev@xianwang.io>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026124150.v4.5.I418c9eaaf754880fcd2698113e8c3ef821a944d7@changeid
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://www.evga.com/support/manuals/files/131-CS-E399.pdf
+Link: https://lore.kernel.org/r/20221104202913.13904-1-dev@xianwang.io
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-tegra.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/sdhci-tegra.c
-+++ b/drivers/mmc/host/sdhci-tegra.c
-@@ -24,6 +24,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/ktime.h>
- 
-+#include "sdhci-cqhci.h"
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
- 
-@@ -347,7 +348,7 @@ static void tegra_sdhci_reset(struct sdh
- 	const struct sdhci_tegra_soc_data *soc_data = tegra_host->soc_data;
- 	u32 misc_ctrl, clk_ctrl, pad_ctrl;
- 
--	sdhci_reset(host, mask);
-+	sdhci_and_cqhci_reset(host, mask);
- 
- 	if (!(mask & SDHCI_RESET_ALL))
- 		return;
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -1182,6 +1182,7 @@ static const struct snd_pci_quirk ca0132
+ 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
++	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
+ 	SND_PCI_QUIRK(0x1102, 0x0018, "Recon3D", QUIRK_R3D),
+ 	SND_PCI_QUIRK(0x1102, 0x0051, "Sound Blaster AE-5", QUIRK_AE5),
 
 
