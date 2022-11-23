@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597231C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1790C433C1;
-	Wed, 23 Nov 2022 09:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB591C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81778C433D6;
+	Wed, 23 Nov 2022 09:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194068;
-	bh=2UziT1us8rWAjxbIozr2ACQp8r1QbqMQ6M0i9QbpJRo=;
+	s=korg; t=1669194071;
+	bh=jC5ctidMD+rvvvSf0jBUaX3iTZ9SEWA5HHJqBvOC/V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nm282ULP77bjvkNkvN0F+EXZp9I4IpbWAkeQyTqqxk0LkG2e4Se3gJBKX4oBXzBt/
-	 h+RjUzEV2zgwZ4XN0TJd1jBj2C55DUzHjphrHv81I9m5n8HMwnwlPNPQiJekzUeV0A
-	 oujDE3EFViACE3e13/dgOuHc4tI48QdTho6zeTJg=
+	b=EO1KmgoKqy8OdNpVJ4rJjeY324hQ9IAgPzlWjoMhzLZCxSsLvCkXZuAaLyxC8Rgef
+	 xn6jaKk5tTv2sY3rI9AulyZqRyWOfG3gfq52xRXmK48+27We5jzKAVlCZ/3ABBT+W1
+	 n4gAT+/u3tv8U3SZleJyUx/Y5gpaBt2RgjA4cupU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dumazet <ndumazet@google.com>
-Subject: [PATCH 4.14 63/88] usb: add NO_LPM quirk for Realforce 87U Keyboard
-Date: Wed, 23 Nov 2022 09:51:00 +0100
-Message-Id: <20221123084550.774123616@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 4.14 64/88] usb: chipidea: fix deadlock in ci_otg_del_timer
+Date: Wed, 23 Nov 2022 09:51:01 +0100
+Message-Id: <20221123084550.820537126@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -33,50 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dumazet <ndumazet@google.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 181135bb20dcb184edd89817831b888eb8132741 upstream.
+commit 7a58b8d6021426b796eebfae80983374d9a80a75 upstream.
 
-Before adding this quirk, this (mechanical keyboard) device would not be
-recognized, logging:
+There is a deadlock in ci_otg_del_timer(), the process is
+shown below:
 
-  new full-speed USB device number 56 using xhci_hcd
-  unable to read config index 0 descriptor/start: -32
-  chopping to 0 config(s)
+    (thread 1)                  |        (thread 2)
+ci_otg_del_timer()              | ci_otg_hrtimer_func()
+  ...                           |
+  spin_lock_irqsave() //(1)     |  ...
+  ...                           |
+  hrtimer_cancel()              |  spin_lock_irqsave() //(2)
+  (block forever)
 
-It would take dozens of plugging/unpuggling cycles for the keyboard to
-be recognized. Keyboard seems to simply work after applying this quirk.
+We hold ci->lock in position (1) and use hrtimer_cancel() to
+wait ci_otg_hrtimer_func() to stop, but ci_otg_hrtimer_func()
+also need ci->lock in position (2). As a result, the
+hrtimer_cancel() in ci_otg_del_timer() will be blocked forever.
 
-This issue had been reported by users in two places already ([1], [2])
-but nobody tried upstreaming a patch yet. After testing I believe their
-suggested fix (DELAY_INIT + NO_LPM + DEVICE_QUALIFIER) was probably a
-little overkill. I assume this particular combination was tested because
-it had been previously suggested in [3], but only NO_LPM seems
-sufficient for this device.
+This patch extracts hrtimer_cancel() from the protection of
+spin_lock_irqsave() in order that the ci_otg_hrtimer_func()
+could obtain the ci->lock.
 
-[1]: https://qiita.com/float168/items/fed43d540c8e2201b543
-[2]: https://blog.kostic.dev/posts/making-the-realforce-87ub-work-with-usb30-on-Ubuntu/
-[3]: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1678477
+What`s more, there will be no race happen. Because the
+"next_timer" is always under the protection of
+spin_lock_irqsave() and we only check whether "next_timer"
+equals to NUM_OTG_FSM_TIMERS in the following code.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolas Dumazet <ndumazet@google.com>
-Link: https://lore.kernel.org/r/20221109122946.706036-1-ndumazet@google.com
+Fixes: 3a316ec4c91c ("usb: chipidea: use hrtimer for otg fsm timers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://lore.kernel.org/r/20220918033312.94348-1-duoming@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/chipidea/otg_fsm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -209,6 +209,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0781, 0x5583), .driver_info = USB_QUIRK_NO_LPM },
- 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
- 
-+	/* Realforce 87U Keyboard */
-+	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* M-Systems Flash Disk Pioneers */
- 	{ USB_DEVICE(0x08ec, 0x1000), .driver_info = USB_QUIRK_RESET_RESUME },
- 
+--- a/drivers/usb/chipidea/otg_fsm.c
++++ b/drivers/usb/chipidea/otg_fsm.c
+@@ -260,8 +260,10 @@ static void ci_otg_del_timer(struct ci_h
+ 	ci->enabled_otg_timer_bits &= ~(1 << t);
+ 	if (ci->next_otg_timer == t) {
+ 		if (ci->enabled_otg_timer_bits == 0) {
++			spin_unlock_irqrestore(&ci->lock, flags);
+ 			/* No enabled timers after delete it */
+ 			hrtimer_cancel(&ci->otg_fsm_hrtimer);
++			spin_lock_irqsave(&ci->lock, flags);
+ 			ci->next_otg_timer = NUM_OTG_FSM_TIMERS;
+ 		} else {
+ 			/* Find the next timer */
 
 
