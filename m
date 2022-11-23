@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25AC1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:48:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0514C433C1;
-	Wed, 23 Nov 2022 09:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A9B1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:48:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165E6C433D6;
+	Wed, 23 Nov 2022 09:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196911;
-	bh=6TDrox1pFcyPxL42kEX1fUpLGFpDOc7GVAip7FwfN6o=;
+	s=korg; t=1669196920;
+	bh=w56iTo/jUBGuFrD+a93L8B1D32eYpNYQ3kqkI16ijKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9TOmVTxE/rlenV4qErxS57j0x3zf+KroQF1HIXoSqw0KYOWzaXcb1e7vKPjr9d8F
-	 8jXFhbvR12xK1Cl7N6o0Evjp9PAM/SzZVNUNcooqNJUEcF7rPoEcMDwuafUG81Sb+A
-	 wbvbe/QAhumiqchAsns5LaWb94iOTBKY9CSEVzrk=
+	b=S/CsW+LiAumykgV54apObfR7tf6ATCAtZ+ysw8PfAvqtaGJZN+vN4a8lwDXdxtxhj
+	 G9JgI5vy0EmeYsHQZRpEY1kY8OejcT+lvw1jTRCyd58F8TPayLM+AvO4JdmdygfJqF
+	 ya4TJ1X1FOuvzCeyKhhqnEbrHjVjhShM6e1KsTYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 154/314] soc: imx8m: Enable OCOTP clock before reading the register
-Date: Wed, 23 Nov 2022 09:49:59 +0100
-Message-Id: <20221123084632.548358688@linuxfoundation.org>
+Subject: [PATCH 6.0 137/314] ata: libata-transport: fix double ata_host_put() in ata_tport_add()
+Date: Wed, 23 Nov 2022 09:49:42 +0100
+Message-Id: <20221123084631.750444799@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,69 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 836fb30949d9edf91d7de696a884ceeae7e426d2 ]
+[ Upstream commit 8c76310740807ade5ecdab5888f70ecb6d35732e ]
 
-Commit 7d981405d0fd ("soc: imx8m: change to use platform driver") ever
-removed the dependency on bootloader for enabling OCOTP clock.  It
-helped to fix a kexec kernel hang issue.  But unfortunately it caused
-a regression on CAAM driver and got reverted.
+In the error path in ata_tport_add(), when calling put_device(),
+ata_tport_release() is called, it will put the refcount of 'ap->host'.
 
-This is the second try to enable the OCOTP clock by directly calling
-clock API instead of indirectly enabling the clock via nvmem API.
+And then ata_host_put() is called again, the refcount is decreased
+to 0, ata_host_release() is called, all ports are freed and set to
+null.
 
-Fixes: ac34de14ac30 ("Revert "soc: imx8m: change to use platform driver"")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+When unbinding the device after failure, ata_host_stop() is called
+to release the resources, it leads a null-ptr-deref(), because all
+the ports all freed and null.
+
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+CPU: 7 PID: 18671 Comm: modprobe Kdump: loaded Tainted: G            E      6.1.0-rc3+ #8
+pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : ata_host_stop+0x3c/0x84 [libata]
+lr : release_nodes+0x64/0xd0
+Call trace:
+ ata_host_stop+0x3c/0x84 [libata]
+ release_nodes+0x64/0xd0
+ devres_release_all+0xbc/0x1b0
+ device_unbind_cleanup+0x20/0x70
+ really_probe+0x158/0x320
+ __driver_probe_device+0x84/0x120
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xb4/0x220
+ bus_for_each_dev+0x78/0xdc
+ driver_attach+0x2c/0x40
+ bus_add_driver+0x184/0x240
+ driver_register+0x80/0x13c
+ __pci_register_driver+0x4c/0x60
+ ahci_pci_driver_init+0x30/0x1000 [ahci]
+
+Fix this by removing redundant ata_host_put() in the error path.
+
+Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/ata/libata-transport.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index cc57a384d74d..28144c699b0c 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -11,6 +11,7 @@
- #include <linux/platform_device.h>
- #include <linux/arm-smccc.h>
- #include <linux/of.h>
-+#include <linux/clk.h>
- 
- #define REV_B1				0x21
- 
-@@ -56,6 +57,7 @@ static u32 __init imx8mq_soc_revision(void)
- 	void __iomem *ocotp_base;
- 	u32 magic;
- 	u32 rev;
-+	struct clk *clk;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
- 	if (!np)
-@@ -63,6 +65,13 @@ static u32 __init imx8mq_soc_revision(void)
- 
- 	ocotp_base = of_iomap(np, 0);
- 	WARN_ON(!ocotp_base);
-+	clk = of_clk_get_by_name(np, NULL);
-+	if (!clk) {
-+		WARN_ON(!clk);
-+		return 0;
-+	}
-+
-+	clk_prepare_enable(clk);
- 
- 	/*
- 	 * SOC revision on older imx8mq is not available in fuses so query
-@@ -79,6 +88,8 @@ static u32 __init imx8mq_soc_revision(void)
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
- 
-+	clk_disable_unprepare(clk);
-+	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index a7e9a75410a3..105da3ec5eaa 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -317,7 +317,6 @@ int ata_tport_add(struct device *parent,
+  tport_err:
+ 	transport_destroy_device(dev);
+ 	put_device(dev);
+-	ata_host_put(ap->host);
+ 	return error;
+ }
  
 -- 
 2.35.1
