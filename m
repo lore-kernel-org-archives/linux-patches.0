@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403071C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E59C433C1;
-	Wed, 23 Nov 2022 09:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15441C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198A4C433C1;
+	Wed, 23 Nov 2022 09:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196272;
-	bh=/3MmBgNPkEOeL6Rxo23TuvoJCvk1cr0WYMXS4xHgAPE=;
+	s=korg; t=1669196275;
+	bh=XLhMLZb6XiLLtPgxe/0OyAMI6SvnqSR49NwowbBrBYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQRe1nlYigr6Vl7auwNM2I0uSc/3k4GdpDGfhBxSMY4M9EokSGaKrE3OWQvSUa8IO
-	 pI3YWjXMWlYGdbcpDgm8v00Css1/YFgjb92YNoqUR+ZlI/Ad69HiIqJFUoztdISXOr
-	 nxm/Eu95bQ6ujGTyf+POioAxOQ2u17mQTB8y8EiQ=
+	b=lnnXZ0Th6t+K4zrNhsqYkSDZD6T3OCXsY/MnOFbHh8QfsMrrplhnDNz2+udu6rBJF
+	 M5X7U/belHgc+x3MNfbOzk2aPxXs1jgfP2xLOPpXT9WC7sk5eDI3YNfN3r74RSkbK5
+	 6ukDzmmAF7IH8yzFuPbvMXIvBh5wP8Fy4+E3w1nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 135/181] iio: adc: at91_adc: fix possible memory leak in at91_adc_allocate_trigger()
-Date: Wed, 23 Nov 2022 09:51:38 +0100
-Message-Id: <20221123084608.173991911@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 126/181] USB: serial: option: add Sierra Wireless EM9191
+Date: Wed, 23 Nov 2022 09:51:29 +0100
+Message-Id: <20221123084607.822432490@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,37 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-commit 65f20301607d07ee279b0804d11a05a62a6c1a1c upstream.
+commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
 
-If iio_trigger_register() returns error, it should call iio_trigger_free()
-to give up the reference that hold in iio_trigger_alloc(), so that it can
-call iio_trig_release() to free memory when the refcount hit to 0.
+Add support for the AT and diag ports, similar to other qualcomm SDX55
+modems. In QDL mode, the modem uses a different device ID and support
+is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
+add EM9191 QDL support").
 
-Fixes: 0e589d5fb317 ("ARM: AT91: IIO: Add AT91 ADC driver.")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221024084511.815096-1-yangyingliang@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1199 ProdID=90d3 Rev=00.06
+S:  Manufacturer=Sierra Wireless, Incorporated
+S:  Product=Sierra Wireless EM9191
+S:  SerialNumber=xxxxxxxxxxxxxxxx
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
+
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91_adc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iio/adc/at91_adc.c
-+++ b/drivers/iio/adc/at91_adc.c
-@@ -634,8 +634,10 @@ static struct iio_trigger *at91_adc_allo
- 	trig->ops = &at91_adc_trigger_ops;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -581,6 +581,9 @@ static void option_instat_callback(struc
+ #define OPPO_VENDOR_ID				0x22d9
+ #define OPPO_PRODUCT_R11			0x276c
  
- 	ret = iio_trigger_register(trig);
--	if (ret)
-+	if (ret) {
-+		iio_trigger_free(trig);
- 		return NULL;
-+	}
++/* Sierra Wireless products */
++#define SIERRA_VENDOR_ID			0x1199
++#define SIERRA_PRODUCT_EM9191			0x90d3
  
- 	return trig;
- }
+ /* Device flags */
+ 
+@@ -2176,6 +2179,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
