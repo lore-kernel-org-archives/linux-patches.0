@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203ED1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FBDC433D6;
-	Wed, 23 Nov 2022 09:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9B21C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5718CC433C1;
+	Wed, 23 Nov 2022 09:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195925;
-	bh=XNr6piV8rUDhJsvcUY05dK3XOn0SRftBcFMhZIEVIeI=;
+	s=korg; t=1669195928;
+	bh=oWs3w9zt/d0RNVKLhNxAd9+8zd5bWXyzfBcS66LyqMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEJj0cG/JTD6gxKrVk2dDK6O/NG43sWG1E6882ltt2Nl8RregN1UpxqBJxTgW6RcK
-	 GjnhIzkF9BOkkbR0nnrgrA5aJcpCyBhIH2IqJY2O0E6glKm54jcCB/+aEX3StWnkzo
-	 YLGgPf/gWiUN7zXAe/B0DQ1sddDv1D5JGyv+SDdE=
+	b=nGTtel7FNl65/smiCr0OJRNkJBxBuQV8B0HW2iiy9+9uSWkjfMzEr15vgOoDWPvBP
+	 ZBjKv/LD1owwaBNV3DKt6yIKdd3s4Zg9DtfsdR1R4/RgodeVWsbVH6sRVdm3Jj6rT8
+	 pyrzOb81a0x6Ka00E05fGA8WMTABVKZ5nRI9/tD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/181] ata: libata-transport: fix double ata_host_put() in ata_tport_add()
-Date: Wed, 23 Nov 2022 09:50:34 +0100
-Message-Id: <20221123084605.425167392@linuxfoundation.org>
+Subject: [PATCH 5.15 072/181] ata: libata-transport: fix error handling in ata_tport_add()
+Date: Wed, 23 Nov 2022 09:50:35 +0100
+Message-Id: <20221123084605.470956531@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,62 +37,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8c76310740807ade5ecdab5888f70ecb6d35732e ]
+[ Upstream commit 3613dbe3909dcc637fe6be00e4dc43b4aa0470ee ]
 
-In the error path in ata_tport_add(), when calling put_device(),
-ata_tport_release() is called, it will put the refcount of 'ap->host'.
+In ata_tport_add(), the return value of transport_add_device() is
+not checked. As a result, it causes null-ptr-deref while removing
+the module, because transport_remove_device() is called to remove
+the device that was not added.
 
-And then ata_host_put() is called again, the refcount is decreased
-to 0, ata_host_release() is called, all ports are freed and set to
-null.
-
-When unbinding the device after failure, ata_host_stop() is called
-to release the resources, it leads a null-ptr-deref(), because all
-the ports all freed and null.
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-CPU: 7 PID: 18671 Comm: modprobe Kdump: loaded Tainted: G            E      6.1.0-rc3+ #8
-pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : ata_host_stop+0x3c/0x84 [libata]
-lr : release_nodes+0x64/0xd0
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+CPU: 12 PID: 13605 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #8
+pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x48/0x39c
+lr : device_del+0x44/0x39c
 Call trace:
- ata_host_stop+0x3c/0x84 [libata]
- release_nodes+0x64/0xd0
- devres_release_all+0xbc/0x1b0
- device_unbind_cleanup+0x20/0x70
- really_probe+0x158/0x320
- __driver_probe_device+0x84/0x120
- driver_probe_device+0x44/0x120
- __driver_attach+0xb4/0x220
- bus_for_each_dev+0x78/0xdc
- driver_attach+0x2c/0x40
- bus_add_driver+0x184/0x240
- driver_register+0x80/0x13c
- __pci_register_driver+0x4c/0x60
- ahci_pci_driver_init+0x30/0x1000 [ahci]
+ device_del+0x48/0x39c
+ attribute_container_class_device_del+0x28/0x40
+ transport_remove_classdev+0x60/0x7c
+ attribute_container_device_trigger+0x118/0x120
+ transport_remove_device+0x20/0x30
+ ata_tport_delete+0x34/0x60 [libata]
+ ata_port_detach+0x148/0x1b0 [libata]
+ ata_pci_remove_one+0x50/0x80 [libata]
+ ahci_remove_one+0x4c/0x8c [ahci]
 
-Fix this by removing redundant ata_host_put() in the error path.
+Fix this by checking and handling return value of transport_add_device()
+in ata_tport_add().
 
-Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Fixes: d9027470b886 ("[libata] Add ATA transport class")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-transport.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/ata/libata-transport.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
-index 93d6920cd86c..2b1e3403570c 100644
+index 2b1e3403570c..3dd3b2543086 100644
 --- a/drivers/ata/libata-transport.c
 +++ b/drivers/ata/libata-transport.c
-@@ -317,7 +317,6 @@ int ata_tport_add(struct device *parent,
-  tport_err:
- 	transport_destroy_device(dev);
- 	put_device(dev);
--	ata_host_put(ap->host);
- 	return error;
- }
+@@ -301,7 +301,9 @@ int ata_tport_add(struct device *parent,
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_forbid(dev);
  
+-	transport_add_device(dev);
++	error = transport_add_device(dev);
++	if (error)
++		goto tport_transport_add_err;
+ 	transport_configure_device(dev);
+ 
+ 	error = ata_tlink_add(&ap->link);
+@@ -312,6 +314,7 @@ int ata_tport_add(struct device *parent,
+ 
+  tport_link_err:
+ 	transport_remove_device(dev);
++ tport_transport_add_err:
+ 	device_del(dev);
+ 
+  tport_err:
 -- 
 2.35.1
 
