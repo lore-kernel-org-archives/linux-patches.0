@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA741C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A5EC433D6;
-	Wed, 23 Nov 2022 09:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747461C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4114C433D7;
+	Wed, 23 Nov 2022 09:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197102;
-	bh=4jyIn4YoUOj/Xcn3qfyKUaQfbIVvRlVpgVTshiyEAv4=;
+	s=korg; t=1669197106;
+	bh=42fREDXtixX5TmXMaOKDZj/4zOqal5lcLcf3aWuZGjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZF5Sw4EjWmqN0BgdXnQomLuBBcZKJRKgS5vczPQpbfKH06Z81e+XyJCtOyMyFuqC
-	 PhERpQNAT6vWdQWNh/Hs2XRMCrWJeyJ1TNZLQwvKotuSSvFwzOrvzjB5R5bUezENgH
-	 1g213Of1C4x84mV6Ylcq5J6jVaNYCd8GAE0pWzWA=
+	b=UuJDJ5vIFlCkEdaqkAMaUpN7opOF/9ZhakfB2FAFhjyN4VvMOJem4xcOKBW1wdHnB
+	 ziYebBLP/b/x+AYP17m5DPdLMWuse5b/zo8FDfSxl8roLZN2aHjoR3fnsu7K4QaN9B
+	 m1Mh/o4InqNckIohnQpfKbIFwZtBDFSDIjhdC3i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com,
-	shaozhengchao <shaozhengchao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Tom Herbert <tom@herbertland.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 171/314] kcm: close race conditions on sk_receive_queue
-Date: Wed, 23 Nov 2022 09:50:16 +0100
-Message-Id: <20221123084633.316460482@linuxfoundation.org>
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 198/314] ftrace: Fix null pointer dereference in ftrace_add_mod()
+Date: Wed, 23 Nov 2022 09:50:43 +0100
+Message-Id: <20221123084634.525363408@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -38,166 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 5121197ecc5db58c07da95eb1ff82b98b121a221 ]
+commit 19ba6c8af9382c4c05dc6a0a79af3013b9a35cd0 upstream.
 
-sk->sk_receive_queue is protected by skb queue lock, but for KCM
-sockets its RX path takes mux->rx_lock to protect more than just
-skb queue. However, kcm_recvmsg() still only grabs the skb queue
-lock, so race conditions still exist.
+The @ftrace_mod is allocated by kzalloc(), so both the members {prev,next}
+of @ftrace_mode->list are NULL, it's not a valid state to call list_del().
+If kstrdup() for @ftrace_mod->{func|module} fails, it goes to @out_free
+tag and calls free_ftrace_mod() to destroy @ftrace_mod, then list_del()
+will write prev->next and next->prev, where null pointer dereference
+happens.
 
-We can teach kcm_recvmsg() to grab mux->rx_lock too but this would
-introduce a potential performance regression as struct kcm_mux can
-be shared by multiple KCM sockets.
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+Oops: 0002 [#1] PREEMPT SMP NOPTI
+Call Trace:
+ <TASK>
+ ftrace_mod_callback+0x20d/0x220
+ ? do_filp_open+0xd9/0x140
+ ftrace_process_regex.isra.51+0xbf/0x130
+ ftrace_regex_write.isra.52.part.53+0x6e/0x90
+ vfs_write+0xee/0x3a0
+ ? __audit_filter_op+0xb1/0x100
+ ? auditd_test_task+0x38/0x50
+ ksys_write+0xa5/0xe0
+ do_syscall_64+0x3a/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Kernel panic - not syncing: Fatal exception
 
-So we have to enforce skb queue lock in requeue_rx_msgs() and handle
-skb peek case carefully in kcm_wait_data(). Fortunately,
-skb_recv_datagram() already handles it nicely and is widely used by
-other sockets, we can just switch to skb_recv_datagram() after
-getting rid of the unnecessary sock lock in kcm_recvmsg() and
-kcm_splice_read(). Side note: SOCK_DONE is not used by KCM sockets,
-so it is safe to get rid of this check too.
+So call INIT_LIST_HEAD() to initialize the list member to fix this issue.
 
-I ran the original syzbot reproducer for 30 min without seeing any
-issue.
+Link: https://lkml.kernel.org/r/20221116015207.30858-1-xiujianfeng@huawei.com
 
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com
-Reported-by: shaozhengchao <shaozhengchao@huawei.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Link: https://lore.kernel.org/r/20221114005119.597905-1-xiyou.wangcong@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 673feb9d76ab ("ftrace: Add :mod: caching infrastructure to trace_array")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c | 58 +++++------------------------------------------
- 1 file changed, 6 insertions(+), 52 deletions(-)
+ kernel/trace/ftrace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index befc62606cdf..9e4b40a30a72 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -222,7 +222,7 @@ static void requeue_rx_msgs(struct kcm_mux *mux, struct sk_buff_head *head)
- 	struct sk_buff *skb;
- 	struct kcm_sock *kcm;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1289,6 +1289,7 @@ static int ftrace_add_mod(struct trace_a
+ 	if (!ftrace_mod)
+ 		return -ENOMEM;
  
--	while ((skb = __skb_dequeue(head))) {
-+	while ((skb = skb_dequeue(head))) {
- 		/* Reset destructor to avoid calling kcm_rcv_ready */
- 		skb->destructor = sock_rfree;
- 		skb_orphan(skb);
-@@ -1085,53 +1085,17 @@ static int kcm_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	return err;
- }
- 
--static struct sk_buff *kcm_wait_data(struct sock *sk, int flags,
--				     long timeo, int *err)
--{
--	struct sk_buff *skb;
--
--	while (!(skb = skb_peek(&sk->sk_receive_queue))) {
--		if (sk->sk_err) {
--			*err = sock_error(sk);
--			return NULL;
--		}
--
--		if (sock_flag(sk, SOCK_DONE))
--			return NULL;
--
--		if ((flags & MSG_DONTWAIT) || !timeo) {
--			*err = -EAGAIN;
--			return NULL;
--		}
--
--		sk_wait_data(sk, &timeo, NULL);
--
--		/* Handle signals */
--		if (signal_pending(current)) {
--			*err = sock_intr_errno(timeo);
--			return NULL;
--		}
--	}
--
--	return skb;
--}
--
- static int kcm_recvmsg(struct socket *sock, struct msghdr *msg,
- 		       size_t len, int flags)
- {
- 	struct sock *sk = sock->sk;
- 	struct kcm_sock *kcm = kcm_sk(sk);
- 	int err = 0;
--	long timeo;
- 	struct strp_msg *stm;
- 	int copied = 0;
- 	struct sk_buff *skb;
- 
--	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
--
--	lock_sock(sk);
--
--	skb = kcm_wait_data(sk, flags, timeo, &err);
-+	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb)
- 		goto out;
- 
-@@ -1162,14 +1126,11 @@ static int kcm_recvmsg(struct socket *sock, struct msghdr *msg,
- 			/* Finished with message */
- 			msg->msg_flags |= MSG_EOR;
- 			KCM_STATS_INCR(kcm->stats.rx_msgs);
--			skb_unlink(skb, &sk->sk_receive_queue);
--			kfree_skb(skb);
- 		}
- 	}
- 
- out:
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return copied ? : err;
- }
- 
-@@ -1179,7 +1140,6 @@ static ssize_t kcm_splice_read(struct socket *sock, loff_t *ppos,
- {
- 	struct sock *sk = sock->sk;
- 	struct kcm_sock *kcm = kcm_sk(sk);
--	long timeo;
- 	struct strp_msg *stm;
- 	int err = 0;
- 	ssize_t copied;
-@@ -1187,11 +1147,7 @@ static ssize_t kcm_splice_read(struct socket *sock, loff_t *ppos,
- 
- 	/* Only support splice for SOCKSEQPACKET */
- 
--	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
--
--	lock_sock(sk);
--
--	skb = kcm_wait_data(sk, flags, timeo, &err);
-+	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb)
- 		goto err_out;
- 
-@@ -1219,13 +1175,11 @@ static ssize_t kcm_splice_read(struct socket *sock, loff_t *ppos,
- 	 * finish reading the message.
- 	 */
- 
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return copied;
- 
- err_out:
--	release_sock(sk);
--
-+	skb_free_datagram(sk, skb);
- 	return err;
- }
- 
--- 
-2.35.1
-
++	INIT_LIST_HEAD(&ftrace_mod->list);
+ 	ftrace_mod->func = kstrdup(func, GFP_KERNEL);
+ 	ftrace_mod->module = kstrdup(module, GFP_KERNEL);
+ 	ftrace_mod->enable = enable;
 
 
