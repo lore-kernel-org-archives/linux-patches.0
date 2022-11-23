@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B51D1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DCEC433C1;
-	Wed, 23 Nov 2022 09:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5B31C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108FEC433D7;
+	Wed, 23 Nov 2022 09:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196767;
-	bh=WsIXFVNRibSQwsGOSyuuuzOYe11bjJTPVln2nNz7kfs=;
+	s=korg; t=1669196771;
+	bh=nUgVtyji8d859Dq3JmyqfBxK74MViQFLGRGxRF/n8sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eC1Fin1WnAWAQ7pEdA4gEQXJreVyimucIQGYxWy54MUVWp/004cX6tyue3DUjaM0u
-	 LfbmZW+gb9f7u5DUAlGm500CAf94Qwduisr1lF1X7gxPX6zS7Lm1KC2oEDRCGlPAdo
-	 oVPP/PEYc0xkEF5nKE4BKL87B6NokKgxDyibPf7o=
+	b=mKgdg+BeiMTd5e9vv4oSEwmOJZBI3cMqkVwGb2LeQS9Ciu3BMMZT6SigXskAGZOws
+	 SOPbrT9fMr7hFQz/vrv7gQbIOOhyfphsVS1yS5KwsY6GG4/6dZADs1qRwQ5gVy3X68
+	 z1uPvSiyCRM4yo7jYT1i55tAVal6xsdwofwFU2co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 119/314] pinctrl: mediatek: common-v2: Fix bias-disable for PULL_PU_PD_RSEL_TYPE
-Date: Wed, 23 Nov 2022 09:49:24 +0100
-Message-Id: <20221123084630.900296046@linuxfoundation.org>
+Subject: [PATCH 6.0 120/314] arm64: Fix bit-shifting UB in the MIDR_CPU_MODEL() macro
+Date: Wed, 23 Nov 2022 09:49:25 +0100
+Message-Id: <20221123084630.950623370@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,58 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-[ Upstream commit fed74d75277da865da9ba334d3f5d5e3e327971d ]
+[ Upstream commit 8ec8490a1950efeccb00967698cf7cb2fcd25ca7 ]
 
-In pinctrl-paris we're calling the .bias_set_combo() callback when we
-are asked to set the pin bias to either pull up/down or pull disable.
+CONFIG_UBSAN_SHIFT with gcc-5 complains that the shifting of
+ARM_CPU_IMP_AMPERE (0xC0) into bits [31:24] by MIDR_CPU_MODEL() is
+undefined behavior. Well, sort of, it actually spells the error as:
 
-On newer platforms, this callback is mtk_pinconf_bias_set_combo(),
-located in pinctrl-mtk-common-v2.c: this will check the "pull type"
-assigned to the requested pin and in case said pin's pull type is
-MTK_PULL_PU_PD_RSEL_TYPE, this function will set RSEL first, PUPD
-last, which is fine.
+ arch/arm64/kernel/proton-pack.c: In function 'spectre_bhb_loop_affected':
+ arch/arm64/include/asm/cputype.h:44:2: error: initializer element is not constant
+   (((imp)   << MIDR_IMPLEMENTOR_SHIFT) | \
+   ^
 
-The issue comes when we're requesting PIN_CONFIG_BIAS_DISABLE, as
-this does *not* require setting RSEL but only PU_PD: in this case,
-the arg is MTK_DISABLE (zero), which is not a supported RSEL, due
-to which function mtk_pinconf_bias_set_rsel() returns a failure;
-because of that, mtk_pinconf_bias_set_pu_pd() is never called,
-hence the pin bias is never set to DISABLE.
+This isn't an issue for other Implementor codes, as all the other codes
+have zero in the top bit and so are representable as a signed int.
 
-To fix this issue, add a check to mtk_pinconf_bias_set_rsel(): if
-we are entering that function with no pullup requested and at the
-same time the arg is MTK_DISABLE, this means that we're trying to
-disable pin bias, hence it's safe to return cleanly without ever
-setting any RSEL register.
-This makes mtk_pinconf_bias_set_combo() happy, going on with setting
-the PU_PD registers, which is the only action to actually take to
-disable bias on a pin/pingroup.
+Cast the implementor code to unsigned in MIDR_CPU_MODEL to remove the
+undefined behavior.
 
-Fixes: fb34a9ae383a ("pinctrl: mediatek: support rsel feature")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221104105605.33720-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 0e5d5ae837c8 ("arm64: Add AMPERE1 to the Spectre-BHB affected list")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/20221102160106.1096948-1-scott@os.amperecomputing.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/cputype.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-index e1ae3beb9f72..b7921b59eb7b 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-@@ -709,6 +709,9 @@ static int mtk_pinconf_bias_set_rsel(struct mtk_pinctrl *hw,
- {
- 	int err, rsel_val;
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index abc418650fec..65e53ef5a396 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -41,7 +41,7 @@
+ 	(((midr) & MIDR_IMPLEMENTOR_MASK) >> MIDR_IMPLEMENTOR_SHIFT)
  
-+	if (!pullup && arg == MTK_DISABLE)
-+		return 0;
-+
- 	if (hw->rsel_si_unit) {
- 		/* find pin rsel_index from pin_rsel array*/
- 		err = mtk_hw_pin_rsel_lookup(hw, desc, pullup, arg, &rsel_val);
+ #define MIDR_CPU_MODEL(imp, partnum) \
+-	(((imp)			<< MIDR_IMPLEMENTOR_SHIFT) | \
++	((_AT(u32, imp)		<< MIDR_IMPLEMENTOR_SHIFT) | \
+ 	(0xf			<< MIDR_ARCHITECTURE_SHIFT) | \
+ 	((partnum)		<< MIDR_PARTNUM_SHIFT))
+ 
 -- 
 2.35.1
 
