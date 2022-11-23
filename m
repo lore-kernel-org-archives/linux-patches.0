@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950361C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8437C433C1;
-	Wed, 23 Nov 2022 09:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C4D1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A3DC433C1;
+	Wed, 23 Nov 2022 09:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197439;
-	bh=1Y85/qbE2VCOCC/FjniRLCR9P5aXyrkBUhUeFcJ+cIo=;
+	s=korg; t=1669197443;
+	bh=MFevkjK4Km5E5MgdatlZan6/En6MRZnPBJO5ogmUvr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBMxVhxqIENfsMPPtOsEHOHhhcsSjzt/GebzYBSspMdNABu+uHeaEnkFXjVSDbRuL
-	 UgH9RWatbYa68ZTu7wo4nFYMPxkndWPmyke+g4i8foA6sj0U8L55sRe4Rx1GztXIS+
-	 ukQFQjyR70yYYDNO0oj/mmOholuzpp2EtWltDznE=
+	b=YWmsYsxU5nEOkcBFN1LXrg6qHvvqF64O4Aw/cle1QWdZ9euU7iioflSczLBiMMnCZ
+	 NGcnXBxI/85HjXcGc4ymSXppmcON3kaiMIwqF1GiHivIt2RA4nbmxGjryXheqhyWLB
+	 Zo4l+9AiIgkwJj+dfOe5ZCbg47lli8P+TT/OvoCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Li Huafei <lihuafei1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 294/314] kprobes: Skip clearing aggrprobes post_handler in kprobe-on-ftrace case
-Date: Wed, 23 Nov 2022 09:52:19 +0100
-Message-Id: <20221123084638.858501138@linuxfoundation.org>
+Subject: [PATCH 6.0 295/314] tracing: Fix potential null-pointer-access of entry in list tr->err_log
+Date: Wed, 23 Nov 2022 09:52:20 +0100
+Message-Id: <20221123084638.893376943@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,72 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 5dd7caf0bdc5d0bae7cf9776b4d739fb09bd5ebb ]
+[ Upstream commit 067df9e0ad48a97382ab2179bbe773a13a846028 ]
 
-In __unregister_kprobe_top(), if the currently unregistered probe has
-post_handler but other child probes of the aggrprobe do not have
-post_handler, the post_handler of the aggrprobe is cleared. If this is
-a ftrace-based probe, there is a problem. In later calls to
-disarm_kprobe(), we will use kprobe_ftrace_ops because post_handler is
-NULL. But we're armed with kprobe_ipmodify_ops. This triggers a WARN in
-__disarm_kprobe_ftrace() and may even cause use-after-free:
+Entries in list 'tr->err_log' will be reused after entry number
+exceed TRACING_LOG_ERRS_MAX.
 
-  Failed to disarm kprobe-ftrace at kernel_clone+0x0/0x3c0 (error -2)
-  WARNING: CPU: 5 PID: 137 at kernel/kprobes.c:1135 __disarm_kprobe_ftrace.isra.21+0xcf/0xe0
-  Modules linked in: testKprobe_007(-)
-  CPU: 5 PID: 137 Comm: rmmod Not tainted 6.1.0-rc4-dirty #18
-  [...]
-  Call Trace:
-   <TASK>
-   __disable_kprobe+0xcd/0xe0
-   __unregister_kprobe_top+0x12/0x150
-   ? mutex_lock+0xe/0x30
-   unregister_kprobes.part.23+0x31/0xa0
-   unregister_kprobe+0x32/0x40
-   __x64_sys_delete_module+0x15e/0x260
-   ? do_user_addr_fault+0x2cd/0x6b0
-   do_syscall_64+0x3a/0x90
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-   [...]
+The cmd string of the to be reused entry will be freed first then
+allocated a new one. If the allocation failed, then the entry will
+still be in list 'tr->err_log' but its 'cmd' field is set to be NULL,
+later access of 'cmd' is risky.
 
-For the kprobe-on-ftrace case, we keep the post_handler setting to
-identify this aggrprobe armed with kprobe_ipmodify_ops. This way we
-can disarm it correctly.
+Currently above problem can cause the loss of 'cmd' information of first
+entry in 'tr->err_log'. When execute `cat /sys/kernel/tracing/error_log`,
+reproduce logs like:
+  [   37.495100] trace_kprobe: error: Maxactive is not for kprobe(null) ^
+  [   38.412517] trace_kprobe: error: Maxactive is not for kprobe
+    Command: p4:myprobe2 do_sys_openat2
+            ^
 
-Link: https://lore.kernel.org/all/20221112070000.35299-1-lihuafei1@huawei.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20221114104632.3547266-1-zhengyejian1@huawei.com
 
-Fixes: 0bc11ed5ab60 ("kprobes: Allow kprobes coexist with livepatch")
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Suggested-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Fixes: 1581a884b7ca ("tracing: Remove size restriction on tracing_log_err cmd strings")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 917b92ae2382..6d2a8623ec7b 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1762,7 +1762,13 @@ static int __unregister_kprobe_top(struct kprobe *p)
- 				if ((list_p != p) && (list_p->post_handler))
- 					goto noclean;
- 			}
--			ap->post_handler = NULL;
-+			/*
-+			 * For the kprobe-on-ftrace case, we keep the
-+			 * post_handler setting to identify this aggrprobe
-+			 * armed with kprobe_ipmodify_ops.
-+			 */
-+			if (!kprobe_ftrace(ap))
-+				ap->post_handler = NULL;
- 		}
- noclean:
- 		/*
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 87d2f04152f9..7132e21e90d6 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7803,6 +7803,7 @@ static struct tracing_log_err *get_tracing_log_err(struct trace_array *tr,
+ 						   int len)
+ {
+ 	struct tracing_log_err *err;
++	char *cmd;
+ 
+ 	if (tr->n_err_log_entries < TRACING_LOG_ERRS_MAX) {
+ 		err = alloc_tracing_log_err(len);
+@@ -7811,12 +7812,12 @@ static struct tracing_log_err *get_tracing_log_err(struct trace_array *tr,
+ 
+ 		return err;
+ 	}
+-
++	cmd = kzalloc(len, GFP_KERNEL);
++	if (!cmd)
++		return ERR_PTR(-ENOMEM);
+ 	err = list_first_entry(&tr->err_log, struct tracing_log_err, list);
+ 	kfree(err->cmd);
+-	err->cmd = kzalloc(len, GFP_KERNEL);
+-	if (!err->cmd)
+-		return ERR_PTR(-ENOMEM);
++	err->cmd = cmd;
+ 	list_del(&err->list);
+ 
+ 	return err;
 -- 
 2.35.1
 
