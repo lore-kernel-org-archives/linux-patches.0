@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC3B7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80951C433D7;
-	Wed, 23 Nov 2022 08:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B17B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF0C433D7;
+	Wed, 23 Nov 2022 08:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193707;
-	bh=ij8juvv4FstSuNIkvApUI6B+mItvPDb7rOWGapS3THg=;
+	s=korg; t=1669193710;
+	bh=2+lgQz+aViiWigOWhhtGoXwEEgqQVI0YSc5X9fCSB2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjJD7olH5A3FKkn4DSGXUKG9zo4EdD0cfx+Hf9H6okTQGqxN1+gMypZSHUGMMjezz
-	 KaYiyEAaM4LxxEf7pQysd8yfEuJXBoANTe8my619byrUQSb12qLpOCFWKLEY3P/aou
-	 VFCWw7jOVYHohRe9Lfam5hJMUs3ifVhM3w9l2Vg0=
+	b=p1dRhfXUyclDaV1JNvwN9iJ1f0YnG1qzkjW6afXZpfHwKtMk70zZGdtoYGXsmd9Li
+	 eTpPu0Yc8aTCDBxp0cyWcVO1Z/sJv7JmK3qt6gNXAFNmnIcU8pOpq+QkV7F/5TssIY
+	 ZszqbvE6qMK0dzDOUAciofeLxIECzmovONCfmPOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 39/76] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
-Date: Wed, 23 Nov 2022 09:50:38 +0100
-Message-Id: <20221123084548.016139201@linuxfoundation.org>
+Subject: [PATCH 4.9 40/76] mISDN: fix possible memory leak in mISDN_dsp_element_register()
+Date: Wed, 23 Nov 2022 09:50:39 +0100
+Message-Id: <20221123084548.051063600@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,45 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
+[ Upstream commit 98a2ac1ca8fd6eca6867726fe238d06e75eb1acd ]
 
-Here is the BUG report by KASAN about null pointer dereference:
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+use put_device() to give up the reference, so that the name can be
+freed in kobject_cleanup() when the refcount is 0.
 
-BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
-Read of size 1 at addr 0000000000000000 by task python3/2640
-Call Trace:
- strcmp
- __of_find_property
- of_find_property
- pinctrl_dt_to_map
+The 'entry' is going to be freed in mISDN_dsp_dev_release(), so the
+kfree() is removed. list_del() is called in mISDN_dsp_dev_release(),
+so it need be initialized.
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-So directly return ENOMEM, if kasprintf() return NULL pointer.
-
-Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109132832.3270119-1-yangyingliang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/devicetree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/isdn/mISDN/dsp_pipeline.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index d32aedfc6dd0..29f8abffe99f 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -207,6 +207,8 @@ int pinctrl_dt_to_map(struct pinctrl *p)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
-+		if (!propname)
-+			return -ENOMEM;
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
+diff --git a/drivers/isdn/mISDN/dsp_pipeline.c b/drivers/isdn/mISDN/dsp_pipeline.c
+index e72b4e73cd61..796cae691560 100644
+--- a/drivers/isdn/mISDN/dsp_pipeline.c
++++ b/drivers/isdn/mISDN/dsp_pipeline.c
+@@ -97,6 +97,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
+ 	if (!entry)
+ 		return -ENOMEM;
+ 
++	INIT_LIST_HEAD(&entry->list);
+ 	entry->elem = elem;
+ 
+ 	entry->dev.class = elements_class;
+@@ -131,7 +132,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
+ 	device_unregister(&entry->dev);
+ 	return ret;
+ err1:
+-	kfree(entry);
++	put_device(&entry->dev);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(mISDN_dsp_element_register);
 -- 
 2.35.1
 
