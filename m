@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9B01C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:44:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F041CC433D6;
-	Wed, 23 Nov 2022 09:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91BD1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34137C433D7;
+	Wed, 23 Nov 2022 09:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196694;
-	bh=/wrEyLTVPqyePPP+3Umh8BzYv8dk/a6tdOLia5W7AWQ=;
+	s=korg; t=1669196698;
+	bh=zlrVVZ1NsxJDlfGE4DmZDf4BrpLtn+E+pd/O+s4YzOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uc5KtkITGXhhT4QhVsJUxOJSfTJjtsWrLsrunOqiTxfa7VEohD6qqz8SM7PsaGslX
-	 iUHRtggUrM6w43/oiiGzCyKhClTI1EcB/Clt9QXwWGGvOZm1g03xxlkBduV7Jl500N
-	 S7OUbYE6MwLG7vkzTdwSof2K1G/s/u2MB1RKXI/4=
+	b=qYpbaXOUD5OzpUiM4sqdlAq0oWzYZyF4oa5lZhpGrMQ45ZSKG3aYUrdJFnHgaVrmH
+	 NqRmJlGO4Yvfkk1gazqPDhEAI52ifuT3lib5UX4IaCFwxbkiDi6dwnIbjJ2C5L5xIt
+	 4LWU9gYxxplUOCQaC9p9BrKxce3mlY6mXwTZA/IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 071/314] arm64: dts: qcom: ipq8074: correct APCS register space size
-Date: Wed, 23 Nov 2022 09:48:36 +0100
-Message-Id: <20221123084628.704773615@linuxfoundation.org>
+Subject: [PATCH 6.0 098/314] serial: 8250: omap: Flush PM QOS work on remove
+Date: Wed, 23 Nov 2022 09:49:03 +0100
+Message-Id: <20221123084629.949600634@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,40 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 40b21d466a86bd5b10d24f59746ed41283a9b3f6 ]
+[ Upstream commit d0b68629bd2fb61e0171a62f2e8da3db322f5cf6 ]
 
-APCS DTS addition that was merged, was not supposed to get merged as it
-was part of patch series that was superseded by 2 more patch series
-that resolved issues with this one and greatly simplified things.
+Rebinding 8250_omap in a loop will at some point produce a warning for
+kernel/power/qos.c:296 cpu_latency_qos_update_request() with error
+"cpu_latency_qos_update_request called for unknown object". Let's flush
+the possibly pending PM QOS work scheduled from omap8250_runtime_suspend()
+before we disable runtime PM.
 
-Since it already got merged, start by correcting the register space
-size as APCS will not be providing regmap for PLL and it will conflict
-with the standalone A53 PLL node.
-
-Fixes: 50ed9fffec3a ("arm64: dts: qcom: ipq8074: add APCS node")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220818220628.339366-8-robimarko@gmail.com
+Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221028110044.54719-1-tony@atomide.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index b9bf43215ada..79351c6157ea 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -668,7 +668,7 @@ watchdog: watchdog@b017000 {
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 3ba1526ccd20..b96fbf8d31df 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1469,6 +1469,7 @@ static int omap8250_remove(struct platform_device *pdev)
  
- 		apcs_glb: mailbox@b111000 {
- 			compatible = "qcom,ipq8074-apcs-apps-global";
--			reg = <0x0b111000 0x6000>;
-+			reg = <0x0b111000 0x1000>;
- 
- 			#clock-cells = <1>;
- 			#mbox-cells = <1>;
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
++	flush_work(&priv->qos_work);
+ 	pm_runtime_disable(&pdev->dev);
+ 	serial8250_unregister_port(priv->line);
+ 	cpu_latency_qos_remove_request(&priv->pm_qos_request);
 -- 
 2.35.1
 
