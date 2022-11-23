@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123451C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F66FC433D6;
-	Wed, 23 Nov 2022 09:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6BB1C33
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0222EC433C1;
+	Wed, 23 Nov 2022 09:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196994;
-	bh=Jau3y2sudsN1E+ARMnAzQIS/xvn7ldlaGKdO4aNb2EY=;
+	s=korg; t=1669196998;
+	bh=ud4z6vADdP4eLfxdSxz/cO9+WcvawO85qnZUMB5hkNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5j4x6v8P+XEJfvEz3VWCSTmeRXuZZhc/gjH3UO3YdiHKE4302oe2gqGNTwBMTw/c
-	 LwEcs9SHQ54LQ5nr/hIkx6aDvruy/eqU+FkqjCrk348/ENnBldjl0dUKVA56uJpPGF
-	 pIHSHA7Dfc74PLKn0JSa+JG6BaVYz4gPiop6W7rM=
+	b=bgsFyj+HOOWKEdIa27N4Lei2KJA+EIWMFgkVrJkXZk+2fU7Nrng4PMtfS32hxS3or
+	 D6ab+9xQWj/VJWFG9m8tigdeDWl5yug3yNlP4puZSYky6t66Q4vko98aoe4zxV3XUJ
+	 +OZo+Xi+DyJCTvwJJF/SLSCBWWI92s1dZJSJ4OTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 167/314] xen/pcpu: fix possible memory leak in register_pcpu()
-Date: Wed, 23 Nov 2022 09:50:12 +0100
-Message-Id: <20221123084633.141570166@linuxfoundation.org>
+Subject: [PATCH 6.0 139/314] ata: libata-transport: fix error handling in ata_tlink_add()
+Date: Wed, 23 Nov 2022 09:49:44 +0100
+Message-Id: <20221123084631.838298084@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,36 +37,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
+[ Upstream commit cf0816f6322c5c37ee52655f928e91ecf32da103 ]
 
-In device_add(), dev_set_name() is called to allocate name, if it returns
-error, the name need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
+In ata_tlink_add(), the return value of transport_add_device() is
+not checked. As a result, it causes null-ptr-deref while removing
+the module, because transport_remove_device() is called to remove
+the device that was not added.
 
-Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+CPU: 33 PID: 13850 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #12
+pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x48/0x39c
+lr : device_del+0x44/0x39c
+Call trace:
+ device_del+0x48/0x39c
+ attribute_container_class_device_del+0x28/0x40
+ transport_remove_classdev+0x60/0x7c
+ attribute_container_device_trigger+0x118/0x120
+ transport_remove_device+0x20/0x30
+ ata_tlink_delete+0x88/0xb0 [libata]
+ ata_tport_delete+0x2c/0x60 [libata]
+ ata_port_detach+0x148/0x1b0 [libata]
+ ata_pci_remove_one+0x50/0x80 [libata]
+ ahci_remove_one+0x4c/0x8c [ahci]
+
+Fix this by checking and handling return value of transport_add_device()
+in ata_tlink_add().
+
+Fixes: d9027470b886 ("[libata] Add ATA transport class")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/pcpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-transport.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
-index 47aa3a1ccaf5..fd3a644b0855 100644
---- a/drivers/xen/pcpu.c
-+++ b/drivers/xen/pcpu.c
-@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
- 
- 	err = device_register(dev);
- 	if (err) {
--		pcpu_release(dev);
-+		put_device(dev);
- 		return err;
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index ef53bdfbcbb2..aac9336e8153 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -458,7 +458,9 @@ int ata_tlink_add(struct ata_link *link)
+ 		goto tlink_err;
  	}
  
+-	transport_add_device(dev);
++	error = transport_add_device(dev);
++	if (error)
++		goto tlink_transport_err;
+ 	transport_configure_device(dev);
+ 
+ 	ata_for_each_dev(ata_dev, link, ALL) {
+@@ -473,6 +475,7 @@ int ata_tlink_add(struct ata_link *link)
+ 		ata_tdev_delete(ata_dev);
+ 	}
+ 	transport_remove_device(dev);
++  tlink_transport_err:
+ 	device_del(dev);
+   tlink_err:
+ 	transport_destroy_device(dev);
 -- 
 2.35.1
 
