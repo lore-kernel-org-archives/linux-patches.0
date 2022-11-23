@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE19B1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E38C433C1;
-	Wed, 23 Nov 2022 09:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAFE1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7553C433D6;
+	Wed, 23 Nov 2022 09:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195450;
-	bh=B6ZsIzFNVc1hIi1Xu/sy1XrxnPud0tnjwQVloDLXRCc=;
+	s=korg; t=1669195454;
+	bh=DJXZ58Qia/mujVLNLhDP8xMbLJ6eJy/f2sTwrkgyJAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlzvHHbEAlgsUTagGFxbaCgGjwuHK9qs6IZLUMPC1CtZV8WBxLs75Gcgt31bEBzN3
-	 xNllD9aoHK4uRViP3Zy4pwqoKRjy2B6cxi+citi6pcGdfnxXTSuFYEVgqi8SKk9aLA
-	 H0En6fPdePxIcLu7ccRtpitLVSJQc+orAkqKp3Os=
+	b=zvn6cJDqlABi+OQFQdO5eiOXDkc2uZqXHE4aRCU6ixKHFK8f0W8iX/Jfrs+zsAsPN
+	 ig82Ejx3Z6nzyezYjdSeNTudL+qD67KhKO2DfpVAEjDtvkZBPNJYIDpJjPf9qHM6d1
+	 DwQfGYvlXH51iOX7+N/suBy+ZZ45sWW0V/3dsdPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/149] ata: libata-transport: fix error handling in ata_tlink_add()
-Date: Wed, 23 Nov 2022 09:50:43 +0100
-Message-Id: <20221123084600.087753720@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	fengguang.wu@intel.com,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 087/149] tracing: Fix memory leak in test_gen_synth_cmd() and test_empty_synth_event()
+Date: Wed, 23 Nov 2022 09:51:10 +0100
+Message-Id: <20221123084601.107762734@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,68 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit cf0816f6322c5c37ee52655f928e91ecf32da103 ]
+commit a4527fef9afe5c903c718d0cd24609fe9c754250 upstream.
 
-In ata_tlink_add(), the return value of transport_add_device() is
-not checked. As a result, it causes null-ptr-deref while removing
-the module, because transport_remove_device() is called to remove
-the device that was not added.
+test_gen_synth_cmd() only free buf in fail path, hence buf will leak
+when there is no failure. Add kfree(buf) to prevent the memleak. The
+same reason and solution in test_empty_synth_event().
 
-Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
-CPU: 33 PID: 13850 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #12
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x48/0x39c
-lr : device_del+0x44/0x39c
-Call trace:
- device_del+0x48/0x39c
- attribute_container_class_device_del+0x28/0x40
- transport_remove_classdev+0x60/0x7c
- attribute_container_device_trigger+0x118/0x120
- transport_remove_device+0x20/0x30
- ata_tlink_delete+0x88/0xb0 [libata]
- ata_tport_delete+0x2c/0x60 [libata]
- ata_port_detach+0x148/0x1b0 [libata]
- ata_pci_remove_one+0x50/0x80 [libata]
- ahci_remove_one+0x4c/0x8c [ahci]
+unreferenced object 0xffff8881127de000 (size 2048):
+  comm "modprobe", pid 247, jiffies 4294972316 (age 78.756s)
+  hex dump (first 32 bytes):
+    20 67 65 6e 5f 73 79 6e 74 68 5f 74 65 73 74 20   gen_synth_test
+    20 70 69 64 5f 74 20 6e 65 78 74 5f 70 69 64 5f   pid_t next_pid_
+  backtrace:
+    [<000000004254801a>] kmalloc_trace+0x26/0x100
+    [<0000000039eb1cf5>] 0xffffffffa00083cd
+    [<000000000e8c3bc8>] 0xffffffffa00086ba
+    [<00000000c293d1ea>] do_one_initcall+0xdb/0x480
+    [<00000000aa189e6d>] do_init_module+0x1cf/0x680
+    [<00000000d513222b>] load_module+0x6a50/0x70a0
+    [<000000001fd4d529>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000b36c4c0f>] do_syscall_64+0x3f/0x90
+    [<00000000bbf20cf3>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+unreferenced object 0xffff8881127df000 (size 2048):
+  comm "modprobe", pid 247, jiffies 4294972324 (age 78.728s)
+  hex dump (first 32 bytes):
+    20 65 6d 70 74 79 5f 73 79 6e 74 68 5f 74 65 73   empty_synth_tes
+    74 20 20 70 69 64 5f 74 20 6e 65 78 74 5f 70 69  t  pid_t next_pi
+  backtrace:
+    [<000000004254801a>] kmalloc_trace+0x26/0x100
+    [<00000000d4db9a3d>] 0xffffffffa0008071
+    [<00000000c31354a5>] 0xffffffffa00086ce
+    [<00000000c293d1ea>] do_one_initcall+0xdb/0x480
+    [<00000000aa189e6d>] do_init_module+0x1cf/0x680
+    [<00000000d513222b>] load_module+0x6a50/0x70a0
+    [<000000001fd4d529>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000b36c4c0f>] do_syscall_64+0x3f/0x90
+    [<00000000bbf20cf3>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix this by checking and handling return value of transport_add_device()
-in ata_tlink_add().
+Link: https://lkml.kernel.org/r/20221117012346.22647-2-shangxiaojing@huawei.com
 
-Fixes: d9027470b886 ("[libata] Add ATA transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Cc: <fengguang.wu@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 9fe41efaca08 ("tracing: Add synth event generation test module")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-transport.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/synth_event_gen_test.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
-index da1b144d8288..e386e5f35015 100644
---- a/drivers/ata/libata-transport.c
-+++ b/drivers/ata/libata-transport.c
-@@ -428,7 +428,9 @@ int ata_tlink_add(struct ata_link *link)
- 		goto tlink_err;
- 	}
+--- a/kernel/trace/synth_event_gen_test.c
++++ b/kernel/trace/synth_event_gen_test.c
+@@ -120,15 +120,13 @@ static int __init test_gen_synth_cmd(voi
  
--	transport_add_device(dev);
-+	error = transport_add_device(dev);
-+	if (error)
-+		goto tlink_transport_err;
- 	transport_configure_device(dev);
+ 	/* Now generate a gen_synth_test event */
+ 	ret = synth_event_trace_array(gen_synth_test, vals, ARRAY_SIZE(vals));
+- out:
++ free:
++	kfree(buf);
+ 	return ret;
+  delete:
+ 	/* We got an error after creating the event, delete it */
+ 	synth_event_delete("gen_synth_test");
+- free:
+-	kfree(buf);
+-
+-	goto out;
++	goto free;
+ }
  
- 	ata_for_each_dev(ata_dev, link, ALL) {
-@@ -443,6 +445,7 @@ int ata_tlink_add(struct ata_link *link)
- 		ata_tdev_delete(ata_dev);
- 	}
- 	transport_remove_device(dev);
-+  tlink_transport_err:
- 	device_del(dev);
-   tlink_err:
- 	transport_destroy_device(dev);
--- 
-2.35.1
-
+ /*
+@@ -227,15 +225,13 @@ static int __init test_empty_synth_event
+ 
+ 	/* Now trace an empty_synth_test event */
+ 	ret = synth_event_trace_array(empty_synth_test, vals, ARRAY_SIZE(vals));
+- out:
++ free:
++	kfree(buf);
+ 	return ret;
+  delete:
+ 	/* We got an error after creating the event, delete it */
+ 	synth_event_delete("empty_synth_test");
+- free:
+-	kfree(buf);
+-
+-	goto out;
++	goto free;
+ }
+ 
+ static struct synth_field_desc create_synth_test_fields[] = {
 
 
