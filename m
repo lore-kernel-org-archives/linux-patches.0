@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E931C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A51FC433C1;
-	Wed, 23 Nov 2022 09:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A9C1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15085C433D6;
+	Wed, 23 Nov 2022 09:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197365;
-	bh=uq07HycUuh2aczJEPzhjUVLluB6NOHBwxU9ddSm4wSQ=;
+	s=korg; t=1669197368;
+	bh=HIrx8m6Fx5PlbrksYrqOPKEpKdAbJVbC/M3xeQpmUQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0KKNAn1bB0LJqFwAKIIlzexFHEcfh8OfnP9CGSz12J50MyTiGG62u/ZVtaRGqK7BH
-	 fjMKzWOhuSyu1FAtvlZdBxbLo9BN80aP6uaBxBKlVjqd0HKbQW9usSOdJoZAVoOTlu
-	 H3ckYyN6jE0fsmKG5/Wq8olZijfmsuryWWyBdHZI=
+	b=DyKyh14vL5ermabWBAWzpY0pmo9+ciVwWq1nbI1FkQ7vgkOx8RNDwT9Tii2SMuiHy
+	 LhzIMxx1+T+Ipo8TRQgC2ISUFvkZaY0n5/4xbYnJwrY7gVm7cGuwKOg9zzCbw7/27w
+	 AXr19pz/fxrpqActM2KJfjrZoyYYep48G6HAYTYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sven Peter <sven@svenpeter.dev>,
-	Eric Curtin <ecurtin@redhat.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
-Subject: [PATCH 6.0 243/314] usb: typec: tipd: Prevent uninitialized event{1,2} in IRQ handler
-Date: Wed, 23 Nov 2022 09:51:28 +0100
-Message-Id: <20221123084636.496667105@linuxfoundation.org>
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Robertson <dan@dlrobertson.com>,
+	Stable@vger.kernel.org
+Subject: [PATCH 6.0 244/314] iio: accel: bma400: Ensure VDDIO is enable defore reading the chip ID.
+Date: Wed, 23 Nov 2022 09:51:29 +0100
+Message-Id: <20221123084636.547800830@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,48 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-commit 6d8fc203b28ff8f6115fbe5eaf584de8b824f4fa upstream.
+commit 57572cacd36e6d4be7722d7770d23f4430219827 upstream.
 
-If reading TPS_REG_INT_EVENT1/2 fails in the interrupt handler event1
-and event2 may be uninitialized when they are used to determine
-IRQ_HANDLED vs. IRQ_NONE in the error path.
+The regulator enables were after the check on the chip variant, which was
+very unlikely to return a correct value when not powered.
+Presumably all the device anyone is testing on have a regulator that
+is already powered up when this code runs for reasons beyond the scope
+of this driver. Move the read call down a few lines.
 
-Fixes: c7260e29dd20 ("usb: typec: tipd: Add short-circuit for no irqs")
-Fixes: 45188f27b3d0 ("usb: typec: tipd: Add support for Apple CD321X")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Eric Curtin <ecurtin@redhat.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Guido Günther <agx@sigxcpu.org>
-Link: https://lore.kernel.org/r/20221102161542.30669-1-sven@svenpeter.dev
+Fixes: 3cf7ded15e40 ("iio: accel: bma400: basic regulator support")
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Dan Robertson <dan@dlrobertson.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221002144133.3771029-1-jic23@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/accel/bma400_core.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -474,7 +474,7 @@ static void tps6598x_handle_plug_event(s
- static irqreturn_t cd321x_interrupt(int irq, void *data)
- {
- 	struct tps6598x *tps = data;
--	u64 event;
-+	u64 event = 0;
- 	u32 status;
+--- a/drivers/iio/accel/bma400_core.c
++++ b/drivers/iio/accel/bma400_core.c
+@@ -737,18 +737,6 @@ static int bma400_init(struct bma400_dat
+ 	unsigned int val;
  	int ret;
  
-@@ -519,8 +519,8 @@ err_unlock:
- static irqreturn_t tps6598x_interrupt(int irq, void *data)
- {
- 	struct tps6598x *tps = data;
--	u64 event1;
--	u64 event2;
-+	u64 event1 = 0;
-+	u64 event2 = 0;
- 	u32 status;
- 	int ret;
+-	/* Try to read chip_id register. It must return 0x90. */
+-	ret = regmap_read(data->regmap, BMA400_CHIP_ID_REG, &val);
+-	if (ret) {
+-		dev_err(data->dev, "Failed to read chip id register\n");
+-		return ret;
+-	}
+-
+-	if (val != BMA400_ID_REG_VAL) {
+-		dev_err(data->dev, "Chip ID mismatch\n");
+-		return -ENODEV;
+-	}
+-
+ 	data->regulators[BMA400_VDD_REGULATOR].supply = "vdd";
+ 	data->regulators[BMA400_VDDIO_REGULATOR].supply = "vddio";
+ 	ret = devm_regulator_bulk_get(data->dev,
+@@ -774,6 +762,18 @@ static int bma400_init(struct bma400_dat
+ 	if (ret)
+ 		return ret;
  
++	/* Try to read chip_id register. It must return 0x90. */
++	ret = regmap_read(data->regmap, BMA400_CHIP_ID_REG, &val);
++	if (ret) {
++		dev_err(data->dev, "Failed to read chip id register\n");
++		return ret;
++	}
++
++	if (val != BMA400_ID_REG_VAL) {
++		dev_err(data->dev, "Chip ID mismatch\n");
++		return -ENODEV;
++	}
++
+ 	ret = bma400_get_power_mode(data);
+ 	if (ret) {
+ 		dev_err(data->dev, "Failed to get the initial power-mode\n");
 
 
