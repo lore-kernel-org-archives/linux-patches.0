@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D051C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:42:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09357C433D7;
-	Wed, 23 Nov 2022 09:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C501C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCC3C433B5;
+	Wed, 23 Nov 2022 09:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196564;
-	bh=L9LEH3BsZlnsIKqkJQyyudYrCpgnyFcbsQzEgaFeCIc=;
+	s=korg; t=1669196568;
+	bh=aEHlPriNCZLk2QpW7QxhTkt/qCzuoHvk0MD559t2cis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydiCJVhDOvnvt4hXe7Wcd1jDGH0ug8OFrtjrfyY03xScn8ABvFgCKa0qbrEx7DDrk
-	 1cUK//3VvS4PrX8F9I18VulypHkoaDH1mC5gXupyMOBRfYexJbUoN3kIXcGCpVL507
-	 a429BXP9sjTss2poLgzjijLT3cwg2Js0iynW9UFY=
+	b=pX7XDi2ArDlxhsIkP4t7ozl35hr6GbmYE3rFussO3+rQNfE2bZQOuusPZRKCkpewX
+	 hpUc5AxctXjcvTLciqULPEKyIabElOKGEWHZXDhiYreWrWLcL1cOKGUMeqkGb7Howq
+	 Jzkh/XAlck+IvUJh44zqmxJBnUezMCOvd39/wrTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	James Houghton <jthoughton@google.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 039/314] drm/rockchip: vop2: disable planes when disabling the crtc
-Date: Wed, 23 Nov 2022 09:48:04 +0100
-Message-Id: <20221123084627.290024967@linuxfoundation.org>
+Subject: [PATCH 6.0 066/314] hugetlbfs: dont delete error page from pagecache
+Date: Wed, 23 Nov 2022 09:48:31 +0100
+Message-Id: <20221123084628.475689821@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,48 +41,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Tretter <m.tretter@pengutronix.de>
+From: James Houghton <jthoughton@google.com>
 
-[ Upstream commit 447fb14bf07905b880c9ed1ea92c53d6dd0649d7 ]
+[ Upstream commit 8625147cafaa9ba74713d682f5185eb62cb2aedb ]
 
-The vop2 driver needs to explicitly disable the planes if the crtc is
-disabled. Unless the planes are explicitly disabled, the address of the
-last framebuffer is kept in the registers of the VOP2. When re-enabling
-the encoder after it has been disabled by the driver, the VOP2 will
-start and read the framebuffer that has been freed but is still pointed
-to by the register. The iommu will catch these read accesses and print
-errors.
+This change is very similar to the change that was made for shmem [1], and
+it solves the same problem but for HugeTLBFS instead.
 
-Explicitly disable the planes when the crtc is disabled to reset the
-registers.
+Currently, when poison is found in a HugeTLB page, the page is removed
+from the page cache.  That means that attempting to map or read that
+hugepage in the future will result in a new hugepage being allocated
+instead of notifying the user that the page was poisoned.  As [1] states,
+this is effectively memory corruption.
 
-Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221028095206.2136601-3-m.tretter@pengutronix.de
+The fix is to leave the page in the page cache.  If the user attempts to
+use a poisoned HugeTLB page with a syscall, the syscall will fail with
+EIO, the same error code that shmem uses.  For attempts to map the page,
+the thread will get a BUS_MCEERR_AR SIGBUS.
+
+[1]: commit a76054266661 ("mm: shmem: don't truncate page if memory failure happens")
+
+Link: https://lkml.kernel.org/r/20221018200125.848471-1-jthoughton@google.com
+Signed-off-by: James Houghton <jthoughton@google.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/hugetlbfs/inode.c | 13 ++++++-------
+ mm/hugetlb.c         |  4 ++++
+ mm/memory-failure.c  |  5 ++++-
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index bf9c3e92e1cd..1fc04019dfd8 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -878,10 +878,14 @@ static void vop2_crtc_atomic_disable(struct drm_crtc *crtc,
- {
- 	struct vop2_video_port *vp = to_vop2_video_port(crtc);
- 	struct vop2 *vop2 = vp->vop2;
-+	struct drm_crtc_state *old_crtc_state;
- 	int ret;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index b6406e7ab64b..fbcfa6bfee80 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -328,6 +328,12 @@ static ssize_t hugetlbfs_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		} else {
+ 			unlock_page(page);
  
- 	vop2_lock(vop2);
- 
-+	old_crtc_state = drm_atomic_get_old_crtc_state(state, crtc);
-+	drm_atomic_helper_disable_planes_on_crtc(old_crtc_state, false);
++			if (PageHWPoison(page)) {
++				put_page(page);
++				retval = -EIO;
++				break;
++			}
 +
- 	drm_crtc_vblank_off(crtc);
+ 			/*
+ 			 * We have the page, copy it to user space buffer.
+ 			 */
+@@ -990,13 +996,6 @@ static int hugetlbfs_migrate_folio(struct address_space *mapping,
+ static int hugetlbfs_error_remove_page(struct address_space *mapping,
+ 				struct page *page)
+ {
+-	struct inode *inode = mapping->host;
+-	pgoff_t index = page->index;
+-
+-	hugetlb_delete_from_page_cache(page);
+-	if (unlikely(hugetlb_unreserve_pages(inode, index, index + 1, 1)))
+-		hugetlb_fix_reserve_counts(inode);
+-
+ 	return 0;
+ }
  
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 5e414c90f82f..dbb558e71e9e 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6021,6 +6021,10 @@ int hugetlb_mcopy_atomic_pte(struct mm_struct *dst_mm,
+ 	ptl = huge_pte_lockptr(h, dst_mm, dst_pte);
+ 	spin_lock(ptl);
+ 
++	ret = -EIO;
++	if (PageHWPoison(page))
++		goto out_release_unlock;
++
  	/*
+ 	 * Recheck the i_size after holding PT lock to make sure not
+ 	 * to leave any page mapped (as page_mapped()) beyond the end
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index e7ac570dda75..4d302f6b02fc 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1079,6 +1079,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 	int res;
+ 	struct page *hpage = compound_head(p);
+ 	struct address_space *mapping;
++	bool extra_pins = false;
+ 
+ 	if (!PageHuge(hpage))
+ 		return MF_DELAYED;
+@@ -1086,6 +1087,8 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 	mapping = page_mapping(hpage);
+ 	if (mapping) {
+ 		res = truncate_error_page(hpage, page_to_pfn(p), mapping);
++		/* The page is kept in page cache. */
++		extra_pins = true;
+ 		unlock_page(hpage);
+ 	} else {
+ 		unlock_page(hpage);
+@@ -1103,7 +1106,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 		}
+ 	}
+ 
+-	if (has_extra_refcount(ps, p, false))
++	if (has_extra_refcount(ps, p, extra_pins))
+ 		res = MF_FAILED;
+ 
+ 	return res;
 -- 
 2.35.1
 
