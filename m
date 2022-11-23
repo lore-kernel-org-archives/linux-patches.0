@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32387B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0760FC433D6;
-	Wed, 23 Nov 2022 08:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F67B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18392C43145;
+	Wed, 23 Nov 2022 08:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193700;
-	bh=qqO23cHMtZVwJ1INEUBOr68uYf5yMqFtBCQ9+LUu5Jw=;
+	s=korg; t=1669193703;
+	bh=+MqoBCHu0QanH+p+pdeXzKJ6GhGyFUGvVeR0YZQAmeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9g3r6KwAGw/xZZpEFBBRnoERmaJU9VTsyj9HrbFJidl2gD/YyG4x8mWWxe6nhWU3
-	 3OALgsXs+N400Qc7MkGpbNcBlQh5bQA9AZV2Mjx1cV0e3JA/dVsBzd14cdR09DRc7J
-	 d8y4idMAiK7uhotEl1BbXo36tDBf20Etg89fUQ1E=
+	b=ruF+9w58W4a9ttDoHMLO1yT8AG5lirC0lvq3VrbnG+2Fwsk3cCHuppaeMbIkXdSDD
+	 ae0ysgIdHeBvPsZcse3vLeqDCRhJuVvBdWBpkRJD+p4BVOs1zkMB09DVM76eLoCgWv
+	 ZVRTGQxxZNj9kQN4TWkByaJkBx9J002LZ9AiVZ78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 37/76] ASoC: soc-utils: Remove __exit for snd_soc_util_exit()
-Date: Wed, 23 Nov 2022 09:50:36 +0100
-Message-Id: <20221123084547.948645656@linuxfoundation.org>
+Subject: [PATCH 4.9 38/76] parport_pc: Avoid FIFO port location truncation
+Date: Wed, 23 Nov 2022 09:50:37 +0100
+Message-Id: <20221123084547.982508791@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,37 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 314d34fe7f0a5836cb0472950c1f17744b4efde8 ]
+[ Upstream commit ab126f51c93a15093df604f661c9480854c005a3 ]
 
-snd_soc_util_exit() is called in __init snd_soc_init() for cleanup.
-Remove the __exit annotation for it to fix the build warning:
+Match the data type of a temporary holding a reference to the FIFO port
+with the type of the original reference coming from `struct parport',
+avoiding data truncation with LP64 ports such as SPARC64 that refer to
+PCI port I/O locations via their corresponding MMIO addresses and will
+therefore have non-zero bits in the high 32-bit part of the reference.
+And in any case it is cleaner to have the data types matching here.
 
-WARNING: modpost: sound/soc/snd-soc-core.o: section mismatch in reference: init_module (section: .init.text) -> snd_soc_util_exit (section: .exit.text)
-
-Fixes: 6ec27c53886c ("ASoC: core: Fix use-after-free in snd_soc_exit()")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221031134031.256511-1-chenzhongjin@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/linux-pci/20220419033752.GA1101844@bhelgaas/
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.2209231912550.29493@angie.orcam.me.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-utils.c | 2 +-
+ drivers/parport/parport_pc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
-index 393e8f0fe2cc..ec84b75ecbce 100644
---- a/sound/soc/soc-utils.c
-+++ b/sound/soc/soc-utils.c
-@@ -186,7 +186,7 @@ int __init snd_soc_util_init(void)
- 	return ret;
- }
- 
--void __exit snd_soc_util_exit(void)
-+void snd_soc_util_exit(void)
- {
- 	platform_device_unregister(soc_dummy_dev);
- 	platform_driver_unregister(&soc_dummy_driver);
+diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
+index 02e6485c1ed5..8c72d54d8d16 100644
+--- a/drivers/parport/parport_pc.c
++++ b/drivers/parport/parport_pc.c
+@@ -474,7 +474,7 @@ static size_t parport_pc_fifo_write_block_pio(struct parport *port,
+ 	const unsigned char *bufp = buf;
+ 	size_t left = length;
+ 	unsigned long expire = jiffies + port->physport->cad->timeout;
+-	const int fifo = FIFO(port);
++	const unsigned long fifo = FIFO(port);
+ 	int poll_for = 8; /* 80 usecs */
+ 	const struct parport_pc_private *priv = port->physport->private_data;
+ 	const int fifo_depth = priv->fifo_depth;
 -- 
 2.35.1
 
