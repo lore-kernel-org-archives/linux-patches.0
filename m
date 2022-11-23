@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BA01C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6EFC433D6;
-	Wed, 23 Nov 2022 09:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3030F1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A136BC433C1;
+	Wed, 23 Nov 2022 09:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197083;
-	bh=I0de6tU/91Ld37FFxXMW7zLvf5T389gBNGApIx/dz5U=;
+	s=korg; t=1669197087;
+	bh=EtWEte110S74mdIMehHy8unJmOtPf/aahiqpujklPsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0UG0vK6k2RmGc11urm/mRaYGUH0YqSWgu00t4FNnHXQytuMtCsmkH6W9wF3x+c3R
-	 hkGENT1tHcpfQ/op1+7T1TyuU14x9eVhtqRzFeDRbleHjBW0hOUd/IKFkQ/q61F+4X
-	 ziYefiDxmUL93FLlsPd3EhuzUXgLUoLFjMnSESII=
+	b=MSRRYAi/YvCQ+oM6caUVFn+YaCena1dknyli21gOeoWzVQN4iAVZ9Cpp4REAnSgjA
+	 nQfG7JKdQKHUrkXIS04xK4qAbBQYM39EiPMKl0exi2KbIPE72fRH4OdQ9S82Hq6Z7p
+	 LxuR2ixzqBzMH6oG4x3N02C9BNaGkliMJIoofcO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Jiri Pirko <jiri@mellanox.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 193/314] netdevsim: Fix memory leak of nsim_dev->fa_cookie
-Date: Wed, 23 Nov 2022 09:50:38 +0100
-Message-Id: <20221123084634.300589176@linuxfoundation.org>
+Subject: [PATCH 6.0 194/314] block: make dma_alignment a stacking queue_limit
+Date: Wed, 23 Nov 2022 09:50:39 +0100
+Message-Id: <20221123084634.338028118@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,58 +36,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 064bc7312bd09a48798418663090be0c776183db ]
+[ Upstream commit c964d62f5cab7b43dd0534f22a96eab386c6ec5d ]
 
-kmemleak reports this issue:
+Device mappers had always been getting the default 511 dma mask, but
+the underlying device might have a larger alignment requirement. Since
+this value is used to determine alloweable direct-io alignment, this
+needs to be a stackable limit.
 
-unreferenced object 0xffff8881bac872d0 (size 8):
-  comm "sh", pid 58603, jiffies 4481524462 (age 68.065s)
-  hex dump (first 8 bytes):
-    04 00 00 00 de ad be ef                          ........
-  backtrace:
-    [<00000000c80b8577>] __kmalloc+0x49/0x150
-    [<000000005292b8c6>] nsim_dev_trap_fa_cookie_write+0xc1/0x210 [netdevsim]
-    [<0000000093d78e77>] full_proxy_write+0xf3/0x180
-    [<000000005a662c16>] vfs_write+0x1c5/0xaf0
-    [<000000007aabf84a>] ksys_write+0xed/0x1c0
-    [<000000005f1d2e47>] do_syscall_64+0x3b/0x90
-    [<000000006001c6ec>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The issue occurs in the following scenarios:
-
-nsim_dev_trap_fa_cookie_write()
-  kmalloc() fa_cookie
-  nsim_dev->fa_cookie = fa_cookie
-..
-nsim_drv_remove()
-
-The fa_cookie allocked in nsim_dev_trap_fa_cookie_write() is not freed. To
-fix, add kfree(nsim_dev->fa_cookie) to nsim_drv_remove().
-
-Fixes: d3cbb907ae57 ("netdevsim: add ACL trap reporting cookie as a metadata")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Cc: Jiri Pirko <jiri@mellanox.com>
-Link: https://lore.kernel.org/r/1668504625-14698-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221110184501.2451620-2-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 86e4d3e8d183 ("dm-crypt: provide dma_alignment limit in io_hints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-core.c       |  1 -
+ block/blk-settings.c   |  8 +++++---
+ include/linux/blkdev.h | 15 ++++++++-------
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
-index b17e4e94a060..38562ed833da 100644
---- a/drivers/net/netdevsim/dev.c
-+++ b/drivers/net/netdevsim/dev.c
-@@ -1675,6 +1675,7 @@ void nsim_drv_remove(struct nsim_bus_dev *nsim_bus_dev)
- 				  ARRAY_SIZE(nsim_devlink_params));
- 	devl_resources_unregister(devlink);
- 	kfree(nsim_dev->vfconfigs);
-+	kfree(nsim_dev->fa_cookie);
- 	devl_unlock(devlink);
- 	devlink_free(devlink);
- 	dev_set_drvdata(&nsim_bus_dev->dev, NULL);
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 651057c4146b..2fbdf17f2206 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -426,7 +426,6 @@ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu)
+ 				PERCPU_REF_INIT_ATOMIC, GFP_KERNEL))
+ 		goto fail_stats;
+ 
+-	blk_queue_dma_alignment(q, 511);
+ 	blk_set_default_limits(&q->limits);
+ 	q->nr_requests = BLKDEV_DEFAULT_RQ;
+ 
+diff --git a/block/blk-settings.c b/block/blk-settings.c
+index 8bb9eef5310e..4949ed3ce7c9 100644
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -57,6 +57,7 @@ void blk_set_default_limits(struct queue_limits *lim)
+ 	lim->misaligned = 0;
+ 	lim->zoned = BLK_ZONED_NONE;
+ 	lim->zone_write_granularity = 0;
++	lim->dma_alignment = 511;
+ }
+ EXPORT_SYMBOL(blk_set_default_limits);
+ 
+@@ -600,6 +601,7 @@ int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
+ 
+ 	t->io_min = max(t->io_min, b->io_min);
+ 	t->io_opt = lcm_not_zero(t->io_opt, b->io_opt);
++	t->dma_alignment = max(t->dma_alignment, b->dma_alignment);
+ 
+ 	/* Set non-power-of-2 compatible chunk_sectors boundary */
+ 	if (b->chunk_sectors)
+@@ -773,7 +775,7 @@ EXPORT_SYMBOL(blk_queue_virt_boundary);
+  **/
+ void blk_queue_dma_alignment(struct request_queue *q, int mask)
+ {
+-	q->dma_alignment = mask;
++	q->limits.dma_alignment = mask;
+ }
+ EXPORT_SYMBOL(blk_queue_dma_alignment);
+ 
+@@ -795,8 +797,8 @@ void blk_queue_update_dma_alignment(struct request_queue *q, int mask)
+ {
+ 	BUG_ON(mask > PAGE_SIZE);
+ 
+-	if (mask > q->dma_alignment)
+-		q->dma_alignment = mask;
++	if (mask > q->limits.dma_alignment)
++		q->limits.dma_alignment = mask;
+ }
+ EXPORT_SYMBOL(blk_queue_update_dma_alignment);
+ 
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 84b13fdd34a7..79624711fda7 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -311,6 +311,13 @@ struct queue_limits {
+ 	unsigned char		discard_misaligned;
+ 	unsigned char		raid_partial_stripes_expensive;
+ 	enum blk_zoned_model	zoned;
++
++	/*
++	 * Drivers that set dma_alignment to less than 511 must be prepared to
++	 * handle individual bvec's that are not a multiple of a SECTOR_SIZE
++	 * due to possible offsets.
++	 */
++	unsigned int		dma_alignment;
+ };
+ 
+ typedef int (*report_zones_cb)(struct blk_zone *zone, unsigned int idx,
+@@ -456,12 +463,6 @@ struct request_queue {
+ 	unsigned long		nr_requests;	/* Max # of requests */
+ 
+ 	unsigned int		dma_pad_mask;
+-	/*
+-	 * Drivers that set dma_alignment to less than 511 must be prepared to
+-	 * handle individual bvec's that are not a multiple of a SECTOR_SIZE
+-	 * due to possible offsets.
+-	 */
+-	unsigned int		dma_alignment;
+ 
+ #ifdef CONFIG_BLK_INLINE_ENCRYPTION
+ 	struct blk_crypto_profile *crypto_profile;
+@@ -1311,7 +1312,7 @@ static inline sector_t bdev_zone_sectors(struct block_device *bdev)
+ 
+ static inline int queue_dma_alignment(const struct request_queue *q)
+ {
+-	return q ? q->dma_alignment : 511;
++	return q ? q->limits.dma_alignment : 511;
+ }
+ 
+ static inline unsigned int bdev_dma_alignment(struct block_device *bdev)
 -- 
 2.35.1
 
