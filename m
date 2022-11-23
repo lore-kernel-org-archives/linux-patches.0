@@ -1,123 +1,93 @@
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com [209.85.166.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828547B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:26 +0000 (UTC)
-Received: by mail-io1-f70.google.com with SMTP id z15-20020a5e860f000000b006c09237cc06so8887460ioj.21
-        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 00:54:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gn+kOxP1GgYrsJ1E1gtUbQrbDQQ+MjA+lXtSMm75qTA=;
-        b=5ytz5W192sLmArqXUSah5Rc9zBnjLVKn29jzcGerrs+IWalOfmL2JLXB+W0PVLiy0C
-         DuEawHD78Oz0ki83u1pRa50h9siU2/qZ8HH8GnLd45VClgxZoAwdC8aYKdYYfocgRxlM
-         8iOTUsgHN/F22KxwCsWue71FFIKEXpdlUbAuhXagIx2iApqv9vN6yZFfhmncDxY20D1Y
-         weYn1ePanxtRGTb7ner1xnOU9SF6/PrHgZwVbJafCMWoFcmoKTQIKnaMeTkHUBNoiVQj
-         0QcnA/+ZMRMf5HdiZpF5cP9+bk0AS88mBbKHrE3dTiJAfHVtXldc4k6M5NYIVVY/9PAL
-         QFXw==
-X-Gm-Message-State: ANoB5pmdOglVIHiwkMHZIJygnwUTG5QyE8UHyM45PV9JnKqJpzdpT3M7
-	KwcRODe5qIFmfUYdgRLawKoHuYnwzNkkWM4+K3TcWwLADdPs
-X-Google-Smtp-Source: AA0mqf6A/qfWF4sV60WmM+Nk+6DIE/bogpvFQfpbUtwL566iztY/qjDB62Hub20OF7jWnFoHcrbXCCRKLWLCOmv+MWjv1sq4hGW6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2811C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEC6C433C1;
+	Wed, 23 Nov 2022 08:54:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1669193667;
+	bh=dkJKQOeejYvmxjXbcWytvc4UbwAgrHIlFHqWkZsJpm0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SAtthQ8MxsjSNf4/EsS5cFweNJrhs9Osu7pMcdqr9K5xPdfzG+mXf4Eh6mVRCWxxt
+	 rQqvWh5mqw7VsHOBeU/2pFM5cthrYal6NRIs2uvjRLL5CY3i5NBvtUVZpJlS57KuwN
+	 OaQGq2rYintkSXzb2E1/9yPRWmA1Lgfk9bJ+3ZMs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 09/76] tipc: fix the msg->req tlv len check in tipc_nl_compat_name_table_dump_header
+Date: Wed, 23 Nov 2022 09:50:08 +0100
+Message-Id: <20221123084547.045467723@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
+References: <20221123084546.742331901@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:1008:b0:300:5bd2:5af4 with SMTP id
- n8-20020a056e02100800b003005bd25af4mr4894951ilj.244.1669193665671; Wed, 23
- Nov 2022 00:54:25 -0800 (PST)
-Date: Wed, 23 Nov 2022 00:54:25 -0800
-In-Reply-To: <20221123084547.014437670@linuxfoundation.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000080f92105ee1f6f3a@google.com>
-Subject: Re: [PATCH 4.9 08/76] ipv6: addrlabel: fix infoleak when sending
- struct ifaddrlblmsg to network
-From: syzbot <syzbot+@syzkaller.appspotmail.com>
-To: gregkh@linuxfoundation.org
-Cc: davem@davemloft.net, dsahern@kernel.org, glider@google.com, 
-	gregkh@linuxfoundation.org, patches@lists.linux.dev, sashal@kernel.org, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> From: Alexander Potapenko <glider@google.com>
->
-> [ Upstream commit c23fb2c82267638f9d206cb96bb93e1f93ad7828 ]
->
-> When copying a `struct ifaddrlblmsg` to the network, __ifal_reserved
-> remained uninitialized, resulting in a 1-byte infoleak:
->
->   BUG: KMSAN: kernel-network-infoleak in __netdev_start_xmit ./include/linux/netdevice.h:4841
->    __netdev_start_xmit ./include/linux/netdevice.h:4841
->    netdev_start_xmit ./include/linux/netdevice.h:4857
->    xmit_one net/core/dev.c:3590
->    dev_hard_start_xmit+0x1dc/0x800 net/core/dev.c:3606
->    __dev_queue_xmit+0x17e8/0x4350 net/core/dev.c:4256
->    dev_queue_xmit ./include/linux/netdevice.h:3009
->    __netlink_deliver_tap_skb net/netlink/af_netlink.c:307
->    __netlink_deliver_tap+0x728/0xad0 net/netlink/af_netlink.c:325
->    netlink_deliver_tap net/netlink/af_netlink.c:338
->    __netlink_sendskb net/netlink/af_netlink.c:1263
->    netlink_sendskb+0x1d9/0x200 net/netlink/af_netlink.c:1272
->    netlink_unicast+0x56d/0xf50 net/netlink/af_netlink.c:1360
->    nlmsg_unicast ./include/net/netlink.h:1061
->    rtnl_unicast+0x5a/0x80 net/core/rtnetlink.c:758
->    ip6addrlbl_get+0xfad/0x10f0 net/ipv6/addrlabel.c:628
->    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
->   ...
->   Uninit was created at:
->    slab_post_alloc_hook+0x118/0xb00 mm/slab.h:742
->    slab_alloc_node mm/slub.c:3398
->    __kmem_cache_alloc_node+0x4f2/0x930 mm/slub.c:3437
->    __do_kmalloc_node mm/slab_common.c:954
->    __kmalloc_node_track_caller+0x117/0x3d0 mm/slab_common.c:975
->    kmalloc_reserve net/core/skbuff.c:437
->    __alloc_skb+0x27a/0xab0 net/core/skbuff.c:509
->    alloc_skb ./include/linux/skbuff.h:1267
->    nlmsg_new ./include/net/netlink.h:964
->    ip6addrlbl_get+0x490/0x10f0 net/ipv6/addrlabel.c:608
->    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
->    netlink_rcv_skb+0x299/0x550 net/netlink/af_netlink.c:2540
->    rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6109
->    netlink_unicast_kernel net/netlink/af_netlink.c:1319
->    netlink_unicast+0x9ab/0xf50 net/netlink/af_netlink.c:1345
->    netlink_sendmsg+0xebc/0x10f0 net/netlink/af_netlink.c:1921
->   ...
->
-> This patch ensures that the reserved field is always initialized.
->
-> Reported-by: syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com
-> Fixes: 2a8cc6c89039 ("[IPV6] ADDRCONF: Support RFC3484 configurable address selection policy table.")
-> Signed-off-by: Alexander Potapenko <glider@google.com>
-> Reviewed-by: David Ahern <dsahern@kernel.org>
-> Signed-off-by: David S. Miller <davem@davemloft.net>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/ipv6/addrlabel.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/net/ipv6/addrlabel.c b/net/ipv6/addrlabel.c
-> index a8f6986dcbe5..2297df80d3ca 100644
-> --- a/net/ipv6/addrlabel.c
-> +++ b/net/ipv6/addrlabel.c
-> @@ -458,6 +458,7 @@ static void ip6addrlbl_putmsg(struct nlmsghdr *nlh,
->  {
->  	struct ifaddrlblmsg *ifal = nlmsg_data(nlh);
->  	ifal->ifal_family = AF_INET6;
-> +	ifal->__ifal_reserved = 0;
->  	ifal->ifal_prefixlen = prefixlen;
->  	ifal->ifal_flags = 0;
->  	ifal->ifal_index = ifindex;
-> -- 
-> 2.35.1
->
->
->
+From: Xin Long <lucien.xin@gmail.com>
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+[ Upstream commit 1c075b192fe41030457cd4a5f7dea730412bca40 ]
+
+This is a follow-up for commit 974cb0e3e7c9 ("tipc: fix uninit-value
+in tipc_nl_compat_name_table_dump") where it should have type casted
+sizeof(..) to int to work when TLV_GET_DATA_LEN() returns a negative
+value.
+
+syzbot reported a call trace because of it:
+
+  BUG: KMSAN: uninit-value in ...
+   tipc_nl_compat_name_table_dump+0x841/0xea0 net/tipc/netlink_compat.c:934
+   __tipc_nl_compat_dumpit+0xab2/0x1320 net/tipc/netlink_compat.c:238
+   tipc_nl_compat_dumpit+0x991/0xb50 net/tipc/netlink_compat.c:321
+   tipc_nl_compat_recv+0xb6e/0x1640 net/tipc/netlink_compat.c:1324
+   genl_family_rcv_msg_doit net/netlink/genetlink.c:731 [inline]
+   genl_family_rcv_msg net/netlink/genetlink.c:775 [inline]
+   genl_rcv_msg+0x103f/0x1260 net/netlink/genetlink.c:792
+   netlink_rcv_skb+0x3a5/0x6c0 net/netlink/af_netlink.c:2501
+   genl_rcv+0x3c/0x50 net/netlink/genetlink.c:803
+   netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+   netlink_unicast+0xf3b/0x1270 net/netlink/af_netlink.c:1345
+   netlink_sendmsg+0x1288/0x1440 net/netlink/af_netlink.c:1921
+   sock_sendmsg_nosec net/socket.c:714 [inline]
+   sock_sendmsg net/socket.c:734 [inline]
+
+Reported-by: syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com
+Fixes: 974cb0e3e7c9 ("tipc: fix uninit-value in tipc_nl_compat_name_table_dump")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/ccd6a7ea801b15aec092c3b532a883b4c5708695.1667594933.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/tipc/netlink_compat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 69151de9657c..2e6c33fbd238 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -856,7 +856,7 @@ static int tipc_nl_compat_name_table_dump_header(struct tipc_nl_compat_msg *msg)
+ 	};
+ 
+ 	ntq = (struct tipc_name_table_query *)TLV_DATA(msg->req);
+-	if (TLV_GET_DATA_LEN(msg->req) < sizeof(struct tipc_name_table_query))
++	if (TLV_GET_DATA_LEN(msg->req) < (int)sizeof(struct tipc_name_table_query))
+ 		return -EINVAL;
+ 
+ 	depth = ntohl(ntq->depth);
+-- 
+2.35.1
+
+
 
