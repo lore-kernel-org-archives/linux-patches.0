@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E621D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421ECC433D6;
-	Wed, 23 Nov 2022 09:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7C51C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A95C433C1;
+	Wed, 23 Nov 2022 09:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195908;
-	bh=RLDtlTnrE7cVkKd7rPPy3PkmhBDWls6IPohDCAXxalg=;
+	s=korg; t=1669195912;
+	bh=upNkdi5O0O2ZCLZhuIgCzfblffSeZQe7x+ufoQQ0hg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h9tBQdnNoqSf+QuDIH1sNKHZcgsn/dv/wxWlm/IBWfH3SPJ8UM5d0TefRseFP49Nl
-	 qOrPPTHfyKi3GO30aVEvazLxNDGqgiuXzFR+E5msLu6MYt0uLJt6JLJay5BumRl2a+
-	 JnZ/LbPZMcYFrITIEM7Ba3WrGSU09bS+X1VSlOKc=
+	b=FuHRRcFBCSA8owgOaNZYofPVhNbqrnStZkgtRg0ZnTC6bvSrFIY5qmYE/MK3dw2Xf
+	 kWxAFMxUJOGzvEdHQhhfAvxViX3WOcn4NgoZNc5rN5m3izq6PNTgqgQM4VdCWCVYNG
+	 fkAPTwkQMAdUSS+j1WQgQEtsrfOazEmO/Wdil2Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Jim Mattson <jmattson@google.com>,
-	Like Xu <likexu@tencent.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/181] KVM: x86/pmu: Do not speculatively query Intel GP PMCs that dont exist yet
-Date: Wed, 23 Nov 2022 09:49:59 +0100
-Message-Id: <20221123084603.926483424@linuxfoundation.org>
+Subject: [PATCH 5.15 027/181] i2c: tegra: Allocate DMA memory for DMA engine
+Date: Wed, 23 Nov 2022 09:49:50 +0100
+Message-Id: <20221123084603.585449145@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,79 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Like Xu <likexu@tencent.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 8631ef59b62290c7d88e7209e35dfb47f33f4902 ]
+[ Upstream commit cdbf26251d3b35c4ccaea0c3a6de4318f727d3d2 ]
 
-The SDM lists an architectural MSR IA32_CORE_CAPABILITIES (0xCF)
-that limits the theoretical maximum value of the Intel GP PMC MSRs
-allocated at 0xC1 to 14; likewise the Intel April 2022 SDM adds
-IA32_OVERCLOCKING_STATUS at 0x195 which limits the number of event
-selection MSRs to 15 (0x186-0x194).
+When the I2C controllers are running in DMA mode, it is the DMA engine
+that performs the memory accesses rather than the I2C controller. Pass
+the DMA engine's struct device pointer to the DMA API to make sure the
+correct DMA operations are used.
 
-Limiting the maximum number of counters to 14 or 18 based on the currently
-allocated MSRs is clearly fragile, and it seems likely that Intel will
-even place PMCs 8-15 at a completely different range of MSR indices.
-So stop at the maximum number of GP PMCs supported today on Intel
-processors.
+This fixes an issue where the DMA engine's SMMU stream ID needs to be
+misleadingly set for the I2C controllers in device tree.
 
-There are some machines, like Intel P4 with non Architectural PMU, that
-may indeed have 18 counters, but those counters are in a completely
-different MSR address range and are not supported by KVM.
-
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: cf05a67b68b8 ("KVM: x86: omit "impossible" pmu MSRs from MSR list")
-Suggested-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Like Xu <likexu@tencent.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20220919091008.60695-1-likexu@tencent.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/i2c/busses/i2c-tegra.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 7f41e1f9f0b4..c58e23e9b5ec 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -1347,20 +1347,10 @@ static const u32 msrs_to_save_all[] = {
- 	MSR_ARCH_PERFMON_PERFCTR0 + 2, MSR_ARCH_PERFMON_PERFCTR0 + 3,
- 	MSR_ARCH_PERFMON_PERFCTR0 + 4, MSR_ARCH_PERFMON_PERFCTR0 + 5,
- 	MSR_ARCH_PERFMON_PERFCTR0 + 6, MSR_ARCH_PERFMON_PERFCTR0 + 7,
--	MSR_ARCH_PERFMON_PERFCTR0 + 8, MSR_ARCH_PERFMON_PERFCTR0 + 9,
--	MSR_ARCH_PERFMON_PERFCTR0 + 10, MSR_ARCH_PERFMON_PERFCTR0 + 11,
--	MSR_ARCH_PERFMON_PERFCTR0 + 12, MSR_ARCH_PERFMON_PERFCTR0 + 13,
--	MSR_ARCH_PERFMON_PERFCTR0 + 14, MSR_ARCH_PERFMON_PERFCTR0 + 15,
--	MSR_ARCH_PERFMON_PERFCTR0 + 16, MSR_ARCH_PERFMON_PERFCTR0 + 17,
- 	MSR_ARCH_PERFMON_EVENTSEL0, MSR_ARCH_PERFMON_EVENTSEL1,
- 	MSR_ARCH_PERFMON_EVENTSEL0 + 2, MSR_ARCH_PERFMON_EVENTSEL0 + 3,
- 	MSR_ARCH_PERFMON_EVENTSEL0 + 4, MSR_ARCH_PERFMON_EVENTSEL0 + 5,
- 	MSR_ARCH_PERFMON_EVENTSEL0 + 6, MSR_ARCH_PERFMON_EVENTSEL0 + 7,
--	MSR_ARCH_PERFMON_EVENTSEL0 + 8, MSR_ARCH_PERFMON_EVENTSEL0 + 9,
--	MSR_ARCH_PERFMON_EVENTSEL0 + 10, MSR_ARCH_PERFMON_EVENTSEL0 + 11,
--	MSR_ARCH_PERFMON_EVENTSEL0 + 12, MSR_ARCH_PERFMON_EVENTSEL0 + 13,
--	MSR_ARCH_PERFMON_EVENTSEL0 + 14, MSR_ARCH_PERFMON_EVENTSEL0 + 15,
--	MSR_ARCH_PERFMON_EVENTSEL0 + 16, MSR_ARCH_PERFMON_EVENTSEL0 + 17,
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index c883044715f3..444867cef682 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -283,6 +283,7 @@ struct tegra_i2c_dev {
+ 	struct dma_chan *tx_dma_chan;
+ 	struct dma_chan *rx_dma_chan;
+ 	unsigned int dma_buf_size;
++	struct device *dma_dev;
+ 	dma_addr_t dma_phys;
+ 	void *dma_buf;
  
- 	MSR_K7_EVNTSEL0, MSR_K7_EVNTSEL1, MSR_K7_EVNTSEL2, MSR_K7_EVNTSEL3,
- 	MSR_K7_PERFCTR0, MSR_K7_PERFCTR1, MSR_K7_PERFCTR2, MSR_K7_PERFCTR3,
-@@ -6449,12 +6439,12 @@ static void kvm_init_msr_list(void)
- 				intel_pt_validate_hw_cap(PT_CAP_num_address_ranges) * 2)
- 				continue;
- 			break;
--		case MSR_ARCH_PERFMON_PERFCTR0 ... MSR_ARCH_PERFMON_PERFCTR0 + 17:
-+		case MSR_ARCH_PERFMON_PERFCTR0 ... MSR_ARCH_PERFMON_PERFCTR0 + 7:
- 			if (msrs_to_save_all[i] - MSR_ARCH_PERFMON_PERFCTR0 >=
- 			    min(INTEL_PMC_MAX_GENERIC, x86_pmu.num_counters_gp))
- 				continue;
- 			break;
--		case MSR_ARCH_PERFMON_EVENTSEL0 ... MSR_ARCH_PERFMON_EVENTSEL0 + 17:
-+		case MSR_ARCH_PERFMON_EVENTSEL0 ... MSR_ARCH_PERFMON_EVENTSEL0 + 7:
- 			if (msrs_to_save_all[i] - MSR_ARCH_PERFMON_EVENTSEL0 >=
- 			    min(INTEL_PMC_MAX_GENERIC, x86_pmu.num_counters_gp))
- 				continue;
+@@ -419,7 +420,7 @@ static int tegra_i2c_dma_submit(struct tegra_i2c_dev *i2c_dev, size_t len)
+ static void tegra_i2c_release_dma(struct tegra_i2c_dev *i2c_dev)
+ {
+ 	if (i2c_dev->dma_buf) {
+-		dma_free_coherent(i2c_dev->dev, i2c_dev->dma_buf_size,
++		dma_free_coherent(i2c_dev->dma_dev, i2c_dev->dma_buf_size,
+ 				  i2c_dev->dma_buf, i2c_dev->dma_phys);
+ 		i2c_dev->dma_buf = NULL;
+ 	}
+@@ -466,10 +467,13 @@ static int tegra_i2c_init_dma(struct tegra_i2c_dev *i2c_dev)
+ 
+ 	i2c_dev->tx_dma_chan = chan;
+ 
++	WARN_ON(i2c_dev->tx_dma_chan->device != i2c_dev->rx_dma_chan->device);
++	i2c_dev->dma_dev = chan->device->dev;
++
+ 	i2c_dev->dma_buf_size = i2c_dev->hw->quirks->max_write_len +
+ 				I2C_PACKET_HEADER_SIZE;
+ 
+-	dma_buf = dma_alloc_coherent(i2c_dev->dev, i2c_dev->dma_buf_size,
++	dma_buf = dma_alloc_coherent(i2c_dev->dma_dev, i2c_dev->dma_buf_size,
+ 				     &dma_phys, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!dma_buf) {
+ 		dev_err(i2c_dev->dev, "failed to allocate DMA buffer\n");
+@@ -1255,7 +1259,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
+ 
+ 	if (i2c_dev->dma_mode) {
+ 		if (i2c_dev->msg_read) {
+-			dma_sync_single_for_device(i2c_dev->dev,
++			dma_sync_single_for_device(i2c_dev->dma_dev,
+ 						   i2c_dev->dma_phys,
+ 						   xfer_size, DMA_FROM_DEVICE);
+ 
+@@ -1263,7 +1267,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
+ 			if (err)
+ 				return err;
+ 		} else {
+-			dma_sync_single_for_cpu(i2c_dev->dev,
++			dma_sync_single_for_cpu(i2c_dev->dma_dev,
+ 						i2c_dev->dma_phys,
+ 						xfer_size, DMA_TO_DEVICE);
+ 		}
+@@ -1276,7 +1280,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
+ 			memcpy(i2c_dev->dma_buf + I2C_PACKET_HEADER_SIZE,
+ 			       msg->buf, msg->len);
+ 
+-			dma_sync_single_for_device(i2c_dev->dev,
++			dma_sync_single_for_device(i2c_dev->dma_dev,
+ 						   i2c_dev->dma_phys,
+ 						   xfer_size, DMA_TO_DEVICE);
+ 
+@@ -1327,7 +1331,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
+ 		}
+ 
+ 		if (i2c_dev->msg_read && i2c_dev->msg_err == I2C_ERR_NONE) {
+-			dma_sync_single_for_cpu(i2c_dev->dev,
++			dma_sync_single_for_cpu(i2c_dev->dma_dev,
+ 						i2c_dev->dma_phys,
+ 						xfer_size, DMA_FROM_DEVICE);
+ 
 -- 
 2.35.1
 
