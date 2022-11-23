@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DF41C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF73C433C1;
-	Wed, 23 Nov 2022 09:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2301C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52512C433C1;
+	Wed, 23 Nov 2022 09:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197139;
-	bh=3Ge9i+CN2V7C7c6CJ9UoxWD1b320vv3joU0Fa0Ejk5E=;
+	s=korg; t=1669197142;
+	bh=DVzPFYmPxRKKl19tDbqvP0y3Z//i1XNc7JEovN0SF9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWsMtefUvnTOufAA5gBh4MAAs08mp/SNd91W7nHB5QOyxb5wzzXuX5iiNvZIbwc9g
-	 gCBRE1IYoFnDr0g2GcQgMAitNVMANiB54CmSdN9jBx5vA/X+nf38ruQKswVXcxMg88
-	 hwJe9MinV8wqu6TpGFnhDnEi8uNfRo2TNOMopTJk=
+	b=rQgDO4mLpXaJIELWYQDM+Sa6B730KeJ9mNqi1pZEY5FxU4v8x4udiUzR4Ei9H6RJg
+	 5Bblaur4v7HGiTM9W6USHGD+Jso+8yAuj0pVuVtXTYoWzFmMqc3HIu8MMQ6ttj5qEF
+	 4f3T8hlo4rzoQevcNBu1OeJJMbM2DFk6+lgqzY8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Howells <dhowells@redhat.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 177/314] drbd: use after free in drbd_create_device()
-Date: Wed, 23 Nov 2022 09:50:22 +0100
-Message-Id: <20221123084633.599297403@linuxfoundation.org>
+Subject: [PATCH 6.0 168/314] erofs: fix missing xas_retry() in fscache mode
+Date: Wed, 23 Nov 2022 09:50:13 +0100
+Message-Id: <20221123084633.181666314@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,45 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit a7a1598189228b5007369a9622ccdf587be0730f ]
+[ Upstream commit 37020bbb71d911431e16c2c940b97cf86ae4f2f6 ]
 
-The drbd_destroy_connection() frees the "connection" so use the _safe()
-iterator to prevent a use after free.
+The xarray iteration only holds the RCU read lock and thus may encounter
+XA_RETRY_ENTRY if there's process modifying the xarray concurrently.
+This will cause oops when referring to the invalid entry.
 
-Fixes: b6f85ef9538b ("drbd: Iterate over all connections")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/Y3Jd5iZRbNQ9w6gm@kili
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix this by adding the missing xas_retry(), which will make the
+iteration wind back to the root node if XA_RETRY_ENTRY is encountered.
+
+Fixes: d435d53228dd ("erofs: change to use asynchronous io for fscache readpage/readahead")
+Suggested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20221114121943.29987-1-jefflexu@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/fscache.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index f3e4db16fd07..8532b839a343 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2672,7 +2672,7 @@ static int init_submitter(struct drbd_device *device)
- enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsigned int minor)
- {
- 	struct drbd_resource *resource = adm_ctx->resource;
--	struct drbd_connection *connection;
-+	struct drbd_connection *connection, *n;
- 	struct drbd_device *device;
- 	struct drbd_peer_device *peer_device, *tmp_peer_device;
- 	struct gendisk *disk;
-@@ -2789,7 +2789,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
- 	return NO_ERROR;
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index 79af25f0a56c..46ab2b3f9a3c 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -69,11 +69,15 @@ static void erofs_fscache_rreq_unlock_folios(struct netfs_io_request *rreq)
  
- out_idr_remove_from_resource:
--	for_each_connection(connection, resource) {
-+	for_each_connection_safe(connection, n, resource) {
- 		peer_device = idr_remove(&connection->peer_devices, vnr);
- 		if (peer_device)
- 			kref_put(&connection->kref, drbd_destroy_connection);
+ 	rcu_read_lock();
+ 	xas_for_each(&xas, folio, last_page) {
+-		unsigned int pgpos =
+-			(folio_index(folio) - start_page) * PAGE_SIZE;
+-		unsigned int pgend = pgpos + folio_size(folio);
++		unsigned int pgpos, pgend;
+ 		bool pg_failed = false;
+ 
++		if (xas_retry(&xas, folio))
++			continue;
++
++		pgpos = (folio_index(folio) - start_page) * PAGE_SIZE;
++		pgend = pgpos + folio_size(folio);
++
+ 		for (;;) {
+ 			if (!subreq) {
+ 				pg_failed = true;
 -- 
 2.35.1
 
