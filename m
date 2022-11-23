@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DCB1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB58AC433C1;
-	Wed, 23 Nov 2022 09:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5471C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3635C433C1;
+	Wed, 23 Nov 2022 09:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194222;
-	bh=hlbt6ouOznX7NICAhk8YG+D1h5Ddk8kjB8nU03v5nrk=;
+	s=korg; t=1669194226;
+	bh=cud50E/Ctxl8i54nV+dqt8k+bF7WPfZGydw6eNHrBcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yu+bRiYPBpO/IPe8LVbX2QNoN7MZ2CYyfe1sc74n+JzEe+f8nkLQfQOl7zGtZmSsp
-	 j9/iCh52XYWXjzjlNutkEbOm3aiul2hRcEW5sN6N4uaS9JGrffQxY4Jt89OTvNm81W
-	 dNFx52Kzv3zaWyerRK8ig6kzA3ESxStA8o/fdsHs=
+	b=FOCrMFmWq2NZC/LV8i0Uxmf1Qql2J8td4hpbzeGO8RIABr3bfQuGT3evTFVmjZhzm
+	 VcCFy5SyJzr5x3Uy+DbSL7xub0NWUD6oofB6xCSz/3XRYJUrnRIJ7k7UIShBdhaVFr
+	 ZIvA7iXlwRd7FzUrXNAnpkkkwk3fBAn3rz4jVxCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 010/114] hamradio: fix issue of dev reference count leakage in bpq_device_event()
-Date: Wed, 23 Nov 2022 09:49:57 +0100
-Message-Id: <20221123084552.254134328@linuxfoundation.org>
+Subject: [PATCH 4.19 019/114] net: mv643xx_eth: disable napi when init rxq or txq failed in mv643xx_eth_open()
+Date: Wed, 23 Nov 2022 09:50:06 +0100
+Message-Id: <20221123084552.618778987@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -37,44 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 85cbaf032d3cd9f595152625eda5d4ecb1d6d78d ]
+[ Upstream commit f111606b63ff2282428ffbac0447c871eb957b6c ]
 
-When following tests are performed, it will cause dev reference counting
-leakage.
-a)ip link add bond2 type bond mode balance-rr
-b)ip link set bond2 up
-c)ifenslave -f bond2 rose1
-d)ip link del bond2
+When failed to init rxq or txq in mv643xx_eth_open() for opening device,
+napi isn't disabled. When open mv643xx_eth device next time, it will
+trigger a BUG_ON() in napi_enable(). Compile tested only.
 
-When new bond device is created, the default type of the bond device is
-ether. And the bond device is up, bpq_device_event() receives the message
-and creates a new bpq device. In this case, the reference count value of
-dev is hold once. But after "ifenslave -f bond2 rose1" command is
-executed, the type of the bond device is changed to rose. When the bond
-device is unregistered, bpq_device_event() will not put the dev reference
-count.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2257e05c1705 ("mv643xx_eth: get rid of receive-side locking")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20221109025432.80900-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/bpqether.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/mv643xx_eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index 777fa59f5e0c..1eeddfea389c 100644
---- a/drivers/net/hamradio/bpqether.c
-+++ b/drivers/net/hamradio/bpqether.c
-@@ -537,7 +537,7 @@ static int bpq_device_event(struct notifier_block *this,
- 	if (!net_eq(dev_net(dev), &init_net))
- 		return NOTIFY_DONE;
+diff --git a/drivers/net/ethernet/marvell/mv643xx_eth.c b/drivers/net/ethernet/marvell/mv643xx_eth.c
+index 59007d6cd36d..2bfad889fdec 100644
+--- a/drivers/net/ethernet/marvell/mv643xx_eth.c
++++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
+@@ -2495,6 +2495,7 @@ static int mv643xx_eth_open(struct net_device *dev)
+ 	for (i = 0; i < mp->rxq_count; i++)
+ 		rxq_deinit(mp->rxq + i);
+ out:
++	napi_disable(&mp->napi);
+ 	free_irq(dev->irq, dev);
  
--	if (!dev_is_ethdev(dev))
-+	if (!dev_is_ethdev(dev) && !bpq_get_ax25_dev(dev))
- 		return NOTIFY_DONE;
- 
- 	switch (event) {
+ 	return err;
 -- 
 2.35.1
 
