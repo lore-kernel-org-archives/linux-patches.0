@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A1A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12104C433D6;
-	Wed, 23 Nov 2022 09:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A221C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94955C433D6;
+	Wed, 23 Nov 2022 09:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195967;
-	bh=oWLJndOzwjiugowe/Wj30r1OPtapHzRVjjKoZsOvRYI=;
+	s=korg; t=1669195971;
+	bh=6TDrox1pFcyPxL42kEX1fUpLGFpDOc7GVAip7FwfN6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNwwy9sZiRoWlqtlMmSAjBjLpJBJVqVqTIIcuxk/cU/fwFTgAxVr0Ogr7hhljd3ze
-	 CjXni8HpWajtRDzwhvmC0dgBWHCGm7FwBFHeJZ1xg53v2lFczD8g4oclPUhdO9+AKY
-	 S1SvU5k/FhJOBSGoYyLTNl76YmNTaP/q2RwURr68=
+	b=hlFERx4K5Jp4QbB7Txc32tPjR/4tQvdgESL6xEYR0nAE7rKGYfme0pbFYTzPkCHP9
+	 D4Q+Xnj6WRXYeZDtGSygTWjT4JbpfziOai6Z45q2Gh8/DUV4pAnO6TqNB8kajJSi93
+	 FEIFg/89BX+ql1A4IwBRzQBSdBKRlZ7OIp8Zo29A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>,
-	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/181] net: stmmac: ensure tx function is not running in stmmac_xdp_release()
-Date: Wed, 23 Nov 2022 09:50:45 +0100
-Message-Id: <20221123084605.868835180@linuxfoundation.org>
+Subject: [PATCH 5.15 083/181] soc: imx8m: Enable OCOTP clock before reading the register
+Date: Wed, 23 Nov 2022 09:50:46 +0100
+Message-Id: <20221123084605.902158314@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,41 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 77711683a50477de39757d67ab1a3638220d6860 ]
+[ Upstream commit 836fb30949d9edf91d7de696a884ceeae7e426d2 ]
 
-When stmmac_xdp_release() is called, there is a possibility that tx
-function is still running on other queues which will lead to tx queue
-timed out and reset adapter.
+Commit 7d981405d0fd ("soc: imx8m: change to use platform driver") ever
+removed the dependency on bootloader for enabling OCOTP clock.  It
+helped to fix a kexec kernel hang issue.  But unfortunately it caused
+a regression on CAAM driver and got reverted.
 
-This commit ensure that tx function is not running xdp before release
-flow continue to run.
+This is the second try to enable the OCOTP clock by directly calling
+clock API instead of indirectly enabling the clock via nvmem API.
 
-Fixes: ac746c8520d9 ("net: stmmac: enhance XDP ZC driver level switching performance")
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
-Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
-Link: https://lore.kernel.org/r/20221110064552.22504-1-noor.azura.ahmad.tarmizi@linux.intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ac34de14ac30 ("Revert "soc: imx8m: change to use platform driver"")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/imx/soc-imx8m.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 6f579f498993..8590249d4468 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6494,6 +6494,9 @@ void stmmac_xdp_release(struct net_device *dev)
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	u32 chan;
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index cc57a384d74d..28144c699b0c 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -11,6 +11,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/arm-smccc.h>
+ #include <linux/of.h>
++#include <linux/clk.h>
  
-+	/* Ensure tx function is not running */
-+	netif_tx_disable(dev);
+ #define REV_B1				0x21
+ 
+@@ -56,6 +57,7 @@ static u32 __init imx8mq_soc_revision(void)
+ 	void __iomem *ocotp_base;
+ 	u32 magic;
+ 	u32 rev;
++	struct clk *clk;
+ 
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
+ 	if (!np)
+@@ -63,6 +65,13 @@ static u32 __init imx8mq_soc_revision(void)
+ 
+ 	ocotp_base = of_iomap(np, 0);
+ 	WARN_ON(!ocotp_base);
++	clk = of_clk_get_by_name(np, NULL);
++	if (!clk) {
++		WARN_ON(!clk);
++		return 0;
++	}
 +
- 	/* Disable NAPI process */
- 	stmmac_disable_all_queues(priv);
++	clk_prepare_enable(clk);
+ 
+ 	/*
+ 	 * SOC revision on older imx8mq is not available in fuses so query
+@@ -79,6 +88,8 @@ static u32 __init imx8mq_soc_revision(void)
+ 	soc_uid <<= 32;
+ 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
+ 
++	clk_disable_unprepare(clk);
++	clk_put(clk);
+ 	iounmap(ocotp_base);
+ 	of_node_put(np);
  
 -- 
 2.35.1
