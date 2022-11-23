@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728C77B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA256C433D6;
-	Wed, 23 Nov 2022 09:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097E27B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6748EC433C1;
+	Wed, 23 Nov 2022 09:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194016;
-	bh=2+lgQz+aViiWigOWhhtGoXwEEgqQVI0YSc5X9fCSB2E=;
+	s=korg; t=1669194019;
+	bh=BUm0QnloEu5jTmCS/qr9CvSCsce7s8EsWk/BKN/eiN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJJ0Ef54U9cnNoWgy1EdptNo+CDHlj+CBJyRId6bXFurLzRYO8Hh+twFHkZDDfzF7
-	 RYgJ5JqrzBp94jCL9mkZK3pDSSzO18wzbTeRhvYfeaSUJMxVCRmt52UC/9cPv5LD/H
-	 4CRL3EkpN+tGVJLLdvq4Gava2Z3xFzTM7WmWZhwE=
+	b=iO5CXQL+mbpTzoJ60i/ej8SINcwtPzfzEG1nkUUQMACKcGHJZW6ncV2n75jQQfD4n
+	 Bxaxysx7kaP+knNyg5h+zKgjzxPFNUAK53eypCkQ3GaTDYHuiHYXV5ByV6IivycP5k
+	 j1v0IGXa9f2T7AGzbSUPmDURW/5POXHanORfSMZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 46/88] mISDN: fix possible memory leak in mISDN_dsp_element_register()
-Date: Wed, 23 Nov 2022 09:50:43 +0100
-Message-Id: <20221123084550.124161291@linuxfoundation.org>
+Subject: [PATCH 4.14 47/88] mISDN: fix misuse of put_device() in mISDN_register_device()
+Date: Wed, 23 Nov 2022 09:50:44 +0100
+Message-Id: <20221123084550.154734683@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,49 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 98a2ac1ca8fd6eca6867726fe238d06e75eb1acd ]
+[ Upstream commit 2d25107e111a85c56f601a5470f1780ec054e6ac ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-use put_device() to give up the reference, so that the name can be
-freed in kobject_cleanup() when the refcount is 0.
+We should not release reference by put_device() before calling device_initialize().
 
-The 'entry' is going to be freed in mISDN_dsp_dev_release(), so the
-kfree() is removed. list_del() is called in mISDN_dsp_dev_release(),
-so it need be initialized.
-
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109132832.3270119-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e7d1d4d9ac0d ("mISDN: fix possible memory leak in mISDN_register_device()")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/dsp_pipeline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/isdn/mISDN/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/isdn/mISDN/dsp_pipeline.c b/drivers/isdn/mISDN/dsp_pipeline.c
-index e72b4e73cd61..796cae691560 100644
---- a/drivers/isdn/mISDN/dsp_pipeline.c
-+++ b/drivers/isdn/mISDN/dsp_pipeline.c
-@@ -97,6 +97,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	if (!entry)
- 		return -ENOMEM;
+diff --git a/drivers/isdn/mISDN/core.c b/drivers/isdn/mISDN/core.c
+index 5cd53b2c47c7..e542439f4950 100644
+--- a/drivers/isdn/mISDN/core.c
++++ b/drivers/isdn/mISDN/core.c
+@@ -231,7 +231,7 @@ mISDN_register_device(struct mISDNdevice *dev,
  
-+	INIT_LIST_HEAD(&entry->list);
- 	entry->elem = elem;
+ 	err = get_free_devid();
+ 	if (err < 0)
+-		goto error1;
++		return err;
+ 	dev->id = err;
  
- 	entry->dev.class = elements_class;
-@@ -131,7 +132,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	device_unregister(&entry->dev);
- 	return ret;
- err1:
--	kfree(entry);
-+	put_device(&entry->dev);
- 	return ret;
- }
- EXPORT_SYMBOL(mISDN_dsp_element_register);
+ 	device_initialize(&dev->dev);
 -- 
 2.35.1
 
