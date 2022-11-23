@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78251C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F40DC433D6;
-	Wed, 23 Nov 2022 09:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BDF1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718D2C433D7;
+	Wed, 23 Nov 2022 09:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197378;
-	bh=KPBHeO15Z7Rdm4vdRtOGfY9k/IKu9AIxzSZd2shTLKI=;
+	s=korg; t=1669197381;
+	bh=HCQBRlTV43aYk1oEg4dyH8XLT+W7JINlk/efRehAb7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tnz/0WAztO6mPKG4rN+WZQoaAE8xCBJeQ/ZnP51RHOjbezbShABeAV2QmjtY4H/y/
-	 UT3TuvTGpXqlJ6rcTiFn5nvTVTBCuzZ4nJzaXCRh4tkXwu1jNt2rHix2bbJehyqJ12
-	 UO4TTggWpnYKmY+d88ePAr6hLdv/4SEC6RDmO0TE=
+	b=UY0xEWEDdTJAN9kV7ee3BMf/rVR3oSlm6auH74I2G00Ax00OGTqYSnWb5bTLRYU0y
+	 wfatEY9oIv+WeuUjklW+PVjPDWOnEq1LxD2+prM75YV7QMaRCCTljCsQDym/xCbBj0
+	 wG8O9TCRyl33Uu+cNvVH2FweO0LCUGDXdCcP6NHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Galbraith <efault@gmx.de>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Borislav Petkov <bp@suse.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.0 278/314] x86/fpu: Drop fpregs lock before inheriting FPU permissions
-Date: Wed, 23 Nov 2022 09:52:03 +0100
-Message-Id: <20221123084638.128273790@linuxfoundation.org>
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.0 279/314] perf/x86/amd/uncore: Fix memory leak for events array
+Date: Wed, 23 Nov 2022 09:52:04 +0100
+Message-Id: <20221123084638.179064432@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,99 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mel Gorman <mgorman@techsingularity.net>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 36b038791e1e2baea892e9276588815fd14894b4 upstream.
+commit bdfe34597139cfcecd47a2eb97fea44d77157491 upstream.
 
-Mike Galbraith reported the following against an old fork of preempt-rt
-but the same issue also applies to the current preempt-rt tree.
+When a CPU comes online, the per-CPU NB and LLC uncore contexts are
+freed but not the events array within the context structure. This
+causes a memory leak as identified by the kmemleak detector.
 
-   BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-   in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: systemd
-   preempt_count: 1, expected: 0
-   RCU nest depth: 0, expected: 0
-   Preemption disabled at:
-   fpu_clone
-   CPU: 6 PID: 1 Comm: systemd Tainted: G            E       (unreleased)
-   Call Trace:
-    <TASK>
-    dump_stack_lvl
-    ? fpu_clone
-    __might_resched
-    rt_spin_lock
-    fpu_clone
-    ? copy_thread
-    ? copy_process
-    ? shmem_alloc_inode
-    ? kmem_cache_alloc
-    ? kernel_clone
-    ? __do_sys_clone
-    ? do_syscall_64
-    ? __x64_sys_rt_sigprocmask
-    ? syscall_exit_to_user_mode
-    ? do_syscall_64
-    ? syscall_exit_to_user_mode
-    ? do_syscall_64
-    ? syscall_exit_to_user_mode
-    ? do_syscall_64
-    ? exc_page_fault
-    ? entry_SYSCALL_64_after_hwframe
-    </TASK>
+  [...]
+  unreferenced object 0xffff8c5944b8e320 (size 32):
+    comm "swapper/0", pid 1, jiffies 4294670387 (age 151.072s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000000759fb79>] amd_uncore_cpu_up_prepare+0xaf/0x230
+      [<00000000ddc9e126>] cpuhp_invoke_callback+0x2cf/0x470
+      [<0000000093e727d4>] cpuhp_issue_call+0x14d/0x170
+      [<0000000045464d54>] __cpuhp_setup_state_cpuslocked+0x11e/0x330
+      [<0000000069f67cbd>] __cpuhp_setup_state+0x6b/0x110
+      [<0000000015365e0f>] amd_uncore_init+0x260/0x321
+      [<00000000089152d2>] do_one_initcall+0x3f/0x1f0
+      [<000000002d0bd18d>] kernel_init_freeable+0x1ca/0x212
+      [<0000000030be8dde>] kernel_init+0x11/0x120
+      [<0000000059709e59>] ret_from_fork+0x22/0x30
+  unreferenced object 0xffff8c5944b8dd40 (size 64):
+    comm "swapper/0", pid 1, jiffies 4294670387 (age 151.072s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<00000000306efe8b>] amd_uncore_cpu_up_prepare+0x183/0x230
+      [<00000000ddc9e126>] cpuhp_invoke_callback+0x2cf/0x470
+      [<0000000093e727d4>] cpuhp_issue_call+0x14d/0x170
+      [<0000000045464d54>] __cpuhp_setup_state_cpuslocked+0x11e/0x330
+      [<0000000069f67cbd>] __cpuhp_setup_state+0x6b/0x110
+      [<0000000015365e0f>] amd_uncore_init+0x260/0x321
+      [<00000000089152d2>] do_one_initcall+0x3f/0x1f0
+      [<000000002d0bd18d>] kernel_init_freeable+0x1ca/0x212
+      [<0000000030be8dde>] kernel_init+0x11/0x120
+      [<0000000059709e59>] ret_from_fork+0x22/0x30
+  [...]
 
-Mike says:
+Fix the problem by freeing the events array before freeing the uncore
+context.
 
-  The splat comes from fpu_inherit_perms() being called under fpregs_lock(),
-  and us reaching the spin_lock_irq() therein due to fpu_state_size_dynamic()
-  returning true despite static key __fpu_state_size_dynamic having never
-  been enabled.
-
-Mike's assessment looks correct. fpregs_lock on a PREEMPT_RT kernel disables
-preemption so calling spin_lock_irq() in fpu_inherit_perms() is unsafe. This
-problem exists since commit
-
-  9e798e9aa14c ("x86/fpu: Prepare fpu_clone() for dynamically enabled features").
-
-Even though the original bug report should not have enabled the paths at
-all, the bug still exists.
-
-fpregs_lock is necessary when editing the FPU registers or a task's FP
-state but it is not necessary for fpu_inherit_perms(). The only write
-of any FP state in fpu_inherit_perms() is for the new child which is
-not running yet and cannot context switch or be borrowed by a kernel
-thread yet. Hence, fpregs_lock is not protecting anything in the new
-child until clone() completes and can be dropped earlier. The siglock
-still needs to be acquired by fpu_inherit_perms() as the read of the
-parent's permissions has to be serialised.
-
-  [ bp: Cleanup splat. ]
-
-Fixes: 9e798e9aa14c ("x86/fpu: Prepare fpu_clone() for dynamically enabled features")
-Reported-by: Mike Galbraith <efault@gmx.de>
-Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
+Fixes: 39621c5808f5 ("perf/x86/amd/uncore: Use dynamic events array")
+Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221110124400.zgymc2lnwqjukgfh@techsingularity.net
+Link: https://lore.kernel.org/r/4fa9e5ac6d6e41fa889101e7af7e6ba372cfea52.1662613255.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/amd/uncore.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index 3b28c5b25e12..d00db56a8868 100644
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -605,9 +605,9 @@ int fpu_clone(struct task_struct *dst, unsigned long clone_flags, bool minimal)
- 	if (test_thread_flag(TIF_NEED_FPU_LOAD))
- 		fpregs_restore_userregs();
- 	save_fpregs_to_fpstate(dst_fpu);
-+	fpregs_unlock();
- 	if (!(clone_flags & CLONE_THREAD))
- 		fpu_inherit_perms(dst_fpu);
--	fpregs_unlock();
+diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+index d568afc705d2..83f15fe411b3 100644
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -553,6 +553,7 @@ static void uncore_clean_online(void)
  
- 	/*
- 	 * Children never inherit PASID state.
+ 	hlist_for_each_entry_safe(uncore, n, &uncore_unused_list, node) {
+ 		hlist_del(&uncore->node);
++		kfree(uncore->events);
+ 		kfree(uncore);
+ 	}
+ }
 -- 
 2.38.1
 
