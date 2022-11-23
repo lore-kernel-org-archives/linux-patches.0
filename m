@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5071C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD87EC433C1;
-	Wed, 23 Nov 2022 09:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E411C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:34:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B8DC433D6;
+	Wed, 23 Nov 2022 09:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196037;
-	bh=h6RcCJ0KUtB4xR20WEzzdRdH8XAPh3qyfEa9OaExBEQ=;
+	s=korg; t=1669196040;
+	bh=ETMoRJbkiIXsKFs/deYrh2htcn7n3/tZEh2SDKvmYGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/OIza152aRA5xro8JlUD0fbil7j8PPytCYcZOnRtCF0BezG+riU4S4VcvnG6vYz7
-	 nZxxWEwvkPbmG88X5I1xFSGZ0aq3AOPEyg0jcXi5ruGPP3Rqz3KFMPmP8cayNYk7+b
-	 02KHlhfguR0VcFztD0VPwADwLYORXR9mypHSSs1Q=
+	b=phNNLlN947v2Krsy/N2TSBORPPhOIulmrDdxML79pQ1911GvqJgSiIAEhdHmUvbtR
+	 oQD/oka21zUDaO5V/bQ6E9FlXmjl0TVo6vh8jZ88GtID6+HP1ZPGVd29O7QA8nqWbX
+	 3uWdQWEZrLIfyT5d+Yo9JM7tAJhVkRdZSSp+emRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangbin Huang <huangguangbin2@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/181] net: hns3: fix setting incorrect phy link ksettings for firmware in resetting process
-Date: Wed, 23 Nov 2022 09:50:57 +0100
-Message-Id: <20221123084606.386855905@linuxfoundation.org>
+Subject: [PATCH 5.15 103/181] net: microchip: sparx5: Fix potential null-ptr-deref in sparx_stats_init() and sparx5_start()
+Date: Wed, 23 Nov 2022 09:51:06 +0100
+Message-Id: <20221123084606.783995332@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,55 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guangbin Huang <huangguangbin2@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 510d7b6ae842e59ee00d57e5f07ac15131b6d899 ]
+[ Upstream commit 639f5d006e36bb303f525d9479448c412b720c39 ]
 
-Currently, if driver is in phy-imp(phy controlled by imp firmware) mode, as
-driver did not update phy link ksettings after initialization process or
-not update advertising when getting phy link ksettings from firmware, it
-may set incorrect phy link ksettings for firmware in resetting process.
-So fix it.
+sparx_stats_init() calls create_singlethread_workqueue() and not
+checked the ret value, which may return NULL. And a null-ptr-deref may
+happen:
 
-Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
-Fixes: c5ef83cbb1e9 ("net: hns3: fix for phy_addr error in hclge_mac_mdio_config")
-Fixes: 2312e050f42b ("net: hns3: Fix for deadlock problem occurring when unregistering ae_algo")
-Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+sparx_stats_init()
+    create_singlethread_workqueue() # failed, sparx5->stats_queue is NULL
+    queue_delayed_work()
+        queue_delayed_work_on()
+            __queue_delayed_work()  # warning here, but continue
+                __queue_work()      # access wq->flags, null-ptr-deref
+
+Check the ret value and return -ENOMEM if it is NULL. So as
+sparx5_start().
+
+Fixes: af4b11022e2d ("net: sparx5: add ethtool configuration and statistics support")
+Fixes: b37a1bae742f ("net: sparx5: add mactable support")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c    | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_ethtool.c | 3 +++
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c    | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 15d10775a757..2102b38b9c35 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3172,6 +3172,7 @@ static int hclge_update_tp_port_info(struct hclge_dev *hdev)
- 	hdev->hw.mac.autoneg = cmd.base.autoneg;
- 	hdev->hw.mac.speed = cmd.base.speed;
- 	hdev->hw.mac.duplex = cmd.base.duplex;
-+	linkmode_copy(hdev->hw.mac.advertising, cmd.link_modes.advertising);
- 
- 	return 0;
- }
-@@ -11669,9 +11670,12 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_msi_irq_uninit;
- 
--	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER &&
--	    !hnae3_dev_phy_imp_supported(hdev)) {
--		ret = hclge_mac_mdio_config(hdev);
-+	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
-+		if (hnae3_dev_phy_imp_supported(hdev))
-+			ret = hclge_update_tp_port_info(hdev);
-+		else
-+			ret = hclge_mac_mdio_config(hdev);
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ethtool.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ethtool.c
+index 10b866e9f726..060274caa4d0 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_ethtool.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ethtool.c
+@@ -1219,6 +1219,9 @@ int sparx_stats_init(struct sparx5 *sparx5)
+ 	snprintf(queue_name, sizeof(queue_name), "%s-stats",
+ 		 dev_name(sparx5->dev));
+ 	sparx5->stats_queue = create_singlethread_workqueue(queue_name);
++	if (!sparx5->stats_queue)
++		return -ENOMEM;
 +
- 		if (ret)
- 			goto err_msi_irq_uninit;
- 	}
+ 	INIT_DELAYED_WORK(&sparx5->stats_work, sparx5_check_stats_work);
+ 	queue_delayed_work(sparx5->stats_queue, &sparx5->stats_work,
+ 			   SPX5_STATS_CHECK_DELAY);
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index 5030dfca3879..435ac224e38e 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -629,6 +629,9 @@ static int sparx5_start(struct sparx5 *sparx5)
+ 	snprintf(queue_name, sizeof(queue_name), "%s-mact",
+ 		 dev_name(sparx5->dev));
+ 	sparx5->mact_queue = create_singlethread_workqueue(queue_name);
++	if (!sparx5->mact_queue)
++		return -ENOMEM;
++
+ 	INIT_DELAYED_WORK(&sparx5->mact_work, sparx5_mact_pull_work);
+ 	queue_delayed_work(sparx5->mact_queue, &sparx5->mact_work,
+ 			   SPX5_MACT_PULL_DELAY);
 -- 
 2.35.1
 
