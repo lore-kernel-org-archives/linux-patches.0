@@ -1,65 +1,86 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9B01FA3
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 10:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1669200496;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Q21XGGIV0kLQZIROdqS+QQLvwJnTsCRdjio/ZDAURPE=;
-	b=Ai5SX3frECIg9pnN33NdUzbGswQ1nTfEfhpCe0ETms/zdCCll1V/e23aMPl70iH46biPh3
-	pg+/Tjzbt6ahxtLxRF+IjZS1mYvI+Z29REacDZ86O04pD3EJJFg5yHTS/n+L9vlyL8GGOt
-	EtBy3sbiCnsUon/rSc+mLaPg5VQrFVs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-488-8tkKkYFnM7KhQMAhkJOAEQ-1; Wed, 23 Nov 2022 05:48:12 -0500
-X-MC-Unique: 8tkKkYFnM7KhQMAhkJOAEQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com [10.11.54.7])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CC42C85A59D;
-	Wed, 23 Nov 2022 10:48:11 +0000 (UTC)
-Received: from oldenburg.str.redhat.com (unknown [10.2.16.18])
-	by smtp.corp.redhat.com (Postfix) with ESMTPS id 4EC231400B15;
-	Wed, 23 Nov 2022 10:48:10 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
-  tglx@linutronix.de,  linux-crypto@vger.kernel.org,  x86@kernel.org,  Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
- <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>
-Subject: Re: [PATCH v6 2/3] random: introduce generic vDSO getrandom()
- implementation
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
-	<20221121152909.3414096-3-Jason@zx2c4.com>
-Date: Wed, 23 Nov 2022 11:48:06 +0100
-In-Reply-To: <20221121152909.3414096-3-Jason@zx2c4.com> (Jason A. Donenfeld's
-	message of "Mon, 21 Nov 2022 16:29:08 +0100")
-Message-ID: <87r0xulzfd.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C7A1FA3
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 11:11:15 +0000 (UTC)
+Received: by mail-pg1-f172.google.com with SMTP id h193so16448674pgc.10
+        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 03:11:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jcfXEcruqvTE2G0on9M/bXzLRbEd9FM+dGkOzqj5auE=;
+        b=STg8oyDVjJ95ozkHYKBwCxoKKj15bLbGMbv335PGZHqMTJw86ZgweIhxINoun+8qds
+         uxQIDZFk9WU19P0ojQ+Zu7EwZb8TThefYKUdIHexlXfDaSh5nHv0xV7/m2r7dXJd7Neq
+         J44TUAqxfGi7ELpSAOc1UaAUtTyDQEDuMZziQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jcfXEcruqvTE2G0on9M/bXzLRbEd9FM+dGkOzqj5auE=;
+        b=wZ46UKtgdFEfMpe3qVy8VHQEO9xHKKqntprYzbjw6YAL2kv9kDZzlQOuq5bvKyHqRH
+         ttFH6b2ISYYjsPpDdAEq6vdWuUlODGevx+cvO3MuQ3d5pmjlN6XKGfTPG3uZW90FfdqO
+         nT3yqBh+lfbKjfud1KSHPNU25dyy3r0N0xX4Ue90IQyqN7ayvSeKCHMawR8esWep+5nZ
+         iYgLK59r+eQG97NDb9/6NARjIXGrf0XXfQVuP8UoTWvUNcZieqck07kVmsL+Du4EWel4
+         6ShclKII4h0i7Jq32suKp3LtPIgmeDDRcVpHbSeN7jQDL2GSl7ZXTQJeg7el996+1bzI
+         TixA==
+X-Gm-Message-State: ANoB5pn4szLP9yV2N2LHMXmJNTOVDFdrzHhY+sbk4L5SHeiONuELgNxk
+	uvowrtCQj0+DCFgDwSr8VKlQQg==
+X-Google-Smtp-Source: AA0mqf5DeCVCvYGoX+mI5w2NZxsP2alnVqmS3+XGoCLpIGrKuvlbL77Knf091D8CiTaTFYjdMJf/BA==
+X-Received: by 2002:a05:6a00:298d:b0:561:5d08:761 with SMTP id cj13-20020a056a00298d00b005615d080761mr11655969pfb.14.1669201874767;
+        Wed, 23 Nov 2022 03:11:14 -0800 (PST)
+Received: from 1682a9d2d5f8 ([220.253.112.46])
+        by smtp.gmail.com with ESMTPSA id f5-20020a63f745000000b0046fe244ed6esm10626904pgk.23.2022.11.23.03.11.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Nov 2022 03:11:13 -0800 (PST)
+Date: Wed, 23 Nov 2022 11:11:06 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
+Message-ID: <20221123111106.GA3974538@1682a9d2d5f8>
+References: <20221123084557.945845710@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 
-* Jason A. Donenfeld:
+On Wed, Nov 23, 2022 at 09:49:43AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.156 release.
+> There are 149 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
+> Anything received after that time might be too late.
 
->   static void *vgetrandom_alloc(size_t *num, size_t *size_per_each, unsigned int flags)
->   {
->     unsigned long ret = syscall(__NR_vgetrandom_alloc, num, size_per_each, flags);
->     return ret > -4096UL ? NULL : (void *)ret;
->   }
+Hi Greg,
 
-The traditional syscall function returns -1 on error and set errors, so
-using unsing long and the 4096 is quite misleading.
+5.10.156-rc1 tested.
 
-Thanks,
-Florian
+Run tested on:
+- Intel Skylake x86_64 (nuc6 i5-6260U)
 
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- Allwinner H6
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
