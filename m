@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503191C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2346C433C1;
-	Wed, 23 Nov 2022 09:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F9E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:54:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277D2C433C1;
+	Wed, 23 Nov 2022 09:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197243;
-	bh=P69XkczsHIbTF3iSIvY2sEtDIH/dFVjsIoFZ8FyFLU8=;
+	s=korg; t=1669197246;
+	bh=HcPyuCp0n5QyO39P5sBaG+3b0bMiT9tVBLZuD1KrLw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhZgft0of5q8G1srABMhCjU1paMwSeUwN7+NCES+dICMG3L96J+t//RaMyu8JHfmD
-	 ujP3RV3iwuuHgZjT1To3K61g3numpLiOGOteflcbgjYm+3oUKZuGxDhJ+P1MhnIwfA
-	 9W90NlqPkmwaYXENCq0HFma+ixITXrkczwG6PSYE=
+	b=000GfdSMgXNxU7i6trtLpiX2X1tEw6MFkzSTBlYLsnG9F9DpqXoDo1SXY8DpXV0ZS
+	 GS+p40lGXW1xI8WclUMIkYzqrP3Sz4JuwUVTgggTc/pe8UjDZKcCitN4zMZdcIcNHi
+	 kzw+0hrnOpXdqZ05DMzAq5l9hH5dbwO3Qx6dGdAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liyupeng@zbhlos.com,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.0 208/314] platform/x86/amd: pmc: Remove more CONFIG_DEBUG_FS checks
-Date: Wed, 23 Nov 2022 09:50:53 +0100
-Message-Id: <20221123084634.962307164@linuxfoundation.org>
+Subject: [PATCH 6.0 209/314] platform/x86/amd: pmc: Add new ACPI ID AMDI0009
+Date: Wed, 23 Nov 2022 09:50:54 +0100
+Message-Id: <20221123084635.003119513@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,47 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-commit a5b5fb0fc47ddc7d1ed6a0365197639a01bc1f3a upstream.
+commit 6412518f5cb953cbd84b6746db9741bfc92be40a upstream.
 
-commit b37fe34c8309 ("platform/x86/amd: pmc: remove CONFIG_DEBUG_FS
-checks") removed most CONFIG_DEBUG_FS checks, but there were some
-left that were reported to cause compile test failures.
+Add new a new ACPI ID AMDI0009 used by upcoming AMD platform to the pmc
+supported list of devices.
 
-Remove the remaining checks, and also the unnecessary CONFIG_SUSPEND
-used in the same place.
-
-Reported-by: liyupeng@zbhlos.com
-Fixes: b37fe34c8309 ("platform/x86/amd: pmc: remove CONFIG_DEBUG_FS checks")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216679
-Link: https://lore.kernel.org/r/20221108023323.19304-1-mario.limonciello@amd.com
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.0
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20221109083346.361603-1-Shyam-sundar.S-k@amd.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/platform/x86/amd/pmc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/platform/x86/amd/pmc.c
 +++ b/drivers/platform/x86/amd/pmc.c
-@@ -274,7 +274,6 @@ static const struct file_operations amd_
- 	.release = amd_pmc_stb_debugfs_release_v2,
- };
- 
--#if defined(CONFIG_SUSPEND) || defined(CONFIG_DEBUG_FS)
- static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
- {
- 	if (dev->cpu_id == AMD_CPU_ID_PCO) {
-@@ -349,7 +348,6 @@ static int get_metrics_table(struct amd_
- 	memcpy_fromio(table, pdev->smu_virt_addr, sizeof(struct smu_metrics));
- 	return 0;
- }
--#endif /* CONFIG_SUSPEND || CONFIG_DEBUG_FS */
- 
- #ifdef CONFIG_SUSPEND
- static void amd_pmc_validate_deepest(struct amd_pmc_dev *pdev)
+@@ -918,6 +918,7 @@ static const struct acpi_device_id amd_p
+ 	{"AMDI0006", 0},
+ 	{"AMDI0007", 0},
+ 	{"AMDI0008", 0},
++	{"AMDI0009", 0},
+ 	{"AMD0004", 0},
+ 	{"AMD0005", 0},
+ 	{ }
 
 
