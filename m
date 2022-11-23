@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06171C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:12:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE26C433C1;
-	Wed, 23 Nov 2022 09:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555401C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:12:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A32C433C1;
+	Wed, 23 Nov 2022 09:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194739;
-	bh=GeC7NvKqm718jF98ewFwJhQZ2YZOROyEMwggYRyroFc=;
+	s=korg; t=1669194743;
+	bh=Ow6bm9sate6P/YdaHpGnT3KY7AexazLac8KcHVBJgW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjeMuD4/8slHta4xmZn/8XsMF3Pwii+z7txaz4TMrwETdNV5r8U5rfEgflfTcdNt1
-	 HrYeuN5D3G5XJMGHxd2x8wEISaMNLbqB9j0Au5W+Bd6GWzT7/xHeiABuKpKBenUNEI
-	 osqteviOxLfBEyfkSB5lLHKisA64903I0YHta5b4=
+	b=IzI9pcvUueyxLkVpP3jEbzfjKdT3eL7FdCGAsf41JkSeX7il4+TlNBFKEHWSTo2Gr
+	 toAHXXSZiyaNPSe/DuQerl3rzQJHMWzlv+RRr84dLO3IBTxgP33PNiATGClOlz+OM9
+	 UshbiSL1Hm8xx9eBfw3FLVwR/m4h5QxHyRpJYEBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/156] net: cpsw: disable napi in cpsw_ndo_open()
-Date: Wed, 23 Nov 2022 09:49:47 +0100
-Message-Id: <20221123084559.050258138@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 048/156] nilfs2: fix deadlock in nilfs_count_free_blocks()
+Date: Wed, 23 Nov 2022 09:50:05 +0100
+Message-Id: <20221123084559.647307588@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,38 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 6d47b53fb3f363a74538a1dbd09954af3d8d4131 ]
+commit 8ac932a4921a96ca52f61935dbba64ea87bbd5dc upstream.
 
-When failed to create xdp rxqs or fill rx channels in cpsw_ndo_open() for
-opening device, napi isn't disabled. When open cpsw device next time, it
-will report a invalid opcode issue. Compiled tested only.
+A semaphore deadlock can occur if nilfs_get_block() detects metadata
+corruption while locating data blocks and a superblock writeback occurs at
+the same time:
 
-Fixes: d354eb85d618 ("drivers: net: cpsw: dual_emac: simplify napi usage")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109011537.96975-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+task 1                               task 2
+------                               ------
+* A file operation *
+nilfs_truncate()
+  nilfs_get_block()
+    down_read(rwsem A) <--
+    nilfs_bmap_lookup_contig()
+      ...                            generic_shutdown_super()
+                                       nilfs_put_super()
+                                         * Prepare to write superblock *
+                                         down_write(rwsem B) <--
+                                         nilfs_cleanup_super()
+      * Detect b-tree corruption *         nilfs_set_log_cursor()
+      nilfs_bmap_convert_error()             nilfs_count_free_blocks()
+        __nilfs_error()                        down_read(rwsem A) <--
+          nilfs_set_error()
+            down_write(rwsem B) <--
+
+                           *** DEADLOCK ***
+
+Here, nilfs_get_block() readlocks rwsem A (= NILFS_MDT(dat_inode)->mi_sem)
+and then calls nilfs_bmap_lookup_contig(), but if it fails due to metadata
+corruption, __nilfs_error() is called from nilfs_bmap_convert_error()
+inside the lock section.
+
+Since __nilfs_error() calls nilfs_set_error() unless the filesystem is
+read-only and nilfs_set_error() attempts to writelock rwsem B (=
+nilfs->ns_sem) to write back superblock exclusively, hierarchical lock
+acquisition occurs in the order rwsem A -> rwsem B.
+
+Now, if another task starts updating the superblock, it may writelock
+rwsem B during the lock sequence above, and can deadlock trying to
+readlock rwsem A in nilfs_count_free_blocks().
+
+However, there is actually no need to take rwsem A in
+nilfs_count_free_blocks() because it, within the lock section, only reads
+a single integer data on a shared struct with
+nilfs_sufile_get_ncleansegs().  This has been the case after commit
+aa474a220180 ("nilfs2: add local variable to cache the number of clean
+segments"), that is, even before this bug was introduced.
+
+So, this resolves the deadlock problem by just not taking the semaphore in
+nilfs_count_free_blocks().
+
+Link: https://lkml.kernel.org/r/20221029044912.9139-1-konishi.ryusuke@gmail.com
+Fixes: e828949e5b42 ("nilfs2: call nilfs_error inside bmap routines")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>	[2.6.38+
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/cpsw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nilfs2/the_nilfs.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index 33eca554424a..774a72db7c96 100644
---- a/drivers/net/ethernet/ti/cpsw.c
-+++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -1753,6 +1753,8 @@ static int cpsw_ndo_open(struct net_device *ndev)
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -695,9 +695,7 @@ int nilfs_count_free_blocks(struct the_n
+ {
+ 	unsigned long ncleansegs;
  
- err_cleanup:
- 	if (!cpsw->usage_count) {
-+		napi_disable(&cpsw->napi_rx);
-+		napi_disable(&cpsw->napi_tx);
- 		cpdma_ctlr_stop(cpsw->dma);
- 		cpsw_destroy_xdp_rxqs(cpsw);
- 	}
--- 
-2.35.1
-
+-	down_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
+ 	ncleansegs = nilfs_sufile_get_ncleansegs(nilfs->ns_sufile);
+-	up_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
+ 	*nblocks = (sector_t)ncleansegs * nilfs->ns_blocks_per_segment;
+ 	return 0;
+ }
 
 
