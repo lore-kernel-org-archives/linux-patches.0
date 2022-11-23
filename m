@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F161C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46535C433D6;
-	Wed, 23 Nov 2022 09:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FBB1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2756C433C1;
+	Wed, 23 Nov 2022 09:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196332;
-	bh=goSKSrtytpLC9w9m/Ga6oFKpblQyL4koo4DePb4zODk=;
+	s=korg; t=1669196336;
+	bh=yZlU3xvpBCtDBfZMgssOPt2vFUm1cFFzhLnsq/c26m0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfGvkmaAjQ1D8HKaocpCqJhq/VFHizHqONqhmy9ARn4gLzU73gzHr0jNgkvCl5Bmh
-	 7xiDa1UsNXUV04LyU1RQ7Iu20jqY/RaQNCGPwkHMgywZ7RyP6e6hyQcMW/kGdsgNSY
-	 qC2pL2fhY3ZB47PMwb/GQzNaLrX8sVMcVS6+n9WA=
+	b=zEJhIhC8nwjND9cmUKgZgfsoOgdw4Q5OMN8RAJtcT8XWyHezfsk/x9rOCYCmMIOUu
+	 9G+jhbaZpZCUBn0s1ZiUJc417dWv3QM3UJIwKbqmt2NGi8n57rZ8H+kjGkzhN9v4oD
+	 1aLS6t0AB4+evAw7hZKw4mYIjzWudF8S2EMuCW/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mike Christie <michael.chritie@oracle.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/181] scsi: target: tcm_loop: Fix possible name leak in tcm_loop_setup_hba_bus()
-Date: Wed, 23 Nov 2022 09:52:07 +0100
-Message-Id: <20221123084609.436980853@linuxfoundation.org>
+Subject: [PATCH 5.15 165/181] scsi: scsi_debug: Fix possible UAF in sdebug_add_host_helper()
+Date: Wed, 23 Nov 2022 09:52:08 +0100
+Message-Id: <20221123084609.477645639@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,48 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit bc68e428d4963af0201e92159629ab96948f0893 ]
+[ Upstream commit e208a1d795a08d1ac0398c79ad9c58106531bcc5 ]
 
-If device_register() fails in tcm_loop_setup_hba_bus(), the name allocated
-by dev_set_name() need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
-The 'tl_hba' will be freed in tcm_loop_release_adapter(), so it don't need
-goto error label in this case.
+If device_register() fails in sdebug_add_host_helper(), it will goto clean
+and sdbg_host will be freed, but sdbg_host->host_list will not be removed
+from sdebug_host_list, then list traversal may cause UAF. Fix it.
 
-Fixes: 3703b2c5d041 ("[SCSI] tcm_loop: Add multi-fabric Linux/SCSI LLD fabric module")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115015042.3652261-1-yangyingliang@huawei.com
-Reviewed-by: Mike Christie <michael.chritie@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221117084421.58918-1-yuancan@huawei.com
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/loopback/tcm_loop.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_debug.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
-index 52db28d868d5..600a4d1ee45f 100644
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -397,6 +397,7 @@ static int tcm_loop_setup_hba_bus(struct tcm_loop_hba *tl_hba, int tcm_loop_host
- 	ret = device_register(&tl_hba->dev);
- 	if (ret) {
- 		pr_err("device_register() failed for tl_hba->dev: %d\n", ret);
-+		put_device(&tl_hba->dev);
- 		return -ENODEV;
- 	}
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 747e1cbb7ec9..2b5e249f5d5b 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -7132,8 +7132,12 @@ static int sdebug_add_host_helper(int per_host_idx)
+ 	dev_set_name(&sdbg_host->dev, "adapter%d", sdebug_num_hosts);
  
-@@ -1073,7 +1074,7 @@ static struct se_wwn *tcm_loop_make_scsi_hba(
- 	 */
- 	ret = tcm_loop_setup_hba_bus(tl_hba, tcm_loop_hba_no_cnt);
- 	if (ret)
--		goto out;
-+		return ERR_PTR(ret);
+ 	error = device_register(&sdbg_host->dev);
+-	if (error)
++	if (error) {
++		spin_lock(&sdebug_host_list_lock);
++		list_del(&sdbg_host->host_list);
++		spin_unlock(&sdebug_host_list_lock);
+ 		goto clean;
++	}
  
- 	sh = tl_hba->sh;
- 	tcm_loop_hba_no_cnt++;
+ 	++sdebug_num_hosts;
+ 	return 0;
 -- 
 2.35.1
 
