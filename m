@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEF91C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E602C433C1;
-	Wed, 23 Nov 2022 09:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040A71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54568C433D6;
+	Wed, 23 Nov 2022 09:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196186;
-	bh=N/Asc+ng/E5TIeoHflsTOYUgjf/lNvHFivHxZ5Itzlw=;
+	s=korg; t=1669196190;
+	bh=jLIkfQQK4i5fEELjYg2YNlkRlfwFdCvTg7WGfHqRHtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gn+akngWD7usHJmX61ogwarE0hu1VP9QNEXEPaTW26mJDXV/WRwfjqZi6h/hrqr1G
-	 Oz4VHE5xqtViGMFRT4rekoFIht8AoBteWvu8hC+Yl+Nq+Glj/sLNOx7fslSqdI+lN8
-	 PdAeIEoMB/wO8rnExzeZ01TrK4Ijqsp9A8B/kZrk=
+	b=sI4UoFwihAre9c7liu7EYZa5FbdAEKc+8Ru+/Kulwg/QiR0WPs6B99A5t0CiaxXn9
+	 ZCtWcjVcFXUjITcavDNnIZm+jZ2gQ4lpC3tqoDZrR0lzPOi7tiNGOzBArE5I6I0JHm
+	 eZnlcfj1JEKZK41k3hGzhiucO5FTTEOrMtRijdq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+4dd880c1184280378821@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 144/181] Input: iforce - invert valid length check when fetching device IDs
-Date: Wed, 23 Nov 2022 09:51:47 +0100
-Message-Id: <20221123084608.576476301@linuxfoundation.org>
+	Alban Crequy <albancrequy@linux.microsoft.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Francis Laniel <flaniel@linux.microsoft.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 145/181] maccess: Fix writing offset in case of fault in strncpy_from_kernel_nofault()
+Date: Wed, 23 Nov 2022 09:51:48 +0100
+Message-Id: <20221123084608.624504876@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,56 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alban Crequy <albancrequy@linux.microsoft.com>
 
-commit b8ebf250997c5fb253582f42bfe98673801ebebd upstream.
+commit 8678ea06852cd1f819b870c773d43df888d15d46 upstream.
 
-syzbot is reporting uninitialized value at iforce_init_device() [1], for
-commit 6ac0aec6b0a6 ("Input: iforce - allow callers supply data buffer
-when fetching device IDs") is checking that valid length is shorter than
-bytes to read. Since iforce_get_id_packet() stores valid length when
-returning 0, the caller needs to check that valid length is longer than or
-equals to bytes to read.
+If a page fault occurs while copying the first byte, this function resets one
+byte before dst.
+As a consequence, an address could be modified and leaded to kernel crashes if
+case the modified address was accessed later.
 
-Reported-by: syzbot <syzbot+4dd880c1184280378821@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Fixes: 6ac0aec6b0a6 ("Input: iforce - allow callers supply data buffer when fetching device IDs")
-Link: https://lore.kernel.org/r/531fb432-7396-ad37-ecba-3e42e7f56d5c@I-love.SAKURA.ne.jp
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: b58294ead14c ("maccess: allow architectures to provide kernel probing directly")
+Signed-off-by: Alban Crequy <albancrequy@linux.microsoft.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: Francis Laniel <flaniel@linux.microsoft.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> [5.8]
+Link: https://lore.kernel.org/bpf/20221110085614.111213-2-albancrequy@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/iforce/iforce-main.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/maccess.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/iforce/iforce-main.c
-+++ b/drivers/input/joystick/iforce/iforce-main.c
-@@ -273,22 +273,22 @@ int iforce_init_device(struct device *pa
-  * Get device info.
-  */
- 
--	if (!iforce_get_id_packet(iforce, 'M', buf, &len) || len < 3)
-+	if (!iforce_get_id_packet(iforce, 'M', buf, &len) && len >= 3)
- 		input_dev->id.vendor = get_unaligned_le16(buf + 1);
- 	else
- 		dev_warn(&iforce->dev->dev, "Device does not respond to id packet M\n");
- 
--	if (!iforce_get_id_packet(iforce, 'P', buf, &len) || len < 3)
-+	if (!iforce_get_id_packet(iforce, 'P', buf, &len) && len >= 3)
- 		input_dev->id.product = get_unaligned_le16(buf + 1);
- 	else
- 		dev_warn(&iforce->dev->dev, "Device does not respond to id packet P\n");
- 
--	if (!iforce_get_id_packet(iforce, 'B', buf, &len) || len < 3)
-+	if (!iforce_get_id_packet(iforce, 'B', buf, &len) && len >= 3)
- 		iforce->device_memory.end = get_unaligned_le16(buf + 1);
- 	else
- 		dev_warn(&iforce->dev->dev, "Device does not respond to id packet B\n");
- 
--	if (!iforce_get_id_packet(iforce, 'N', buf, &len) || len < 2)
-+	if (!iforce_get_id_packet(iforce, 'N', buf, &len) && len >= 2)
- 		ff_effects = buf[1];
- 	else
- 		dev_warn(&iforce->dev->dev, "Device does not respond to id packet N\n");
+--- a/mm/maccess.c
++++ b/mm/maccess.c
+@@ -99,7 +99,7 @@ long strncpy_from_kernel_nofault(char *d
+ 	return src - unsafe_addr;
+ Efault:
+ 	pagefault_enable();
+-	dst[-1] = '\0';
++	dst[0] = '\0';
+ 	return -EFAULT;
+ }
+ #else /* HAVE_GET_KERNEL_NOFAULT */
 
 
