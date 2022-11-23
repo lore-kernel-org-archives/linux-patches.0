@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0A7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA450C433D6;
-	Wed, 23 Nov 2022 08:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA7C1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80390C433D7;
+	Wed, 23 Nov 2022 08:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193992;
-	bh=kJ54kQwvYYVFdgE1bUWDINk7Vi8pAsHGDMtpQe3PfF0=;
+	s=korg; t=1669193999;
+	bh=irkkxOrCXIgtDv9vcfY8FJlWl23CQ6d5Rq4QHPnHr18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kx1yemuGvn6vKEgwt3aUK4RzrY6pORy1Z8rwsY61IC1hO2hFLCOV1uEtWSqV4313P
-	 7WY6ZlDGy80bnOR0q49rhwhaiDTY56A84dYmyUCIAgAHavIYQ+bE5kYrv508V1ChwC
-	 CX5b8HvpeVF4dKJpJs9LfaundtCp92YHRutDAlts=
+	b=L1GGnJuiYwDwWYhccUPkOBZE1fsmchE3O0D70G+C8bzlDOs2xzguVbvSwmAXx2o6k
+	 YUTxFMIEf16LzTh5CNR4KQgg9LWmiL03RYv04rZmnBxoe+2Xbvn1BwqFFEyqzoEAhp
+	 oLO/1b1T9tVaA6X5pKdMxC5sYXpppuF8oG988kNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 40/88] tty: n_gsm: fix sleep-in-atomic-context bug in gsm_control_send
-Date: Wed, 23 Nov 2022 09:50:37 +0100
-Message-Id: <20221123084549.888167886@linuxfoundation.org>
+Subject: [PATCH 4.14 42/88] block: sed-opal: kmalloc the cmd/resp buffers
+Date: Wed, 23 Nov 2022 09:50:39 +0100
+Message-Id: <20221123084549.960621191@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -34,47 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit 7b7dfe4833c70a11cdfa51b38705103bd31eddaa ]
+[ Upstream commit f829230dd51974c1f4478900ed30bb77ba530b40 ]
 
-The function gsm_dlci_t1() is a timer handler that runs in an
-atomic context, but it calls "kzalloc(..., GFP_KERNEL)" that
-may sleep. As a result, the sleep-in-atomic-context bug will
-happen. The process is shown below:
+In accordance with [1] the DMA-able memory buffers must be
+cacheline-aligned otherwise the cache writing-back and invalidation
+performed during the mapping may cause the adjacent data being lost. It's
+specifically required for the DMA-noncoherent platforms [2]. Seeing the
+opal_dev.{cmd,resp} buffers are implicitly used for DMAs in the NVME and
+SCSI/SD drivers in framework of the nvme_sec_submit() and sd_sec_submit()
+methods respectively they must be cacheline-aligned to prevent the denoted
+problem. One of the option to guarantee that is to kmalloc the buffers
+[2]. Let's explicitly allocate them then instead of embedding into the
+opal_dev structure instance.
 
-gsm_dlci_t1()
- gsm_dlci_open()
-  gsm_modem_update()
-   gsm_modem_upd_via_msc()
-    gsm_control_send()
-     kzalloc(sizeof(.., GFP_KERNEL) //may sleep
+Note this fix was inspired by the commit c94b7f9bab22 ("nvme-hwmon:
+kmalloc the NVME SMART log buffer").
 
-This patch changes the gfp_t parameter of kzalloc() from GFP_KERNEL to
-GFP_ATOMIC in order to mitigate the bug.
+[1] Documentation/core-api/dma-api.rst
+[2] Documentation/core-api/dma-api-howto.rst
 
-Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20221002040709.27849-1-duoming@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 455a7b238cd6 ("block: Add Sed-opal library")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221107203944.31686-1-Sergey.Semin@baikalelectronics.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/sed-opal.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 1d50f3ab4e5a..97f6860c911e 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -1425,7 +1425,7 @@ static struct gsm_control *gsm_control_send(struct gsm_mux *gsm,
- 		unsigned int command, u8 *data, int clen)
- {
- 	struct gsm_control *ctrl = kzalloc(sizeof(struct gsm_control),
--						GFP_KERNEL);
-+						GFP_ATOMIC);
- 	unsigned long flags;
- 	if (ctrl == NULL)
+diff --git a/block/sed-opal.c b/block/sed-opal.c
+index c64011cda9fc..ae902077cd9d 100644
+--- a/block/sed-opal.c
++++ b/block/sed-opal.c
+@@ -94,8 +94,8 @@ struct opal_dev {
+ 	u64 lowest_lba;
+ 
+ 	size_t pos;
+-	u8 cmd[IO_BUFFER_LENGTH];
+-	u8 resp[IO_BUFFER_LENGTH];
++	u8 *cmd;
++	u8 *resp;
+ 
+ 	struct parsed_resp parsed;
+ 	size_t prev_d_len;
+@@ -2011,6 +2011,8 @@ void free_opal_dev(struct opal_dev *dev)
+ 	if (!dev)
+ 		return;
+ 	clean_opal_dev(dev);
++	kfree(dev->resp);
++	kfree(dev->cmd);
+ 	kfree(dev);
+ }
+ EXPORT_SYMBOL(free_opal_dev);
+@@ -2023,16 +2025,38 @@ struct opal_dev *init_opal_dev(void *data, sec_send_recv *send_recv)
+ 	if (!dev)
  		return NULL;
+ 
++	/*
++	 * Presumably DMA-able buffers must be cache-aligned. Kmalloc makes
++	 * sure the allocated buffer is DMA-safe in that regard.
++	 */
++	dev->cmd = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->cmd)
++		goto err_free_dev;
++
++	dev->resp = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->resp)
++		goto err_free_cmd;
++
+ 	INIT_LIST_HEAD(&dev->unlk_lst);
+ 	mutex_init(&dev->dev_lock);
+ 	dev->data = data;
+ 	dev->send_recv = send_recv;
+ 	if (check_opal_support(dev) != 0) {
+ 		pr_debug("Opal is not supported on this device\n");
+-		kfree(dev);
+-		return NULL;
++		goto err_free_resp;
+ 	}
+ 	return dev;
++
++err_free_resp:
++	kfree(dev->resp);
++
++err_free_cmd:
++	kfree(dev->cmd);
++
++err_free_dev:
++	kfree(dev);
++
++	return NULL;
+ }
+ EXPORT_SYMBOL(init_opal_dev);
+ 
 -- 
 2.35.1
 
