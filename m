@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDE41C2B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57FBC433D6;
-	Wed, 23 Nov 2022 09:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ADC1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0A2C433D6;
+	Wed, 23 Nov 2022 09:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195400;
-	bh=7g0uSiGeoomZ7UqLQ4jw6+NhcVH+awKXjjHF7Rlugj8=;
+	s=korg; t=1669195403;
+	bh=ZDEjWfNXwpVT0d/r4wzQ9qp++kxgxyPEkOBZM8Wb6FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPAmO+VpgvmnppQR8MvDML1Afc3hwbk4oJspwxF4EW3wcm2S0a6SlhEccM6gHQwcd
-	 QTfGtToVuzRxa6KoVQGP0OkzJyL6ocLpYgC1/C/0QA8SYUXhCn1Nu86pvoM6Uc5HdC
-	 SLrjIY8ssEvvsmG7mpO5ahMgL0e7d0xM+X0+55mk=
+	b=Ya6EyJOqyyVsCuqV0DewgVIIgwJ4o2GK4IyEe/plpUffuM22gmkuHqr9qjMUhrJKR
+	 fY6WyRDxieYJyFhg7G4muioUKUBv1d3Kbeb03eKTQNMXpe+A5tKzEou7g97gbBMmb2
+	 cBt2ov3rizeGEavm3aYZ8uXdT93JP9hZsvnEIC6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/149] drbd: use after free in drbd_create_device()
-Date: Wed, 23 Nov 2022 09:50:57 +0100
-Message-Id: <20221123084600.537501795@linuxfoundation.org>
+Subject: [PATCH 5.10 075/149] platform/x86/intel: pmc: Dont unconditionally attach Intel PMC when virtualized
+Date: Wed, 23 Nov 2022 09:50:58 +0100
+Message-Id: <20221123084600.568019262@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,45 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Roger Pau Monné <roger.pau@citrix.com>
 
-[ Upstream commit a7a1598189228b5007369a9622ccdf587be0730f ]
+[ Upstream commit 2dbfb3f33350e1e868d3d7ed4c176d8777150878 ]
 
-The drbd_destroy_connection() frees the "connection" so use the _safe()
-iterator to prevent a use after free.
+The current logic in the Intel PMC driver will forcefully attach it
+when detecting any CPU on the intel_pmc_core_platform_ids array,
+even if the matching ACPI device is not present.
 
-Fixes: b6f85ef9538b ("drbd: Iterate over all connections")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/Y3Jd5iZRbNQ9w6gm@kili
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+There's no checking in pmc_core_probe() to assert that the PMC device
+is present, and hence on virtualized environments the PMC device
+probes successfully, even if the underlying registers are not present.
+Before commit 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI
+with CPUID enumeration") the driver would check for the presence of a
+specific PCI device, and that prevented the driver from attaching when
+running virtualized.
+
+Fix by only forcefully attaching the PMC device when not running
+virtualized.  Note that virtualized platforms can still get the device
+to load if the appropriate ACPI device is present on the tables
+provided to the VM.
+
+Make an exception for the Xen initial domain, which does have full
+hardware access, and hence can attach to the PMC if present.
+
+Fixes: 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI with CPUID enumeration")
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Acked-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110163145.80374-1-roger.pau@citrix.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel_pmc_core_pltdrv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index 407527ff6b1f..51450f7c81af 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2720,7 +2720,7 @@ static int init_submitter(struct drbd_device *device)
- enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsigned int minor)
+diff --git a/drivers/platform/x86/intel_pmc_core_pltdrv.c b/drivers/platform/x86/intel_pmc_core_pltdrv.c
+index 15ca8afdd973..ddfba38c2104 100644
+--- a/drivers/platform/x86/intel_pmc_core_pltdrv.c
++++ b/drivers/platform/x86/intel_pmc_core_pltdrv.c
+@@ -18,6 +18,8 @@
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ 
++#include <xen/xen.h>
++
+ static void intel_pmc_core_release(struct device *dev)
  {
- 	struct drbd_resource *resource = adm_ctx->resource;
--	struct drbd_connection *connection;
-+	struct drbd_connection *connection, *n;
- 	struct drbd_device *device;
- 	struct drbd_peer_device *peer_device, *tmp_peer_device;
- 	struct gendisk *disk;
-@@ -2839,7 +2839,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
- out_idr_remove_vol:
- 	idr_remove(&connection->peer_devices, vnr);
- out_idr_remove_from_resource:
--	for_each_connection(connection, resource) {
-+	for_each_connection_safe(connection, n, resource) {
- 		peer_device = idr_remove(&connection->peer_devices, vnr);
- 		if (peer_device)
- 			kref_put(&connection->kref, drbd_destroy_connection);
+ 	kfree(dev);
+@@ -53,6 +55,13 @@ static int __init pmc_core_platform_init(void)
+ 	if (acpi_dev_present("INT33A1", NULL, -1))
+ 		return -ENODEV;
+ 
++	/*
++	 * Skip forcefully attaching the device for VMs. Make an exception for
++	 * Xen dom0, which does have full hardware access.
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR) && !xen_initial_domain())
++		return -ENODEV;
++
+ 	if (!x86_match_cpu(intel_pmc_core_platform_ids))
+ 		return -ENODEV;
+ 
 -- 
 2.35.1
 
