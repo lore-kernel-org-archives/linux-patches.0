@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234691C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83037C43470;
-	Wed, 23 Nov 2022 09:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CB31C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CACBC43153;
+	Wed, 23 Nov 2022 09:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195586;
-	bh=kzm0pHKEUUwLjvH2Hs6cJW0wUcSo5pzcTGmkwXIN81o=;
+	s=korg; t=1669195588;
+	bh=mCmpBwT8Ioz8zoxuf/jc5cRTM5dhY4OjpjcHwzkIS2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7KQidScCU02cT16tjTGnJCSGU+9ftcJLZAxmMWvvgbpI0oilxmFnxKcMCVh+ypqu
-	 RPPDtFCzE3m+Bg39LR94z5YZ8F5mDZRnwBNGTXUoBfDgk/xBf96S5LxclrMV53bdrR
-	 MT1dZLeuTNdqJb98/KBqluyvKtoADkgIsOXFYsf8=
+	b=bOj5u2ztCP6+VSRuyHY89uXNvS4WQi+MkvDH24IzPZwBUVDg/xqb32Ab8jz9Al2a1
+	 z/fSz1BC7tiR1DOtEaKia+8ySSzC00DBskhDF46hL4uUbYf89xsv/r9xP4+6d/V3nf
+	 NK3dKi3A5D9xT5nHISEllR5x1185/xqgLr3QELGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mushahid Hussain <mushi.shar@gmail.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 5.10 096/149] speakup: fix a segfault caused by switching consoles
-Date: Wed, 23 Nov 2022 09:51:19 +0100
-Message-Id: <20221123084601.447626814@linuxfoundation.org>
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Chuhong Yuan <hslester96@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 097/149] USB: bcma: Make GPIO explicitly optional
+Date: Wed, 23 Nov 2022 09:51:20 +0100
+Message-Id: <20221123084601.486556062@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,61 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mushahid Hussain <mushi.shar@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 0fc801f8018000c8e64a275a20cb1da7c54e46df upstream.
+commit cd136706b4f925aa5d316642543babac90d45910 upstream.
 
-This patch fixes a segfault by adding a null check on synth in
-speakup_con_update(). The segfault can be reproduced as follows:
+What the code does is to not check the return value from
+devm_gpiod_get() and then avoid using an erroneous GPIO descriptor
+with IS_ERR_OR_NULL().
 
-	- Login into a text console
+This will miss real errors from the GPIO core that should not be
+ignored, such as probe deferral.
 
-	- Load speakup and speakup_soft modules
+Instead request the GPIO as explicitly optional, which means that
+if it doesn't exist, the descriptor returned will be NULL.
 
-	- Remove speakup_soft
+Then we can add error handling and also avoid just doing this on
+the device tree path, and simplify the site where the optional
+GPIO descriptor is used.
 
-	- Switch to a graphics console
+There were some problems with cleaning up this GPIO descriptor
+use in the past, but this is the proper way to deal with it.
 
-This is caused by lack of a null check on `synth` in
-speakup_con_update().
-
-Here's the sequence that causes the segfault:
-
-	- When we remove the speakup_soft, synth_release() sets the synth
-	  to null.
-
-	- After that, when we change the virtual console to graphics
-	  console, vt_notifier_call() is fired, which then calls
-	  speakup_con_update().
-
-	- Inside speakup_con_update() there's no null check on synth,
-	  so it calls synth_printf().
-
-	- Inside synth_printf(), synth_buffer_add() and synth_start(),
-	  both access synth, when it is null and causing a segfault.
-
-Therefore adding a null check on synth solves the issue.
-
-Fixes: 2610df41489f ("staging: speakup: Add pause command used on switching to graphical mode")
+Cc: Rafał Miłecki <rafal@milecki.pl>
+Cc: Chuhong Yuan <hslester96@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Mushahid Hussain <mushi.shar@gmail.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://lore.kernel.org/r/20221010165720.397042-1-mushi.shar@gmail.com
+Link: https://lore.kernel.org/r/20221107090753.1404679-1-linus.walleij@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accessibility/speakup/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/bcma-hcd.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/accessibility/speakup/main.c
-+++ b/drivers/accessibility/speakup/main.c
-@@ -1780,7 +1780,7 @@ static void speakup_con_update(struct vc
+--- a/drivers/usb/host/bcma-hcd.c
++++ b/drivers/usb/host/bcma-hcd.c
+@@ -285,7 +285,7 @@ static void bcma_hci_platform_power_gpio
  {
- 	unsigned long flags;
+ 	struct bcma_hcd_device *usb_dev = bcma_get_drvdata(dev);
  
--	if (!speakup_console[vc->vc_num] || spk_parked)
-+	if (!speakup_console[vc->vc_num] || spk_parked || !synth)
+-	if (IS_ERR_OR_NULL(usb_dev->gpio_desc))
++	if (!usb_dev->gpio_desc)
  		return;
- 	if (!spin_trylock_irqsave(&speakup_info.spinlock, flags))
- 		/* Speakup output, discard */
+ 
+ 	gpiod_set_value(usb_dev->gpio_desc, val);
+@@ -406,9 +406,11 @@ static int bcma_hcd_probe(struct bcma_de
+ 		return -ENOMEM;
+ 	usb_dev->core = core;
+ 
+-	if (core->dev.of_node)
+-		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
+-						    GPIOD_OUT_HIGH);
++	usb_dev->gpio_desc = devm_gpiod_get_optional(&core->dev, "vcc",
++						     GPIOD_OUT_HIGH);
++	if (IS_ERR(usb_dev->gpio_desc))
++		return dev_err_probe(&core->dev, PTR_ERR(usb_dev->gpio_desc),
++				     "error obtaining VCC GPIO");
+ 
+ 	switch (core->id.id) {
+ 	case BCMA_CORE_USB20_HOST:
 
 
