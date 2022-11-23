@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB5B1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:48:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7251C433D6;
-	Wed, 23 Nov 2022 09:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677C71C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9A5C433C1;
+	Wed, 23 Nov 2022 09:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196889;
-	bh=NcK/HYF5zVKL1UPy0hhsoZHe6zqmpWnoR9dwSxxFXsw=;
+	s=korg; t=1669196898;
+	bh=Mj0Dibo5NJ9JLM9UW1yITq7awWO2TLW20TY3ZnCDkMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfna0n4fS6mx/J5f5xNmtnY5PuzruCmVd48SGGKNIIWUUwlafx1eLJX2VSK7mWK/U
-	 H3tIyNIZ/x1o9yP6zrGPHBbc8dZdBnJa0ePj6+OfhxIlk1kQUMBubGxstKnTn7aM7w
-	 oOXiqUIOJ4/JvYb9yeCdsQ0EgV85/BYuSggs3z9A=
+	b=WiAABb7U1hoYolSnoQ4EYfUi52OS34vLELQtNrDmnDrS4b71rHKy9C0ZI2G6bMBDn
+	 43SgAEvE2YaIhJl4NExprWrqwXlhgHgtOH9XRaGb60tvEyvYNfFqKriYcLEp+W1XN+
+	 cOiepNM0Vz1j93ZEIchMabBHvJLTFjk/xuiSQeGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>,
-	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
+	Jian Zhang <zhangjian.3032@bytedance.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 152/314] net: stmmac: ensure tx function is not running in stmmac_xdp_release()
-Date: Wed, 23 Nov 2022 09:49:57 +0100
-Message-Id: <20221123084632.457436351@linuxfoundation.org>
+Subject: [PATCH 6.0 153/314] mctp i2c: dont count unused / invalid keys for flow release
+Date: Wed, 23 Nov 2022 09:49:58 +0100
+Message-Id: <20221123084632.499341272@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,42 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 77711683a50477de39757d67ab1a3638220d6860 ]
+[ Upstream commit 9cbd48d5fa14e4c65f8580de16686077f7cea02b ]
 
-When stmmac_xdp_release() is called, there is a possibility that tx
-function is still running on other queues which will lead to tx queue
-timed out and reset adapter.
+We're currently hitting the WARN_ON in mctp_i2c_flow_release:
 
-This commit ensure that tx function is not running xdp before release
-flow continue to run.
+    if (midev->release_count > midev->i2c_lock_count) {
+        WARN_ONCE(1, "release count overflow");
 
-Fixes: ac746c8520d9 ("net: stmmac: enhance XDP ZC driver level switching performance")
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
-Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
-Link: https://lore.kernel.org/r/20221110064552.22504-1-noor.azura.ahmad.tarmizi@linux.intel.com
+This may be hit if we expire a flow before sending the first packet it
+contains - as we will not be pairing the increment of release_count
+(performed on flow release) with the i2c lock operation (only
+performed on actual TX).
+
+To fix this, only release a flow if we've encountered it previously (ie,
+dev_flow_state does not indicate NEW), as we will mark the flow as
+ACTIVE at the same time as accounting for the i2c lock operation. We
+also need to add an INVALID flow state, to indicate when we've done the
+release.
+
+Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
+Reported-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Tested-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://lore.kernel.org/r/20221110053135.329071-1-jk@codeconstruct.com.au
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/mctp/mctp-i2c.c | 47 +++++++++++++++++++++++++------------
+ 1 file changed, 32 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index bc060ef558d3..02827829463f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6564,6 +6564,9 @@ void stmmac_xdp_release(struct net_device *dev)
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	u32 chan;
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index 53846c6b56ca..aca3697b0962 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -43,6 +43,7 @@
+ enum {
+ 	MCTP_I2C_FLOW_STATE_NEW = 0,
+ 	MCTP_I2C_FLOW_STATE_ACTIVE,
++	MCTP_I2C_FLOW_STATE_INVALID,
+ };
  
-+	/* Ensure tx function is not running */
-+	netif_tx_disable(dev);
-+
- 	/* Disable NAPI process */
- 	stmmac_disable_all_queues(priv);
+ /* List of all struct mctp_i2c_client
+@@ -374,12 +375,18 @@ mctp_i2c_get_tx_flow_state(struct mctp_i2c_dev *midev, struct sk_buff *skb)
+ 	 */
+ 	if (!key->valid) {
+ 		state = MCTP_I2C_TX_FLOW_INVALID;
+-
+-	} else if (key->dev_flow_state == MCTP_I2C_FLOW_STATE_NEW) {
+-		key->dev_flow_state = MCTP_I2C_FLOW_STATE_ACTIVE;
+-		state = MCTP_I2C_TX_FLOW_NEW;
+ 	} else {
+-		state = MCTP_I2C_TX_FLOW_EXISTING;
++		switch (key->dev_flow_state) {
++		case MCTP_I2C_FLOW_STATE_NEW:
++			key->dev_flow_state = MCTP_I2C_FLOW_STATE_ACTIVE;
++			state = MCTP_I2C_TX_FLOW_NEW;
++			break;
++		case MCTP_I2C_FLOW_STATE_ACTIVE:
++			state = MCTP_I2C_TX_FLOW_EXISTING;
++			break;
++		default:
++			state = MCTP_I2C_TX_FLOW_INVALID;
++		}
+ 	}
  
+ 	spin_unlock_irqrestore(&key->lock, flags);
+@@ -617,21 +624,31 @@ static void mctp_i2c_release_flow(struct mctp_dev *mdev,
+ 
+ {
+ 	struct mctp_i2c_dev *midev = netdev_priv(mdev->dev);
++	bool queue_release = false;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&midev->lock, flags);
+-	midev->release_count++;
+-	spin_unlock_irqrestore(&midev->lock, flags);
+-
+-	/* Ensure we have a release operation queued, through the fake
+-	 * marker skb
++	/* if we have seen the flow/key previously, we need to pair the
++	 * original lock with a release
+ 	 */
+-	spin_lock(&midev->tx_queue.lock);
+-	if (!midev->unlock_marker.next)
+-		__skb_queue_tail(&midev->tx_queue, &midev->unlock_marker);
+-	spin_unlock(&midev->tx_queue.lock);
++	if (key->dev_flow_state == MCTP_I2C_FLOW_STATE_ACTIVE) {
++		midev->release_count++;
++		queue_release = true;
++	}
++	key->dev_flow_state = MCTP_I2C_FLOW_STATE_INVALID;
++	spin_unlock_irqrestore(&midev->lock, flags);
+ 
+-	wake_up(&midev->tx_wq);
++	if (queue_release) {
++		/* Ensure we have a release operation queued, through the fake
++		 * marker skb
++		 */
++		spin_lock(&midev->tx_queue.lock);
++		if (!midev->unlock_marker.next)
++			__skb_queue_tail(&midev->tx_queue,
++					 &midev->unlock_marker);
++		spin_unlock(&midev->tx_queue.lock);
++		wake_up(&midev->tx_wq);
++	}
+ }
+ 
+ static const struct net_device_ops mctp_i2c_ops = {
 -- 
 2.35.1
 
