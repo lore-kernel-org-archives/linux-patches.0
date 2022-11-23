@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DD51C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EAEC433C1;
-	Wed, 23 Nov 2022 09:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D531C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059F5C433C1;
+	Wed, 23 Nov 2022 09:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194460;
-	bh=SFLiyXJIsPNPOg/prYYiJnPLX7A1la6Ua8omJIwtJyM=;
+	s=korg; t=1669194463;
+	bh=SiTJ9C3dPn9HvqBY93Akj6RRkHk43y2HXNtW85w7ibM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8IT87WcscgEPUNXJSPci7IjsCFS/ke0ytv262KZz0ElX+i11Hr9VCn7qEcOkohe9
-	 BQucZc0qnT2UCmjLdyxD4LqkVmZSR12oRrpA13u5rkbADnQaLYab7fqC6H+oR3n2OM
-	 q3o8G1GuhxTNDG14GumaKfUB9F1DHk13UqQKGEGk=
+	b=2E43d28v1ocWjPolTZ5N/pBgP4xjvRCpzFOCiSpRtelkLgZuwJkEU90+ZqloegAn1
+	 uvjwyYUt9v5jb3LcRbk3oLrihP/C0MoA8FPQ9pI7bVxOJGiNAxJDKczPt29mrqWaX0
+	 3e0y2sQ5yzrPuzRZFcVQ090TCUhX3DmnUMa+/KiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	Wang Wensheng <wangwensheng4@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 076/114] ftrace: Optimize the allocation for mcount entries
-Date: Wed, 23 Nov 2022 09:51:03 +0100
-Message-Id: <20221123084554.913782462@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 085/114] USB: serial: option: add u-blox LARA-L6 modem
+Date: Wed, 23 Nov 2022 09:51:12 +0100
+Message-Id: <20221123084555.250094797@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -36,36 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Wensheng <wangwensheng4@huawei.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit bcea02b096333dc74af987cb9685a4dbdd820840 upstream.
+commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
 
-If we can't allocate this size, try something smaller with half of the
-size. Its order should be decreased by one instead of divided by two.
+Add LARA-L6 PIDs for three different USB compositions.
 
-Link: https://lkml.kernel.org/r/20221109094434.84046-3-wangwensheng4@huawei.com
+LARA-L6 module can be configured (by AT interface) in three different
+USB modes:
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
+interfaces
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
+interfaces and 1 RmNet virtual network interface
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
+interface and 1 CDC-ECM virtual network interface
 
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
+In default mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+[ johan: drop PID defines in favour of comments ]
 Cc: stable@vger.kernel.org
-Fixes: a79008755497d ("ftrace: Allocate the mcount record pages as groups")
-Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3033,7 +3033,7 @@ static int ftrace_allocate_records(struc
- 		/* if we can't allocate this size, try something smaller */
- 		if (!order)
- 			return -ENOMEM;
--		order >>= 1;
-+		order--;
- 		goto again;
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -162,6 +162,8 @@ static void option_instat_callback(struc
+ #define NOVATELWIRELESS_PRODUCT_G2		0xA010
+ #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
  
++#define UBLOX_VENDOR_ID				0x1546
++
+ /* AMOI PRODUCTS */
+ #define AMOI_VENDOR_ID				0x1614
+ #define AMOI_PRODUCT_H01			0x0800
+@@ -1130,6 +1132,12 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
++	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
++	  .driver_info = RSVD(4) },
+ 	/* Quectel products using Quectel vendor ID */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
+ 	  .driver_info = NUMEP2 },
 
 
