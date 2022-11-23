@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990D51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E50C433C1;
-	Wed, 23 Nov 2022 09:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240A71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B034C4347C;
+	Wed, 23 Nov 2022 09:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196293;
-	bh=XsZSh6F8s2pFGPqES2VfvOwXvezIvJIKFoVC92IKz18=;
+	s=korg; t=1669196297;
+	bh=cDnd/XqOK4736kK4xoiHK32ADKHeW4k70WsItiacWmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbRi1XqPOsBXfWdz0GBgygX7hlwvGhfxRre5kUaBfAk5s7B3Vkf3qRbUKxshiHT8s
-	 F6kfEnxuX67Z/PAHaVIifAd1yIz9/GAlpyt9L4x/FFbLncop8v+EXpcZIPPBwuvp4a
-	 IO6TEMe2zX2f6xlEIK9FAzrPdQYVdbcVgJZzJ9q0=
+	b=c+suJB7RatEO4hQkLZCSYqR8RQC4swtJZcoDegT2MjefJjwd2YASgcAYrQve24gX6
+	 Y0FuNd35jmk0PEj3mpEAo0ddtgPr5r4THtIdwp+l4UokNNVqo5JeSRKRQvk07yBxU2
+	 3zHPh/Rg9dVfaAfMpaQ3O2xkr8rpGYa/sgJReFck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dcf33a7aae997956fe06@syzkaller.appspotmail.com,
-	Andrew Price <anprice@redhat.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: [PATCH 5.15 173/181] gfs2: Check sb_bsize_shift after reading superblock
-Date: Wed, 23 Nov 2022 09:52:16 +0100
-Message-Id: <20221123084609.827490826@linuxfoundation.org>
+Subject: [PATCH 5.15 174/181] gfs2: Switch from strlcpy to strscpy
+Date: Wed, 23 Nov 2022 09:52:17 +0100
+Message-Id: <20221123084609.870944357@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,59 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Price <anprice@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 670f8ce56dd0632dc29a0322e188cc73ce3c6b92 upstream.
+commit 204c0300c4e99707e9fb6e57840aa1127060e63f upstream.
 
-Fuzzers like to scribble over sb_bsize_shift but in reality it's very
-unlikely that this field would be corrupted on its own. Nevertheless it
-should be checked to avoid the possibility of messy mount errors due to
-bad calculations. It's always a fixed value based on the block size so
-we can just check that it's the expected value.
+Switch from strlcpy to strscpy and make sure that @count is the size of
+the smaller of the source and destination buffers.  This prevents
+reading beyond the end of the source buffer when the source string isn't
+null terminated.
 
-Tested with:
+Found by a modified version of syzkaller.
 
-    mkfs.gfs2 -O -p lock_nolock /dev/vdb
-    for i in 0 -1 64 65 32 33; do
-        gfs2_edit -p sb field sb_bsize_shift $i /dev/vdb
-        mount /dev/vdb /mnt/test && umount /mnt/test
-    done
-
-Before this patch we get a withdraw after
-
-[   76.413681] gfs2: fsid=loop0.0: fatal: invalid metadata block
-[   76.413681]   bh = 19 (type: exp=5, found=4)
-[   76.413681]   function = gfs2_meta_buffer, file = fs/gfs2/meta_io.c, line = 492
-
-and with UBSAN configured we also get complaints like
-
-[   76.373395] UBSAN: shift-out-of-bounds in fs/gfs2/ops_fstype.c:295:19
-[   76.373815] shift exponent 4294967287 is too large for 64-bit type 'long unsigned int'
-
-After the patch, these complaints don't appear, mount fails immediately
-and we get an explanation in dmesg.
-
-Reported-by: syzbot+dcf33a7aae997956fe06@syzkaller.appspotmail.com
-Signed-off-by: Andrew Price <anprice@redhat.com>
+Suggested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/ops_fstype.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/gfs2/ops_fstype.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 --- a/fs/gfs2/ops_fstype.c
 +++ b/fs/gfs2/ops_fstype.c
-@@ -180,7 +180,10 @@ static int gfs2_check_sb(struct gfs2_sbd
- 		pr_warn("Invalid block size\n");
- 		return -EINVAL;
- 	}
--
-+	if (sb->sb_bsize_shift != ffs(sb->sb_bsize) - 1) {
-+		pr_warn("Invalid block size shift\n");
-+		return -EINVAL;
-+	}
- 	return 0;
- }
+@@ -388,8 +388,10 @@ static int init_names(struct gfs2_sbd *s
+ 	if (!table[0])
+ 		table = sdp->sd_vfs->s_id;
  
+-	strlcpy(sdp->sd_proto_name, proto, GFS2_FSNAME_LEN);
+-	strlcpy(sdp->sd_table_name, table, GFS2_FSNAME_LEN);
++	BUILD_BUG_ON(GFS2_LOCKNAME_LEN > GFS2_FSNAME_LEN);
++
++	strscpy(sdp->sd_proto_name, proto, GFS2_LOCKNAME_LEN);
++	strscpy(sdp->sd_table_name, table, GFS2_LOCKNAME_LEN);
+ 
+ 	table = sdp->sd_table_name;
+ 	while ((table = strchr(table, '/')))
+@@ -1446,13 +1448,13 @@ static int gfs2_parse_param(struct fs_co
+ 
+ 	switch (o) {
+ 	case Opt_lockproto:
+-		strlcpy(args->ar_lockproto, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_lockproto, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_locktable:
+-		strlcpy(args->ar_locktable, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_locktable, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_hostdata:
+-		strlcpy(args->ar_hostdata, param->string, GFS2_LOCKNAME_LEN);
++		strscpy(args->ar_hostdata, param->string, GFS2_LOCKNAME_LEN);
+ 		break;
+ 	case Opt_spectator:
+ 		args->ar_spectator = 1;
 
 
