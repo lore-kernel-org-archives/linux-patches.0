@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C799EC433C1;
-	Wed, 23 Nov 2022 09:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639931C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25CDC433C1;
+	Wed, 23 Nov 2022 09:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195802;
-	bh=PyvGfMNO4eGVZEKytnxM1XElbL0QDh3Vv3c9PMIsKIE=;
+	s=korg; t=1669195806;
+	bh=Xhot2VfNAB4AkgKvs9OLpBqEMJ/DuE/cQX3zOo1+Ab4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grit8xvfaXM4qoUM3vK+Df6VZA8iiYcaKmxm0xwtV63FAPM72d2TViaLEMHB8iz99
-	 iAa1oGRMFE7h0tkZlC3kWnl8Q/foBY2Km8wQS0XGOFqvMfVQTHoG7M6ii1ObHdZSk5
-	 hVUKP1nqHspXqUUYpjTnvA212209UP/9EcH9PN24=
+	b=OCKwTniqYXK2zwFPR6pOFysAgqSs2kLkxhQV7QRyWewC0KX43EHsnvbfCKF/RaHFx
+	 uMd516Igog+mId7IupeoR05eMDpVoKJiUizHHCTSMkNuynYhOMnCgrnYqL5uSAsYYy
+	 LQ3st2v3eLMBHEIGVOjtmvVJGryLiWNzOHHaxido=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Houghton <jthoughton@google.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/181] hugetlbfs: dont delete error page from pagecache
-Date: Wed, 23 Nov 2022 09:50:00 +0100
-Message-Id: <20221123084603.965798988@linuxfoundation.org>
+Subject: [PATCH 5.15 038/181] arm64: dts: qcom: sa8155p-adp: Specify which LDO modes are allowed
+Date: Wed, 23 Nov 2022 09:50:01 +0100
+Message-Id: <20221123084604.005025185@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -41,121 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Houghton <jthoughton@google.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 8625147cafaa9ba74713d682f5185eb62cb2aedb ]
+[ Upstream commit bd9f3dcf42d943b53190f99bcdbcfe98a56ac4cd ]
 
-This change is very similar to the change that was made for shmem [1], and
-it solves the same problem but for HugeTLBFS instead.
+This board uses RPMH, specifies "regulator-allow-set-load" for LDOs,
+but doesn't specify any modes with "regulator-allowed-modes".
 
-Currently, when poison is found in a HugeTLB page, the page is removed
-from the page cache.  That means that attempting to map or read that
-hugepage in the future will result in a new hugepage being allocated
-instead of notifying the user that the page was poisoned.  As [1] states,
-this is effectively memory corruption.
+Prior to commit efb0cb50c427 ("regulator: qcom-rpmh: Implement
+get_optimum_mode(), not set_load()") the above meant that we were able
+to set either LPM or HPM mode. After that commit (and fixes [1]) we'll
+be stuck at the initial mode. Discussion of this has resulted in the
+decision that the old dts files were wrong and should be fixed to
+fully restore old functionality.
 
-The fix is to leave the page in the page cache.  If the user attempts to
-use a poisoned HugeTLB page with a syscall, the syscall will fail with
-EIO, the same error code that shmem uses.  For attempts to map the page,
-the thread will get a BUS_MCEERR_AR SIGBUS.
+Let's re-enable the old functionality by fixing the dts.
 
-[1]: commit a76054266661 ("mm: shmem: don't truncate page if memory failure happens")
+NOTE: while here, let's also remove the nonsensical
+"regulator-allow-set-load" on the fixed regulator "vreg_s4a_1p8".
 
-Link: https://lkml.kernel.org/r/20221018200125.848471-1-jthoughton@google.com
-Signed-off-by: James Houghton <jthoughton@google.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[1] https://lore.kernel.org/r/20220824142229.RFT.v2.2.I6f77860e5cd98bf5c67208fa9edda4a08847c304@changeid
+
+Fixes: 5b85e8f2225c ("arm64: dts: qcom: sa8155p-adp: Add base dts file")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220829094903.v2.1.Id59c32b560c4662d8b3697de2bd494d08d654806@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c | 13 ++++++-------
- mm/hugetlb.c         |  4 ++++
- mm/memory-failure.c  |  5 ++++-
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index d74a49b188c2..be8deec29ebe 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -361,6 +361,12 @@ static ssize_t hugetlbfs_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 		} else {
- 			unlock_page(page);
+diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+index 5ae2ddc65f7e..56a789a5789e 100644
+--- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
++++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+@@ -43,7 +43,6 @@ vreg_s4a_1p8: smps4 {
  
-+			if (PageHWPoison(page)) {
-+				put_page(page);
-+				retval = -EIO;
-+				break;
-+			}
-+
- 			/*
- 			 * We have the page, copy it to user space buffer.
- 			 */
-@@ -984,13 +990,6 @@ static int hugetlbfs_migrate_page(struct address_space *mapping,
- static int hugetlbfs_error_remove_page(struct address_space *mapping,
- 				struct page *page)
- {
--	struct inode *inode = mapping->host;
--	pgoff_t index = page->index;
--
--	remove_huge_page(page);
--	if (unlikely(hugetlb_unreserve_pages(inode, index, index + 1, 1)))
--		hugetlb_fix_reserve_counts(inode);
--
- 	return 0;
- }
+ 		regulator-always-on;
+ 		regulator-boot-on;
+-		regulator-allow-set-load;
  
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index dbb63ec3b5fa..e7bd42f23667 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5350,6 +5350,10 @@ int hugetlb_mcopy_atomic_pte(struct mm_struct *dst_mm,
- 	ptl = huge_pte_lockptr(h, dst_mm, dst_pte);
- 	spin_lock(ptl);
+ 		vin-supply = <&vreg_3p3>;
+ 	};
+@@ -114,6 +113,9 @@ vreg_l5a_0p88: ldo5 {
+ 			regulator-max-microvolt = <880000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-allow-set-load;
++			regulator-allowed-modes =
++			    <RPMH_REGULATOR_MODE_LPM
++			     RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
-+	ret = -EIO;
-+	if (PageHWPoison(page))
-+		goto out_release_unlock;
-+
- 	/*
- 	 * Recheck the i_size after holding PT lock to make sure not
- 	 * to leave any page mapped (as page_mapped()) beyond the end
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 85b1a77e3a99..2ad0f4580091 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1040,6 +1040,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
- 	int res;
- 	struct page *hpage = compound_head(p);
- 	struct address_space *mapping;
-+	bool extra_pins = false;
+ 		vreg_l7a_1p8: ldo7 {
+@@ -129,6 +131,9 @@ vreg_l10a_2p96: ldo10 {
+ 			regulator-max-microvolt = <2960000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-allow-set-load;
++			regulator-allowed-modes =
++			    <RPMH_REGULATOR_MODE_LPM
++			     RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
- 	if (!PageHuge(hpage))
- 		return MF_DELAYED;
-@@ -1047,6 +1048,8 @@ static int me_huge_page(struct page_state *ps, struct page *p)
- 	mapping = page_mapping(hpage);
- 	if (mapping) {
- 		res = truncate_error_page(hpage, page_to_pfn(p), mapping);
-+		/* The page is kept in page cache. */
-+		extra_pins = true;
- 		unlock_page(hpage);
- 	} else {
- 		res = MF_FAILED;
-@@ -1064,7 +1067,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
- 		}
- 	}
+ 		vreg_l11a_0p8: ldo11 {
+@@ -235,6 +240,9 @@ vreg_l5c_1p2: ldo5 {
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-allow-set-load;
++			regulator-allowed-modes =
++			    <RPMH_REGULATOR_MODE_LPM
++			     RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
--	if (has_extra_refcount(ps, p, false))
-+	if (has_extra_refcount(ps, p, extra_pins))
- 		res = MF_FAILED;
+ 		vreg_l7c_1p8: ldo7 {
+@@ -250,6 +258,9 @@ vreg_l8c_1p2: ldo8 {
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-allow-set-load;
++			regulator-allowed-modes =
++			    <RPMH_REGULATOR_MODE_LPM
++			     RPMH_REGULATOR_MODE_HPM>;
+ 		};
  
- 	return res;
+ 		vreg_l10c_3p3: ldo10 {
 -- 
 2.35.1
 
