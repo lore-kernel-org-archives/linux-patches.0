@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7559D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D057C433C1;
-	Wed, 23 Nov 2022 09:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7961C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC779C433D6;
+	Wed, 23 Nov 2022 09:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196130;
-	bh=hcIHoOOr0mQPIoISV17umq8DPr5hm5Z2CXFa3EUYcnM=;
+	s=korg; t=1669196133;
+	bh=ghylQkP0z+HutDJSEoWylxi/yDDRP5oocBF2N6o+o4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkQiS6tJA2y+v9Nh94K9YqxayOt3FhqlbolLisMt2UlQKFM47rbG7d8fsfigl/dK1
-	 XYED2TwAH9ixK8Cp1xPVd9a3GpQOonJ8+vvokA4vA2swszNviZyG0GEC1CRTdfctfx
-	 PPz92nblIYZOTGjFb6XGRplXyLCBMKH9SmjbPf1g=
+	b=f76UyFQVpIV+wkpT09oqGOw+vjpCtsUtJqFnfqDaFU1NyEn91pqOu+A8/YQPppWPg
+	 td7PifDXQG2SKLThqGE9g0UQa91tKicbPlP23JuAtDugXgtHZAfKQ82FtPibrhe5FX
+	 mCDaNNDpDCDUZxRr4JwU8sxm/UTHNWfvLcaAk/bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/181] platform/x86/intel: pmc: Dont unconditionally attach Intel PMC when virtualized
-Date: Wed, 23 Nov 2022 09:51:00 +0100
-Message-Id: <20221123084606.520360389@linuxfoundation.org>
+Subject: [PATCH 5.15 098/181] platform/surface: aggregator: Do not check for repeated unsequenced packets
+Date: Wed, 23 Nov 2022 09:51:01 +0100
+Message-Id: <20221123084606.569499454@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,69 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Pau Monné <roger.pau@citrix.com>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit 2dbfb3f33350e1e868d3d7ed4c176d8777150878 ]
+[ Upstream commit d9a477f643eb3de71fbea5ae6103b800ceb8f547 ]
 
-The current logic in the Intel PMC driver will forcefully attach it
-when detecting any CPU on the intel_pmc_core_platform_ids array,
-even if the matching ACPI device is not present.
+Currently, we check any received packet whether we have already seen it
+previously, regardless of the packet type (sequenced / unsequenced). We
+do this by checking the sequence number. This assumes that sequence
+numbers are valid for both sequenced and unsequenced packets. However,
+this assumption appears to be incorrect.
 
-There's no checking in pmc_core_probe() to assert that the PMC device
-is present, and hence on virtualized environments the PMC device
-probes successfully, even if the underlying registers are not present.
-Before commit 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI
-with CPUID enumeration") the driver would check for the presence of a
-specific PCI device, and that prevented the driver from attaching when
-running virtualized.
+On some devices, the sequence number field of unsequenced packets (in
+particular HID input events on the Surface Pro 9) is always zero. As a
+result, the current retransmission check kicks in and discards all but
+the first unsequenced packet, breaking (among other things) keyboard and
+touchpad input.
 
-Fix by only forcefully attaching the PMC device when not running
-virtualized.  Note that virtualized platforms can still get the device
-to load if the appropriate ACPI device is present on the tables
-provided to the VM.
+Note that we have, so far, only seen packets being retransmitted in
+sequenced communication. In particular, this happens when there is an
+ACK timeout, causing the EC (or us) to re-send the packet waiting for an
+ACK. Arguably, retransmission / duplication of unsequenced packets
+should not be an issue as there is no logical condition (such as an ACK
+timeout) to determine when a packet should be sent again.
 
-Make an exception for the Xen initial domain, which does have full
-hardware access, and hence can attach to the PMC if present.
+Therefore, remove the retransmission check for unsequenced packets
+entirely to resolve the issue.
 
-Fixes: 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI with CPUID enumeration")
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Acked-by: David E. Box <david.e.box@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110163145.80374-1-roger.pau@citrix.com
+Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20221113185951.224759-1-luzmaximilian@gmail.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmc/pltdrv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../surface/aggregator/ssh_packet_layer.c     | 24 +++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/pmc/pltdrv.c b/drivers/platform/x86/intel/pmc/pltdrv.c
-index 15ca8afdd973..ddfba38c2104 100644
---- a/drivers/platform/x86/intel/pmc/pltdrv.c
-+++ b/drivers/platform/x86/intel/pmc/pltdrv.c
-@@ -18,6 +18,8 @@
- #include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
+diff --git a/drivers/platform/surface/aggregator/ssh_packet_layer.c b/drivers/platform/surface/aggregator/ssh_packet_layer.c
+index 8a4451c1ffe5..a652c2763175 100644
+--- a/drivers/platform/surface/aggregator/ssh_packet_layer.c
++++ b/drivers/platform/surface/aggregator/ssh_packet_layer.c
+@@ -1596,16 +1596,32 @@ static void ssh_ptl_timeout_reap(struct work_struct *work)
+ 		ssh_ptl_tx_wakeup_packet(ptl);
+ }
  
-+#include <xen/xen.h>
-+
- static void intel_pmc_core_release(struct device *dev)
+-static bool ssh_ptl_rx_retransmit_check(struct ssh_ptl *ptl, u8 seq)
++static bool ssh_ptl_rx_retransmit_check(struct ssh_ptl *ptl, const struct ssh_frame *frame)
  {
- 	kfree(dev);
-@@ -53,6 +55,13 @@ static int __init pmc_core_platform_init(void)
- 	if (acpi_dev_present("INT33A1", NULL, -1))
- 		return -ENODEV;
+ 	int i;
  
 +	/*
-+	 * Skip forcefully attaching the device for VMs. Make an exception for
-+	 * Xen dom0, which does have full hardware access.
++	 * Ignore unsequenced packets. On some devices (notably Surface Pro 9),
++	 * unsequenced events will always be sent with SEQ=0x00. Attempting to
++	 * detect retransmission would thus just block all events.
++	 *
++	 * While sequence numbers would also allow detection of retransmitted
++	 * packets in unsequenced communication, they have only ever been used
++	 * to cover edge-cases in sequenced transmission. In particular, the
++	 * only instance of packets being retransmitted (that we are aware of)
++	 * is due to an ACK timeout. As this does not happen in unsequenced
++	 * communication, skip the retransmission check for those packets
++	 * entirely.
 +	 */
-+	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR) && !xen_initial_domain())
-+		return -ENODEV;
++	if (frame->type == SSH_FRAME_TYPE_DATA_NSQ)
++		return false;
 +
- 	if (!x86_match_cpu(intel_pmc_core_platform_ids))
- 		return -ENODEV;
+ 	/*
+ 	 * Check if SEQ has been seen recently (i.e. packet was
+ 	 * re-transmitted and we should ignore it).
+ 	 */
+ 	for (i = 0; i < ARRAY_SIZE(ptl->rx.blocked.seqs); i++) {
+-		if (likely(ptl->rx.blocked.seqs[i] != seq))
++		if (likely(ptl->rx.blocked.seqs[i] != frame->seq))
+ 			continue;
  
+ 		ptl_dbg(ptl, "ptl: ignoring repeated data packet\n");
+@@ -1613,7 +1629,7 @@ static bool ssh_ptl_rx_retransmit_check(struct ssh_ptl *ptl, u8 seq)
+ 	}
+ 
+ 	/* Update list of blocked sequence IDs. */
+-	ptl->rx.blocked.seqs[ptl->rx.blocked.offset] = seq;
++	ptl->rx.blocked.seqs[ptl->rx.blocked.offset] = frame->seq;
+ 	ptl->rx.blocked.offset = (ptl->rx.blocked.offset + 1)
+ 				  % ARRAY_SIZE(ptl->rx.blocked.seqs);
+ 
+@@ -1624,7 +1640,7 @@ static void ssh_ptl_rx_dataframe(struct ssh_ptl *ptl,
+ 				 const struct ssh_frame *frame,
+ 				 const struct ssam_span *payload)
+ {
+-	if (ssh_ptl_rx_retransmit_check(ptl, frame->seq))
++	if (ssh_ptl_rx_retransmit_check(ptl, frame))
+ 		return;
+ 
+ 	ptl->ops.data_received(ptl, payload);
 -- 
 2.35.1
 
