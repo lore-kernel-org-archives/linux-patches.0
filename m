@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7C67B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0375EC433D6;
-	Wed, 23 Nov 2022 08:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D52D7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36611C433D7;
+	Wed, 23 Nov 2022 08:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193856;
-	bh=j/JTQIAE1GWBAnBCJNbxGvmRrWSFsFWJpR/Z13Ya33Q=;
+	s=korg; t=1669193860;
+	bh=TGalKx3q+JMOTWIuK5mkuewHjtfnx+mIe/aGeS8DqDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBYf3GCObc0Itj45MzjcFgUCvfYcv7xM0XHmbIB+u5BzB2lmCc2vsZdQ3finVKPFi
-	 kZf5TaOLCaV7EctRzR55h5+1gZ5zC5BdcvoqSrSQPxdij78Y6gmeOrBsHFQpv7xzms
-	 SBKTieRqvG+d+vGgHX0IRghiZzVytgGP5O2XbySo=
+	b=RYejGf4KbiAtdjx+/9MOmrXM4pMwT2iNMaQW1mj9B9y8rrA9taBDAxgJbprg52DVs
+	 BF8Wf+Rwdqo4Mr40zTnriZxZM3AZnA/TDOOmyL4BSy6Mhdy+7AoLu3Y6jSDC4yQa24
+	 WbIdGyo9ymOVZrv4o9+NkOqnfDE8t6eqAO8Xtw5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitja Spes <mitja@lxnav.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.9 59/76] iio: pressure: ms5611: changed hardcoded SPI speed to value limited
-Date: Wed, 23 Nov 2022 09:50:58 +0100
-Message-Id: <20221123084548.697977785@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.9 60/76] dm ioctl: fix misbehavior if list_versions races with module loading
+Date: Wed, 23 Nov 2022 09:50:59 +0100
+Message-Id: <20221123084548.727918056@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,32 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mitja Spes <mitja@lxnav.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 741cec30cc52058d1c10d415f3b98319887e4f73 upstream.
+commit 4fe1ec995483737f3d2a14c3fe1d8fe634972979 upstream.
 
-Don't hardcode the ms5611 SPI speed, limit it instead.
+__list_versions will first estimate the required space using the
+"dm_target_iterate(list_version_get_needed, &needed)" call and then will
+fill the space using the "dm_target_iterate(list_version_get_info,
+&iter_info)" call. Each of these calls locks the targets using the
+"down_read(&_lock)" and "up_read(&_lock)" calls, however between the first
+and second "dm_target_iterate" there is no lock held and the target
+modules can be loaded at this point, so the second "dm_target_iterate"
+call may need more space than what was the first "dm_target_iterate"
+returned.
 
-Signed-off-by: Mitja Spes <mitja@lxnav.com>
-Fixes: c0644160a8b5 ("iio: pressure: add support for MS5611 pressure and temperature sensor")
-Link: https://lore.kernel.org/r/20221021135827.1444793-3-mitja@lxnav.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The code tries to handle this overflow (see the beginning of
+list_version_get_info), however this handling is incorrect.
+
+The code sets "param->data_size = param->data_start + needed" and
+"iter_info.end = (char *)vers+len" - "needed" is the size returned by the
+first dm_target_iterate call; "len" is the size of the buffer allocated by
+userspace.
+
+"len" may be greater than "needed"; in this case, the code will write up
+to "len" bytes into the buffer, however param->data_size is set to
+"needed", so it may write data past the param->data_size value. The ioctl
+interface copies only up to param->data_size into userspace, thus part of
+the result will be truncated.
+
+Fix this bug by setting "iter_info.end = (char *)vers + needed;" - this
+guarantees that the second "dm_target_iterate" call will write only up to
+the "needed" buffer and it will exit with "DM_BUFFER_FULL_FLAG" if it
+overflows the "needed" space - in this case, userspace will allocate a
+larger buffer and retry.
+
+Note that there is also a bug in list_version_get_needed - we need to add
+"strlen(tt->name) + 1" to the needed size, not "strlen(tt->name)".
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/ms5611_spi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/pressure/ms5611_spi.c
-+++ b/drivers/iio/pressure/ms5611_spi.c
-@@ -95,7 +95,7 @@ static int ms5611_spi_probe(struct spi_d
- 	spi_set_drvdata(spi, indio_dev);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -561,7 +561,7 @@ static void list_version_get_needed(stru
+     size_t *needed = needed_param;
  
- 	spi->mode = SPI_MODE_0;
--	spi->max_speed_hz = 20000000;
-+	spi->max_speed_hz = min(spi->max_speed_hz, 20000000U);
- 	spi->bits_per_word = 8;
- 	ret = spi_setup(spi);
- 	if (ret < 0)
+     *needed += sizeof(struct dm_target_versions);
+-    *needed += strlen(tt->name);
++    *needed += strlen(tt->name) + 1;
+     *needed += ALIGN_MASK;
+ }
+ 
+@@ -616,7 +616,7 @@ static int list_versions(struct dm_ioctl
+ 	iter_info.old_vers = NULL;
+ 	iter_info.vers = vers;
+ 	iter_info.flags = 0;
+-	iter_info.end = (char *)vers+len;
++	iter_info.end = (char *)vers + needed;
+ 
+ 	/*
+ 	 * Now loop through filling out the names & versions.
 
 
