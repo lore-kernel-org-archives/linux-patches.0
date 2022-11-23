@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB4E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CDCC433C1;
-	Wed, 23 Nov 2022 09:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9467C433D7;
+	Wed, 23 Nov 2022 09:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195235;
-	bh=1ORQlxAowSfhXvICF3tR/7GM3ipW9w9XtoSFsQVIZSo=;
+	s=korg; t=1669195238;
+	bh=8s1SAEAUQi9Iu/CB0Z3srSJkqdB0oJJaPfhfxwFNUpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+EyLdm66I7jwlKkEJG9yoRsF2TdxrN5EzFUE0jUYk7QajWEdLjGfibTwauA/d2mP
-	 WvwoyaJVyZn6KiWRnJgHNWgVbHY8eqxHFRQdSAvcuTKgETVjkERBywtKYFhASkFX0l
-	 DYBgnb1D9hcyvSaakN8lxbAjkzL+Vvp7oXF1af3s=
+	b=CcvE5kcvZTlJiUDeFCoGG4ojQYQRfX2XX+N9oyO+UTlrF1aBBGiijj2Rn9olhnBIK
+	 7ebizACizatu7VkFATqAMMTWh9mFQy9OU4AA6Mk2dFrSBraKist1VFBZgjR+67vRwC
+	 bJqFpZdvMYkOHCAND9wkeFg4ZPa/DGPG2NTEKyyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Adam Ford <aford173@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mauro Lima <mauro.lima@eclypsium.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/149] ASoC: wm8962: Add an event handler for TEMP_HP and TEMP_SPK
-Date: Wed, 23 Nov 2022 09:49:48 +0100
-Message-Id: <20221123084558.154578395@linuxfoundation.org>
+Subject: [PATCH 5.10 006/149] spi: intel: Fix the offset to get the 64K erase opcode
+Date: Wed, 23 Nov 2022 09:49:49 +0100
+Message-Id: <20221123084558.195125006@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,114 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Mauro Lima <mauro.lima@eclypsium.com>
 
-[ Upstream commit ee1aa2ae3eaa96e70229fa61deee87ef4528ffdf ]
+[ Upstream commit 6a43cd02ddbc597dc9a1f82c1e433f871a2f6f06 ]
 
-In wm8962 driver, the WM8962_ADDITIONAL_CONTROL_4 is used as a volatile
-register, but this register mixes a bunch of volatile status bits and a
-bunch of non-volatile control bits. The dapm widgets TEMP_HP and
-TEMP_SPK leverages the control bits in this register. After the wm8962
-probe, the regmap will bet set to cache only mode, then a read error
-like below would be triggered when trying to read the initial power
-state of the dapm widgets TEMP_HP and TEMP_SPK.
-  wm8962 0-001a: ASoC: error at soc_component_read_no_lock
-  on wm8962.0-001a: -16
+According to documentation, the 64K erase opcode is located in VSCC
+range [16:23] instead of [8:15].
+Use the proper value to shift the mask over the correct range.
 
-In order to fix this issue, we add event handler to actually power
-up/down these widgets. With this change, we also need to explicitly
-power off these widgets in the wm8962 probe since they are enabled
-by default.
-
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Tested-by: Adam Ford <aford173@gmail.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221010092014.2229246-1-xiaolei.wang@windriver.com
+Signed-off-by: Mauro Lima <mauro.lima@eclypsium.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20221012152135.28353-1-mauro.lima@eclypsium.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8962.c | 54 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 52 insertions(+), 2 deletions(-)
+ drivers/mtd/spi-nor/controllers/intel-spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8962.c b/sound/soc/codecs/wm8962.c
-index 38651022e3d5..21574447650c 100644
---- a/sound/soc/codecs/wm8962.c
-+++ b/sound/soc/codecs/wm8962.c
-@@ -1840,6 +1840,49 @@ SOC_SINGLE_TLV("SPKOUTR Mixer DACR Volume", WM8962_SPEAKER_MIXER_5,
- 	       4, 1, 0, inmix_tlv),
- };
+diff --git a/drivers/mtd/spi-nor/controllers/intel-spi.c b/drivers/mtd/spi-nor/controllers/intel-spi.c
+index b54a56a68100..b4b0affd16c8 100644
+--- a/drivers/mtd/spi-nor/controllers/intel-spi.c
++++ b/drivers/mtd/spi-nor/controllers/intel-spi.c
+@@ -117,7 +117,7 @@
+ #define ERASE_OPCODE_SHIFT		8
+ #define ERASE_OPCODE_MASK		(0xff << ERASE_OPCODE_SHIFT)
+ #define ERASE_64K_OPCODE_SHIFT		16
+-#define ERASE_64K_OPCODE_MASK		(0xff << ERASE_OPCODE_SHIFT)
++#define ERASE_64K_OPCODE_MASK		(0xff << ERASE_64K_OPCODE_SHIFT)
  
-+static int tp_event(struct snd_soc_dapm_widget *w,
-+		    struct snd_kcontrol *kcontrol, int event)
-+{
-+	int ret, reg, val, mask;
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+
-+	ret = pm_runtime_resume_and_get(component->dev);
-+	if (ret < 0) {
-+		dev_err(component->dev, "Failed to resume device: %d\n", ret);
-+		return ret;
-+	}
-+
-+	reg = WM8962_ADDITIONAL_CONTROL_4;
-+
-+	if (!strcmp(w->name, "TEMP_HP")) {
-+		mask = WM8962_TEMP_ENA_HP_MASK;
-+		val = WM8962_TEMP_ENA_HP;
-+	} else if (!strcmp(w->name, "TEMP_SPK")) {
-+		mask = WM8962_TEMP_ENA_SPK_MASK;
-+		val = WM8962_TEMP_ENA_SPK;
-+	} else {
-+		pm_runtime_put(component->dev);
-+		return -EINVAL;
-+	}
-+
-+	switch (event) {
-+	case SND_SOC_DAPM_POST_PMD:
-+		val = 0;
-+		fallthrough;
-+	case SND_SOC_DAPM_POST_PMU:
-+		ret = snd_soc_component_update_bits(component, reg, mask, val);
-+		break;
-+	default:
-+		WARN(1, "Invalid event %d\n", event);
-+		pm_runtime_put(component->dev);
-+		return -EINVAL;
-+	}
-+
-+	pm_runtime_put(component->dev);
-+
-+	return 0;
-+}
-+
- static int cp_event(struct snd_soc_dapm_widget *w,
- 		    struct snd_kcontrol *kcontrol, int event)
- {
-@@ -2133,8 +2176,10 @@ SND_SOC_DAPM_SUPPLY("TOCLK", WM8962_ADDITIONAL_CONTROL_1, 0, 0, NULL, 0),
- SND_SOC_DAPM_SUPPLY_S("DSP2", 1, WM8962_DSP2_POWER_MANAGEMENT,
- 		      WM8962_DSP2_ENA_SHIFT, 0, dsp2_event,
- 		      SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
--SND_SOC_DAPM_SUPPLY("TEMP_HP", WM8962_ADDITIONAL_CONTROL_4, 2, 0, NULL, 0),
--SND_SOC_DAPM_SUPPLY("TEMP_SPK", WM8962_ADDITIONAL_CONTROL_4, 1, 0, NULL, 0),
-+SND_SOC_DAPM_SUPPLY("TEMP_HP", SND_SOC_NOPM, 0, 0, tp_event,
-+		SND_SOC_DAPM_POST_PMU|SND_SOC_DAPM_POST_PMD),
-+SND_SOC_DAPM_SUPPLY("TEMP_SPK", SND_SOC_NOPM, 0, 0, tp_event,
-+		SND_SOC_DAPM_POST_PMU|SND_SOC_DAPM_POST_PMD),
- 
- SND_SOC_DAPM_MIXER("INPGAL", WM8962_LEFT_INPUT_PGA_CONTROL, 4, 0,
- 		   inpgal, ARRAY_SIZE(inpgal)),
-@@ -3760,6 +3805,11 @@ static int wm8962_i2c_probe(struct i2c_client *i2c,
- 	if (ret < 0)
- 		goto err_pm_runtime;
- 
-+	regmap_update_bits(wm8962->regmap, WM8962_ADDITIONAL_CONTROL_4,
-+			    WM8962_TEMP_ENA_HP_MASK, 0);
-+	regmap_update_bits(wm8962->regmap, WM8962_ADDITIONAL_CONTROL_4,
-+			    WM8962_TEMP_ENA_SPK_MASK, 0);
-+
- 	regcache_cache_only(wm8962->regmap, true);
- 
- 	/* The drivers should power up as needed */
+ #define INTEL_SPI_TIMEOUT		5000 /* ms */
+ #define INTEL_SPI_FIFO_SZ		64
 -- 
 2.35.1
 
