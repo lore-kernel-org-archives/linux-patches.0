@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0541C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED56C433D6;
-	Wed, 23 Nov 2022 09:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075321C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9B8C433C1;
+	Wed, 23 Nov 2022 09:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197233;
-	bh=XLhMLZb6XiLLtPgxe/0OyAMI6SvnqSR49NwowbBrBYg=;
+	s=korg; t=1669197236;
+	bh=yV2QOT6MGDCcTaSh3CAzCJBGTzQqCDEh7xEJW+bRV/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DH+ITFYoOB/RLzpleRY/QvXHDr/MoqZ4rHKXodoc1QsBMhpnQwFZ5WylouDuE6L3t
-	 7yf/pAQMLJRdmTQ/Otnlp0LaV5cU04c+un8sh9WmUnA6ZsJk9uGclJbDdgn7BnE23V
-	 3JAh1ltPTRL5mNADytsP5GJkrj5J1mYYa1ms1CCw=
+	b=zFeE6KlLto9ICH/8zAKPz3aOixGmIRtf21uspdZ6iScSal8cH5PKHvT7SKTz/0ojr
+	 yAMH4lrkO8Y+RDeM2x1acXdrRYa8kLDNLznNgVg4em4Glc0ZFzWS47arPwMZhfcY+g
+	 r7y4Wjd/k+GUEtPR67Mfc97n4Dd6EfKHeM3GXylQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.0 234/314] USB: serial: option: add Sierra Wireless EM9191
-Date: Wed, 23 Nov 2022 09:51:19 +0100
-Message-Id: <20221123084636.087672250@linuxfoundation.org>
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.0 206/314] tracing: kprobe: Fix potential null-ptr-deref on trace_array in kprobe_event_gen_test_exit()
+Date: Wed, 23 Nov 2022 09:50:51 +0100
+Message-Id: <20221123084634.879197861@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,55 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
+commit 22ea4ca9631eb137e64e5ab899e9c89cb6670959 upstream.
 
-Add support for the AT and diag ports, similar to other qualcomm SDX55
-modems. In QDL mode, the modem uses a different device ID and support
-is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
-add EM9191 QDL support").
+When test_gen_kprobe_cmd() failed after kprobe_event_gen_cmd_end(), it
+will goto delete, which will call kprobe_event_delete() and release the
+corresponding resource. However, the trace_array in gen_kretprobe_test
+will point to the invalid resource. Set gen_kretprobe_test to NULL
+after called kprobe_event_delete() to prevent null-ptr-deref.
 
-T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1199 ProdID=90d3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9191
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
+BUG: kernel NULL pointer dereference, address: 0000000000000070
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP PTI
+CPU: 0 PID: 246 Comm: modprobe Tainted: G        W
+6.1.0-rc1-00174-g9522dc5c87da-dirty #248
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+RIP: 0010:__ftrace_set_clr_event_nolock+0x53/0x1b0
+Code: e8 82 26 fc ff 49 8b 1e c7 44 24 0c ea ff ff ff 49 39 de 0f 84 3c
+01 00 00 c7 44 24 18 00 00 00 00 e8 61 26 fc ff 48 8b 6b 10 <44> 8b 65
+70 4c 8b 6d 18 41 f7 c4 00 02 00 00 75 2f
+RSP: 0018:ffffc9000159fe00 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff88810971d268 RCX: 0000000000000000
+RDX: ffff8881080be600 RSI: ffffffff811b48ff RDI: ffff88810971d058
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000001
+R10: ffffc9000159fe58 R11: 0000000000000001 R12: ffffffffa0001064
+R13: ffffffffa000106c R14: ffff88810971d238 R15: 0000000000000000
+FS:  00007f89eeff6540(0000) GS:ffff88813b600000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000070 CR3: 000000010599e004 CR4: 0000000000330ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __ftrace_set_clr_event+0x3e/0x60
+ trace_array_set_clr_event+0x35/0x50
+ ? 0xffffffffa0000000
+ kprobe_event_gen_test_exit+0xcd/0x10b [kprobe_event_gen_test]
+ __x64_sys_delete_module+0x206/0x380
+ ? lockdep_hardirqs_on_prepare+0xd8/0x190
+ ? syscall_enter_from_user_mode+0x1c/0x50
+ do_syscall_64+0x3f/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f89eeb061b7
 
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Link: https://lore.kernel.org/all/20221108015130.28326-3-shangxiaojing@huawei.com/
+
+Fixes: 64836248dda2 ("tracing: Add kprobe event command generation test module")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/trace/kprobe_event_gen_test.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -581,6 +581,9 @@ static void option_instat_callback(struc
- #define OPPO_VENDOR_ID				0x22d9
- #define OPPO_PRODUCT_R11			0x276c
- 
-+/* Sierra Wireless products */
-+#define SIERRA_VENDOR_ID			0x1199
-+#define SIERRA_PRODUCT_EM9191			0x90d3
- 
- /* Device flags */
- 
-@@ -2176,6 +2179,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+--- a/kernel/trace/kprobe_event_gen_test.c
++++ b/kernel/trace/kprobe_event_gen_test.c
+@@ -143,6 +143,8 @@ static int __init test_gen_kprobe_cmd(vo
+ 	kfree(buf);
+ 	return ret;
+  delete:
++	if (trace_event_file_is_valid(gen_kprobe_test))
++		gen_kprobe_test = NULL;
+ 	/* We got an error after creating the event, delete it */
+ 	ret = kprobe_event_delete("gen_kprobe_test");
+ 	goto out;
+@@ -206,6 +208,8 @@ static int __init test_gen_kretprobe_cmd
+ 	kfree(buf);
+ 	return ret;
+  delete:
++	if (trace_event_file_is_valid(gen_kretprobe_test))
++		gen_kretprobe_test = NULL;
+ 	/* We got an error after creating the event, delete it */
+ 	ret = kprobe_event_delete("gen_kretprobe_test");
+ 	goto out;
 
 
