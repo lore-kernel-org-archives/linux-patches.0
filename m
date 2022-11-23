@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80D41C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F004C433C1;
-	Wed, 23 Nov 2022 09:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA0A1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCA3C433C1;
+	Wed, 23 Nov 2022 09:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196876;
-	bh=lSh7dWGbiTy18SerLpyw2sdeqDmywC414TJRby9OZEg=;
+	s=korg; t=1669196880;
+	bh=HRs+c8AjQoN57wzP4AQg59TeYAmKAvKhVx9GpFAKqDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjM/SJKjDjAH0Caiq5arYDegJp+D319TpiBGRYMZxRXo28QyoXeHHyX5LI/Tse4ib
-	 xSC4gKnOEFlAGm1lDdozQkWor/rA8c9N2RJAmBtDvHft3kABVrvT/gXQPz3Gdc1a9o
-	 BtanESxEc8zLfOXSv+lfisjqUNFr/vPZZeSj0TeQ=
+	b=T7Q6Vts1qYneKSDqfIAqWvVmninRAp4FsJE5vAJPKD4ZTt0BDddjKaTtLhpCi18qv
+	 S0INdthoGeOBmnJfCXp0S0p/oggH8ueGtU+AG/IhiUjHc+6TdkVFVCa/KnycgoVg6I
+	 Ub8Xebk90c/kgcZP6QsIJ3iZse5JwQ47Eyw7hFs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 149/314] mISDN: fix possible memory leak in mISDN_dsp_element_register()
-Date: Wed, 23 Nov 2022 09:49:54 +0100
-Message-Id: <20221123084632.311977948@linuxfoundation.org>
+Subject: [PATCH 6.0 150/314] net: hinic: Fix error handling in hinic_module_init()
+Date: Wed, 23 Nov 2022 09:49:55 +0100
+Message-Id: <20221123084632.359514827@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,49 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 98a2ac1ca8fd6eca6867726fe238d06e75eb1acd ]
+[ Upstream commit 8eab9be56cc6b702a445d2b6d0256aa0992316b3 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-use put_device() to give up the reference, so that the name can be
-freed in kobject_cleanup() when the refcount is 0.
+A problem about hinic create debugfs failed is triggered with the
+following log given:
 
-The 'entry' is going to be freed in mISDN_dsp_dev_release(), so the
-kfree() is removed. list_del() is called in mISDN_dsp_dev_release(),
-so it need be initialized.
+ [  931.419023] debugfs: Directory 'hinic' with parent '/' already present!
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109132832.3270119-1-yangyingliang@huawei.com
+The reason is that hinic_module_init() returns pci_register_driver()
+directly without checking its return value, if pci_register_driver()
+failed, it returns without destroy the newly created debugfs, resulting
+the debugfs of hinic can never be created later.
+
+ hinic_module_init()
+   hinic_dbg_register_debugfs() # create debugfs directory
+   pci_register_driver()
+     driver_register()
+       bus_add_driver()
+         priv = kzalloc(...) # OOM happened
+   # return without destroy debugfs directory
+
+Fix by removing debugfs when pci_register_driver() returns error.
+
+Fixes: 253ac3a97921 ("hinic: add support to query sq info")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221110021642.80378-1-yuancan@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/dsp_pipeline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/huawei/hinic/hinic_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/isdn/mISDN/dsp_pipeline.c b/drivers/isdn/mISDN/dsp_pipeline.c
-index c3b2c99b5cd5..cfbcd9e973c2 100644
---- a/drivers/isdn/mISDN/dsp_pipeline.c
-+++ b/drivers/isdn/mISDN/dsp_pipeline.c
-@@ -77,6 +77,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	if (!entry)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+index c23ee2ddbce3..1a6534c35ef3 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+@@ -1478,8 +1478,15 @@ static struct pci_driver hinic_driver = {
  
-+	INIT_LIST_HEAD(&entry->list);
- 	entry->elem = elem;
- 
- 	entry->dev.class = elements_class;
-@@ -107,7 +108,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	device_unregister(&entry->dev);
- 	return ret;
- err1:
--	kfree(entry);
-+	put_device(&entry->dev);
- 	return ret;
+ static int __init hinic_module_init(void)
+ {
++	int ret;
++
+ 	hinic_dbg_register_debugfs(HINIC_DRV_NAME);
+-	return pci_register_driver(&hinic_driver);
++
++	ret = pci_register_driver(&hinic_driver);
++	if (ret)
++		hinic_dbg_unregister_debugfs();
++
++	return ret;
  }
- EXPORT_SYMBOL(mISDN_dsp_element_register);
+ 
+ static void __exit hinic_module_exit(void)
 -- 
 2.35.1
 
