@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4321D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EF6C433C1;
-	Wed, 23 Nov 2022 09:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069351C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:18:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF09C433D6;
+	Wed, 23 Nov 2022 09:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195077;
-	bh=49Dsf+zDOKQtNYLQYspLG7aGZvJYY3za8s7ziKbh8Ic=;
+	s=korg; t=1669195080;
+	bh=Yf9+sxUz+NMzCw5cvSHZ2AajlpgEik9ZLg2PBG+knGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztUxcc7Y/MhmYVLZEURpLgs1KetiSzNiP0XCuofeQLGAXXUezImJRaRCrVxQcC4nH
-	 MA/LlW00quMq2TxTgfxH3/WKXEAseS1BvIahAICZs2tTt0tpLieozWeIqwdcg9dRaK
-	 c7nc3un2MjHkiJCLO5qDTO0ibvEwJpJhJAmTP6ew=
+	b=ibXkp0cJKPOpT3nBYng3hoQCDzP8YAO1EEAJhCX2pG98Kr7JJODnr7UlWa2CN6KBn
+	 /wKsqUp6wAQH7tgEMvIPsGimFPg1STc+ieJPtTguc0uNrOKQQrUIZ6Ux1qnwPErREg
+	 +Xok5Ugde7EBbCh4/oZYMUXzL4NVu+lkv82iJbQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mike Christie <michael.chritie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Li Huafei <lihuafei1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/156] scsi: target: tcm_loop: Fix possible name leak in tcm_loop_setup_hba_bus()
-Date: Wed, 23 Nov 2022 09:51:38 +0100
-Message-Id: <20221123084602.986102527@linuxfoundation.org>
+Subject: [PATCH 5.4 142/156] kprobes: Skip clearing aggrprobes post_handler in kprobe-on-ftrace case
+Date: Wed, 23 Nov 2022 09:51:39 +0100
+Message-Id: <20221123084603.016207013@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,48 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit bc68e428d4963af0201e92159629ab96948f0893 ]
+[ Upstream commit 5dd7caf0bdc5d0bae7cf9776b4d739fb09bd5ebb ]
 
-If device_register() fails in tcm_loop_setup_hba_bus(), the name allocated
-by dev_set_name() need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
-The 'tl_hba' will be freed in tcm_loop_release_adapter(), so it don't need
-goto error label in this case.
+In __unregister_kprobe_top(), if the currently unregistered probe has
+post_handler but other child probes of the aggrprobe do not have
+post_handler, the post_handler of the aggrprobe is cleared. If this is
+a ftrace-based probe, there is a problem. In later calls to
+disarm_kprobe(), we will use kprobe_ftrace_ops because post_handler is
+NULL. But we're armed with kprobe_ipmodify_ops. This triggers a WARN in
+__disarm_kprobe_ftrace() and may even cause use-after-free:
 
-Fixes: 3703b2c5d041 ("[SCSI] tcm_loop: Add multi-fabric Linux/SCSI LLD fabric module")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115015042.3652261-1-yangyingliang@huawei.com
-Reviewed-by: Mike Christie <michael.chritie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  Failed to disarm kprobe-ftrace at kernel_clone+0x0/0x3c0 (error -2)
+  WARNING: CPU: 5 PID: 137 at kernel/kprobes.c:1135 __disarm_kprobe_ftrace.isra.21+0xcf/0xe0
+  Modules linked in: testKprobe_007(-)
+  CPU: 5 PID: 137 Comm: rmmod Not tainted 6.1.0-rc4-dirty #18
+  [...]
+  Call Trace:
+   <TASK>
+   __disable_kprobe+0xcd/0xe0
+   __unregister_kprobe_top+0x12/0x150
+   ? mutex_lock+0xe/0x30
+   unregister_kprobes.part.23+0x31/0xa0
+   unregister_kprobe+0x32/0x40
+   __x64_sys_delete_module+0x15e/0x260
+   ? do_user_addr_fault+0x2cd/0x6b0
+   do_syscall_64+0x3a/0x90
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+   [...]
+
+For the kprobe-on-ftrace case, we keep the post_handler setting to
+identify this aggrprobe armed with kprobe_ipmodify_ops. This way we
+can disarm it correctly.
+
+Link: https://lore.kernel.org/all/20221112070000.35299-1-lihuafei1@huawei.com/
+
+Fixes: 0bc11ed5ab60 ("kprobes: Allow kprobes coexist with livepatch")
+Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Suggested-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/loopback/tcm_loop.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/kprobes.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
-index 16d5a4e117a2..5ae5d94c5b93 100644
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -394,6 +394,7 @@ static int tcm_loop_setup_hba_bus(struct tcm_loop_hba *tl_hba, int tcm_loop_host
- 	ret = device_register(&tl_hba->dev);
- 	if (ret) {
- 		pr_err("device_register() failed for tl_hba->dev: %d\n", ret);
-+		put_device(&tl_hba->dev);
- 		return -ENODEV;
- 	}
- 
-@@ -1072,7 +1073,7 @@ static struct se_wwn *tcm_loop_make_scsi_hba(
- 	 */
- 	ret = tcm_loop_setup_hba_bus(tl_hba, tcm_loop_hba_no_cnt);
- 	if (ret)
--		goto out;
-+		return ERR_PTR(ret);
- 
- 	sh = tl_hba->sh;
- 	tcm_loop_hba_no_cnt++;
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index f8ea8cf694c6..3de56ca28017 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1792,7 +1792,13 @@ static int __unregister_kprobe_top(struct kprobe *p)
+ 				if ((list_p != p) && (list_p->post_handler))
+ 					goto noclean;
+ 			}
+-			ap->post_handler = NULL;
++			/*
++			 * For the kprobe-on-ftrace case, we keep the
++			 * post_handler setting to identify this aggrprobe
++			 * armed with kprobe_ipmodify_ops.
++			 */
++			if (!kprobe_ftrace(ap))
++				ap->post_handler = NULL;
+ 		}
+ noclean:
+ 		/*
 -- 
 2.35.1
 
