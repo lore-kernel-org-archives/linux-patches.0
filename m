@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3A61C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CBC433D6;
-	Wed, 23 Nov 2022 09:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC581C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46646C4347C;
+	Wed, 23 Nov 2022 09:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195880;
-	bh=9QPTpe3O4Wdgo90IBeO2bl3KONhzK17Ryo0NBFw1d58=;
+	s=korg; t=1669195883;
+	bh=Mbh//rgxz3VINRNhosHNkW5TiO1ag1/5pFNXo3aCBgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFyoK3xp/mZtdpzrxfBJoxUp2iaqjIyVRxM4njkx0U85Kw6d5oXxl27OGclPfHH37
-	 KOeojycvO48hxH0S+NYq6eKp8uRwbCZJAX5rwtBrrI+LpoN6oG4FVag1SGTFHY0wP3
-	 2DXX+mXwzaxGSvIMYvTMnOR2VntkxpRG2R1j/MSo=
+	b=fRlh7vfyc4wMkjZNAUf5EfMsUTIur8Q8q3RdmXwo8RRggJAZFyVJ2xlxxg8qZFViP
+	 bb2nFU64Q1cLpvQ3KI50TeOcuKCzEOujbnpBYDUFOV73Ie3otEnFvzzI9Bjn0VPEH1
+	 k81LC6mHGeX0XRjDhqJfjNcSi72HHWYcncAqZIDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/181] scsi: scsi_transport_sas: Fix error handling in sas_phy_add()
-Date: Wed, 23 Nov 2022 09:50:20 +0100
-Message-Id: <20221123084604.837593646@linuxfoundation.org>
+Subject: [PATCH 5.15 058/181] block: sed-opal: kmalloc the cmd/resp buffers
+Date: Wed, 23 Nov 2022 09:50:21 +0100
+Message-Id: <20221123084604.878333557@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,74 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit 5d7bebf2dfb0dc97aac1fbace0910e557ecdb16f ]
+[ Upstream commit f829230dd51974c1f4478900ed30bb77ba530b40 ]
 
-If transport_add_device() fails in sas_phy_add(), the kernel will crash
-trying to delete the device in transport_remove_device() called from
-sas_remove_host().
+In accordance with [1] the DMA-able memory buffers must be
+cacheline-aligned otherwise the cache writing-back and invalidation
+performed during the mapping may cause the adjacent data being lost. It's
+specifically required for the DMA-noncoherent platforms [2]. Seeing the
+opal_dev.{cmd,resp} buffers are implicitly used for DMAs in the NVME and
+SCSI/SD drivers in framework of the nvme_sec_submit() and sd_sec_submit()
+methods respectively they must be cacheline-aligned to prevent the denoted
+problem. One of the option to guarantee that is to kmalloc the buffers
+[2]. Let's explicitly allocate them then instead of embedding into the
+opal_dev structure instance.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 61 PID: 42829 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc1+ #173
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_phy_delete+0x30/0x60 [scsi_transport_sas]
- do_sas_phy_delete+0x6c/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x40/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- hisi_sas_remove+0x40/0x68 [hisi_sas_main]
- hisi_sas_v2_remove+0x20/0x30 [hisi_sas_v2_hw]
- platform_remove+0x2c/0x60
+Note this fix was inspired by the commit c94b7f9bab22 ("nvme-hwmon:
+kmalloc the NVME SMART log buffer").
 
-Fix this by checking and handling return value of transport_add_device()
-in sas_phy_add().
+[1] Documentation/core-api/dma-api.rst
+[2] Documentation/core-api/dma-api-howto.rst
 
-Fixes: c7ebbbce366c ("[SCSI] SAS transport class")
-Suggested-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221107124828.115557-1-yangyingliang@huawei.com
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 455a7b238cd6 ("block: Add Sed-opal library")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221107203944.31686-1-Sergey.Semin@baikalelectronics.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_sas.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ block/sed-opal.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 4a96fb05731d..c6256fdc24b1 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -716,12 +716,17 @@ int sas_phy_add(struct sas_phy *phy)
- 	int error;
+diff --git a/block/sed-opal.c b/block/sed-opal.c
+index daafadbb88ca..0ac5a4f3f226 100644
+--- a/block/sed-opal.c
++++ b/block/sed-opal.c
+@@ -88,8 +88,8 @@ struct opal_dev {
+ 	u64 lowest_lba;
  
- 	error = device_add(&phy->dev);
--	if (!error) {
--		transport_add_device(&phy->dev);
--		transport_configure_device(&phy->dev);
-+	if (error)
-+		return error;
-+
-+	error = transport_add_device(&phy->dev);
-+	if (error) {
-+		device_del(&phy->dev);
-+		return error;
- 	}
-+	transport_configure_device(&phy->dev);
+ 	size_t pos;
+-	u8 cmd[IO_BUFFER_LENGTH];
+-	u8 resp[IO_BUFFER_LENGTH];
++	u8 *cmd;
++	u8 *resp;
  
--	return error;
-+	return 0;
+ 	struct parsed_resp parsed;
+ 	size_t prev_d_len;
+@@ -2134,6 +2134,8 @@ void free_opal_dev(struct opal_dev *dev)
+ 		return;
+ 
+ 	clean_opal_dev(dev);
++	kfree(dev->resp);
++	kfree(dev->cmd);
+ 	kfree(dev);
  }
- EXPORT_SYMBOL(sas_phy_add);
+ EXPORT_SYMBOL(free_opal_dev);
+@@ -2146,17 +2148,39 @@ struct opal_dev *init_opal_dev(void *data, sec_send_recv *send_recv)
+ 	if (!dev)
+ 		return NULL;
+ 
++	/*
++	 * Presumably DMA-able buffers must be cache-aligned. Kmalloc makes
++	 * sure the allocated buffer is DMA-safe in that regard.
++	 */
++	dev->cmd = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->cmd)
++		goto err_free_dev;
++
++	dev->resp = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->resp)
++		goto err_free_cmd;
++
+ 	INIT_LIST_HEAD(&dev->unlk_lst);
+ 	mutex_init(&dev->dev_lock);
+ 	dev->data = data;
+ 	dev->send_recv = send_recv;
+ 	if (check_opal_support(dev) != 0) {
+ 		pr_debug("Opal is not supported on this device\n");
+-		kfree(dev);
+-		return NULL;
++		goto err_free_resp;
+ 	}
+ 
+ 	return dev;
++
++err_free_resp:
++	kfree(dev->resp);
++
++err_free_cmd:
++	kfree(dev->cmd);
++
++err_free_dev:
++	kfree(dev);
++
++	return NULL;
+ }
+ EXPORT_SYMBOL(init_opal_dev);
  
 -- 
 2.35.1
