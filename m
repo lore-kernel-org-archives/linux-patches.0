@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0A71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CD8C433C1;
-	Wed, 23 Nov 2022 09:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06E81C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E595C433C1;
+	Wed, 23 Nov 2022 09:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195375;
-	bh=6RZWYC1vgxe9Pqj4chLkaY/6M7VYNi4xgg2j5+MALRs=;
+	s=korg; t=1669195378;
+	bh=lkMK0xkhMTN/jpraeZPPD6HepizLa+NhnYCPB1crPH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebLq8g4zO7vqpAf/R1ZTxFiaHKGrlfOD634huwA75bJjs2GrjVQYbutGJvANtr7VR
-	 PfiwBAKKEzZvx0ZWNeu7LUN9+6CmjgRj8lyLfcAVH0HSqWAhlQKqrHsR6KiWp76Hoo
-	 IDdziAcByOrKmm2DcWogG88q8tgCFk/rInXPXe9E=
+	b=I5UbrVL+PYK+mwzbKDnMAfJDlpIIiScAFbO7cD7qB0CXlUBXhcLsfaH662jePa4II
+	 xB7inv93fKz0RCD+rl4rCvUNvyiCTTlmPe2UyQQ96sHnWRuQ7ckUbjs+Wlsu4CmsZz
+	 t4LYNHYOII2GJyhJazmWU4rzVvvJJXvZbBJDH+V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chuang Wang <nashuiliang@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/149] mISDN: fix misuse of put_device() in mISDN_register_device()
-Date: Wed, 23 Nov 2022 09:50:50 +0100
-Message-Id: <20221123084600.319977155@linuxfoundation.org>
+Subject: [PATCH 5.10 068/149] net: macvlan: Use built-in RCU list checking
+Date: Wed, 23 Nov 2022 09:50:51 +0100
+Message-Id: <20221123084600.359858310@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,33 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Chuang Wang <nashuiliang@gmail.com>
 
-[ Upstream commit 2d25107e111a85c56f601a5470f1780ec054e6ac ]
+[ Upstream commit 5df1341ea822292275c56744aab9c536d75c33be ]
 
-We should not release reference by put_device() before calling device_initialize().
+hlist_for_each_entry_rcu() has built-in RCU and lock checking.
 
-Fixes: e7d1d4d9ac0d ("mISDN: fix possible memory leak in mISDN_register_device()")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Pass cond argument to hlist_for_each_entry_rcu() to silence false
+lockdep warning when CONFIG_PROVE_RCU_LIST is enabled.
+
+Execute as follow:
+
+ ip link add link eth0 type macvlan mode source macaddr add <MAC-ADDR>
+
+The rtnl_lock is held when macvlan_hash_lookup_source() or
+macvlan_fill_info_macaddr() are called in the non-RCU read side section.
+So, pass lockdep_rtnl_is_held() to silence false lockdep warning.
+
+Fixes: 79cf79abce71 ("macvlan: add source mode")
+Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macvlan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/isdn/mISDN/core.c b/drivers/isdn/mISDN/core.c
-index 7ea0100f218a..90ee56d07a6e 100644
---- a/drivers/isdn/mISDN/core.c
-+++ b/drivers/isdn/mISDN/core.c
-@@ -222,7 +222,7 @@ mISDN_register_device(struct mISDNdevice *dev,
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 6b269a72388b..5d6b4f76b519 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -139,7 +139,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
+ 	u32 idx = macvlan_eth_hash(addr);
+ 	struct hlist_head *h = &vlan->port->vlan_source_hash[idx];
  
- 	err = get_free_devid();
- 	if (err < 0)
--		goto error1;
-+		return err;
- 	dev->id = err;
+-	hlist_for_each_entry_rcu(entry, h, hlist) {
++	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+ 		if (ether_addr_equal_64bits(entry->addr, addr) &&
+ 		    entry->vlan == vlan)
+ 			return entry;
+@@ -1614,7 +1614,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
+ 	struct hlist_head *h = &vlan->port->vlan_source_hash[i];
+ 	struct macvlan_source_entry *entry;
  
- 	device_initialize(&dev->dev);
+-	hlist_for_each_entry_rcu(entry, h, hlist) {
++	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+ 		if (entry->vlan != vlan)
+ 			continue;
+ 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
 -- 
 2.35.1
 
