@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8841C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439C4C433D6;
-	Wed, 23 Nov 2022 09:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481781C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92665C4347C;
+	Wed, 23 Nov 2022 09:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196325;
-	bh=9+ZLJWZ+edbJ5SV64rjAhzZBWoWw/nYmvN4vTgXSXP4=;
+	s=korg; t=1669196329;
+	bh=x4RWptu7xEAGucwfy0/VeIWFzLvk/NHNchCpSS/Wc7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGvYo4gS5IcFo3ck2I1/du5IBiIGjzf8hCSkvCssZsaIluqUE5BwkbIwgEGYwsKHs
-	 aI87tdw1io6hIKsM2a4NHPyuyKNJfUsDhvVUVVCRRtgkedT8ZOsP4YzDBsnSxmpKHL
-	 9sQi0va2ZpCdj0tlnGm/OSwOC4GK+EAUqvsx/0Rw=
+	b=LVGFSftFRU0Lkw1gO25LT42earJ3h4cCwaJzNjE1o15R1YslXhSOTiyhzc2IVpUjs
+	 YX+/W1O5pQS6kq5ODe4pyJ8JckI5Ao/I/yAKSjISdHX+f75Gjtanj1Zxav9mnarW2j
+	 WNZpHjikuWtHGPnjfErpa3JvDxtB91eRA5PTAmTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Anton Altaparmakov <anton@tuxera.com>,
-	"chenxiaosong (A)" <chenxiaosong2@huawei.com>,
-	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 181/181] ntfs: check overflow when iterating ATTR_RECORDs
-Date: Wed, 23 Nov 2022 09:52:24 +0100
-Message-Id: <20221123084610.185707949@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 163/181] net: use struct_group to copy ip/ipv6 header addresses
+Date: Wed, 23 Nov 2022 09:52:06 +0100
+Message-Id: <20221123084609.387755447@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -38,52 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 63095f4f3af59322bea984a6ae44337439348fe0 upstream.
+[ Upstream commit 58e0be1ef6118c5352b56a4d06e974c5599993a5 ]
 
-Kernel iterates over ATTR_RECORDs in mft record in ntfs_attr_find().
-Because the ATTR_RECORDs are next to each other, kernel can get the next
-ATTR_RECORD from end address of current ATTR_RECORD, through current
-ATTR_RECORD length field.
+kernel test robot reported warnings when build bonding module with
+make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/net/bonding/:
 
-The problem is that during iteration, when kernel calculates the end
-address of current ATTR_RECORD, kernel may trigger an integer overflow bug
-in executing `a = (ATTR_RECORD*)((u8*)a + le32_to_cpu(a->length))`.  This
-may wrap, leading to a forever iteration on 32bit systems.
+                 from ../drivers/net/bonding/bond_main.c:35:
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘iph_to_flow_copy_v4addrs’ at ../include/net/ip.h:566:2,
+    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3984:3:
+../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
+ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘iph_to_flow_copy_v6addrs’ at ../include/net/ipv6.h:900:2,
+    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3994:3:
+../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
+ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This patch solves it by adding some checks on calculating end address
-of current ATTR_RECORD during iteration.
+This is because we try to copy the whole ip/ip6 address to the flow_key,
+while we only point the to ip/ip6 saddr. Note that since these are UAPI
+headers, __struct_group() is used to avoid the compiler warnings.
 
-Link: https://lkml.kernel.org/r/20220831160935.3409-4-yin31149@gmail.com
-Link: https://lore.kernel.org/all/20220827105842.GM2030@kadam/
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Suggested-by: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Anton Altaparmakov <anton@tuxera.com>
-Cc: chenxiaosong (A) <chenxiaosong2@huawei.com>
-Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: c3f8324188fa ("net: Add full IPv6 addresses to flow_keys")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20221115142400.1204786-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/ip.h          | 2 +-
+ include/net/ipv6.h        | 2 +-
+ include/uapi/linux/ip.h   | 6 ++++--
+ include/uapi/linux/ipv6.h | 6 ++++--
+ 4 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -617,6 +617,14 @@ static int ntfs_attr_find(const ATTR_TYP
- 			return -ENOENT;
- 		if (unlikely(!a->length))
- 			break;
-+
-+		/* check whether ATTR_RECORD's length wrap */
-+		if ((u8 *)a + le32_to_cpu(a->length) < (u8 *)a)
-+			break;
-+		/* check whether ATTR_RECORD's length is within bounds */
-+		if ((u8 *)a + le32_to_cpu(a->length) > mrec_end)
-+			break;
-+
- 		if (a->type != type)
- 			continue;
- 		/*
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 8462ced0c21e..6ae923c55cf4 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -559,7 +559,7 @@ static inline void iph_to_flow_copy_v4addrs(struct flow_keys *flow,
+ 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v4addrs.dst) !=
+ 		     offsetof(typeof(flow->addrs), v4addrs.src) +
+ 			      sizeof(flow->addrs.v4addrs.src));
+-	memcpy(&flow->addrs.v4addrs, &iph->saddr, sizeof(flow->addrs.v4addrs));
++	memcpy(&flow->addrs.v4addrs, &iph->addrs, sizeof(flow->addrs.v4addrs));
+ 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV4_ADDRS;
+ }
+ 
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 359540dfc033..a5e18d65c82d 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -843,7 +843,7 @@ static inline void iph_to_flow_copy_v6addrs(struct flow_keys *flow,
+ 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v6addrs.dst) !=
+ 		     offsetof(typeof(flow->addrs), v6addrs.src) +
+ 		     sizeof(flow->addrs.v6addrs.src));
+-	memcpy(&flow->addrs.v6addrs, &iph->saddr, sizeof(flow->addrs.v6addrs));
++	memcpy(&flow->addrs.v6addrs, &iph->addrs, sizeof(flow->addrs.v6addrs));
+ 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
+ }
+ 
+diff --git a/include/uapi/linux/ip.h b/include/uapi/linux/ip.h
+index e42d13b55cf3..d2f143393780 100644
+--- a/include/uapi/linux/ip.h
++++ b/include/uapi/linux/ip.h
+@@ -100,8 +100,10 @@ struct iphdr {
+ 	__u8	ttl;
+ 	__u8	protocol;
+ 	__sum16	check;
+-	__be32	saddr;
+-	__be32	daddr;
++	__struct_group(/* no tag */, addrs, /* no attrs */,
++		__be32	saddr;
++		__be32	daddr;
++	);
+ 	/*The options start here. */
+ };
+ 
+diff --git a/include/uapi/linux/ipv6.h b/include/uapi/linux/ipv6.h
+index b243a53fa985..62e5e16ef539 100644
+--- a/include/uapi/linux/ipv6.h
++++ b/include/uapi/linux/ipv6.h
+@@ -130,8 +130,10 @@ struct ipv6hdr {
+ 	__u8			nexthdr;
+ 	__u8			hop_limit;
+ 
+-	struct	in6_addr	saddr;
+-	struct	in6_addr	daddr;
++	__struct_group(/* no tag */, addrs, /* no attrs */,
++		struct	in6_addr	saddr;
++		struct	in6_addr	daddr;
++	);
+ };
+ 
+ 
+-- 
+2.35.1
+
 
 
