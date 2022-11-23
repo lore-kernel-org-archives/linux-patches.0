@@ -1,59 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C757B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD6C433D6;
-	Wed, 23 Nov 2022 08:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ACB7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B038DC433D7;
+	Wed, 23 Nov 2022 08:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193832;
-	bh=ELC0TOWEfJJIPQ80PbZV8reL9vGg7G0MWOX9w0MZMBw=;
+	s=korg; t=1669193836;
+	bh=CjEG3KaHCKgqxfFo0gGaul858Ch2xOM/UVF4Chf2oZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWoly8ykbwmsAOCjP4ekT1sED1Z+zj+Km3A8w4XT+ZJSAxnKGckFFZK4nSIC9dbd1
-	 qX1N1Sk7EZmYxvs6uEeRDUN3j6vK6Nu8LfDA1w0wF9VGtgYjAvUrgFUq9EP6jqr0Dz
-	 4j9vya5nk7PDgSz2fAGR7VuesO6gKxi/VKBvSai8=
+	b=aCFQGAtNfIwi3+Ah9JtV4onsFHN+YigiFb8QxQe5sDawLqR8BCMpkCwpXt8YFkvoF
+	 NjbGKmt81H+pbIb4h/6TtgqU17wF+nwXhcKv9lEOSxVVG9u2gsPk435C0+3LeP/VJq
+	 BDvAFoO14HXXDwSrQoPZ4Aco4l9SYvOeb8g3PtUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Konovalov <andreyknvl@google.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Borislav Petkov <bp@alien8.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Anton Altaparmakov <anton@tuxera.com>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 73/76] mm: fs: initialize fsdata passed to write_begin/write_end interface
-Date: Wed, 23 Nov 2022 09:51:12 +0100
-Message-Id: <20221123084549.145856158@linuxfoundation.org>
+Subject: [PATCH 4.9 74/76] ntfs: fix use-after-free in ntfs_attr_find()
+Date: Wed, 23 Nov 2022 09:51:13 +0100
+Message-Id: <20221123084549.177788226@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -67,115 +38,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-commit 1468c6f4558b1bcd92aa0400f2920f9dc7588402 upstream.
+commit d85a1bec8e8d552ab13163ca1874dcd82f3d1550 upstream.
 
-Functions implementing the a_ops->write_end() interface accept the `void
-*fsdata` parameter that is supposed to be initialized by the corresponding
-a_ops->write_begin() (which accepts `void **fsdata`).
+Patch series "ntfs: fix bugs about Attribute", v2.
 
-However not all a_ops->write_begin() implementations initialize `fsdata`
-unconditionally, so it may get passed uninitialized to a_ops->write_end(),
-resulting in undefined behavior.
+This patchset fixes three bugs relative to Attribute in record:
 
-Fix this by initializing fsdata with NULL before the call to
-write_begin(), rather than doing so in all possible a_ops implementations.
+Patch 1 adds a sanity check to ensure that, attrs_offset field in first
+mft record loading from disk is within bounds.
 
-This patch covers only the following cases found by running x86 KMSAN
-under syzkaller:
+Patch 2 moves the ATTR_RECORD's bounds checking earlier, to avoid
+dereferencing ATTR_RECORD before checking this ATTR_RECORD is within
+bounds.
 
- - generic_perform_write()
- - cont_expand_zero() and generic_cont_expand_simple()
- - page_symlink()
+Patch 3 adds an overflow checking to avoid possible forever loop in
+ntfs_attr_find().
 
-Other cases of passing uninitialized fsdata may persist in the codebase.
+Without patch 1 and patch 2, the kernel triggersa KASAN use-after-free
+detection as reported by Syzkaller.
 
-Link: https://lkml.kernel.org/r/20220915150417.722975-43-glider@google.com
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Konovalov <andreyknvl@google.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Eric Biggers <ebiggers@kernel.org>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Marco Elver <elver@google.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Vegard Nossum <vegard.nossum@oracle.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
+Although one of patch 1 or patch 2 can fix this, we still need both of
+them.  Because patch 1 fixes the root cause, and patch 2 not only fixes
+the direct cause, but also fixes the potential out-of-bounds bug.
+
+
+This patch (of 3):
+
+Syzkaller reported use-after-free read as follows:
+==================================================================
+BUG: KASAN: use-after-free in ntfs_attr_find+0xc02/0xce0 fs/ntfs/attrib.c:597
+Read of size 2 at addr ffff88807e352009 by task syz-executor153/3607
+
+[...]
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:317 [inline]
+ print_report.cold+0x2ba/0x719 mm/kasan/report.c:433
+ kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+ ntfs_attr_find+0xc02/0xce0 fs/ntfs/attrib.c:597
+ ntfs_attr_lookup+0x1056/0x2070 fs/ntfs/attrib.c:1193
+ ntfs_read_inode_mount+0x89a/0x2580 fs/ntfs/inode.c:1845
+ ntfs_fill_super+0x1799/0x9320 fs/ntfs/super.c:2854
+ mount_bdev+0x34d/0x410 fs/super.c:1400
+ legacy_get_tree+0x105/0x220 fs/fs_context.c:610
+ vfs_get_tree+0x89/0x2f0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x1326/0x1e20 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ [...]
+ </TASK>
+
+The buggy address belongs to the physical page:
+page:ffffea0001f8d400 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x7e350
+head:ffffea0001f8d400 order:3 compound_mapcount:0 compound_pincount:0
+flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
+raw: 00fff00000010200 0000000000000000 dead000000000122 ffff888011842140
+raw: 0000000000000000 0000000000040004 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+Memory state around the buggy address:
+ ffff88807e351f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88807e351f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff88807e352000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                      ^
+ ffff88807e352080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88807e352100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Kernel will loads $MFT/$DATA's first mft record in
+ntfs_read_inode_mount().
+
+Yet the problem is that after loading, kernel doesn't check whether
+attrs_offset field is a valid value.
+
+To be more specific, if attrs_offset field is larger than bytes_allocated
+field, then it may trigger the out-of-bounds read bug(reported as
+use-after-free bug) in ntfs_attr_find(), when kernel tries to access the
+corresponding mft record's attribute.
+
+This patch solves it by adding the sanity check between attrs_offset field
+and bytes_allocated field, after loading the first mft record.
+
+Link: https://lkml.kernel.org/r/20220831160935.3409-1-yin31149@gmail.com
+Link: https://lkml.kernel.org/r/20220831160935.3409-2-yin31149@gmail.com
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Cc: Anton Altaparmakov <anton@tuxera.com>
+Cc: ChenXiaoSong <chenxiaosong2@huawei.com>
+Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
+Cc: Dan Carpenter <dan.carpenter@oracle.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/buffer.c  |    4 ++--
- fs/namei.c   |    2 +-
- mm/filemap.c |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ fs/ntfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -2329,7 +2329,7 @@ int generic_cont_expand_simple(struct in
- {
- 	struct address_space *mapping = inode->i_mapping;
- 	struct page *page;
--	void *fsdata;
-+	void *fsdata = NULL;
- 	int err;
+--- a/fs/ntfs/inode.c
++++ b/fs/ntfs/inode.c
+@@ -1863,6 +1863,13 @@ int ntfs_read_inode_mount(struct inode *
+ 		goto err_out;
+ 	}
  
- 	err = inode_newsize_ok(inode, size);
-@@ -2356,7 +2356,7 @@ static int cont_expand_zero(struct file
- 	struct inode *inode = mapping->host;
- 	unsigned int blocksize = i_blocksize(inode);
- 	struct page *page;
--	void *fsdata;
-+	void *fsdata = NULL;
- 	pgoff_t index, curidx;
- 	loff_t curpos;
- 	unsigned zerofrom, offset, len;
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -4802,7 +4802,7 @@ int __page_symlink(struct inode *inode,
- {
- 	struct address_space *mapping = inode->i_mapping;
- 	struct page *page;
--	void *fsdata;
-+	void *fsdata = NULL;
- 	int err;
- 	unsigned int flags = AOP_FLAG_UNINTERRUPTIBLE;
- 	if (nofs)
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2719,7 +2719,7 @@ ssize_t generic_perform_write(struct fil
- 		unsigned long offset;	/* Offset into pagecache page */
- 		unsigned long bytes;	/* Bytes to write to page */
- 		size_t copied;		/* Bytes copied from user */
--		void *fsdata;
-+		void *fsdata = NULL;
++	/* Sanity check offset to the first attribute */
++	if (le16_to_cpu(m->attrs_offset) >= le32_to_cpu(m->bytes_allocated)) {
++		ntfs_error(sb, "Incorrect mft offset to the first attribute %u in superblock.",
++			       le16_to_cpu(m->attrs_offset));
++		goto err_out;
++	}
++
+ 	/* Need this to sanity check attribute list references to $MFT. */
+ 	vi->i_generation = ni->seq_no = le16_to_cpu(m->sequence_number);
  
- 		offset = (pos & (PAGE_SIZE - 1));
- 		bytes = min_t(unsigned long, PAGE_SIZE - offset,
 
 
