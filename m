@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710801C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FF4C433C1;
-	Wed, 23 Nov 2022 09:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2E51C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA6C433B5;
+	Wed, 23 Nov 2022 09:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196235;
-	bh=SiTJ9C3dPn9HvqBY93Akj6RRkHk43y2HXNtW85w7ibM=;
+	s=korg; t=1669196240;
+	bh=fHXDeFhK45VnMTTNCv2wQtmdkU75+T7qWf1s9rN7QYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzbLi6/m27Zu1hBD33ytN8e98Gyznn579NFGRaVSfY++3JcMFWS0hEMI7sFHIxHLG
-	 bChj3TaZP1ja+IxmcRCK9lQuIo5P8p6FSxwzE0d++7wWquAJFKa8ki4KEcHgIpKd9a
-	 Yy8sARazF1RulEDTEhFNfaJaRVZIlw8QCtL1Cw1s=
+	b=b7XM5ZwhSR/mH1k37RUZ9fJ/azClJ7Bz+PFBGXcbXZnYRt3KsZreykjaxZdBoDwZj
+	 Xyr0jKwjXAiqqndnWKX+OCBa0q/RTBTFGVVPIrPNJDRRqfSDgkVex7ew6NckIWaurn
+	 SDlydF8GrVMEEKVKtXxMACxpgTXCh2s3XKJfpgUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 129/181] USB: serial: option: add u-blox LARA-L6 modem
-Date: Wed, 23 Nov 2022 09:51:32 +0100
-Message-Id: <20221123084607.933780767@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 156/181] perf/x86/intel/pt: Fix sampling using single range output
+Date: Wed, 23 Nov 2022 09:51:59 +0100
+Message-Id: <20221123084609.077857548@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,73 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
+commit ce0d998be9274dd3a3d971cbeaa6fe28fd2c3062 upstream.
 
-Add LARA-L6 PIDs for three different USB compositions.
+Deal with errata TGL052, ADL037 and RPL017 "Trace May Contain Incorrect
+Data When Configured With Single Range Output Larger Than 4KB" by
+disabling single range output whenever larger than 4KB.
 
-LARA-L6 module can be configured (by AT interface) in three different
-USB modes:
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
-interfaces
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
-interfaces and 1 RmNet virtual network interface
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-
-In default mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-
-In RmNet mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-[ johan: drop PID defines in favour of comments ]
+Fixes: 670638477aed ("perf/x86/intel/pt: Opportunistically use single range output mode")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lkml.kernel.org/r/20221112151508.13768-1-adrian.hunter@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/events/intel/pt.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -162,6 +162,8 @@ static void option_instat_callback(struc
- #define NOVATELWIRELESS_PRODUCT_G2		0xA010
- #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1247,6 +1247,15 @@ static int pt_buffer_try_single(struct p
+ 	if (1 << order != nr_pages)
+ 		goto out;
  
-+#define UBLOX_VENDOR_ID				0x1546
++	/*
++	 * Some processors cannot always support single range for more than
++	 * 4KB - refer errata TGL052, ADL037 and RPL017. Future processors might
++	 * also be affected, so for now rather than trying to keep track of
++	 * which ones, just disable it for all.
++	 */
++	if (nr_pages > 1)
++		goto out;
 +
- /* AMOI PRODUCTS */
- #define AMOI_VENDOR_ID				0x1614
- #define AMOI_PRODUCT_H01			0x0800
-@@ -1130,6 +1132,12 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
-+	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
-+	  .driver_info = RSVD(4) },
- 	/* Quectel products using Quectel vendor ID */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
- 	  .driver_info = NUMEP2 },
+ 	buf->single = true;
+ 	buf->nr_pages = nr_pages;
+ 	ret = 0;
 
 
