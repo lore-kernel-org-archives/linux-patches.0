@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494A51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB65CC433D6;
-	Wed, 23 Nov 2022 09:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69941C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB6CC433D6;
+	Wed, 23 Nov 2022 09:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194710;
-	bh=6/mqBGBbGDV5vhPl0+iOzXBqKyq9yKNg/8BY94L0bTM=;
+	s=korg; t=1669194713;
+	bh=KZcb3HGOc4Q8KBrAokYIfuTuxq6MNqkyKu1YhQ6HDZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyA6SXAgesDTWzHiSGNgRfTNp73ZmXqtwz7O+dt8Oms422Aikoc8hRzKpUQgDXQV7
-	 sJukASIAoEZEeTaQcIMZZNyPxpcmw4t7s/Jo87kBDeeDhDVLp5FUrrXukW9CwHpKKg
-	 8AJlDjViul2yxvI8hkgplr4Yiyk8OTLd/746/TWk=
+	b=zCbgYj+zoVPH+ljTCHlryImLy865gmoEU83OR00snNz99zqTBV0nRlbcB2IB1NDC3
+	 AXrGRmad5cYo3M6W60zj99LXh++DW++Oi+jnx0eUVtG1cMJ/mqWuHoVd/3wbN2aZwB
+	 V476cecodNENim2s7T8YK2YEMF1odV/uGyKsfh6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Brian Norris <briannorris@chromium.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 040/156] mmc: cqhci: Provide helper for resetting both SDHCI and CQHCI
-Date: Wed, 23 Nov 2022 09:49:57 +0100
-Message-Id: <20221123084559.368002151@linuxfoundation.org>
+Subject: [PATCH 5.4 041/156] mmc: sdhci-of-arasan: Fix SDHCI_RESET_ALL for CQHCI
+Date: Wed, 23 Nov 2022 09:49:58 +0100
+Message-Id: <20221123084559.398909381@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -38,67 +38,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Norris <briannorris@chromium.org>
 
-commit ebb5fd38f41132e6924cb33b647337f4a5d5360c upstream.
+commit 5d249ac37fc2396e8acc1adb0650cdacae5a990d upstream.
 
-Several SDHCI drivers need to deactivate command queueing in their reset
-hook (see sdhci_cqhci_reset() / sdhci-pci-core.c, for example), and
-several more are coming.
+SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
+tracking that properly in software. When out of sync, we may trigger
+various timeouts.
 
-Those reset implementations have some small subtleties (e.g., ordering
-of initialization of SDHCI vs. CQHCI might leave us resetting with a
-NULL ->cqe_private), and are often identical across different host
-drivers.
+It's not typical to perform resets while CQE is enabled, but one
+particular case I hit commonly enough: mmc_suspend() -> mmc_power_off().
+Typically we will eventually deactivate CQE (cqhci_suspend() ->
+cqhci_deactivate()), but that's not guaranteed -- in particular, if
+we perform a partial (e.g., interrupted) system suspend.
 
-We also don't want to force a dependency between SDHCI and CQHCI, or
-vice versa; non-SDHCI drivers use CQHCI, and SDHCI drivers might support
-command queueing through some other means.
+The same bug was already found and fixed for two other drivers, in v5.7
+and v5.9:
 
-So, implement a small helper, to avoid repeating the same mistakes in
-different drivers. Simply stick it in a header, because it's so small it
-doesn't deserve its own module right now, and inlining to each driver is
-pretty reasonable.
+  5cf583f1fb9c ("mmc: sdhci-msm: Deactivate CQE during SDHC reset")
+  df57d73276b8 ("mmc: sdhci-pci: Fix SDHCI_RESET_ALL for CQHCI for Intel
+                 GLK-based controllers")
 
-This is marked for -stable, as it is an important prerequisite patch for
-several SDHCI controller bugfixes that follow.
+The latter is especially prescient, saying "other drivers using CQHCI
+might benefit from a similar change, if they also have CQHCI reset by
+SDHCI_RESET_ALL."
 
+So like these other patches, deactivate CQHCI when resetting the
+controller. Do this via the new sdhci_and_cqhci_reset() helper.
+
+This patch depends on (and should not compile without) the patch
+entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
+CQHCI".
+
+Fixes: 84362d79f436 ("mmc: sdhci-of-arasan: Add CQHCI support for arasan,sdhci-5.1")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20221026124150.v4.1.Ie85faa09432bfe1b0890d8c24ff95e17f3097317@changeid
+Link: https://lore.kernel.org/r/20221026124150.v4.2.I29f6a2189e84e35ad89c1833793dca9e36c64297@changeid
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-cqhci.h |   24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
- create mode 100644 drivers/mmc/host/sdhci-cqhci.h
+ drivers/mmc/host/sdhci-of-arasan.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/drivers/mmc/host/sdhci-cqhci.h
-@@ -0,0 +1,24 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright 2022 The Chromium OS Authors
-+ *
-+ * Support that applies to the combination of SDHCI and CQHCI, while not
-+ * expressing a dependency between the two modules.
-+ */
-+
-+#ifndef __MMC_HOST_SDHCI_CQHCI_H__
-+#define __MMC_HOST_SDHCI_CQHCI_H__
-+
-+#include "cqhci.h"
-+#include "sdhci.h"
-+
-+static inline void sdhci_and_cqhci_reset(struct sdhci_host *host, u8 mask)
-+{
-+	if ((host->mmc->caps2 & MMC_CAP2_CQE) && (mask & SDHCI_RESET_ALL) &&
-+	    host->mmc->cqe_private)
-+		cqhci_deactivate(host->mmc);
-+
-+	sdhci_reset(host, mask);
-+}
-+
-+#endif /* __MMC_HOST_SDHCI_CQHCI_H__ */
+--- a/drivers/mmc/host/sdhci-of-arasan.c
++++ b/drivers/mmc/host/sdhci-of-arasan.c
+@@ -24,6 +24,7 @@
+ #include <linux/of.h>
+ 
+ #include "cqhci.h"
++#include "sdhci-cqhci.h"
+ #include "sdhci-pltfm.h"
+ 
+ #define SDHCI_ARASAN_VENDOR_REGISTER	0x78
+@@ -264,7 +265,7 @@ static void sdhci_arasan_reset(struct sd
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_arasan_data *sdhci_arasan = sdhci_pltfm_priv(pltfm_host);
+ 
+-	sdhci_reset(host, mask);
++	sdhci_and_cqhci_reset(host, mask);
+ 
+ 	if (sdhci_arasan->quirks & SDHCI_ARASAN_QUIRK_FORCE_CDTEST) {
+ 		ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
 
 
