@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483521C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF30C433D6;
-	Wed, 23 Nov 2022 09:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E3F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A474C433C1;
+	Wed, 23 Nov 2022 09:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195638;
-	bh=yYhp8Hn/124hrHXNT+nRAm36mEF9eGnbHttfrnpJ3Ts=;
+	s=korg; t=1669195641;
+	bh=BDC7gb5JX6VFQic4aK/Xw5vyvyd55F9yZ7uBgdIImbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daVp4CrDMf41Og7Ok+WUia/lO9w0A/RKZROzQmiWsqzbZFcUBZLeCmXOXjCel8NMB
-	 XdMWpnY8VK3wJmYSm1kSkS8w58B9LV40biI3w6V3gvNfVFifsJolYvZFnXqEHX0PfE
-	 uc8E1PVnl9UkmGon29wmGJj8HPDd+2Qhkym9PWzo=
+	b=dIoMMTes1M87+N2NXG6HiVhrbueBF3DWxXsI+x225eT4FUq0quA3FS0Oc0GZKRiDV
+	 Y9qcMdI2z04j2ee1s0+XrWHk8sITdaM5hXQXZgrJKg+S+0j1ZT+HQ1YV7RSvz5CU43
+	 cLHOq6UTbaomN20ead4Yqw2zky+jPLaVYYW9DI8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Schspa Shi <schspa@gmail.com>
-Subject: [PATCH 5.10 142/149] 9p: trans_fd/p9_conn_cancel: drop client lock earlier
-Date: Wed, 23 Nov 2022 09:52:05 +0100
-Message-Id: <20221123084603.032987856@linuxfoundation.org>
+	syzbot+dcf33a7aae997956fe06@syzkaller.appspotmail.com,
+	Andrew Price <anprice@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 5.10 143/149] gfs2: Check sb_bsize_shift after reading superblock
+Date: Wed, 23 Nov 2022 09:52:06 +0100
+Message-Id: <20221123084603.064150076@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,41 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Andrew Price <anprice@redhat.com>
 
-commit 52f1c45dde9136f964d63a77d19826c8a74e2c7f upstream.
+commit 670f8ce56dd0632dc29a0322e188cc73ce3c6b92 upstream.
 
-syzbot reported a double-lock here and we no longer need this
-lock after requests have been moved off to local list:
-just drop the lock earlier.
+Fuzzers like to scribble over sb_bsize_shift but in reality it's very
+unlikely that this field would be corrupted on its own. Nevertheless it
+should be checked to avoid the possibility of messy mount errors due to
+bad calculations. It's always a fixed value based on the block size so
+we can just check that it's the expected value.
 
-Link: https://lkml.kernel.org/r/20220904064028.1305220-1-asmadeus@codewreck.org
-Reported-by: syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Tested-by: Schspa Shi <schspa@gmail.com>
+Tested with:
+
+    mkfs.gfs2 -O -p lock_nolock /dev/vdb
+    for i in 0 -1 64 65 32 33; do
+        gfs2_edit -p sb field sb_bsize_shift $i /dev/vdb
+        mount /dev/vdb /mnt/test && umount /mnt/test
+    done
+
+Before this patch we get a withdraw after
+
+[   76.413681] gfs2: fsid=loop0.0: fatal: invalid metadata block
+[   76.413681]   bh = 19 (type: exp=5, found=4)
+[   76.413681]   function = gfs2_meta_buffer, file = fs/gfs2/meta_io.c, line = 492
+
+and with UBSAN configured we also get complaints like
+
+[   76.373395] UBSAN: shift-out-of-bounds in fs/gfs2/ops_fstype.c:295:19
+[   76.373815] shift exponent 4294967287 is too large for 64-bit type 'long unsigned int'
+
+After the patch, these complaints don't appear, mount fails immediately
+and we get an explanation in dmesg.
+
+Reported-by: syzbot+dcf33a7aae997956fe06@syzkaller.appspotmail.com
+Signed-off-by: Andrew Price <anprice@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/gfs2/ops_fstype.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -205,6 +205,8 @@ static void p9_conn_cancel(struct p9_con
- 		list_move(&req->req_list, &cancel_list);
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -182,7 +182,10 @@ static int gfs2_check_sb(struct gfs2_sbd
+ 		pr_warn("Invalid superblock size\n");
+ 		return -EINVAL;
  	}
- 
-+	spin_unlock(&m->client->lock);
-+
- 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
- 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
- 		list_del(&req->req_list);
-@@ -212,7 +214,6 @@ static void p9_conn_cancel(struct p9_con
- 			req->t_err = err;
- 		p9_client_cb(m->client, req, REQ_STATUS_ERROR);
- 	}
--	spin_unlock(&m->client->lock);
+-
++	if (sb->sb_bsize_shift != ffs(sb->sb_bsize) - 1) {
++		pr_warn("Invalid block size shift\n");
++		return -EINVAL;
++	}
+ 	return 0;
  }
  
- static __poll_t
 
 
