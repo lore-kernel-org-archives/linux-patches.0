@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456DC1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84434C433C1;
-	Wed, 23 Nov 2022 09:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD5F1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:09:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB43C433D6;
+	Wed, 23 Nov 2022 09:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194537;
-	bh=6QqdkLRmgk+TgWmk16E7hamPY8XXEoMQdN8mYGlQn7c=;
+	s=korg; t=1669194540;
+	bh=z8dYoWHouUrlumcNukhKi+RMMKmKo4R05zEY4em5Y8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0x6L+RLGyvOGRWAk+xUXEtFBjRM6IB4tJ1bY6Dg5IacS/pTxgl54a665OXAxcBLk
-	 QnikCViObB6b1spK03KgXpdHi0VIMWlOPZ0+jpdOUg7ktP9aJj/LwIrjmQc/Ozwq3/
-	 x5kYhu0dKh/eHKFYtZV3THniNXw7mUwyk3QNwjfk=
+	b=nh0iC0ycaByhn53RdhAkSRsx1x9kZ1zxGGeLp7ebkayuuaqS0BPRcQdh7+CKgfh+5
+	 9zzUJuyQjXi1j56yTOfQSG2HCjnS9KsMlSI/ftaL2ycLgUfcyJutGHThaR89JkAueg
+	 o8Q7VOioM1TsQ43UITEXP3M4UHwQVYGPlTkAkZgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 078/114] ring_buffer: Do not deactivate non-existant pages
-Date: Wed, 23 Nov 2022 09:51:05 +0100
-Message-Id: <20221123084554.984744927@linuxfoundation.org>
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eric Dumazet <edumazet@google.com>
+Subject: [PATCH 4.19 105/114] bpf, test_run: Fix alignment problem in bpf_prog_test_run_skb()
+Date: Wed, 23 Nov 2022 09:51:32 +0100
+Message-Id: <20221123084555.915212242@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,40 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-commit 56f4ca0a79a9f1af98f26c54b9b89ba1f9bcc6bd upstream.
+commit d3fd203f36d46aa29600a72d57a1b61af80e4a25 upstream.
 
-rb_head_page_deactivate() expects cpu_buffer to contain a valid list of
-->pages, so verify that the list is actually present before calling it.
+We got a syzkaller problem because of aarch64 alignment fault
+if KFENCE enabled. When the size from user bpf program is an odd
+number, like 399, 407, etc, it will cause the struct skb_shared_info's
+unaligned access. As seen below:
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
+  BUG: KFENCE: use-after-free read in __skb_clone+0x23c/0x2a0 net/core/skbuff.c:1032
 
-Link: https://lkml.kernel.org/r/20221114143129.3534443-1-d-tatianin@yandex-team.ru
+  Use-after-free read at 0xffff6254fffac077 (in kfence-#213):
+   __lse_atomic_add arch/arm64/include/asm/atomic_lse.h:26 [inline]
+   arch_atomic_add arch/arm64/include/asm/atomic.h:28 [inline]
+   arch_atomic_inc include/linux/atomic-arch-fallback.h:270 [inline]
+   atomic_inc include/asm-generic/atomic-instrumented.h:241 [inline]
+   __skb_clone+0x23c/0x2a0 net/core/skbuff.c:1032
+   skb_clone+0xf4/0x214 net/core/skbuff.c:1481
+   ____bpf_clone_redirect net/core/filter.c:2433 [inline]
+   bpf_clone_redirect+0x78/0x1c0 net/core/filter.c:2420
+   bpf_prog_d3839dd9068ceb51+0x80/0x330
+   bpf_dispatcher_nop_func include/linux/bpf.h:728 [inline]
+   bpf_test_run+0x3c0/0x6c0 net/bpf/test_run.c:53
+   bpf_prog_test_run_skb+0x638/0xa7c net/bpf/test_run.c:594
+   bpf_prog_test_run kernel/bpf/syscall.c:3148 [inline]
+   __do_sys_bpf kernel/bpf/syscall.c:4441 [inline]
+   __se_sys_bpf+0xad0/0x1634 kernel/bpf/syscall.c:4381
 
-Cc: stable@vger.kernel.org
-Fixes: 77ae365eca895 ("ring-buffer: make lockless")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  kfence-#213: 0xffff6254fffac000-0xffff6254fffac196, size=407, cache=kmalloc-512
+
+  allocated by task 15074 on cpu 0 at 1342.585390s:
+   kmalloc include/linux/slab.h:568 [inline]
+   kzalloc include/linux/slab.h:675 [inline]
+   bpf_test_init.isra.0+0xac/0x290 net/bpf/test_run.c:191
+   bpf_prog_test_run_skb+0x11c/0xa7c net/bpf/test_run.c:512
+   bpf_prog_test_run kernel/bpf/syscall.c:3148 [inline]
+   __do_sys_bpf kernel/bpf/syscall.c:4441 [inline]
+   __se_sys_bpf+0xad0/0x1634 kernel/bpf/syscall.c:4381
+   __arm64_sys_bpf+0x50/0x60 kernel/bpf/syscall.c:4381
+
+To fix the problem, we adjust @size so that (@size + @hearoom) is a
+multiple of SMP_CACHE_BYTES. So we make sure the struct skb_shared_info
+is aligned to a cache line.
+
+Fixes: 1cf1cae963c2 ("bpf: introduce BPF_PROG_TEST_RUN command")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/bpf/20221102081620.1465154-1-zhongbaisong@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bpf/test_run.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1328,9 +1328,9 @@ static void rb_free_cpu_buffer(struct ri
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -87,6 +87,7 @@ static void *bpf_test_init(const union b
+ 	if (size < ETH_HLEN || size > PAGE_SIZE - headroom - tailroom)
+ 		return ERR_PTR(-EINVAL);
  
- 	free_buffer_page(cpu_buffer->reader_page);
- 
--	rb_head_page_deactivate(cpu_buffer);
--
- 	if (head) {
-+		rb_head_page_deactivate(cpu_buffer);
-+
- 		list_for_each_entry_safe(bpage, tmp, head, list) {
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
++	size = SKB_DATA_ALIGN(size);
+ 	data = kzalloc(size + headroom + tailroom, GFP_USER);
+ 	if (!data)
+ 		return ERR_PTR(-ENOMEM);
 
 
