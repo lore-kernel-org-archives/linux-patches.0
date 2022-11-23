@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8D31C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD99FC433C1;
-	Wed, 23 Nov 2022 09:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870A21C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C72C433D6;
+	Wed, 23 Nov 2022 09:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195516;
-	bh=eF1j130c0SZailNo6oQfzBp+HT2TeZ5zTXO6Y/j4im8=;
+	s=korg; t=1669195520;
+	bh=kkjYAi6GyHZFGIO3tZgWYZ//QSxKIu91Xoswk/75h30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8jP5AQyjq2RfJxJ89vvZ0bMY9kHV01EnMUUbQjQ8TtRqRjVsQbQJJZLmCkLNzni7
-	 3xeJmN4gX40B1uDFkltdQ0FDeSvj7ZektYpizpkrJHhWohXeTMQ/HUtki/0Y9+cglF
-	 J6j3EfcYAjUNFFw8Gp4EN6sWq+1rNoT/vPoxY0EM=
+	b=XJNiyeCeVbogK8sJkPgbVzs1zFNE0+yOBdEr5hP11tJgpEZ2/19IMCDMtQDJ9fKhf
+	 OkiPZZijSUoMlWDkAdr8+qv5IlKQcuJ+mUotNsiU64+NEjXzr4Tml5/m9yLrGyvUDQ
+	 S6MNSmZuLFhCfADOIMOKSZiADNx0FfBI/pUNah/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Saravanan Sekar <sravanhome@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 107/149] iio: trigger: sysfs: fix possible memory leak in iio_sysfs_trig_init()
-Date: Wed, 23 Nov 2022 09:51:30 +0100
-Message-Id: <20221123084601.830892418@linuxfoundation.org>
+Subject: [PATCH 5.10 108/149] iio: adc: mp2629: fix wrong comparison of channel
+Date: Wed, 23 Nov 2022 09:51:31 +0100
+Message-Id: <20221123084601.860847055@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,55 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Saravanan Sekar <sravanhome@gmail.com>
 
-commit efa17e90e1711bdb084e3954fa44afb6647331c0 upstream.
+commit 1eb20332a082fa801fb89c347c5e62de916a4001 upstream.
 
-dev_set_name() allocates memory for name, it need be freed
-when device_add() fails, call put_device() to give up the
-reference that hold in device_initialize(), so that it can
-be freed in kobject_cleanup() when the refcount hit to 0.
+Input voltage channel enum is compared against iio address instead
+of the channel.
 
-Fault injection test can trigger this:
-
-unreferenced object 0xffff8e8340a7b4c0 (size 32):
-  comm "modprobe", pid 243, jiffies 4294678145 (age 48.845s)
-  hex dump (first 32 bytes):
-    69 69 6f 5f 73 79 73 66 73 5f 74 72 69 67 67 65  iio_sysfs_trigge
-    72 00 a7 40 83 8e ff ff 00 86 13 c4 f6 ee ff ff  r..@............
-  backtrace:
-    [<0000000074999de8>] __kmem_cache_alloc_node+0x1e9/0x360
-    [<00000000497fd30b>] __kmalloc_node_track_caller+0x44/0x1a0
-    [<000000003636c520>] kstrdup+0x2d/0x60
-    [<0000000032f84da2>] kobject_set_name_vargs+0x1e/0x90
-    [<0000000092efe493>] dev_set_name+0x4e/0x70
-
-Fixes: 1f785681a870 ("staging:iio:trigger sysfs userspace trigger rework.")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: 7abd9fb64682 ("iio: adc: mp2629: Add support for mp2629 ADC driver")
+Signed-off-by: Saravanan Sekar <sravanhome@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20221029093000.45451-2-sravanhome@gmail.com
 Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221022074212.1386424-1-yangyingliang@huawei.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/trigger/iio-trig-sysfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/adc/mp2629_adc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/trigger/iio-trig-sysfs.c
-+++ b/drivers/iio/trigger/iio-trig-sysfs.c
-@@ -209,9 +209,13 @@ static int iio_sysfs_trigger_remove(int
+--- a/drivers/iio/adc/mp2629_adc.c
++++ b/drivers/iio/adc/mp2629_adc.c
+@@ -73,7 +73,7 @@ static int mp2629_read_raw(struct iio_de
+ 		if (ret)
+ 			return ret;
  
- static int __init iio_sysfs_trig_init(void)
- {
-+	int ret;
- 	device_initialize(&iio_sysfs_trig_dev);
- 	dev_set_name(&iio_sysfs_trig_dev, "iio_sysfs_trigger");
--	return device_add(&iio_sysfs_trig_dev);
-+	ret = device_add(&iio_sysfs_trig_dev);
-+	if (ret)
-+		put_device(&iio_sysfs_trig_dev);
-+	return ret;
- }
- module_init(iio_sysfs_trig_init);
- 
+-		if (chan->address == MP2629_INPUT_VOLT)
++		if (chan->channel == MP2629_INPUT_VOLT)
+ 			rval &= GENMASK(6, 0);
+ 		*val = rval;
+ 		return IIO_VAL_INT;
 
 
