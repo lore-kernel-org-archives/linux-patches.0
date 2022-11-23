@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C4F1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34E1C433D6;
-	Wed, 23 Nov 2022 09:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC2E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17DEC433C1;
+	Wed, 23 Nov 2022 09:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197023;
-	bh=Htk4lFxlXUqXg8iR+lbYeuN9dR1Zr7JJCzLfbNd3l7o=;
+	s=korg; t=1669197026;
+	bh=hcIHoOOr0mQPIoISV17umq8DPr5hm5Z2CXFa3EUYcnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jb8Jni1fBLSIWgRw1ULgpU2hVaq8Pp9/d7aizk/OrdFnQO8hOd6sbkyc25WHJXstb
-	 jxLbzOBKWpv4QccxkFBVTOvLsYogGmG3L6CZsjLjpzxEHOyNDiu5lWVdPdw9+ZXdXt
-	 AM6KOzwytBqgaRFaB42OH2cxYLcoUybN2JJ+sWJA=
+	b=ycLcsnMj/huEkT9uRriULE3UiXwdcqfXcnb0Ul6ONM0lY50L22NN45VTBXRNMG/X4
+	 EAP8WU/P2JMzVJmIsscxk8KzH/QNPlVWBQ/VK84neRQTUrx5E0R9/Q90XDdmTNOfJl
+	 gCaQVi1uUdNxc+BK+nGF3uBYZQx/Gp9JmhzYYtcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 169/314] mlxsw: Avoid warnings when not offloaded FDB entry with IPv6 is removed
-Date: Wed, 23 Nov 2022 09:50:14 +0100
-Message-Id: <20221123084633.227775978@linuxfoundation.org>
+Subject: [PATCH 6.0 178/314] platform/x86/intel: pmc: Dont unconditionally attach Intel PMC when virtualized
+Date: Wed, 23 Nov 2022 09:50:23 +0100
+Message-Id: <20221123084633.639157337@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,110 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Roger Pau Monné <roger.pau@citrix.com>
 
-[ Upstream commit 30f5312d2c722107364f266cfa98ef4f0857c1fb ]
+[ Upstream commit 2dbfb3f33350e1e868d3d7ed4c176d8777150878 ]
 
-FDB entries that perform VXLAN encapsulation with an IPv6 underlay hold
-a reference on a resource - the KVDL entry where the IPv6 underlay
-destination IP is stored. For that, the driver maintains two hash tables:
-1. Maps IPv6 to KVDL index
-2. Maps {MAC, FID index} to IPv6 address
+The current logic in the Intel PMC driver will forcefully attach it
+when detecting any CPU on the intel_pmc_core_platform_ids array,
+even if the matching ACPI device is not present.
 
-When a FDB entry is removed, the second table is used to find the relevant
-IPv6 address and the first table is used to remove the reference count and
-free the index if is not used anymore.
+There's no checking in pmc_core_probe() to assert that the PMC device
+is present, and hence on virtualized environments the PMC device
+probes successfully, even if the underlying registers are not present.
+Before commit 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI
+with CPUID enumeration") the driver would check for the presence of a
+specific PCI device, and that prevented the driver from attaching when
+running virtualized.
 
-In order for a packet to be forwarded to a single remote VTEP, FDB
-entries need to be configured at both the bridge and VXLAN devices' FDB
-tables. Both entries are squashed into one {MAC, VLAN/VNI} -> IP entry
-in the hardware. Therefore, in case one entry is removed, the entry will
-be removed from the hardware and the remaining entry will be unmarked
-with 'offload' flag since it is not offloaded anymore.
+Fix by only forcefully attaching the PMC device when not running
+virtualized.  Note that virtualized platforms can still get the device
+to load if the appropriate ACPI device is present on the tables
+provided to the VM.
 
-For example, the two FDB entries should be added to allow packets to be
-forwarded via vx10:
-$ bridge fdb add dev vx10 aa:bb:cc:dd:ee:ff self static dst 2001:db8:5::1
-$ bridge fdb add dev vx10 aa:bb:cc:dd:ee:ff master static vlan 10
+Make an exception for the Xen initial domain, which does have full
+hardware access, and hence can attach to the PMC if present.
 
-When one entry will be removed, the second one will not be offloaded
-anymore. When the first entry (in VXLAN FDB) will be removed / will not be
-offloaded anymore, the two mappings in IPv6 hash tables will be removed.
-
-In case that the second entry is removed before the first one, unexpected
-warnings[1][2] will be shown in user space as a result of removing the
-first entry. The issue is that not offloaded entry is removed, the driver
-tries to search the relevant entries in the hash tables, does not find them
-and therefore warns.
-
-Do not handle removing of not offloaded VXLAN FDB entries, as they were
-already removed when the offload flag was removed.
-
-[1]:
-WARNING: CPU: 1 PID: 239 at drivers/net/ethernet/mellanox/mlxsw/spectrum_nve.c:914 mlxsw_sp_nve_ipv6_addr_map_del+0x6b/0x80 [mlxsw_spectrum]
-...
-Hardware name: Mellanox Technologies Ltd. Mellanox switch/Mellanox switch, BIOS 4.6.5 05/21/2015
-Workqueue: mlxsw_core_ordered mlxsw_sp_switchdev_vxlan_fdb_event_work [mlxsw_spectrum]
-RIP: 0010:mlxsw_sp_nve_ipv6_addr_map_del+0x6b/0x80 [mlxsw_spectrum]
-...
-Call Trace:
-  <TASK>
-  mlxsw_sp_port_fdb_tunnel_uc_op+0x6cf/0x7b0 [mlxsw_spectrum]
-  mlxsw_sp_switchdev_vxlan_fdb_event_work+0x17c/0x420 [mlxsw_spectrum]
-  ? finish_task_switch.isra.0+0x8c/0x290
-  process_one_work+0x1cd/0x390
-  worker_thread+0x48/0x3c0
-  ? process_one_work+0x390/0x390
-  kthread+0xe0/0x110
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x1f/0x30
-  </TASK>
-
-[2]:
-WARNING: CPU: 0 PID: 239 at drivers/net/ethernet/mellanox/mlxsw/spectrum.c:3035 mlxsw_sp_ipv6_addr_put+0x142/0x220 [mlxsw_spectrum]
-...
-Hardware name: Mellanox Technologies Ltd. Mellanox switch/Mellanox switch, BIOS 4.6.5 05/21/2015
-Workqueue: mlxsw_core_ordered mlxsw_sp_switchdev_vxlan_fdb_event_work [mlxsw_spectrum]
-RIP: 0010:mlxsw_sp_ipv6_addr_put+0x142/0x220 [mlxsw_spectrum]
-...
-Call Trace:
-  <TASK>
-  ? mlxsw_sp_port_fdb_tun_uc_op6_sfd_write+0x5c1/0x610 [mlxsw_spectrum]
-  mlxsw_sp_port_fdb_tunnel_uc_op+0x6ec/0x7b0 [mlxsw_spectrum]
-  mlxsw_sp_switchdev_vxlan_fdb_event_work+0x17c/0x420 [mlxsw_spectrum]
-  ? finish_task_switch.isra.0+0x8c/0x290
-  process_one_work+0x1cd/0x390
-  worker_thread+0x48/0x3c0
-  ? process_one_work+0x390/0x390
-  kthread+0xe0/0x110
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x1f/0x30
-  </TASK>
-
-Fixes: 0860c7641634 ("mlxsw: spectrum_nve: Keep track of IPv6 addresses used by FDB entries")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/c186de8cbd28e3eb661e06f31f7f2f2dff30020f.1668184350.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI with CPUID enumeration")
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Acked-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110163145.80374-1-roger.pau@citrix.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/intel/pmc/pltdrv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-index 4efccd942fb8..1290b2d3eae6 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_switchdev.c
-@@ -3470,6 +3470,8 @@ mlxsw_sp_switchdev_vxlan_fdb_del(struct mlxsw_sp *mlxsw_sp,
- 	u16 vid;
+diff --git a/drivers/platform/x86/intel/pmc/pltdrv.c b/drivers/platform/x86/intel/pmc/pltdrv.c
+index 15ca8afdd973..ddfba38c2104 100644
+--- a/drivers/platform/x86/intel/pmc/pltdrv.c
++++ b/drivers/platform/x86/intel/pmc/pltdrv.c
+@@ -18,6 +18,8 @@
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
  
- 	vxlan_fdb_info = &switchdev_work->vxlan_fdb_info;
-+	if (!vxlan_fdb_info->offloaded)
-+		return;
++#include <xen/xen.h>
++
+ static void intel_pmc_core_release(struct device *dev)
+ {
+ 	kfree(dev);
+@@ -53,6 +55,13 @@ static int __init pmc_core_platform_init(void)
+ 	if (acpi_dev_present("INT33A1", NULL, -1))
+ 		return -ENODEV;
  
- 	bridge_device = mlxsw_sp_bridge_device_find(mlxsw_sp->bridge, br_dev);
- 	if (!bridge_device)
++	/*
++	 * Skip forcefully attaching the device for VMs. Make an exception for
++	 * Xen dom0, which does have full hardware access.
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR) && !xen_initial_domain())
++		return -ENODEV;
++
+ 	if (!x86_match_cpu(intel_pmc_core_platform_ids))
+ 		return -ENODEV;
+ 
 -- 
 2.35.1
 
