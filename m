@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621271C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE164C433D6;
-	Wed, 23 Nov 2022 09:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFD11C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA01C433D6;
+	Wed, 23 Nov 2022 09:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196778;
-	bh=mLO1JiiEIsXuH2DETePX1+A5i5ebwP1JmEG93V3NDpU=;
+	s=korg; t=1669196781;
+	bh=XpwRcAo2jfwOpMnSgLEF1oXMai8/FPRyv23ruHXnGqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N3XRF2dRSFbxm4HZ40GN3K/T4MAEEBnAwiOq9apzsJtLiKDHRckbgJJUeWpPlwtTV
-	 1g49vNNaLW5iW5QVQYsNOZjFPn0/3IocsJIEN7BVyyKuwgADEM5wwFTgC+Lp0ljF4R
-	 ea9/f2mb3HLs34WcHYNsYonxSW/ocwLTEHz1fHNw=
+	b=UVNp4bnDsNiGhMD9h+abUMQ+P5a0UEgWbOvjlJ2mvDLy9AuCwcfZL2HBYKgigc3L4
+	 BWDHIT443K2FaW2BqURyOZXINjlEnwlNGVVzObWwbwy4dP4opozBra7iWrM488X3G/
+	 st3vTxmuw6pNmvJjt4pN+iirWNF9puU07cLKlB9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 121/314] nvmet: fix a memory leak
-Date: Wed, 23 Nov 2022 09:49:26 +0100
-Message-Id: <20221123084630.997878052@linuxfoundation.org>
+Subject: [PATCH 6.0 122/314] siox: fix possible memory leak in siox_device_add()
+Date: Wed, 23 Nov 2022 09:49:27 +0100
+Message-Id: <20221123084631.044626604@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,49 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e65fdf530f55c5e387db14470a59a399faa29613 ]
+[ Upstream commit 6e63153db50059fb78b8a8447b132664887d24e3 ]
 
-We need to also free the dhchap_ctrl_secret when releasing nvmet_host.
-kmemleak complaint:
---
-unreferenced object 0xffff99b1cbca5140 (size 64):
-  comm "check", pid 4864, jiffies 4305092436 (age 2913.583s)
-  hex dump (first 32 bytes):
-    44 48 48 43 2d 31 3a 30 30 3a 65 36 2b 41 63 44  DHHC-1:00:e6+AcD
-    39 76 47 4d 52 57 59 78 67 54 47 44 51 59 47 78  9vGMRWYxgTGDQYGx
-  backtrace:
-    [<00000000c07d369d>] kstrdup+0x2e/0x60
-    [<000000001372171c>] 0xffffffffc0cceec6
-    [<0000000010dbf50b>] 0xffffffffc0cc6783
-    [<000000007465e93c>] configfs_write_iter+0xb1/0x120
-    [<0000000039c23f62>] vfs_write+0x2be/0x3c0
-    [<000000002da4351c>] ksys_write+0x5f/0xe0
-    [<00000000d5011e32>] do_syscall_64+0x38/0x90
-    [<00000000503870cf>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+If device_register() returns error in siox_device_add(),
+the name allocated by dev_set_name() need be freed. As
+comment of device_register() says, it should use put_device()
+to give up the reference in the error path. So fix this
+by calling put_device(), then the name can be freed in
+kobject_cleanup(), and sdevice is freed in siox_device_release(),
+set it to null in error path.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: bbecb07fa0af ("siox: new driver framework for eckelmann SIOX")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20221104021334.618189-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/siox/siox-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 2bcd60758919..7f52d9dac443 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -1811,6 +1811,7 @@ static void nvmet_host_release(struct config_item *item)
+diff --git a/drivers/siox/siox-core.c b/drivers/siox/siox-core.c
+index 7c4f32d76966..561408583b2b 100644
+--- a/drivers/siox/siox-core.c
++++ b/drivers/siox/siox-core.c
+@@ -839,6 +839,8 @@ static struct siox_device *siox_device_add(struct siox_master *smaster,
  
- #ifdef CONFIG_NVME_TARGET_AUTH
- 	kfree(host->dhchap_secret);
-+	kfree(host->dhchap_ctrl_secret);
- #endif
- 	kfree(host);
- }
+ err_device_register:
+ 	/* don't care to make the buffer smaller again */
++	put_device(&sdevice->dev);
++	sdevice = NULL;
+ 
+ err_buf_alloc:
+ 	siox_master_unlock(smaster);
 -- 
 2.35.1
 
