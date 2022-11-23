@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217147B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:53:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EE9C433D6;
-	Wed, 23 Nov 2022 08:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C977B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D05EC433C1;
+	Wed, 23 Nov 2022 08:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193589;
-	bh=WBZ/XOKvDwNSQvD8wia+y+RG8tMBt0GVWn4WMRO9rdU=;
+	s=korg; t=1669193594;
+	bh=RFdyty56Fu5ogRgu7IXwMkxUO06xGTJUuy/uclPBwx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbx8XX1CPzIZ4DYw/9DTBegQ47PYJdwz31ulIMcAKtgkaBz2bSuFRYE6NIlVKtybB
-	 8y1uKMzH8uZKWCCdSLtUXbCsbdpMsLdLbzqmIZq6TR/hZSSRaViXeFdZZC+9wgqOrg
-	 GeYbhCP9mcDH+6kPgmtnzj7FF3Gs35RqYOHp2u7Y=
+	b=Ed4YrwyLzY4QZUeJLC7g0YZbx26U81YDgh2Uo9fHvqM+x/w3SLthTV+fucjVdv0Ip
+	 wgx006BpodDM6U2WPmI4bm+wNFyig7hwvtB9ys6QvAARZou9HGyHsQfGSinhkqYAHT
+	 kHVIfd/sjwS2lUWVMJjtWwIO8CS173iHBiQB/IzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Vinod Koul <vkoul@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 10/76] dmaengine: mv_xor_v2: Fix a resource leak in mv_xor_v2_remove()
-Date: Wed, 23 Nov 2022 09:50:09 +0100
-Message-Id: <20221123084547.076928639@linuxfoundation.org>
+Subject: [PATCH 4.9 11/76] drivers: net: xgene: disable napi when register irq failed in xgene_enet_open()
+Date: Wed, 23 Nov 2022 09:50:10 +0100
+Message-Id: <20221123084547.108743008@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 081195d17a0c4c636da2b869bd5809d42e8cbb13 ]
+[ Upstream commit ce9e57feeed81d17d5e80ed86f516ff0d39c3867 ]
 
-A clk_prepare_enable() call in the probe is not balanced by a corresponding
-clk_disable_unprepare() in the remove function.
+When failed to register irq in xgene_enet_open() for opening device,
+napi isn't disabled. When open xgene device next time, it will reports
+a invalid opcode issue. Fix it. Only be compiled, not be tested.
 
-Add the missing call.
-
-Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/e9e3837a680c9bd2438e4db2b83270c6c052d005.1666640987.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: aeb20b6b3f4e ("drivers: net: xgene: fix: ifconfig up/down crash")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221107043032.357673-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mv_xor_v2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/apm/xgene/xgene_enet_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
-index be1f5c26fae8..9eb5647fef3e 100644
---- a/drivers/dma/mv_xor_v2.c
-+++ b/drivers/dma/mv_xor_v2.c
-@@ -847,6 +847,7 @@ static int mv_xor_v2_remove(struct platform_device *pdev)
- 	tasklet_kill(&xor_dev->irq_tasklet);
+diff --git a/drivers/net/ethernet/apm/xgene/xgene_enet_main.c b/drivers/net/ethernet/apm/xgene/xgene_enet_main.c
+index 17c07837033f..3eeae65bcc5a 100644
+--- a/drivers/net/ethernet/apm/xgene/xgene_enet_main.c
++++ b/drivers/net/ethernet/apm/xgene/xgene_enet_main.c
+@@ -805,8 +805,10 @@ static int xgene_enet_open(struct net_device *ndev)
  
- 	clk_disable_unprepare(xor_dev->clk);
-+	clk_disable_unprepare(xor_dev->reg_clk);
+ 	xgene_enet_napi_enable(pdata);
+ 	ret = xgene_enet_register_irq(ndev);
+-	if (ret)
++	if (ret) {
++		xgene_enet_napi_disable(pdata);
+ 		return ret;
++	}
  
- 	return 0;
- }
+ 	if (ndev->phydev) {
+ 		phy_start(ndev->phydev);
 -- 
 2.35.1
 
