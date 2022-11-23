@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F281C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF491C433C1;
-	Wed, 23 Nov 2022 09:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732651C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0248BC433C1;
+	Wed, 23 Nov 2022 09:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194856;
-	bh=9T1Ecdju3OV995/kOEJ34eC2q8xjcDQVVhhfNwX0MQQ=;
+	s=korg; t=1669194861;
+	bh=POwGG4pLJ+2XfsCxy8zrPY9aDITKMX4OWVbLHSl/pwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njCBshvYtU492pOPwo+tSPuJ/WWBr20nxQlDrOMAfKgIBjLFNqvh8NJVsxgEM9nxu
-	 EcKu27utJMKtaJ92NwnDovc8FUTOc1HFMpjmorrCylYKRySv8SSa+2JtjD2U6l76Eh
-	 oDwHg5y1VGUnwwVbAsH/EBODrQ3Fyltm2Pwq0x44=
+	b=VUT+c7fCtKCjRKEi/Sp3O/KGkkEWPOlGvGqON3Yop1pAhgVj5lTZQXoXmFY7enBui
+	 zWFExs6MseDDeAD/tC5QTDUTCwbWtB08w3GQQbgX30YTeQmbAesYvQmpB2JbWaV6Xo
+	 neZjziZHEdAQPQYQkXGfLq3TRvstRYQrTuQJuyis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Wang Yufen <wangyufen@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 062/156] net: tun: call napi_schedule_prep() to ensure we own a napi
-Date: Wed, 23 Nov 2022 09:50:19 +0100
-Message-Id: <20221123084600.195122112@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 080/156] Bluetooth: L2CAP: Fix l2cap_global_chan_by_psm
+Date: Wed, 23 Nov 2022 09:50:37 +0100
+Message-Id: <20221123084600.900601144@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,93 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 07d120aa33cc9d9115753d159f64d20c94458781 upstream.
+[ Upstream commit f937b758a188d6fd328a81367087eddbb2fce50f ]
 
-A recent patch exposed another issue in napi_get_frags()
-caught by syzbot [1]
+l2cap_global_chan_by_psm shall not return fixed channels as they are not
+meant to be connected by (S)PSM.
 
-Before feeding packets to GRO, and calling napi_complete()
-we must first grab NAPI_STATE_SCHED.
-
-[1]
-WARNING: CPU: 0 PID: 3612 at net/core/dev.c:6076 napi_complete_done+0x45b/0x880 net/core/dev.c:6076
-Modules linked in:
-CPU: 0 PID: 3612 Comm: syz-executor408 Not tainted 6.1.0-rc3-syzkaller-00175-g1118b2049d77 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:napi_complete_done+0x45b/0x880 net/core/dev.c:6076
-Code: c1 ea 03 0f b6 14 02 4c 89 f0 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 24 04 00 00 41 89 5d 1c e9 73 fc ff ff e8 b5 53 22 fa <0f> 0b e9 82 fe ff ff e8 a9 53 22 fa 48 8b 5c 24 08 31 ff 48 89 de
-RSP: 0018:ffffc90003c4f920 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000030 RCX: 0000000000000000
-RDX: ffff8880251c0000 RSI: ffffffff875a58db RDI: 0000000000000007
-RBP: 0000000000000001 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888072d02628
-R13: ffff888072d02618 R14: ffff888072d02634 R15: 0000000000000000
-FS: 0000555555f13300(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055c44d3892b8 CR3: 00000000172d2000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-napi_complete include/linux/netdevice.h:510 [inline]
-tun_get_user+0x206d/0x3a60 drivers/net/tun.c:1980
-tun_chr_write_iter+0xdb/0x200 drivers/net/tun.c:2027
-call_write_iter include/linux/fs.h:2191 [inline]
-do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
-do_iter_write+0x182/0x700 fs/read_write.c:861
-vfs_writev+0x1aa/0x630 fs/read_write.c:934
-do_writev+0x133/0x2f0 fs/read_write.c:977
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f37021a3c19
-
-Fixes: 1118b2049d77 ("net: tun: Fix memory leaks of napi_get_frags")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/20221107180011.188437-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/bluetooth/l2cap_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2002,18 +2002,25 @@ drop:
- 					  skb_headlen(skb));
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c0cdc28e1d1e..afa7fc55555e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1833,7 +1833,7 @@ static struct l2cap_chan *l2cap_global_chan_by_psm(int state, __le16 psm,
+ 		if (link_type == LE_LINK && c->src_type == BDADDR_BREDR)
+ 			continue;
  
- 		if (unlikely(headlen > skb_headlen(skb))) {
-+			WARN_ON_ONCE(1);
-+			err = -ENOMEM;
- 			this_cpu_inc(tun->pcpu_stats->rx_dropped);
-+napi_busy:
- 			napi_free_frags(&tfile->napi);
- 			rcu_read_unlock();
- 			mutex_unlock(&tfile->napi_mutex);
--			WARN_ON(1);
--			return -ENOMEM;
-+			return err;
- 		}
+-		if (c->psm == psm) {
++		if (c->chan_type != L2CAP_CHAN_FIXED && c->psm == psm) {
+ 			int src_match, dst_match;
+ 			int src_any, dst_any;
  
--		local_bh_disable();
--		napi_gro_frags(&tfile->napi);
--		napi_complete(&tfile->napi);
--		local_bh_enable();
-+		if (likely(napi_schedule_prep(&tfile->napi))) {
-+			local_bh_disable();
-+			napi_gro_frags(&tfile->napi);
-+			napi_complete(&tfile->napi);
-+			local_bh_enable();
-+		} else {
-+			err = -EBUSY;
-+			goto napi_busy;
-+		}
- 		mutex_unlock(&tfile->napi_mutex);
- 	} else if (tfile->napi_enabled) {
- 		struct sk_buff_head *queue = &tfile->sk.sk_write_queue;
+-- 
+2.35.1
+
 
 
