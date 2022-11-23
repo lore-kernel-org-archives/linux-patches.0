@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E3B1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD698C433C1;
-	Wed, 23 Nov 2022 09:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED8C1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D3FC433C1;
+	Wed, 23 Nov 2022 09:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195666;
-	bh=9+ZLJWZ+edbJ5SV64rjAhzZBWoWw/nYmvN4vTgXSXP4=;
+	s=korg; t=1669195669;
+	bh=SsFWBR3HZ9wgA3nMbPY5ENwrqvXCbyOID5Q0i/49Ms4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFYRAA2lcAc9jBf1bb7gH+hEmutwIS+V7wL0awidkXcdRAzfpJCtwibjqQ9awgZ40
-	 cOel4fe8UYQFy+1omb5X0TIK62AGijH8+CLpY5vq229B3BGxikTjSxaBWbyVupevsu
-	 YLaupD7KI1G0JZhpUxh5SjvPrJ1iBACjKdsjtuto=
+	b=XYY3UvaDUZlBeTh09aZx1+6lxqGDhVs1CBIb17im/Et56As5GNr4Zgd5EjLy1lpHN
+	 E60JKjLDxe2Qmy4tpuVgmEUM1l4/1QEnG6ww2VhggRnJhUUED4o/Hh1AnHDIbSUGWS
+	 qEpZBjkBxO75+ZEOAlBXwavMG/7858hn7mam6Bao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Anton Altaparmakov <anton@tuxera.com>,
-	"chenxiaosong (A)" <chenxiaosong2@huawei.com>,
-	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 149/149] ntfs: check overflow when iterating ATTR_RECORDs
-Date: Wed, 23 Nov 2022 09:52:12 +0100
-Message-Id: <20221123084603.242457367@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 5.10 127/149] nvme: ensure subsystem reset is single threaded
+Date: Wed, 23 Nov 2022 09:51:50 +0100
+Message-Id: <20221123084602.485839010@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -38,52 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit 63095f4f3af59322bea984a6ae44337439348fe0 upstream.
+commit 1e866afd4bcdd01a70a5eddb4371158d3035ce03 upstream.
 
-Kernel iterates over ATTR_RECORDs in mft record in ntfs_attr_find().
-Because the ATTR_RECORDs are next to each other, kernel can get the next
-ATTR_RECORD from end address of current ATTR_RECORD, through current
-ATTR_RECORD length field.
+The subsystem reset writes to a register, so we have to ensure the
+device state is capable of handling that otherwise the driver may access
+unmapped registers. Use the state machine to ensure the subsystem reset
+doesn't try to write registers on a device already undergoing this type
+of reset.
 
-The problem is that during iteration, when kernel calculates the end
-address of current ATTR_RECORD, kernel may trigger an integer overflow bug
-in executing `a = (ATTR_RECORD*)((u8*)a + le32_to_cpu(a->length))`.  This
-may wrap, leading to a forever iteration on 32bit systems.
-
-This patch solves it by adding some checks on calculating end address
-of current ATTR_RECORD during iteration.
-
-Link: https://lkml.kernel.org/r/20220831160935.3409-4-yin31149@gmail.com
-Link: https://lore.kernel.org/all/20220827105842.GM2030@kadam/
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Suggested-by: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Anton Altaparmakov <anton@tuxera.com>
-Cc: chenxiaosong (A) <chenxiaosong2@huawei.com>
-Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=214771
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrib.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvme/host/nvme.h |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -617,6 +617,14 @@ static int ntfs_attr_find(const ATTR_TYP
- 			return -ENOENT;
- 		if (unlikely(!a->length))
- 			break;
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -544,11 +544,23 @@ static inline void nvme_fault_inject_fin
+ static inline void nvme_should_fail(struct request *req) {}
+ #endif
+ 
++bool nvme_wait_reset(struct nvme_ctrl *ctrl);
++int nvme_try_sched_reset(struct nvme_ctrl *ctrl);
 +
-+		/* check whether ATTR_RECORD's length wrap */
-+		if ((u8 *)a + le32_to_cpu(a->length) < (u8 *)a)
-+			break;
-+		/* check whether ATTR_RECORD's length is within bounds */
-+		if ((u8 *)a + le32_to_cpu(a->length) > mrec_end)
-+			break;
+ static inline int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
+ {
++	int ret;
 +
- 		if (a->type != type)
- 			continue;
- 		/*
+ 	if (!ctrl->subsystem)
+ 		return -ENOTTY;
+-	return ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
++	if (!nvme_wait_reset(ctrl))
++		return -EBUSY;
++
++	ret = ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
++	if (ret)
++		return ret;
++
++	return nvme_try_sched_reset(ctrl);
+ }
+ 
+ /*
+@@ -635,7 +647,6 @@ void nvme_cancel_tagset(struct nvme_ctrl
+ void nvme_cancel_admin_tagset(struct nvme_ctrl *ctrl);
+ bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
+ 		enum nvme_ctrl_state new_state);
+-bool nvme_wait_reset(struct nvme_ctrl *ctrl);
+ int nvme_disable_ctrl(struct nvme_ctrl *ctrl);
+ int nvme_enable_ctrl(struct nvme_ctrl *ctrl);
+ int nvme_shutdown_ctrl(struct nvme_ctrl *ctrl);
+@@ -688,7 +699,6 @@ int nvme_set_queue_count(struct nvme_ctr
+ void nvme_stop_keep_alive(struct nvme_ctrl *ctrl);
+ int nvme_reset_ctrl(struct nvme_ctrl *ctrl);
+ int nvme_reset_ctrl_sync(struct nvme_ctrl *ctrl);
+-int nvme_try_sched_reset(struct nvme_ctrl *ctrl);
+ int nvme_delete_ctrl(struct nvme_ctrl *ctrl);
+ 
+ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
 
 
