@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B01C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4142FC433C1;
-	Wed, 23 Nov 2022 09:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A741C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EACC433D6;
+	Wed, 23 Nov 2022 09:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197159;
-	bh=Vv438Qoi75yLyYc7xCoY2kB40fj1RvhLEvmhFcrJ6Ac=;
+	s=korg; t=1669197162;
+	bh=WO33uot3OR3TvqZxOp92NKrN7EgmYPBU7TzJwPjhVyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHSxGgqp7dmhmSRpY4xAGodrtEvFjvLwFZCV42zaSz30N9VhTo5WrahjDPgYzYHJl
-	 89Hq4x0wGgAjJ+o0iMJaguRcd4gFKeBHUkBH3CyseVWleUeSFvfwt39FSgXM3705yX
-	 B+hDajOzJmjWi72ZnnNGrYkLJeD1t7cKV/JmfQzI=
+	b=h8wE1mMDLABN9rXm7A8aC3yrqZcOnNWmvyo+rNsiMnOKl8wnEheh2TcfKyJ07A+zg
+	 fLRW7f21lWNWaASg+joa94RPHPhfHukqkRmRu8QNhy7JULlIGRMGXLMzxlRJRxYWk+
+	 7btc5yv+d5XMfa9FQ/8TNgPrfZFcMC0lE2cRj+bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 215/314] drm/amd/display: Add HUBP surface flip interrupt handler
-Date: Wed, 23 Nov 2022 09:51:00 +0100
-Message-Id: <20221123084635.284275030@linuxfoundation.org>
+Subject: [PATCH 6.0 216/314] drm/amd/display: Fix access timeout to DPIA AUX at boot time
+Date: Wed, 23 Nov 2022 09:51:01 +0100
+Message-Id: <20221123084635.331988949@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,50 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Stylon Wang <stylon.wang@amd.com>
 
-commit 7af87fc1ba136143314c870059b8f60180247cbd upstream.
+commit 0d502ef8898b3983eef9e40f50dfe100a0de5d93 upstream.
 
-On IGT, there is a test named amd_hotplug, and when the subtest basic is
-executed on DCN31, we get the following error:
+[Why]
+Since introduction of patch "Query DPIA HPD status.", link detection at
+boot could be accessing DPIA AUX, which will not succeed until
+DMUB outbox messaging is enabled and results in below dmesg logs:
 
-[drm] *ERROR* [CRTC:71:crtc-0] flip_done timed out
-[drm] *ERROR* flip_done timed out
-[drm] *ERROR* [CRTC:71:crtc-0] commit wait timed out
-[drm] *ERROR* flip_done timed out
-[drm] *ERROR* [CONNECTOR:88:DP-1] commit wait timed out
-[drm] *ERROR* flip_done timed out
-[drm] *ERROR* [PLANE:59:plane-3] commit wait timed out
+[  160.840227] [drm:amdgpu_dm_process_dmub_aux_transfer_sync [amdgpu]] *ERROR* wait_for_completion_timeout timeout!
 
-After enable the page flip log with the below command:
+[How]
+Enable DMUB outbox messaging before link detection at boot time.
 
- echo -n 'format "[PFLIP]" +p' > /sys/kernel/debug/dynamic_debug/control
-
-It is possible to see that the flip was submitted, but DC never replied
-back, which generates time-out issues. This is an indication that the
-HUBP surface flip is missing. This commit fixes this issue by adding
-hubp1_set_flip_int to DCN31.
-
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Stylon Wang <stylon.wang@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hubp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_hubp.c
-@@ -87,6 +87,7 @@ static struct hubp_funcs dcn31_hubp_func
- 	.hubp_init = hubp3_init,
- 	.set_unbounded_requesting = hubp31_set_unbounded_requesting,
- 	.hubp_soft_reset = hubp31_soft_reset,
-+	.hubp_set_flip_int = hubp1_set_flip_int,
- 	.hubp_in_blank = hubp1_in_blank,
- 	.program_extended_blank = hubp31_program_extended_blank,
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1645,12 +1645,6 @@ static int amdgpu_dm_init(struct amdgpu_
+ 		}
+ 	}
+ 
+-	if (amdgpu_dm_initialize_drm_device(adev)) {
+-		DRM_ERROR(
+-		"amdgpu: failed to initialize sw for display support.\n");
+-		goto error;
+-	}
+-
+ 	/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
+ 	 * It is expected that DMUB will resend any pending notifications at this point, for
+ 	 * example HPD from DPIA.
+@@ -1658,6 +1652,12 @@ static int amdgpu_dm_init(struct amdgpu_
+ 	if (dc_is_dmub_outbox_supported(adev->dm.dc))
+ 		dc_enable_dmub_outbox(adev->dm.dc);
+ 
++	if (amdgpu_dm_initialize_drm_device(adev)) {
++		DRM_ERROR(
++		"amdgpu: failed to initialize sw for display support.\n");
++		goto error;
++	}
++
+ 	/* create fake encoders for MST */
+ 	dm_dp_create_fake_mst_encoders(adev);
+ 
 
 
