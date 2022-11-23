@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417991C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F94C433D6;
-	Wed, 23 Nov 2022 09:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5381C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDE2C433D6;
+	Wed, 23 Nov 2022 09:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194523;
-	bh=z5ODNmwOoYmHRbgRb3xl9qAa0t6XnmlTK/6F42wmKF4=;
+	s=korg; t=1669194526;
+	bh=T/e3MNvNW8CQmNRDyQI97IB/PJdxQjND73c0YgecIrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdJ5QIzMvj0426b8zHtmsziTdlIhHYNiipsPuyHrdXRiFjbYxXdDLcG2akTEthCCa
-	 Y9PwmKbk6XLlIihgWMLZHs4x5Hn7CsXuIaqcSYectmHOGagaw0KGjRYLtpdiyFAnbt
-	 WLZ0uTpjXwK6y7zf3gEpBntG66z2tMq59ClKobLQ=
+	b=p+mYWM1Y3cYe9De1/ZrmhT2JOMUJYRtRtN1zfG7XTIgYeEbYgDY1z9koUW3ZiaWb/
+	 Re1uKME9qeSaY4QVcPQcOXj2Bij15vXDHmDQZj0A9+Tw1CkzQWCBvW6rHTnxfAvOMH
+	 TBt6wjp8P0MDD9MGM9fa2NsEdLpLr1ddp8wWNx2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 4.19 101/114] serial: 8250: Flush DMA Rx on RLSI
-Date: Wed, 23 Nov 2022 09:51:28 +0100
-Message-Id: <20221123084555.780040519@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 102/114] macvlan: enforce a consistent minimal mtu
+Date: Wed, 23 Nov 2022 09:51:29 +0100
+Message-Id: <20221123084555.810110831@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,38 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1980860e0c8299316cddaf0992dd9e1258ec9d88 upstream.
+commit b64085b00044bdf3cd1c9825e9ef5b2e0feae91a upstream.
 
-Returning true from handle_rx_dma() without flushing DMA first creates
-a data ordering hazard. If DMA Rx has handled any character at the
-point when RLSI occurs, the non-DMA path handles any pending characters
-jumping them ahead of those characters that are pending under DMA.
+macvlan should enforce a minimal mtu of 68, even at link creation.
 
-Fixes: 75df022b5f89 ("serial: 8250_dma: Fix RX handling")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221108121952.5497-5-ilpo.jarvinen@linux.intel.com
+This patch avoids the current behavior (which could lead to crashes
+in ipv6 stack if the link is brought up)
+
+$ ip link add macvlan1 link eno1 mtu 8 type macvlan  # This should fail !
+$ ip link sh dev macvlan1
+5: macvlan1@eno1: <BROADCAST,MULTICAST> mtu 8 qdisc noop
+    state DOWN mode DEFAULT group default qlen 1000
+    link/ether 02:47:6c:24:74:82 brd ff:ff:ff:ff:ff:ff
+$ ip link set macvlan1 mtu 67
+Error: mtu less than device minimum.
+$ ip link set macvlan1 mtu 68
+$ ip link set macvlan1 mtu 8
+Error: mtu less than device minimum.
+
+Fixes: 91572088e3fd ("net: use core MTU range checking in core net infra")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/macvlan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1869,10 +1869,9 @@ static bool handle_rx_dma(struct uart_82
- 		if (!up->dma->rx_running)
- 			break;
- 		/* fall-through */
-+	case UART_IIR_RLSI:
- 	case UART_IIR_RX_TIMEOUT:
- 		serial8250_rx_dma_flush(up);
--		/* fall-through */
--	case UART_IIR_RLSI:
- 		return true;
- 	}
- 	return up->dma->rx_dma(up);
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1137,7 +1137,7 @@ void macvlan_common_setup(struct net_dev
+ {
+ 	ether_setup(dev);
+ 
+-	dev->min_mtu		= 0;
++	/* ether_setup() has set dev->min_mtu to ETH_MIN_MTU. */
+ 	dev->max_mtu		= ETH_MAX_MTU;
+ 	dev->priv_flags	       &= ~IFF_TX_SKB_SHARING;
+ 	netif_keep_dst(dev);
 
 
