@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E306C1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41547C433C1;
-	Wed, 23 Nov 2022 09:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2421C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F760C433D6;
+	Wed, 23 Nov 2022 09:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195506;
-	bh=8HKXCGGVFpmxdo+NKF8LQteVHYmNXwRyQa8UNM5udUs=;
+	s=korg; t=1669195509;
+	bh=usXO0qpR1EGS+UFtnv7AekE1dRikgHZ2mqrctQ8tj4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mp8dxiJw79zdjEA9ZYYj8MNG/jEwjUhOB5ybq0awZVrPV7rYXDOi5XdQyp89sUMCJ
-	 kW0uj9Nq3KVxoK2RTgfgFgeETvpVGOd947+G8uGYQjtN4aN60azWiNSobM0JKpxBet
-	 yMLzAvaJ7h5fj/ezAxxgC0E2TfIRNzaaRUFKsV7A=
+	b=brAvryz/01Ep0tEP2flinURHmQLKyESyOuFZJvKibiWkTLWzfNk/Qplz2BpnzRtqb
+	 zJvdEhSs2tuyn4XcFgQz/4IJNNzdYSPmhZFFlztB2AIZmgEKaiX42Zzzm321A+rrag
+	 S8/HclIJvUlREdGGAsiGuEvOJw+5b2Bf1tURigco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 5.10 104/149] usb: chipidea: fix deadlock in ci_otg_del_timer
-Date: Wed, 23 Nov 2022 09:51:27 +0100
-Message-Id: <20221123084601.726975517@linuxfoundation.org>
+	Rajat Khandelwal <rajat.khandelwal@linux.intel.com>,
+	Lee Shawn C <shawn.c.lee@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 105/149] usb: typec: mux: Enter safe mode only when pins need to be reconfigured
+Date: Wed, 23 Nov 2022 09:51:28 +0100
+Message-Id: <20221123084601.761574179@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,56 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Rajat Khandelwal <rajat.khandelwal@linux.intel.com>
 
-commit 7a58b8d6021426b796eebfae80983374d9a80a75 upstream.
+commit 40bf8f162d0f95e0716e479d7db41443d931765c upstream.
 
-There is a deadlock in ci_otg_del_timer(), the process is
-shown below:
+There is no point to enter safe mode during DP/TBT configuration
+if the DP/TBT was already configured in mux. This is because safe
+mode is only applicable when there is a need to reconfigure the
+pins in order to avoid damage within/to port partner.
 
-    (thread 1)                  |        (thread 2)
-ci_otg_del_timer()              | ci_otg_hrtimer_func()
-  ...                           |
-  spin_lock_irqsave() //(1)     |  ...
-  ...                           |
-  hrtimer_cancel()              |  spin_lock_irqsave() //(2)
-  (block forever)
+In some chrome systems, IOM/mux is already configured before OS
+comes up. Thus, when driver is probed, it blindly enters safe
+mode due to PD negotiations but only after gfx driver lowers
+dp_phy_ownership, will the IOM complete safe mode and send an
+ack to PMC.
+Since, that never happens, we see IPC timeout.
 
-We hold ci->lock in position (1) and use hrtimer_cancel() to
-wait ci_otg_hrtimer_func() to stop, but ci_otg_hrtimer_func()
-also need ci->lock in position (2). As a result, the
-hrtimer_cancel() in ci_otg_del_timer() will be blocked forever.
+Hence, allow safe mode only when pin reconfiguration is not
+required, which makes sense.
 
-This patch extracts hrtimer_cancel() from the protection of
-spin_lock_irqsave() in order that the ci_otg_hrtimer_func()
-could obtain the ci->lock.
-
-What`s more, there will be no race happen. Because the
-"next_timer" is always under the protection of
-spin_lock_irqsave() and we only check whether "next_timer"
-equals to NUM_OTG_FSM_TIMERS in the following code.
-
-Fixes: 3a316ec4c91c ("usb: chipidea: use hrtimer for otg fsm timers")
+Fixes: 43d596e32276 ("usb: typec: intel_pmc_mux: Check the port status before connect")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20220918033312.94348-1-duoming@zju.edu.cn
+Signed-off-by: Rajat Khandelwal <rajat.khandelwal@linux.intel.com>
+Signed-off-by: Lee Shawn C <shawn.c.lee@intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221024171611.181468-1-rajat.khandelwal@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/otg_fsm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/mux/intel_pmc_mux.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/otg_fsm.c
-+++ b/drivers/usb/chipidea/otg_fsm.c
-@@ -256,8 +256,10 @@ static void ci_otg_del_timer(struct ci_h
- 	ci->enabled_otg_timer_bits &= ~(1 << t);
- 	if (ci->next_otg_timer == t) {
- 		if (ci->enabled_otg_timer_bits == 0) {
-+			spin_unlock_irqrestore(&ci->lock, flags);
- 			/* No enabled timers after delete it */
- 			hrtimer_cancel(&ci->otg_fsm_hrtimer);
-+			spin_lock_irqsave(&ci->lock, flags);
- 			ci->next_otg_timer = NUM_OTG_FSM_TIMERS;
- 		} else {
- 			/* Find the next timer */
+--- a/drivers/usb/typec/mux/intel_pmc_mux.c
++++ b/drivers/usb/typec/mux/intel_pmc_mux.c
+@@ -339,13 +339,24 @@ pmc_usb_mux_usb4(struct pmc_usb_port *po
+ 	return pmc_usb_command(port, (void *)&req, sizeof(req));
+ }
+ 
+-static int pmc_usb_mux_safe_state(struct pmc_usb_port *port)
++static int pmc_usb_mux_safe_state(struct pmc_usb_port *port,
++				  struct typec_mux_state *state)
+ {
+ 	u8 msg;
+ 
+ 	if (IOM_PORT_ACTIVITY_IS(port->iom_status, SAFE_MODE))
+ 		return 0;
+ 
++	if ((IOM_PORT_ACTIVITY_IS(port->iom_status, DP) ||
++	     IOM_PORT_ACTIVITY_IS(port->iom_status, DP_MFD)) &&
++	     state->alt && state->alt->svid == USB_TYPEC_DP_SID)
++		return 0;
++
++	if ((IOM_PORT_ACTIVITY_IS(port->iom_status, TBT) ||
++	     IOM_PORT_ACTIVITY_IS(port->iom_status, ALT_MODE_TBT_USB)) &&
++	     state->alt && state->alt->svid == USB_TYPEC_TBT_SID)
++		return 0;
++
+ 	msg = PMC_USB_SAFE_MODE;
+ 	msg |= port->usb3_port << PMC_USB_MSG_USB3_PORT_SHIFT;
+ 
+@@ -413,7 +424,7 @@ pmc_usb_mux_set(struct typec_mux *mux, s
+ 		return 0;
+ 
+ 	if (state->mode == TYPEC_STATE_SAFE)
+-		return pmc_usb_mux_safe_state(port);
++		return pmc_usb_mux_safe_state(port, state);
+ 	if (state->mode == TYPEC_STATE_USB)
+ 		return pmc_usb_connect(port, port->role);
+ 
 
 
