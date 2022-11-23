@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBB61C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087CBC433C1;
-	Wed, 23 Nov 2022 09:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC831C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D49CC433D6;
+	Wed, 23 Nov 2022 09:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197399;
-	bh=UPQ7gVctsHoQavNTrTATOQJKVBME4/aT954rMC+rZ8s=;
+	s=korg; t=1669197404;
+	bh=4QEx52f9Bc8PgEJLUxctotmIwR6pQLd0IZ7U23Uu7nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwvnbMcYA/EXRLUxJ4eiZb73B4/LhiSLsJafmZENKEOxGJoPwupIyUCqtknmsSFL7
-	 QRKIDDv+MJHD3x5yr8uViP4y4HpAU5NUqr8QytBHobXxTqcxxrEf17IghG2VnjYNcH
-	 MRLzjKASHz9cdISVNgNROAToeJk7KNjF/uzTrqMk=
+	b=ypBqAhBaJRdGCSEkf47tugAXFOZTgSq8PQWCSdefR8lqcO0twkiQTSZvWx6paJO/Z
+	 xthqPwsXAUhCk7VCLxLDhbvuaEJmbEqh/cuHnUwbTCLrzj+Y7dYqPISRyULqreKaq/
+	 Cnc+yTGPR2b+A4H8XVQ7/9D/KiDNZ6usfbypB8FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b8ded3e2e2c6adde4990@syzkaller.appspotmail.com,
-	Marco Elver <elver@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 284/314] perf: Improve missing SIGTRAP checking
-Date: Wed, 23 Nov 2022 09:52:09 +0100
-Message-Id: <20221123084638.400684318@linuxfoundation.org>
+Subject: [PATCH 6.0 285/314] vfio: Rename vfio_ioctl_check_extension()
+Date: Wed, 23 Nov 2022 09:52:10 +0100
+Message-Id: <20221123084638.451232124@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,100 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit bb88f9695460bec25aa30ba9072595025cf6c8af ]
+[ Upstream commit 1408640d578887d7860737221043d91fc6d5a723 ]
 
-To catch missing SIGTRAP we employ a WARN in __perf_event_overflow(),
-which fires if pending_sigtrap was already set: returning to user space
-without consuming pending_sigtrap, and then having the event fire again
-would re-enter the kernel and trigger the WARN.
+To vfio_container_ioctl_check_extension().
 
-This, however, seemed to miss the case where some events not associated
-with progress in the user space task can fire and the interrupt handler
-runs before the IRQ work meant to consume pending_sigtrap (and generate
-the SIGTRAP).
+A following patch will turn this into a non-static function, make it clear
+it is related to the container.
 
-syzbot gifted us this stack trace:
-
- | WARNING: CPU: 0 PID: 3607 at kernel/events/core.c:9313 __perf_event_overflow
- | Modules linked in:
- | CPU: 0 PID: 3607 Comm: syz-executor100 Not tainted 6.1.0-rc2-syzkaller-00073-g88619e77b33d #0
- | Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/11/2022
- | RIP: 0010:__perf_event_overflow+0x498/0x540 kernel/events/core.c:9313
- | <...>
- | Call Trace:
- |  <TASK>
- |  perf_swevent_hrtimer+0x34f/0x3c0 kernel/events/core.c:10729
- |  __run_hrtimer kernel/time/hrtimer.c:1685 [inline]
- |  __hrtimer_run_queues+0x1c6/0xfb0 kernel/time/hrtimer.c:1749
- |  hrtimer_interrupt+0x31c/0x790 kernel/time/hrtimer.c:1811
- |  local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1096 [inline]
- |  __sysvec_apic_timer_interrupt+0x17c/0x640 arch/x86/kernel/apic/apic.c:1113
- |  sysvec_apic_timer_interrupt+0x40/0xc0 arch/x86/kernel/apic/apic.c:1107
- |  asm_sysvec_apic_timer_interrupt+0x16/0x20 arch/x86/include/asm/idtentry.h:649
- | <...>
- |  </TASK>
-
-In this case, syzbot produced a program with event type
-PERF_TYPE_SOFTWARE and config PERF_COUNT_SW_CPU_CLOCK. The hrtimer
-manages to fire again before the IRQ work got a chance to run, all while
-never having returned to user space.
-
-Improve the WARN to check for real progress in user space: approximate
-this by storing a 32-bit hash of the current IP into pending_sigtrap,
-and if an event fires while pending_sigtrap still matches the previous
-IP, we assume no progress (false negatives are possible given we could
-return to user space and trigger again on the same IP).
-
-Fixes: ca6c21327c6a ("perf: Fix missing SIGTRAPs")
-Reported-by: syzbot+b8ded3e2e2c6adde4990@syzkaller.appspotmail.com
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221031093513.3032814-1-elver@google.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/6-v3-297af71838d2+b9-vfio_container_split_jgg@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: 7fdba0011157 ("vfio: Fix container device registration life cycle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/vfio/vfio_main.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 072ab26269c0..bec18d81b116 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9282,14 +9282,27 @@ static int __perf_event_overflow(struct perf_event *event,
- 	}
+diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
+index 7cb56c382c97..c555d497e9e8 100644
+--- a/drivers/vfio/vfio_main.c
++++ b/drivers/vfio/vfio_main.c
+@@ -710,8 +710,9 @@ EXPORT_SYMBOL_GPL(vfio_unregister_group_dev);
+ /*
+  * VFIO base fd, /dev/vfio/vfio
+  */
+-static long vfio_ioctl_check_extension(struct vfio_container *container,
+-				       unsigned long arg)
++static long
++vfio_container_ioctl_check_extension(struct vfio_container *container,
++				     unsigned long arg)
+ {
+ 	struct vfio_iommu_driver *driver;
+ 	long ret = 0;
+@@ -868,7 +869,7 @@ static long vfio_fops_unl_ioctl(struct file *filep,
+ 		ret = VFIO_API_VERSION;
+ 		break;
+ 	case VFIO_CHECK_EXTENSION:
+-		ret = vfio_ioctl_check_extension(container, arg);
++		ret = vfio_container_ioctl_check_extension(container, arg);
+ 		break;
+ 	case VFIO_SET_IOMMU:
+ 		ret = vfio_ioctl_set_iommu(container, arg);
+@@ -1763,8 +1764,8 @@ bool vfio_file_enforced_coherent(struct file *file)
  
- 	if (event->attr.sigtrap) {
--		/*
--		 * Should not be able to return to user space without processing
--		 * pending_sigtrap (kernel events can overflow multiple times).
--		 */
--		WARN_ON_ONCE(event->pending_sigtrap && event->attr.exclude_kernel);
-+		unsigned int pending_id = 1;
-+
-+		if (regs)
-+			pending_id = hash32_ptr((void *)instruction_pointer(regs)) ?: 1;
- 		if (!event->pending_sigtrap) {
--			event->pending_sigtrap = 1;
-+			event->pending_sigtrap = pending_id;
- 			local_inc(&event->ctx->nr_pending);
-+		} else if (event->attr.exclude_kernel) {
-+			/*
-+			 * Should not be able to return to user space without
-+			 * consuming pending_sigtrap; with exceptions:
-+			 *
-+			 *  1. Where !exclude_kernel, events can overflow again
-+			 *     in the kernel without returning to user space.
-+			 *
-+			 *  2. Events that can overflow again before the IRQ-
-+			 *     work without user space progress (e.g. hrtimer).
-+			 *     To approximate progress (with false negatives),
-+			 *     check 32-bit hash of the current IP.
-+			 */
-+			WARN_ON_ONCE(event->pending_sigtrap != pending_id);
- 		}
- 		event->pending_addr = data->addr;
- 		irq_work_queue(&event->pending_irq);
+ 	down_read(&group->group_rwsem);
+ 	if (group->container) {
+-		ret = vfio_ioctl_check_extension(group->container,
+-						 VFIO_DMA_CC_IOMMU);
++		ret = vfio_container_ioctl_check_extension(group->container,
++							   VFIO_DMA_CC_IOMMU);
+ 	} else {
+ 		/*
+ 		 * Since the coherency state is determined only once a container
 -- 
 2.35.1
 
