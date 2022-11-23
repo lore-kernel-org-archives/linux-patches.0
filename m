@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D30F1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D087BC433D7;
-	Wed, 23 Nov 2022 09:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738841C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2DFC433C1;
+	Wed, 23 Nov 2022 09:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195339;
-	bh=nvZTrhBnXULaYIkh0utOzkLR4LyToGCZxO6bBva3D04=;
+	s=korg; t=1669195343;
+	bh=pnPC5Qo/EGH4PEMuh3sQfiQ1gv1AyJl2EdMDkGYeFQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hes1FV649gsBoVRMpN8/OnSAdZII3e58O+aBuIeboFC/51Oak0+4CjzOShlTyjQAm
-	 4z2WZo4n74vCS3q+i7p6VTVAp1hpeFymQAJPC/ClqNzU80kn+F6H55N6hEyBBOZ7ci
-	 liVAwbIOqEddANEG5TqVdClPQCIuCOhjAJAcEGTM=
+	b=vDbyickXATTW3nZdgqI3oHIgderjVLgFbBPacO7ZfMuTKiqkl37k5i/iD01fqYFV6
+	 ASnXOMGrrFAAsq4U80AJL3dHqbuRb970UDvqTGAkE2/ci1F8YIMyZEYDeu396gMQVF
+	 X1UteCdlFJEijmifYVbt0YcMlB4yjKcrAUpQqUJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/149] ARM: dts: imx7: Fix NAND controller size-cells
-Date: Wed, 23 Nov 2022 09:50:38 +0100
-Message-Id: <20221123084559.902834055@linuxfoundation.org>
+Subject: [PATCH 5.10 056/149] arm64: dts: imx8mm: Fix NAND controller size-cells
+Date: Wed, 23 Nov 2022 09:50:39 +0100
+Message-Id: <20221123084559.947273883@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 753395ea1e45c724150070b5785900b6a44bd5fb ]
+[ Upstream commit 1610233bc2c2cae2dff9e101e6ea5ef69cceb0e9 ]
 
 The NAND controller size-cells should be 0 per DT bindings.
 Fix the following warning produces by DT bindings check:
@@ -47,25 +47,25 @@ nand-controller@33002000: Unevaluated properties are not allowed ('#address-cell
 "
 Fix the missing space in node name too.
 
-Fixes: e7495a45a76de ("ARM: dts: imx7: add GPMI NAND and APBH DMA")
+Fixes: a05ea40eb384e ("arm64: dts: imx: Add i.mx8mm dtsi support")
 Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7s.dtsi | 4 ++--
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 9e1b0af0aa43..e4ff47110a96 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -1221,10 +1221,10 @@ dma_apbh: dma-apbh@33000000 {
- 			clocks = <&clks IMX7D_NAND_USDHC_BUS_RAWNAND_CLK>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index f4d7bb75707d..3490619a9ba9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -939,10 +939,10 @@ dma_apbh: dma-controller@33000000 {
+ 			clocks = <&clk IMX8MM_CLK_NAND_USDHC_BUS_RAWNAND_CLK>;
  		};
  
 -		gpmi: nand-controller@33002000{
 +		gpmi: nand-controller@33002000 {
- 			compatible = "fsl,imx7d-gpmi-nand";
+ 			compatible = "fsl,imx8mm-gpmi-nand", "fsl,imx7d-gpmi-nand";
  			#address-cells = <1>;
 -			#size-cells = <1>;
 +			#size-cells = <0>;
