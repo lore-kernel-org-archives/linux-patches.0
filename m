@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D0A1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229DAC433D6;
-	Wed, 23 Nov 2022 09:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FA11C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC2EC433B5;
+	Wed, 23 Nov 2022 09:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197005;
-	bh=sIAEPt/H/gTLrZ7FU7JS9WhysTyzp6yf8yks1QJRfgQ=;
+	s=korg; t=1669197009;
+	bh=s+LaA2Wi8EUCX3BFfeokk0V07Q8RVJTayEln1EXQPvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsEF+O9CJqIPwIMQ5YSNZ7Jw4jkcAYruwqfbDwqGuBgQJh65g6ZAu3SpJ8HF77lr6
-	 tes4TQVuS3hmY8Q8a0CaNmTkQhmijREBmK8fGXoZVaI7/SCCFFx3oPB7Ckts+UB/xF
-	 NVBFssLmwyNBF3z5E3w2nnbMM+RMp8c42VosrWqY=
+	b=v4ozNEi4h3Rh7zNoSes9gxT3ZOD5dJp+BLuz1g9mWmZjulvJS3uW3VREx1gmM3ylC
+	 D6wF1RNM8VSwE5+kuv3MU+/IZRKsbeh1ROFOhAeoO5zIPjUU33Ds3PZAq1+1/7xknA
+	 IrGnMTkzoHwOqZFqrUiDnSqbb8vZEVTW+LHD/W88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaco Coetzee <jaco.coetzee@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rongwei Zhang <pudh4418@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 141/314] nfp: change eeprom length to max length enumerators
-Date: Wed, 23 Nov 2022 09:49:46 +0100
-Message-Id: <20221123084631.936479132@linuxfoundation.org>
+Subject: [PATCH 6.0 142/314] MIPS: fix duplicate definitions for exported symbols
+Date: Wed, 23 Nov 2022 09:49:47 +0100
+Message-Id: <20221123084631.976069259@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,56 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaco Coetzee <jaco.coetzee@corigine.com>
+From: Rongwei Zhang <pudh4418@gmail.com>
 
-[ Upstream commit f3a72878a3de720661b7ed0d6b7f7c506ddb8a52 ]
+[ Upstream commit 612d80784fdc0c2e2ee2e2d901a55ef2f72ebf4b ]
 
-Extend the size of QSFP EEPROM for types SSF8436 and SFF8636
-from 256 to 640 bytes in order to expose all the EEPROM pages by
-ethtool.
+Building with clang-14 fails with:
 
-For SFF-8636 and SFF-8436 specifications, the driver exposes
-256 bytes of EEPROM data for ethtool's get_module_eeprom()
-callback, resulting in "netlink error: Invalid argument" when
-an EEPROM read with an offset larger than 256 bytes is attempted.
+AS      arch/mips/kernel/relocate_kernel.o
+<unknown>:0: error: symbol 'kexec_args' is already defined
+<unknown>:0: error: symbol 'secondary_kexec_args' is already defined
+<unknown>:0: error: symbol 'kexec_start_address' is already defined
+<unknown>:0: error: symbol 'kexec_indirection_page' is already defined
+<unknown>:0: error: symbol 'relocate_new_kernel_size' is already defined
 
-Changing the length enumerators to the _MAX_LEN
-variants exposes all 640 bytes of the EEPROM allowing upper
-pages 1, 2 and 3 to be read.
+It turns out EXPORT defined in asm/asm.h expands to a symbol definition,
+so there is no need to define these symbols again. Remove duplicated
+symbol definitions.
 
-Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
-Signed-off-by: Jaco Coetzee <jaco.coetzee@corigine.com>
-Reviewed-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7aa1c8f47e7e ("MIPS: kdump: Add support")
+Signed-off-by: Rongwei Zhang <pudh4418@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/mips/kernel/relocate_kernel.S | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-index b1b1b648e40c..b19bff0db1fd 100644
---- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-@@ -1440,15 +1440,15 @@ nfp_port_get_module_info(struct net_device *netdev,
+diff --git a/arch/mips/kernel/relocate_kernel.S b/arch/mips/kernel/relocate_kernel.S
+index cfde14b48fd8..f5b2ef979b43 100644
+--- a/arch/mips/kernel/relocate_kernel.S
++++ b/arch/mips/kernel/relocate_kernel.S
+@@ -145,8 +145,7 @@ LEAF(kexec_smp_wait)
+  * kexec_args[0..3] are used to prepare register values.
+  */
  
- 		if (data < 0x3) {
- 			modinfo->type = ETH_MODULE_SFF_8436;
--			modinfo->eeprom_len = ETH_MODULE_SFF_8436_LEN;
-+			modinfo->eeprom_len = ETH_MODULE_SFF_8436_MAX_LEN;
- 		} else {
- 			modinfo->type = ETH_MODULE_SFF_8636;
--			modinfo->eeprom_len = ETH_MODULE_SFF_8636_LEN;
-+			modinfo->eeprom_len = ETH_MODULE_SFF_8636_MAX_LEN;
- 		}
- 		break;
- 	case NFP_INTERFACE_QSFP28:
- 		modinfo->type = ETH_MODULE_SFF_8636;
--		modinfo->eeprom_len = ETH_MODULE_SFF_8636_LEN;
-+		modinfo->eeprom_len = ETH_MODULE_SFF_8636_MAX_LEN;
- 		break;
- 	default:
- 		netdev_err(netdev, "Unsupported module 0x%x detected\n",
+-kexec_args:
+-	EXPORT(kexec_args)
++EXPORT(kexec_args)
+ arg0:	PTR_WD		0x0
+ arg1:	PTR_WD		0x0
+ arg2:	PTR_WD		0x0
+@@ -159,8 +158,7 @@ arg3:	PTR_WD		0x0
+  * their registers a0-a3. secondary_kexec_args[0..3] are used
+  * to prepare register values.
+  */
+-secondary_kexec_args:
+-	EXPORT(secondary_kexec_args)
++EXPORT(secondary_kexec_args)
+ s_arg0: PTR_WD		0x0
+ s_arg1: PTR_WD		0x0
+ s_arg2: PTR_WD		0x0
+@@ -171,19 +169,16 @@ kexec_flag:
+ 
+ #endif
+ 
+-kexec_start_address:
+-	EXPORT(kexec_start_address)
++EXPORT(kexec_start_address)
+ 	PTR_WD		0x0
+ 	.size		kexec_start_address, PTRSIZE
+ 
+-kexec_indirection_page:
+-	EXPORT(kexec_indirection_page)
++EXPORT(kexec_indirection_page)
+ 	PTR_WD		0
+ 	.size		kexec_indirection_page, PTRSIZE
+ 
+ relocate_new_kernel_end:
+ 
+-relocate_new_kernel_size:
+-	EXPORT(relocate_new_kernel_size)
++EXPORT(relocate_new_kernel_size)
+ 	PTR_WD		relocate_new_kernel_end - relocate_new_kernel
+ 	.size		relocate_new_kernel_size, PTRSIZE
 -- 
 2.35.1
 
