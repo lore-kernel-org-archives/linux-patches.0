@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034A41C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61314C433D6;
-	Wed, 23 Nov 2022 09:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BB31C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75B0C433D6;
+	Wed, 23 Nov 2022 09:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194239;
-	bh=cCiJFGSK7fn9NCfE6/a+mCeAsqUGHU3BEeDud0XZZGs=;
+	s=korg; t=1669194243;
+	bh=o1ead+5rBVTZ7mRzhCWAICO6KlZSC0g7GmAHxAPXBbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZsjrVUZbv7fu3ttzMjw1rvvGI3j31euk/9haF1SF46G0iIlAmwkiVucuUHuh5s3v
-	 d+AiM6spDifSvec4x4lYuYSN74o92j//BRyQepxmK5SlAkOzKDKRRXoCZCyFVn2wB6
-	 7zNGSxS4zgn7mu0DSIMA5IG0ZhwKmFPe5ahbLaSk=
+	b=zTUUozLMizC07gR1TrN69LSmqZMOSRKIE2q0nIrhdT0XNgCOrmAxaJVS4vFy/vaSo
+	 twjFHB0jGFZstsn5iiTahd3qebGWLSrmMgrjQRbKqAWnnhw0cItkKObTQLXI7plmej
+	 oEan/3p5ViIGiTbllRtmVnVjx087Pi6SmRvfz8zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xian Wang <dev@xianwang.io>,
+	Ye Bin <yebin10@huawei.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 023/114] ALSA: hda/ca0132: add quirk for EVGA Z390 DARK
-Date: Wed, 23 Nov 2022 09:50:10 +0100
-Message-Id: <20221123084552.760507196@linuxfoundation.org>
+Subject: [PATCH 4.19 024/114] ALSA: hda: fix potential memleak in add_widget_node
+Date: Wed, 23 Nov 2022 09:50:11 +0100
+Message-Id: <20221123084552.812897236@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,37 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xian Wang <dev@xianwang.io>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 0c423e2ffa7edd3f8f9bcf17ce73fa9c7509b99e upstream.
+commit 9a5523f72bd2b0d66eef3d58810c6eb7b5ffc143 upstream.
 
-The Z390 DARK mainboard uses a CA0132 audio controller. The quirk is
-needed to enable surround sound and 3.5mm headphone jack handling in
-the front audio connector as well as in the rear of the board when in
-stereo mode.
+As 'kobject_add' may allocated memory for 'kobject->name' when return error.
+And in this function, if call 'kobject_add' failed didn't free kobject.
+So call 'kobject_put' to recycling resources.
 
-Page 97 of the linked manual contains instructions to setup the
-controller.
-
-Signed-off-by: Xian Wang <dev@xianwang.io>
-Cc: stable@vger.kernel.org
-Link: https://www.evga.com/support/manuals/files/131-CS-E399.pdf
-Link: https://lore.kernel.org/r/20221104202913.13904-1-dev@xianwang.io
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221110144539.2989354-1-yebin@huaweicloud.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_ca0132.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/hdac_sysfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -1070,6 +1070,7 @@ static const struct snd_pci_quirk ca0132
- 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
-+	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
- 	{}
- };
+--- a/sound/hda/hdac_sysfs.c
++++ b/sound/hda/hdac_sysfs.c
+@@ -346,8 +346,10 @@ static int add_widget_node(struct kobjec
+ 		return -ENOMEM;
+ 	kobject_init(kobj, &widget_ktype);
+ 	err = kobject_add(kobj, parent, "%02x", nid);
+-	if (err < 0)
++	if (err < 0) {
++		kobject_put(kobj);
+ 		return err;
++	}
+ 	err = sysfs_create_group(kobj, group);
+ 	if (err < 0) {
+ 		kobject_put(kobj);
 
 
