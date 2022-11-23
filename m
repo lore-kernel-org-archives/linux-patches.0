@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC681C29;
-	Wed, 23 Nov 2022 09:30:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF25C433D6;
-	Wed, 23 Nov 2022 09:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B271C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF536C43470;
+	Wed, 23 Nov 2022 09:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195838;
-	bh=ZvJmBRius+jMqI9fFzOtmo5ZpQc62MIL0f24ld1r+s0=;
+	s=korg; t=1669195842;
+	bh=BwL/lmsgmZ0VIWJ2aV/tfzveO0mqGIsEDhAZ2p/WCN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDY+a7SKoaZVRFPtpmE0jxVUcOE3EU2BJ2SzkgaFO6pzMU0pPjLlhg6lQ0vnbJvjQ
-	 dmNJLwq+cq3oJl6gaUoC1iTGesIOshG8uxVwH+YdHiF36F0v+H2VRrwIvd5atApbr0
-	 2KiQAnkklgNqB68X0rEhsqxNMQb1tR5kfqRb2pX8=
+	b=FbidBKrTRrVUwfldMaQ4zCXF19Hyzp9dTNXJVTO5a6YwZ4iv2vADd7PpZf5aYyHSf
+	 IAJJYgk7JntkmmxHHTsPw427/uPdcp8nigNIXzEXV9SjBQD6RttcZECsKM6lsWMlef
+	 +EjUzIXbzxpcgQ3eFIKphbmKDix1UCl++khXR6w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	llvm@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/181] drm/imx: imx-tve: Fix return type of imx_tve_connector_mode_valid
-Date: Wed, 23 Nov 2022 09:49:52 +0100
-Message-Id: <20221123084603.662679406@linuxfoundation.org>
+Subject: [PATCH 5.15 047/181] ARM: at91: pm: avoid soft resetting AC DLL
+Date: Wed, 23 Nov 2022 09:50:10 +0100
+Message-Id: <20221123084604.402250668@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -39,51 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Huckleberry <nhuck@google.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit fc007fb815ab5395c3962c09b79a1630b0fbed9c ]
+[ Upstream commit cef8cdc0d0e7c701fe4dcfba4ed3fd25d28a6020 ]
 
-The mode_valid field in drm_connector_helper_funcs is expected to be of
-type:
-enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
-                                     struct drm_display_mode *mode);
+Do not soft reset AC DLL as controller is buggy and this operation my
+introduce glitches in the controller leading to undefined behavior.
 
-The mismatched return type breaks forward edge kCFI since the underlying
-function definition does not match the function hook definition.
-
-The return type of imx_tve_connector_mode_valid should be changed from
-int to enum drm_mode_status.
-
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1703
-Cc: llvm@lists.linux.dev
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220913205544.155106-1-nhuck@google.com
+Fixes: f0bbf17958e8 ("ARM: at91: pm: add self-refresh support for sama7g5")
+Depends-on: a02875c4cbd6 ("ARM: at91: pm: fix self-refresh for sama7g5")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20221026124114.985876-2-claudiu.beznea@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/imx-tve.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm/mach-at91/pm_suspend.S | 7 ++++++-
+ include/soc/at91/sama7-ddr.h    | 5 ++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/imx-tve.c b/drivers/gpu/drm/imx/imx-tve.c
-index bc8c3f802a15..fbfb7adead0b 100644
---- a/drivers/gpu/drm/imx/imx-tve.c
-+++ b/drivers/gpu/drm/imx/imx-tve.c
-@@ -217,8 +217,9 @@ static int imx_tve_connector_get_modes(struct drm_connector *connector)
- 	return ret;
- }
+diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
+index 65cfcc19a936..2f0a370a1309 100644
+--- a/arch/arm/mach-at91/pm_suspend.S
++++ b/arch/arm/mach-at91/pm_suspend.S
+@@ -169,10 +169,15 @@ sr_ena_2:
+ 	cmp	tmp1, #UDDRC_STAT_SELFREF_TYPE_SW
+ 	bne	sr_ena_2
  
--static int imx_tve_connector_mode_valid(struct drm_connector *connector,
--					struct drm_display_mode *mode)
-+static enum drm_mode_status
-+imx_tve_connector_mode_valid(struct drm_connector *connector,
-+			     struct drm_display_mode *mode)
- {
- 	struct imx_tve *tve = con_to_tve(connector);
- 	unsigned long rate;
+-	/* Put DDR PHY's DLL in bypass mode for non-backup modes. */
++	/* Disable DX DLLs for non-backup modes. */
+ 	cmp	r7, #AT91_PM_BACKUP
+ 	beq	sr_ena_3
+ 
++	/* Do not soft reset the AC DLL. */
++	ldr	tmp1, [r3, DDR3PHY_ACDLLCR]
++	bic	tmp1, tmp1, DDR3PHY_ACDLLCR_DLLSRST
++	str	tmp1, [r3, DDR3PHY_ACDLLCR]
++
+ 	/* Disable DX DLLs. */
+ 	ldr	tmp1, [r3, #DDR3PHY_DX0DLLCR]
+ 	orr	tmp1, tmp1, #DDR3PHY_DXDLLCR_DLLDIS
+diff --git a/include/soc/at91/sama7-ddr.h b/include/soc/at91/sama7-ddr.h
+index f203f34dba12..cac3f9cd25f9 100644
+--- a/include/soc/at91/sama7-ddr.h
++++ b/include/soc/at91/sama7-ddr.h
+@@ -26,7 +26,10 @@
+ #define	DDR3PHY_PGSR				(0x0C)		/* DDR3PHY PHY General Status Register */
+ #define		DDR3PHY_PGSR_IDONE		(1 << 0)	/* Initialization Done */
+ 
+-#define DDR3PHY_ACIOCR				(0x24)		/*  DDR3PHY AC I/O Configuration Register */
++#define	DDR3PHY_ACDLLCR				(0x14)		/* DDR3PHY AC DLL Control Register */
++#define		DDR3PHY_ACDLLCR_DLLSRST		(1 << 30)	/* DLL Soft Reset */
++
++#define DDR3PHY_ACIOCR				(0x24)		/* DDR3PHY AC I/O Configuration Register */
+ #define		DDR3PHY_ACIOCR_CSPDD_CS0	(1 << 18)	/* CS#[0] Power Down Driver */
+ #define		DDR3PHY_ACIOCR_CKPDD_CK0	(1 << 8)	/* CK[0] Power Down Driver */
+ #define		DDR3PHY_ACIORC_ACPDD		(1 << 3)	/* AC Power Down Driver */
 -- 
 2.35.1
 
