@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6271A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A727C433D6;
-	Wed, 23 Nov 2022 09:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4515D1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF0CC433C1;
+	Wed, 23 Nov 2022 09:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195472;
-	bh=FzlzNwFEQZf+iUksPz8L9P4mFXjh2drbjWh1XaP4tc0=;
+	s=korg; t=1669195476;
+	bh=R5astfXp/esCPEfcdekGxcYhw4wFdzNjt4rXlUHWD2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2O04+8iDsW5+hjNB2XBGDhI6i1IvOTu+3z4eT8Gmc3kLRJLfhywHKCq2Ma1kqRd7y
-	 9gHZ+qDPZaazcVi8v1zYT52eUx9D/EtgpqhlXqL/rEUelfB6A+djgmyLsCHaaN5dSg
-	 9Hsxh/12NJWlsnCtfwEFfiUoO7vEN7bNvL31IeHw=
+	b=z4EPknseaxd+M+v8RL1M5sERkbH0BlSva2poPOOjmlPz/V3sHYf5Rspwzo9bMoVi4
+	 Nk89PXi7Xh9ECvSkd2Go2lv7/A1GyDjqsubw7onszBkOyw2V/IMwVtxdhBoKyJT4MM
+	 c0VcI74DOa4PVhAi/A/x5H3yyXrnceC0aYNR5J/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/149] bpf: Initialize same number of free nodes for each pcpu_freelist
-Date: Wed, 23 Nov 2022 09:50:45 +0100
-Message-Id: <20221123084600.153838542@linuxfoundation.org>
+Subject: [PATCH 5.10 063/149] net: bgmac: Drop free_netdev() from bgmac_enet_remove()
+Date: Wed, 23 Nov 2022 09:50:46 +0100
+Message-Id: <20221123084600.193330322@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,68 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 4b45cd81f737d79d0fbfc0d320a1e518e7f0bbf0 ]
+[ Upstream commit 6f928ab8ee9bfbcb0e631c47ea8a16c3d5116ff1 ]
 
-pcpu_freelist_populate() initializes nr_elems / num_possible_cpus() + 1
-free nodes for some CPUs, and then possibly one CPU with fewer nodes,
-followed by remaining cpus with 0 nodes. For example, when nr_elems == 256
-and num_possible_cpus() == 32, CPU 0~27 each gets 9 free nodes, CPU 28 gets
-4 free nodes, CPU 29~31 get 0 free nodes, while in fact each CPU should get
-8 nodes equally.
+netdev is allocated in bgmac_alloc() with devm_alloc_etherdev() and will
+be auto released in ->remove and ->probe failure path. Using free_netdev()
+in bgmac_enet_remove() leads to double free.
 
-This patch initializes nr_elems / num_possible_cpus() free nodes for each
-CPU firstly, then allocates the remaining free nodes by one for each CPU
-until no free nodes left.
+Fixes: 34a5102c3235 ("net: bgmac: allocate struct bgmac just once & don't copy it")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 
-Fixes: e19494edab82 ("bpf: introduce percpu_freelist")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221110122128.105214-1-xukuohai@huawei.com
+Link: https://lore.kernel.org/r/20221109150136.2991171-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/percpu_freelist.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
-index 3d897de89061..bbab8bb4b2fd 100644
---- a/kernel/bpf/percpu_freelist.c
-+++ b/kernel/bpf/percpu_freelist.c
-@@ -102,22 +102,21 @@ void pcpu_freelist_populate(struct pcpu_freelist *s, void *buf, u32 elem_size,
- 			    u32 nr_elems)
- {
- 	struct pcpu_freelist_head *head;
--	int i, cpu, pcpu_entries;
-+	unsigned int cpu, cpu_idx, i, j, n, m;
- 
--	pcpu_entries = nr_elems / num_possible_cpus() + 1;
--	i = 0;
-+	n = nr_elems / num_possible_cpus();
-+	m = nr_elems % num_possible_cpus();
- 
-+	cpu_idx = 0;
- 	for_each_possible_cpu(cpu) {
--again:
- 		head = per_cpu_ptr(s->freelist, cpu);
--		/* No locking required as this is not visible yet. */
--		pcpu_freelist_push_node(head, buf);
--		i++;
--		buf += elem_size;
--		if (i == nr_elems)
--			break;
--		if (i % pcpu_entries)
--			goto again;
-+		j = n + (cpu_idx < m ? 1 : 0);
-+		for (i = 0; i < j; i++) {
-+			/* No locking required as this is not visible yet. */
-+			pcpu_freelist_push_node(head, buf);
-+			buf += elem_size;
-+		}
-+		cpu_idx++;
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 6290d8bedc92..9960127f612e 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -1568,7 +1568,6 @@ void bgmac_enet_remove(struct bgmac *bgmac)
+ 	phy_disconnect(bgmac->net_dev->phydev);
+ 	netif_napi_del(&bgmac->napi);
+ 	bgmac_dma_free(bgmac);
+-	free_netdev(bgmac->net_dev);
  }
+ EXPORT_SYMBOL_GPL(bgmac_enet_remove);
  
 -- 
 2.35.1
