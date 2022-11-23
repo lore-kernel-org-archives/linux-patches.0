@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0AC1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E49C433C1;
-	Wed, 23 Nov 2022 09:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EFD1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB680C433D7;
+	Wed, 23 Nov 2022 09:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194082;
-	bh=j/JTQIAE1GWBAnBCJNbxGvmRrWSFsFWJpR/Z13Ya33Q=;
+	s=korg; t=1669194085;
+	bh=G68ezDfW2/Yn+3+TkEuZKc9w+waiy+oLGHeii3Kmrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/kKs1C/S1GHJd9JyYQJnKOcAWWTbs4TUuWhZAmjSRyXZTq23chnc2xu9VqRGdewi
-	 7IIO/baKRoCRc1w6ZOmGDXS1IKaR0W6pcyF8/oOiXwP10H0mOq9IVu8+gEXqHBeMvo
-	 R7ukCoF3N7MJx3k+XmzjTnzFjCk0H4W48Yds/qyM=
+	b=PjTJEI6YxwfE0ejFQWR5SmnLseMlkBbRgFzuBOPyUy9lfOWvwsyTj9tZucDKu/P04
+	 Ym4W7SC3AyUcVC48NqxqDsc3wlI40lvrSldPAceQHRMPf3Pq4RLeiSiIscJGqNC3Sr
+	 DRLlnaVYVYk9WaF34HOZDCWex6Iop6qdbPPy2KSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitja Spes <mitja@lxnav.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.14 67/88] iio: pressure: ms5611: changed hardcoded SPI speed to value limited
-Date: Wed, 23 Nov 2022 09:51:04 +0100
-Message-Id: <20221123084550.949367163@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 50/88] drbd: use after free in drbd_create_device()
+Date: Wed, 23 Nov 2022 09:50:47 +0100
+Message-Id: <20221123084550.256465963@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,32 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mitja Spes <mitja@lxnav.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 741cec30cc52058d1c10d415f3b98319887e4f73 upstream.
+[ Upstream commit a7a1598189228b5007369a9622ccdf587be0730f ]
 
-Don't hardcode the ms5611 SPI speed, limit it instead.
+The drbd_destroy_connection() frees the "connection" so use the _safe()
+iterator to prevent a use after free.
 
-Signed-off-by: Mitja Spes <mitja@lxnav.com>
-Fixes: c0644160a8b5 ("iio: pressure: add support for MS5611 pressure and temperature sensor")
-Link: https://lore.kernel.org/r/20221021135827.1444793-3-mitja@lxnav.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b6f85ef9538b ("drbd: Iterate over all connections")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/Y3Jd5iZRbNQ9w6gm@kili
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/ms5611_spi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/pressure/ms5611_spi.c
-+++ b/drivers/iio/pressure/ms5611_spi.c
-@@ -95,7 +95,7 @@ static int ms5611_spi_probe(struct spi_d
- 	spi_set_drvdata(spi, indio_dev);
- 
- 	spi->mode = SPI_MODE_0;
--	spi->max_speed_hz = 20000000;
-+	spi->max_speed_hz = min(spi->max_speed_hz, 20000000U);
- 	spi->bits_per_word = 8;
- 	ret = spi_setup(spi);
- 	if (ret < 0)
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 1e02cb60b65b..872e70f5b4d6 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2804,7 +2804,7 @@ static int init_submitter(struct drbd_device *device)
+ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsigned int minor)
+ {
+ 	struct drbd_resource *resource = adm_ctx->resource;
+-	struct drbd_connection *connection;
++	struct drbd_connection *connection, *n;
+ 	struct drbd_device *device;
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
+ 	struct gendisk *disk;
+@@ -2933,7 +2933,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
+ out_idr_remove_vol:
+ 	idr_remove(&connection->peer_devices, vnr);
+ out_idr_remove_from_resource:
+-	for_each_connection(connection, resource) {
++	for_each_connection_safe(connection, n, resource) {
+ 		peer_device = idr_remove(&connection->peer_devices, vnr);
+ 		if (peer_device)
+ 			kref_put(&connection->kref, drbd_destroy_connection);
+-- 
+2.35.1
+
 
 
