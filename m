@@ -1,112 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com [209.85.166.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC51E1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:05:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA5C4347C;
-	Wed, 23 Nov 2022 09:05:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194302;
-	bh=oNO64aBCJOIWPv5An76/4b06BcQ+bSU0o7fOuMRVxfo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFy9PxwXCjT1ScYPH3a2S6jH4g7syYXZ3h2hqYtEhkw8RvmPh5nvHLJyBs/GweFQ0
-	 01uaI+Ldaa+WclTlB/hpjYY6EnrdhI/rxuvMvwJjaUtyIDdBU9n2S3awhMxF0m2VpX
-	 jTqu2+D+s/PRMfiUpOchyVGq7RUs5/IAtMlSvNgo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com,
-	Alexander Potapenko <glider@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 012/114] ipv6: addrlabel: fix infoleak when sending struct ifaddrlblmsg to network
-Date: Wed, 23 Nov 2022 09:49:59 +0100
-Message-Id: <20221123084552.337303067@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
-References: <20221123084551.864610302@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59AB1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:05:04 +0000 (UTC)
+Received: by mail-il1-f199.google.com with SMTP id x10-20020a056e021bca00b00302b6c0a683so8437145ilv.23
+        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 01:05:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hOwaUP9SnaHg7GvHDtdq80VwQovF/jP7FuJHxUUIH1w=;
+        b=CdTmGXh7Me1QL4aXw5m1zcnYi+lN6XeC9Ezu4YrS83zcXRa4nys2M6jGit211ZD4ND
+         Z0VFrvHxVXW9Ogs2vZpJtTLxHlYKXD+X75zajtLWqw9Ha9edL13m/UMNDW/e/DaDVviR
+         o5A+Poyh6liTCJrSVfeyuqlpj+lYTBXBmN5TingOPyWQLoMbG2aayAYwf7Q4Ws+cz/p/
+         QFx+snGd/xyxQjGPbBM/jiWiHGWLIRsYWJoLq9lb/QxfKbzHIo1l0wGP72SX0D1KAGAT
+         cwtmoeM3KBbXogCHPhxAAdYYYGu6QgGiSaBcwbnWbBhgmztItbZOvJPZ8P3lHw1GIOmP
+         Taqg==
+X-Gm-Message-State: ANoB5pkYfuXskIDd+aVbZHlEGBtePES8xf5RNmy6qvdVVB9CFVPGDYiw
+	BX4E5MJtL7LvEoSGnZLdfdDy+ozfRg+V/noj3QPjYCChqlMW
+X-Google-Smtp-Source: AA0mqf7SdlyZACq4cXIrmJqHAqNcAdRgWSbuK5H6M+yoJ1JAc2cVG1j8G8YLFXsab5Beg4+24GIvpt0zW9qBCvmAblAA6gaEz4CG
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a5e:aa06:0:b0:6bc:614c:63c2 with SMTP id
+ s6-20020a5eaa06000000b006bc614c63c2mr5330231ioe.21.1669194304118; Wed, 23 Nov
+ 2022 01:05:04 -0800 (PST)
+Date: Wed, 23 Nov 2022 01:05:04 -0800
+In-Reply-To: <20221123084552.337303067@linuxfoundation.org>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <0000000000008ee66405ee1f9570@google.com>
+Subject: Re: [PATCH 4.19 012/114] ipv6: addrlabel: fix infoleak when sending
+ struct ifaddrlblmsg to network
+From: syzbot <syzbot+@syzkaller.appspotmail.com>
+To: gregkh@linuxfoundation.org
+Cc: davem@davemloft.net, dsahern@kernel.org, glider@google.com, 
+	gregkh@linuxfoundation.org, patches@lists.linux.dev, sashal@kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Alexander Potapenko <glider@google.com>
+> From: Alexander Potapenko <glider@google.com>
+>
+> [ Upstream commit c23fb2c82267638f9d206cb96bb93e1f93ad7828 ]
+>
+> When copying a `struct ifaddrlblmsg` to the network, __ifal_reserved
+> remained uninitialized, resulting in a 1-byte infoleak:
+>
+>   BUG: KMSAN: kernel-network-infoleak in __netdev_start_xmit ./include/linux/netdevice.h:4841
+>    __netdev_start_xmit ./include/linux/netdevice.h:4841
+>    netdev_start_xmit ./include/linux/netdevice.h:4857
+>    xmit_one net/core/dev.c:3590
+>    dev_hard_start_xmit+0x1dc/0x800 net/core/dev.c:3606
+>    __dev_queue_xmit+0x17e8/0x4350 net/core/dev.c:4256
+>    dev_queue_xmit ./include/linux/netdevice.h:3009
+>    __netlink_deliver_tap_skb net/netlink/af_netlink.c:307
+>    __netlink_deliver_tap+0x728/0xad0 net/netlink/af_netlink.c:325
+>    netlink_deliver_tap net/netlink/af_netlink.c:338
+>    __netlink_sendskb net/netlink/af_netlink.c:1263
+>    netlink_sendskb+0x1d9/0x200 net/netlink/af_netlink.c:1272
+>    netlink_unicast+0x56d/0xf50 net/netlink/af_netlink.c:1360
+>    nlmsg_unicast ./include/net/netlink.h:1061
+>    rtnl_unicast+0x5a/0x80 net/core/rtnetlink.c:758
+>    ip6addrlbl_get+0xfad/0x10f0 net/ipv6/addrlabel.c:628
+>    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
+>   ...
+>   Uninit was created at:
+>    slab_post_alloc_hook+0x118/0xb00 mm/slab.h:742
+>    slab_alloc_node mm/slub.c:3398
+>    __kmem_cache_alloc_node+0x4f2/0x930 mm/slub.c:3437
+>    __do_kmalloc_node mm/slab_common.c:954
+>    __kmalloc_node_track_caller+0x117/0x3d0 mm/slab_common.c:975
+>    kmalloc_reserve net/core/skbuff.c:437
+>    __alloc_skb+0x27a/0xab0 net/core/skbuff.c:509
+>    alloc_skb ./include/linux/skbuff.h:1267
+>    nlmsg_new ./include/net/netlink.h:964
+>    ip6addrlbl_get+0x490/0x10f0 net/ipv6/addrlabel.c:608
+>    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
+>    netlink_rcv_skb+0x299/0x550 net/netlink/af_netlink.c:2540
+>    rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6109
+>    netlink_unicast_kernel net/netlink/af_netlink.c:1319
+>    netlink_unicast+0x9ab/0xf50 net/netlink/af_netlink.c:1345
+>    netlink_sendmsg+0xebc/0x10f0 net/netlink/af_netlink.c:1921
+>   ...
+>
+> This patch ensures that the reserved field is always initialized.
+>
+> Reported-by: syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com
+> Fixes: 2a8cc6c89039 ("[IPV6] ADDRCONF: Support RFC3484 configurable address selection policy table.")
+> Signed-off-by: Alexander Potapenko <glider@google.com>
+> Reviewed-by: David Ahern <dsahern@kernel.org>
+> Signed-off-by: David S. Miller <davem@davemloft.net>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/ipv6/addrlabel.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/net/ipv6/addrlabel.c b/net/ipv6/addrlabel.c
+> index c7dc8b2de6c2..7fdd433b968e 100644
+> --- a/net/ipv6/addrlabel.c
+> +++ b/net/ipv6/addrlabel.c
+> @@ -437,6 +437,7 @@ static void ip6addrlbl_putmsg(struct nlmsghdr *nlh,
+>  {
+>  	struct ifaddrlblmsg *ifal = nlmsg_data(nlh);
+>  	ifal->ifal_family = AF_INET6;
+> +	ifal->__ifal_reserved = 0;
+>  	ifal->ifal_prefixlen = prefixlen;
+>  	ifal->ifal_flags = 0;
+>  	ifal->ifal_index = ifindex;
+> -- 
+> 2.35.1
+>
+>
+>
 
-[ Upstream commit c23fb2c82267638f9d206cb96bb93e1f93ad7828 ]
-
-When copying a `struct ifaddrlblmsg` to the network, __ifal_reserved
-remained uninitialized, resulting in a 1-byte infoleak:
-
-  BUG: KMSAN: kernel-network-infoleak in __netdev_start_xmit ./include/linux/netdevice.h:4841
-   __netdev_start_xmit ./include/linux/netdevice.h:4841
-   netdev_start_xmit ./include/linux/netdevice.h:4857
-   xmit_one net/core/dev.c:3590
-   dev_hard_start_xmit+0x1dc/0x800 net/core/dev.c:3606
-   __dev_queue_xmit+0x17e8/0x4350 net/core/dev.c:4256
-   dev_queue_xmit ./include/linux/netdevice.h:3009
-   __netlink_deliver_tap_skb net/netlink/af_netlink.c:307
-   __netlink_deliver_tap+0x728/0xad0 net/netlink/af_netlink.c:325
-   netlink_deliver_tap net/netlink/af_netlink.c:338
-   __netlink_sendskb net/netlink/af_netlink.c:1263
-   netlink_sendskb+0x1d9/0x200 net/netlink/af_netlink.c:1272
-   netlink_unicast+0x56d/0xf50 net/netlink/af_netlink.c:1360
-   nlmsg_unicast ./include/net/netlink.h:1061
-   rtnl_unicast+0x5a/0x80 net/core/rtnetlink.c:758
-   ip6addrlbl_get+0xfad/0x10f0 net/ipv6/addrlabel.c:628
-   rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
-  ...
-  Uninit was created at:
-   slab_post_alloc_hook+0x118/0xb00 mm/slab.h:742
-   slab_alloc_node mm/slub.c:3398
-   __kmem_cache_alloc_node+0x4f2/0x930 mm/slub.c:3437
-   __do_kmalloc_node mm/slab_common.c:954
-   __kmalloc_node_track_caller+0x117/0x3d0 mm/slab_common.c:975
-   kmalloc_reserve net/core/skbuff.c:437
-   __alloc_skb+0x27a/0xab0 net/core/skbuff.c:509
-   alloc_skb ./include/linux/skbuff.h:1267
-   nlmsg_new ./include/net/netlink.h:964
-   ip6addrlbl_get+0x490/0x10f0 net/ipv6/addrlabel.c:608
-   rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
-   netlink_rcv_skb+0x299/0x550 net/netlink/af_netlink.c:2540
-   rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6109
-   netlink_unicast_kernel net/netlink/af_netlink.c:1319
-   netlink_unicast+0x9ab/0xf50 net/netlink/af_netlink.c:1345
-   netlink_sendmsg+0xebc/0x10f0 net/netlink/af_netlink.c:1921
-  ...
-
-This patch ensures that the reserved field is always initialized.
-
-Reported-by: syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com
-Fixes: 2a8cc6c89039 ("[IPV6] ADDRCONF: Support RFC3484 configurable address selection policy table.")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/ipv6/addrlabel.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/net/ipv6/addrlabel.c b/net/ipv6/addrlabel.c
-index c7dc8b2de6c2..7fdd433b968e 100644
---- a/net/ipv6/addrlabel.c
-+++ b/net/ipv6/addrlabel.c
-@@ -437,6 +437,7 @@ static void ip6addrlbl_putmsg(struct nlmsghdr *nlh,
- {
- 	struct ifaddrlblmsg *ifal = nlmsg_data(nlh);
- 	ifal->ifal_family = AF_INET6;
-+	ifal->__ifal_reserved = 0;
- 	ifal->ifal_prefixlen = prefixlen;
- 	ifal->ifal_flags = 0;
- 	ifal->ifal_index = ifindex;
--- 
-2.35.1
-
-
+I see the command but can't find the corresponding bug.
+The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
+but the HASH does not correspond to any known bug.
+Please double check the address.
 
