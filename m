@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00C71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2480CC433C1;
-	Wed, 23 Nov 2022 09:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC2B1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40021C433D6;
+	Wed, 23 Nov 2022 09:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195531;
-	bh=/LDp0W0au7I4ALoX246C150Tqr21yWHIGUVDJwXPFZg=;
+	s=korg; t=1669195535;
+	bh=gtYR++FiirfzN5RZRAJawT8wVcSsiAOXGbccMfLBFmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJpUnWcPzAUf6pxHlJRtBDwqF7HdL7MdQyFQyKelKvkSH3fNk/d626XCeNkOBr8ne
-	 TlUVUOA/3wYRt/McCW1MYivJ6z50HAcrBOe6Wos6cLkjsCz8eThWIhGDK1ohDFaAHW
-	 RC4bKc2OZQwBGqtpU9nFC/Rnu4Szd6+c7oBsSb8c=
+	b=S56I4oKXP/7OVWAr4EmawARyDgZK7/Yf0Mhrn5VnZaBDAUmRU/XE/iw/7u5CKihMo
+	 X2UxP9bn8/ZYtfPyRirI9h5SjhqRXEt5POOxxMfI49yD3eYrI6qE1yH5topb0H4TOI
+	 KAXEWtq+Q/E6dwzqIcitSfnBd6axs8+ytKj5bR0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 093/149] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
-Date: Wed, 23 Nov 2022 09:51:16 +0100
-Message-Id: <20221123084601.334952817@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 111/149] dm ioctl: fix misbehavior if list_versions races with module loading
+Date: Wed, 23 Nov 2022 09:51:34 +0100
+Message-Id: <20221123084601.954174840@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -33,32 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 1abfd71ee8f3ed99c5d0df5d9843a360541d6808 upstream.
+commit 4fe1ec995483737f3d2a14c3fe1d8fe634972979 upstream.
 
-Samsung Galaxy Book Pro 360 (13" 2021 NP930QBD-ke1US) with codec SSID
-144d:c1a6 requires the same workaround for enabling the speaker amp
-like other Samsung models with ALC298 codec.
+__list_versions will first estimate the required space using the
+"dm_target_iterate(list_version_get_needed, &needed)" call and then will
+fill the space using the "dm_target_iterate(list_version_get_info,
+&iter_info)" call. Each of these calls locks the targets using the
+"down_read(&_lock)" and "up_read(&_lock)" calls, however between the first
+and second "dm_target_iterate" there is no lock held and the target
+modules can be loaded at this point, so the second "dm_target_iterate"
+call may need more space than what was the first "dm_target_iterate"
+returned.
 
-Link: https://bugzilla.opensuse.org/show_bug.cgi?id=1205100
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221115170235.18875-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The code tries to handle this overflow (see the beginning of
+list_version_get_info), however this handling is incorrect.
+
+The code sets "param->data_size = param->data_start + needed" and
+"iter_info.end = (char *)vers+len" - "needed" is the size returned by the
+first dm_target_iterate call; "len" is the size of the buffer allocated by
+userspace.
+
+"len" may be greater than "needed"; in this case, the code will write up
+to "len" bytes into the buffer, however param->data_size is set to
+"needed", so it may write data past the param->data_size value. The ioctl
+interface copies only up to param->data_size into userspace, thus part of
+the result will be truncated.
+
+Fix this bug by setting "iter_info.end = (char *)vers + needed;" - this
+guarantees that the second "dm_target_iterate" call will write only up to
+the "needed" buffer and it will exit with "DM_BUFFER_FULL_FLAG" if it
+overflows the "needed" space - in this case, userspace will allocate a
+larger buffer and retry.
+
+Note that there is also a bug in list_version_get_needed - we need to add
+"strlen(tt->name) + 1" to the needed size, not "strlen(tt->name)".
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-ioctl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9008,6 +9008,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
- 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -573,7 +573,7 @@ static void list_version_get_needed(stru
+     size_t *needed = needed_param;
+ 
+     *needed += sizeof(struct dm_target_versions);
+-    *needed += strlen(tt->name);
++    *needed += strlen(tt->name) + 1;
+     *needed += ALIGN_MASK;
+ }
+ 
+@@ -638,7 +638,7 @@ static int __list_versions(struct dm_ioc
+ 	iter_info.old_vers = NULL;
+ 	iter_info.vers = vers;
+ 	iter_info.flags = 0;
+-	iter_info.end = (char *)vers+len;
++	iter_info.end = (char *)vers + needed;
+ 
+ 	/*
+ 	 * Now loop through filling out the names & versions.
 
 
