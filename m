@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75991C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0973DC433D6;
-	Wed, 23 Nov 2022 09:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5071C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD87EC433C1;
+	Wed, 23 Nov 2022 09:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196032;
-	bh=Ljhjh+feQ0RsPPmK3j6ciGv+xzursYPd/aPf7TXLlN4=;
+	s=korg; t=1669196037;
+	bh=h6RcCJ0KUtB4xR20WEzzdRdH8XAPh3qyfEa9OaExBEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FTrbcHYv9LrjKG4KqEqb1IVZM5QUfnLehe8Ocsp3PNCT3FguAXl7UhFbrQAjRzAT
-	 KjVf969p8nejhdBveXJIeci0Ls0tqmfv3TGizcrI0L2TWXILGye9X4x1NfVDaaY9Dx
-	 Xa8WrSAkmK9tUVX0u+qUW9LBDie/8QBoJe+jX+Z4=
+	b=I/OIza152aRA5xro8JlUD0fbil7j8PPytCYcZOnRtCF0BezG+riU4S4VcvnG6vYz7
+	 nZxxWEwvkPbmG88X5I1xFSGZ0aq3AOPEyg0jcXi5ruGPP3Rqz3KFMPmP8cayNYk7+b
+	 02KHlhfguR0VcFztD0VPwADwLYORXR9mypHSSs1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Guangbin Huang <huangguangbin2@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/181] arm64: Fix bit-shifting UB in the MIDR_CPU_MODEL() macro
-Date: Wed, 23 Nov 2022 09:50:23 +0100
-Message-Id: <20221123084604.957379211@linuxfoundation.org>
+Subject: [PATCH 5.15 094/181] net: hns3: fix setting incorrect phy link ksettings for firmware in resetting process
+Date: Wed, 23 Nov 2022 09:50:57 +0100
+Message-Id: <20221123084606.386855905@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,48 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D Scott Phillips <scott@os.amperecomputing.com>
+From: Guangbin Huang <huangguangbin2@huawei.com>
 
-[ Upstream commit 8ec8490a1950efeccb00967698cf7cb2fcd25ca7 ]
+[ Upstream commit 510d7b6ae842e59ee00d57e5f07ac15131b6d899 ]
 
-CONFIG_UBSAN_SHIFT with gcc-5 complains that the shifting of
-ARM_CPU_IMP_AMPERE (0xC0) into bits [31:24] by MIDR_CPU_MODEL() is
-undefined behavior. Well, sort of, it actually spells the error as:
+Currently, if driver is in phy-imp(phy controlled by imp firmware) mode, as
+driver did not update phy link ksettings after initialization process or
+not update advertising when getting phy link ksettings from firmware, it
+may set incorrect phy link ksettings for firmware in resetting process.
+So fix it.
 
- arch/arm64/kernel/proton-pack.c: In function 'spectre_bhb_loop_affected':
- arch/arm64/include/asm/cputype.h:44:2: error: initializer element is not constant
-   (((imp)   << MIDR_IMPLEMENTOR_SHIFT) | \
-   ^
-
-This isn't an issue for other Implementor codes, as all the other codes
-have zero in the top bit and so are representable as a signed int.
-
-Cast the implementor code to unsigned in MIDR_CPU_MODEL to remove the
-undefined behavior.
-
-Fixes: 0e5d5ae837c8 ("arm64: Add AMPERE1 to the Spectre-BHB affected list")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/20221102160106.1096948-1-scott@os.amperecomputing.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
+Fixes: c5ef83cbb1e9 ("net: hns3: fix for phy_addr error in hclge_mac_mdio_config")
+Fixes: 2312e050f42b ("net: hns3: Fix for deadlock problem occurring when unregistering ae_algo")
+Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c    | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 457b6bb276bb..9cf5d9551e99 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -41,7 +41,7 @@
- 	(((midr) & MIDR_IMPLEMENTOR_MASK) >> MIDR_IMPLEMENTOR_SHIFT)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 15d10775a757..2102b38b9c35 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -3172,6 +3172,7 @@ static int hclge_update_tp_port_info(struct hclge_dev *hdev)
+ 	hdev->hw.mac.autoneg = cmd.base.autoneg;
+ 	hdev->hw.mac.speed = cmd.base.speed;
+ 	hdev->hw.mac.duplex = cmd.base.duplex;
++	linkmode_copy(hdev->hw.mac.advertising, cmd.link_modes.advertising);
  
- #define MIDR_CPU_MODEL(imp, partnum) \
--	(((imp)			<< MIDR_IMPLEMENTOR_SHIFT) | \
-+	((_AT(u32, imp)		<< MIDR_IMPLEMENTOR_SHIFT) | \
- 	(0xf			<< MIDR_ARCHITECTURE_SHIFT) | \
- 	((partnum)		<< MIDR_PARTNUM_SHIFT))
+ 	return 0;
+ }
+@@ -11669,9 +11670,12 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	if (ret)
+ 		goto err_msi_irq_uninit;
  
+-	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER &&
+-	    !hnae3_dev_phy_imp_supported(hdev)) {
+-		ret = hclge_mac_mdio_config(hdev);
++	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
++		if (hnae3_dev_phy_imp_supported(hdev))
++			ret = hclge_update_tp_port_info(hdev);
++		else
++			ret = hclge_mac_mdio_config(hdev);
++
+ 		if (ret)
+ 			goto err_msi_irq_uninit;
+ 	}
 -- 
 2.35.1
 
