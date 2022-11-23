@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4515D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF0CC433C1;
-	Wed, 23 Nov 2022 09:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3DF1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F8BC433D7;
+	Wed, 23 Nov 2022 09:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195476;
-	bh=R5astfXp/esCPEfcdekGxcYhw4wFdzNjt4rXlUHWD2o=;
+	s=korg; t=1669195479;
+	bh=lSh7dWGbiTy18SerLpyw2sdeqDmywC414TJRby9OZEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4EPknseaxd+M+v8RL1M5sERkbH0BlSva2poPOOjmlPz/V3sHYf5Rspwzo9bMoVi4
-	 Nk89PXi7Xh9ECvSkd2Go2lv7/A1GyDjqsubw7onszBkOyw2V/IMwVtxdhBoKyJT4MM
-	 c0VcI74DOa4PVhAi/A/x5H3yyXrnceC0aYNR5J/4=
+	b=zeBlKPiyITjmTvTcuAk8rlZHBxiEdsCT8DMJhqeYcLeMzqZLtzVxCofHhbi9CLcSy
+	 IQTN9INAGdtK9ZkiWTNoLnYFyItmiI6bDpz/jG0F6gSHwEocPD4+HOWsaxNYiC5FIz
+	 RKxPpCwwmzDCN7uqn1vLVZgEQCGeSjx91jTdPY8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/149] net: bgmac: Drop free_netdev() from bgmac_enet_remove()
-Date: Wed, 23 Nov 2022 09:50:46 +0100
-Message-Id: <20221123084600.193330322@linuxfoundation.org>
+Subject: [PATCH 5.10 064/149] mISDN: fix possible memory leak in mISDN_dsp_element_register()
+Date: Wed, 23 Nov 2022 09:50:47 +0100
+Message-Id: <20221123084600.224188113@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,36 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6f928ab8ee9bfbcb0e631c47ea8a16c3d5116ff1 ]
+[ Upstream commit 98a2ac1ca8fd6eca6867726fe238d06e75eb1acd ]
 
-netdev is allocated in bgmac_alloc() with devm_alloc_etherdev() and will
-be auto released in ->remove and ->probe failure path. Using free_netdev()
-in bgmac_enet_remove() leads to double free.
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+use put_device() to give up the reference, so that the name can be
+freed in kobject_cleanup() when the refcount is 0.
 
-Fixes: 34a5102c3235 ("net: bgmac: allocate struct bgmac just once & don't copy it")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+The 'entry' is going to be freed in mISDN_dsp_dev_release(), so the
+kfree() is removed. list_del() is called in mISDN_dsp_dev_release(),
+so it need be initialized.
 
-Link: https://lore.kernel.org/r/20221109150136.2991171-1-weiyongjun@huaweicloud.com
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109132832.3270119-1-yangyingliang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/isdn/mISDN/dsp_pipeline.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 6290d8bedc92..9960127f612e 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1568,7 +1568,6 @@ void bgmac_enet_remove(struct bgmac *bgmac)
- 	phy_disconnect(bgmac->net_dev->phydev);
- 	netif_napi_del(&bgmac->napi);
- 	bgmac_dma_free(bgmac);
--	free_netdev(bgmac->net_dev);
- }
- EXPORT_SYMBOL_GPL(bgmac_enet_remove);
+diff --git a/drivers/isdn/mISDN/dsp_pipeline.c b/drivers/isdn/mISDN/dsp_pipeline.c
+index c3b2c99b5cd5..cfbcd9e973c2 100644
+--- a/drivers/isdn/mISDN/dsp_pipeline.c
++++ b/drivers/isdn/mISDN/dsp_pipeline.c
+@@ -77,6 +77,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
+ 	if (!entry)
+ 		return -ENOMEM;
  
++	INIT_LIST_HEAD(&entry->list);
+ 	entry->elem = elem;
+ 
+ 	entry->dev.class = elements_class;
+@@ -107,7 +108,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
+ 	device_unregister(&entry->dev);
+ 	return ret;
+ err1:
+-	kfree(entry);
++	put_device(&entry->dev);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(mISDN_dsp_element_register);
 -- 
 2.35.1
 
