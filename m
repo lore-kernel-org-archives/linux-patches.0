@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5B31C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108FEC433D7;
-	Wed, 23 Nov 2022 09:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5281C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690B9C433C1;
+	Wed, 23 Nov 2022 09:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196771;
-	bh=nUgVtyji8d859Dq3JmyqfBxK74MViQFLGRGxRF/n8sM=;
+	s=korg; t=1669196774;
+	bh=3tLvJtMNbBd47YR9+bv6xKmABh2xvsfhJQRQlVP21c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKgdg+BeiMTd5e9vv4oSEwmOJZBI3cMqkVwGb2LeQS9Ciu3BMMZT6SigXskAGZOws
-	 SOPbrT9fMr7hFQz/vrv7gQbIOOhyfphsVS1yS5KwsY6GG4/6dZADs1qRwQ5gVy3X68
-	 z1uPvSiyCRM4yo7jYT1i55tAVal6xsdwofwFU2co=
+	b=Kb/6qWU2HKGqfhq+9WirBv1IYpDGcfonUaG6tmEzgai+w91vgaUhhbcdd5AGWosQG
+	 YUk4Wl6jDd+ekiQrRtq64oVTE/N4E4yZ2n8gJ1M/eC/QyF5h2MuLbTknKrs5E04Lpu
+	 Qg2vcc6HV0iqQK9detE3ocxEecGEMIoaLjwBb98c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jason Montleon <jmontleo@redhat.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 120/314] arm64: Fix bit-shifting UB in the MIDR_CPU_MODEL() macro
-Date: Wed, 23 Nov 2022 09:49:25 +0100
-Message-Id: <20221123084630.950623370@linuxfoundation.org>
+Subject: [PATCH 6.0 103/314] ASoC: rt5677: fix legacy dai naming
+Date: Wed, 23 Nov 2022 09:49:08 +0100
+Message-Id: <20221123084630.162795459@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,48 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: D Scott Phillips <scott@os.amperecomputing.com>
+From: Jason Montleon <jmontleo@redhat.com>
 
-[ Upstream commit 8ec8490a1950efeccb00967698cf7cb2fcd25ca7 ]
+[ Upstream commit a1dca8774faf3f77eb34fa0ac6f3e2b82290b1e4 ]
 
-CONFIG_UBSAN_SHIFT with gcc-5 complains that the shifting of
-ARM_CPU_IMP_AMPERE (0xC0) into bits [31:24] by MIDR_CPU_MODEL() is
-undefined behavior. Well, sort of, it actually spells the error as:
+Starting with 6.0-rc1 the CPU DAI is not registered and the sound
+card is unavailable. Adding legacy_dai_naming causes it to function
+properly again.
 
- arch/arm64/kernel/proton-pack.c: In function 'spectre_bhb_loop_affected':
- arch/arm64/include/asm/cputype.h:44:2: error: initializer element is not constant
-   (((imp)   << MIDR_IMPLEMENTOR_SHIFT) | \
-   ^
-
-This isn't an issue for other Implementor codes, as all the other codes
-have zero in the top bit and so are representable as a signed int.
-
-Cast the implementor code to unsigned in MIDR_CPU_MODEL to remove the
-undefined behavior.
-
-Fixes: 0e5d5ae837c8 ("arm64: Add AMPERE1 to the Spectre-BHB affected list")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/20221102160106.1096948-1-scott@os.amperecomputing.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: fc34ece41f71 ("ASoC: Refactor non_legacy_dai_naming flag")
+Signed-off-by: Jason Montleon <jmontleo@redhat.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221103144612.4431-2-jmontleo@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/rt5677-spi.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index abc418650fec..65e53ef5a396 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -41,7 +41,7 @@
- 	(((midr) & MIDR_IMPLEMENTOR_MASK) >> MIDR_IMPLEMENTOR_SHIFT)
+diff --git a/sound/soc/codecs/rt5677-spi.c b/sound/soc/codecs/rt5677-spi.c
+index 8f3993a4c1cc..d25703dd7499 100644
+--- a/sound/soc/codecs/rt5677-spi.c
++++ b/sound/soc/codecs/rt5677-spi.c
+@@ -396,15 +396,16 @@ static int rt5677_spi_pcm_probe(struct snd_soc_component *component)
+ }
  
- #define MIDR_CPU_MODEL(imp, partnum) \
--	(((imp)			<< MIDR_IMPLEMENTOR_SHIFT) | \
-+	((_AT(u32, imp)		<< MIDR_IMPLEMENTOR_SHIFT) | \
- 	(0xf			<< MIDR_ARCHITECTURE_SHIFT) | \
- 	((partnum)		<< MIDR_PARTNUM_SHIFT))
+ static const struct snd_soc_component_driver rt5677_spi_dai_component = {
+-	.name		= DRV_NAME,
+-	.probe		= rt5677_spi_pcm_probe,
+-	.open		= rt5677_spi_pcm_open,
+-	.close		= rt5677_spi_pcm_close,
+-	.hw_params	= rt5677_spi_hw_params,
+-	.hw_free	= rt5677_spi_hw_free,
+-	.prepare	= rt5677_spi_prepare,
+-	.pointer	= rt5677_spi_pcm_pointer,
+-	.pcm_construct	= rt5677_spi_pcm_new,
++	.name			= DRV_NAME,
++	.probe			= rt5677_spi_pcm_probe,
++	.open			= rt5677_spi_pcm_open,
++	.close			= rt5677_spi_pcm_close,
++	.hw_params		= rt5677_spi_hw_params,
++	.hw_free		= rt5677_spi_hw_free,
++	.prepare		= rt5677_spi_prepare,
++	.pointer		= rt5677_spi_pcm_pointer,
++	.pcm_construct		= rt5677_spi_pcm_new,
++	.legacy_dai_naming	= 1,
+ };
  
+ /* Select a suitable transfer command for the next transfer to ensure
 -- 
 2.35.1
 
