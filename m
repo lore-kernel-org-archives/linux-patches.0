@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865D77B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:58:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99C5C433D7;
-	Wed, 23 Nov 2022 08:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92D87B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF71C433C1;
+	Wed, 23 Nov 2022 08:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193906;
-	bh=MKIwULUTzY9b/S7fURhrtwfN6LhN6IKwxhr87DaXfns=;
+	s=korg; t=1669193911;
+	bh=WH18cPsKWwF+LC7xjVD+TnfDBYhZyD/dORe/weZmqmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaRFr6yNtrK48jWrNXcNixqaWGlxITh9AGUnLZr8MZF74y6RBWvdhB0hm4EQMY7Of
-	 6Ti6L4nTaB1We7NVGVgPOyamUGh2DwC+5g/13HaeaVDJsSU7zqghSDB2hOEmA6RvxR
-	 3Xbjv9QGczjcng+R4AB82mqf1Ccli5tKM1hh49zA=
+	b=D5CuJVRSS9Zi8ceWbrRFlwBS0jMdSLYeWWuJ/wvmDd9FXDvgMl0rqWa4coIIQNUeB
+	 Efep4myU9aXCgrJpOHWIuN/RLIcUtcNyKjX2eg087LUxek8T9fuk2E15YqR9ensEez
+	 QhPYpHIhmIpVBaEgjfFFeXVKdOL8PHzGPG5iNbLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	"Andrew G. Morgan" <morgan@kernel.org>,
+	Serge Hallyn <serge@hallyn.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/88] net: fman: Unregister ethernet device on removal
-Date: Wed, 23 Nov 2022 09:50:01 +0100
-Message-Id: <20221123084548.687295363@linuxfoundation.org>
+Subject: [PATCH 4.14 05/88] capabilities: fix undefined behavior in bit shift for CAP_TO_MASK
+Date: Wed, 23 Nov 2022 09:50:02 +0100
+Message-Id: <20221123084548.726605289@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,51 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit b7cbc6740bd6ad5d43345a2504f7e4beff0d709f ]
+[ Upstream commit 46653972e3ea64f79e7f8ae3aa41a4d3fdb70a13 ]
 
-When the mac device gets removed, it leaves behind the ethernet device.
-This will result in a segfault next time the ethernet device accesses
-mac_dev. Remove the ethernet device when we get removed to prevent
-this. This is not completely reversible, since some resources aren't
-cleaned up properly, but that can be addressed later.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-Fixes: 3933961682a3 ("fsl/fman: Add FMan MAC driver")
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20221103182831.2248833-1-sean.anderson@seco.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+UBSAN: shift-out-of-bounds in security/commoncap.c:1252:2
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ cap_task_prctl+0x561/0x6f0
+ security_task_prctl+0x5a/0xb0
+ __x64_sys_prctl+0x61/0x8f0
+ do_syscall_64+0x58/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+
+Fixes: e338d263a76a ("Add 64-bit capability support to the kernel")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Acked-by: Andrew G. Morgan <morgan@kernel.org>
+Reviewed-by: Serge Hallyn <serge@hallyn.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fman/mac.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/uapi/linux/capability.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fman/mac.c b/drivers/net/ethernet/freescale/fman/mac.c
-index 3221a5420263..8f9b4029de7a 100644
---- a/drivers/net/ethernet/freescale/fman/mac.c
-+++ b/drivers/net/ethernet/freescale/fman/mac.c
-@@ -955,12 +955,21 @@ static int mac_probe(struct platform_device *_of_dev)
- 	return err;
- }
+diff --git a/include/uapi/linux/capability.h b/include/uapi/linux/capability.h
+index 240fdb9a60f6..6e0d68e841cd 100644
+--- a/include/uapi/linux/capability.h
++++ b/include/uapi/linux/capability.h
+@@ -376,7 +376,7 @@ struct vfs_ns_cap_data {
+  */
  
-+static int mac_remove(struct platform_device *pdev)
-+{
-+	struct mac_device *mac_dev = platform_get_drvdata(pdev);
-+
-+	platform_device_unregister(mac_dev->priv->eth_dev);
-+	return 0;
-+}
-+
- static struct platform_driver mac_driver = {
- 	.driver = {
- 		.name		= KBUILD_MODNAME,
- 		.of_match_table	= mac_match,
- 	},
- 	.probe		= mac_probe,
-+	.remove		= mac_remove,
- };
+ #define CAP_TO_INDEX(x)     ((x) >> 5)        /* 1 << 5 == bits in __u32 */
+-#define CAP_TO_MASK(x)      (1 << ((x) & 31)) /* mask for indexed __u32 */
++#define CAP_TO_MASK(x)      (1U << ((x) & 31)) /* mask for indexed __u32 */
  
- builtin_platform_driver(mac_driver);
+ 
+ #endif /* _UAPI_LINUX_CAPABILITY_H */
 -- 
 2.35.1
 
