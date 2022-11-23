@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522131C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:55:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2532C433C1;
-	Wed, 23 Nov 2022 09:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA891C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:55:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498ADC433C1;
+	Wed, 23 Nov 2022 09:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197332;
-	bh=8xbrFBqfT7zn9i+d9KIk4z5mPpi2oZAvNNdYMviGH+w=;
+	s=korg; t=1669197335;
+	bh=3OoW5/pZq+1ILZLdW/y1USNHDpgOLPwzibT0IQT93XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dxzw0UdbNO5PxZbFP+v5pBY4gJUgXZz03O8h3LDjJBc8W5PgdQSkxPa2zmRtNpDp
-	 VN5vowO1UtnWAzYLO5txgJsED+B3gzZd6tlzBmQtz4LclAPZe0sgLCqfvREtMzInT6
-	 Y+NertYbDdn1F/YyDjQLLofrJqdOEZgWJ+eoyO3I=
+	b=V1iM7YoiyeaRnP7ZX0on5yRemOnxB6C34nwcn/eA8i5YFDTlzN+iw9MC+XogpcvVO
+	 wGcamhcqbS5bxS97tedNRGQGDPf2h7mjcVsp8wURUmd332HQwLKhIL35Swn/J/TfbV
+	 k/61ANBgP4Rn1Nx2PEccAfexoPg7BVlhqc+L0x4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Crequy <albancrequy@linux.microsoft.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Francis Laniel <flaniel@linux.microsoft.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 263/314] maccess: Fix writing offset in case of fault in strncpy_from_kernel_nofault()
-Date: Wed, 23 Nov 2022 09:51:48 +0100
-Message-Id: <20221123084637.433738103@linuxfoundation.org>
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.0 264/314] net: phy: marvell: add sleep time after enabling the loopback bit
+Date: Wed, 23 Nov 2022 09:51:49 +0100
+Message-Id: <20221123084637.483872515@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,37 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alban Crequy <albancrequy@linux.microsoft.com>
+From: Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>
 
-commit 8678ea06852cd1f819b870c773d43df888d15d46 upstream.
+commit 18c532e44939caa17f1fa380f7ac50dbc0718dbb upstream.
 
-If a page fault occurs while copying the first byte, this function resets one
-byte before dst.
-As a consequence, an address could be modified and leaded to kernel crashes if
-case the modified address was accessed later.
+Sleep time is added to ensure the phy to be ready after loopback
+bit was set. This to prevent the phy loopback test from failing.
 
-Fixes: b58294ead14c ("maccess: allow architectures to provide kernel probing directly")
-Signed-off-by: Alban Crequy <albancrequy@linux.microsoft.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Francis Laniel <flaniel@linux.microsoft.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> [5.8]
-Link: https://lore.kernel.org/bpf/20221110085614.111213-2-albancrequy@linux.microsoft.com
+Fixes: 020a45aff119 ("net: phy: marvell: add Marvell specific PHY loopback")
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Signed-off-by: Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>
+Link: https://lore.kernel.org/r/20221114065302.10625-1-aminuddin.jamaluddin@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/maccess.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/marvell.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/mm/maccess.c
-+++ b/mm/maccess.c
-@@ -97,7 +97,7 @@ long strncpy_from_kernel_nofault(char *d
- 	return src - unsafe_addr;
- Efault:
- 	pagefault_enable();
--	dst[-1] = '\0';
-+	dst[0] = '\0';
- 	return -EFAULT;
- }
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -2015,14 +2015,16 @@ static int m88e1510_loopback(struct phy_
+ 		if (err < 0)
+ 			return err;
  
+-		/* FIXME: Based on trial and error test, it seem 1G need to have
+-		 * delay between soft reset and loopback enablement.
+-		 */
+-		if (phydev->speed == SPEED_1000)
+-			msleep(1000);
++		err = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK,
++				 BMCR_LOOPBACK);
+ 
+-		return phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK,
+-				  BMCR_LOOPBACK);
++		if (!err) {
++			/* It takes some time for PHY device to switch
++			 * into/out-of loopback mode.
++			 */
++			msleep(1000);
++		}
++		return err;
+ 	} else {
+ 		err = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK, 0);
+ 		if (err < 0)
 
 
