@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763971C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF898C433C1;
-	Wed, 23 Nov 2022 09:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59AD1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7EFC433C1;
+	Wed, 23 Nov 2022 09:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194943;
-	bh=3ck9Xe5tg1QfdZeBDOx83UjQJzLEsPFRPeEwmuhrhc8=;
+	s=korg; t=1669194946;
+	bh=qC5Aaz5818ndaSbC6eLg99Qdhg1sYmlp28oMgS78mWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OisEft1MH1NU6M4k4nHtYeLxej/xnI6hfiUelYI6/VnYR5yjZmyAVbIe8Ryy8YhS
-	 zxEfnHi5MnIsT4qSvdJ3YvoKkcVvY7eyu6X2fe70PvDBPg/CFWpmP0KsLyt+mplENj
-	 O8aERGN+/sZYud265DsxUgtBQg8svvIci6U5ncZY=
+	b=pw71C7rZu8TLtuCYWN1rDOh0WuXbANqAH9IdlYEoVbcBrWDyZAgQta2m+TTWg1leJ
+	 O/K22cD2RwokL+kZHxPNMWmpra6FI91/YwA7Re+2GN9PivyecGC2mB3N5OMaX9UV/S
+	 6u8/ZapIYv8M2se/ICjABzJxH3Bik58QvGbHa714=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Dan Carpenter <error27@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/156] xen/pcpu: fix possible memory leak in register_pcpu()
-Date: Wed, 23 Nov 2022 09:51:01 +0100
-Message-Id: <20221123084601.731003121@linuxfoundation.org>
+Subject: [PATCH 5.4 105/156] drbd: use after free in drbd_create_device()
+Date: Wed, 23 Nov 2022 09:51:02 +0100
+Message-Id: <20221123084601.767046628@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,38 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
+[ Upstream commit a7a1598189228b5007369a9622ccdf587be0730f ]
 
-In device_add(), dev_set_name() is called to allocate name, if it returns
-error, the name need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
+The drbd_destroy_connection() frees the "connection" so use the _safe()
+iterator to prevent a use after free.
 
-Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: b6f85ef9538b ("drbd: Iterate over all connections")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/Y3Jd5iZRbNQ9w6gm@kili
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/pcpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
-index cdc6daa7a9f6..9cf7085a260b 100644
---- a/drivers/xen/pcpu.c
-+++ b/drivers/xen/pcpu.c
-@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
- 
- 	err = device_register(dev);
- 	if (err) {
--		pcpu_release(dev);
-+		put_device(dev);
- 		return err;
- 	}
- 
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 5ece2fd70d9c..f3a96c76f5a4 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2778,7 +2778,7 @@ static int init_submitter(struct drbd_device *device)
+ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsigned int minor)
+ {
+ 	struct drbd_resource *resource = adm_ctx->resource;
+-	struct drbd_connection *connection;
++	struct drbd_connection *connection, *n;
+ 	struct drbd_device *device;
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
+ 	struct gendisk *disk;
+@@ -2906,7 +2906,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
+ out_idr_remove_vol:
+ 	idr_remove(&connection->peer_devices, vnr);
+ out_idr_remove_from_resource:
+-	for_each_connection(connection, resource) {
++	for_each_connection_safe(connection, n, resource) {
+ 		peer_device = idr_remove(&connection->peer_devices, vnr);
+ 		if (peer_device)
+ 			kref_put(&connection->kref, drbd_destroy_connection);
 -- 
 2.35.1
 
