@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE011C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD554C433D6;
-	Wed, 23 Nov 2022 09:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80A1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6952C433D6;
+	Wed, 23 Nov 2022 09:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196795;
-	bh=j7DB7TlvOvN44uwVzudms0ItbMwP4w6ehza4se1yK38=;
+	s=korg; t=1669196799;
+	bh=i9YKgbz66W62bTZZ/sYKnXQ31Al/E83J/H6hI2xMtM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+I+/r2fxg7YmfpNYsAdbhjW1OyGBdKm2RD796S8C6naCaIRAj0972m95Y88LWn40
-	 EHqWqKGI0oFgROPe66rsM0Gm2v78iTZrU42sarGu9kMwDH3Dik8yNuv2a2/Tw9t7zl
-	 iyuVysGQ7/t+sMmVPtx91rRcN4t/l1aboD0V4spU=
+	b=ooJ920U/iNZQ/jOLvKGhBXNo5skgdIvxm4QjTeuG+IWtA8GVpye90jAQQmQvYVdNl
+	 HGfNb2rb35JCSU8rKVeM6UmSNLR3LzT943x73lVSRMcmhu7urpoRnHe/xMJXteXfFq
+	 2LK4nTF7MphFlMimoMD8gNw2UZmR+CyGjoUFmeBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 126/314] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
-Date: Wed, 23 Nov 2022 09:49:31 +0100
-Message-Id: <20221123084631.239075712@linuxfoundation.org>
+Subject: [PATCH 6.0 127/314] drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms
+Date: Wed, 23 Nov 2022 09:49:32 +0100
+Message-Id: <20221123084631.288197046@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,45 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
+[ Upstream commit dba9e3467425800f9d3a14e8b6a0f85c731c1650 ]
 
-Here is the BUG report by KASAN about null pointer dereference:
+The drm_atomic_get_new_private_obj_state() function returns NULL
+on error path, drm_atomic_get_old_private_obj_state() function
+returns NULL on error path, too, they does not return error pointers.
 
-BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
-Read of size 1 at addr 0000000000000000 by task python3/2640
-Call Trace:
- strcmp
- __of_find_property
- of_find_property
- pinctrl_dt_to_map
+By the way, vc4_hvs_get_new/old_global_state() should return
+ERR_PTR(-EINVAL), otherwise there will be null-ptr-defer issue,
+such as follows:
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-So directly return ENOMEM, if kasprintf() return NULL pointer.
+In function vc4_atomic_commit_tail():
+  |-- old_hvs_state = vc4_hvs_get_old_global_state(state); <-- return NULL
+  |-- if (WARN_ON(IS_ERR(old_hvs_state))) <-- no return
+  |-- unsigned long state_rate = max(old_hvs_state->core_clock_rate,
+	new_hvs_state->core_clock_rate); <-- null-ptr-defer
 
-Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 9ec03d7f1ed3 ("drm/vc4: kms: Wait on previous FIFO users before a commit")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221110094445.2930509-6-cuigaosheng1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/devicetree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_kms.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index ef898ee8ca6b..6e0a40962f38 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -220,6 +220,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
-+		if (!propname)
-+			return -ENOMEM;
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
+diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
+index b45dcdfd7306..a3678178b022 100644
+--- a/drivers/gpu/drm/vc4/vc4_kms.c
++++ b/drivers/gpu/drm/vc4/vc4_kms.c
+@@ -198,8 +198,8 @@ vc4_hvs_get_new_global_state(struct drm_atomic_state *state)
+ 	struct drm_private_state *priv_state;
+ 
+ 	priv_state = drm_atomic_get_new_private_obj_state(state, &vc4->hvs_channels);
+-	if (IS_ERR(priv_state))
+-		return ERR_CAST(priv_state);
++	if (!priv_state)
++		return ERR_PTR(-EINVAL);
+ 
+ 	return to_vc4_hvs_state(priv_state);
+ }
+@@ -211,8 +211,8 @@ vc4_hvs_get_old_global_state(struct drm_atomic_state *state)
+ 	struct drm_private_state *priv_state;
+ 
+ 	priv_state = drm_atomic_get_old_private_obj_state(state, &vc4->hvs_channels);
+-	if (IS_ERR(priv_state))
+-		return ERR_CAST(priv_state);
++	if (!priv_state)
++		return ERR_PTR(-EINVAL);
+ 
+ 	return to_vc4_hvs_state(priv_state);
+ }
 -- 
 2.35.1
 
