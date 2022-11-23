@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C4D1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A3DC433C1;
-	Wed, 23 Nov 2022 09:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9C61C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB01C433D6;
+	Wed, 23 Nov 2022 09:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197443;
-	bh=MFevkjK4Km5E5MgdatlZan6/En6MRZnPBJO5ogmUvr4=;
+	s=korg; t=1669197446;
+	bh=rZqd3JSc/e78fE4qKHRM3n5UtErFT1QOMI+SDjRe4EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWmsYsxU5nEOkcBFN1LXrg6qHvvqF64O4Aw/cle1QWdZ9euU7iioflSczLBiMMnCZ
-	 NGcnXBxI/85HjXcGc4ymSXppmcON3kaiMIwqF1GiHivIt2RA4nbmxGjryXheqhyWLB
-	 Zo4l+9AiIgkwJj+dfOe5ZCbg47lli8P+TT/OvoCU=
+	b=N7n6DeajiHquuFdRe2K1haPVKOFXmYsGhqb8kQpMzNJc7lcpwVzo5UJXaTIIMKE6z
+	 z7loecoZsXvCPuWJAlJNE5M7VbWNFmXv/+ghH55a0ywN7li7pp5JlalIcpDlLjDif0
+	 oQRqC0JAlTSrlzHKq9sU+thqsx6M+oWvdqZ3iBN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Denys Vlasenko <dvlasenk@redhat.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 295/314] tracing: Fix potential null-pointer-access of entry in list tr->err_log
-Date: Wed, 23 Nov 2022 09:52:20 +0100
-Message-Id: <20221123084638.893376943@linuxfoundation.org>
+Subject: [PATCH 6.0 296/314] arm64/mm: fix incorrect file_map_count for non-leaf pmd/pud
+Date: Wed, 23 Nov 2022 09:52:21 +0100
+Message-Id: <20221123084638.945320968@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,66 +40,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 067df9e0ad48a97382ab2179bbe773a13a846028 ]
+[ Upstream commit 5b47348fc0b18a78c96f8474cc90b7525ad1bbfe ]
 
-Entries in list 'tr->err_log' will be reused after entry number
-exceed TRACING_LOG_ERRS_MAX.
+The page table check trigger BUG_ON() unexpectedly when collapse hugepage:
 
-The cmd string of the to be reused entry will be freed first then
-allocated a new one. If the allocation failed, then the entry will
-still be in list 'tr->err_log' but its 'cmd' field is set to be NULL,
-later access of 'cmd' is risky.
+ ------------[ cut here ]------------
+ kernel BUG at mm/page_table_check.c:82!
+ Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+ Dumping ftrace buffer:
+    (ftrace buffer empty)
+ Modules linked in:
+ CPU: 6 PID: 68 Comm: khugepaged Not tainted 6.1.0-rc3+ #750
+ Hardware name: linux,dummy-virt (DT)
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : page_table_check_clear.isra.0+0x258/0x3f0
+ lr : page_table_check_clear.isra.0+0x240/0x3f0
+[...]
+ Call trace:
+  page_table_check_clear.isra.0+0x258/0x3f0
+  __page_table_check_pmd_clear+0xbc/0x108
+  pmdp_collapse_flush+0xb0/0x160
+  collapse_huge_page+0xa08/0x1080
+  hpage_collapse_scan_pmd+0xf30/0x1590
+  khugepaged_scan_mm_slot.constprop.0+0x52c/0xac8
+  khugepaged+0x338/0x518
+  kthread+0x278/0x2f8
+  ret_from_fork+0x10/0x20
+[...]
 
-Currently above problem can cause the loss of 'cmd' information of first
-entry in 'tr->err_log'. When execute `cat /sys/kernel/tracing/error_log`,
-reproduce logs like:
-  [   37.495100] trace_kprobe: error: Maxactive is not for kprobe(null) ^
-  [   38.412517] trace_kprobe: error: Maxactive is not for kprobe
-    Command: p4:myprobe2 do_sys_openat2
-            ^
+Since pmd_user_accessible_page() doesn't check if a pmd is leaf, it
+decrease file_map_count for a non-leaf pmd comes from collapse_huge_page().
+and so trigger BUG_ON() unexpectedly.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20221114104632.3547266-1-zhengyejian1@huawei.com
+Fix this problem by using pmd_leaf() insteal of pmd_present() in
+pmd_user_accessible_page(). Moreover, use pud_leaf() for
+pud_user_accessible_page() too.
 
-Fixes: 1581a884b7ca ("tracing: Remove size restriction on tracing_log_err cmd strings")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 42b2547137f5 ("arm64/mm: enable ARCH_SUPPORTS_PAGE_TABLE_CHECK")
+Reported-by: Denys Vlasenko <dvlasenk@redhat.com>
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221117075602.2904324-2-liushixin2@huawei.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/pgtable.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 87d2f04152f9..7132e21e90d6 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7803,6 +7803,7 @@ static struct tracing_log_err *get_tracing_log_err(struct trace_array *tr,
- 						   int len)
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index b5df82aa99e6..d78e69293d12 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -863,12 +863,12 @@ static inline bool pte_user_accessible_page(pte_t pte)
+ 
+ static inline bool pmd_user_accessible_page(pmd_t pmd)
  {
- 	struct tracing_log_err *err;
-+	char *cmd;
+-	return pmd_present(pmd) && (pmd_user(pmd) || pmd_user_exec(pmd));
++	return pmd_leaf(pmd) && (pmd_user(pmd) || pmd_user_exec(pmd));
+ }
  
- 	if (tr->n_err_log_entries < TRACING_LOG_ERRS_MAX) {
- 		err = alloc_tracing_log_err(len);
-@@ -7811,12 +7812,12 @@ static struct tracing_log_err *get_tracing_log_err(struct trace_array *tr,
+ static inline bool pud_user_accessible_page(pud_t pud)
+ {
+-	return pud_present(pud) && pud_user(pud);
++	return pud_leaf(pud) && pud_user(pud);
+ }
+ #endif
  
- 		return err;
- 	}
--
-+	cmd = kzalloc(len, GFP_KERNEL);
-+	if (!cmd)
-+		return ERR_PTR(-ENOMEM);
- 	err = list_first_entry(&tr->err_log, struct tracing_log_err, list);
- 	kfree(err->cmd);
--	err->cmd = kzalloc(len, GFP_KERNEL);
--	if (!err->cmd)
--		return ERR_PTR(-ENOMEM);
-+	err->cmd = cmd;
- 	list_del(&err->list);
- 
- 	return err;
 -- 
 2.35.1
 
