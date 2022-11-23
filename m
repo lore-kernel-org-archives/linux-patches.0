@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A741C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EACC433D6;
-	Wed, 23 Nov 2022 09:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB2B1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AC8C433D6;
+	Wed, 23 Nov 2022 09:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197162;
-	bh=WO33uot3OR3TvqZxOp92NKrN7EgmYPBU7TzJwPjhVyk=;
+	s=korg; t=1669197166;
+	bh=GylouvC0mD/Wmx9YJ2djSRQJ3H4H1N+tXd0yuKM8VKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8wE1mMDLABN9rXm7A8aC3yrqZcOnNWmvyo+rNsiMnOKl8wnEheh2TcfKyJ07A+zg
-	 fLRW7f21lWNWaASg+joa94RPHPhfHukqkRmRu8QNhy7JULlIGRMGXLMzxlRJRxYWk+
-	 7btc5yv+d5XMfa9FQ/8TNgPrfZFcMC0lE2cRj+bU=
+	b=M3E2ZwUoD5Jz1QjZ2SMPJbCpRN0RSbKFY8NXOS8Cdlps5lkXPbiR9/inaPcCj7Zbq
+	 awePSc8AHBgxpG7bvigfRkvNzFAZsqFBMwDRn/EUh9wjfC99JT4NVw4mECDMnRdGjY
+	 NRDqhu+bRHP3k+9MAle5//WKX7W/KFHPk1lL19OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
+	George Shen <george.shen@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 216/314] drm/amd/display: Fix access timeout to DPIA AUX at boot time
-Date: Wed, 23 Nov 2022 09:51:01 +0100
-Message-Id: <20221123084635.331988949@linuxfoundation.org>
+Subject: [PATCH 6.0 217/314] drm/amd/display: Support parsing VRAM info v3.0 from VBIOS
+Date: Wed, 23 Nov 2022 09:51:02 +0100
+Message-Id: <20221123084635.371789234@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,58 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stylon Wang <stylon.wang@amd.com>
+From: George Shen <george.shen@amd.com>
 
-commit 0d502ef8898b3983eef9e40f50dfe100a0de5d93 upstream.
+commit 7e952a18eb978a3e51fc1704b752378be66226b2 upstream.
 
 [Why]
-Since introduction of patch "Query DPIA HPD status.", link detection at
-boot could be accessing DPIA AUX, which will not succeed until
-DMUB outbox messaging is enabled and results in below dmesg logs:
+For DCN3.2 and DCN3.21, VBIOS has switch to using v3.0 of the VRAM
+info struct. We should read and override the VRAM info in driver with
+values provided by VBIOS to support memory downbin cases.
 
-[  160.840227] [drm:amdgpu_dm_process_dmub_aux_transfer_sync [amdgpu]] *ERROR* wait_for_completion_timeout timeout!
-
-[How]
-Enable DMUB outbox messaging before link detection at boot time.
-
-Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |   30 +++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1645,12 +1645,6 @@ static int amdgpu_dm_init(struct amdgpu_
- 		}
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -2392,6 +2392,26 @@ static enum bp_result get_vram_info_v25(
+ 	return result;
+ }
  
--	if (amdgpu_dm_initialize_drm_device(adev)) {
--		DRM_ERROR(
--		"amdgpu: failed to initialize sw for display support.\n");
--		goto error;
--	}
--
- 	/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
- 	 * It is expected that DMUB will resend any pending notifications at this point, for
- 	 * example HPD from DPIA.
-@@ -1658,6 +1652,12 @@ static int amdgpu_dm_init(struct amdgpu_
- 	if (dc_is_dmub_outbox_supported(adev->dm.dc))
- 		dc_enable_dmub_outbox(adev->dm.dc);
- 
-+	if (amdgpu_dm_initialize_drm_device(adev)) {
-+		DRM_ERROR(
-+		"amdgpu: failed to initialize sw for display support.\n");
-+		goto error;
-+	}
++static enum bp_result get_vram_info_v30(
++	struct bios_parser *bp,
++	struct dc_vram_info *info)
++{
++	struct atom_vram_info_header_v3_0 *info_v30;
++	enum bp_result result = BP_RESULT_OK;
 +
- 	/* create fake encoders for MST */
- 	dm_dp_create_fake_mst_encoders(adev);
++	info_v30 = GET_IMAGE(struct atom_vram_info_header_v3_0,
++						DATA_TABLES(vram_info));
++
++	if (info_v30 == NULL)
++		return BP_RESULT_BADBIOSTABLE;
++
++	info->num_chans = info_v30->channel_num;
++	info->dram_channel_width_bytes = (1 << info_v30->channel_width) / 8;
++
++	return result;
++}
++
++
+ /*
+  * get_integrated_info_v11
+  *
+@@ -3022,6 +3042,16 @@ static enum bp_result bios_parser_get_vr
+ 				break;
+ 			default:
+ 				break;
++			}
++			break;
++
++		case 3:
++			switch (revision.minor) {
++			case 0:
++				result = get_vram_info_v30(bp, info);
++				break;
++			default:
++				break;
+ 			}
+ 			break;
  
 
 
