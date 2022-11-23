@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71F01C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFA0C433C1;
-	Wed, 23 Nov 2022 09:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426D41C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1654C433C1;
+	Wed, 23 Nov 2022 09:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194259;
-	bh=Ow6bm9sate6P/YdaHpGnT3KY7AexazLac8KcHVBJgW8=;
+	s=korg; t=1669194263;
+	bh=C0WMr25BMRqL1AV//WwwfcxI5BwlUs3bPLepC5iG5vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P19I/vPVrcwL8fL5fb8mzOs0EyhBOOVvck+KB7RVyT7r91EzbAsZz54dhkgyitIVY
-	 sEyacC+5PG2DuHafjBbTtx5IiwddYaEZ6Bv/sbp6qtfMhX1B0Zjt5uluQdy7kkoul/
-	 xIl/xPqJRZA3XaIjoJ3a3q5Xsjyk4jYpoTp9QupU=
+	b=w7MFJskYtuXkT/z3xEKk8yrBZzV7U4yN/A/5YiSFnCEPlYhCFXFHXY2+1GUff2jDi
+	 jSQxxmRvTTUC1EtfHYo8ejh00T+eQBzTFcLsmqg/WkfoKhJzAqRieEDdgjwY03tMds
+	 PSIKO8Tp37RV9I6dYbUhnNeEzFDJOMIr2byTEl90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 028/114] nilfs2: fix deadlock in nilfs_count_free_blocks()
-Date: Wed, 23 Nov 2022 09:50:15 +0100
-Message-Id: <20221123084552.970307455@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 011/114] drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
+Date: Wed, 23 Nov 2022 09:49:58 +0100
+Message-Id: <20221123084552.286332663@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -35,81 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 8ac932a4921a96ca52f61935dbba64ea87bbd5dc upstream.
+[ Upstream commit cf53db768a8790fdaae2fa3a81322b080285f7e5 ]
 
-A semaphore deadlock can occur if nilfs_get_block() detects metadata
-corruption while locating data blocks and a superblock writeback occurs at
-the same time:
+A problem about modprobe vc4 failed is triggered with the following log
+given:
 
-task 1                               task 2
-------                               ------
-* A file operation *
-nilfs_truncate()
-  nilfs_get_block()
-    down_read(rwsem A) <--
-    nilfs_bmap_lookup_contig()
-      ...                            generic_shutdown_super()
-                                       nilfs_put_super()
-                                         * Prepare to write superblock *
-                                         down_write(rwsem B) <--
-                                         nilfs_cleanup_super()
-      * Detect b-tree corruption *         nilfs_set_log_cursor()
-      nilfs_bmap_convert_error()             nilfs_count_free_blocks()
-        __nilfs_error()                        down_read(rwsem A) <--
-          nilfs_set_error()
-            down_write(rwsem B) <--
+ [  420.327987] Error: Driver 'vc4_hvs' is already registered, aborting...
+ [  420.333904] failed to register platform driver vc4_hvs_driver [vc4]: -16
+ modprobe: ERROR: could not insert 'vc4': Device or resource busy
 
-                           *** DEADLOCK ***
+The reason is that vc4_drm_register() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+fails, it returns without unregistering all the vc4 drivers, resulting the
+vc4 can never be installed later.
+A simple call graph is shown as below:
 
-Here, nilfs_get_block() readlocks rwsem A (= NILFS_MDT(dat_inode)->mi_sem)
-and then calls nilfs_bmap_lookup_contig(), but if it fails due to metadata
-corruption, __nilfs_error() is called from nilfs_bmap_convert_error()
-inside the lock section.
+ vc4_drm_register()
+   platform_register_drivers() # all vc4 drivers are registered
+   platform_driver_register()
+     driver_register()
+       bus_add_driver()
+         priv = kzalloc(...) # OOM happened
+   # return without unregister drivers
 
-Since __nilfs_error() calls nilfs_set_error() unless the filesystem is
-read-only and nilfs_set_error() attempts to writelock rwsem B (=
-nilfs->ns_sem) to write back superblock exclusively, hierarchical lock
-acquisition occurs in the order rwsem A -> rwsem B.
+Fixing this problem by checking the return value of
+platform_driver_register() and do platform_unregister_drivers() if
+error happened.
 
-Now, if another task starts updating the superblock, it may writelock
-rwsem B during the lock sequence above, and can deadlock trying to
-readlock rwsem A in nilfs_count_free_blocks().
-
-However, there is actually no need to take rwsem A in
-nilfs_count_free_blocks() because it, within the lock section, only reads
-a single integer data on a shared struct with
-nilfs_sufile_get_ncleansegs().  This has been the case after commit
-aa474a220180 ("nilfs2: add local variable to cache the number of clean
-segments"), that is, even before this bug was introduced.
-
-So, this resolves the deadlock problem by just not taking the semaphore in
-nilfs_count_free_blocks().
-
-Link: https://lkml.kernel.org/r/20221029044912.9139-1-konishi.ryusuke@gmail.com
-Fixes: e828949e5b42 ("nilfs2: call nilfs_error inside bmap routines")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+45d6ce7b7ad7ef455d03@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>	[2.6.38+
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221103014705.109322-1-yuancan@huawei.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/vc4/vc4_drv.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -695,9 +695,7 @@ int nilfs_count_free_blocks(struct the_n
- {
- 	unsigned long ncleansegs;
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index 868dd1ef3b69..f210560a4831 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -394,7 +394,12 @@ static int __init vc4_drm_register(void)
+ 	if (ret)
+ 		return ret;
  
--	down_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
- 	ncleansegs = nilfs_sufile_get_ncleansegs(nilfs->ns_sufile);
--	up_read(&NILFS_MDT(nilfs->ns_dat)->mi_sem);
- 	*nblocks = (sector_t)ncleansegs * nilfs->ns_blocks_per_segment;
- 	return 0;
+-	return platform_driver_register(&vc4_platform_driver);
++	ret = platform_driver_register(&vc4_platform_driver);
++	if (ret)
++		platform_unregister_drivers(component_drivers,
++					    ARRAY_SIZE(component_drivers));
++
++	return ret;
  }
+ 
+ static void __exit vc4_drm_unregister(void)
+-- 
+2.35.1
+
 
 
