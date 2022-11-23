@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF04A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAB7C433D6;
-	Wed, 23 Nov 2022 09:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDD41C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C654C433C1;
+	Wed, 23 Nov 2022 09:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195765;
-	bh=3WkrmEoAFgzP3rS0WAcjwHIGzNUq1a486mzZdGRC2ns=;
+	s=korg; t=1669195769;
+	bh=tYBtVuLghGj1IVRNT9l+TDsCZwlgI9Vqa/6GY+KEVGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRcHAMihLYpFHM1pqDqolGJIhNR0Iyi4ON4y/ri3m2RK/4x9TS3IUT8o+WP7Bj1ve
-	 V8vn62DY9OC9l8BuP9cMCFF4P+LCDkFKRh/pURHYgV6A2KOOu0BeU7tXtiDHUxwzyZ
-	 xi5kJrYSC0MG7Hl6l9RP4m+jXxlGuH0y7dIPF4cc=
+	b=cRG1iFpuGXpvli4l4aQ/lrb89J7ojxfad51N9qSgSoU7uMXdLnm02Hx+HSiZaibZh
+	 4nC6zb2ArP457OM4hQ9BcGa+v0Y9ewX/YQyaYgkbAkpmMwFtYSUANwnxscxkQtbxW1
+	 P9Daa6w1W0wJ4mlVK1iDyhVx2uFhUe9P0YzmsEL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/181] firmware: arm_scmi: Cleanup the core driver removal callback
-Date: Wed, 23 Nov 2022 09:49:49 +0100
-Message-Id: <20221123084603.537554541@linuxfoundation.org>
+	Yang Shi <shy828301@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hugh Dickins <hughd@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Ajay Garg <ajaygargnsit@gmail.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andy Lavr <andy.lavr@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Subject: [PATCH 5.15 003/181] mm: shmem: dont truncate page if memory failure happens
+Date: Wed, 23 Nov 2022 09:49:26 +0100
+Message-Id: <20221123084602.818806597@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,136 +46,223 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Yang Shi <shy828301@gmail.com>
 
-[ Upstream commit 3f4071cbd2063b917486d1047a4da47718215fee ]
+commit a7605426666196c5a460dd3de6f8dac1d3c21f00 upstream.
 
-Platform drivers .remove callbacks are not supposed to fail and report
-errors. Such errors are indeed ignored by the core platform drivers
-and the driver unbind process is anyway completed.
+The current behavior of memory failure is to truncate the page cache
+regardless of dirty or clean.  If the page is dirty the later access
+will get the obsolete data from disk without any notification to the
+users.  This may cause silent data loss.  It is even worse for shmem
+since shmem is in-memory filesystem, truncating page cache means
+discarding data blocks.  The later read would return all zero.
 
-The SCMI core platform driver as it is now, instead, bails out reporting
-an error in case of an explicit unbind request.
+The right approach is to keep the corrupted page in page cache, any
+later access would return error for syscalls or SIGBUS for page fault,
+until the file is truncated, hole punched or removed.  The regular
+storage backed filesystems would be more complicated so this patch is
+focused on shmem.  This also unblock the support for soft offlining
+shmem THP.
 
-Fix the removal path by adding proper device links between the core SCMI
-device and the SCMI protocol devices so that a full SCMI stack unbind is
-triggered when the core driver is removed. The remove process does not
-bail out anymore on the anomalous conditions triggered by an explicit
-unbind but the user is still warned.
+[akpm@linux-foundation.org: coding style fixes]
+[arnd@arndb.de: fix uninitialized variable use in me_pagecache_clean()]
+  Link: https://lkml.kernel.org/r/20211022064748.4173718-1-arnd@kernel.org
+[Fix invalid pointer dereference in shmem_read_mapping_page_gfp() with a
+ slight different implementation from what Ajay Garg <ajaygargnsit@gmail.com>
+ and Muchun Song <songmuchun@bytedance.com> proposed and reworked the
+ error handling of shmem_write_begin() suggested by Linus]
+  Link: https://lore.kernel.org/linux-mm/20211111084617.6746-1-ajaygargnsit@gmail.com/
 
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221028140833.280091-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20211020210755.23964-6-shy828301@gmail.com
+Link: https://lkml.kernel.org/r/20211116193247.21102-1-shy828301@gmail.com
+Signed-off-by: Yang Shi <shy828301@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ajay Garg <ajaygargnsit@gmail.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Andy Lavr <andy.lavr@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/bus.c    | 11 +++++++++++
- drivers/firmware/arm_scmi/common.h |  1 +
- drivers/firmware/arm_scmi/driver.c | 31 ++++++++++++++++++------------
- 3 files changed, 31 insertions(+), 12 deletions(-)
+ mm/memory-failure.c |   14 +++++++++++---
+ mm/shmem.c          |   51 +++++++++++++++++++++++++++++++++++++++++++++------
+ mm/userfaultfd.c    |    5 +++++
+ 3 files changed, 61 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index f6fe723ab869..7c1c0951e562 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -216,9 +216,20 @@ void scmi_device_destroy(struct scmi_device *scmi_dev)
- 	device_unregister(&scmi_dev->dev);
- }
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -57,6 +57,7 @@
+ #include <linux/ratelimit.h>
+ #include <linux/page-isolation.h>
+ #include <linux/pagewalk.h>
++#include <linux/shmem_fs.h>
+ #include "internal.h"
+ #include "ras/ras_event.h"
  
-+void scmi_device_link_add(struct device *consumer, struct device *supplier)
-+{
-+	struct device_link *link;
-+
-+	link = device_link_add(consumer, supplier, DL_FLAG_AUTOREMOVE_CONSUMER);
-+
-+	WARN_ON(!link);
-+}
-+
- void scmi_set_handle(struct scmi_device *scmi_dev)
+@@ -871,6 +872,7 @@ static int me_pagecache_clean(struct pag
  {
- 	scmi_dev->handle = scmi_handle_get(&scmi_dev->dev);
-+	if (scmi_dev->handle)
-+		scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev);
- }
+ 	int ret;
+ 	struct address_space *mapping;
++	bool extra_pins;
  
- int scmi_protocol_register(const struct scmi_protocol *proto)
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index dea1bfbe1052..b9f5829c0c4d 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -272,6 +272,7 @@ struct scmi_xfer_ops {
- struct scmi_revision_info *
- scmi_revision_area_get(const struct scmi_protocol_handle *ph);
- int scmi_handle_put(const struct scmi_handle *handle);
-+void scmi_device_link_add(struct device *consumer, struct device *supplier);
- struct scmi_handle *scmi_handle_get(struct device *dev);
- void scmi_set_handle(struct scmi_device *scmi_dev);
- void scmi_setup_protocol_implemented(const struct scmi_protocol_handle *ph,
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 16569af4a2ba..a8ff4c9508b7 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -1731,10 +1731,16 @@ int scmi_protocol_device_request(const struct scmi_device_id *id_table)
- 			sdev = scmi_get_protocol_device(child, info,
- 							id_table->protocol_id,
- 							id_table->name);
--			/* Set handle if not already set: device existed */
--			if (sdev && !sdev->handle)
--				sdev->handle =
--					scmi_handle_get_from_info_unlocked(info);
-+			if (sdev) {
-+				/* Set handle if not already set: device existed */
-+				if (!sdev->handle)
-+					sdev->handle =
-+						scmi_handle_get_from_info_unlocked(info);
-+				/* Relink consumer and suppliers */
-+				if (sdev->handle)
-+					scmi_device_link_add(&sdev->dev,
-+							     sdev->handle->dev);
-+			}
- 		} else {
- 			dev_err(info->dev,
- 				"Failed. SCMI protocol %d not active.\n",
-@@ -1920,20 +1926,17 @@ void scmi_free_channel(struct scmi_chan_info *cinfo, struct idr *idr, int id)
+ 	delete_from_lru_cache(p);
  
- static int scmi_remove(struct platform_device *pdev)
- {
--	int ret = 0, id;
-+	int ret, id;
- 	struct scmi_info *info = platform_get_drvdata(pdev);
- 	struct device_node *child;
+@@ -900,17 +902,23 @@ static int me_pagecache_clean(struct pag
+ 	}
  
- 	mutex_lock(&scmi_list_mutex);
- 	if (info->users)
--		ret = -EBUSY;
--	else
--		list_del(&info->node);
-+		dev_warn(&pdev->dev,
-+			 "Still active SCMI users will be forcibly unbound.\n");
-+	list_del(&info->node);
- 	mutex_unlock(&scmi_list_mutex);
+ 	/*
++	 * The shmem page is kept in page cache instead of truncating
++	 * so is expected to have an extra refcount after error-handling.
++	 */
++	extra_pins = shmem_mapping(mapping);
++
++	/*
+ 	 * Truncation is a bit tricky. Enable it per file system for now.
+ 	 *
+ 	 * Open: to take i_rwsem or not for this? Right now we don't.
+ 	 */
+ 	ret = truncate_error_page(p, page_to_pfn(p), mapping);
++	if (has_extra_refcount(ps, p, extra_pins))
++		ret = MF_FAILED;
++
+ out:
+ 	unlock_page(p);
  
--	if (ret)
--		return ret;
+-	if (has_extra_refcount(ps, p, false))
+-		ret = MF_FAILED;
 -
- 	scmi_notification_exit(&info->handle);
+ 	return ret;
+ }
  
- 	mutex_lock(&info->protocols_mtx);
-@@ -1945,7 +1948,11 @@ static int scmi_remove(struct platform_device *pdev)
- 	idr_destroy(&info->active_protocols);
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -2463,6 +2463,7 @@ shmem_write_begin(struct file *file, str
+ 	struct inode *inode = mapping->host;
+ 	struct shmem_inode_info *info = SHMEM_I(inode);
+ 	pgoff_t index = pos >> PAGE_SHIFT;
++	int ret = 0;
  
- 	/* Safe to free channels since no more users */
--	return scmi_cleanup_txrx_channels(info);
-+	ret = scmi_cleanup_txrx_channels(info);
+ 	/* i_rwsem is held by caller */
+ 	if (unlikely(info->seals & (F_SEAL_GROW |
+@@ -2473,7 +2474,19 @@ shmem_write_begin(struct file *file, str
+ 			return -EPERM;
+ 	}
+ 
+-	return shmem_getpage(inode, index, pagep, SGP_WRITE);
++	ret = shmem_getpage(inode, index, pagep, SGP_WRITE);
++
 +	if (ret)
-+		dev_warn(&pdev->dev, "Failed to cleanup SCMI channels.\n");
++		return ret;
++
++	if (PageHWPoison(*pagep)) {
++		unlock_page(*pagep);
++		put_page(*pagep);
++		*pagep = NULL;
++		return -EIO;
++	}
 +
 +	return 0;
  }
  
- static ssize_t protocol_version_show(struct device *dev,
--- 
-2.35.1
-
+ static int
+@@ -2560,6 +2573,12 @@ static ssize_t shmem_file_read_iter(stru
+ 			if (sgp == SGP_CACHE)
+ 				set_page_dirty(page);
+ 			unlock_page(page);
++
++			if (PageHWPoison(page)) {
++				put_page(page);
++				error = -EIO;
++				break;
++			}
+ 		}
+ 
+ 		/*
+@@ -3121,7 +3140,8 @@ static const char *shmem_get_link(struct
+ 		page = find_get_page(inode->i_mapping, 0);
+ 		if (!page)
+ 			return ERR_PTR(-ECHILD);
+-		if (!PageUptodate(page)) {
++		if (PageHWPoison(page) ||
++		    !PageUptodate(page)) {
+ 			put_page(page);
+ 			return ERR_PTR(-ECHILD);
+ 		}
+@@ -3129,6 +3149,13 @@ static const char *shmem_get_link(struct
+ 		error = shmem_getpage(inode, 0, &page, SGP_READ);
+ 		if (error)
+ 			return ERR_PTR(error);
++		if (!page)
++			return ERR_PTR(-ECHILD);
++		if (PageHWPoison(page)) {
++			unlock_page(page);
++			put_page(page);
++			return ERR_PTR(-ECHILD);
++		}
+ 		unlock_page(page);
+ 	}
+ 	set_delayed_call(done, shmem_put_link, page);
+@@ -3779,6 +3806,13 @@ static void shmem_destroy_inodecache(voi
+ 	kmem_cache_destroy(shmem_inode_cachep);
+ }
+ 
++/* Keep the page in page cache instead of truncating it */
++static int shmem_error_remove_page(struct address_space *mapping,
++				   struct page *page)
++{
++	return 0;
++}
++
+ const struct address_space_operations shmem_aops = {
+ 	.writepage	= shmem_writepage,
+ 	.set_page_dirty	= __set_page_dirty_no_writeback,
+@@ -3789,7 +3823,7 @@ const struct address_space_operations sh
+ #ifdef CONFIG_MIGRATION
+ 	.migratepage	= migrate_page,
+ #endif
+-	.error_remove_page = generic_error_remove_page,
++	.error_remove_page = shmem_error_remove_page,
+ };
+ EXPORT_SYMBOL(shmem_aops);
+ 
+@@ -4197,9 +4231,14 @@ struct page *shmem_read_mapping_page_gfp
+ 	error = shmem_getpage_gfp(inode, index, &page, SGP_CACHE,
+ 				  gfp, NULL, NULL, NULL);
+ 	if (error)
+-		page = ERR_PTR(error);
+-	else
+-		unlock_page(page);
++		return ERR_PTR(error);
++
++	unlock_page(page);
++	if (PageHWPoison(page)) {
++		put_page(page);
++		return ERR_PTR(-EIO);
++	}
++
+ 	return page;
+ #else
+ 	/*
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -238,6 +238,11 @@ static int mcontinue_atomic_pte(struct m
+ 		goto out;
+ 	}
+ 
++	if (PageHWPoison(page)) {
++		ret = -EIO;
++		goto out_release;
++	}
++
+ 	ret = mfill_atomic_install_pte(dst_mm, dst_pmd, dst_vma, dst_addr,
+ 				       page, false, wp_copy);
+ 	if (ret)
 
 
