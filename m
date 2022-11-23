@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348951C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E553C433D6;
-	Wed, 23 Nov 2022 09:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8E91C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB78FC433C1;
+	Wed, 23 Nov 2022 09:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195059;
-	bh=bd3ntbbQYOuOvmoZf9fzo++h3Jhhk5K/ZRBajluowik=;
+	s=korg; t=1669195062;
+	bh=yyRLcOZkVFdF4LGAYIWZzTY3gJNCP7TaUXIpFbcdzNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOKC329iqqL/fIPDfsix2+/1HVRQvyn32t9uEq+r+gc3p27ycuPx6GtfFRGayVMLw
-	 PGxnd51/iBP1976h+uKkgKf59UhWvb2TjWrwuKKbE1yhRQlq9mlEcnjewBmSgD0WV2
-	 SjTC4uivTTd9wq3gx9bx3fflLsSYui44vukJbblY=
+	b=hDqg10avqSWkdMwNCgP0oVhiU0+p9gy+QyAKn7Nh2qyrfHL7eQ5Ru6zN6++jeqDFv
+	 jN+FBxcY52BIqA0LTjopzUxrcsHm80xPdKhyiR1Et0bUiJbym+IUw+uHRHjMoHUWVs
+	 F6oRw9zTDkEeXXqcJ2YPpY+tE4z/lpEbx+oIec6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 136/156] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
-Date: Wed, 23 Nov 2022 09:51:33 +0100
-Message-Id: <20221123084602.831695465@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 5.4 137/156] docs: update mediator contact information in CoC doc
+Date: Wed, 23 Nov 2022 09:51:34 +0100
+Message-Id: <20221123084602.861820450@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -34,36 +33,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
 
-commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
+commit 5fddf8962b429b8303c4a654291ecb6e61a7d747 upstream.
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-before amd_probe() returns. There is no problem for the 'smbus_dev ==
-NULL' branch because pci_dev_put() can also handle the NULL input
-parameter case.
+Update mediator contact information in CoC interpretation document.
 
-Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20221011171417.34286-1-skhan@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/process/code-of-conduct-interpretation.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -1795,6 +1795,8 @@ static int amd_probe(struct sdhci_pci_ch
- 		}
- 	}
+--- a/Documentation/process/code-of-conduct-interpretation.rst
++++ b/Documentation/process/code-of-conduct-interpretation.rst
+@@ -51,7 +51,7 @@ the Technical Advisory Board (TAB) or ot
+ uncertain how to handle situations that come up.  It will not be
+ considered a violation report unless you want it to be.  If you are
+ uncertain about approaching the TAB or any other maintainers, please
+-reach out to our conflict mediator, Joanna Lee <joanna.lee@gesmer.com>.
++reach out to our conflict mediator, Joanna Lee <jlee@linuxfoundation.org>.
  
-+	pci_dev_put(smbus_dev);
-+
- 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
- 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
- 
+ In the end, "be kind to each other" is really what the end goal is for
+ everybody.  We know everyone is human and we all fail at times, but the
 
 
