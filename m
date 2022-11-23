@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3621C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44A2C433D6;
-	Wed, 23 Nov 2022 09:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249D41C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE7AC433C1;
+	Wed, 23 Nov 2022 09:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195140;
-	bh=9+ZLJWZ+edbJ5SV64rjAhzZBWoWw/nYmvN4vTgXSXP4=;
+	s=korg; t=1669195144;
+	bh=XHf2VZmDJzbdI9vkkpkXc/QkLY8a5j4YlW7jgxm9b84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvDt8sKgUsq4okwHgkNBlQtl/EnjUq8MMIP2PWZ8V2mYvyr+l8ntrrkQihYQW7zOD
-	 oYJT811m4stWebJV3GUDoOivTjS2oPsD+CQbqEuREVc1/Bj0qqIK1AH09O0+StSVJd
-	 1xrNFnARY9ryJfof640DUmjz898kZGm5QJOgIHxk=
+	b=GJrzOKAaycqDmMRAe2GiEBfXd6n8xdr0Cx/6vdPygj2Cd1QRIwoyM3oWyN1/qQgZZ
+	 07DzRBMqvvDXfZ28Mn1npTyiU2C6ZA/aeg4cqRSEArXPH14tJ7D5cNn+3s5Y4wAdy/
+	 H+OF7c4iBLf++UAVOV3CG2dkRBK/3O9llFa8aGuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Anton Altaparmakov <anton@tuxera.com>,
-	"chenxiaosong (A)" <chenxiaosong2@huawei.com>,
-	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 156/156] ntfs: check overflow when iterating ATTR_RECORDs
-Date: Wed, 23 Nov 2022 09:51:53 +0100
-Message-Id: <20221123084603.441804323@linuxfoundation.org>
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Aman Kumar <aman.kumar@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.4 130/156] serial: 8250: Fall back to non-DMA Rx if IIR_RDI occurs
+Date: Wed, 23 Nov 2022 09:51:27 +0100
+Message-Id: <20221123084602.637997839@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -38,52 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 63095f4f3af59322bea984a6ae44337439348fe0 upstream.
+commit a931237cbea256aff13bb403da13a97b2d1605d9 upstream.
 
-Kernel iterates over ATTR_RECORDs in mft record in ntfs_attr_find().
-Because the ATTR_RECORDs are next to each other, kernel can get the next
-ATTR_RECORD from end address of current ATTR_RECORD, through current
-ATTR_RECORD length field.
+DW UART sometimes triggers IIR_RDI during DMA Rx when IIR_RX_TIMEOUT
+should have been triggered instead. Since IIR_RDI has higher priority
+than IIR_RX_TIMEOUT, this causes the Rx to hang into interrupt loop.
+The problem seems to occur at least with some combinations of
+small-sized transfers (I've reproduced the problem on Elkhart Lake PSE
+UARTs).
 
-The problem is that during iteration, when kernel calculates the end
-address of current ATTR_RECORD, kernel may trigger an integer overflow bug
-in executing `a = (ATTR_RECORD*)((u8*)a + le32_to_cpu(a->length))`.  This
-may wrap, leading to a forever iteration on 32bit systems.
+If there's already an on-going Rx DMA and IIR_RDI triggers, fall
+graciously back to non-DMA Rx. That is, behave as if IIR_RX_TIMEOUT had
+occurred.
 
-This patch solves it by adding some checks on calculating end address
-of current ATTR_RECORD during iteration.
+8250_omap already considers IIR_RDI similar to this change so its
+nothing unheard of.
 
-Link: https://lkml.kernel.org/r/20220831160935.3409-4-yin31149@gmail.com
-Link: https://lore.kernel.org/all/20220827105842.GM2030@kadam/
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Suggested-by: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Anton Altaparmakov <anton@tuxera.com>
-Cc: chenxiaosong (A) <chenxiaosong2@huawei.com>
-Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 75df022b5f89 ("serial: 8250_dma: Fix RX handling")
+Cc: <stable@vger.kernel.org>
+Co-developed-by: Srikanth Thokala <srikanth.thokala@intel.com>
+Signed-off-by: Srikanth Thokala <srikanth.thokala@intel.com>
+Co-developed-by: Aman Kumar <aman.kumar@intel.com>
+Signed-off-by: Aman Kumar <aman.kumar@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221108121952.5497-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrib.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/8250/8250_port.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -617,6 +617,14 @@ static int ntfs_attr_find(const ATTR_TYP
- 			return -ENOENT;
- 		if (unlikely(!a->length))
- 			break;
-+
-+		/* check whether ATTR_RECORD's length wrap */
-+		if ((u8 *)a + le32_to_cpu(a->length) < (u8 *)a)
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1820,6 +1820,10 @@ EXPORT_SYMBOL_GPL(serial8250_modem_statu
+ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
+ {
+ 	switch (iir & 0x3f) {
++	case UART_IIR_RDI:
++		if (!up->dma->rx_running)
 +			break;
-+		/* check whether ATTR_RECORD's length is within bounds */
-+		if ((u8 *)a + le32_to_cpu(a->length) > mrec_end)
-+			break;
-+
- 		if (a->type != type)
- 			continue;
- 		/*
++		fallthrough;
+ 	case UART_IIR_RX_TIMEOUT:
+ 		serial8250_rx_dma_flush(up);
+ 		/* fall-through */
 
 
