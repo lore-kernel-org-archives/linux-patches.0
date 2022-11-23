@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153471C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B859C433D7;
-	Wed, 23 Nov 2022 09:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73841C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294DFC433C1;
+	Wed, 23 Nov 2022 09:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197491;
-	bh=yYhp8Hn/124hrHXNT+nRAm36mEF9eGnbHttfrnpJ3Ts=;
+	s=korg; t=1669197495;
+	bh=Wsgk9B9ibQKnSKhxbQMpuw1MKUj0bTEKFbDa7TQjK4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deYEm7xOhBIjNgq/7DUD132RFOeH7lGdWaNq6kTs4Vd20wxwrmf29sRyu4tHi6BDA
-	 raTFgG79NI+p1p+vJImGbZ/8GWcesU1Ixh9efaWTSmssKtxYTkr96rRmTXKf4THsFz
-	 Jv0XEpcCLNDxJigCeN6AUWFKP7QgTBngS48tgPMQ=
+	b=MYhksMNsI2y3ck9wOLVgjPj7PQREiUaN3Ve50g773kumqE6x4JyqoGyZM5rwByTD6
+	 Fa9x78pkqBH/Smg/R78wgMystWLyyc4CflcaNGejOVylBYmlXjgwbv5gqxZOBMjY1y
+	 OeMNJY4C9sEgbEDuukKcFI6/2vrixfMicrO7X588=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Schspa Shi <schspa@gmail.com>
-Subject: [PATCH 6.0 302/314] 9p: trans_fd/p9_conn_cancel: drop client lock earlier
-Date: Wed, 23 Nov 2022 09:52:27 +0100
-Message-Id: <20221123084639.241924754@linuxfoundation.org>
+	Stanislav Fomichev <sdf@google.com>,
+	syzbot+2251879aa068ad9c960d@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.0 311/314] bpf: Prevent bpf program recursion for raw tracepoint probes
+Date: Wed, 23 Nov 2022 09:52:36 +0100
+Message-Id: <20221123084639.677872088@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,41 +36,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 52f1c45dde9136f964d63a77d19826c8a74e2c7f upstream.
+commit 05b24ff9b2cfabfcfd951daaa915a036ab53c9e1 upstream.
 
-syzbot reported a double-lock here and we no longer need this
-lock after requests have been moved off to local list:
-just drop the lock earlier.
+We got report from sysbot [1] about warnings that were caused by
+bpf program attached to contention_begin raw tracepoint triggering
+the same tracepoint by using bpf_trace_printk helper that takes
+trace_printk_lock lock.
 
-Link: https://lkml.kernel.org/r/20220904064028.1305220-1-asmadeus@codewreck.org
-Reported-by: syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Tested-by: Schspa Shi <schspa@gmail.com>
+ Call Trace:
+  <TASK>
+  ? trace_event_raw_event_bpf_trace_printk+0x5f/0x90
+  bpf_trace_printk+0x2b/0xe0
+  bpf_prog_a9aec6167c091eef_prog+0x1f/0x24
+  bpf_trace_run2+0x26/0x90
+  native_queued_spin_lock_slowpath+0x1c6/0x2b0
+  _raw_spin_lock_irqsave+0x44/0x50
+  bpf_trace_printk+0x3f/0xe0
+  bpf_prog_a9aec6167c091eef_prog+0x1f/0x24
+  bpf_trace_run2+0x26/0x90
+  native_queued_spin_lock_slowpath+0x1c6/0x2b0
+  _raw_spin_lock_irqsave+0x44/0x50
+  bpf_trace_printk+0x3f/0xe0
+  bpf_prog_a9aec6167c091eef_prog+0x1f/0x24
+  bpf_trace_run2+0x26/0x90
+  native_queued_spin_lock_slowpath+0x1c6/0x2b0
+  _raw_spin_lock_irqsave+0x44/0x50
+  bpf_trace_printk+0x3f/0xe0
+  bpf_prog_a9aec6167c091eef_prog+0x1f/0x24
+  bpf_trace_run2+0x26/0x90
+  native_queued_spin_lock_slowpath+0x1c6/0x2b0
+  _raw_spin_lock_irqsave+0x44/0x50
+  __unfreeze_partials+0x5b/0x160
+  ...
+
+The can be reproduced by attaching bpf program as raw tracepoint on
+contention_begin tracepoint. The bpf prog calls bpf_trace_printk
+helper. Then by running perf bench the spin lock code is forced to
+take slow path and call contention_begin tracepoint.
+
+Fixing this by skipping execution of the bpf program if it's
+already running, Using bpf prog 'active' field, which is being
+currently used by trampoline programs for the same reason.
+
+Moving bpf_prog_inc_misses_counter to syscall.c because
+trampoline.c is compiled in just for CONFIG_BPF_JIT option.
+
+Reviewed-by: Stanislav Fomichev <sdf@google.com>
+Reported-by: syzbot+2251879aa068ad9c960d@syzkaller.appspotmail.com
+[1] https://lore.kernel.org/bpf/YxhFe3EwqchC%2FfYf@krava/T/#t
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20220916071914.7156-1-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/bpf.h      |    5 +++++
+ kernel/bpf/syscall.c     |   11 +++++++++++
+ kernel/bpf/trampoline.c  |   15 ++-------------
+ kernel/trace/bpf_trace.c |    6 ++++++
+ 4 files changed, 24 insertions(+), 13 deletions(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -205,6 +205,8 @@ static void p9_conn_cancel(struct p9_con
- 		list_move(&req->req_list, &cancel_list);
- 	}
- 
-+	spin_unlock(&m->client->lock);
-+
- 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
- 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
- 		list_del(&req->req_list);
-@@ -212,7 +214,6 @@ static void p9_conn_cancel(struct p9_con
- 			req->t_err = err;
- 		p9_client_cb(m->client, req, REQ_STATUS_ERROR);
- 	}
--	spin_unlock(&m->client->lock);
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1967,6 +1967,7 @@ static inline bool unprivileged_ebpf_ena
+ 	return !sysctl_unprivileged_bpf_disabled;
  }
  
- static __poll_t
++void notrace bpf_prog_inc_misses_counter(struct bpf_prog *prog);
+ #else /* !CONFIG_BPF_SYSCALL */
+ static inline struct bpf_prog *bpf_prog_get(u32 ufd)
+ {
+@@ -2305,6 +2306,10 @@ static inline int sock_map_bpf_prog_quer
+ {
+ 	return -EINVAL;
+ }
++
++static inline void bpf_prog_inc_misses_counter(struct bpf_prog *prog)
++{
++}
+ #endif /* CONFIG_BPF_SYSCALL */
+ #endif /* CONFIG_NET && CONFIG_BPF_SYSCALL */
+ 
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2094,6 +2094,17 @@ struct bpf_prog_kstats {
+ 	u64 misses;
+ };
+ 
++void notrace bpf_prog_inc_misses_counter(struct bpf_prog *prog)
++{
++	struct bpf_prog_stats *stats;
++	unsigned int flags;
++
++	stats = this_cpu_ptr(prog->stats);
++	flags = u64_stats_update_begin_irqsave(&stats->syncp);
++	u64_stats_inc(&stats->misses);
++	u64_stats_update_end_irqrestore(&stats->syncp, flags);
++}
++
+ static void bpf_prog_get_stats(const struct bpf_prog *prog,
+ 			       struct bpf_prog_kstats *stats)
+ {
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -863,17 +863,6 @@ static __always_inline u64 notrace bpf_p
+ 	return start;
+ }
+ 
+-static void notrace inc_misses_counter(struct bpf_prog *prog)
+-{
+-	struct bpf_prog_stats *stats;
+-	unsigned int flags;
+-
+-	stats = this_cpu_ptr(prog->stats);
+-	flags = u64_stats_update_begin_irqsave(&stats->syncp);
+-	u64_stats_inc(&stats->misses);
+-	u64_stats_update_end_irqrestore(&stats->syncp, flags);
+-}
+-
+ /* The logic is similar to bpf_prog_run(), but with an explicit
+  * rcu_read_lock() and migrate_disable() which are required
+  * for the trampoline. The macro is split into
+@@ -896,7 +885,7 @@ u64 notrace __bpf_prog_enter(struct bpf_
+ 	run_ctx->saved_run_ctx = bpf_set_run_ctx(&run_ctx->run_ctx);
+ 
+ 	if (unlikely(this_cpu_inc_return(*(prog->active)) != 1)) {
+-		inc_misses_counter(prog);
++		bpf_prog_inc_misses_counter(prog);
+ 		return 0;
+ 	}
+ 	return bpf_prog_start_time();
+@@ -967,7 +956,7 @@ u64 notrace __bpf_prog_enter_sleepable(s
+ 	might_fault();
+ 
+ 	if (unlikely(this_cpu_inc_return(*(prog->active)) != 1)) {
+-		inc_misses_counter(prog);
++		bpf_prog_inc_misses_counter(prog);
+ 		return 0;
+ 	}
+ 
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2058,9 +2058,15 @@ static __always_inline
+ void __bpf_trace_run(struct bpf_prog *prog, u64 *args)
+ {
+ 	cant_sleep();
++	if (unlikely(this_cpu_inc_return(*(prog->active)) != 1)) {
++		bpf_prog_inc_misses_counter(prog);
++		goto out;
++	}
+ 	rcu_read_lock();
+ 	(void) bpf_prog_run(prog, args);
+ 	rcu_read_unlock();
++out:
++	this_cpu_dec(*(prog->active));
+ }
+ 
+ #define UNPACK(...)			__VA_ARGS__
 
 
