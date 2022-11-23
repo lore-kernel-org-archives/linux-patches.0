@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD6A1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F046EC433D7;
-	Wed, 23 Nov 2022 09:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBCF1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F0CC433C1;
+	Wed, 23 Nov 2022 09:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194473;
-	bh=8HKXCGGVFpmxdo+NKF8LQteVHYmNXwRyQa8UNM5udUs=;
+	s=korg; t=1669194477;
+	bh=qNa6ZgqqhbvXTp/YjOxgoK9GO2CkeK9YAx27ryM4fMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OudIGJ2wre7qhbMTiIGEL12H6ASvPyFRet1lGQoGrnJoAP4haXu2hwgbIhueG09ND
-	 MM7TRHLDkSLRNtgU71sVmGlFiUfuXkJjsMUXalzT8zts67yqTKzzfu45tsOPQ3vxd+
-	 9P9OCv2RYu21f3UOittSFx8UfruvKhYeWmsxPTb8=
+	b=Yx3jXmYlA40SggJdSgJSyBxYrvAOKp+9q4ZvRPKmQxaVVwwhe7s3EnM1OEbJ+Fgjx
+	 N35ALW94TZavrz71fclVP25F6kn4B1zKgALFAJ4mpqV/nqLTq57QdC1JbPDmNXdSJQ
+	 yDZtRlqk8vFdquLknA5lH4zrqyLUEEw8sF9B2Xis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 4.19 088/114] usb: chipidea: fix deadlock in ci_otg_del_timer
-Date: Wed, 23 Nov 2022 09:51:15 +0100
-Message-Id: <20221123084555.350930798@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 4.19 089/114] iio: adc: at91_adc: fix possible memory leak in at91_adc_allocate_trigger()
+Date: Wed, 23 Nov 2022 09:51:16 +0100
+Message-Id: <20221123084555.387784358@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,56 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 7a58b8d6021426b796eebfae80983374d9a80a75 upstream.
+commit 65f20301607d07ee279b0804d11a05a62a6c1a1c upstream.
 
-There is a deadlock in ci_otg_del_timer(), the process is
-shown below:
+If iio_trigger_register() returns error, it should call iio_trigger_free()
+to give up the reference that hold in iio_trigger_alloc(), so that it can
+call iio_trig_release() to free memory when the refcount hit to 0.
 
-    (thread 1)                  |        (thread 2)
-ci_otg_del_timer()              | ci_otg_hrtimer_func()
-  ...                           |
-  spin_lock_irqsave() //(1)     |  ...
-  ...                           |
-  hrtimer_cancel()              |  spin_lock_irqsave() //(2)
-  (block forever)
-
-We hold ci->lock in position (1) and use hrtimer_cancel() to
-wait ci_otg_hrtimer_func() to stop, but ci_otg_hrtimer_func()
-also need ci->lock in position (2). As a result, the
-hrtimer_cancel() in ci_otg_del_timer() will be blocked forever.
-
-This patch extracts hrtimer_cancel() from the protection of
-spin_lock_irqsave() in order that the ci_otg_hrtimer_func()
-could obtain the ci->lock.
-
-What`s more, there will be no race happen. Because the
-"next_timer" is always under the protection of
-spin_lock_irqsave() and we only check whether "next_timer"
-equals to NUM_OTG_FSM_TIMERS in the following code.
-
-Fixes: 3a316ec4c91c ("usb: chipidea: use hrtimer for otg fsm timers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20220918033312.94348-1-duoming@zju.edu.cn
+Fixes: 0e589d5fb317 ("ARM: AT91: IIO: Add AT91 ADC driver.")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221024084511.815096-1-yangyingliang@huawei.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/otg_fsm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/at91_adc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/otg_fsm.c
-+++ b/drivers/usb/chipidea/otg_fsm.c
-@@ -256,8 +256,10 @@ static void ci_otg_del_timer(struct ci_h
- 	ci->enabled_otg_timer_bits &= ~(1 << t);
- 	if (ci->next_otg_timer == t) {
- 		if (ci->enabled_otg_timer_bits == 0) {
-+			spin_unlock_irqrestore(&ci->lock, flags);
- 			/* No enabled timers after delete it */
- 			hrtimer_cancel(&ci->otg_fsm_hrtimer);
-+			spin_lock_irqsave(&ci->lock, flags);
- 			ci->next_otg_timer = NUM_OTG_FSM_TIMERS;
- 		} else {
- 			/* Find the next timer */
+--- a/drivers/iio/adc/at91_adc.c
++++ b/drivers/iio/adc/at91_adc.c
+@@ -617,8 +617,10 @@ static struct iio_trigger *at91_adc_allo
+ 	trig->ops = &at91_adc_trigger_ops;
+ 
+ 	ret = iio_trigger_register(trig);
+-	if (ret)
++	if (ret) {
++		iio_trigger_free(trig);
+ 		return NULL;
++	}
+ 
+ 	return trig;
+ }
 
 
