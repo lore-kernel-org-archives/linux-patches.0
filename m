@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E4E1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F170C4347C;
-	Wed, 23 Nov 2022 09:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8519C1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2410C433C1;
+	Wed, 23 Nov 2022 09:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194247;
-	bh=cFLOritFGy24Cwf2eUPTfwECU3WBNxNCnfPg8GhNuAM=;
+	s=korg; t=1669194251;
+	bh=guRZ5QD94TgZ+6o3ecrajWTwoxRUO1Jivjf7+/Ltlv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1l/tHVc2/B6ymqg2Ed4VqEWTxDbu1SIvaC1v5NubuX4+5LZD4adU0oZ9uOTv7J2Eg
-	 Hhj8x3FSIybQqX+ze2qCwJTvhn+GdI8yL3rtET/SJoXCWdAFIwagiC6GN2re3q6cJQ
-	 7stqWunEySp4JFG09pJflQ85+XNm5icCj1BekuJI=
+	b=Yjp9N2mICWE4Zr1ZFInSk6CmY5eLhCpOSgts+amcuc5DEesWgNtsO3a1ZnG7kC5xi
+	 WLfvD3S7P+9PF6luMme6TCBU/sVVu74X6Ul3T7VfWXnblFmC8EU2+0HikqMEAk88CF
+	 yEbTu266siXKiIlpxhDezodjx2RLAebIjacHQm94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ash Logan <ash@heyquark.com>,
+	Jussi Laako <jussi@sonarnerd.net>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 025/114] ALSA: usb-audio: Add quirk entry for M-Audio Micro
-Date: Wed, 23 Nov 2022 09:50:12 +0100
-Message-Id: <20221123084552.853608871@linuxfoundation.org>
+Subject: [PATCH 4.19 026/114] ALSA: usb-audio: Add DSD support for Accuphase DAC-60
+Date: Wed, 23 Nov 2022 09:50:13 +0100
+Message-Id: <20221123084552.886401986@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,36 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jussi Laako <jussi@sonarnerd.net>
 
-commit 2f01a612d4758b45f775dbb88a49cf534ba47275 upstream.
+commit 8cbd4725ffff3eface1f5f3397af02acad5b2831 upstream.
 
-M-Audio Micro (0762:201a) defines the descriptor as vendor-specific,
-while the content seems class-compliant.  Just overriding the probe
-makes the device working.
+Accuphase DAC-60 option card supports native DSD up to DSD256,
+but doesn't have support for auto-detection. Explicitly enable
+DSD support for the correct altsetting.
 
-Reported-by: Ash Logan <ash@heyquark.com>
+Signed-off-by: Jussi Laako <jussi@sonarnerd.net>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/7ecd4417-d860-4773-c1c1-b07433342390@heyquark.com
-Link: https://lore.kernel.org/r/20221108140721.24248-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/20221108221241.1220878-1-jussi@sonarnerd.net
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -2110,6 +2110,10 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 	}
- },
- {
-+	/* M-Audio Micro */
-+	USB_DEVICE_VENDOR_SPEC(0x0763, 0x201a),
-+},
-+{
- 	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2030),
- 	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
- 		/* .vendor_name = "M-Audio", */
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1410,6 +1410,7 @@ u64 snd_usb_interface_dsd_format_quirks(
+ 	/* XMOS based USB DACs */
+ 	switch (chip->usb_id) {
+ 	case USB_ID(0x1511, 0x0037): /* AURALiC VEGA */
++	case USB_ID(0x21ed, 0xd75a): /* Accuphase DAC-60 option card */
+ 	case USB_ID(0x2522, 0x0012): /* LH Labs VI DAC Infinity */
+ 	case USB_ID(0x2772, 0x0230): /* Pro-Ject Pre Box S2 Digital */
+ 		if (fp->altsetting == 2)
 
 
