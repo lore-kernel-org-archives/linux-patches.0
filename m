@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5697C1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B3FC433C1;
-	Wed, 23 Nov 2022 09:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3EB1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:34:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030BFC433C1;
+	Wed, 23 Nov 2022 09:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196075;
-	bh=U1ebpkQkY7eYJEuGv0yRvofLo51BOdq/7WgmmEI+SMY=;
+	s=korg; t=1669196078;
+	bh=HYyikXwEeZqiyvKlX0EfTO06waO+GO6SpFkXoXFzCpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8AQbNiYuO3KVgD6uZvMAz7uYofbx6jlhj4Y/BZcx1SzWjh3x30EophMWfIE+Mr7e
-	 8nN5uu8PlvlpuKFl4F4ae8+fDtl5XDNDCLMPmZWc4ypzypliMltuZUrn0mdu7Devg9
-	 JnkDKrU32Fpbx/YUuhzvpnDACO554dve8bnbfKlM=
+	b=yrXumWBrr8YMeH0VZrUcSqUVCKpnzNcMiGxcsbgr/Wjd+qv5x9e7/9vqstnjjqZRi
+	 ERH/5sx0Z6D3CWqb5u6kMGBIBf7OoQ7JeWQWVLlph7Fq7HLnTxnmNCOuRD+Ih0+3MI
+	 N/OHD97pP4anthkPK5flimXTbcpjWe/Ec1pw2jdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/181] bridge: switchdev: Fix memory leaks when changing VLAN protocol
-Date: Wed, 23 Nov 2022 09:50:58 +0100
-Message-Id: <20221123084606.436724108@linuxfoundation.org>
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	fengguang.wu@intel.com,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 113/181] tracing: Fix wild-memory-access in register_synth_event()
+Date: Wed, 23 Nov 2022 09:51:16 +0100
+Message-Id: <20221123084607.235518692@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,120 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 9d45921ee4cb364910097e7d1b7558559c2f9fd2 ]
+commit 1b5f1c34d3f5a664a57a5a7557a50e4e3cc2505c upstream.
 
-The bridge driver can offload VLANs to the underlying hardware either
-via switchdev or the 8021q driver. When the former is used, the VLAN is
-marked in the bridge driver with the 'BR_VLFLAG_ADDED_BY_SWITCHDEV'
-private flag.
+In register_synth_event(), if set_synth_event_print_fmt() failed, then
+both trace_remove_event_call() and unregister_trace_event() will be
+called, which means the trace_event_call will call
+__unregister_trace_event() twice. As the result, the second unregister
+will causes the wild-memory-access.
 
-To avoid the memory leaks mentioned in the cited commit, the bridge
-driver will try to delete a VLAN via the 8021q driver if the VLAN is not
-marked with the previously mentioned flag.
+register_synth_event
+    set_synth_event_print_fmt failed
+    trace_remove_event_call
+        event_remove
+            if call->event.funcs then
+            __unregister_trace_event (first call)
+    unregister_trace_event
+        __unregister_trace_event (second call)
 
-When the VLAN protocol of the bridge changes, switchdev drivers are
-notified via the 'SWITCHDEV_ATTR_ID_BRIDGE_VLAN_PROTOCOL' attribute, but
-the 8021q driver is also called to add the existing VLANs with the new
-protocol and delete them with the old protocol.
+Fix the bug by avoiding to call the second __unregister_trace_event() by
+checking if the first one is called.
 
-In case the VLANs were offloaded via switchdev, the above behavior is
-both redundant and buggy. Redundant because the VLANs are already
-programmed in hardware and drivers that support VLAN protocol change
-(currently only mlx5) change the protocol upon the switchdev attribute
-notification. Buggy because the 8021q driver is called despite these
-VLANs being marked with 'BR_VLFLAG_ADDED_BY_SWITCHDEV'. This leads to
-memory leaks [1] when the VLANs are deleted.
+general protection fault, probably for non-canonical address
+	0xfbd59c0000000024: 0000 [#1] SMP KASAN PTI
+KASAN: maybe wild-memory-access in range
+[0xdead000000000120-0xdead000000000127]
+CPU: 0 PID: 3807 Comm: modprobe Not tainted
+6.1.0-rc1-00186-g76f33a7eedb4 #299
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+RIP: 0010:unregister_trace_event+0x6e/0x280
+Code: 00 fc ff df 4c 89 ea 48 c1 ea 03 80 3c 02 00 0f 85 0e 02 00 00 48
+b8 00 00 00 00 00 fc ff df 4c 8b 63 08 4c 89 e2 48 c1 ea 03 <80> 3c 02
+00 0f 85 e2 01 00 00 49 89 2c 24 48 85 ed 74 28 e8 7a 9b
+RSP: 0018:ffff88810413f370 EFLAGS: 00010a06
+RAX: dffffc0000000000 RBX: ffff888105d050b0 RCX: 0000000000000000
+RDX: 1bd5a00000000024 RSI: ffff888119e276e0 RDI: ffffffff835a8b20
+RBP: dead000000000100 R08: 0000000000000000 R09: fffffbfff0913481
+R10: ffffffff8489a407 R11: fffffbfff0913480 R12: dead000000000122
+R13: ffff888105d050b8 R14: 0000000000000000 R15: ffff888105d05028
+FS:  00007f7823e8d540(0000) GS:ffff888119e00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7823e7ebec CR3: 000000010a058002 CR4: 0000000000330ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __create_synth_event+0x1e37/0x1eb0
+ create_or_delete_synth_event+0x110/0x250
+ synth_event_run_command+0x2f/0x110
+ test_gen_synth_cmd+0x170/0x2eb [synth_event_gen_test]
+ synth_event_gen_test_init+0x76/0x9bc [synth_event_gen_test]
+ do_one_initcall+0xdb/0x480
+ do_init_module+0x1cf/0x680
+ load_module+0x6a50/0x70a0
+ __do_sys_finit_module+0x12f/0x1c0
+ do_syscall_64+0x3f/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix by not calling the 8021q driver for VLANs that were already
-programmed via switchdev.
+Link: https://lkml.kernel.org/r/20221117012346.22647-3-shangxiaojing@huawei.com
 
-[1]
-unreferenced object 0xffff8881f6771200 (size 256):
-  comm "ip", pid 446855, jiffies 4298238841 (age 55.240s)
-  hex dump (first 32 bytes):
-    00 00 7f 0e 83 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000012819ac>] vlan_vid_add+0x437/0x750
-    [<00000000f2281fad>] __br_vlan_set_proto+0x289/0x920
-    [<000000000632b56f>] br_changelink+0x3d6/0x13f0
-    [<0000000089d25f04>] __rtnl_newlink+0x8ae/0x14c0
-    [<00000000f6276baf>] rtnl_newlink+0x5f/0x90
-    [<00000000746dc902>] rtnetlink_rcv_msg+0x336/0xa00
-    [<000000001c2241c0>] netlink_rcv_skb+0x11d/0x340
-    [<0000000010588814>] netlink_unicast+0x438/0x710
-    [<00000000e1a4cd5c>] netlink_sendmsg+0x788/0xc40
-    [<00000000e8992d4e>] sock_sendmsg+0xb0/0xe0
-    [<00000000621b8f91>] ____sys_sendmsg+0x4ff/0x6d0
-    [<000000000ea26996>] ___sys_sendmsg+0x12e/0x1b0
-    [<00000000684f7e25>] __sys_sendmsg+0xab/0x130
-    [<000000004538b104>] do_syscall_64+0x3d/0x90
-    [<0000000091ed9678>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 279737939a81 ("net: bridge: Fix VLANs memory leak")
-Reported-by: Vlad Buslov <vladbu@nvidia.com>
-Tested-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20221114084509.860831-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Cc: stable@vger.kernel.org
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Cc: <fengguang.wu@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_vlan.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_synth.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 10e63ea6a13e..86441ff78a0f 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -904,6 +904,8 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
- 	list_for_each_entry(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
- 		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			err = vlan_vid_add(p->dev, proto, vlan->vid);
- 			if (err)
- 				goto err_filt;
-@@ -918,8 +920,11 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
- 	/* Delete VLANs for the old proto from the device filter. */
- 	list_for_each_entry(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
--		list_for_each_entry(vlan, &vg->vlan_list, vlist)
-+		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			vlan_vid_del(p->dev, oldproto, vlan->vid);
-+		}
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -820,10 +820,9 @@ static int register_synth_event(struct s
  	}
  
- 	return 0;
-@@ -928,13 +933,19 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
- 	attr.u.vlan_protocol = ntohs(oldproto);
- 	switchdev_port_attr_set(br->dev, &attr, NULL);
- 
--	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist)
-+	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist) {
-+		if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+			continue;
- 		vlan_vid_del(p->dev, proto, vlan->vid);
-+	}
- 
- 	list_for_each_entry_continue_reverse(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
--		list_for_each_entry(vlan, &vg->vlan_list, vlist)
-+		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			vlan_vid_del(p->dev, proto, vlan->vid);
-+		}
- 	}
- 
- 	return err;
--- 
-2.35.1
-
+ 	ret = set_synth_event_print_fmt(call);
+-	if (ret < 0) {
++	/* unregister_trace_event() will be called inside */
++	if (ret < 0)
+ 		trace_remove_event_call(call);
+-		goto err;
+-	}
+  out:
+ 	return ret;
+  err:
 
 
