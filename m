@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD05A1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11684C433D7;
-	Wed, 23 Nov 2022 09:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107381C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8CFC433C1;
+	Wed, 23 Nov 2022 09:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194187;
-	bh=zlh4YqHE2NmRVcmxsBs+NFeT1WtJpyY4qXh7X7Re7Xw=;
+	s=korg; t=1669194190;
+	bh=dkSONJRuZ+uNCCJ/twALFMAw+ruZ3ZJUdYeK9FiHtWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mg2iJS3nH5LuNy2fkuKIDTD3cXfeqQ9uu5unDqmP60z9fRndoAU4MoMQSzgHZA2f7
-	 YQLDlYsQTzKYoEqIcY8dk0wRQiKZooPfdu5VfLVcjHWdq1AxffsaCmsl/1Fln81qaw
-	 Vt9dX5R4fxPTv6VznmJLtHVDm8UD7oZBE5UiFbfA=
+	b=FtLS/XXYSXHhwB4sG5Yv0v18md4xRWSyOizTHYHKJqME2n9Q4KP57zHuVOdWVbybJ
+	 yOZV8tQDVnh0tFY0iBc8kJIfLKV3Y4fR5mNEL7bOQGlgd0g7yuQFBmFWQHs+3rZnYU
+	 +pb4RyV/HemBmrPIuPtmZqS4oPTzYkYlzDb2iG+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Schspa Shi <schspa@gmail.com>
-Subject: [PATCH 4.14 81/88] 9p: trans_fd/p9_conn_cancel: drop client lock earlier
-Date: Wed, 23 Nov 2022 09:51:18 +0100
-Message-Id: <20221123084551.479620236@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 001/114] phy: stm32: fix an error code in probe
+Date: Wed, 23 Nov 2022 09:49:48 +0100
+Message-Id: <20221123084551.914105871@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
-References: <20221123084548.535439312@linuxfoundation.org>
+In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
+References: <20221123084551.864610302@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,41 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit 52f1c45dde9136f964d63a77d19826c8a74e2c7f upstream.
+[ Upstream commit ca1c73628f5bd0c1ef6e46073cc3be2450605b06 ]
 
-syzbot reported a double-lock here and we no longer need this
-lock after requests have been moved off to local list:
-just drop the lock earlier.
+If "index > usbphyc->nphys" is true then this returns success but it
+should return -EINVAL.
 
-Link: https://lkml.kernel.org/r/20220904064028.1305220-1-asmadeus@codewreck.org
-Reported-by: syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Tested-by: Schspa Shi <schspa@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 94c358da3a05 ("phy: stm32: add support for STM32 USB PHY Controller (USBPHYC)")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/Y0kq8j6S+5nDdMpr@kili
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/st/phy-stm32-usbphyc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -219,6 +219,8 @@ static void p9_conn_cancel(struct p9_con
- 		list_move(&req->req_list, &cancel_list);
- 	}
+diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
+index 1255cd1d9a60..5056662d2927 100644
+--- a/drivers/phy/st/phy-stm32-usbphyc.c
++++ b/drivers/phy/st/phy-stm32-usbphyc.c
+@@ -393,6 +393,8 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
+ 		ret = of_property_read_u32(child, "reg", &index);
+ 		if (ret || index > usbphyc->nphys) {
+ 			dev_err(&phy->dev, "invalid reg property: %d\n", ret);
++			if (!ret)
++				ret = -EINVAL;
+ 			goto put_child;
+ 		}
  
-+	spin_unlock(&m->client->lock);
-+
- 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
- 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
- 		list_del(&req->req_list);
-@@ -226,7 +228,6 @@ static void p9_conn_cancel(struct p9_con
- 			req->t_err = err;
- 		p9_client_cb(m->client, req, REQ_STATUS_ERROR);
- 	}
--	spin_unlock(&m->client->lock);
- }
- 
- static int
+-- 
+2.35.1
+
 
 
