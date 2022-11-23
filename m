@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD05E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43411C433C1;
-	Wed, 23 Nov 2022 09:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE491C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B31C433D7;
+	Wed, 23 Nov 2022 09:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195568;
-	bh=3jjkmEEo7x4ZAG1NUt7AJvALdp+qBET0zfbfPrdKwnQ=;
+	s=korg; t=1669195571;
+	bh=soRwJoUSQTL/JWkcmwznr+5z0qWTyhROorY2T+v/c78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CE+uxD4YnSFP1Ph0o64FAPBMawRybYdVJx428V+gcRhK5wL5svd0Jz071EKzbtOQi
-	 ojJCA0fyolck/5rMm1h3B2kCkrnQn9KVkS68FX1haywIcpvLG4rhacxyLdn6W0NsAA
-	 rYcQpKyiwfQnTl2/sRaPr0kE8YUCCwAXoILEurq4=
+	b=wxUK94whyn3PRKnxAEXUTwvg5GYa3hFftYBLXe5Meh6eFt7aL1/Tp0Y3BdPrjvB8f
+	 dcs89yYE1kjcaedLax+UayyP7O9ZWfbPS6PH4KiEv+4tVp5+U4kmU1Jry/eGmuyo6A
+	 NzvY0kLLpFI3DRqnuHDthgomUs6KfEuPTa613BHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Agner <stefan@agner.ch>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 094/149] Revert "usb: dwc3: disable USB core PHY management"
-Date: Wed, 23 Nov 2022 09:51:17 +0100
-Message-Id: <20221123084601.366321060@linuxfoundation.org>
+	Chevron Li <chevron.li@bayhubtech.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 121/149] mmc: sdhci-pci-o2micro: fix card detect fail issue caused by CD# debounce timeout
+Date: Wed, 23 Nov 2022 09:51:44 +0100
+Message-Id: <20221123084602.294440946@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,71 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Chevron Li <chevron.li@bayhubtech.com>
 
-commit 5c294de36e7fb3e0cba0c4e1ef9a5f57bc080d0f upstream.
+commit 096cc0cddf58232bded309336961784f1d1c85f8 upstream.
 
-This reverts commit 6000b8d900cd5f52fbcd0776d0cc396e88c8c2ea.
+The SD card is recognized failed sometimes when resume from suspend.
+Because CD# debounce time too long then card present report wrong.
+Finally, card is recognized failed.
 
-The offending commit disabled the USB core PHY management as the dwc3
-already manages the PHYs in question.
-
-Unfortunately some platforms have started relying on having USB core
-also controlling the PHY and this is specifically currently needed on
-some Exynos platforms for PHY calibration or connected device may fail
-to enumerate.
-
-The PHY calibration was previously handled in the dwc3 driver, but to
-work around some issues related to how the dwc3 driver interacts with
-xhci (e.g. using multiple drivers) this was moved to USB core by commits
-34c7ed72f4f0 ("usb: core: phy: add support for PHY calibration") and
-a0a465569b45 ("usb: dwc3: remove generic PHY calibrate() calls").
-
-The same PHY obviously should not be controlled from two different
-places, which for example do no agree on the PHY mode or power state
-during suspend, but as the offending patch was backported to stable,
-let's revert it for now.
-
-Reported-by: Stefan Agner <stefan@agner.ch>
-Link: https://lore.kernel.org/lkml/808bdba846bb60456adf10a3016911ee@agner.ch/
-Fixes: 6000b8d900cd ("usb: dwc3: disable USB core PHY management")
+Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20221103144648.14197-1-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20221104095512.4068-1-chevron.li@bayhubtech.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/host.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/mmc/host/sdhci-pci-o2micro.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -10,13 +10,8 @@
- #include <linux/acpi.h>
- #include <linux/platform_device.h>
- 
--#include "../host/xhci-plat.h"
- #include "core.h"
- 
--static const struct xhci_plat_priv dwc3_xhci_plat_priv = {
--	.quirks = XHCI_SKIP_PHY_INIT,
--};
--
- static int dwc3_host_get_irq(struct dwc3 *dwc)
- {
- 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
-@@ -92,11 +87,6 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		goto err;
- 	}
- 
--	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_priv,
--					sizeof(dwc3_xhci_plat_priv));
--	if (ret)
--		goto err;
--
- 	memset(props, 0, sizeof(struct property_entry) * ARRAY_SIZE(props));
- 
- 	if (dwc->usb3_lpm_capable)
+--- a/drivers/mmc/host/sdhci-pci-o2micro.c
++++ b/drivers/mmc/host/sdhci-pci-o2micro.c
+@@ -31,6 +31,7 @@
+ #define O2_SD_CAPS		0xE0
+ #define O2_SD_ADMA1		0xE2
+ #define O2_SD_ADMA2		0xE7
++#define O2_SD_MISC_CTRL2	0xF0
+ #define O2_SD_INF_MOD		0xF1
+ #define O2_SD_MISC_CTRL4	0xFC
+ #define O2_SD_MISC_CTRL		0x1C0
+@@ -822,6 +823,12 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		/* Set Tuning Windows to 5 */
+ 		pci_write_config_byte(chip->pdev,
+ 				O2_SD_TUNING_CTRL, 0x55);
++		//Adjust 1st and 2nd CD debounce time
++		pci_read_config_dword(chip->pdev, O2_SD_MISC_CTRL2, &scratch_32);
++		scratch_32 &= 0xFFE7FFFF;
++		scratch_32 |= 0x00180000;
++		pci_write_config_dword(chip->pdev, O2_SD_MISC_CTRL2, scratch_32);
++		pci_write_config_dword(chip->pdev, O2_SD_DETECT_SETTING, 1);
+ 		/* Lock WP */
+ 		ret = pci_read_config_byte(chip->pdev,
+ 					   O2_SD_LOCK_WP, &scratch);
 
 
