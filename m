@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC281C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5A7C433D7;
-	Wed, 23 Nov 2022 09:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51241C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375A6C433D6;
+	Wed, 23 Nov 2022 09:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194061;
-	bh=hvcud6CkPL+24ACJhOPu5m/hMilRA+lE2K6kETMhF8Y=;
+	s=korg; t=1669194064;
+	bh=mRgb36hpD085HZ9AKRcvgfgEXjGbdYr2ZRV3NlA3D+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9kqg6boDAFgQZMMqcKAtZONiI61IREjAWWChhTzBfCYTx4F1Iqk0B6yOMzPIpsl9
-	 XKMlyaYkKim38zy8EEz91tV41hFyRWU+X2oxIZJ/hMpYKUpEwGmXTyvpgim0dNsqSf
-	 ePMQuYBf4tkpYRvPdP8m7aqVckEvi4MEP3zvShQs=
+	b=TiDPYGEtwMVZ2KCUIuLOoZxGvpvS6JA7IqT0fk9Qdlhn/MBfXwK43htbHbJ3AD5/f
+	 rEGURiKVRD1hP3j6sGLsD+ouZQRQYgpbZ8/wmkO5tpVIVkwwKCXJcZTkcDL8oX1Kzn
+	 Il9BA3gpgLmxN3uCSSmL/8lMz0U0hb/1toKVfvh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Reinhard Speyerer <rspmn@arcor.de>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 61/88] USB: serial: option: add u-blox LARA-L6 modem
-Date: Wed, 23 Nov 2022 09:50:58 +0100
-Message-Id: <20221123084550.697317063@linuxfoundation.org>
+Subject: [PATCH 4.14 62/88] USB: serial: option: add Fibocom FM160 0x0111 composition
+Date: Wed, 23 Nov 2022 09:50:59 +0100
+Message-Id: <20221123084550.733392013@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -34,73 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
+commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
 
-Add LARA-L6 PIDs for three different USB compositions.
+Add support for the following Fibocom FM160 composition:
 
-LARA-L6 module can be configured (by AT interface) in three different
-USB modes:
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
-interfaces
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
-interfaces and 1 RmNet virtual network interface
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
-interface and 1 CDC-ECM virtual network interface
+0x0111: MBIM + MODEM + DIAG + AT
 
-In default mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
+T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
+S:  Manufacturer=Fibocom
+S:  Product=Fibocom FM160 Modem_SN:12345678
+S:  SerialNumber=12345678
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-In RmNet mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-[ johan: drop PID defines in favour of comments ]
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -165,6 +165,8 @@ static void option_instat_callback(struc
- #define NOVATELWIRELESS_PRODUCT_G2		0xA010
- #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
- 
-+#define UBLOX_VENDOR_ID				0x1546
-+
- /* AMOI PRODUCTS */
- #define AMOI_VENDOR_ID				0x1614
- #define AMOI_PRODUCT_H01			0x0800
-@@ -1133,6 +1135,12 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
-+	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
-+	  .driver_info = RSVD(4) },
- 	/* Quectel products using Quectel vendor ID */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
- 	  .driver_info = NUMEP2 },
+@@ -2181,6 +2181,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
++	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
 
 
