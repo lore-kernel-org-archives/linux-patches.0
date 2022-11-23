@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471E11C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAACC433D7;
-	Wed, 23 Nov 2022 09:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2A21C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B803BC433D6;
+	Wed, 23 Nov 2022 09:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195992;
-	bh=XfMfgMe8lbKu34voISkyYmbekNIIsZxoeYhUhW5IZ+Y=;
+	s=korg; t=1669195995;
+	bh=Lw/0qUIlufrW3yWXwArHp40lUGROJTp8vd8y2eiTc50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXd9yahAXTrmzHHQE6VtbgIflLAqV0GgtLscJKXzUsZHGOILmGbFmlHXQFsyZwBCI
-	 tOFFgfh3oZ1GcIsq6oiLOCO2nr9PAMnPOXvOSzIViscLEqDJ8siXGpZf+2Cr5wecik
-	 n5F9JTq0koG+ZspjLV7gLJXDDD/DSmMJiVAW7CMY=
+	b=EH1rBfieL10IX3aBNF6Gu7EKHDJX0IOnPQzI1ZEsKMPipr9btHWYppxF2/96tXYJe
+	 Su0s2z8DG61k8Ip6BzIWrrWm4/YG3plD2KrehfcTsHZpBU+5Q9nUP/6SnqBSjGFQJS
+	 lb5xWgy/K+JOY4f8DKqnCoBMEgI/MuIKAQ0fvS0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/181] net: mhi: Fix memory leak in mhi_net_dellink()
-Date: Wed, 23 Nov 2022 09:50:52 +0100
-Message-Id: <20221123084606.176445831@linuxfoundation.org>
+Subject: [PATCH 5.15 063/181] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
+Date: Wed, 23 Nov 2022 09:50:26 +0100
+Message-Id: <20221123084605.083918995@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,38 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit f7c125bd79f50ec6094761090be81d02726ec6f4 ]
+[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
 
-MHI driver registers network device without setting the
-needs_free_netdev flag, and does NOT call free_netdev() when
-unregisters network device, which causes a memory leak.
+Here is the BUG report by KASAN about null pointer dereference:
 
-This patch calls free_netdev() to fix it since netdev_priv
-is used after unregister.
+BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
+Read of size 1 at addr 0000000000000000 by task python3/2640
+Call Trace:
+ strcmp
+ __of_find_property
+ of_find_property
+ pinctrl_dt_to_map
 
-Fixes: 13adac032982 ("net: mhi_net: Register wwan_ops for link creation")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+kasprintf() would return NULL pointer when kmalloc() fail to allocate.
+So directly return ENOMEM, if kasprintf() return NULL pointer.
+
+Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mhi_net.c | 2 ++
+ drivers/pinctrl/devicetree.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-index aaa628f859fd..f84554aa02af 100644
---- a/drivers/net/mhi_net.c
-+++ b/drivers/net/mhi_net.c
-@@ -343,6 +343,8 @@ static void mhi_net_dellink(struct mhi_device *mhi_dev, struct net_device *ndev)
- 
- 	kfree_skb(mhi_netdev->skbagg_head);
- 
-+	free_netdev(ndev);
-+
- 	dev_set_drvdata(&mhi_dev->dev, NULL);
- }
- 
+diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
+index 3fb238714718..eac55fee5281 100644
+--- a/drivers/pinctrl/devicetree.c
++++ b/drivers/pinctrl/devicetree.c
+@@ -220,6 +220,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
+ 	for (state = 0; ; state++) {
+ 		/* Retrieve the pinctrl-* property */
+ 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
++		if (!propname)
++			return -ENOMEM;
+ 		prop = of_find_property(np, propname, &size);
+ 		kfree(propname);
+ 		if (!prop) {
 -- 
 2.35.1
 
