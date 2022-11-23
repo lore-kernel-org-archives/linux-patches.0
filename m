@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B151C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:12:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEE1C433D6;
-	Wed, 23 Nov 2022 09:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8C81C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:12:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E9DC433D7;
+	Wed, 23 Nov 2022 09:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194768;
-	bh=NgcgWbgq+NHzd1MVDmZVgA4UGHow7sBhCZKIKBlN88o=;
+	s=korg; t=1669194771;
+	bh=+P/RdhWhH/6YqWiFbrZyzX8MB81NKIhxvMxfgipKPjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpE0z21u1e4aH8VAWv0SddHWbB2Ido7bOake1Tjf+bYGZPoLlbaB6FgkBRBTpXBgx
-	 OaOjK02f8HeznlNQmlc+0MDekN37ph8BxbLiIaCQ7fLTRMKh0RCYue/lpUF9jsI3jh
-	 2Tkl0JjHDwAQV3G1tQC3CvOOyOdPcz0pxKZFknxE=
+	b=uEUPHG3slHoBl5vskzSavAOBICBwMRR9rq61akZvJhJQ5YjGwYbqL0Nl2bHmsDeeL
+	 V6HF12UtCMS8XE8VRmsq1bLXwDCQu4nGEf/RWkU7sR4WY/qv8JVSuoDyCJqb1wTEl7
+	 lY4btt77L+vWGD6n8gMoMEqCSwqjYnpkNmJUFxz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 055/156] cert host tools: Stop complaining about deprecated OpenSSL functions
-Date: Wed, 23 Nov 2022 09:50:12 +0100
-Message-Id: <20221123084559.927425430@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.4 056/156] dmaengine: at_hdmac: Fix at_lli struct definition
+Date: Wed, 23 Nov 2022 09:50:13 +0100
+Message-Id: <20221123084559.969578865@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -33,52 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 6bfb56e93bcef41859c2d5ab234ffd80b691be35 upstream.
+commit f1171bbdd2ba2a50ee64bb198a78c268a5baf5f1 upstream.
 
-OpenSSL 3.0 deprecated the OpenSSL's ENGINE API.  That is as may be, but
-the kernel build host tools still use it.  Disable the warning about
-deprecated declarations until somebody who cares fixes it.
+Those hardware registers are all of 32 bits, while dma_addr_t ca be of
+type u64 or u32 depending on CONFIG_ARCH_DMA_ADDR_T_64BIT. Force u32 to
+comply with what the hardware expects.
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: stable@vger.kernel.org
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-2-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/extract-cert.c |    7 +++++++
- scripts/sign-file.c    |    7 +++++++
- 2 files changed, 14 insertions(+)
+ drivers/dma/at_hdmac_regs.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/scripts/extract-cert.c
-+++ b/scripts/extract-cert.c
-@@ -23,6 +23,13 @@
- #include <openssl/err.h>
- #include <openssl/engine.h>
+--- a/drivers/dma/at_hdmac_regs.h
++++ b/drivers/dma/at_hdmac_regs.h
+@@ -164,13 +164,13 @@
+ /* LLI == Linked List Item; aka DMA buffer descriptor */
+ struct at_lli {
+ 	/* values that are not changed by hardware */
+-	dma_addr_t	saddr;
+-	dma_addr_t	daddr;
++	u32 saddr;
++	u32 daddr;
+ 	/* value that may get written back: */
+-	u32		ctrla;
++	u32 ctrla;
+ 	/* more values that are not changed by hardware */
+-	u32		ctrlb;
+-	dma_addr_t	dscr;	/* chain to next lli */
++	u32 ctrlb;
++	u32 dscr;	/* chain to next lli */
+ };
  
-+/*
-+ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-+ *
-+ * Remove this if/when that API is no longer used
-+ */
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+
- #define PKEY_ID_PKCS7 2
- 
- static __attribute__((noreturn))
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -30,6 +30,13 @@
- #include <openssl/engine.h>
- 
- /*
-+ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-+ *
-+ * Remove this if/when that API is no longer used
-+ */
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+
-+/*
-  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
-  * assume that it's not available and its header file is missing and that we
-  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
+ /**
 
 
