@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2F07B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1EEC433D6;
-	Wed, 23 Nov 2022 08:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17857B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076D2C433C1;
+	Wed, 23 Nov 2022 08:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193788;
-	bh=QiDSmBEXHZdbvSEN/y2hWHaCMwGGzJgzFrhP35z0+as=;
+	s=korg; t=1669193792;
+	bh=FGng+i9gTJCZSrk7tG+9y0H3mrmtuTm6uRvhDup/qvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3GXcCnhVly+lnOpMb7rXFr+C2P3CugPY2vMJOj66Q+MekfrWu9qoCVKmsKviucF1
-	 B0Zfj1j78/KWcqx/7V8e8tMXVitqINDLST3w80/sobBzfc3tuWhkRn9ceSTRy/kOor
-	 hSGaCIQkhdfpN3KqrobUbOMoanE2mBZIIAM3tIyQ=
+	b=tW3SVOxrg6YE7Ug0RaKng/IuQJaAbvnMmCfpFkGYh5q9DnkM95whxBp7DE546u1fM
+	 Uq923n6XZF3NIgPhIgycCO9S/qfINoAl0vy38A4GXHwoW7mKiykmP9iATo4Fnu28ar
+	 sFQpD0lhb4aPB/RT+xfqJlVxqgUd5Ceab810TPyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.9 54/76] USB: serial: option: add Fibocom FM160 0x0111 composition
-Date: Wed, 23 Nov 2022 09:50:53 +0100
-Message-Id: <20221123084548.533987056@linuxfoundation.org>
+	Yann Gautier <yann.gautier@foss.st.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.9 63/76] mmc: core: properly select voltage range without power cycle
+Date: Wed, 23 Nov 2022 09:51:02 +0100
+Message-Id: <20221123084548.818808512@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,57 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Yann Gautier <yann.gautier@foss.st.com>
 
-commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
+commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
 
-Add support for the following Fibocom FM160 composition:
+In mmc_select_voltage(), if there is no full power cycle, the voltage
+range selected at the end of the function will be on a single range
+(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
+the mask shift should be reduced by 1.
 
-0x0111: MBIM + MODEM + DIAG + AT
+This issue was triggered by using a specific SD-card (Verbatim Premium
+16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
+and there is no power cycle. And the card was failing to switch to
+high-speed mode. When adding the range 3.2V/3.3V for this card with the
+proposed shift change, the card can switch to high-speed mode.
 
-T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
-S:  Manufacturer=Fibocom
-S:  Product=Fibocom FM160 Modem_SN:12345678
-S:  SerialNumber=12345678
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
+Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2140,6 +2140,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -1641,7 +1641,13 @@ u32 mmc_select_voltage(struct mmc_host *
+ 		mmc_power_cycle(host, ocr);
+ 	} else {
+ 		bit = fls(ocr) - 1;
+-		ocr &= 3 << bit;
++		/*
++		 * The bit variable represents the highest voltage bit set in
++		 * the OCR register.
++		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
++		 * we must shift the mask '3' with (bit - 1).
++		 */
++		ocr &= 3 << (bit - 1);
+ 		if (bit != host->ios.vdd)
+ 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
+ 	}
 
 
