@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C94A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CCCC433D6;
-	Wed, 23 Nov 2022 09:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712721C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15EAC433D6;
+	Wed, 23 Nov 2022 09:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195748;
-	bh=NssqwD5/Gv4Zq01FZfPoyFmZ9zR/cF/rab9d/sMdA+Q=;
+	s=korg; t=1669195751;
+	bh=N8NVJueAeboGeHke8tO0MN6mtyRozkODvCg+zb2WlE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3PCH9kXmo3/5sfhwLn05ohaXaLchaxC1WmzSQX9F3ypgGGoD2982llrZQaR67ck1
-	 GKZzuOmsM9AlBEtrTpzIrCsfIv2lDigS0f+OrUXubw4JrSh/8XkP+W/ZnF4P8fU63N
-	 SGVcYL6KIv5UOHtcrFP3CwBRBoqnAS03Ec+g62OQ=
+	b=BWbLhj2PQY9uKiJkL05lPN8zGKUpWI6SHk6Fok4HJ1g/lh3/Qt6bCW0NeVpq9eTLo
+	 vbT8Hvv7u/OUi29qblF8Z1mlRAs1W20FGYCiewVAdqwOPQUNJLmR68V79hXdyhgs7D
+	 GMgPemc5BMCzI5+azGIbSCp0o+sukryj//JiiMDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Yossi Leybovich <sleybo@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/181] ACPI: scan: Add LATT2021 to acpi_ignore_dep_ids[]
-Date: Wed, 23 Nov 2022 09:49:44 +0100
-Message-Id: <20221123084603.377195384@linuxfoundation.org>
+Subject: [PATCH 5.15 022/181] RDMA/efa: Add EFA 0xefa2 PCI ID
+Date: Wed, 23 Nov 2022 09:49:45 +0100
+Message-Id: <20221123084603.412010802@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,40 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit fa153b7cddce795662d38f78a87612c166c0f692 ]
+[ Upstream commit b75927cff13e0b3b652a12da7eb9a012911799e8 ]
 
-Some x86/ACPI laptops with MIPI cameras have a LATT2021 ACPI device
-in the _DEP dependency list of the ACPI devices for the camera-sensors
-(which have flags.honor_deps set).
+Add support for 0xefa2 devices.
 
-The _DDN for the LATT2021 device is "Lattice FW Update Client Driver",
-suggesting that this is used for firmware updates of something. There
-is no Linux driver for this and if Linux gets support for updates it
-will likely be in userspace through fwupd.
-
-For now add the LATT2021 HID to acpi_ignore_dep_ids[] so that
-acpi_dev_ready_for_enumeration() will return true once the other _DEP
-dependencies are met.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Yossi Leybovich <sleybo@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Link: https://lore.kernel.org/r/20221020151949.1768-1-mrgolin@amazon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/efa/efa_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 6e9cd41c5f9b..ae74720888db 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -793,6 +793,7 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
- static const char * const acpi_ignore_dep_ids[] = {
- 	"PNP0D80", /* Windows-compatible System Power Management Controller */
- 	"INT33BD", /* Intel Baytrail Mailbox Device */
-+	"LATT2021", /* Lattice FW Update Client Driver */
- 	NULL
+diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
+index 417dea5f90cf..d6d48db86681 100644
+--- a/drivers/infiniband/hw/efa/efa_main.c
++++ b/drivers/infiniband/hw/efa/efa_main.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+ /*
+- * Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All rights reserved.
++ * Copyright 2018-2022 Amazon.com, Inc. or its affiliates. All rights reserved.
+  */
+ 
+ #include <linux/module.h>
+@@ -14,10 +14,12 @@
+ 
+ #define PCI_DEV_ID_EFA0_VF 0xefa0
+ #define PCI_DEV_ID_EFA1_VF 0xefa1
++#define PCI_DEV_ID_EFA2_VF 0xefa2
+ 
+ static const struct pci_device_id efa_pci_tbl[] = {
+ 	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA0_VF) },
+ 	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA1_VF) },
++	{ PCI_VDEVICE(AMAZON, PCI_DEV_ID_EFA2_VF) },
+ 	{ }
  };
  
 -- 
