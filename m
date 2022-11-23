@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138F81C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A08CC433C1;
-	Wed, 23 Nov 2022 09:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BB31C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17C6C433C1;
+	Wed, 23 Nov 2022 09:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197145;
-	bh=NU98xZvm7Ion+vuUqyWnzH6FUSPyNnqXVRQ7Z++l7jw=;
+	s=korg; t=1669197149;
+	bh=2OI2APBd1jExr1h7zXHFoK56XBYgjQyI4naM7V0+Tx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIPEbmdCPT8ZiV32xAN89NwHDp1vdeqc68mNspYXnMfFaixJ7uGiwivlpXwhdLFe9
-	 oLPbGLi7452nnrFPlYlVSNpHlWxzig5HJItSIiQDiQXxQb7YalRZDcZ2H02jxoGTO7
-	 FWVOlOUJ1us3rmsj0R8tvGAXd00txTp+qHDn2I10=
+	b=KlVxnt6KGpycemHsznd43iTt2/lmcckh3Ne5p9R2I7I75aiC0GhgqpA/uTj/edvu5
+	 oA6ulvVk9vuVr2eH+3cri9zyMpYmOvMU3NCUeCogUI/RqFjoeC4X7v0WVzoUgrg0Rw
+	 UrxPWGuqQEdI/sdG0awgRm1FZwd42kSeIM6CrcPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	fengguang.wu@intel.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 203/314] tracing: Fix wild-memory-access in register_synth_event()
-Date: Wed, 23 Nov 2022 09:50:48 +0100
-Message-Id: <20221123084634.758069654@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 212/314] drm/amd/pm: fix SMU13 runpm hang due to unintentional workaround
+Date: Wed, 23 Nov 2022 09:50:57 +0100
+Message-Id: <20221123084635.142971874@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,94 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 1b5f1c34d3f5a664a57a5a7557a50e4e3cc2505c upstream.
+commit 4b14841c9a820e484bc8c4c3f5a6fed1bc528cbc upstream.
 
-In register_synth_event(), if set_synth_event_print_fmt() failed, then
-both trace_remove_event_call() and unregister_trace_event() will be
-called, which means the trace_event_call will call
-__unregister_trace_event() twice. As the result, the second unregister
-will causes the wild-memory-access.
+The workaround designed for some specific ASICs is wrongly applied
+to SMU13 ASICs. That leads to some runpm hang.
 
-register_synth_event
-    set_synth_event_print_fmt failed
-    trace_remove_event_call
-        event_remove
-            if call->event.funcs then
-            __unregister_trace_event (first call)
-    unregister_trace_event
-        __unregister_trace_event (second call)
-
-Fix the bug by avoiding to call the second __unregister_trace_event() by
-checking if the first one is called.
-
-general protection fault, probably for non-canonical address
-	0xfbd59c0000000024: 0000 [#1] SMP KASAN PTI
-KASAN: maybe wild-memory-access in range
-[0xdead000000000120-0xdead000000000127]
-CPU: 0 PID: 3807 Comm: modprobe Not tainted
-6.1.0-rc1-00186-g76f33a7eedb4 #299
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:unregister_trace_event+0x6e/0x280
-Code: 00 fc ff df 4c 89 ea 48 c1 ea 03 80 3c 02 00 0f 85 0e 02 00 00 48
-b8 00 00 00 00 00 fc ff df 4c 8b 63 08 4c 89 e2 48 c1 ea 03 <80> 3c 02
-00 0f 85 e2 01 00 00 49 89 2c 24 48 85 ed 74 28 e8 7a 9b
-RSP: 0018:ffff88810413f370 EFLAGS: 00010a06
-RAX: dffffc0000000000 RBX: ffff888105d050b0 RCX: 0000000000000000
-RDX: 1bd5a00000000024 RSI: ffff888119e276e0 RDI: ffffffff835a8b20
-RBP: dead000000000100 R08: 0000000000000000 R09: fffffbfff0913481
-R10: ffffffff8489a407 R11: fffffbfff0913480 R12: dead000000000122
-R13: ffff888105d050b8 R14: 0000000000000000 R15: ffff888105d05028
-FS:  00007f7823e8d540(0000) GS:ffff888119e00000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7823e7ebec CR3: 000000010a058002 CR4: 0000000000330ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __create_synth_event+0x1e37/0x1eb0
- create_or_delete_synth_event+0x110/0x250
- synth_event_run_command+0x2f/0x110
- test_gen_synth_cmd+0x170/0x2eb [synth_event_gen_test]
- synth_event_gen_test_init+0x76/0x9bc [synth_event_gen_test]
- do_one_initcall+0xdb/0x480
- do_init_module+0x1cf/0x680
- load_module+0x6a50/0x70a0
- __do_sys_finit_module+0x12f/0x1c0
- do_syscall_64+0x3f/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Link: https://lkml.kernel.org/r/20221117012346.22647-3-shangxiaojing@huawei.com
-
-Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
-Cc: <fengguang.wu@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -828,10 +828,9 @@ static int register_synth_event(struct s
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1131,22 +1131,21 @@ static int smu_smc_hw_setup(struct smu_c
+ 	uint64_t features_supported;
+ 	int ret = 0;
+ 
+-	if (adev->in_suspend && smu_is_dpm_running(smu)) {
+-		dev_info(adev->dev, "dpm has been enabled\n");
+-		/* this is needed specifically */
+-		switch (adev->ip_versions[MP1_HWIP][0]) {
+-		case IP_VERSION(11, 0, 7):
+-		case IP_VERSION(11, 0, 11):
+-		case IP_VERSION(11, 5, 0):
+-		case IP_VERSION(11, 0, 12):
++	switch (adev->ip_versions[MP1_HWIP][0]) {
++	case IP_VERSION(11, 0, 7):
++	case IP_VERSION(11, 0, 11):
++	case IP_VERSION(11, 5, 0):
++	case IP_VERSION(11, 0, 12):
++		if (adev->in_suspend && smu_is_dpm_running(smu)) {
++			dev_info(adev->dev, "dpm has been enabled\n");
+ 			ret = smu_system_features_control(smu, true);
+ 			if (ret)
+ 				dev_err(adev->dev, "Failed system features control!\n");
+-			break;
+-		default:
+-			break;
++			return ret;
+ 		}
+-		return ret;
++		break;
++	default:
++		break;
  	}
  
- 	ret = set_synth_event_print_fmt(call);
--	if (ret < 0) {
-+	/* unregister_trace_event() will be called inside */
-+	if (ret < 0)
- 		trace_remove_event_call(call);
--		goto err;
--	}
-  out:
- 	return ret;
-  err:
+ 	ret = smu_init_display_count(smu, 0);
 
 
