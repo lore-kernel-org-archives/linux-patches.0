@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D87F1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CA0C43145;
-	Wed, 23 Nov 2022 09:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368571C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:11:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7CBC433D6;
+	Wed, 23 Nov 2022 09:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194680;
-	bh=aoNIfstFJaw6s/CMJvUQSKT+Q2V32rZKbtW1JkDTiUs=;
+	s=korg; t=1669194684;
+	bh=lQH9xFpWR+Mk/N6H9Zij9AXQ4wneXUhWgo0ItBv2bO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRIMbtbqfJY/vzy0c5++CN+abfxkqoh7Q0J6b5Ju31QJykVXuXzb25Mkimio/+rC/
-	 9jlmw6UtSe9b7w9jv/xN6W/lZfJDs0f1PkaZml8bpYspyBQtnYn3gFfI5izCyn1Cwm
-	 8MG9YOqyVnAbcXWaSXGsYJ+e2bAUvGu08LYtKR20=
+	b=pS+dim8jgO36i18XyvL793YswE/DAF1CQvB/LOKS5K04Th0WKBSA/7D9BYXqjjStb
+	 ly2M0Yp7FC3S3AwOkdMBIpmaCFlF0U73bZq5KISXykIg7fjVxz1m1WQNvTaYZjI/le
+	 FgP7j95oSNhNeLlFRNCIDrSKMEAcrtJC9ePuT6VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 006/156] xfs: drain the buf delwri queue before xfsaild idles
-Date: Wed, 23 Nov 2022 09:49:23 +0100
-Message-Id: <20221123084558.082635022@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 007/156] phy: stm32: fix an error code in probe
+Date: Wed, 23 Nov 2022 09:49:24 +0100
+Message-Id: <20221123084558.129372731@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -37,98 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Foster <bfoster@redhat.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit f376b45e861d8b7b34bf0eceeecfdd00dbe65cde upstream.
+[ Upstream commit ca1c73628f5bd0c1ef6e46073cc3be2450605b06 ]
 
-xfsaild is racy with respect to transaction abort and shutdown in
-that the task can idle or exit with an empty AIL but buffers still
-on the delwri queue. This was partly addressed by cancelling the
-delwri queue before the task exits to prevent memory leaks, but it's
-also possible for xfsaild to empty and idle with buffers on the
-delwri queue. For example, a transaction that pins a buffer that
-also happens to sit on the AIL delwri queue will explicitly remove
-the associated log item from the AIL if the transaction aborts. The
-side effect of this is an unmount hang in xfs_wait_buftarg() as the
-associated buffers remain held by the delwri queue indefinitely.
-This is reproduced on repeated runs of generic/531 with an fs format
-(-mrmapbt=1 -bsize=1k) that happens to also reproduce transaction
-aborts.
+If "index > usbphyc->nphys" is true then this returns success but it
+should return -EINVAL.
 
-Update xfsaild to not idle until both the AIL and associated delwri
-queue are empty and update the push code to continue delwri queue
-submission attempts even when the AIL is empty. This allows the AIL
-to eventually release aborted buffers stranded on the delwri queue
-when they are unlocked by the associated transaction. This should
-have no significant effect on normal runtime behavior because the
-xfsaild currently idles only when the AIL is empty and in practice
-the AIL is rarely empty with a populated delwri queue. The items
-must be AIL resident to land in the queue in the first place and
-generally aren't removed until writeback completes.
-
-Note that the pre-existing delwri queue cancel logic in the exit
-path is retained because task stop is external, could technically
-come at any point, and xfsaild is still responsible to release its
-buffer references before it exits.
-
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 94c358da3a05 ("phy: stm32: add support for STM32 USB PHY Controller (USBPHYC)")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/Y0kq8j6S+5nDdMpr@kili
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_trans_ail.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/phy/st/phy-stm32-usbphyc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/xfs_trans_ail.c
-+++ b/fs/xfs/xfs_trans_ail.c
-@@ -402,16 +402,10 @@ xfsaild_push(
- 	target = ailp->ail_target;
- 	ailp->ail_target_prev = target;
+diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
+index 56bdea4b0bd9..e643c21c1217 100644
+--- a/drivers/phy/st/phy-stm32-usbphyc.c
++++ b/drivers/phy/st/phy-stm32-usbphyc.c
+@@ -393,6 +393,8 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
+ 		ret = of_property_read_u32(child, "reg", &index);
+ 		if (ret || index > usbphyc->nphys) {
+ 			dev_err(&phy->dev, "invalid reg property: %d\n", ret);
++			if (!ret)
++				ret = -EINVAL;
+ 			goto put_child;
+ 		}
  
-+	/* we're done if the AIL is empty or our push has reached the end */
- 	lip = xfs_trans_ail_cursor_first(ailp, &cur, ailp->ail_last_pushed_lsn);
--	if (!lip) {
--		/*
--		 * If the AIL is empty or our push has reached the end we are
--		 * done now.
--		 */
--		xfs_trans_ail_cursor_done(&cur);
--		spin_unlock(&ailp->ail_lock);
-+	if (!lip)
- 		goto out_done;
--	}
- 
- 	XFS_STATS_INC(mp, xs_push_ail);
- 
-@@ -493,6 +487,8 @@ xfsaild_push(
- 			break;
- 		lsn = lip->li_lsn;
- 	}
-+
-+out_done:
- 	xfs_trans_ail_cursor_done(&cur);
- 	spin_unlock(&ailp->ail_lock);
- 
-@@ -500,7 +496,6 @@ xfsaild_push(
- 		ailp->ail_log_flush++;
- 
- 	if (!count || XFS_LSN_CMP(lsn, target) >= 0) {
--out_done:
- 		/*
- 		 * We reached the target or the AIL is empty, so wait a bit
- 		 * longer for I/O to complete and remove pushed items from the
-@@ -592,7 +587,8 @@ xfsaild(
- 		 */
- 		smp_rmb();
- 		if (!xfs_ail_min(ailp) &&
--		    ailp->ail_target == ailp->ail_target_prev) {
-+		    ailp->ail_target == ailp->ail_target_prev &&
-+		    list_empty(&ailp->ail_buf_list)) {
- 			spin_unlock(&ailp->ail_lock);
- 			freezable_schedule();
- 			tout = 0;
+-- 
+2.35.1
+
 
 
