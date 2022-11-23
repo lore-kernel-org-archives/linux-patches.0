@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400791C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DB4C433C1;
-	Wed, 23 Nov 2022 09:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B4A1C2B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DCAC433D7;
+	Wed, 23 Nov 2022 09:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194830;
-	bh=7r+6km4b+vXIeOkkyXEJz4P9pHvEd5OlxAOs/eJBiio=;
+	s=korg; t=1669194833;
+	bh=v8cGCJBDm0eZJLPzFSbLDbXewUjQNprW6ZfOK/nAJcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxwbM44woTATquY8B15HThUVNF6Dx+MQDu12oR25lK37lMcX1/2zrQnzfgXdnJFs6
-	 UHlWD5UXOf58ocEzg1lhhH89B88DOUZm0HS44V887yaLJ8aH/J93u+DW8FowXcf4mZ
-	 oRBtiN3zjjelvNVUGQuFkGewVLfz1+Ms7pJN5Kd8=
+	b=kKqwln6lWI6mF6boqruXM9UhDrBkaRlAxOAPlMxTikRGDtPULjn8BZgt8QvSvdWj4
+	 WWrQhCyFs+bslR+8KtH8roSQRRDc8HQgRdMTIUNKGDR1pihbuYGWxhM7r9RNroigLa
+	 BWKHVQpcc07mso2WervclJDJ/PMCicyhaylcEs2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/156] selftests/futex: fix build for clang
-Date: Wed, 23 Nov 2022 09:50:30 +0100
-Message-Id: <20221123084600.589117774@linuxfoundation.org>
+Subject: [PATCH 5.4 074/156] selftests/intel_pstate: fix build for ARCH=x86_64
+Date: Wed, 23 Nov 2022 09:50:31 +0100
+Message-Id: <20221123084600.686435421@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -38,47 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-[ Upstream commit 03cab65a07e083b6c1010fbc8f9b817e9aca75d9 ]
+[ Upstream commit beb7d862ed4ac6aa14625418970f22a7d55b8615 ]
 
-Don't use the test-specific header files as source files to force a
-target dependency, as clang will complain if more than one source file
-is used for a compile command with a single '-o' flag.
-
-Use the proper Makefile variables instead as defined in
-tools/testing/selftests/lib.mk.
+Handle the scenario where the build is launched with the ARCH envvar
+defined as x86_64.
 
 Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Reviewed-by: André Almeida <andrealmeid@igalia.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tools/testing/selftests/intel_pstate/Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index 30996306cabc..479531f5865d 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -3,11 +3,11 @@ INCLUDES := -I../include -I../../
- CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE -pthread $(INCLUDES)
- LDFLAGS := $(LDFLAGS) -pthread -lrt
+diff --git a/tools/testing/selftests/intel_pstate/Makefile b/tools/testing/selftests/intel_pstate/Makefile
+index 7340fd6a9a9f..9fc1a40b0127 100644
+--- a/tools/testing/selftests/intel_pstate/Makefile
++++ b/tools/testing/selftests/intel_pstate/Makefile
+@@ -2,10 +2,10 @@
+ CFLAGS := $(CFLAGS) -Wall -D_GNU_SOURCE
+ LDLIBS := $(LDLIBS) -lm
  
--HEADERS := \
-+LOCAL_HDRS := \
- 	../include/futextest.h \
- 	../include/atomic.h \
- 	../include/logging.h
--TEST_GEN_FILES := \
-+TEST_GEN_PROGS := \
- 	futex_wait_timeout \
- 	futex_wait_wouldblock \
- 	futex_requeue_pi \
-@@ -21,5 +21,3 @@ TEST_PROGS := run.sh
- top_srcdir = ../../../../..
- KSFT_KHDR_INSTALL := 1
- include ../../lib.mk
--
--$(TEST_GEN_FILES): $(HEADERS)
+-uname_M := $(shell uname -m 2>/dev/null || echo not)
+-ARCH ?= $(shell echo $(uname_M) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
++ARCH ?= $(shell uname -m 2>/dev/null || echo not)
++ARCH_PROCESSED := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
+ 
+-ifeq (x86,$(ARCH))
++ifeq (x86,$(ARCH_PROCESSED))
+ TEST_GEN_FILES := msr aperf
+ endif
+ 
 -- 
 2.35.1
 
