@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D7A7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993BDC433C1;
-	Wed, 23 Nov 2022 08:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2F07B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1EEC433D6;
+	Wed, 23 Nov 2022 08:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193785;
-	bh=0QohzFDRvLKtEGOb7zkuJ4sXW4Fzb1aWRGMjdoV3HU8=;
+	s=korg; t=1669193788;
+	bh=QiDSmBEXHZdbvSEN/y2hWHaCMwGGzJgzFrhP35z0+as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMEtfuP2vECwtNl/kJAlU6lduI7tLj/ZM8vLt12qC46C1TINJVmMXXpzRhlmKjHot
-	 k1OOM+vWORX1Ds4tLe0ZnzmKufkgOB8VDUoHj7lvdRydb6/owa34PFxyOeyw8z098t
-	 UwFHZCJIrJmOlYvtNxXGTfa6tGP6FdzCP1TaOTqA=
+	b=J3GXcCnhVly+lnOpMb7rXFr+C2P3CugPY2vMJOj66Q+MekfrWu9qoCVKmsKviucF1
+	 B0Zfj1j78/KWcqx/7V8e8tMXVitqINDLST3w80/sobBzfc3tuWhkRn9ceSTRy/kOor
+	 hSGaCIQkhdfpN3KqrobUbOMoanE2mBZIIAM3tIyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.9 21/76] udf: Fix a slab-out-of-bounds write bug in udf_find_entry()
-Date: Wed, 23 Nov 2022 09:50:20 +0100
-Message-Id: <20221123084547.416570725@linuxfoundation.org>
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.9 54/76] USB: serial: option: add Fibocom FM160 0x0111 composition
+Date: Wed, 23 Nov 2022 09:50:53 +0100
+Message-Id: <20221123084548.533987056@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,135 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit c8af247de385ce49afabc3bf1cf4fd455c94bfe8 upstream.
+commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
 
-Syzbot reported a slab-out-of-bounds Write bug:
+Add support for the following Fibocom FM160 composition:
 
-loop0: detected capacity change from 0 to 2048
-==================================================================
-BUG: KASAN: slab-out-of-bounds in udf_find_entry+0x8a5/0x14f0
-fs/udf/namei.c:253
-Write of size 105 at addr ffff8880123ff896 by task syz-executor323/3610
+0x0111: MBIM + MODEM + DIAG + AT
 
-CPU: 0 PID: 3610 Comm: syz-executor323 Not tainted
-6.1.0-rc2-syzkaller-00105-gb229b6ca5abb #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS
-Google 10/11/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- kasan_check_range+0x2a7/0x2e0 mm/kasan/generic.c:189
- memcpy+0x3c/0x60 mm/kasan/shadow.c:66
- udf_find_entry+0x8a5/0x14f0 fs/udf/namei.c:253
- udf_lookup+0xef/0x340 fs/udf/namei.c:309
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_creat fs/open.c:1402 [inline]
- __se_sys_creat fs/open.c:1396 [inline]
- __x64_sys_creat+0x11f/0x160 fs/open.c:1396
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7ffab0d164d9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89
-f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
-f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffe1a7e6bb8 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffab0d164d9
-RDX: 00007ffab0d164d9 RSI: 0000000000000000 RDI: 0000000020000180
-RBP: 00007ffab0cd5a10 R08: 0000000000000000 R09: 0000000000000000
-R10: 00005555573552c0 R11: 0000000000000246 R12: 00007ffab0cd5aa0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
+T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
+S:  Manufacturer=Fibocom
+S:  Product=Fibocom FM160 Modem_SN:12345678
+S:  SerialNumber=12345678
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Allocated by task 3610:
- kasan_save_stack mm/kasan/common.c:45 [inline]
- kasan_set_track+0x3d/0x60 mm/kasan/common.c:52
- ____kasan_kmalloc mm/kasan/common.c:371 [inline]
- __kasan_kmalloc+0x97/0xb0 mm/kasan/common.c:380
- kmalloc include/linux/slab.h:576 [inline]
- udf_find_entry+0x7b6/0x14f0 fs/udf/namei.c:243
- udf_lookup+0xef/0x340 fs/udf/namei.c:309
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_creat fs/open.c:1402 [inline]
- __se_sys_creat fs/open.c:1396 [inline]
- __x64_sys_creat+0x11f/0x160 fs/open.c:1396
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The buggy address belongs to the object at ffff8880123ff800
- which belongs to the cache kmalloc-256 of size 256
-The buggy address is located 150 bytes inside of
- 256-byte region [ffff8880123ff800, ffff8880123ff900)
-
-The buggy address belongs to the physical page:
-page:ffffea000048ff80 refcount:1 mapcount:0 mapping:0000000000000000
-index:0x0 pfn:0x123fe
-head:ffffea000048ff80 order:1 compound_mapcount:0 compound_pincount:0
-flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000010200 ffffea00004b8500 dead000000000003 ffff888012041b40
-raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x0(),
-pid 1, tgid 1 (swapper/0), ts 1841222404, free_ts 0
- create_dummy_stack mm/page_owner.c:67 [inline]
- register_early_stack+0x77/0xd0 mm/page_owner.c:83
- init_page_owner+0x3a/0x731 mm/page_owner.c:93
- kernel_init_freeable+0x41c/0x5d5 init/main.c:1629
- kernel_init+0x19/0x2b0 init/main.c:1519
-page_owner free stack trace missing
-
-Memory state around the buggy address:
- ffff8880123ff780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff8880123ff800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff8880123ff880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 06
-                                                                ^
- ffff8880123ff900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff8880123ff980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-
-Fix this by changing the memory size allocated for copy_name from
-UDF_NAME_LEN(254) to UDF_NAME_LEN_CS0(255), because the total length
-(lfi) of subsequent memcpy can be up to 255.
-
-CC: stable@vger.kernel.org
-Reported-by: syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com
-Fixes: 066b9cded00b ("udf: Use separate buffer for copying split names")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221109013542.442790-1-zhangpeng362@huawei.com
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -237,7 +237,7 @@ static struct fileIdentDesc *udf_find_en
- 						      poffset - lfi);
- 			else {
- 				if (!copy_name) {
--					copy_name = kmalloc(UDF_NAME_LEN,
-+					copy_name = kmalloc(UDF_NAME_LEN_CS0,
- 							    GFP_NOFS);
- 					if (!copy_name) {
- 						fi = ERR_PTR(-ENOMEM);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2140,6 +2140,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
++	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
 
 
