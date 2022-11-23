@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3F21C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F020EC433D6;
-	Wed, 23 Nov 2022 09:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97991C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA78C433C1;
+	Wed, 23 Nov 2022 09:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194889;
-	bh=bMI6dkkkMc5xKkDcdAp1/uN4HZC3fI9uMyPmQYNVCX4=;
+	s=korg; t=1669194892;
+	bh=+la9Ol8WdFfxbgP+IvHza1x4ig5XA42K2ZhFW63EJUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SswBo5x6NXMDMiKfEkxGNCIBagIqCpRkBo4hg3ITbFVvWSctlahztX4NRuFxhepxf
-	 k4OXuz8+yzhf1BNDCYAs1Os4icQQ+bqWHhnFH3a9Q/iRMHYzFSlBa2oZ8/MpU1Pmfg
-	 3MEtOuMH0dMTDUyMQgybYbtYZ5liMzOcyIoy0CTo=
+	b=ZqhQaa1FYnfDeU4Dcx4PCkilLkuuSDvItXE7hTeGNE9amp5Elorz/UvK/hpi+b4CM
+	 VaVmOP8IqPcLVUfKmbx+mnjQ8RhifUDEs8olmu73lyno9Lt4aJIk0LeL/RCkt2ZZv2
+	 3d/hFxKyzncrXkKIuw1k9iU5+oQdhCcPIzMwPWnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/156] tty: n_gsm: fix sleep-in-atomic-context bug in gsm_control_send
-Date: Wed, 23 Nov 2022 09:50:45 +0100
-Message-Id: <20221123084601.170731238@linuxfoundation.org>
+Subject: [PATCH 5.4 089/156] ASoC: soc-utils: Remove __exit for snd_soc_util_exit()
+Date: Wed, 23 Nov 2022 09:50:46 +0100
+Message-Id: <20221123084601.200374871@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -34,47 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 7b7dfe4833c70a11cdfa51b38705103bd31eddaa ]
+[ Upstream commit 314d34fe7f0a5836cb0472950c1f17744b4efde8 ]
 
-The function gsm_dlci_t1() is a timer handler that runs in an
-atomic context, but it calls "kzalloc(..., GFP_KERNEL)" that
-may sleep. As a result, the sleep-in-atomic-context bug will
-happen. The process is shown below:
+snd_soc_util_exit() is called in __init snd_soc_init() for cleanup.
+Remove the __exit annotation for it to fix the build warning:
 
-gsm_dlci_t1()
- gsm_dlci_open()
-  gsm_modem_update()
-   gsm_modem_upd_via_msc()
-    gsm_control_send()
-     kzalloc(sizeof(.., GFP_KERNEL) //may sleep
+WARNING: modpost: sound/soc/snd-soc-core.o: section mismatch in reference: init_module (section: .init.text) -> snd_soc_util_exit (section: .exit.text)
 
-This patch changes the gfp_t parameter of kzalloc() from GFP_KERNEL to
-GFP_ATOMIC in order to mitigate the bug.
-
-Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20221002040709.27849-1-duoming@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6ec27c53886c ("ASoC: core: Fix use-after-free in snd_soc_exit()")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221031134031.256511-1-chenzhongjin@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 2 +-
+ sound/soc/soc-utils.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 22da64453054..98c67ddf2fd9 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -1413,7 +1413,7 @@ static struct gsm_control *gsm_control_send(struct gsm_mux *gsm,
- 		unsigned int command, u8 *data, int clen)
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index 54dcece52b0c..abcc5d97b134 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -174,7 +174,7 @@ int __init snd_soc_util_init(void)
+ 	return ret;
+ }
+ 
+-void __exit snd_soc_util_exit(void)
++void snd_soc_util_exit(void)
  {
- 	struct gsm_control *ctrl = kzalloc(sizeof(struct gsm_control),
--						GFP_KERNEL);
-+						GFP_ATOMIC);
- 	unsigned long flags;
- 	if (ctrl == NULL)
- 		return NULL;
+ 	platform_driver_unregister(&soc_dummy_driver);
+ 	platform_device_unregister(soc_dummy_dev);
 -- 
 2.35.1
 
