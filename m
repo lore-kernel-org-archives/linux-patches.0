@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B531C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FEAC433C1;
-	Wed, 23 Nov 2022 09:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B241C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AADC433D6;
+	Wed, 23 Nov 2022 09:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194425;
-	bh=KrvNOB/jWRk0+sIQgnh6ZQSThFAyEoNxallyG23zNL4=;
+	s=korg; t=1669194428;
+	bh=W6wmzkYCv/AMLPLOaIwgBtqOPiV6VZOuARrUfUaadY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8kGyNWhE+B1UevKH6GmFpfdEvxXsBLc859vxDtqEDE5oeJx1d/FOgl6v+FmGmvO2
-	 UqxoZPbNPeOwAIAXQHNmLnIvhM50atPSFfmRi/4vy9LbQzlaXJvdzZbFHh1Dm5Xsrb
-	 Q1RImgQ1c9hQRv3DRaXBDbffsuktj0EHYUY3Mz5M=
+	b=k5Ipiuyb7UzaJQ/2smFw9f7R3nvO9N9exXwZWuF5/qVzsDyjJ8GFz+oWdnjTfKJUF
+	 tBqzPm7rrEVRKNPf+DQHBUe5MmE3zqt7wHUwD+WeMXI1v0PwmHDs8Fzv5/CfkZ5sUd
+	 wlc8/ppM4vPZ6XQaS/7CNjOlyF+pSUeK9YQpQX6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 072/114] net/x25: Fix skb leak in x25_lapb_receive_frame()
-Date: Wed, 23 Nov 2022 09:50:59 +0100
-Message-Id: <20221123084554.759527007@linuxfoundation.org>
+Subject: [PATCH 4.19 073/114] cifs: Fix wrong return value checking when GETFLAGS
+Date: Wed, 23 Nov 2022 09:51:00 +0100
+Message-Id: <20221123084554.800258633@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -36,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 2929cceb2fcf0ded7182562e4888afafece82cce ]
+[ Upstream commit 92bbd67a55fee50743b42825d1c016e7fd5c79f9 ]
 
-x25_lapb_receive_frame() using skb_copy() to get a private copy of
-skb, the new skb should be freed in the undersized/fragmented skb
-error handling path. Otherwise there is a memory leak.
+The return value of CIFSGetExtAttr is negative, should be checked
+with -EOPNOTSUPP rather than EOPNOTSUPP.
 
-Fixes: cb101ed2c3c7 ("x25: Handle undersized/fragmented skbs")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://lore.kernel.org/r/20221114110519.514538-1-weiyongjun@huaweicloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 64a5cfa6db94 ("Allow setting per-file compression via SMB2/3")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/x25/x25_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/x25/x25_dev.c b/net/x25/x25_dev.c
-index 30f71620d4e3..24f2676e3b66 100644
---- a/net/x25/x25_dev.c
-+++ b/net/x25/x25_dev.c
-@@ -122,7 +122,7 @@ int x25_lapb_receive_frame(struct sk_buff *skb, struct net_device *dev,
+diff --git a/fs/cifs/ioctl.c b/fs/cifs/ioctl.c
+index 54f32f9143a9..5a7020e767e4 100644
+--- a/fs/cifs/ioctl.c
++++ b/fs/cifs/ioctl.c
+@@ -149,7 +149,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 					rc = put_user(ExtAttrBits &
+ 						FS_FL_USER_VISIBLE,
+ 						(int __user *)arg);
+-				if (rc != EOPNOTSUPP)
++				if (rc != -EOPNOTSUPP)
+ 					break;
+ 			}
+ #endif /* CONFIG_CIFS_POSIX */
+@@ -178,7 +178,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 			 *		       pSMBFile->fid.netfid,
+ 			 *		       extAttrBits,
+ 			 *		       &ExtAttrMask);
+-			 * if (rc != EOPNOTSUPP)
++			 * if (rc != -EOPNOTSUPP)
+ 			 *	break;
+ 			 */
  
- 	if (!pskb_may_pull(skb, 1)) {
- 		x25_neigh_put(nb);
--		return 0;
-+		goto drop;
- 	}
- 
- 	switch (skb->data[0]) {
 -- 
 2.35.1
 
