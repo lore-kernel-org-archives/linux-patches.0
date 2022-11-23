@@ -1,25 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A497B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8153C433D6;
-	Wed, 23 Nov 2022 08:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7A87B;
+	Wed, 23 Nov 2022 08:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094CDC433D6;
+	Wed, 23 Nov 2022 08:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193675;
-	bh=NgcgWbgq+NHzd1MVDmZVgA4UGHow7sBhCZKIKBlN88o=;
+	s=korg; t=1669193678;
+	bh=YHxZlplJYFwobsY6XzCxLP+nTe0K3MkcAJaglIz46QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0n+ZdTOtyhP3YRQGwL3IbbrubNkl8J/AyKgOoSfvRjTmLXTBeFQifDF+hOkPKjW87
-	 Jr942yfgf77//LUwAxtQ7Qm5cuuWNQRT9qRHr6U1cpWnuehzyGcLoYfL/gzDBC/Q3Y
-	 cinVS/pVgSe/3oxnuTao2xxt6A9ZoSY/gnfX+al8=
+	b=gtFwfH9yDSGrvmllspZlYYg901g6FGF6JkCKg0pybhTWVeBL7dqANRPtGa+19SRLt
+	 1sR75Z49mncbC89d3sax7hKNnvjWJZa0g8BReGrLi+7aCPdGt4AtYAo+Tn1GiGDWmI
+	 qFyRfY8XbListRS/3blC/17/bBLWUSmT12dgHbaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.9 22/76] cert host tools: Stop complaining about deprecated OpenSSL functions
-Date: Wed, 23 Nov 2022 09:50:21 +0100
-Message-Id: <20221123084547.446750542@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	llvm@lists.linux.dev,
+	Nathan Huckleberry <nhuck@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 31/76] drm/imx: imx-tve: Fix return type of imx_tve_connector_mode_valid
+Date: Wed, 23 Nov 2022 09:50:30 +0100
+Message-Id: <20221123084547.747822954@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -33,52 +39,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nathan Huckleberry <nhuck@google.com>
 
-commit 6bfb56e93bcef41859c2d5ab234ffd80b691be35 upstream.
+[ Upstream commit fc007fb815ab5395c3962c09b79a1630b0fbed9c ]
 
-OpenSSL 3.0 deprecated the OpenSSL's ENGINE API.  That is as may be, but
-the kernel build host tools still use it.  Disable the warning about
-deprecated declarations until somebody who cares fixes it.
+The mode_valid field in drm_connector_helper_funcs is expected to be of
+type:
+enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
+                                     struct drm_display_mode *mode);
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The mismatched return type breaks forward edge kCFI since the underlying
+function definition does not match the function hook definition.
+
+The return type of imx_tve_connector_mode_valid should be changed from
+int to enum drm_mode_status.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1703
+Cc: llvm@lists.linux.dev
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220913205544.155106-1-nhuck@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/extract-cert.c |    7 +++++++
- scripts/sign-file.c    |    7 +++++++
- 2 files changed, 14 insertions(+)
+ drivers/gpu/drm/imx/imx-tve.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/scripts/extract-cert.c
-+++ b/scripts/extract-cert.c
-@@ -23,6 +23,13 @@
- #include <openssl/err.h>
- #include <openssl/engine.h>
+diff --git a/drivers/gpu/drm/imx/imx-tve.c b/drivers/gpu/drm/imx/imx-tve.c
+index 9ae515f3171e..372582df6008 100644
+--- a/drivers/gpu/drm/imx/imx-tve.c
++++ b/drivers/gpu/drm/imx/imx-tve.c
+@@ -254,8 +254,9 @@ static int imx_tve_connector_get_modes(struct drm_connector *connector)
+ 	return ret;
+ }
  
-+/*
-+ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-+ *
-+ * Remove this if/when that API is no longer used
-+ */
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+
- #define PKEY_ID_PKCS7 2
- 
- static __attribute__((noreturn))
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -30,6 +30,13 @@
- #include <openssl/engine.h>
- 
- /*
-+ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
-+ *
-+ * Remove this if/when that API is no longer used
-+ */
-+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+
-+/*
-  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
-  * assume that it's not available and its header file is missing and that we
-  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
+-static int imx_tve_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++imx_tve_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	struct imx_tve *tve = con_to_tve(connector);
+ 	unsigned long rate;
+-- 
+2.35.1
+
 
 
