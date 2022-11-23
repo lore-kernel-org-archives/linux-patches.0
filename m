@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1F01C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBE7C433C1;
-	Wed, 23 Nov 2022 09:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E831C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD37AC433D7;
+	Wed, 23 Nov 2022 09:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195684;
-	bh=kKMC+spU6MfnUaovpOJQaL5h02Qb233xHv7tIfL3Jlk=;
+	s=korg; t=1669195688;
+	bh=4wo/w9JKvQ1JwILnmjIRqQEkvwcUj/vMy/ZQWq6SqMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHkZOcPY+bGY0IYKtuQ+jvTwdgdh12nheme1GQKS2gL37o8w7et27HSf2n/Vkg5iN
-	 Or1o/iYE88qk2F5/+RFY+/mqXIbQPqD4hDDJP4ZLU26GffT2O5GfWx4olXSwcGKe7u
-	 4KSQySJb54ZbrO7DWWrAsyExeArK+kLsEZu+riFI=
+	b=VzpFGmP0vd2saPgi+9OFCionjTOf8VoDpHlv9GaTHvvZ1OJUK6c1uyf4u/bWWFVig
+	 QAvL2/r83xwtu4KGTASQ9AiTSaRkcI2qu1QP9XTyLzu7LBih6pZfVREbTR8UmR8n2A
+	 VNjadyx2U0RZ+Mi7v9PZmxO8bu6fpsqEiHE5LQio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Packard <keithp@keithp.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH 5.10 131/149] stddef: Introduce struct_group() helper macro
-Date: Wed, 23 Nov 2022 09:51:54 +0100
-Message-Id: <20221123084602.637242871@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 132/149] net: use struct_group to copy ip/ipv6 header addresses
+Date: Wed, 23 Nov 2022 09:51:55 +0100
+Message-Id: <20221123084602.677943392@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -39,260 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 50d7bd38c3aafc4749e05e8d7fcb616979143602 ]
+[ Upstream commit 58e0be1ef6118c5352b56a4d06e974c5599993a5 ]
 
-Kernel code has a regular need to describe groups of members within a
-structure usually when they need to be copied or initialized separately
-from the rest of the surrounding structure. The generally accepted design
-pattern in C is to use a named sub-struct:
+kernel test robot reported warnings when build bonding module with
+make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/net/bonding/:
 
-	struct foo {
-		int one;
-		struct {
-			int two;
-			int three, four;
-		} thing;
-		int five;
-	};
+                 from ../drivers/net/bonding/bond_main.c:35:
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘iph_to_flow_copy_v4addrs’ at ../include/net/ip.h:566:2,
+    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3984:3:
+../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
+ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘iph_to_flow_copy_v6addrs’ at ../include/net/ipv6.h:900:2,
+    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3994:3:
+../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
+ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This would allow for traditional references and sizing:
+This is because we try to copy the whole ip/ip6 address to the flow_key,
+while we only point the to ip/ip6 saddr. Note that since these are UAPI
+headers, __struct_group() is used to avoid the compiler warnings.
 
-	memcpy(&dst.thing, &src.thing, sizeof(dst.thing));
-
-However, doing this would mean that referencing struct members enclosed
-by such named structs would always require including the sub-struct name
-in identifiers:
-
-	do_something(dst.thing.three);
-
-This has tended to be quite inflexible, especially when such groupings
-need to be added to established code which causes huge naming churn.
-Three workarounds exist in the kernel for this problem, and each have
-other negative properties.
-
-To avoid the naming churn, there is a design pattern of adding macro
-aliases for the named struct:
-
-	#define f_three thing.three
-
-This ends up polluting the global namespace, and makes it difficult to
-search for identifiers.
-
-Another common work-around in kernel code avoids the pollution by avoiding
-the named struct entirely, instead identifying the group's boundaries using
-either a pair of empty anonymous structs of a pair of zero-element arrays:
-
-	struct foo {
-		int one;
-		struct { } start;
-		int two;
-		int three, four;
-		struct { } finish;
-		int five;
-	};
-
-	struct foo {
-		int one;
-		int start[0];
-		int two;
-		int three, four;
-		int finish[0];
-		int five;
-	};
-
-This allows code to avoid needing to use a sub-struct named for member
-references within the surrounding structure, but loses the benefits of
-being able to actually use such a struct, making it rather fragile. Using
-these requires open-coded calculation of sizes and offsets. The efforts
-made to avoid common mistakes include lots of comments, or adding various
-BUILD_BUG_ON()s. Such code is left with no way for the compiler to reason
-about the boundaries (e.g. the "start" object looks like it's 0 bytes
-in length), making bounds checking depend on open-coded calculations:
-
-	if (length > offsetof(struct foo, finish) -
-		     offsetof(struct foo, start))
-		return -EINVAL;
-	memcpy(&dst.start, &src.start, offsetof(struct foo, finish) -
-				       offsetof(struct foo, start));
-
-However, the vast majority of places in the kernel that operate on
-groups of members do so without any identification of the grouping,
-relying either on comments or implicit knowledge of the struct contents,
-which is even harder for the compiler to reason about, and results in
-even more fragile manual sizing, usually depending on member locations
-outside of the region (e.g. to copy "two" and "three", use the start of
-"four" to find the size):
-
-	BUILD_BUG_ON((offsetof(struct foo, four) <
-		      offsetof(struct foo, two)) ||
-		     (offsetof(struct foo, four) <
-		      offsetof(struct foo, three));
-	if (length > offsetof(struct foo, four) -
-		     offsetof(struct foo, two))
-		return -EINVAL;
-	memcpy(&dst.two, &src.two, length);
-
-In order to have a regular programmatic way to describe a struct
-region that can be used for references and sizing, can be examined for
-bounds checking, avoids forcing the use of intermediate identifiers,
-and avoids polluting the global namespace, introduce the struct_group()
-macro. This macro wraps the member declarations to create an anonymous
-union of an anonymous struct (no intermediate name) and a named struct
-(for references and sizing):
-
-	struct foo {
-		int one;
-		struct_group(thing,
-			int two;
-			int three, four;
-		);
-		int five;
-	};
-
-	if (length > sizeof(src.thing))
-		return -EINVAL;
-	memcpy(&dst.thing, &src.thing, length);
-	do_something(dst.three);
-
-There are some rare cases where the resulting struct_group() needs
-attributes added, so struct_group_attr() is also introduced to allow
-for specifying struct attributes (e.g. __align(x) or __packed).
-Additionally, there are places where such declarations would like to
-have the struct be tagged, so struct_group_tagged() is added.
-
-Given there is a need for a handful of UAPI uses too, the underlying
-__struct_group() macro has been defined in UAPI so it can be used there
-too.
-
-To avoid confusing scripts/kernel-doc, hide the macro from its struct
-parsing.
-
-Co-developed-by: Keith Packard <keithp@keithp.com>
-Signed-off-by: Keith Packard <keithp@keithp.com>
-Acked-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/lkml/20210728023217.GC35706@embeddedor
-Enhanced-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/lkml/41183a98-bdb9-4ad6-7eab-5a7292a6df84@rasmusvillemoes.dk
-Enhanced-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/lkml/1d9a2e6df2a9a35b2cdd50a9a68cac5991e7e5f0.camel@intel.com
-Enhanced-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://lore.kernel.org/lkml/YQKa76A6XuFqgM03@phenom.ffwll.local
-Acked-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Stable-dep-of: 58e0be1ef611 ("net: use struct_group to copy ip/ipv6 header addresses")
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: c3f8324188fa ("net: Add full IPv6 addresses to flow_keys")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20221115142400.1204786-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/stddef.h      | 48 +++++++++++++++++++++++++++++++++++++
- include/uapi/linux/stddef.h | 21 ++++++++++++++++
- scripts/kernel-doc          |  7 ++++++
- 3 files changed, 76 insertions(+)
+ include/net/ip.h          | 2 +-
+ include/net/ipv6.h        | 2 +-
+ include/uapi/linux/ip.h   | 6 ++++--
+ include/uapi/linux/ipv6.h | 6 ++++--
+ 4 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/stddef.h b/include/linux/stddef.h
-index 998a4ba28eba..938216f8ab7e 100644
---- a/include/linux/stddef.h
-+++ b/include/linux/stddef.h
-@@ -36,4 +36,52 @@ enum {
- #define offsetofend(TYPE, MEMBER) \
- 	(offsetof(TYPE, MEMBER)	+ sizeof_field(TYPE, MEMBER))
+diff --git a/include/net/ip.h b/include/net/ip.h
+index c5822d7824cd..4b775af57268 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -545,7 +545,7 @@ static inline void iph_to_flow_copy_v4addrs(struct flow_keys *flow,
+ 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v4addrs.dst) !=
+ 		     offsetof(typeof(flow->addrs), v4addrs.src) +
+ 			      sizeof(flow->addrs.v4addrs.src));
+-	memcpy(&flow->addrs.v4addrs, &iph->saddr, sizeof(flow->addrs.v4addrs));
++	memcpy(&flow->addrs.v4addrs, &iph->addrs, sizeof(flow->addrs.v4addrs));
+ 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV4_ADDRS;
+ }
  
-+/**
-+ * struct_group() - Wrap a set of declarations in a mirrored struct
-+ *
-+ * @NAME: The identifier name of the mirrored sub-struct
-+ * @MEMBERS: The member declarations for the mirrored structs
-+ *
-+ * Used to create an anonymous union of two structs with identical
-+ * layout and size: one anonymous and one named. The former can be
-+ * used normally without sub-struct naming, and the latter can be
-+ * used to reason about the start, end, and size of the group of
-+ * struct members.
-+ */
-+#define struct_group(NAME, MEMBERS...)	\
-+	__struct_group(/* no tag */, NAME, /* no attrs */, MEMBERS)
-+
-+/**
-+ * struct_group_attr() - Create a struct_group() with trailing attributes
-+ *
-+ * @NAME: The identifier name of the mirrored sub-struct
-+ * @ATTRS: Any struct attributes to apply
-+ * @MEMBERS: The member declarations for the mirrored structs
-+ *
-+ * Used to create an anonymous union of two structs with identical
-+ * layout and size: one anonymous and one named. The former can be
-+ * used normally without sub-struct naming, and the latter can be
-+ * used to reason about the start, end, and size of the group of
-+ * struct members. Includes structure attributes argument.
-+ */
-+#define struct_group_attr(NAME, ATTRS, MEMBERS...) \
-+	__struct_group(/* no tag */, NAME, ATTRS, MEMBERS)
-+
-+/**
-+ * struct_group_tagged() - Create a struct_group with a reusable tag
-+ *
-+ * @TAG: The tag name for the named sub-struct
-+ * @NAME: The identifier name of the mirrored sub-struct
-+ * @MEMBERS: The member declarations for the mirrored structs
-+ *
-+ * Used to create an anonymous union of two structs with identical
-+ * layout and size: one anonymous and one named. The former can be
-+ * used normally without sub-struct naming, and the latter can be
-+ * used to reason about the start, end, and size of the group of
-+ * struct members. Includes struct tag argument for the named copy,
-+ * so the specified layout can be reused later.
-+ */
-+#define struct_group_tagged(TAG, NAME, MEMBERS...) \
-+	__struct_group(TAG, NAME, /* no attrs */, MEMBERS)
-+
- #endif
-diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
-index ee8220f8dcf5..610204f7c275 100644
---- a/include/uapi/linux/stddef.h
-+++ b/include/uapi/linux/stddef.h
-@@ -4,3 +4,24 @@
- #ifndef __always_inline
- #define __always_inline inline
- #endif
-+
-+/**
-+ * __struct_group() - Create a mirrored named and anonyomous struct
-+ *
-+ * @TAG: The tag name for the named sub-struct (usually empty)
-+ * @NAME: The identifier name of the mirrored sub-struct
-+ * @ATTRS: Any struct attributes (usually empty)
-+ * @MEMBERS: The member declarations for the mirrored structs
-+ *
-+ * Used to create an anonymous union of two structs with identical layout
-+ * and size: one anonymous and one named. The former's members can be used
-+ * normally without sub-struct naming, and the latter can be used to
-+ * reason about the start, end, and size of the group of struct members.
-+ * The named struct can also be explicitly tagged for layer reuse, as well
-+ * as both having struct attributes appended.
-+ */
-+#define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
-+	union { \
-+		struct { MEMBERS } ATTRS; \
-+		struct TAG { MEMBERS } ATTRS NAME; \
-+	}
-diff --git a/scripts/kernel-doc b/scripts/kernel-doc
-index 6325bec3f66f..19af6dd160e6 100755
---- a/scripts/kernel-doc
-+++ b/scripts/kernel-doc
-@@ -1215,6 +1215,13 @@ sub dump_struct($$) {
- 	$members =~ s/\s*CRYPTO_MINALIGN_ATTR/ /gos;
- 	$members =~ s/\s*____cacheline_aligned_in_smp/ /gos;
- 	$members =~ s/\s*____cacheline_aligned/ /gos;
-+	# unwrap struct_group():
-+	# - first eat non-declaration parameters and rewrite for final match
-+	# - then remove macro, outer parens, and trailing semicolon
-+	$members =~ s/\bstruct_group\s*\(([^,]*,)/STRUCT_GROUP(/gos;
-+	$members =~ s/\bstruct_group_(attr|tagged)\s*\(([^,]*,){2}/STRUCT_GROUP(/gos;
-+	$members =~ s/\b__struct_group\s*\(([^,]*,){3}/STRUCT_GROUP(/gos;
-+	$members =~ s/\bSTRUCT_GROUP(\(((?:(?>[^)(]+)|(?1))*)\))[^;]*;/$2/gos;
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 60601896d474..89ce8a50f236 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -842,7 +842,7 @@ static inline void iph_to_flow_copy_v6addrs(struct flow_keys *flow,
+ 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v6addrs.dst) !=
+ 		     offsetof(typeof(flow->addrs), v6addrs.src) +
+ 		     sizeof(flow->addrs.v6addrs.src));
+-	memcpy(&flow->addrs.v6addrs, &iph->saddr, sizeof(flow->addrs.v6addrs));
++	memcpy(&flow->addrs.v6addrs, &iph->addrs, sizeof(flow->addrs.v6addrs));
+ 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
+ }
  
- 	# replace DECLARE_BITMAP
- 	$members =~ s/__ETHTOOL_DECLARE_LINK_MODE_MASK\s*\(([^\)]+)\)/DECLARE_BITMAP($1, __ETHTOOL_LINK_MODE_MASK_NBITS)/gos;
+diff --git a/include/uapi/linux/ip.h b/include/uapi/linux/ip.h
+index e42d13b55cf3..d2f143393780 100644
+--- a/include/uapi/linux/ip.h
++++ b/include/uapi/linux/ip.h
+@@ -100,8 +100,10 @@ struct iphdr {
+ 	__u8	ttl;
+ 	__u8	protocol;
+ 	__sum16	check;
+-	__be32	saddr;
+-	__be32	daddr;
++	__struct_group(/* no tag */, addrs, /* no attrs */,
++		__be32	saddr;
++		__be32	daddr;
++	);
+ 	/*The options start here. */
+ };
+ 
+diff --git a/include/uapi/linux/ipv6.h b/include/uapi/linux/ipv6.h
+index 13e8751bf24a..766ab5c8ee65 100644
+--- a/include/uapi/linux/ipv6.h
++++ b/include/uapi/linux/ipv6.h
+@@ -130,8 +130,10 @@ struct ipv6hdr {
+ 	__u8			nexthdr;
+ 	__u8			hop_limit;
+ 
+-	struct	in6_addr	saddr;
+-	struct	in6_addr	daddr;
++	__struct_group(/* no tag */, addrs, /* no attrs */,
++		struct	in6_addr	saddr;
++		struct	in6_addr	daddr;
++	);
+ };
+ 
+ 
 -- 
 2.35.1
 
