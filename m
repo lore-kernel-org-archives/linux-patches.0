@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF1E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:39:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A615C433C1;
-	Wed, 23 Nov 2022 09:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C333C1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:39:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB11C433D6;
+	Wed, 23 Nov 2022 09:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196343;
-	bh=apa7HXC1Vf2N3cDfPVKE9OAdFl+cxw1TmKXAhubsPXY=;
+	s=korg; t=1669196347;
+	bh=+8AODrq2tiX3TsgZ4ShGAGAmb0PFxVzOIoEHdT7ao+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rd/DPGU31NQV+Ucp3c7l3uYfi8KkxiHpyN7R666jQQJOTmsKFGe2Nohz6U0siKMkB
-	 +NpIYfw769cllwZ7UsxJAupdcxZBNI2QyOJoL3i6zHoKtX2SLBw8lUHyTO3eqkL4zY
-	 BIaUsKdh75Oxa5WFnfnECVO3m0izxOFqPzttllHk=
+	b=zhx+aepzUNQ6D3XZH2Bqa7ifHnCRMJ/Jfl3/IA528eZrqD8ZjlYi80jnfXzj6qegh
+	 qoTzjEigvCo1vgl3YEnNjYvWbLY8kDLC/r+1LrQYX3i0CYxJ3I7a486MLvnFGxaRVy
+	 QLAwcX4MBY3EZ/tlajCCFYZmDB/bpd00eWp6AliQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jun <chenjun102@huawei.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/181] Input: i8042 - fix leaking of platform device on module removal
-Date: Wed, 23 Nov 2022 09:52:10 +0100
-Message-Id: <20221123084609.549235800@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 168/181] macvlan: enforce a consistent minimal mtu
+Date: Wed, 23 Nov 2022 09:52:11 +0100
+Message-Id: <20221123084609.597223807@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,54 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jun <chenjun102@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 81cd7e8489278d28794e7b272950c3e00c344e44 ]
+commit b64085b00044bdf3cd1c9825e9ef5b2e0feae91a upstream.
 
-Avoid resetting the module-wide i8042_platform_device pointer in
-i8042_probe() or i8042_remove(), so that the device can be properly
-destroyed by i8042_exit() on module unload.
+macvlan should enforce a minimal mtu of 68, even at link creation.
 
-Fixes: 9222ba68c3f4 ("Input: i8042 - add deferred probe support")
-Signed-off-by: Chen Jun <chenjun102@huawei.com>
-Link: https://lore.kernel.org/r/20221109034148.23821-1-chenjun102@huawei.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch avoids the current behavior (which could lead to crashes
+in ipv6 stack if the link is brought up)
+
+$ ip link add macvlan1 link eno1 mtu 8 type macvlan  # This should fail !
+$ ip link sh dev macvlan1
+5: macvlan1@eno1: <BROADCAST,MULTICAST> mtu 8 qdisc noop
+    state DOWN mode DEFAULT group default qlen 1000
+    link/ether 02:47:6c:24:74:82 brd ff:ff:ff:ff:ff:ff
+$ ip link set macvlan1 mtu 67
+Error: mtu less than device minimum.
+$ ip link set macvlan1 mtu 68
+$ ip link set macvlan1 mtu 8
+Error: mtu less than device minimum.
+
+Fixes: 91572088e3fd ("net: use core MTU range checking in core net infra")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/macvlan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
-index 3fc0a89cc785..f132d6dfc25e 100644
---- a/drivers/input/serio/i8042.c
-+++ b/drivers/input/serio/i8042.c
-@@ -1543,8 +1543,6 @@ static int i8042_probe(struct platform_device *dev)
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1181,7 +1181,7 @@ void macvlan_common_setup(struct net_dev
  {
- 	int error;
+ 	ether_setup(dev);
  
--	i8042_platform_device = dev;
--
- 	if (i8042_reset == I8042_RESET_ALWAYS) {
- 		error = i8042_controller_selftest();
- 		if (error)
-@@ -1582,7 +1580,6 @@ static int i8042_probe(struct platform_device *dev)
- 	i8042_free_aux_ports();	/* in case KBD failed but AUX not */
- 	i8042_free_irqs();
- 	i8042_controller_reset(false);
--	i8042_platform_device = NULL;
- 
- 	return error;
- }
-@@ -1592,7 +1589,6 @@ static int i8042_remove(struct platform_device *dev)
- 	i8042_unregister_ports();
- 	i8042_free_irqs();
- 	i8042_controller_reset(false);
--	i8042_platform_device = NULL;
- 
- 	return 0;
- }
--- 
-2.35.1
-
+-	dev->min_mtu		= 0;
++	/* ether_setup() has set dev->min_mtu to ETH_MIN_MTU. */
+ 	dev->max_mtu		= ETH_MAX_MTU;
+ 	dev->priv_flags	       &= ~IFF_TX_SKB_SHARING;
+ 	netif_keep_dst(dev);
 
 
