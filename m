@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13D51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C003C433C1;
-	Wed, 23 Nov 2022 09:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00C71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2480CC433C1;
+	Wed, 23 Nov 2022 09:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195527;
-	bh=u/s33k08WmlBc5YODo+KAW2RhSMTD8O4/IU91YQ1fJw=;
+	s=korg; t=1669195531;
+	bh=/LDp0W0au7I4ALoX246C150Tqr21yWHIGUVDJwXPFZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCN329ebP4tT6lY5Hk5Jj2STMmG/hwwnMpJ/0g02BkTDSq6DqcOGu5YVc8AO3QnrM
-	 Sflj0oLqvCRkbgtqje2JVtIO2O6OMMYr8y/COgj57QebV71kZlIaPyayyjwNtcy003
-	 370ii5wn/vMhiYNs9iYb8mdGuE5LUaox+4/tsvko=
+	b=SJpUnWcPzAUf6pxHlJRtBDwqF7HdL7MdQyFQyKelKvkSH3fNk/d626XCeNkOBr8ne
+	 TlUVUOA/3wYRt/McCW1MYivJ6z50HAcrBOe6Wos6cLkjsCz8eThWIhGDK1ohDFaAHW
+	 RC4bKc2OZQwBGqtpU9nFC/Rnu4Szd6+c7oBsSb8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitja Spes <mitja@lxnav.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 110/149] iio: pressure: ms5611: changed hardcoded SPI speed to value limited
-Date: Wed, 23 Nov 2022 09:51:33 +0100
-Message-Id: <20221123084601.918704123@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 093/149] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
+Date: Wed, 23 Nov 2022 09:51:16 +0100
+Message-Id: <20221123084601.334952817@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,32 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mitja Spes <mitja@lxnav.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 741cec30cc52058d1c10d415f3b98319887e4f73 upstream.
+commit 1abfd71ee8f3ed99c5d0df5d9843a360541d6808 upstream.
 
-Don't hardcode the ms5611 SPI speed, limit it instead.
+Samsung Galaxy Book Pro 360 (13" 2021 NP930QBD-ke1US) with codec SSID
+144d:c1a6 requires the same workaround for enabling the speaker amp
+like other Samsung models with ALC298 codec.
 
-Signed-off-by: Mitja Spes <mitja@lxnav.com>
-Fixes: c0644160a8b5 ("iio: pressure: add support for MS5611 pressure and temperature sensor")
-Link: https://lore.kernel.org/r/20221021135827.1444793-3-mitja@lxnav.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://bugzilla.opensuse.org/show_bug.cgi?id=1205100
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221115170235.18875-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/ms5611_spi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/pressure/ms5611_spi.c
-+++ b/drivers/iio/pressure/ms5611_spi.c
-@@ -94,7 +94,7 @@ static int ms5611_spi_probe(struct spi_d
- 	spi_set_drvdata(spi, indio_dev);
- 
- 	spi->mode = SPI_MODE_0;
--	spi->max_speed_hz = 20000000;
-+	spi->max_speed_hz = min(spi->max_speed_hz, 20000000U);
- 	spi->bits_per_word = 8;
- 	ret = spi_setup(spi);
- 	if (ret < 0)
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9008,6 +9008,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
+ 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
 
 
