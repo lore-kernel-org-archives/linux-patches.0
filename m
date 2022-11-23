@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA891C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:55:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498ADC433C1;
-	Wed, 23 Nov 2022 09:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A8E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:55:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFF3C433D7;
+	Wed, 23 Nov 2022 09:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197335;
-	bh=3OoW5/pZq+1ILZLdW/y1USNHDpgOLPwzibT0IQT93XY=;
+	s=korg; t=1669197339;
+	bh=V17UdKcr17cJJO81G71Avd8cF26LZvzq6YnUjnmlBjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1iM7YoiyeaRnP7ZX0on5yRemOnxB6C34nwcn/eA8i5YFDTlzN+iw9MC+XogpcvVO
-	 wGcamhcqbS5bxS97tedNRGQGDPf2h7mjcVsp8wURUmd332HQwLKhIL35Swn/J/TfbV
-	 k/61ANBgP4Rn1Nx2PEccAfexoPg7BVlhqc+L0x4I=
+	b=fiDic1BsdvKSM0SGmsa2VT+rq6kzq/+9AHBQaiEN88CClBBDh8AUd+YH03FzPfsps
+	 wYlWnkMCYZfPp2dUQeR7YDWkgYCwsp38cTFaDYQ5P/P4TScfphEXaSOzQj49Y2cDc1
+	 rS6G6zrYXx4WB4l5buGEAvi79S7fPF5eWGH4eXd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.0 264/314] net: phy: marvell: add sleep time after enabling the loopback bit
-Date: Wed, 23 Nov 2022 09:51:49 +0100
-Message-Id: <20221123084637.483872515@linuxfoundation.org>
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.0 238/314] USB: serial: option: add Fibocom FM160 0x0111 composition
+Date: Wed, 23 Nov 2022 09:51:23 +0100
+Message-Id: <20221123084636.254689820@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,49 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit 18c532e44939caa17f1fa380f7ac50dbc0718dbb upstream.
+commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
 
-Sleep time is added to ensure the phy to be ready after loopback
-bit was set. This to prevent the phy loopback test from failing.
+Add support for the following Fibocom FM160 composition:
 
-Fixes: 020a45aff119 ("net: phy: marvell: add Marvell specific PHY loopback")
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Signed-off-by: Aminuddin Jamaluddin <aminuddin.jamaluddin@intel.com>
-Link: https://lore.kernel.org/r/20221114065302.10625-1-aminuddin.jamaluddin@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+0x0111: MBIM + MODEM + DIAG + AT
+
+T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
+S:  Manufacturer=Fibocom
+S:  Product=Fibocom FM160 Modem_SN:12345678
+S:  SerialNumber=12345678
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/marvell.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -2015,14 +2015,16 @@ static int m88e1510_loopback(struct phy_
- 		if (err < 0)
- 			return err;
- 
--		/* FIXME: Based on trial and error test, it seem 1G need to have
--		 * delay between soft reset and loopback enablement.
--		 */
--		if (phydev->speed == SPEED_1000)
--			msleep(1000);
-+		err = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK,
-+				 BMCR_LOOPBACK);
- 
--		return phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK,
--				  BMCR_LOOPBACK);
-+		if (!err) {
-+			/* It takes some time for PHY device to switch
-+			 * into/out-of loopback mode.
-+			 */
-+			msleep(1000);
-+		}
-+		return err;
- 	} else {
- 		err = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK, 0);
- 		if (err < 0)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2179,6 +2179,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
++	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
 
 
