@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022D91C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50823C433C1;
-	Wed, 23 Nov 2022 09:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21E81C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1186BC433D6;
+	Wed, 23 Nov 2022 09:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194617;
-	bh=36C+gVogxR2GlRPSxMvvXAApCHvSmIi/5WF++fmZTRE=;
+	s=korg; t=1669194622;
+	bh=GwcMWJ0EPLhLW47wwosOYK46SYIOhNwvIVKoKGOAQBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTvgfLjYi72lRvm2p/Ufyg6fDps3fW1QF0FBzXztsjab1j2IhO/D+rxArSMmMW3F9
-	 JHz428TokayShCBppO/VMv9zXc4rpX8ZWK5Rs+6r/50tmyoztKqbM4RVN238BqL/Um
-	 wqvWZteEHnOGU+UFdbuGcbB7wXFlNSR1C1/6mcHY=
+	b=IuSgLwpKhQ56XCM8WXso7vu28YkslujtOmEvT647V9J5m8+71qtKMGRuQA37GQr6b
+	 66QS2WbWbMKbBYNfxSMeH6SyDzIU2iR/0W+bHFqtKaOf+zhqrco7AjRB7fdgZmXDVu
+	 a4qYnOYNRmNJ3fx3GWXts5aI4JYxA8I5MNljPcqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Akshay Navgire <anavgire@purestorage.com>,
+	Alex Barba <alex.barba@broadcom.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 014/156] bnxt_en: Fix possible crash in bnxt_hwrm_set_coal()
-Date: Wed, 23 Nov 2022 09:49:31 +0100
-Message-Id: <20221123084558.395674277@linuxfoundation.org>
+Subject: [PATCH 5.4 015/156] bnxt_en: fix potentially incorrect return value for ndo_rx_flow_steer
+Date: Wed, 23 Nov 2022 09:49:32 +0100
+Message-Id: <20221123084558.437226071@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,79 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Alex Barba <alex.barba@broadcom.com>
 
-[ Upstream commit 6d81ea3765dfa6c8a20822613c81edad1c4a16a0 ]
+[ Upstream commit 02597d39145bb0aa81d04bf39b6a913ce9a9d465 ]
 
-During the error recovery sequence, the rtnl_lock is not held for the
-entire duration and some datastructures may be freed during the sequence.
-Check for the BNXT_STATE_OPEN flag instead of netif_running() to ensure
-that the device is fully operational before proceeding to reconfigure
-the coalescing settings.
+In the bnxt_en driver ndo_rx_flow_steer returns '0' whenever an entry
+that we are attempting to steer is already found.  This is not the
+correct behavior.  The return code should be the value/index that
+corresponds to the entry.  Returning zero all the time causes the
+RFS records to be incorrect unless entry '0' is the correct one.  As
+flows migrate to different cores this can create entries that are not
+correct.
 
-This will fix a possible crash like this:
-
-BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP NOPTI
-CPU: 10 PID: 181276 Comm: ethtool Kdump: loaded Tainted: G          IOE    --------- -  - 4.18.0-348.el8.x86_64 #1
-Hardware name: Dell Inc. PowerEdge R740/0F9N89, BIOS 2.3.10 08/15/2019
-RIP: 0010:bnxt_hwrm_set_coal+0x1fb/0x2a0 [bnxt_en]
-Code: c2 66 83 4e 22 08 66 89 46 1c e8 10 cb 00 00 41 83 c6 01 44 39 b3 68 01 00 00 0f 8e a3 00 00 00 48 8b 93 c8 00 00 00 49 63 c6 <48> 8b 2c c2 48 8b 85 b8 02 00 00 48 85 c0 74 2e 48 8b 74 24 08 f6
-RSP: 0018:ffffb11c8dcaba50 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff8d168a8b0ac0 RCX: 00000000000000c5
-RDX: 0000000000000000 RSI: ffff8d162f72c000 RDI: ffff8d168a8b0b28
-RBP: 0000000000000000 R08: b6e1f68a12e9a7eb R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000037 R12: ffff8d168a8b109c
-R13: ffff8d168a8b10aa R14: 0000000000000000 R15: ffffffffc01ac4e0
-FS:  00007f3852e4c740(0000) GS:ffff8d24c0080000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 000000041b3ee003 CR4: 00000000007706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- ethnl_set_coalesce+0x3ce/0x4c0
- genl_family_rcv_msg_doit.isra.15+0x10f/0x150
- genl_family_rcv_msg+0xb3/0x160
- ? coalesce_fill_reply+0x480/0x480
- genl_rcv_msg+0x47/0x90
- ? genl_family_rcv_msg+0x160/0x160
- netlink_rcv_skb+0x4c/0x120
- genl_rcv+0x24/0x40
- netlink_unicast+0x196/0x230
- netlink_sendmsg+0x204/0x3d0
- sock_sendmsg+0x4c/0x50
- __sys_sendto+0xee/0x160
- ? syscall_trace_enter+0x1d3/0x2c0
- ? __audit_syscall_exit+0x249/0x2a0
- __x64_sys_sendto+0x24/0x30
- do_syscall_64+0x5b/0x1a0
- entry_SYSCALL_64_after_hwframe+0x65/0xca
-RIP: 0033:0x7f38524163bb
-
-Fixes: 2151fe0830fd ("bnxt_en: Handle RESET_NOTIFY async event from firmware.")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Reported-by: Akshay Navgire <anavgire@purestorage.com>
+Signed-off-by: Alex Barba <alex.barba@broadcom.com>
+Signed-off-by: Andy Gospodarek <gospo@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index d74c6a34b936..24282a426481 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -124,7 +124,7 @@ static int bnxt_set_coalesce(struct net_device *dev,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 5a7d5e7f3b23..d7d7d6421c48 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11182,8 +11182,8 @@ static int bnxt_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
+ 	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(fltr, head, hash) {
+ 		if (bnxt_fltr_match(fltr, new_fltr)) {
++			rc = fltr->sw_id;
+ 			rcu_read_unlock();
+-			rc = 0;
+ 			goto err_free;
+ 		}
  	}
- 
- reset_coalesce:
--	if (netif_running(dev)) {
-+	if (test_bit(BNXT_STATE_OPEN, &bp->state)) {
- 		if (update_stats) {
- 			rc = bnxt_close_nic(bp, true, false);
- 			if (!rc)
 -- 
 2.35.1
 
