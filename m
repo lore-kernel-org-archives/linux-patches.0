@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893EB7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:58:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD05C433D6;
-	Wed, 23 Nov 2022 08:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D274F7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:58:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4CBC433C1;
+	Wed, 23 Nov 2022 08:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193921;
-	bh=t3hXwQq3L5B9fTd44C0XuYf3XzSZpJ5EgT9h6MXqXwo=;
+	s=korg; t=1669193924;
+	bh=epM8ymXghOtSSc0lpAKJc8pZ9as3gBhoIHmI4+IKe8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrR7s4VcrR39yRJplMzUbZGiw6ySiyIpTrc6/vUYbFZt4oD24LHJs982qtdlJ4MCr
-	 4KgZ5rLkQ81Cc6/NHhJ6t6xwm8SFE0KGbU+GxzoKapqnTIxxx5MvbZEUVa/sbOPiCl
-	 TEPMrL950UqGrmMw74CKOF4EHa2CQdk2fDqBr5qo=
+	b=LiSSxkqtKjXBKBP4OfFBFxnXJGbskYdSJGSua/d/emuX833dIDT4u6rnqRc5bqSj5
+	 14nKm7dY+berNc6FUdgLeVa6QfIs/8hZPJj+rQSi/8+zex+hzXorgazEisSJ8UdOnb
+	 b74v5BDXpvOuNCzqWl4wYKjGSghD6+kJg4AGeiZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com,
+	Alexander Potapenko <glider@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/88] drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
-Date: Wed, 23 Nov 2022 09:50:05 +0100
-Message-Id: <20221123084548.817692871@linuxfoundation.org>
+Subject: [PATCH 4.14 09/88] ipv6: addrlabel: fix infoleak when sending struct ifaddrlblmsg to network
+Date: Wed, 23 Nov 2022 09:50:06 +0100
+Message-Id: <20221123084548.847749891@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,62 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit cf53db768a8790fdaae2fa3a81322b080285f7e5 ]
+[ Upstream commit c23fb2c82267638f9d206cb96bb93e1f93ad7828 ]
 
-A problem about modprobe vc4 failed is triggered with the following log
-given:
+When copying a `struct ifaddrlblmsg` to the network, __ifal_reserved
+remained uninitialized, resulting in a 1-byte infoleak:
 
- [  420.327987] Error: Driver 'vc4_hvs' is already registered, aborting...
- [  420.333904] failed to register platform driver vc4_hvs_driver [vc4]: -16
- modprobe: ERROR: could not insert 'vc4': Device or resource busy
+  BUG: KMSAN: kernel-network-infoleak in __netdev_start_xmit ./include/linux/netdevice.h:4841
+   __netdev_start_xmit ./include/linux/netdevice.h:4841
+   netdev_start_xmit ./include/linux/netdevice.h:4857
+   xmit_one net/core/dev.c:3590
+   dev_hard_start_xmit+0x1dc/0x800 net/core/dev.c:3606
+   __dev_queue_xmit+0x17e8/0x4350 net/core/dev.c:4256
+   dev_queue_xmit ./include/linux/netdevice.h:3009
+   __netlink_deliver_tap_skb net/netlink/af_netlink.c:307
+   __netlink_deliver_tap+0x728/0xad0 net/netlink/af_netlink.c:325
+   netlink_deliver_tap net/netlink/af_netlink.c:338
+   __netlink_sendskb net/netlink/af_netlink.c:1263
+   netlink_sendskb+0x1d9/0x200 net/netlink/af_netlink.c:1272
+   netlink_unicast+0x56d/0xf50 net/netlink/af_netlink.c:1360
+   nlmsg_unicast ./include/net/netlink.h:1061
+   rtnl_unicast+0x5a/0x80 net/core/rtnetlink.c:758
+   ip6addrlbl_get+0xfad/0x10f0 net/ipv6/addrlabel.c:628
+   rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
+  ...
+  Uninit was created at:
+   slab_post_alloc_hook+0x118/0xb00 mm/slab.h:742
+   slab_alloc_node mm/slub.c:3398
+   __kmem_cache_alloc_node+0x4f2/0x930 mm/slub.c:3437
+   __do_kmalloc_node mm/slab_common.c:954
+   __kmalloc_node_track_caller+0x117/0x3d0 mm/slab_common.c:975
+   kmalloc_reserve net/core/skbuff.c:437
+   __alloc_skb+0x27a/0xab0 net/core/skbuff.c:509
+   alloc_skb ./include/linux/skbuff.h:1267
+   nlmsg_new ./include/net/netlink.h:964
+   ip6addrlbl_get+0x490/0x10f0 net/ipv6/addrlabel.c:608
+   rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
+   netlink_rcv_skb+0x299/0x550 net/netlink/af_netlink.c:2540
+   rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6109
+   netlink_unicast_kernel net/netlink/af_netlink.c:1319
+   netlink_unicast+0x9ab/0xf50 net/netlink/af_netlink.c:1345
+   netlink_sendmsg+0xebc/0x10f0 net/netlink/af_netlink.c:1921
+  ...
 
-The reason is that vc4_drm_register() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-fails, it returns without unregistering all the vc4 drivers, resulting the
-vc4 can never be installed later.
-A simple call graph is shown as below:
+This patch ensures that the reserved field is always initialized.
 
- vc4_drm_register()
-   platform_register_drivers() # all vc4 drivers are registered
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without unregister drivers
-
-Fixing this problem by checking the return value of
-platform_driver_register() and do platform_unregister_drivers() if
-error happened.
-
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221103014705.109322-1-yuancan@huawei.com
+Reported-by: syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com
+Fixes: 2a8cc6c89039 ("[IPV6] ADDRCONF: Support RFC3484 configurable address selection policy table.")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_drv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/addrlabel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index 028dc2819a36..ad9e1fdf9fc8 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.c
-+++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -364,7 +364,12 @@ static int __init vc4_drm_register(void)
- 	if (ret)
- 		return ret;
- 
--	return platform_driver_register(&vc4_platform_driver);
-+	ret = platform_driver_register(&vc4_platform_driver);
-+	if (ret)
-+		platform_unregister_drivers(component_drivers,
-+					    ARRAY_SIZE(component_drivers));
-+
-+	return ret;
- }
- 
- static void __exit vc4_drm_unregister(void)
+diff --git a/net/ipv6/addrlabel.c b/net/ipv6/addrlabel.c
+index f664871feca6..4e215cfb5fa9 100644
+--- a/net/ipv6/addrlabel.c
++++ b/net/ipv6/addrlabel.c
+@@ -474,6 +474,7 @@ static void ip6addrlbl_putmsg(struct nlmsghdr *nlh,
+ {
+ 	struct ifaddrlblmsg *ifal = nlmsg_data(nlh);
+ 	ifal->ifal_family = AF_INET6;
++	ifal->__ifal_reserved = 0;
+ 	ifal->ifal_prefixlen = prefixlen;
+ 	ifal->ifal_flags = 0;
+ 	ifal->ifal_index = ifindex;
 -- 
 2.35.1
 
