@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890511C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DA6C433C1;
-	Wed, 23 Nov 2022 09:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF3A1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB86C433D6;
+	Wed, 23 Nov 2022 09:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195828;
-	bh=rvoXpDnMHR6CBYgwvGitUozbwCVc9iIt5ox64UjXL5s=;
+	s=korg; t=1669195831;
+	bh=Apl9t3T+wssZ8/RR+u1kkXBwsaEcX9WBeQVhuPS8M8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ymVrRMVPwlYY5UaVYSfx0zyp2ElqtEiG1chLm7zpfDl///OjrT7iacmNZ3Ou8n1Aq
-	 naO6TrU3x4kBOWJ4ksYK2hcAAOWa82Srt9hhi4Loqd6+GYRPAeqF7SC+9Swu86DkAk
-	 NDq8+aAsUiUS0VCpRTNHNP/ZR0aGq131/YAlXZuA=
+	b=DtiaXviTWYQdgYcJqZ5u4Qcb9I79JtsfuFZw1/9s2aqSRdsnsIWlN2AcVpfyOYHcA
+	 WH9cBrmlWz/P12x5jMy5k/wXN7qXTo6GL4/3VXZGwAsfNgxQOifzT8YgWo451OOjC0
+	 dKNyRp7OMnFSDX761bXnYRQRyxhp6yxZcykHdKXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Jos Dehaes <jos.dehaes@gmail.com>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/181] ASoC: core: Fix use-after-free in snd_soc_exit()
-Date: Wed, 23 Nov 2022 09:50:07 +0100
-Message-Id: <20221123084604.257523992@linuxfoundation.org>
+Subject: [PATCH 5.15 045/181] ASoC: tas2770: Fix set_tdm_slot in case of single slot
+Date: Wed, 23 Nov 2022 09:50:08 +0100
+Message-Id: <20221123084604.308006784@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,87 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit 6ec27c53886c8963729885bcf2dd996eba2767a7 ]
+[ Upstream commit e59bf547a7dd366f93bfebb7487959580ca6c0ec ]
 
-KASAN reports a use-after-free:
+There's a special branch in the set_tdm_slot op for the case of nslots
+being 1, but:
 
-BUG: KASAN: use-after-free in device_del+0xb5b/0xc60
-Read of size 8 at addr ffff888008655050 by task rmmod/387
-CPU: 2 PID: 387 Comm: rmmod
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
-<TASK>
-dump_stack_lvl+0x79/0x9a
-print_report+0x17f/0x47b
-kasan_report+0xbb/0xf0
-device_del+0xb5b/0xc60
-platform_device_del.part.0+0x24/0x200
-platform_device_unregister+0x2e/0x40
-snd_soc_exit+0xa/0x22 [snd_soc_core]
-__do_sys_delete_module.constprop.0+0x34f/0x5b0
-do_syscall_64+0x3a/0x90
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-...
-</TASK>
+ (1) That branch can never work (there's a check for tx_mask being
+     non-zero, later there's another check for it *being* zero; one or
+     the other always throws -EINVAL).
 
-It's bacause in snd_soc_init(), snd_soc_util_init() is possble to fail,
-but its ret is ignored, which makes soc_dummy_dev unregistered twice.
+ (2) The intention of the branch seems to be what the general other
+     branch reduces to in case of nslots being 1.
 
-snd_soc_init()
-    snd_soc_util_init()
-        platform_device_register_simple(soc_dummy_dev)
-        platform_driver_register() # fail
-    	platform_device_unregister(soc_dummy_dev)
-    platform_driver_register() # success
-...
-snd_soc_exit()
-    snd_soc_util_exit()
-    # soc_dummy_dev will be unregistered for second time
+For those reasons remove the 'nslots being 1' special case.
 
-To fix it, handle error and stop snd_soc_init() when util_init() fail.
-Also clean debugfs when util_init() or driver_register() fail.
-
-Fixes: fb257897bf20 ("ASoC: Work around allmodconfig failure")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221028031603.59416-1-chenzhongjin@huawei.com
+Fixes: 1a476abc723e ("tas2770: add tas2770 smart PA kernel driver")
+Suggested-by: Jos Dehaes <jos.dehaes@gmail.com>
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20221027095800.16094-1-povik+lin@cutebit.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tas2770.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 5da762807824..1b1749b920f4 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -3366,10 +3366,23 @@ EXPORT_SYMBOL_GPL(snd_soc_of_get_dai_link_codecs);
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index a13b086a072b..ec0df3b1ef61 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -395,21 +395,13 @@ static int tas2770_set_dai_tdm_slot(struct snd_soc_dai *dai,
+ 	if (tx_mask == 0 || rx_mask != 0)
+ 		return -EINVAL;
  
- static int __init snd_soc_init(void)
- {
-+	int ret;
-+
- 	snd_soc_debugfs_init();
--	snd_soc_util_init();
-+	ret = snd_soc_util_init();
-+	if (ret)
-+		goto err_util_init;
+-	if (slots == 1) {
+-		if (tx_mask != 1)
+-			return -EINVAL;
+-
+-		left_slot = 0;
+-		right_slot = 0;
++	left_slot = __ffs(tx_mask);
++	tx_mask &= ~(1 << left_slot);
++	if (tx_mask == 0) {
++		right_slot = left_slot;
+ 	} else {
+-		left_slot = __ffs(tx_mask);
+-		tx_mask &= ~(1 << left_slot);
+-		if (tx_mask == 0) {
+-			right_slot = left_slot;
+-		} else {
+-			right_slot = __ffs(tx_mask);
+-			tx_mask &= ~(1 << right_slot);
+-		}
++		right_slot = __ffs(tx_mask);
++		tx_mask &= ~(1 << right_slot);
+ 	}
  
--	return platform_driver_register(&soc_driver);
-+	ret = platform_driver_register(&soc_driver);
-+	if (ret)
-+		goto err_register;
-+	return 0;
-+
-+err_register:
-+	snd_soc_util_exit();
-+err_util_init:
-+	snd_soc_debugfs_exit();
-+	return ret;
- }
- module_init(snd_soc_init);
- 
+ 	if (tx_mask != 0 || left_slot >= slots || right_slot >= slots)
 -- 
 2.35.1
 
