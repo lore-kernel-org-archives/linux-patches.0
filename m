@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230311C2B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC22C433C1;
-	Wed, 23 Nov 2022 09:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDE41C2B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57FBC433D6;
+	Wed, 23 Nov 2022 09:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195397;
-	bh=r7TCqYdhccG16jbLPuh3M3onDTOS79O2F0bXMmexU1A=;
+	s=korg; t=1669195400;
+	bh=7g0uSiGeoomZ7UqLQ4jw6+NhcVH+awKXjjHF7Rlugj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwq/DgPJvKzemmvXlfblQEUWIprj42d0VCjnDensHg7PvlUrSs0S0/KiXRuBtdnnY
-	 j3D24kNYo4nh42ApVfueK7bUc6rfcKUENhitca/FDQhOSKlgP+QIcFHgztFIwGwxBx
-	 PFcxSABOk73VYyKZvEIEB4IPg6HMH5MbGivP8Ajo=
+	b=hPAmO+VpgvmnppQR8MvDML1Afc3hwbk4oJspwxF4EW3wcm2S0a6SlhEccM6gHQwcd
+	 QTfGtToVuzRxa6KoVQGP0OkzJyL6ocLpYgC1/C/0QA8SYUXhCn1Nu86pvoM6Uc5HdC
+	 SLrjIY8ssEvvsmG7mpO5ahMgL0e7d0xM+X0+55mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Shay Agroskin <shayagr@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <error27@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/149] net: ena: Fix error handling in ena_init()
-Date: Wed, 23 Nov 2022 09:50:56 +0100
-Message-Id: <20221123084600.507946700@linuxfoundation.org>
+Subject: [PATCH 5.10 074/149] drbd: use after free in drbd_create_device()
+Date: Wed, 23 Nov 2022 09:50:57 +0100
+Message-Id: <20221123084600.537501795@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,50 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit d349e9be5a2c2d7588a2c4e4bfa0bb3dc1226769 ]
+[ Upstream commit a7a1598189228b5007369a9622ccdf587be0730f ]
 
-The ena_init() won't destroy workqueue created by
-create_singlethread_workqueue() when pci_register_driver() failed.
-Call destroy_workqueue() when pci_register_driver() failed to prevent the
-resource leak.
+The drbd_destroy_connection() frees the "connection" so use the _safe()
+iterator to prevent a use after free.
 
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Shay Agroskin <shayagr@amazon.com>
-Link: https://lore.kernel.org/r/20221114025659.124726-1-yuancan@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b6f85ef9538b ("drbd: Iterate over all connections")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/Y3Jd5iZRbNQ9w6gm@kili
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/block/drbd/drbd_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 52414ac2c901..1722d4091ea3 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -4488,13 +4488,19 @@ static struct pci_driver ena_pci_driver = {
- 
- static int __init ena_init(void)
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 407527ff6b1f..51450f7c81af 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2720,7 +2720,7 @@ static int init_submitter(struct drbd_device *device)
+ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsigned int minor)
  {
-+	int ret;
-+
- 	ena_wq = create_singlethread_workqueue(DRV_MODULE_NAME);
- 	if (!ena_wq) {
- 		pr_err("Failed to create workqueue\n");
- 		return -ENOMEM;
- 	}
- 
--	return pci_register_driver(&ena_pci_driver);
-+	ret = pci_register_driver(&ena_pci_driver);
-+	if (ret)
-+		destroy_workqueue(ena_wq);
-+
-+	return ret;
- }
- 
- static void __exit ena_cleanup(void)
+ 	struct drbd_resource *resource = adm_ctx->resource;
+-	struct drbd_connection *connection;
++	struct drbd_connection *connection, *n;
+ 	struct drbd_device *device;
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
+ 	struct gendisk *disk;
+@@ -2839,7 +2839,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
+ out_idr_remove_vol:
+ 	idr_remove(&connection->peer_devices, vnr);
+ out_idr_remove_from_resource:
+-	for_each_connection(connection, resource) {
++	for_each_connection_safe(connection, n, resource) {
+ 		peer_device = idr_remove(&connection->peer_devices, vnr);
+ 		if (peer_device)
+ 			kref_put(&connection->kref, drbd_destroy_connection);
 -- 
 2.35.1
 
