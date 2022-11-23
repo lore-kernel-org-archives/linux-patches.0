@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394581C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92634C433C1;
-	Wed, 23 Nov 2022 09:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691281C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1104C433D6;
+	Wed, 23 Nov 2022 09:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195493;
-	bh=+D3/pq+rbn2ovkDvw9nNjYgjbEwbEQJYh26Y3w/nW7c=;
+	s=korg; t=1669195496;
+	bh=SiTJ9C3dPn9HvqBY93Akj6RRkHk43y2HXNtW85w7ibM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7wmqNTO5KMDZnIgzD2FNhXUKOKdWZnPGARt57Vjzp9pE/iod0kHQw5fOV29/Avmc
-	 XMSK8gticIn7GB8Sxo6kK79NGS12Hcm/0G8V9z/I6hvDvt4MIDklI1hG0eksyU3F6E
-	 PPKtPktqebNa//tpsyn3vPMqkO5+1oC5s/DElEuw=
+	b=JUifzEQ0JbtzveIBVzehYi3cTuoj/Qm2dGTmh5x2MVuG4UAZqMIg4IlicXMxFRpsg
+	 0y7msJveQiFHfoCuGK7NSDAqLxdh3Svm5/ORbKlzWvzBiuS0d7PuG5cY+hr5XVZ13L
+	 KSSKMBpALh11DqfcpDbu7hMK8ScJwgonfiowYJ3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Flink <emil.flink@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 092/149] ALSA: hda/realtek: fix speakers for Samsung Galaxy Book Pro
-Date: Wed, 23 Nov 2022 09:51:15 +0100
-Message-Id: <20221123084601.295323048@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 101/149] USB: serial: option: add u-blox LARA-L6 modem
+Date: Wed, 23 Nov 2022 09:51:24 +0100
+Message-Id: <20221123084601.627604903@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,34 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emil Flink <emil.flink@gmail.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit b18a456330e1c1ca207b57b45872f10336741388 upstream.
+commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
 
-The Samsung Galaxy Book Pro seems to have the same issue as a few
-other Samsung laptops, detailed in kernel bug report 207423. Sound from
-headphone jack works, but not the built-in speakers.
+Add LARA-L6 PIDs for three different USB compositions.
 
-alsa-info: http://alsa-project.org/db/?f=b40ba609dc6ae28dc84ad404a0d8a4bbcd8bea6d
+LARA-L6 module can be configured (by AT interface) in three different
+USB modes:
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
+interfaces
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
+interfaces and 1 RmNet virtual network interface
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
+interface and 1 CDC-ECM virtual network interface
 
-Signed-off-by: Emil Flink <emil.flink@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221115144500.7782-1-emil.flink@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+In default mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+[ johan: drop PID defines in favour of comments ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9007,6 +9007,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
- 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc830, "Samsung Galaxy Book Ion (NT950XCJ-X716A)", ALC298_FIXUP_SAMSUNG_AMP),
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -162,6 +162,8 @@ static void option_instat_callback(struc
+ #define NOVATELWIRELESS_PRODUCT_G2		0xA010
+ #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
+ 
++#define UBLOX_VENDOR_ID				0x1546
++
+ /* AMOI PRODUCTS */
+ #define AMOI_VENDOR_ID				0x1614
+ #define AMOI_PRODUCT_H01			0x0800
+@@ -1130,6 +1132,12 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
++	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
++	  .driver_info = RSVD(4) },
+ 	/* Quectel products using Quectel vendor ID */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
+ 	  .driver_info = NUMEP2 },
 
 
