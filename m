@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A221C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94955C433D6;
-	Wed, 23 Nov 2022 09:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769921C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E1C433C1;
+	Wed, 23 Nov 2022 09:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195971;
-	bh=6TDrox1pFcyPxL42kEX1fUpLGFpDOc7GVAip7FwfN6o=;
+	s=korg; t=1669195974;
+	bh=vqX4hgTmlunXbUXbK2XjDESzUQmqehiQqsnV9B0wU4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlFERx4K5Jp4QbB7Txc32tPjR/4tQvdgESL6xEYR0nAE7rKGYfme0pbFYTzPkCHP9
-	 D4Q+Xnj6WRXYeZDtGSygTWjT4JbpfziOai6Z45q2Gh8/DUV4pAnO6TqNB8kajJSi93
-	 FEIFg/89BX+ql1A4IwBRzQBSdBKRlZ7OIp8Zo29A=
+	b=d1gc0yH+SJOZrvNct+Cwj0G/zkBDljuBBuLriZ73PbwSUzdLrqHmKBTyaGxE35ZEx
+	 FkpqdOmd13q2Kkq5E2DM02dP0bnKNsSRLVSGKfvwZ0QRrbMmvEr6yGmBWHhw0UyvXO
+	 GfIz63BoxSty2iBcvKCpssCR/fpsTni8DZ1cbXQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/181] soc: imx8m: Enable OCOTP clock before reading the register
-Date: Wed, 23 Nov 2022 09:50:46 +0100
-Message-Id: <20221123084605.902158314@linuxfoundation.org>
+Subject: [PATCH 5.15 084/181] net: liquidio: release resources when liquidio driver open failed
+Date: Wed, 23 Nov 2022 09:50:47 +0100
+Message-Id: <20221123084605.942478913@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,69 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 836fb30949d9edf91d7de696a884ceeae7e426d2 ]
+[ Upstream commit 8979f428a4afc215e390006e5ea19fd4e22c7ca9 ]
 
-Commit 7d981405d0fd ("soc: imx8m: change to use platform driver") ever
-removed the dependency on bootloader for enabling OCOTP clock.  It
-helped to fix a kexec kernel hang issue.  But unfortunately it caused
-a regression on CAAM driver and got reverted.
+When liquidio driver open failed, it doesn't release resources. Compile
+tested only.
 
-This is the second try to enable the OCOTP clock by directly calling
-clock API instead of indirectly enabling the clock via nvmem API.
-
-Fixes: ac34de14ac30 ("Revert "soc: imx8m: change to use platform driver"")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 5b07aee11227 ("liquidio: MSIX support for CN23XX")
+Fixes: dbc97bfd3918 ("net: liquidio: Add missing null pointer checks")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ .../net/ethernet/cavium/liquidio/lio_main.c   | 34 ++++++++++++++-----
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index cc57a384d74d..28144c699b0c 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -11,6 +11,7 @@
- #include <linux/platform_device.h>
- #include <linux/arm-smccc.h>
- #include <linux/of.h>
-+#include <linux/clk.h>
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index 2907e13b9df6..7bd97d98afeb 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -1798,13 +1798,10 @@ static int liquidio_open(struct net_device *netdev)
  
- #define REV_B1				0x21
+ 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
  
-@@ -56,6 +57,7 @@ static u32 __init imx8mq_soc_revision(void)
- 	void __iomem *ocotp_base;
- 	u32 magic;
- 	u32 rev;
-+	struct clk *clk;
+-	if (OCTEON_CN23XX_PF(oct)) {
+-		if (!oct->msix_on)
+-			if (setup_tx_poll_fn(netdev))
+-				return -1;
+-	} else {
+-		if (setup_tx_poll_fn(netdev))
+-			return -1;
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
++		ret = setup_tx_poll_fn(netdev);
++		if (ret)
++			goto err_poll;
+ 	}
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
- 	if (!np)
-@@ -63,6 +65,13 @@ static u32 __init imx8mq_soc_revision(void)
+ 	netif_tx_start_all_queues(netdev);
+@@ -1817,7 +1814,7 @@ static int liquidio_open(struct net_device *netdev)
+ 	/* tell Octeon to start forwarding packets to host */
+ 	ret = send_rx_ctrl_cmd(lio, 1);
+ 	if (ret)
+-		return ret;
++		goto err_rx_ctrl;
  
- 	ocotp_base = of_iomap(np, 0);
- 	WARN_ON(!ocotp_base);
-+	clk = of_clk_get_by_name(np, NULL);
-+	if (!clk) {
-+		WARN_ON(!clk);
-+		return 0;
+ 	/* start periodical statistics fetch */
+ 	INIT_DELAYED_WORK(&lio->stats_wk.work, lio_fetch_stats);
+@@ -1828,6 +1825,27 @@ static int liquidio_open(struct net_device *netdev)
+ 	dev_info(&oct->pci_dev->dev, "%s interface is opened\n",
+ 		 netdev->name);
+ 
++	return 0;
++
++err_rx_ctrl:
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
++		cleanup_tx_poll_fn(netdev);
++err_poll:
++	if (lio->ptp_clock) {
++		ptp_clock_unregister(lio->ptp_clock);
++		lio->ptp_clock = NULL;
 +	}
 +
-+	clk_prepare_enable(clk);
- 
- 	/*
- 	 * SOC revision on older imx8mq is not available in fuses so query
-@@ -79,6 +88,8 @@ static u32 __init imx8mq_soc_revision(void)
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
- 
-+	clk_disable_unprepare(clk);
-+	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
++	if (oct->props[lio->ifidx].napi_enabled == 1) {
++		list_for_each_entry_safe(napi, n, &netdev->napi_list, dev_list)
++			napi_disable(napi);
++
++		oct->props[lio->ifidx].napi_enabled = 0;
++
++		if (OCTEON_CN23XX_PF(oct))
++			oct->droq[0]->ops.poll_mode = 0;
++	}
++
+ 	return ret;
+ }
  
 -- 
 2.35.1
