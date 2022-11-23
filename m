@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9221A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB28C433D6;
-	Wed, 23 Nov 2022 09:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5189C1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81E1C433C1;
+	Wed, 23 Nov 2022 09:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194987;
-	bh=0EYjDFr7xoTV+UFs7GGOGr0QDiqFY7bNb4GAVBRtLdE=;
+	s=korg; t=1669194991;
+	bh=wbXfRZVTjH/i5QxGGaPKDOz1HOqWrlVg/c9gTEMXxDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qh3QyIID3GORr5H6WTooJv20eBRXsJ8XJ0dZc5yLfRnSZ/wMx2WQNKgpo66vqiNIu
-	 xTuOfpRI7AbBWzO+kFqefi3sziVXAmWMxFvtaUa5oIJQRYDetTP3nwE6BdxEVOVvUw
-	 ZS7iqIqfyycbOju8CRqydcDz0mgoke79/lct7S90=
+	b=J/FnCM16fBpde/6UegAdpDz25Yk++bS9/d52WlcUE6tj2rFSEIiNX+E/9YJMQBI57
+	 FFUwwX4mazMWf8HQhS3joU9HdT6K6n56ew4ipv9ae03yjTaP/hjYsMGLyULx1qun0o
+	 xYhw0wV01mqeCwtjbQoxk7PSENUk2Q2lcUYWuav0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 115/156] ALSA: usb-audio: Drop snd_BUG_ON() from snd_usbmidi_output_open()
-Date: Wed, 23 Nov 2022 09:51:12 +0100
-Message-Id: <20221123084602.105325784@linuxfoundation.org>
+	Stefan Agner <stefan@agner.ch>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.4 116/156] Revert "usb: dwc3: disable USB core PHY management"
+Date: Wed, 23 Nov 2022 09:51:13 +0100
+Message-Id: <20221123084602.148126300@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -34,41 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ad72c3c3f6eb81d2cb189ec71e888316adada5df upstream.
+commit 5c294de36e7fb3e0cba0c4e1ef9a5f57bc080d0f upstream.
 
-snd_usbmidi_output_open() has a check of the NULL port with
-snd_BUG_ON().  snd_BUG_ON() was used as this shouldn't have happened,
-but in reality, the NULL port may be seen when the device gives an
-invalid endpoint setup at the descriptor, hence the driver skips the
-allocation.  That is, the check itself is valid and snd_BUG_ON()
-should be dropped from there.  Otherwise it's confusing as if it were
-a real bug, as recently syzbot stumbled on it.
+This reverts commit 6000b8d900cd5f52fbcd0776d0cc396e88c8c2ea.
 
-Reported-by: syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20221112141223.6144-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The offending commit disabled the USB core PHY management as the dwc3
+already manages the PHYs in question.
+
+Unfortunately some platforms have started relying on having USB core
+also controlling the PHY and this is specifically currently needed on
+some Exynos platforms for PHY calibration or connected device may fail
+to enumerate.
+
+The PHY calibration was previously handled in the dwc3 driver, but to
+work around some issues related to how the dwc3 driver interacts with
+xhci (e.g. using multiple drivers) this was moved to USB core by commits
+34c7ed72f4f0 ("usb: core: phy: add support for PHY calibration") and
+a0a465569b45 ("usb: dwc3: remove generic PHY calibrate() calls").
+
+The same PHY obviously should not be controlled from two different
+places, which for example do no agree on the PHY mode or power state
+during suspend, but as the offending patch was backported to stable,
+let's revert it for now.
+
+Reported-by: Stefan Agner <stefan@agner.ch>
+Link: https://lore.kernel.org/lkml/808bdba846bb60456adf10a3016911ee@agner.ch/
+Fixes: 6000b8d900cd ("usb: dwc3: disable USB core PHY management")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20221103144648.14197-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/dwc3/host.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1149,10 +1149,8 @@ static int snd_usbmidi_output_open(struc
- 					port = &umidi->endpoints[i].out->ports[j];
- 					break;
- 				}
--	if (!port) {
--		snd_BUG();
-+	if (!port)
- 		return -ENXIO;
--	}
+--- a/drivers/usb/dwc3/host.c
++++ b/drivers/usb/dwc3/host.c
+@@ -9,13 +9,8 @@
  
- 	substream->runtime->private_data = port;
- 	port->state = STATE_UNKNOWN;
+ #include <linux/platform_device.h>
+ 
+-#include "../host/xhci-plat.h"
+ #include "core.h"
+ 
+-static const struct xhci_plat_priv dwc3_xhci_plat_priv = {
+-	.quirks = XHCI_SKIP_PHY_INIT,
+-};
+-
+ static int dwc3_host_get_irq(struct dwc3 *dwc)
+ {
+ 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
+@@ -90,11 +85,6 @@ int dwc3_host_init(struct dwc3 *dwc)
+ 		goto err;
+ 	}
+ 
+-	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_priv,
+-					sizeof(dwc3_xhci_plat_priv));
+-	if (ret)
+-		goto err;
+-
+ 	memset(props, 0, sizeof(struct property_entry) * ARRAY_SIZE(props));
+ 
+ 	if (dwc->usb3_lpm_capable)
 
 
