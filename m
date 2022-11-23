@@ -1,25 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1F57B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7DCC433D6;
-	Wed, 23 Nov 2022 08:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C757B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD6C433D6;
+	Wed, 23 Nov 2022 08:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193828;
-	bh=2UziT1us8rWAjxbIozr2ACQp8r1QbqMQ6M0i9QbpJRo=;
+	s=korg; t=1669193832;
+	bh=ELC0TOWEfJJIPQ80PbZV8reL9vGg7G0MWOX9w0MZMBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enSWnkNpQxrzIHn2HlrX7myFOUBOC+1yBgFN85PY1TFC2HUl5cSAzrqB7KVdLWEkI
-	 hkCNAEnJdci5e/BSW68hho8RyRGafd1/UoqE7H/mHPjbaJVaPWhV/WjI8gCi38IHlV
-	 hSOb6SmEnsln/D4PjW0Qg9KyTABP5RscQLj9dOkk=
+	b=zWoly8ykbwmsAOCjP4ekT1sED1Z+zj+Km3A8w4XT+ZJSAxnKGckFFZK4nSIC9dbd1
+	 qX1N1Sk7EZmYxvs6uEeRDUN3j6vK6Nu8LfDA1w0wF9VGtgYjAvUrgFUq9EP6jqr0Dz
+	 4j9vya5nk7PDgSz2fAGR7VuesO6gKxi/VKBvSai8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dumazet <ndumazet@google.com>
-Subject: [PATCH 4.9 55/76] usb: add NO_LPM quirk for Realforce 87U Keyboard
-Date: Wed, 23 Nov 2022 09:50:54 +0100
-Message-Id: <20221123084548.565726607@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.9 73/76] mm: fs: initialize fsdata passed to write_begin/write_end interface
+Date: Wed, 23 Nov 2022 09:51:12 +0100
+Message-Id: <20221123084549.145856158@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -33,50 +67,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dumazet <ndumazet@google.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 181135bb20dcb184edd89817831b888eb8132741 upstream.
+commit 1468c6f4558b1bcd92aa0400f2920f9dc7588402 upstream.
 
-Before adding this quirk, this (mechanical keyboard) device would not be
-recognized, logging:
+Functions implementing the a_ops->write_end() interface accept the `void
+*fsdata` parameter that is supposed to be initialized by the corresponding
+a_ops->write_begin() (which accepts `void **fsdata`).
 
-  new full-speed USB device number 56 using xhci_hcd
-  unable to read config index 0 descriptor/start: -32
-  chopping to 0 config(s)
+However not all a_ops->write_begin() implementations initialize `fsdata`
+unconditionally, so it may get passed uninitialized to a_ops->write_end(),
+resulting in undefined behavior.
 
-It would take dozens of plugging/unpuggling cycles for the keyboard to
-be recognized. Keyboard seems to simply work after applying this quirk.
+Fix this by initializing fsdata with NULL before the call to
+write_begin(), rather than doing so in all possible a_ops implementations.
 
-This issue had been reported by users in two places already ([1], [2])
-but nobody tried upstreaming a patch yet. After testing I believe their
-suggested fix (DELAY_INIT + NO_LPM + DEVICE_QUALIFIER) was probably a
-little overkill. I assume this particular combination was tested because
-it had been previously suggested in [3], but only NO_LPM seems
-sufficient for this device.
+This patch covers only the following cases found by running x86 KMSAN
+under syzkaller:
 
-[1]: https://qiita.com/float168/items/fed43d540c8e2201b543
-[2]: https://blog.kostic.dev/posts/making-the-realforce-87ub-work-with-usb30-on-Ubuntu/
-[3]: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1678477
+ - generic_perform_write()
+ - cont_expand_zero() and generic_cont_expand_simple()
+ - page_symlink()
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolas Dumazet <ndumazet@google.com>
-Link: https://lore.kernel.org/r/20221109122946.706036-1-ndumazet@google.com
+Other cases of passing uninitialized fsdata may persist in the codebase.
+
+Link: https://lkml.kernel.org/r/20220915150417.722975-43-glider@google.com
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Konovalov <andreyknvl@google.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Eric Biggers <ebiggers@google.com>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/buffer.c  |    4 ++--
+ fs/namei.c   |    2 +-
+ mm/filemap.c |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -209,6 +209,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0781, 0x5583), .driver_info = USB_QUIRK_NO_LPM },
- 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -2329,7 +2329,7 @@ int generic_cont_expand_simple(struct in
+ {
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	int err;
  
-+	/* Realforce 87U Keyboard */
-+	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* M-Systems Flash Disk Pioneers */
- 	{ USB_DEVICE(0x08ec, 0x1000), .driver_info = USB_QUIRK_RESET_RESUME },
+ 	err = inode_newsize_ok(inode, size);
+@@ -2356,7 +2356,7 @@ static int cont_expand_zero(struct file
+ 	struct inode *inode = mapping->host;
+ 	unsigned int blocksize = i_blocksize(inode);
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	pgoff_t index, curidx;
+ 	loff_t curpos;
+ 	unsigned zerofrom, offset, len;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -4802,7 +4802,7 @@ int __page_symlink(struct inode *inode,
+ {
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	int err;
+ 	unsigned int flags = AOP_FLAG_UNINTERRUPTIBLE;
+ 	if (nofs)
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2719,7 +2719,7 @@ ssize_t generic_perform_write(struct fil
+ 		unsigned long offset;	/* Offset into pagecache page */
+ 		unsigned long bytes;	/* Bytes to write to page */
+ 		size_t copied;		/* Bytes copied from user */
+-		void *fsdata;
++		void *fsdata = NULL;
  
+ 		offset = (pos & (PAGE_SIZE - 1));
+ 		bytes = min_t(unsigned long, PAGE_SIZE - offset,
 
 
