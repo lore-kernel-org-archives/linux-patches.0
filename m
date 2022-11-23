@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A6A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F07C433B5;
-	Wed, 23 Nov 2022 09:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E76E1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5587FC4347C;
+	Wed, 23 Nov 2022 09:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196006;
-	bh=XmYnc1+Jf9mCeXr1+9JXPveFSZZl5VTLrHQRVPPtdY0=;
+	s=korg; t=1669196009;
+	bh=iVlrMy6lC0UQ57qlioplTa7yuemupF8/Isl5lcU1N9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaNe8RmQzJGWLYhNf3hym3JvdLKr1MX1CLi9grwuowdZJJRZFx3x4w2m4BEf7167W
-	 ciC86jnBNZvVS0jSdL8+9QdmhClPGJnjf83LF6g+rCzsVrDpe4PDCLYlv4TsQupLhN
-	 vs0JGliFnpwLnZpSeA/0PV2RMgi7lt+r9REODz4s=
+	b=2KnpT2gWDuOjky8kCt9k1CvZInIfrObgniQk5ssDT07RKYH7FEbPgGcHkbRxH8TTW
+	 ohUGDBjTlQZwTXrQ/ngKclqt4x5VaM8WpF2DBvJnNKSdd4tJy/y8fvekvnNTDUEpgi
+	 ul019lYqd3cenqEByprOqDCQpcrbfMUtakyPTdWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Shannon Nelson <snelson@pensando.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/181] net: ionic: Fix error handling in ionic_init_module()
-Date: Wed, 23 Nov 2022 09:50:55 +0100
-Message-Id: <20221123084606.295853136@linuxfoundation.org>
+Subject: [PATCH 5.15 064/181] drm/vc4: kms: Fix IS_ERR() vs NULL check for vc4_kms
+Date: Wed, 23 Nov 2022 09:50:27 +0100
+Message-Id: <20221123084605.123633995@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,61 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 280c0f7cd0aa4d190619b18243110e052a90775c ]
+[ Upstream commit dba9e3467425800f9d3a14e8b6a0f85c731c1650 ]
 
-A problem about ionic create debugfs failed is triggered with the
-following log given:
+The drm_atomic_get_new_private_obj_state() function returns NULL
+on error path, drm_atomic_get_old_private_obj_state() function
+returns NULL on error path, too, they does not return error pointers.
 
- [  415.799514] debugfs: Directory 'ionic' with parent '/' already present!
+By the way, vc4_hvs_get_new/old_global_state() should return
+ERR_PTR(-EINVAL), otherwise there will be null-ptr-defer issue,
+such as follows:
 
-The reason is that ionic_init_module() returns ionic_bus_register_driver()
-directly without checking its return value, if ionic_bus_register_driver()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of ionic can never be created later.
+In function vc4_atomic_commit_tail():
+  |-- old_hvs_state = vc4_hvs_get_old_global_state(state); <-- return NULL
+  |-- if (WARN_ON(IS_ERR(old_hvs_state))) <-- no return
+  |-- unsigned long state_rate = max(old_hvs_state->core_clock_rate,
+	new_hvs_state->core_clock_rate); <-- null-ptr-defer
 
- ionic_init_module()
-   ionic_debugfs_create() # create debugfs directory
-   ionic_bus_register_driver()
-     pci_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when ionic_bus_register_driver() returns error.
-
-Fixes: fbfb8031533c ("ionic: Add hardware init and device commands")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Shannon Nelson <snelson@pensando.io>
-Link: https://lore.kernel.org/r/20221113092929.19161-1-yuancan@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9ec03d7f1ed3 ("drm/vc4: kms: Wait on previous FIFO users before a commit")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221110094445.2930509-6-cuigaosheng1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_kms.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 9ede66842118..538c024afed5 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -588,8 +588,14 @@ int ionic_port_reset(struct ionic *ionic)
+diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
+index 6030d4a82155..1bb8bcc45d71 100644
+--- a/drivers/gpu/drm/vc4/vc4_kms.c
++++ b/drivers/gpu/drm/vc4/vc4_kms.c
+@@ -193,8 +193,8 @@ vc4_hvs_get_new_global_state(struct drm_atomic_state *state)
+ 	struct drm_private_state *priv_state;
  
- static int __init ionic_init_module(void)
- {
-+	int ret;
-+
- 	ionic_debugfs_create();
--	return ionic_bus_register_driver();
-+	ret = ionic_bus_register_driver();
-+	if (ret)
-+		ionic_debugfs_destroy();
-+
-+	return ret;
+ 	priv_state = drm_atomic_get_new_private_obj_state(state, &vc4->hvs_channels);
+-	if (IS_ERR(priv_state))
+-		return ERR_CAST(priv_state);
++	if (!priv_state)
++		return ERR_PTR(-EINVAL);
+ 
+ 	return to_vc4_hvs_state(priv_state);
  }
+@@ -206,8 +206,8 @@ vc4_hvs_get_old_global_state(struct drm_atomic_state *state)
+ 	struct drm_private_state *priv_state;
  
- static void __exit ionic_cleanup_module(void)
+ 	priv_state = drm_atomic_get_old_private_obj_state(state, &vc4->hvs_channels);
+-	if (IS_ERR(priv_state))
+-		return ERR_CAST(priv_state);
++	if (!priv_state)
++		return ERR_PTR(-EINVAL);
+ 
+ 	return to_vc4_hvs_state(priv_state);
+ }
 -- 
 2.35.1
 
