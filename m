@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFE41C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C0EC433D6;
-	Wed, 23 Nov 2022 09:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC1B1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2109C433D7;
+	Wed, 23 Nov 2022 09:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195739;
-	bh=7fg3JJI8ivCtwEiQGUPSN95Jq9Q5NyVi608o9N9iSBU=;
+	s=korg; t=1669195743;
+	bh=iPxNq6OZIAYYK2AOMlVT08B1wcF9j2sMEKlxUF6HeFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBeSfsKX6UZ/9Qb1n2jI9O1bCnexzh0TPvPKa7E8NGbXT5Qt36QU08H4Tx/wrlMlR
-	 VDtfFXAqw+eRqzvzRmLbOPp4g2bdSb3xYhebSi0CbqJyOut1FHNi33OSM0z0n7onaB
-	 Lz2hIaoS3mOe63LGwMG6d2tGYCwKrVgqWNF56fV8=
+	b=ZZCbnSohoI1vhBpY8iAWVRDRUP1KpPBT6Yi7Aarqvgt94F7WiZw0jOlsfJ2E9PWXT
+	 TnrVz1wgqihBU0zC3ltSX5RAvYLhLFR1OpHiZE5x46hH3kb/1IyOqXgKkd5I5OC00u
+	 v+6d7ErsOzn/8MnzfmWps/uiOsgBTBYtAfIhTXXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <shy828301@gmail.com>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Subject: [PATCH 5.15 002/181] mm: hwpoison: handle non-anonymous THP correctly
-Date: Wed, 23 Nov 2022 09:49:25 +0100
-Message-Id: <20221123084602.788986097@linuxfoundation.org>
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 020/181] drm/amd/display: Remove wrong pipe control lock
+Date: Wed, 23 Nov 2022 09:49:43 +0100
+Message-Id: <20221123084603.348224420@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -42,48 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Shi <shy828301@gmail.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-commit 4966455d9100236fd6dd72b0cd00818435fdb25d upstream.
+[ Upstream commit ca08a1725d0d78efca8d2dbdbce5ea70355da0f2 ]
 
-Currently hwpoison doesn't handle non-anonymous THP, but since v4.8 THP
-support for tmpfs and read-only file cache has been added.  They could
-be offlined by split THP, just like anonymous THP.
+When using a device based on DCN32/321,
+we have an issue where a second
+4k@60Hz display does not light up,
+and the system becomes unresponsive
+for a few minutes. In the debug process,
+it was possible to see a hang
+in the function dcn20_post_unlock_program_front_end
+in this part:
 
-Link: https://lkml.kernel.org/r/20211020210755.23964-7-shy828301@gmail.com
-Signed-off-by: Yang Shi <shy828301@gmail.com>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
+	&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
+	mdelay(1);
+}
+
+The hubp_is_flip_pending always returns positive
+for waiting pending flips which is a symptom of
+pipe hang. Additionally, the dmesg log shows
+this message after a few minutes:
+
+  BUG: soft lockup - CPU#4 stuck for 26s!
+  ...
+  [  +0.000003]  dcn20_post_unlock_program_front_end+0x112/0x340 [amdgpu]
+  [  +0.000171]  dc_commit_state_no_check+0x63d/0xbf0 [amdgpu]
+  [  +0.000155]  ? dc_validate_global_state+0x358/0x3d0 [amdgpu]
+  [  +0.000154]  dc_commit_state+0xe2/0xf0 [amdgpu]
+
+This confirmed the hypothesis that we had a pipe
+hanging somewhere. Next, after checking the
+ftrace entries, we have the below weird
+sequence:
+
+ [..]
+  2)               |        dcn10_lock_all_pipes [amdgpu]() {
+  2)   0.120 us    |          optc1_is_tg_enabled [amdgpu]();
+  2)               |          dcn20_pipe_control_lock [amdgpu]() {
+  2)               |            dc_dmub_srv_clear_inbox0_ack [amdgpu]() {
+  2)   0.121 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
+  2)   0.551 us    |            }
+  2)               |            dc_dmub_srv_send_inbox0_cmd [amdgpu]() {
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
+  2)   0.511 us    |            }
+  2)               |            dc_dmub_srv_wait_for_inbox0_ack [amdgpu]() {
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
+ [..]
+
+We are not expected to read from dmub register
+so many times and for so long. From the trace log,
+it was possible to identify that the function
+dcn20_pipe_control_lock was triggering the dmub
+operation when it was unnecessary and causing
+the hang issue. This commit drops the unnecessary
+dmub code and, consequently, fixes the second display not
+lighting up the issue.
+
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory-failure.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1440,14 +1440,11 @@ static int identify_page_state(unsigned
- static int try_to_split_thp_page(struct page *page, const char *msg)
- {
- 	lock_page(page);
--	if (!PageAnon(page) || unlikely(split_huge_page(page))) {
-+	if (unlikely(split_huge_page(page))) {
- 		unsigned long pfn = page_to_pfn(page);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index 0de1bbbabf9a..58eea3aa3bfc 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -1765,7 +1765,7 @@ void dcn20_post_unlock_program_front_end(
  
- 		unlock_page(page);
--		if (!PageAnon(page))
--			pr_info("%s: %#lx: non anonymous thp\n", msg, pfn);
--		else
--			pr_info("%s: %#lx: thp split failed\n", msg, pfn);
-+		pr_info("%s: %#lx: thp split failed\n", msg, pfn);
- 		put_page(page);
- 		return -EBUSY;
+ 			for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
+ 					&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
+-				mdelay(1);
++				udelay(1);
+ 		}
  	}
+ 
+-- 
+2.35.1
+
 
 
