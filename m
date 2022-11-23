@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481781C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92665C4347C;
-	Wed, 23 Nov 2022 09:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F161C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46535C433D6;
+	Wed, 23 Nov 2022 09:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196329;
-	bh=x4RWptu7xEAGucwfy0/VeIWFzLvk/NHNchCpSS/Wc7M=;
+	s=korg; t=1669196332;
+	bh=goSKSrtytpLC9w9m/Ga6oFKpblQyL4koo4DePb4zODk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVGFSftFRU0Lkw1gO25LT42earJ3h4cCwaJzNjE1o15R1YslXhSOTiyhzc2IVpUjs
-	 YX+/W1O5pQS6kq5ODe4pyJ8JckI5Ao/I/yAKSjISdHX+f75Gjtanj1Zxav9mnarW2j
-	 WNZpHjikuWtHGPnjfErpa3JvDxtB91eRA5PTAmTA=
+	b=RfGvkmaAjQ1D8HKaocpCqJhq/VFHizHqONqhmy9ARn4gLzU73gzHr0jNgkvCl5Bmh
+	 7xiDa1UsNXUV04LyU1RQ7Iu20jqY/RaQNCGPwkHMgywZ7RyP6e6hyQcMW/kGdsgNSY
+	 qC2pL2fhY3ZB47PMwb/GQzNaLrX8sVMcVS6+n9WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mike Christie <michael.chritie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/181] net: use struct_group to copy ip/ipv6 header addresses
-Date: Wed, 23 Nov 2022 09:52:06 +0100
-Message-Id: <20221123084609.387755447@linuxfoundation.org>
+Subject: [PATCH 5.15 164/181] scsi: target: tcm_loop: Fix possible name leak in tcm_loop_setup_hba_bus()
+Date: Wed, 23 Nov 2022 09:52:07 +0100
+Message-Id: <20221123084609.436980853@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,106 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 58e0be1ef6118c5352b56a4d06e974c5599993a5 ]
+[ Upstream commit bc68e428d4963af0201e92159629ab96948f0893 ]
 
-kernel test robot reported warnings when build bonding module with
-make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/net/bonding/:
+If device_register() fails in tcm_loop_setup_hba_bus(), the name allocated
+by dev_set_name() need be freed. As comment of device_register() says, it
+should use put_device() to give up the reference in the error path. So fix
+this by calling put_device(), then the name can be freed in kobject_cleanup().
+The 'tl_hba' will be freed in tcm_loop_release_adapter(), so it don't need
+goto error label in this case.
 
-                 from ../drivers/net/bonding/bond_main.c:35:
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘iph_to_flow_copy_v4addrs’ at ../include/net/ip.h:566:2,
-    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3984:3:
-../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
-ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In function ‘fortify_memcpy_chk’,
-    inlined from ‘iph_to_flow_copy_v6addrs’ at ../include/net/ipv6.h:900:2,
-    inlined from ‘bond_flow_ip’ at ../drivers/net/bonding/bond_main.c:3994:3:
-../include/linux/fortify-string.h:413:25: warning: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of f
-ield (2nd parameter); maybe use struct_group()? [-Wattribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is because we try to copy the whole ip/ip6 address to the flow_key,
-while we only point the to ip/ip6 saddr. Note that since these are UAPI
-headers, __struct_group() is used to avoid the compiler warnings.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Fixes: c3f8324188fa ("net: Add full IPv6 addresses to flow_keys")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20221115142400.1204786-1-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3703b2c5d041 ("[SCSI] tcm_loop: Add multi-fabric Linux/SCSI LLD fabric module")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221115015042.3652261-1-yangyingliang@huawei.com
+Reviewed-by: Mike Christie <michael.chritie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h          | 2 +-
- include/net/ipv6.h        | 2 +-
- include/uapi/linux/ip.h   | 6 ++++--
- include/uapi/linux/ipv6.h | 6 ++++--
- 4 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/target/loopback/tcm_loop.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 8462ced0c21e..6ae923c55cf4 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -559,7 +559,7 @@ static inline void iph_to_flow_copy_v4addrs(struct flow_keys *flow,
- 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v4addrs.dst) !=
- 		     offsetof(typeof(flow->addrs), v4addrs.src) +
- 			      sizeof(flow->addrs.v4addrs.src));
--	memcpy(&flow->addrs.v4addrs, &iph->saddr, sizeof(flow->addrs.v4addrs));
-+	memcpy(&flow->addrs.v4addrs, &iph->addrs, sizeof(flow->addrs.v4addrs));
- 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV4_ADDRS;
- }
+diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
+index 52db28d868d5..600a4d1ee45f 100644
+--- a/drivers/target/loopback/tcm_loop.c
++++ b/drivers/target/loopback/tcm_loop.c
+@@ -397,6 +397,7 @@ static int tcm_loop_setup_hba_bus(struct tcm_loop_hba *tl_hba, int tcm_loop_host
+ 	ret = device_register(&tl_hba->dev);
+ 	if (ret) {
+ 		pr_err("device_register() failed for tl_hba->dev: %d\n", ret);
++		put_device(&tl_hba->dev);
+ 		return -ENODEV;
+ 	}
  
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 359540dfc033..a5e18d65c82d 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -843,7 +843,7 @@ static inline void iph_to_flow_copy_v6addrs(struct flow_keys *flow,
- 	BUILD_BUG_ON(offsetof(typeof(flow->addrs), v6addrs.dst) !=
- 		     offsetof(typeof(flow->addrs), v6addrs.src) +
- 		     sizeof(flow->addrs.v6addrs.src));
--	memcpy(&flow->addrs.v6addrs, &iph->saddr, sizeof(flow->addrs.v6addrs));
-+	memcpy(&flow->addrs.v6addrs, &iph->addrs, sizeof(flow->addrs.v6addrs));
- 	flow->control.addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
- }
+@@ -1073,7 +1074,7 @@ static struct se_wwn *tcm_loop_make_scsi_hba(
+ 	 */
+ 	ret = tcm_loop_setup_hba_bus(tl_hba, tcm_loop_hba_no_cnt);
+ 	if (ret)
+-		goto out;
++		return ERR_PTR(ret);
  
-diff --git a/include/uapi/linux/ip.h b/include/uapi/linux/ip.h
-index e42d13b55cf3..d2f143393780 100644
---- a/include/uapi/linux/ip.h
-+++ b/include/uapi/linux/ip.h
-@@ -100,8 +100,10 @@ struct iphdr {
- 	__u8	ttl;
- 	__u8	protocol;
- 	__sum16	check;
--	__be32	saddr;
--	__be32	daddr;
-+	__struct_group(/* no tag */, addrs, /* no attrs */,
-+		__be32	saddr;
-+		__be32	daddr;
-+	);
- 	/*The options start here. */
- };
- 
-diff --git a/include/uapi/linux/ipv6.h b/include/uapi/linux/ipv6.h
-index b243a53fa985..62e5e16ef539 100644
---- a/include/uapi/linux/ipv6.h
-+++ b/include/uapi/linux/ipv6.h
-@@ -130,8 +130,10 @@ struct ipv6hdr {
- 	__u8			nexthdr;
- 	__u8			hop_limit;
- 
--	struct	in6_addr	saddr;
--	struct	in6_addr	daddr;
-+	__struct_group(/* no tag */, addrs, /* no attrs */,
-+		struct	in6_addr	saddr;
-+		struct	in6_addr	daddr;
-+	);
- };
- 
- 
+ 	sh = tl_hba->sh;
+ 	tcm_loop_hba_no_cnt++;
 -- 
 2.35.1
 
