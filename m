@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D331C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:34:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F88FC433C1;
-	Wed, 23 Nov 2022 09:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67DC1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:34:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7924FC433D6;
+	Wed, 23 Nov 2022 09:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196054;
-	bh=ojq5mGZOa0nVsbcCQV/i7xnHYx+OxPlNEmOqDXfXR28=;
+	s=korg; t=1669196058;
+	bh=4kQXuLVjnJAIBlUTuao5wEwx4A5xmo6Ka1Rl+jzJi90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4Bo2r9tkO1U02vCQCZ5DiWbzZtcWOd88UK41DILDOD9k+s2ba6G0noXd8j6MBNZ8
-	 xsZFqGv+bQdZfILVXXp8Pz3zHCfszlcgm2nN1N4Um5RmuqXGMwHsBN9Z1oTTSz99+i
-	 lCMagQXukhqh1Cop66MIeYRLV6x2dV9L/8LecFQo=
+	b=0sZ9wY3YSiy3aVBp7cR853qwaxGwpoXmYpZsu3YDP3ZDeh+5QvskVnCMp+x8lN3+K
+	 1fum4eAQBNVUh5kCZoU8wXTz33qx+eaxUvo133E4yuKJuQq+8uPzb/sG1dcq/rFUxY
+	 iUKQwcss0q7TThQSvVIaAIJ1Dfz+6tabwD4zZp8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	Wang Wensheng <wangwensheng4@huawei.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 107/181] ftrace: Optimize the allocation for mcount entries
-Date: Wed, 23 Nov 2022 09:51:10 +0100
-Message-Id: <20221123084606.953645143@linuxfoundation.org>
+Subject: [PATCH 5.15 108/181] ftrace: Fix null pointer dereference in ftrace_add_mod()
+Date: Wed, 23 Nov 2022 09:51:11 +0100
+Message-Id: <20221123084607.003043645@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,36 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Wensheng <wangwensheng4@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit bcea02b096333dc74af987cb9685a4dbdd820840 upstream.
+commit 19ba6c8af9382c4c05dc6a0a79af3013b9a35cd0 upstream.
 
-If we can't allocate this size, try something smaller with half of the
-size. Its order should be decreased by one instead of divided by two.
+The @ftrace_mod is allocated by kzalloc(), so both the members {prev,next}
+of @ftrace_mode->list are NULL, it's not a valid state to call list_del().
+If kstrdup() for @ftrace_mod->{func|module} fails, it goes to @out_free
+tag and calls free_ftrace_mod() to destroy @ftrace_mod, then list_del()
+will write prev->next and next->prev, where null pointer dereference
+happens.
 
-Link: https://lkml.kernel.org/r/20221109094434.84046-3-wangwensheng4@huawei.com
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+Oops: 0002 [#1] PREEMPT SMP NOPTI
+Call Trace:
+ <TASK>
+ ftrace_mod_callback+0x20d/0x220
+ ? do_filp_open+0xd9/0x140
+ ftrace_process_regex.isra.51+0xbf/0x130
+ ftrace_regex_write.isra.52.part.53+0x6e/0x90
+ vfs_write+0xee/0x3a0
+ ? __audit_filter_op+0xb1/0x100
+ ? auditd_test_task+0x38/0x50
+ ksys_write+0xa5/0xe0
+ do_syscall_64+0x3a/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Kernel panic - not syncing: Fatal exception
 
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
+So call INIT_LIST_HEAD() to initialize the list member to fix this issue.
+
+Link: https://lkml.kernel.org/r/20221116015207.30858-1-xiujianfeng@huawei.com
+
 Cc: stable@vger.kernel.org
-Fixes: a79008755497d ("ftrace: Allocate the mcount record pages as groups")
-Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
+Fixes: 673feb9d76ab ("ftrace: Add :mod: caching infrastructure to trace_array")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ftrace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -3174,7 +3174,7 @@ static int ftrace_allocate_records(struc
- 		/* if we can't allocate this size, try something smaller */
- 		if (!order)
- 			return -ENOMEM;
--		order >>= 1;
-+		order--;
- 		goto again;
- 	}
+@@ -1295,6 +1295,7 @@ static int ftrace_add_mod(struct trace_a
+ 	if (!ftrace_mod)
+ 		return -ENOMEM;
  
++	INIT_LIST_HEAD(&ftrace_mod->list);
+ 	ftrace_mod->func = kstrdup(func, GFP_KERNEL);
+ 	ftrace_mod->module = kstrdup(module, GFP_KERNEL);
+ 	ftrace_mod->enable = enable;
 
 
