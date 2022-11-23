@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C1B1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B28FC433C1;
-	Wed, 23 Nov 2022 09:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A295E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD17EC433D6;
+	Wed, 23 Nov 2022 09:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197058;
-	bh=3RvsOKUIeEkCaOeS8cC9Z8xROjwYtqJs6Ri7PW7eAJU=;
+	s=korg; t=1669197062;
+	bh=0W3mu/HKMd5n1ShSbTV23pSlPq7KXXzwl5UrGTTVwNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDkaZcm5l79I2Gu17/XZMGp9/8QfIrXxeGDm4AasW5crBDO/C/KV07hBODgHlbz+o
-	 kx2yctINO95wYu3BYecVh/PhLIQKc9bF0RUGuwgR1u0+5ovZy07TjoAIxhpiePVz6Z
-	 Gdtc6SzdOLExw0pCiN6mAtbv93502a9RrWjC9vr4=
+	b=wyxjRvu2fuNlLSLfjPqW3OL3J8EAwuhwTPFJILW0pvsjToOy9xr3LnS2U/30CYW2d
+	 nlkBbM49RdU3nE7rzBrfUyUgqM8Ro2rBvgjizBhlZozpDQTdNSMbBsCfek1BImM8b6
+	 082XrGGQq6TqtXzfwlTY5AZ4Auy+whDEEuRzi8q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Shannon Nelson <snelson@pensando.io>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 187/314] cifs: Fix wrong return value checking when GETFLAGS
-Date: Wed, 23 Nov 2022 09:50:32 +0100
-Message-Id: <20221123084634.038703194@linuxfoundation.org>
+Subject: [PATCH 6.0 170/314] net: ionic: Fix error handling in ionic_init_module()
+Date: Wed, 23 Nov 2022 09:50:15 +0100
+Message-Id: <20221123084633.267899318@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,43 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 92bbd67a55fee50743b42825d1c016e7fd5c79f9 ]
+[ Upstream commit 280c0f7cd0aa4d190619b18243110e052a90775c ]
 
-The return value of CIFSGetExtAttr is negative, should be checked
-with -EOPNOTSUPP rather than EOPNOTSUPP.
+A problem about ionic create debugfs failed is triggered with the
+following log given:
 
-Fixes: 64a5cfa6db94 ("Allow setting per-file compression via SMB2/3")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ [  415.799514] debugfs: Directory 'ionic' with parent '/' already present!
+
+The reason is that ionic_init_module() returns ionic_bus_register_driver()
+directly without checking its return value, if ionic_bus_register_driver()
+failed, it returns without destroy the newly created debugfs, resulting
+the debugfs of ionic can never be created later.
+
+ ionic_init_module()
+   ionic_debugfs_create() # create debugfs directory
+   ionic_bus_register_driver()
+     pci_register_driver()
+       driver_register()
+         bus_add_driver()
+           priv = kzalloc(...) # OOM happened
+   # return without destroy debugfs directory
+
+Fix by removing debugfs when ionic_bus_register_driver() returns error.
+
+Fixes: fbfb8031533c ("ionic: Add hardware init and device commands")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Shannon Nelson <snelson@pensando.io>
+Link: https://lore.kernel.org/r/20221113092929.19161-1-yuancan@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/ioctl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/cifs/ioctl.c b/fs/cifs/ioctl.c
-index b6e6e5d6c8dd..baccda02deab 100644
---- a/fs/cifs/ioctl.c
-+++ b/fs/cifs/ioctl.c
-@@ -343,7 +343,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
- 					rc = put_user(ExtAttrBits &
- 						FS_FL_USER_VISIBLE,
- 						(int __user *)arg);
--				if (rc != EOPNOTSUPP)
-+				if (rc != -EOPNOTSUPP)
- 					break;
- 			}
- #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
-@@ -373,7 +373,7 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
- 			 *		       pSMBFile->fid.netfid,
- 			 *		       extAttrBits,
- 			 *		       &ExtAttrMask);
--			 * if (rc != EOPNOTSUPP)
-+			 * if (rc != -EOPNOTSUPP)
- 			 *	break;
- 			 */
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 56f93b030551..5456c2b15d9b 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -687,8 +687,14 @@ int ionic_port_reset(struct ionic *ionic)
  
+ static int __init ionic_init_module(void)
+ {
++	int ret;
++
+ 	ionic_debugfs_create();
+-	return ionic_bus_register_driver();
++	ret = ionic_bus_register_driver();
++	if (ret)
++		ionic_debugfs_destroy();
++
++	return ret;
+ }
+ 
+ static void __exit ionic_cleanup_module(void)
 -- 
 2.35.1
 
