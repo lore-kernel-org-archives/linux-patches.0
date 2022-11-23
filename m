@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2161C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C32CC433D7;
-	Wed, 23 Nov 2022 09:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956031C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0427EC433D6;
+	Wed, 23 Nov 2022 09:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195033;
-	bh=nTmbkR0BjFCUnhOTmawubJ7Eqd1vBF7Lw+2yg2rI1KY=;
+	s=korg; t=1669195037;
+	bh=zZwTBmOHh8NNLTfvKSOGm2tDuT/pN8Wxi+UisuVglP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ID5ogmW9eEwa5rMbeBIIR+w7VPJhYpyWHDWlaQ3Gpdk3cP7e9Tq9/LugcVVKexUUs
-	 GR/8Mqxm2QKOC4co3mIkOCApiMG0oUyBpltk2f4qbBF7zmRoISeJoFU6Uo5A1Rje4P
-	 3l/J3AjhSjbHJWkE41NumvoztMc6iZkJpFq+qs0o=
+	b=zl55+uscsRHqHawhhHb0IQRvAeyniy19eAzK+RMmPubKyE8VUcG6zuJbXZqOZXO4C
+	 v5g6VoBa5v8woZW4Aq4C7Nq6NaIPSxOPRy2t7ayB4I8WwJK01uBRM7WhqSz40FhXpj
+	 Oov6sZrdX+TQ7U3wv89+eg2505Gq/OFDYWFczQb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 098/156] mISDN: fix possible memory leak in mISDN_dsp_element_register()
-Date: Wed, 23 Nov 2022 09:50:55 +0100
-Message-Id: <20221123084601.532309680@linuxfoundation.org>
+Subject: [PATCH 5.4 099/156] net: liquidio: release resources when liquidio driver open failed
+Date: Wed, 23 Nov 2022 09:50:56 +0100
+Message-Id: <20221123084601.567737948@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,49 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 98a2ac1ca8fd6eca6867726fe238d06e75eb1acd ]
+[ Upstream commit 8979f428a4afc215e390006e5ea19fd4e22c7ca9 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-use put_device() to give up the reference, so that the name can be
-freed in kobject_cleanup() when the refcount is 0.
+When liquidio driver open failed, it doesn't release resources. Compile
+tested only.
 
-The 'entry' is going to be freed in mISDN_dsp_dev_release(), so the
-kfree() is removed. list_del() is called in mISDN_dsp_dev_release(),
-so it need be initialized.
-
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109132832.3270119-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b07aee11227 ("liquidio: MSIX support for CN23XX")
+Fixes: dbc97bfd3918 ("net: liquidio: Add missing null pointer checks")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/dsp_pipeline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/cavium/liquidio/lio_main.c   | 34 ++++++++++++++-----
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/isdn/mISDN/dsp_pipeline.c b/drivers/isdn/mISDN/dsp_pipeline.c
-index 40588692cec7..cd9bc11e8dfb 100644
---- a/drivers/isdn/mISDN/dsp_pipeline.c
-+++ b/drivers/isdn/mISDN/dsp_pipeline.c
-@@ -80,6 +80,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	if (!entry)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index d0c77ff9dbb1..69878589213a 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -1836,13 +1836,10 @@ static int liquidio_open(struct net_device *netdev)
  
-+	INIT_LIST_HEAD(&entry->list);
- 	entry->elem = elem;
+ 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
  
- 	entry->dev.class = elements_class;
-@@ -114,7 +115,7 @@ int mISDN_dsp_element_register(struct mISDN_dsp_element *elem)
- 	device_unregister(&entry->dev);
- 	return ret;
- err1:
--	kfree(entry);
-+	put_device(&entry->dev);
+-	if (OCTEON_CN23XX_PF(oct)) {
+-		if (!oct->msix_on)
+-			if (setup_tx_poll_fn(netdev))
+-				return -1;
+-	} else {
+-		if (setup_tx_poll_fn(netdev))
+-			return -1;
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
++		ret = setup_tx_poll_fn(netdev);
++		if (ret)
++			goto err_poll;
+ 	}
+ 
+ 	netif_tx_start_all_queues(netdev);
+@@ -1855,7 +1852,7 @@ static int liquidio_open(struct net_device *netdev)
+ 	/* tell Octeon to start forwarding packets to host */
+ 	ret = send_rx_ctrl_cmd(lio, 1);
+ 	if (ret)
+-		return ret;
++		goto err_rx_ctrl;
+ 
+ 	/* start periodical statistics fetch */
+ 	INIT_DELAYED_WORK(&lio->stats_wk.work, lio_fetch_stats);
+@@ -1866,6 +1863,27 @@ static int liquidio_open(struct net_device *netdev)
+ 	dev_info(&oct->pci_dev->dev, "%s interface is opened\n",
+ 		 netdev->name);
+ 
++	return 0;
++
++err_rx_ctrl:
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
++		cleanup_tx_poll_fn(netdev);
++err_poll:
++	if (lio->ptp_clock) {
++		ptp_clock_unregister(lio->ptp_clock);
++		lio->ptp_clock = NULL;
++	}
++
++	if (oct->props[lio->ifidx].napi_enabled == 1) {
++		list_for_each_entry_safe(napi, n, &netdev->napi_list, dev_list)
++			napi_disable(napi);
++
++		oct->props[lio->ifidx].napi_enabled = 0;
++
++		if (OCTEON_CN23XX_PF(oct))
++			oct->droq[0]->ops.poll_mode = 0;
++	}
++
  	return ret;
  }
- EXPORT_SYMBOL(mISDN_dsp_element_register);
+ 
 -- 
 2.35.1
 
