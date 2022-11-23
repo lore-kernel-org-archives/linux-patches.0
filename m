@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70031C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B737C433D7;
-	Wed, 23 Nov 2022 09:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6271A1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A727C433D6;
+	Wed, 23 Nov 2022 09:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195468;
-	bh=/IsUeQ5TSeFo1EJeRR10jo5s/IPoa5AniyKUTFgwv1A=;
+	s=korg; t=1669195472;
+	bh=FzlzNwFEQZf+iUksPz8L9P4mFXjh2drbjWh1XaP4tc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDs60iIPB1qXETAlpRqaAgRZFpr6/okG5ad6K21MtTGC1JWjRalvaHUL5FG1niTWV
-	 VIQCc8QIN5hB9Ez7Jk7rDM/d677/d8RsxBxHYI+MHpEQrmQOSRBBQV1S3hXrvz8I1s
-	 5B+L7oUg3dgAtX8Pjcjpzx9ZrSEhwsnQQQmgKKSE=
+	b=2O04+8iDsW5+hjNB2XBGDhI6i1IvOTu+3z4eT8Gmc3kLRJLfhywHKCq2Ma1kqRd7y
+	 9gHZ+qDPZaazcVi8v1zYT52eUx9D/EtgpqhlXqL/rEUelfB6A+djgmyLsCHaaN5dSg
+	 9Hsxh/12NJWlsnCtfwEFfiUoO7vEN7bNvL31IeHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/149] ata: libata-transport: fix error handling in ata_tdev_add()
-Date: Wed, 23 Nov 2022 09:50:44 +0100
-Message-Id: <20221123084600.118003661@linuxfoundation.org>
+Subject: [PATCH 5.10 062/149] bpf: Initialize same number of free nodes for each pcpu_freelist
+Date: Wed, 23 Nov 2022 09:50:45 +0100
+Message-Id: <20221123084600.153838542@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,65 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 1ff36351309e3eadcff297480baf4785e726de9b ]
+[ Upstream commit 4b45cd81f737d79d0fbfc0d320a1e518e7f0bbf0 ]
 
-In ata_tdev_add(), the return value of transport_add_device() is
-not checked. As a result, it causes null-ptr-deref while removing
-the module, because transport_remove_device() is called to remove
-the device that was not added.
+pcpu_freelist_populate() initializes nr_elems / num_possible_cpus() + 1
+free nodes for some CPUs, and then possibly one CPU with fewer nodes,
+followed by remaining cpus with 0 nodes. For example, when nr_elems == 256
+and num_possible_cpus() == 32, CPU 0~27 each gets 9 free nodes, CPU 28 gets
+4 free nodes, CPU 29~31 get 0 free nodes, while in fact each CPU should get
+8 nodes equally.
 
-Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
-CPU: 13 PID: 13603 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #36
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x48/0x3a0
-lr : device_del+0x44/0x3a0
-Call trace:
- device_del+0x48/0x3a0
- attribute_container_class_device_del+0x28/0x40
- transport_remove_classdev+0x60/0x7c
- attribute_container_device_trigger+0x118/0x120
- transport_remove_device+0x20/0x30
- ata_tdev_delete+0x24/0x50 [libata]
- ata_tlink_delete+0x40/0xa0 [libata]
- ata_tport_delete+0x2c/0x60 [libata]
- ata_port_detach+0x148/0x1b0 [libata]
- ata_pci_remove_one+0x50/0x80 [libata]
- ahci_remove_one+0x4c/0x8c [ahci]
+This patch initializes nr_elems / num_possible_cpus() free nodes for each
+CPU firstly, then allocates the remaining free nodes by one for each CPU
+until no free nodes left.
 
-Fix this by checking and handling return value of transport_add_device()
-in ata_tdev_add(). In the error path, device_del() is called to delete
-the device which was added earlier in this function, and ata_tdev_free()
-is called to free ata_dev.
-
-Fixes: d9027470b886 ("[libata] Add ATA transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: e19494edab82 ("bpf: introduce percpu_freelist")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221110122128.105214-1-xukuohai@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-transport.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/bpf/percpu_freelist.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
-index e386e5f35015..31a66fc0c31d 100644
---- a/drivers/ata/libata-transport.c
-+++ b/drivers/ata/libata-transport.c
-@@ -683,7 +683,13 @@ static int ata_tdev_add(struct ata_device *ata_dev)
- 		return error;
- 	}
+diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
+index 3d897de89061..bbab8bb4b2fd 100644
+--- a/kernel/bpf/percpu_freelist.c
++++ b/kernel/bpf/percpu_freelist.c
+@@ -102,22 +102,21 @@ void pcpu_freelist_populate(struct pcpu_freelist *s, void *buf, u32 elem_size,
+ 			    u32 nr_elems)
+ {
+ 	struct pcpu_freelist_head *head;
+-	int i, cpu, pcpu_entries;
++	unsigned int cpu, cpu_idx, i, j, n, m;
  
--	transport_add_device(dev);
-+	error = transport_add_device(dev);
-+	if (error) {
-+		device_del(dev);
-+		ata_tdev_free(ata_dev);
-+		return error;
-+	}
-+
- 	transport_configure_device(dev);
- 	return 0;
+-	pcpu_entries = nr_elems / num_possible_cpus() + 1;
+-	i = 0;
++	n = nr_elems / num_possible_cpus();
++	m = nr_elems % num_possible_cpus();
+ 
++	cpu_idx = 0;
+ 	for_each_possible_cpu(cpu) {
+-again:
+ 		head = per_cpu_ptr(s->freelist, cpu);
+-		/* No locking required as this is not visible yet. */
+-		pcpu_freelist_push_node(head, buf);
+-		i++;
+-		buf += elem_size;
+-		if (i == nr_elems)
+-			break;
+-		if (i % pcpu_entries)
+-			goto again;
++		j = n + (cpu_idx < m ? 1 : 0);
++		for (i = 0; i < j; i++) {
++			/* No locking required as this is not visible yet. */
++			pcpu_freelist_push_node(head, buf);
++			buf += elem_size;
++		}
++		cpu_idx++;
+ 	}
  }
+ 
 -- 
 2.35.1
 
