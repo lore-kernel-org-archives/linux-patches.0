@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604071C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F87C433D6;
-	Wed, 23 Nov 2022 09:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143381C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179EEC433D7;
+	Wed, 23 Nov 2022 09:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195332;
-	bh=VeoP0g8tyA4ZnHPJJjYyta9XXq2o52HhUdVgI9RoFyo=;
+	s=korg; t=1669195335;
+	bh=ljU7IhwUlLHS09gVDokkGLxdk/mB7kUBubcpowL28jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=quOTqZs9vs5SyWlPYFCJZfgfwQPwint1IF2xyH2DZ5WfLoVY/T+7yBPAtCyB7NAJ8
-	 K70XWSSc+Q4DaKfn16qOuQNOXVFDzhl6nwLXFyvLu9abi2S/LBtS5AEB3TfHiGoddV
-	 3e55RAVsQmTGvQoSBgZNB7wXY1NeNXywDWZrIV3I=
+	b=tr1bCfmpRt/VqNpmXuK52LPjqe2wI/vd17ESyx6ueYakkFLw8gIZleQb3MWW4n/7t
+	 iSQNsGXvoi/8E6ihy8Jddvqvvf1y1rTrmZ7XTnqQJEc2jMnWUb7mGPT5n7ImuZgcbo
+	 n8MwuNYRaBbnNJ4pDyaGqXyVmSS36h4FyyLqFcsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/149] mmc: sdhci-esdhc-imx: use the correct host caps for MMC_CAP_8_BIT_DATA
-Date: Wed, 23 Nov 2022 09:50:10 +0100
-Message-Id: <20221123084558.988282811@linuxfoundation.org>
+Subject: [PATCH 5.10 054/149] drm: Fix potential null-ptr-deref in drm_vblank_destroy_worker()
+Date: Wed, 23 Nov 2022 09:50:37 +0100
+Message-Id: <20221123084559.866757491@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,45 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit f002f45a00ee14214d96b18b9a555fe2c56afb20 ]
+[ Upstream commit 4979524f5a2a8210e87fde2f642b0dc060860821 ]
 
-MMC_CAP_8_BIT_DATA belongs to struct mmc_host, not struct sdhci_host.
-So correct it here.
+drm_vblank_init() call drmm_add_action_or_reset() with
+drm_vblank_init_release() as action. If __drmm_add_action() failed, will
+directly call drm_vblank_init_release() with the vblank whose worker is
+NULL. As the resule, a null-ptr-deref will happen in
+kthread_destroy_worker(). Add the NULL check before calling
+drm_vblank_destroy_worker().
 
-Fixes: 1ed5c3b22fc7 ("mmc: sdhci-esdhc-imx: Propagate ESDHC_FLAG_HS400* only on 8bit bus")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Cc: stable@vger.kernel.org
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/1667893503-20583-1-git-send-email-haibo.chen@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+BUG: null-ptr-deref
+KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
+CPU: 5 PID: 961 Comm: modprobe Not tainted 6.0.0-11331-gd465bff130bf-dirty
+RIP: 0010:kthread_destroy_worker+0x25/0xb0
+  Call Trace:
+    <TASK>
+    drm_vblank_init_release+0x124/0x220 [drm]
+    ? drm_crtc_vblank_restore+0x8b0/0x8b0 [drm]
+    __drmm_add_action_or_reset+0x41/0x50 [drm]
+    drm_vblank_init+0x282/0x310 [drm]
+    vkms_init+0x35f/0x1000 [vkms]
+    ? 0xffffffffc4508000
+    ? lock_is_held_type+0xd7/0x130
+    ? __kmem_cache_alloc_node+0x1c2/0x2b0
+    ? lock_is_held_type+0xd7/0x130
+    ? 0xffffffffc4508000
+    do_one_initcall+0xd0/0x4f0
+    ...
+    do_syscall_64+0x35/0x80
+    entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: 5e6c2b4f9161 ("drm/vblank: Add vblank works")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221101070716.9189-3-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_internal.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index 449562122adc..1f1bdd34dd55 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1621,14 +1621,14 @@ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
- 	if (imx_data->socdata->flags & ESDHC_FLAG_ERR004536)
- 		host->quirks |= SDHCI_QUIRK_BROKEN_ADMA;
+diff --git a/drivers/gpu/drm/drm_internal.h b/drivers/gpu/drm/drm_internal.h
+index f80e0f28087d..41efe40bc70f 100644
+--- a/drivers/gpu/drm/drm_internal.h
++++ b/drivers/gpu/drm/drm_internal.h
+@@ -116,7 +116,8 @@ static inline void drm_vblank_flush_worker(struct drm_vblank_crtc *vblank)
  
--	if (host->caps & MMC_CAP_8_BIT_DATA &&
-+	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
- 	    imx_data->socdata->flags & ESDHC_FLAG_HS400)
- 		host->quirks2 |= SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400;
+ static inline void drm_vblank_destroy_worker(struct drm_vblank_crtc *vblank)
+ {
+-	kthread_destroy_worker(vblank->worker);
++	if (vblank->worker)
++		kthread_destroy_worker(vblank->worker);
+ }
  
- 	if (imx_data->socdata->flags & ESDHC_FLAG_BROKEN_AUTO_CMD23)
- 		host->quirks2 |= SDHCI_QUIRK2_ACMD23_BROKEN;
- 
--	if (host->caps & MMC_CAP_8_BIT_DATA &&
-+	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
- 	    imx_data->socdata->flags & ESDHC_FLAG_HS400_ES) {
- 		host->mmc->caps2 |= MMC_CAP2_HS400_ES;
- 		host->mmc_host_ops.hs400_enhanced_strobe =
+ int drm_vblank_worker_init(struct drm_vblank_crtc *vblank);
 -- 
 2.35.1
 
