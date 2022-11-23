@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1E81C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC07C433D6;
-	Wed, 23 Nov 2022 09:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B71C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C799EC433C1;
+	Wed, 23 Nov 2022 09:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195799;
-	bh=EI6mOgYYXI90K34Rj0qLYMqHzFN4gNn1e2esvbFQeK8=;
+	s=korg; t=1669195802;
+	bh=PyvGfMNO4eGVZEKytnxM1XElbL0QDh3Vv3c9PMIsKIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgdMf90fR9svDoNqBnIjhh8xK2l4pNCAHPjiYomYjEBuAW8uH3pUO+YqL2Ft5FN6b
-	 Rmwc3pLaMt3teOVwriySLlW9M6JNom4xzLMgJmMRhJpaxCqzYVhP2vCynSiCT4nTje
-	 opFWZhwxVpcLJNVVJcxzuBmHLNaUBaY0pI271OZ0=
+	b=grit8xvfaXM4qoUM3vK+Df6VZA8iiYcaKmxm0xwtV63FAPM72d2TViaLEMHB8iz99
+	 iAa1oGRMFE7h0tkZlC3kWnl8Q/foBY2Km8wQS0XGOFqvMfVQTHoG7M6ii1ObHdZSk5
+	 hVUKP1nqHspXqUUYpjTnvA212209UP/9EcH9PN24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcaov@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	James Houghton <jthoughton@google.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/181] i2c: i801: add lis3lv02ds I2C address for Vostro 5568
-Date: Wed, 23 Nov 2022 09:49:51 +0100
-Message-Id: <20221123084603.624052201@linuxfoundation.org>
+Subject: [PATCH 5.15 037/181] hugetlbfs: dont delete error page from pagecache
+Date: Wed, 23 Nov 2022 09:50:00 +0100
+Message-Id: <20221123084603.965798988@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,41 +41,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nam Cao <namcaov@gmail.com>
+From: James Houghton <jthoughton@google.com>
 
-[ Upstream commit d6643d7207c572c1b0305ed505101f15502c6c87 ]
+[ Upstream commit 8625147cafaa9ba74713d682f5185eb62cb2aedb ]
 
-Dell Vostro 5568 laptop has lis3lv02d, but its i2c address is not known
-to the kernel. Add this address.
+This change is very similar to the change that was made for shmem [1], and
+it solves the same problem but for HugeTLBFS instead.
 
-Output of "cat /sys/devices/platform/lis3lv02d/position" on Dell Vostro
-5568 laptop:
-    - Horizontal: (-18,0,1044)
-    - Front elevated: (522,-18,1080)
-    - Left elevated: (-18,-360,1080)
-    - Upside down: (36,108,-1134)
+Currently, when poison is found in a HugeTLB page, the page is removed
+from the page cache.  That means that attempting to map or read that
+hugepage in the future will result in a new hugepage being allocated
+instead of notifying the user that the page was poisoned.  As [1] states,
+this is effectively memory corruption.
 
-Signed-off-by: Nam Cao <namcaov@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+The fix is to leave the page in the page cache.  If the user attempts to
+use a poisoned HugeTLB page with a syscall, the syscall will fail with
+EIO, the same error code that shmem uses.  For attempts to map the page,
+the thread will get a BUS_MCEERR_AR SIGBUS.
+
+[1]: commit a76054266661 ("mm: shmem: don't truncate page if memory failure happens")
+
+Link: https://lkml.kernel.org/r/20221018200125.848471-1-jthoughton@google.com
+Signed-off-by: James Houghton <jthoughton@google.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hugetlbfs/inode.c | 13 ++++++-------
+ mm/hugetlb.c         |  4 ++++
+ mm/memory-failure.c  |  5 ++++-
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 98e39a17fb83..74d343d1a36b 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1242,6 +1242,7 @@ static const struct {
- 	 */
- 	{ "Latitude 5480",      0x29 },
- 	{ "Vostro V131",        0x1d },
-+	{ "Vostro 5568",        0x29 },
- };
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index d74a49b188c2..be8deec29ebe 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -361,6 +361,12 @@ static ssize_t hugetlbfs_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		} else {
+ 			unlock_page(page);
  
- static void register_dell_lis3lv02d_i2c_device(struct i801_priv *priv)
++			if (PageHWPoison(page)) {
++				put_page(page);
++				retval = -EIO;
++				break;
++			}
++
+ 			/*
+ 			 * We have the page, copy it to user space buffer.
+ 			 */
+@@ -984,13 +990,6 @@ static int hugetlbfs_migrate_page(struct address_space *mapping,
+ static int hugetlbfs_error_remove_page(struct address_space *mapping,
+ 				struct page *page)
+ {
+-	struct inode *inode = mapping->host;
+-	pgoff_t index = page->index;
+-
+-	remove_huge_page(page);
+-	if (unlikely(hugetlb_unreserve_pages(inode, index, index + 1, 1)))
+-		hugetlb_fix_reserve_counts(inode);
+-
+ 	return 0;
+ }
+ 
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index dbb63ec3b5fa..e7bd42f23667 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5350,6 +5350,10 @@ int hugetlb_mcopy_atomic_pte(struct mm_struct *dst_mm,
+ 	ptl = huge_pte_lockptr(h, dst_mm, dst_pte);
+ 	spin_lock(ptl);
+ 
++	ret = -EIO;
++	if (PageHWPoison(page))
++		goto out_release_unlock;
++
+ 	/*
+ 	 * Recheck the i_size after holding PT lock to make sure not
+ 	 * to leave any page mapped (as page_mapped()) beyond the end
+diff --git a/mm/memory-failure.c b/mm/memory-failure.c
+index 85b1a77e3a99..2ad0f4580091 100644
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1040,6 +1040,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 	int res;
+ 	struct page *hpage = compound_head(p);
+ 	struct address_space *mapping;
++	bool extra_pins = false;
+ 
+ 	if (!PageHuge(hpage))
+ 		return MF_DELAYED;
+@@ -1047,6 +1048,8 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 	mapping = page_mapping(hpage);
+ 	if (mapping) {
+ 		res = truncate_error_page(hpage, page_to_pfn(p), mapping);
++		/* The page is kept in page cache. */
++		extra_pins = true;
+ 		unlock_page(hpage);
+ 	} else {
+ 		res = MF_FAILED;
+@@ -1064,7 +1067,7 @@ static int me_huge_page(struct page_state *ps, struct page *p)
+ 		}
+ 	}
+ 
+-	if (has_extra_refcount(ps, p, false))
++	if (has_extra_refcount(ps, p, extra_pins))
+ 		res = MF_FAILED;
+ 
+ 	return res;
 -- 
 2.35.1
 
