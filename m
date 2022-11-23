@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A121C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00675C433C1;
-	Wed, 23 Nov 2022 09:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575B01C33
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2A9C433B5;
+	Wed, 23 Nov 2022 09:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196760;
-	bh=vYjTcDxjUZro+fLletC+0gecwRNWkga7YhOeS9UU+Hw=;
+	s=korg; t=1669196764;
+	bh=V4gVvRvmo0xjL8AeNN/q0if05nknZP0mi7pIcTVbnF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xwutitYoLa8/hPQVD/PONelckHAKd+kZLHs+U4y5NTZxwYMuaxxFRYbkP2LzdtsNr
-	 2PFgztUr1sOZ/EKjW0RiXdtqC2bx7f3fz2zKZ9j61TWkljE5HNM3SIeyN5snMxNHzk
-	 JBKWndh6fC2H3+8tZ5dSHu8oGJ7QLCzRlH2ilI0Y=
+	b=HD0ypTh8MG5RqaSau6I2LGVnmmX7Q+X5VVArGNGPx8jfcerXZfWeb1chTPnT3lJ0G
+	 ftTE7cFqAqKxzMZ8sbocRJVCh8ZZGpRB+hjUa1klzxHD8iEWMs0pI/6tHdCduP8kVq
+	 GK30i5a1HWou/mf7ISoOJSUyT0IpgLBzb7k1W9bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Dylan Yudaken <dylany@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 117/314] bpf: Fix memory leaks in __check_func_call
-Date: Wed, 23 Nov 2022 09:49:22 +0100
-Message-Id: <20221123084630.811659605@linuxfoundation.org>
+Subject: [PATCH 6.0 118/314] io_uring: calculate CQEs from the user visible value
+Date: Wed, 23 Nov 2022 09:49:23 +0100
+Message-Id: <20221123084630.860899497@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,99 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Dylan Yudaken <dylany@meta.com>
 
-[ Upstream commit eb86559a691cea5fa63e57a03ec3dc9c31e97955 ]
+[ Upstream commit 0fc8c2acbfc789a977a50a4a9812a8e4b37958ce ]
 
-kmemleak reports this issue:
+io_cqring_wait (and it's wake function io_has_work) used cached_cq_tail in
+order to calculate the number of CQEs. cached_cq_tail is set strictly
+before the user visible rings->cq.tail
 
-unreferenced object 0xffff88817139d000 (size 2048):
-  comm "test_progs", pid 33246, jiffies 4307381979 (age 45851.820s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000045f075f0>] kmalloc_trace+0x27/0xa0
-    [<0000000098b7c90a>] __check_func_call+0x316/0x1230
-    [<00000000b4c3c403>] check_helper_call+0x172e/0x4700
-    [<00000000aa3875b7>] do_check+0x21d8/0x45e0
-    [<000000001147357b>] do_check_common+0x767/0xaf0
-    [<00000000b5a595b4>] bpf_check+0x43e3/0x5bc0
-    [<0000000011e391b1>] bpf_prog_load+0xf26/0x1940
-    [<0000000007f765c0>] __sys_bpf+0xd2c/0x3650
-    [<00000000839815d6>] __x64_sys_bpf+0x75/0xc0
-    [<00000000946ee250>] do_syscall_64+0x3b/0x90
-    [<0000000000506b7f>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+However as far as userspace is concerned,  if io_uring_enter(2) is called
+with a minimum number of events, they will verify by checking
+rings->cq.tail.
 
-The root case here is: In function prepare_func_exit(), the callee is
-not released in the abnormal scenario after "state->curframe--;". To
-fix, move "state->curframe--;" to the very bottom of the function,
-right when we free callee and reset frame[] pointer to NULL, as Andrii
-suggested.
+It is therefore possible for io_uring_enter(2) to return early with fewer
+events visible to the user.
 
-In addition, function __check_func_call() has a similar problem. In
-the abnormal scenario before "state->curframe++;", the callee also
-should be released by free_func_state().
+Instead make the wait functions read from the user visible value, so there
+will be no discrepency.
 
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Fixes: fd978bf7fd31 ("bpf: Add reference tracking to verifier")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1667884291-15666-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+This is triggered eventually by the following reproducer:
+
+struct io_uring_sqe *sqe;
+struct io_uring_cqe *cqe;
+unsigned int cqe_ready;
+struct io_uring ring;
+int ret, i;
+
+ret = io_uring_queue_init(N, &ring, 0);
+assert(!ret);
+while(true) {
+	for (i = 0; i < N; i++) {
+		sqe = io_uring_get_sqe(&ring);
+		io_uring_prep_nop(sqe);
+		sqe->flags |= IOSQE_ASYNC;
+	}
+	ret = io_uring_submit(&ring);
+	assert(ret == N);
+
+	do {
+		ret = io_uring_wait_cqes(&ring, &cqe, N, NULL, NULL);
+	} while(ret == -EINTR);
+	cqe_ready = io_uring_cq_ready(&ring);
+	assert(!ret);
+	assert(cqe_ready == N);
+	io_uring_cq_advance(&ring, N);
+}
+
+Fixes: ad3eb2c89fb2 ("io_uring: split overflow state into SQ and CQ side")
+Signed-off-by: Dylan Yudaken <dylany@meta.com>
+Link: https://lore.kernel.org/r/20221108153016.1854297-1-dylany@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ io_uring/io_uring.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 69fb46fdf763..b781075dd510 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6674,11 +6674,11 @@ static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 	/* Transfer references to the callee */
- 	err = copy_reference_state(callee, caller);
- 	if (err)
--		return err;
-+		goto err_out;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index d29f397f095e..f347e81e2d98 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -171,6 +171,11 @@ static inline unsigned int __io_cqring_events(struct io_ring_ctx *ctx)
+ 	return ctx->cached_cq_tail - READ_ONCE(ctx->rings->cq.head);
+ }
  
- 	err = set_callee_state_cb(env, caller, callee, *insn_idx);
- 	if (err)
--		return err;
-+		goto err_out;
- 
- 	clear_caller_saved_regs(env, caller->regs);
- 
-@@ -6695,6 +6695,11 @@ static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 		print_verifier_state(env, callee, true);
- 	}
- 	return 0;
++static inline unsigned int __io_cqring_events_user(struct io_ring_ctx *ctx)
++{
++	return READ_ONCE(ctx->rings->cq.tail) - READ_ONCE(ctx->rings->cq.head);
++}
 +
-+err_out:
-+	free_func_state(callee);
-+	state->frame[state->curframe + 1] = NULL;
-+	return err;
- }
+ static bool io_match_linked(struct io_kiocb *head)
+ {
+ 	struct io_kiocb *req;
+@@ -2163,7 +2168,7 @@ struct io_wait_queue {
+ static inline bool io_should_wake(struct io_wait_queue *iowq)
+ {
+ 	struct io_ring_ctx *ctx = iowq->ctx;
+-	int dist = ctx->cached_cq_tail - (int) iowq->cq_tail;
++	int dist = READ_ONCE(ctx->rings->cq.tail) - (int) iowq->cq_tail;
  
- int map_set_for_each_callback_args(struct bpf_verifier_env *env,
-@@ -6880,8 +6885,7 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 		return -EINVAL;
- 	}
+ 	/*
+ 	 * Wake up if we have enough events, or if a timeout occurred since we
+@@ -2240,7 +2245,8 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events,
+ 	do {
+ 		io_cqring_overflow_flush(ctx);
  
--	state->curframe--;
--	caller = state->frame[state->curframe];
-+	caller = state->frame[state->curframe - 1];
- 	if (callee->in_callback_fn) {
- 		/* enforce R0 return value range [0, 1]. */
- 		struct tnum range = tnum_range(0, 1);
-@@ -6920,7 +6924,7 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 	}
- 	/* clear everything in the callee */
- 	free_func_state(callee);
--	state->frame[state->curframe + 1] = NULL;
-+	state->frame[state->curframe--] = NULL;
- 	return 0;
- }
- 
+-		if (io_cqring_events(ctx) >= min_events)
++		/* if user messes with these they will just get an early return */
++		if (__io_cqring_events_user(ctx) >= min_events)
+ 			return 0;
+ 		if (!io_run_task_work())
+ 			break;
 -- 
 2.35.1
 
