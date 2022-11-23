@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F51A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06D8C433C1;
-	Wed, 23 Nov 2022 09:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7559D1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D057C433C1;
+	Wed, 23 Nov 2022 09:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196126;
-	bh=mCmpBwT8Ioz8zoxuf/jc5cRTM5dhY4OjpjcHwzkIS2o=;
+	s=korg; t=1669196130;
+	bh=hcIHoOOr0mQPIoISV17umq8DPr5hm5Z2CXFa3EUYcnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4V5Zu/V3QgnBNK5NATv8hkrrfVSbF8ESd58lbC7KMRQ8mUcEa4akep6dEX2r5Nbc
-	 iq4fVaGAXejx6U/O0C3sIOR44ZyF6opX/Xo4JdfRMGUZy6kHdFh/NYBPX4uhThLgZo
-	 77XyU0OByuyyQxEy7o6AgTObTPRgKHEyaOxm4PcA=
+	b=vkQiS6tJA2y+v9Nh94K9YqxayOt3FhqlbolLisMt2UlQKFM47rbG7d8fsfigl/dK1
+	 XYED2TwAH9ixK8Cp1xPVd9a3GpQOonJ8+vvokA4vA2swszNviZyG0GEC1CRTdfctfx
+	 PPz92nblIYZOTGjFb6XGRplXyLCBMKH9SmjbPf1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Chuhong Yuan <hslester96@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 125/181] USB: bcma: Make GPIO explicitly optional
-Date: Wed, 23 Nov 2022 09:51:28 +0100
-Message-Id: <20221123084607.779061889@linuxfoundation.org>
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 097/181] platform/x86/intel: pmc: Dont unconditionally attach Intel PMC when virtualized
+Date: Wed, 23 Nov 2022 09:51:00 +0100
+Message-Id: <20221123084606.520360389@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,62 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Roger Pau Monné <roger.pau@citrix.com>
 
-commit cd136706b4f925aa5d316642543babac90d45910 upstream.
+[ Upstream commit 2dbfb3f33350e1e868d3d7ed4c176d8777150878 ]
 
-What the code does is to not check the return value from
-devm_gpiod_get() and then avoid using an erroneous GPIO descriptor
-with IS_ERR_OR_NULL().
+The current logic in the Intel PMC driver will forcefully attach it
+when detecting any CPU on the intel_pmc_core_platform_ids array,
+even if the matching ACPI device is not present.
 
-This will miss real errors from the GPIO core that should not be
-ignored, such as probe deferral.
+There's no checking in pmc_core_probe() to assert that the PMC device
+is present, and hence on virtualized environments the PMC device
+probes successfully, even if the underlying registers are not present.
+Before commit 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI
+with CPUID enumeration") the driver would check for the presence of a
+specific PCI device, and that prevented the driver from attaching when
+running virtualized.
 
-Instead request the GPIO as explicitly optional, which means that
-if it doesn't exist, the descriptor returned will be NULL.
+Fix by only forcefully attaching the PMC device when not running
+virtualized.  Note that virtualized platforms can still get the device
+to load if the appropriate ACPI device is present on the tables
+provided to the VM.
 
-Then we can add error handling and also avoid just doing this on
-the device tree path, and simplify the site where the optional
-GPIO descriptor is used.
+Make an exception for the Xen initial domain, which does have full
+hardware access, and hence can attach to the PMC if present.
 
-There were some problems with cleaning up this GPIO descriptor
-use in the past, but this is the proper way to deal with it.
-
-Cc: Rafał Miłecki <rafal@milecki.pl>
-Cc: Chuhong Yuan <hslester96@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221107090753.1404679-1-linus.walleij@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 21ae43570940 ("platform/x86: intel_pmc_core: Substitute PCI with CPUID enumeration")
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Acked-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110163145.80374-1-roger.pau@citrix.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/bcma-hcd.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/pmc/pltdrv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/host/bcma-hcd.c
-+++ b/drivers/usb/host/bcma-hcd.c
-@@ -285,7 +285,7 @@ static void bcma_hci_platform_power_gpio
+diff --git a/drivers/platform/x86/intel/pmc/pltdrv.c b/drivers/platform/x86/intel/pmc/pltdrv.c
+index 15ca8afdd973..ddfba38c2104 100644
+--- a/drivers/platform/x86/intel/pmc/pltdrv.c
++++ b/drivers/platform/x86/intel/pmc/pltdrv.c
+@@ -18,6 +18,8 @@
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ 
++#include <xen/xen.h>
++
+ static void intel_pmc_core_release(struct device *dev)
  {
- 	struct bcma_hcd_device *usb_dev = bcma_get_drvdata(dev);
+ 	kfree(dev);
+@@ -53,6 +55,13 @@ static int __init pmc_core_platform_init(void)
+ 	if (acpi_dev_present("INT33A1", NULL, -1))
+ 		return -ENODEV;
  
--	if (IS_ERR_OR_NULL(usb_dev->gpio_desc))
-+	if (!usb_dev->gpio_desc)
- 		return;
++	/*
++	 * Skip forcefully attaching the device for VMs. Make an exception for
++	 * Xen dom0, which does have full hardware access.
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR) && !xen_initial_domain())
++		return -ENODEV;
++
+ 	if (!x86_match_cpu(intel_pmc_core_platform_ids))
+ 		return -ENODEV;
  
- 	gpiod_set_value(usb_dev->gpio_desc, val);
-@@ -406,9 +406,11 @@ static int bcma_hcd_probe(struct bcma_de
- 		return -ENOMEM;
- 	usb_dev->core = core;
- 
--	if (core->dev.of_node)
--		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
--						    GPIOD_OUT_HIGH);
-+	usb_dev->gpio_desc = devm_gpiod_get_optional(&core->dev, "vcc",
-+						     GPIOD_OUT_HIGH);
-+	if (IS_ERR(usb_dev->gpio_desc))
-+		return dev_err_probe(&core->dev, PTR_ERR(usb_dev->gpio_desc),
-+				     "error obtaining VCC GPIO");
- 
- 	switch (core->id.id) {
- 	case BCMA_CORE_USB20_HOST:
+-- 
+2.35.1
+
 
 
