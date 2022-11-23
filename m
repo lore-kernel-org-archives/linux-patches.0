@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40C41C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:18:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198FAC433C1;
-	Wed, 23 Nov 2022 09:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3621C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:19:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44A2C433D6;
+	Wed, 23 Nov 2022 09:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195136;
-	bh=gtYR++FiirfzN5RZRAJawT8wVcSsiAOXGbccMfLBFmQ=;
+	s=korg; t=1669195140;
+	bh=9+ZLJWZ+edbJ5SV64rjAhzZBWoWw/nYmvN4vTgXSXP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7+WzeaMTKenXdyOvXyCXiOlgR4yvpcW+ENchYbvNQ8j6smrAhcqneGNRuH0i0Dug
-	 AFOQJfBQ4qRddx9qNB/A7SR/UGpwBiNHJ5FYV2lsS5IJeMDQURLHewnOULzdaj70G3
-	 l6qxm0TL91AOM6MdavNcqgYV5vabfzMWCSjvxSGo=
+	b=MvDt8sKgUsq4okwHgkNBlQtl/EnjUq8MMIP2PWZ8V2mYvyr+l8ntrrkQihYQW7zOD
+	 oYJT811m4stWebJV3GUDoOivTjS2oPsD+CQbqEuREVc1/Bj0qqIK1AH09O0+StSVJd
+	 1xrNFnARY9ryJfof640DUmjz898kZGm5QJOgIHxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.4 129/156] dm ioctl: fix misbehavior if list_versions races with module loading
-Date: Wed, 23 Nov 2022 09:51:26 +0100
-Message-Id: <20221123084602.601962961@linuxfoundation.org>
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Anton Altaparmakov <anton@tuxera.com>,
+	"chenxiaosong (A)" <chenxiaosong2@huawei.com>,
+	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 156/156] ntfs: check overflow when iterating ATTR_RECORDs
+Date: Wed, 23 Nov 2022 09:51:53 +0100
+Message-Id: <20221123084603.441804323@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -34,70 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-commit 4fe1ec995483737f3d2a14c3fe1d8fe634972979 upstream.
+commit 63095f4f3af59322bea984a6ae44337439348fe0 upstream.
 
-__list_versions will first estimate the required space using the
-"dm_target_iterate(list_version_get_needed, &needed)" call and then will
-fill the space using the "dm_target_iterate(list_version_get_info,
-&iter_info)" call. Each of these calls locks the targets using the
-"down_read(&_lock)" and "up_read(&_lock)" calls, however between the first
-and second "dm_target_iterate" there is no lock held and the target
-modules can be loaded at this point, so the second "dm_target_iterate"
-call may need more space than what was the first "dm_target_iterate"
-returned.
+Kernel iterates over ATTR_RECORDs in mft record in ntfs_attr_find().
+Because the ATTR_RECORDs are next to each other, kernel can get the next
+ATTR_RECORD from end address of current ATTR_RECORD, through current
+ATTR_RECORD length field.
 
-The code tries to handle this overflow (see the beginning of
-list_version_get_info), however this handling is incorrect.
+The problem is that during iteration, when kernel calculates the end
+address of current ATTR_RECORD, kernel may trigger an integer overflow bug
+in executing `a = (ATTR_RECORD*)((u8*)a + le32_to_cpu(a->length))`.  This
+may wrap, leading to a forever iteration on 32bit systems.
 
-The code sets "param->data_size = param->data_start + needed" and
-"iter_info.end = (char *)vers+len" - "needed" is the size returned by the
-first dm_target_iterate call; "len" is the size of the buffer allocated by
-userspace.
+This patch solves it by adding some checks on calculating end address
+of current ATTR_RECORD during iteration.
 
-"len" may be greater than "needed"; in this case, the code will write up
-to "len" bytes into the buffer, however param->data_size is set to
-"needed", so it may write data past the param->data_size value. The ioctl
-interface copies only up to param->data_size into userspace, thus part of
-the result will be truncated.
-
-Fix this bug by setting "iter_info.end = (char *)vers + needed;" - this
-guarantees that the second "dm_target_iterate" call will write only up to
-the "needed" buffer and it will exit with "DM_BUFFER_FULL_FLAG" if it
-overflows the "needed" space - in this case, userspace will allocate a
-larger buffer and retry.
-
-Note that there is also a bug in list_version_get_needed - we need to add
-"strlen(tt->name) + 1" to the needed size, not "strlen(tt->name)".
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lkml.kernel.org/r/20220831160935.3409-4-yin31149@gmail.com
+Link: https://lore.kernel.org/all/20220827105842.GM2030@kadam/
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Suggested-by: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: Anton Altaparmakov <anton@tuxera.com>
+Cc: chenxiaosong (A) <chenxiaosong2@huawei.com>
+Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs/attrib.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -573,7 +573,7 @@ static void list_version_get_needed(stru
-     size_t *needed = needed_param;
- 
-     *needed += sizeof(struct dm_target_versions);
--    *needed += strlen(tt->name);
-+    *needed += strlen(tt->name) + 1;
-     *needed += ALIGN_MASK;
- }
- 
-@@ -638,7 +638,7 @@ static int __list_versions(struct dm_ioc
- 	iter_info.old_vers = NULL;
- 	iter_info.vers = vers;
- 	iter_info.flags = 0;
--	iter_info.end = (char *)vers+len;
-+	iter_info.end = (char *)vers + needed;
- 
- 	/*
- 	 * Now loop through filling out the names & versions.
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -617,6 +617,14 @@ static int ntfs_attr_find(const ATTR_TYP
+ 			return -ENOENT;
+ 		if (unlikely(!a->length))
+ 			break;
++
++		/* check whether ATTR_RECORD's length wrap */
++		if ((u8 *)a + le32_to_cpu(a->length) < (u8 *)a)
++			break;
++		/* check whether ATTR_RECORD's length is within bounds */
++		if ((u8 *)a + le32_to_cpu(a->length) > mrec_end)
++			break;
++
+ 		if (a->type != type)
+ 			continue;
+ 		/*
 
 
