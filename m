@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B591C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F5BC433D6;
-	Wed, 23 Nov 2022 09:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C145F1C29;
+	Wed, 23 Nov 2022 09:14:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEAFC433D6;
+	Wed, 23 Nov 2022 09:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194845;
-	bh=D12S1QJOCBDz/sO5Wa0HDRc7+ODBM7WKRmkzoARuMkU=;
+	s=korg; t=1669194848;
+	bh=PEHzwfO/VIiHVS3KPMtQeWVmGCOUzoW4YxeEJJBvGXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQNHHBrb7OrHNCD29P/RNwhGEwRB6fL3uMDvXFj5LhNHpcSuNq/KyzeMmLsMbnc7/
-	 4COjSL6XWLGYFWH5V/jBaXkL+QLaaykO27kWMotT8nrCAlVnXwgD+5w8savG1hrXMb
-	 MWc/pyL/yyEStLlJQBBOPPNyDkx70kF5H87sLe6s=
+	b=ztK9fU/AktMg2LwtgZWqKk4puqvo2AOk8/xwzCA7vwNBdgJwmtFWRp72DSPAu497s
+	 ATw5JRykUM3dTUZWCLrx5QCVb3deUMrGU2l11M/uXT9RdubnsGSWXHjMKhrqgV4XmI
+	 hS+pCyI3HCTe3i+T1vcZxBS0uKLGGUywtOtCZmcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcaov@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	llvm@lists.linux.dev,
+	Nathan Huckleberry <nhuck@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 077/156] i2c: i801: add lis3lv02ds I2C address for Vostro 5568
-Date: Wed, 23 Nov 2022 09:50:34 +0100
-Message-Id: <20221123084600.791082188@linuxfoundation.org>
+Subject: [PATCH 5.4 078/156] drm/imx: imx-tve: Fix return type of imx_tve_connector_mode_valid
+Date: Wed, 23 Nov 2022 09:50:35 +0100
+Message-Id: <20221123084600.825057559@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -37,41 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nam Cao <namcaov@gmail.com>
+From: Nathan Huckleberry <nhuck@google.com>
 
-[ Upstream commit d6643d7207c572c1b0305ed505101f15502c6c87 ]
+[ Upstream commit fc007fb815ab5395c3962c09b79a1630b0fbed9c ]
 
-Dell Vostro 5568 laptop has lis3lv02d, but its i2c address is not known
-to the kernel. Add this address.
+The mode_valid field in drm_connector_helper_funcs is expected to be of
+type:
+enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
+                                     struct drm_display_mode *mode);
 
-Output of "cat /sys/devices/platform/lis3lv02d/position" on Dell Vostro
-5568 laptop:
-    - Horizontal: (-18,0,1044)
-    - Front elevated: (522,-18,1080)
-    - Left elevated: (-18,-360,1080)
-    - Upside down: (36,108,-1134)
+The mismatched return type breaks forward edge kCFI since the underlying
+function definition does not match the function hook definition.
 
-Signed-off-by: Nam Cao <namcaov@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+The return type of imx_tve_connector_mode_valid should be changed from
+int to enum drm_mode_status.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1703
+Cc: llvm@lists.linux.dev
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220913205544.155106-1-nhuck@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/imx/imx-tve.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 4e6d0b722ddc..2b84db59ab3c 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1253,6 +1253,7 @@ static const struct {
- 	 * Additional individual entries were added after verification.
- 	 */
- 	{ "Vostro V131",        0x1d },
-+	{ "Vostro 5568",        0x29 },
- };
+diff --git a/drivers/gpu/drm/imx/imx-tve.c b/drivers/gpu/drm/imx/imx-tve.c
+index f91c3eb7697b..cc300ed456e1 100644
+--- a/drivers/gpu/drm/imx/imx-tve.c
++++ b/drivers/gpu/drm/imx/imx-tve.c
+@@ -237,8 +237,9 @@ static int imx_tve_connector_get_modes(struct drm_connector *connector)
+ 	return ret;
+ }
  
- static void register_dell_lis3lv02d_i2c_device(struct i801_priv *priv)
+-static int imx_tve_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++imx_tve_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	struct imx_tve *tve = con_to_tve(connector);
+ 	unsigned long rate;
 -- 
 2.35.1
 
