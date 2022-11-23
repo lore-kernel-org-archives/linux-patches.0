@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC1D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBF2C433D6;
-	Wed, 23 Nov 2022 09:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761861C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55B9C433D6;
+	Wed, 23 Nov 2022 09:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196310;
-	bh=Qu4yDC0ZW/6TZr8rCP5cMgAzWh/0eNhDMUxHwwy/HNo=;
+	s=korg; t=1669196314;
+	bh=GzoWNf11BJbxgQ5dp8GhRgeAFnuO0L89kf0hVz/N4PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtPRcStwe5hxVQFmteJlLL3C4TaE4PUWCXweWoRROl0X9MaPFGz1pPID+mbZi1F7i
-	 KK58ge/IvbF90mOZHcH0gmuNMRFUjNbbOF9KMjqGTSZVQN11dG1JmNbZ9Q8ilMJb1a
-	 hG32l36EBBEZCdrKK0wUkUpvtbrAvvJq+QOLFocQ=
+	b=dKlA4FCF5vXhN9tRbgHhbhrrMCBC+dMEZthIqB/ZEx2zFhI8Nc/ZoxRaSvxDYzHW+
+	 QoN/Luuv1bzzIC7Se/F9x8ns6JsxcpzUuRPvVC0xPsmXHOxJqX/8I1p/RCn6084vjT
+	 LBqIR5gt4s2kHAiRKqrfJjnVymp+auqDpLAsbK7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+2f20b523930c32c160cc@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 5.15 178/181] net/9p: use a dedicated spinlock for trans_fd
-Date: Wed, 23 Nov 2022 09:52:21 +0100
-Message-Id: <20221123084610.043203934@linuxfoundation.org>
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Anton Altaparmakov <anton@tuxera.com>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 179/181] ntfs: fix use-after-free in ntfs_attr_find()
+Date: Wed, 23 Nov 2022 09:52:22 +0100
+Message-Id: <20221123084610.094442919@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,196 +38,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-commit 296ab4a813841ba1d5f40b03190fd1bd8f25aab0 upstream.
+commit d85a1bec8e8d552ab13163ca1874dcd82f3d1550 upstream.
 
-Shamelessly copying the explanation from Tetsuo Handa's suggested
-patch[1] (slightly reworded):
-syzbot is reporting inconsistent lock state in p9_req_put()[2],
-for p9_tag_remove() from p9_req_put() from IRQ context is using
-spin_lock_irqsave() on "struct p9_client"->lock but trans_fd
-(not from IRQ context) is using spin_lock().
+Patch series "ntfs: fix bugs about Attribute", v2.
 
-Since the locks actually protect different things in client.c and in
-trans_fd.c, just replace trans_fd.c's lock by a new one specific to the
-transport (client.c's protect the idr for fid/tag allocations,
-while trans_fd.c's protects its own req list and request status field
-that acts as the transport's state machine)
+This patchset fixes three bugs relative to Attribute in record:
 
-Link: https://lore.kernel.org/r/20220904112928.1308799-1-asmadeus@codewreck.org
-Link: https://lkml.kernel.org/r/2470e028-9b05-2013-7198-1fdad071d999@I-love.SAKURA.ne.jp [1]
-Link: https://syzkaller.appspot.com/bug?extid=2f20b523930c32c160cc [2]
-Reported-by: syzbot <syzbot+2f20b523930c32c160cc@syzkaller.appspotmail.com>
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Patch 1 adds a sanity check to ensure that, attrs_offset field in first
+mft record loading from disk is within bounds.
+
+Patch 2 moves the ATTR_RECORD's bounds checking earlier, to avoid
+dereferencing ATTR_RECORD before checking this ATTR_RECORD is within
+bounds.
+
+Patch 3 adds an overflow checking to avoid possible forever loop in
+ntfs_attr_find().
+
+Without patch 1 and patch 2, the kernel triggersa KASAN use-after-free
+detection as reported by Syzkaller.
+
+Although one of patch 1 or patch 2 can fix this, we still need both of
+them.  Because patch 1 fixes the root cause, and patch 2 not only fixes
+the direct cause, but also fixes the potential out-of-bounds bug.
+
+
+This patch (of 3):
+
+Syzkaller reported use-after-free read as follows:
+==================================================================
+BUG: KASAN: use-after-free in ntfs_attr_find+0xc02/0xce0 fs/ntfs/attrib.c:597
+Read of size 2 at addr ffff88807e352009 by task syz-executor153/3607
+
+[...]
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:317 [inline]
+ print_report.cold+0x2ba/0x719 mm/kasan/report.c:433
+ kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+ ntfs_attr_find+0xc02/0xce0 fs/ntfs/attrib.c:597
+ ntfs_attr_lookup+0x1056/0x2070 fs/ntfs/attrib.c:1193
+ ntfs_read_inode_mount+0x89a/0x2580 fs/ntfs/inode.c:1845
+ ntfs_fill_super+0x1799/0x9320 fs/ntfs/super.c:2854
+ mount_bdev+0x34d/0x410 fs/super.c:1400
+ legacy_get_tree+0x105/0x220 fs/fs_context.c:610
+ vfs_get_tree+0x89/0x2f0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x1326/0x1e20 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ [...]
+ </TASK>
+
+The buggy address belongs to the physical page:
+page:ffffea0001f8d400 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x7e350
+head:ffffea0001f8d400 order:3 compound_mapcount:0 compound_pincount:0
+flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
+raw: 00fff00000010200 0000000000000000 dead000000000122 ffff888011842140
+raw: 0000000000000000 0000000000040004 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+Memory state around the buggy address:
+ ffff88807e351f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88807e351f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff88807e352000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                      ^
+ ffff88807e352080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88807e352100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Kernel will loads $MFT/$DATA's first mft record in
+ntfs_read_inode_mount().
+
+Yet the problem is that after loading, kernel doesn't check whether
+attrs_offset field is a valid value.
+
+To be more specific, if attrs_offset field is larger than bytes_allocated
+field, then it may trigger the out-of-bounds read bug(reported as
+use-after-free bug) in ntfs_attr_find(), when kernel tries to access the
+corresponding mft record's attribute.
+
+This patch solves it by adding the sanity check between attrs_offset field
+and bytes_allocated field, after loading the first mft record.
+
+Link: https://lkml.kernel.org/r/20220831160935.3409-1-yin31149@gmail.com
+Link: https://lkml.kernel.org/r/20220831160935.3409-2-yin31149@gmail.com
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Cc: Anton Altaparmakov <anton@tuxera.com>
+Cc: ChenXiaoSong <chenxiaosong2@huawei.com>
+Cc: syzkaller-bugs <syzkaller-bugs@googlegroups.com>
+Cc: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |   41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ fs/ntfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -93,6 +93,7 @@ struct p9_poll_wait {
-  * @mux_list: list link for mux to manage multiple connections (?)
-  * @client: reference to client instance for this connection
-  * @err: error state
-+ * @req_lock: lock protecting req_list and requests statuses
-  * @req_list: accounting for requests which have been sent
-  * @unsent_req_list: accounting for requests that haven't been sent
-  * @rreq: read request
-@@ -116,6 +117,7 @@ struct p9_conn {
- 	struct list_head mux_list;
- 	struct p9_client *client;
- 	int err;
-+	spinlock_t req_lock;
- 	struct list_head req_list;
- 	struct list_head unsent_req_list;
- 	struct p9_req_t *rreq;
-@@ -191,10 +193,10 @@ static void p9_conn_cancel(struct p9_con
- 
- 	p9_debug(P9_DEBUG_ERROR, "mux %p err %d\n", m, err);
- 
--	spin_lock(&m->client->lock);
-+	spin_lock(&m->req_lock);
- 
- 	if (m->err) {
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 		return;
+--- a/fs/ntfs/inode.c
++++ b/fs/ntfs/inode.c
+@@ -1829,6 +1829,13 @@ int ntfs_read_inode_mount(struct inode *
+ 		goto err_out;
  	}
  
-@@ -207,7 +209,7 @@ static void p9_conn_cancel(struct p9_con
- 		list_move(&req->req_list, &cancel_list);
- 	}
- 
--	spin_unlock(&m->client->lock);
-+	spin_unlock(&m->req_lock);
- 
- 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
- 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
-@@ -362,7 +364,7 @@ static void p9_read_work(struct work_str
- 	if ((m->rreq) && (m->rc.offset == m->rc.capacity)) {
- 		p9_debug(P9_DEBUG_TRANS, "got new packet\n");
- 		m->rreq->rc.size = m->rc.offset;
--		spin_lock(&m->client->lock);
-+		spin_lock(&m->req_lock);
- 		if (m->rreq->status == REQ_STATUS_SENT) {
- 			list_del(&m->rreq->req_list);
- 			p9_client_cb(m->client, m->rreq, REQ_STATUS_RCVD);
-@@ -371,14 +373,14 @@ static void p9_read_work(struct work_str
- 			p9_debug(P9_DEBUG_TRANS,
- 				 "Ignore replies associated with a cancelled request\n");
- 		} else {
--			spin_unlock(&m->client->lock);
-+			spin_unlock(&m->req_lock);
- 			p9_debug(P9_DEBUG_ERROR,
- 				 "Request tag %d errored out while we were reading the reply\n",
- 				 m->rc.tag);
- 			err = -EIO;
- 			goto error;
- 		}
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 		m->rc.sdata = NULL;
- 		m->rc.offset = 0;
- 		m->rc.capacity = 0;
-@@ -456,10 +458,10 @@ static void p9_write_work(struct work_st
- 	}
- 
- 	if (!m->wsize) {
--		spin_lock(&m->client->lock);
-+		spin_lock(&m->req_lock);
- 		if (list_empty(&m->unsent_req_list)) {
- 			clear_bit(Wworksched, &m->wsched);
--			spin_unlock(&m->client->lock);
-+			spin_unlock(&m->req_lock);
- 			return;
- 		}
- 
-@@ -474,7 +476,7 @@ static void p9_write_work(struct work_st
- 		m->wpos = 0;
- 		p9_req_get(req);
- 		m->wreq = req;
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 	}
- 
- 	p9_debug(P9_DEBUG_TRANS, "mux %p pos %d size %d\n",
-@@ -591,6 +593,7 @@ static void p9_conn_create(struct p9_cli
- 	INIT_LIST_HEAD(&m->mux_list);
- 	m->client = client;
- 
-+	spin_lock_init(&m->req_lock);
- 	INIT_LIST_HEAD(&m->req_list);
- 	INIT_LIST_HEAD(&m->unsent_req_list);
- 	INIT_WORK(&m->rq, p9_read_work);
-@@ -672,10 +675,10 @@ static int p9_fd_request(struct p9_clien
- 	if (m->err < 0)
- 		return m->err;
- 
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 	req->status = REQ_STATUS_UNSENT;
- 	list_add_tail(&req->req_list, &m->unsent_req_list);
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
- 
- 	if (test_and_clear_bit(Wpending, &m->wsched))
- 		n = EPOLLOUT;
-@@ -690,11 +693,13 @@ static int p9_fd_request(struct p9_clien
- 
- static int p9_fd_cancel(struct p9_client *client, struct p9_req_t *req)
- {
-+	struct p9_trans_fd *ts = client->trans;
-+	struct p9_conn *m = &ts->conn;
- 	int ret = 1;
- 
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
- 
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 
- 	if (req->status == REQ_STATUS_UNSENT) {
- 		list_del(&req->req_list);
-@@ -702,21 +707,24 @@ static int p9_fd_cancel(struct p9_client
- 		p9_req_put(client, req);
- 		ret = 0;
- 	}
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
- 
- 	return ret;
- }
- 
- static int p9_fd_cancelled(struct p9_client *client, struct p9_req_t *req)
- {
-+	struct p9_trans_fd *ts = client->trans;
-+	struct p9_conn *m = &ts->conn;
++	/* Sanity check offset to the first attribute */
++	if (le16_to_cpu(m->attrs_offset) >= le32_to_cpu(m->bytes_allocated)) {
++		ntfs_error(sb, "Incorrect mft offset to the first attribute %u in superblock.",
++			       le16_to_cpu(m->attrs_offset));
++		goto err_out;
++	}
 +
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
+ 	/* Need this to sanity check attribute list references to $MFT. */
+ 	vi->i_generation = ni->seq_no = le16_to_cpu(m->sequence_number);
  
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 	/* Ignore cancelled request if message has been received
- 	 * before lock.
- 	 */
- 	if (req->status == REQ_STATUS_RCVD) {
--		spin_unlock(&client->lock);
-+		spin_unlock(&m->req_lock);
- 		return 0;
- 	}
- 
-@@ -725,7 +733,8 @@ static int p9_fd_cancelled(struct p9_cli
- 	 */
- 	list_del(&req->req_list);
- 	req->status = REQ_STATUS_FLSHD;
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
-+
- 	p9_req_put(client, req);
- 
- 	return 0;
 
 
