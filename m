@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2CC1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDACDC433D7;
-	Wed, 23 Nov 2022 09:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152221C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438EFC433C1;
+	Wed, 23 Nov 2022 09:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197090;
-	bh=xEJqRnBy+vMuDlF4QQzj61BtCttbpIzGhAGRwcpHp58=;
+	s=korg; t=1669197093;
+	bh=EQdAbsQ90qB08aK3VNVU0t5dAm0fBAqBfENgBxZEDp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5rBj096FxlfHIq4U1HHQO2adFcM7yLIreqa6/wtMTv0yG5HObZqUUBxefl4Y+v0C
-	 Je/aneYMFBbtYzigtm/FS+DWxSLik5KwUNTcErDq7O+0LqaPjlwyByqluw7rMmOIQQ
-	 3VLFov2Q0WX1WBY6zdTKLlmVA4ghgOgNrav0uvLY=
+	b=u9GIfGoikUH2e4gJ+3ds5jTPDK54eR9XG+H02tYhexM6fW/GJTJf2bh9AIEo9fYD2
+	 KI16YlWmapC7sfO8/HprEwy5keRFqeJVzfJ9x/VMWCQLIVgLW1IPoesAnspY1iKtXa
+	 inc9RERJTu1AZ/NLWy1M/efniRabwsM1y50m25nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitrii Tcvetkov <me@demsh.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.0 195/314] dm-crypt: provide dma_alignment limit in io_hints
-Date: Wed, 23 Nov 2022 09:50:40 +0100
-Message-Id: <20221123084634.387022316@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	Wang Wensheng <wangwensheng4@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 196/314] ftrace: Fix the possible incorrect kernel message
+Date: Wed, 23 Nov 2022 09:50:41 +0100
+Message-Id: <20221123084634.436212171@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -38,41 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Wang Wensheng <wangwensheng4@huawei.com>
 
-[ Upstream commit 86e4d3e8d1838ca88fb9267e669c36f6c8f7c6cd ]
+commit 08948caebe93482db1adfd2154eba124f66d161d upstream.
 
-This device mapper needs bio vectors to be sized and memory aligned to
-the logical block size. Set the minimum required queue limit
-accordingly.
+If the number of mcount entries is an integer multiple of
+ENTRIES_PER_PAGE, the page count showing on the console would be wrong.
 
-Link: https://lore.kernel.org/linux-block/20221101001558.648ee024@xps.demsh.org/
-Fixes: b1a000d3b8ec5 ("block: relax direct io memory alignment")
-Reportred-by: Eric Biggers <ebiggers@kernel.org>
-Reported-by: Dmitrii Tcvetkov <me@demsh.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221110184501.2451620-3-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20221109094434.84046-2-wangwensheng4@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: 5821e1b74f0d0 ("function tracing: fix wrong pos computing when read buffer has been fulfilled")
+Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/ftrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
-index 159c6806c19b..2653516bcdef 100644
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -3630,6 +3630,7 @@ static void crypt_io_hints(struct dm_target *ti, struct queue_limits *limits)
- 	limits->physical_block_size =
- 		max_t(unsigned, limits->physical_block_size, cc->sector_size);
- 	limits->io_min = max_t(unsigned, limits->io_min, cc->sector_size);
-+	limits->dma_alignment = limits->logical_block_size - 1;
- }
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -7394,7 +7394,7 @@ void __init ftrace_init(void)
+ 	}
  
- static struct target_type crypt_target = {
--- 
-2.35.1
-
+ 	pr_info("ftrace: allocating %ld entries in %ld pages\n",
+-		count, count / ENTRIES_PER_PAGE + 1);
++		count, DIV_ROUND_UP(count, ENTRIES_PER_PAGE));
+ 
+ 	ret = ftrace_process_locs(NULL,
+ 				  __start_mcount_loc,
 
 
