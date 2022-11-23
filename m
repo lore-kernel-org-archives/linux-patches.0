@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DDD1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A72BC433D7;
-	Wed, 23 Nov 2022 09:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482E41C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C3EC433D7;
+	Wed, 23 Nov 2022 09:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194498;
-	bh=5vlzAXbKP20lF8P0CVQ65gppQRO/pYXyPGRwOyNk7Wc=;
+	s=korg; t=1669194502;
+	bh=lN7LWd8fpUKRteACJxqs8EUEmMM5J6qINk4Mj9sT32o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZ4cfJ/b5VNPWpBaLMIPzwX57/hjPq2kMdahGNPMp7dk75hPsgrLatIoNEOmd1+oD
-	 03RBZA5UQ3SJrVM36Tlhz207K+jjCQ9qkJKa2noRqjgvM22YZP1XRoQOJ98awxoVUI
-	 FZzXvZP10CzxdITzn6d8RpH9XpC+UI0Ety1nFqEU=
+	b=XeeROYqEDG2gao07I/QakkEHxc5oN9BGweQ1/zf0J8pjCjGBoNQfmlfxasQUijAP7
+	 wlSbPy9g0nS0ryKOAHiIFRoyfiAhiz4UBEOvnCt3YHk2GzTF0P9uh4h9eqIgaNp/XC
+	 /FKskcky9zwBMZgowMacnPitMJXT+oPGoyrksmz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 077/114] ftrace: Fix null pointer dereference in ftrace_add_mod()
-Date: Wed, 23 Nov 2022 09:51:04 +0100
-Message-Id: <20221123084554.946795596@linuxfoundation.org>
+	Yann Gautier <yann.gautier@foss.st.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 095/114] mmc: core: properly select voltage range without power cycle
+Date: Wed, 23 Nov 2022 09:51:22 +0100
+Message-Id: <20221123084555.589931514@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,55 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Yann Gautier <yann.gautier@foss.st.com>
 
-commit 19ba6c8af9382c4c05dc6a0a79af3013b9a35cd0 upstream.
+commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
 
-The @ftrace_mod is allocated by kzalloc(), so both the members {prev,next}
-of @ftrace_mode->list are NULL, it's not a valid state to call list_del().
-If kstrdup() for @ftrace_mod->{func|module} fails, it goes to @out_free
-tag and calls free_ftrace_mod() to destroy @ftrace_mod, then list_del()
-will write prev->next and next->prev, where null pointer dereference
-happens.
+In mmc_select_voltage(), if there is no full power cycle, the voltage
+range selected at the end of the function will be on a single range
+(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
+the mask shift should be reduced by 1.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-Oops: 0002 [#1] PREEMPT SMP NOPTI
-Call Trace:
- <TASK>
- ftrace_mod_callback+0x20d/0x220
- ? do_filp_open+0xd9/0x140
- ftrace_process_regex.isra.51+0xbf/0x130
- ftrace_regex_write.isra.52.part.53+0x6e/0x90
- vfs_write+0xee/0x3a0
- ? __audit_filter_op+0xb1/0x100
- ? auditd_test_task+0x38/0x50
- ksys_write+0xa5/0xe0
- do_syscall_64+0x3a/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-Kernel panic - not syncing: Fatal exception
+This issue was triggered by using a specific SD-card (Verbatim Premium
+16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
+and there is no power cycle. And the card was failing to switch to
+high-speed mode. When adding the range 3.2V/3.3V for this card with the
+proposed shift change, the card can switch to high-speed mode.
 
-So call INIT_LIST_HEAD() to initialize the list member to fix this issue.
-
-Link: https://lkml.kernel.org/r/20221116015207.30858-1-xiujianfeng@huawei.com
-
+Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
+Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
 Cc: stable@vger.kernel.org
-Fixes: 673feb9d76ab ("ftrace: Add :mod: caching infrastructure to trace_array")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/core.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1331,6 +1331,7 @@ static int ftrace_add_mod(struct trace_a
- 	if (!ftrace_mod)
- 		return -ENOMEM;
- 
-+	INIT_LIST_HEAD(&ftrace_mod->list);
- 	ftrace_mod->func = kstrdup(func, GFP_KERNEL);
- 	ftrace_mod->module = kstrdup(module, GFP_KERNEL);
- 	ftrace_mod->enable = enable;
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -1461,7 +1461,13 @@ u32 mmc_select_voltage(struct mmc_host *
+ 		mmc_power_cycle(host, ocr);
+ 	} else {
+ 		bit = fls(ocr) - 1;
+-		ocr &= 3 << bit;
++		/*
++		 * The bit variable represents the highest voltage bit set in
++		 * the OCR register.
++		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
++		 * we must shift the mask '3' with (bit - 1).
++		 */
++		ocr &= 3 << (bit - 1);
+ 		if (bit != host->ios.vdd)
+ 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
+ 	}
 
 
