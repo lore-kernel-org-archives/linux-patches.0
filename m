@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47431C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472EAC433D6;
-	Wed, 23 Nov 2022 09:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B591C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F5BC433D6;
+	Wed, 23 Nov 2022 09:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194841;
-	bh=81g+KZ2MVQmCits8iZFpT3D2MWr8qIA2KP/zxhVyrx4=;
+	s=korg; t=1669194845;
+	bh=D12S1QJOCBDz/sO5Wa0HDRc7+ODBM7WKRmkzoARuMkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTMBv2iE3tXwyo8vQ50CSlzMqJ6cg4D5H1orG4xVuRJyttqtdRyo1wov7+KfgfnEP
-	 Vpn5mEbI4+D4AdhU8nwCMEwDRRcYzYUAS0emrOq2IP4dpZy+xm0f2pWnbt4D2TgqTq
-	 tgMxtM54QTD7Bx7qvX0OJTSlviXhGhoD9koXzg5w=
+	b=iQNHHBrb7OrHNCD29P/RNwhGEwRB6fL3uMDvXFj5LhNHpcSuNq/KyzeMmLsMbnc7/
+	 4COjSL6XWLGYFWH5V/jBaXkL+QLaaykO27kWMotT8nrCAlVnXwgD+5w8savG1hrXMb
+	 MWc/pyL/yyEStLlJQBBOPPNyDkx70kF5H87sLe6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gonzalo Siero Humet <gsierohu@redhat.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Nam Cao <namcaov@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/156] NFSv4: Retry LOCK on OLD_STATEID during delegation return
-Date: Wed, 23 Nov 2022 09:50:33 +0100
-Message-Id: <20221123084600.761338028@linuxfoundation.org>
+Subject: [PATCH 5.4 077/156] i2c: i801: add lis3lv02ds I2C address for Vostro 5568
+Date: Wed, 23 Nov 2022 09:50:34 +0100
+Message-Id: <20221123084600.791082188@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,60 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Nam Cao <namcaov@gmail.com>
 
-[ Upstream commit f5ea16137a3fa2858620dc9084466491c128535f ]
+[ Upstream commit d6643d7207c572c1b0305ed505101f15502c6c87 ]
 
-There's a small window where a LOCK sent during a delegation return can
-race with another OPEN on client, but the open stateid has not yet been
-updated.  In this case, the client doesn't handle the OLD_STATEID error
-from the server and will lose this lock, emitting:
-"NFS: nfs4_handle_delegation_recall_error: unhandled error -10024".
+Dell Vostro 5568 laptop has lis3lv02d, but its i2c address is not known
+to the kernel. Add this address.
 
-Fix this by sending the task through the nfs4 error handling in
-nfs4_lock_done() when we may have to reconcile our stateid with what the
-server believes it to be.  For this case, the result is a retry of the
-LOCK operation with the updated stateid.
+Output of "cat /sys/devices/platform/lis3lv02d/position" on Dell Vostro
+5568 laptop:
+    - Horizontal: (-18,0,1044)
+    - Front elevated: (522,-18,1080)
+    - Left elevated: (-18,-360,1080)
+    - Upside down: (36,108,-1134)
 
-Reported-by: Gonzalo Siero Humet <gsierohu@redhat.com>
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-i801.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 7c5dfed0437f..77c2c88621be 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -6854,6 +6854,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
- {
- 	struct nfs4_lockdata *data = calldata;
- 	struct nfs4_lock_state *lsp = data->lsp;
-+	struct nfs_server *server = NFS_SERVER(d_inode(data->ctx->dentry));
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index 4e6d0b722ddc..2b84db59ab3c 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -1253,6 +1253,7 @@ static const struct {
+ 	 * Additional individual entries were added after verification.
+ 	 */
+ 	{ "Vostro V131",        0x1d },
++	{ "Vostro 5568",        0x29 },
+ };
  
- 	dprintk("%s: begin!\n", __func__);
- 
-@@ -6863,8 +6864,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
- 	data->rpc_status = task->tk_status;
- 	switch (task->tk_status) {
- 	case 0:
--		renew_lease(NFS_SERVER(d_inode(data->ctx->dentry)),
--				data->timestamp);
-+		renew_lease(server, data->timestamp);
- 		if (data->arg.new_lock && !data->cancelled) {
- 			data->fl.fl_flags &= ~(FL_SLEEP | FL_ACCESS);
- 			if (locks_lock_inode_wait(lsp->ls_state->inode, &data->fl) < 0)
-@@ -6885,6 +6885,8 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
- 			if (!nfs4_stateid_match(&data->arg.open_stateid,
- 						&lsp->ls_state->open_stateid))
- 				goto out_restart;
-+			else if (nfs4_async_handle_error(task, server, lsp->ls_state, NULL) == -EAGAIN)
-+				goto out_restart;
- 		} else if (!nfs4_stateid_match(&data->arg.lock_stateid,
- 						&lsp->ls_stateid))
- 				goto out_restart;
+ static void register_dell_lis3lv02d_i2c_device(struct i801_priv *priv)
 -- 
 2.35.1
 
