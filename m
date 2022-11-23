@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A295E1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD17EC433D6;
-	Wed, 23 Nov 2022 09:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C177D1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA50C433C1;
+	Wed, 23 Nov 2022 09:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197062;
-	bh=0W3mu/HKMd5n1ShSbTV23pSlPq7KXXzwl5UrGTTVwNQ=;
+	s=korg; t=1669197066;
+	bh=pI+t2qaAQ/nsC24gNRpl5Q/MEht6VRjnyWb4HNFljxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyxjRvu2fuNlLSLfjPqW3OL3J8EAwuhwTPFJILW0pvsjToOy9xr3LnS2U/30CYW2d
-	 nlkBbM49RdU3nE7rzBrfUyUgqM8Ro2rBvgjizBhlZozpDQTdNSMbBsCfek1BImM8b6
-	 082XrGGQq6TqtXzfwlTY5AZ4Auy+whDEEuRzi8q4=
+	b=uZq9hw12xMImvIc5tR0o0UbNSAwBowfga3ZSgf1lGUXvp68EL8R9rlkG3VDvkUSrs
+	 3eBGZPuWtefFxJ6QjHtDIuE0Ehr1+UDmtUqNLYnT2zwfgJJKn8UpvOzGHW9Dy6O7eY
+	 iW4uTaiWABYs/O6X7UPfca7d1/qtwK+/mDserRkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Shannon Nelson <snelson@pensando.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 170/314] net: ionic: Fix error handling in ionic_init_module()
-Date: Wed, 23 Nov 2022 09:50:15 +0100
-Message-Id: <20221123084633.267899318@linuxfoundation.org>
+Subject: [PATCH 6.0 188/314] net: lan966x: Fix potential null-ptr-deref in lan966x_stats_init()
+Date: Wed, 23 Nov 2022 09:50:33 +0100
+Message-Id: <20221123084634.087951589@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,61 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 280c0f7cd0aa4d190619b18243110e052a90775c ]
+[ Upstream commit ba86af3733aece88dbcee0dfebf7e2dcfefb2be4 ]
 
-A problem about ionic create debugfs failed is triggered with the
-following log given:
+lan966x_stats_init() calls create_singlethread_workqueue() and not
+checked the ret value, which may return NULL. And a null-ptr-deref may
+happen:
 
- [  415.799514] debugfs: Directory 'ionic' with parent '/' already present!
+lan966x_stats_init()
+    create_singlethread_workqueue() # failed, lan966x->stats_queue is NULL
+    queue_delayed_work()
+        queue_delayed_work_on()
+            __queue_delayed_work()  # warning here, but continue
+                __queue_work()      # access wq->flags, null-ptr-deref
 
-The reason is that ionic_init_module() returns ionic_bus_register_driver()
-directly without checking its return value, if ionic_bus_register_driver()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of ionic can never be created later.
+Check the ret value and return -ENOMEM if it is NULL.
 
- ionic_init_module()
-   ionic_debugfs_create() # create debugfs directory
-   ionic_bus_register_driver()
-     pci_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when ionic_bus_register_driver() returns error.
-
-Fixes: fbfb8031533c ("ionic: Add hardware init and device commands")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Shannon Nelson <snelson@pensando.io>
-Link: https://lore.kernel.org/r/20221113092929.19161-1-yuancan@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12c2d0a5b8e2 ("net: lan966x: add ethtool configuration and statistics")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 56f93b030551..5456c2b15d9b 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -687,8 +687,14 @@ int ionic_port_reset(struct ionic *ionic)
- 
- static int __init ionic_init_module(void)
- {
-+	int ret;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
+index fea42542be28..06811c60d598 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
+@@ -716,6 +716,9 @@ int lan966x_stats_init(struct lan966x *lan966x)
+ 	snprintf(queue_name, sizeof(queue_name), "%s-stats",
+ 		 dev_name(lan966x->dev));
+ 	lan966x->stats_queue = create_singlethread_workqueue(queue_name);
++	if (!lan966x->stats_queue)
++		return -ENOMEM;
 +
- 	ionic_debugfs_create();
--	return ionic_bus_register_driver();
-+	ret = ionic_bus_register_driver();
-+	if (ret)
-+		ionic_debugfs_destroy();
-+
-+	return ret;
- }
- 
- static void __exit ionic_cleanup_module(void)
+ 	INIT_DELAYED_WORK(&lan966x->stats_work, lan966x_check_stats_work);
+ 	queue_delayed_work(lan966x->stats_queue, &lan966x->stats_work,
+ 			   LAN966X_STATS_CHECK_DELAY);
 -- 
 2.35.1
 
