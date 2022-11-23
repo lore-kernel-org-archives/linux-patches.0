@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438251C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6432BC433C1;
-	Wed, 23 Nov 2022 09:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1941C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA76FC433D6;
+	Wed, 23 Nov 2022 09:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196817;
-	bh=PibUpeYMLBbUQiYCyPbuF/slTeh4Hlr4bhqqK+lE9bs=;
+	s=korg; t=1669196821;
+	bh=5KpsrMG0gUW7Vu63+wN6/epD6u3QpqJaF1065czRBtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2FLBLXz3wj7CPjI/WT9U01w7xYelixGF/o5bAkW3anzEbYXpkSCVqH5sS7vBcsQs
-	 V0Xi0MxYML7v9mwWZPi/U8IkC6D6Pl6SvOWLNiYQ7cuhdvsny+rhxHgmDD+e9FAwAe
-	 fEEaHSlDK70sIYPawi+Yrl9Ey3I99OSJYplIKd8w=
+	b=2HSX0bl+7SU1cFmXNG8dv537a147NaAtlAOzcmrNxMTzmqemnU7RxVYZkFOobGAr5
+	 sBkskDsC4FdePqiIGFKtXeNkBqctHgWbTgGL8QDOyZ38R/t/MMoEbCGJjAB8TWjnQP
+	 6ceyrcSJ6o6MCNxGcPe4cQ4RjARbQU4j3+OkEtek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Marek Vasut <marex@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 131/314] arm64: dts: imx8mm-tqma8mqml-mba8mx: Fix USB DR
-Date: Wed, 23 Nov 2022 09:49:36 +0100
-Message-Id: <20221123084631.474405706@linuxfoundation.org>
+Subject: [PATCH 6.0 132/314] ARM: dts: imx7: Fix NAND controller size-cells
+Date: Wed, 23 Nov 2022 09:49:37 +0100
+Message-Id: <20221123084631.507727354@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,86 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 63fd9437ec81899fc36bb642d558378bc89aa4f9 ]
+[ Upstream commit 753395ea1e45c724150070b5785900b6a44bd5fb ]
 
-Using extcon USB host mode works properly on DR interface, e.g.
-enabling/disabling VBUS. But USB device mode is not working.
-Fix this by switching to usb-role-switch instead.
+The NAND controller size-cells should be 0 per DT bindings.
+Fix the following warning produces by DT bindings check:
+"
+nand-controller@33002000: #size-cells:0:0: 0 was expected
+nand-controller@33002000: Unevaluated properties are not allowed ('#address-cells', '#size-cells' were unexpected)
+"
+Fix the missing space in node name too.
 
-Fixes: dfcd1b6f7620 ("arm64: dts: freescale: add initial device tree for TQMa8MQML with i.MX8MM")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: e7495a45a76de ("ARM: dts: imx7: add GPMI NAND and APBH DMA")
+Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/freescale/imx8mm-tqma8mqml-mba8mx.dts | 32 +++++++++++++++----
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/imx7s.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
-index 7e0aeb2db305..a0aeac619929 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
-@@ -34,11 +34,25 @@ reg_usdhc2_vmmc: regulator-vmmc {
- 		off-on-delay-us = <12000>;
- 	};
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 29148285f9fc..1dc3bfac30b6 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -1270,10 +1270,10 @@ dma_apbh: dma-apbh@33000000 {
+ 			clocks = <&clks IMX7D_NAND_USDHC_BUS_RAWNAND_CLK>;
+ 		};
  
--	extcon_usbotg1: extcon-usbotg1 {
--		compatible = "linux,extcon-usb-gpio";
-+	connector {
-+		compatible = "gpio-usb-b-connector", "usb-b-connector";
-+		type = "micro";
-+		label = "X19";
- 		pinctrl-names = "default";
--		pinctrl-0 = <&pinctrl_usb1_extcon>;
--		id-gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&pinctrl_usb1_connector>;
-+		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-+
-+		ports {
-+			#address-cells = <1>;
+-		gpmi: nand-controller@33002000{
++		gpmi: nand-controller@33002000 {
+ 			compatible = "fsl,imx7d-gpmi-nand";
+ 			#address-cells = <1>;
+-			#size-cells = <1>;
 +			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				usb_dr_connector: endpoint {
-+					remote-endpoint = <&usb1_drd_sw>;
-+				};
-+			};
-+		};
- 	};
- };
- 
-@@ -105,13 +119,19 @@ &usbotg1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_usbotg1>;
- 	dr_mode = "otg";
--	extcon = <&extcon_usbotg1>;
- 	srp-disable;
- 	hnp-disable;
- 	adp-disable;
- 	power-active-high;
- 	over-current-active-low;
-+	usb-role-switch;
- 	status = "okay";
-+
-+	port {
-+		usb1_drd_sw: endpoint {
-+			remote-endpoint = <&usb_dr_connector>;
-+		};
-+	};
- };
- 
- &usbotg2 {
-@@ -231,7 +251,7 @@ pinctrl_usbotg1: usbotg1grp {
- 			   <MX8MM_IOMUXC_GPIO1_IO13_USB1_OTG_OC		0x84>;
- 	};
- 
--	pinctrl_usb1_extcon: usb1-extcongrp {
-+	pinctrl_usb1_connector: usb1-connectorgrp {
- 		fsl,pins = <MX8MM_IOMUXC_GPIO1_IO10_GPIO1_IO10		0x1c0>;
- 	};
- 
+ 			reg = <0x33002000 0x2000>, <0x33004000 0x4000>;
+ 			reg-names = "gpmi-nand", "bch";
+ 			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.35.1
 
