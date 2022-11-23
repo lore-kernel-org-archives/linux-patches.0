@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5877B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE67C433D7;
-	Wed, 23 Nov 2022 08:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6187B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9FBC433D6;
+	Wed, 23 Nov 2022 08:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193742;
-	bh=1RVzD4SAWU/WqbChixPy4VM0dNOktno0GCWcdiWHjZg=;
+	s=korg; t=1669193746;
+	bh=v+rcOIAi86dmxDnAA+LxYWuevQXRR4pMmZ2C1W5rqxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhJlMUhEP/fJmTeGsCy2CI/oExnxG7D428b8gyKXGKW7t+/J8CukHaF6SLIiBWmD7
-	 1ZatbhKut/bJrVHvt9VdWtdZUcL0vRvWRYnRS1yt7THovGNr/QYcm1xqgmKjjKkgRD
-	 XjbejJFX2l1L5GEbk98XMYRd4kllPDzEQzpp3SHM=
+	b=faQPmYhxNVMEt6St6lIApHVPyytbvdM9r8evleb3ISE5DlfN4BAZj3rN8hjRExz6A
+	 ZroRAwj0ZKkMxO7wGgyRMZZiAI9pBGOylTAxqcFCOun73sRQ4Z+/UGmRePdqUJSpQh
+	 3hEiqOmKJu7WaFdSVzuKbzRTG+61PMpKOfefT7KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.9 48/76] ring_buffer: Do not deactivate non-existant pages
-Date: Wed, 23 Nov 2022 09:50:47 +0100
-Message-Id: <20221123084548.317910865@linuxfoundation.org>
+	syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.9 49/76] ALSA: usb-audio: Drop snd_BUG_ON() from snd_usbmidi_output_open()
+Date: Wed, 23 Nov 2022 09:50:48 +0100
+Message-Id: <20221123084548.359181018@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,40 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 56f4ca0a79a9f1af98f26c54b9b89ba1f9bcc6bd upstream.
+commit ad72c3c3f6eb81d2cb189ec71e888316adada5df upstream.
 
-rb_head_page_deactivate() expects cpu_buffer to contain a valid list of
-->pages, so verify that the list is actually present before calling it.
+snd_usbmidi_output_open() has a check of the NULL port with
+snd_BUG_ON().  snd_BUG_ON() was used as this shouldn't have happened,
+but in reality, the NULL port may be seen when the device gives an
+invalid endpoint setup at the descriptor, hence the driver skips the
+allocation.  That is, the check itself is valid and snd_BUG_ON()
+should be dropped from there.  Otherwise it's confusing as if it were
+a real bug, as recently syzbot stumbled on it.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Link: https://lkml.kernel.org/r/20221114143129.3534443-1-d-tatianin@yandex-team.ru
-
-Cc: stable@vger.kernel.org
-Fixes: 77ae365eca895 ("ring-buffer: make lockless")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20221112141223.6144-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/midi.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1267,9 +1267,9 @@ static void rb_free_cpu_buffer(struct ri
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1148,10 +1148,8 @@ static int snd_usbmidi_output_open(struc
+ 					port = &umidi->endpoints[i].out->ports[j];
+ 					break;
+ 				}
+-	if (!port) {
+-		snd_BUG();
++	if (!port)
+ 		return -ENXIO;
+-	}
  
- 	free_buffer_page(cpu_buffer->reader_page);
- 
--	rb_head_page_deactivate(cpu_buffer);
--
- 	if (head) {
-+		rb_head_page_deactivate(cpu_buffer);
-+
- 		list_for_each_entry_safe(bpage, tmp, head, list) {
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
+ 	substream->runtime->private_data = port;
+ 	port->state = STATE_UNKNOWN;
 
 
