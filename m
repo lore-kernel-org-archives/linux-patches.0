@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BAA7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF3DC433C1;
-	Wed, 23 Nov 2022 08:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C377B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750B8C433D6;
+	Wed, 23 Nov 2022 08:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193750;
-	bh=+sZCUYkmz8asjPo7ONv1U8laz1xx2HO0TwdhbupLB4Q=;
+	s=korg; t=1669193753;
+	bh=gJebFQz4TNNVetuwPfZ+5l5I3DVoYACqCEEN7M/UDFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDvOVbF8IWH05tKv6N16+hGxx9rL8Zy6yTvvqkt/gx3mchoh0LZGeh7d2KKpxG0Hq
-	 rucr/Zdb5/VAe7kRpYiX4z01reDvWvA440pmhPp5oP4WMjHxFlQV7RwXL9EtoeInvN
-	 CazkNigQJ6Rd1C7DiOVcpP6DjoHKxTNtQfbMAEGc=
+	b=cQCUkPbjheuWhk5lHSwoLxe8hehFRoelOoja2YK60gLvRc/oQbhfuZjW5qBvF4USN
+	 jxucth0I9SPQApN1rZFyofABQtcGwplVCwryj4+sPcCbA5Hb7V+C9MCH6QV2ifx6bl
+	 7r9xjix8CDN3cAfeB2FI8oTNQlTyBz+12aN7aRCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.9 50/76] USB: serial: option: add Sierra Wireless EM9191
-Date: Wed, 23 Nov 2022 09:50:49 +0100
-Message-Id: <20221123084548.390557875@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 4.9 24/76] dmaengine: at_hdmac: Dont start transactions at tx_submit level
+Date: Wed, 23 Nov 2022 09:50:23 +0100
+Message-Id: <20221123084547.516232665@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,55 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
+commit 7176a6a8982d311e50a7c1168868d26e65bbba19 upstream.
 
-Add support for the AT and diag ports, similar to other qualcomm SDX55
-modems. In QDL mode, the modem uses a different device ID and support
-is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
-add EM9191 QDL support").
+tx_submit is supposed to push the current transaction descriptor to a
+pending queue, waiting for issue_pending() to be called. issue_pending()
+must start the transfer, not tx_submit(), thus remove atc_dostart() from
+atc_tx_submit(). Clients of at_xdmac that assume that tx_submit() starts
+the transfer must be updated and call dma_async_issue_pending() if they
+miss to call it.
+The vdbg print was moved to after the lock is released. It is desirable to
+do the prints without the lock held if possible, and because the if
+statement disappears there's no reason why to do the print while holding
+the lock.
 
-T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1199 ProdID=90d3 Rev=00.06
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Sierra Wireless EM9191
-S:  SerialNumber=xxxxxxxxxxxxxxxx
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
-I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
-
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-3-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/dma/at_hdmac.c |   14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -575,6 +575,9 @@ static void option_instat_callback(struc
- #define OPPO_VENDOR_ID				0x22d9
- #define OPPO_PRODUCT_R11			0x276c
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -681,19 +681,11 @@ static dma_cookie_t atc_tx_submit(struct
+ 	spin_lock_irqsave(&atchan->lock, flags);
+ 	cookie = dma_cookie_assign(tx);
  
-+/* Sierra Wireless products */
-+#define SIERRA_VENDOR_ID			0x1199
-+#define SIERRA_PRODUCT_EM9191			0x90d3
+-	if (list_empty(&atchan->active_list)) {
+-		dev_vdbg(chan2dev(tx->chan), "tx_submit: started %u\n",
+-				desc->txd.cookie);
+-		atc_dostart(atchan, desc);
+-		list_add_tail(&desc->desc_node, &atchan->active_list);
+-	} else {
+-		dev_vdbg(chan2dev(tx->chan), "tx_submit: queued %u\n",
+-				desc->txd.cookie);
+-		list_add_tail(&desc->desc_node, &atchan->queue);
+-	}
+-
++	list_add_tail(&desc->desc_node, &atchan->queue);
+ 	spin_unlock_irqrestore(&atchan->lock, flags);
  
- /* Device flags */
++	dev_vdbg(chan2dev(tx->chan), "tx_submit: queued %u\n",
++		 desc->txd.cookie);
+ 	return cookie;
+ }
  
-@@ -2137,6 +2140,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
 
 
