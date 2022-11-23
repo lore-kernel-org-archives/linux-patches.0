@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39751C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B10C433D7;
-	Wed, 23 Nov 2022 09:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69711C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBA2C433D7;
+	Wed, 23 Nov 2022 09:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195676;
-	bh=2rPV25vQ7nF4CdVTBGoMPi4w1TgPjx/y6JdUfityHgw=;
+	s=korg; t=1669195680;
+	bh=OyWp4u03SvshycubyCf/r0bvhPPM+gO9J7xu/W3pXGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAGHe1/6T7bfmwIzdSGsyfYHtCsk3wd2CS/gTrRcvOB3t9j3xHISChIblOibBYOdB
-	 +YD5UtGDF6uTx/eSWBzC5BoMgDs4s0ntwkklkqKKC5gnZ17X7P01ydy+snda/ueHpm
-	 DtyYfQCOjZ/XZbLWfaNOBp5XMdB6CGPewBzTcw6Y=
+	b=xmDxkbYGSzwrsPZ+hU1FeF19R77kZElPM0yvRmP+4iaBw4wLfw3dVrnwc5hKR65kP
+	 yCNV26rdwUwjjCBJ+zZvDiBlPQeUfFDvATg42h/NYTSQCUl3W+GJIfzLuL6eua/IIJ
+	 Lt1tmQPVuciwot5q5C8+obJ5FpAvXFvd5CWvlGTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Andre Edich <andre.edich@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/149] ring-buffer: Include dropped pages in counting dirty patches
-Date: Wed, 23 Nov 2022 09:51:52 +0100
-Message-Id: <20221123084602.560746219@linuxfoundation.org>
+Subject: [PATCH 5.10 130/149] usbnet: smsc95xx: Fix deadlock on runtime resume
+Date: Wed, 23 Nov 2022 09:51:53 +0100
+Message-Id: <20221123084602.596048839@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,93 +36,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 31029a8b2c7e656a0289194ef16415050ae4c4ac ]
+[ Upstream commit 7b960c967f2aa01ab8f45c5a0bd78e754cffdeee ]
 
-The function ring_buffer_nr_dirty_pages() was created to find out how many
-pages are filled in the ring buffer. There's two running counters. One is
-incremented whenever a new page is touched (pages_touched) and the other
-is whenever a page is read (pages_read). The dirty count is the number
-touched minus the number read. This is used to determine if a blocked task
-should be woken up if the percentage of the ring buffer it is waiting for
-is hit.
+Commit 05b35e7eb9a1 ("smsc95xx: add phylib support") amended
+smsc95xx_resume() to call phy_init_hw().  That function waits for the
+device to runtime resume even though it is placed in the runtime resume
+path, causing a deadlock.
 
-The problem is that it does not take into account dropped pages (when the
-new writes overwrite pages that were not read). And then the dirty pages
-will always be greater than the percentage.
+The problem is that phy_init_hw() calls down to smsc95xx_mdiobus_read(),
+which never uses the _nopm variant of usbnet_read_cmd().
 
-This makes the "buffer_percent" file inaccurate, as the number of dirty
-pages end up always being larger than the percentage, event when it's not
-and this causes user space to be woken up more than it wants to be.
+Commit b4df480f68ae ("usbnet: smsc95xx: add reset_resume function with
+reset operation") causes a similar deadlock on resume if the device was
+already runtime suspended when entering system sleep:
 
-Add a new counter to keep track of lost pages, and include that in the
-accounting of dirty pages so that it is actually accurate.
+That's because the commit introduced smsc95xx_reset_resume(), which
+calls down to smsc95xx_reset(), which neglects to use _nopm accessors.
 
-Link: https://lkml.kernel.org/r/20221021123013.55fb6055@gandalf.local.home
+Fix by auto-detecting whether a device access is performed by the
+suspend/resume task_struct and use the _nopm variant if so.  This works
+because the PM core guarantees that suspend/resume callbacks are run in
+task context.
 
-Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stacktrace for posterity:
+
+  INFO: task kworker/2:1:49 blocked for more than 122 seconds.
+  Workqueue: usb_hub_wq hub_event
+  schedule
+  rpm_resume
+  __pm_runtime_resume
+  usb_autopm_get_interface
+  usbnet_read_cmd
+  __smsc95xx_read_reg
+  __smsc95xx_phy_wait_not_busy
+  __smsc95xx_mdio_read
+  smsc95xx_mdiobus_read
+  __mdiobus_read
+  mdiobus_read
+  smsc_phy_reset
+  phy_init_hw
+  smsc95xx_resume
+  usb_resume_interface
+  usb_resume_both
+  usb_runtime_resume
+  __rpm_callback
+  rpm_callback
+  rpm_resume
+  __pm_runtime_resume
+  usb_autoresume_device
+  hub_event
+  process_one_work
+
+Fixes: b4df480f68ae ("usbnet: smsc95xx: add reset_resume function with reset operation")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v3.16+
+Cc: Andre Edich <andre.edich@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/usb/smsc95xx.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 9a1f82cafad4..49ebb8c66268 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -517,6 +517,7 @@ struct ring_buffer_per_cpu {
- 	local_t				committing;
- 	local_t				commits;
- 	local_t				pages_touched;
-+	local_t				pages_lost;
- 	local_t				pages_read;
- 	long				last_pages_touch;
- 	size_t				shortest_full;
-@@ -771,10 +772,18 @@ size_t ring_buffer_nr_pages(struct trace_buffer *buffer, int cpu)
- size_t ring_buffer_nr_dirty_pages(struct trace_buffer *buffer, int cpu)
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 65d42f5d42a3..e1cd4c2de2d3 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -61,6 +61,7 @@ struct smsc95xx_priv {
+ 	u8 suspend_flags;
+ 	struct mii_bus *mdiobus;
+ 	struct phy_device *phydev;
++	struct task_struct *pm_task;
+ };
+ 
+ static bool turbo_mode = true;
+@@ -70,13 +71,14 @@ MODULE_PARM_DESC(turbo_mode, "Enable multiple frames per Rx transaction");
+ static int __must_check __smsc95xx_read_reg(struct usbnet *dev, u32 index,
+ 					    u32 *data, int in_pm)
  {
- 	size_t read;
-+	size_t lost;
- 	size_t cnt;
++	struct smsc95xx_priv *pdata = dev->driver_priv;
+ 	u32 buf;
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, void *, u16);
  
- 	read = local_read(&buffer->buffers[cpu]->pages_read);
-+	lost = local_read(&buffer->buffers[cpu]->pages_lost);
- 	cnt = local_read(&buffer->buffers[cpu]->pages_touched);
-+
-+	if (WARN_ON_ONCE(cnt < lost))
-+		return 0;
-+
-+	cnt -= lost;
-+
- 	/* The reader can read an empty page, but not more than that */
- 	if (cnt < read) {
- 		WARN_ON_ONCE(read > cnt + 1);
-@@ -1897,6 +1906,7 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
- 			 */
- 			local_add(page_entries, &cpu_buffer->overrun);
- 			local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+			local_inc(&cpu_buffer->pages_lost);
- 		}
+ 	BUG_ON(!dev);
  
- 		/*
-@@ -2387,6 +2397,7 @@ rb_handle_head_page(struct ring_buffer_per_cpu *cpu_buffer,
- 		 */
- 		local_add(entries, &cpu_buffer->overrun);
- 		local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+		local_inc(&cpu_buffer->pages_lost);
+-	if (!in_pm)
++	if (current != pdata->pm_task)
+ 		fn = usbnet_read_cmd;
+ 	else
+ 		fn = usbnet_read_cmd_nopm;
+@@ -100,13 +102,14 @@ static int __must_check __smsc95xx_read_reg(struct usbnet *dev, u32 index,
+ static int __must_check __smsc95xx_write_reg(struct usbnet *dev, u32 index,
+ 					     u32 data, int in_pm)
+ {
++	struct smsc95xx_priv *pdata = dev->driver_priv;
+ 	u32 buf;
+ 	int ret;
+ 	int (*fn)(struct usbnet *, u8, u8, u16, u16, const void *, u16);
  
- 		/*
- 		 * The entries will be zeroed out when we move the
-@@ -4981,6 +4992,7 @@ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
- 	local_set(&cpu_buffer->committing, 0);
- 	local_set(&cpu_buffer->commits, 0);
- 	local_set(&cpu_buffer->pages_touched, 0);
-+	local_set(&cpu_buffer->pages_lost, 0);
- 	local_set(&cpu_buffer->pages_read, 0);
- 	cpu_buffer->last_pages_touch = 0;
- 	cpu_buffer->shortest_full = 0;
+ 	BUG_ON(!dev);
+ 
+-	if (!in_pm)
++	if (current != pdata->pm_task)
+ 		fn = usbnet_write_cmd;
+ 	else
+ 		fn = usbnet_write_cmd_nopm;
+@@ -1468,9 +1471,12 @@ static int smsc95xx_suspend(struct usb_interface *intf, pm_message_t message)
+ 	u32 val, link_up;
+ 	int ret;
+ 
++	pdata->pm_task = current;
++
+ 	ret = usbnet_suspend(intf, message);
+ 	if (ret < 0) {
+ 		netdev_warn(dev->net, "usbnet_suspend error\n");
++		pdata->pm_task = NULL;
+ 		return ret;
+ 	}
+ 
+@@ -1717,6 +1723,7 @@ static int smsc95xx_suspend(struct usb_interface *intf, pm_message_t message)
+ 	if (ret && PMSG_IS_AUTO(message))
+ 		usbnet_resume(intf);
+ 
++	pdata->pm_task = NULL;
+ 	return ret;
+ }
+ 
+@@ -1737,29 +1744,31 @@ static int smsc95xx_resume(struct usb_interface *intf)
+ 	/* do this first to ensure it's cleared even in error case */
+ 	pdata->suspend_flags = 0;
+ 
++	pdata->pm_task = current;
++
+ 	if (suspend_flags & SUSPEND_ALLMODES) {
+ 		/* clear wake-up sources */
+ 		ret = smsc95xx_read_reg_nopm(dev, WUCSR, &val);
+ 		if (ret < 0)
+-			return ret;
++			goto done;
+ 
+ 		val &= ~(WUCSR_WAKE_EN_ | WUCSR_MPEN_);
+ 
+ 		ret = smsc95xx_write_reg_nopm(dev, WUCSR, val);
+ 		if (ret < 0)
+-			return ret;
++			goto done;
+ 
+ 		/* clear wake-up status */
+ 		ret = smsc95xx_read_reg_nopm(dev, PM_CTRL, &val);
+ 		if (ret < 0)
+-			return ret;
++			goto done;
+ 
+ 		val &= ~PM_CTL_WOL_EN_;
+ 		val |= PM_CTL_WUPS_;
+ 
+ 		ret = smsc95xx_write_reg_nopm(dev, PM_CTRL, val);
+ 		if (ret < 0)
+-			return ret;
++			goto done;
+ 	}
+ 
+ 	ret = usbnet_resume(intf);
+@@ -1767,15 +1776,21 @@ static int smsc95xx_resume(struct usb_interface *intf)
+ 		netdev_warn(dev->net, "usbnet_resume error\n");
+ 
+ 	phy_init_hw(pdata->phydev);
++
++done:
++	pdata->pm_task = NULL;
+ 	return ret;
+ }
+ 
+ static int smsc95xx_reset_resume(struct usb_interface *intf)
+ {
+ 	struct usbnet *dev = usb_get_intfdata(intf);
++	struct smsc95xx_priv *pdata = dev->driver_priv;
+ 	int ret;
+ 
++	pdata->pm_task = current;
+ 	ret = smsc95xx_reset(dev);
++	pdata->pm_task = NULL;
+ 	if (ret < 0)
+ 		return ret;
+ 
 -- 
 2.35.1
 
