@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EFD1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AB1C433C1;
-	Wed, 23 Nov 2022 09:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D421C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B53AC433D6;
+	Wed, 23 Nov 2022 09:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196282;
-	bh=oLtCzsgJpL4Er8phRZ6LwZnW2PIre6o2F2zvXfB+kcs=;
+	s=korg; t=1669196285;
+	bh=Q9A91qhkduaPRmOcW1+8ym4gxsSzJ5m39iXWq/uEAp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EP/nP/IybuckbzniLeCndIWM+QVbVUzDlosWiUmZzY6Lzoqx2K6MetSyf/arVpUbN
-	 Hu3r0o7uzWCN4fDSkcQR6uKRXuJObhCys3NSbSrhyt5Gfa+5Mun5Wq6xvL8YkVNzLg
-	 A6teiGqhuhFE1UdY0r3aqshIuCq8ynDm/PPeZAOo=
+	b=Zd4/ZCYrtWHscB3LRYALceJak+DgZkM4Arvmgu1hARWKib/q3gLxd1aTCSwb4Fqa7
+	 zF3n5JKy/PpZ8hXrDiHezRTfwwSaBlQwjeUxA+aSBkI4Y8reIsZrOgWIyG3l3myLjO
+	 orFoizwhcb8VPuEnQLkG3jWWVKBvbz5KT8OkyxGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com,
+	shaozhengchao <shaozhengchao@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Tom Herbert <tom@herbertland.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 170/181] kcm: avoid potential race in kcm_tx_work
-Date: Wed, 23 Nov 2022 09:52:13 +0100
-Message-Id: <20221123084609.684972724@linuxfoundation.org>
+	Cong Wang <cong.wang@bytedance.com>
+Subject: [PATCH 5.15 171/181] kcm: close race conditions on sk_receive_queue
+Date: Wed, 23 Nov 2022 09:52:14 +0100
+Message-Id: <20221123084609.733336644@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,72 +37,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-commit ec7eede369fe5b0d085ac51fdbb95184f87bfc6c upstream.
+commit 5121197ecc5db58c07da95eb1ff82b98b121a221 upstream.
 
-syzbot found that kcm_tx_work() could crash [1] in:
+sk->sk_receive_queue is protected by skb queue lock, but for KCM
+sockets its RX path takes mux->rx_lock to protect more than just
+skb queue. However, kcm_recvmsg() still only grabs the skb queue
+lock, so race conditions still exist.
 
-	/* Primarily for SOCK_SEQPACKET sockets */
-	if (likely(sk->sk_socket) &&
-	    test_bit(SOCK_NOSPACE, &sk->sk_socket->flags)) {
-<<*>>	clear_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-		sk->sk_write_space(sk);
-	}
+We can teach kcm_recvmsg() to grab mux->rx_lock too but this would
+introduce a potential performance regression as struct kcm_mux can
+be shared by multiple KCM sockets.
 
-I think the reason is that another thread might concurrently
-run in kcm_release() and call sock_orphan(sk) while sk is not
-locked. kcm_tx_work() find sk->sk_socket being NULL.
+So we have to enforce skb queue lock in requeue_rx_msgs() and handle
+skb peek case carefully in kcm_wait_data(). Fortunately,
+skb_recv_datagram() already handles it nicely and is widely used by
+other sockets, we can just switch to skb_recv_datagram() after
+getting rid of the unnecessary sock lock in kcm_recvmsg() and
+kcm_splice_read(). Side note: SOCK_DONE is not used by KCM sockets,
+so it is safe to get rid of this check too.
 
-[1]
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:86 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-Write of size 8 at addr 0000000000000008 by task kworker/u4:3/53
-
-CPU: 0 PID: 53 Comm: kworker/u4:3 Not tainted 5.19.0-rc3-next-20220621-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: kkcmd kcm_tx_work
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-kasan_report+0xbe/0x1f0 mm/kasan/report.c:495
-check_region_inline mm/kasan/generic.c:183 [inline]
-kasan_check_range+0x13d/0x180 mm/kasan/generic.c:189
-instrument_atomic_write include/linux/instrumented.h:86 [inline]
-clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-process_one_work+0x996/0x1610 kernel/workqueue.c:2289
-worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-kthread+0x2e9/0x3a0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
-</TASK>
+I ran the original syzbot reproducer for 30 min without seeing any
+issue.
 
 Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+278279efdd2730dd14bf@syzkaller.appspotmail.com
+Reported-by: shaozhengchao <shaozhengchao@huawei.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
 Cc: Tom Herbert <tom@herbertland.com>
-Link: https://lore.kernel.org/r/20221012133412.519394-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Link: https://lore.kernel.org/r/20221114005119.597905-1-xiyou.wangcong@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/kcm/kcmsock.c |   60 +++++++-----------------------------------------------
+ 1 file changed, 8 insertions(+), 52 deletions(-)
 
 --- a/net/kcm/kcmsock.c
 +++ b/net/kcm/kcmsock.c
-@@ -1844,10 +1844,10 @@ static int kcm_release(struct socket *so
- 	kcm = kcm_sk(sk);
- 	mux = kcm->mux;
+@@ -221,7 +221,7 @@ static void requeue_rx_msgs(struct kcm_m
+ 	struct sk_buff *skb;
+ 	struct kcm_sock *kcm;
  
-+	lock_sock(sk);
- 	sock_orphan(sk);
- 	kfree_skb(kcm->seq_skb);
+-	while ((skb = __skb_dequeue(head))) {
++	while ((skb = skb_dequeue(head))) {
+ 		/* Reset destructor to avoid calling kcm_rcv_ready */
+ 		skb->destructor = sock_rfree;
+ 		skb_orphan(skb);
+@@ -1084,53 +1084,18 @@ out_error:
+ 	return err;
+ }
  
+-static struct sk_buff *kcm_wait_data(struct sock *sk, int flags,
+-				     long timeo, int *err)
+-{
+-	struct sk_buff *skb;
+-
+-	while (!(skb = skb_peek(&sk->sk_receive_queue))) {
+-		if (sk->sk_err) {
+-			*err = sock_error(sk);
+-			return NULL;
+-		}
+-
+-		if (sock_flag(sk, SOCK_DONE))
+-			return NULL;
+-
+-		if ((flags & MSG_DONTWAIT) || !timeo) {
+-			*err = -EAGAIN;
+-			return NULL;
+-		}
+-
+-		sk_wait_data(sk, &timeo, NULL);
+-
+-		/* Handle signals */
+-		if (signal_pending(current)) {
+-			*err = sock_intr_errno(timeo);
+-			return NULL;
+-		}
+-	}
+-
+-	return skb;
+-}
+-
+ static int kcm_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		       size_t len, int flags)
+ {
++	int noblock = flags & MSG_DONTWAIT;
+ 	struct sock *sk = sock->sk;
+ 	struct kcm_sock *kcm = kcm_sk(sk);
+ 	int err = 0;
+-	long timeo;
+ 	struct strp_msg *stm;
+ 	int copied = 0;
+ 	struct sk_buff *skb;
+ 
+-	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+-
 -	lock_sock(sk);
- 	/* Purge queue under lock to avoid race condition with tx_work trying
- 	 * to act when queue is nonempty. If tx_work runs after this point
- 	 * it will just return.
+-
+-	skb = kcm_wait_data(sk, flags, timeo, &err);
++	skb = skb_recv_datagram(sk, flags, noblock, &err);
+ 	if (!skb)
+ 		goto out;
+ 
+@@ -1161,14 +1126,11 @@ msg_finished:
+ 			/* Finished with message */
+ 			msg->msg_flags |= MSG_EOR;
+ 			KCM_STATS_INCR(kcm->stats.rx_msgs);
+-			skb_unlink(skb, &sk->sk_receive_queue);
+-			kfree_skb(skb);
+ 		}
+ 	}
+ 
+ out:
+-	release_sock(sk);
+-
++	skb_free_datagram(sk, skb);
+ 	return copied ? : err;
+ }
+ 
+@@ -1176,9 +1138,9 @@ static ssize_t kcm_splice_read(struct so
+ 			       struct pipe_inode_info *pipe, size_t len,
+ 			       unsigned int flags)
+ {
++	int noblock = flags & MSG_DONTWAIT;
+ 	struct sock *sk = sock->sk;
+ 	struct kcm_sock *kcm = kcm_sk(sk);
+-	long timeo;
+ 	struct strp_msg *stm;
+ 	int err = 0;
+ 	ssize_t copied;
+@@ -1186,11 +1148,7 @@ static ssize_t kcm_splice_read(struct so
+ 
+ 	/* Only support splice for SOCKSEQPACKET */
+ 
+-	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
+-
+-	lock_sock(sk);
+-
+-	skb = kcm_wait_data(sk, flags, timeo, &err);
++	skb = skb_recv_datagram(sk, flags, noblock, &err);
+ 	if (!skb)
+ 		goto err_out;
+ 
+@@ -1218,13 +1176,11 @@ static ssize_t kcm_splice_read(struct so
+ 	 * finish reading the message.
+ 	 */
+ 
+-	release_sock(sk);
+-
++	skb_free_datagram(sk, skb);
+ 	return copied;
+ 
+ err_out:
+-	release_sock(sk);
+-
++	skb_free_datagram(sk, skb);
+ 	return err;
+ }
+ 
 
 
