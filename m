@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7AA1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E25FC433C1;
-	Wed, 23 Nov 2022 09:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398911C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0674C433D6;
+	Wed, 23 Nov 2022 09:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197117;
-	bh=NTL4zNzGBVNwLVJXhb2ZeGTCX4f2rotC/aJta45h2nc=;
+	s=korg; t=1669197121;
+	bh=YZ+S0vucD44X6LY7bzJAP9aj14ecwMl4oDo+xG+qMmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NlhhNtSJnB/2glbGqspF6opzWGRd3iZsTwI6RUj9jSXHVkJj/2Ccya0w6a3FS04Hw
-	 Dyri8cQCW+94C9JCPHieEGdY//kYfiP1CjVpbDdWHjzLHc3DLgvC6chj2JgvZju0Id
-	 iwO2zc2Z5kM+qYaReMCZTe98i3f94G0iNKgPiAXE=
+	b=uT8h6J+XEVh7E+lxru7x8n4L1i9CSIKlgMRdV6N5bvsBW5lPjjwJmXHl42n0zvdGo
+	 izHvUuz8cr8qXJxejTo7LO1XmF1KXvQ4mC/MThYEdLFVMl3oeYUGzvnmq1UUa4OHH9
+	 qs2QEwmwyzLNVGYzIWRVWPi7ag8eyUxOTKUafvXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Primiano Tucci <primiano@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 201/314] tracing/ring-buffer: Have polling block on watermark
-Date: Wed, 23 Nov 2022 09:50:46 +0100
-Message-Id: <20221123084634.660315514@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 172/314] net: ena: Fix error handling in ena_init()
+Date: Wed, 23 Nov 2022 09:50:17 +0100
+Message-Id: <20221123084633.348765766@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,187 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 42fb0a1e84ff525ebe560e2baf9451ab69127e2b upstream.
+[ Upstream commit d349e9be5a2c2d7588a2c4e4bfa0bb3dc1226769 ]
 
-Currently the way polling works on the ring buffer is broken. It will
-return immediately if there's any data in the ring buffer whereas a read
-will block until the watermark (defined by the tracefs buffer_percent file)
-is hit.
+The ena_init() won't destroy workqueue created by
+create_singlethread_workqueue() when pci_register_driver() failed.
+Call destroy_workqueue() when pci_register_driver() failed to prevent the
+resource leak.
 
-That is, a select() or poll() will return as if there's data available,
-but then the following read will block. This is broken for the way
-select()s and poll()s are supposed to work.
-
-Have the polling on the ring buffer also block the same way reads and
-splice does on the ring buffer.
-
-Link: https://lkml.kernel.org/r/20221020231427.41be3f26@gandalf.local.home
-
-Cc: Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Primiano Tucci <primiano@google.com>
-Cc: stable@vger.kernel.org
-Fixes: 1e0d6714aceb7 ("ring-buffer: Do not wake up a splice waiter when page is not full")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Shay Agroskin <shayagr@amazon.com>
+Link: https://lore.kernel.org/r/20221114025659.124726-1-yuancan@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |    2 -
- kernel/trace/ring_buffer.c  |   55 ++++++++++++++++++++++++++++----------------
- kernel/trace/trace.c        |    2 -
- 3 files changed, 38 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -100,7 +100,7 @@ __ring_buffer_alloc(unsigned long size,
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 6a356a6cee15..41c821348476 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -4545,13 +4545,19 @@ static struct pci_driver ena_pci_driver = {
  
- int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full);
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table);
-+			  struct file *filp, poll_table *poll_table, int full);
- void ring_buffer_wake_waiters(struct trace_buffer *buffer, int cpu);
- 
- #define RING_BUFFER_ALL_CPUS -1
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -907,6 +907,21 @@ size_t ring_buffer_nr_dirty_pages(struct
- 	return cnt - read;
- }
- 
-+static __always_inline bool full_hit(struct trace_buffer *buffer, int cpu, int full)
-+{
-+	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
-+	size_t nr_pages;
-+	size_t dirty;
-+
-+	nr_pages = cpu_buffer->nr_pages;
-+	if (!nr_pages || !full)
-+		return true;
-+
-+	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+
-+	return (dirty * 100) > (full * nr_pages);
-+}
-+
- /*
-  * rb_wake_up_waiters - wake up tasks waiting for ring buffer input
-  *
-@@ -1046,22 +1061,20 @@ int ring_buffer_wait(struct trace_buffer
- 		    !ring_buffer_empty_cpu(buffer, cpu)) {
- 			unsigned long flags;
- 			bool pagebusy;
--			size_t nr_pages;
--			size_t dirty;
-+			bool done;
- 
- 			if (!full)
- 				break;
- 
- 			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
- 			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
--			nr_pages = cpu_buffer->nr_pages;
--			dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+			done = !pagebusy && full_hit(buffer, cpu, full);
-+
- 			if (!cpu_buffer->shortest_full ||
- 			    cpu_buffer->shortest_full > full)
- 				cpu_buffer->shortest_full = full;
- 			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
--			if (!pagebusy &&
--			    (!nr_pages || (dirty * 100) > full * nr_pages))
-+			if (done)
- 				break;
- 		}
- 
-@@ -1087,6 +1100,7 @@ int ring_buffer_wait(struct trace_buffer
-  * @cpu: the cpu buffer to wait on
-  * @filp: the file descriptor
-  * @poll_table: The poll descriptor
-+ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-  *
-  * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-  * as data is added to any of the @buffer's cpu buffers. Otherwise
-@@ -1096,14 +1110,15 @@ int ring_buffer_wait(struct trace_buffer
-  * zero otherwise.
-  */
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table)
-+			  struct file *filp, poll_table *poll_table, int full)
+ static int __init ena_init(void)
  {
- 	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct rb_irq_work *work;
- 
--	if (cpu == RING_BUFFER_ALL_CPUS)
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
- 		work = &buffer->irq_work;
--	else {
-+		full = 0;
-+	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 			return -EINVAL;
- 
-@@ -1111,8 +1126,14 @@ __poll_t ring_buffer_poll_wait(struct tr
- 		work = &cpu_buffer->irq_work;
++	int ret;
++
+ 	ena_wq = create_singlethread_workqueue(DRV_MODULE_NAME);
+ 	if (!ena_wq) {
+ 		pr_err("Failed to create workqueue\n");
+ 		return -ENOMEM;
  	}
  
--	poll_wait(filp, &work->waiters, poll_table);
--	work->waiters_pending = true;
-+	if (full) {
-+		poll_wait(filp, &work->full_waiters, poll_table);
-+		work->full_waiters_pending = true;
-+	} else {
-+		poll_wait(filp, &work->waiters, poll_table);
-+		work->waiters_pending = true;
-+	}
+-	return pci_register_driver(&ena_pci_driver);
++	ret = pci_register_driver(&ena_pci_driver);
++	if (ret)
++		destroy_workqueue(ena_wq);
 +
- 	/*
- 	 * There's a tight race between setting the waiters_pending and
- 	 * checking if the ring buffer is empty.  Once the waiters_pending bit
-@@ -1128,6 +1149,9 @@ __poll_t ring_buffer_poll_wait(struct tr
- 	 */
- 	smp_mb();
- 
-+	if (full)
-+		return full_hit(buffer, cpu, full) ? EPOLLIN | EPOLLRDNORM : 0;
-+
- 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
- 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
- 		return EPOLLIN | EPOLLRDNORM;
-@@ -3155,10 +3179,6 @@ static void rb_commit(struct ring_buffer
- static __always_inline void
- rb_wakeups(struct trace_buffer *buffer, struct ring_buffer_per_cpu *cpu_buffer)
- {
--	size_t nr_pages;
--	size_t dirty;
--	size_t full;
--
- 	if (buffer->irq_work.waiters_pending) {
- 		buffer->irq_work.waiters_pending = false;
- 		/* irq_work_queue() supplies it's own memory barriers */
-@@ -3182,10 +3202,7 @@ rb_wakeups(struct trace_buffer *buffer,
- 
- 	cpu_buffer->last_pages_touch = local_read(&cpu_buffer->pages_touched);
- 
--	full = cpu_buffer->shortest_full;
--	nr_pages = cpu_buffer->nr_pages;
--	dirty = ring_buffer_nr_dirty_pages(buffer, cpu_buffer->cpu);
--	if (full && nr_pages && (dirty * 100) <= full * nr_pages)
-+	if (!full_hit(buffer, cpu_buffer->cpu, cpu_buffer->shortest_full))
- 		return;
- 
- 	cpu_buffer->irq_work.wakeup_full = true;
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6682,7 +6682,7 @@ trace_poll(struct trace_iterator *iter,
- 		return EPOLLIN | EPOLLRDNORM;
- 	else
- 		return ring_buffer_poll_wait(iter->array_buffer->buffer, iter->cpu_file,
--					     filp, poll_table);
-+					     filp, poll_table, iter->tr->buffer_percent);
++	return ret;
  }
  
- static __poll_t
+ static void __exit ena_cleanup(void)
+-- 
+2.35.1
+
 
 
