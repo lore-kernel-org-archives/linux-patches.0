@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FE81C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42ED5C433D6;
-	Wed, 23 Nov 2022 09:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C981C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AF9C433D7;
+	Wed, 23 Nov 2022 09:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195254;
-	bh=kwHE8GNSAxpB6c3dHNHzoH5JUui0GNbFrxoDCFH/I+4=;
+	s=korg; t=1669195258;
+	bh=s2B4JRIrgHGof5B00nLty3oG5rszX2+hzFy72CRsWSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BB5FkrH2l9+LUfFXSUqoEhEoAKpV1+kuakxh+EjFxmDoOExw0egjyTGtYZgrXHCU
-	 GNPdyZF4bLEVFv4ErM0GDUhW/DnSBAxwFITtIkalrdV9kMdFKzLu8uD8m3eniwoaYW
-	 RZBLS/0SStohBJ+kD7WiFCY26YLXxToEwhXAcq9s=
+	b=PUJ8KwYm/16gymy1W81H+xgK0zyCWvgtNC7pJzhMj3FRTjbLhA4NttOWSf2oPMSgn
+	 5HNPKD9+5xlAMrKkm/wN5Nu1Hnl+3j9N64taml6FtV6tpsn4X1GhZijX0AcwXdiggq
+	 e7UC0brnoxjzmnjDUVL5BXYqai23tGQUEnmoLHSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mauro Lima <mauro.lima@eclypsium.com>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Lee Jones <lee.jones@linaro.org>,
+	Jos Dehaes <jos.dehaes@gmail.com>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/149] mtd: spi-nor: intel-spi: Disable write protection only if asked
-Date: Wed, 23 Nov 2022 09:50:08 +0100
-Message-Id: <20221123084558.918962944@linuxfoundation.org>
+Subject: [PATCH 5.10 034/149] ASoC: tas2770: Fix set_tdm_slot in case of single slot
+Date: Wed, 23 Nov 2022 09:50:17 +0100
+Message-Id: <20221123084559.222646827@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -39,318 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit cd149eff8d2201a63c074a6d9d03e52926aa535d ]
+[ Upstream commit e59bf547a7dd366f93bfebb7487959580ca6c0ec ]
 
-Currently the driver tries to disable the BIOS write protection
-automatically even if this is not what the user wants. For this reason
-modify the driver so that by default it does not touch the write
-protection. Only if specifically asked by the user (setting writeable=1
-command line parameter) the driver tries to disable the BIOS write
-protection.
+There's a special branch in the set_tdm_slot op for the case of nslots
+being 1, but:
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Mauro Lima <mauro.lima@eclypsium.com>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Acked-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20220209122706.42439-2-mika.westerberg@linux.intel.com
+ (1) That branch can never work (there's a check for tx_mask being
+     non-zero, later there's another check for it *being* zero; one or
+     the other always throws -EINVAL).
+
+ (2) The intention of the branch seems to be what the general other
+     branch reduces to in case of nslots being 1.
+
+For those reasons remove the 'nslots being 1' special case.
+
+Fixes: 1a476abc723e ("tas2770: add tas2770 smart PA kernel driver")
+Suggested-by: Jos Dehaes <jos.dehaes@gmail.com>
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20221027095800.16094-1-povik+lin@cutebit.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 92a66cbf6b30 ("spi: intel: Use correct mask for flash and protected regions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/lpc_ich.c                         | 59 +++++++++++++++++--
- .../mtd/spi-nor/controllers/intel-spi-pci.c   | 29 +++++----
- drivers/mtd/spi-nor/controllers/intel-spi.c   | 41 ++++++-------
- include/linux/platform_data/intel-spi.h       |  6 +-
- 4 files changed, 96 insertions(+), 39 deletions(-)
+ sound/soc/codecs/tas2770.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/mfd/lpc_ich.c b/drivers/mfd/lpc_ich.c
-index 3bbb29a7e7a5..2411b7a2e6f4 100644
---- a/drivers/mfd/lpc_ich.c
-+++ b/drivers/mfd/lpc_ich.c
-@@ -63,6 +63,8 @@
- #define SPIBASE_BYT		0x54
- #define SPIBASE_BYT_SZ		512
- #define SPIBASE_BYT_EN		BIT(1)
-+#define BYT_BCR			0xfc
-+#define BYT_BCR_WPD		BIT(0)
- 
- #define SPIBASE_LPT		0x3800
- #define SPIBASE_LPT_SZ		512
-@@ -1083,12 +1085,57 @@ static int lpc_ich_init_wdt(struct pci_dev *dev)
- 	return ret;
- }
- 
-+static bool lpc_ich_byt_set_writeable(void __iomem *base, void *data)
-+{
-+	u32 val;
-+
-+	val = readl(base + BYT_BCR);
-+	if (!(val & BYT_BCR_WPD)) {
-+		val |= BYT_BCR_WPD;
-+		writel(val, base + BYT_BCR);
-+		val = readl(base + BYT_BCR);
-+	}
-+
-+	return val & BYT_BCR_WPD;
-+}
-+
-+static bool lpc_ich_lpt_set_writeable(void __iomem *base, void *data)
-+{
-+	struct pci_dev *pdev = data;
-+	u32 bcr;
-+
-+	pci_read_config_dword(pdev, BCR, &bcr);
-+	if (!(bcr & BCR_WPD)) {
-+		bcr |= BCR_WPD;
-+		pci_write_config_dword(pdev, BCR, bcr);
-+		pci_read_config_dword(pdev, BCR, &bcr);
-+	}
-+
-+	return bcr & BCR_WPD;
-+}
-+
-+static bool lpc_ich_bxt_set_writeable(void __iomem *base, void *data)
-+{
-+	unsigned int spi = PCI_DEVFN(13, 2);
-+	struct pci_bus *bus = data;
-+	u32 bcr;
-+
-+	pci_bus_read_config_dword(bus, spi, BCR, &bcr);
-+	if (!(bcr & BCR_WPD)) {
-+		bcr |= BCR_WPD;
-+		pci_bus_write_config_dword(bus, spi, BCR, bcr);
-+		pci_bus_read_config_dword(bus, spi, BCR, &bcr);
-+	}
-+
-+	return bcr & BCR_WPD;
-+}
-+
- static int lpc_ich_init_spi(struct pci_dev *dev)
- {
- 	struct lpc_ich_priv *priv = pci_get_drvdata(dev);
- 	struct resource *res = &intel_spi_res[0];
- 	struct intel_spi_boardinfo *info;
--	u32 spi_base, rcba, bcr;
-+	u32 spi_base, rcba;
- 
- 	info = devm_kzalloc(&dev->dev, sizeof(*info), GFP_KERNEL);
- 	if (!info)
-@@ -1102,6 +1149,8 @@ static int lpc_ich_init_spi(struct pci_dev *dev)
- 		if (spi_base & SPIBASE_BYT_EN) {
- 			res->start = spi_base & ~(SPIBASE_BYT_SZ - 1);
- 			res->end = res->start + SPIBASE_BYT_SZ - 1;
-+
-+			info->set_writeable = lpc_ich_byt_set_writeable;
- 		}
- 		break;
- 
-@@ -1112,8 +1161,8 @@ static int lpc_ich_init_spi(struct pci_dev *dev)
- 			res->start = spi_base + SPIBASE_LPT;
- 			res->end = res->start + SPIBASE_LPT_SZ - 1;
- 
--			pci_read_config_dword(dev, BCR, &bcr);
--			info->writeable = !!(bcr & BCR_WPD);
-+			info->set_writeable = lpc_ich_lpt_set_writeable;
-+			info->data = dev;
- 		}
- 		break;
- 
-@@ -1134,8 +1183,8 @@ static int lpc_ich_init_spi(struct pci_dev *dev)
- 			res->start = spi_base & 0xfffffff0;
- 			res->end = res->start + SPIBASE_APL_SZ - 1;
- 
--			pci_bus_read_config_dword(bus, spi, BCR, &bcr);
--			info->writeable = !!(bcr & BCR_WPD);
-+			info->set_writeable = lpc_ich_bxt_set_writeable;
-+			info->data = bus;
- 		}
- 
- 		pci_bus_write_config_byte(bus, p2sb, 0xe1, 0x1);
-diff --git a/drivers/mtd/spi-nor/controllers/intel-spi-pci.c b/drivers/mtd/spi-nor/controllers/intel-spi-pci.c
-index 555fe55d14ae..8a3c1f3c2d2e 100644
---- a/drivers/mtd/spi-nor/controllers/intel-spi-pci.c
-+++ b/drivers/mtd/spi-nor/controllers/intel-spi-pci.c
-@@ -16,12 +16,30 @@
- #define BCR		0xdc
- #define BCR_WPD		BIT(0)
- 
-+static bool intel_spi_pci_set_writeable(void __iomem *base, void *data)
-+{
-+	struct pci_dev *pdev = data;
-+	u32 bcr;
-+
-+	/* Try to make the chip read/write */
-+	pci_read_config_dword(pdev, BCR, &bcr);
-+	if (!(bcr & BCR_WPD)) {
-+		bcr |= BCR_WPD;
-+		pci_write_config_dword(pdev, BCR, bcr);
-+		pci_read_config_dword(pdev, BCR, &bcr);
-+	}
-+
-+	return bcr & BCR_WPD;
-+}
-+
- static const struct intel_spi_boardinfo bxt_info = {
- 	.type = INTEL_SPI_BXT,
-+	.set_writeable = intel_spi_pci_set_writeable,
- };
- 
- static const struct intel_spi_boardinfo cnl_info = {
- 	.type = INTEL_SPI_CNL,
-+	.set_writeable = intel_spi_pci_set_writeable,
- };
- 
- static int intel_spi_pci_probe(struct pci_dev *pdev,
-@@ -29,7 +47,6 @@ static int intel_spi_pci_probe(struct pci_dev *pdev,
- {
- 	struct intel_spi_boardinfo *info;
- 	struct intel_spi *ispi;
--	u32 bcr;
- 	int ret;
- 
- 	ret = pcim_enable_device(pdev);
-@@ -41,15 +58,7 @@ static int intel_spi_pci_probe(struct pci_dev *pdev,
- 	if (!info)
- 		return -ENOMEM;
- 
--	/* Try to make the chip read/write */
--	pci_read_config_dword(pdev, BCR, &bcr);
--	if (!(bcr & BCR_WPD)) {
--		bcr |= BCR_WPD;
--		pci_write_config_dword(pdev, BCR, bcr);
--		pci_read_config_dword(pdev, BCR, &bcr);
--	}
--	info->writeable = !!(bcr & BCR_WPD);
--
-+	info->data = pdev;
- 	ispi = intel_spi_probe(&pdev->dev, &pdev->resource[0], info);
- 	if (IS_ERR(ispi))
- 		return PTR_ERR(ispi);
-diff --git a/drivers/mtd/spi-nor/controllers/intel-spi.c b/drivers/mtd/spi-nor/controllers/intel-spi.c
-index b4b0affd16c8..65f41c0781bf 100644
---- a/drivers/mtd/spi-nor/controllers/intel-spi.c
-+++ b/drivers/mtd/spi-nor/controllers/intel-spi.c
-@@ -132,7 +132,6 @@
-  * @sregs: Start of software sequencer registers
-  * @nregions: Maximum number of regions
-  * @pr_num: Maximum number of protected range registers
-- * @writeable: Is the chip writeable
-  * @locked: Is SPI setting locked
-  * @swseq_reg: Use SW sequencer in register reads/writes
-  * @swseq_erase: Use SW sequencer in erase operation
-@@ -150,7 +149,6 @@ struct intel_spi {
- 	void __iomem *sregs;
- 	size_t nregions;
- 	size_t pr_num;
--	bool writeable;
- 	bool locked;
- 	bool swseq_reg;
- 	bool swseq_erase;
-@@ -305,6 +303,14 @@ static int intel_spi_wait_sw_busy(struct intel_spi *ispi)
- 				  INTEL_SPI_TIMEOUT * 1000);
- }
- 
-+static bool intel_spi_set_writeable(struct intel_spi *ispi)
-+{
-+	if (!ispi->info->set_writeable)
-+		return false;
-+
-+	return ispi->info->set_writeable(ispi->base, ispi->info->data);
-+}
-+
- static int intel_spi_init(struct intel_spi *ispi)
- {
- 	u32 opmenu0, opmenu1, lvscc, uvscc, val;
-@@ -317,19 +323,6 @@ static int intel_spi_init(struct intel_spi *ispi)
- 		ispi->nregions = BYT_FREG_NUM;
- 		ispi->pr_num = BYT_PR_NUM;
- 		ispi->swseq_reg = true;
--
--		if (writeable) {
--			/* Disable write protection */
--			val = readl(ispi->base + BYT_BCR);
--			if (!(val & BYT_BCR_WPD)) {
--				val |= BYT_BCR_WPD;
--				writel(val, ispi->base + BYT_BCR);
--				val = readl(ispi->base + BYT_BCR);
--			}
--
--			ispi->writeable = !!(val & BYT_BCR_WPD);
--		}
--
- 		break;
- 
- 	case INTEL_SPI_LPT:
-@@ -359,6 +352,12 @@ static int intel_spi_init(struct intel_spi *ispi)
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 171bbcc919d5..c213c8096142 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -395,21 +395,13 @@ static int tas2770_set_dai_tdm_slot(struct snd_soc_dai *dai,
+ 	if (tx_mask == 0 || rx_mask != 0)
  		return -EINVAL;
+ 
+-	if (slots == 1) {
+-		if (tx_mask != 1)
+-			return -EINVAL;
+-
+-		left_slot = 0;
+-		right_slot = 0;
++	left_slot = __ffs(tx_mask);
++	tx_mask &= ~(1 << left_slot);
++	if (tx_mask == 0) {
++		right_slot = left_slot;
+ 	} else {
+-		left_slot = __ffs(tx_mask);
+-		tx_mask &= ~(1 << left_slot);
+-		if (tx_mask == 0) {
+-			right_slot = left_slot;
+-		} else {
+-			right_slot = __ffs(tx_mask);
+-			tx_mask &= ~(1 << right_slot);
+-		}
++		right_slot = __ffs(tx_mask);
++		tx_mask &= ~(1 << right_slot);
  	}
  
-+	/* Try to disable write protection if user asked to do so */
-+	if (writeable && !intel_spi_set_writeable(ispi)) {
-+		dev_warn(ispi->dev, "can't disable chip write protection\n");
-+		writeable = false;
-+	}
-+
- 	/* Disable #SMI generation from HW sequencer */
- 	val = readl(ispi->base + HSFSTS_CTL);
- 	val &= ~HSFSTS_CTL_FSMIE;
-@@ -885,9 +884,12 @@ static void intel_spi_fill_partition(struct intel_spi *ispi,
- 		/*
- 		 * If any of the regions have protection bits set, make the
- 		 * whole partition read-only to be on the safe side.
-+		 *
-+		 * Also if the user did not ask the chip to be writeable
-+		 * mask the bit too.
- 		 */
--		if (intel_spi_is_protected(ispi, base, limit))
--			ispi->writeable = false;
-+		if (!writeable || intel_spi_is_protected(ispi, base, limit))
-+			part->mask_flags |= MTD_WRITEABLE;
- 
- 		end = (limit << 12) + 4096;
- 		if (end > part->size)
-@@ -928,7 +930,6 @@ struct intel_spi *intel_spi_probe(struct device *dev,
- 
- 	ispi->dev = dev;
- 	ispi->info = info;
--	ispi->writeable = info->writeable;
- 
- 	ret = intel_spi_init(ispi);
- 	if (ret)
-@@ -946,10 +947,6 @@ struct intel_spi *intel_spi_probe(struct device *dev,
- 
- 	intel_spi_fill_partition(ispi, &part);
- 
--	/* Prevent writes if not explicitly enabled */
--	if (!ispi->writeable || !writeable)
--		ispi->nor.mtd.flags &= ~MTD_WRITEABLE;
--
- 	ret = mtd_device_register(&ispi->nor.mtd, &part, 1);
- 	if (ret)
- 		return ERR_PTR(ret);
-diff --git a/include/linux/platform_data/intel-spi.h b/include/linux/platform_data/intel-spi.h
-index 7f53a5c6f35e..7dda3f690465 100644
---- a/include/linux/platform_data/intel-spi.h
-+++ b/include/linux/platform_data/intel-spi.h
-@@ -19,11 +19,13 @@ enum intel_spi_type {
- /**
-  * struct intel_spi_boardinfo - Board specific data for Intel SPI driver
-  * @type: Type which this controller is compatible with
-- * @writeable: The chip is writeable
-+ * @set_writeable: Try to make the chip writeable (optional)
-+ * @data: Data to be passed to @set_writeable can be %NULL
-  */
- struct intel_spi_boardinfo {
- 	enum intel_spi_type type;
--	bool writeable;
-+	bool (*set_writeable)(void __iomem *base, void *data);
-+	void *data;
- };
- 
- #endif /* INTEL_SPI_PDATA_H */
+ 	if (tx_mask != 0 || left_slot >= slots || right_slot >= slots)
 -- 
 2.35.1
 
