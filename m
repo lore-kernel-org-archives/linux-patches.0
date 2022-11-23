@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57371C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142BDC433D7;
-	Wed, 23 Nov 2022 09:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED95E1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:51:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4ABC433D7;
+	Wed, 23 Nov 2022 09:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197073;
-	bh=KmKB49GJz8EHtHKKI9mDkKv+O6ON21IldEClDjv7CyI=;
+	s=korg; t=1669197076;
+	bh=Dxw+JxFyB9dso11235OTLMOl7ze509DMwUFuMvzxTw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsi3k1ZIwclbzc8kt8WpWeeJqR2j4mXfQ2+/9g6MgQfL9n0koBDz6HlO4tgPuQlTh
-	 3YiFPl0hSMojh6AGPQUgzoi3+asRohnq4WNnL4LD6pKUy8kyKryQnlBWqWbbRFi584
-	 aoprL+8D22OenJWmtT3qbMNhjUAUCE77YYH8TNbE=
+	b=iL4rorxuYZI/En9auCMV8zjXYgHPCjfQ5D7ou3epHbLHJKKxTPcedhBEpn930yvY3
+	 KX5By+2ShUQ+e+27Uk5+6jPU1Olbq62mdiEsLUtbigdm9/TJ10MgJ2eemn00HrNueT
+	 TIdk26eOceqgeu8I9XB7lK2Ad3roDpUH3Uk0Vu0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 190/314] net: thunderbolt: Fix error handling in tbnet_init()
-Date: Wed, 23 Nov 2022 09:50:35 +0100
-Message-Id: <20221123084634.168202058@linuxfoundation.org>
+Subject: [PATCH 6.0 191/314] s390: avoid using global register for current_stack_pointer
+Date: Wed, 23 Nov 2022 09:50:36 +0100
+Message-Id: <20221123084634.212088267@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,71 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit f524b7289bbb0c8ffaa2ba3c34c146e43da54fb2 ]
+[ Upstream commit e3c11025bcd2142a61abe5806b2f86a0e78118df ]
 
-A problem about insmod thunderbolt-net failed is triggered with following
-log given while lsmod does not show thunderbolt_net:
+Commit 30de14b1884b ("s390: current_stack_pointer shouldn't be a
+function") made current_stack_pointer a global register variable like
+on many other architectures. Unfortunately on s390 it uncovers old
+gcc bug which is fixed only since gcc-9.1 [gcc commit 3ad7fed1cc87
+("S/390: Fix PR89775. Stackpointer save/restore instructions removed")]
+and backported to gcc-8.4 and later. Due to this bug gcc versions prior
+to 8.4 generate broken code which leads to stack corruptions.
 
- insmod: ERROR: could not insert module thunderbolt-net.ko: File exists
+Current minimal gcc version required to build the kernel is declared
+as 5.1. It is not possible to fix all old gcc versions, so work
+around this problem by avoiding using global register variable for
+current_stack_pointer.
 
-The reason is that tbnet_init() returns tb_register_service_driver()
-directly without checking its return value, if tb_register_service_driver()
-failed, it returns without removing property directory, resulting the
-property directory can never be created later.
-
- tbnet_init()
-   tb_register_property_dir() # register property directory
-   tb_register_service_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without remove property directory
-
-Fix by remove property directory when tb_register_service_driver() returns
-error.
-
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 30de14b1884b ("s390: current_stack_pointer shouldn't be a function")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/s390/include/asm/processor.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
-index ab3f04562980..8391f8303499 100644
---- a/drivers/net/thunderbolt.c
-+++ b/drivers/net/thunderbolt.c
-@@ -1379,12 +1379,21 @@ static int __init tbnet_init(void)
- 				  TBNET_MATCH_FRAGS_ID | TBNET_64K_FRAMES);
+diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
+index bd66f8e34949..00f45d8f1efa 100644
+--- a/arch/s390/include/asm/processor.h
++++ b/arch/s390/include/asm/processor.h
+@@ -202,7 +202,16 @@ unsigned long __get_wchan(struct task_struct *p);
+ /* Has task runtime instrumentation enabled ? */
+ #define is_ri_task(tsk) (!!(tsk)->thread.ri_cb)
  
- 	ret = tb_register_property_dir("network", tbnet_dir);
--	if (ret) {
--		tb_property_free_dir(tbnet_dir);
--		return ret;
--	}
-+	if (ret)
-+		goto err_free_dir;
+-register unsigned long current_stack_pointer asm("r15");
++/* avoid using global register due to gcc bug in versions < 8.4 */
++#define current_stack_pointer (__current_stack_pointer())
 +
-+	ret = tb_register_service_driver(&tbnet_driver);
-+	if (ret)
-+		goto err_unregister;
++static __always_inline unsigned long __current_stack_pointer(void)
++{
++	unsigned long sp;
++
++	asm volatile("lgr %0,15" : "=d" (sp));
++	return sp;
++}
  
--	return tb_register_service_driver(&tbnet_driver);
-+	return 0;
-+
-+err_unregister:
-+	tb_unregister_property_dir("network", tbnet_dir);
-+err_free_dir:
-+	tb_property_free_dir(tbnet_dir);
-+
-+	return ret;
- }
- module_init(tbnet_init);
- 
+ static __always_inline unsigned short stap(void)
+ {
 -- 
 2.35.1
 
