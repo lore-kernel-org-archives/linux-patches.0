@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728491C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:45:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C810AC433C1;
-	Wed, 23 Nov 2022 09:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30381C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:45:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3ACC433D6;
+	Wed, 23 Nov 2022 09:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196750;
-	bh=m7H/1F7srcbf/Xd5NOKYCw65oBVqXXthpE4VklhKM08=;
+	s=korg; t=1669196753;
+	bh=VQFUxrPPeJxAbyK55Zpe+US5bymqPCcCoWYYX1On2dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ni38keb83C/kHgI9V+XoeYVnznrgZ49CXWFFeouTb1xrThwCObpREkWMzQzMD75Jr
-	 S58cuHk0sdvcyNX66G6IsK50CHFI+YnY74sADUrAH1+hg5zJrwdUoXor/GPRmWxEmx
-	 zrd2jKxlP/Rd6j6xTjim6vlrAEJhclELMmef4wQE=
+	b=fUKMFlhK3tUwxrLTgK0F4xA7IuI59Supj6NLH8dbyjhXnEp0M1TlYzZNRTfj7k42o
+	 phICStB5G9+NDAN78Q1C/FbFuAbOu2Lex584DufkDNd1k+9vQ8V7NR+ka93/ZbPprX
+	 lhAXxNJ3AkAVyp4VkQ1DQpTkExDztfzuqtzE6VZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/314] erofs: get correct count for unmapped range in fscache mode
-Date: Wed, 23 Nov 2022 09:49:19 +0100
-Message-Id: <20221123084630.675780082@linuxfoundation.org>
+Subject: [PATCH 6.0 115/314] block: sed-opal: kmalloc the cmd/resp buffers
+Date: Wed, 23 Nov 2022 09:49:20 +0100
+Message-Id: <20221123084630.723194232@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,57 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit e6d9f9ba111b56154f1b1120252aff269cebd49c ]
+[ Upstream commit f829230dd51974c1f4478900ed30bb77ba530b40 ]
 
-For unmapped range, the returned map.m_llen is zero, and thus the
-calculated count is unexpected zero.
+In accordance with [1] the DMA-able memory buffers must be
+cacheline-aligned otherwise the cache writing-back and invalidation
+performed during the mapping may cause the adjacent data being lost. It's
+specifically required for the DMA-noncoherent platforms [2]. Seeing the
+opal_dev.{cmd,resp} buffers are implicitly used for DMAs in the NVME and
+SCSI/SD drivers in framework of the nvme_sec_submit() and sd_sec_submit()
+methods respectively they must be cacheline-aligned to prevent the denoted
+problem. One of the option to guarantee that is to kmalloc the buffers
+[2]. Let's explicitly allocate them then instead of embedding into the
+opal_dev structure instance.
 
-Prior to the refactoring introduced by commit 1ae9470c3e14 ("erofs:
-clean up .read_folio() and .readahead() in fscache mode"), only the
-readahead routine suffers from this. With the refactoring of making
-.read_folio() and .readahead() calling one common routine, both
-read_folio and readahead have this issue now.
+Note this fix was inspired by the commit c94b7f9bab22 ("nvme-hwmon:
+kmalloc the NVME SMART log buffer").
 
-Fix this by calculating count separately in unmapped condition.
+[1] Documentation/core-api/dma-api.rst
+[2] Documentation/core-api/dma-api-howto.rst
 
-Fixes: c665b394b9e8 ("erofs: implement fscache-based data readahead")
-Fixes: 1ae9470c3e14 ("erofs: clean up .read_folio() and .readahead() in fscache mode")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20221104054028.52208-3-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 455a7b238cd6 ("block: Add Sed-opal library")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221107203944.31686-1-Sergey.Semin@baikalelectronics.ru
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fscache.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ block/sed-opal.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index 508b1a4df15e..8585e324298c 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -288,15 +288,16 @@ static int erofs_fscache_data_read(struct address_space *mapping,
- 		return PAGE_SIZE;
- 	}
+diff --git a/block/sed-opal.c b/block/sed-opal.c
+index 9700197000f2..55cd37e868c0 100644
+--- a/block/sed-opal.c
++++ b/block/sed-opal.c
+@@ -88,8 +88,8 @@ struct opal_dev {
+ 	u64 lowest_lba;
  
--	count = min_t(size_t, map.m_llen - (pos - map.m_la), len);
--	DBG_BUGON(!count || count % PAGE_SIZE);
--
- 	if (!(map.m_flags & EROFS_MAP_MAPPED)) {
-+		count = len;
- 		iov_iter_xarray(&iter, READ, &mapping->i_pages, pos, count);
- 		iov_iter_zero(count, &iter);
- 		return count;
- 	}
+ 	size_t pos;
+-	u8 cmd[IO_BUFFER_LENGTH];
+-	u8 resp[IO_BUFFER_LENGTH];
++	u8 *cmd;
++	u8 *resp;
  
-+	count = min_t(size_t, map.m_llen - (pos - map.m_la), len);
-+	DBG_BUGON(!count || count % PAGE_SIZE);
+ 	struct parsed_resp parsed;
+ 	size_t prev_d_len;
+@@ -2134,6 +2134,8 @@ void free_opal_dev(struct opal_dev *dev)
+ 		return;
+ 
+ 	clean_opal_dev(dev);
++	kfree(dev->resp);
++	kfree(dev->cmd);
+ 	kfree(dev);
+ }
+ EXPORT_SYMBOL(free_opal_dev);
+@@ -2146,17 +2148,39 @@ struct opal_dev *init_opal_dev(void *data, sec_send_recv *send_recv)
+ 	if (!dev)
+ 		return NULL;
+ 
++	/*
++	 * Presumably DMA-able buffers must be cache-aligned. Kmalloc makes
++	 * sure the allocated buffer is DMA-safe in that regard.
++	 */
++	dev->cmd = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->cmd)
++		goto err_free_dev;
 +
- 	mdev = (struct erofs_map_dev) {
- 		.m_deviceid = map.m_deviceid,
- 		.m_pa = map.m_pa,
++	dev->resp = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
++	if (!dev->resp)
++		goto err_free_cmd;
++
+ 	INIT_LIST_HEAD(&dev->unlk_lst);
+ 	mutex_init(&dev->dev_lock);
+ 	dev->data = data;
+ 	dev->send_recv = send_recv;
+ 	if (check_opal_support(dev) != 0) {
+ 		pr_debug("Opal is not supported on this device\n");
+-		kfree(dev);
+-		return NULL;
++		goto err_free_resp;
+ 	}
+ 
+ 	return dev;
++
++err_free_resp:
++	kfree(dev->resp);
++
++err_free_cmd:
++	kfree(dev->cmd);
++
++err_free_dev:
++	kfree(dev);
++
++	return NULL;
+ }
+ EXPORT_SYMBOL(init_opal_dev);
+ 
 -- 
 2.35.1
 
