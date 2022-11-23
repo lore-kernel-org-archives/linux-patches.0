@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B9A1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A55BC433D7;
-	Wed, 23 Nov 2022 09:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6353E1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:01:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B49C433D6;
+	Wed, 23 Nov 2022 09:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194103;
-	bh=hiLYMyPW2D4iP5KTP6ogPeDTfnXA+eY98B09LNN8qsM=;
+	s=korg; t=1669194106;
+	bh=BqmV0dlf0J2tKlVx2gqvDigoQunsxpVZJo54U8idNFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZ+JVEsWcxEyCK3xccezkDy4wFurUrZ/qpaUNZeQxtJIkdDNdcMv+NVcGHgDx3MfN
-	 Pp8cXabR8OEkXF7C8sQA3jRey9Ympl+PswVGgLnmI1nBXgVTknvBnr4s8GBv6sj8Bk
-	 1oCHi9MLF9LD5WMY1MUOA+CsjVMPX4/5drLhH48M=
+	b=CO8KuHC+e6WR1eI5Bq5FwoPFRqcMulkO4BWqhNuTJlQ92dWX9g4ZSXVeBCVvju0Dt
+	 JRy5HL9CrDKBbIVFCmOGTwWeS6yatA33kC7gbdhgQg4R7Wj4dk0QA433lFOhpPS7BG
+	 GedSdXdvWMJlqLJMP3slN5sWzMdnTJ5kwlc2bCLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.14 72/88] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
-Date: Wed, 23 Nov 2022 09:51:09 +0100
-Message-Id: <20221123084551.159993125@linuxfoundation.org>
+	syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Vishnu Dasa <vdasa@vmware.com>
+Subject: [PATCH 4.14 73/88] misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram()
+Date: Wed, 23 Nov 2022 09:51:10 +0100
+Message-Id: <20221123084551.200292055@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -34,36 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
+commit e5b0d06d9b10f5f43101bd6598b076c347f9295f upstream.
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-before amd_probe() returns. There is no problem for the 'smbus_dev ==
-NULL' branch because pci_dev_put() can also handle the NULL input
-parameter case.
+`struct vmci_event_qp` allocated by qp_notify_peer() contains padding,
+which may carry uninitialized data to the userspace, as observed by
+KMSAN:
 
-Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user ./include/linux/instrumented.h:121
+   instrument_copy_to_user ./include/linux/instrumented.h:121
+   _copy_to_user+0x5f/0xb0 lib/usercopy.c:33
+   copy_to_user ./include/linux/uaccess.h:169
+   vmci_host_do_receive_datagram drivers/misc/vmw_vmci/vmci_host.c:431
+   vmci_host_unlocked_ioctl+0x33d/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:925
+   vfs_ioctl fs/ioctl.c:51
+  ...
+
+  Uninit was stored to memory at:
+   kmemdup+0x74/0xb0 mm/util.c:131
+   dg_dispatch_as_host drivers/misc/vmw_vmci/vmci_datagram.c:271
+   vmci_datagram_dispatch+0x4f8/0xfc0 drivers/misc/vmw_vmci/vmci_datagram.c:339
+   qp_notify_peer+0x19a/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1479
+   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
+   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+   vmci_qp_broker_alloc+0x96/0xd0 drivers/misc/vmw_vmci/vmci_queue_pair.c:1940
+   vmci_host_do_alloc_queuepair drivers/misc/vmw_vmci/vmci_host.c:488
+   vmci_host_unlocked_ioctl+0x24fd/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:927
+  ...
+
+  Local variable ev created at:
+   qp_notify_peer+0x54/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1456
+   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
+   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+
+  Bytes 28-31 of 48 are uninitialized
+  Memory access of size 48 starts at ffff888035155e00
+  Data copied to user address 0000000020000100
+
+Use memset() to prevent the infoleaks.
+
+Also speculatively fix qp_notify_peer_local(), which may suffer from the
+same problem.
+
+Reported-by: syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Fixes: 06164d2b72aa ("VMCI: queue pairs implementation.")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Link: https://lore.kernel.org/r/20221104175849.2782567-1-glider@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |    2 ++
+ drivers/misc/vmw_vmci/vmci_queue_pair.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -1277,6 +1277,8 @@ static int amd_probe(struct sdhci_pci_ch
- 		}
- 	}
+--- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
++++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
+@@ -952,6 +952,7 @@ static int qp_notify_peer_local(bool att
+ 	u32 context_id = vmci_get_context_id();
+ 	struct vmci_event_qp ev;
  
-+	pci_dev_put(smbus_dev);
-+
- 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
- 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
++	memset(&ev, 0, sizeof(ev));
+ 	ev.msg.hdr.dst = vmci_make_handle(context_id, VMCI_EVENT_HANDLER);
+ 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 					  VMCI_CONTEXT_RESOURCE_ID);
+@@ -1563,6 +1564,7 @@ static int qp_notify_peer(bool attach,
+ 	 * kernel.
+ 	 */
  
++	memset(&ev, 0, sizeof(ev));
+ 	ev.msg.hdr.dst = vmci_make_handle(peer_id, VMCI_EVENT_HANDLER);
+ 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 					  VMCI_CONTEXT_RESOURCE_ID);
 
 
