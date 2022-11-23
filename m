@@ -1,100 +1,74 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAABA7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:51:08 +0000 (UTC)
-Received: by mail-lj1-f182.google.com with SMTP id s24so20583656ljs.11
-        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 00:51:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vE++5vLwb67DahKEwL1NXxuRxUTeETw1sq0DG9JKnPs=;
-        b=eDPSn7/6kb1CMEWfq46VqkmkHK/vBYGMlzLNxKGhcHC96gnEGPfsDj2hRC3D3+0K/K
-         nEe7kVfSMcDnBMpcslsPmZD7sycWxZurDwfbzuNXkZsvnUyFZd8egtiOWOewnIuGrSX1
-         CwSlY6i3mfcQCE1BONVmlepyH/mlLpEdIIogM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vE++5vLwb67DahKEwL1NXxuRxUTeETw1sq0DG9JKnPs=;
-        b=mo3m7P9bAxdYm4KCrGVwWAHg9pF8dnTF6xpG1xKj+hjj6/DuYrj1CPVm33oYgTK8KD
-         ntVGqj184+LbsqS24kMGpRgeUc//T3/yG0E4066ZsqcOko74uFAATrlifOi6/ydsTiZx
-         Hn0KgmucJGoNXV2wpHrCQmY/IFk/m3PeFxWgArhyRdx560mfyjvUg5qwFFDcOLOqm8zc
-         RNcwpfd0yNkXUdfoURF1Or4mjRZJ9KW9zfVd1WL3A5V+yfC4ZolddImzY7G9mIBAOual
-         DI3/VJLGDWd3Yi6CrzDYi4cmwKL0OPNO7qCiFujPiVxlbNqIWTvsGwaafifJojZMJF/+
-         CDJg==
-X-Gm-Message-State: ANoB5pklj1mSC03zcPL2Yhfc1pf8Ofqy+AHn7hyA+B5Ejy1Qs0nftfhC
-	UATnFcM2sQ+Fkfff+CvhQXaftw==
-X-Google-Smtp-Source: AA0mqf4HD7o0V7cctrri/bgHQuP2OrT988YzhpJ2yA34/vUS3vxMKihKLGVVQkl9eSFRAmwtZ6M03Q==
-X-Received: by 2002:a2e:9117:0:b0:279:4f30:da0f with SMTP id m23-20020a2e9117000000b002794f30da0fmr3713652ljg.366.1669193466652;
-        Wed, 23 Nov 2022 00:51:06 -0800 (PST)
-Received: from [172.16.11.74] ([81.216.59.226])
-        by smtp.gmail.com with ESMTPSA id l7-20020a2e7007000000b0027776efa48csm2134522ljc.91.2022.11.23.00.51.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 00:51:05 -0800 (PST)
-Message-ID: <842fd97b-c958-7b0d-2c77-6927c7ab4d72@rasmusvillemoes.dk>
-Date: Wed, 23 Nov 2022 09:51:04 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634E7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:53:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E20C433C1;
+	Wed, 23 Nov 2022 08:53:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1669193586;
+	bh=ltgVwSfiV2GEztLdYLVwBU7SjhKV4d4MID3pEIDOxlo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dp2syjRWxYAAykiNwrLfDWOWUV95AYh/3NS6m0M4qdKkTVOa4WR/qB/4diR5JfAwT
+	 +AAqjBAajspPTvMghZkZJFcMqAegaJMcL6fs1IGX033QwiiZNXZf0FACBWpE8raaFv
+	 SzmDhtUdJl/pPamOw4dHfkbGZQa9aIx/CSIWK+t8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 01/76] HID: hyperv: fix possible memory leak in mousevsc_probe()
+Date: Wed, 23 Nov 2022 09:50:00 +0100
+Message-Id: <20221123084546.792182149@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
+References: <20221123084546.742331901@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v6 2/3] random: introduce generic vDSO getrandom()
- implementation
-Content-Language: en-US, da
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, tglx@linutronix.de
-Cc: linux-crypto@vger.kernel.org, x86@kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
- Carlos O'Donell <carlos@redhat.com>, Linux API <linux-api@vger.kernel.org>
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
- <20221121152909.3414096-3-Jason@zx2c4.com>
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-In-Reply-To: <20221121152909.3414096-3-Jason@zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 21/11/2022 16.29, Jason A. Donenfeld wrote:
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-Cc += linux-api
+[ Upstream commit b5bcb94b0954a026bbd671741fdb00e7141f9c91 ]
 
-> 
->       if (!new_block)
->         goto out;
->       new_cap = grnd_allocator.cap + num;
->       new_states = reallocarray(grnd_allocator.states, new_cap, sizeof(*grnd_allocator.states));
->       if (!new_states) {
->         munmap(new_block, num * size_per_each);
+If hid_add_device() returns error, it should call hid_destroy_device()
+to free hid_dev which is allocated in hid_allocate_device().
 
-Hm. This does leak an implementation detail of vgetrandom_alloc(),
-namely that it is based on mmap() of that size rounded up to page size.
-Do we want to commit to this being the proper way of disposing of a
-succesful vgetrandom_alloc(), or should there also be a
-vgetrandom_free(void *states, long num, long size_per_each)?
+Fixes: 74c4fb058083 ("HID: hv_mouse: Properly add the hid device")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/hid/hid-hyperv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-And if so, what color should the bikeshed really have. I.e.,
+diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
+index 6039f071fab1..15e20d5e76dd 100644
+--- a/drivers/hid/hid-hyperv.c
++++ b/drivers/hid/hid-hyperv.c
+@@ -536,7 +536,7 @@ static int mousevsc_probe(struct hv_device *device,
+ 
+ 	ret = hid_add_device(hid_dev);
+ 	if (ret)
+-		goto probe_err1;
++		goto probe_err2;
+ 
+ 
+ 	ret = hid_parse(hid_dev);
+-- 
+2.35.1
 
-- does it need to take that size_per_each parameter which the kernel knows
 
-- should it rather take the product so it can for now be a simple alias
-for munmap
-
-- should it also have a flags argument just because that's what all
-well-behaving syscalls have these days...
-
-Also, should vgetrandom_alloc() take a void *hint argument that
-would/could be passed through to mmap() to give userspace some control
-over where the memory is located - possibly only in the future, i.e.
-insist on it being NULL for now, but it could open the possibility for
-adding e.g. VGRND_MAP_FIXED[_NOREPLACE] that would translate to the
-corresponding MAP_ flags.
-
-Rasmus
 
