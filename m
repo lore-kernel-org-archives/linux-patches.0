@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246161C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F38C433C1;
-	Wed, 23 Nov 2022 09:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B461C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD18BC433C1;
+	Wed, 23 Nov 2022 09:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197153;
-	bh=ohNM9I+B+TVOqRvqSVJZ+xoo5Z37TCMG6Q5V5Y0OOMg=;
+	s=korg; t=1669197156;
+	bh=nwTYIszFR2D1cDmsmVWigrCJQ1xZTYGonN92I/EoYoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Be8J9+F/Kr8MRbBzNCZYukpb4AdHS656+dHphj8OYyCqLIe8cVtUUGPwzsZd6ptV3
-	 +ciwUSU7HkKYZUUvvCj1fojHra+lXsPlajF5zhQEC9vYBHaUgNCQ45TbZtz7SOCBfS
-	 XwcAZtGDM0BCfx/SvCliIKclLWNPJXcTCbzw6JLo=
+	b=Ldm8oVnx0ZSjUce/xzdSuPJEen/FZMadZ1VI8JiToDXW+vY0ZZ2nbtElNbSK8aWuT
+	 ZBHBhPc0MAPusc2THsiiGjBGDKSSyuJXyHPHuX6QPCYbzAXC2qeTcDwkuWbvMruCgO
+	 BIeX+8bT/qfS7MaHCyJTm3P2AlGsmw5SzDIa7+m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>,
-	Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.0 213/314] drm/display: Dont assume dual mode adaptors support i2c sub-addressing
-Date: Wed, 23 Nov 2022 09:50:58 +0100
-Message-Id: <20221123084635.195117092@linuxfoundation.org>
+	Roman Li <Roman.Li@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 214/314] drm/amd/display: Fix invalid DPIA AUX reply causing system hang
+Date: Wed, 23 Nov 2022 09:50:59 +0100
+Message-Id: <20221123084635.233993662@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,141 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
+From: Stylon Wang <stylon.wang@amd.com>
 
-commit 5954acbacbd1946b96ce8ee799d309cb0cd3cb9d upstream.
+commit 8d8494c3467d366eb0f7c8198dab80be8bdc47d2 upstream.
 
-Current dual mode adaptor ("DP++") detection code assumes that all
-adaptors support i2c sub-addressing for read operations from the
-DP-HDMI adaptor ID buffer.  It has been observed that multiple
-adaptors do not in fact support this, and always return data starting
-at register 0.  On affected adaptors, the code fails to read the proper
-registers that would identify the device as a type 2 adaptor, and
-handles those as type 1, limiting the TMDS clock to 165MHz, even if
-the according register would announce a higher TMDS clock.
-Fix this by always reading the ID buffer starting from offset 0, and
-discarding any bytes before the actual offset of interest.
+[Why]
+Some DPIA AUX replies have incorrect data length from original request.
+This could lead to overwriting of destination buffer if reply length is
+larger, which could cause invalid access to stack since many destination
+buffers are declared as local variables.
 
-We tried finding authoritative documentation on whether or not this is
-allowed behaviour, but since all the official VESA docs are paywalled,
-the best we could come up with was the spec sheet for Texas Instruments'
-SNx5DP149 chip family.[1]  It explicitly mentions that sub-addressing is
-supported for register writes, but *not* for reads (See NOTE in
-section 8.5.3).  Unless TI openly decided to violate the VESA spec, one
-could take that as a hint that sub-addressing is in fact not mandated
-by VESA.
-The other two adaptors affected used the PS8409(A) and the LT8611,
-according to the data returned from their ID buffers.
+[How]
+Check for invalid length from DPIA AUX replies and trigger a retry if
+reply length is not the same as original request. A DRM_WARN() dmesg log
+is also produced.
 
-[1] https://www.ti.com/lit/ds/symlink/sn75dp149.pdf
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
-Reviewed-by: Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221006113314.41101987@computer
-Acked-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Roman Li <Roman.Li@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Stylon Wang <stylon.wang@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_dual_mode_helper.c |   51 ++++++++++++----------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   20 ++++++++++++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |    6 ------
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_dual_mode_helper.c
-@@ -63,23 +63,45 @@
- ssize_t drm_dp_dual_mode_read(struct i2c_adapter *adapter,
- 			      u8 offset, void *buffer, size_t size)
- {
-+	u8 zero = 0;
-+	char *tmpbuf = NULL;
-+	/*
-+	 * As sub-addressing is not supported by all adaptors,
-+	 * always explicitly read from the start and discard
-+	 * any bytes that come before the requested offset.
-+	 * This way, no matter whether the adaptor supports it
-+	 * or not, we'll end up reading the proper data.
-+	 */
- 	struct i2c_msg msgs[] = {
- 		{
- 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
- 			.flags = 0,
- 			.len = 1,
--			.buf = &offset,
-+			.buf = &zero,
- 		},
- 		{
- 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
- 			.flags = I2C_M_RD,
--			.len = size,
-+			.len = size + offset,
- 			.buf = buffer,
- 		},
- 	};
- 	int ret;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -146,6 +146,14 @@ MODULE_FIRMWARE(FIRMWARE_NAVI12_DMCU);
+ /* Number of bytes in PSP footer for firmware. */
+ #define PSP_FOOTER_BYTES 0x100
  
-+	if (offset) {
-+		tmpbuf = kmalloc(size + offset, GFP_KERNEL);
-+		if (!tmpbuf)
-+			return -ENOMEM;
++/*
++ * DMUB Async to Sync Mechanism Status
++ */
++#define DMUB_ASYNC_TO_SYNC_ACCESS_FAIL 1
++#define DMUB_ASYNC_TO_SYNC_ACCESS_TIMEOUT 2
++#define DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS 3
++#define DMUB_ASYNC_TO_SYNC_ACCESS_INVALID 4
 +
-+		msgs[1].buf = tmpbuf;
-+	}
-+
- 	ret = i2c_transfer(adapter, msgs, ARRAY_SIZE(msgs));
-+	if (tmpbuf)
-+		memcpy(buffer, tmpbuf + offset, size);
-+
-+	kfree(tmpbuf);
-+
- 	if (ret < 0)
- 		return ret;
- 	if (ret != ARRAY_SIZE(msgs))
-@@ -208,18 +230,6 @@ enum drm_dp_dual_mode_type drm_dp_dual_m
- 	if (ret)
- 		return DRM_DP_DUAL_MODE_UNKNOWN;
- 
--	/*
--	 * Sigh. Some (maybe all?) type 1 adaptors are broken and ack
--	 * the offset but ignore it, and instead they just always return
--	 * data from the start of the HDMI ID buffer. So for a broken
--	 * type 1 HDMI adaptor a single byte read will always give us
--	 * 0x44, and for a type 1 DVI adaptor it should give 0x00
--	 * (assuming it implements any registers). Fortunately neither
--	 * of those values will match the type 2 signature of the
--	 * DP_DUAL_MODE_ADAPTOR_ID register so we can proceed with
--	 * the type 2 adaptor detection safely even in the presence
--	 * of broken type 1 adaptors.
--	 */
- 	ret = drm_dp_dual_mode_read(adapter, DP_DUAL_MODE_ADAPTOR_ID,
- 				    &adaptor_id, sizeof(adaptor_id));
- 	drm_dbg_kms(dev, "DP dual mode adaptor ID: %02x (err %zd)\n", adaptor_id, ret);
-@@ -233,11 +243,10 @@ enum drm_dp_dual_mode_type drm_dp_dual_m
- 				return DRM_DP_DUAL_MODE_TYPE2_DVI;
+ /**
+  * DOC: overview
+  *
+@@ -10149,6 +10157,8 @@ static int amdgpu_dm_set_dmub_async_sync
+ 			*operation_result = AUX_RET_ERROR_TIMEOUT;
+ 		} else if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_FAIL) {
+ 			*operation_result = AUX_RET_ERROR_ENGINE_ACQUIRE;
++		} else if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_INVALID) {
++			*operation_result = AUX_RET_ERROR_INVALID_REPLY;
+ 		} else {
+ 			*operation_result = AUX_RET_ERROR_UNKNOWN;
  		}
- 		/*
--		 * If neither a proper type 1 ID nor a broken type 1 adaptor
--		 * as described above, assume type 1, but let the user know
--		 * that we may have misdetected the type.
-+		 * If not a proper type 1 ID, still assume type 1, but let
-+		 * the user know that we may have misdetected the type.
- 		 */
--		if (!is_type1_adaptor(adaptor_id) && adaptor_id != hdmi_id[0])
-+		if (!is_type1_adaptor(adaptor_id))
- 			drm_err(dev, "Unexpected DP dual mode adaptor ID %02x\n", adaptor_id);
+@@ -10196,6 +10206,16 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 			payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
+ 			if (!payload->write && adev->dm.dmub_notify->aux_reply.length &&
+ 			    payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK) {
++
++				if (payload->length != adev->dm.dmub_notify->aux_reply.length) {
++					DRM_WARN("invalid read from DPIA AUX %x(%d) got length %d!\n",
++							payload->address, payload->length,
++							adev->dm.dmub_notify->aux_reply.length);
++					return amdgpu_dm_set_dmub_async_sync_status(is_cmd_aux, ctx,
++							DMUB_ASYNC_TO_SYNC_ACCESS_INVALID,
++							(uint32_t *)operation_result);
++				}
++
+ 				memcpy(payload->data, adev->dm.dmub_notify->aux_reply.data,
+ 				       adev->dm.dmub_notify->aux_reply.length);
+ 			}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -51,12 +51,6 @@
+ #define AMDGPU_DMUB_NOTIFICATION_MAX 5
  
- 	}
-@@ -343,10 +352,8 @@ EXPORT_SYMBOL(drm_dp_dual_mode_get_tmds_
-  * @enable: enable (as opposed to disable) the TMDS output buffers
-  *
-  * Set the state of the TMDS output buffers in the adaptor. For
-- * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register. As
-- * some type 1 adaptors have problems with registers (see comments
-- * in drm_dp_dual_mode_detect()) we avoid touching the register,
-- * making this function a no-op on type 1 adaptors.
-+ * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register.
-+ * Type1 adaptors do not support any register writes.
-  *
-  * Returns:
-  * 0 on success, negative error code on failure
+ /*
+- * DMUB Async to Sync Mechanism Status
+- */
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_FAIL 1
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_TIMEOUT 2
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS 3
+-/*
+ #include "include/amdgpu_dal_power_if.h"
+ #include "amdgpu_dm_irq.h"
+ */
 
 
