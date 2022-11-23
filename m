@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442311C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8204AC433D6;
-	Wed, 23 Nov 2022 09:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FF61C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22233C433C1;
+	Wed, 23 Nov 2022 09:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194516;
-	bh=SN3BZFFGmbsH+aakDdyP9OE2PoHA0WxBD8a4S5++v9s=;
+	s=korg; t=1669194519;
+	bh=zRrtcxO3mtb3gKxu3WPEtvVkdAyfEjPyGaK50ToQ/2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZzyojwZHuedr6n1cUH/r/Sdu4aSP4Q8byaZrjcFeCDt+X7Cy1ZH0qy4oDuUcinlO
-	 wlaKmK0dixQ02qb212AqIkuuAShq0bqYhURRE1glulrSQZUGx7ZtyZexY9Yj9f6e7C
-	 LPa++Yc6fskdz5SgmTFy5YKwAbjeGV3G9rILFLm4=
+	b=eUOj/risffhiANB3mt5thxSvIcfIka+Q4wpidwu92+VbKeK7xGT1B1ftDuYQNKWOH
+	 +u0oYQKO9ZlzhA05bGhVQIbmC9aGzkIaxLY83NtAwNdLmnvUAiJr/4EWDETYNAOT4M
+	 WfsmBgFG7RrjPvo0myhZYsey5fmN1Ega8NoJQDeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mike Christie <michael.chritie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chen Jun <chenjun102@huawei.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 099/114] scsi: target: tcm_loop: Fix possible name leak in tcm_loop_setup_hba_bus()
-Date: Wed, 23 Nov 2022 09:51:26 +0100
-Message-Id: <20221123084555.714615701@linuxfoundation.org>
+Subject: [PATCH 4.19 100/114] Input: i8042 - fix leaking of platform device on module removal
+Date: Wed, 23 Nov 2022 09:51:27 +0100
+Message-Id: <20221123084555.745403481@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -36,48 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Chen Jun <chenjun102@huawei.com>
 
-[ Upstream commit bc68e428d4963af0201e92159629ab96948f0893 ]
+[ Upstream commit 81cd7e8489278d28794e7b272950c3e00c344e44 ]
 
-If device_register() fails in tcm_loop_setup_hba_bus(), the name allocated
-by dev_set_name() need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
-The 'tl_hba' will be freed in tcm_loop_release_adapter(), so it don't need
-goto error label in this case.
+Avoid resetting the module-wide i8042_platform_device pointer in
+i8042_probe() or i8042_remove(), so that the device can be properly
+destroyed by i8042_exit() on module unload.
 
-Fixes: 3703b2c5d041 ("[SCSI] tcm_loop: Add multi-fabric Linux/SCSI LLD fabric module")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115015042.3652261-1-yangyingliang@huawei.com
-Reviewed-by: Mike Christie <michael.chritie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9222ba68c3f4 ("Input: i8042 - add deferred probe support")
+Signed-off-by: Chen Jun <chenjun102@huawei.com>
+Link: https://lore.kernel.org/r/20221109034148.23821-1-chenjun102@huawei.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/loopback/tcm_loop.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/serio/i8042.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/target/loopback/tcm_loop.c b/drivers/target/loopback/tcm_loop.c
-index bc8918f382e4..80b74db4048b 100644
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -409,6 +409,7 @@ static int tcm_loop_setup_hba_bus(struct tcm_loop_hba *tl_hba, int tcm_loop_host
- 	ret = device_register(&tl_hba->dev);
- 	if (ret) {
- 		pr_err("device_register() failed for tl_hba->dev: %d\n", ret);
-+		put_device(&tl_hba->dev);
- 		return -ENODEV;
- 	}
+diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
+index 082afbf088d6..c9b51511b33d 100644
+--- a/drivers/input/serio/i8042.c
++++ b/drivers/input/serio/i8042.c
+@@ -1544,8 +1544,6 @@ static int i8042_probe(struct platform_device *dev)
+ {
+ 	int error;
  
-@@ -1103,7 +1104,7 @@ static struct se_wwn *tcm_loop_make_scsi_hba(
- 	 */
- 	ret = tcm_loop_setup_hba_bus(tl_hba, tcm_loop_hba_no_cnt);
- 	if (ret)
--		goto out;
-+		return ERR_PTR(ret);
+-	i8042_platform_device = dev;
+-
+ 	if (i8042_reset == I8042_RESET_ALWAYS) {
+ 		error = i8042_controller_selftest();
+ 		if (error)
+@@ -1583,7 +1581,6 @@ static int i8042_probe(struct platform_device *dev)
+ 	i8042_free_aux_ports();	/* in case KBD failed but AUX not */
+ 	i8042_free_irqs();
+ 	i8042_controller_reset(false);
+-	i8042_platform_device = NULL;
  
- 	sh = tl_hba->sh;
- 	tcm_loop_hba_no_cnt++;
+ 	return error;
+ }
+@@ -1593,7 +1590,6 @@ static int i8042_remove(struct platform_device *dev)
+ 	i8042_unregister_ports();
+ 	i8042_free_irqs();
+ 	i8042_controller_reset(false);
+-	i8042_platform_device = NULL;
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
