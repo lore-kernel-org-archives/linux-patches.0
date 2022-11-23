@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677061C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A0FC433D6;
-	Wed, 23 Nov 2022 09:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104591C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:10:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F48BC433C1;
+	Wed, 23 Nov 2022 09:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194639;
-	bh=GhXVaMMPq+UaqeaYn61W7XBXEWGHPVFdhdeY8zM2vTA=;
+	s=korg; t=1669194642;
+	bh=ZyIsjk83RiWDYobLCizAPcbpgtskiaSiiPgPFhWC6U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ds6vyVWjCDyOvwJYRz7X7WFbOZ5h/3EBqXGl5g3KNHaEYovrLeQLuaTvBaa5JOBvU
-	 CzDgtzcmQz8EueDOLqLJskgaT+uxqo7cSio/W0pmOOKLx89miI9hbK7CvNWjEu1pyY
-	 7oiZOjB6mxUqZsNio2BNQ+1ps/MHHRlemVt4jpfo=
+	b=lDsitFP0Il4W7F7osnWhVn/1l+2XzhQBgf1MoHmJ/l7WYCWT8ZtkGhBE8Cx8kw/iM
+	 9uNvLm9MjVySsRy8xj7tQeUQTrFJqPbKIlsVJElKsexFhI30HDzFEpC2FfXKMuU2ZJ
+	 7NO2Ub0+U99oq/D3+34F0IFdpQsfkv7hSsBBYMEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 002/156] xfs: rename xfs_bmap_is_real_extent to is_written_extent
-Date: Wed, 23 Nov 2022 09:49:19 +0100
-Message-Id: <20221123084557.926302292@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 020/156] drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
+Date: Wed, 23 Nov 2022 09:49:37 +0100
+Message-Id: <20221123084558.657301431@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,87 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 877f58f53684f14ca3202640f70592bf44890924 upstream.
+[ Upstream commit cf53db768a8790fdaae2fa3a81322b080285f7e5 ]
 
-[ Slightly modify fs/xfs/libxfs/xfs_rtbitmap.c & fs/xfs/xfs_reflink.c to
-  resolve merge conflict ]
+A problem about modprobe vc4 failed is triggered with the following log
+given:
 
-The name of this predicate is a little misleading -- it decides if the
-extent mapping is allocated and written.  Change the name to be more
-direct, as we're going to add a new predicate in the next patch.
+ [  420.327987] Error: Driver 'vc4_hvs' is already registered, aborting...
+ [  420.333904] failed to register platform driver vc4_hvs_driver [vc4]: -16
+ modprobe: ERROR: could not insert 'vc4': Device or resource busy
 
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The reason is that vc4_drm_register() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+fails, it returns without unregistering all the vc4 drivers, resulting the
+vc4 can never be installed later.
+A simple call graph is shown as below:
+
+ vc4_drm_register()
+   platform_register_drivers() # all vc4 drivers are registered
+   platform_driver_register()
+     driver_register()
+       bus_add_driver()
+         priv = kzalloc(...) # OOM happened
+   # return without unregister drivers
+
+Fixing this problem by checking the return value of
+platform_driver_register() and do platform_unregister_drivers() if
+error happened.
+
+Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221103014705.109322-1-yuancan@huawei.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_bmap.h     |    2 +-
- fs/xfs/libxfs/xfs_rtbitmap.c |    2 +-
- fs/xfs/xfs_reflink.c         |    8 ++++----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/vc4/vc4_drv.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_bmap.h
-+++ b/fs/xfs/libxfs/xfs_bmap.h
-@@ -163,7 +163,7 @@ static inline int xfs_bmapi_whichfork(in
-  * Return true if the extent is a real, allocated extent, or false if it is  a
-  * delayed allocation, and unwritten extent or a hole.
-  */
--static inline bool xfs_bmap_is_real_extent(struct xfs_bmbt_irec *irec)
-+static inline bool xfs_bmap_is_written_extent(struct xfs_bmbt_irec *irec)
- {
- 	return irec->br_state != XFS_EXT_UNWRITTEN &&
- 		irec->br_startblock != HOLESTARTBLOCK &&
---- a/fs/xfs/libxfs/xfs_rtbitmap.c
-+++ b/fs/xfs/libxfs/xfs_rtbitmap.c
-@@ -70,7 +70,7 @@ xfs_rtbuf_get(
- 	if (error)
- 		return error;
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index 0d78ba017a29..36688a56c91c 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -392,7 +392,12 @@ static int __init vc4_drm_register(void)
+ 	if (ret)
+ 		return ret;
  
--	if (nmap == 0 || !xfs_bmap_is_real_extent(&map)) {
-+	if (nmap == 0 || !xfs_bmap_is_written_extent(&map)) {
- 		XFS_ERROR_REPORT(__func__, XFS_ERRLEVEL_LOW, mp);
- 		return -EFSCORRUPTED;
- 	}
---- a/fs/xfs/xfs_reflink.c
-+++ b/fs/xfs/xfs_reflink.c
-@@ -181,7 +181,7 @@ xfs_reflink_trim_around_shared(
- 	int			error = 0;
+-	return platform_driver_register(&vc4_platform_driver);
++	ret = platform_driver_register(&vc4_platform_driver);
++	if (ret)
++		platform_unregister_drivers(component_drivers,
++					    ARRAY_SIZE(component_drivers));
++
++	return ret;
+ }
  
- 	/* Holes, unwritten, and delalloc extents cannot be shared */
--	if (!xfs_is_cow_inode(ip) || !xfs_bmap_is_real_extent(irec)) {
-+	if (!xfs_is_cow_inode(ip) || !xfs_bmap_is_written_extent(irec)) {
- 		*shared = false;
- 		return 0;
- 	}
-@@ -657,7 +657,7 @@ xfs_reflink_end_cow_extent(
- 	 * preallocations can leak into the range we are called upon, and we
- 	 * need to skip them.
- 	 */
--	if (!xfs_bmap_is_real_extent(&got)) {
-+	if (!xfs_bmap_is_written_extent(&got)) {
- 		*end_fsb = del.br_startoff;
- 		goto out_cancel;
- 	}
-@@ -998,7 +998,7 @@ xfs_reflink_remap_extent(
- 	xfs_off_t		new_isize)
- {
- 	struct xfs_mount	*mp = ip->i_mount;
--	bool			real_extent = xfs_bmap_is_real_extent(irec);
-+	bool			real_extent = xfs_bmap_is_written_extent(irec);
- 	struct xfs_trans	*tp;
- 	unsigned int		resblks;
- 	struct xfs_bmbt_irec	uirec;
-@@ -1427,7 +1427,7 @@ xfs_reflink_dirty_extents(
- 			goto out;
- 		if (nmaps == 0)
- 			break;
--		if (!xfs_bmap_is_real_extent(&map[0]))
-+		if (!xfs_bmap_is_written_extent(&map[0]))
- 			goto next;
- 
- 		map[1] = map[0];
+ static void __exit vc4_drm_unregister(void)
+-- 
+2.35.1
+
 
 
