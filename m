@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55FD7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3AEC433C1;
-	Wed, 23 Nov 2022 08:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280957B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E39DC433C1;
+	Wed, 23 Nov 2022 08:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193867;
-	bh=0gcBp1EZb5Qzput6Uy9st24miVHHhb7T6sdfzLqWLyE=;
+	s=korg; t=1669193870;
+	bh=tE2HAV8kIHJPsljpL3zxwrQsBovYKkLHTnkuxp7icLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rmept7EI2BPzsnIMDYrkUiBYnMAq+GY8Y9a6i444Gbpwn3O7+8qPhlbvmc7X2yC0T
-	 U0ngfR5jOirvgnRp85F+wG04zwk5wUuQxe7x/92/WfCHAJ2E1biMUkvJ77jDzHBe1c
-	 2NyezFxEjdJAxVff3l4DJqxYgvG3c/NuSRCM6dhY=
+	b=Y2n/9bpVhXtaquRHV+cM0O33yURaP9654mwtg5qGqDHEAVP6ldFte2nBAo0K2NdCJ
+	 XORWa6NgiEmC/UhbJP8RCp5ev3yarC48WPIph9XDkn5mJr7989r/4jAaFSRz5TvVN+
+	 RyT+xREnWlEIw8DTrUk39+JXqUjNLZoGW9ts+Ynk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 4.9 62/76] serial: 8250_lpss: Configure DMA also w/o DMA filter
-Date: Wed, 23 Nov 2022 09:51:01 +0100
-Message-Id: <20221123084548.787883897@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.9 53/76] USB: serial: option: add u-blox LARA-L6 modem
+Date: Wed, 23 Nov 2022 09:50:52 +0100
+Message-Id: <20221123084548.503575213@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,63 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit 1bfcbe5805d0cfc83c3544dcd01e0a282c1f6790 upstream.
+commit c1547f12df8b8e9ca2686accee43213ecd117efe upstream.
 
-If the platform doesn't use DMA device filter (as is the case with
-Elkhart Lake), whole lpss8250_dma_setup() setup is skipped. This
-results in skipping also *_maxburst setup which is undesirable.
-Refactor lpss8250_dma_setup() to configure DMA even if filter is not
-setup.
+Add LARA-L6 PIDs for three different USB compositions.
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221108121952.5497-3-ilpo.jarvinen@linux.intel.com
+LARA-L6 module can be configured (by AT interface) in three different
+USB modes:
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
+interfaces
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
+interfaces and 1 RmNet virtual network interface
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
+interface and 1 CDC-ECM virtual network interface
+
+In default mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-L6 exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parset/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+[ johan: drop PID defines in favour of comments ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -245,8 +245,13 @@ static int lpss8250_dma_setup(struct lps
- 	struct dw_dma_slave *rx_param, *tx_param;
- 	struct device *dev = port->port.dev;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -165,6 +165,8 @@ static void option_instat_callback(struc
+ #define NOVATELWIRELESS_PRODUCT_G2		0xA010
+ #define NOVATELWIRELESS_PRODUCT_MC551		0xB001
  
--	if (!lpss->dma_param.dma_dev)
-+	if (!lpss->dma_param.dma_dev) {
-+		dma = port->dma;
-+		if (dma)
-+			goto out_configuration_only;
++#define UBLOX_VENDOR_ID				0x1546
 +
- 		return 0;
-+	}
- 
- 	rx_param = devm_kzalloc(dev, sizeof(*rx_param), GFP_KERNEL);
- 	if (!rx_param)
-@@ -257,16 +262,18 @@ static int lpss8250_dma_setup(struct lps
- 		return -ENOMEM;
- 
- 	*rx_param = lpss->dma_param;
--	dma->rxconf.src_maxburst = lpss->dma_maxburst;
--
- 	*tx_param = lpss->dma_param;
--	dma->txconf.dst_maxburst = lpss->dma_maxburst;
- 
- 	dma->fn = lpss8250_dma_filter;
- 	dma->rx_param = rx_param;
- 	dma->tx_param = tx_param;
- 
- 	port->dma = dma;
-+
-+out_configuration_only:
-+	dma->rxconf.src_maxburst = lpss->dma_maxburst;
-+	dma->txconf.dst_maxburst = lpss->dma_maxburst;
-+
- 	return 0;
- }
- 
+ /* AMOI PRODUCTS */
+ #define AMOI_VENDOR_ID				0x1614
+ #define AMOI_PRODUCT_H01			0x0800
+@@ -1121,6 +1123,12 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
++	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1343),		/* u-blox LARA-L6 (ECM) */
++	  .driver_info = RSVD(4) },
+ 	/* Quectel products using Quectel vendor ID */
+ 	{ USB_DEVICE(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21),
+ 	  .driver_info = RSVD(4) },
 
 
