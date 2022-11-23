@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6F31C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071ABC433D7;
-	Wed, 23 Nov 2022 09:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0051C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9797C433D6;
+	Wed, 23 Nov 2022 09:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196218;
-	bh=EKZ4cdmEZz25H9XGgwx9cNIJnnHiTuH/vUNa9qb7MUI=;
+	s=korg; t=1669196222;
+	bh=0IbsUDIFqY96nQG5GiND1XTtBWpVR/czehVD67FXCLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5sNTm1xtP4EdRSTH5pxgSbcPk/yDl+0HcsaZfQC5NU/PlsnCe9XSPm/Es/cmHxiK
-	 Y5uHPqX5fcCb91hX6TfXpfYCmvavUo0wu9SZQCF575bW0zmXSf6RG6/rxOtFDsC4tU
-	 mGS0jVkG1s9LgGk7vr3E081iWBMarYpaEjyEjANA=
+	b=1djHhiXrvShLyFWZxtEPcobIxmlJfrw5hQXVdDYq2Df7jyyaV1q4ZwgSJKCNIy8HW
+	 ru3pAGyRW62JbcqFhnYVI49BUsQ3Dq5Hgpt9K4cR8IVzr5kRvdPcoqKwo7JspqIT0Z
+	 TRZpfSE1OWtLz7v2g94jHm1eVz9O/mV/c+9/Ylcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chevron Li <chevron.li@bayhubtech.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 152/181] mmc: sdhci-pci-o2micro: fix card detect fail issue caused by CD# debounce timeout
-Date: Wed, 23 Nov 2022 09:51:55 +0100
-Message-Id: <20221123084608.915508900@linuxfoundation.org>
+Subject: [PATCH 5.15 153/181] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
+Date: Wed, 23 Nov 2022 09:51:56 +0100
+Message-Id: <20221123084608.962064179@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,45 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chevron Li <chevron.li@bayhubtech.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-commit 096cc0cddf58232bded309336961784f1d1c85f8 upstream.
+commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
 
-The SD card is recognized failed sometimes when resume from suspend.
-Because CD# debounce time too long then card present report wrong.
-Finally, card is recognized failed.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before amd_probe() returns. There is no problem for the 'smbus_dev ==
+NULL' branch because pci_dev_put() can also handle the NULL input
+parameter case.
 
-Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
+Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221104095512.4068-1-chevron.li@bayhubtech.com
+Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-o2micro.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/host/sdhci-pci-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci-pci-o2micro.c
-+++ b/drivers/mmc/host/sdhci-pci-o2micro.c
-@@ -31,6 +31,7 @@
- #define O2_SD_CAPS		0xE0
- #define O2_SD_ADMA1		0xE2
- #define O2_SD_ADMA2		0xE7
-+#define O2_SD_MISC_CTRL2	0xF0
- #define O2_SD_INF_MOD		0xF1
- #define O2_SD_MISC_CTRL4	0xFC
- #define O2_SD_MISC_CTRL		0x1C0
-@@ -830,6 +831,12 @@ static int sdhci_pci_o2_probe(struct sdh
- 		/* Set Tuning Windows to 5 */
- 		pci_write_config_byte(chip->pdev,
- 				O2_SD_TUNING_CTRL, 0x55);
-+		//Adjust 1st and 2nd CD debounce time
-+		pci_read_config_dword(chip->pdev, O2_SD_MISC_CTRL2, &scratch_32);
-+		scratch_32 &= 0xFFE7FFFF;
-+		scratch_32 |= 0x00180000;
-+		pci_write_config_dword(chip->pdev, O2_SD_MISC_CTRL2, scratch_32);
-+		pci_write_config_dword(chip->pdev, O2_SD_DETECT_SETTING, 1);
- 		/* Lock WP */
- 		ret = pci_read_config_byte(chip->pdev,
- 					   O2_SD_LOCK_WP, &scratch);
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -1818,6 +1818,8 @@ static int amd_probe(struct sdhci_pci_ch
+ 		}
+ 	}
+ 
++	pci_dev_put(smbus_dev);
++
+ 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
+ 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
+ 
 
 
