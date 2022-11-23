@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384391C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9191BC433B5;
-	Wed, 23 Nov 2022 09:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415D71C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7815C433B5;
+	Wed, 23 Nov 2022 09:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197200;
-	bh=QUidASXV2Hx8XkfztRf8O5GMKzZDoGx9Zp/e2NlKmPw=;
+	s=korg; t=1669197204;
+	bh=NZ9Inb07yjO1KPDxMKA60xvWbluxDgPha8pzpTQYxKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v450pTl0nWC3M5ijK68qZQARpc5OtRZTnUrc1LoLsK0Ot2/TMJCeXzMxAS2orTaEi
-	 yf9X6hVAZYK97027cEAELiCjdjcT3WG8bULZY7+AYAp2sK6PTncmWmAHBnUSZO/Yyx
-	 +WiD1dkpIlAlLHzFMN15DbSVQthWAPjeL88Zjbfw=
+	b=2kPJgmgTBrtXgPA/R9w53MShwjjivNPf93LqkuUorwq4afosffuj5NgKux4xRTKQe
+	 yiQmx/F8TkLy9eIn4r1CxgNllUQBJ5LSx8PnBTgMfFj6Yebn8Q29zwOherKBfxxrcM
+	 wc3o2i3kaetToNz7MWkk23CN6F+AYaBtLJZKUUcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 226/314] io_uring: update res mask in io_poll_check_events
-Date: Wed, 23 Nov 2022 09:51:11 +0100
-Message-Id: <20221123084635.768677526@linuxfoundation.org>
+	Bean Huo <beanhuo@micron.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.0 227/314] nvme-pci: add NVME_QUIRK_BOGUS_NID for Micron Nitro
+Date: Wed, 23 Nov 2022 09:51:12 +0100
+Message-Id: <20221123084635.808188017@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,39 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Bean Huo <beanhuo@micron.com>
 
-commit b98186aee22fa593bc8c6b2c5d839c2ee518bc8c upstream.
+commit d5ceb4d1c50786d21de3d4b06c3f43109ec56dd8 upstream.
 
-When io_poll_check_events() collides with someone attempting to queue a
-task work, it'll spin for one more time. However, it'll continue to use
-the mask from the first iteration instead of updating it. For example,
-if the first wake up was a EPOLLIN and the second EPOLLOUT, the
-userspace will not get EPOLLOUT in time.
+Added a quirk to fix Micron Nitro NVMe reporting duplicate NGUIDs.
 
-Clear the mask for all subsequent iterations to force vfs_poll().
-
-Cc: stable@vger.kernel.org
-Fixes: aa43477b04025 ("io_uring: poll rework")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/2dac97e8f691231049cb259c4ae57e79e40b537c.1668710222.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -256,6 +256,9 @@ static int io_poll_check_events(struct i
- 				return ret;
- 		}
- 
-+		/* force the next iteration to vfs_poll() */
-+		req->cqe.res = 0;
-+
- 		/*
- 		 * Release all references, retry if someone tried to restart
- 		 * task_work while we were executing it.
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3488,6 +3488,8 @@ static const struct pci_device_id nvme_i
+ 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	 { PCI_DEVICE(0x1344, 0x5407), /* Micron Technology Inc NVMe SSD */
+ 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
++	 { PCI_DEVICE(0x1344, 0x6001),   /* Micron Nitro NVMe */
++		 .driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
 
 
