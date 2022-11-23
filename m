@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6487F1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C7FC433C1;
-	Wed, 23 Nov 2022 09:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438251C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6432BC433C1;
+	Wed, 23 Nov 2022 09:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196814;
-	bh=CGrDR4utkag3YGuxsoFh0/Qwbf6BHTkGQL0iBcWsr6E=;
+	s=korg; t=1669196817;
+	bh=PibUpeYMLBbUQiYCyPbuF/slTeh4Hlr4bhqqK+lE9bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/6N5w/7OFKuQRYOulQYkedQJfPpVGz3WOhAIsIkamhZPHK9monflAAncap/oBJJM
-	 KnsGjRtQ5O2peCJx/PzXKmfmDQSIskW/zTzdzA9IHqA8S0BVpGrZ8AkCbKMAkAdmA7
-	 TK6i2jqtQYBV3ARLj+nz5mGrJh6zH0hufUL4+E9g=
+	b=k2FLBLXz3wj7CPjI/WT9U01w7xYelixGF/o5bAkW3anzEbYXpkSCVqH5sS7vBcsQs
+	 V0Xi0MxYML7v9mwWZPi/U8IkC6D6Pl6SvOWLNiYQ7cuhdvsny+rhxHgmDD+e9FAwAe
+	 fEEaHSlDK70sIYPawi+Yrl9Ey3I99OSJYplIKd8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eric Dumazet <edumazet@google.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 104/314] bpf, test_run: Fix alignment problem in bpf_prog_test_run_skb()
-Date: Wed, 23 Nov 2022 09:49:09 +0100
-Message-Id: <20221123084630.207782379@linuxfoundation.org>
+Subject: [PATCH 6.0 131/314] arm64: dts: imx8mm-tqma8mqml-mba8mx: Fix USB DR
+Date: Wed, 23 Nov 2022 09:49:36 +0100
+Message-Id: <20221123084631.474405706@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,72 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit d3fd203f36d46aa29600a72d57a1b61af80e4a25 ]
+[ Upstream commit 63fd9437ec81899fc36bb642d558378bc89aa4f9 ]
 
-We got a syzkaller problem because of aarch64 alignment fault
-if KFENCE enabled. When the size from user bpf program is an odd
-number, like 399, 407, etc, it will cause the struct skb_shared_info's
-unaligned access. As seen below:
+Using extcon USB host mode works properly on DR interface, e.g.
+enabling/disabling VBUS. But USB device mode is not working.
+Fix this by switching to usb-role-switch instead.
 
-  BUG: KFENCE: use-after-free read in __skb_clone+0x23c/0x2a0 net/core/skbuff.c:1032
-
-  Use-after-free read at 0xffff6254fffac077 (in kfence-#213):
-   __lse_atomic_add arch/arm64/include/asm/atomic_lse.h:26 [inline]
-   arch_atomic_add arch/arm64/include/asm/atomic.h:28 [inline]
-   arch_atomic_inc include/linux/atomic-arch-fallback.h:270 [inline]
-   atomic_inc include/asm-generic/atomic-instrumented.h:241 [inline]
-   __skb_clone+0x23c/0x2a0 net/core/skbuff.c:1032
-   skb_clone+0xf4/0x214 net/core/skbuff.c:1481
-   ____bpf_clone_redirect net/core/filter.c:2433 [inline]
-   bpf_clone_redirect+0x78/0x1c0 net/core/filter.c:2420
-   bpf_prog_d3839dd9068ceb51+0x80/0x330
-   bpf_dispatcher_nop_func include/linux/bpf.h:728 [inline]
-   bpf_test_run+0x3c0/0x6c0 net/bpf/test_run.c:53
-   bpf_prog_test_run_skb+0x638/0xa7c net/bpf/test_run.c:594
-   bpf_prog_test_run kernel/bpf/syscall.c:3148 [inline]
-   __do_sys_bpf kernel/bpf/syscall.c:4441 [inline]
-   __se_sys_bpf+0xad0/0x1634 kernel/bpf/syscall.c:4381
-
-  kfence-#213: 0xffff6254fffac000-0xffff6254fffac196, size=407, cache=kmalloc-512
-
-  allocated by task 15074 on cpu 0 at 1342.585390s:
-   kmalloc include/linux/slab.h:568 [inline]
-   kzalloc include/linux/slab.h:675 [inline]
-   bpf_test_init.isra.0+0xac/0x290 net/bpf/test_run.c:191
-   bpf_prog_test_run_skb+0x11c/0xa7c net/bpf/test_run.c:512
-   bpf_prog_test_run kernel/bpf/syscall.c:3148 [inline]
-   __do_sys_bpf kernel/bpf/syscall.c:4441 [inline]
-   __se_sys_bpf+0xad0/0x1634 kernel/bpf/syscall.c:4381
-   __arm64_sys_bpf+0x50/0x60 kernel/bpf/syscall.c:4381
-
-To fix the problem, we adjust @size so that (@size + @hearoom) is a
-multiple of SMP_CACHE_BYTES. So we make sure the struct skb_shared_info
-is aligned to a cache line.
-
-Fixes: 1cf1cae963c2 ("bpf: introduce BPF_PROG_TEST_RUN command")
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/bpf/20221102081620.1465154-1-zhongbaisong@huawei.com
+Fixes: dfcd1b6f7620 ("arm64: dts: freescale: add initial device tree for TQMa8MQML with i.MX8MM")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../dts/freescale/imx8mm-tqma8mqml-mba8mx.dts | 32 +++++++++++++++----
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index d11209367dd0..b422238f9f86 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -733,6 +733,7 @@ static void *bpf_test_init(const union bpf_attr *kattr, u32 user_size,
- 	if (user_size > size)
- 		return ERR_PTR(-EMSGSIZE);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
+index 7e0aeb2db305..a0aeac619929 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml-mba8mx.dts
+@@ -34,11 +34,25 @@ reg_usdhc2_vmmc: regulator-vmmc {
+ 		off-on-delay-us = <12000>;
+ 	};
  
-+	size = SKB_DATA_ALIGN(size);
- 	data = kzalloc(size + headroom + tailroom, GFP_USER);
- 	if (!data)
- 		return ERR_PTR(-ENOMEM);
+-	extcon_usbotg1: extcon-usbotg1 {
+-		compatible = "linux,extcon-usb-gpio";
++	connector {
++		compatible = "gpio-usb-b-connector", "usb-b-connector";
++		type = "micro";
++		label = "X19";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pinctrl_usb1_extcon>;
+-		id-gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&pinctrl_usb1_connector>;
++		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				usb_dr_connector: endpoint {
++					remote-endpoint = <&usb1_drd_sw>;
++				};
++			};
++		};
+ 	};
+ };
+ 
+@@ -105,13 +119,19 @@ &usbotg1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_usbotg1>;
+ 	dr_mode = "otg";
+-	extcon = <&extcon_usbotg1>;
+ 	srp-disable;
+ 	hnp-disable;
+ 	adp-disable;
+ 	power-active-high;
+ 	over-current-active-low;
++	usb-role-switch;
+ 	status = "okay";
++
++	port {
++		usb1_drd_sw: endpoint {
++			remote-endpoint = <&usb_dr_connector>;
++		};
++	};
+ };
+ 
+ &usbotg2 {
+@@ -231,7 +251,7 @@ pinctrl_usbotg1: usbotg1grp {
+ 			   <MX8MM_IOMUXC_GPIO1_IO13_USB1_OTG_OC		0x84>;
+ 	};
+ 
+-	pinctrl_usb1_extcon: usb1-extcongrp {
++	pinctrl_usb1_connector: usb1-connectorgrp {
+ 		fsl,pins = <MX8MM_IOMUXC_GPIO1_IO10_GPIO1_IO10		0x1c0>;
+ 	};
+ 
 -- 
 2.35.1
 
