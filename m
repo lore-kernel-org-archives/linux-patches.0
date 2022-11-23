@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8DB1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E605FC43151;
-	Wed, 23 Nov 2022 09:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77331C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11334C433D6;
+	Wed, 23 Nov 2022 09:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196961;
-	bh=sa5YvF7LifWQ6aZRv1t5yDOh8mEtqf/ISwb7PfrcqaI=;
+	s=korg; t=1669196965;
+	bh=Aggbpxdm1Mi46rnqdyBpdbKOOM0lFimbly89tIXEB1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbVTqrDGGDsjIWd9OpE2Pf1IFU9Qy7beTdfpu/IXHJzZZoaBGKdxY+yYa3IglO58a
-	 oFVEGvowfSdo4qc+R7bKSt1lVTJtG+meqxAc6XpItxtA/eU4Nm+cn3ij7PLuNftsxg
-	 C21tG5hqX42wCrZgAlsZsEyeN4BI0jt12cOtieP4=
+	b=ocjGP3HcotFtIPvvcAfRTBpQ+A7ttwKK54jzqkOsPchKVRBW7af6k/EEGelJx94Kk
+	 GvN24egb1Cxy71gkhWAJ7AMp+54t8RVdktHF0fGsHHuqblYDREfQL4GfAk/os5UQ48
+	 oFZlytk/6TFWmAcVa5+6q0poR4ZDEsvhJG09dzcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 159/314] bnxt_en: Remove debugfs when pci_register_driver failed
-Date: Wed, 23 Nov 2022 09:50:04 +0100
-Message-Id: <20221123084632.777940787@linuxfoundation.org>
+Subject: [PATCH 6.0 160/314] octeon_ep: delete unnecessary napi rollback under set_queues_err in octep_open()
+Date: Wed, 23 Nov 2022 09:50:05 +0100
+Message-Id: <20221123084632.820672883@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,48 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 991aef4ee4f6eb999924f429b943441a32835c8f ]
+[ Upstream commit 298b83e180d53a310f9b47e3bf13b7b583e75e9c ]
 
-When pci_register_driver failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+octep_napi_add() and octep_napi_enable() are all after
+netif_set_real_num_{tx,rx}_queues() in octep_open(), so it is unnecessary
+napi rollback under set_queues_err. Delete them to fix it.
 
-Resource leak logs as follows:
-[   52.184456] debugfs: Directory 'bnxt_en' with parent '/' already present!
-
-Fixes: cabfb09d87bd ("bnxt_en: add debugfs support for DIM")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Fixes: 37d79d059606 ("octeon_ep: add Tx/Rx processing and interrupt support")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 55d4efbb8614..57cabe20aa12 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -14037,8 +14037,16 @@ static struct pci_driver bnxt_pci_driver = {
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index 97f080c66dd4..7083c995d0c1 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -527,8 +527,6 @@ static int octep_open(struct net_device *netdev)
+ 	return 0;
  
- static int __init bnxt_init(void)
- {
-+	int err;
-+
- 	bnxt_debug_init();
--	return pci_register_driver(&bnxt_pci_driver);
-+	err = pci_register_driver(&bnxt_pci_driver);
-+	if (err) {
-+		bnxt_debug_exit();
-+		return err;
-+	}
-+
-+	return 0;
- }
- 
- static void __exit bnxt_exit(void)
+ set_queues_err:
+-	octep_napi_disable(oct);
+-	octep_napi_delete(oct);
+ 	octep_clean_irqs(oct);
+ setup_irq_err:
+ 	octep_free_oqs(oct);
 -- 
 2.35.1
 
