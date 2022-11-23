@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCC71C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:42:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A242AC433C1;
-	Wed, 23 Nov 2022 09:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6281C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:42:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC86C433D6;
+	Wed, 23 Nov 2022 09:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196524;
-	bh=COgMoRGC2qbClDmwoUTbT34A8Y2geTBApiLwhGghjDQ=;
+	s=korg; t=1669196528;
+	bh=Mw8TLCt2WFyOkNt3qgLi05EIYzHnLchcXcQJD7OwzqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnzNIUpMP63Qhc2SHCz+DVN76287Wp+dDZEAQOSBRTPk49QVQ6nRV5LRouiQo7a7A
-	 t99hwqSpH8Z1k2hIAKre4Z1rF4ffg3l3ucZsVFgX2MTZJpPsZ7UOUR8y6ybp6fiBT1
-	 feNt3ncrxVmunkDR3BTp0iK56ntA1d7H7S8Bdl1E=
+	b=yiz8BQrrD+Mtr5s5z7aV2zupCsBg/1Wc33VpoGu5BxS+l3+MWOb+BPdRN4Yu+rkXT
+	 Mvibjns6OnUaKHGQZMxa4lMoHIFlA765TaOgsWxr/u0OO3il7JZyJQ99kiRf4FBKk2
+	 +/qcGAaEIdJ3J/wUXqLn6Uc9rqE8c8FLYq+ZGRIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Chaitanya Dhere <Chaitanya.Dhere@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 038/314] drm/rockchip: vop2: fix null pointer in plane_atomic_disable
-Date: Wed, 23 Nov 2022 09:48:03 +0100
-Message-Id: <20221123084627.242640238@linuxfoundation.org>
+Subject: [PATCH 6.0 056/314] drm/amd/display: Investigate tool reported FCLK P-state deviations
+Date: Wed, 23 Nov 2022 09:48:21 +0100
+Message-Id: <20221123084628.038013005@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,48 +39,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Tretter <m.tretter@pengutronix.de>
+From: Nevenko Stupar <Nevenko.Stupar@amd.com>
 
-[ Upstream commit 471bf2406c043491b1a8288e5f04bc278f7d7ca1 ]
+[ Upstream commit 7461016c5706eb8c477752bf69e5c9f5a38f502b ]
 
-If the vop2_plane_atomic_disable function is called with NULL as a
-state, accessing the old_pstate runs into a null pointer exception.
-However, the drm_atomic_helper_disable_planes_on_crtc function calls the
-atomic_disable callback with state NULL.
+[Why]
+Fix for some of the tool reported modes for FCLK
+P-state deviations and UCLK P-state deviations that
+are coming from DSC terms and/or Scaling terms
+causing MinActiveFCLKChangeLatencySupported
+and MaxActiveDRAMClockChangeLatencySupported
+incorrectly calculated in DML for these configurations.
 
-Allow to disable a plane without passing a plane state by checking the
-old_pstate only if a state is passed.
-
-Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221028095206.2136601-2-m.tretter@pengutronix.de
+Reviewed-by: Chaitanya Dhere <Chaitanya.Dhere@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index f9aa8b96c695..bf9c3e92e1cd 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -997,13 +997,15 @@ static int vop2_plane_atomic_check(struct drm_plane *plane,
- static void vop2_plane_atomic_disable(struct drm_plane *plane,
- 				      struct drm_atomic_state *state)
- {
--	struct drm_plane_state *old_pstate = drm_atomic_get_old_plane_state(state, plane);
-+	struct drm_plane_state *old_pstate = NULL;
- 	struct vop2_win *win = to_vop2_win(plane);
- 	struct vop2 *vop2 = win->vop2;
- 
- 	drm_dbg(vop2->drm, "%s disable\n", win->data->name);
- 
--	if (!old_pstate->crtc)
-+	if (state)
-+		old_pstate = drm_atomic_get_old_plane_state(state, plane);
-+	if (old_pstate && !old_pstate->crtc)
- 		return;
- 
- 	vop2_win_disable(win);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
+index 6704465fe5b6..ea80874474e3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
+@@ -364,7 +364,8 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
+ 	for (k = 0; k < mode_lib->vba.NumberOfActiveSurfaces; ++k) {
+ 		v->DSCDelay[k] = dml32_DSCDelayRequirement(mode_lib->vba.DSCEnabled[k],
+ 				mode_lib->vba.ODMCombineEnabled[k], mode_lib->vba.DSCInputBitPerComponent[k],
+-				mode_lib->vba.OutputBpp[k], mode_lib->vba.HActive[k], mode_lib->vba.HTotal[k],
++				mode_lib->vba.OutputBppPerState[mode_lib->vba.VoltageLevel][k],
++				mode_lib->vba.HActive[k], mode_lib->vba.HTotal[k],
+ 				mode_lib->vba.NumberOfDSCSlices[k], mode_lib->vba.OutputFormat[k],
+ 				mode_lib->vba.Output[k], mode_lib->vba.PixelClock[k],
+ 				mode_lib->vba.PixelClockBackEnd[k]);
 -- 
 2.35.1
 
