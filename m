@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9021E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133A4C433C1;
-	Wed, 23 Nov 2022 09:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E2E1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABA1C433C1;
+	Wed, 23 Nov 2022 09:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195216;
-	bh=4cmOKSF0vJttC2ZSZJ+6bpxHAl/p+9nFE0GngYN1Lhw=;
+	s=korg; t=1669195219;
+	bh=VHxJDfLVsxZi1dGOPT27NeKAUeluNqJDD4tyII4ESXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cnej9vAXvjIUPr8/0qfwrQNXQdtwRTPXm5+t1dw/mFWFQzWMY2O/zKv0jD2qYa4y4
-	 ARw9okIvEz9AU9Q0/CCGLZE3BYUQeeR7jX8CdDLrNGX/ckClMx/nbYR5xqPhbhDL9j
-	 jsjTVoBK8rJg9oraTSEjUzmyecXSw6YLGUbaY5HU=
+	b=idWL4htfdF3Z0U0jHuNGt8XfSm1F7O43Z4ojCqCf4PiizNWtclYovY7j1oWYdY3wZ
+	 286BBFcHC96Lhxat8dorZtUgMXCg2elQ1H9ppeAFXvDF8yFWyMBp3uCXsQaolBYd1x
+	 QVwIQmNtzTAy+ibOoByisqx8MdaoIjj0vY2qBqZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/149] btrfs: remove pointless and double ulist frees in error paths of qgroup tests
-Date: Wed, 23 Nov 2022 09:50:04 +0100
-Message-Id: <20221123084558.781403744@linuxfoundation.org>
+Subject: [PATCH 5.10 022/149] Bluetooth: L2CAP: Fix l2cap_global_chan_by_psm
+Date: Wed, 23 Nov 2022 09:50:05 +0100
+Message-Id: <20221123084558.820898181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,131 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit d0ea17aec12ea0f7b9d2ed727d8ef8169d1e7699 ]
+[ Upstream commit f937b758a188d6fd328a81367087eddbb2fce50f ]
 
-Several places in the qgroup self tests follow the pattern of freeing the
-ulist pointer they passed to btrfs_find_all_roots() if the call to that
-function returned an error. That is pointless because that function always
-frees the ulist in case it returns an error.
+l2cap_global_chan_by_psm shall not return fixed channels as they are not
+meant to be connected by (S)PSM.
 
-Also In some places like at test_multiple_refs(), after a call to
-btrfs_qgroup_account_extent() we also leave "old_roots" and "new_roots"
-pointing to ulists that were freed, because btrfs_qgroup_account_extent()
-has freed those ulists, and if after that the next call to
-btrfs_find_all_roots() fails, we call ulist_free() on the "old_roots"
-ulist again, resulting in a double free.
-
-So remove those calls to reduce the code size and avoid double ulist
-free in case of an error.
-
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tests/qgroup-tests.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ net/bluetooth/l2cap_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
-index c4b31dccc184..289366c98f5b 100644
---- a/fs/btrfs/tests/qgroup-tests.c
-+++ b/fs/btrfs/tests/qgroup-tests.c
-@@ -230,7 +230,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
- 			false);
- 	if (ret) {
--		ulist_free(old_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -246,7 +245,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
- 			false);
- 	if (ret) {
- 		ulist_free(old_roots);
--		ulist_free(new_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -258,18 +256,19 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
- 		return ret;
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index e69e96ef4927..c5e4d2b8cb0b 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1986,7 +1986,7 @@ static struct l2cap_chan *l2cap_global_chan_by_psm(int state, __le16 psm,
+ 		if (link_type == LE_LINK && c->src_type == BDADDR_BREDR)
+ 			continue;
  
-+	/* btrfs_qgroup_account_extent() always frees the ulists passed to it. */
-+	old_roots = NULL;
-+	new_roots = NULL;
-+
- 	if (btrfs_verify_qgroup_counts(fs_info, BTRFS_FS_TREE_OBJECTID,
- 				nodesize, nodesize)) {
- 		test_err("qgroup counts didn't match expected values");
- 		return -EINVAL;
- 	}
--	old_roots = NULL;
--	new_roots = NULL;
+-		if (c->psm == psm) {
++		if (c->chan_type != L2CAP_CHAN_FIXED && c->psm == psm) {
+ 			int src_match, dst_match;
+ 			int src_any, dst_any;
  
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
- 			false);
- 	if (ret) {
--		ulist_free(old_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -284,7 +283,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
- 			false);
- 	if (ret) {
- 		ulist_free(old_roots);
--		ulist_free(new_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -335,7 +333,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
- 			false);
- 	if (ret) {
--		ulist_free(old_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -351,7 +348,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 			false);
- 	if (ret) {
- 		ulist_free(old_roots);
--		ulist_free(new_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -372,7 +368,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
- 			false);
- 	if (ret) {
--		ulist_free(old_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -388,7 +383,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 			false);
- 	if (ret) {
- 		ulist_free(old_roots);
--		ulist_free(new_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -415,7 +409,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
- 			false);
- 	if (ret) {
--		ulist_free(old_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
-@@ -431,7 +424,6 @@ static int test_multiple_refs(struct btrfs_root *root,
- 			false);
- 	if (ret) {
- 		ulist_free(old_roots);
--		ulist_free(new_roots);
- 		test_err("couldn't find old roots: %d", ret);
- 		return ret;
- 	}
 -- 
 2.35.1
 
