@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF0E1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B91C43470;
-	Wed, 23 Nov 2022 09:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFFA1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:49:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6D6C433D6;
+	Wed, 23 Nov 2022 09:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196980;
-	bh=g8WVvdd57OrwfvIwlzkMT4xFDAf/yGTsnBiPaEF5orA=;
+	s=korg; t=1669196983;
+	bh=NeKT4+ypP7mG+tJLszxiDLdC1jNFhcN2r7sRWpRO9M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PC6Yb5m7H/hIq9YGhapP0u+ZDouNaj+GmOhGITL6biKIGB2DXV1eTIssIaR1PIPFJ
-	 A2v5TmnEKNcOukovcUG6uVdeHJUD278UXaFD2nCkYWNgE67x1E3si7s5hrFAO0sLpu
-	 mdX52Q+oCC6l6i/327O3FuTRMIjlQhV69YO915ZY=
+	b=071cz1b5fPGvfaXQykYdFgvjySQPXwTFQ17ce6rZoSXCUom8CH//d+qhcCZzNrAv0
+	 etVjtMKsnMbVwXmsCv4H468ClueEDma4fdBMyepW5nEfABgvGHbiSro8LbCfFO7WLH
+	 Qsf++vsPeFarPKWH7xv9y2G/QRy3vCJ2NfCAyWnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 164/314] drm/lima: Fix opp clkname setting in case of missing regulator
-Date: Wed, 23 Nov 2022 09:50:09 +0100
-Message-Id: <20221123084633.002608525@linuxfoundation.org>
+Subject: [PATCH 6.0 138/314] ata: libata-transport: fix error handling in ata_tport_add()
+Date: Wed, 23 Nov 2022 09:49:43 +0100
+Message-Id: <20221123084631.793569349@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,61 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e17a025a47c66ca8499ae88d8046c4f0d7c9c057 ]
+[ Upstream commit 3613dbe3909dcc637fe6be00e4dc43b4aa0470ee ]
 
-Commit d8c32d3971e4 ("drm/lima: Migrate to dev_pm_opp_set_config()")
-introduced a regression as it may undo the clk_names setting in case
-the optional regulator is missing. This resulted in test and performance
-regressions with lima.
+In ata_tport_add(), the return value of transport_add_device() is
+not checked. As a result, it causes null-ptr-deref while removing
+the module, because transport_remove_device() is called to remove
+the device that was not added.
 
-Restore the old behavior where clk_names is set separately so it is not
-undone in case of a missing optional regulator.
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+CPU: 12 PID: 13605 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #8
+pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x48/0x39c
+lr : device_del+0x44/0x39c
+Call trace:
+ device_del+0x48/0x39c
+ attribute_container_class_device_del+0x28/0x40
+ transport_remove_classdev+0x60/0x7c
+ attribute_container_device_trigger+0x118/0x120
+ transport_remove_device+0x20/0x30
+ ata_tport_delete+0x34/0x60 [libata]
+ ata_port_detach+0x148/0x1b0 [libata]
+ ata_pci_remove_one+0x50/0x80 [libata]
+ ahci_remove_one+0x4c/0x8c [ahci]
 
-Fixes: d8c32d3971e4 ("drm/lima: Migrate to dev_pm_opp_set_config()")
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221027073200.3885839-1-nunes.erico@gmail.com
+Fix this by checking and handling return value of transport_add_device()
+in ata_tport_add().
+
+Fixes: d9027470b886 ("[libata] Add ATA transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_devfreq.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/ata/libata-transport.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_devfreq.c b/drivers/gpu/drm/lima/lima_devfreq.c
-index 011be7ff51e1..bc8fb4e38d0a 100644
---- a/drivers/gpu/drm/lima/lima_devfreq.c
-+++ b/drivers/gpu/drm/lima/lima_devfreq.c
-@@ -112,11 +112,6 @@ int lima_devfreq_init(struct lima_device *ldev)
- 	unsigned long cur_freq;
- 	int ret;
- 	const char *regulator_names[] = { "mali", NULL };
--	const char *clk_names[] = { "core", NULL };
--	struct dev_pm_opp_config config = {
--		.regulator_names = regulator_names,
--		.clk_names = clk_names,
--	};
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index 105da3ec5eaa..ef53bdfbcbb2 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -301,7 +301,9 @@ int ata_tport_add(struct device *parent,
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_forbid(dev);
  
- 	if (!device_property_present(dev, "operating-points-v2"))
- 		/* Optional, continue without devfreq */
-@@ -124,7 +119,15 @@ int lima_devfreq_init(struct lima_device *ldev)
+-	transport_add_device(dev);
++	error = transport_add_device(dev);
++	if (error)
++		goto tport_transport_add_err;
+ 	transport_configure_device(dev);
  
- 	spin_lock_init(&ldevfreq->lock);
+ 	error = ata_tlink_add(&ap->link);
+@@ -312,6 +314,7 @@ int ata_tport_add(struct device *parent,
  
--	ret = devm_pm_opp_set_config(dev, &config);
-+	/*
-+	 * clkname is set separately so it is not affected by the optional
-+	 * regulator setting which may return error.
-+	 */
-+	ret = devm_pm_opp_set_clkname(dev, "core");
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_pm_opp_set_regulators(dev, regulator_names);
- 	if (ret) {
- 		/* Continue if the optional regulator is missing */
- 		if (ret != -ENODEV)
+  tport_link_err:
+ 	transport_remove_device(dev);
++ tport_transport_add_err:
+ 	device_del(dev);
+ 
+  tport_err:
 -- 
 2.35.1
 
