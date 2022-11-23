@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBCF1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F0CC433C1;
-	Wed, 23 Nov 2022 09:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D841C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44480C433D6;
+	Wed, 23 Nov 2022 09:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194477;
-	bh=qNa6ZgqqhbvXTp/YjOxgoK9GO2CkeK9YAx27ryM4fMg=;
+	s=korg; t=1669194480;
+	bh=DTqj4f3MFNEmt6NouOqFEfOk9mcw3yIgeLKT1w9SodY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yx3jXmYlA40SggJdSgJSyBxYrvAOKp+9q4ZvRPKmQxaVVwwhe7s3EnM1OEbJ+Fgjx
-	 N35ALW94TZavrz71fclVP25F6kn4B1zKgALFAJ4mpqV/nqLTq57QdC1JbPDmNXdSJQ
-	 yDZtRlqk8vFdquLknA5lH4zrqyLUEEw8sF9B2Xis=
+	b=bKEXX8BLAhIotnaDPMBsbDNXJfpEKv0qInQ5msrHyeN79s3Jvbv79CfXTQoNRG27V
+	 2LD6ywY7z7J2XYjVN4ZYwnigo+wI0Ulo4y7g+sKgogdPPPxM+Lf8pX911kRmb23S6H
+	 cT5K2yc3JB3YVELdoV61CJ+97MnBmzLM0z4A3hto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 089/114] iio: adc: at91_adc: fix possible memory leak in at91_adc_allocate_trigger()
-Date: Wed, 23 Nov 2022 09:51:16 +0100
-Message-Id: <20221123084555.387784358@linuxfoundation.org>
+Subject: [PATCH 4.19 090/114] iio: trigger: sysfs: fix possible memory leak in iio_sysfs_trig_init()
+Date: Wed, 23 Nov 2022 09:51:17 +0100
+Message-Id: <20221123084555.428085772@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -37,35 +37,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 65f20301607d07ee279b0804d11a05a62a6c1a1c upstream.
+commit efa17e90e1711bdb084e3954fa44afb6647331c0 upstream.
 
-If iio_trigger_register() returns error, it should call iio_trigger_free()
-to give up the reference that hold in iio_trigger_alloc(), so that it can
-call iio_trig_release() to free memory when the refcount hit to 0.
+dev_set_name() allocates memory for name, it need be freed
+when device_add() fails, call put_device() to give up the
+reference that hold in device_initialize(), so that it can
+be freed in kobject_cleanup() when the refcount hit to 0.
 
-Fixes: 0e589d5fb317 ("ARM: AT91: IIO: Add AT91 ADC driver.")
+Fault injection test can trigger this:
+
+unreferenced object 0xffff8e8340a7b4c0 (size 32):
+  comm "modprobe", pid 243, jiffies 4294678145 (age 48.845s)
+  hex dump (first 32 bytes):
+    69 69 6f 5f 73 79 73 66 73 5f 74 72 69 67 67 65  iio_sysfs_trigge
+    72 00 a7 40 83 8e ff ff 00 86 13 c4 f6 ee ff ff  r..@............
+  backtrace:
+    [<0000000074999de8>] __kmem_cache_alloc_node+0x1e9/0x360
+    [<00000000497fd30b>] __kmalloc_node_track_caller+0x44/0x1a0
+    [<000000003636c520>] kstrdup+0x2d/0x60
+    [<0000000032f84da2>] kobject_set_name_vargs+0x1e/0x90
+    [<0000000092efe493>] dev_set_name+0x4e/0x70
+
+Fixes: 1f785681a870 ("staging:iio:trigger sysfs userspace trigger rework.")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221024084511.815096-1-yangyingliang@huawei.com
 Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221022074212.1386424-1-yangyingliang@huawei.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91_adc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/trigger/iio-trig-sysfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/at91_adc.c
-+++ b/drivers/iio/adc/at91_adc.c
-@@ -617,8 +617,10 @@ static struct iio_trigger *at91_adc_allo
- 	trig->ops = &at91_adc_trigger_ops;
+--- a/drivers/iio/trigger/iio-trig-sysfs.c
++++ b/drivers/iio/trigger/iio-trig-sysfs.c
+@@ -211,9 +211,13 @@ static int iio_sysfs_trigger_remove(int
  
- 	ret = iio_trigger_register(trig);
--	if (ret)
-+	if (ret) {
-+		iio_trigger_free(trig);
- 		return NULL;
-+	}
- 
- 	return trig;
+ static int __init iio_sysfs_trig_init(void)
+ {
++	int ret;
+ 	device_initialize(&iio_sysfs_trig_dev);
+ 	dev_set_name(&iio_sysfs_trig_dev, "iio_sysfs_trigger");
+-	return device_add(&iio_sysfs_trig_dev);
++	ret = device_add(&iio_sysfs_trig_dev);
++	if (ret)
++		put_device(&iio_sysfs_trig_dev);
++	return ret;
  }
+ module_init(iio_sysfs_trig_init);
+ 
 
 
