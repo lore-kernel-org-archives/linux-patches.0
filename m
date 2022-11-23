@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F67B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18392C43145;
-	Wed, 23 Nov 2022 08:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC3B7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80951C433D7;
+	Wed, 23 Nov 2022 08:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193703;
-	bh=+MqoBCHu0QanH+p+pdeXzKJ6GhGyFUGvVeR0YZQAmeE=;
+	s=korg; t=1669193707;
+	bh=ij8juvv4FstSuNIkvApUI6B+mItvPDb7rOWGapS3THg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruF+9w58W4a9ttDoHMLO1yT8AG5lirC0lvq3VrbnG+2Fwsk3cCHuppaeMbIkXdSDD
-	 ae0ysgIdHeBvPsZcse3vLeqDCRhJuVvBdWBpkRJD+p4BVOs1zkMB09DVM76eLoCgWv
-	 ZVRTGQxxZNj9kQN4TWkByaJkBx9J002LZ9AiVZ78=
+	b=kjJD7olH5A3FKkn4DSGXUKG9zo4EdD0cfx+Hf9H6okTQGqxN1+gMypZSHUGMMjezz
+	 KaYiyEAaM4LxxEf7pQysd8yfEuJXBoANTe8my619byrUQSb12qLpOCFWKLEY3P/aou
+	 VFCWw7jOVYHohRe9Lfam5hJMUs3ifVhM3w9l2Vg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 38/76] parport_pc: Avoid FIFO port location truncation
-Date: Wed, 23 Nov 2022 09:50:37 +0100
-Message-Id: <20221123084547.982508791@linuxfoundation.org>
+Subject: [PATCH 4.9 39/76] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
+Date: Wed, 23 Nov 2022 09:50:38 +0100
+Message-Id: <20221123084548.016139201@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,41 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit ab126f51c93a15093df604f661c9480854c005a3 ]
+[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
 
-Match the data type of a temporary holding a reference to the FIFO port
-with the type of the original reference coming from `struct parport',
-avoiding data truncation with LP64 ports such as SPARC64 that refer to
-PCI port I/O locations via their corresponding MMIO addresses and will
-therefore have non-zero bits in the high 32-bit part of the reference.
-And in any case it is cleaner to have the data types matching here.
+Here is the BUG report by KASAN about null pointer dereference:
 
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/linux-pci/20220419033752.GA1101844@bhelgaas/
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/alpine.DEB.2.21.2209231912550.29493@angie.orcam.me.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
+Read of size 1 at addr 0000000000000000 by task python3/2640
+Call Trace:
+ strcmp
+ __of_find_property
+ of_find_property
+ pinctrl_dt_to_map
+
+kasprintf() would return NULL pointer when kmalloc() fail to allocate.
+So directly return ENOMEM, if kasprintf() return NULL pointer.
+
+Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/parport_pc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/devicetree.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
-index 02e6485c1ed5..8c72d54d8d16 100644
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -474,7 +474,7 @@ static size_t parport_pc_fifo_write_block_pio(struct parport *port,
- 	const unsigned char *bufp = buf;
- 	size_t left = length;
- 	unsigned long expire = jiffies + port->physport->cad->timeout;
--	const int fifo = FIFO(port);
-+	const unsigned long fifo = FIFO(port);
- 	int poll_for = 8; /* 80 usecs */
- 	const struct parport_pc_private *priv = port->physport->private_data;
- 	const int fifo_depth = priv->fifo_depth;
+diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
+index d32aedfc6dd0..29f8abffe99f 100644
+--- a/drivers/pinctrl/devicetree.c
++++ b/drivers/pinctrl/devicetree.c
+@@ -207,6 +207,8 @@ int pinctrl_dt_to_map(struct pinctrl *p)
+ 	for (state = 0; ; state++) {
+ 		/* Retrieve the pinctrl-* property */
+ 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
++		if (!propname)
++			return -ENOMEM;
+ 		prop = of_find_property(np, propname, &size);
+ 		kfree(propname);
+ 		if (!prop) {
 -- 
 2.35.1
 
