@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B6F1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944B9C43470;
-	Wed, 23 Nov 2022 09:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47431C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472EAC433D6;
+	Wed, 23 Nov 2022 09:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194838;
-	bh=AgeBNrJ+55Qc7UTqcitGrc64dU8FWmDYQycQ1ieO4YY=;
+	s=korg; t=1669194841;
+	bh=81g+KZ2MVQmCits8iZFpT3D2MWr8qIA2KP/zxhVyrx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npCSZKsDLo20zY5mhsYX7UOrARLCMOAq6lfD29zheQBWRx16El99NN25RUihYwPT1
-	 TGLYZfACk2ikeKq4kKDowsRSogZoBiFcB17nAe33OpJLNx9okT0f9Kn8a+rJW/KyU5
-	 NGv9Vgj9qSWUdjNPtOjeSV0Vz+zeLO3WeeUF3/8g=
+	b=jTMBv2iE3tXwyo8vQ50CSlzMqJ6cg4D5H1orG4xVuRJyttqtdRyo1wov7+KfgfnEP
+	 Vpn5mEbI4+D4AdhU8nwCMEwDRRcYzYUAS0emrOq2IP4dpZy+xm0f2pWnbt4D2TgqTq
+	 tgMxtM54QTD7Bx7qvX0OJTSlviXhGhoD9koXzg5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Gonzalo Siero Humet <gsierohu@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/156] rtc: cmos: fix build on non-ACPI platforms
-Date: Wed, 23 Nov 2022 09:50:32 +0100
-Message-Id: <20221123084600.718736559@linuxfoundation.org>
+Subject: [PATCH 5.4 076/156] NFSv4: Retry LOCK on OLD_STATEID during delegation return
+Date: Wed, 23 Nov 2022 09:50:33 +0100
+Message-Id: <20221123084600.761338028@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,35 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit db4e955ae333567dea02822624106c0b96a2f84f ]
+[ Upstream commit f5ea16137a3fa2858620dc9084466491c128535f ]
 
-Now that rtc_wake_setup is called outside of cmos_wake_setup, it also need
-to be defined on non-ACPI platforms.
+There's a small window where a LOCK sent during a delegation return can
+race with another OPEN on client, but the open stateid has not yet been
+updated.  In this case, the client doesn't handle the OLD_STATEID error
+from the server and will lose this lock, emitting:
+"NFS: nfs4_handle_delegation_recall_error: unhandled error -10024".
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/20221018203512.2532407-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix this by sending the task through the nfs4 error handling in
+nfs4_lock_done() when we may have to reconcile our stateid with what the
+server believes it to be.  For this case, the result is a retry of the
+LOCK operation with the updated stateid.
+
+Reported-by: Gonzalo Siero Humet <gsierohu@redhat.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfs/nfs4proc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index c0dc03ffa817..be92919af2f3 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1290,6 +1290,9 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 7c5dfed0437f..77c2c88621be 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6854,6 +6854,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
  {
- }
+ 	struct nfs4_lockdata *data = calldata;
+ 	struct nfs4_lock_state *lsp = data->lsp;
++	struct nfs_server *server = NFS_SERVER(d_inode(data->ctx->dentry));
  
-+static void rtc_wake_setup(struct device *dev)
-+{
-+}
- #endif
+ 	dprintk("%s: begin!\n", __func__);
  
- #ifdef	CONFIG_PNP
+@@ -6863,8 +6864,7 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ 	data->rpc_status = task->tk_status;
+ 	switch (task->tk_status) {
+ 	case 0:
+-		renew_lease(NFS_SERVER(d_inode(data->ctx->dentry)),
+-				data->timestamp);
++		renew_lease(server, data->timestamp);
+ 		if (data->arg.new_lock && !data->cancelled) {
+ 			data->fl.fl_flags &= ~(FL_SLEEP | FL_ACCESS);
+ 			if (locks_lock_inode_wait(lsp->ls_state->inode, &data->fl) < 0)
+@@ -6885,6 +6885,8 @@ static void nfs4_lock_done(struct rpc_task *task, void *calldata)
+ 			if (!nfs4_stateid_match(&data->arg.open_stateid,
+ 						&lsp->ls_state->open_stateid))
+ 				goto out_restart;
++			else if (nfs4_async_handle_error(task, server, lsp->ls_state, NULL) == -EAGAIN)
++				goto out_restart;
+ 		} else if (!nfs4_stateid_match(&data->arg.lock_stateid,
+ 						&lsp->ls_stateid))
+ 				goto out_restart;
 -- 
 2.35.1
 
