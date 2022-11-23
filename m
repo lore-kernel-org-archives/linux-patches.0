@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41047B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DADC433D6;
-	Wed, 23 Nov 2022 09:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CFF7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C916C433D7;
+	Wed, 23 Nov 2022 09:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194005;
-	bh=rR/tcBFedu6lmjGKWGI5TLax5AWewwhyMivQ7SKYeLs=;
+	s=korg; t=1669194009;
+	bh=o1ead+5rBVTZ7mRzhCWAICO6KlZSC0g7GmAHxAPXBbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aWXpQFY9+d7dGsau8WpS6FFNyCMlk9+iZx14G2z+bP3k+80jgpnOpwVgt1WVP8Yw
-	 7uh7JOLe8cZ29+WvJjIXxv/mTeZi26j3LwLa/wC3bbI1N1owFE3VcRKHiG8gAiOitK
-	 kPefY+w/RfLdoLz8Y+aIxSXVhzAc81+G0uijC4rA=
+	b=hL+5clq+iIsMwLzByH1+sNf5qWeZVwuWxRLsxD8keNda2PzfLswr90p6UQjQFUwf0
+	 wUiYEULE2dgSvu/YEUAaMy1QavoBkpwVBcjK+YYz5b+4gHD0uNIJ3dZVzLnJIEOJSW
+	 DMWAfdM379vUJ/JbGrX+SJNfp6GqkY1FqELNb7xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 44/88] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
-Date: Wed, 23 Nov 2022 09:50:41 +0100
-Message-Id: <20221123084550.040424593@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.14 18/88] ALSA: hda: fix potential memleak in add_widget_node
+Date: Wed, 23 Nov 2022 09:50:15 +0100
+Message-Id: <20221123084549.138176666@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,47 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
+commit 9a5523f72bd2b0d66eef3d58810c6eb7b5ffc143 upstream.
 
-Here is the BUG report by KASAN about null pointer dereference:
+As 'kobject_add' may allocated memory for 'kobject->name' when return error.
+And in this function, if call 'kobject_add' failed didn't free kobject.
+So call 'kobject_put' to recycling resources.
 
-BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
-Read of size 1 at addr 0000000000000000 by task python3/2640
-Call Trace:
- strcmp
- __of_find_property
- of_find_property
- pinctrl_dt_to_map
-
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-So directly return ENOMEM, if kasprintf() return NULL pointer.
-
-Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221110144539.2989354-1-yebin@huaweicloud.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/devicetree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/hdac_sysfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index 3a7c2d6e4d5f..b9a1080277b9 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -228,6 +228,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
-+		if (!propname)
-+			return -ENOMEM;
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
--- 
-2.35.1
-
+--- a/sound/hda/hdac_sysfs.c
++++ b/sound/hda/hdac_sysfs.c
+@@ -346,8 +346,10 @@ static int add_widget_node(struct kobjec
+ 		return -ENOMEM;
+ 	kobject_init(kobj, &widget_ktype);
+ 	err = kobject_add(kobj, parent, "%02x", nid);
+-	if (err < 0)
++	if (err < 0) {
++		kobject_put(kobj);
+ 		return err;
++	}
+ 	err = sysfs_create_group(kobj, group);
+ 	if (err < 0) {
+ 		kobject_put(kobj);
 
 
