@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B4A1C2B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DCAC433D7;
-	Wed, 23 Nov 2022 09:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B6F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:13:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944B9C43470;
+	Wed, 23 Nov 2022 09:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194833;
-	bh=v8cGCJBDm0eZJLPzFSbLDbXewUjQNprW6ZfOK/nAJcc=;
+	s=korg; t=1669194838;
+	bh=AgeBNrJ+55Qc7UTqcitGrc64dU8FWmDYQycQ1ieO4YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKqwln6lWI6mF6boqruXM9UhDrBkaRlAxOAPlMxTikRGDtPULjn8BZgt8QvSvdWj4
-	 WWrQhCyFs+bslR+8KtH8roSQRRDc8HQgRdMTIUNKGDR1pihbuYGWxhM7r9RNroigLa
-	 BWKHVQpcc07mso2WervclJDJ/PMCicyhaylcEs2Y=
+	b=npCSZKsDLo20zY5mhsYX7UOrARLCMOAq6lfD29zheQBWRx16El99NN25RUihYwPT1
+	 TGLYZfACk2ikeKq4kKDowsRSogZoBiFcB17nAe33OpJLNx9okT0f9Kn8a+rJW/KyU5
+	 NGv9Vgj9qSWUdjNPtOjeSV0Vz+zeLO3WeeUF3/8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/156] selftests/intel_pstate: fix build for ARCH=x86_64
-Date: Wed, 23 Nov 2022 09:50:31 +0100
-Message-Id: <20221123084600.686435421@linuxfoundation.org>
+Subject: [PATCH 5.4 075/156] rtc: cmos: fix build on non-ACPI platforms
+Date: Wed, 23 Nov 2022 09:50:32 +0100
+Message-Id: <20221123084600.718736559@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-[ Upstream commit beb7d862ed4ac6aa14625418970f22a7d55b8615 ]
+[ Upstream commit db4e955ae333567dea02822624106c0b96a2f84f ]
 
-Handle the scenario where the build is launched with the ARCH envvar
-defined as x86_64.
+Now that rtc_wake_setup is called outside of cmos_wake_setup, it also need
+to be defined on non-ACPI platforms.
 
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/20221018203512.2532407-1-alexandre.belloni@bootlin.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/intel_pstate/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-cmos.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/intel_pstate/Makefile b/tools/testing/selftests/intel_pstate/Makefile
-index 7340fd6a9a9f..9fc1a40b0127 100644
---- a/tools/testing/selftests/intel_pstate/Makefile
-+++ b/tools/testing/selftests/intel_pstate/Makefile
-@@ -2,10 +2,10 @@
- CFLAGS := $(CFLAGS) -Wall -D_GNU_SOURCE
- LDLIBS := $(LDLIBS) -lm
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index c0dc03ffa817..be92919af2f3 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1290,6 +1290,9 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ {
+ }
  
--uname_M := $(shell uname -m 2>/dev/null || echo not)
--ARCH ?= $(shell echo $(uname_M) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
-+ARCH ?= $(shell uname -m 2>/dev/null || echo not)
-+ARCH_PROCESSED := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
++static void rtc_wake_setup(struct device *dev)
++{
++}
+ #endif
  
--ifeq (x86,$(ARCH))
-+ifeq (x86,$(ARCH_PROCESSED))
- TEST_GEN_FILES := msr aperf
- endif
- 
+ #ifdef	CONFIG_PNP
 -- 
 2.35.1
 
