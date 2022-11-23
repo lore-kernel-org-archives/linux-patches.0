@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D311C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:44:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3840EC433D6;
-	Wed, 23 Nov 2022 09:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9B01C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:44:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F041CC433D6;
+	Wed, 23 Nov 2022 09:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196690;
-	bh=S/7J4RLUlv/oIrOL1v4t2auAxspCXRrjcpWtrLRDZ00=;
+	s=korg; t=1669196694;
+	bh=/wrEyLTVPqyePPP+3Umh8BzYv8dk/a6tdOLia5W7AWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4AS9xgSb5tJ55b0vcplpO+4DhczsLMughHoujnIjH7g47xvm2Hd7D2TPD20wwbxf
-	 b1Kdj4QUGJhxkc5utCSf32SWjEOGRNzNMAunePSOktvPUcelhhKQVT2JgjgEbDSv9L
-	 WFJ5QWg95kJekN9guFpz08NgDaN2txOFYP5xUqV4=
+	b=Uc5KtkITGXhhT4QhVsJUxOJSfTJjtsWrLsrunOqiTxfa7VEohD6qqz8SM7PsaGslX
+	 iUHRtggUrM6w43/oiiGzCyKhClTI1EcB/Clt9QXwWGGvOZm1g03xxlkBduV7Jl500N
+	 S7OUbYE6MwLG7vkzTdwSof2K1G/s/u2MB1RKXI/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
+	Robert Marko <robimarko@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 097/314] serial: 8250: omap: Fix unpaired pm_runtime_put_sync() in omap8250_remove()
-Date: Wed, 23 Nov 2022 09:49:02 +0100
-Message-Id: <20221123084629.904038425@linuxfoundation.org>
+Subject: [PATCH 6.0 071/314] arm64: dts: qcom: ipq8074: correct APCS register space size
+Date: Wed, 23 Nov 2022 09:48:36 +0100
+Message-Id: <20221123084628.704773615@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,42 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit e3f0c638f428fd66b5871154b62706772045f91a ]
+[ Upstream commit 40b21d466a86bd5b10d24f59746ed41283a9b3f6 ]
 
-On remove, we get an error for "Runtime PM usage count underflow!". I guess
-this driver is mostly built-in, and this issue has gone unnoticed for a
-while. Somehow I did not catch this issue with my earlier fix done with
-commit 4e0f5cc65098 ("serial: 8250_omap: Fix probe and remove for PM
-runtime").
+APCS DTS addition that was merged, was not supposed to get merged as it
+was part of patch series that was superseded by 2 more patch series
+that resolved issues with this one and greatly simplified things.
 
-Fixes: 4e0f5cc65098 ("serial: 8250_omap: Fix probe and remove for PM runtime")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Depends-on: dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
-Link: https://lore.kernel.org/r/20221028105813.54290-1-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since it already got merged, start by correcting the register space
+size as APCS will not be providing regmap for PLL and it will conflict
+with the standalone A53 PLL node.
+
+Fixes: 50ed9fffec3a ("arm64: dts: qcom: ipq8074: add APCS node")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220818220628.339366-8-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index c772735035b5..3ba1526ccd20 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1461,6 +1461,11 @@ static int omap8250_probe(struct platform_device *pdev)
- static int omap8250_remove(struct platform_device *pdev)
- {
- 	struct omap8250_priv *priv = platform_get_drvdata(pdev);
-+	int err;
-+
-+	err = pm_runtime_resume_and_get(&pdev->dev);
-+	if (err)
-+		return err;
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index b9bf43215ada..79351c6157ea 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -668,7 +668,7 @@ watchdog: watchdog@b017000 {
  
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
+ 		apcs_glb: mailbox@b111000 {
+ 			compatible = "qcom,ipq8074-apcs-apps-global";
+-			reg = <0x0b111000 0x6000>;
++			reg = <0x0b111000 0x1000>;
+ 
+ 			#clock-cells = <1>;
+ 			#mbox-cells = <1>;
 -- 
 2.35.1
 
