@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99FA1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E2FC433D6;
-	Wed, 23 Nov 2022 09:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC09F1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DF5C433C1;
+	Wed, 23 Nov 2022 09:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195578;
-	bh=yyRLcOZkVFdF4LGAYIWZzTY3gJNCP7TaUXIpFbcdzNE=;
+	s=korg; t=1669195582;
+	bh=x59k8a8dxn+UmFAVzcjKfgR6g/7yTXPX/lXKHoUuAsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKANhe/qf+fvh47mDyWHc/kiUmRq6y/7pTyL+17a5TBjIpnAfRCpGSf0WrLQHdcw5
-	 0U1fmXYyIaXge4WIindi2hPD7+tt1ndpUZxUMXUJfIKpoGF86A92aAO/ybXHs3PIur
-	 MbUSlaZEepD3o2sZh8OTkK2Nks4ksThuZXXV0BIQ=
+	b=tdu42wMKnAXG0kRgOboMlphkW1+4Rri+kkWx2cwkapVRNz9CFRNHU6wAVtntyGQfZ
+	 Y9VjavlyBJ+5r3YZvkSoaosH7aSlpDBXGnXfBzoid9uBvX8nMpeB4lkzDlNkfREa6+
+	 R91R7i6mdIR5cXeY/7tHWpY31XGKeOWub/3FvLi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.10 123/149] docs: update mediator contact information in CoC doc
-Date: Wed, 23 Nov 2022 09:51:46 +0100
-Message-Id: <20221123084602.366609770@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.10 095/149] slimbus: stream: correct presence rate frequencies
+Date: Wed, 23 Nov 2022 09:51:18 +0100
+Message-Id: <20221123084601.414345400@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -33,30 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 5fddf8962b429b8303c4a654291ecb6e61a7d747 upstream.
+commit b9c1939627f8185dec8ba6d741e9573a4c7a5834 upstream.
 
-Update mediator contact information in CoC interpretation document.
+Correct few frequencies in presence rate table - multiplied by 10
+(110250 instead of 11025 Hz).
 
+Fixes: abb9c9b8b51b ("slimbus: stream: add stream support")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20221011171417.34286-1-skhan@linuxfoundation.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220929165202.410937-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/process/code-of-conduct-interpretation.rst |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/slimbus/stream.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/Documentation/process/code-of-conduct-interpretation.rst
-+++ b/Documentation/process/code-of-conduct-interpretation.rst
-@@ -51,7 +51,7 @@ the Technical Advisory Board (TAB) or ot
- uncertain how to handle situations that come up.  It will not be
- considered a violation report unless you want it to be.  If you are
- uncertain about approaching the TAB or any other maintainers, please
--reach out to our conflict mediator, Joanna Lee <joanna.lee@gesmer.com>.
-+reach out to our conflict mediator, Joanna Lee <jlee@linuxfoundation.org>.
- 
- In the end, "be kind to each other" is really what the end goal is for
- everybody.  We know everyone is human and we all fail at times, but the
+--- a/drivers/slimbus/stream.c
++++ b/drivers/slimbus/stream.c
+@@ -67,10 +67,10 @@ static const int slim_presence_rate_tabl
+ 	384000,
+ 	768000,
+ 	0, /* Reserved */
+-	110250,
+-	220500,
+-	441000,
+-	882000,
++	11025,
++	22050,
++	44100,
++	88200,
+ 	176400,
+ 	352800,
+ 	705600,
 
 
