@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D181C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB9AC433C1;
-	Wed, 23 Nov 2022 09:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020D51C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B54C433C1;
+	Wed, 23 Nov 2022 09:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195360;
-	bh=N3ASCJl5UJ4VJyTqa6tVZ1xQThYrp+/q7HmMNnSW48Y=;
+	s=korg; t=1669195363;
+	bh=11D0frR9o1KerfcfDxeXEfRTqdAKc6lEFS6JHA74m38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScO+/APO/EcGMJBD6pN2Tt5I/QxpbdMaDn8NV3XaGqRFbx33IAvSO32nAGyhRDIFm
-	 vw61MOC4FJu+b/tILYC9EX/SWDr8G6dIAchrZiufug+T8/i9ZZgaQD4lYI1mSE05q9
-	 TXzc6YKL9+NGmDpq0cCN5Fn6U7bacQz4yLu1SLsY=
+	b=ATY65OLyBWDJNwlv3zfOhLHHHMuVr8M9YaI3L1tCne4anzyhNvgBD56gyh83af+Y3
+	 S0XymyIqiZgqY/gOCsfRecWrYe3aTk0HSOjorCgxlbnJJ8qL/29a0irMIY7GaiZYLe
+	 VX65LFRxXPBumkNTdUmyjSrvBCoDIKqpIg97hK0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/149] spi: stm32: Print summary callbacks suppressed message
-Date: Wed, 23 Nov 2022 09:50:15 +0100
-Message-Id: <20221123084559.149569531@linuxfoundation.org>
+Subject: [PATCH 5.10 033/149] ASoC: core: Fix use-after-free in snd_soc_exit()
+Date: Wed, 23 Nov 2022 09:50:16 +0100
+Message-Id: <20221123084559.180006129@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,37 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 195583504be28df5d608a4677dd796117aea875f ]
+[ Upstream commit 6ec27c53886c8963729885bcf2dd996eba2767a7 ]
 
-The original fix "spi: stm32: Rate-limit the 'Communication suspended' message"
-still leads to "stm32h7_spi_irq_thread: 1696 callbacks suppressed" spew in the
-kernel log. Since this 'Communication suspended' message is a debug print, add
-RATELIMIT_MSG_ON_RELEASE flag to inhibit the "callbacks suspended" part during
-normal operation and only print summary at the end.
+KASAN reports a use-after-free:
 
-Fixes: ea8be08cc9358 ("spi: stm32: Rate-limit the 'Communication suspended' message")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20221018183513.206706-1-marex@denx.de
+BUG: KASAN: use-after-free in device_del+0xb5b/0xc60
+Read of size 8 at addr ffff888008655050 by task rmmod/387
+CPU: 2 PID: 387 Comm: rmmod
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+<TASK>
+dump_stack_lvl+0x79/0x9a
+print_report+0x17f/0x47b
+kasan_report+0xbb/0xf0
+device_del+0xb5b/0xc60
+platform_device_del.part.0+0x24/0x200
+platform_device_unregister+0x2e/0x40
+snd_soc_exit+0xa/0x22 [snd_soc_core]
+__do_sys_delete_module.constprop.0+0x34f/0x5b0
+do_syscall_64+0x3a/0x90
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+...
+</TASK>
+
+It's bacause in snd_soc_init(), snd_soc_util_init() is possble to fail,
+but its ret is ignored, which makes soc_dummy_dev unregistered twice.
+
+snd_soc_init()
+    snd_soc_util_init()
+        platform_device_register_simple(soc_dummy_dev)
+        platform_driver_register() # fail
+    	platform_device_unregister(soc_dummy_dev)
+    platform_driver_register() # success
+...
+snd_soc_exit()
+    snd_soc_util_exit()
+    # soc_dummy_dev will be unregistered for second time
+
+To fix it, handle error and stop snd_soc_init() when util_init() fail.
+Also clean debugfs when util_init() or driver_register() fail.
+
+Fixes: fb257897bf20 ("ASoC: Work around allmodconfig failure")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221028031603.59416-1-chenzhongjin@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/soc-core.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index a6dfc8fef20c..651a6510fb54 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -941,6 +941,7 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
- 		static DEFINE_RATELIMIT_STATE(rs,
- 					      DEFAULT_RATELIMIT_INTERVAL * 10,
- 					      1);
-+		ratelimit_set_flags(&rs, RATELIMIT_MSG_ON_RELEASE);
- 		if (__ratelimit(&rs))
- 			dev_dbg_ratelimited(spi->dev, "Communication suspended\n");
- 		if (!spi->cur_usedma && (spi->rx_buf && (spi->rx_len > 0)))
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index a6d6d10cd471..e9da95ebccc8 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -3178,10 +3178,23 @@ EXPORT_SYMBOL_GPL(snd_soc_of_get_dai_link_codecs);
+ 
+ static int __init snd_soc_init(void)
+ {
++	int ret;
++
+ 	snd_soc_debugfs_init();
+-	snd_soc_util_init();
++	ret = snd_soc_util_init();
++	if (ret)
++		goto err_util_init;
+ 
+-	return platform_driver_register(&soc_driver);
++	ret = platform_driver_register(&soc_driver);
++	if (ret)
++		goto err_register;
++	return 0;
++
++err_register:
++	snd_soc_util_exit();
++err_util_init:
++	snd_soc_debugfs_exit();
++	return ret;
+ }
+ module_init(snd_soc_init);
+ 
 -- 
 2.35.1
 
