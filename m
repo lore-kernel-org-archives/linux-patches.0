@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3521C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725B1C433C1;
-	Wed, 23 Nov 2022 09:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25C01C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419DCC433D7;
+	Wed, 23 Nov 2022 09:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196828;
-	bh=pvm/wxrC9xlwI5h6SNgivKLBHRhQapDihpLNb8afBHo=;
+	s=korg; t=1669196832;
+	bh=wUl7IVCpwie38HmCHTaMz62NWtS26+zgc5NkX9CrU2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2AKJiBrhJrvQ6i0JH5bTWj73NphgnvD7fby8CELZI9hYFhUGSvnFY+EKnPRTqmJs
-	 yc0Jk06AhGdzGQJ5VWvbFRWiQvFaoj7RB2H4hRY8GieeIkTm0OZuvhUbSIhaCGdXAO
-	 FJEOqzdInonRWv5T+fmOmQGVfcOMH7D9Bj39q+I8=
+	b=yskg0/U11FiA2m7MUf84g+qezMpkVtatYfoSKd4BhR3nXpFQBA7oy9ig+88jRr8wA
+	 AnnWHwkS7s8hty2T7/WLN+E7B7+nVTCMawqkHCRBjrn/ummcyOYHes4uPuJY6Dx4Rm
+	 WvXmvnXcSsdJd9SdVIuVCT7q3bw0AaU24CkhD8Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Chao Yu <chao@kernel.org>,
+	Vikas Gupta <vikas.gupta@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 134/314] erofs: put metabuf in error path in fscache mode
-Date: Wed, 23 Nov 2022 09:49:39 +0100
-Message-Id: <20221123084631.602838712@linuxfoundation.org>
+Subject: [PATCH 6.0 105/314] bnxt_en: refactor bnxt_cancel_reservations()
+Date: Wed, 23 Nov 2022 09:49:10 +0100
+Message-Id: <20221123084630.256463788@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -37,40 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Vikas Gupta <vikas.gupta@broadcom.com>
 
-[ Upstream commit 75e43355cbe4d5948a79bd592f2ffecb9f75f75d ]
+[ Upstream commit b4c66425771ddb910316c7b4cd7fa0614098ec45 ]
 
-For tail packing layout, put metabuf when error is encountered.
+Introduce bnxt_clear_reservations() to clear the reserved attributes only.
+This will be used in the next patch to fix PCI AER handling.
 
-Fixes: 1ae9470c3e14 ("erofs: clean up .read_folio() and .readahead() in fscache mode")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20221104054028.52208-2-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0cf736a18a1e ("bnxt_en: fix the handling of PCIE-AER")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fscache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index 8585e324298c..79af25f0a56c 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -281,8 +281,10 @@ static int erofs_fscache_data_read(struct address_space *mapping,
- 			return PTR_ERR(src);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index be5df8fca264..72915f40c7a0 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -9983,17 +9983,12 @@ static int bnxt_try_recover_fw(struct bnxt *bp)
+ 	return -ENODEV;
+ }
  
- 		iov_iter_xarray(&iter, READ, &mapping->i_pages, pos, PAGE_SIZE);
--		if (copy_to_iter(src + offset, size, &iter) != size)
-+		if (copy_to_iter(src + offset, size, &iter) != size) {
-+			erofs_put_metabuf(&buf);
- 			return -EFAULT;
-+		}
- 		iov_iter_zero(PAGE_SIZE - size, &iter);
- 		erofs_put_metabuf(&buf);
- 		return PAGE_SIZE;
+-int bnxt_cancel_reservations(struct bnxt *bp, bool fw_reset)
++static void bnxt_clear_reservations(struct bnxt *bp, bool fw_reset)
+ {
+ 	struct bnxt_hw_resc *hw_resc = &bp->hw_resc;
+-	int rc;
+ 
+ 	if (!BNXT_NEW_RM(bp))
+-		return 0; /* no resource reservations required */
+-
+-	rc = bnxt_hwrm_func_resc_qcaps(bp, true);
+-	if (rc)
+-		netdev_err(bp->dev, "resc_qcaps failed\n");
++		return; /* no resource reservations required */
+ 
+ 	hw_resc->resv_cp_rings = 0;
+ 	hw_resc->resv_stat_ctxs = 0;
+@@ -10006,6 +10001,20 @@ int bnxt_cancel_reservations(struct bnxt *bp, bool fw_reset)
+ 		bp->tx_nr_rings = 0;
+ 		bp->rx_nr_rings = 0;
+ 	}
++}
++
++int bnxt_cancel_reservations(struct bnxt *bp, bool fw_reset)
++{
++	int rc;
++
++	if (!BNXT_NEW_RM(bp))
++		return 0; /* no resource reservations required */
++
++	rc = bnxt_hwrm_func_resc_qcaps(bp, true);
++	if (rc)
++		netdev_err(bp->dev, "resc_qcaps failed\n");
++
++	bnxt_clear_reservations(bp, fw_reset);
+ 
+ 	return rc;
+ }
 -- 
 2.35.1
 
