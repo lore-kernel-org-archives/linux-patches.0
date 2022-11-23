@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6DE1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B62C433D6;
-	Wed, 23 Nov 2022 09:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E731C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCC0C433C1;
+	Wed, 23 Nov 2022 09:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197178;
-	bh=Qts2eUS7impzPN8SqLPQq4uQlEHeRqTDJWcTql6E7Qs=;
+	s=korg; t=1669197182;
+	bh=r/KD+Loc1bRhvWnz5vxl9PaccKxnBDk2Ng7IRLJ8Wv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpVLy2zMCzJ1+OIyExs5U+XD+Sh3F2nmqdBrGt+p5XvaO7XPan6HQj38mcdriNlvD
-	 nFxJwALMO/3IhTeGlCq1SmYTeKrgMCqYayndNqv51qI49g4KBa/ZMUAO9QNcapFF1W
-	 KPi7+5iCzFiGaoVl9W7CUDOas6tN0mpjXrYajQjc=
+	b=DJwGAYMyEPVEhvPX6uALTtwJYkPWKOOkVB8ZSlYc9JgZAQFfenWLK21hdQf9a1swl
+	 YVN8e8Sv7efNq2Imb6S3Hpwx4c8QVc8211cwGFyP8bEEWqxUKCEfSUrq2gd2QwFFy0
+	 +BQ+WGqnxmfHpD0Piakp75S4bhjao16CsqMkxJFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.0 221/314] ALSA: usb-audio: Drop snd_BUG_ON() from snd_usbmidi_output_open()
-Date: Wed, 23 Nov 2022 09:51:06 +0100
-Message-Id: <20221123084635.558923451@linuxfoundation.org>
+	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
+	Tzvetomir Stoyanov <tz.stoyanov@gmail.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 204/314] tracing: Fix race where eprobes can be called before the event
+Date: Wed, 23 Nov 2022 09:50:49 +0100
+Message-Id: <20221123084634.797557114@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,41 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit ad72c3c3f6eb81d2cb189ec71e888316adada5df upstream.
+commit 94eedf3dded5fb472ce97bfaf3ac1c6c29c35d26 upstream.
 
-snd_usbmidi_output_open() has a check of the NULL port with
-snd_BUG_ON().  snd_BUG_ON() was used as this shouldn't have happened,
-but in reality, the NULL port may be seen when the device gives an
-invalid endpoint setup at the descriptor, hence the driver skips the
-allocation.  That is, the check itself is valid and snd_BUG_ON()
-should be dropped from there.  Otherwise it's confusing as if it were
-a real bug, as recently syzbot stumbled on it.
+The flag that tells the event to call its triggers after reading the event
+is set for eprobes after the eprobe is enabled. This leads to a race where
+the eprobe may be triggered at the beginning of the event where the record
+information is NULL. The eprobe then dereferences the NULL record causing
+a NULL kernel pointer bug.
 
-Reported-by: syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/syzbot+9abda841d636d86c41da@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20221112141223.6144-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Test for a NULL record to keep this from happening.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20221116192552.1066630-1-rafaelmendsr@gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20221117214249.2addbe10@gandalf.local.home
+
+Cc: Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>
+Cc: Tzvetomir Stoyanov <tz.stoyanov@gmail.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/trace/trace_eprobe.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1133,10 +1133,8 @@ static int snd_usbmidi_output_open(struc
- 					port = &umidi->endpoints[i].out->ports[j];
- 					break;
- 				}
--	if (!port) {
--		snd_BUG();
-+	if (!port)
- 		return -ENXIO;
--	}
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -560,6 +560,9 @@ static void eprobe_trigger_func(struct e
+ {
+ 	struct eprobe_data *edata = data->private_data;
  
- 	substream->runtime->private_data = port;
- 	port->state = STATE_UNKNOWN;
++	if (unlikely(!rec))
++		return;
++
+ 	__eprobe_trace_func(edata, rec);
+ }
+ 
 
 
