@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EED1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49679C433D6;
-	Wed, 23 Nov 2022 09:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AA91C2B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1421C433D7;
+	Wed, 23 Nov 2022 09:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195385;
-	bh=aawWHhCUd07uff3ZRsXV6mxTZgglzAtTFBt8GJF195s=;
+	s=korg; t=1669195389;
+	bh=3ck9Xe5tg1QfdZeBDOx83UjQJzLEsPFRPeEwmuhrhc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzAT5XjbzBNLikSgJ8Fqq/rzy2xslJEAZ81I43ebqO41OCNXoXvLgv7WdxGOra2CW
-	 +GdB/zGrRLO3+mUTYeKnA6Ek+5iO6QSXn/hFpEMCAP52RNe1MAUNi0c4UXfvF6IB7I
-	 IS9wazuXckzZSxpUVYvBBRyJr3Dy0ztSDIevhoso=
+	b=LRbZZxJUF5PmJp6My7Xptwk7rp/Eh7gcOnYWJSJZuKR30JUD1kDDNgSEx/toESvz9
+	 38tyVK5qbnbRqnS3fOl0Wv1Je2mDp0SWMphOGjwZPR5e406e/iWZ3XnJU+g7kUBNhm
+	 P1ht0dtpekvBmyHS2OgC6/Xrq7PJ+b/1BEYQsV14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/149] bnxt_en: Remove debugfs when pci_register_driver failed
-Date: Wed, 23 Nov 2022 09:50:53 +0100
-Message-Id: <20221123084600.419217322@linuxfoundation.org>
+Subject: [PATCH 5.10 071/149] xen/pcpu: fix possible memory leak in register_pcpu()
+Date: Wed, 23 Nov 2022 09:50:54 +0100
+Message-Id: <20221123084600.448177645@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,48 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 991aef4ee4f6eb999924f429b943441a32835c8f ]
+[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
 
-When pci_register_driver failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+In device_add(), dev_set_name() is called to allocate name, if it returns
+error, the name need be freed. As comment of device_register() says, it
+should use put_device() to give up the reference in the error path. So fix
+this by calling put_device(), then the name can be freed in kobject_cleanup().
 
-Resource leak logs as follows:
-[   52.184456] debugfs: Directory 'bnxt_en' with parent '/' already present!
-
-Fixes: cabfb09d87bd ("bnxt_en: add debugfs support for DIM")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/xen/pcpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 8311473d537b..92f54e333395 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -13111,8 +13111,16 @@ static struct pci_driver bnxt_pci_driver = {
+diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
+index cdc6daa7a9f6..9cf7085a260b 100644
+--- a/drivers/xen/pcpu.c
++++ b/drivers/xen/pcpu.c
+@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
  
- static int __init bnxt_init(void)
- {
-+	int err;
-+
- 	bnxt_debug_init();
--	return pci_register_driver(&bnxt_pci_driver);
-+	err = pci_register_driver(&bnxt_pci_driver);
-+	if (err) {
-+		bnxt_debug_exit();
-+		return err;
-+	}
-+
-+	return 0;
- }
+ 	err = device_register(dev);
+ 	if (err) {
+-		pcpu_release(dev);
++		put_device(dev);
+ 		return err;
+ 	}
  
- static void __exit bnxt_exit(void)
 -- 
 2.35.1
 
