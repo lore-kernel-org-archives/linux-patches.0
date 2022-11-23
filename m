@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445091C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A984C433D7;
-	Wed, 23 Nov 2022 09:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B211C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE992C433D7;
+	Wed, 23 Nov 2022 09:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194865;
-	bh=uRIb+m49OBhCrmfBdz8AcUfRxXEcuxfqhSK8uAUYD6U=;
+	s=korg; t=1669194868;
+	bh=jjtMGiW/60n+4V6Eqyt3dhA3e10NO5t2LnXBVN95Mrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJcecDPbJLZC+AAKrEfl9PbAjw2wSQRGuWumVMdNGk3ntOsH4ok/oYESAzPuwB5Sf
-	 b1rb3m7qOVaRVhZJraRbVsff6/gusjlUrhsTHsjOOh2elHyNhRKQVM49VWp1pGj/C+
-	 ejbEjGp5c4eEbXOQPmVDcsbQ5JbfA9hTQ8BVhsz8=
+	b=EjWubO2QjGGkfPA9SzuNff2nAiIstilVhFOd6HF1gcu33r5i1iaFk/b/e9LOe+JiN
+	 hotQrfKNXRNSvceuD+3q5DO+0PftRo93pNrylp2G+mBGbfH5XYMTaYRndQeuxO6OEC
+	 qBIIOIyw85cIsOHZ6gkr+K72soOmRGIQcAkodYCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Paul Cercueil <paul@crapouillou.net>,
+	Marek Vasut <marex@denx.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 081/156] ASoC: codecs: jz4725b: Fix spelling mistake "Sourc" -> "Source", "Routee" -> "Route"
-Date: Wed, 23 Nov 2022 09:50:38 +0100
-Message-Id: <20221123084600.940520618@linuxfoundation.org>
+Subject: [PATCH 5.4 082/156] spi: stm32: Print summary callbacks suppressed message
+Date: Wed, 23 Nov 2022 09:50:39 +0100
+Message-Id: <20221123084600.971866381@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -37,35 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit df496157a5afa1b6d1f4c46ad6549c2c346d1e59 ]
+[ Upstream commit 195583504be28df5d608a4677dd796117aea875f ]
 
-There are two spelling mistakes in codec routing description. Fix it.
+The original fix "spi: stm32: Rate-limit the 'Communication suspended' message"
+still leads to "stm32h7_spi_irq_thread: 1696 callbacks suppressed" spew in the
+kernel log. Since this 'Communication suspended' message is a debug print, add
+RATELIMIT_MSG_ON_RELEASE flag to inhibit the "callbacks suspended" part during
+normal operation and only print summary at the end.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://lore.kernel.org/r/20221019071639.1003730-1-colin.i.king@gmail.com
+Fixes: ea8be08cc9358 ("spi: stm32: Rate-limit the 'Communication suspended' message")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20221018183513.206706-1-marex@denx.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/jz4725b.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-stm32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/jz4725b.c b/sound/soc/codecs/jz4725b.c
-index ebe643e4aa2f..48c40a44b763 100644
---- a/sound/soc/codecs/jz4725b.c
-+++ b/sound/soc/codecs/jz4725b.c
-@@ -288,7 +288,7 @@ static const struct snd_soc_dapm_route jz4725b_codec_dapm_routes[] = {
- 
- 	{"Mixer to ADC", NULL, "Mixer"},
- 	{"ADC Source Capture Route", "Mixer", "Mixer to ADC"},
--	{"ADC Sourc Capture Routee", "Line In", "Line In"},
-+	{"ADC Source Capture Route", "Line In", "Line In"},
- 	{"ADC Source Capture Route", "Mic 1", "Mic 1"},
- 	{"ADC Source Capture Route", "Mic 2", "Mic 2"},
- 	{"ADC", NULL, "ADC Source Capture Route"},
+diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
+index 9ae16092206d..a1961a973839 100644
+--- a/drivers/spi/spi-stm32.c
++++ b/drivers/spi/spi-stm32.c
+@@ -937,6 +937,7 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
+ 		static DEFINE_RATELIMIT_STATE(rs,
+ 					      DEFAULT_RATELIMIT_INTERVAL * 10,
+ 					      1);
++		ratelimit_set_flags(&rs, RATELIMIT_MSG_ON_RELEASE);
+ 		if (__ratelimit(&rs))
+ 			dev_dbg_ratelimited(spi->dev, "Communication suspended\n");
+ 		if (!spi->cur_usedma && (spi->rx_buf && (spi->rx_len > 0)))
 -- 
 2.35.1
 
