@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4860E7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5DAC4347C;
-	Wed, 23 Nov 2022 09:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E8A7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDD5C433C1;
+	Wed, 23 Nov 2022 09:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194044;
-	bh=peAcNCm6lf3qCCE0hCDQw1Ru8S8rHAjuQWQD/TKNGzo=;
+	s=korg; t=1669194047;
+	bh=3ck9Xe5tg1QfdZeBDOx83UjQJzLEsPFRPeEwmuhrhc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOH8+V8oLby9dZrBySRJlaoVmUAhXUBJbSGZHokEPZGaaJCioyeWVKvzShHagIr4s
-	 VAYPxjRGUTqPbq0Rz87NBN+f3idmCNxAKg+KssW9OlcGUO1wVcyV9GZtRhmRFTdCw7
-	 Wv97Cj3hNMq4P8IpKU5sN4toD+RyfF67uOYjdij8=
+	b=kQiZPa1n/yRQ/YXyJMom7mz4oDqbDx7rqrjiqzUynerCn7VFV0oQ56AKeF0RQHWGD
+	 fVdxqpZtuEAEFLArxZIrF9DtM82AdW+TGQBWgnVc3Wuof2yZS/pc0S0YL71IeuoYsq
+	 371U/OxgFXwW/252Zp7PWWLmxYpXDM1TQKg61idg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/88] net: mv643xx_eth: disable napi when init rxq or txq failed in mv643xx_eth_open()
-Date: Wed, 23 Nov 2022 09:50:12 +0100
-Message-Id: <20221123084549.045860481@linuxfoundation.org>
+Subject: [PATCH 4.14 49/88] xen/pcpu: fix possible memory leak in register_pcpu()
+Date: Wed, 23 Nov 2022 09:50:46 +0100
+Message-Id: <20221123084550.225519157@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,35 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f111606b63ff2282428ffbac0447c871eb957b6c ]
+[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
 
-When failed to init rxq or txq in mv643xx_eth_open() for opening device,
-napi isn't disabled. When open mv643xx_eth device next time, it will
-trigger a BUG_ON() in napi_enable(). Compile tested only.
+In device_add(), dev_set_name() is called to allocate name, if it returns
+error, the name need be freed. As comment of device_register() says, it
+should use put_device() to give up the reference in the error path. So fix
+this by calling put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: 2257e05c1705 ("mv643xx_eth: get rid of receive-side locking")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109025432.80900-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mv643xx_eth.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/xen/pcpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mv643xx_eth.c b/drivers/net/ethernet/marvell/mv643xx_eth.c
-index 2434409f84b2..ec881374be4b 100644
---- a/drivers/net/ethernet/marvell/mv643xx_eth.c
-+++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
-@@ -2495,6 +2495,7 @@ static int mv643xx_eth_open(struct net_device *dev)
- 	for (i = 0; i < mp->rxq_count; i++)
- 		rxq_deinit(mp->rxq + i);
- out:
-+	napi_disable(&mp->napi);
- 	free_irq(dev->irq, dev);
+diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
+index cdc6daa7a9f6..9cf7085a260b 100644
+--- a/drivers/xen/pcpu.c
++++ b/drivers/xen/pcpu.c
+@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
  
- 	return err;
+ 	err = device_register(dev);
+ 	if (err) {
+-		pcpu_release(dev);
++		put_device(dev);
+ 		return err;
+ 	}
+ 
 -- 
 2.35.1
 
