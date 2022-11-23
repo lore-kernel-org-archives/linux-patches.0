@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01C71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A21C433C1;
-	Wed, 23 Nov 2022 09:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CF51C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F36C433D6;
+	Wed, 23 Nov 2022 09:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196106;
-	bh=3jjkmEEo7x4ZAG1NUt7AJvALdp+qBET0zfbfPrdKwnQ=;
+	s=korg; t=1669196110;
+	bh=xFcXCQCI2IWt9k8sEkG9X6qihCmXclSIilK7GkX28+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmYcW6C0GNXkwCyk1LLOoa0u5Jld2OxxyW/lf68QDas4LI3Cy/aiVlB601tPFJaNM
-	 e3GTrY6xaBS50bfCDf8bwOWX5RC5yVla9zgXZv2+cyMUbGrCST/5aHSxt9MJqOr1tA
-	 bXns4FyvtP/HDpEPXWEnF60KBTnEkaVQJXUiLKiI=
+	b=aoIdpgXXFNf/Hif24ZgkYSFlVO6VNz9Y0NZZy6E/dJCUcAO36eyZwGP40gTvj+56W
+	 mk/G4t8IOEsbINs4im2GrQy6KpDAEBLahyJk4s4To/h8LXoW39o0am9sEzoP/EKxb7
+	 y2kx5iUtrW5YK9kkm8DUxukhD1nBag8PHvEkKLao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Agner <stefan@agner.ch>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 121/181] Revert "usb: dwc3: disable USB core PHY management"
-Date: Wed, 23 Nov 2022 09:51:24 +0100
-Message-Id: <20221123084607.608784875@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zheng Bin <zhengbin13@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.15 122/181] slimbus: qcom-ngd: Fix build error when CONFIG_SLIM_QCOM_NGD_CTRL=y && CONFIG_QCOM_RPROC_COMMON=m
+Date: Wed, 23 Nov 2022 09:51:25 +0100
+Message-Id: <20221123084607.647974074@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,71 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Zheng Bin <zhengbin13@huawei.com>
 
-commit 5c294de36e7fb3e0cba0c4e1ef9a5f57bc080d0f upstream.
+commit e54fad8044db18cc400df8d01bfb86cada08b7cb upstream.
 
-This reverts commit 6000b8d900cd5f52fbcd0776d0cc396e88c8c2ea.
+If CONFIG_SLIM_QCOM_NGD_CTRL=y, CONFIG_QCOM_RPROC_COMMON=m, COMPILE_TEST=y,
+bulding fails:
 
-The offending commit disabled the USB core PHY management as the dwc3
-already manages the PHYs in question.
+drivers/slimbus/qcom-ngd-ctrl.o: In function `qcom_slim_ngd_ctrl_probe':
+qcom-ngd-ctrl.c:(.text+0x330): undefined reference to `qcom_register_ssr_notifier'
+qcom-ngd-ctrl.c:(.text+0x5fc): undefined reference to `qcom_unregister_ssr_notifier'
+drivers/slimbus/qcom-ngd-ctrl.o: In function `qcom_slim_ngd_remove':
+qcom-ngd-ctrl.c:(.text+0x90c): undefined reference to `qcom_unregister_ssr_notifier'
 
-Unfortunately some platforms have started relying on having USB core
-also controlling the PHY and this is specifically currently needed on
-some Exynos platforms for PHY calibration or connected device may fail
-to enumerate.
+Make SLIM_QCOM_NGD_CTRL depends on QCOM_RPROC_COMMON || (COMPILE_TEST && !QCOM_RPROC_COMMON) to fix this.
 
-The PHY calibration was previously handled in the dwc3 driver, but to
-work around some issues related to how the dwc3 driver interacts with
-xhci (e.g. using multiple drivers) this was moved to USB core by commits
-34c7ed72f4f0 ("usb: core: phy: add support for PHY calibration") and
-a0a465569b45 ("usb: dwc3: remove generic PHY calibrate() calls").
-
-The same PHY obviously should not be controlled from two different
-places, which for example do no agree on the PHY mode or power state
-during suspend, but as the offending patch was backported to stable,
-let's revert it for now.
-
-Reported-by: Stefan Agner <stefan@agner.ch>
-Link: https://lore.kernel.org/lkml/808bdba846bb60456adf10a3016911ee@agner.ch/
-Fixes: 6000b8d900cd ("usb: dwc3: disable USB core PHY management")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20221103144648.14197-1-johan+linaro@kernel.org
+Fixes: e291691c6977 ("slimbus: qcom-ngd-ctrl: allow compile testing without QCOM_RPROC_COMMON")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zheng Bin <zhengbin13@huawei.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221027095904.3388959-1-zhengbin13@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/host.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/slimbus/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -10,13 +10,8 @@
- #include <linux/acpi.h>
- #include <linux/platform_device.h>
- 
--#include "../host/xhci-plat.h"
- #include "core.h"
- 
--static const struct xhci_plat_priv dwc3_xhci_plat_priv = {
--	.quirks = XHCI_SKIP_PHY_INIT,
--};
--
- static int dwc3_host_get_irq(struct dwc3 *dwc)
- {
- 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
-@@ -92,11 +87,6 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		goto err;
- 	}
- 
--	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_priv,
--					sizeof(dwc3_xhci_plat_priv));
--	if (ret)
--		goto err;
--
- 	memset(props, 0, sizeof(struct property_entry) * ARRAY_SIZE(props));
- 
- 	if (dwc->usb3_lpm_capable)
+diff --git a/drivers/slimbus/Kconfig b/drivers/slimbus/Kconfig
+index 2ed821f75816..a0fdf9d792cb 100644
+--- a/drivers/slimbus/Kconfig
++++ b/drivers/slimbus/Kconfig
+@@ -23,7 +23,7 @@ config SLIM_QCOM_CTRL
+ config SLIM_QCOM_NGD_CTRL
+ 	tristate "Qualcomm SLIMbus Satellite Non-Generic Device Component"
+ 	depends on HAS_IOMEM && DMA_ENGINE && NET
+-	depends on QCOM_RPROC_COMMON || COMPILE_TEST
++	depends on QCOM_RPROC_COMMON || (COMPILE_TEST && !QCOM_RPROC_COMMON)
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	select QCOM_QMI_HELPERS
+ 	select QCOM_PDR_HELPERS
+-- 
+2.38.1
+
 
 
