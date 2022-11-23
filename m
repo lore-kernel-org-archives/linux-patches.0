@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040A71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54568C433D6;
-	Wed, 23 Nov 2022 09:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E571C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:36:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADA9C433C1;
+	Wed, 23 Nov 2022 09:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196190;
-	bh=jLIkfQQK4i5fEELjYg2YNlkRlfwFdCvTg7WGfHqRHtM=;
+	s=korg; t=1669196194;
+	bh=VXRv0y6xY0jPwHcNM1H07341PsyTBnUYhW9WJTx/3uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sI4UoFwihAre9c7liu7EYZa5FbdAEKc+8Ru+/Kulwg/QiR0WPs6B99A5t0CiaxXn9
-	 ZCtWcjVcFXUjITcavDNnIZm+jZ2gQ4lpC3tqoDZrR0lzPOi7tiNGOzBArE5I6I0JHm
-	 eZnlcfj1JEKZK41k3hGzhiucO5FTTEOrMtRijdq4=
+	b=vsTstYCmVbg6nbLE4NlY7aSmGInsYe1urJ+/ZO6UERmflAHgZmsHkqqxf8qUm6ppS
+	 HfWxodWQW815FsCjpCevJcaS1yxCE87vZMeHEeFxTApiEIbGtb9VCk9Ti0C3bv+0/C
+	 fMn8w4UQZhhT3/nkN/6w3Mdn7AZJHeEmN5+C1Y6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Crequy <albancrequy@linux.microsoft.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Francis Laniel <flaniel@linux.microsoft.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 145/181] maccess: Fix writing offset in case of fault in strncpy_from_kernel_nofault()
-Date: Wed, 23 Nov 2022 09:51:48 +0100
-Message-Id: <20221123084608.624504876@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 128/181] USB: serial: option: add u-blox LARA-R6 00B modem
+Date: Wed, 23 Nov 2022 09:51:31 +0100
+Message-Id: <20221123084607.898092851@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,37 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alban Crequy <albancrequy@linux.microsoft.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit 8678ea06852cd1f819b870c773d43df888d15d46 upstream.
+commit d9e37a5c4d80ea25a7171ab8557a449115554e76 upstream.
 
-If a page fault occurs while copying the first byte, this function resets one
-byte before dst.
-As a consequence, an address could be modified and leaded to kernel crashes if
-case the modified address was accessed later.
+The official LARA-R6 (00B) modem uses 0x908b PID. LARA-R6 00B does not
+implement a QMI interface on port 4, the reservation (RSVD(4)) has been
+added to meet other companies that implement QMI on that interface.
 
-Fixes: b58294ead14c ("maccess: allow architectures to provide kernel probing directly")
-Signed-off-by: Alban Crequy <albancrequy@linux.microsoft.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Francis Laniel <flaniel@linux.microsoft.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> [5.8]
-Link: https://lore.kernel.org/bpf/20221110085614.111213-2-albancrequy@linux.microsoft.com
+LARA-R6 00B USB composition exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/maccess.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/maccess.c
-+++ b/mm/maccess.c
-@@ -99,7 +99,7 @@ long strncpy_from_kernel_nofault(char *d
- 	return src - unsafe_addr;
- Efault:
- 	pagefault_enable();
--	dst[-1] = '\0';
-+	dst[0] = '\0';
- 	return -EFAULT;
- }
- #else /* HAVE_GET_KERNEL_NOFAULT */
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1126,6 +1126,8 @@ static const struct usb_device_id option
+ 	/* u-blox products using Qualcomm vendor ID */
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R410M),
+ 	  .driver_info = RSVD(1) | RSVD(3) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x908b),	/* u-blox LARA-R6 00B */
++	  .driver_info = RSVD(4) },
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
+ 	/* Quectel products using Quectel vendor ID */
 
 
