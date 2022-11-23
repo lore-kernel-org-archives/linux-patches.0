@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426D41C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1654C433C1;
-	Wed, 23 Nov 2022 09:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AB61C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF77EC433D6;
+	Wed, 23 Nov 2022 09:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194263;
-	bh=C0WMr25BMRqL1AV//WwwfcxI5BwlUs3bPLepC5iG5vY=;
+	s=korg; t=1669194266;
+	bh=cKJsrtftiW0of52GDApWHW7SPhRuOqNhKLNmI8mWfXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7MFJskYtuXkT/z3xEKk8yrBZzV7U4yN/A/5YiSFnCEPlYhCFXFHXY2+1GUff2jDi
-	 jSQxxmRvTTUC1EtfHYo8ejh00T+eQBzTFcLsmqg/WkfoKhJzAqRieEDdgjwY03tMds
-	 PSIKO8Tp37RV9I6dYbUhnNeEzFDJOMIr2byTEl90=
+	b=iloF+xtvbvNi0NShrW/VtSBc3ekSoqdro5oYdDoMv8A5kGJcw81l6ZaUaqP8uXctK
+	 9t/QGYrbv6N9CxzesGLKw7J48K7zIlgNn/NM70kNGQs/L5LJizokMrusJtoFBSaHz8
+	 kUPhO4P0e6ahtZcoFmD2FW2eP+CMEt/Qa4JFxQQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 011/114] drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
-Date: Wed, 23 Nov 2022 09:49:58 +0100
-Message-Id: <20221123084552.286332663@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+f816fa82f8783f7a02bb@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 029/114] nilfs2: fix use-after-free bug of ns_writer on remount
+Date: Wed, 23 Nov 2022 09:50:16 +0100
+Message-Id: <20221123084553.010073395@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -35,64 +36,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit cf53db768a8790fdaae2fa3a81322b080285f7e5 ]
+commit 8cccf05fe857a18ee26e20d11a8455a73ffd4efd upstream.
 
-A problem about modprobe vc4 failed is triggered with the following log
-given:
+If a nilfs2 filesystem is downgraded to read-only due to metadata
+corruption on disk and is remounted read/write, or if emergency read-only
+remount is performed, detaching a log writer and synchronizing the
+filesystem can be done at the same time.
 
- [  420.327987] Error: Driver 'vc4_hvs' is already registered, aborting...
- [  420.333904] failed to register platform driver vc4_hvs_driver [vc4]: -16
- modprobe: ERROR: could not insert 'vc4': Device or resource busy
+In these cases, use-after-free of the log writer (hereinafter
+nilfs->ns_writer) can happen as shown in the scenario below:
 
-The reason is that vc4_drm_register() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-fails, it returns without unregistering all the vc4 drivers, resulting the
-vc4 can never be installed later.
-A simple call graph is shown as below:
+ Task1                               Task2
+ --------------------------------    ------------------------------
+ nilfs_construct_segment
+   nilfs_segctor_sync
+     init_wait
+     init_waitqueue_entry
+     add_wait_queue
+     schedule
+                                     nilfs_remount (R/W remount case)
+				       nilfs_attach_log_writer
+                                         nilfs_detach_log_writer
+                                           nilfs_segctor_destroy
+                                             kfree
+     finish_wait
+       _raw_spin_lock_irqsave
+         __raw_spin_lock_irqsave
+           do_raw_spin_lock
+             debug_spin_lock_before  <-- use-after-free
 
- vc4_drm_register()
-   platform_register_drivers() # all vc4 drivers are registered
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without unregister drivers
+While Task1 is sleeping, nilfs->ns_writer is freed by Task2.  After Task1
+waked up, Task1 accesses nilfs->ns_writer which is already freed.  This
+scenario diagram is based on the Shigeru Yoshida's post [1].
 
-Fixing this problem by checking the return value of
-platform_driver_register() and do platform_unregister_drivers() if
-error happened.
+This patch fixes the issue by not detaching nilfs->ns_writer on remount so
+that this UAF race doesn't happen.  Along with this change, this patch
+also inserts a few necessary read-only checks with superblock instance
+where only the ns_writer pointer was used to check if the filesystem is
+read-only.
 
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221103014705.109322-1-yuancan@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://syzkaller.appspot.com/bug?id=79a4c002e960419ca173d55e863bd09e8112df8b
+Link: https://lkml.kernel.org/r/20221103141759.1836312-1-syoshida@redhat.com [1]
+Link: https://lkml.kernel.org/r/20221104142959.28296-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+f816fa82f8783f7a02bb@syzkaller.appspotmail.com
+Reported-by: Shigeru Yoshida <syoshida@redhat.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_drv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nilfs2/segment.c |   15 ++++++++-------
+ fs/nilfs2/super.c   |    2 --
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index 868dd1ef3b69..f210560a4831 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.c
-+++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -394,7 +394,12 @@ static int __init vc4_drm_register(void)
- 	if (ret)
- 		return ret;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -322,7 +322,7 @@ void nilfs_relax_pressure_in_lock(struct
+ 	struct the_nilfs *nilfs = sb->s_fs_info;
+ 	struct nilfs_sc_info *sci = nilfs->ns_writer;
  
--	return platform_driver_register(&vc4_platform_driver);
-+	ret = platform_driver_register(&vc4_platform_driver);
-+	if (ret)
-+		platform_unregister_drivers(component_drivers,
-+					    ARRAY_SIZE(component_drivers));
-+
-+	return ret;
- }
+-	if (!sci || !sci->sc_flush_request)
++	if (sb_rdonly(sb) || unlikely(!sci) || !sci->sc_flush_request)
+ 		return;
  
- static void __exit vc4_drm_unregister(void)
--- 
-2.35.1
-
+ 	set_bit(NILFS_SC_PRIOR_FLUSH, &sci->sc_flags);
+@@ -2243,7 +2243,7 @@ int nilfs_construct_segment(struct super
+ 	struct nilfs_transaction_info *ti;
+ 	int err;
+ 
+-	if (!sci)
++	if (sb_rdonly(sb) || unlikely(!sci))
+ 		return -EROFS;
+ 
+ 	/* A call inside transactions causes a deadlock. */
+@@ -2282,7 +2282,7 @@ int nilfs_construct_dsync_segment(struct
+ 	struct nilfs_transaction_info ti;
+ 	int err = 0;
+ 
+-	if (!sci)
++	if (sb_rdonly(sb) || unlikely(!sci))
+ 		return -EROFS;
+ 
+ 	nilfs_transaction_lock(sb, &ti, 0);
+@@ -2778,11 +2778,12 @@ int nilfs_attach_log_writer(struct super
+ 
+ 	if (nilfs->ns_writer) {
+ 		/*
+-		 * This happens if the filesystem was remounted
+-		 * read/write after nilfs_error degenerated it into a
+-		 * read-only mount.
++		 * This happens if the filesystem is made read-only by
++		 * __nilfs_error or nilfs_remount and then remounted
++		 * read/write.  In these cases, reuse the existing
++		 * writer.
+ 		 */
+-		nilfs_detach_log_writer(sb);
++		return 0;
+ 	}
+ 
+ 	nilfs->ns_writer = nilfs_segctor_new(sb, root);
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -1138,8 +1138,6 @@ static int nilfs_remount(struct super_bl
+ 	if ((bool)(*flags & SB_RDONLY) == sb_rdonly(sb))
+ 		goto out;
+ 	if (*flags & SB_RDONLY) {
+-		/* Shutting down log writer */
+-		nilfs_detach_log_writer(sb);
+ 		sb->s_flags |= SB_RDONLY;
+ 
+ 		/*
 
 
