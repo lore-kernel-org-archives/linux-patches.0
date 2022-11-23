@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD9E1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98022C433D6;
-	Wed, 23 Nov 2022 09:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E3D1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35282C433C1;
+	Wed, 23 Nov 2022 09:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197219;
-	bh=OP3xTZtj9CsnyaQHPQQEnLm1yDzvAH7Qbs7EJ4k81+Q=;
+	s=korg; t=1669197222;
+	bh=OzWTM6DAHNbxr85UkBEjp6JoHpX9VpTLXfq2oyIaTFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKas4QZYhpSMZwOMU1440KY4iGSsEeFO0ePqpz5icgq25hW0Xd0YxdG5P+ikS7JWX
-	 wx8hDUi3rpYicGImVQBcNIGqeIX9LI+U5XJIivt1cksfsbwjwW5QV+Ivruq/Zx6FZr
-	 Z1bwfjLJ3VDFLbQnhXvzREBJwpGKT/J0R2lOqfSY=
+	b=J2T9M/f5jRoQpClnrub1/BT9sseZHyX53KyQPqxBNhVMQlOIX2PbdVdI85pBpXjKk
+	 zA8geFYHR7GKAZaDB8QBSNfujx0OMKY7HNIBoT1ZkKmAPserjpq7isooYULQ7phTQf
+	 54yjjfrwfuRvb5ksfSoKHeww2TujhMuaGnWzFTUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mushahid Hussain <mushi.shar@gmail.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 6.0 231/314] speakup: fix a segfault caused by switching consoles
-Date: Wed, 23 Nov 2022 09:51:16 +0100
-Message-Id: <20221123084635.974943948@linuxfoundation.org>
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.0 205/314] tracing: kprobe: Fix potential null-ptr-deref on trace_event_file in kprobe_event_gen_test_exit()
+Date: Wed, 23 Nov 2022 09:50:50 +0100
+Message-Id: <20221123084634.844519684@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,61 +34,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mushahid Hussain <mushi.shar@gmail.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit 0fc801f8018000c8e64a275a20cb1da7c54e46df upstream.
+commit e0d75267f59d7084e0468bd68beeb1bf9c71d7c0 upstream.
 
-This patch fixes a segfault by adding a null check on synth in
-speakup_con_update(). The segfault can be reproduced as follows:
+When trace_get_event_file() failed, gen_kretprobe_test will be assigned
+as the error code. If module kprobe_event_gen_test is removed now, the
+null pointer dereference will happen in kprobe_event_gen_test_exit().
+Check if gen_kprobe_test or gen_kretprobe_test is error code or NULL
+before dereference them.
 
-	- Login into a text console
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP PTI
+CPU: 3 PID: 2210 Comm: modprobe Not tainted
+6.1.0-rc1-00171-g2159299a3b74-dirty #217
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+RIP: 0010:kprobe_event_gen_test_exit+0x1c/0xb5 [kprobe_event_gen_test]
+Code: Unable to access opcode bytes at 0xffffffff9ffffff2.
+RSP: 0018:ffffc900015bfeb8 EFLAGS: 00010246
+RAX: ffffffffffffffea RBX: ffffffffa0002080 RCX: 0000000000000000
+RDX: ffffffffa0001054 RSI: ffffffffa0001064 RDI: ffffffffdfc6349c
+RBP: ffffffffa0000000 R08: 0000000000000004 R09: 00000000001e95c0
+R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000800
+R13: ffffffffa0002420 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f56b75be540(0000) GS:ffff88813bc00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffff9ffffff2 CR3: 000000010874a006 CR4: 0000000000330ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __x64_sys_delete_module+0x206/0x380
+ ? lockdep_hardirqs_on_prepare+0xd8/0x190
+ ? syscall_enter_from_user_mode+0x1c/0x50
+ do_syscall_64+0x3f/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-	- Load speakup and speakup_soft modules
+Link: https://lore.kernel.org/all/20221108015130.28326-2-shangxiaojing@huawei.com/
 
-	- Remove speakup_soft
-
-	- Switch to a graphics console
-
-This is caused by lack of a null check on `synth` in
-speakup_con_update().
-
-Here's the sequence that causes the segfault:
-
-	- When we remove the speakup_soft, synth_release() sets the synth
-	  to null.
-
-	- After that, when we change the virtual console to graphics
-	  console, vt_notifier_call() is fired, which then calls
-	  speakup_con_update().
-
-	- Inside speakup_con_update() there's no null check on synth,
-	  so it calls synth_printf().
-
-	- Inside synth_printf(), synth_buffer_add() and synth_start(),
-	  both access synth, when it is null and causing a segfault.
-
-Therefore adding a null check on synth solves the issue.
-
-Fixes: 2610df41489f ("staging: speakup: Add pause command used on switching to graphical mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mushahid Hussain <mushi.shar@gmail.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://lore.kernel.org/r/20221010165720.397042-1-mushi.shar@gmail.com
+Fixes: 64836248dda2 ("tracing: Add kprobe event command generation test module")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accessibility/speakup/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/kprobe_event_gen_test.c |   44 ++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/drivers/accessibility/speakup/main.c
-+++ b/drivers/accessibility/speakup/main.c
-@@ -1778,7 +1778,7 @@ static void speakup_con_update(struct vc
- {
- 	unsigned long flags;
+--- a/kernel/trace/kprobe_event_gen_test.c
++++ b/kernel/trace/kprobe_event_gen_test.c
+@@ -73,6 +73,10 @@ static struct trace_event_file *gen_kret
+ #define KPROBE_GEN_TEST_ARG3	NULL
+ #endif
  
--	if (!speakup_console[vc->vc_num] || spk_parked)
-+	if (!speakup_console[vc->vc_num] || spk_parked || !synth)
- 		return;
- 	if (!spin_trylock_irqsave(&speakup_info.spinlock, flags))
- 		/* Speakup output, discard */
++static bool trace_event_file_is_valid(struct trace_event_file *input)
++{
++	return input && !IS_ERR(input);
++}
+ 
+ /*
+  * Test to make sure we can create a kprobe event, then add more
+@@ -217,10 +221,12 @@ static int __init kprobe_event_gen_test_
+ 
+ 	ret = test_gen_kretprobe_cmd();
+ 	if (ret) {
+-		WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
+-						  "kprobes",
+-						  "gen_kretprobe_test", false));
+-		trace_put_event_file(gen_kretprobe_test);
++		if (trace_event_file_is_valid(gen_kretprobe_test)) {
++			WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
++							  "kprobes",
++							  "gen_kretprobe_test", false));
++			trace_put_event_file(gen_kretprobe_test);
++		}
+ 		WARN_ON(kprobe_event_delete("gen_kretprobe_test"));
+ 	}
+ 
+@@ -229,24 +235,30 @@ static int __init kprobe_event_gen_test_
+ 
+ static void __exit kprobe_event_gen_test_exit(void)
+ {
+-	/* Disable the event or you can't remove it */
+-	WARN_ON(trace_array_set_clr_event(gen_kprobe_test->tr,
+-					  "kprobes",
+-					  "gen_kprobe_test", false));
++	if (trace_event_file_is_valid(gen_kprobe_test)) {
++		/* Disable the event or you can't remove it */
++		WARN_ON(trace_array_set_clr_event(gen_kprobe_test->tr,
++						  "kprobes",
++						  "gen_kprobe_test", false));
++
++		/* Now give the file and instance back */
++		trace_put_event_file(gen_kprobe_test);
++	}
+ 
+-	/* Now give the file and instance back */
+-	trace_put_event_file(gen_kprobe_test);
+ 
+ 	/* Now unregister and free the event */
+ 	WARN_ON(kprobe_event_delete("gen_kprobe_test"));
+ 
+-	/* Disable the event or you can't remove it */
+-	WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
+-					  "kprobes",
+-					  "gen_kretprobe_test", false));
++	if (trace_event_file_is_valid(gen_kretprobe_test)) {
++		/* Disable the event or you can't remove it */
++		WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
++						  "kprobes",
++						  "gen_kretprobe_test", false));
++
++		/* Now give the file and instance back */
++		trace_put_event_file(gen_kretprobe_test);
++	}
+ 
+-	/* Now give the file and instance back */
+-	trace_put_event_file(gen_kretprobe_test);
+ 
+ 	/* Now unregister and free the event */
+ 	WARN_ON(kprobe_event_delete("gen_kretprobe_test"));
 
 
