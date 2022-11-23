@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E1E1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D92C433D7;
-	Wed, 23 Nov 2022 09:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396641C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7455CC433B5;
+	Wed, 23 Nov 2022 09:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197128;
-	bh=3T9A7XV3dvrq5RgeaJKwXAXtgDdUaXw2bIuGUfOlCig=;
+	s=korg; t=1669197132;
+	bh=OhKWinaIzpz10rv7EjrJXzgbVqN4jsKr8yLZMLHrmm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMFIpO5XrKQbaBEzrU4CZULgy669tZbQVo92Q6bNtxRrGWK2GLYG+G9upImLjvP3r
-	 /W8GY8H2u8hciAV2ydCzaFI1SpLdVDNorkWWAb4ghTLlgCm1Sehh4Jx4tJE4sxT2uT
-	 WAlcwX9hsvOMGmym8Oe3vKzfAE/M8Hk2BZU/DmFY=
+	b=pHtZM/5iQs9dcjeXtkdF9OIp/XktUgteMGs9Vjaza11a5hJILqf0Elzkjcl02MmCL
+	 ssCJ4jyix4N3j6ueI52N+sytZApvw0+VhMJUdNFKKrPxTQbJ3PM1UN4w+qtKc/697A
+	 ZobkWmCQCzfIRJ226Iezjt9irvc28vJSy6m6Id08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
+	Guangbin Huang <huangguangbin2@huawei.com>,
 	Hao Lan <lanhao@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 174/314] net: hns3: fix return value check bug of rx copybreak
-Date: Wed, 23 Nov 2022 09:50:19 +0100
-Message-Id: <20221123084633.452115664@linuxfoundation.org>
+Subject: [PATCH 6.0 175/314] net: hns3: fix setting incorrect phy link ksettings for firmware in resetting process
+Date: Wed, 23 Nov 2022 09:50:20 +0100
+Message-Id: <20221123084633.501013843@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,39 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Guangbin Huang <huangguangbin2@huawei.com>
 
-[ Upstream commit 29df7c695ed67a8fa32bb7805bad8fe2a76c1f88 ]
+[ Upstream commit 510d7b6ae842e59ee00d57e5f07ac15131b6d899 ]
 
-The refactoring of rx copybreak modifies the original return logic, which
-will make this feature unavailable. So this patch fixes the return logic of
-rx copybreak.
+Currently, if driver is in phy-imp(phy controlled by imp firmware) mode, as
+driver did not update phy link ksettings after initialization process or
+not update advertising when getting phy link ksettings from firmware, it
+may set incorrect phy link ksettings for firmware in resetting process.
+So fix it.
 
-Fixes: e74a726da2c4 ("net: hns3: refactor hns3_nic_reuse_page()")
-Fixes: 99f6b5fb5f63 ("net: hns3: use bounce buffer when rx page can not be reused")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
+Fixes: c5ef83cbb1e9 ("net: hns3: fix for phy_addr error in hclge_mac_mdio_config")
+Fixes: 2312e050f42b ("net: hns3: Fix for deadlock problem occurring when unregistering ae_algo")
+Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
 Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c    | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 944f36e4d66f..44d4265f109a 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3736,8 +3736,8 @@ static void hns3_nic_reuse_page(struct sk_buff *skb, int i,
- 		desc_cb->reuse_flag = 1;
- 	} else if (frag_size <= ring->rx_copybreak) {
- 		ret = hns3_handle_rx_copybreak(skb, i, ring, pull_len, desc_cb);
--		if (ret)
--			goto out;
-+		if (!ret)
-+			return;
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index bd9a3b8f9e79..7e8a60f2401c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -3246,6 +3246,7 @@ static int hclge_update_tp_port_info(struct hclge_dev *hdev)
+ 	hdev->hw.mac.autoneg = cmd.base.autoneg;
+ 	hdev->hw.mac.speed = cmd.base.speed;
+ 	hdev->hw.mac.duplex = cmd.base.duplex;
++	linkmode_copy(hdev->hw.mac.advertising, cmd.link_modes.advertising);
  
- out:
+ 	return 0;
+ }
+@@ -11373,9 +11374,12 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	if (ret)
+ 		goto err_msi_irq_uninit;
+ 
+-	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER &&
+-	    !hnae3_dev_phy_imp_supported(hdev)) {
+-		ret = hclge_mac_mdio_config(hdev);
++	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
++		if (hnae3_dev_phy_imp_supported(hdev))
++			ret = hclge_update_tp_port_info(hdev);
++		else
++			ret = hclge_mac_mdio_config(hdev);
++
+ 		if (ret)
+ 			goto err_msi_irq_uninit;
+ 	}
 -- 
 2.35.1
 
