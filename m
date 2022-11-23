@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E437B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F1DC433D6;
-	Wed, 23 Nov 2022 08:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865927B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03EEC433D7;
+	Wed, 23 Nov 2022 08:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193721;
-	bh=uI8KDpWZIaQOgw6yOhJf5TOysUv+gHfWXnzZAap4mM8=;
+	s=korg; t=1669193725;
+	bh=3ck9Xe5tg1QfdZeBDOx83UjQJzLEsPFRPeEwmuhrhc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pk8PagLp7TrjGn6pvJ1up8BmKV5yfYhfXHfyKd2qSBczqYMmtp26C3EGWmo9kka0D
-	 c5eQtpbk0vLzvBSd1vgX8MyHdEqxHMLDwkTPx9Xvq4L8M9hmnnJxYFbMnEgSpH5S4L
-	 Wp3RQlyqUsqRjBfzSnAyX2bqE/XHLog4105FuNCg=
+	b=DHc1GO5qPER898hQ7GgqeGM4xaH5Txm72UhJFHLIvEP9t7cbsMYpulPQu6Bdj3QpB
+	 4jFwmsIedjAs/ZWQv9wX06kp61571Xca2hCA63hLg+6xO2GHojD6hIoimSq1kMhmx7
+	 do+dnjg5aNdYdbHT+CihmwLqKvhQnSW1N5qhiyDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 42/76] net: caif: fix double disconnect client in chnl_net_open()
-Date: Wed, 23 Nov 2022 09:50:41 +0100
-Message-Id: <20221123084548.113983592@linuxfoundation.org>
+Subject: [PATCH 4.9 43/76] xen/pcpu: fix possible memory leak in register_pcpu()
+Date: Wed, 23 Nov 2022 09:50:42 +0100
+Message-Id: <20221123084548.155239735@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -35,35 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8fbb53c8bfd8c56ecf1f78dc821778b58f505503 ]
+[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
 
-When connecting to client timeout, disconnect client for twice in
-chnl_net_open(). Remove one. Compile tested only.
+In device_add(), dev_set_name() is called to allocate name, if it returns
+error, the name need be freed. As comment of device_register() says, it
+should use put_device() to give up the reference in the error path. So fix
+this by calling put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: 2aa40aef9deb ("caif: Use link layer MTU instead of fixed MTU")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/chnl_net.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/xen/pcpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/caif/chnl_net.c b/net/caif/chnl_net.c
-index 12063f333897..1bfcfcb68a26 100644
---- a/net/caif/chnl_net.c
-+++ b/net/caif/chnl_net.c
-@@ -316,9 +316,6 @@ static int chnl_net_open(struct net_device *dev)
+diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
+index cdc6daa7a9f6..9cf7085a260b 100644
+--- a/drivers/xen/pcpu.c
++++ b/drivers/xen/pcpu.c
+@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
  
- 	if (result == 0) {
- 		pr_debug("connect timeout\n");
--		caif_disconnect_client(dev_net(dev), &priv->chnl);
--		priv->state = CAIF_DISCONNECTED;
--		pr_debug("state disconnected\n");
- 		result = -ETIMEDOUT;
- 		goto error;
+ 	err = device_register(dev);
+ 	if (err) {
+-		pcpu_release(dev);
++		put_device(dev);
+ 		return err;
  	}
+ 
 -- 
 2.35.1
 
