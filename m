@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC1B1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2109C433D7;
-	Wed, 23 Nov 2022 09:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C94A1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:29:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CCCC433D6;
+	Wed, 23 Nov 2022 09:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195743;
-	bh=iPxNq6OZIAYYK2AOMlVT08B1wcF9j2sMEKlxUF6HeFA=;
+	s=korg; t=1669195748;
+	bh=NssqwD5/Gv4Zq01FZfPoyFmZ9zR/cF/rab9d/sMdA+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZCbnSohoI1vhBpY8iAWVRDRUP1KpPBT6Yi7Aarqvgt94F7WiZw0jOlsfJ2E9PWXT
-	 TnrVz1wgqihBU0zC3ltSX5RAvYLhLFR1OpHiZE5x46hH3kb/1IyOqXgKkd5I5OC00u
-	 v+6d7ErsOzn/8MnzfmWps/uiOsgBTBYtAfIhTXXY=
+	b=s3PCH9kXmo3/5sfhwLn05ohaXaLchaxC1WmzSQX9F3ypgGGoD2982llrZQaR67ck1
+	 GKZzuOmsM9AlBEtrTpzIrCsfIv2lDigS0f+OrUXubw4JrSh/8XkP+W/ZnF4P8fU63N
+	 SGVcYL6KIv5UOHtcrFP3CwBRBoqnAS03Ec+g62OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/181] drm/amd/display: Remove wrong pipe control lock
-Date: Wed, 23 Nov 2022 09:49:43 +0100
-Message-Id: <20221123084603.348224420@linuxfoundation.org>
+Subject: [PATCH 5.15 021/181] ACPI: scan: Add LATT2021 to acpi_ignore_dep_ids[]
+Date: Wed, 23 Nov 2022 09:49:44 +0100
+Message-Id: <20221123084603.377195384@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -37,91 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit ca08a1725d0d78efca8d2dbdbce5ea70355da0f2 ]
+[ Upstream commit fa153b7cddce795662d38f78a87612c166c0f692 ]
 
-When using a device based on DCN32/321,
-we have an issue where a second
-4k@60Hz display does not light up,
-and the system becomes unresponsive
-for a few minutes. In the debug process,
-it was possible to see a hang
-in the function dcn20_post_unlock_program_front_end
-in this part:
+Some x86/ACPI laptops with MIPI cameras have a LATT2021 ACPI device
+in the _DEP dependency list of the ACPI devices for the camera-sensors
+(which have flags.honor_deps set).
 
-for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
-	&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
-	mdelay(1);
-}
+The _DDN for the LATT2021 device is "Lattice FW Update Client Driver",
+suggesting that this is used for firmware updates of something. There
+is no Linux driver for this and if Linux gets support for updates it
+will likely be in userspace through fwupd.
 
-The hubp_is_flip_pending always returns positive
-for waiting pending flips which is a symptom of
-pipe hang. Additionally, the dmesg log shows
-this message after a few minutes:
+For now add the LATT2021 HID to acpi_ignore_dep_ids[] so that
+acpi_dev_ready_for_enumeration() will return true once the other _DEP
+dependencies are met.
 
-  BUG: soft lockup - CPU#4 stuck for 26s!
-  ...
-  [  +0.000003]  dcn20_post_unlock_program_front_end+0x112/0x340 [amdgpu]
-  [  +0.000171]  dc_commit_state_no_check+0x63d/0xbf0 [amdgpu]
-  [  +0.000155]  ? dc_validate_global_state+0x358/0x3d0 [amdgpu]
-  [  +0.000154]  dc_commit_state+0xe2/0xf0 [amdgpu]
-
-This confirmed the hypothesis that we had a pipe
-hanging somewhere. Next, after checking the
-ftrace entries, we have the below weird
-sequence:
-
- [..]
-  2)               |        dcn10_lock_all_pipes [amdgpu]() {
-  2)   0.120 us    |          optc1_is_tg_enabled [amdgpu]();
-  2)               |          dcn20_pipe_control_lock [amdgpu]() {
-  2)               |            dc_dmub_srv_clear_inbox0_ack [amdgpu]() {
-  2)   0.121 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
-  2)   0.551 us    |            }
-  2)               |            dc_dmub_srv_send_inbox0_cmd [amdgpu]() {
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_write [amdgpu]();
-  2)   0.511 us    |            }
-  2)               |            dc_dmub_srv_wait_for_inbox0_ack [amdgpu]() {
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
-  2)   0.110 us    |              amdgpu_dm_dmub_reg_read [amdgpu]();
- [..]
-
-We are not expected to read from dmub register
-so many times and for so long. From the trace log,
-it was possible to identify that the function
-dcn20_pipe_control_lock was triggering the dmub
-operation when it was unnecessary and causing
-the hang issue. This commit drops the unnecessary
-dmub code and, consequently, fixes the second display not
-lighting up the issue.
-
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/scan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 0de1bbbabf9a..58eea3aa3bfc 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1765,7 +1765,7 @@ void dcn20_post_unlock_program_front_end(
- 
- 			for (j = 0; j < TIMEOUT_FOR_PIPE_ENABLE_MS*1000
- 					&& hubp->funcs->hubp_is_flip_pending(hubp); j++)
--				mdelay(1);
-+				udelay(1);
- 		}
- 	}
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 6e9cd41c5f9b..ae74720888db 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -793,6 +793,7 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
+ static const char * const acpi_ignore_dep_ids[] = {
+ 	"PNP0D80", /* Windows-compatible System Power Management Controller */
+ 	"INT33BD", /* Intel Baytrail Mailbox Device */
++	"LATT2021", /* Lattice FW Update Client Driver */
+ 	NULL
+ };
  
 -- 
 2.35.1
