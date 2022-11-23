@@ -1,28 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B671E1C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:02:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195FBC433D7;
-	Wed, 23 Nov 2022 09:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A7A1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:02:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070EAC433D6;
+	Wed, 23 Nov 2022 09:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194170;
-	bh=f+UDXZM143Nq8HB9IFOgHap79D8szZHdFvH9tnI7k0E=;
+	s=korg; t=1669194174;
+	bh=bfQyc+493sN0GCJ69O6/+VlNDyIJGQLhy2y+UlSK1wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gz8Lu9NTSOOUOlHG+6sxx4Ct2w3VaCbZ9F12+OdW8SbjFOL9F+KOrm4hZR01LQZPZ
-	 I97OrlkN8va57zBiw2g/jgDCPEFXBQ8VywOD2MTMpXhii+FtWHCaiFA2ohJCtzmXoB
-	 zlc1XMvi/I/+P/iqsXczmyVKPyCrZqmaTgif6JGg=
+	b=PXG3STXPnuCwHbbEoTXCudpdgy9Cztcm4QoajHM3LhYjnTZiQ6aJCFWcPwSdK6g/p
+	 nFUPo/1G/ytyNcO/uIRoIJ0HJX5m3TDfVQgDh89v1R1x1iEePQEVEHObjBJzlK9Czl
+	 Pkfq8hS0irhLXzz1rfukK7r2Pjxjs2JM78rUH22E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+8b41a1365f1106fd0f33@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 4.14 84/88] 9p/trans_fd: always use O_NONBLOCK read/write
-Date: Wed, 23 Nov 2022 09:51:21 +0100
-Message-Id: <20221123084551.593671952@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 85/88] mm: fs: initialize fsdata passed to write_begin/write_end interface
+Date: Wed, 23 Nov 2022 09:51:22 +0100
+Message-Id: <20221123084551.643743850@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -36,71 +67,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alexander Potapenko <glider@google.com>
 
-commit ef575281b21e9a34dfae544a187c6aac2ae424a9 upstream.
+commit 1468c6f4558b1bcd92aa0400f2920f9dc7588402 upstream.
 
-syzbot is reporting hung task at p9_fd_close() [1], for p9_mux_poll_stop()
- from p9_conn_destroy() from p9_fd_close() is failing to interrupt already
-started kernel_read() from p9_fd_read() from p9_read_work() and/or
-kernel_write() from p9_fd_write() from p9_write_work() requests.
+Functions implementing the a_ops->write_end() interface accept the `void
+*fsdata` parameter that is supposed to be initialized by the corresponding
+a_ops->write_begin() (which accepts `void **fsdata`).
 
-Since p9_socket_open() sets O_NONBLOCK flag, p9_mux_poll_stop() does not
-need to interrupt kernel_read()/kernel_write(). However, since p9_fd_open()
-does not set O_NONBLOCK flag, but pipe blocks unless signal is pending,
-p9_mux_poll_stop() needs to interrupt kernel_read()/kernel_write() when
-the file descriptor refers to a pipe. In other words, pipe file descriptor
-needs to be handled as if socket file descriptor.
+However not all a_ops->write_begin() implementations initialize `fsdata`
+unconditionally, so it may get passed uninitialized to a_ops->write_end(),
+resulting in undefined behavior.
 
-We somehow need to interrupt kernel_read()/kernel_write() on pipes.
+Fix this by initializing fsdata with NULL before the call to
+write_begin(), rather than doing so in all possible a_ops implementations.
 
-A minimal change, which this patch is doing, is to set O_NONBLOCK flag
- from p9_fd_open(), for O_NONBLOCK flag does not affect reading/writing
-of regular files. But this approach changes O_NONBLOCK flag on userspace-
-supplied file descriptors (which might break userspace programs), and
-O_NONBLOCK flag could be changed by userspace. It would be possible to set
-O_NONBLOCK flag every time p9_fd_read()/p9_fd_write() is invoked, but still
-remains small race window for clearing O_NONBLOCK flag.
+This patch covers only the following cases found by running x86 KMSAN
+under syzkaller:
 
-If we don't want to manipulate O_NONBLOCK flag, we might be able to
-surround kernel_read()/kernel_write() with set_thread_flag(TIF_SIGPENDING)
-and recalc_sigpending(). Since p9_read_work()/p9_write_work() works are
-processed by kernel threads which process global system_wq workqueue,
-signals could not be delivered from remote threads when p9_mux_poll_stop()
- from p9_conn_destroy() from p9_fd_close() is called. Therefore, calling
-set_thread_flag(TIF_SIGPENDING)/recalc_sigpending() every time would be
-needed if we count on signals for making kernel_read()/kernel_write()
-non-blocking.
+ - generic_perform_write()
+ - cont_expand_zero() and generic_cont_expand_simple()
+ - page_symlink()
 
-Link: https://lkml.kernel.org/r/345de429-a88b-7097-d177-adecf9fed342@I-love.SAKURA.ne.jp
-Link: https://syzkaller.appspot.com/bug?extid=8b41a1365f1106fd0f33 [1]
-Reported-by: syzbot <syzbot+8b41a1365f1106fd0f33@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Tested-by: syzbot <syzbot+8b41a1365f1106fd0f33@syzkaller.appspotmail.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-[Dominique: add comment at Christian's suggestion]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Other cases of passing uninitialized fsdata may persist in the codebase.
+
+Link: https://lkml.kernel.org/r/20220915150417.722975-43-glider@google.com
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Konovalov <andreyknvl@google.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Eric Biggers <ebiggers@google.com>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/buffer.c  |    4 ++--
+ fs/namei.c   |    2 +-
+ mm/filemap.c |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -834,11 +834,14 @@ static int p9_fd_open(struct p9_client *
- 		goto out_free_ts;
- 	if (!(ts->rd->f_mode & FMODE_READ))
- 		goto out_put_rd;
-+	/* prevent workers from hanging on IO when fd is a pipe */
-+	ts->rd->f_flags |= O_NONBLOCK;
- 	ts->wr = fget(wfd);
- 	if (!ts->wr)
- 		goto out_put_rd;
- 	if (!(ts->wr->f_mode & FMODE_WRITE))
- 		goto out_put_wr;
-+	ts->wr->f_flags |= O_NONBLOCK;
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -2378,7 +2378,7 @@ int generic_cont_expand_simple(struct in
+ {
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	int err;
  
- 	client->trans = ts;
- 	client->status = Connected;
+ 	err = inode_newsize_ok(inode, size);
+@@ -2404,7 +2404,7 @@ static int cont_expand_zero(struct file
+ 	struct inode *inode = mapping->host;
+ 	unsigned int blocksize = i_blocksize(inode);
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	pgoff_t index, curidx;
+ 	loff_t curpos;
+ 	unsigned zerofrom, offset, len;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -4847,7 +4847,7 @@ int __page_symlink(struct inode *inode,
+ {
+ 	struct address_space *mapping = inode->i_mapping;
+ 	struct page *page;
+-	void *fsdata;
++	void *fsdata = NULL;
+ 	int err;
+ 	unsigned int flags = 0;
+ 	if (nofs)
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3025,7 +3025,7 @@ ssize_t generic_perform_write(struct fil
+ 		unsigned long offset;	/* Offset into pagecache page */
+ 		unsigned long bytes;	/* Bytes to write to page */
+ 		size_t copied;		/* Bytes copied from user */
+-		void *fsdata;
++		void *fsdata = NULL;
+ 
+ 		offset = (pos & (PAGE_SIZE - 1));
+ 		bytes = min_t(unsigned long, PAGE_SIZE - offset,
 
 
