@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396641C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7455CC433B5;
-	Wed, 23 Nov 2022 09:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF291C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93D5C433C1;
+	Wed, 23 Nov 2022 09:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197132;
-	bh=OhKWinaIzpz10rv7EjrJXzgbVqN4jsKr8yLZMLHrmm0=;
+	s=korg; t=1669197135;
+	bh=45mOl9QTSmGK5vOy62FjHPbIfzUM1gtX8bzEW+sl62w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pHtZM/5iQs9dcjeXtkdF9OIp/XktUgteMGs9Vjaza11a5hJILqf0Elzkjcl02MmCL
-	 ssCJ4jyix4N3j6ueI52N+sytZApvw0+VhMJUdNFKKrPxTQbJ3PM1UN4w+qtKc/697A
-	 ZobkWmCQCzfIRJ226Iezjt9irvc28vJSy6m6Id08=
+	b=oA0Oi9/ZMhndAf7l86WznsdfI4SR+jOMkT+FMg0wT78z/Fvkb6K+6+aMxGTRyHrH9
+	 ugWLRIDVhhOkmHD2FjxFNhhMWO6lUOhvPJu+9m1xvyGk3Uo4SAy8w+kAK5kU924S8l
+	 mFvWI7Y50VrZDnR7T0+h6fzbO0x6JipstnTrdZCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangbin Huang <huangguangbin2@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 175/314] net: hns3: fix setting incorrect phy link ksettings for firmware in resetting process
-Date: Wed, 23 Nov 2022 09:50:20 +0100
-Message-Id: <20221123084633.501013843@linuxfoundation.org>
+Subject: [PATCH 6.0 176/314] bridge: switchdev: Fix memory leaks when changing VLAN protocol
+Date: Wed, 23 Nov 2022 09:50:21 +0100
+Message-Id: <20221123084633.551911600@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,55 +37,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guangbin Huang <huangguangbin2@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 510d7b6ae842e59ee00d57e5f07ac15131b6d899 ]
+[ Upstream commit 9d45921ee4cb364910097e7d1b7558559c2f9fd2 ]
 
-Currently, if driver is in phy-imp(phy controlled by imp firmware) mode, as
-driver did not update phy link ksettings after initialization process or
-not update advertising when getting phy link ksettings from firmware, it
-may set incorrect phy link ksettings for firmware in resetting process.
-So fix it.
+The bridge driver can offload VLANs to the underlying hardware either
+via switchdev or the 8021q driver. When the former is used, the VLAN is
+marked in the bridge driver with the 'BR_VLFLAG_ADDED_BY_SWITCHDEV'
+private flag.
 
-Fixes: f5f2b3e4dcc0 ("net: hns3: add support for imp-controlled PHYs")
-Fixes: c5ef83cbb1e9 ("net: hns3: fix for phy_addr error in hclge_mac_mdio_config")
-Fixes: 2312e050f42b ("net: hns3: Fix for deadlock problem occurring when unregistering ae_algo")
-Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
+To avoid the memory leaks mentioned in the cited commit, the bridge
+driver will try to delete a VLAN via the 8021q driver if the VLAN is not
+marked with the previously mentioned flag.
+
+When the VLAN protocol of the bridge changes, switchdev drivers are
+notified via the 'SWITCHDEV_ATTR_ID_BRIDGE_VLAN_PROTOCOL' attribute, but
+the 8021q driver is also called to add the existing VLANs with the new
+protocol and delete them with the old protocol.
+
+In case the VLANs were offloaded via switchdev, the above behavior is
+both redundant and buggy. Redundant because the VLANs are already
+programmed in hardware and drivers that support VLAN protocol change
+(currently only mlx5) change the protocol upon the switchdev attribute
+notification. Buggy because the 8021q driver is called despite these
+VLANs being marked with 'BR_VLFLAG_ADDED_BY_SWITCHDEV'. This leads to
+memory leaks [1] when the VLANs are deleted.
+
+Fix by not calling the 8021q driver for VLANs that were already
+programmed via switchdev.
+
+[1]
+unreferenced object 0xffff8881f6771200 (size 256):
+  comm "ip", pid 446855, jiffies 4298238841 (age 55.240s)
+  hex dump (first 32 bytes):
+    00 00 7f 0e 83 88 ff ff 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000012819ac>] vlan_vid_add+0x437/0x750
+    [<00000000f2281fad>] __br_vlan_set_proto+0x289/0x920
+    [<000000000632b56f>] br_changelink+0x3d6/0x13f0
+    [<0000000089d25f04>] __rtnl_newlink+0x8ae/0x14c0
+    [<00000000f6276baf>] rtnl_newlink+0x5f/0x90
+    [<00000000746dc902>] rtnetlink_rcv_msg+0x336/0xa00
+    [<000000001c2241c0>] netlink_rcv_skb+0x11d/0x340
+    [<0000000010588814>] netlink_unicast+0x438/0x710
+    [<00000000e1a4cd5c>] netlink_sendmsg+0x788/0xc40
+    [<00000000e8992d4e>] sock_sendmsg+0xb0/0xe0
+    [<00000000621b8f91>] ____sys_sendmsg+0x4ff/0x6d0
+    [<000000000ea26996>] ___sys_sendmsg+0x12e/0x1b0
+    [<00000000684f7e25>] __sys_sendmsg+0xab/0x130
+    [<000000004538b104>] do_syscall_64+0x3d/0x90
+    [<0000000091ed9678>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: 279737939a81 ("net: bridge: Fix VLANs memory leak")
+Reported-by: Vlad Buslov <vladbu@nvidia.com>
+Tested-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20221114084509.860831-1-idosch@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c    | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bridge/br_vlan.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index bd9a3b8f9e79..7e8a60f2401c 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3246,6 +3246,7 @@ static int hclge_update_tp_port_info(struct hclge_dev *hdev)
- 	hdev->hw.mac.autoneg = cmd.base.autoneg;
- 	hdev->hw.mac.speed = cmd.base.speed;
- 	hdev->hw.mac.duplex = cmd.base.duplex;
-+	linkmode_copy(hdev->hw.mac.advertising, cmd.link_modes.advertising);
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 6e53dc991409..9ffd40b8270c 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -959,6 +959,8 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
+ 	list_for_each_entry(p, &br->port_list, list) {
+ 		vg = nbp_vlan_group(p);
+ 		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
++			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++				continue;
+ 			err = vlan_vid_add(p->dev, proto, vlan->vid);
+ 			if (err)
+ 				goto err_filt;
+@@ -973,8 +975,11 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
+ 	/* Delete VLANs for the old proto from the device filter. */
+ 	list_for_each_entry(p, &br->port_list, list) {
+ 		vg = nbp_vlan_group(p);
+-		list_for_each_entry(vlan, &vg->vlan_list, vlist)
++		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
++			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++				continue;
+ 			vlan_vid_del(p->dev, oldproto, vlan->vid);
++		}
+ 	}
  
  	return 0;
- }
-@@ -11373,9 +11374,12 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_msi_irq_uninit;
+@@ -983,13 +988,19 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto,
+ 	attr.u.vlan_protocol = ntohs(oldproto);
+ 	switchdev_port_attr_set(br->dev, &attr, NULL);
  
--	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER &&
--	    !hnae3_dev_phy_imp_supported(hdev)) {
--		ret = hclge_mac_mdio_config(hdev);
-+	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
-+		if (hnae3_dev_phy_imp_supported(hdev))
-+			ret = hclge_update_tp_port_info(hdev);
-+		else
-+			ret = hclge_mac_mdio_config(hdev);
-+
- 		if (ret)
- 			goto err_msi_irq_uninit;
+-	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist)
++	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist) {
++		if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++			continue;
+ 		vlan_vid_del(p->dev, proto, vlan->vid);
++	}
+ 
+ 	list_for_each_entry_continue_reverse(p, &br->port_list, list) {
+ 		vg = nbp_vlan_group(p);
+-		list_for_each_entry(vlan, &vg->vlan_list, vlist)
++		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
++			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++				continue;
+ 			vlan_vid_del(p->dev, proto, vlan->vid);
++		}
  	}
+ 
+ 	return err;
 -- 
 2.35.1
 
