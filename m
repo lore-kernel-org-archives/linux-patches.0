@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031EF1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD43C433C1;
-	Wed, 23 Nov 2022 09:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9491C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12C9C433D6;
+	Wed, 23 Nov 2022 09:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196154;
-	bh=QFGnn7q7ymSY6xi5+Jbc9Eit6+uYnFqG2uPeexq/A+k=;
+	s=korg; t=1669196158;
+	bh=DGwmPvq/7nttIOxaZou3QrDBDbsXUks7H3RaWBJXyvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWbkdSIAT0uDSFUjKfUAxbReSDtgGccPBFQpiz5XXbEGBtgDPB6YQ5JXcWMJ7tbAM
-	 oXMnMUhbRcdCrdqMm3n8i7WWiPz+JXEjvDfjciGRgzbuclkFJIIbnaahJ57UO/mg3/
-	 El7v0Eb9lfgg2qphQV3zwspMSu6dwXXMSYjZ6E28=
+	b=qADWA6N4QZMwjUKCrd08JE/RLbSF7IDFbppXNbwCT8WEgOsiGc9KP2uCjmFNApP+h
+	 kgTBnUGST3zkSbKTMl+ifkGOfaXois8E2YhQI2/jNpfjcvumpCtyJGj9x+ZuaaEEGh
+	 OsHHW3xapqZrqRkMQvPif5gKFEWt1wBZ6tZPJn+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 127/181] USB: serial: option: remove old LARA-R6 PID
-Date: Wed, 23 Nov 2022 09:51:30 +0100
-Message-Id: <20221123084607.858251533@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 136/181] iio: trigger: sysfs: fix possible memory leak in iio_sysfs_trig_init()
+Date: Wed, 23 Nov 2022 09:51:39 +0100
+Message-Id: <20221123084608.220008598@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,45 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 2ec106b96afc19698ff934323b633c0729d4c7f8 upstream.
+commit efa17e90e1711bdb084e3954fa44afb6647331c0 upstream.
 
-Remove the UBLOX_PRODUCT_R6XX 0x90fa association since LARA-R6 00B final
-product uses a new USB composition with different PID. 0x90fa PID used
-only by LARA-R6 internal prototypes.
+dev_set_name() allocates memory for name, it need be freed
+when device_add() fails, call put_device() to give up the
+reference that hold in device_initialize(), so that it can
+be freed in kobject_cleanup() when the refcount hit to 0.
 
-Move 0x90fa PID directly in the option_ids array since used by other
-Qualcomm based modem vendors as pointed out in:
+Fault injection test can trigger this:
 
-  https://lore.kernel.org/all/6572c4e6-d8bc-b8d3-4396-d879e4e76338@gmail.com
+unreferenced object 0xffff8e8340a7b4c0 (size 32):
+  comm "modprobe", pid 243, jiffies 4294678145 (age 48.845s)
+  hex dump (first 32 bytes):
+    69 69 6f 5f 73 79 73 66 73 5f 74 72 69 67 67 65  iio_sysfs_trigge
+    72 00 a7 40 83 8e ff ff 00 86 13 c4 f6 ee ff ff  r..@............
+  backtrace:
+    [<0000000074999de8>] __kmem_cache_alloc_node+0x1e9/0x360
+    [<00000000497fd30b>] __kmalloc_node_track_caller+0x44/0x1a0
+    [<000000003636c520>] kstrdup+0x2d/0x60
+    [<0000000032f84da2>] kobject_set_name_vargs+0x1e/0x90
+    [<0000000092efe493>] dev_set_name+0x4e/0x70
 
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 1f785681a870 ("staging:iio:trigger sysfs userspace trigger rework.")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221022074212.1386424-1-yangyingliang@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/trigger/iio-trig-sysfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -240,7 +240,6 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_UC15			0x9090
- /* These u-blox products use Qualcomm's vendor ID */
- #define UBLOX_PRODUCT_R410M			0x90b2
--#define UBLOX_PRODUCT_R6XX			0x90fa
- /* These Yuga products use Qualcomm's vendor ID */
- #define YUGA_PRODUCT_CLM920_NC5			0x9625
+--- a/drivers/iio/trigger/iio-trig-sysfs.c
++++ b/drivers/iio/trigger/iio-trig-sysfs.c
+@@ -208,9 +208,13 @@ static int iio_sysfs_trigger_remove(int
  
-@@ -1127,7 +1126,7 @@ static const struct usb_device_id option
- 	/* u-blox products using Qualcomm vendor ID */
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R410M),
- 	  .driver_info = RSVD(1) | RSVD(3) },
--	{ USB_DEVICE(QUALCOMM_VENDOR_ID, UBLOX_PRODUCT_R6XX),
-+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* Quectel products using Quectel vendor ID */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21, 0xff, 0xff, 0xff),
+ static int __init iio_sysfs_trig_init(void)
+ {
++	int ret;
+ 	device_initialize(&iio_sysfs_trig_dev);
+ 	dev_set_name(&iio_sysfs_trig_dev, "iio_sysfs_trigger");
+-	return device_add(&iio_sysfs_trig_dev);
++	ret = device_add(&iio_sysfs_trig_dev);
++	if (ret)
++		put_device(&iio_sysfs_trig_dev);
++	return ret;
+ }
+ module_init(iio_sysfs_trig_init);
+ 
 
 
