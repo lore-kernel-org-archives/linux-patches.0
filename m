@@ -1,84 +1,105 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEE64699
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 17:03:24 +0000 (UTC)
-Received: by mail-oi1-f175.google.com with SMTP id v81so19654777oie.5
-        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:03:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xvt9NMUMshKq6vZrNophFamB+BPLohd5Icmfx4xFrM8=;
-        b=bm9/oOvAW0+K3TJJ7Gj5sl3POoljrlM5fVEpGzyPYDn4OCbo2EeE67VBrIOriN/jqg
-         ht41OZVqCMlusFwyludo9TG2r5836OGVFluTeXayWnJN3BwV1XlA3NC5EVlIkCH5gHPJ
-         HN27HGz0DIoa4TEqjlB9O3zEO5gvarItsEocQ3K+jerWc0/bh90xxvNYnOYfAv/nSFQw
-         gMQOc6drXwiicuWIoc7v0eKNzPfOY3raHDwtA6vTKMmZbIBh/28u++jjNJblBh8RKK07
-         Io7YWkQaVhSTvIaweIs8MKe40rxEWQFmw7loCuk+6YlBZZUerx9FXPWKZgeSKXnez3Nu
-         U+mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xvt9NMUMshKq6vZrNophFamB+BPLohd5Icmfx4xFrM8=;
-        b=xayj0NE0Dk9FwjmPWdTvUfpR4E1xtbaQ/enqWw0kYnqyKGE7vGnQ2iIh+OGaHhPaPb
-         lu/NRGEXqpkm7fDxduIFJh/I48uhR3bXCHhgy+YOiuqWo/A6FF+1BnLCMomLxL8Ktb83
-         bszfbvbjlZf+14LakSKE06hXsVGQbknTTgd8gOz6LomIoCgBIkmKEY/94gNMzhSOV4N6
-         8TIPmnOz1I8siZcZtQXCiQmLvlKe5+YpsHawSYsBHTYvixx/VgY5CAoGoVBOpL8qP00N
-         H3azWTknHzgken7PNW7WTHFhwJqbCElAEHRaxfU3KKgVH9JhEfZ1L7t0wtdbuldbPn55
-         T6eA==
-X-Gm-Message-State: ANoB5pkKl7B3cqC0QFBRSA0qWVslvDWQcU+TdiyKCPXWZ4YCpO+f3l+X
-	yCU/RCjYK3Oq2y240mg3dWA=
-X-Google-Smtp-Source: AA0mqf5wBlGvPRLvp/pTWhAa3z7dqWlSRK2KNfpsujr/Ynf5V+BHlGBDdSDKcoDbs2wesz+bqx1Fbw==
-X-Received: by 2002:a05:6808:1115:b0:359:cb71:328b with SMTP id e21-20020a056808111500b00359cb71328bmr14023971oih.282.1669223003837;
-        Wed, 23 Nov 2022 09:03:23 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id s8-20020a056870248800b001431bf4e5a0sm2090707oaq.38.2022.11.23.09.03.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 09:03:23 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 23 Nov 2022 09:03:22 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFF02912
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 22:56:50 +0000 (UTC)
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+	by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 93D008034CE9
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 22:32:35 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 1AF4B10046527
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 22:31:59 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id xyHeo698HmSzkxyHeoQ9WX; Wed, 23 Nov 2022 22:31:59 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=PKDKRdmC c=1 sm=1 tr=0 ts=637e9f5f
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=9xFQ1JgjjksA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=v/xOKGW0BsQAx53NFGgIhs2QrUVPKgaTLEUW5GUX404=; b=o1YnRX2GE7ySqkg9w9gFB4BQRk
+	lshwkgQUMLloT4L5K10Sl3bDwrQcMriMe60VcC4zaug4iA2BU7pVYuOSznmtn9KfI/qVcX0GiQwdf
+	PSS2OJxpm4KnvLOnDipM8Mdau58MLOr/y4pwh3BgJ6shimcsxtRP1aV0FZKruoLgzvaAtEHCW2FA4
+	hNUmZoa0r9PDQpyFK5iD2F0rFp5QCZpV57Lr9CNw8ZMq/LPhvKAK5Nbie25b6Mk9suGtaNzs7nuxw
+	PbyVkok1jjTaYoS0OogwY1yVqqZTz1d2rSQulfYeKTfcueCnVc5vWqnmbqvdfb/roTGqJX5tXWQJT
+	8bPKYR3w==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:58836 helo=[10.0.1.48])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1oxyHd-000NoE-Rb;
+	Wed, 23 Nov 2022 15:31:57 -0700
 Subject: Re: [PATCH 6.0 000/314] 6.0.10-rc1 review
-Message-ID: <20221123170322.GB3745358@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
 References: <20221123084625.457073469@linuxfoundation.org>
+In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <d10b8119-0324-4798-76a3-e34a1ad23608@w6rz.net>
+Date: Wed, 23 Nov 2022 14:31:54 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1oxyHd-000NoE-Rb
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:58836
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Wed, Nov 23, 2022 at 09:47:25AM +0100, Greg Kroah-Hartman wrote:
+On 11/23/22 12:47 AM, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.0.10 release.
 > There are 314 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
 > Anything received after that time might be too late.
-> 
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Build reference: v6.0.9-315-gdcf677c
-Compiler version: arm-linux-gnueabi-gcc (GCC) 11.3.0
-Assembler version: GNU assembler (GNU Binutils) 2.39
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Building arm:allmodconfig ... failed
---------------
-Error log:
-drivers/rtc/rtc-cmos.c:1347:13: error: 'rtc_wake_setup' defined but not used [-Werror=unused-function]
- 1347 | static void rtc_wake_setup(struct device *dev)
+Tested-by: Ron Economos <re@w6rz.net>
 
-Guenter
