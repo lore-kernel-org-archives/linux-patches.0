@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23361C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED0EC433D6;
-	Wed, 23 Nov 2022 09:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088791C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:21:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B192C433C1;
+	Wed, 23 Nov 2022 09:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195292;
-	bh=4QgEydFWYE+iOzvndmU3IrAlgl9UyUzLDI7WJ3V13XQ=;
+	s=korg; t=1669195295;
+	bh=MA59D5WIQvHUCpoCxRHqWsIPVJ/UvRO5gbe223FpQQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONk2dV5F24lm4r561C+nA9xPD23mLMFUWM78E/EyHrvVBwumvWGsPiNDXnXCDDsx5
-	 Sab603QkRk/RNyXfYlzHFBcaUByZEr62sLfGJhqjyulAv7uIaPM/ExewOE2LqBfXC+
-	 TgR+7LM/THcNLFg5MCWIe55Petk7akJJGZ8UoRBg=
+	b=pmXJdeBqC4mPPMRuoMJ5pfRc36RReYrMJTjApGQmc8N20Jv52RAk99xXDUlNEleFh
+	 YNIdnQ7IKBVG9cSIUigKGYYmKqHfoPBnFvFFM8yxsRZvQsVoTdtZT1rmyUNW+A2Qoi
+	 BiDVT1HBFA1HT6Xqt+9mL8hUU5yQfaVjt29M4yAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/149] spi: intel: Use correct mask for flash and protected regions
-Date: Wed, 23 Nov 2022 09:50:09 +0100
-Message-Id: <20221123084558.949017098@linuxfoundation.org>
+Subject: [PATCH 5.10 044/149] ASoC: soc-utils: Remove __exit for snd_soc_util_exit()
+Date: Wed, 23 Nov 2022 09:50:27 +0100
+Message-Id: <20221123084559.540186582@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,48 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 92a66cbf6b30eda5719fbdfb24cd15fb341bba32 ]
+[ Upstream commit 314d34fe7f0a5836cb0472950c1f17744b4efde8 ]
 
-The flash and protected region mask is actually 0x7fff (30:16 and 14:0)
-and not 0x3fff so fix this accordingly. While there use GENMASK() instead.
+snd_soc_util_exit() is called in __init snd_soc_init() for cleanup.
+Remove the __exit annotation for it to fix the build warning:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221025062800.22357-1-mika.westerberg@linux.intel.com
+WARNING: modpost: sound/soc/snd-soc-core.o: section mismatch in reference: init_module (section: .init.text) -> snd_soc_util_exit (section: .exit.text)
+
+Fixes: 6ec27c53886c ("ASoC: core: Fix use-after-free in snd_soc_exit()")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221031134031.256511-1-chenzhongjin@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/controllers/intel-spi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/soc-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/controllers/intel-spi.c b/drivers/mtd/spi-nor/controllers/intel-spi.c
-index 65f41c0781bf..6c802db6b4af 100644
---- a/drivers/mtd/spi-nor/controllers/intel-spi.c
-+++ b/drivers/mtd/spi-nor/controllers/intel-spi.c
-@@ -53,17 +53,17 @@
- #define FRACC				0x50
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index f27f94ca064b..6b398ffabb02 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -171,7 +171,7 @@ int __init snd_soc_util_init(void)
+ 	return ret;
+ }
  
- #define FREG(n)				(0x54 + ((n) * 4))
--#define FREG_BASE_MASK			0x3fff
-+#define FREG_BASE_MASK			GENMASK(14, 0)
- #define FREG_LIMIT_SHIFT		16
--#define FREG_LIMIT_MASK			(0x03fff << FREG_LIMIT_SHIFT)
-+#define FREG_LIMIT_MASK			GENMASK(30, 16)
- 
- /* Offset is from @ispi->pregs */
- #define PR(n)				((n) * 4)
- #define PR_WPE				BIT(31)
- #define PR_LIMIT_SHIFT			16
--#define PR_LIMIT_MASK			(0x3fff << PR_LIMIT_SHIFT)
-+#define PR_LIMIT_MASK			GENMASK(30, 16)
- #define PR_RPE				BIT(15)
--#define PR_BASE_MASK			0x3fff
-+#define PR_BASE_MASK			GENMASK(14, 0)
- 
- /* Offsets are from @ispi->sregs */
- #define SSFSTS_CTL			0x00
+-void __exit snd_soc_util_exit(void)
++void snd_soc_util_exit(void)
+ {
+ 	platform_driver_unregister(&soc_dummy_driver);
+ 	platform_device_unregister(soc_dummy_dev);
 -- 
 2.35.1
 
