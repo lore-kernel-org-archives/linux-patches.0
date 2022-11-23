@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC4A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1840C433D7;
-	Wed, 23 Nov 2022 09:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239741C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84993C433D6;
+	Wed, 23 Nov 2022 09:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195895;
-	bh=95b1XakCFBg/d5siGzijyvjnKGr+D1NMWcvNvxWOtxc=;
+	s=korg; t=1669195899;
+	bh=QSbxve1qhHo5yWGBhiJaGqLwSC9xh5DOEBYCl3tq6Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xeiay/nJbSllnzKcQUo1cr9EIqPq4xcmL+zVb0nLUdyknuV4nKJaCYve5FFiyJpK1
-	 1y7/FmNdoffErL6KJDmCEJVxnRf/W7NlL8GkavMy0Ljo7mPH2R5pHLCj5VrRutpYug
-	 3rMwQS+PSH4UEah3gt08jOwqEsxmKkT9nZPAsLws=
+	b=GdDCG9eQeabZlKDxcBDkzmcCDYwe4c/NAjfHm+cvAC0u3tR3KTx0d3IQlGLC6COUi
+	 m8oe1vilGhGkCqpnyAqg3ksjYhPSYneIp7ZqcR+jrfInlrd+gz1Y3gom8PiX2D5NYI
+	 2m0lxqxJ+gGrcggfe7doDPnIjtF4co1uHgddn/YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Borislav Petkov <bp@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/181] x86/cpu: Add several Intel server CPU model numbers
-Date: Wed, 23 Nov 2022 09:49:55 +0100
-Message-Id: <20221123084603.778735641@linuxfoundation.org>
+Subject: [PATCH 5.15 033/181] ASoC: codecs: jz4725b: Fix spelling mistake "Sourc" -> "Source", "Routee" -> "Route"
+Date: Wed, 23 Nov 2022 09:49:56 +0100
+Message-Id: <20221123084603.819603299@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,55 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Luck <tony.luck@intel.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 7beade0dd41d42d797ccb7791b134a77fcebf35b ]
+[ Upstream commit df496157a5afa1b6d1f4c46ad6549c2c346d1e59 ]
 
-These servers are all on the public versions of the roadmap. The model
-numbers for Grand Ridge, Granite Rapids, and Sierra Forest were included
-in the September 2022 edition of the Instruction Set Extensions document.
+There are two spelling mistakes in codec routing description. Fix it.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20221103203310.5058-1-tony.luck@intel.com
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://lore.kernel.org/r/20221019071639.1003730-1-colin.i.king@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/soc/codecs/jz4725b.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 27158436f322..13922963431a 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -105,10 +105,15 @@
+diff --git a/sound/soc/codecs/jz4725b.c b/sound/soc/codecs/jz4725b.c
+index d57c2c6a3add..71ea576f7e67 100644
+--- a/sound/soc/codecs/jz4725b.c
++++ b/sound/soc/codecs/jz4725b.c
+@@ -288,7 +288,7 @@ static const struct snd_soc_dapm_route jz4725b_codec_dapm_routes[] = {
  
- #define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
- 
-+#define INTEL_FAM6_EMERALDRAPIDS_X	0xCF
-+
-+#define INTEL_FAM6_GRANITERAPIDS_X	0xAD
-+#define INTEL_FAM6_GRANITERAPIDS_D	0xAE
-+
- #define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
- #define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
- 
--/* "Small Core" Processors (Atom) */
-+/* "Small Core" Processors (Atom/E-Core) */
- 
- #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
- #define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
-@@ -135,6 +140,10 @@
- #define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
- #define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
- 
-+#define INTEL_FAM6_SIERRAFOREST_X	0xAF
-+
-+#define INTEL_FAM6_GRANDRIDGE		0xB6
-+
- /* Xeon Phi */
- 
- #define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
+ 	{"Mixer to ADC", NULL, "Mixer"},
+ 	{"ADC Source Capture Route", "Mixer", "Mixer to ADC"},
+-	{"ADC Sourc Capture Routee", "Line In", "Line In"},
++	{"ADC Source Capture Route", "Line In", "Line In"},
+ 	{"ADC Source Capture Route", "Mic 1", "Mic 1"},
+ 	{"ADC Source Capture Route", "Mic 2", "Mic 2"},
+ 	{"ADC", NULL, "ADC Source Capture Route"},
 -- 
 2.35.1
 
