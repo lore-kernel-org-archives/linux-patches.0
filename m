@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A3D1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1E0C43470;
-	Wed, 23 Nov 2022 09:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD05E1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43411C433C1;
+	Wed, 23 Nov 2022 09:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195565;
-	bh=q/hmdjhSzgvkQTDsnu5dbUmamha4EVlShLlLDNXzeMI=;
+	s=korg; t=1669195568;
+	bh=3jjkmEEo7x4ZAG1NUt7AJvALdp+qBET0zfbfPrdKwnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAXv8ljObB2Q+14dLaCbGZGL35nF0D+y4IHBD0Ex1wS7ys2u8YiK9hW5ymyjWy8bE
-	 LG4PAYMnS4vhuQKOn5fjFNNAloITI26Kjj5Naq0mZlMZUQSW1hWO/c/HCrJZIlMrAE
-	 xcvCBN48tJkB3dwNNfHBVEWTsTKkuU6kf2z5Brl4=
+	b=CE+uxD4YnSFP1Ph0o64FAPBMawRybYdVJx428V+gcRhK5wL5svd0Jz071EKzbtOQi
+	 ojJCA0fyolck/5rMm1h3B2kCkrnQn9KVkS68FX1haywIcpvLG4rhacxyLdn6W0NsAA
+	 rYcQpKyiwfQnTl2/sRaPr0kE8YUCCwAXoILEurq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 120/149] mmc: core: properly select voltage range without power cycle
-Date: Wed, 23 Nov 2022 09:51:43 +0100
-Message-Id: <20221123084602.254066159@linuxfoundation.org>
+	Stefan Agner <stefan@agner.ch>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 094/149] Revert "usb: dwc3: disable USB core PHY management"
+Date: Wed, 23 Nov 2022 09:51:17 +0100
+Message-Id: <20221123084601.366321060@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,47 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yann Gautier <yann.gautier@foss.st.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
+commit 5c294de36e7fb3e0cba0c4e1ef9a5f57bc080d0f upstream.
 
-In mmc_select_voltage(), if there is no full power cycle, the voltage
-range selected at the end of the function will be on a single range
-(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
-the mask shift should be reduced by 1.
+This reverts commit 6000b8d900cd5f52fbcd0776d0cc396e88c8c2ea.
 
-This issue was triggered by using a specific SD-card (Verbatim Premium
-16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
-and there is no power cycle. And the card was failing to switch to
-high-speed mode. When adding the range 3.2V/3.3V for this card with the
-proposed shift change, the card can switch to high-speed mode.
+The offending commit disabled the USB core PHY management as the dwc3
+already manages the PHYs in question.
 
-Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
+Unfortunately some platforms have started relying on having USB core
+also controlling the PHY and this is specifically currently needed on
+some Exynos platforms for PHY calibration or connected device may fail
+to enumerate.
+
+The PHY calibration was previously handled in the dwc3 driver, but to
+work around some issues related to how the dwc3 driver interacts with
+xhci (e.g. using multiple drivers) this was moved to USB core by commits
+34c7ed72f4f0 ("usb: core: phy: add support for PHY calibration") and
+a0a465569b45 ("usb: dwc3: remove generic PHY calibrate() calls").
+
+The same PHY obviously should not be controlled from two different
+places, which for example do no agree on the PHY mode or power state
+during suspend, but as the offending patch was backported to stable,
+let's revert it for now.
+
+Reported-by: Stefan Agner <stefan@agner.ch>
+Link: https://lore.kernel.org/lkml/808bdba846bb60456adf10a3016911ee@agner.ch/
+Fixes: 6000b8d900cd ("usb: dwc3: disable USB core PHY management")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20221103144648.14197-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/host.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1128,7 +1128,13 @@ u32 mmc_select_voltage(struct mmc_host *
- 		mmc_power_cycle(host, ocr);
- 	} else {
- 		bit = fls(ocr) - 1;
--		ocr &= 3 << bit;
-+		/*
-+		 * The bit variable represents the highest voltage bit set in
-+		 * the OCR register.
-+		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
-+		 * we must shift the mask '3' with (bit - 1).
-+		 */
-+		ocr &= 3 << (bit - 1);
- 		if (bit != host->ios.vdd)
- 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
+--- a/drivers/usb/dwc3/host.c
++++ b/drivers/usb/dwc3/host.c
+@@ -10,13 +10,8 @@
+ #include <linux/acpi.h>
+ #include <linux/platform_device.h>
+ 
+-#include "../host/xhci-plat.h"
+ #include "core.h"
+ 
+-static const struct xhci_plat_priv dwc3_xhci_plat_priv = {
+-	.quirks = XHCI_SKIP_PHY_INIT,
+-};
+-
+ static int dwc3_host_get_irq(struct dwc3 *dwc)
+ {
+ 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
+@@ -92,11 +87,6 @@ int dwc3_host_init(struct dwc3 *dwc)
+ 		goto err;
  	}
+ 
+-	ret = platform_device_add_data(xhci, &dwc3_xhci_plat_priv,
+-					sizeof(dwc3_xhci_plat_priv));
+-	if (ret)
+-		goto err;
+-
+ 	memset(props, 0, sizeof(struct property_entry) * ARRAY_SIZE(props));
+ 
+ 	if (dwc->usb3_lpm_capable)
 
 
