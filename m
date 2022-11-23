@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5171C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:09:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40DDC433B5;
-	Wed, 23 Nov 2022 09:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2A1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:09:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D15C433C1;
+	Wed, 23 Nov 2022 09:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194554;
-	bh=j0Q7W8nBJpRZPClb33Ok8jHJKZZVzMLWRuNlgwAb0Y4=;
+	s=korg; t=1669194557;
+	bh=XLhMLZb6XiLLtPgxe/0OyAMI6SvnqSR49NwowbBrBYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nt2OcAf0y+y1LVgUuEWC9DQCJqGqMLCrjxVkQomU2T5aB5O3az/oH9O351drBkcR3
-	 XadLdaP2oFM4i4l0OgjTvYdGwDvDF29WQ26igd6KoelcDg4YA8wIfGTnr9zE501yDr
-	 mFHrReAAXEtK31YyYRfJBrirmtA7AZoOdtHWydZc=
+	b=LkjfFnDe4sOJhvJSGgdA3VU0Aw1oreA60PWyktaZr5ICahxRQ8iAV7Ps6xQNqsXPq
+	 GpktRCoLPVB4O24XmlLYSlxJ1hYfCx/Ph0PCpTYVPxYJtikwc75eh1Nc5NKa+BK5id
+	 kkXJv9ILf/ZdIDK5nUW4ayNi/cCax1sugNFJzT2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mushahid Hussain <mushi.shar@gmail.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 4.19 081/114] speakup: fix a segfault caused by switching consoles
-Date: Wed, 23 Nov 2022 09:51:08 +0100
-Message-Id: <20221123084555.095281547@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 082/114] USB: serial: option: add Sierra Wireless EM9191
+Date: Wed, 23 Nov 2022 09:51:09 +0100
+Message-Id: <20221123084555.135761368@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -35,61 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mushahid Hussain <mushi.shar@gmail.com>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-commit 0fc801f8018000c8e64a275a20cb1da7c54e46df upstream.
+commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
 
-This patch fixes a segfault by adding a null check on synth in
-speakup_con_update(). The segfault can be reproduced as follows:
+Add support for the AT and diag ports, similar to other qualcomm SDX55
+modems. In QDL mode, the modem uses a different device ID and support
+is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
+add EM9191 QDL support").
 
-	- Login into a text console
+T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1199 ProdID=90d3 Rev=00.06
+S:  Manufacturer=Sierra Wireless, Incorporated
+S:  Product=Sierra Wireless EM9191
+S:  SerialNumber=xxxxxxxxxxxxxxxx
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
 
-	- Load speakup and speakup_soft modules
-
-	- Remove speakup_soft
-
-	- Switch to a graphics console
-
-This is caused by lack of a null check on `synth` in
-speakup_con_update().
-
-Here's the sequence that causes the segfault:
-
-	- When we remove the speakup_soft, synth_release() sets the synth
-	  to null.
-
-	- After that, when we change the virtual console to graphics
-	  console, vt_notifier_call() is fired, which then calls
-	  speakup_con_update().
-
-	- Inside speakup_con_update() there's no null check on synth,
-	  so it calls synth_printf().
-
-	- Inside synth_printf(), synth_buffer_add() and synth_start(),
-	  both access synth, when it is null and causing a segfault.
-
-Therefore adding a null check on synth solves the issue.
-
-Fixes: 2610df41489f ("staging: speakup: Add pause command used on switching to graphical mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mushahid Hussain <mushi.shar@gmail.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://lore.kernel.org/r/20221010165720.397042-1-mushi.shar@gmail.com
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/speakup/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/staging/speakup/main.c
-+++ b/drivers/staging/speakup/main.c
-@@ -1778,7 +1778,7 @@ static void speakup_con_update(struct vc
- {
- 	unsigned long flags;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -581,6 +581,9 @@ static void option_instat_callback(struc
+ #define OPPO_VENDOR_ID				0x22d9
+ #define OPPO_PRODUCT_R11			0x276c
  
--	if (!speakup_console[vc->vc_num] || spk_parked)
-+	if (!speakup_console[vc->vc_num] || spk_parked || !synth)
- 		return;
- 	if (!spin_trylock_irqsave(&speakup_info.spinlock, flags))
- 		/* Speakup output, discard */
++/* Sierra Wireless products */
++#define SIERRA_VENDOR_ID			0x1199
++#define SIERRA_PRODUCT_EM9191			0x90d3
+ 
+ /* Device flags */
+ 
+@@ -2176,6 +2179,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
