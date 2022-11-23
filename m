@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD431C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E931FC433C1;
-	Wed, 23 Nov 2022 09:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968D21C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:22:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3023C433C1;
+	Wed, 23 Nov 2022 09:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195367;
-	bh=d0zj5rT3Hd8veX7kySCjO6ZD/o9+VkfEgKeQuMfbh/4=;
+	s=korg; t=1669195371;
+	bh=USJJq69zVKa+mBIhzkqrjlkmBhWZOp8Zk2LgIStl8ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZlvUiq8EuvfExoNTKgFi+DfpHi4lFKaNTOIYipPKUACIkc+P4kJ834liFbtgrNq9
-	 31KwN0HPoofLirkSzdpbwQrN606KcEnLErxXXQev+B97/aBph9AjJy1iHXHb2+Gtbx
-	 kqaynQoUSX7p+Z+XNR+VXKW/aFHhOK5VyK8ErDV4=
+	b=iGOobtTGBd9YqqvZEx18rEI/zCYF4voDDZkRH+/T8chjF4GH81vra1C6Dvqo9/xnv
+	 YiD5T4uETSIW2VwZtqfW5XrJhau+AIrvn0MMluycnMyIcs1xTSCN6CZBYVFvcBXjFH
+	 nUVholR1w0ex0n2H9S0B9C0ji7iDmLHNRb7KbtQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sergeyev <sergeev917@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/149] ALSA: hda/realtek: fix speakers and micmute on HP 855 G8
-Date: Wed, 23 Nov 2022 09:50:07 +0100
-Message-Id: <20221123084558.880131844@linuxfoundation.org>
+Subject: [PATCH 5.10 058/149] ata: libata-transport: fix double ata_host_put() in ata_tport_add()
+Date: Wed, 23 Nov 2022 09:50:41 +0100
+Message-Id: <20221123084600.017995669@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,69 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sergeyev <sergeev917@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 91502a9a0b0d5252cf3f32ebd898823c2f5aadab ]
+[ Upstream commit 8c76310740807ade5ecdab5888f70ecb6d35732e ]
 
-There are several PCI ids associated with HP EliteBook 855 G8 Notebook
-PC. Commit 0e68c4b11f1e6 ("ALSA: hda/realtek: fix mute/micmute LEDs for
-HP 855 G8") covers 0x103c:0x8896, while this commit covers 0x103c:0x8895
-which needs some additional work on top of the quirk from 0e68c4b11f1e6.
+In the error path in ata_tport_add(), when calling put_device(),
+ata_tport_release() is called, it will put the refcount of 'ap->host'.
 
-Note that the device can boot up with working speakers and micmute LED
-without this patch, but the success rate would be quite low (order of
-16 working boots across 709 boots) at least for the built-in drivers
-scenario. This also means that there are some timing issues during early
-boot and this patch is a workaround.
+And then ata_host_put() is called again, the refcount is decreased
+to 0, ata_host_release() is called, all ports are freed and set to
+null.
 
-With this patch applied speakers and headphones are consistenly working,
-as well as mute/micmute LEDs and the internal microphone.
+When unbinding the device after failure, ata_host_stop() is called
+to release the resources, it leads a null-ptr-deref(), because all
+the ports all freed and null.
 
-Signed-off-by: Alexander Sergeyev <sergeev917@gmail.com>
-Link: https://lore.kernel.org/r/20220114165050.ouw2nknuspclynro@localhost.localdomain
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+CPU: 7 PID: 18671 Comm: modprobe Kdump: loaded Tainted: G            E      6.1.0-rc3+ #8
+pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : ata_host_stop+0x3c/0x84 [libata]
+lr : release_nodes+0x64/0xd0
+Call trace:
+ ata_host_stop+0x3c/0x84 [libata]
+ release_nodes+0x64/0xd0
+ devres_release_all+0xbc/0x1b0
+ device_unbind_cleanup+0x20/0x70
+ really_probe+0x158/0x320
+ __driver_probe_device+0x84/0x120
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xb4/0x220
+ bus_for_each_dev+0x78/0xdc
+ driver_attach+0x2c/0x40
+ bus_add_driver+0x184/0x240
+ driver_register+0x80/0x13c
+ __pci_register_driver+0x4c/0x60
+ ahci_pci_driver_init+0x30/0x1000 [ahci]
+
+Fix this by removing redundant ata_host_put() in the error path.
+
+Fixes: 2623c7a5f279 ("libata: add refcounting to ata_host")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/ata/libata-transport.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index e3f6b930ad4a..d427e8939a0e 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6883,6 +6883,7 @@ enum {
- 	ALC256_FIXUP_MIC_NO_PRESENCE_AND_RESUME,
- 	ALC285_FIXUP_LEGION_Y9000X_SPEAKERS,
- 	ALC285_FIXUP_LEGION_Y9000X_AUTOMUTE,
-+	ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED,
- };
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index b33772df9bc6..8a9850bd5d6c 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -317,7 +317,6 @@ int ata_tport_add(struct device *parent,
+  tport_err:
+ 	transport_destroy_device(dev);
+ 	put_device(dev);
+-	ata_host_put(ap->host);
+ 	return error;
+ }
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -8693,6 +8694,16 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC
- 	},
-+	[ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x19 },
-+			 { 0x20, AC_VERB_SET_PROC_COEF, 0x8e11 },
-+			 { }
-+		},
-+		.chained = true,
-+		.chain_id = ALC285_FIXUP_HP_MUTE_LED,
-+	},
- };
- 
- static const struct snd_pci_quirk alc269_fixup_tbl[] = {
-@@ -8915,6 +8926,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
 -- 
 2.35.1
 
