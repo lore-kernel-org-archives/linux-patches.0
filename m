@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98951C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:05:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E90C433D6;
-	Wed, 23 Nov 2022 09:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A1E1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:05:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E964FC433D6;
+	Wed, 23 Nov 2022 09:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194352;
-	bh=XbiBtFeER33Qkh6MpIYHaijb5Z6lPAWZRqnIAbyoYGs=;
+	s=korg; t=1669194356;
+	bh=3+tkchl8LH5Uan1McyIQEAVqBv1iA0XIm3xfZU8BgiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQJfSBaMMozVIJoC/P25ZVqhHPdh/g7jonkt8TKcKbdL827+MS53dCGurDNMDqr3p
-	 kwRLA1dpdKVJ6UhlqX2b2P8dJRest086FoerdQ8mac0ytsigTE+2fGdoiwEJFtRgLq
-	 dtWq+Tdy+lbOOSqRtBuFg7vaCHT+Pr/296ODRnz4=
+	b=RXs8YVCrynwA12lbmz8svgQKcNMcjmlvyWuborGJy8P6eCWWXNdpZMvK/1KGe7ZW/
+	 lK/unOdogTXns6ZbBLMxG+YO9vGlELcybP7XjBMh03HujDVtdxNRXa4yuXQmSeORd+
+	 e1UQWbWpdLzxzMXnZgiUOSbZZMw6Ica7OuQqaD+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 054/114] ASoC: core: Fix use-after-free in snd_soc_exit()
-Date: Wed, 23 Nov 2022 09:50:41 +0100
-Message-Id: <20221123084554.030508411@linuxfoundation.org>
+Subject: [PATCH 4.19 055/114] serial: 8250_omap: remove wait loop from Errata i202 workaround
+Date: Wed, 23 Nov 2022 09:50:42 +0100
+Message-Id: <20221123084554.079896123@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -35,87 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit 6ec27c53886c8963729885bcf2dd996eba2767a7 ]
+[ Upstream commit e828e56684d61b17317e0cfdef83791fa61cb76b ]
 
-KASAN reports a use-after-free:
+We were occasionally seeing the "Errata i202: timedout" on an AM335x
+board when repeatedly opening and closing a UART connected to an active
+sender. As new input may arrive at any time, it is possible to miss the
+"RX FIFO empty" condition, forcing the loop to wait until it times out.
 
-BUG: KASAN: use-after-free in device_del+0xb5b/0xc60
-Read of size 8 at addr ffff888008655050 by task rmmod/387
-CPU: 2 PID: 387 Comm: rmmod
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
-<TASK>
-dump_stack_lvl+0x79/0x9a
-print_report+0x17f/0x47b
-kasan_report+0xbb/0xf0
-device_del+0xb5b/0xc60
-platform_device_del.part.0+0x24/0x200
-platform_device_unregister+0x2e/0x40
-snd_soc_exit+0xa/0x22 [snd_soc_core]
-__do_sys_delete_module.constprop.0+0x34f/0x5b0
-do_syscall_64+0x3a/0x90
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-...
-</TASK>
+Nothing in the i202 Advisory states that such a wait is even necessary;
+other FIFO clear functions like serial8250_clear_fifos() do not wait
+either. For this reason, it seems safe to remove the wait, fixing the
+mentioned issue.
 
-It's bacause in snd_soc_init(), snd_soc_util_init() is possble to fail,
-but its ret is ignored, which makes soc_dummy_dev unregistered twice.
-
-snd_soc_init()
-    snd_soc_util_init()
-        platform_device_register_simple(soc_dummy_dev)
-        platform_driver_register() # fail
-    	platform_device_unregister(soc_dummy_dev)
-    platform_driver_register() # success
-...
-snd_soc_exit()
-    snd_soc_util_exit()
-    # soc_dummy_dev will be unregistered for second time
-
-To fix it, handle error and stop snd_soc_init() when util_init() fail.
-Also clean debugfs when util_init() or driver_register() fail.
-
-Fixes: fb257897bf20 ("ASoC: Work around allmodconfig failure")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221028031603.59416-1-chenzhongjin@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20221013112339.2540767-1-matthias.schiffer@ew.tq-group.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 9ca7dff5593d..07875867f5c2 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -3863,10 +3863,23 @@ EXPORT_SYMBOL_GPL(snd_soc_of_get_dai_link_codecs);
- 
- static int __init snd_soc_init(void)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index c1166b45c288..b81fb44e2bd7 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -162,27 +162,10 @@ static void omap8250_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ static void omap_8250_mdr1_errataset(struct uart_8250_port *up,
+ 				     struct omap8250_priv *priv)
  {
-+	int ret;
-+
- 	snd_soc_debugfs_init();
--	snd_soc_util_init();
-+	ret = snd_soc_util_init();
-+	if (ret)
-+		goto err_util_init;
- 
--	return platform_driver_register(&soc_driver);
-+	ret = platform_driver_register(&soc_driver);
-+	if (ret)
-+		goto err_register;
-+	return 0;
-+
-+err_register:
-+	snd_soc_util_exit();
-+err_util_init:
-+	snd_soc_debugfs_exit();
-+	return ret;
+-	u8 timeout = 255;
+-
+ 	serial_out(up, UART_OMAP_MDR1, priv->mdr1);
+ 	udelay(2);
+ 	serial_out(up, UART_FCR, up->fcr | UART_FCR_CLEAR_XMIT |
+ 			UART_FCR_CLEAR_RCVR);
+-	/*
+-	 * Wait for FIFO to empty: when empty, RX_FIFO_E bit is 0 and
+-	 * TX_FIFO_E bit is 1.
+-	 */
+-	while (UART_LSR_THRE != (serial_in(up, UART_LSR) &
+-				(UART_LSR_THRE | UART_LSR_DR))) {
+-		timeout--;
+-		if (!timeout) {
+-			/* Should *never* happen. we warn and carry on */
+-			dev_crit(up->port.dev, "Errata i202: timedout %x\n",
+-				 serial_in(up, UART_LSR));
+-			break;
+-		}
+-		udelay(1);
+-	}
  }
- module_init(snd_soc_init);
  
+ static void omap_8250_get_divisor(struct uart_port *port, unsigned int baud,
 -- 
 2.35.1
 
