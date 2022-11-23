@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112111C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D60C433B5;
-	Wed, 23 Nov 2022 09:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210491C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E25C433C1;
+	Wed, 23 Nov 2022 09:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196860;
-	bh=uxkAYE2rJsVxwD/Y1VXYKv8Q5J+kocS2iTmD+cCRFNU=;
+	s=korg; t=1669196864;
+	bh=9LuCxELjQe5XEdt7o5CPgb0qGBIZqkrcpmfrY//LbKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6O9MB5EIsA7XV0Fo6Q0GynfmaghX1EJtTavFFha0Ek14GHsgZP3zt1fClBWVqt9n
-	 yDycxWgjtljxSEqMQB7+rpOOb44a07f2tsdW+z0pzQosWLJh0tw2H67p72rPjIRjg7
-	 VngPCYoEL4Dq12Eboy1aM6TD9RzsKldnpyp3Z22o=
+	b=OOqiyGclqdMjO5TRWjgtuUC8mJgkjy6/+bo+VGjBhTfdsouTu+h0vuepoCd8LsMkT
+	 v5uXES9+fjo0TpjHDVtCWgjgRNevAwN1m02a/8qkcoMGzwd9B2BPbWQt1SXd0C/VFo
+	 7uqBnuXEKu4LKUOoX/CmCzL+ECMYsl67OkK1+RO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 145/314] cifs: Fix connections leak when tlink setup failed
-Date: Wed, 23 Nov 2022 09:49:50 +0100
-Message-Id: <20221123084632.120001707@linuxfoundation.org>
+Subject: [PATCH 6.0 146/314] bpf: Initialize same number of free nodes for each pcpu_freelist
+Date: Wed, 23 Nov 2022 09:49:51 +0100
+Message-Id: <20221123084632.167451448@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,62 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 1dcdf5f5b2137185cbdd5385f29949ab3da4f00c ]
+[ Upstream commit 4b45cd81f737d79d0fbfc0d320a1e518e7f0bbf0 ]
 
-If the tlink setup failed, lost to put the connections, then
-the module refcnt leak since the cifsd kthread not exit.
+pcpu_freelist_populate() initializes nr_elems / num_possible_cpus() + 1
+free nodes for some CPUs, and then possibly one CPU with fewer nodes,
+followed by remaining cpus with 0 nodes. For example, when nr_elems == 256
+and num_possible_cpus() == 32, CPU 0~27 each gets 9 free nodes, CPU 28 gets
+4 free nodes, CPU 29~31 get 0 free nodes, while in fact each CPU should get
+8 nodes equally.
 
-Also leak the fscache info, and for next mount with fsc, it will
-print the follow errors:
-  CIFS: Cache volume key already in use (cifs,127.0.0.1:445,TEST)
+This patch initializes nr_elems / num_possible_cpus() free nodes for each
+CPU firstly, then allocates the remaining free nodes by one for each CPU
+until no free nodes left.
 
-Let's check the result of tlink setup, and do some cleanup.
-
-Fixes: 56c762eb9bee ("cifs: Refactor out cifs_mount()")
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: e19494edab82 ("bpf: introduce percpu_freelist")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221110122128.105214-1-xukuohai@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/connect.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ kernel/bpf/percpu_freelist.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index c2c36451a883..317ca1be9c4c 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -3846,9 +3846,13 @@ int cifs_mount(struct cifs_sb_info *cifs_sb, struct smb3_fs_context *ctx)
- 	uuid_copy(&cifs_sb->dfs_mount_id, &mnt_ctx.mount_id);
+diff --git a/kernel/bpf/percpu_freelist.c b/kernel/bpf/percpu_freelist.c
+index 00b874c8e889..2ffb741eee8d 100644
+--- a/kernel/bpf/percpu_freelist.c
++++ b/kernel/bpf/percpu_freelist.c
+@@ -102,22 +102,21 @@ void pcpu_freelist_populate(struct pcpu_freelist *s, void *buf, u32 elem_size,
+ 			    u32 nr_elems)
+ {
+ 	struct pcpu_freelist_head *head;
+-	int i, cpu, pcpu_entries;
++	unsigned int cpu, cpu_idx, i, j, n, m;
  
- out:
--	free_xid(mnt_ctx.xid);
- 	cifs_try_adding_channels(cifs_sb, mnt_ctx.ses);
--	return mount_setup_tlink(cifs_sb, mnt_ctx.ses, mnt_ctx.tcon);
-+	rc = mount_setup_tlink(cifs_sb, mnt_ctx.ses, mnt_ctx.tcon);
-+	if (rc)
-+		goto error;
-+
-+	free_xid(mnt_ctx.xid);
-+	return rc;
+-	pcpu_entries = nr_elems / num_possible_cpus() + 1;
+-	i = 0;
++	n = nr_elems / num_possible_cpus();
++	m = nr_elems % num_possible_cpus();
  
- error:
- 	dfs_cache_put_refsrv_sessions(&mnt_ctx.mount_id);
-@@ -3875,8 +3879,12 @@ int cifs_mount(struct cifs_sb_info *cifs_sb, struct smb3_fs_context *ctx)
- 			goto error;
++	cpu_idx = 0;
+ 	for_each_possible_cpu(cpu) {
+-again:
+ 		head = per_cpu_ptr(s->freelist, cpu);
+-		/* No locking required as this is not visible yet. */
+-		pcpu_freelist_push_node(head, buf);
+-		i++;
+-		buf += elem_size;
+-		if (i == nr_elems)
+-			break;
+-		if (i % pcpu_entries)
+-			goto again;
++		j = n + (cpu_idx < m ? 1 : 0);
++		for (i = 0; i < j; i++) {
++			/* No locking required as this is not visible yet. */
++			pcpu_freelist_push_node(head, buf);
++			buf += elem_size;
++		}
++		cpu_idx++;
  	}
+ }
  
-+	rc = mount_setup_tlink(cifs_sb, mnt_ctx.ses, mnt_ctx.tcon);
-+	if (rc)
-+		goto error;
-+
- 	free_xid(mnt_ctx.xid);
--	return mount_setup_tlink(cifs_sb, mnt_ctx.ses, mnt_ctx.tcon);
-+	return rc;
- 
- error:
- 	mount_put_conns(&mnt_ctx);
 -- 
 2.35.1
 
