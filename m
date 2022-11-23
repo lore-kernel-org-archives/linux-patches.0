@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759E31C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9601C433D7;
-	Wed, 23 Nov 2022 09:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A7D1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128D5C433D7;
+	Wed, 23 Nov 2022 09:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195873;
-	bh=Uw6ThUPtlGjZSzu0+6MMneBzgkM3pRG9ykStTPC+8uA=;
+	s=korg; t=1669195877;
+	bh=W9eTiuWY5cuwcJq0KCWVetZ7u9WSld4yFSNmIbRPd8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c88xPgKfoDC0HwMgOUbVIvMqSqB6b8u1HdDB2ywNSh+fJgzQYLcd2oczwJtcT6BTQ
-	 az5kYw4ifW2bgoCo30uGOVOwVNBbCj289aZIVO1ta+v5cpdZ+mziq4q+gQ6VFbbAn6
-	 k/hQrpir5CP2hXKz6lG+FRmHd/sJ6xze1WILVYoA=
+	b=pRkTtMygyeGNr6aQamm2BFhi7VxeKLVlww2p+7yhAOZpoMxKJSXUCZ1fJX4KOe41m
+	 mDq1MrI9qyQmxBZ3w2Ka2zRct0xGOhx6ILL0WalQYmzGloSAKxw1g8luFtqrmqmB2Q
+	 YfBxUyXiRP4G5F+4VApAOFb+Oz0IvvxK1mQOlPqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/181] pinctrl: rockchip: list all pins in a possible mux route for PX30
-Date: Wed, 23 Nov 2022 09:50:19 +0100
-Message-Id: <20221123084604.788496891@linuxfoundation.org>
+Subject: [PATCH 5.15 030/181] btrfs: remove pointless and double ulist frees in error paths of qgroup tests
+Date: Wed, 23 Nov 2022 09:49:53 +0100
+Message-Id: <20221123084603.693945174@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,97 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit bee55f2e7a44e7a7676e264b42f026e34bd244d9 ]
+[ Upstream commit d0ea17aec12ea0f7b9d2ed727d8ef8169d1e7699 ]
 
-The mux routes are incomplete for the PX30. This was discovered because
-we had a HW design using cif-clkoutm1 with the correct pinmux in the
-Device Tree but the clock would still not work.
+Several places in the qgroup self tests follow the pattern of freeing the
+ulist pointer they passed to btrfs_find_all_roots() if the call to that
+function returned an error. That is pointless because that function always
+frees the ulist in case it returns an error.
 
-There are actually two muxing required: the pin muxing (performed by the
-usual Device Tree pinctrl nodes) and the "function" muxing (m0 vs m1;
-performed by the mux routing inside the driver). The pin muxing was
-correct but the function muxing was not.
+Also In some places like at test_multiple_refs(), after a call to
+btrfs_qgroup_account_extent() we also leave "old_roots" and "new_roots"
+pointing to ulists that were freed, because btrfs_qgroup_account_extent()
+has freed those ulists, and if after that the next call to
+btrfs_find_all_roots() fails, we call ulist_free() on the "old_roots"
+ulist again, resulting in a double free.
 
-This adds the missing pins and their configuration for the mux routes
-that are already specified in the driver.
+So remove those calls to reduce the code size and avoid double ulist
+free in case of an error.
 
-Note that there are some "conflicts": it is possible *in Device Tree* to
-(attempt to) mux the pins for e.g. clkoutm1 and clkinm0 at the same time
-but this is actually not possible in hardware (because both share the
-same bit for the function muxing). Since it is an impossible hardware
-design, it is not deemed necessary to prevent the user from attempting
-to "misconfigure" the pins/functions.
-
-Fixes: 87065ca9b8e5 ("pinctrl: rockchip: Add pinctrl support for PX30")
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20221017-upstream-px30-cif-clkoutm1-v1-0-4ea1389237f7@theobroma-systems.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 40 ++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ fs/btrfs/tests/qgroup-tests.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index bae6cc83ea36..25ec0d22f184 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -608,14 +608,54 @@ static void rockchip_get_recalced_mux(struct rockchip_pin_bank *bank, int pin,
- }
+diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
+index a374b62c9de9..08c1abd6bb0c 100644
+--- a/fs/btrfs/tests/qgroup-tests.c
++++ b/fs/btrfs/tests/qgroup-tests.c
+@@ -225,7 +225,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 	 */
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -240,7 +239,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -252,17 +250,18 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 		return ret;
+ 	}
  
- static struct rockchip_mux_route_data px30_mux_route_data[] = {
-+	RK_MUXROUTE_SAME(2, RK_PB4, 1, 0x184, BIT(16 + 7)), /* cif-d0m0 */
-+	RK_MUXROUTE_SAME(3, RK_PA1, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d0m1 */
-+	RK_MUXROUTE_SAME(2, RK_PB6, 1, 0x184, BIT(16 + 7)), /* cif-d1m0 */
-+	RK_MUXROUTE_SAME(3, RK_PA2, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d1m1 */
- 	RK_MUXROUTE_SAME(2, RK_PA0, 1, 0x184, BIT(16 + 7)), /* cif-d2m0 */
- 	RK_MUXROUTE_SAME(3, RK_PA3, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d2m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA1, 1, 0x184, BIT(16 + 7)), /* cif-d3m0 */
-+	RK_MUXROUTE_SAME(3, RK_PA5, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d3m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA2, 1, 0x184, BIT(16 + 7)), /* cif-d4m0 */
-+	RK_MUXROUTE_SAME(3, RK_PA7, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d4m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA3, 1, 0x184, BIT(16 + 7)), /* cif-d5m0 */
-+	RK_MUXROUTE_SAME(3, RK_PB0, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d5m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA4, 1, 0x184, BIT(16 + 7)), /* cif-d6m0 */
-+	RK_MUXROUTE_SAME(3, RK_PB1, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d6m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA5, 1, 0x184, BIT(16 + 7)), /* cif-d7m0 */
-+	RK_MUXROUTE_SAME(3, RK_PB4, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d7m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA6, 1, 0x184, BIT(16 + 7)), /* cif-d8m0 */
-+	RK_MUXROUTE_SAME(3, RK_PB6, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d8m1 */
-+	RK_MUXROUTE_SAME(2, RK_PA7, 1, 0x184, BIT(16 + 7)), /* cif-d9m0 */
-+	RK_MUXROUTE_SAME(3, RK_PB7, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d9m1 */
-+	RK_MUXROUTE_SAME(2, RK_PB7, 1, 0x184, BIT(16 + 7)), /* cif-d10m0 */
-+	RK_MUXROUTE_SAME(3, RK_PC6, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d10m1 */
-+	RK_MUXROUTE_SAME(2, RK_PC0, 1, 0x184, BIT(16 + 7)), /* cif-d11m0 */
-+	RK_MUXROUTE_SAME(3, RK_PC7, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-d11m1 */
-+	RK_MUXROUTE_SAME(2, RK_PB0, 1, 0x184, BIT(16 + 7)), /* cif-vsyncm0 */
-+	RK_MUXROUTE_SAME(3, RK_PD1, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-vsyncm1 */
-+	RK_MUXROUTE_SAME(2, RK_PB1, 1, 0x184, BIT(16 + 7)), /* cif-hrefm0 */
-+	RK_MUXROUTE_SAME(3, RK_PD2, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-hrefm1 */
-+	RK_MUXROUTE_SAME(2, RK_PB2, 1, 0x184, BIT(16 + 7)), /* cif-clkinm0 */
-+	RK_MUXROUTE_SAME(3, RK_PD3, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-clkinm1 */
-+	RK_MUXROUTE_SAME(2, RK_PB3, 1, 0x184, BIT(16 + 7)), /* cif-clkoutm0 */
-+	RK_MUXROUTE_SAME(3, RK_PD0, 3, 0x184, BIT(16 + 7) | BIT(7)), /* cif-clkoutm1 */
- 	RK_MUXROUTE_SAME(3, RK_PC6, 2, 0x184, BIT(16 + 8)), /* pdm-m0 */
- 	RK_MUXROUTE_SAME(2, RK_PC6, 1, 0x184, BIT(16 + 8) | BIT(8)), /* pdm-m1 */
-+	RK_MUXROUTE_SAME(3, RK_PD3, 2, 0x184, BIT(16 + 8)), /* pdm-sdi0m0 */
-+	RK_MUXROUTE_SAME(2, RK_PC5, 2, 0x184, BIT(16 + 8) | BIT(8)), /* pdm-sdi0m1 */
- 	RK_MUXROUTE_SAME(1, RK_PD3, 2, 0x184, BIT(16 + 10)), /* uart2-rxm0 */
- 	RK_MUXROUTE_SAME(2, RK_PB6, 2, 0x184, BIT(16 + 10) | BIT(10)), /* uart2-rxm1 */
-+	RK_MUXROUTE_SAME(1, RK_PD2, 2, 0x184, BIT(16 + 10)), /* uart2-txm0 */
-+	RK_MUXROUTE_SAME(2, RK_PB4, 2, 0x184, BIT(16 + 10) | BIT(10)), /* uart2-txm1 */
- 	RK_MUXROUTE_SAME(0, RK_PC1, 2, 0x184, BIT(16 + 9)), /* uart3-rxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PB7, 2, 0x184, BIT(16 + 9) | BIT(9)), /* uart3-rxm1 */
-+	RK_MUXROUTE_SAME(0, RK_PC0, 2, 0x184, BIT(16 + 9)), /* uart3-txm0 */
-+	RK_MUXROUTE_SAME(1, RK_PB6, 2, 0x184, BIT(16 + 9) | BIT(9)), /* uart3-txm1 */
-+	RK_MUXROUTE_SAME(0, RK_PC2, 2, 0x184, BIT(16 + 9)), /* uart3-ctsm0 */
-+	RK_MUXROUTE_SAME(1, RK_PB4, 2, 0x184, BIT(16 + 9) | BIT(9)), /* uart3-ctsm1 */
-+	RK_MUXROUTE_SAME(0, RK_PC3, 2, 0x184, BIT(16 + 9)), /* uart3-rtsm0 */
-+	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x184, BIT(16 + 9) | BIT(9)), /* uart3-rtsm1 */
- };
++	/* btrfs_qgroup_account_extent() always frees the ulists passed to it. */
++	old_roots = NULL;
++	new_roots = NULL;
++
+ 	if (btrfs_verify_qgroup_counts(fs_info, BTRFS_FS_TREE_OBJECTID,
+ 				nodesize, nodesize)) {
+ 		test_err("qgroup counts didn't match expected values");
+ 		return -EINVAL;
+ 	}
+-	old_roots = NULL;
+-	new_roots = NULL;
  
- static struct rockchip_mux_route_data rk3128_mux_route_data[] = {
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -276,7 +275,6 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -326,7 +324,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -341,7 +338,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -361,7 +357,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -376,7 +371,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -402,7 +396,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+ 	if (ret) {
+-		ulist_free(old_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
+@@ -417,7 +410,6 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+ 		ulist_free(old_roots);
+-		ulist_free(new_roots);
+ 		test_err("couldn't find old roots: %d", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
