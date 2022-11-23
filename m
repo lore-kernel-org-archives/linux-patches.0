@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572951C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3D9C433D6;
-	Wed, 23 Nov 2022 09:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5111C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297B4C433C1;
+	Wed, 23 Nov 2022 09:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196788;
-	bh=jyKkORKFRgtrno+VYXBm2KyG4O4f6Lddnrs3pAb2oJg=;
+	s=korg; t=1669196791;
+	bh=RBHfiV6ctG5H4E9QhEOBnjB8iFT88OSDBL+qt/D9V2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ow9u0tXhjZ4PI7Fb2nPHRJb9gn9GElkfUgT04cV95Hl4W5wzna9v0ejqYPejvjzbh
-	 OGIwAzLY2sRHbn23Hb7oFix9UInma/VeSy6dPou/e9q5H/RrVHDbpqVZtxM96a0Udp
-	 hHEMy7Ma7EQ9K6jwMZ3rSYeTMld8VwowijPFvlr0=
+	b=Gv1Q1H92xL6DQ5Xx6Gwy4C4AX/c8yicMn/AGjge87HUxLAu9z9dJB8yPf/jpjLrEN
+	 M7PWsOvKDQSryKFNs/x5ZFCl70dg+1uvQppO43ry04sMFYQ+ivOjmrQ7NzNUtdcpEF
+	 Umgv0pfPHN4Jb3nxYcOop32sLbDpYIm+SGNq7hP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Yonghong Song <yhs@fb.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 124/314] selftests/bpf: Fix casting error when cross-compiling test_verifier for 32-bit platforms
-Date: Wed, 23 Nov 2022 09:49:29 +0100
-Message-Id: <20221123084631.142821393@linuxfoundation.org>
+Subject: [PATCH 6.0 125/314] selftests/bpf: Fix test_progs compilation failure in 32-bit arch
+Date: Wed, 23 Nov 2022 09:49:30 +0100
+Message-Id: <20221123084631.189914289@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,42 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 0811664da064c6d7ca64c02f5579f758a007e52d ]
+[ Upstream commit 5704bc7e8991164b14efb748b5afa0715c25fac3 ]
 
-When cross-compiling test_verifier for 32-bit platforms, the casting error is shown below:
+test_progs fails to be compiled in the 32-bit arch, log is as follows:
 
-test_verifier.c:1263:27: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
- 1263 |  info.xlated_prog_insns = (__u64)*buf;
-      |                           ^
-cc1: all warnings being treated as errors
+  test_progs.c:1013:52: error: format '%ld' expects argument of type 'long int', but argument 3 has type 'size_t' {aka 'unsigned int'} [-Werror=format=]
+   1013 |                 sprintf(buf, "MSG_TEST_LOG (cnt: %ld, last: %d)",
+        |                                                  ~~^
+        |                                                    |
+        |                                                    long int
+        |                                                  %d
+   1014 |                         strlen(msg->test_log.log_buf),
+        |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                         |
+        |                         size_t {aka unsigned int}
 
-Fix it by adding zero-extension for it.
+Fix it.
 
-Fixes: 933ff53191eb ("selftests/bpf: specify expected instructions in test_verifier tests")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Fixes: 91b2c0afd00c ("selftests/bpf: Add parallelism to test_progs")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
 Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20221108121945.4104644-1-pulehui@huaweicloud.com
+Link: https://lore.kernel.org/r/20221108015857.132457-1-yangjihong1@huawei.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_verifier.c | 2 +-
+ tools/testing/selftests/bpf/test_progs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_verifier.c b/tools/testing/selftests/bpf/test_verifier.c
-index f9d553fbf68a..ce97a9262698 100644
---- a/tools/testing/selftests/bpf/test_verifier.c
-+++ b/tools/testing/selftests/bpf/test_verifier.c
-@@ -1260,7 +1260,7 @@ static int get_xlated_program(int fd_prog, struct bpf_insn **buf, int *cnt)
- 
- 	bzero(&info, sizeof(info));
- 	info.xlated_prog_len = xlated_prog_len;
--	info.xlated_prog_insns = (__u64)*buf;
-+	info.xlated_prog_insns = (__u64)(unsigned long)*buf;
- 	if (bpf_obj_get_info_by_fd(fd_prog, &info, &info_len)) {
- 		perror("second bpf_obj_get_info_by_fd failed");
- 		goto out_free_buf;
+diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
+index 3561c97701f2..a07b8ae64bf8 100644
+--- a/tools/testing/selftests/bpf/test_progs.c
++++ b/tools/testing/selftests/bpf/test_progs.c
+@@ -993,7 +993,7 @@ static inline const char *str_msg(const struct msg *msg, char *buf)
+ 			msg->subtest_done.have_log);
+ 		break;
+ 	case MSG_TEST_LOG:
+-		sprintf(buf, "MSG_TEST_LOG (cnt: %ld, last: %d)",
++		sprintf(buf, "MSG_TEST_LOG (cnt: %zu, last: %d)",
+ 			strlen(msg->test_log.log_buf),
+ 			msg->test_log.is_last);
+ 		break;
 -- 
 2.35.1
 
