@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EFF1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977F0C433C1;
-	Wed, 23 Nov 2022 09:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF91C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C117BC433C1;
+	Wed, 23 Nov 2022 09:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197226;
-	bh=qZXAzJZ46p1wM7xcxEeyRcj6E6CoATu5brSew7Trosg=;
+	s=korg; t=1669197229;
+	bh=mCmpBwT8Ioz8zoxuf/jc5cRTM5dhY4OjpjcHwzkIS2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUSooy8MX3Tw6DkXzpahN4vNRSSr3RYBAtkFMDEIBUQ/8i7iEjyK3dLP4irLeOmWa
-	 c38X/soyx3icbKAZlNmtCr+uePErluQJYdOPgzR6tL/sHgSvJtNTSS9frQdoaJLmIL
-	 gWsXmopQzDs6iF2Vp3dzvYISu+wsWjcdoAiSgtzQ=
+	b=G8XDCaj1CLUAU7QLBzwiOCySJY3qwUhpMfw1C1Fh2Q5cXDBNSDK2bld8gxqEDApQG
+	 C/2Dukou9wG+JUefg9lLcOYgn2JkfS/teV3GDJC0CSzYPYLKiRWRVsNGLkO0ouRcJM
+	 JIzqEmAboAT2qnuPjZow9edoniteWc5IDGNoxTnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Chuhong Yuan <hslester96@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.0 232/314] speakup: replace utils u_char with unsigned char
-Date: Wed, 23 Nov 2022 09:51:17 +0100
-Message-Id: <20221123084636.006088921@linuxfoundation.org>
+Subject: [PATCH 6.0 233/314] USB: bcma: Make GPIO explicitly optional
+Date: Wed, 23 Nov 2022 09:51:18 +0100
+Message-Id: <20221123084636.045448843@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,37 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 92ca969ff8815f3feef2645199bd39bf594e5eeb upstream.
+commit cd136706b4f925aa5d316642543babac90d45910 upstream.
 
-drivers/accessibility/speakup/utils.h will be used to compile host tool
-to generate metadata.
+What the code does is to not check the return value from
+devm_gpiod_get() and then avoid using an erroneous GPIO descriptor
+with IS_ERR_OR_NULL().
 
-"u_char" is a non-standard type, which is defined to "unsigned char"
-on glibc but not defined by some libc, e.g. musl.
+This will miss real errors from the GPIO core that should not be
+ignored, such as probe deferral.
 
-Let's replace "u_char" with "unsigned char"
+Instead request the GPIO as explicitly optional, which means that
+if it doesn't exist, the descriptor returned will be NULL.
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Then we can add error handling and also avoid just doing this on
+the device tree path, and simplify the site where the optional
+GPIO descriptor is used.
+
+There were some problems with cleaning up this GPIO descriptor
+use in the past, but this is the proper way to deal with it.
+
+Cc: Rafał Miłecki <rafal@milecki.pl>
+Cc: Chuhong Yuan <hslester96@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/b75743026aaee2d81efe3d7f2e8fa47f7d0b8ea7.1665736571.git.congdanhqx@gmail.com
+Link: https://lore.kernel.org/r/20221107090753.1404679-1-linus.walleij@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accessibility/speakup/utils.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/bcma-hcd.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/accessibility/speakup/utils.h
-+++ b/drivers/accessibility/speakup/utils.h
-@@ -54,7 +54,7 @@ static inline int oops(const char *msg,
- 
- static inline struct st_key *hash_name(char *name)
+--- a/drivers/usb/host/bcma-hcd.c
++++ b/drivers/usb/host/bcma-hcd.c
+@@ -285,7 +285,7 @@ static void bcma_hci_platform_power_gpio
  {
--	u_char *pn = (u_char *)name;
-+	unsigned char *pn = (unsigned char *)name;
- 	int hash = 0;
+ 	struct bcma_hcd_device *usb_dev = bcma_get_drvdata(dev);
  
- 	while (*pn) {
+-	if (IS_ERR_OR_NULL(usb_dev->gpio_desc))
++	if (!usb_dev->gpio_desc)
+ 		return;
+ 
+ 	gpiod_set_value(usb_dev->gpio_desc, val);
+@@ -406,9 +406,11 @@ static int bcma_hcd_probe(struct bcma_de
+ 		return -ENOMEM;
+ 	usb_dev->core = core;
+ 
+-	if (core->dev.of_node)
+-		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
+-						    GPIOD_OUT_HIGH);
++	usb_dev->gpio_desc = devm_gpiod_get_optional(&core->dev, "vcc",
++						     GPIOD_OUT_HIGH);
++	if (IS_ERR(usb_dev->gpio_desc))
++		return dev_err_probe(&core->dev, PTR_ERR(usb_dev->gpio_desc),
++				     "error obtaining VCC GPIO");
+ 
+ 	switch (core->id.id) {
+ 	case BCMA_CORE_USB20_HOST:
 
 
