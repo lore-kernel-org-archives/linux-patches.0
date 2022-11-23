@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69711C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBA2C433D7;
-	Wed, 23 Nov 2022 09:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1F01C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:28:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBE7C433C1;
+	Wed, 23 Nov 2022 09:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195680;
-	bh=OyWp4u03SvshycubyCf/r0bvhPPM+gO9J7xu/W3pXGs=;
+	s=korg; t=1669195684;
+	bh=kKMC+spU6MfnUaovpOJQaL5h02Qb233xHv7tIfL3Jlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmDxkbYGSzwrsPZ+hU1FeF19R77kZElPM0yvRmP+4iaBw4wLfw3dVrnwc5hKR65kP
-	 yCNV26rdwUwjjCBJ+zZvDiBlPQeUfFDvATg42h/NYTSQCUl3W+GJIfzLuL6eua/IIJ
-	 Lt1tmQPVuciwot5q5C8+obJ5FpAvXFvd5CWvlGTs=
+	b=NHkZOcPY+bGY0IYKtuQ+jvTwdgdh12nheme1GQKS2gL37o8w7et27HSf2n/Vkg5iN
+	 Or1o/iYE88qk2F5/+RFY+/mqXIbQPqD4hDDJP4ZLU26GffT2O5GfWx4olXSwcGKe7u
+	 4KSQySJb54ZbrO7DWWrAsyExeArK+kLsEZu+riFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Andre Edich <andre.edich@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/149] usbnet: smsc95xx: Fix deadlock on runtime resume
-Date: Wed, 23 Nov 2022 09:51:53 +0100
-Message-Id: <20221123084602.596048839@linuxfoundation.org>
+	Keith Packard <keithp@keithp.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: [PATCH 5.10 131/149] stddef: Introduce struct_group() helper macro
+Date: Wed, 23 Nov 2022 09:51:54 +0100
+Message-Id: <20221123084602.637242871@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,192 +39,260 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 7b960c967f2aa01ab8f45c5a0bd78e754cffdeee ]
+[ Upstream commit 50d7bd38c3aafc4749e05e8d7fcb616979143602 ]
 
-Commit 05b35e7eb9a1 ("smsc95xx: add phylib support") amended
-smsc95xx_resume() to call phy_init_hw().  That function waits for the
-device to runtime resume even though it is placed in the runtime resume
-path, causing a deadlock.
+Kernel code has a regular need to describe groups of members within a
+structure usually when they need to be copied or initialized separately
+from the rest of the surrounding structure. The generally accepted design
+pattern in C is to use a named sub-struct:
 
-The problem is that phy_init_hw() calls down to smsc95xx_mdiobus_read(),
-which never uses the _nopm variant of usbnet_read_cmd().
+	struct foo {
+		int one;
+		struct {
+			int two;
+			int three, four;
+		} thing;
+		int five;
+	};
 
-Commit b4df480f68ae ("usbnet: smsc95xx: add reset_resume function with
-reset operation") causes a similar deadlock on resume if the device was
-already runtime suspended when entering system sleep:
+This would allow for traditional references and sizing:
 
-That's because the commit introduced smsc95xx_reset_resume(), which
-calls down to smsc95xx_reset(), which neglects to use _nopm accessors.
+	memcpy(&dst.thing, &src.thing, sizeof(dst.thing));
 
-Fix by auto-detecting whether a device access is performed by the
-suspend/resume task_struct and use the _nopm variant if so.  This works
-because the PM core guarantees that suspend/resume callbacks are run in
-task context.
+However, doing this would mean that referencing struct members enclosed
+by such named structs would always require including the sub-struct name
+in identifiers:
 
-Stacktrace for posterity:
+	do_something(dst.thing.three);
 
-  INFO: task kworker/2:1:49 blocked for more than 122 seconds.
-  Workqueue: usb_hub_wq hub_event
-  schedule
-  rpm_resume
-  __pm_runtime_resume
-  usb_autopm_get_interface
-  usbnet_read_cmd
-  __smsc95xx_read_reg
-  __smsc95xx_phy_wait_not_busy
-  __smsc95xx_mdio_read
-  smsc95xx_mdiobus_read
-  __mdiobus_read
-  mdiobus_read
-  smsc_phy_reset
-  phy_init_hw
-  smsc95xx_resume
-  usb_resume_interface
-  usb_resume_both
-  usb_runtime_resume
-  __rpm_callback
-  rpm_callback
-  rpm_resume
-  __pm_runtime_resume
-  usb_autoresume_device
-  hub_event
-  process_one_work
+This has tended to be quite inflexible, especially when such groupings
+need to be added to established code which causes huge naming churn.
+Three workarounds exist in the kernel for this problem, and each have
+other negative properties.
 
-Fixes: b4df480f68ae ("usbnet: smsc95xx: add reset_resume function with reset operation")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v3.16+
-Cc: Andre Edich <andre.edich@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To avoid the naming churn, there is a design pattern of adding macro
+aliases for the named struct:
+
+	#define f_three thing.three
+
+This ends up polluting the global namespace, and makes it difficult to
+search for identifiers.
+
+Another common work-around in kernel code avoids the pollution by avoiding
+the named struct entirely, instead identifying the group's boundaries using
+either a pair of empty anonymous structs of a pair of zero-element arrays:
+
+	struct foo {
+		int one;
+		struct { } start;
+		int two;
+		int three, four;
+		struct { } finish;
+		int five;
+	};
+
+	struct foo {
+		int one;
+		int start[0];
+		int two;
+		int three, four;
+		int finish[0];
+		int five;
+	};
+
+This allows code to avoid needing to use a sub-struct named for member
+references within the surrounding structure, but loses the benefits of
+being able to actually use such a struct, making it rather fragile. Using
+these requires open-coded calculation of sizes and offsets. The efforts
+made to avoid common mistakes include lots of comments, or adding various
+BUILD_BUG_ON()s. Such code is left with no way for the compiler to reason
+about the boundaries (e.g. the "start" object looks like it's 0 bytes
+in length), making bounds checking depend on open-coded calculations:
+
+	if (length > offsetof(struct foo, finish) -
+		     offsetof(struct foo, start))
+		return -EINVAL;
+	memcpy(&dst.start, &src.start, offsetof(struct foo, finish) -
+				       offsetof(struct foo, start));
+
+However, the vast majority of places in the kernel that operate on
+groups of members do so without any identification of the grouping,
+relying either on comments or implicit knowledge of the struct contents,
+which is even harder for the compiler to reason about, and results in
+even more fragile manual sizing, usually depending on member locations
+outside of the region (e.g. to copy "two" and "three", use the start of
+"four" to find the size):
+
+	BUILD_BUG_ON((offsetof(struct foo, four) <
+		      offsetof(struct foo, two)) ||
+		     (offsetof(struct foo, four) <
+		      offsetof(struct foo, three));
+	if (length > offsetof(struct foo, four) -
+		     offsetof(struct foo, two))
+		return -EINVAL;
+	memcpy(&dst.two, &src.two, length);
+
+In order to have a regular programmatic way to describe a struct
+region that can be used for references and sizing, can be examined for
+bounds checking, avoids forcing the use of intermediate identifiers,
+and avoids polluting the global namespace, introduce the struct_group()
+macro. This macro wraps the member declarations to create an anonymous
+union of an anonymous struct (no intermediate name) and a named struct
+(for references and sizing):
+
+	struct foo {
+		int one;
+		struct_group(thing,
+			int two;
+			int three, four;
+		);
+		int five;
+	};
+
+	if (length > sizeof(src.thing))
+		return -EINVAL;
+	memcpy(&dst.thing, &src.thing, length);
+	do_something(dst.three);
+
+There are some rare cases where the resulting struct_group() needs
+attributes added, so struct_group_attr() is also introduced to allow
+for specifying struct attributes (e.g. __align(x) or __packed).
+Additionally, there are places where such declarations would like to
+have the struct be tagged, so struct_group_tagged() is added.
+
+Given there is a need for a handful of UAPI uses too, the underlying
+__struct_group() macro has been defined in UAPI so it can be used there
+too.
+
+To avoid confusing scripts/kernel-doc, hide the macro from its struct
+parsing.
+
+Co-developed-by: Keith Packard <keithp@keithp.com>
+Signed-off-by: Keith Packard <keithp@keithp.com>
+Acked-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/lkml/20210728023217.GC35706@embeddedor
+Enhanced-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Link: https://lore.kernel.org/lkml/41183a98-bdb9-4ad6-7eab-5a7292a6df84@rasmusvillemoes.dk
+Enhanced-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/lkml/1d9a2e6df2a9a35b2cdd50a9a68cac5991e7e5f0.camel@intel.com
+Enhanced-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://lore.kernel.org/lkml/YQKa76A6XuFqgM03@phenom.ffwll.local
+Acked-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Stable-dep-of: 58e0be1ef611 ("net: use struct_group to copy ip/ipv6 header addresses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ include/linux/stddef.h      | 48 +++++++++++++++++++++++++++++++++++++
+ include/uapi/linux/stddef.h | 21 ++++++++++++++++
+ scripts/kernel-doc          |  7 ++++++
+ 3 files changed, 76 insertions(+)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 65d42f5d42a3..e1cd4c2de2d3 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -61,6 +61,7 @@ struct smsc95xx_priv {
- 	u8 suspend_flags;
- 	struct mii_bus *mdiobus;
- 	struct phy_device *phydev;
-+	struct task_struct *pm_task;
- };
+diff --git a/include/linux/stddef.h b/include/linux/stddef.h
+index 998a4ba28eba..938216f8ab7e 100644
+--- a/include/linux/stddef.h
++++ b/include/linux/stddef.h
+@@ -36,4 +36,52 @@ enum {
+ #define offsetofend(TYPE, MEMBER) \
+ 	(offsetof(TYPE, MEMBER)	+ sizeof_field(TYPE, MEMBER))
  
- static bool turbo_mode = true;
-@@ -70,13 +71,14 @@ MODULE_PARM_DESC(turbo_mode, "Enable multiple frames per Rx transaction");
- static int __must_check __smsc95xx_read_reg(struct usbnet *dev, u32 index,
- 					    u32 *data, int in_pm)
- {
-+	struct smsc95xx_priv *pdata = dev->driver_priv;
- 	u32 buf;
- 	int ret;
- 	int (*fn)(struct usbnet *, u8, u8, u16, u16, void *, u16);
- 
- 	BUG_ON(!dev);
- 
--	if (!in_pm)
-+	if (current != pdata->pm_task)
- 		fn = usbnet_read_cmd;
- 	else
- 		fn = usbnet_read_cmd_nopm;
-@@ -100,13 +102,14 @@ static int __must_check __smsc95xx_read_reg(struct usbnet *dev, u32 index,
- static int __must_check __smsc95xx_write_reg(struct usbnet *dev, u32 index,
- 					     u32 data, int in_pm)
- {
-+	struct smsc95xx_priv *pdata = dev->driver_priv;
- 	u32 buf;
- 	int ret;
- 	int (*fn)(struct usbnet *, u8, u8, u16, u16, const void *, u16);
- 
- 	BUG_ON(!dev);
- 
--	if (!in_pm)
-+	if (current != pdata->pm_task)
- 		fn = usbnet_write_cmd;
- 	else
- 		fn = usbnet_write_cmd_nopm;
-@@ -1468,9 +1471,12 @@ static int smsc95xx_suspend(struct usb_interface *intf, pm_message_t message)
- 	u32 val, link_up;
- 	int ret;
- 
-+	pdata->pm_task = current;
++/**
++ * struct_group() - Wrap a set of declarations in a mirrored struct
++ *
++ * @NAME: The identifier name of the mirrored sub-struct
++ * @MEMBERS: The member declarations for the mirrored structs
++ *
++ * Used to create an anonymous union of two structs with identical
++ * layout and size: one anonymous and one named. The former can be
++ * used normally without sub-struct naming, and the latter can be
++ * used to reason about the start, end, and size of the group of
++ * struct members.
++ */
++#define struct_group(NAME, MEMBERS...)	\
++	__struct_group(/* no tag */, NAME, /* no attrs */, MEMBERS)
 +
- 	ret = usbnet_suspend(intf, message);
- 	if (ret < 0) {
- 		netdev_warn(dev->net, "usbnet_suspend error\n");
-+		pdata->pm_task = NULL;
- 		return ret;
- 	}
- 
-@@ -1717,6 +1723,7 @@ static int smsc95xx_suspend(struct usb_interface *intf, pm_message_t message)
- 	if (ret && PMSG_IS_AUTO(message))
- 		usbnet_resume(intf);
- 
-+	pdata->pm_task = NULL;
- 	return ret;
- }
- 
-@@ -1737,29 +1744,31 @@ static int smsc95xx_resume(struct usb_interface *intf)
- 	/* do this first to ensure it's cleared even in error case */
- 	pdata->suspend_flags = 0;
- 
-+	pdata->pm_task = current;
++/**
++ * struct_group_attr() - Create a struct_group() with trailing attributes
++ *
++ * @NAME: The identifier name of the mirrored sub-struct
++ * @ATTRS: Any struct attributes to apply
++ * @MEMBERS: The member declarations for the mirrored structs
++ *
++ * Used to create an anonymous union of two structs with identical
++ * layout and size: one anonymous and one named. The former can be
++ * used normally without sub-struct naming, and the latter can be
++ * used to reason about the start, end, and size of the group of
++ * struct members. Includes structure attributes argument.
++ */
++#define struct_group_attr(NAME, ATTRS, MEMBERS...) \
++	__struct_group(/* no tag */, NAME, ATTRS, MEMBERS)
 +
- 	if (suspend_flags & SUSPEND_ALLMODES) {
- 		/* clear wake-up sources */
- 		ret = smsc95xx_read_reg_nopm(dev, WUCSR, &val);
- 		if (ret < 0)
--			return ret;
-+			goto done;
- 
- 		val &= ~(WUCSR_WAKE_EN_ | WUCSR_MPEN_);
- 
- 		ret = smsc95xx_write_reg_nopm(dev, WUCSR, val);
- 		if (ret < 0)
--			return ret;
-+			goto done;
- 
- 		/* clear wake-up status */
- 		ret = smsc95xx_read_reg_nopm(dev, PM_CTRL, &val);
- 		if (ret < 0)
--			return ret;
-+			goto done;
- 
- 		val &= ~PM_CTL_WOL_EN_;
- 		val |= PM_CTL_WUPS_;
- 
- 		ret = smsc95xx_write_reg_nopm(dev, PM_CTRL, val);
- 		if (ret < 0)
--			return ret;
-+			goto done;
- 	}
- 
- 	ret = usbnet_resume(intf);
-@@ -1767,15 +1776,21 @@ static int smsc95xx_resume(struct usb_interface *intf)
- 		netdev_warn(dev->net, "usbnet_resume error\n");
- 
- 	phy_init_hw(pdata->phydev);
++/**
++ * struct_group_tagged() - Create a struct_group with a reusable tag
++ *
++ * @TAG: The tag name for the named sub-struct
++ * @NAME: The identifier name of the mirrored sub-struct
++ * @MEMBERS: The member declarations for the mirrored structs
++ *
++ * Used to create an anonymous union of two structs with identical
++ * layout and size: one anonymous and one named. The former can be
++ * used normally without sub-struct naming, and the latter can be
++ * used to reason about the start, end, and size of the group of
++ * struct members. Includes struct tag argument for the named copy,
++ * so the specified layout can be reused later.
++ */
++#define struct_group_tagged(TAG, NAME, MEMBERS...) \
++	__struct_group(TAG, NAME, /* no attrs */, MEMBERS)
 +
-+done:
-+	pdata->pm_task = NULL;
- 	return ret;
- }
+ #endif
+diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
+index ee8220f8dcf5..610204f7c275 100644
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -4,3 +4,24 @@
+ #ifndef __always_inline
+ #define __always_inline inline
+ #endif
++
++/**
++ * __struct_group() - Create a mirrored named and anonyomous struct
++ *
++ * @TAG: The tag name for the named sub-struct (usually empty)
++ * @NAME: The identifier name of the mirrored sub-struct
++ * @ATTRS: Any struct attributes (usually empty)
++ * @MEMBERS: The member declarations for the mirrored structs
++ *
++ * Used to create an anonymous union of two structs with identical layout
++ * and size: one anonymous and one named. The former's members can be used
++ * normally without sub-struct naming, and the latter can be used to
++ * reason about the start, end, and size of the group of struct members.
++ * The named struct can also be explicitly tagged for layer reuse, as well
++ * as both having struct attributes appended.
++ */
++#define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
++	union { \
++		struct { MEMBERS } ATTRS; \
++		struct TAG { MEMBERS } ATTRS NAME; \
++	}
+diff --git a/scripts/kernel-doc b/scripts/kernel-doc
+index 6325bec3f66f..19af6dd160e6 100755
+--- a/scripts/kernel-doc
++++ b/scripts/kernel-doc
+@@ -1215,6 +1215,13 @@ sub dump_struct($$) {
+ 	$members =~ s/\s*CRYPTO_MINALIGN_ATTR/ /gos;
+ 	$members =~ s/\s*____cacheline_aligned_in_smp/ /gos;
+ 	$members =~ s/\s*____cacheline_aligned/ /gos;
++	# unwrap struct_group():
++	# - first eat non-declaration parameters and rewrite for final match
++	# - then remove macro, outer parens, and trailing semicolon
++	$members =~ s/\bstruct_group\s*\(([^,]*,)/STRUCT_GROUP(/gos;
++	$members =~ s/\bstruct_group_(attr|tagged)\s*\(([^,]*,){2}/STRUCT_GROUP(/gos;
++	$members =~ s/\b__struct_group\s*\(([^,]*,){3}/STRUCT_GROUP(/gos;
++	$members =~ s/\bSTRUCT_GROUP(\(((?:(?>[^)(]+)|(?1))*)\))[^;]*;/$2/gos;
  
- static int smsc95xx_reset_resume(struct usb_interface *intf)
- {
- 	struct usbnet *dev = usb_get_intfdata(intf);
-+	struct smsc95xx_priv *pdata = dev->driver_priv;
- 	int ret;
- 
-+	pdata->pm_task = current;
- 	ret = smsc95xx_reset(dev);
-+	pdata->pm_task = NULL;
- 	if (ret < 0)
- 		return ret;
- 
+ 	# replace DECLARE_BITMAP
+ 	$members =~ s/__ETHTOOL_DECLARE_LINK_MODE_MASK\s*\(([^\)]+)\)/DECLARE_BITMAP($1, __ETHTOOL_LINK_MODE_MASK_NBITS)/gos;
 -- 
 2.35.1
 
