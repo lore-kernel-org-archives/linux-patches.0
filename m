@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE051C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDBBC433D6;
-	Wed, 23 Nov 2022 09:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B031C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC07C433C1;
+	Wed, 23 Nov 2022 09:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197468;
-	bh=yyRLcOZkVFdF4LGAYIWZzTY3gJNCP7TaUXIpFbcdzNE=;
+	s=korg; t=1669197472;
+	bh=Pi1Rh5BKUq7UdB7u38NCY0wqfSGxl9jsX0lMoXfqTOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNqiN/HAWFXro9bExkoe13XPs8E6XeazhcFcEloPxa/h4SijPtaoQkBvLRiTla4Gh
-	 O7HBQ9qAHH83IFItAehONP/kKspj1k9fREqjRhg5bAUc1aZfJg2AHUjXFY7AFi+Xxg
-	 l8zWBiqBVRtPmdgL+3w1UiDtCJEdkQQ3G2jM/1q4=
+	b=jr5XRcyoGs2WB8WlDHj6hh1oP956jlvnQFXOcAT5qQjQsbiEvWKgmUhQMiN5XdDZA
+	 W43AOF7Kuj3NX/3SH8Jae0Vk02+R44SYuueUNgOXgZvZ+cKa+PPUhA6D7PdjKgi35S
+	 PN7XjVdJzpdnMOB+CpdVPUxWfiABEjUW5Fy2EWFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.0 272/314] docs: update mediator contact information in CoC doc
-Date: Wed, 23 Nov 2022 09:51:57 +0100
-Message-Id: <20221123084637.865019228@linuxfoundation.org>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Jiri Slaby <jslaby@suse.cz>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.0 273/314] docs/driver-api/miscellaneous: Remove kernel-doc of serial_core.c
+Date: Wed, 23 Nov 2022 09:51:58 +0100
+Message-Id: <20221123084637.902950494@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -33,30 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Akira Yokosawa <akiyks@gmail.com>
 
-commit 5fddf8962b429b8303c4a654291ecb6e61a7d747 upstream.
+commit 3ec17cb325ac731c2211e13f7eaa4b812694e218 upstream.
 
-Update mediator contact information in CoC interpretation document.
+Since merge of tty-6.0-rc1, "make htmldocs" with Sphinx >=3.1 emits
+a bunch of warnings indicating duplicate kernel-doc comments from
+drivers/tty/serial/serial_core.c.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20221011171417.34286-1-skhan@linuxfoundation.org
+This is due to the kernel-doc directive for serial_core.c in
+serial/drivers.rst added in the merge. It conflicts with an existing
+kernel-doc directive in miscellaneous.rst.
+
+Remove the latter directive and resolve the duplicates.
+
+Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
+Fixes: 607ca0f742b7 ("Merge tag 'tty-6.0-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty")
+Cc: stable@vger.kernel.org # 6.0
+Cc: Jiri Slaby <jslaby@suse.cz>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/4e54c76a-138a-07e0-985a-dd83cb622208@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/process/code-of-conduct-interpretation.rst |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/driver-api/miscellaneous.rst | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/Documentation/process/code-of-conduct-interpretation.rst
-+++ b/Documentation/process/code-of-conduct-interpretation.rst
-@@ -51,7 +51,7 @@ the Technical Advisory Board (TAB) or ot
- uncertain how to handle situations that come up.  It will not be
- considered a violation report unless you want it to be.  If you are
- uncertain about approaching the TAB or any other maintainers, please
--reach out to our conflict mediator, Joanna Lee <joanna.lee@gesmer.com>.
-+reach out to our conflict mediator, Joanna Lee <jlee@linuxfoundation.org>.
+diff --git a/Documentation/driver-api/miscellaneous.rst b/Documentation/driver-api/miscellaneous.rst
+index 304ffb146cf9..4a5104a368ac 100644
+--- a/Documentation/driver-api/miscellaneous.rst
++++ b/Documentation/driver-api/miscellaneous.rst
+@@ -16,12 +16,11 @@ Parallel Port Devices
+ 16x50 UART Driver
+ =================
  
- In the end, "be kind to each other" is really what the end goal is for
- everybody.  We know everyone is human and we all fail at times, but the
+-.. kernel-doc:: drivers/tty/serial/serial_core.c
+-   :export:
+-
+ .. kernel-doc:: drivers/tty/serial/8250/8250_core.c
+    :export:
+ 
++See serial/driver.rst for related APIs.
++
+ Pulse-Width Modulation (PWM)
+ ============================
+ 
+-- 
+2.38.1
+
 
 
