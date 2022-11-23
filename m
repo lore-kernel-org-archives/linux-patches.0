@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BE97B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822A2C433C1;
-	Wed, 23 Nov 2022 08:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5877B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:55:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE67C433D7;
+	Wed, 23 Nov 2022 08:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193739;
-	bh=K/qrV8p30cAXsF+unQKdgqR/ZkpyVwwfX13nqZBbX+Q=;
+	s=korg; t=1669193742;
+	bh=1RVzD4SAWU/WqbChixPy4VM0dNOktno0GCWcdiWHjZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7eWrvG6mICZxpIu8WqGPAv0U30yP1Gw6n9l+GywNCXUksL9A4MZMiERtaiowxfy8
-	 xyMEBWXFFOEcYpySiSzt/ZHqfcf/PcptXMD9BeCj7Eec2euWp8b0pALnGRpiFCS+22
-	 H1956hvYCh7gqLmv5l/o+Uw0rrHPMcc14UHADOGg=
+	b=PhJlMUhEP/fJmTeGsCy2CI/oExnxG7D428b8gyKXGKW7t+/J8CukHaF6SLIiBWmD7
+	 1ZatbhKut/bJrVHvt9VdWtdZUcL0vRvWRYnRS1yt7THovGNr/QYcm1xqgmKjjKkgRD
+	 XjbejJFX2l1L5GEbk98XMYRd4kllPDzEQzpp3SHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	Wang Wensheng <wangwensheng4@huawei.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.9 47/76] ftrace: Optimize the allocation for mcount entries
-Date: Wed, 23 Nov 2022 09:50:46 +0100
-Message-Id: <20221123084548.286768674@linuxfoundation.org>
+Subject: [PATCH 4.9 48/76] ring_buffer: Do not deactivate non-existant pages
+Date: Wed, 23 Nov 2022 09:50:47 +0100
+Message-Id: <20221123084548.317910865@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -36,36 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Wensheng <wangwensheng4@huawei.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-commit bcea02b096333dc74af987cb9685a4dbdd820840 upstream.
+commit 56f4ca0a79a9f1af98f26c54b9b89ba1f9bcc6bd upstream.
 
-If we can't allocate this size, try something smaller with half of the
-size. Its order should be decreased by one instead of divided by two.
+rb_head_page_deactivate() expects cpu_buffer to contain a valid list of
+->pages, so verify that the list is actually present before calling it.
 
-Link: https://lkml.kernel.org/r/20221109094434.84046-3-wangwensheng4@huawei.com
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
+Link: https://lkml.kernel.org/r/20221114143129.3534443-1-d-tatianin@yandex-team.ru
+
 Cc: stable@vger.kernel.org
-Fixes: a79008755497d ("ftrace: Allocate the mcount record pages as groups")
-Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
+Fixes: 77ae365eca895 ("ring-buffer: make lockless")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3013,7 +3013,7 @@ static int ftrace_allocate_records(struc
- 		/* if we can't allocate this size, try something smaller */
- 		if (!order)
- 			return -ENOMEM;
--		order >>= 1;
-+		order--;
- 		goto again;
- 	}
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1267,9 +1267,9 @@ static void rb_free_cpu_buffer(struct ri
  
+ 	free_buffer_page(cpu_buffer->reader_page);
+ 
+-	rb_head_page_deactivate(cpu_buffer);
+-
+ 	if (head) {
++		rb_head_page_deactivate(cpu_buffer);
++
+ 		list_for_each_entry_safe(bpage, tmp, head, list) {
+ 			list_del_init(&bpage->list);
+ 			free_buffer_page(bpage);
 
 
