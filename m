@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC0A1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC008C433D7;
-	Wed, 23 Nov 2022 09:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372E31C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952FCC433C1;
+	Wed, 23 Nov 2022 09:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197048;
-	bh=p1uLgSVqztVqCqfj2kFE2qwQ5TmyRCQNvq1V4eSlrVo=;
+	s=korg; t=1669197052;
+	bh=z+si0tkDvWJ4oWmCX5HaPjTwpocGqSm+tuzxqgEi988=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8piXL7J23/Ov1Ys3A60svry8ufL77ytteHYZBLJlMFDDXL+Wwu18gOSrSSnLmLLK
-	 23ZM2PNig+kSB/nFWfjda3YEtwxcbU/gl7tn5yA5X/rPSGZ6n4LwmGzJwOQNFznPzh
-	 pJNyN9OPu2v29mTGRLg/8hZJSRkNPwa2OCB6XdRI=
+	b=VU66CQknHcMfvP22j5nNaQyV+Izk41gMzvjX/Upy9+B0HlmXa2wctsPu0/jBc9Cz1
+	 WQjS/33QTlvdRnJiUnY6/BhSgKGom6JtiPbJYZn7aoavsK7GgYiFxj2zbqhk2ykdb0
+	 RhoXQdVdThNSqs4jcSLXrHgU53QRkHIA2xWp1/bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Martin Schiller <ms@dev.tdt.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Saeed Mahameed <saeed@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 184/314] net/x25: Fix skb leak in x25_lapb_receive_frame()
-Date: Wed, 23 Nov 2022 09:50:29 +0100
-Message-Id: <20221123084633.905106879@linuxfoundation.org>
+Subject: [PATCH 6.0 185/314] net: dsa: dont leak tagger-owned storage on switch driver unbind
+Date: Wed, 23 Nov 2022 09:50:30 +0100
+Message-Id: <20221123084633.954160545@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,37 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 2929cceb2fcf0ded7182562e4888afafece82cce ]
+[ Upstream commit 4e0c19fcb8b5323716140fa82b79aa9f60e60407 ]
 
-x25_lapb_receive_frame() using skb_copy() to get a private copy of
-skb, the new skb should be freed in the undersized/fragmented skb
-error handling path. Otherwise there is a memory leak.
+In the initial commit dc452a471dba ("net: dsa: introduce tagger-owned
+storage for private and shared data"), we had a call to
+tag_ops->disconnect(dst) issued from dsa_tree_free(), which is called at
+tree teardown time.
 
-Fixes: cb101ed2c3c7 ("x25: Handle undersized/fragmented skbs")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://lore.kernel.org/r/20221114110519.514538-1-weiyongjun@huaweicloud.com
+There were problems with connecting to a switch tree as a whole, so this
+got reworked to connecting to individual switches within the tree. In
+this process, tag_ops->disconnect(ds) was made to be called only from
+switch.c (cross-chip notifiers emitted as a result of dynamic tag proto
+changes), but the normal driver teardown code path wasn't replaced with
+anything.
+
+Solve this problem by adding a function that does the opposite of
+dsa_switch_setup_tag_protocol(), which is called from the equivalent
+spot in dsa_switch_teardown(). The positioning here also ensures that we
+won't have any use-after-free in tagging protocol (*rcv) ops, since the
+teardown sequence is as follows:
+
+dsa_tree_teardown
+-> dsa_tree_teardown_master
+   -> dsa_master_teardown
+      -> unsets master->dsa_ptr, making no further packets match the
+         ETH_P_XDSA packet type handler
+-> dsa_tree_teardown_ports
+   -> dsa_port_teardown
+      -> dsa_slave_destroy
+         -> unregisters DSA net devices, there is even a synchronize_net()
+            in unregister_netdevice_many()
+-> dsa_tree_teardown_switches
+   -> dsa_switch_teardown
+      -> dsa_switch_teardown_tag_protocol
+         -> finally frees the tagger-owned storage
+
+Fixes: 7f2973149c22 ("net: dsa: make tagging protocols connect to individual switches from a tree")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20221114143551.1906361-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/x25/x25_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/dsa/dsa2.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/x25/x25_dev.c b/net/x25/x25_dev.c
-index 5259ef8f5242..748d8630ab58 100644
---- a/net/x25/x25_dev.c
-+++ b/net/x25/x25_dev.c
-@@ -117,7 +117,7 @@ int x25_lapb_receive_frame(struct sk_buff *skb, struct net_device *dev,
+diff --git a/net/dsa/dsa2.c b/net/dsa/dsa2.c
+index e537655e442b..befa954b0a47 100644
+--- a/net/dsa/dsa2.c
++++ b/net/dsa/dsa2.c
+@@ -850,6 +850,14 @@ static int dsa_switch_setup_tag_protocol(struct dsa_switch *ds)
+ 	return err;
+ }
  
- 	if (!pskb_may_pull(skb, 1)) {
- 		x25_neigh_put(nb);
--		return 0;
-+		goto drop;
++static void dsa_switch_teardown_tag_protocol(struct dsa_switch *ds)
++{
++	const struct dsa_device_ops *tag_ops = ds->dst->tag_ops;
++
++	if (tag_ops->disconnect)
++		tag_ops->disconnect(ds);
++}
++
+ static int dsa_switch_setup(struct dsa_switch *ds)
+ {
+ 	struct dsa_devlink_priv *dl_priv;
+@@ -953,6 +961,8 @@ static void dsa_switch_teardown(struct dsa_switch *ds)
+ 		ds->slave_mii_bus = NULL;
  	}
  
- 	switch (skb->data[0]) {
++	dsa_switch_teardown_tag_protocol(ds);
++
+ 	if (ds->ops->teardown)
+ 		ds->ops->teardown(ds);
+ 
 -- 
 2.35.1
 
