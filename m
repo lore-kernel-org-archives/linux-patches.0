@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1BD1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A992FC43470;
-	Wed, 23 Nov 2022 09:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1101C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:31:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31D7C433C1;
+	Wed, 23 Nov 2022 09:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195887;
-	bh=i+svlwgfyazBfWgfYrV0oTcv5EMEiLtTVctGjOddZNM=;
+	s=korg; t=1669195891;
+	bh=3rrB4DSeXqgBgmYgLkVpBE4d+QmXYAW5M8u0tbqCAfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxE0Cz8MRDQk9EaVkEBYbkywmEuP5rigUfTPMxe8VTktO+0yiiCOMoYcol6ke5X5p
-	 VrH7AtvzrLpofnYZGkj1tyZDilBhB83HGAASiQDNXZ58JOiqkreWysEatM7ebK0Sml
-	 rDpPcCjA6CQOLxFRU1RWuL+3HNl8pbMieZx/J89U=
+	b=toB5zXB1o87P5KiGGFeU4wbtIRIstPlMx3IB48rHD27Y3luznJA5SZrdsniuOOGK3
+	 juzkYrVgX0V3cu0W1rg6tZ9rRV/2d6VEfeXMFsb4719r/6+yOMVlp6jw1neNK/0LH+
+	 uS9i5jUJZKsLGcJoRFSvp/LDTzkCOoAN33j881SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/181] bpf: Fix memory leaks in __check_func_call
-Date: Wed, 23 Nov 2022 09:50:22 +0100
-Message-Id: <20221123084604.918492869@linuxfoundation.org>
+Subject: [PATCH 5.15 031/181] Bluetooth: L2CAP: Fix l2cap_global_chan_by_psm
+Date: Wed, 23 Nov 2022 09:49:54 +0100
+Message-Id: <20221123084603.739545024@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,98 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit eb86559a691cea5fa63e57a03ec3dc9c31e97955 ]
+[ Upstream commit f937b758a188d6fd328a81367087eddbb2fce50f ]
 
-kmemleak reports this issue:
+l2cap_global_chan_by_psm shall not return fixed channels as they are not
+meant to be connected by (S)PSM.
 
-unreferenced object 0xffff88817139d000 (size 2048):
-  comm "test_progs", pid 33246, jiffies 4307381979 (age 45851.820s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000045f075f0>] kmalloc_trace+0x27/0xa0
-    [<0000000098b7c90a>] __check_func_call+0x316/0x1230
-    [<00000000b4c3c403>] check_helper_call+0x172e/0x4700
-    [<00000000aa3875b7>] do_check+0x21d8/0x45e0
-    [<000000001147357b>] do_check_common+0x767/0xaf0
-    [<00000000b5a595b4>] bpf_check+0x43e3/0x5bc0
-    [<0000000011e391b1>] bpf_prog_load+0xf26/0x1940
-    [<0000000007f765c0>] __sys_bpf+0xd2c/0x3650
-    [<00000000839815d6>] __x64_sys_bpf+0x75/0xc0
-    [<00000000946ee250>] do_syscall_64+0x3b/0x90
-    [<0000000000506b7f>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The root case here is: In function prepare_func_exit(), the callee is
-not released in the abnormal scenario after "state->curframe--;". To
-fix, move "state->curframe--;" to the very bottom of the function,
-right when we free callee and reset frame[] pointer to NULL, as Andrii
-suggested.
-
-In addition, function __check_func_call() has a similar problem. In
-the abnormal scenario before "state->curframe++;", the callee also
-should be released by free_func_state().
-
-Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
-Fixes: fd978bf7fd31 ("bpf: Add reference tracking to verifier")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1667884291-15666-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8a73a165ac76..cceb29b0585f 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5808,11 +5808,11 @@ static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 	/* Transfer references to the callee */
- 	err = copy_reference_state(callee, caller);
- 	if (err)
--		return err;
-+		goto err_out;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 16f954a4802c..761efd7da514 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1990,7 +1990,7 @@ static struct l2cap_chan *l2cap_global_chan_by_psm(int state, __le16 psm,
+ 		if (link_type == LE_LINK && c->src_type == BDADDR_BREDR)
+ 			continue;
  
- 	err = set_callee_state_cb(env, caller, callee, *insn_idx);
- 	if (err)
--		return err;
-+		goto err_out;
- 
- 	clear_caller_saved_regs(env, caller->regs);
- 
-@@ -5829,6 +5829,11 @@ static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 		print_verifier_state(env, callee);
- 	}
- 	return 0;
-+
-+err_out:
-+	free_func_state(callee);
-+	state->frame[state->curframe + 1] = NULL;
-+	return err;
- }
- 
- int map_set_for_each_callback_args(struct bpf_verifier_env *env,
-@@ -5966,8 +5971,7 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 		return -EINVAL;
- 	}
- 
--	state->curframe--;
--	caller = state->frame[state->curframe];
-+	caller = state->frame[state->curframe - 1];
- 	if (callee->in_callback_fn) {
- 		/* enforce R0 return value range [0, 1]. */
- 		struct tnum range = tnum_range(0, 1);
-@@ -6006,7 +6010,7 @@ static int prepare_func_exit(struct bpf_verifier_env *env, int *insn_idx)
- 	}
- 	/* clear everything in the callee */
- 	free_func_state(callee);
--	state->frame[state->curframe + 1] = NULL;
-+	state->frame[state->curframe--] = NULL;
- 	return 0;
- }
+-		if (c->psm == psm) {
++		if (c->chan_type != L2CAP_CHAN_FIXED && c->psm == psm) {
+ 			int src_match, dst_match;
+ 			int src_any, dst_any;
  
 -- 
 2.35.1
