@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E701C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994E7C433C1;
-	Wed, 23 Nov 2022 09:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879721C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BDEC433D6;
+	Wed, 23 Nov 2022 09:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195483;
-	bh=FZ9/NRy3jlbEtnSZoMRaBfFMmupLQmeV6gELIMPAcvM=;
+	s=korg; t=1669195486;
+	bh=9+L60O73mmTtw6dOEpOhJ4VuTITV0DJuXpKL0zV7WRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZLd6xqomKvjd60DP/mZ1l7VOAI74D8L3MtUbFgIcawK/TF7X40vmwxL0mUGFFahM
-	 od0kl+zB6wyAaZnPy3MNY1dTsx7TCn8K/BuE6+WBSEPeuO00lv31ze3hz0Rx8quz9g
-	 4qvL8SnhK5dl0qLrrZbO8uazD8isN+cVMEiqrius=
+	b=Dsl4ukeMoaLawfwPX3iwZK3n0ID/VdQEoqkJFzEo9/d+T9+hr00Qx4oUC7Tg5R+m2
+	 4sDEr5F3i6Q+GwAEPrfzvxM9ZB9FzvnjzS3KxCWgohg0ekmQUBmSGl4nIBrMM14nZ1
+	 rZVBufUrNKoLgx9B98Xxv4B6/vx9itoTL9/osoUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/149] net: hinic: Fix error handling in hinic_module_init()
-Date: Wed, 23 Nov 2022 09:50:48 +0100
-Message-Id: <20221123084600.252761703@linuxfoundation.org>
+Subject: [PATCH 5.10 066/149] net: liquidio: release resources when liquidio driver open failed
+Date: Wed, 23 Nov 2022 09:50:49 +0100
+Message-Id: <20221123084600.282217347@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,61 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 8eab9be56cc6b702a445d2b6d0256aa0992316b3 ]
+[ Upstream commit 8979f428a4afc215e390006e5ea19fd4e22c7ca9 ]
 
-A problem about hinic create debugfs failed is triggered with the
-following log given:
+When liquidio driver open failed, it doesn't release resources. Compile
+tested only.
 
- [  931.419023] debugfs: Directory 'hinic' with parent '/' already present!
-
-The reason is that hinic_module_init() returns pci_register_driver()
-directly without checking its return value, if pci_register_driver()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of hinic can never be created later.
-
- hinic_module_init()
-   hinic_dbg_register_debugfs() # create debugfs directory
-   pci_register_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when pci_register_driver() returns error.
-
-Fixes: 253ac3a97921 ("hinic: add support to query sq info")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
+Fixes: 5b07aee11227 ("liquidio: MSIX support for CN23XX")
+Fixes: dbc97bfd3918 ("net: liquidio: Add missing null pointer checks")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221110021642.80378-1-yuancan@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ .../net/ethernet/cavium/liquidio/lio_main.c   | 34 ++++++++++++++-----
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-index 4f1d585485d7..6ec042d48cd1 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-@@ -1502,8 +1502,15 @@ static struct pci_driver hinic_driver = {
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index e0d18e917108..c4dc6e2ccd6b 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -1798,13 +1798,10 @@ static int liquidio_open(struct net_device *netdev)
  
- static int __init hinic_module_init(void)
- {
-+	int ret;
+ 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
+ 
+-	if (OCTEON_CN23XX_PF(oct)) {
+-		if (!oct->msix_on)
+-			if (setup_tx_poll_fn(netdev))
+-				return -1;
+-	} else {
+-		if (setup_tx_poll_fn(netdev))
+-			return -1;
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
++		ret = setup_tx_poll_fn(netdev);
++		if (ret)
++			goto err_poll;
+ 	}
+ 
+ 	netif_tx_start_all_queues(netdev);
+@@ -1817,7 +1814,7 @@ static int liquidio_open(struct net_device *netdev)
+ 	/* tell Octeon to start forwarding packets to host */
+ 	ret = send_rx_ctrl_cmd(lio, 1);
+ 	if (ret)
+-		return ret;
++		goto err_rx_ctrl;
+ 
+ 	/* start periodical statistics fetch */
+ 	INIT_DELAYED_WORK(&lio->stats_wk.work, lio_fetch_stats);
+@@ -1828,6 +1825,27 @@ static int liquidio_open(struct net_device *netdev)
+ 	dev_info(&oct->pci_dev->dev, "%s interface is opened\n",
+ 		 netdev->name);
+ 
++	return 0;
 +
- 	hinic_dbg_register_debugfs(HINIC_DRV_NAME);
--	return pci_register_driver(&hinic_driver);
++err_rx_ctrl:
++	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
++		cleanup_tx_poll_fn(netdev);
++err_poll:
++	if (lio->ptp_clock) {
++		ptp_clock_unregister(lio->ptp_clock);
++		lio->ptp_clock = NULL;
++	}
 +
-+	ret = pci_register_driver(&hinic_driver);
-+	if (ret)
-+		hinic_dbg_unregister_debugfs();
++	if (oct->props[lio->ifidx].napi_enabled == 1) {
++		list_for_each_entry_safe(napi, n, &netdev->napi_list, dev_list)
++			napi_disable(napi);
 +
-+	return ret;
++		oct->props[lio->ifidx].napi_enabled = 0;
++
++		if (OCTEON_CN23XX_PF(oct))
++			oct->droq[0]->ops.poll_mode = 0;
++	}
++
+ 	return ret;
  }
  
- static void __exit hinic_module_exit(void)
 -- 
 2.35.1
 
