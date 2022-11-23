@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99A71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE5EC433C1;
-	Wed, 23 Nov 2022 09:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1521C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F73C433C1;
+	Wed, 23 Nov 2022 09:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195052;
-	bh=1EDZTar56R7LSbU0ckBgtz83HhLS0ycOyYjqyBSMy+U=;
+	s=korg; t=1669195055;
+	bh=eF1j130c0SZailNo6oQfzBp+HT2TeZ5zTXO6Y/j4im8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEMU4gXnwQoPjmtgilOqoipZjhtNQ+5FaeTjVPuo+dHbvJVmczs0PWguo9oDK9Z4a
-	 K7ux5uNGn6H5hzFcohCKxB59tbvePZuCnkdrsoIBIY0mm8gt4ybH4PhcdrFiaLnHlk
-	 kMCAVfcBBlW5WICaKZBHgWB8UPkYsKjALzmln3JI=
+	b=YyuOyt0kUPllFlUpdKekN0uDX5vaFt2aG2qfI4SYE6J8BbYloRf3aQ4AsJAz2GUzn
+	 ww7Qz2iNx59PvEFN/BhmhW1gGGv2/f4nriROJA7HIYbXHsXkGgBWmnr0eOqDQvBGAh
+	 /vvBYXgGfQlyi+LXZ1i/PlBJXJdKhUMVy6zPOAuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/156] pinctrl: devicetree: fix null pointer dereferencing in pinctrl_dt_to_map
-Date: Wed, 23 Nov 2022 09:50:50 +0100
-Message-Id: <20221123084601.338353101@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 127/156] iio: trigger: sysfs: fix possible memory leak in iio_sysfs_trig_init()
+Date: Wed, 23 Nov 2022 09:51:24 +0100
+Message-Id: <20221123084602.523536130@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,47 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 91d5c5060ee24fe8da88cd585bb43b843d2f0dce ]
+commit efa17e90e1711bdb084e3954fa44afb6647331c0 upstream.
 
-Here is the BUG report by KASAN about null pointer dereference:
+dev_set_name() allocates memory for name, it need be freed
+when device_add() fails, call put_device() to give up the
+reference that hold in device_initialize(), so that it can
+be freed in kobject_cleanup() when the refcount hit to 0.
 
-BUG: KASAN: null-ptr-deref in strcmp+0x2e/0x50
-Read of size 1 at addr 0000000000000000 by task python3/2640
-Call Trace:
- strcmp
- __of_find_property
- of_find_property
- pinctrl_dt_to_map
+Fault injection test can trigger this:
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-So directly return ENOMEM, if kasprintf() return NULL pointer.
+unreferenced object 0xffff8e8340a7b4c0 (size 32):
+  comm "modprobe", pid 243, jiffies 4294678145 (age 48.845s)
+  hex dump (first 32 bytes):
+    69 69 6f 5f 73 79 73 66 73 5f 74 72 69 67 67 65  iio_sysfs_trigge
+    72 00 a7 40 83 8e ff ff 00 86 13 c4 f6 ee ff ff  r..@............
+  backtrace:
+    [<0000000074999de8>] __kmem_cache_alloc_node+0x1e9/0x360
+    [<00000000497fd30b>] __kmalloc_node_track_caller+0x44/0x1a0
+    [<000000003636c520>] kstrdup+0x2d/0x60
+    [<0000000032f84da2>] kobject_set_name_vargs+0x1e/0x90
+    [<0000000092efe493>] dev_set_name+0x4e/0x70
 
-Fixes: 57291ce295c0 ("pinctrl: core device tree mapping table parsing support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221110082056.2014898-1-zengheng4@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1f785681a870 ("staging:iio:trigger sysfs userspace trigger rework.")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221022074212.1386424-1-yangyingliang@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/devicetree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/trigger/iio-trig-sysfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
-index dbaacde1b36a..362d84c2ead4 100644
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -223,6 +223,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
- 	for (state = 0; ; state++) {
- 		/* Retrieve the pinctrl-* property */
- 		propname = kasprintf(GFP_KERNEL, "pinctrl-%d", state);
-+		if (!propname)
-+			return -ENOMEM;
- 		prop = of_find_property(np, propname, &size);
- 		kfree(propname);
- 		if (!prop) {
--- 
-2.35.1
-
+--- a/drivers/iio/trigger/iio-trig-sysfs.c
++++ b/drivers/iio/trigger/iio-trig-sysfs.c
+@@ -209,9 +209,13 @@ static int iio_sysfs_trigger_remove(int
+ 
+ static int __init iio_sysfs_trig_init(void)
+ {
++	int ret;
+ 	device_initialize(&iio_sysfs_trig_dev);
+ 	dev_set_name(&iio_sysfs_trig_dev, "iio_sysfs_trigger");
+-	return device_add(&iio_sysfs_trig_dev);
++	ret = device_add(&iio_sysfs_trig_dev);
++	if (ret)
++		put_device(&iio_sysfs_trig_dev);
++	return ret;
+ }
+ module_init(iio_sysfs_trig_init);
+ 
 
 
