@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB99A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC9BC433C1;
-	Wed, 23 Nov 2022 09:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C091C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7300AC433C1;
+	Wed, 23 Nov 2022 09:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195414;
-	bh=gsFLLLvmqVtzx1deac1hge59Qq18CRhkXMMbTvbZIhA=;
+	s=korg; t=1669195417;
+	bh=RbTjZk2cy9m5HP6NBRnKTUBHw62JRHbrcuQY1H0EGRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OTww/zj94uWUZbAvNy9ZKCkYRhk9JaFtTXs6/5JQwB+tWjM45M8BzC72PMMqNmmrN
-	 eYIqM9ArU2PvjAFMY221VYbDbzRdue07nHHuRFsp8/NeBGgkgkoZz7JAD4jmDwqWek
-	 expxGePmt1HqJXH4JwszKmRjz4MJNppz3EtdQ9M8=
+	b=pbXNrXkbJyd4KFVhJc/w1TA6MK6RIVO8Nj+4wC03a3fW8h5Xv79JEpszNu2V1ygfK
+	 Erswbhk89BYwR6nNaKuAkrpQIzvbLzHlCMf/OE2V7ky7qx4TRFRo8FDl/iss64lMMh
+	 rq7anG6JS4keJxZO3Zf4DaKuL4lW97kkwLgJ+A5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Martin Schiller <ms@dev.tdt.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/149] net: ag71xx: call phylink_disconnect_phy if ag71xx_hw_enable() fail in ag71xx_open()
-Date: Wed, 23 Nov 2022 09:51:00 +0100
-Message-Id: <20221123084600.718118949@linuxfoundation.org>
+Subject: [PATCH 5.10 078/149] net/x25: Fix skb leak in x25_lapb_receive_frame()
+Date: Wed, 23 Nov 2022 09:51:01 +0100
+Message-Id: <20221123084600.757320415@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,45 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Jian <liujian56@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit c9b895c6878bdb6789dc1d7af60fd10f4a9f1937 ]
+[ Upstream commit 2929cceb2fcf0ded7182562e4888afafece82cce ]
 
-If ag71xx_hw_enable() fails, call phylink_disconnect_phy() to clean up.
-And if phylink_of_phy_connect() fails, nothing needs to be done.
-Compile tested only.
+x25_lapb_receive_frame() using skb_copy() to get a private copy of
+skb, the new skb should be freed in the undersized/fragmented skb
+error handling path. Otherwise there is a memory leak.
 
-Fixes: 892e09153fa3 ("net: ag71xx: port to phylink")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20221114095549.40342-1-liujian56@huawei.com
+Fixes: cb101ed2c3c7 ("x25: Handle undersized/fragmented skbs")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Martin Schiller <ms@dev.tdt.de>
+Link: https://lore.kernel.org/r/20221114110519.514538-1-weiyongjun@huaweicloud.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/ag71xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/x25/x25_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/atheros/ag71xx.c b/drivers/net/ethernet/atheros/ag71xx.c
-index c26c9b0c00d8..fe3ca3af431a 100644
---- a/drivers/net/ethernet/atheros/ag71xx.c
-+++ b/drivers/net/ethernet/atheros/ag71xx.c
-@@ -1468,7 +1468,7 @@ static int ag71xx_open(struct net_device *ndev)
- 	if (ret) {
- 		netif_err(ag, link, ndev, "phylink_of_phy_connect filed with err: %i\n",
- 			  ret);
--		goto err;
-+		return ret;
+diff --git a/net/x25/x25_dev.c b/net/x25/x25_dev.c
+index 25bf72ee6cad..226397add422 100644
+--- a/net/x25/x25_dev.c
++++ b/net/x25/x25_dev.c
+@@ -117,7 +117,7 @@ int x25_lapb_receive_frame(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	if (!pskb_may_pull(skb, 1)) {
+ 		x25_neigh_put(nb);
+-		return 0;
++		goto drop;
  	}
  
- 	max_frame_len = ag71xx_max_frame_len(ndev->mtu);
-@@ -1489,6 +1489,7 @@ static int ag71xx_open(struct net_device *ndev)
- 
- err:
- 	ag71xx_rings_cleanup(ag);
-+	phylink_disconnect_phy(ag->phylink);
- 	return ret;
- }
- 
+ 	switch (skb->data[0]) {
 -- 
 2.35.1
 
