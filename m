@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45301C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA16C433D7;
-	Wed, 23 Nov 2022 09:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF371C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AFAC433D6;
+	Wed, 23 Nov 2022 09:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197211;
-	bh=IswDgvgDFdImhSWTVyWNNPKWvKVLcSsoGzYPx58NVec=;
+	s=korg; t=1669197215;
+	bh=x59k8a8dxn+UmFAVzcjKfgR6g/7yTXPX/lXKHoUuAsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slgCLXSMui5IcTAt5pXuRpGzN/uosUGqWdxqs/zfnFwnD8/Pbaih4Xk6231ic1M1f
-	 tf2DsQ2SmQWJWHlWEFgogEO4IBxDgFyCyOA5NaO0Ophe6CEySMIQroePSM1VhmzMuM
-	 vl6QJvSHxdUl0JmxXv7AoGDbfYj3yJJrvgfG6xtQ=
+	b=lszn1gX7On9w1WDGipY5DaHR3WUw+F5kJRY7MmxljEa0vtZ3YGJYKhk3LPrD0b5Dq
+	 1DjRH/3DJLbsLq6zG3pp2QSL8z4OmJn/d97qVoeMHAeNt8IVCB/gvO6NvpBYhjLqbM
+	 9chm9i+1XZ+wL9MCDYH1BYBHZI2eGAYC80Youcao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zheng Bin <zhengbin13@huawei.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.0 229/314] slimbus: qcom-ngd: Fix build error when CONFIG_SLIM_QCOM_NGD_CTRL=y && CONFIG_QCOM_RPROC_COMMON=m
-Date: Wed, 23 Nov 2022 09:51:14 +0100
-Message-Id: <20221123084635.895573433@linuxfoundation.org>
+Subject: [PATCH 6.0 230/314] slimbus: stream: correct presence rate frequencies
+Date: Wed, 23 Nov 2022 09:51:15 +0100
+Message-Id: <20221123084635.933596776@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,41 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Bin <zhengbin13@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit e54fad8044db18cc400df8d01bfb86cada08b7cb upstream.
+commit b9c1939627f8185dec8ba6d741e9573a4c7a5834 upstream.
 
-If CONFIG_SLIM_QCOM_NGD_CTRL=y, CONFIG_QCOM_RPROC_COMMON=m, COMPILE_TEST=y,
-bulding fails:
+Correct few frequencies in presence rate table - multiplied by 10
+(110250 instead of 11025 Hz).
 
-drivers/slimbus/qcom-ngd-ctrl.o: In function `qcom_slim_ngd_ctrl_probe':
-qcom-ngd-ctrl.c:(.text+0x330): undefined reference to `qcom_register_ssr_notifier'
-qcom-ngd-ctrl.c:(.text+0x5fc): undefined reference to `qcom_unregister_ssr_notifier'
-drivers/slimbus/qcom-ngd-ctrl.o: In function `qcom_slim_ngd_remove':
-qcom-ngd-ctrl.c:(.text+0x90c): undefined reference to `qcom_unregister_ssr_notifier'
-
-Make SLIM_QCOM_NGD_CTRL depends on QCOM_RPROC_COMMON || (COMPILE_TEST && !QCOM_RPROC_COMMON) to fix this.
-
-Fixes: e291691c6977 ("slimbus: qcom-ngd-ctrl: allow compile testing without QCOM_RPROC_COMMON")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Zheng Bin <zhengbin13@huawei.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221027095904.3388959-1-zhengbin13@huawei.com
+Fixes: abb9c9b8b51b ("slimbus: stream: add stream support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20220929165202.410937-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/slimbus/stream.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/slimbus/Kconfig
-+++ b/drivers/slimbus/Kconfig
-@@ -23,7 +23,7 @@ config SLIM_QCOM_CTRL
- config SLIM_QCOM_NGD_CTRL
- 	tristate "Qualcomm SLIMbus Satellite Non-Generic Device Component"
- 	depends on HAS_IOMEM && DMA_ENGINE && NET && QCOM_RPROC_COMMON
--	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on ARCH_QCOM || (COMPILE_TEST && !QCOM_RPROC_COMMON)
- 	select QCOM_QMI_HELPERS
- 	select QCOM_PDR_HELPERS
- 	help
+--- a/drivers/slimbus/stream.c
++++ b/drivers/slimbus/stream.c
+@@ -67,10 +67,10 @@ static const int slim_presence_rate_tabl
+ 	384000,
+ 	768000,
+ 	0, /* Reserved */
+-	110250,
+-	220500,
+-	441000,
+-	882000,
++	11025,
++	22050,
++	44100,
++	88200,
+ 	176400,
+ 	352800,
+ 	705600,
 
 
