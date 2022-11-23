@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BA51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40F8C433D7;
-	Wed, 23 Nov 2022 09:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23C51C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:25:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522F7C433D7;
+	Wed, 23 Nov 2022 09:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195542;
-	bh=oAigBay/sd/7qktzjMrBHXzuJdfLRliL+a2vGIn4EJI=;
+	s=korg; t=1669195545;
+	bh=DcKWH419ruqEzwaYGvsR4WXaeMJmJ3yNz/SNrjNuL5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbMIDE2Oii8Tzpnbhq4+4GurPEVNIPAbwF4sP1/znfIO/vZ1kr4koCvBlX8Rtar4N
-	 WSCvB7b74iA0a3qRbfg4vraLC2N8YL1Smtc9FcJX7Xle7LfwbxmbTOSdO0gCFaXrdT
-	 E96o236M3t8B0bH5psJxKrMOqq6CMM/GNWzXHhwU=
+	b=eWROqw7QYs4wTclsJp77QlocuUeF4GwN2a15LG8UXwzMe5Va0bwXfNqfVnb9BudW9
+	 OaLdv90Or7cGup+g6t7PKamzjAVuckk+DXXD9R0rRGVTjNOmanAqZdPHdoC71dMOrP
+	 E3XfwGBYFQ29K9AvpnxONK0kilh/mSb2qfz39KiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.10 113/149] serial: 8250: Flush DMA Rx on RLSI
-Date: Wed, 23 Nov 2022 09:51:36 +0100
-Message-Id: <20221123084602.013278688@linuxfoundation.org>
+Subject: [PATCH 5.10 114/149] serial: 8250_lpss: Configure DMA also w/o DMA filter
+Date: Wed, 23 Nov 2022 09:51:37 +0100
+Message-Id: <20221123084602.044444774@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -36,36 +37,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 1980860e0c8299316cddaf0992dd9e1258ec9d88 upstream.
+commit 1bfcbe5805d0cfc83c3544dcd01e0a282c1f6790 upstream.
 
-Returning true from handle_rx_dma() without flushing DMA first creates
-a data ordering hazard. If DMA Rx has handled any character at the
-point when RLSI occurs, the non-DMA path handles any pending characters
-jumping them ahead of those characters that are pending under DMA.
+If the platform doesn't use DMA device filter (as is the case with
+Elkhart Lake), whole lpss8250_dma_setup() setup is skipped. This
+results in skipping also *_maxburst setup which is undesirable.
+Refactor lpss8250_dma_setup() to configure DMA even if filter is not
+setup.
 
-Fixes: 75df022b5f89 ("serial: 8250_dma: Fix RX handling")
-Cc: <stable@vger.kernel.org>
+Cc: stable <stable@kernel.org>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221108121952.5497-5-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/20221108121952.5497-3-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_lpss.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1873,10 +1873,9 @@ static bool handle_rx_dma(struct uart_82
- 		if (!up->dma->rx_running)
- 			break;
- 		fallthrough;
-+	case UART_IIR_RLSI:
- 	case UART_IIR_RX_TIMEOUT:
- 		serial8250_rx_dma_flush(up);
--		fallthrough;
--	case UART_IIR_RLSI:
- 		return true;
- 	}
- 	return up->dma->rx_dma(up);
+--- a/drivers/tty/serial/8250/8250_lpss.c
++++ b/drivers/tty/serial/8250/8250_lpss.c
+@@ -268,8 +268,13 @@ static int lpss8250_dma_setup(struct lps
+ 	struct dw_dma_slave *rx_param, *tx_param;
+ 	struct device *dev = port->port.dev;
+ 
+-	if (!lpss->dma_param.dma_dev)
++	if (!lpss->dma_param.dma_dev) {
++		dma = port->dma;
++		if (dma)
++			goto out_configuration_only;
++
+ 		return 0;
++	}
+ 
+ 	rx_param = devm_kzalloc(dev, sizeof(*rx_param), GFP_KERNEL);
+ 	if (!rx_param)
+@@ -280,16 +285,18 @@ static int lpss8250_dma_setup(struct lps
+ 		return -ENOMEM;
+ 
+ 	*rx_param = lpss->dma_param;
+-	dma->rxconf.src_maxburst = lpss->dma_maxburst;
+-
+ 	*tx_param = lpss->dma_param;
+-	dma->txconf.dst_maxburst = lpss->dma_maxburst;
+ 
+ 	dma->fn = lpss8250_dma_filter;
+ 	dma->rx_param = rx_param;
+ 	dma->tx_param = tx_param;
+ 
+ 	port->dma = dma;
++
++out_configuration_only:
++	dma->rxconf.src_maxburst = lpss->dma_maxburst;
++	dma->txconf.dst_maxburst = lpss->dma_maxburst;
++
+ 	return 0;
+ }
+ 
 
 
