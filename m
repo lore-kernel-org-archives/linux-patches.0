@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C861C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DC7C433C1;
-	Wed, 23 Nov 2022 09:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030FD1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E84C433D7;
+	Wed, 23 Nov 2022 09:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195936;
-	bh=3glp74B8zkAU4YV2Zon+InBbMuZ1d8Kiwn1W8kM/w2A=;
+	s=korg; t=1669195939;
+	bh=XN61+9YlMRuvd58nAtfL8AAaJ9d+xr7vdWCDGQYUSB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUDi3hC/K8S5CqLG9fQvJ5bHiLvqtr3Q705GC7SWcDmEeEnTokrIzd3NPsePxKHgB
-	 B8932PmZNef/d5sMBnv+wcuMpkBv+ssLCib5/8IJ2AKqjlR7+SMmyps3Y1BS/Yn4sH
-	 cezhH4/bAbdFPNfafrLF8i8ooy6InpCeXwSYSf5M=
+	b=cRkUVcK8QOZnvy5wMyhLVPAmdO07bb8RgmKgS5kUZ0UapoL6owfj5nDh71i6oYcPe
+	 S2OZ8C7Zhtp68tMrkvh6xz4t62Rum4GXb0MdnDscDLzssfughDVetwainM0RSUqEcf
+	 EafWx6gvZ3PP66Rtjdk9QsQvZP/CLK2SLetdkF2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Jaco Coetzee <jaco.coetzee@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/181] ata: libata-transport: fix error handling in ata_tdev_add()
-Date: Wed, 23 Nov 2022 09:50:37 +0100
-Message-Id: <20221123084605.561911541@linuxfoundation.org>
+Subject: [PATCH 5.15 075/181] nfp: change eeprom length to max length enumerators
+Date: Wed, 23 Nov 2022 09:50:38 +0100
+Message-Id: <20221123084605.602821250@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,65 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jaco Coetzee <jaco.coetzee@corigine.com>
 
-[ Upstream commit 1ff36351309e3eadcff297480baf4785e726de9b ]
+[ Upstream commit f3a72878a3de720661b7ed0d6b7f7c506ddb8a52 ]
 
-In ata_tdev_add(), the return value of transport_add_device() is
-not checked. As a result, it causes null-ptr-deref while removing
-the module, because transport_remove_device() is called to remove
-the device that was not added.
+Extend the size of QSFP EEPROM for types SSF8436 and SFF8636
+from 256 to 640 bytes in order to expose all the EEPROM pages by
+ethtool.
 
-Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
-CPU: 13 PID: 13603 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #36
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x48/0x3a0
-lr : device_del+0x44/0x3a0
-Call trace:
- device_del+0x48/0x3a0
- attribute_container_class_device_del+0x28/0x40
- transport_remove_classdev+0x60/0x7c
- attribute_container_device_trigger+0x118/0x120
- transport_remove_device+0x20/0x30
- ata_tdev_delete+0x24/0x50 [libata]
- ata_tlink_delete+0x40/0xa0 [libata]
- ata_tport_delete+0x2c/0x60 [libata]
- ata_port_detach+0x148/0x1b0 [libata]
- ata_pci_remove_one+0x50/0x80 [libata]
- ahci_remove_one+0x4c/0x8c [ahci]
+For SFF-8636 and SFF-8436 specifications, the driver exposes
+256 bytes of EEPROM data for ethtool's get_module_eeprom()
+callback, resulting in "netlink error: Invalid argument" when
+an EEPROM read with an offset larger than 256 bytes is attempted.
 
-Fix this by checking and handling return value of transport_add_device()
-in ata_tdev_add(). In the error path, device_del() is called to delete
-the device which was added earlier in this function, and ata_tdev_free()
-is called to free ata_dev.
+Changing the length enumerators to the _MAX_LEN
+variants exposes all 640 bytes of the EEPROM allowing upper
+pages 1, 2 and 3 to be read.
 
-Fixes: d9027470b886 ("[libata] Add ATA transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
+Signed-off-by: Jaco Coetzee <jaco.coetzee@corigine.com>
+Reviewed-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-transport.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
-index 5ee46521198d..60f22e1a4943 100644
---- a/drivers/ata/libata-transport.c
-+++ b/drivers/ata/libata-transport.c
-@@ -683,7 +683,13 @@ static int ata_tdev_add(struct ata_device *ata_dev)
- 		return error;
- 	}
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+index 62546d197bfd..865865adfefc 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+@@ -1264,15 +1264,15 @@ nfp_port_get_module_info(struct net_device *netdev,
  
--	transport_add_device(dev);
-+	error = transport_add_device(dev);
-+	if (error) {
-+		device_del(dev);
-+		ata_tdev_free(ata_dev);
-+		return error;
-+	}
-+
- 	transport_configure_device(dev);
- 	return 0;
- }
+ 		if (data < 0x3) {
+ 			modinfo->type = ETH_MODULE_SFF_8436;
+-			modinfo->eeprom_len = ETH_MODULE_SFF_8436_LEN;
++			modinfo->eeprom_len = ETH_MODULE_SFF_8436_MAX_LEN;
+ 		} else {
+ 			modinfo->type = ETH_MODULE_SFF_8636;
+-			modinfo->eeprom_len = ETH_MODULE_SFF_8636_LEN;
++			modinfo->eeprom_len = ETH_MODULE_SFF_8636_MAX_LEN;
+ 		}
+ 		break;
+ 	case NFP_INTERFACE_QSFP28:
+ 		modinfo->type = ETH_MODULE_SFF_8636;
+-		modinfo->eeprom_len = ETH_MODULE_SFF_8636_LEN;
++		modinfo->eeprom_len = ETH_MODULE_SFF_8636_MAX_LEN;
+ 		break;
+ 	default:
+ 		netdev_err(netdev, "Unsupported module 0x%x detected\n",
 -- 
 2.35.1
 
