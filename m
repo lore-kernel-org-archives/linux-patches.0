@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6DA1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21D1C433D6;
-	Wed, 23 Nov 2022 09:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9361C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E88C433C1;
+	Wed, 23 Nov 2022 09:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195457;
-	bh=mwgAUIh0GXwDHOaTxo6AwOWqBV+qlLL0o5J74KRgorQ=;
+	s=korg; t=1669195460;
+	bh=OzWTM6DAHNbxr85UkBEjp6JoHpX9VpTLXfq2oyIaTFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXPF811sL8AkllmfTMx+Z3Hdj+8CDedjk7nC56q79UwxBFWpJgmaeoTB1c+8UQHHY
-	 SZOlftPkdfSjsbayjxxXMrmaFEmtYDwFSBBy1CaoePrpp8CNYedtBIVu3NBMCaopAh
-	 mQEvRK6OpR2uRzLMB3qE1xdCZwuy20R8zAPRQoOM=
+	b=M4qdBvhLhbUo+O5NRqFuyqdO32+d9McoaL4FJ9gaw1s1S+hNO0tFAmIEysKBG1BU5
+	 ac1RIOEhJxUAx7M5EWEU0NL+vU9+qfXqpgTSOl2LG9fomjWRASfiu/5kMxy5PQkRes
+	 tUQQnDZCOCKDnyscrWqiY814ojHMepRk+9Us/d6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shang XiaoJing <shangxiaojing@huawei.com>,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	fengguang.wu@intel.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 088/149] tracing: Fix wild-memory-access in register_synth_event()
-Date: Wed, 23 Nov 2022 09:51:11 +0100
-Message-Id: <20221123084601.154258049@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.10 089/149] tracing: kprobe: Fix potential null-ptr-deref on trace_event_file in kprobe_event_gen_test_exit()
+Date: Wed, 23 Nov 2022 09:51:12 +0100
+Message-Id: <20221123084601.192455632@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -39,92 +36,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit 1b5f1c34d3f5a664a57a5a7557a50e4e3cc2505c upstream.
+commit e0d75267f59d7084e0468bd68beeb1bf9c71d7c0 upstream.
 
-In register_synth_event(), if set_synth_event_print_fmt() failed, then
-both trace_remove_event_call() and unregister_trace_event() will be
-called, which means the trace_event_call will call
-__unregister_trace_event() twice. As the result, the second unregister
-will causes the wild-memory-access.
+When trace_get_event_file() failed, gen_kretprobe_test will be assigned
+as the error code. If module kprobe_event_gen_test is removed now, the
+null pointer dereference will happen in kprobe_event_gen_test_exit().
+Check if gen_kprobe_test or gen_kretprobe_test is error code or NULL
+before dereference them.
 
-register_synth_event
-    set_synth_event_print_fmt failed
-    trace_remove_event_call
-        event_remove
-            if call->event.funcs then
-            __unregister_trace_event (first call)
-    unregister_trace_event
-        __unregister_trace_event (second call)
-
-Fix the bug by avoiding to call the second __unregister_trace_event() by
-checking if the first one is called.
-
-general protection fault, probably for non-canonical address
-	0xfbd59c0000000024: 0000 [#1] SMP KASAN PTI
-KASAN: maybe wild-memory-access in range
-[0xdead000000000120-0xdead000000000127]
-CPU: 0 PID: 3807 Comm: modprobe Not tainted
-6.1.0-rc1-00186-g76f33a7eedb4 #299
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP PTI
+CPU: 3 PID: 2210 Comm: modprobe Not tainted
+6.1.0-rc1-00171-g2159299a3b74-dirty #217
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
 rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:unregister_trace_event+0x6e/0x280
-Code: 00 fc ff df 4c 89 ea 48 c1 ea 03 80 3c 02 00 0f 85 0e 02 00 00 48
-b8 00 00 00 00 00 fc ff df 4c 8b 63 08 4c 89 e2 48 c1 ea 03 <80> 3c 02
-00 0f 85 e2 01 00 00 49 89 2c 24 48 85 ed 74 28 e8 7a 9b
-RSP: 0018:ffff88810413f370 EFLAGS: 00010a06
-RAX: dffffc0000000000 RBX: ffff888105d050b0 RCX: 0000000000000000
-RDX: 1bd5a00000000024 RSI: ffff888119e276e0 RDI: ffffffff835a8b20
-RBP: dead000000000100 R08: 0000000000000000 R09: fffffbfff0913481
-R10: ffffffff8489a407 R11: fffffbfff0913480 R12: dead000000000122
-R13: ffff888105d050b8 R14: 0000000000000000 R15: ffff888105d05028
-FS:  00007f7823e8d540(0000) GS:ffff888119e00000(0000)
+RIP: 0010:kprobe_event_gen_test_exit+0x1c/0xb5 [kprobe_event_gen_test]
+Code: Unable to access opcode bytes at 0xffffffff9ffffff2.
+RSP: 0018:ffffc900015bfeb8 EFLAGS: 00010246
+RAX: ffffffffffffffea RBX: ffffffffa0002080 RCX: 0000000000000000
+RDX: ffffffffa0001054 RSI: ffffffffa0001064 RDI: ffffffffdfc6349c
+RBP: ffffffffa0000000 R08: 0000000000000004 R09: 00000000001e95c0
+R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000800
+R13: ffffffffa0002420 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f56b75be540(0000) GS:ffff88813bc00000(0000)
 knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7823e7ebec CR3: 000000010a058002 CR4: 0000000000330ef0
+CR2: ffffffff9ffffff2 CR3: 000000010874a006 CR4: 0000000000330ee0
 DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
 DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
  <TASK>
- __create_synth_event+0x1e37/0x1eb0
- create_or_delete_synth_event+0x110/0x250
- synth_event_run_command+0x2f/0x110
- test_gen_synth_cmd+0x170/0x2eb [synth_event_gen_test]
- synth_event_gen_test_init+0x76/0x9bc [synth_event_gen_test]
- do_one_initcall+0xdb/0x480
- do_init_module+0x1cf/0x680
- load_module+0x6a50/0x70a0
- __do_sys_finit_module+0x12f/0x1c0
+ __x64_sys_delete_module+0x206/0x380
+ ? lockdep_hardirqs_on_prepare+0xd8/0x190
+ ? syscall_enter_from_user_mode+0x1c/0x50
  do_syscall_64+0x3f/0x90
  entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Link: https://lkml.kernel.org/r/20221117012346.22647-3-shangxiaojing@huawei.com
+Link: https://lore.kernel.org/all/20221108015130.28326-2-shangxiaojing@huawei.com/
 
-Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
+Fixes: 64836248dda2 ("tracing: Add kprobe event command generation test module")
 Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
-Cc: <fengguang.wu@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/trace/kprobe_event_gen_test.c |   44 ++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -791,10 +791,9 @@ static int register_synth_event(struct s
+--- a/kernel/trace/kprobe_event_gen_test.c
++++ b/kernel/trace/kprobe_event_gen_test.c
+@@ -73,6 +73,10 @@ static struct trace_event_file *gen_kret
+ #define KPROBE_GEN_TEST_ARG3	NULL
+ #endif
+ 
++static bool trace_event_file_is_valid(struct trace_event_file *input)
++{
++	return input && !IS_ERR(input);
++}
+ 
+ /*
+  * Test to make sure we can create a kprobe event, then add more
+@@ -217,10 +221,12 @@ static int __init kprobe_event_gen_test_
+ 
+ 	ret = test_gen_kretprobe_cmd();
+ 	if (ret) {
+-		WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
+-						  "kprobes",
+-						  "gen_kretprobe_test", false));
+-		trace_put_event_file(gen_kretprobe_test);
++		if (trace_event_file_is_valid(gen_kretprobe_test)) {
++			WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
++							  "kprobes",
++							  "gen_kretprobe_test", false));
++			trace_put_event_file(gen_kretprobe_test);
++		}
+ 		WARN_ON(kprobe_event_delete("gen_kretprobe_test"));
  	}
  
- 	ret = set_synth_event_print_fmt(call);
--	if (ret < 0) {
-+	/* unregister_trace_event() will be called inside */
-+	if (ret < 0)
- 		trace_remove_event_call(call);
--		goto err;
--	}
-  out:
- 	return ret;
-  err:
+@@ -229,24 +235,30 @@ static int __init kprobe_event_gen_test_
+ 
+ static void __exit kprobe_event_gen_test_exit(void)
+ {
+-	/* Disable the event or you can't remove it */
+-	WARN_ON(trace_array_set_clr_event(gen_kprobe_test->tr,
+-					  "kprobes",
+-					  "gen_kprobe_test", false));
++	if (trace_event_file_is_valid(gen_kprobe_test)) {
++		/* Disable the event or you can't remove it */
++		WARN_ON(trace_array_set_clr_event(gen_kprobe_test->tr,
++						  "kprobes",
++						  "gen_kprobe_test", false));
++
++		/* Now give the file and instance back */
++		trace_put_event_file(gen_kprobe_test);
++	}
+ 
+-	/* Now give the file and instance back */
+-	trace_put_event_file(gen_kprobe_test);
+ 
+ 	/* Now unregister and free the event */
+ 	WARN_ON(kprobe_event_delete("gen_kprobe_test"));
+ 
+-	/* Disable the event or you can't remove it */
+-	WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
+-					  "kprobes",
+-					  "gen_kretprobe_test", false));
++	if (trace_event_file_is_valid(gen_kretprobe_test)) {
++		/* Disable the event or you can't remove it */
++		WARN_ON(trace_array_set_clr_event(gen_kretprobe_test->tr,
++						  "kprobes",
++						  "gen_kretprobe_test", false));
++
++		/* Now give the file and instance back */
++		trace_put_event_file(gen_kretprobe_test);
++	}
+ 
+-	/* Now give the file and instance back */
+-	trace_put_event_file(gen_kretprobe_test);
+ 
+ 	/* Now unregister and free the event */
+ 	WARN_ON(kprobe_event_delete("gen_kretprobe_test"));
 
 
