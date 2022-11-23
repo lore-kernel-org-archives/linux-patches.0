@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0441B1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:37:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470F8C433C1;
-	Wed, 23 Nov 2022 09:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EFD1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:38:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AB1C433C1;
+	Wed, 23 Nov 2022 09:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196278;
-	bh=WzC4sH3Tvi+T5uH2aKJaOCbP6e2Uclrw4hF5fnw9GDQ=;
+	s=korg; t=1669196282;
+	bh=oLtCzsgJpL4Er8phRZ6LwZnW2PIre6o2F2zvXfB+kcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgAE6GhaKPJHU6hi8c+PtXdST05XcFJzqAHk3YiE/26mV4naE21la8khmWHZM8eXo
-	 E9wilhq2Bc1vKf5fVi7UZqQ3I81izl66DJ8B5k2KtoPoQNWlOn1fQKc/zNtQttyByw
-	 Vzaq9hy/Jah4i8rUMdltDqgFdTZh+qOxuFfd4pM8=
+	b=EP/nP/IybuckbzniLeCndIWM+QVbVUzDlosWiUmZzY6Lzoqx2K6MetSyf/arVpUbN
+	 Hu3r0o7uzWCN4fDSkcQR6uKRXuJObhCys3NSbSrhyt5Gfa+5Mun5Wq6xvL8YkVNzLg
+	 A6teiGqhuhFE1UdY0r3aqshIuCq8ynDm/PPeZAOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/181] ring-buffer: Include dropped pages in counting dirty patches
-Date: Wed, 23 Nov 2022 09:52:04 +0100
-Message-Id: <20221123084609.307089624@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tom Herbert <tom@herbertland.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 170/181] kcm: avoid potential race in kcm_tx_work
+Date: Wed, 23 Nov 2022 09:52:13 +0100
+Message-Id: <20221123084609.684972724@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -34,95 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 31029a8b2c7e656a0289194ef16415050ae4c4ac ]
+commit ec7eede369fe5b0d085ac51fdbb95184f87bfc6c upstream.
 
-The function ring_buffer_nr_dirty_pages() was created to find out how many
-pages are filled in the ring buffer. There's two running counters. One is
-incremented whenever a new page is touched (pages_touched) and the other
-is whenever a page is read (pages_read). The dirty count is the number
-touched minus the number read. This is used to determine if a blocked task
-should be woken up if the percentage of the ring buffer it is waiting for
-is hit.
+syzbot found that kcm_tx_work() could crash [1] in:
 
-The problem is that it does not take into account dropped pages (when the
-new writes overwrite pages that were not read). And then the dirty pages
-will always be greater than the percentage.
+	/* Primarily for SOCK_SEQPACKET sockets */
+	if (likely(sk->sk_socket) &&
+	    test_bit(SOCK_NOSPACE, &sk->sk_socket->flags)) {
+<<*>>	clear_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
+		sk->sk_write_space(sk);
+	}
 
-This makes the "buffer_percent" file inaccurate, as the number of dirty
-pages end up always being larger than the percentage, event when it's not
-and this causes user space to be woken up more than it wants to be.
+I think the reason is that another thread might concurrently
+run in kcm_release() and call sock_orphan(sk) while sk is not
+locked. kcm_tx_work() find sk->sk_socket being NULL.
 
-Add a new counter to keep track of lost pages, and include that in the
-accounting of dirty pages so that it is actually accurate.
+[1]
+BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:86 [inline]
+BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+BUG: KASAN: null-ptr-deref in kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
+Write of size 8 at addr 0000000000000008 by task kworker/u4:3/53
 
-Link: https://lkml.kernel.org/r/20221021123013.55fb6055@gandalf.local.home
+CPU: 0 PID: 53 Comm: kworker/u4:3 Not tainted 5.19.0-rc3-next-20220621-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: kkcmd kcm_tx_work
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+kasan_report+0xbe/0x1f0 mm/kasan/report.c:495
+check_region_inline mm/kasan/generic.c:183 [inline]
+kasan_check_range+0x13d/0x180 mm/kasan/generic.c:189
+instrument_atomic_write include/linux/instrumented.h:86 [inline]
+clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
+process_one_work+0x996/0x1610 kernel/workqueue.c:2289
+worker_thread+0x665/0x1080 kernel/workqueue.c:2436
+kthread+0x2e9/0x3a0 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
+</TASK>
 
-Fixes: 2c2b0a78b3739 ("ring-buffer: Add percentage of ring buffer full to wake up reader")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Tom Herbert <tom@herbertland.com>
+Link: https://lore.kernel.org/r/20221012133412.519394-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/kcm/kcmsock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 5346405fc4b9..ffc8696e6746 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -510,6 +510,7 @@ struct ring_buffer_per_cpu {
- 	local_t				committing;
- 	local_t				commits;
- 	local_t				pages_touched;
-+	local_t				pages_lost;
- 	local_t				pages_read;
- 	long				last_pages_touch;
- 	size_t				shortest_full;
-@@ -858,10 +859,18 @@ size_t ring_buffer_nr_pages(struct trace_buffer *buffer, int cpu)
- size_t ring_buffer_nr_dirty_pages(struct trace_buffer *buffer, int cpu)
- {
- 	size_t read;
-+	size_t lost;
- 	size_t cnt;
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1844,10 +1844,10 @@ static int kcm_release(struct socket *so
+ 	kcm = kcm_sk(sk);
+ 	mux = kcm->mux;
  
- 	read = local_read(&buffer->buffers[cpu]->pages_read);
-+	lost = local_read(&buffer->buffers[cpu]->pages_lost);
- 	cnt = local_read(&buffer->buffers[cpu]->pages_touched);
-+
-+	if (WARN_ON_ONCE(cnt < lost))
-+		return 0;
-+
-+	cnt -= lost;
-+
- 	/* The reader can read an empty page, but not more than that */
- 	if (cnt < read) {
- 		WARN_ON_ONCE(read > cnt + 1);
-@@ -1995,6 +2004,7 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
- 			 */
- 			local_add(page_entries, &cpu_buffer->overrun);
- 			local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+			local_inc(&cpu_buffer->pages_lost);
- 		}
++	lock_sock(sk);
+ 	sock_orphan(sk);
+ 	kfree_skb(kcm->seq_skb);
  
- 		/*
-@@ -2479,6 +2489,7 @@ rb_handle_head_page(struct ring_buffer_per_cpu *cpu_buffer,
- 		 */
- 		local_add(entries, &cpu_buffer->overrun);
- 		local_sub(BUF_PAGE_SIZE, &cpu_buffer->entries_bytes);
-+		local_inc(&cpu_buffer->pages_lost);
- 
- 		/*
- 		 * The entries will be zeroed out when we move the
-@@ -5223,6 +5234,7 @@ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
- 	local_set(&cpu_buffer->committing, 0);
- 	local_set(&cpu_buffer->commits, 0);
- 	local_set(&cpu_buffer->pages_touched, 0);
-+	local_set(&cpu_buffer->pages_lost, 0);
- 	local_set(&cpu_buffer->pages_read, 0);
- 	cpu_buffer->last_pages_touch = 0;
- 	cpu_buffer->shortest_full = 0;
--- 
-2.35.1
-
+-	lock_sock(sk);
+ 	/* Purge queue under lock to avoid race condition with tx_work trying
+ 	 * to act when queue is nonempty. If tx_work runs after this point
+ 	 * it will just return.
 
 
