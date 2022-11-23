@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDED1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08CDC433C1;
-	Wed, 23 Nov 2022 09:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933891C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18CDC433C1;
+	Wed, 23 Nov 2022 09:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195206;
-	bh=Oct1CCLUuZzv8fyT8cTIxJxmEbxlDlfS6fPcJMbzTqc=;
+	s=korg; t=1669195209;
+	bh=iMy/QLiHHSo7jzMYqfg+bf+qnnQpWfC8mPYt3PFZgt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLXSspVLQpmS8jLKtmb1c8L96EOg5bHRoY+qq90uALTrxoToRFitxJc3OvJGbgkWX
-	 +gjdTJYqCuVCwONCBJHhfYPjh5piTlhMirQhJdOnFIfx23CdqmAKTzdP2dMdqM2dpK
-	 O5RbbK8o+dcxJijbqcblDh9tX0eAoCtppjXXNMEY=
+	b=U7So60BdxwMXYz4ipy//DGMy7/wK7LtUdyQpqykoIq0t1t5Ui/+ssekccofibN0G5
+	 /o+EHu3/K6Ex6Of3zZvZaYB1l578yQPLxNmN+dM4Lv64k5qDkj+DR2D0KD/mXaCNan
+	 +iUfcS8a3KfKRNXd7UtxIO8oUdrQQE9ArX3gC2q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcaov@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/149] i2c: i801: add lis3lv02ds I2C address for Vostro 5568
-Date: Wed, 23 Nov 2022 09:50:02 +0100
-Message-Id: <20221123084558.700349670@linuxfoundation.org>
+Subject: [PATCH 5.10 002/149] ASoC: wm5110: Revert "ASoC: wm5110: Fix PM disable depth imbalance in wm5110_probe"
+Date: Wed, 23 Nov 2022 09:49:45 +0100
+Message-Id: <20221123084558.049051837@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -37,41 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nam Cao <namcaov@gmail.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit d6643d7207c572c1b0305ed505101f15502c6c87 ]
+[ Upstream commit 7d4e966f4cd73ff69bf06934e8e14a33fb7ef447 ]
 
-Dell Vostro 5568 laptop has lis3lv02d, but its i2c address is not known
-to the kernel. Add this address.
+This reverts commit 86b46bf1feb83898d89a2b4a8d08d21e9ea277a7.
 
-Output of "cat /sys/devices/platform/lis3lv02d/position" on Dell Vostro
-5568 laptop:
-    - Horizontal: (-18,0,1044)
-    - Front elevated: (522,-18,1080)
-    - Left elevated: (-18,-360,1080)
-    - Upside down: (36,108,-1134)
+The pm_runtime_disable is redundant when error returns in
+wm5110_probe, we just revert the old patch to fix it.
 
-Signed-off-by: Nam Cao <namcaov@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221010114852.88127-3-zhangqilong3@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm5110.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 5618c1ff34dc..45682d30d705 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1275,6 +1275,7 @@ static const struct {
- 	 */
- 	{ "Latitude 5480",      0x29 },
- 	{ "Vostro V131",        0x1d },
-+	{ "Vostro 5568",        0x29 },
- };
+diff --git a/sound/soc/codecs/wm5110.c b/sound/soc/codecs/wm5110.c
+index c158f8b1e8e4..d0cef982215d 100644
+--- a/sound/soc/codecs/wm5110.c
++++ b/sound/soc/codecs/wm5110.c
+@@ -2452,6 +2452,9 @@ static int wm5110_probe(struct platform_device *pdev)
+ 		regmap_update_bits(arizona->regmap, wm5110_digital_vu[i],
+ 				   WM5110_DIG_VU, WM5110_DIG_VU);
  
- static void register_dell_lis3lv02d_i2c_device(struct i801_priv *priv)
++	pm_runtime_enable(&pdev->dev);
++	pm_runtime_idle(&pdev->dev);
++
+ 	ret = arizona_request_irq(arizona, ARIZONA_IRQ_DSP_IRQ1,
+ 				  "ADSP2 Compressed IRQ", wm5110_adsp2_irq,
+ 				  wm5110);
+@@ -2484,9 +2487,6 @@ static int wm5110_probe(struct platform_device *pdev)
+ 		goto err_spk_irqs;
+ 	}
+ 
+-	pm_runtime_enable(&pdev->dev);
+-	pm_runtime_idle(&pdev->dev);
+-
+ 	return ret;
+ 
+ err_spk_irqs:
 -- 
 2.35.1
 
