@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D52D7B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36611C433D7;
-	Wed, 23 Nov 2022 08:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EBB7B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C2C433D7;
+	Wed, 23 Nov 2022 08:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193860;
-	bh=TGalKx3q+JMOTWIuK5mkuewHjtfnx+mIe/aGeS8DqDU=;
+	s=korg; t=1669193864;
+	bh=QkK/bqZVDzrOgR1YDlHi9pObIM2h74viCBDmfbxG328=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RYejGf4KbiAtdjx+/9MOmrXM4pMwT2iNMaQW1mj9B9y8rrA9taBDAxgJbprg52DVs
-	 BF8Wf+Rwdqo4Mr40zTnriZxZM3AZnA/TDOOmyL4BSy6Mhdy+7AoLu3Y6jSDC4yQa24
-	 WbIdGyo9ymOVZrv4o9+NkOqnfDE8t6eqAO8Xtw5E=
+	b=S32azCQMHE8Da3jQPDuylfDgIlQ/mA8DO5Z26AraMf34tSc8JiewE85vUPjhSee+R
+	 800LKc7hJOIAmq9RgN7lfHnWJ8VXoYiCZbfU2kHe5LWipUJVRgS5oupYIfDUthKP8Y
+	 00SjJpnxneOJ0WOTO1bCV7Y/I4iemU0Eth8tKj18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.9 60/76] dm ioctl: fix misbehavior if list_versions races with module loading
-Date: Wed, 23 Nov 2022 09:50:59 +0100
-Message-Id: <20221123084548.727918056@linuxfoundation.org>
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Aman Kumar <aman.kumar@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 4.9 61/76] serial: 8250: Fall back to non-DMA Rx if IIR_RDI occurs
+Date: Wed, 23 Nov 2022 09:51:00 +0100
+Message-Id: <20221123084548.758534147@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,70 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 4fe1ec995483737f3d2a14c3fe1d8fe634972979 upstream.
+commit a931237cbea256aff13bb403da13a97b2d1605d9 upstream.
 
-__list_versions will first estimate the required space using the
-"dm_target_iterate(list_version_get_needed, &needed)" call and then will
-fill the space using the "dm_target_iterate(list_version_get_info,
-&iter_info)" call. Each of these calls locks the targets using the
-"down_read(&_lock)" and "up_read(&_lock)" calls, however between the first
-and second "dm_target_iterate" there is no lock held and the target
-modules can be loaded at this point, so the second "dm_target_iterate"
-call may need more space than what was the first "dm_target_iterate"
-returned.
+DW UART sometimes triggers IIR_RDI during DMA Rx when IIR_RX_TIMEOUT
+should have been triggered instead. Since IIR_RDI has higher priority
+than IIR_RX_TIMEOUT, this causes the Rx to hang into interrupt loop.
+The problem seems to occur at least with some combinations of
+small-sized transfers (I've reproduced the problem on Elkhart Lake PSE
+UARTs).
 
-The code tries to handle this overflow (see the beginning of
-list_version_get_info), however this handling is incorrect.
+If there's already an on-going Rx DMA and IIR_RDI triggers, fall
+graciously back to non-DMA Rx. That is, behave as if IIR_RX_TIMEOUT had
+occurred.
 
-The code sets "param->data_size = param->data_start + needed" and
-"iter_info.end = (char *)vers+len" - "needed" is the size returned by the
-first dm_target_iterate call; "len" is the size of the buffer allocated by
-userspace.
+8250_omap already considers IIR_RDI similar to this change so its
+nothing unheard of.
 
-"len" may be greater than "needed"; in this case, the code will write up
-to "len" bytes into the buffer, however param->data_size is set to
-"needed", so it may write data past the param->data_size value. The ioctl
-interface copies only up to param->data_size into userspace, thus part of
-the result will be truncated.
-
-Fix this bug by setting "iter_info.end = (char *)vers + needed;" - this
-guarantees that the second "dm_target_iterate" call will write only up to
-the "needed" buffer and it will exit with "DM_BUFFER_FULL_FLAG" if it
-overflows the "needed" space - in this case, userspace will allocate a
-larger buffer and retry.
-
-Note that there is also a bug in list_version_get_needed - we need to add
-"strlen(tt->name) + 1" to the needed size, not "strlen(tt->name)".
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 75df022b5f89 ("serial: 8250_dma: Fix RX handling")
+Cc: <stable@vger.kernel.org>
+Co-developed-by: Srikanth Thokala <srikanth.thokala@intel.com>
+Signed-off-by: Srikanth Thokala <srikanth.thokala@intel.com>
+Co-developed-by: Aman Kumar <aman.kumar@intel.com>
+Signed-off-by: Aman Kumar <aman.kumar@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221108121952.5497-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -561,7 +561,7 @@ static void list_version_get_needed(stru
-     size_t *needed = needed_param;
- 
-     *needed += sizeof(struct dm_target_versions);
--    *needed += strlen(tt->name);
-+    *needed += strlen(tt->name) + 1;
-     *needed += ALIGN_MASK;
- }
- 
-@@ -616,7 +616,7 @@ static int list_versions(struct dm_ioctl
- 	iter_info.old_vers = NULL;
- 	iter_info.vers = vers;
- 	iter_info.flags = 0;
--	iter_info.end = (char *)vers+len;
-+	iter_info.end = (char *)vers + needed;
- 
- 	/*
- 	 * Now loop through filling out the names & versions.
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1798,6 +1798,10 @@ EXPORT_SYMBOL_GPL(serial8250_modem_statu
+ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
+ {
+ 	switch (iir & 0x3f) {
++	case UART_IIR_RDI:
++		if (!up->dma->rx_running)
++			break;
++		/* fall-through */
+ 	case UART_IIR_RX_TIMEOUT:
+ 		serial8250_rx_dma_flush(up);
+ 		/* fall-through */
 
 
