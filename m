@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF91C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C117BC433C1;
-	Wed, 23 Nov 2022 09:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0541C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:53:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED56C433D6;
+	Wed, 23 Nov 2022 09:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197229;
-	bh=mCmpBwT8Ioz8zoxuf/jc5cRTM5dhY4OjpjcHwzkIS2o=;
+	s=korg; t=1669197233;
+	bh=XLhMLZb6XiLLtPgxe/0OyAMI6SvnqSR49NwowbBrBYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8XDCaj1CLUAU7QLBzwiOCySJY3qwUhpMfw1C1Fh2Q5cXDBNSDK2bld8gxqEDApQG
-	 C/2Dukou9wG+JUefg9lLcOYgn2JkfS/teV3GDJC0CSzYPYLKiRWRVsNGLkO0ouRcJM
-	 JIzqEmAboAT2qnuPjZow9edoniteWc5IDGNoxTnU=
+	b=DH+ITFYoOB/RLzpleRY/QvXHDr/MoqZ4rHKXodoc1QsBMhpnQwFZ5WylouDuE6L3t
+	 7yf/pAQMLJRdmTQ/Otnlp0LaV5cU04c+un8sh9WmUnA6ZsJk9uGclJbDdgn7BnE23V
+	 3JAh1ltPTRL5mNADytsP5GJkrj5J1mYYa1ms1CCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Chuhong Yuan <hslester96@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.0 233/314] USB: bcma: Make GPIO explicitly optional
-Date: Wed, 23 Nov 2022 09:51:18 +0100
-Message-Id: <20221123084636.045448843@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.0 234/314] USB: serial: option: add Sierra Wireless EM9191
+Date: Wed, 23 Nov 2022 09:51:19 +0100
+Message-Id: <20221123084636.087672250@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,62 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-commit cd136706b4f925aa5d316642543babac90d45910 upstream.
+commit df3414b0a245f43476061fddd78cee7d6cff797f upstream.
 
-What the code does is to not check the return value from
-devm_gpiod_get() and then avoid using an erroneous GPIO descriptor
-with IS_ERR_OR_NULL().
+Add support for the AT and diag ports, similar to other qualcomm SDX55
+modems. In QDL mode, the modem uses a different device ID and support
+is provided by qcserial in commit 11c52d250b34 ("USB: serial: qcserial:
+add EM9191 QDL support").
 
-This will miss real errors from the GPIO core that should not be
-ignored, such as probe deferral.
+T:  Bus=08 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1199 ProdID=90d3 Rev=00.06
+S:  Manufacturer=Sierra Wireless, Incorporated
+S:  Product=Sierra Wireless EM9191
+S:  SerialNumber=xxxxxxxxxxxxxxxx
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#=0x0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+I:  If#=0x1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
+I:  If#=0x4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
 
-Instead request the GPIO as explicitly optional, which means that
-if it doesn't exist, the descriptor returned will be NULL.
-
-Then we can add error handling and also avoid just doing this on
-the device tree path, and simplify the site where the optional
-GPIO descriptor is used.
-
-There were some problems with cleaning up this GPIO descriptor
-use in the past, but this is the proper way to deal with it.
-
-Cc: Rafał Miłecki <rafal@milecki.pl>
-Cc: Chuhong Yuan <hslester96@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221107090753.1404679-1-linus.walleij@linaro.org
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/bcma-hcd.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/host/bcma-hcd.c
-+++ b/drivers/usb/host/bcma-hcd.c
-@@ -285,7 +285,7 @@ static void bcma_hci_platform_power_gpio
- {
- 	struct bcma_hcd_device *usb_dev = bcma_get_drvdata(dev);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -581,6 +581,9 @@ static void option_instat_callback(struc
+ #define OPPO_VENDOR_ID				0x22d9
+ #define OPPO_PRODUCT_R11			0x276c
  
--	if (IS_ERR_OR_NULL(usb_dev->gpio_desc))
-+	if (!usb_dev->gpio_desc)
- 		return;
++/* Sierra Wireless products */
++#define SIERRA_VENDOR_ID			0x1199
++#define SIERRA_PRODUCT_EM9191			0x90d3
  
- 	gpiod_set_value(usb_dev->gpio_desc, val);
-@@ -406,9 +406,11 @@ static int bcma_hcd_probe(struct bcma_de
- 		return -ENOMEM;
- 	usb_dev->core = core;
+ /* Device flags */
  
--	if (core->dev.of_node)
--		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
--						    GPIOD_OUT_HIGH);
-+	usb_dev->gpio_desc = devm_gpiod_get_optional(&core->dev, "vcc",
-+						     GPIOD_OUT_HIGH);
-+	if (IS_ERR(usb_dev->gpio_desc))
-+		return dev_err_probe(&core->dev, PTR_ERR(usb_dev->gpio_desc),
-+				     "error obtaining VCC GPIO");
- 
- 	switch (core->id.id) {
- 	case BCMA_CORE_USB20_HOST:
+@@ -2176,6 +2179,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1406, 0xff) },			/* GosunCn GM500 ECM/NCM */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
