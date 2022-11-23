@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429267B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:53:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7729EC433C1;
-	Wed, 23 Nov 2022 08:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7B77B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:54:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA6CC433C1;
+	Wed, 23 Nov 2022 08:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193638;
-	bh=edHHhhyaSRG8UU1YJs5iEYdsUNLH3my41z3iQZV3wO4=;
+	s=korg; t=1669193642;
+	bh=Sx1ZqYTj+xz+xvVWExzlBk/tdb8vOLYL27lRZ/KZB4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjNdIPJjiMJjIRkVrXTRvHEVELhG0fBA6sBdF130VF6cxwjpQuKWU0PjCHUP8Akv1
-	 zATskYLXrb7xDV9uvrCH/aWzXTyIn52FCjEnjxKV2890PGkFVDlPOTIpkAF6CerSZx
-	 mKoucrDXoQiuSFa+REn6UbDh1KQd5lzQRM8ZLm+E=
+	b=N5+MMtGyNRJUu6uKmGEioUYV50MuakA4W+2zIU8EbznQb8xbWTRjRay+zKWBqy79I
+	 ZXhBsOfK3ein2sAYzUNayIGIpWPW5jLjZyZdnHQemW1OzDQ0S+kkbEEPAJkueDNb3W
+	 h4U3VkyodLSSRCP+XqdZARIv/G6nwa8bLEYCm/Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Benc <jbenc@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 02/76] net: gso: fix panic on frag_list with mixed head alloc types
-Date: Wed, 23 Nov 2022 09:50:01 +0100
-Message-Id: <20221123084546.824545159@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.9 20/76] btrfs: selftests: fix wrong error check in btrfs_free_dummy_root()
+Date: Wed, 23 Nov 2022 09:50:19 +0100
+Message-Id: <20221123084547.385759749@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -36,105 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Benc <jbenc@redhat.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 9e4b7a99a03aefd37ba7bb1f022c8efab5019165 ]
+commit 9b2f20344d450137d015b380ff0c2e2a6a170135 upstream.
 
-Since commit 3dcbdb134f32 ("net: gso: Fix skb_segment splat when
-splitting gso_size mangled skb having linear-headed frag_list"), it is
-allowed to change gso_size of a GRO packet. However, that commit assumes
-that "checking the first list_skb member suffices; i.e if either of the
-list_skb members have non head_frag head, then the first one has too".
+The btrfs_alloc_dummy_root() uses ERR_PTR as the error return value
+rather than NULL, if error happened, there will be a NULL pointer
+dereference:
 
-It turns out this assumption does not hold. We've seen BUG_ON being hit
-in skb_segment when skbs on the frag_list had differing head_frag with
-the vmxnet3 driver. This happens because __netdev_alloc_skb and
-__napi_alloc_skb can return a skb that is page backed or kmalloced
-depending on the requested size. As the result, the last small skb in
-the GRO packet can be kmalloced.
+  BUG: KASAN: null-ptr-deref in btrfs_free_dummy_root+0x21/0x50 [btrfs]
+  Read of size 8 at addr 000000000000002c by task insmod/258926
 
-There are three different locations where this can be fixed:
+  CPU: 2 PID: 258926 Comm: insmod Tainted: G        W          6.1.0-rc2+ #5
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xb7/0x140
+   kasan_check_range+0x145/0x1a0
+   btrfs_free_dummy_root+0x21/0x50 [btrfs]
+   btrfs_test_free_space_cache+0x1a8c/0x1add [btrfs]
+   btrfs_run_sanity_tests+0x65/0x80 [btrfs]
+   init_btrfs_fs+0xec/0x154 [btrfs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x3006/0x3390
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-(1) We could check head_frag in GRO and not allow GROing skbs with
-    different head_frag. However, that would lead to performance
-    regression on normal forward paths with unmodified gso_size, where
-    !head_frag in the last packet is not a problem.
-
-(2) Set a flag in bpf_skb_net_grow and bpf_skb_net_shrink indicating
-    that NETIF_F_SG is undesirable. That would need to eat a bit in
-    sk_buff. Furthermore, that flag can be unset when all skbs on the
-    frag_list are page backed. To retain good performance,
-    bpf_skb_net_grow/shrink would have to walk the frag_list.
-
-(3) Walk the frag_list in skb_segment when determining whether
-    NETIF_F_SG should be cleared. This of course slows things down.
-
-This patch implements (3). To limit the performance impact in
-skb_segment, the list is walked only for skbs with SKB_GSO_DODGY set
-that have gso_size changed. Normal paths thus will not hit it.
-
-We could check only the last skb but since we need to walk the whole
-list anyway, let's stay on the safe side.
-
-Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
-Signed-off-by: Jiri Benc <jbenc@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/e04426a6a91baf4d1081e1b478c82b5de25fdf21.1667407944.git.jbenc@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aaedb55bc08f ("Btrfs: add tests for btrfs_get_extent")
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ fs/btrfs/tests/btrfs-tests.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 022e26c18024..5dcdbffdee49 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3125,23 +3125,25 @@ struct sk_buff *skb_segment(struct sk_buff *head_skb,
- 	int pos;
- 	int dummy;
+--- a/fs/btrfs/tests/btrfs-tests.c
++++ b/fs/btrfs/tests/btrfs-tests.c
+@@ -183,7 +183,7 @@ void btrfs_free_dummy_fs_info(struct btr
  
--	if (list_skb && !list_skb->head_frag && skb_headlen(list_skb) &&
--	    (skb_shinfo(head_skb)->gso_type & SKB_GSO_DODGY)) {
--		/* gso_size is untrusted, and we have a frag_list with a linear
--		 * non head_frag head.
--		 *
--		 * (we assume checking the first list_skb member suffices;
--		 * i.e if either of the list_skb members have non head_frag
--		 * head, then the first one has too).
--		 *
--		 * If head_skb's headlen does not fit requested gso_size, it
--		 * means that the frag_list members do NOT terminate on exact
--		 * gso_size boundaries. Hence we cannot perform skb_frag_t page
--		 * sharing. Therefore we must fallback to copying the frag_list
--		 * skbs; we do so by disabling SG.
--		 */
--		if (mss != GSO_BY_FRAGS && mss != skb_headlen(head_skb))
--			features &= ~NETIF_F_SG;
-+	if ((skb_shinfo(head_skb)->gso_type & SKB_GSO_DODGY) &&
-+	    mss != GSO_BY_FRAGS && mss != skb_headlen(head_skb)) {
-+		struct sk_buff *check_skb;
-+
-+		for (check_skb = list_skb; check_skb; check_skb = check_skb->next) {
-+			if (skb_headlen(check_skb) && !check_skb->head_frag) {
-+				/* gso_size is untrusted, and we have a frag_list with
-+				 * a linear non head_frag item.
-+				 *
-+				 * If head_skb's headlen does not fit requested gso_size,
-+				 * it means that the frag_list members do NOT terminate
-+				 * on exact gso_size boundaries. Hence we cannot perform
-+				 * skb_frag_t page sharing. Therefore we must fallback to
-+				 * copying the frag_list skbs; we do so by disabling SG.
-+				 */
-+				features &= ~NETIF_F_SG;
-+				break;
-+			}
-+		}
- 	}
- 
- 	__skb_push(head_skb, doffset);
--- 
-2.35.1
-
+ void btrfs_free_dummy_root(struct btrfs_root *root)
+ {
+-	if (!root)
++	if (IS_ERR_OR_NULL(root))
+ 		return;
+ 	/* Will be freed by btrfs_free_fs_roots */
+ 	if (WARN_ON(test_bit(BTRFS_ROOT_IN_RADIX, &root->state)))
 
 
