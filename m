@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17857B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076D2C433C1;
-	Wed, 23 Nov 2022 08:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF37B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30E0C433C1;
+	Wed, 23 Nov 2022 08:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193792;
-	bh=FGng+i9gTJCZSrk7tG+9y0H3mrmtuTm6uRvhDup/qvA=;
+	s=korg; t=1669193796;
+	bh=BqmV0dlf0J2tKlVx2gqvDigoQunsxpVZJo54U8idNFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tW3SVOxrg6YE7Ug0RaKng/IuQJaAbvnMmCfpFkGYh5q9DnkM95whxBp7DE546u1fM
-	 Uq923n6XZF3NIgPhIgycCO9S/qfINoAl0vy38A4GXHwoW7mKiykmP9iATo4Fnu28ar
-	 sFQpD0lhb4aPB/RT+xfqJlVxqgUd5Ceab810TPyk=
+	b=NZLNFvr1JB1qMeD1knIoPmaZRFzma8xGQGAn5vSj5cn4hj7Qjli2nZUSK6JKbq9r9
+	 PqyjwuJ35vbQeXGHjhL11Be5+1QjiyQhw9aJEvclTl7/4rKicpewtaTd+kUs8gptx7
+	 yWieXB2A6KGZ9iDaiO1PKvIjJo0y2twzlc5+6s7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.9 63/76] mmc: core: properly select voltage range without power cycle
-Date: Wed, 23 Nov 2022 09:51:02 +0100
-Message-Id: <20221123084548.818808512@linuxfoundation.org>
+	syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Vishnu Dasa <vdasa@vmware.com>
+Subject: [PATCH 4.9 64/76] misc/vmw_vmci: fix an infoleak in vmci_host_do_receive_datagram()
+Date: Wed, 23 Nov 2022 09:51:03 +0100
+Message-Id: <20221123084548.853224949@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -34,47 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yann Gautier <yann.gautier@foss.st.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 39a72dbfe188291b156dd6523511e3d5761ce775 upstream.
+commit e5b0d06d9b10f5f43101bd6598b076c347f9295f upstream.
 
-In mmc_select_voltage(), if there is no full power cycle, the voltage
-range selected at the end of the function will be on a single range
-(e.g. 3.3V/3.4V). To keep a range around the selected voltage (3.2V/3.4V),
-the mask shift should be reduced by 1.
+`struct vmci_event_qp` allocated by qp_notify_peer() contains padding,
+which may carry uninitialized data to the userspace, as observed by
+KMSAN:
 
-This issue was triggered by using a specific SD-card (Verbatim Premium
-16GB UHS-1) on an STM32MP157C-DK2 board. This board cannot do UHS modes
-and there is no power cycle. And the card was failing to switch to
-high-speed mode. When adding the range 3.2V/3.3V for this card with the
-proposed shift change, the card can switch to high-speed mode.
+  BUG: KMSAN: kernel-infoleak in instrument_copy_to_user ./include/linux/instrumented.h:121
+   instrument_copy_to_user ./include/linux/instrumented.h:121
+   _copy_to_user+0x5f/0xb0 lib/usercopy.c:33
+   copy_to_user ./include/linux/uaccess.h:169
+   vmci_host_do_receive_datagram drivers/misc/vmw_vmci/vmci_host.c:431
+   vmci_host_unlocked_ioctl+0x33d/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:925
+   vfs_ioctl fs/ioctl.c:51
+  ...
 
-Fixes: ce69d37b7d8f ("mmc: core: Prevent violation of specs while initializing cards")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221028073740.7259-1-yann.gautier@foss.st.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  Uninit was stored to memory at:
+   kmemdup+0x74/0xb0 mm/util.c:131
+   dg_dispatch_as_host drivers/misc/vmw_vmci/vmci_datagram.c:271
+   vmci_datagram_dispatch+0x4f8/0xfc0 drivers/misc/vmw_vmci/vmci_datagram.c:339
+   qp_notify_peer+0x19a/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1479
+   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
+   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+   vmci_qp_broker_alloc+0x96/0xd0 drivers/misc/vmw_vmci/vmci_queue_pair.c:1940
+   vmci_host_do_alloc_queuepair drivers/misc/vmw_vmci/vmci_host.c:488
+   vmci_host_unlocked_ioctl+0x24fd/0x43d0 drivers/misc/vmw_vmci/vmci_host.c:927
+  ...
+
+  Local variable ev created at:
+   qp_notify_peer+0x54/0x290 drivers/misc/vmw_vmci/vmci_queue_pair.c:1456
+   qp_broker_attach drivers/misc/vmw_vmci/vmci_queue_pair.c:1662
+   qp_broker_alloc+0x2977/0x2f30 drivers/misc/vmw_vmci/vmci_queue_pair.c:1750
+
+  Bytes 28-31 of 48 are uninitialized
+  Memory access of size 48 starts at ffff888035155e00
+  Data copied to user address 0000000020000100
+
+Use memset() to prevent the infoleaks.
+
+Also speculatively fix qp_notify_peer_local(), which may suffer from the
+same problem.
+
+Reported-by: syzbot+39be4da489ed2493ba25@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Fixes: 06164d2b72aa ("VMCI: queue pairs implementation.")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Link: https://lore.kernel.org/r/20221104175849.2782567-1-glider@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_queue_pair.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1641,7 +1641,13 @@ u32 mmc_select_voltage(struct mmc_host *
- 		mmc_power_cycle(host, ocr);
- 	} else {
- 		bit = fls(ocr) - 1;
--		ocr &= 3 << bit;
-+		/*
-+		 * The bit variable represents the highest voltage bit set in
-+		 * the OCR register.
-+		 * To keep a range of 2 values (e.g. 3.2V/3.3V and 3.3V/3.4V),
-+		 * we must shift the mask '3' with (bit - 1).
-+		 */
-+		ocr &= 3 << (bit - 1);
- 		if (bit != host->ios.vdd)
- 			dev_warn(mmc_dev(host), "exceeding card's volts\n");
- 	}
+--- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
++++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
+@@ -952,6 +952,7 @@ static int qp_notify_peer_local(bool att
+ 	u32 context_id = vmci_get_context_id();
+ 	struct vmci_event_qp ev;
+ 
++	memset(&ev, 0, sizeof(ev));
+ 	ev.msg.hdr.dst = vmci_make_handle(context_id, VMCI_EVENT_HANDLER);
+ 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 					  VMCI_CONTEXT_RESOURCE_ID);
+@@ -1563,6 +1564,7 @@ static int qp_notify_peer(bool attach,
+ 	 * kernel.
+ 	 */
+ 
++	memset(&ev, 0, sizeof(ev));
+ 	ev.msg.hdr.dst = vmci_make_handle(peer_id, VMCI_EVENT_HANDLER);
+ 	ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 					  VMCI_CONTEXT_RESOURCE_ID);
 
 
