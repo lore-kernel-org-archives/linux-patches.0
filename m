@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5731C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D5BC433D6;
-	Wed, 23 Nov 2022 09:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BD71C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:57:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2397C433D6;
+	Wed, 23 Nov 2022 09:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197454;
-	bh=mzrBDLiKxHPK8Mz4w65f5wPk/h40VoYaqHIw7d/9g6w=;
+	s=korg; t=1669197458;
+	bh=rxD+kNMxCUOMAYgE0xEan8kZoKIajeVAmFMKv1OXqlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwG3y+SSOnz8+C5X6sSQVkXABwJ4a8yM/BOHQwQBAdHX2LYf4OJE4rTMvU3X4f26R
-	 OqEpzUujMcc9HaL776/Bw6SGP1WZbYrIc0fXde+yKWEqoEcjDwcwPkD+vrujSuwBSu
-	 F7pwXX6830XSn+DYqrXm9LEWaEw8J3Lf6026PSPk=
+	b=QdxvnedWArkObKkwTF6QB2Bm6ev8cYfqqISOMbDei+ufFRQpQhcBUplfEFGbqiNN+
+	 sG1ZwZ7Q3sRR7iycikRJ7JW804NmelUDZDNpvv6HUZ9cTkc2vFkfJBpx0LzRJxTT4g
+	 dLD2x2valxbX5QMAcLSQR68TbHO+ofqdCH1jZ+cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 271/314] mmc: sdhci-pci: Fix possible memory leak caused by missing pci_dev_put()
-Date: Wed, 23 Nov 2022 09:51:56 +0100
-Message-Id: <20221123084637.813669226@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.0 298/314] macvlan: enforce a consistent minimal mtu
+Date: Wed, 23 Nov 2022 09:52:23 +0100
+Message-Id: <20221123084639.046672896@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -34,36 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 222cfa0118aa68687ace74aab8fdf77ce8fbd7e6 upstream.
+commit b64085b00044bdf3cd1c9825e9ef5b2e0feae91a upstream.
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-before amd_probe() returns. There is no problem for the 'smbus_dev ==
-NULL' branch because pci_dev_put() can also handle the NULL input
-parameter case.
+macvlan should enforce a minimal mtu of 68, even at link creation.
 
-Fixes: 659c9bc114a8 ("mmc: sdhci-pci: Build o2micro support in the same module")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221114083100.149200-1-wangxiongfeng2@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+This patch avoids the current behavior (which could lead to crashes
+in ipv6 stack if the link is brought up)
+
+$ ip link add macvlan1 link eno1 mtu 8 type macvlan  # This should fail !
+$ ip link sh dev macvlan1
+5: macvlan1@eno1: <BROADCAST,MULTICAST> mtu 8 qdisc noop
+    state DOWN mode DEFAULT group default qlen 1000
+    link/ether 02:47:6c:24:74:82 brd ff:ff:ff:ff:ff:ff
+$ ip link set macvlan1 mtu 67
+Error: mtu less than device minimum.
+$ ip link set macvlan1 mtu 68
+$ ip link set macvlan1 mtu 8
+Error: mtu less than device minimum.
+
+Fixes: 91572088e3fd ("net: use core MTU range checking in core net infra")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/macvlan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -1728,6 +1728,8 @@ static int amd_probe(struct sdhci_pci_ch
- 		}
- 	}
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1192,7 +1192,7 @@ void macvlan_common_setup(struct net_dev
+ {
+ 	ether_setup(dev);
  
-+	pci_dev_put(smbus_dev);
-+
- 	if (gen == AMD_CHIPSET_BEFORE_ML || gen == AMD_CHIPSET_CZ)
- 		chip->quirks2 |= SDHCI_QUIRK2_CLEAR_TRANSFERMODE_REG_BEFORE_CMD;
- 
+-	dev->min_mtu		= 0;
++	/* ether_setup() has set dev->min_mtu to ETH_MIN_MTU. */
+ 	dev->max_mtu		= ETH_MAX_MTU;
+ 	dev->priv_flags	       &= ~IFF_TX_SKB_SHARING;
+ 	netif_keep_dst(dev);
 
 
