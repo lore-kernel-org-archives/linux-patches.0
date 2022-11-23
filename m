@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13241C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43221C433B5;
-	Wed, 23 Nov 2022 09:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A6A1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F07C433B5;
+	Wed, 23 Nov 2022 09:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196002;
-	bh=Jau3y2sudsN1E+ARMnAzQIS/xvn7ldlaGKdO4aNb2EY=;
+	s=korg; t=1669196006;
+	bh=XmYnc1+Jf9mCeXr1+9JXPveFSZZl5VTLrHQRVPPtdY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qle65CjX1Ao/otjqELSU74aHvxTqSX9pwyxoqe1TVDxIFUeMqHjK2aZCjtvDpa9ZG
-	 JxCnFId/1+xuPO8piW7qSs6vx03Nb8npEqJ+BVTLR9ht2dEv74XAn1Emn2oWRWR9hS
-	 7JPVoCW/WWRpi1mqoGofgEqW7MT+wKp3Rn0Uz38Y=
+	b=FaNe8RmQzJGWLYhNf3hym3JvdLKr1MX1CLi9grwuowdZJJRZFx3x4w2m4BEf7167W
+	 ciC86jnBNZvVS0jSdL8+9QdmhClPGJnjf83LF6g+rCzsVrDpe4PDCLYlv4TsQupLhN
+	 vs0JGliFnpwLnZpSeA/0PV2RMgi7lt+r9REODz4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Shannon Nelson <snelson@pensando.io>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/181] xen/pcpu: fix possible memory leak in register_pcpu()
-Date: Wed, 23 Nov 2022 09:50:54 +0100
-Message-Id: <20221123084606.266644534@linuxfoundation.org>
+Subject: [PATCH 5.15 092/181] net: ionic: Fix error handling in ionic_init_module()
+Date: Wed, 23 Nov 2022 09:50:55 +0100
+Message-Id: <20221123084606.295853136@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -35,38 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit da36a2a76b01b210ffaa55cdc2c99bc8783697c5 ]
+[ Upstream commit 280c0f7cd0aa4d190619b18243110e052a90775c ]
 
-In device_add(), dev_set_name() is called to allocate name, if it returns
-error, the name need be freed. As comment of device_register() says, it
-should use put_device() to give up the reference in the error path. So fix
-this by calling put_device(), then the name can be freed in kobject_cleanup().
+A problem about ionic create debugfs failed is triggered with the
+following log given:
 
-Fixes: f65c9bb3fb72 ("xen/pcpu: Xen physical cpus online/offline sys interface")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221110152441.401630-1-yangyingliang@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+ [  415.799514] debugfs: Directory 'ionic' with parent '/' already present!
+
+The reason is that ionic_init_module() returns ionic_bus_register_driver()
+directly without checking its return value, if ionic_bus_register_driver()
+failed, it returns without destroy the newly created debugfs, resulting
+the debugfs of ionic can never be created later.
+
+ ionic_init_module()
+   ionic_debugfs_create() # create debugfs directory
+   ionic_bus_register_driver()
+     pci_register_driver()
+       driver_register()
+         bus_add_driver()
+           priv = kzalloc(...) # OOM happened
+   # return without destroy debugfs directory
+
+Fix by removing debugfs when ionic_bus_register_driver() returns error.
+
+Fixes: fbfb8031533c ("ionic: Add hardware init and device commands")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Shannon Nelson <snelson@pensando.io>
+Link: https://lore.kernel.org/r/20221113092929.19161-1-yuancan@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/pcpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
-index 47aa3a1ccaf5..fd3a644b0855 100644
---- a/drivers/xen/pcpu.c
-+++ b/drivers/xen/pcpu.c
-@@ -228,7 +228,7 @@ static int register_pcpu(struct pcpu *pcpu)
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 9ede66842118..538c024afed5 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -588,8 +588,14 @@ int ionic_port_reset(struct ionic *ionic)
  
- 	err = device_register(dev);
- 	if (err) {
--		pcpu_release(dev);
-+		put_device(dev);
- 		return err;
- 	}
+ static int __init ionic_init_module(void)
+ {
++	int ret;
++
+ 	ionic_debugfs_create();
+-	return ionic_bus_register_driver();
++	ret = ionic_bus_register_driver();
++	if (ret)
++		ionic_debugfs_destroy();
++
++	return ret;
+ }
  
+ static void __exit ionic_cleanup_module(void)
 -- 
 2.35.1
 
