@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5C71C26
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE41C433B5;
-	Wed, 23 Nov 2022 09:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBCB1C26
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFA0C433C1;
+	Wed, 23 Nov 2022 09:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194466;
-	bh=V17UdKcr17cJJO81G71Avd8cF26LZvzq6YnUjnmlBjM=;
+	s=korg; t=1669194470;
+	bh=JnJnvlZZy9vjTNKlPvZjDSsxAK8c+iBV6yQeRvO3Kug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDrwqf2EpvLSwARwB6ffvZsdSzpd1w3IgP57M3W/uTWYv3h30cQymz/IVIyVAWoqs
-	 v3+F2V18kKgLpt2pvlU1lbM8v8sSu1dil8I0kSSNMnD7iRiUPQDCGITtjE8QCTLAlg
-	 mBNXcTi8Hr8wUB4QT/G/pvtC61cF+UYSCiARxal0=
+	b=NwoIAuxywhRhzH5Fj3bAkGlH8Gy9SlMZf3S9QjHObbEZpMXjWNCIzWWWFaT0ubACl
+	 +7m/OBjk4A5WwxyKtaDUX+32eficRfiI7QflS/d7GGmz/t8rV5yaaIjOuWGD8R1xDK
+	 8jt0h4ahpKmFbqcQS5HUvCxAUEFYd6Mm4bLROGsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 086/114] USB: serial: option: add Fibocom FM160 0x0111 composition
-Date: Wed, 23 Nov 2022 09:51:13 +0100
-Message-Id: <20221123084555.280734950@linuxfoundation.org>
+	Nicolas Dumazet <ndumazet@google.com>
+Subject: [PATCH 4.19 087/114] usb: add NO_LPM quirk for Realforce 87U Keyboard
+Date: Wed, 23 Nov 2022 09:51:14 +0100
+Message-Id: <20221123084555.311401572@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
 References: <20221123084551.864610302@linuxfoundation.org>
@@ -34,57 +33,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Nicolas Dumazet <ndumazet@google.com>
 
-commit 148f4b32b4504d8a32cf82049b7b9499a4b299ab upstream.
+commit 181135bb20dcb184edd89817831b888eb8132741 upstream.
 
-Add support for the following Fibocom FM160 composition:
+Before adding this quirk, this (mechanical keyboard) device would not be
+recognized, logging:
 
-0x0111: MBIM + MODEM + DIAG + AT
+  new full-speed USB device number 56 using xhci_hcd
+  unable to read config index 0 descriptor/start: -32
+  chopping to 0 config(s)
 
-T:  Bus=01 Lev=02 Prnt=125 Port=01 Cnt=02 Dev#= 93 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0111 Rev= 5.04
-S:  Manufacturer=Fibocom
-S:  Product=Fibocom FM160 Modem_SN:12345678
-S:  SerialNumber=12345678
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+It would take dozens of plugging/unpuggling cycles for the keyboard to
+be recognized. Keyboard seems to simply work after applying this quirk.
 
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+This issue had been reported by users in two places already ([1], [2])
+but nobody tried upstreaming a patch yet. After testing I believe their
+suggested fix (DELAY_INIT + NO_LPM + DEVICE_QUALIFIER) was probably a
+little overkill. I assume this particular combination was tested because
+it had been previously suggested in [3], but only NO_LPM seems
+sufficient for this device.
+
+[1]: https://qiita.com/float168/items/fed43d540c8e2201b543
+[2]: https://blog.kostic.dev/posts/making-the-realforce-87ub-work-with-usb30-on-Ubuntu/
+[3]: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1678477
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Nicolas Dumazet <ndumazet@google.com>
+Link: https://lore.kernel.org/r/20221109122946.706036-1-ndumazet@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2179,6 +2179,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x010a, 0xff) },			/* Fibocom MA510 (ECM mode) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -362,6 +362,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0781, 0x5583), .driver_info = USB_QUIRK_NO_LPM },
+ 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* Realforce 87U Keyboard */
++	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* M-Systems Flash Disk Pioneers */
+ 	{ USB_DEVICE(0x08ec, 0x1000), .driver_info = USB_QUIRK_RESET_RESUME },
+ 
 
 
