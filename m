@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D617B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FF4C433C1;
-	Wed, 23 Nov 2022 08:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCE07B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DCEC433C1;
+	Wed, 23 Nov 2022 08:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193948;
-	bh=xgVPU+roTiY3lq8wwHqlqta0cuZXORGBp20GZ7jDlw0=;
+	s=korg; t=1669193952;
+	bh=gB527T6b3MrBiCk6/ln79ld7BZD9XlJqsAd/OFCqUZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5R/DdfHQAHoG5Lb2fIvxIzNFvvqRdZcbdr/0whAJrUxFWmX3JKDTkvUIC5vOnKys
-	 fqOlRnRh4PUVizGnTD8UrrP4BA6eOv3d8t3u7617msvBwxLDszAbF+GivziuH1h2sa
-	 4obOxz8mzsw+vx3iupYczdmS/Ei7DifZGX61pBjc=
+	b=t0VELYFmG0cJP9NSY7RvJAZAwLBGYer5MSTiUyECFErNAQLd1ItmQUV7IebtS2U6T
+	 BuPJ6H5PBSxa1s1dCtA2yhcK/qogbmk5BWgA5bhs0VLaGus5cN6wMEuH/mdGkth/S5
+	 4XweOdOTEZBur8I8rYyv0a9fiHZD6gLQGdK6XuGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Rosin <peda@axentia.se>,
 	Tudor Ambarus <tudor.ambarus@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 4.14 29/88] dmaengine: at_hdmac: Dont allow CPU to reorder channel enable
-Date: Wed, 23 Nov 2022 09:50:26 +0100
-Message-Id: <20221123084549.493640121@linuxfoundation.org>
+Subject: [PATCH 4.14 30/88] dmaengine: at_hdmac: Fix impossible condition
+Date: Wed, 23 Nov 2022 09:50:27 +0100
+Message-Id: <20221123084549.530048585@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -38,38 +37,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 580ee84405c27d6ed419abe4d2b3de1968abdafd upstream.
+commit 28cbe5a0a46a6637adbda52337d7b2777fc04027 upstream.
 
-at_hdmac uses __raw_writel for register writes. In the absence of a
-barrier, the CPU may reorder the register operations.
-Introduce a write memory barrier so that the CPU does not reorder the
-channel enable, thus the start of the transfer, without making sure that
-all the pre-required register fields are already written.
+The iterator can not be greater than ATC_MAX_DSCR_TRIALS, as the for loop
+will stop when i == ATC_MAX_DSCR_TRIALS. While here, use the common "i"
+name for the iterator.
 
-Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
-Reported-by: Peter Rosin <peda@axentia.se>
+Fixes: 93dce3a6434f ("dmaengine: at_hdmac: fix residue computation")
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
 Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-14-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-15-tudor.ambarus@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/at_hdmac.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -252,6 +252,8 @@ static void atc_dostart(struct at_dma_ch
- 		       ATC_SPIP_BOUNDARY(first->boundary));
- 	channel_writel(atchan, DPIP, ATC_DPIP_HOLE(first->dst_hole) |
- 		       ATC_DPIP_BOUNDARY(first->boundary));
-+	/* Don't allow CPU to reorder channel enable. */
-+	wmb();
- 	dma_writel(atdma, CHER, atchan->mask);
+@@ -314,7 +314,8 @@ static int atc_get_bytes_left(struct dma
+ 	struct at_desc *desc_first = atc_first_active(atchan);
+ 	struct at_desc *desc;
+ 	int ret;
+-	u32 ctrla, dscr, trials;
++	u32 ctrla, dscr;
++	unsigned int i;
  
- 	vdbg_dump_regs(atchan);
+ 	/*
+ 	 * If the cookie doesn't match to the currently running transfer then
+@@ -384,7 +385,7 @@ static int atc_get_bytes_left(struct dma
+ 		dscr = channel_readl(atchan, DSCR);
+ 		rmb(); /* ensure DSCR is read before CTRLA */
+ 		ctrla = channel_readl(atchan, CTRLA);
+-		for (trials = 0; trials < ATC_MAX_DSCR_TRIALS; ++trials) {
++		for (i = 0; i < ATC_MAX_DSCR_TRIALS; ++i) {
+ 			u32 new_dscr;
+ 
+ 			rmb(); /* ensure DSCR is read after CTRLA */
+@@ -410,7 +411,7 @@ static int atc_get_bytes_left(struct dma
+ 			rmb(); /* ensure DSCR is read before CTRLA */
+ 			ctrla = channel_readl(atchan, CTRLA);
+ 		}
+-		if (unlikely(trials >= ATC_MAX_DSCR_TRIALS))
++		if (unlikely(i == ATC_MAX_DSCR_TRIALS))
+ 			return -ETIMEDOUT;
+ 
+ 		/* for the first descriptor we can be more accurate */
 
 
