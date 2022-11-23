@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F6D1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536DCC433D6;
-	Wed, 23 Nov 2022 09:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E931C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A51FC433C1;
+	Wed, 23 Nov 2022 09:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197361;
-	bh=TQqUbMvbDA0PjcEPTF5tFpCjf8CzBPlqLVL2E4XNzXo=;
+	s=korg; t=1669197365;
+	bh=uq07HycUuh2aczJEPzhjUVLluB6NOHBwxU9ddSm4wSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xybxCXMcCzT/EHhYol0AWp9Yt1r2lC+bfEtU9erVYmty73cRuSPQFaCdF+6qyuFgy
-	 LNlq7EcyL4YD7Xp0wrxQCl5hsAsebmBOYMsG53+/acRjNYri/g2kH/3kJCfW0CKWFx
-	 5kPQLf8Tyg81tavQJunUY9wse8WhH3Cfhw48p+R0=
+	b=0KKNAn1bB0LJqFwAKIIlzexFHEcfh8OfnP9CGSz12J50MyTiGG62u/ZVtaRGqK7BH
+	 fjMKzWOhuSyu1FAtvlZdBxbLo9BN80aP6uaBxBKlVjqd0HKbQW9usSOdJoZAVoOTlu
+	 H3ckYyN6jE0fsmKG5/Wq8olZijfmsuryWWyBdHZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Rajat Khandelwal <rajat.khandelwal@linux.intel.com>,
-	Lee Shawn C <shawn.c.lee@intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.0 242/314] usb: typec: mux: Enter safe mode only when pins need to be reconfigured
-Date: Wed, 23 Nov 2022 09:51:27 +0100
-Message-Id: <20221123084636.451197020@linuxfoundation.org>
+	Sven Peter <sven@svenpeter.dev>,
+	Eric Curtin <ecurtin@redhat.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Subject: [PATCH 6.0 243/314] usb: typec: tipd: Prevent uninitialized event{1,2} in IRQ handler
+Date: Wed, 23 Nov 2022 09:51:28 +0100
+Message-Id: <20221123084636.496667105@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,72 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rajat Khandelwal <rajat.khandelwal@linux.intel.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-commit 40bf8f162d0f95e0716e479d7db41443d931765c upstream.
+commit 6d8fc203b28ff8f6115fbe5eaf584de8b824f4fa upstream.
 
-There is no point to enter safe mode during DP/TBT configuration
-if the DP/TBT was already configured in mux. This is because safe
-mode is only applicable when there is a need to reconfigure the
-pins in order to avoid damage within/to port partner.
+If reading TPS_REG_INT_EVENT1/2 fails in the interrupt handler event1
+and event2 may be uninitialized when they are used to determine
+IRQ_HANDLED vs. IRQ_NONE in the error path.
 
-In some chrome systems, IOM/mux is already configured before OS
-comes up. Thus, when driver is probed, it blindly enters safe
-mode due to PD negotiations but only after gfx driver lowers
-dp_phy_ownership, will the IOM complete safe mode and send an
-ack to PMC.
-Since, that never happens, we see IPC timeout.
-
-Hence, allow safe mode only when pin reconfiguration is not
-required, which makes sense.
-
-Fixes: 43d596e32276 ("usb: typec: intel_pmc_mux: Check the port status before connect")
+Fixes: c7260e29dd20 ("usb: typec: tipd: Add short-circuit for no irqs")
+Fixes: 45188f27b3d0 ("usb: typec: tipd: Add support for Apple CD321X")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Rajat Khandelwal <rajat.khandelwal@linux.intel.com>
-Signed-off-by: Lee Shawn C <shawn.c.lee@intel.com>
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Eric Curtin <ecurtin@redhat.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221024171611.181468-1-rajat.khandelwal@linux.intel.com
+Reviewed-by: Guido Günther <agx@sigxcpu.org>
+Link: https://lore.kernel.org/r/20221102161542.30669-1-sven@svenpeter.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/mux/intel_pmc_mux.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tipd/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/mux/intel_pmc_mux.c
-+++ b/drivers/usb/typec/mux/intel_pmc_mux.c
-@@ -369,13 +369,24 @@ pmc_usb_mux_usb4(struct pmc_usb_port *po
- 	return pmc_usb_command(port, (void *)&req, sizeof(req));
- }
- 
--static int pmc_usb_mux_safe_state(struct pmc_usb_port *port)
-+static int pmc_usb_mux_safe_state(struct pmc_usb_port *port,
-+				  struct typec_mux_state *state)
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -474,7 +474,7 @@ static void tps6598x_handle_plug_event(s
+ static irqreturn_t cd321x_interrupt(int irq, void *data)
  {
- 	u8 msg;
+ 	struct tps6598x *tps = data;
+-	u64 event;
++	u64 event = 0;
+ 	u32 status;
+ 	int ret;
  
- 	if (IOM_PORT_ACTIVITY_IS(port->iom_status, SAFE_MODE))
- 		return 0;
- 
-+	if ((IOM_PORT_ACTIVITY_IS(port->iom_status, DP) ||
-+	     IOM_PORT_ACTIVITY_IS(port->iom_status, DP_MFD)) &&
-+	     state->alt && state->alt->svid == USB_TYPEC_DP_SID)
-+		return 0;
-+
-+	if ((IOM_PORT_ACTIVITY_IS(port->iom_status, TBT) ||
-+	     IOM_PORT_ACTIVITY_IS(port->iom_status, ALT_MODE_TBT_USB)) &&
-+	     state->alt && state->alt->svid == USB_TYPEC_TBT_SID)
-+		return 0;
-+
- 	msg = PMC_USB_SAFE_MODE;
- 	msg |= port->usb3_port << PMC_USB_MSG_USB3_PORT_SHIFT;
- 
-@@ -443,7 +454,7 @@ pmc_usb_mux_set(struct typec_mux_dev *mu
- 		return 0;
- 
- 	if (state->mode == TYPEC_STATE_SAFE)
--		return pmc_usb_mux_safe_state(port);
-+		return pmc_usb_mux_safe_state(port, state);
- 	if (state->mode == TYPEC_STATE_USB)
- 		return pmc_usb_connect(port, port->role);
+@@ -519,8 +519,8 @@ err_unlock:
+ static irqreturn_t tps6598x_interrupt(int irq, void *data)
+ {
+ 	struct tps6598x *tps = data;
+-	u64 event1;
+-	u64 event2;
++	u64 event1 = 0;
++	u64 event2 = 0;
+ 	u32 status;
+ 	int ret;
  
 
 
