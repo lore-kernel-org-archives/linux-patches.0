@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9607B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFACFC433C1;
-	Wed, 23 Nov 2022 08:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819077B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 08:56:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB90AC433D7;
+	Wed, 23 Nov 2022 08:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669193810;
-	bh=ozvKxBch8i4IK4aMjrMX0xPTwZ1icZ+HFk7kcr4vvhQ=;
+	s=korg; t=1669193813;
+	bh=Ae8EYFn2Me9WGxC8wMAvFS4+yGKTqzB+QiZmXtJq9vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8PCfjDyjDwr0CJY1txLIKGfps+8Y/6bK/YYkJ6lpXRBSo4jRGT/8Xk1FFioJfplF
-	 dvAnpaKRWuCdWU704f6c2ArG6C0Qe82/CmTOEdVkJKp3URIGIeW7VSA0mQ/VcqO9kR
-	 h4sAviJ6YaOCYSbHC79nrhkq4kxiPpWb2iNxzoKA=
+	b=ghNgm3QMg+7tgCuIiglj9nKmLho+Jumt9PhynvbR0T/8DVZrA6kAqPU19VO1KiJru
+	 UZpqGKoqgUEzPhXptYJgH4qmN8T1ujBbi505ipWQg107sBTXqJ0XJfOUcU0aQiwYM4
+	 66s0nNP98azHBFLxAFdyLBVqpkmROVtJHDeBz684=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Tom Herbert <tom@herbertland.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.9 68/76] kcm: avoid potential race in kcm_tx_work
-Date: Wed, 23 Nov 2022 09:51:07 +0100
-Message-Id: <20221123084548.975832937@linuxfoundation.org>
+	syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Schspa Shi <schspa@gmail.com>
+Subject: [PATCH 4.9 69/76] 9p: trans_fd/p9_conn_cancel: drop client lock earlier
+Date: Wed, 23 Nov 2022 09:51:08 +0100
+Message-Id: <20221123084549.005072250@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
 References: <20221123084546.742331901@linuxfoundation.org>
@@ -36,72 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-commit ec7eede369fe5b0d085ac51fdbb95184f87bfc6c upstream.
+commit 52f1c45dde9136f964d63a77d19826c8a74e2c7f upstream.
 
-syzbot found that kcm_tx_work() could crash [1] in:
+syzbot reported a double-lock here and we no longer need this
+lock after requests have been moved off to local list:
+just drop the lock earlier.
 
-	/* Primarily for SOCK_SEQPACKET sockets */
-	if (likely(sk->sk_socket) &&
-	    test_bit(SOCK_NOSPACE, &sk->sk_socket->flags)) {
-<<*>>	clear_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-		sk->sk_write_space(sk);
-	}
-
-I think the reason is that another thread might concurrently
-run in kcm_release() and call sock_orphan(sk) while sk is not
-locked. kcm_tx_work() find sk->sk_socket being NULL.
-
-[1]
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:86 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-Write of size 8 at addr 0000000000000008 by task kworker/u4:3/53
-
-CPU: 0 PID: 53 Comm: kworker/u4:3 Not tainted 5.19.0-rc3-next-20220621-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: kkcmd kcm_tx_work
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-kasan_report+0xbe/0x1f0 mm/kasan/report.c:495
-check_region_inline mm/kasan/generic.c:183 [inline]
-kasan_check_range+0x13d/0x180 mm/kasan/generic.c:189
-instrument_atomic_write include/linux/instrumented.h:86 [inline]
-clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-kcm_tx_work+0xff/0x160 net/kcm/kcmsock.c:742
-process_one_work+0x996/0x1610 kernel/workqueue.c:2289
-worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-kthread+0x2e9/0x3a0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:302
-</TASK>
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Link: https://lore.kernel.org/r/20221012133412.519394-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20220904064028.1305220-1-asmadeus@codewreck.org
+Reported-by: syzbot+50f7e8d06c3768dd97f3@syzkaller.appspotmail.com
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Tested-by: Schspa Shi <schspa@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/kcm/kcmsock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/9p/trans_fd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1850,10 +1850,10 @@ static int kcm_release(struct socket *so
- 	kcm = kcm_sk(sk);
- 	mux = kcm->mux;
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -215,6 +215,8 @@ static void p9_conn_cancel(struct p9_con
+ 		list_move(&req->req_list, &cancel_list);
+ 	}
  
-+	lock_sock(sk);
- 	sock_orphan(sk);
- 	kfree_skb(kcm->seq_skb);
++	spin_unlock(&m->client->lock);
++
+ 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
+ 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
+ 		list_del(&req->req_list);
+@@ -222,7 +224,6 @@ static void p9_conn_cancel(struct p9_con
+ 			req->t_err = err;
+ 		p9_client_cb(m->client, req, REQ_STATUS_ERROR);
+ 	}
+-	spin_unlock(&m->client->lock);
+ }
  
--	lock_sock(sk);
- 	/* Purge queue under lock to avoid race condition with tx_work trying
- 	 * to act when queue is nonempty. If tx_work runs after this point
- 	 * it will just return.
+ static int
 
 
