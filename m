@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE8E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A75C433C1;
-	Wed, 23 Nov 2022 09:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70031C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:24:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B737C433D7;
+	Wed, 23 Nov 2022 09:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195463;
-	bh=yV2QOT6MGDCcTaSh3CAzCJBGTzQqCDEh7xEJW+bRV/4=;
+	s=korg; t=1669195468;
+	bh=/IsUeQ5TSeFo1EJeRR10jo5s/IPoa5AniyKUTFgwv1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Et7pFh/MbNkYaocc4yn/dGOBTq9UkYb8sK2RJ7CkDpjfjs785OXX8mn8M/UbQrg1s
-	 Bojmv5nufS8KL8h2/4+9GqKP3MOE2IEwf25Fd4r+0vvl0VD+kXLBqHhuxrQAWfDHTf
-	 dDmt9RePBGYvbFHnkBu0+tFI9asB714zNyIT3WO8=
+	b=sDs60iIPB1qXETAlpRqaAgRZFpr6/okG5ad6K21MtTGC1JWjRalvaHUL5FG1niTWV
+	 VIQCc8QIN5hB9Ez7Jk7rDM/d677/d8RsxBxHYI+MHpEQrmQOSRBBQV1S3hXrvz8I1s
+	 5B+L7oUg3dgAtX8Pjcjpzx9ZrSEhwsnQQQmgKKSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.10 090/149] tracing: kprobe: Fix potential null-ptr-deref on trace_array in kprobe_event_gen_test_exit()
-Date: Wed, 23 Nov 2022 09:51:13 +0100
-Message-Id: <20221123084601.227314967@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 061/149] ata: libata-transport: fix error handling in ata_tdev_add()
+Date: Wed, 23 Nov 2022 09:50:44 +0100
+Message-Id: <20221123084600.118003661@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,83 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 22ea4ca9631eb137e64e5ab899e9c89cb6670959 upstream.
+[ Upstream commit 1ff36351309e3eadcff297480baf4785e726de9b ]
 
-When test_gen_kprobe_cmd() failed after kprobe_event_gen_cmd_end(), it
-will goto delete, which will call kprobe_event_delete() and release the
-corresponding resource. However, the trace_array in gen_kretprobe_test
-will point to the invalid resource. Set gen_kretprobe_test to NULL
-after called kprobe_event_delete() to prevent null-ptr-deref.
+In ata_tdev_add(), the return value of transport_add_device() is
+not checked. As a result, it causes null-ptr-deref while removing
+the module, because transport_remove_device() is called to remove
+the device that was not added.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000070
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP PTI
-CPU: 0 PID: 246 Comm: modprobe Tainted: G        W
-6.1.0-rc1-00174-g9522dc5c87da-dirty #248
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:__ftrace_set_clr_event_nolock+0x53/0x1b0
-Code: e8 82 26 fc ff 49 8b 1e c7 44 24 0c ea ff ff ff 49 39 de 0f 84 3c
-01 00 00 c7 44 24 18 00 00 00 00 e8 61 26 fc ff 48 8b 6b 10 <44> 8b 65
-70 4c 8b 6d 18 41 f7 c4 00 02 00 00 75 2f
-RSP: 0018:ffffc9000159fe00 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff88810971d268 RCX: 0000000000000000
-RDX: ffff8881080be600 RSI: ffffffff811b48ff RDI: ffff88810971d058
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000001
-R10: ffffc9000159fe58 R11: 0000000000000001 R12: ffffffffa0001064
-R13: ffffffffa000106c R14: ffff88810971d238 R15: 0000000000000000
-FS:  00007f89eeff6540(0000) GS:ffff88813b600000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000070 CR3: 000000010599e004 CR4: 0000000000330ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __ftrace_set_clr_event+0x3e/0x60
- trace_array_set_clr_event+0x35/0x50
- ? 0xffffffffa0000000
- kprobe_event_gen_test_exit+0xcd/0x10b [kprobe_event_gen_test]
- __x64_sys_delete_module+0x206/0x380
- ? lockdep_hardirqs_on_prepare+0xd8/0x190
- ? syscall_enter_from_user_mode+0x1c/0x50
- do_syscall_64+0x3f/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f89eeb061b7
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+CPU: 13 PID: 13603 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc3+ #36
+pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x48/0x3a0
+lr : device_del+0x44/0x3a0
+Call trace:
+ device_del+0x48/0x3a0
+ attribute_container_class_device_del+0x28/0x40
+ transport_remove_classdev+0x60/0x7c
+ attribute_container_device_trigger+0x118/0x120
+ transport_remove_device+0x20/0x30
+ ata_tdev_delete+0x24/0x50 [libata]
+ ata_tlink_delete+0x40/0xa0 [libata]
+ ata_tport_delete+0x2c/0x60 [libata]
+ ata_port_detach+0x148/0x1b0 [libata]
+ ata_pci_remove_one+0x50/0x80 [libata]
+ ahci_remove_one+0x4c/0x8c [ahci]
 
-Link: https://lore.kernel.org/all/20221108015130.28326-3-shangxiaojing@huawei.com/
+Fix this by checking and handling return value of transport_add_device()
+in ata_tdev_add(). In the error path, device_del() is called to delete
+the device which was added earlier in this function, and ata_tdev_free()
+is called to free ata_dev.
 
-Fixes: 64836248dda2 ("tracing: Add kprobe event command generation test module")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Cc: stable@vger.kernel.org
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9027470b886 ("[libata] Add ATA transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/kprobe_event_gen_test.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-transport.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/kprobe_event_gen_test.c
-+++ b/kernel/trace/kprobe_event_gen_test.c
-@@ -143,6 +143,8 @@ static int __init test_gen_kprobe_cmd(vo
- 	kfree(buf);
- 	return ret;
-  delete:
-+	if (trace_event_file_is_valid(gen_kprobe_test))
-+		gen_kprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
- 	ret = kprobe_event_delete("gen_kprobe_test");
- 	goto out;
-@@ -206,6 +208,8 @@ static int __init test_gen_kretprobe_cmd
- 	kfree(buf);
- 	return ret;
-  delete:
-+	if (trace_event_file_is_valid(gen_kretprobe_test))
-+		gen_kretprobe_test = NULL;
- 	/* We got an error after creating the event, delete it */
- 	ret = kprobe_event_delete("gen_kretprobe_test");
- 	goto out;
+diff --git a/drivers/ata/libata-transport.c b/drivers/ata/libata-transport.c
+index e386e5f35015..31a66fc0c31d 100644
+--- a/drivers/ata/libata-transport.c
++++ b/drivers/ata/libata-transport.c
+@@ -683,7 +683,13 @@ static int ata_tdev_add(struct ata_device *ata_dev)
+ 		return error;
+ 	}
+ 
+-	transport_add_device(dev);
++	error = transport_add_device(dev);
++	if (error) {
++		device_del(dev);
++		ata_tdev_free(ata_dev);
++		return error;
++	}
++
+ 	transport_configure_device(dev);
+ 	return 0;
+ }
+-- 
+2.35.1
+
 
 
