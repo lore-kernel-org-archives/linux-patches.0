@@ -1,85 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674E22569
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:03:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C855C433D6;
-	Thu, 24 Nov 2022 12:03:30 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="axgdK4U0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669291409;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=svvOs5KTAIBgEAm2FbMOmQp4ZCHzoNvCSIQoIKLpoyA=;
-	b=axgdK4U0SE+UdXCyY3HU7gyH9aSxGnz6XHp7NBuDL4/cp+eV5Ia7cD4bdsmPVVPxc8fLjC
-	gpRRYex+xQlSug/Tuj6U1uqIRjZPOqEcJHIsN56JLUdXzw7xauGMvChxT89SCKLLCgk9OE
-	t/zAmQ/EQyQ2ulFKAD4pWecvKsdIj84=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2340bdb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Nov 2022 12:03:29 +0000 (UTC)
-Date: Thu, 24 Nov 2022 13:03:26 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>
-Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
-Message-ID: <Y39djiBSmgXfgWJv@zx2c4.com>
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
- <20221121152909.3414096-2-Jason@zx2c4.com>
- <87v8n6lzh9.fsf@oldenburg.str.redhat.com>
- <Y37DDX5RtiGsV6MO@zx2c4.com>
- <87a64g7wks.fsf@oldenburg.str.redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB7F2569
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:06:13 +0000 (UTC)
+Received: by mail-pj1-f41.google.com with SMTP id 3-20020a17090a098300b00219041dcbe9so302073pjo.3
+        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 04:06:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IAX5cjv3FV+pwILnpnHsO44lgFo9KZIJeSsheZZLVIg=;
+        b=hvY1uDyL0ey9sUdH1VlAPTnxAQ6Z4wMH2cJPwB39IuOLSrbbwT6J/MPAr422yfgWLc
+         5WGaaaTTywlbrL3NoU1/EHsbe9MiwUOq2TpFeUEOQSN6X4ePtVOgRn294LHwnYb7ycL4
+         NoCmjKIE+2tOJjJFVlEattu1U1hGXPJL/ffS1GurdZM0VamAPKr9iWm7xyDk+vnh8JwP
+         Uh86JffdWQSnDgAmeRDZ09uwsBEXgvcIFmqj+UvRb8SohnfsfpUTybWWgoLD0vcVLLHG
+         Cu9aX1FLr0ptzWJLb3D212Mt5U+dTjKS3mucKL3wZALgrFmBOqqORl+JPrLHOX1MwMW8
+         O8zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IAX5cjv3FV+pwILnpnHsO44lgFo9KZIJeSsheZZLVIg=;
+        b=BjgGxbmdeTj/gFtmuKAUjGnIsnsUdYXHnp/z4DeSbdL0nBcmXb9s00jjcr+Op6yIpI
+         nhJ0EjnGyyH37MHGR0FCP6JpdwxTG/rfCZkE1zx8OBQNCJgM61xUMSqtDkvSR7Kxn0ro
+         yA9o0+st6pQY4P9stWU0oXw762/Mp1TwHhhGih2ezY82onJMbHI7x35AoPKNhRLHvp30
+         9OLby2At3zpdARVxiR3NzNf9t6X+57SkDMBkwxf1wREmXkM0J/Yuj2c9IES7zd+sRMkl
+         LDxYo8nVf+I9JZT+HVTmLJLvI8tktzeca4wJGeQXvvPyRpjKCkSEVY347ub19Gxs9Qyy
+         bHMg==
+X-Gm-Message-State: ANoB5plERZVXzRDYFdKwcBNfoXDO2CwzTSA5Jbe0kwNizYrp76X2MK9Y
+	b75b9PkaCoUdJ9sjstrA3J4=
+X-Google-Smtp-Source: AA0mqf5pZO7aBuavuyzfuW0tbHgET6lLrCyFD/qydLNuN75Z1M9V0V9SMX2yq7hOSsMDdB81BXMWVg==
+X-Received: by 2002:a17:90b:2d8b:b0:202:f88d:587 with SMTP id sj11-20020a17090b2d8b00b00202f88d0587mr36177116pjb.232.1669291572617;
+        Thu, 24 Nov 2022 04:06:12 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id s1-20020a625e01000000b0056cea9530b6sm1028976pfb.202.2022.11.24.04.06.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 04:06:11 -0800 (PST)
+Date: Thu, 24 Nov 2022 21:06:05 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+ CONFIG_SLUB_TINY
+Message-ID: <Y39eLaW0mDNrHI6i@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-7-vbabka@suse.cz>
+ <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87a64g7wks.fsf@oldenburg.str.redhat.com>
+In-Reply-To: <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
 
-Hi Florian,
-
-On Thu, Nov 24, 2022 at 06:25:39AM +0100, Florian Weimer wrote:
-> * Jason A. Donenfeld:
+On Wed, Nov 23, 2022 at 02:53:43PM +0100, Vlastimil Babka wrote:
+> On 11/21/22 18:11, Vlastimil Babka wrote:
+> > Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> > by grouping pages by mobility, but on tiny systems the extra memory
+> > overhead of separate set of kmalloc-rcl caches will probably be worse,
+> > and mobility grouping likely disabled anyway.
+> > 
+> > Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> > regular ones.
+> > 
+> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 > 
-> > Hi Florian,
-> >
-> > On Wed, Nov 23, 2022 at 11:46:58AM +0100, Florian Weimer wrote:
-> >> * Jason A. Donenfeld:
-> >> 
-> >> > + * The vgetrandom() function in userspace requires an opaque state, which this
-> >> > + * function provides to userspace, by mapping a certain number of special pages
-> >> > + * into the calling process. It takes a hint as to the number of opaque states
-> >> > + * desired, and returns the number of opaque states actually allocated, the
-> >> > + * size of each one in bytes, and the address of the first state.
-> >> > + */
-> >> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
-> >> > +		unsigned long __user *, size_per_each, unsigned int, flags)
-> >> 
-> >> I think you should make this __u64, so that you get a consistent
-> >> userspace interface on all architectures, without the need for compat
-> >> system calls.
-> >
-> > That would be quite unconventional. Most syscalls that take lengths do
-> > so with the native register size (`unsigned long`, `size_t`), rather
-> > than u64. If you can point to a recent trend away from this by
-> > indicating some commits that added new syscalls with u64, I'd be happy
-> > to be shown otherwise. But AFAIK, that's not the way it's done.
+> Fixed up in response to lkp report for a MEMCG_KMEM+SLUB_TINY combo:
+> ---8<---
+> From c1ec0b924850a2863d061f316615d596176f15bb Mon Sep 17 00:00:00 2001
+> From: Vlastimil Babka <vbabka@suse.cz>
+> Date: Tue, 15 Nov 2022 18:19:28 +0100
+> Subject: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+>  CONFIG_SLUB_TINY
 > 
-> See clone3 and struct clone_args.
+> Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> by grouping pages by mobility, but on tiny systems the extra memory
+> overhead of separate set of kmalloc-rcl caches will probably be worse,
+> and mobility grouping likely disabled anyway.
+> 
+> Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> regular ones.
+> 
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  include/linux/slab.h |  9 +++++++--
+>  mm/slab_common.c     | 10 ++++++++--
+>  2 files changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/linux/slab.h b/include/linux/slab.h
+> index 45efc6c553b8..ae2d19ec8467 100644
+> --- a/include/linux/slab.h
+> +++ b/include/linux/slab.h
+> @@ -336,12 +336,17 @@ enum kmalloc_cache_type {
+>  #endif
+>  #ifndef CONFIG_MEMCG_KMEM
+>  	KMALLOC_CGROUP = KMALLOC_NORMAL,
+> -#else
+> -	KMALLOC_CGROUP,
+>  #endif
+> +#ifdef CONFIG_SLUB_TINY
+> +	KMALLOC_RECLAIM = KMALLOC_NORMAL,
+> +#else
+>  	KMALLOC_RECLAIM,
+> +#endif
+>  #ifdef CONFIG_ZONE_DMA
+>  	KMALLOC_DMA,
+> +#endif
+> +#ifdef CONFIG_MEMCG_KMEM
+> +	KMALLOC_CGROUP,
+>  #endif
+>  	NR_KMALLOC_TYPES
+>  };
 
-The struct is one thing. But actually, clone3 takes a `size_t`:
+Can you please elaborate what the lkp report was about
+and how you fixed it? I'm not getting what the problem of previous
+version is.
 
-    SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
+> diff --git a/mm/slab_common.c b/mm/slab_common.c
+> index a8cb5de255fc..907d52963806 100644
+> --- a/mm/slab_common.c
+> +++ b/mm/slab_common.c
+> @@ -770,10 +770,16 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
+>  #define KMALLOC_CGROUP_NAME(sz)
+>  #endif
+>  
+> +#ifndef CONFIG_SLUB_TINY
+> +#define KMALLOC_RCL_NAME(sz)	.name[KMALLOC_RECLAIM] = "kmalloc-rcl-" #sz,
+> +#else
+> +#define KMALLOC_RCL_NAME(sz)
+> +#endif
+> +
+>  #define INIT_KMALLOC_INFO(__size, __short_size)			\
+>  {								\
+>  	.name[KMALLOC_NORMAL]  = "kmalloc-" #__short_size,	\
+> -	.name[KMALLOC_RECLAIM] = "kmalloc-rcl-" #__short_size,	\
+> +	KMALLOC_RCL_NAME(__short_size)				\
+>  	KMALLOC_CGROUP_NAME(__short_size)			\
+>  	KMALLOC_DMA_NAME(__short_size)				\
+>  	.size = __size,						\
+> @@ -859,7 +865,7 @@ void __init setup_kmalloc_cache_index_table(void)
+>  static void __init
+>  new_kmalloc_cache(int idx, enum kmalloc_cache_type type, slab_flags_t flags)
+>  {
+> -	if (type == KMALLOC_RECLAIM) {
+> +	if ((KMALLOC_RECLAIM != KMALLOC_NORMAL) && (type == KMALLOC_RECLAIM)) {
+>  		flags |= SLAB_RECLAIM_ACCOUNT;
+>  	} else if (IS_ENABLED(CONFIG_MEMCG_KMEM) && (type == KMALLOC_CGROUP)) {
+>  		if (mem_cgroup_kmem_disabled()) {
+> -- 
+> 2.38.1
+>
 
-I take from this that I too should use `size_t` rather than `unsigned
-long.` And it doesn't seem like there's any compat clone3.
+Otherwise looks fine to me.
 
-Jason
+-- 
+Thanks,
+Hyeonggon
