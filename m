@@ -1,145 +1,98 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE1F2575
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:12:15 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 9E01D218E9;
-	Thu, 24 Nov 2022 12:12:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1669291933; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A352575
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:15:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1669292133;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DJVmOWQbiMAmWnWW4hlsAe4eeK/zWKppLW8xti306l8=;
-	b=C3UPthb+tD9RGQ86R6MIG3nJNUfLpmtD8GzpC0MULOIMRvXck3rGJ7N8WvDuWRchFXatXT
-	ULasH5JgLkCdzxDxk7Q5GrEK+ruHD5YYxSCXQPdfYmOaxzpn1XrbxwejNNSaqUtxu1aqxw
-	3Flj/3W9ATaZ45Pv+U2mpPNmzTPwuqQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1669291933;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DJVmOWQbiMAmWnWW4hlsAe4eeK/zWKppLW8xti306l8=;
-	b=9XLkuKC8yJHZDxVcaB5ZpfD0f920D7i+Gcssv1hh335LdEK2mc/ILRj0MWGsQCS2OSo8lk
-	72c75DcYoI8hErCg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	bh=LhtIcas2JvUNRz550Pp/W/2twet/oq84mZGa4a40f8g=;
+	b=gyAIDQNLCFpz+ZVFnQt3rakvc9VzNGbvyQP4ZlhFWDces0IwHMc0h5C3yleWrlbzAbPoXO
+	wxuS9L8pfxrhzNGAsuxygu9Bky2ymHt/fFXkkIbwHrDTeS64RQ0BCjDizfqPcDBbqXq3f7
+	gHI9gOi32Ki7b/TgLeF38IefUdAtGZ8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-530-hMsbhpb2MNSqF7_u8UQDNw-1; Thu, 24 Nov 2022 07:15:30 -0500
+X-MC-Unique: hMsbhpb2MNSqF7_u8UQDNw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com [10.11.54.6])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 66CEE13488;
-	Thu, 24 Nov 2022 12:12:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id EFQ4GJ1ff2M7egAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 24 Nov 2022 12:12:13 +0000
-Message-ID: <4fb214a4-0535-2d4a-fcde-bc2ab71329e3@suse.cz>
-Date: Thu, 24 Nov 2022 13:12:13 +0100
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ACA9C8027FE;
+	Thu, 24 Nov 2022 12:15:29 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.44])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id DE4B22166B33;
+	Thu, 24 Nov 2022 12:15:27 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,  x86@kernel.org,  Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>
+Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
+References: <20221121152909.3414096-1-Jason@zx2c4.com>
+	<20221121152909.3414096-2-Jason@zx2c4.com>
+	<87v8n6lzh9.fsf@oldenburg.str.redhat.com> <Y37DDX5RtiGsV6MO@zx2c4.com>
+	<87a64g7wks.fsf@oldenburg.str.redhat.com> <Y39djiBSmgXfgWJv@zx2c4.com>
+Date: Thu, 24 Nov 2022 13:15:24 +0100
+In-Reply-To: <Y39djiBSmgXfgWJv@zx2c4.com> (Jason A. Donenfeld's message of
+	"Thu, 24 Nov 2022 13:03:26 +0100")
+Message-ID: <87cz9c5z1f.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
- CONFIG_SLUB_TINY
-Content-Language: en-US
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-7-vbabka@suse.cz>
- <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz> <Y39eLaW0mDNrHI6i@hyeyoo>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <Y39eLaW0mDNrHI6i@hyeyoo>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.6
 
-On 11/24/22 13:06, Hyeonggon Yoo wrote:
-> On Wed, Nov 23, 2022 at 02:53:43PM +0100, Vlastimil Babka wrote:
->> On 11/21/22 18:11, Vlastimil Babka wrote:
->> > Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
->> > by grouping pages by mobility, but on tiny systems the extra memory
->> > overhead of separate set of kmalloc-rcl caches will probably be worse,
->> > and mobility grouping likely disabled anyway.
->> > 
->> > Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
->> > regular ones.
->> > 
->> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> 
->> Fixed up in response to lkp report for a MEMCG_KMEM+SLUB_TINY combo:
->> ---8<---
->> From c1ec0b924850a2863d061f316615d596176f15bb Mon Sep 17 00:00:00 2001
->> From: Vlastimil Babka <vbabka@suse.cz>
->> Date: Tue, 15 Nov 2022 18:19:28 +0100
->> Subject: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
->>  CONFIG_SLUB_TINY
->> 
->> Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
->> by grouping pages by mobility, but on tiny systems the extra memory
->> overhead of separate set of kmalloc-rcl caches will probably be worse,
->> and mobility grouping likely disabled anyway.
->> 
->> Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
->> regular ones.
->> 
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> ---
->>  include/linux/slab.h |  9 +++++++--
->>  mm/slab_common.c     | 10 ++++++++--
->>  2 files changed, 15 insertions(+), 4 deletions(-)
->> 
->> diff --git a/include/linux/slab.h b/include/linux/slab.h
->> index 45efc6c553b8..ae2d19ec8467 100644
->> --- a/include/linux/slab.h
->> +++ b/include/linux/slab.h
->> @@ -336,12 +336,17 @@ enum kmalloc_cache_type {
->>  #endif
->>  #ifndef CONFIG_MEMCG_KMEM
->>  	KMALLOC_CGROUP = KMALLOC_NORMAL,
->> -#else
->> -	KMALLOC_CGROUP,
->>  #endif
->> +#ifdef CONFIG_SLUB_TINY
->> +	KMALLOC_RECLAIM = KMALLOC_NORMAL,
->> +#else
->>  	KMALLOC_RECLAIM,
->> +#endif
->>  #ifdef CONFIG_ZONE_DMA
->>  	KMALLOC_DMA,
->> +#endif
->> +#ifdef CONFIG_MEMCG_KMEM
->> +	KMALLOC_CGROUP,
->>  #endif
->>  	NR_KMALLOC_TYPES
->>  };
-> 
-> Can you please elaborate what the lkp report was about
-> and how you fixed it? I'm not getting what the problem of previous
-> version is.
+* Jason A. Donenfeld:
 
-Report here:
-https://lore.kernel.org/all/202211231949.nIyAWKam-lkp@intel.com/
+> Hi Florian,
+>
+> On Thu, Nov 24, 2022 at 06:25:39AM +0100, Florian Weimer wrote:
+>> * Jason A. Donenfeld:
+>> 
+>> > Hi Florian,
+>> >
+>> > On Wed, Nov 23, 2022 at 11:46:58AM +0100, Florian Weimer wrote:
+>> >> * Jason A. Donenfeld:
+>> >> 
+>> >> > + * The vgetrandom() function in userspace requires an opaque state, which this
+>> >> > + * function provides to userspace, by mapping a certain number of special pages
+>> >> > + * into the calling process. It takes a hint as to the number of opaque states
+>> >> > + * desired, and returns the number of opaque states actually allocated, the
+>> >> > + * size of each one in bytes, and the address of the first state.
+>> >> > + */
+>> >> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
+>> >> > +		unsigned long __user *, size_per_each, unsigned int, flags)
+>> >> 
+>> >> I think you should make this __u64, so that you get a consistent
+>> >> userspace interface on all architectures, without the need for compat
+>> >> system calls.
+>> >
+>> > That would be quite unconventional. Most syscalls that take lengths do
+>> > so with the native register size (`unsigned long`, `size_t`), rather
+>> > than u64. If you can point to a recent trend away from this by
+>> > indicating some commits that added new syscalls with u64, I'd be happy
+>> > to be shown otherwise. But AFAIK, that's not the way it's done.
+>> 
+>> See clone3 and struct clone_args.
+>
+> The struct is one thing. But actually, clone3 takes a `size_t`:
+>
+>     SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
+>
+> I take from this that I too should use `size_t` rather than `unsigned
+> long.` And it doesn't seem like there's any compat clone3.
 
-Problem is that if the preprocessing results in e.g.
-KMALLOC_NORMAL = 0,
-KMALLOC_DMA = KMALLOC_NORMAL
-KMALLOC_CGROUP,
-KMALLOC_RECLAIM = KMALLOC_NORMAL,
-NR_KMALLOC_TYPES
+But vgetrandom_alloc does not use unsigned long, but unsigned long *.
+You need to look at the contents for struct clone_args for comparison.
 
-then NR_KMALLOC_TYPES is not 2, but 1, because the enum's internal counter
-got reset to 0 by KMALLOC_RECLAIM = KMALLOC_NORMAL. A common gotcha :/
+Thanks,
+Florian
 
