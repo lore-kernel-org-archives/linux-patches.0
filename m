@@ -1,129 +1,103 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135CE29CA
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 15:47:48 +0000 (UTC)
-Received: by mail-yb1-f174.google.com with SMTP id z192so2255448yba.0
-        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 07:47:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=h4SSPuvhYffhFxePiwJ39RwPGg7tQbtiVDjXCFISW8g=;
-        b=LsbRhfvUIWkKiDqkYWNoaVfGGGmdnrw2/hWFF6wuZr6aOhLs75ccrr8mys9fid0xyP
-         ZtAWcd5VCQMrmfDx6SMNWGWwINeFFL/MHgpxCZny0dMc/B9OsIRAexstOZIgM7gK/q5f
-         kGRkEMohMduN2R5W2ZqF7WzqTteeMYYoEsKH57gm1iBQQVvYKCGdCiTTE1edsZLPmoap
-         37x3JLMBouAUxW2AOzzDAKb/oK8/Pc/TtQkUbtrVix0G85Sr3hCDUD0NMxshPkrvSk6M
-         7GHoy+DdE4/zzWxVCnEvWRukfe7l/DzoPrr/u3YdJkU85XP6+tkYb6jrbB6kQ5eMQLWw
-         bnnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h4SSPuvhYffhFxePiwJ39RwPGg7tQbtiVDjXCFISW8g=;
-        b=O2+VtL/nr6km0tM+1P3hYO+I1evQLIbf7bxpkmeF4n35RR/T2iR25H8jZAQYRZV0CG
-         5LV0ixra70H6bxg8FuGJI6+bMTyvjlBKExLLJgPpsvyXuxCe2wZ1LjNAfpbmdjLt8HGP
-         vQw9VuUtNpM8d/t4tE46HiF3My+xwQ8wIUenjCHf/mthLcNZmBSvnTl813bCGzz+OjaZ
-         PfmZqVofCOTDJmiHGTpTkESH90cG+1qVjCIirYEu+FtQK1FyI/vEy+VWnLgw0/Rb9bRH
-         Ju75L1ZxqqTBBZanAUPasvlPvpNBIOo8dinTRSKi3jGPhSwHwBAXffB4a17WtdjzJrxq
-         9cjQ==
-X-Gm-Message-State: ANoB5pm6Ro4Q/UO1EEBoxdrWCNZBycy3Hp9IkCJMjKSFXGQlxS0iba+W
-	8xXfpxQ4quY/zn3TL5sgNiDVmbOTd8NSXSieoz9nmA==
-X-Google-Smtp-Source: AA0mqf5kc8lHtLyUfaXXXit+VFn6RsjS45esjbJUMBQ3kt/egSQtBW3It5ZQsDAj2Mmdm6OXhRf/Ub3gqeuh4oaeSsg=
-X-Received: by 2002:a5b:f0f:0:b0:6d2:5835:301f with SMTP id
- x15-20020a5b0f0f000000b006d25835301fmr21381074ybr.336.1669304867700; Thu, 24
- Nov 2022 07:47:47 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB02523A9
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 16:30:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C35C433C1;
+	Thu, 24 Nov 2022 16:30:36 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="GLM0uBfm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669307434;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EzDoEvNDhRphmuoSNKNVxLbek8oLLix/b9dbHW5QtLs=;
+	b=GLM0uBfmyJutlyfrCPqlI3ap4XE52yP7cYHnWXQLh83VEssdyMGcsqspkq6b8Tu9mdbQIO
+	NwcVzP3GcuZ128HU52dJhFTjUij1LmkBMFTeSyk0FIaPs6JJA1lzBDbaLwpFa/R/9M/rxK
+	FH6gc0vEUWPKCBVX2XMy5Q1IkLY5vo4=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a4fe9579 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Nov 2022 16:30:33 +0000 (UTC)
+Date: Thu, 24 Nov 2022 17:30:28 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>, linux-api@vger.kernel.org
+Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
+Message-ID: <Y3+cJLBas5hRh7GU@zx2c4.com>
+References: <20221121152909.3414096-1-Jason@zx2c4.com>
+ <20221121152909.3414096-2-Jason@zx2c4.com>
+ <87v8n6lzh9.fsf@oldenburg.str.redhat.com>
+ <Y37DDX5RtiGsV6MO@zx2c4.com>
+ <87a64g7wks.fsf@oldenburg.str.redhat.com>
+ <Y39djiBSmgXfgWJv@zx2c4.com>
+ <87cz9c5z1f.fsf@oldenburg.str.redhat.com>
+ <Y39iisTmUO2AaKNs@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221123084557.945845710@linuxfoundation.org> <CA+G9fYvKfbJHcMZtybf_0Ru3+6fKPg9HwWTOhdCLrOBXMaeG1A@mail.gmail.com>
-In-Reply-To: <CA+G9fYvKfbJHcMZtybf_0Ru3+6fKPg9HwWTOhdCLrOBXMaeG1A@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 24 Nov 2022 21:17:36 +0530
-Message-ID: <CA+G9fYvgaNKbr_EhWsh9hjnzCeVXGJoXX4to72ytdvZi8W0svA@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, Netdev <netdev@vger.kernel.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, YueHaibing <yuehaibing@huawei.com>, 
-	=?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y39iisTmUO2AaKNs@zx2c4.com>
 
-On Wed, 23 Nov 2022 at 19:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> On Wed, 23 Nov 2022 at 14:50, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.10.156 release.
-> > There are 149 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.156-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
->
-> With stable rc 5.10.156-rc1 Raspberry Pi 4 Model B failed to boot due to
-> following warnings / errors [1]. The NFS mount failed and failed to boot.
->
-> I have to bisect this problem.
+On Thu, Nov 24, 2022 at 01:24:42PM +0100, Jason A. Donenfeld wrote:
+> Hi Florian,
+> 
+> On Thu, Nov 24, 2022 at 01:15:24PM +0100, Florian Weimer wrote:
+> > * Jason A. Donenfeld:
+> > 
+> > > Hi Florian,
+> > >
+> > > On Thu, Nov 24, 2022 at 06:25:39AM +0100, Florian Weimer wrote:
+> > >> * Jason A. Donenfeld:
+> > >> 
+> > >> > Hi Florian,
+> > >> >
+> > >> > On Wed, Nov 23, 2022 at 11:46:58AM +0100, Florian Weimer wrote:
+> > >> >> * Jason A. Donenfeld:
+> > >> >> 
+> > >> >> > + * The vgetrandom() function in userspace requires an opaque state, which this
+> > >> >> > + * function provides to userspace, by mapping a certain number of special pages
+> > >> >> > + * into the calling process. It takes a hint as to the number of opaque states
+> > >> >> > + * desired, and returns the number of opaque states actually allocated, the
+> > >> >> > + * size of each one in bytes, and the address of the first state.
+> > >> >> > + */
+> > >> >> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
+> > >> >> > +		unsigned long __user *, size_per_each, unsigned int, flags)
+> > >> >> 
+> > >> >> I think you should make this __u64, so that you get a consistent
+> > >> >> userspace interface on all architectures, without the need for compat
+> > >> >> system calls.
+> > >> >
+> > >> > That would be quite unconventional. Most syscalls that take lengths do
+> > >> > so with the native register size (`unsigned long`, `size_t`), rather
+> > >> > than u64. If you can point to a recent trend away from this by
+> > >> > indicating some commits that added new syscalls with u64, I'd be happy
+> > >> > to be shown otherwise. But AFAIK, that's not the way it's done.
+> > >> 
+> > >> See clone3 and struct clone_args.
+> > >
+> > > The struct is one thing. But actually, clone3 takes a `size_t`:
+> > >
+> > >     SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
+> > >
+> > > I take from this that I too should use `size_t` rather than `unsigned
+> > > long.` And it doesn't seem like there's any compat clone3.
+> > 
+> > But vgetrandom_alloc does not use unsigned long, but unsigned long *.
+> > You need to look at the contents for struct clone_args for comparison.
+> 
+> The other direction would be making this a u32
 
-Daniel bisected this reported problem and found the first bad commit,
+I think `unsigned int` is actually a sensible size for what these values
+should be. That eliminates the problem and potential bikeshed too. So
+I'll go with that for v+1.
 
-YueHaibing <yuehaibing@huawei.com>
-    net: broadcom: Fix BCMGENET Kconfig
-
-
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
->
-> [    0.000000] Linux version 5.10.156-rc1 (tuxmake@tuxmake)
-> (aarch64-linux-gnu-gcc (Debian 11.3.0-6) 11.3.0, GNU ld (GNU Binutils
-> for Debian) 2.39) #1 SMP PREEMPT @1669194931
-> [    0.000000] Machine model: Raspberry Pi 4 Model B
-> ---
-> [    3.253965] mmc0: new high speed SDIO card at address 0001
-> [    7.229502] bcmgenet fd580000.ethernet eth0: Link is Up -
-> 1Gbps/Full - flow control off
-> [    7.237710] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-> [    7.253259] Sending DHCP requests ......
-> [   81.086546] DHCP/BOOTP: Reply not for us on eth0, op[2] xid[42e6766b]
-> [   89.106504] DHCP/BOOTP: Reply not for us on eth0, op[2] xid[42e6766b]
-> [   98.657252]  timed out!
-> [   98.683997] bcmgenet fd580000.ethernet eth0: Link is Down
-> [   98.691276] IP-Config: Retrying forever (NFS root)...
-> [   98.698404] bcmgenet fd580000.ethernet: configuring instance for
-> external RGMII (RX delay)
-> [   98.707190] bcmgenet fd580000.ethernet eth0: Link is Down
-> [  102.813504] bcmgenet fd580000.ethernet eth0: Link is Up -
-> 1Gbps/Full - flow control off
-> [  102.821680] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-> [  102.841257] Sending DHCP requests ....
-> [  119.840915] DHCP/BOOTP: Reply not for us on eth0, op[2] xid[34e6766b]
-> [  127.860148] DHCP/BOOTP: Reply not for us on eth0, op[2] xid[34e6766b]
-> [  132.513252] .. timed out!
->
-> [1] https://lkft.validation.linaro.org/scheduler/job/5880584#L392
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+Jason
