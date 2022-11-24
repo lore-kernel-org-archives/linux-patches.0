@@ -1,127 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274792589
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:49:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E033AC433C1;
-	Thu, 24 Nov 2022 12:49:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669294173;
-	bh=cY0zoRDBBqP3t4FgqnJqWRlOpTVPEPD40LQxnSFLXD4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AAyWKZIRRxmldjMLNe4g1TIt/dn3auYo4I2AlIXGwLzFkcsgexSJ3DuPsyn1zzhM9
-	 1nVGQ3VIiLxtrLwHWqAqXPPB1bGEIPtSJg23ODXIVfh7qPGVufYazyyJnVWn3iYgub
-	 EXvh9r7+eqC2Glz2aJWPzNbhxb2dD54/8YAvtLFH1T7QEe8MnDTKDuq/6E0fgHohlu
-	 Wo0bdNR+0CPShkYNEnQtxKVec9ym46Gev1N+vQ3e9SjUvYVDviLyTIpGETnd7679in
-	 2mKMUDknZihL4Vd3XAw/pHlDlE0c4CaXXKlQw92O9Ozt+r9cV4FL4wBwUOL4PrfwHj
-	 M4du5bKF6EgrA==
-Date: Thu, 24 Nov 2022 13:49:27 +0100
-From: Christian Brauner <brauner@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Florian Weimer <fweimer@redhat.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, tglx@linutronix.de,
-	linux-crypto@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>, linux-api@vger.kernel.org,
-	Arnd Bergmann <arnd@arnd.de>
-Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
-Message-ID: <20221124124927.argohuob2bslolbt@wittgenstein>
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
- <20221121152909.3414096-2-Jason@zx2c4.com>
- <87v8n6lzh9.fsf@oldenburg.str.redhat.com>
- <Y37DDX5RtiGsV6MO@zx2c4.com>
- <87a64g7wks.fsf@oldenburg.str.redhat.com>
- <Y39djiBSmgXfgWJv@zx2c4.com>
- <87cz9c5z1f.fsf@oldenburg.str.redhat.com>
- <Y39iisTmUO2AaKNs@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C0A2589
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 12:55:23 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id d192so1611911pfd.0
+        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 04:55:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9gtzrOrsoNCV5o2QC8fgzxtE8ANXsxJSKoxo24IyFcc=;
+        b=RINqxyHQ1+PlMbJe7syJQm04IztogY5hCRUwRAOi2i6WrIByZqpDK/LPRjeplsTdtt
+         KmV0QCeI7hNtnElUTudG0rFIOCSmDz0TIEzLxL0dqiMXf5WqexjgDYpG04EqvRDOKN+A
+         hHGG54Gxkoxp5bX1FZuVUR+ZL2jp60VVAzJmgruSqKBm2U9UWswEHBwaNGnPpy3yScY3
+         Nd7FcA4BcRX0No/2vhLV0sttRpn69iZeRUtlXCFRXC8W0Vgz6kL1WigkyZ5Gr0mMT1KF
+         H6fK8w5WDLioJaJWJZcuGwt3lfRGfKbscQfk4Fq85TjYkZ7SOBS67RgtSGY7Fvdbb/uT
+         hFUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9gtzrOrsoNCV5o2QC8fgzxtE8ANXsxJSKoxo24IyFcc=;
+        b=YuWiHwdHkZU2EQL6bDEXGnsCi6nc4EOx9BAHiNIJzCefMRPdTt6UMAdcddL2veGzK+
+         uvEyydLV2INYSB95lBthxJG02OSs9p5L0r/lFSL2dLjNdGznylhWyRBlNtiw0U/ncpnr
+         juVzyQ7kRED107IvmBbgGeIE+8khIsoLJ/N8qY2qmCKoKy3PcKyg8nNEVcJMIAuEh/jh
+         58j80VByr2mUfG0c7ZTc9er3kMzjJAuBR81Tc5qzEk0/ctUhwQyr3j73bJx2GDIp1kua
+         HrEVRW5Iu642Ae4bCBt7y4641BZtP5JCUUEOe4q3VaLNNigsxNeyOQVcU1bKH9R02z7u
+         Q3Vw==
+X-Gm-Message-State: ANoB5pkmUSYIt93lEIG/6OXDXIx+9uipN6NCTD2eSAoy2Ia+a3pIkLgm
+	cEi+O6tbQa1UMjXeOiy64GQ=
+X-Google-Smtp-Source: AA0mqf4rEBDF5wX9BJnHhW0nfowVburVfHmQhsIXGzqgWOWAmaPXelMP15ZuJXhvQFBMs9Sb+5x4Pg==
+X-Received: by 2002:a63:ea52:0:b0:46f:9c0c:8673 with SMTP id l18-20020a63ea52000000b0046f9c0c8673mr13642591pgk.154.1669294522593;
+        Thu, 24 Nov 2022 04:55:22 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id y8-20020a17090a390800b0020d48bc6661sm3120211pjb.31.2022.11.24.04.55.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 04:55:21 -0800 (PST)
+Date: Thu, 24 Nov 2022 21:55:15 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+ CONFIG_SLUB_TINY
+Message-ID: <Y39psxclH4QEAzN+@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-7-vbabka@suse.cz>
+ <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
+ <Y39eLaW0mDNrHI6i@hyeyoo>
+ <4fb214a4-0535-2d4a-fcde-bc2ab71329e3@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y39iisTmUO2AaKNs@zx2c4.com>
+In-Reply-To: <4fb214a4-0535-2d4a-fcde-bc2ab71329e3@suse.cz>
 
-On Thu, Nov 24, 2022 at 01:24:42PM +0100, Jason A. Donenfeld wrote:
-> Hi Florian,
-> 
-> On Thu, Nov 24, 2022 at 01:15:24PM +0100, Florian Weimer wrote:
-> > * Jason A. Donenfeld:
+On Thu, Nov 24, 2022 at 01:12:13PM +0100, Vlastimil Babka wrote:
+> On 11/24/22 13:06, Hyeonggon Yoo wrote:
+> > On Wed, Nov 23, 2022 at 02:53:43PM +0100, Vlastimil Babka wrote:
+> >> On 11/21/22 18:11, Vlastimil Babka wrote:
+> >> > Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> >> > by grouping pages by mobility, but on tiny systems the extra memory
+> >> > overhead of separate set of kmalloc-rcl caches will probably be worse,
+> >> > and mobility grouping likely disabled anyway.
+> >> > 
+> >> > Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> >> > regular ones.
+> >> > 
+> >> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> >> 
+> >> Fixed up in response to lkp report for a MEMCG_KMEM+SLUB_TINY combo:
+> >> ---8<---
+> >> From c1ec0b924850a2863d061f316615d596176f15bb Mon Sep 17 00:00:00 2001
+> >> From: Vlastimil Babka <vbabka@suse.cz>
+> >> Date: Tue, 15 Nov 2022 18:19:28 +0100
+> >> Subject: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+> >>  CONFIG_SLUB_TINY
+> >> 
+> >> Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> >> by grouping pages by mobility, but on tiny systems the extra memory
+> >> overhead of separate set of kmalloc-rcl caches will probably be worse,
+> >> and mobility grouping likely disabled anyway.
+> >> 
+> >> Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> >> regular ones.
+> >> 
+> >> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> >> ---
+> >>  include/linux/slab.h |  9 +++++++--
+> >>  mm/slab_common.c     | 10 ++++++++--
+> >>  2 files changed, 15 insertions(+), 4 deletions(-)
+> >> 
+> >> diff --git a/include/linux/slab.h b/include/linux/slab.h
+> >> index 45efc6c553b8..ae2d19ec8467 100644
+> >> --- a/include/linux/slab.h
+> >> +++ b/include/linux/slab.h
+> >> @@ -336,12 +336,17 @@ enum kmalloc_cache_type {
+> >>  #endif
+> >>  #ifndef CONFIG_MEMCG_KMEM
+> >>  	KMALLOC_CGROUP = KMALLOC_NORMAL,
+> >> -#else
+> >> -	KMALLOC_CGROUP,
+> >>  #endif
+> >> +#ifdef CONFIG_SLUB_TINY
+> >> +	KMALLOC_RECLAIM = KMALLOC_NORMAL,
+> >> +#else
+> >>  	KMALLOC_RECLAIM,
+> >> +#endif
+> >>  #ifdef CONFIG_ZONE_DMA
+> >>  	KMALLOC_DMA,
+> >> +#endif
+> >> +#ifdef CONFIG_MEMCG_KMEM
+> >> +	KMALLOC_CGROUP,
+> >>  #endif
+> >>  	NR_KMALLOC_TYPES
+> >>  };
 > > 
-> > > Hi Florian,
-> > >
-> > > On Thu, Nov 24, 2022 at 06:25:39AM +0100, Florian Weimer wrote:
-> > >> * Jason A. Donenfeld:
-> > >> 
-> > >> > Hi Florian,
-> > >> >
-> > >> > On Wed, Nov 23, 2022 at 11:46:58AM +0100, Florian Weimer wrote:
-> > >> >> * Jason A. Donenfeld:
-> > >> >> 
-> > >> >> > + * The vgetrandom() function in userspace requires an opaque state, which this
-> > >> >> > + * function provides to userspace, by mapping a certain number of special pages
-> > >> >> > + * into the calling process. It takes a hint as to the number of opaque states
-> > >> >> > + * desired, and returns the number of opaque states actually allocated, the
-> > >> >> > + * size of each one in bytes, and the address of the first state.
-> > >> >> > + */
-> > >> >> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
-> > >> >> > +		unsigned long __user *, size_per_each, unsigned int, flags)
-> > >> >> 
-> > >> >> I think you should make this __u64, so that you get a consistent
-> > >> >> userspace interface on all architectures, without the need for compat
-> > >> >> system calls.
-> > >> >
-> > >> > That would be quite unconventional. Most syscalls that take lengths do
-> > >> > so with the native register size (`unsigned long`, `size_t`), rather
-> > >> > than u64. If you can point to a recent trend away from this by
-> > >> > indicating some commits that added new syscalls with u64, I'd be happy
-> > >> > to be shown otherwise. But AFAIK, that's not the way it's done.
-> > >> 
-> > >> See clone3 and struct clone_args.
-
-For system calls that take structs as arguments we use u64 in the struct
-for proper alignment so we can extend structs without regressing old
-kernels. We have a few of those extensible struct system calls.
-
-But we don't really have a lot system calls that pass u64 as a pointer
-outside of a structure so far. Neither as register and nor as pointer
-iirc. Passing them as a register arg is problematic because of 32bit
-arches. But passing as pointer should be fine but it is indeed uncommon.
-
-> > >
-> > > The struct is one thing. But actually, clone3 takes a `size_t`:
-> > >
-> > >     SYSCALL_DEFINE2(clone3, struct clone_args __user *, uargs, size_t, size)
-> > >
-> > > I take from this that I too should use `size_t` rather than `unsigned
-> > > long.` And it doesn't seem like there's any compat clone3.
-> > 
-> > But vgetrandom_alloc does not use unsigned long, but unsigned long *.
-> > You need to look at the contents for struct clone_args for comparison.
+> > Can you please elaborate what the lkp report was about
+> > and how you fixed it? I'm not getting what the problem of previous
+> > version is.
 > 
-> Ah! I see what you mean; that's a good point. The usual register
-> clearing thing isn't going to happen because these are addresses.
+> Report here:
+> https://lore.kernel.org/all/202211231949.nIyAWKam-lkp@intel.com/
 > 
-> I still am somewhat hesitant, though, because `size_t` is really the
-> "proper" type to be used. Maybe the compat syscall thing is just a
-> necessary evil?
-
-We try to avoid adding new compat-requiring syscalls like the plague
-usually. (At least for new syscalls that don't need to inherit behavior
-from earlier syscalls they are a revisions of.)
-
+> Problem is that if the preprocessing results in e.g.
+> KMALLOC_NORMAL = 0,
+> KMALLOC_DMA = KMALLOC_NORMAL
+> KMALLOC_CGROUP,
+> KMALLOC_RECLAIM = KMALLOC_NORMAL,
+> NR_KMALLOC_TYPES
 > 
-> The other direction would be making this a u32, since 640k ought to be
-> enough for anybody and such, but maybe that'd be a mistake too.
+> then NR_KMALLOC_TYPES is not 2, but 1, because the enum's internal counter
+> got reset to 0 by KMALLOC_RECLAIM = KMALLOC_NORMAL. A common gotcha :/
 
-I think making this a size_t is fine. We haven't traditionally used u32
-for sizes. All syscalls that pass structs versioned by size use size_t.
-So I would recommend to stick with that.
+Thanks for quick and kind explanation :)
+That was easy to be missed.
 
-Alternatively, you could also introduce a simple struct versioned by
-size for this system call similar to mount_setatt() and clone3() and so
-on. This way you don't need to worry about future extensibilty. Just a
-thought.
+-- 
+Thanks,
+Hyeonggon
