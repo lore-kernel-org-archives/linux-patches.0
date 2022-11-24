@@ -1,132 +1,86 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE892597
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 13:47:54 +0000 (UTC)
-Received: by mail-ej1-f51.google.com with SMTP id ho10so4326245ejc.1
-        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 05:47:54 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71BF28EF
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 14:26:06 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id b13-20020a17090a5a0d00b0021906102d05so285118pjd.5
+        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 06:26:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=skUT3utsKPWLVdNJygEjjwBaHmNe4Tok7aRtnCgAX+c=;
-        b=e3iSJl6EenwxDQL3vM4l/NttSfBRWz+80bAmlpHxlOD09NhlOAkGYs9eQry22x+P28
-         s2mAjWbIbI/W9XdcTgVgPXZykf337tdyx5zvQQ4sGfKz6CCKo/PUyo7U7EU6O0GhWK76
-         0Rce+qPkJe0pJG3TsWA+HRxMhg41aZIqH/5N+Sfi8mAeU/nlTMSw92IPxQUmBoXwMWsD
-         7BcUsNhZcupTlJJnE3S6IornNYD96UrwHWrVLbDAr2V38luuKQnQu9FFvp1BpnRrzLuk
-         0w2lNRaa/YGQazsA7O6Qu0CPIOus+Qf7RPK7tYdSUBQjWUQoJeYVs7+Vz/d3AlpVuTfJ
-         i6XQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IAlmDlf3J91/9mijeaog5st0f/5MkIiZF834ldeIBx0=;
+        b=Lk+Axj7fdQi0yyxjccdwBH5rucopDiUHwkMJPcAFD7s4QwYPhq5ajHq09DdObQ2Uog
+         wvdaypvnpIdGzvnl6AsKAxzZmxCeUbtC7znyGNbYEg7RN9iV4EwXh+GZf8DL+r6JQppl
+         0+RXV3gkAXLlDxn/fNq6t7tixQd2bpUcJi2Ylyv3d52VAUk/OwKMDjpNV+LVUuioP10j
+         sHDbN3vrfGaj2NkLLJ9I/PYietus+u8+w/+awCtXgEMK0AXEQT4XtdXgL22zcbuXIykW
+         7fBCiTHNDknLsSPFRhsyiqhQ6LbQ1dEABMZHZ/VvRWXQTm/LwZnZBOB9rY33q5Je01kz
+         UuWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=skUT3utsKPWLVdNJygEjjwBaHmNe4Tok7aRtnCgAX+c=;
-        b=7nObHnkUpjogz+0sUkQ6tAk3sWQaGw3M+ga32OFLJF7QXPFxPxt7zaVhFPqfdK0xXO
-         9H+MciDOLlJ5feS8KOKCF0WJappF2DziFMCoau9/MiNJKWBSwfFxtIiOhBrIK4hGXCHg
-         8/RXwPcxZEaIyUAnopTUI3l5JJpGeNXdRYxpbGE/2IcvAaY2uQIh4vD4aapMF68NVtZv
-         Z6JWClgo4KgPkvftnOgUL1tzPJc2lm5vWVIQHgiA3zkZGwMHx1oPplB5i7qWoubnYNEJ
-         UbrgE/dClJqPKzP1IblKmgj9Fwp+ipPXF7E1KCmgufqIdVNbm6kzENeB+dAj2kWaxq+C
-         T08g==
-X-Gm-Message-State: ANoB5pml68a8kE2KZq+omGHOeH0dHqGkB1bh/tnYmUfD293dtkOgxuT6
-	t4uTVmHBJSPcY4EoZdnw7qk=
-X-Google-Smtp-Source: AA0mqf5jQIt+NupQkEFckTgQCITSjNHYjr9XYScCGCO2ex6bxNZ0VedlEVBIfO3I4PuvXLLBrYQIbw==
-X-Received: by 2002:a17:907:9151:b0:7ae:df97:c03d with SMTP id l17-20020a170907915100b007aedf97c03dmr12175583ejs.125.1669297672693;
-        Thu, 24 Nov 2022 05:47:52 -0800 (PST)
-Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
-        by smtp.gmail.com with ESMTPSA id cd10-20020a170906b34a00b007aa239cf4d9sm442358ejb.89.2022.11.24.05.47.51
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IAlmDlf3J91/9mijeaog5st0f/5MkIiZF834ldeIBx0=;
+        b=aqrwi4QjMd3yKJ0640iQdTi3kaF4eByUyDYkxBDz7FIB4sPyI3Txi/9D+TopSLKW0N
+         ZQqJIyn8HIB7PQeKonI0X1ASqwsXa4TtmPnixL4P6hBoYrX4M37eZLwlgau0cV0ML3Jy
+         b1foOpG7rBAa80yVOI5Q0TrdMwXNufS/I4Zej+jRnYpwSAY3BRW4HPUk+Qcw8LZWffrc
+         M41/fCu6Cwy0hTTeS9vmnRE6gpbZorvCBRvjlV3b+MjPxYGiT4N/SueQMqK3cAmfL+Ng
+         rDACZDb8QcK5RbkCya1lUCDCwQRjaQNTSpW/HeH1doEQysyK8Q/13rnw4bcj97knrrrP
+         cihw==
+X-Gm-Message-State: ANoB5pnP/UO685Uu8LMI3LPrD/0xpEeLMnCJeKQIiF98ksqGUgn/H/1U
+	nIKxW/f6xh4XFkEe7ibAksM=
+X-Google-Smtp-Source: AA0mqf5GMN96W6w9aQMjgL4hm3VPATsFalHprJKWDdJ0RfZ4rKCtYx8AcAblrrg7VOpxiQKs3Ex0HA==
+X-Received: by 2002:a17:902:e807:b0:186:fb90:5774 with SMTP id u7-20020a170902e80700b00186fb905774mr14542983plg.137.1669299966305;
+        Thu, 24 Nov 2022 06:26:06 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id b26-20020aa78eda000000b0056da63c8515sm1319439pfr.91.2022.11.24.06.26.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 05:47:52 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id 2FB6DBE2DE0; Thu, 24 Nov 2022 14:47:51 +0100 (CET)
-Date: Thu, 24 Nov 2022 14:47:51 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 011/149] ASoC: Intel: sof_sdw: add quirk variant for
- LAPBC710 NUC15
-Message-ID: <Y392B4HibRmMU1o3@eldamar.lan>
-References: <20221123084557.945845710@linuxfoundation.org>
- <20221123084558.387879056@linuxfoundation.org>
+        Thu, 24 Nov 2022 06:26:05 -0800 (PST)
+Date: Thu, 24 Nov 2022 23:25:54 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+ CONFIG_SLUB_TINY
+Message-ID: <Y39+8mO5oT3K41si@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-7-vbabka@suse.cz>
+ <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
+ <Y39wYPl5y3apKbD2@hyeyoo>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221123084558.387879056@linuxfoundation.org>
+In-Reply-To: <Y39wYPl5y3apKbD2@hyeyoo>
 
-Hi Greg,
-
-On Wed, Nov 23, 2022 at 09:49:54AM +0100, Greg Kroah-Hartman wrote:
-> From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+On Thu, Nov 24, 2022 at 10:23:51PM +0900, Hyeonggon Yoo wrote:
+> > @@ -859,7 +865,7 @@ void __init setup_kmalloc_cache_index_table(void)
+> >  static void __init
+> >  new_kmalloc_cache(int idx, enum kmalloc_cache_type type, slab_flags_t flags)
+> >  {
+> > -	if (type == KMALLOC_RECLAIM) {
+> > +	if ((KMALLOC_RECLAIM != KMALLOC_NORMAL) && (type == KMALLOC_RECLAIM)) {
 > 
-> [ Upstream commit 41deb2db64997d01110faaf763bd911d490dfde7 ]
-> 
-> Some NUC15 LAPBC710 devices don't expose the same DMI information as
-> the Intel reference, add additional entry in the match table.
-> 
-> BugLink: https://github.com/thesofproject/linux/issues/3885
-> Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-> Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-> Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-> Link: https://lore.kernel.org/r/20221017204054.207512-1-pierre-louis.bossart@linux.intel.com
-> Signed-off-by: Mark Brown <broonie@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  sound/soc/intel/boards/sof_sdw.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-> index 25548555d8d7..5e1a718a64da 100644
-> --- a/sound/soc/intel/boards/sof_sdw.c
-> +++ b/sound/soc/intel/boards/sof_sdw.c
-> @@ -175,6 +175,17 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
->  					SOF_SDW_PCH_DMIC |
->  					SOF_RT711_JD_SRC_JD2),
->  	},
-> +	{
-> +		/* NUC15 LAPBC710 skews */
-> +		.callback = sof_sdw_quirk_cb,
-> +		.matches = {
-> +			DMI_MATCH(DMI_BOARD_VENDOR, "Intel Corporation"),
-> +			DMI_MATCH(DMI_BOARD_NAME, "LAPBC710"),
-> +		},
-> +		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
-> +					SOF_SDW_PCH_DMIC |
-> +					RT711_JD1),
-> +	},
->  	/* TigerLake-SDCA devices */
->  	{
->  		.callback = sof_sdw_quirk_cb,
-> -- 
-> 2.35.1
+> for consistency this can be:
+> 	if (IS_ENABLED(CONFIG_SLUB_TINY) && (type == KMALLOC_RECLAIM)) {
+>
 
-This one causes a build failure for 5.10.156-rc1 (not tested newer
-ones possibly affected):
+My finger slipped :)
+I mean:
+	if (!IS_ENABLED(CONFIG_SLUB_TINY) && (type == KMALLOC_RECLAIM)) {
 
-sound/soc/intel/boards/sof_sdw.c:187:6: error: ‘RT711_JD1’ undeclared here (not in a function)
-  187 |      RT711_JD1),
-      |      ^~~~~~~~~
-make[7]: *** [scripts/Makefile.build:286: sound/soc/intel/boards/sof_sdw.o] Error 1
-make[6]: *** [scripts/Makefile.build:503: sound/soc/intel/boards] Error 2
-make[5]: *** [scripts/Makefile.build:503: sound/soc/intel] Error 2
-make[4]: *** [scripts/Makefile.build:503: sound/soc] Error 2
-make[3]: *** [Makefile:1837: sound] Error 2
-make[3]: *** Waiting for unfinished jobs....
-
-If not mistaken this is because 5.10.y does not have yet 8e6c00f1fdea ("ASoC:
-Intel: sof_sdw: include rt711.h for RT711 JD mode") which is present on
-5.15-rc1 onwards.
-
-Regards,
-Salvatore
+-- 
+Thanks,
+Hyeonggon
