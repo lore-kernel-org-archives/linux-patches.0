@@ -1,97 +1,90 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59557E
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 03:54:57 +0000 (UTC)
-Received: by mail-pj1-f41.google.com with SMTP id j10-20020a17090aeb0a00b00218dfce36e5so3030036pjz.1
-        for <patches@lists.linux.dev>; Wed, 23 Nov 2022 19:54:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FGDchlzjZ9nDfcUMTxD0UYqCVipAmcffFJDXCznLGbg=;
-        b=kMBa7450Mqi4GDqf6C0SoSvIT3YNQSLd0LAj4lPYdHxeLZqvfqyG3Lw1WaBS3PkB+C
-         hV8S6Oh4k6Xuc19CbipnWJ77NELKQJ5OSejy1DQXMKKsJkCJ9N/bVG3ypLeA8voJY2CZ
-         YOgojVUk1K2/zCXG24Vb4oVlmOYW74Mu1CB4/Y8VgVxZJDn7f+CqrhrHzCA47HnExFSm
-         aajmeKVKvEgYzp4lMGFTJv1y+62eQHBP0X83RheSgZPkhKMZmIk9lhrOiqTPcNxF4Vsa
-         Su5llDhFTl4zc9ZpgXMyV7GvvyNQNTyV2c/vRkbvHZT580eoxf72S3Nw6u3Sd3hnGXPe
-         IRwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FGDchlzjZ9nDfcUMTxD0UYqCVipAmcffFJDXCznLGbg=;
-        b=tdx16eAAEvkC8AVF7jWELsNkMbfd+8RBWecbY5Hqs2CfjGiaL8s08UxKVAWuGk7n8C
-         mZs75mmPHTfTZmhd3H7SqgIpCjttYYFip/NhLcQn5oNDQtXJkZlUHAKvNojj6d6Is8aS
-         ZV8mFdvtW/gINKJvOY+H6F6gC7tKv41LoGxf+SF+5bFqPJtlNphpUkOlKIeFyLBNpcmr
-         H//DlP+BU6PgwWPDxUiWPotKwScpIJyZf9KxZjuynWQhfmTpIqD0AZ5+234irsh+7nJw
-         GmlbTsVgG7FsbHPYHpsLWUWpxs+vPoE/Hl9EBQ80a0l1kx9w4Vjq/2nFvnQRDy+HNOJO
-         p51w==
-X-Gm-Message-State: ANoB5plqg4f14pKldKGWnZSIpUw4tZ5yzYpy+bJwkipz8L+L3umHwkMx
-	WNDLCnh28gtAwa+d0mSgzJc=
-X-Google-Smtp-Source: AA0mqf7l1GM+1in+Uo4hp9ulB/JA1vn363dWWJwr6CWQMxFco81Ih0QfK235HeX6iwSbv3baflNMRw==
-X-Received: by 2002:a17:902:a616:b0:189:46b1:fe0b with SMTP id u22-20020a170902a61600b0018946b1fe0bmr5265985plq.117.1669262097267;
-        Wed, 23 Nov 2022 19:54:57 -0800 (PST)
-Received: from debian.me (subs10b-223-255-225-232.three.co.id. [223.255.225.232])
-        by smtp.gmail.com with ESMTPSA id mg13-20020a17090b370d00b001faafa42a9esm154817pjb.26.2022.11.23.19.54.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 19:54:56 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id F20DF103C91; Thu, 24 Nov 2022 10:54:52 +0700 (WIB)
-Date: Thu, 24 Nov 2022 10:54:52 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/181] 5.15.80-rc1 review
-Message-ID: <Y37rDMB1Q9Gn5g/Y@debian.me>
-References: <20221123084602.707860461@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4D31FC1
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 05:25:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1669267552;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1BJTv1yw1TZn6Ej/2m7IJg8ynAjrSeGYMGPtsYN1BeU=;
+	b=gkruY9S12XGOfG8IJPqbP2M7eKx7kRhxn4VztG4jh+mqSsiYSRN2uOGL1D/CSpIHIs947e
+	9OEQIzS0G0KN+hiWldMZRrYLteb8wGHvUmQ/8byG7adLXSohAmmK0FySK3Lf6vgMm9uDpZ
+	sWZ/NdFnmkzWKi9JhmjSlBRlgzOW7Nw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-152-EWPiQi1WPDiKMhuQin-LmQ-1; Thu, 24 Nov 2022 00:25:45 -0500
+X-MC-Unique: EWPiQi1WPDiKMhuQin-LmQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com [10.11.54.8])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 76EA6101A52A;
+	Thu, 24 Nov 2022 05:25:45 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.44])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 9086FC15BA5;
+	Thu, 24 Nov 2022 05:25:43 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,  x86@kernel.org,  Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>
+Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
+References: <20221121152909.3414096-1-Jason@zx2c4.com>
+	<20221121152909.3414096-2-Jason@zx2c4.com>
+	<87v8n6lzh9.fsf@oldenburg.str.redhat.com> <Y37DDX5RtiGsV6MO@zx2c4.com>
+Date: Thu, 24 Nov 2022 06:25:39 +0100
+In-Reply-To: <Y37DDX5RtiGsV6MO@zx2c4.com> (Jason A. Donenfeld's message of
+	"Thu, 24 Nov 2022 02:04:13 +0100")
+Message-ID: <87a64g7wks.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="m8RHb0XePUCKlKuT"
-Content-Disposition: inline
-In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.8
 
+* Jason A. Donenfeld:
 
---m8RHb0XePUCKlKuT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hi Florian,
+>
+> On Wed, Nov 23, 2022 at 11:46:58AM +0100, Florian Weimer wrote:
+>> * Jason A. Donenfeld:
+>> 
+>> > + * The vgetrandom() function in userspace requires an opaque state, which this
+>> > + * function provides to userspace, by mapping a certain number of special pages
+>> > + * into the calling process. It takes a hint as to the number of opaque states
+>> > + * desired, and returns the number of opaque states actually allocated, the
+>> > + * size of each one in bytes, and the address of the first state.
+>> > + */
+>> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
+>> > +		unsigned long __user *, size_per_each, unsigned int, flags)
+>> 
+>> I think you should make this __u64, so that you get a consistent
+>> userspace interface on all architectures, without the need for compat
+>> system calls.
+>
+> That would be quite unconventional. Most syscalls that take lengths do
+> so with the native register size (`unsigned long`, `size_t`), rather
+> than u64. If you can point to a recent trend away from this by
+> indicating some commits that added new syscalls with u64, I'd be happy
+> to be shown otherwise. But AFAIK, that's not the way it's done.
 
-On Wed, Nov 23, 2022 at 09:49:23AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.80 release.
-> There are 181 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+See clone3 and struct clone_args.  It's more common with pointers, which
+are now 64 bits unconditionally: struct futex_waitv, struct rseq_cs and
+struct rseq.
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+If the length or pointer is a system call argument, widening it to 64
+bits is not necessary because zero-extension to the full register
+eliminates the need for a compat system call.  But if you pass the
+address to a size or pointer, you'll need compat syscalls if you don't
+make the passed data __u64.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>=20
+Thanks,
+Florian
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---m8RHb0XePUCKlKuT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY37rCAAKCRD2uYlJVVFO
-o2aKAP90gSYvj507poLMjIQxTK2VLml5E3sz31igtyMEUF58dQD9GELsELsAbxkI
-N9O89nMeDAeYaLcdUux5yi1mGOWhTwA=
-=8VWb
------END PGP SIGNATURE-----
-
---m8RHb0XePUCKlKuT--
