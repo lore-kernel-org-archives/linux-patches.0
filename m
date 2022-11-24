@@ -1,447 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0802F26
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 16:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9161C433D6;
-	Thu, 24 Nov 2022 16:56:14 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="arxlqSqY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669308973;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WQkNPzT+4E6D9ikxguKExRCMA9UxFawQtzMPEnpl28M=;
-	b=arxlqSqYukYk5orSZci9P0U8+n1NoLSPANyatjKk29yyQaFXaAgV74fpZ/ZH6OacBrHbzP
-	10HlEmaJGV3CkOvsTON8s1RRrqf5is5E80ly/5gm8y7x3j49hOLQAal1euiNGN77B3SV2r
-	NdWhFf5Xxn7U6s19Mq5RucOzLqgwe6c=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a70463aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Nov 2022 16:56:12 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	tglx@linutronix.de
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org,
-	x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH v7 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-Date: Thu, 24 Nov 2022 17:55:36 +0100
-Message-Id: <20221124165536.1631325-4-Jason@zx2c4.com>
-In-Reply-To: <20221124165536.1631325-1-Jason@zx2c4.com>
-References: <20221124165536.1631325-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4854D33E9
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 20:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB9BC433D6;
+	Thu, 24 Nov 2022 20:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669321862;
+	bh=VYogHO/QzC0Ie7JtQNRyLU+4odaED0lO+ZqrQ2anQ4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B4JIUPPb4GNyqmaugd+1VesUVg/rY2YBuh9jPZSEa9LfSEQzH3zDygt0HPqdzet2M
+	 Dp4c/55O2yCFMpzlwelwJsAnq/cWVHvGVHOAbVO908xeu84LN7567KgsRaE4IVVlI4
+	 irQCMsnXsSJ21jNJaw6RWjzOUpRxJ6RKhWjRfpd9wRYv71gwQVQAvT0UvpbAXv+eDr
+	 jBzcX+3BhUu0qt/DvQCSNER8QfDrEQGt+TJ9slcZjWNwkaVshc7is4iQ3Zq0vSzdZc
+	 hcrepLOFcnDEx3g9ybGBdkV9QmYuTZxJxy7F+stexs8bO96+DDGYQXJXkj+qDrkXGn
+	 djLsL9V97W7iw==
+Date: Thu, 24 Nov 2022 22:30:41 +0200
+From: Mike Rapoport <rppt@kernel.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	Aaro Koskinen <aaro.koskinen@iki.fi>, Arnd Bergmann <arnd@arndb.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Conor Dooley <conor@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+	Jonas Bonn <jonas@southpole.se>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Kees Cook <keescook@chromium.org>,
+	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-sh@vger.kernel.org,
+	openrisc@lists.librecores.org, Rich Felker <dalias@libc.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Stafford Horne <shorne@gmail.com>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Tony Lindgren <tony@atomide.com>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: Re: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
+Message-ID: <Y3/UccT+hJ/6/v4c@kernel.org>
+References: <20221121171202.22080-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221121171202.22080-1-vbabka@suse.cz>
 
-Hook up the generic vDSO implementation to the x86 vDSO data page. Since
-the existing vDSO infrastructure is heavily based on the timekeeping
-functionality, which works over arrays of bases, a new macro is
-introduced for vvars that are not arrays.
+On Mon, Nov 21, 2022 at 06:11:50PM +0100, Vlastimil Babka wrote:
+> Hi,
+> 
+> this continues the discussion from [1]. Reasons to remove SLOB are
+> outlined there and no-one has objected so far. The last patch of this
+> series therefore deprecates CONFIG_SLOB and updates all the defconfigs
+> using CONFIG_SLOB=y in the tree.
+> 
+> There is a k210 board with 8MB RAM where switching to SLUB caused issues
+> [2] and the lkp bot wasn't also happy about code bloat [3]. To address
+> both, this series introduces CONFIG_SLUB_TINY to perform some rather
+> low-hanging fruit modifications to SLUB to reduce its memory overhead.
+> This seems to have been successful at least in the k210 case [4]. I
+> consider this as an acceptable tradeoff for getting rid of SLOB.
+> 
+> The series is also available in git:
+> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-tiny-v1r2
+> 
+> [1] https://lore.kernel.org/all/b35c3f82-f67b-2103-7d82-7a7ba7521439@suse.cz/
+> [2] https://lore.kernel.org/all/a5bba3ca-da19-293c-c01b-a28291533466@opensource.wdc.com/
+> [3] https://lore.kernel.org/all/Y25E9cJbhDAKi1vd@99bb1221be19/
+> [4] https://lore.kernel.org/all/6a1883c4-4c3f-545a-90e8-2cd805bcf4ae@opensource.wdc.com/
+> 
+> Vlastimil Babka (12):
+>   mm, slab: ignore hardened usercopy parameters when disabled
+>   mm, slub: add CONFIG_SLUB_TINY
+>   mm, slub: disable SYSFS support with CONFIG_SLUB_TINY
+>   mm, slub: retain no free slabs on partial list with CONFIG_SLUB_TINY
+>   mm, slub: lower the default slub_max_order with CONFIG_SLUB_TINY
+>   mm, slub: don't create kmalloc-rcl caches with CONFIG_SLUB_TINY
+>   mm, slab: ignore SLAB_RECLAIM_ACCOUNT with CONFIG_SLUB_TINY
+>   mm, slub: refactor free debug processing
+>   mm, slub: split out allocations from pre/post hooks
+>   mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
+>   mm, slub: don't aggressively inline with CONFIG_SLUB_TINY
+>   mm, slob: rename CONFIG_SLOB to CONFIG_SLOB_DEPRECATED
+> 
+>  arch/arm/configs/clps711x_defconfig           |   3 +-
+>  arch/arm/configs/collie_defconfig             |   3 +-
+>  arch/arm/configs/multi_v4t_defconfig          |   3 +-
+>  arch/arm/configs/omap1_defconfig              |   3 +-
+>  arch/arm/configs/pxa_defconfig                |   3 +-
+>  arch/arm/configs/tct_hammer_defconfig         |   3 +-
+>  arch/arm/configs/xcep_defconfig               |   3 +-
+>  arch/openrisc/configs/or1ksim_defconfig       |   3 +-
+>  arch/openrisc/configs/simple_smp_defconfig    |   3 +-
+>  arch/riscv/configs/nommu_k210_defconfig       |   3 +-
+>  .../riscv/configs/nommu_k210_sdcard_defconfig |   3 +-
+>  arch/riscv/configs/nommu_virt_defconfig       |   3 +-
+>  arch/sh/configs/rsk7201_defconfig             |   3 +-
+>  arch/sh/configs/rsk7203_defconfig             |   3 +-
+>  arch/sh/configs/se7206_defconfig              |   3 +-
+>  arch/sh/configs/shmin_defconfig               |   3 +-
+>  arch/sh/configs/shx3_defconfig                |   3 +-
+>  include/linux/slab.h                          |   8 +
+>  include/linux/slub_def.h                      |   6 +-
+>  kernel/configs/tiny.config                    |   5 +-
+>  mm/Kconfig                                    |  38 +-
+>  mm/Kconfig.debug                              |   2 +-
+>  mm/slab_common.c                              |  16 +-
+>  mm/slub.c                                     | 415 ++++++++++++------
+>  24 files changed, 377 insertions(+), 164 deletions(-)
 
-The vDSO function requires a ChaCha20 implementation that does not write
-to the stack, yet can still do an entire ChaCha20 permutation, so
-provide this using SSE2, since this is userland code that must work on
-all x86-64 processors.
+For the series
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- arch/x86/Kconfig                        |   1 +
- arch/x86/entry/vdso/Makefile            |   3 +-
- arch/x86/entry/vdso/vdso.lds.S          |   2 +
- arch/x86/entry/vdso/vgetrandom-chacha.S | 179 ++++++++++++++++++++++++
- arch/x86/entry/vdso/vgetrandom.c        |  18 +++
- arch/x86/include/asm/vdso/getrandom.h   |  49 +++++++
- arch/x86/include/asm/vdso/vsyscall.h    |   2 +
- arch/x86/include/asm/vvar.h             |  16 +++
- 8 files changed, 269 insertions(+), 1 deletion(-)
- create mode 100644 arch/x86/entry/vdso/vgetrandom-chacha.S
- create mode 100644 arch/x86/entry/vdso/vgetrandom.c
- create mode 100644 arch/x86/include/asm/vdso/getrandom.h
+Acked-by: Mike Rapoport <rppt@linux.ibm.com>
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 331e21ba961a..b64b1b1274ae 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -270,6 +270,7 @@ config X86
- 	select HAVE_UNSTABLE_SCHED_CLOCK
- 	select HAVE_USER_RETURN_NOTIFIER
- 	select HAVE_GENERIC_VDSO
-+	select HAVE_VDSO_GETRANDOM		if X86_64
- 	select HOTPLUG_SMT			if SMP
- 	select IRQ_FORCED_THREADING
- 	select NEED_PER_CPU_EMBED_FIRST_CHUNK
-diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
-index 3e88b9df8c8f..2de64e52236a 100644
---- a/arch/x86/entry/vdso/Makefile
-+++ b/arch/x86/entry/vdso/Makefile
-@@ -27,7 +27,7 @@ VDSO32-$(CONFIG_X86_32)		:= y
- VDSO32-$(CONFIG_IA32_EMULATION)	:= y
- 
- # files to link into the vdso
--vobjs-y := vdso-note.o vclock_gettime.o vgetcpu.o
-+vobjs-y := vdso-note.o vclock_gettime.o vgetcpu.o vgetrandom.o vgetrandom-chacha.o
- vobjs32-y := vdso32/note.o vdso32/system_call.o vdso32/sigreturn.o
- vobjs32-y += vdso32/vclock_gettime.o
- vobjs-$(CONFIG_X86_SGX)	+= vsgx.o
-@@ -104,6 +104,7 @@ CFLAGS_REMOVE_vclock_gettime.o = -pg
- CFLAGS_REMOVE_vdso32/vclock_gettime.o = -pg
- CFLAGS_REMOVE_vgetcpu.o = -pg
- CFLAGS_REMOVE_vsgx.o = -pg
-+CFLAGS_REMOVE_vgetrandom.o = -pg
- 
- #
- # X32 processes use x32 vDSO to access 64bit kernel data.
-diff --git a/arch/x86/entry/vdso/vdso.lds.S b/arch/x86/entry/vdso/vdso.lds.S
-index 4bf48462fca7..1919cc39277e 100644
---- a/arch/x86/entry/vdso/vdso.lds.S
-+++ b/arch/x86/entry/vdso/vdso.lds.S
-@@ -28,6 +28,8 @@ VERSION {
- 		clock_getres;
- 		__vdso_clock_getres;
- 		__vdso_sgx_enter_enclave;
-+		getrandom;
-+		__vdso_getrandom;
- 	local: *;
- 	};
- }
-diff --git a/arch/x86/entry/vdso/vgetrandom-chacha.S b/arch/x86/entry/vdso/vgetrandom-chacha.S
-new file mode 100644
-index 000000000000..d1b986be3aa4
---- /dev/null
-+++ b/arch/x86/entry/vdso/vgetrandom-chacha.S
-@@ -0,0 +1,179 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-+ */
-+
-+#include <linux/linkage.h>
-+#include <asm/frame.h>
-+
-+.section	.rodata.cst16.CONSTANTS, "aM", @progbits, 16
-+.align 16
-+CONSTANTS:	.octa 0x6b20657479622d323320646e61707865
-+.text
-+
-+/*
-+ * Very basic SSE2 implementation of ChaCha20. Produces a given positive number
-+ * of blocks of output with a nonce of 0, taking an input key and 8-byte
-+ * counter. Importantly does not spill to the stack. Its arguments are:
-+ *
-+ *	rdi: output bytes
-+ *	rsi: 32-byte key input
-+ *	rdx: 8-byte counter input/output
-+ *	rcx: number of 64-byte blocks to write to output
-+ */
-+SYM_FUNC_START(chacha20_blocks_nostack)
-+
-+#define output  %rdi
-+#define key     %rsi
-+#define counter %rdx
-+#define nblocks %rcx
-+#define i       %al
-+#define state0  %xmm0
-+#define state1  %xmm1
-+#define state2  %xmm2
-+#define state3  %xmm3
-+#define copy0   %xmm4
-+#define copy1   %xmm5
-+#define copy2   %xmm6
-+#define copy3   %xmm7
-+#define temp    %xmm8
-+#define one     %xmm9
-+
-+	/* copy0 = "expand 32-byte k" */
-+	movaps		CONSTANTS(%rip),copy0
-+	/* copy1,copy2 = key */
-+	movdqu		0x00(key),copy1
-+	movdqu		0x10(key),copy2
-+	/* copy3 = counter || zero nonce */
-+	movq		0x00(counter),copy3
-+	/* one = 1 || 0 */
-+	movq		$1,%rax
-+	movq		%rax,one
-+
-+.Lblock:
-+	/* state0,state1,state2,state3 = copy0,copy1,copy2,copy3 */
-+	movdqa		copy0,state0
-+	movdqa		copy1,state1
-+	movdqa		copy2,state2
-+	movdqa		copy3,state3
-+
-+	movb		$10,i
-+.Lpermute:
-+	/* state0 += state1, state3 = rotl32(state3 ^ state0, 16) */
-+	paddd		state1,state0
-+	pxor		state0,state3
-+	movdqa		state3,temp
-+	pslld		$16,temp
-+	psrld		$16,state3
-+	por		temp,state3
-+
-+	/* state2 += state3, state1 = rotl32(state1 ^ state2, 12) */
-+	paddd		state3,state2
-+	pxor		state2,state1
-+	movdqa		state1,temp
-+	pslld		$12,temp
-+	psrld		$20,state1
-+	por		temp,state1
-+
-+	/* state0 += state1, state3 = rotl32(state3 ^ state0, 8) */
-+	paddd		state1,state0
-+	pxor		state0,state3
-+	movdqa		state3,temp
-+	pslld		$8,temp
-+	psrld		$24,state3
-+	por		temp,state3
-+
-+	/* state2 += state3, state1 = rotl32(state1 ^ state2, 7) */
-+	paddd		state3,state2
-+	pxor		state2,state1
-+	movdqa		state1,temp
-+	pslld		$7,temp
-+	psrld		$25,state1
-+	por		temp,state1
-+
-+	/* state1 = shuffle32(state1, MASK(0, 3, 2, 1)) */
-+	pshufd		$0x39,state1,state1
-+	/* state2 = shuffle32(state2, MASK(1, 0, 3, 2)) */
-+	pshufd		$0x4e,state2,state2
-+	/* state3 = shuffle32(state3, MASK(2, 1, 0, 3)) */
-+	pshufd		$0x93,state3,state3
-+
-+	/* state0 += state1, state3 = rotl32(state3 ^ state0, 16) */
-+	paddd		state1,state0
-+	pxor		state0,state3
-+	movdqa		state3,temp
-+	pslld		$16,temp
-+	psrld		$16,state3
-+	por		temp,state3
-+
-+	/* state2 += state3, state1 = rotl32(state1 ^ state2, 12) */
-+	paddd		state3,state2
-+	pxor		state2,state1
-+	movdqa		state1,temp
-+	pslld		$12,temp
-+	psrld		$20,state1
-+	por		temp,state1
-+
-+	/* state0 += state1, state3 = rotl32(state3 ^ state0, 8) */
-+	paddd		state1,state0
-+	pxor		state0,state3
-+	movdqa		state3,temp
-+	pslld		$8,temp
-+	psrld		$24,state3
-+	por		temp,state3
-+
-+	/* state2 += state3, state1 = rotl32(state1 ^ state2, 7) */
-+	paddd		state3,state2
-+	pxor		state2,state1
-+	movdqa		state1,temp
-+	pslld		$7,temp
-+	psrld		$25,state1
-+	por		temp,state1
-+
-+	/* state1 = shuffle32(state1, MASK(2, 1, 0, 3)) */
-+	pshufd		$0x93,state1,state1
-+	/* state2 = shuffle32(state2, MASK(1, 0, 3, 2)) */
-+	pshufd		$0x4e,state2,state2
-+	/* state3 = shuffle32(state3, MASK(0, 3, 2, 1)) */
-+	pshufd		$0x39,state3,state3
-+
-+	decb		i
-+	jnz		.Lpermute
-+
-+	/* output0 = state0 + copy0 */
-+	paddd		copy0,state0
-+	movdqu		state0,0x00(output)
-+	/* output1 = state1 + copy1 */
-+	paddd		copy1,state1
-+	movdqu		state1,0x10(output)
-+	/* output2 = state2 + copy2 */
-+	paddd		copy2,state2
-+	movdqu		state2,0x20(output)
-+	/* output3 = state3 + copy3 */
-+	paddd		copy3,state3
-+	movdqu		state3,0x30(output)
-+
-+	/* ++copy3.counter */
-+	paddq		one,copy3
-+
-+	/* output += 64, --nblocks */
-+	addq		$64,output
-+	decq		nblocks
-+	jnz		.Lblock
-+
-+	/* counter = copy3.counter */
-+	movq		copy3,0x00(counter)
-+
-+	/* Zero out all the regs, in case nothing uses these again. */
-+	pxor		state0,state0
-+	pxor		state1,state1
-+	pxor		state2,state2
-+	pxor		state3,state3
-+	pxor		copy0,copy0
-+	pxor		copy1,copy1
-+	pxor		copy2,copy2
-+	pxor		copy3,copy3
-+	pxor		temp,temp
-+
-+	ret
-+SYM_FUNC_END(chacha20_blocks_nostack)
-diff --git a/arch/x86/entry/vdso/vgetrandom.c b/arch/x86/entry/vdso/vgetrandom.c
-new file mode 100644
-index 000000000000..c7a2476d5d8a
---- /dev/null
-+++ b/arch/x86/entry/vdso/vgetrandom.c
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-+ */
-+#include <linux/kernel.h>
-+#include <linux/types.h>
-+
-+#include "../../../../lib/vdso/getrandom.c"
-+
-+ssize_t __vdso_getrandom(void *buffer, size_t len, unsigned int flags, void *state);
-+
-+ssize_t __vdso_getrandom(void *buffer, size_t len, unsigned int flags, void *state)
-+{
-+	return __cvdso_getrandom(buffer, len, flags, state);
-+}
-+
-+ssize_t getrandom(void *, size_t, unsigned int, void *)
-+	__attribute__((weak, alias("__vdso_getrandom")));
-diff --git a/arch/x86/include/asm/vdso/getrandom.h b/arch/x86/include/asm/vdso/getrandom.h
-new file mode 100644
-index 000000000000..099aca58ef20
---- /dev/null
-+++ b/arch/x86/include/asm/vdso/getrandom.h
-@@ -0,0 +1,49 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-+ */
-+#ifndef __ASM_VDSO_GETRANDOM_H
-+#define __ASM_VDSO_GETRANDOM_H
-+
-+#ifndef __ASSEMBLY__
-+
-+#include <asm/unistd.h>
-+#include <asm/vvar.h>
-+
-+static __always_inline ssize_t
-+getrandom_syscall(void *buffer, size_t len, unsigned int flags)
-+{
-+	long ret;
-+
-+	asm ("syscall" : "=a" (ret) :
-+	     "0" (__NR_getrandom), "D" (buffer), "S" (len), "d" (flags) :
-+	     "rcx", "r11", "memory");
-+
-+	return ret;
-+}
-+
-+#define __vdso_rng_data (VVAR(_vdso_rng_data))
-+
-+static __always_inline const struct vdso_rng_data *__arch_get_vdso_rng_data(void)
-+{
-+	if (__vdso_data->clock_mode == VDSO_CLOCKMODE_TIMENS)
-+		return (void *)&__vdso_rng_data +
-+		       ((void *)&__timens_vdso_data - (void *)&__vdso_data);
-+	return &__vdso_rng_data;
-+}
-+
-+/*
-+ * Generates a given positive number of block of ChaCha20 output with nonce=0,
-+ * and does not write to any stack or memory outside of the parameters passed
-+ * to it. This way, we don't need to worry about stack data leaking into forked
-+ * child processes.
-+ */
-+static __always_inline void __arch_chacha20_blocks_nostack(u8 *dst_bytes, const u32 *key, u32 *counter, size_t nblocks)
-+{
-+	extern void chacha20_blocks_nostack(u8 *dst_bytes, const u32 *key, u32 *counter, size_t nblocks);
-+	return chacha20_blocks_nostack(dst_bytes, key, counter, nblocks);
-+}
-+
-+#endif /* !__ASSEMBLY__ */
-+
-+#endif /* __ASM_VDSO_GETRANDOM_H */
-diff --git a/arch/x86/include/asm/vdso/vsyscall.h b/arch/x86/include/asm/vdso/vsyscall.h
-index be199a9b2676..71c56586a22f 100644
---- a/arch/x86/include/asm/vdso/vsyscall.h
-+++ b/arch/x86/include/asm/vdso/vsyscall.h
-@@ -11,6 +11,8 @@
- #include <asm/vvar.h>
- 
- DEFINE_VVAR(struct vdso_data, _vdso_data);
-+DEFINE_VVAR_SINGLE(struct vdso_rng_data, _vdso_rng_data);
-+
- /*
-  * Update the vDSO data page to keep in sync with kernel timekeeping.
-  */
-diff --git a/arch/x86/include/asm/vvar.h b/arch/x86/include/asm/vvar.h
-index 183e98e49ab9..9d9af37f7cab 100644
---- a/arch/x86/include/asm/vvar.h
-+++ b/arch/x86/include/asm/vvar.h
-@@ -26,6 +26,8 @@
-  */
- #define DECLARE_VVAR(offset, type, name) \
- 	EMIT_VVAR(name, offset)
-+#define DECLARE_VVAR_SINGLE(offset, type, name) \
-+	EMIT_VVAR(name, offset)
- 
- #else
- 
-@@ -37,6 +39,10 @@ extern char __vvar_page;
- 	extern type timens_ ## name[CS_BASES]				\
- 	__attribute__((visibility("hidden")));				\
- 
-+#define DECLARE_VVAR_SINGLE(offset, type, name)				\
-+	extern type vvar_ ## name					\
-+	__attribute__((visibility("hidden")));				\
-+
- #define VVAR(name) (vvar_ ## name)
- #define TIMENS(name) (timens_ ## name)
- 
-@@ -44,12 +50,22 @@ extern char __vvar_page;
- 	type name[CS_BASES]						\
- 	__attribute__((section(".vvar_" #name), aligned(16))) __visible
- 
-+#define DEFINE_VVAR_SINGLE(type, name)					\
-+	type name							\
-+	__attribute__((section(".vvar_" #name), aligned(16))) __visible
-+
- #endif
- 
- /* DECLARE_VVAR(offset, type, name) */
- 
- DECLARE_VVAR(128, struct vdso_data, _vdso_data)
- 
-+#if !defined(_SINGLE_DATA)
-+#define _SINGLE_DATA
-+DECLARE_VVAR_SINGLE(640, struct vdso_rng_data, _vdso_rng_data)
-+#endif
-+
- #undef DECLARE_VVAR
-+#undef DECLARE_VVAR_SINGLE
- 
- #endif
 -- 
-2.38.1
-
+Sincerely yours,
+Mike.
