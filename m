@@ -1,105 +1,173 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3802589
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 13:18:25 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 2DE6F32009C6;
-	Thu, 24 Nov 2022 08:18:24 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Thu, 24 Nov 2022 08:18:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1669295903; x=1669382303; bh=4sKDJSN01P
-	eIAiXQHaFqrZQX8gqaur58q7xvYuCCrEw=; b=DY52+Je6rlB55h4gnvNU+KhxnG
-	+fF14yFdZ9YMTXe5RWTtb96nPdiXE9b7ZuQdIIAIjm6lYLqDt9kPoRLIOehaNBSo
-	uhqHJSd6MZkq3jxyzQe5d0cY8EgbXyc3ANDEmkwGlILJIdVXhjKEILq9eue1QYr+
-	SmrZEjlJMQt2div+xHqZ1xkJsUafpE5v/PkUxFF5mkPVw9rdk53Yfjgg7GaptpdQ
-	tDw0ppZyl7Sp6dcw0hrWsLHhWLcUSc4mg8Y55NLkUgmeY9aomx8hsYnS20YAcPus
-	NrJ0NIdALlEANOQ6t11fJppwBnfPmhQboDsSVbSjSnyI4jNOX36rh9HmbVXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669295903; x=1669382303; bh=4sKDJSN01PeIAiXQHaFqrZQX8gqa
-	ur58q7xvYuCCrEw=; b=cHUsDg9USKksVIE/uaaxz8YGUoQJXPIPFXFBdKtr+8UR
-	F/M6SjrokoS65iGn6reMTGQxDxGUR0EuTTT8r+xwNZWpdXSGb27fy3FIfuJKhq1b
-	nIacplD12qe56DgdU0LqprZz22yJlLhjnuLw+0RQbZ6LGbGFD4oco+aIVAj1ujDF
-	KZGgYQsDcXVYdR83TXItpaY7vN5eh3UWLbAjZgv6CVUhUP6uC5HMwnfMJyZolwJ6
-	KpqKODvNXLYJ0F0rYpnyVz8Uy+jFUzOhM+/hK4eagtjChnMaUwjgW5kv2KW0QBfU
-	bdxfn2ii6N2So5jluJ3V9u4NXMGFZLCOeLcSjQNq+w==
-X-ME-Sender: <xms:H29_Y0Qq5JD6yf7CFoVYBOkq4svdhXxXMheSgqdh9Kh2pHUcmw7n_A>
-    <xme:H29_YxwzxeXEvIyaFxHj2_TaD74MHm40xVdSoHcCrlDTfeDAuq4zU-5b24e6j3aDx
-    9u6lbOzo-JZcW5M9E8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrieefgdehudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeevhfffledtgeehfeffhfdtgedvheejtdfgkeeuvefgudffteettdekkeeufeeh
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:H29_Yx1DEl7KyReL2IQVQu5LvTUalRSn0otglnXihmI5wpkk7WVLgg>
-    <xmx:H29_Y4ANsr_zanA5MrUDVh5-lLct3tt5kaUB-3CShYkujPQwbZTuVw>
-    <xmx:H29_Y9iDNEUwoPSIyQ_DDFkOQha36lWb9DsYpFFkERE6Vv1Kny0rUQ>
-    <xmx:H29_Y-Us_IcDqiJyWRqnUuTp1dXhECKWovVznjJfYrYntzt8ZzEM0A>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 6A8E8B60086; Thu, 24 Nov 2022 08:18:23 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640B22589
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 13:23:51 +0000 (UTC)
+Received: by mail-pf1-f179.google.com with SMTP id v28so1614082pfi.12
+        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 05:23:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8y/808AEnHwi3gKJBM+uetYeo4u9vQ49H82jeAEWhHU=;
+        b=V+QjrA/U7ScHxJ9ZYpE7O3RSWmSkzchs2ANjV8VzLrCCY/niTxtyQWGpPbyM9XkmyW
+         WUZzaMIhKqFZFU8oxa222F3tpEq3Y1YS3msg7uTrIWc7lZ5zVT2Av3x39VFIhcPpBlAk
+         G0hZmwyYAAjE6+KaJbFb3EiDMmTQzATe/MJ+UHCfocUWVLNcKAVFKgrP36sOAkUgFzeN
+         HMPL3Zi3SO02hDye9/9wyECt8ctuhmRJx2U+jb9AdWcny/T0kfhMZgTavulYELFx/8oW
+         VsVdiUQYGBOJ3nWlF4RTajvzflna4ZgeRJ+Q76rY2eJeasSHYJVyRRfSiXuq/KwD/6Ym
+         Brfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8y/808AEnHwi3gKJBM+uetYeo4u9vQ49H82jeAEWhHU=;
+        b=Dv8EVTHmvnWv40kljL88VnBi2e/NTIUJ9tJKk67UThqPHXjwpSZqGHIjardmyDYKFM
+         pxgV25uTwdw8BHAm549cEO9zAMrbMLGTSghniNqFqm2q6f6g4q7zYdl6i3MyDn96FZ9v
+         cw6l5sCTrPDTvEDkJabv4MwSzozSReGygNIxx/nT7xFNft54FkM4I+8d7g/VmPexL0iW
+         FN0oJdwTQgSy+ml3t6Eywdzp8Mh0uvnr6recLQwFHLhVuBBYSVyJLYHAtmZLL6mTj+h6
+         MdnJs4fChzfCA3P5VzaR2eYDmCv0/rAh3TqdE1btxpE6mzbJWDwyPYA3W8uvveDmYQAD
+         KoyQ==
+X-Gm-Message-State: ANoB5pl0gasS9PO/Plxlw9HtBr217SYxP7rQA8uwAFkd1ea4VbQGLSpv
+	7NQ5ngGUQaiF9yGYKlJ8qdyKyI0Src3JsSv3
+X-Google-Smtp-Source: AA0mqf4TyZNNwzl3rHjI/din13NVJjNuRxJ1olfSN/enVVVxr/ZPBliA6gHtprrBtvgwnZY7JQPUMg==
+X-Received: by 2002:a63:4c4b:0:b0:46f:f112:e782 with SMTP id m11-20020a634c4b000000b0046ff112e782mr11630314pgl.219.1669296230710;
+        Thu, 24 Nov 2022 05:23:50 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id ik16-20020a170902ab1000b00172f6726d8esm1229687plb.277.2022.11.24.05.23.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 05:23:49 -0800 (PST)
+Date: Thu, 24 Nov 2022 22:23:44 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+ CONFIG_SLUB_TINY
+Message-ID: <Y39wYPl5y3apKbD2@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-7-vbabka@suse.cz>
+ <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <7928bec7-4659-4b32-aad7-2300409ea670@app.fastmail.com>
-In-Reply-To: <Y39oBtR8t+XNPS0d@zx2c4.com>
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
- <20221121152909.3414096-2-Jason@zx2c4.com>
- <87v8n6lzh9.fsf@oldenburg.str.redhat.com> <Y37DDX5RtiGsV6MO@zx2c4.com>
- <87a64g7wks.fsf@oldenburg.str.redhat.com> <Y39djiBSmgXfgWJv@zx2c4.com>
- <87cz9c5z1f.fsf@oldenburg.str.redhat.com> <Y39iisTmUO2AaKNs@zx2c4.com>
- <Y39oBtR8t+XNPS0d@zx2c4.com>
-Date: Thu, 24 Nov 2022 14:18:03 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- "Florian Weimer" <fweimer@redhat.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- "Thomas Gleixner" <tglx@linutronix.de>, linux-crypto@vger.kernel.org,
- x86@kernel.org, "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
- "Carlos O'Donell" <carlos@redhat.com>, linux-api@vger.kernel.org
-Subject: Re: [PATCH v6 1/3] random: add vgetrandom_alloc() syscall
-Content-Type: text/plain
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d77498f8-b15f-9dae-1803-2d2bbb99da50@suse.cz>
 
-On Thu, Nov 24, 2022, at 13:48, Jason A. Donenfeld wrote:
-> On Thu, Nov 24, 2022 at 01:24:42PM +0100, Jason A. Donenfeld wrote:
+On Wed, Nov 23, 2022 at 02:53:43PM +0100, Vlastimil Babka wrote:
+> On 11/21/22 18:11, Vlastimil Babka wrote:
+> > Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> > by grouping pages by mobility, but on tiny systems the extra memory
+> > overhead of separate set of kmalloc-rcl caches will probably be worse,
+> > and mobility grouping likely disabled anyway.
+> > 
+> > Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> > regular ones.
+> > 
+> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> 
+> Fixed up in response to lkp report for a MEMCG_KMEM+SLUB_TINY combo:
+> ---8<---
+> From c1ec0b924850a2863d061f316615d596176f15bb Mon Sep 17 00:00:00 2001
+> From: Vlastimil Babka <vbabka@suse.cz>
+> Date: Tue, 15 Nov 2022 18:19:28 +0100
+> Subject: [PATCH 06/12] mm, slub: don't create kmalloc-rcl caches with
+>  CONFIG_SLUB_TINY
+> 
+> Distinguishing kmalloc(__GFP_RECLAIMABLE) can help against fragmentation
+> by grouping pages by mobility, but on tiny systems the extra memory
+> overhead of separate set of kmalloc-rcl caches will probably be worse,
+> and mobility grouping likely disabled anyway.
+> 
+> Thus with CONFIG_SLUB_TINY, don't create kmalloc-rcl caches and use the
+> regular ones.
+> 
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  include/linux/slab.h |  9 +++++++--
+>  mm/slab_common.c     | 10 ++++++++--
+>  2 files changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/linux/slab.h b/include/linux/slab.h
+> index 45efc6c553b8..ae2d19ec8467 100644
+> --- a/include/linux/slab.h
+> +++ b/include/linux/slab.h
+> @@ -336,12 +336,17 @@ enum kmalloc_cache_type {
+>  #endif
+>  #ifndef CONFIG_MEMCG_KMEM
+>  	KMALLOC_CGROUP = KMALLOC_NORMAL,
+> -#else
+> -	KMALLOC_CGROUP,
+>  #endif
+> +#ifdef CONFIG_SLUB_TINY
+> +	KMALLOC_RECLAIM = KMALLOC_NORMAL,
+> +#else
+>  	KMALLOC_RECLAIM,
+> +#endif
+>  #ifdef CONFIG_ZONE_DMA
+>  	KMALLOC_DMA,
+> +#endif
+> +#ifdef CONFIG_MEMCG_KMEM
+> +	KMALLOC_CGROUP,
+>  #endif
+>  	NR_KMALLOC_TYPES
+>  };
+> diff --git a/mm/slab_common.c b/mm/slab_common.c
+> index a8cb5de255fc..907d52963806 100644
+> --- a/mm/slab_common.c
+> +++ b/mm/slab_common.c
+> @@ -770,10 +770,16 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
+>  #define KMALLOC_CGROUP_NAME(sz)
+>  #endif
+>  
+> +#ifndef CONFIG_SLUB_TINY
+> +#define KMALLOC_RCL_NAME(sz)	.name[KMALLOC_RECLAIM] = "kmalloc-rcl-" #sz,
+> +#else
+> +#define KMALLOC_RCL_NAME(sz)
+> +#endif
+> +
+>  #define INIT_KMALLOC_INFO(__size, __short_size)			\
+>  {								\
+>  	.name[KMALLOC_NORMAL]  = "kmalloc-" #__short_size,	\
+> -	.name[KMALLOC_RECLAIM] = "kmalloc-rcl-" #__short_size,	\
+> +	KMALLOC_RCL_NAME(__short_size)				\
+>  	KMALLOC_CGROUP_NAME(__short_size)			\
+>  	KMALLOC_DMA_NAME(__short_size)				\
+>  	.size = __size,						\
+> @@ -859,7 +865,7 @@ void __init setup_kmalloc_cache_index_table(void)
+>  static void __init
+>  new_kmalloc_cache(int idx, enum kmalloc_cache_type type, slab_flags_t flags)
+>  {
+> -	if (type == KMALLOC_RECLAIM) {
+> +	if ((KMALLOC_RECLAIM != KMALLOC_NORMAL) && (type == KMALLOC_RECLAIM)) {
 
-> Looks like set_mempolicy, get_mempoliy, and migrate_pages pass an
-> unsigned long pointer and I don't see any compat stuff around it:
->
->     SYSCALL_DEFINE3(set_mempolicy, int, mode, const unsigned long 
-> __user *, nmask,
->                     unsigned long, maxnode)
->    
->     SYSCALL_DEFINE5(get_mempolicy, int __user *, policy,
->                     unsigned long __user *, nmask, unsigned long, maxnode,
->                     unsigned long, addr, unsigned long, flags)
->
->     SYSCALL_DEFINE4(migrate_pages, pid_t, pid, unsigned long, maxnode,
->                     const unsigned long __user *, old_nodes,
->                     const unsigned long __user *, new_nodes)
+for consistency this can be:
+	if (IS_ENABLED(CONFIG_SLUB_TINY) && (type == KMALLOC_RECLAIM)) {
 
-Compat handling for these is done all the way down in the
-pointer access:
+But yeah, it's not a big deal.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/mm/mempolicy.c#n1368
+>  		flags |= SLAB_RECLAIM_ACCOUNT;
+>  	} else if (IS_ENABLED(CONFIG_MEMCG_KMEM) && (type == KMALLOC_CGROUP)) {
+>  		if (mem_cgroup_kmem_disabled()) {
+> -- 
+> 2.38.1
+> 
 
-This works here because it's a special bitmap but is not the
-best approach if you just have a pointer to a single value.
+For either case:
 
-       Arnd
+Looks good to me.
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+
+-- 
+Thanks,
+Hyeonggon
