@@ -1,44 +1,44 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC1E23AE
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 09:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41723B4
+	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 09:09:05 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 51F5E218FF;
-	Thu, 24 Nov 2022 09:00:39 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 364C1218E6;
+	Thu, 24 Nov 2022 09:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1669280439; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1669280944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rA5/aENVR0bEyMQoBGdlZhbE0LfdmtRdobdrIQ0v1Uc=;
-	b=rqTkvg4c1kL0BjXJTshfAM9/+BK6UEAok/LW/2i3kos0fWOfTntEwrTr8sQJVDvIodE1QI
-	OiuPtRXXKMNc1YZDKgTpTb6J+DSrRi2XBSF2WAsTHAso+95u2eQU9uhkSRNWu2nfGTg2If
-	3VNSieUmjIvikPHaFEHZrdHqW41ZklM=
+	bh=FclYwF7mD6zlQIZIpdVB8v8DFuE768K+j4RqjDVV1Z4=;
+	b=kEOX+wB6OF6hz8EP3HGfyVC4B/lC6PiVIhtAYVxDG4OMYQ4ztcDfl4ilXlWVDbdIEeiMUO
+	WMDEfdioXUZ+E7lo0orv9i4D6w3ETgDA74t9Y4MSNX2bOvT+7rWMDLvYaOFm/8AOzEUz7K
+	n/qkOdjBW4q036Y+T1XmEJ66cw8X8To=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1669280439;
+	s=susede2_ed25519; t=1669280944;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rA5/aENVR0bEyMQoBGdlZhbE0LfdmtRdobdrIQ0v1Uc=;
-	b=lMVHKR7ZEll/NHNQJo2mvK5GvaaWcC67KOJ3HX9Tq7Pmt4nwnWnALo94wghDhCU0SedIwN
-	FMhK7hVZoLPEpkBQ==
+	bh=FclYwF7mD6zlQIZIpdVB8v8DFuE768K+j4RqjDVV1Z4=;
+	b=NEHVony4RogAIHQYKpjGONKexPxGDMrMJ5UiEjLrzU53yMnOA63UrZssDjr7V+PnhxQDgS
+	EwEwBwNGxVYVMfDA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1F30A13B4F;
-	Thu, 24 Nov 2022 09:00:39 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0EE9013B4F;
+	Thu, 24 Nov 2022 09:09:04 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id u0SyBrcyf2MJEwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 24 Nov 2022 09:00:39 +0000
-Message-ID: <1d075dad-d0f3-c4c3-d169-89e7b166ea53@suse.cz>
-Date: Thu, 24 Nov 2022 10:00:38 +0100
+	id MQIBA7A0f2NyFwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 24 Nov 2022 09:09:04 +0000
+Message-ID: <23028c8a-7e53-6993-e076-6df8a6939313@suse.cz>
+Date: Thu, 24 Nov 2022 10:09:03 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: [PATCH 03/12] mm, slub: disable SYSFS support with
+Subject: Re: [PATCH 07/12] mm, slab: ignore SLAB_RECLAIM_ACCOUNT with
  CONFIG_SLUB_TINY
 Content-Language: en-US
 To: Roman Gushchin <roman.gushchin@linux.dev>
@@ -59,29 +59,37 @@ Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
  Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
  linux-mm@kvack.org, linux-kernel@vger.kernel.org
 References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-4-vbabka@suse.cz>
- <Y37E5Dpu/FLi7wrA@P9FQF9L96D.corp.robot.car>
+ <20221121171202.22080-8-vbabka@suse.cz>
+ <Y37GxICuaRbwK+tj@P9FQF9L96D.corp.robot.car>
 From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <Y37E5Dpu/FLi7wrA@P9FQF9L96D.corp.robot.car>
+In-Reply-To: <Y37GxICuaRbwK+tj@P9FQF9L96D.corp.robot.car>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/24/22 02:12, Roman Gushchin wrote:
-> On Mon, Nov 21, 2022 at 06:11:53PM +0100, Vlastimil Babka wrote:
->> Currently SLUB enables its sysfs support depending unconditionally on
->> the general CONFIG_SYSFS setting. To reduce the configuration
->> combination space, make CONFIG_SLUB_TINY disable SLUB's sysfs support by
->> reusing the existing SLAB_SUPPORTS_SYSFS define. It is unlikely that
->> real tiny systems would combine CONFIG_SLUB_TINY with CONFIG_SYSFS, but
->> a randconfig might.
+On 11/24/22 02:20, Roman Gushchin wrote:
+> On Mon, Nov 21, 2022 at 06:11:57PM +0100, Vlastimil Babka wrote:
+>> SLAB_RECLAIM_ACCOUNT caches allocate their slab pages with
+>> __GFP_RECLAIMABLE and can help against fragmentation by grouping pages
+>> by mobility, but on tiny systems mobility grouping is likely disabled
+>> anyway and ignoring SLAB_RECLAIM_ACCOUNT might instead lead to merging
+>> of caches that are made incompatible just by the flag.
+>> 
+>> Thus with CONFIG_SLUB_TINY, make SLAB_RECLAIM_ACCOUNT ineffective.
 > 
-> Hm, don't we want to introduce CONFIG_SLAB_SYSFS instead?
-> I believe many users don't really need it, even if they don't
-> need CONFIG_SLUB_TINY and they do have CONFIG_SYSFS.
+> Hm, do you see disabling all kernel memory accounting functionality
+> with COFNIG_SLUB_TINY? I'd say yes. But in this case need to be consistent
+> and disable it alltogether.
 
-Dunno, adding more and more config options is generally frowned upon. Also
-tools might be using it to get more details than /proc/slabinfo does - i.e.
-tools/vm/slabinfo.c
+SLAB_RECLAIM_ACCOUNT is kinda misnomer these days, as the only thing it does
+is to add __GFP_RECLAIMABLE to cache's gfp flags for the page allocator's
+mobility grouping. I guess the "ACCOUNT" part comes from being counted
+towards SReclaimable (vs SUnreclaim) in /proc/meminfo.
+
+So currently SLUB_TINY has no effect on MEMCG_KMEM (which you probably
+meant). Using those two together has little sense and had I stumbled while
+making this series upon a code that would become complicated, I would have
+made SLUB_TINY disable MEMCG_KMEM, but that didn't happen so I left as is
+for now.
 
 > Thanks!
 
