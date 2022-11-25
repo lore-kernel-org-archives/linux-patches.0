@@ -1,193 +1,185 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7C1846B
-	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 20:01:27 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id 205so6235218ybf.6
-        for <patches@lists.linux.dev>; Fri, 25 Nov 2022 12:01:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XsAz5OBEzFSCrUnH0XURNQPAnZshG1GxLmebcCoOCro=;
-        b=M1fxuOx1LYLPTrX7jOgiFNsY6mUl3ZHy75KtzD2wHrMcSLVac2HWlQZ/pnZVBd8r5i
-         64QIaD+J3JdhCwsgP8FKln0/tKEgXUlKf8dUtNZAsLlAC7a0iylDO82oYv62/RsFqQBx
-         zqs2fRI5qzheKBClurQPHvoraeO2w60ryX9BY5gce4XWRUhQ/XE9CBrZ68h19wRXZxWJ
-         Z/3vdq588NLmDIcoKH72Eqgk9AidinRyGdLiP5ErQACJpawMNxc+PYN3nAHnn9rX0b4P
-         3tah9AxCSkvyNZi+siePM1rrbv8Oa4gpzATi/AHaNLUd6O7NY1PTF7bUOocZzuK87eTr
-         fkdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XsAz5OBEzFSCrUnH0XURNQPAnZshG1GxLmebcCoOCro=;
-        b=KiH9sw67SoKd9dfyRdPjRBYBdF3+/03L1P/terQwIVVZuaKO4L8Iky88AveUfn49a6
-         mBgE8vcBExAp0A2eOvj5eqV9wqNVJit3aehqcyxcGUKmJS3x4/yy3zpAmjBuRD/acZzg
-         UTfNid/Pl3sxzMVT8uOCMVdA0qXcHjym+1DiA4g0uXV6jPSa/Ce3NxQ0j5eziQK3wNIU
-         +5OZbGYdj1e8P0lTVHKpLIFn6D6qcBSmVzvQLM1ZIRml2DuOO5jc2qiXdbOuEtCKLm2y
-         Jpa/Dc1+1rAEKADt61mEDpbul90d67pJCtohWf39WLTldBUroH76h9ov5NhktA1vsp6M
-         s05A==
-X-Gm-Message-State: ANoB5pkfKZAT78mQ+FYMReRJHrhochrALA4JlUihO1EjCdTaeBtHX9Ct
-	krAvRqI4tPDsh04ZtJz+ZQUJqIhQhwy62qA2XZruWw==
-X-Google-Smtp-Source: AA0mqf7gKI/WoDu6LpJd7wKwjj72gk7p/63usADkgJGSXUlrxGzQ+7EPO6kFAvRuwsaxR6ehDmpUK7sviW1uFtmqxJs=
-X-Received: by 2002:a25:d9d8:0:b0:6e4:c5c4:a62b with SMTP id
- q207-20020a25d9d8000000b006e4c5c4a62bmr19152567ybg.560.1669406486793; Fri, 25
- Nov 2022 12:01:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD548474
+	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 20:55:21 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1669409132;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Nx7J1ZYr7PRDjr0HjbjLwEuOmEiqovGUiWQQwnfrbYQ=;
+	b=AdCx8VPE/lzRBFp7vbqM3AWVW89sObDyt43L3+MHIoDr1ZzaVYwNcdPk1SFmEv+x41P4rg
+	jmmVPNEhH0Dt6Ar4z6lI4svK79bAj6/nzBllkMSCGFBgGz+NNHxjR9kz1BgSvDqfDhHkHR
+	MdA7+TniTH4Llx5g5AYETV37fiBxXc0Vbn59hmZ3ryGKfeHR8B/zRYu1zsWl4cUYrhKcgO
+	bngTt11EPv4BYrkv4hOhJsRQC/tIjIVL8XIPhC12VfRbcqVzQN4knhwAm+HOknvZd3JclX
+	vO+Ic1zJts7unrwo2HsRzwS9cVglJ4Jy8zdFxXCORI9f72omzt0DZijsgKzZLQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1669409132;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Nx7J1ZYr7PRDjr0HjbjLwEuOmEiqovGUiWQQwnfrbYQ=;
+	b=HFsIpAcT6mMdpz79iidHhND9Aa/Q6QqVc7oqC6hX0dK3g5hv7aHto9ob0Xt4sKULt+jUCy
+	SN3mGKCZx+oHUaAQ==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-crypto@vger.kernel.org,
+ linux-api@vger.kernel.org, x86@kernel.org, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
+ Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+ Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
+In-Reply-To: <20221124165536.1631325-2-Jason@zx2c4.com>
+References: <20221124165536.1631325-1-Jason@zx2c4.com>
+ <20221124165536.1631325-2-Jason@zx2c4.com>
+Date: Fri, 25 Nov 2022 21:45:31 +0100
+Message-ID: <87bkouyd90.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221125075750.019489581@linuxfoundation.org>
-In-Reply-To: <20221125075750.019489581@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 26 Nov 2022 01:31:14 +0530
-Message-ID: <CA+G9fYvHBGz_hHcxqizx4CKLuRkeQp9ytAuCjsBp+BGf1xQ0Og@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/180] 5.15.80-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Fri, 25 Nov 2022 at 13:29, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.15.80 release.
-> There are 180 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 27 Nov 2022 07:57:16 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.80-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Thu, Nov 24 2022 at 17:55, Jason A. Donenfeld wrote:
+> ---
+>  MAINTAINERS                             |  1 +
+>  arch/x86/Kconfig                        |  1 +
+>  arch/x86/entry/syscalls/syscall_64.tbl  |  1 +
+>  arch/x86/include/asm/unistd.h           |  1 +
+>  drivers/char/random.c                   | 59 +++++++++++++++++++++++++
+>  include/uapi/asm-generic/unistd.h       |  7 ++-
+>  kernel/sys_ni.c                         |  3 ++
+>  lib/vdso/getrandom.h                    | 23 ++++++++++
+>  scripts/checksyscalls.sh                |  4 ++
+>  tools/include/uapi/asm-generic/unistd.h |  7 ++-
+>  10 files changed, 105 insertions(+), 2 deletions(-)
+>  create mode 100644 lib/vdso/getrandom.h
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64, and i386.
+I think I asked for this before:
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Please split these things properly up. Provide the syscall and then wire
+it up.
 
-## Build
-* kernel: 5.15.80-rc2
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: d0344da1eca6840c665685e68ae82c09b301fc02
-* git describe: v5.15.79-181-gd0344da1eca6
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.79-181-gd0344da1eca6
+> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> index 67745ceab0db..331e21ba961a 100644
+> --- a/arch/x86/Kconfig
+> +++ b/arch/x86/Kconfig
+> @@ -59,6 +59,7 @@ config X86
+>  	#
+>  	select ACPI_LEGACY_TABLES_LOOKUP	if ACPI
+>  	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
+> +	select ADVISE_SYSCALLS			if X86_64
 
-## Test Regressions (compared to v5.15.79)
+Why is this x86_64 specific?
 
-## Metric Regressions (compared to v5.15.79)
+> --- a/arch/x86/include/asm/unistd.h
+> +++ b/arch/x86/include/asm/unistd.h
+> @@ -27,6 +27,7 @@
+>  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64
+>  #  define __ARCH_WANT_COMPAT_SYS_PREADV64V2
+>  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64V2
+> +#  define __ARCH_WANT_VGETRANDOM_ALLOC
 
-## Test Fixes (compared to v5.15.79)
+So instead of this define, why can't you do:
 
-## Metric Fixes (compared to v5.15.79)
+config VGETRADOM_ALLOC
+       bool
+       select ADVISE_SYSCALLS
 
-## Test result summary
-total: 145876, pass: 126345, fail: 3093, skip: 16007, xfail: 431
+and then have
 
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 151 total, 148 passed, 3 failed
-* arm64: 49 total, 47 passed, 2 failed
-* i386: 39 total, 35 passed, 4 failed
-* mips: 31 total, 29 passed, 2 failed
-* parisc: 8 total, 7 passed, 1 failed
-* powerpc: 34 total, 32 passed, 2 failed
-* riscv: 14 total, 14 passed, 0 failed
-* s390: 16 total, 14 passed, 2 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 42 total, 40 passed, 2 failed
+config GENERIC_VDSO_RANDOM_WHATEVER
+       bool
+       select VGETRANDOM_ALLOC
 
-## Test suites summary
-* boot
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-arm64/arm64.btitest.bti_c_func
-* kselftest-arm64/arm64.btitest.bti_j_func
-* kselftest-arm64/arm64.btitest.bti_jc_func
-* kselftest-arm64/arm64.btitest.bti_none_func
-* kselftest-arm64/arm64.btitest.nohint_func
-* kselftest-arm64/arm64.btitest.paciasp_func
-* kselftest-arm64/arm64.nobtitest.bti_c_func
-* kselftest-arm64/arm64.nobtitest.bti_j_func
-* kselftest-arm64/arm64.nobtitest.bti_jc_func
-* kselftest-arm64/arm64.nobtitest.bti_none_func
-* kselftest-arm64/arm64.nobtitest.nohint_func
-* kselftest-arm64/arm64.nobtitest.paciasp_func
-* kselftest-breakpoints
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-kvm
-* kselftest-lib
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-openat2
-* kselftest-seccomp
-* kselftest-timens
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-lock[
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
+This gives a clear Kconfig dependency instead of the random
+ADVISE_SYSCALLS select.
 
---
-Linaro LKFT
-https://lkft.linaro.org
+>--- a/drivers/char/random.c
+> +++ b/drivers/char/random.c
+
+> +#include "../../lib/vdso/getrandom.h"
+
+Seriously?
+
+include/vdso/ exists for a reason.
+
+> +#ifdef __ARCH_WANT_VGETRANDOM_ALLOC
+> +/*
+> + * The vgetrandom() function in userspace requires an opaque state, which this
+> + * function provides to userspace, by mapping a certain number of special pages
+> + * into the calling process. It takes a hint as to the number of opaque states
+> + * desired, and returns the number of opaque states actually allocated, the
+> + * size of each one in bytes, and the address of the first state.
+
+As this is a syscall which can be invoked outside of the VDSO, can you
+please provide proper kernel-doc which explains the arguments, the
+functionality and the return value?
+
+> + */
+> +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned int __user *, num,
+> +		unsigned int __user *, size_per_each, unsigned int, flags)
+> +{
+> +	size_t alloc_size, num_states;
+> +	unsigned long pages_addr;
+> +	unsigned int num_hint;
+> +	int ret;
+> +
+> +	if (flags)
+> +		return -EINVAL;
+> +
+> +	if (get_user(num_hint, num))
+> +		return -EFAULT;
+> +
+> +	num_states = clamp_t(size_t, num_hint, 1, (SIZE_MAX & PAGE_MASK) / sizeof(struct vgetrandom_state));
+> +	alloc_size = PAGE_ALIGN(num_states * sizeof(struct vgetrandom_state));
+> +
+> +	if (put_user(alloc_size / sizeof(struct vgetrandom_state), num) ||
+> +	    put_user(sizeof(struct vgetrandom_state), size_per_each))
+> +		return -EFAULT;
+
+That's a total of four sizeof(struct vgetrandom_state) usage sites.
+
+       size_t state_size = sizeof(struct vgetrandom_state);
+
+perhaps?
+
+> diff --git a/lib/vdso/getrandom.h b/lib/vdso/getrandom.h
+> new file mode 100644
+> index 000000000000..c7f727db2aaa
+> --- /dev/null
+> +++ b/lib/vdso/getrandom.h
+
+Wrong place. See above.
+
+> @@ -0,0 +1,23 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+> + */
+> +
+> +#ifndef _VDSO_LIB_GETRANDOM_H
+> +#define _VDSO_LIB_GETRANDOM_H
+> +
+> +#include <crypto/chacha.h>
+> +
+> +struct vgetrandom_state {
+> +	union {
+> +		struct {
+> +			u8 batch[CHACHA_BLOCK_SIZE * 3 / 2];
+> +			u32 key[CHACHA_KEY_SIZE / sizeof(u32)];
+> +		};
+> +		u8 batch_key[CHACHA_BLOCK_SIZE * 2];
+> +	};
+> +	unsigned long generation;
+> +	u8 pos;
+> +};
+
+Thanks,
+
+        tglx
