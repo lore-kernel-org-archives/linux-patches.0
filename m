@@ -1,134 +1,170 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF3B23A6
-	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 08:02:33 +0000 (UTC)
-Received: by mail-ed1-f41.google.com with SMTP id r26so3237657edc.10
-        for <patches@lists.linux.dev>; Fri, 25 Nov 2022 00:02:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F28C23A6
+	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 08:05:21 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id d128so4197674ybf.10
+        for <patches@lists.linux.dev>; Fri, 25 Nov 2022 00:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=r47lxpAlmEVI5SZmOnV7ojQvY12OH1FcHXRnZ5IZQpg=;
-        b=FflgkK1IFiX6gJG48jUUG6HQ6UBNUIBr0KpQ0GUhFdGrrdAjteke3CjWbe0S8lQZ9s
-         8VMcLsaOcq55oo6sHEMXtV6g/RP/zZyFw+DLFPFM/qcZkM647nM4zwyVX4wPgKv9bm+2
-         9JDN83itAS2CbQ1fVYQDsC6G6+LSxRweHAlf0=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pnfIVSOrUJ3z+ilEDdymU1GO/STI0zxzNjpepGL0pvY=;
+        b=G9i0Y5NM3kY1yH6UILP1oYSOnKsIaZHoPRSN+B+o+PeOJWJv9HW74WfuUmfYFlaWX2
+         xb4e2tijSPZAn9AVQM3oEXa3TxO1DmGbTZa/Wu/Fq7MNy0R4vnfMKe1cve+r39I20f2R
+         BHmD1RbmEmcjRjWfAesitbIMwc+688tJMaHSaD37b8/dVQjQ3CPednoutLFpO60KiGGW
+         R/G7dPdqtKzyEkweEmE5c0J2Wepl43/Rfm2OdCAlLFBsd87DlPXeEN+MCSt2ugSKqcBR
+         aFUhn7WXyVcR8DOZ4Jo4fQie+TMU/nrBwNGafmFCdxu2tz/FmhUsAtw3lGmyjPL2s6E1
+         Hj6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r47lxpAlmEVI5SZmOnV7ojQvY12OH1FcHXRnZ5IZQpg=;
-        b=LMbr/E/HRtrWDklNjCKPZnx1v8MXTNXMYFZghTL7A551o1Xv4MxwSm1lsyho1cxs1c
-         /nFp8ChAr/64vBHkt2wyL7RbyrDRJfNDBGdXazGkm4ZY43bHaYp1mPapuc9Mj2JZpgiv
-         tK+X6phC4IB5+I/Ust4XLEmunKez9uji93zOSUfmh2kHGH/TCsPq6UdqFqfyuf7hjMCF
-         BcTmYCybig9AMakMlFBvUX5OYQdPaR0MzmA6FtVtsdB44fJjNeHWqqkHqSlyRSnOi9iQ
-         Evwg6Z6aCxTwnvPeEi3aRJiohXYPSc6cYodaq/03Ws0dLlKRMU0JrC1ulhI1oi8bpdea
-         N+xw==
-X-Gm-Message-State: ANoB5plV+9PporfS3sl7JhJexOZgtKPQhL8Px6ouX7Q3q+Nd/eHLJJIs
-	gQmfkuiE/xa0cPXHPAkUxlDcjw==
-X-Google-Smtp-Source: AA0mqf5JN7k4JtsVSIurwKWsi38PwPudjjN/uj4c43SHFAYXYjnFk48jhsUZHvboHR1bLdw44Ozczw==
-X-Received: by 2002:aa7:d998:0:b0:463:a4a7:d3f1 with SMTP id u24-20020aa7d998000000b00463a4a7d3f1mr25798323eds.299.1669363351490;
-        Fri, 25 Nov 2022 00:02:31 -0800 (PST)
-Received: from [172.16.11.74] ([81.216.59.226])
-        by smtp.gmail.com with ESMTPSA id f15-20020a50fc8f000000b00462e1d8e914sm1466467edq.68.2022.11.25.00.02.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Nov 2022 00:02:30 -0800 (PST)
-Message-ID: <5d7ff259-819e-df9f-1db3-271c263be9cd@rasmusvillemoes.dk>
-Date: Fri, 25 Nov 2022 09:02:29 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pnfIVSOrUJ3z+ilEDdymU1GO/STI0zxzNjpepGL0pvY=;
+        b=KmH5I0Hs17mi8Kf50KcytSHK+TSxWr0D68HvPARxazP+QDGcV7UxPa/VWKtLAcD0OA
+         01q3koak+wXiAiCrubNnuO2KNzt+aEgDHRdcWLCdA6Y+vaCm3QE4QikT89PWQOwjl9Ae
+         O4eHiAmxk01m9OTFJfHwja/1Msei6/+gjKFb8YEV4vcKWUGxwiO3NFpKTfCs1EU1F8yM
+         fBkk7WLPMkIDtubiTpsEoskOkTfBzcxiyQqXXQ8mrGjVpueZd+KMElQYfDICmHQv7wPf
+         cBH9VBEyCJiIL33qJQo/w/zhlar0Oio2FX/ZObmiBiTJp8dTPXpbl0SVmmQS/uB0Hr7A
+         zfog==
+X-Gm-Message-State: ANoB5pncyLhdmATvHDPkuAg2BlY8/PFdMtmBFt96YYfZAzlEtPhtmGTV
+	X910WjvXqHkT3drsabo5QCdoz3Plk6+M6OTI/VMNeA==
+X-Google-Smtp-Source: AA0mqf7OgJkiz3KAGFtHjIaNXzXenKiC0lfUTs2VaZpT60Y42LyT6mHG+ZY7pBZ6ToQai8QeKtDh5776ncDGQd5pifM=
+X-Received: by 2002:a25:9d8f:0:b0:6d0:155f:aa9e with SMTP id
+ v15-20020a259d8f000000b006d0155faa9emr15327691ybp.448.1669363519825; Fri, 25
+ Nov 2022 00:05:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v6 2/3] random: introduce generic vDSO getrandom()
- implementation
-Content-Language: en-US, da
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- tglx@linutronix.de, linux-crypto@vger.kernel.org, x86@kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
- Carlos O'Donell <carlos@redhat.com>, Linux API <linux-api@vger.kernel.org>
-References: <20221121152909.3414096-1-Jason@zx2c4.com>
- <20221121152909.3414096-3-Jason@zx2c4.com>
- <842fd97b-c958-7b0d-2c77-6927c7ab4d72@rasmusvillemoes.dk>
- <Y37GXIQVvUvRac6D@zx2c4.com>
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-In-Reply-To: <Y37GXIQVvUvRac6D@zx2c4.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20221123084557.945845710@linuxfoundation.org> <CA+G9fYvKfbJHcMZtybf_0Ru3+6fKPg9HwWTOhdCLrOBXMaeG1A@mail.gmail.com>
+ <CA+G9fYvgaNKbr_EhWsh9hjnzCeVXGJoXX4to72ytdvZi8W0svA@mail.gmail.com> <Y4BuUU5yMI6PqCbb@kroah.com>
+In-Reply-To: <Y4BuUU5yMI6PqCbb@kroah.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 25 Nov 2022 13:35:08 +0530
+Message-ID: <CA+G9fYsXomPXcecPDzDydO3=i2qHDM2RTtGxr0p2YOS6=YcWng@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, YueHaibing <yuehaibing@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, Netdev <netdev@vger.kernel.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	=?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 24/11/2022 02.18, Jason A. Donenfeld wrote:
-> Hi Rasmus,
-> 
-> On Wed, Nov 23, 2022 at 09:51:04AM +0100, Rasmus Villemoes wrote:
->> On 21/11/2022 16.29, Jason A. Donenfeld wrote:
->>
->> Cc += linux-api
->>
->>>
->>>       if (!new_block)
->>>         goto out;
->>>       new_cap = grnd_allocator.cap + num;
->>>       new_states = reallocarray(grnd_allocator.states, new_cap, sizeof(*grnd_allocator.states));
->>>       if (!new_states) {
->>>         munmap(new_block, num * size_per_each);
->>
->> Hm. This does leak an implementation detail of vgetrandom_alloc(),
->> namely that it is based on mmap() of that size rounded up to page size.
->> Do we want to commit to this being the proper way of disposing of a
->> succesful vgetrandom_alloc(), or should there also be a
->> vgetrandom_free(void *states, long num, long size_per_each)?
-> 
-> Yes, this is intentional, and this is exactly what I wanted to do. There
-> are various wrappers of vm_mmap() throughout, mmap being one of them,
-> and they typically then resort to munmap to unmap it. This is how
-> userspace handles memory - maps, always maps. So I think doing that is
-> fine and consistent.
+On Fri, 25 Nov 2022 at 12:57, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Thu, Nov 24, 2022 at 09:17:36PM +0530, Naresh Kamboju wrote:
+> > On Wed, 23 Nov 2022 at 19:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > >
+> > > On Wed, 23 Nov 2022 at 14:50, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 5.10.156 release.
+> > > > There are 149 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.156-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > >
+> > >
+> > > With stable rc 5.10.156-rc1 Raspberry Pi 4 Model B failed to boot due to
+> > > following warnings / errors [1]. The NFS mount failed and failed to boot.
+> > >
+> > > I have to bisect this problem.
+> >
+> > Daniel bisected this reported problem and found the first bad commit,
+> >
+> > YueHaibing <yuehaibing@huawei.com>
+> >     net: broadcom: Fix BCMGENET Kconfig
+>
+> But that is in 5.10.155, 5.15.79, 6.0.9, and 6.1-rc5.  It is not new to
+> this -rc release.
 
-OK. Perhaps for the benefit of future libc implementors drop a comment
-somewhere as to how to dealloc the blob.
+It started from 5.10.155 and this is only seen on 5.10 and other
+branches 5.15, 6.0 and mainline are looking good.
 
-> However, your point about it relying on it being a rounded up size isn't
-> correct. `munmap` will unmap the whole page if the size you pass lies
-> within a page. So `num * size_of_each` will always do the right thing,
-> without needing to have userspace code round anything up. (From the man
-> page: "The  address addr must be a multiple of the page size (but length
-> need not be). 
+>
+> What config options are being set because of this that cause the
+> problem?
 
-I know, and I never said userspace needed to round anything up.
+LKFT is built with arm64 defconfig + distro configs as described below.
 
-All pages containing a part of the indicated range are
-> unmapped.") And as you can see in my example code, nothing is rounded
-> up. So I don't know why you made that comment.
+>   Should it just be reverted for 5.10.y, and not the other
+> branches?  Or for everywhere including Linus's tree?
 
-I made that comment because it's clear from what this does that you get
-something back that is _at least_ num*size_per_each in size, but what is
-not clear is that the actual allocation is exactly and will always be
-that size rounded up to a page size (and no more), so that
-munmap(num*size_per_each), with its well-known and documented semantics,
-will DTRT.
+Reverting for 5.10 works for Rpi-4 to boot.
 
-> I think adding more control is exactly what this is trying to avoid.
-> It's very intentionally *not* a general allocator function, but
-> something specific for vDSO getrandom(). However, it does already, in
-> this very patchset here, take a (currently unused) flags argument, in
-> case we have the need for later extension.
+Due to the problematic commit
+      # CONFIG_BROADCOM_PHY is not set
+and Raspberry Pi 4 boot failed only on 5.10.155 and later.
 
-OK.
+--
 
-Perhaps you can spend a few more words on why this allocation _needs_ to
-be MAP_LOCKED? That seems somewhat of a policy thing imposed by the
-kernel, something that would be better left to the libc or distro or
-whatnot to request via a flag. I could imagine applications that
-currently run at the mlock limit start failing after a libc upgrade -
-which could of course be considered a libc problem, and perhaps it's too
-unlikely to worry about.
+diff -Narub good-config bad-config
+--- good-config 2022-11-09 14:19:58.000000000 +0530
++++ bad-config 2022-11-16 15:50:36.000000000 +0530
+@@ -1,6 +1,6 @@
+ #
+ # Automatically generated file; DO NOT EDIT.
+-# Linux/arm64 5.10.154-rc2 Kernel Configuration
++# Linux/arm64 5.10.155 Kernel Configuration
+ #
+ CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Debian 11.3.0-6) 11.3.0"
+ CONFIG_CC_IS_GCC=y
+@@ -2611,7 +2611,7 @@
+ # CONFIG_ADIN_PHY is not set
+ CONFIG_AQUANTIA_PHY=y
+ # CONFIG_AX88796B_PHY is not set
+-CONFIG_BROADCOM_PHY=y
++# CONFIG_BROADCOM_PHY is not set
+ # CONFIG_BCM54140_PHY is not set
+ CONFIG_BCM7XXX_PHY=y
+ # CONFIG_BCM84881_PHY is not set
 
-Rasmus
+---
 
+# To install tuxmake on your system globally:
+# sudo pip3 install -U tuxmake
+#
+# See https://docs.tuxmake.org/ for complete documentation.
+# Original tuxmake command with fragments listed below.
+# tuxmake --runtime podman --target-arch arm64 --toolchain gcc-11
+--kconfig defconfig --kconfig-add
+https://raw.githubusercontent.com/Linaro/meta-lkft/kirkstone/meta/recipes-kernel/linux/files/lkft.config
+--kconfig-add https://raw.githubusercontent.com/Linaro/meta-lkft/kirkstone/meta/recipes-kernel/linux/files/lkft-crypto.config
+--kconfig-add https://raw.githubusercontent.com/Linaro/meta-lkft/kirkstone/meta/recipes-kernel/linux/files/distro-overrides.config
+--kconfig-add https://raw.githubusercontent.com/Linaro/meta-lkft/kirkstone/meta/recipes-kernel/linux/files/systemd.config
+--kconfig-add https://raw.githubusercontent.com/Linaro/meta-lkft/kirkstone/meta/recipes-kernel/linux/files/virtio.config
+--kconfig-add CONFIG_ARM64_MODULE_PLTS=y --kconfig-add
+CONFIG_SYN_COOKIES=y --kconfig-add CONFIG_SCHEDSTATS=y
+CROSS_COMPILE_COMPAT=arm-linux-gnueabihf-
+
+Bad config link,
+https://builds.tuxbuild.com/2HcnnvEDD3gSr1zmS5DHzqPG2cJ/config
+
+>
+> thanks,
+>
+> greg k-h
+
+- Naresh
