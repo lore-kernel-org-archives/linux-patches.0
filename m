@@ -1,29 +1,37 @@
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0DB2907
-	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 10:43:42 +0000 (UTC)
-Received: from canpemm500007.china.huawei.com (unknown [172.30.72.55])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4NJWfY1fYNz15MsX;
-	Fri, 25 Nov 2022 18:43:01 +0800 (CST)
-Received: from [10.174.179.215] (10.174.179.215) by
- canpemm500007.china.huawei.com (7.192.104.62) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Fri, 25 Nov 2022 18:43:33 +0800
-Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
-To: Arnd Bergmann <arnd@arndb.de>, Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, Linus Torvalds
-	<torvalds@linux-foundation.org>, Andrew Morton <akpm@linux-foundation.org>,
-	Guenter Roeck <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, Pavel Machek
-	<pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli
-	<f.fainelli@gmail.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, Netdev <netdev@vger.kernel.org>,
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8542C9D
+	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 14:54:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCEEC433C1;
+	Fri, 25 Nov 2022 14:54:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1669388084;
+	bh=X6duHG1DzBZC/eiNX9qpygv77VpsBbT5+iXpjXIGEkA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l/dl7Hwmgdaj6MxO/pCTgdFwlnEPhk8v1MD0NMui1v5oBmDHWPy0N0n6Ui60F3AQU
+	 ceyF3e3rjFlisClTQDa4tyWzVJHwV8YNEQG4pf0TXACO0ZggxXTnXtg+IaSdq3oaDq
+	 89g7u6+rlzAayKMyuWIl8rwv8CPNMiogCgCEBie4=
+Date: Fri, 25 Nov 2022 15:54:41 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: YueHaibing <yuehaibing@huawei.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Guenter Roeck <linux@roeck-us.net>, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	Pavel Machek <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
+	rwarsow@gmx.de, Netdev <netdev@vger.kernel.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	=?UTF-8?Q?Daniel_D=c3=adaz?= <daniel.diaz@linaro.org>
+	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
+Message-ID: <Y4DXMRK4HZFp7aOc@kroah.com>
 References: <20221123084557.945845710@linuxfoundation.org>
  <CA+G9fYvKfbJHcMZtybf_0Ru3+6fKPg9HwWTOhdCLrOBXMaeG1A@mail.gmail.com>
  <CA+G9fYvgaNKbr_EhWsh9hjnzCeVXGJoXX4to72ytdvZi8W0svA@mail.gmail.com>
@@ -32,50 +40,40 @@ References: <20221123084557.945845710@linuxfoundation.org>
  <a1652617-9da5-4a29-9711-9d3b3cf66597@app.fastmail.com>
  <23b0fa9c-d041-8c56-ec4b-04991fa340d4@huawei.com>
  <78fc17ac-bdce-4835-953d-d50d0a467146@app.fastmail.com>
-From: YueHaibing <yuehaibing@huawei.com>
-Message-ID: <a6b5e0f5-815c-6fd0-9195-80cfd0819912@huawei.com>
-Date: Fri, 25 Nov 2022 18:43:32 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <78fc17ac-bdce-4835-953d-d50d0a467146@app.fastmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.179.215]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- canpemm500007.china.huawei.com (7.192.104.62)
-X-CFilter-Loop: Reflected
 
-On 2022/11/25 18:32, Arnd Bergmann wrote:
+On Fri, Nov 25, 2022 at 11:32:49AM +0100, Arnd Bergmann wrote:
 > On Fri, Nov 25, 2022, at 11:25, YueHaibing wrote:
->> On 2022/11/25 18:02, Arnd Bergmann wrote:
->>> On Fri, Nov 25, 2022, at 09:05, Naresh Kamboju wrote:
->>>> On Fri, 25 Nov 2022 at 12:57, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->>>>> On Thu, Nov 24, 2022 at 09:17:36PM +0530, Naresh Kamboju wrote:
->>>>>>
->>>>>> Daniel bisected this reported problem and found the first bad commit,
->>>>>>
->>>>>> YueHaibing <yuehaibing@huawei.com>
->>>>>>     net: broadcom: Fix BCMGENET Kconfig
->>>>>
->>>>> But that is in 5.10.155, 5.15.79, 6.0.9, and 6.1-rc5.  It is not new to
->>>>> this -rc release.
->>>>
->>>> It started from 5.10.155 and this is only seen on 5.10 and other
->>>> branches 5.15, 6.0 and mainline are looking good.
->>>
->>> I think the original patch is wrong and should be fixed upstream.
->>> The backported patch in question is a one-line Kconfig change doing
->>
->> It seems lts 5.10 do not contain commit e5f31552674e ("ethernet: fix 
->> PTP_1588_CLOCK dependencies"),
->> there is not PTP_1588_CLOCK_OPTIONAL option.
+> > On 2022/11/25 18:02, Arnd Bergmann wrote:
+> >> On Fri, Nov 25, 2022, at 09:05, Naresh Kamboju wrote:
+> >>> On Fri, 25 Nov 2022 at 12:57, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> >>>> On Thu, Nov 24, 2022 at 09:17:36PM +0530, Naresh Kamboju wrote:
+> >>>>>
+> >>>>> Daniel bisected this reported problem and found the first bad commit,
+> >>>>>
+> >>>>> YueHaibing <yuehaibing@huawei.com>
+> >>>>>     net: broadcom: Fix BCMGENET Kconfig
+> >>>>
+> >>>> But that is in 5.10.155, 5.15.79, 6.0.9, and 6.1-rc5.  It is not new to
+> >>>> this -rc release.
+> >>>
+> >>> It started from 5.10.155 and this is only seen on 5.10 and other
+> >>> branches 5.15, 6.0 and mainline are looking good.
+> >> 
+> >> I think the original patch is wrong and should be fixed upstream.
+> >> The backported patch in question is a one-line Kconfig change doing
+> >
+> > It seems lts 5.10 do not contain commit e5f31552674e ("ethernet: fix 
+> > PTP_1588_CLOCK dependencies"),
+> > there is not PTP_1588_CLOCK_OPTIONAL option.
 > 
 > Ok, so there is a second problem then.
 > 
@@ -83,14 +81,7 @@ On 2022/11/25 18:32, Arnd Bergmann wrote:
 > in stable/linux-5.10.y: it depends on e5f31552674e ("ethernet: fix
 > PTP_1588_CLOCK dependencies"), which we probably don't want backported
 > from 5.15 to 5.10.
-> 
-> YueHaibing, do you agree with my suggestion for improving the
-> upstream 8d820bc9d12b ("net: broadcom: Fix BCMGENET Kconfig")
-> commit? Can you send a follow-up fix, or should I?
 
-Ok, I will take care this.
+Now reverted, thanks.
 
-> 
->       Arnd
-> .
-> 
+greg k-h
