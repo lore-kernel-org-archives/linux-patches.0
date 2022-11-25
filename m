@@ -1,52 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4854D33E9
-	for <patches@lists.linux.dev>; Thu, 24 Nov 2022 20:31:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB9BC433D6;
-	Thu, 24 Nov 2022 20:30:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669321862;
-	bh=VYogHO/QzC0Ie7JtQNRyLU+4odaED0lO+ZqrQ2anQ4g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B4JIUPPb4GNyqmaugd+1VesUVg/rY2YBuh9jPZSEa9LfSEQzH3zDygt0HPqdzet2M
-	 Dp4c/55O2yCFMpzlwelwJsAnq/cWVHvGVHOAbVO908xeu84LN7567KgsRaE4IVVlI4
-	 irQCMsnXsSJ21jNJaw6RWjzOUpRxJ6RKhWjRfpd9wRYv71gwQVQAvT0UvpbAXv+eDr
-	 jBzcX+3BhUu0qt/DvQCSNER8QfDrEQGt+TJ9slcZjWNwkaVshc7is4iQ3Zq0vSzdZc
-	 hcrepLOFcnDEx3g9ybGBdkV9QmYuTZxJxy7F+stexs8bO96+DDGYQXJXkj+qDrkXGn
-	 djLsL9V97W7iw==
-Date: Thu, 24 Nov 2022 22:30:41 +0200
-From: Mike Rapoport <rppt@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
-	Aaro Koskinen <aaro.koskinen@iki.fi>, Arnd Bergmann <arnd@arndb.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Conor Dooley <conor@kernel.org>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Jonas Bonn <jonas@southpole.se>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Kees Cook <keescook@chromium.org>,
-	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-sh@vger.kernel.org,
-	openrisc@lists.librecores.org, Rich Felker <dalias@libc.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Stafford Horne <shorne@gmail.com>,
-	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
-	Tony Lindgren <tony@atomide.com>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: Re: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
-Message-ID: <Y3/UccT+hJ/6/v4c@kernel.org>
-References: <20221121171202.22080-1-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69567F
+	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 00:29:11 +0000 (UTC)
+Received: by mail-ot1-f53.google.com with SMTP id db10-20020a0568306b0a00b0066d43e80118so1789073otb.1
+        for <patches@lists.linux.dev>; Thu, 24 Nov 2022 16:29:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rTkWTJr+jVo44z0ToVSWhOX33FwS2vLhzhC45GxZgmU=;
+        b=Qdjl+pr+iIz3S+2tn1Q0JU7ziR4GJ03sr352O+F4nFNUm1ZTG52sYXAn95iZZhHWA2
+         vfyvvqmSy/GXOB8bIDWNZaol5ovJUTOs+XSMPsjBBdwVwt5nfJGp+M/DyGLj3qCbT6nF
+         MIuRFfqjJ3qVcCymi6VGzNg03Rj4i/w1QMoF0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rTkWTJr+jVo44z0ToVSWhOX33FwS2vLhzhC45GxZgmU=;
+        b=TbNTh0FzAHwy48eqTl/A7A9wUmsdmf/z3/cA+Qdkh8l1j6+I5nkVFnKbQtxWO6ZJGx
+         8Gm4jyNbuDW1wuI2NevHE02zR8q3KNsLLqUT0hXrlCFRLRhWjVR6NtPoRFJfOMMq2T0n
+         /f9rybHopzW9wnxopJOSBhJ4tVQ+rptrHYCs8hBTCmESevv+2XH8vMXBTg/QJOp/wFag
+         SfabeY696+yHdNmJc9AOb/yT3bZAtlsuxbHJh34ZbdVm/ntoLZgx3XD4vHalF7kM7zeV
+         Zi//LYeJjCgF4zq2MPjlgsgcul3TAkCkQKqBj4F5oCbvBQRsCUZUXwVvhwTIIRx83lZ8
+         +M5Q==
+X-Gm-Message-State: ANoB5pmBbf49et9j1gIDzeXE0tYCyY9i9AQNUh362exlfC6U8OxZgNE0
+	CvRB7eGPHHTtC0WZVhvnRfPBQA==
+X-Google-Smtp-Source: AA0mqf5Up/gRWD0unDI43s9o/afyX5Cgl0YlLTTlVxTCX38dEV155pu9MJQMQWx1c5O2bS1YQcANXA==
+X-Received: by 2002:a05:6830:1604:b0:661:ef0:230a with SMTP id g4-20020a056830160400b006610ef0230amr9369057otr.235.1669336150530;
+        Thu, 24 Nov 2022 16:29:10 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id d16-20020a9d4f10000000b0066c8bf7f196sm972120otl.51.2022.11.24.16.29.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 16:29:10 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Thu, 24 Nov 2022 18:29:08 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 000/314] 6.0.10-rc1 review
+Message-ID: <Y4AMVB9zUGgPQbLk@fedora64.linuxtx.org>
+References: <20221123084625.457073469@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,75 +56,28 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221121171202.22080-1-vbabka@suse.cz>
+In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 
-On Mon, Nov 21, 2022 at 06:11:50PM +0100, Vlastimil Babka wrote:
-> Hi,
+On Wed, Nov 23, 2022 at 09:47:25AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.10 release.
+> There are 314 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> this continues the discussion from [1]. Reasons to remove SLOB are
-> outlined there and no-one has objected so far. The last patch of this
-> series therefore deprecates CONFIG_SLOB and updates all the defconfigs
-> using CONFIG_SLOB=y in the tree.
+> Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
+> Anything received after that time might be too late.
 > 
-> There is a k210 board with 8MB RAM where switching to SLUB caused issues
-> [2] and the lkp bot wasn't also happy about code bloat [3]. To address
-> both, this series introduces CONFIG_SLUB_TINY to perform some rather
-> low-hanging fruit modifications to SLUB to reduce its memory overhead.
-> This seems to have been successful at least in the k210 case [4]. I
-> consider this as an acceptable tradeoff for getting rid of SLOB.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
 > 
-> The series is also available in git:
-> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-tiny-v1r2
+> thanks,
 > 
-> [1] https://lore.kernel.org/all/b35c3f82-f67b-2103-7d82-7a7ba7521439@suse.cz/
-> [2] https://lore.kernel.org/all/a5bba3ca-da19-293c-c01b-a28291533466@opensource.wdc.com/
-> [3] https://lore.kernel.org/all/Y25E9cJbhDAKi1vd@99bb1221be19/
-> [4] https://lore.kernel.org/all/6a1883c4-4c3f-545a-90e8-2cd805bcf4ae@opensource.wdc.com/
-> 
-> Vlastimil Babka (12):
->   mm, slab: ignore hardened usercopy parameters when disabled
->   mm, slub: add CONFIG_SLUB_TINY
->   mm, slub: disable SYSFS support with CONFIG_SLUB_TINY
->   mm, slub: retain no free slabs on partial list with CONFIG_SLUB_TINY
->   mm, slub: lower the default slub_max_order with CONFIG_SLUB_TINY
->   mm, slub: don't create kmalloc-rcl caches with CONFIG_SLUB_TINY
->   mm, slab: ignore SLAB_RECLAIM_ACCOUNT with CONFIG_SLUB_TINY
->   mm, slub: refactor free debug processing
->   mm, slub: split out allocations from pre/post hooks
->   mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
->   mm, slub: don't aggressively inline with CONFIG_SLUB_TINY
->   mm, slob: rename CONFIG_SLOB to CONFIG_SLOB_DEPRECATED
-> 
->  arch/arm/configs/clps711x_defconfig           |   3 +-
->  arch/arm/configs/collie_defconfig             |   3 +-
->  arch/arm/configs/multi_v4t_defconfig          |   3 +-
->  arch/arm/configs/omap1_defconfig              |   3 +-
->  arch/arm/configs/pxa_defconfig                |   3 +-
->  arch/arm/configs/tct_hammer_defconfig         |   3 +-
->  arch/arm/configs/xcep_defconfig               |   3 +-
->  arch/openrisc/configs/or1ksim_defconfig       |   3 +-
->  arch/openrisc/configs/simple_smp_defconfig    |   3 +-
->  arch/riscv/configs/nommu_k210_defconfig       |   3 +-
->  .../riscv/configs/nommu_k210_sdcard_defconfig |   3 +-
->  arch/riscv/configs/nommu_virt_defconfig       |   3 +-
->  arch/sh/configs/rsk7201_defconfig             |   3 +-
->  arch/sh/configs/rsk7203_defconfig             |   3 +-
->  arch/sh/configs/se7206_defconfig              |   3 +-
->  arch/sh/configs/shmin_defconfig               |   3 +-
->  arch/sh/configs/shx3_defconfig                |   3 +-
->  include/linux/slab.h                          |   8 +
->  include/linux/slub_def.h                      |   6 +-
->  kernel/configs/tiny.config                    |   5 +-
->  mm/Kconfig                                    |  38 +-
->  mm/Kconfig.debug                              |   2 +-
->  mm/slab_common.c                              |  16 +-
->  mm/slub.c                                     | 415 ++++++++++++------
->  24 files changed, 377 insertions(+), 164 deletions(-)
+> greg k-h
 
-For the series
+Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
-Acked-by: Mike Rapoport <rppt@linux.ibm.com>
-
--- 
-Sincerely yours,
-Mike.
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
