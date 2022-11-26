@@ -1,55 +1,53 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6127C196
-	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 08:55:57 +0000 (UTC)
-Received: by mail-pf1-f173.google.com with SMTP id w79so6047361pfc.2
-        for <patches@lists.linux.dev>; Sat, 26 Nov 2022 00:55:57 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9C4EB2B
+	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 11:17:22 +0000 (UTC)
+Received: by mail-wm1-f50.google.com with SMTP id o30so5179436wms.2
+        for <patches@lists.linux.dev>; Sat, 26 Nov 2022 03:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mjCyoWb61wdL81qcmSTAoCdIWg/CnPBXU24aGBaxwOM=;
-        b=GKxrnlQLxkL9Zl+l/xPdpODXepbcFe04+9KhbZqPCrUdhirdjzECqRG7Bho21ovFaz
-         I3YdMsdsZ0fbxpGtE1dKZEo6AjHoQ7zitma0vg5XFFnDExCg46EmBf0bRbi3EL8NMZ0V
-         xXCMos5IWLsaEHb0C4fGPnJBSE1smSkBJSFZwclaL6iMbo4nxn+i1Q56kXkPAJ27iH0I
-         YJ0uzsFlP+jOpDIbuiYNAhozku4OuzTGBZXerfPyPFesLfuaQecUDwGpyyZ/cuIKPyMd
-         sfxV78V5uXlyjsd7gBEwWgODn6zHnUHDZemDrk+QU3FdTE4u6jlE6f2YELumG+BvZJET
-         yhaw==
+        bh=EKBlOjDIo+FXnoo/ratYxLq6wevcO8d8/HghKFwYCx4=;
+        b=PdSUeXcyA/vBYOIS46Dxg3XdcZj2UdydFPmSFt+ujsV631OvtyTWC+EF8i++boQIYj
+         Dr//OLHcBDVXrimwn/E9SsbEVXLdNaKi/CQmAzgN5+xSTw9BOM0iU0hz+GEWtrbENPrt
+         EfaUXsaG2CiINFreuUVOJ4jD1zrfSvJVDeRPfY5ehTvolF5JIAK1hwYdr/rQYUnH+pb9
+         sUAJpXiSwrg10lLuemj5AXs3FzbRntfNcXakSYGXNR4HqwY/OuPA71XQtnURgHwO7Ksp
+         sm51rNaKKMJQL4/9WeIb9NCVxrEqkNKq/Zb85DIBEXfEBxqLpwb+tew8QttZLTn/HN8B
+         tHag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mjCyoWb61wdL81qcmSTAoCdIWg/CnPBXU24aGBaxwOM=;
-        b=jb0GrN5HbR1LmZTSX2PC5ZZVqDJBP30hUNpHBobHNCK2w4au2dMmNlCmrhLI7xdmYn
-         pyvkzT68ZY9dKxahrQ5ioGfpuT7/DRwqlEX0E8vExCDSEr5DSgBhAiOSrWGg+749NInp
-         iTiUCL41FmD3uyGHetALwqlc49EpIn2BJjo+3Qap6ygaDLIZEbnc4cN+4KjWD/hisSuw
-         Lk+vEEIe1E3ijOm5RuPJnma6edsm+dlRK2bDbJ0NBDtT2ED1khBRPSjaqBMjZU/MjbbH
-         1IVSZZYjT1GDxYEnNBz8kvt64ZOyhPuZ7hKdU+p4nnTMuIxX8d4SZnT+5tgBFH+4B5zY
-         56vg==
-X-Gm-Message-State: ANoB5pkvIBxEg5QPcDHj8syd+Qw9rfJz2h6TZDvSNhX6hxWtG2CQMaoq
-	tEDjJKbuC9yIslEPPG4o4qo=
-X-Google-Smtp-Source: AA0mqf46aOZen8tAGbErQ9j6rmqHuNqXcVcwUnho3E5t1ejjZqVcNErb8tzEMFzSlpfLszqPUVgv3A==
-X-Received: by 2002:a05:6a00:1d21:b0:574:a486:cb with SMTP id a33-20020a056a001d2100b00574a48600cbmr9339894pfx.11.1669452956727;
-        Sat, 26 Nov 2022 00:55:56 -0800 (PST)
-Received: from debian.me (subs02-180-214-232-11.three.co.id. [180.214.232.11])
-        by smtp.gmail.com with ESMTPSA id l7-20020a170902f68700b0017f756563bcsm4892392plg.47.2022.11.26.00.55.55
+        bh=EKBlOjDIo+FXnoo/ratYxLq6wevcO8d8/HghKFwYCx4=;
+        b=W2YMg25cWVcoP1O+kLz2gmNDpuMzB/XkTbKoSA4k14NhnLWeqbUipqG9QdEqOduaGZ
+         ccLj3HIISAflk96q2xQiOxGqgjGJjKPW4PLzFLQ1E86rXiGkAL3z2cz6RGAMhqS2qwJP
+         w000BOpShPOfeRa4QcRTdO1X6JpxNewnMZGkbcPuWorj5Q0oadJpAZ/pfWIQZZsW0guj
+         V01KSvbBtB1o2nmSKUBOuMon40jRe4/k8Vuk346rxprubpIFdLZCBx4c2HrqUJjauIiA
+         HefO0M6hwAC+MccGAbm0IpAMuKdujBfRpZtaCaJlCh9nfEbYswZani4C3JD8f3yFbvmd
+         6P7A==
+X-Gm-Message-State: ANoB5pkERr2xl9yYfN7NU8r+jt8LkBrj6zBQtWetECqdZlCFdT6B47jf
+	aKjHgIrrd/ffQkOyccFztg8=
+X-Google-Smtp-Source: AA0mqf6ZSRviRwvrfCzcg5u5CU6ujh9mzD4e6f1QEbdq8uAcNdPU4CLP8AHAna4Sj3eSTBDoPPOiSA==
+X-Received: by 2002:a1c:790a:0:b0:3cf:e137:b31d with SMTP id l10-20020a1c790a000000b003cfe137b31dmr21524246wme.205.1669461441065;
+        Sat, 26 Nov 2022 03:17:21 -0800 (PST)
+Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
+        by smtp.gmail.com with ESMTPSA id o20-20020a05600c4fd400b003c6c5a5a651sm9046745wmq.28.2022.11.26.03.17.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 00:55:56 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id 7B41210436D; Sat, 26 Nov 2022 15:55:52 +0700 (WIB)
-Date: Sat, 26 Nov 2022 15:55:51 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+        Sat, 26 Nov 2022 03:17:20 -0800 (PST)
+Date: Sat, 26 Nov 2022 11:17:19 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
 Subject: Re: [PATCH 6.0 000/313] 6.0.10-rc2 review
-Message-ID: <Y4HUl6gMvkDJxgA+@debian.me>
+Message-ID: <Y4H1vz8htC1+9rbB@debian>
 References: <20221125075804.064161337@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -57,41 +55,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="1CcNYwqhgGfkxMEO"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20221125075804.064161337@linuxfoundation.org>
 
-
---1CcNYwqhgGfkxMEO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Greg,
 
 On Fri, Nov 25, 2022 at 08:58:38AM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.0.10 release.
 > There are 313 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+> 
+> Responses should be made by Sun, 27 Nov 2022 07:57:07 +0000.
+> Anything received after that time might be too late.
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+Build test (gcc version 12.2.1 20221016):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
---=20
-An old man doll... just what I always wanted! - Clara
+[1]. https://openqa.qa.codethink.co.uk/tests/2226
+[2]. https://openqa.qa.codethink.co.uk/tests/2229
+[3]. https://openqa.qa.codethink.co.uk/tests/2231
 
---1CcNYwqhgGfkxMEO
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY4HUiwAKCRD2uYlJVVFO
-o6ybAP9NqLaB6L+lF2RF9TI+GtnoTjgX2+5JnN/BjIgquv4TbgD/UsPqydFI5nTo
-KP2Rnp0N4UkMCI2XWBSRcazJebcmnwk=
-=xTG3
------END PGP SIGNATURE-----
-
---1CcNYwqhgGfkxMEO--
+-- 
+Regards
+Sudip
