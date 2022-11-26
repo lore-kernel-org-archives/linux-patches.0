@@ -1,21 +1,21 @@
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5125515A8
-	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 02:29:21 +0000 (UTC)
-Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.56])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NJwZb4smDzJnQc;
-	Sat, 26 Nov 2022 10:25:59 +0800 (CST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E387E
+	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 02:40:05 +0000 (UTC)
+Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.53])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4NJwsx3pQ3zHw8J;
+	Sat, 26 Nov 2022 10:39:17 +0800 (CST)
 Received: from kwepemm600020.china.huawei.com (7.193.23.147) by
  dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 26 Nov 2022 10:29:18 +0800
+ 15.1.2375.31; Sat, 26 Nov 2022 10:39:56 +0800
 Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
  (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Sat, 26 Nov
- 2022 10:29:17 +0800
-Message-ID: <13064a0a-fc98-33ee-e30b-6a9284d4ae7b@huawei.com>
-Date: Sat, 26 Nov 2022 10:29:15 +0800
+ 2022 10:39:55 +0800
+Message-ID: <2c4041a5-3442-92a9-b11c-a88f4caf0df8@huawei.com>
+Date: Sat, 26 Nov 2022 10:39:53 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -24,7 +24,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
-Subject: Re: [PATCH 4.19 000/114] 4.19.267-rc1 review
+Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
+Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
 	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
@@ -32,10 +33,9 @@ CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
 	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
 	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
 	<rwarsow@gmx.de>
-References: <20221123084551.864610302@linuxfoundation.org>
-Content-Language: en-US
+References: <20221123084557.945845710@linuxfoundation.org>
 From: zhouzhixiu <zhouzhixiu@huawei.com>
-In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
+In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.174.178.94]
@@ -45,8 +45,8 @@ X-CFilter-Loop: Reflected
 
 
 On 2022/11/23 16:49, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.267 release.
-> There are 114 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.156 release.
+> There are 149 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -54,9 +54,9 @@ On 2022/11/23 16:49, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.267-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.156-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -64,20 +64,20 @@ On 2022/11/23 16:49, Greg Kroah-Hartman wrote:
 > greg k-h
 >
 > -------------
-Tested on arm64 and x86 for 4.19.267-rc1,
+Tested on arm64 and x86 for 5.10.156-rc1,
 
 Kernel 
 repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-4.19.y
-Version: 4.19.267-rc1
-Commit: f65c47c3f3362b712468c9b15657d9311e998240
+Branch: linux-5.10.y
+Version: 5.10.156-rc1
+Commit: 38866e257e18dbc209f4c355fe57123b0c2e0e4a
 Compiler: gcc version 7.3.0 (GCC)
 
 arm64:
 --------------------------------------------------------------------
 Testcase Result Summary:
-total: 8947
-passed: 8947
+total: 9023
+passed: 9023
 failed: 0
 timeout: 0
 --------------------------------------------------------------------
@@ -85,8 +85,8 @@ timeout: 0
 x86:
 --------------------------------------------------------------------
 Testcase Result Summary:
-total: 8947
-passed: 8947
+total: 9023
+passed: 9023
 failed: 0
 timeout: 0
 --------------------------------------------------------------------
