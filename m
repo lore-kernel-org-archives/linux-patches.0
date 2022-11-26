@@ -1,172 +1,94 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA10B2F41
-	for <patches@lists.linux.dev>; Fri, 25 Nov 2022 23:08:44 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1669417722;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6hxW2N4kxmUbACxVJ2sLC2tD7nS+hLHLjTZx7sixZYM=;
-	b=twx8rF2lsPE6PBtsHMA++brIpc3uCQi+qb0wdSHkIvs7AfFXtCPsY1x4O0PwGnK7QYl3xk
-	YEKB4yBS4owCWRqCu6HHA3uQipm3zAOwBuxDGtLOUy62I+YAfSJ2s0QGVER1uhnz53QaRx
-	cIYqn6gVZRRxAL0cE210J66VCvKCc07xUfjesKnwcgTAW40UYdKANSpfX2Sa765hgXAqzg
-	bLE/eEPyETCs7B2E+0alr7dtdZAKXsHNUDTFUdUlhAiyBU7aCnldKqARjlCUHugS7Ex/Dv
-	sYnIfVSCOkXl4dKQoFyQWUPyBgvugFnN/FLcP6RIvDNeJBNIKkXCX1a5Y5aIjA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1669417722;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6hxW2N4kxmUbACxVJ2sLC2tD7nS+hLHLjTZx7sixZYM=;
-	b=/L7yn3LQCqK3rKZ4qZRQwSYbwQP7NCTdySqDRR88jr6gFkN+qbUuQYHxLVPWAw4Wh6/QJC
-	2lFUsr+kgdfqOZBQ==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-crypto@vger.kernel.org,
- linux-api@vger.kernel.org, x86@kernel.org, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
- <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
- Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
- Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v7 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-In-Reply-To: <20221124165536.1631325-4-Jason@zx2c4.com>
-References: <20221124165536.1631325-1-Jason@zx2c4.com>
- <20221124165536.1631325-4-Jason@zx2c4.com>
-Date: Sat, 26 Nov 2022 00:08:41 +0100
-Message-ID: <874jumy6me.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5125515A8
+	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 02:29:21 +0000 (UTC)
+Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.56])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4NJwZb4smDzJnQc;
+	Sat, 26 Nov 2022 10:25:59 +0800 (CST)
+Received: from kwepemm600020.china.huawei.com (7.193.23.147) by
+ dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Sat, 26 Nov 2022 10:29:18 +0800
+Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
+ (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Sat, 26 Nov
+ 2022 10:29:17 +0800
+Message-ID: <13064a0a-fc98-33ee-e30b-6a9284d4ae7b@huawei.com>
+Date: Sat, 26 Nov 2022 10:29:15 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH 4.19 000/114] 4.19.267-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>
+References: <20221123084551.864610302@linuxfoundation.org>
+Content-Language: en-US
+From: zhouzhixiu <zhouzhixiu@huawei.com>
+In-Reply-To: <20221123084551.864610302@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.178.94]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemm600020.china.huawei.com (7.193.23.147)
+X-CFilter-Loop: Reflected
 
-Jason!
 
-On Thu, Nov 24 2022 at 17:55, Jason A. Donenfeld wrote:
-> +++ b/arch/x86/entry/vdso/vgetrandom-chacha.S
-> +/*
-> + * Very basic SSE2 implementation of ChaCha20. Produces a given positive number
-> + * of blocks of output with a nonce of 0, taking an input key and 8-byte
-> + * counter. Importantly does not spill to the stack. Its arguments are:
+On 2022/11/23 16:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.267 release.
+> There are 114 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.267-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+Tested on arm64 and x86 for 4.19.267-rc1,
 
-Basic or not. This needs a Reviewed-by from someone who understands SSE2
-and ChaCha20 before this can go anywhere near the x86 tree.
+Kernel 
+repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+Branch: linux-4.19.y
+Version: 4.19.267-rc1
+Commit: f65c47c3f3362b712468c9b15657d9311e998240
+Compiler: gcc version 7.3.0 (GCC)
 
-> +++ b/arch/x86/entry/vdso/vgetrandom.c
-> @@ -0,0 +1,18 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-> + */
-> +#include <linux/kernel.h>
+arm64:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8947
+passed: 8947
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
 
-Why do you need kernel.h here?
+x86:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8947
+passed: 8947
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+Tested-by: Hulk Robot <hulkrobot@huawei.com>
 
-> +#include <linux/types.h>
-> +
-> +#include "../../../../lib/vdso/getrandom.c"
-> +
-> +ssize_t __vdso_getrandom(void *buffer, size_t len, unsigned int flags, void *state);
-> +
-> +ssize_t __vdso_getrandom(void *buffer, size_t len, unsigned int flags, void *state)
-> +{
-> +	return __cvdso_getrandom(buffer, len, flags, state);
-> +}
-> +
-> +ssize_t getrandom(void *, size_t, unsigned int, void *)
-> +	__attribute__((weak, alias("__vdso_getrandom")));
-> diff --git a/arch/x86/include/asm/vdso/getrandom.h b/arch/x86/include/asm/vdso/getrandom.h
-> new file mode 100644
-> index 000000000000..099aca58ef20
-> --- /dev/null
-> +++ b/arch/x86/include/asm/vdso/getrandom.h
-> @@ -0,0 +1,49 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-> + */
-> +#ifndef __ASM_VDSO_GETRANDOM_H
-> +#define __ASM_VDSO_GETRANDOM_H
-> +
-> +#ifndef __ASSEMBLY__
-> +
-> +#include <asm/unistd.h>
-> +#include <asm/vvar.h>
-> +
-> +static __always_inline ssize_t
-> +getrandom_syscall(void *buffer, size_t len, unsigned int flags)
-
-static __always_inline ssize_t getrandom_syscall(void *buffer, size_t len, unsigned int flags)
-
-please. We expanded to 100 quite some time ago.
-
-Some kernel-doc compliant comment for this would be appreciated as well.
-
-> +{
-> +	long ret;
-> +
-> +	asm ("syscall" : "=a" (ret) :
-> +	     "0" (__NR_getrandom), "D" (buffer), "S" (len), "d" (flags) :
-> +	     "rcx", "r11", "memory");
-> +
-> +	return ret;
-> +}
-> +
-> +#define __vdso_rng_data (VVAR(_vdso_rng_data))
-> +
-> +static __always_inline const struct vdso_rng_data *__arch_get_vdso_rng_data(void)
-> +{
-> +	if (__vdso_data->clock_mode == VDSO_CLOCKMODE_TIMENS)
-> +		return (void *)&__vdso_rng_data +
-> +		       ((void *)&__timens_vdso_data - (void *)&__vdso_data);
-> +	return &__vdso_rng_data;
-
-So either bite the bullet and  write it:
-
-	if (__vdso_data->clock_mode == VDSO_CLOCKMODE_TIMENS)
-		return (void *)&__vdso_rng_data + ((void *)&__timens_vdso_data - (void *)&__vdso_data);
-
-        return &__vdso_rng_data;
-
-or comply to the well documented rules of the tip tree:
-
-   https://www.kernel.org/doc/html/latest/process/maintainer-tip.html#bracket-rules
-
-> +/*
-> + * Generates a given positive number of block of ChaCha20 output with nonce=0,
-> + * and does not write to any stack or memory outside of the parameters passed
-> + * to it. This way, we don't need to worry about stack data leaking into forked
-> + * child processes.
-
-Please use proper kernel-doc
-
-> + */
-> +static __always_inline void __arch_chacha20_blocks_nostack(u8 *dst_bytes, const u32 *key, u32 *counter, size_t nblocks)
-> +{
-> +	extern void chacha20_blocks_nostack(u8 *dst_bytes, const u32 *key, u32 *counter, size_t nblocks);
-> +	return chacha20_blocks_nostack(dst_bytes, key, counter, nblocks);
-
-You surely have an issue with your newline key...
-
-The above aside, can you please explain the value of this __arch_()
-wrapper?
-
-It's just voodoo for no value because it hands through the arguments
-1:1. So where are you expecting that that __arch...() version of this is
-any different than invoking the architecture specific version of
-chacha20_blocks_nostack().
-
-Can you spot the irony of your naming choices?
-
-    __arch_chacha20_blocks_nostack() {
-      	return chacha20_blocks_nostack()
-    };
-
-Thanks,
-
-        tglx
