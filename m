@@ -1,89 +1,191 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC544256E
-	for <patches@lists.linux.dev>; Sun, 27 Nov 2022 11:05:59 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id b29so7910091pfp.13
-        for <patches@lists.linux.dev>; Sun, 27 Nov 2022 03:05:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yktw0YNbfJViRzOBK1z1I3DiZx0Xo+QXXrahApjTukw=;
-        b=dsfe0IZycca1vKvPwH0+SS5PnahlyMoY18LuHqrV4rMcpk9V74A+jred7IP/Ms4NAD
-         4S1o7vIrooX8tyVA6iDKcoYDosvFFcTSN6xS7wTYh+BQfBKKG33oAqJAQJ3zHhs5EGiz
-         y7CNB3c2+7nu4yvVXyiU/AgxeXwwSuKq9BcbSSQo8crxcTFLwNFaSaM0ws4LIuwC9unC
-         xLYSuNmDlkTwurv3fwqsOL+9r25NcgJHB4JucUtMmBeON+IMitFWRD8CVO460c3yLn1B
-         DyZvxxl0ibCIwOJwwKyKkxxKYJhWueM02jw6I+PtVf7/PFmqgtXjZhTmM5m4QVO89upz
-         PkQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yktw0YNbfJViRzOBK1z1I3DiZx0Xo+QXXrahApjTukw=;
-        b=rFwzZIcsNBSDQ5PFQ7MvGpp1NH3aAaFdD6t4euNzJ+8lC175YNGWZfM7+hBuwCOMFY
-         4fJ8Nb5MIG2MQ6Ks+vKO4L8XWaPr2pzb2xlaC2BcOTaygUg8Yi8ZwKJb8gLiT1A7sRBC
-         apyb8MUTfdr/sOXrs1Gh1nYMA5Br6FVl4Z9pjtBEB+LQjelzFA/9jbCpU2jkXA90OG44
-         IyDwFDFr9Hh5W7P4aHyfwAycd03sMH+dF8BsGnvHfC8lnz2055jzGkpMzDLa0SWC9nmg
-         aoDE15D7fdb2x6ye2ALmMqJlWQYiU3Jjh7QkrDh7k/MjSpy0E8aI3ZLCmj81JbzTbRhL
-         LY2g==
-X-Gm-Message-State: ANoB5pm4Yt8soXu8WAgA9EnFKOgcOarNuUvIcufyMYSjKDU0NOGRs7JK
-	9kxKw0WaiY+Tm3ZgPEQt90Y=
-X-Google-Smtp-Source: AA0mqf545L0iENUMeOl6Wu09GKFsw4mhesGxrH3UpIYCwlJIZcO+SXoT7tW4i0Z5mXftI9+FkT3ILg==
-X-Received: by 2002:a62:605:0:b0:574:ec7f:20d0 with SMTP id 5-20020a620605000000b00574ec7f20d0mr5952033pfg.77.1669547159386;
-        Sun, 27 Nov 2022 03:05:59 -0800 (PST)
-Received: from hyeyoo ([114.29.91.56])
-        by smtp.gmail.com with ESMTPSA id x4-20020a170902ec8400b00186b04776b0sm6680417plg.118.2022.11.27.03.05.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Nov 2022 03:05:58 -0800 (PST)
-Date: Sun, 27 Nov 2022 20:05:52 +0900
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
-	Dennis Zhou <dennis@kernel.org>, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/12] mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
-Message-ID: <Y4NEkF8DI1uXFRv4@hyeyoo>
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-11-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5F63FD4
+	for <patches@lists.linux.dev>; Sun, 27 Nov 2022 20:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115BFC433C1;
+	Sun, 27 Nov 2022 20:18:12 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ctC5PFp7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669580290;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5Y3CBMuPS7LaIxQ72QWojthFee5sMI0jlRfrPvp9oDc=;
+	b=ctC5PFp74Lbo172SyBzejQP2DBuiADzFpnJVpc1S+AizO0l4hyc5HqdAIGDX9Opv90ixyq
+	49JHP982vikll1vRoxCUz/+tCTyJswAYuT6Qbuh3m4EH927rcNYPfUD2DGRVy4jdFu7kMV
+	TAKU3FLoGxYFkdWht5K4cVZpukbc+Wo=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 68cd4782 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 27 Nov 2022 20:18:09 +0000 (UTC)
+Date: Sun, 27 Nov 2022 21:18:02 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
+Message-ID: <Y4PF+pBlNZGfZ0sr@zx2c4.com>
+References: <20221124165536.1631325-1-Jason@zx2c4.com>
+ <20221124165536.1631325-2-Jason@zx2c4.com>
+ <87bkouyd90.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221121171202.22080-11-vbabka@suse.cz>
+In-Reply-To: <87bkouyd90.ffs@tglx>
 
-On Mon, Nov 21, 2022 at 06:12:00PM +0100, Vlastimil Babka wrote:
-> SLUB gets most of its scalability by percpu slabs. However for
-> CONFIG_SLUB_TINY the goal is minimal memory overhead, not scalability.
-> Thus, #ifdef out the whole kmem_cache_cpu percpu structure and
-> associated code. Additionally to the slab page savings, this reduces
-> percpu allocator usage, and code size.
+Hi Thomas,
 
-[+Cc Dennis]
+Thanks a lot for the thorough review, here, and in the other two emails.
+I appreciate you taking the time to look at it, and my apologies for
+parts that are unclear or sloppy or otherwise unpolished. I'll try to
+make v8 a lot better.
 
-Wondering if we can reduce (or zero) early reservation of percpu area
-when #if !defined(CONFIG_SLUB) || defined(CONFIG_SLUB_TINY)?
+Comments inline below:
 
-> This change builds on recent commit c7323a5ad078 ("mm/slub: restrict
-> sysfs validation to debug caches and make it safe"), as caches with
-> enabled debugging also avoid percpu slabs and all allocations and
-> freeing ends up working with the partial list. With a bit more
-> refactoring by the preceding patches, use the same code paths with
-> CONFIG_SLUB_TINY.
+On Fri, Nov 25, 2022 at 09:45:31PM +0100, Thomas Gleixner wrote:
+> On Thu, Nov 24 2022 at 17:55, Jason A. Donenfeld wrote:
+> > ---
+> >  MAINTAINERS                             |  1 +
+> >  arch/x86/Kconfig                        |  1 +
+> >  arch/x86/entry/syscalls/syscall_64.tbl  |  1 +
+> >  arch/x86/include/asm/unistd.h           |  1 +
+> >  drivers/char/random.c                   | 59 +++++++++++++++++++++++++
+> >  include/uapi/asm-generic/unistd.h       |  7 ++-
+> >  kernel/sys_ni.c                         |  3 ++
+> >  lib/vdso/getrandom.h                    | 23 ++++++++++
+> >  scripts/checksyscalls.sh                |  4 ++
+> >  tools/include/uapi/asm-generic/unistd.h |  7 ++-
+> >  10 files changed, 105 insertions(+), 2 deletions(-)
+> >  create mode 100644 lib/vdso/getrandom.h
 > 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> I think I asked for this before:
+> 
+> Please split these things properly up. Provide the syscall and then wire
+> it up.
 
--- 
-Thanks,
-Hyeonggon
+Before I split it into "syscall, generic vdso, x86 vdso", as that's how
+I interpreted your email. Next, I'll split it up into "generic syscall,
+generic vdso, x86 vdso & syscall", since enabling the syscall without
+the vdso function, or vice-versa, doesn't make sense, and having that
+last step be all at once there will provide an easy thing for other
+archs to look at.
+
+> > diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> > index 67745ceab0db..331e21ba961a 100644
+> > --- a/arch/x86/Kconfig
+> > +++ b/arch/x86/Kconfig
+> > @@ -59,6 +59,7 @@ config X86
+> >  	#
+> >  	select ACPI_LEGACY_TABLES_LOOKUP	if ACPI
+> >  	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
+> > +	select ADVISE_SYSCALLS			if X86_64
+> 
+> Why is this x86_64 specific?
+> 
+> > --- a/arch/x86/include/asm/unistd.h
+> > +++ b/arch/x86/include/asm/unistd.h
+> > @@ -27,6 +27,7 @@
+> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64
+> >  #  define __ARCH_WANT_COMPAT_SYS_PREADV64V2
+> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64V2
+> > +#  define __ARCH_WANT_VGETRANDOM_ALLOC
+> 
+> So instead of this define, why can't you do:
+> 
+> config VGETRADOM_ALLOC
+>        bool
+>        select ADVISE_SYSCALLS
+> 
+> and then have
+> 
+> config GENERIC_VDSO_RANDOM_WHATEVER
+>        bool
+>        select VGETRANDOM_ALLOC
+> 
+> This gives a clear Kconfig dependency instead of the random
+> ADVISE_SYSCALLS select.
+
+That's much better indeed. I was trying to straddle the two conventions
+of `#define __ARCH_...` for syscalls and a Kconfig for vDSO functions,
+but doing it all together as you've suggested is nicer.
+
+I'll try to figure this out, though so far futzing around suggests there
+might have to be both, because of unistd.h being a userspace header.
+That is, include/uapi/asm-generic/unistd.h typically needs a `#if
+__ARCH_WANT..., #define ...` in it. I'll give it a spin and you'll see
+for v8. At the very least it should get rid of the more awkward
+`select ADVISE_SYSCALLS if X86_64` part, and will better separate the
+arch code from non-arch code.
+
+> 
+> >--- a/drivers/char/random.c
+> > +++ b/drivers/char/random.c
+> 
+> > +#include "../../lib/vdso/getrandom.h"
+> 
+> Seriously?
+> 
+> include/vdso/ exists for a reason.
+
+Er, yes, thanks.
+
+> 
+> > +#ifdef __ARCH_WANT_VGETRANDOM_ALLOC
+> > +/*
+> > + * The vgetrandom() function in userspace requires an opaque state, which this
+> > + * function provides to userspace, by mapping a certain number of special pages
+> > + * into the calling process. It takes a hint as to the number of opaque states
+> > + * desired, and returns the number of opaque states actually allocated, the
+> > + * size of each one in bytes, and the address of the first state.
+> 
+> As this is a syscall which can be invoked outside of the VDSO, can you
+> please provide proper kernel-doc which explains the arguments, the
+> functionality and the return value?
+
+Yes, will do.
+
+> 
+> > + */
+> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned int __user *, num,
+> > +		unsigned int __user *, size_per_each, unsigned int, flags)
+> > +{
+> > +	size_t alloc_size, num_states;
+> > +	unsigned long pages_addr;
+> > +	unsigned int num_hint;
+> > +	int ret;
+> > +
+> > +	if (flags)
+> > +		return -EINVAL;
+> > +
+> > +	if (get_user(num_hint, num))
+> > +		return -EFAULT;
+> > +
+> > +	num_states = clamp_t(size_t, num_hint, 1, (SIZE_MAX & PAGE_MASK) / sizeof(struct vgetrandom_state));
+> > +	alloc_size = PAGE_ALIGN(num_states * sizeof(struct vgetrandom_state));
+> > +
+> > +	if (put_user(alloc_size / sizeof(struct vgetrandom_state), num) ||
+> > +	    put_user(sizeof(struct vgetrandom_state), size_per_each))
+> > +		return -EFAULT;
+> 
+> That's a total of four sizeof(struct vgetrandom_state) usage sites.
+> 
+>        size_t state_size = sizeof(struct vgetrandom_state);
+> 
+> perhaps?
+
+Not my style -- I like to have the constant expression at the usage site
+so I don't have to remember the variable -- but I'm fine going with your
+suggestion, so I'll do that for v8.
+
+Jason
