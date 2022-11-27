@@ -1,191 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5F63FD4
-	for <patches@lists.linux.dev>; Sun, 27 Nov 2022 20:18:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115BFC433C1;
-	Sun, 27 Nov 2022 20:18:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ctC5PFp7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669580290;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5Y3CBMuPS7LaIxQ72QWojthFee5sMI0jlRfrPvp9oDc=;
-	b=ctC5PFp74Lbo172SyBzejQP2DBuiADzFpnJVpc1S+AizO0l4hyc5HqdAIGDX9Opv90ixyq
-	49JHP982vikll1vRoxCUz/+tCTyJswAYuT6Qbuh3m4EH927rcNYPfUD2DGRVy4jdFu7kMV
-	TAKU3FLoGxYFkdWht5K4cVZpukbc+Wo=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 68cd4782 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 27 Nov 2022 20:18:09 +0000 (UTC)
-Date: Sun, 27 Nov 2022 21:18:02 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
-	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
-Message-ID: <Y4PF+pBlNZGfZ0sr@zx2c4.com>
-References: <20221124165536.1631325-1-Jason@zx2c4.com>
- <20221124165536.1631325-2-Jason@zx2c4.com>
- <87bkouyd90.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA01F6ABD
+	for <patches@lists.linux.dev>; Sun, 27 Nov 2022 20:58:24 +0000 (UTC)
+Received: by mail-qt1-f177.google.com with SMTP id c15so5567630qtw.8
+        for <patches@lists.linux.dev>; Sun, 27 Nov 2022 12:58:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9z9H623YyFpG25RUIa9AcX5Q4BaOKDFmx3+FsI4Hjo0=;
+        b=kIKOr46dScPmq82WG73HKGJ3DxDc3QohtTk32WAwA8BB53HL/cU1Zd9JrpLVzbPjKJ
+         tbGocktc39UMu+PuS17GmtPxqEjClzBIgJhPNlE7V9DXcWiSRuoqEHXW7Zputi7reqXP
+         ZN9G/J93jW7gzJH91B8do8l01F7HVdOxs4lYgEL5k4A7qESjOYW+yrlc3XbWBLqDd2TS
+         rzGoQ4r1P5lXol9Da8uNds066GgQTcjHICSC2Tj83OMrB0HkE3qXq+y7LrQ45TCk3KE2
+         oRFPWn6FZjzyjoyLKkh85zMTIgol5Yq90GKPvBQvtV6VLPAcWuMVhvVg1Sv8z9noi8k8
+         2MFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9z9H623YyFpG25RUIa9AcX5Q4BaOKDFmx3+FsI4Hjo0=;
+        b=Ra3DeQ65tzq2Buq7XNMbqN7JJR0ZfdHdqZj9XztK/SdsRvVOaOu9DUQqB7ryD3lc0G
+         zsPkKB4PgxMGG9Q7v4EgW/obi37r9ezorhgI7EPUW5j7TH3cd/5EzTj+vZZ4/lUg+eHh
+         iGjCJ2ROLEBhIaY2lbFPXpZUxiFbJbo6+6yfhFKAakPUlA9ES9M/fbJiYxM84oDm/C1s
+         T2IPQNcFz3XAHuFKiWDqyhU3RCUPW2usig9kv0DtHM/u1LwMbEPnzU2RWrCENbPKbwdH
+         WCpswQ8tMpqKQYuR9MtAO9PnnCPbQH6kcSZ+jMGoQDZHB6N/F0L2QJ8Jf2K1XB78qsJA
+         pteg==
+X-Gm-Message-State: ANoB5pkuLXXsC5qXB8ZYXMYAxgid+RauK0m/5WuLSf7i4LIcoKRVuETe
+	TLokEhuOlmecRNXLe/6FOek=
+X-Google-Smtp-Source: AA0mqf6XfDiTe4HDarvewLHJ64J8JYj8LZ0AIwPf6hnZaBhAFqZ23/QLfBypLs+hafawdP2MFjlarw==
+X-Received: by 2002:ac8:4d51:0:b0:3a5:1e6e:ad6a with SMTP id x17-20020ac84d51000000b003a51e6ead6amr45058614qtv.556.1669582703502;
+        Sun, 27 Nov 2022 12:58:23 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id o22-20020a05620a2a1600b006eeb3165554sm7021787qkp.19.2022.11.27.12.58.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Nov 2022 12:58:22 -0800 (PST)
+Message-ID: <bd2843ef-b226-d603-0474-c0f6d325c6c0@gmail.com>
+Date: Sun, 27 Nov 2022 12:58:19 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87bkouyd90.ffs@tglx>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH 5.15 000/180] 5.15.80-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221125075750.019489581@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221125075750.019489581@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Thomas,
 
-Thanks a lot for the thorough review, here, and in the other two emails.
-I appreciate you taking the time to look at it, and my apologies for
-parts that are unclear or sloppy or otherwise unpolished. I'll try to
-make v8 a lot better.
 
-Comments inline below:
+On 11/24/2022 11:58 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.80 release.
+> There are 180 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 27 Nov 2022 07:57:16 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.80-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On Fri, Nov 25, 2022 at 09:45:31PM +0100, Thomas Gleixner wrote:
-> On Thu, Nov 24 2022 at 17:55, Jason A. Donenfeld wrote:
-> > ---
-> >  MAINTAINERS                             |  1 +
-> >  arch/x86/Kconfig                        |  1 +
-> >  arch/x86/entry/syscalls/syscall_64.tbl  |  1 +
-> >  arch/x86/include/asm/unistd.h           |  1 +
-> >  drivers/char/random.c                   | 59 +++++++++++++++++++++++++
-> >  include/uapi/asm-generic/unistd.h       |  7 ++-
-> >  kernel/sys_ni.c                         |  3 ++
-> >  lib/vdso/getrandom.h                    | 23 ++++++++++
-> >  scripts/checksyscalls.sh                |  4 ++
-> >  tools/include/uapi/asm-generic/unistd.h |  7 ++-
-> >  10 files changed, 105 insertions(+), 2 deletions(-)
-> >  create mode 100644 lib/vdso/getrandom.h
-> 
-> I think I asked for this before:
-> 
-> Please split these things properly up. Provide the syscall and then wire
-> it up.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Before I split it into "syscall, generic vdso, x86 vdso", as that's how
-I interpreted your email. Next, I'll split it up into "generic syscall,
-generic vdso, x86 vdso & syscall", since enabling the syscall without
-the vdso function, or vice-versa, doesn't make sense, and having that
-last step be all at once there will provide an easy thing for other
-archs to look at.
-
-> > diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-> > index 67745ceab0db..331e21ba961a 100644
-> > --- a/arch/x86/Kconfig
-> > +++ b/arch/x86/Kconfig
-> > @@ -59,6 +59,7 @@ config X86
-> >  	#
-> >  	select ACPI_LEGACY_TABLES_LOOKUP	if ACPI
-> >  	select ACPI_SYSTEM_POWER_STATES_SUPPORT	if ACPI
-> > +	select ADVISE_SYSCALLS			if X86_64
-> 
-> Why is this x86_64 specific?
-> 
-> > --- a/arch/x86/include/asm/unistd.h
-> > +++ b/arch/x86/include/asm/unistd.h
-> > @@ -27,6 +27,7 @@
-> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64
-> >  #  define __ARCH_WANT_COMPAT_SYS_PREADV64V2
-> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64V2
-> > +#  define __ARCH_WANT_VGETRANDOM_ALLOC
-> 
-> So instead of this define, why can't you do:
-> 
-> config VGETRADOM_ALLOC
->        bool
->        select ADVISE_SYSCALLS
-> 
-> and then have
-> 
-> config GENERIC_VDSO_RANDOM_WHATEVER
->        bool
->        select VGETRANDOM_ALLOC
-> 
-> This gives a clear Kconfig dependency instead of the random
-> ADVISE_SYSCALLS select.
-
-That's much better indeed. I was trying to straddle the two conventions
-of `#define __ARCH_...` for syscalls and a Kconfig for vDSO functions,
-but doing it all together as you've suggested is nicer.
-
-I'll try to figure this out, though so far futzing around suggests there
-might have to be both, because of unistd.h being a userspace header.
-That is, include/uapi/asm-generic/unistd.h typically needs a `#if
-__ARCH_WANT..., #define ...` in it. I'll give it a spin and you'll see
-for v8. At the very least it should get rid of the more awkward
-`select ADVISE_SYSCALLS if X86_64` part, and will better separate the
-arch code from non-arch code.
-
-> 
-> >--- a/drivers/char/random.c
-> > +++ b/drivers/char/random.c
-> 
-> > +#include "../../lib/vdso/getrandom.h"
-> 
-> Seriously?
-> 
-> include/vdso/ exists for a reason.
-
-Er, yes, thanks.
-
-> 
-> > +#ifdef __ARCH_WANT_VGETRANDOM_ALLOC
-> > +/*
-> > + * The vgetrandom() function in userspace requires an opaque state, which this
-> > + * function provides to userspace, by mapping a certain number of special pages
-> > + * into the calling process. It takes a hint as to the number of opaque states
-> > + * desired, and returns the number of opaque states actually allocated, the
-> > + * size of each one in bytes, and the address of the first state.
-> 
-> As this is a syscall which can be invoked outside of the VDSO, can you
-> please provide proper kernel-doc which explains the arguments, the
-> functionality and the return value?
-
-Yes, will do.
-
-> 
-> > + */
-> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned int __user *, num,
-> > +		unsigned int __user *, size_per_each, unsigned int, flags)
-> > +{
-> > +	size_t alloc_size, num_states;
-> > +	unsigned long pages_addr;
-> > +	unsigned int num_hint;
-> > +	int ret;
-> > +
-> > +	if (flags)
-> > +		return -EINVAL;
-> > +
-> > +	if (get_user(num_hint, num))
-> > +		return -EFAULT;
-> > +
-> > +	num_states = clamp_t(size_t, num_hint, 1, (SIZE_MAX & PAGE_MASK) / sizeof(struct vgetrandom_state));
-> > +	alloc_size = PAGE_ALIGN(num_states * sizeof(struct vgetrandom_state));
-> > +
-> > +	if (put_user(alloc_size / sizeof(struct vgetrandom_state), num) ||
-> > +	    put_user(sizeof(struct vgetrandom_state), size_per_each))
-> > +		return -EFAULT;
-> 
-> That's a total of four sizeof(struct vgetrandom_state) usage sites.
-> 
->        size_t state_size = sizeof(struct vgetrandom_state);
-> 
-> perhaps?
-
-Not my style -- I like to have the constant expression at the usage site
-so I don't have to remember the variable -- but I'm fine going with your
-suggestion, so I'll do that for v8.
-
-Jason
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
