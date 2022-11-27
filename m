@@ -1,54 +1,57 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9722517CB
-	for <patches@lists.linux.dev>; Sat, 26 Nov 2022 11:19:01 +0000 (UTC)
-Received: by mail-wr1-f48.google.com with SMTP id o5so1084780wrm.1
-        for <patches@lists.linux.dev>; Sat, 26 Nov 2022 03:19:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EAC211A
+	for <patches@lists.linux.dev>; Sun, 27 Nov 2022 10:18:28 +0000 (UTC)
+Received: by mail-pj1-f41.google.com with SMTP id v3-20020a17090ac90300b00218441ac0f6so10496160pjt.0
+        for <patches@lists.linux.dev>; Sun, 27 Nov 2022 02:18:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D+0puK+taLmh7q2XEEEVa6EShVz+GcTC6xdX07f/2xM=;
-        b=FFe6lGtTQ9b3SgofHOyHLZWWyjkQEAD92acdEpUJ6UTIdyXTc0s3D2fKX0QOF+cFh/
-         yE1KeKSMd68VvB/qANzoywqd5a+KepPfMP7YguUCa+TFVYm2we0JGqx+lW6Cb287WOCZ
-         4aUYtR80D2DVGnFchZ38hP8H8LA3cFdyS3JcTXwUemM0H6bSGRYnJrebK0tB41zrqFRB
-         hZA5O5tE3YkXhnJMg9h6I4spE0/UMbOHjfdruBvg0k7Z5nJF8hIxPhuxwYwsyClZN+nt
-         HZZSY5U8LJxwdrcDo04l0l9DKGoY/YIjsl4oCDKANHhoe2ebMw1B+yUuXEvijtK0oeXh
-         H7EQ==
+        bh=8dFxQI+/RVircnstLupR+wzSTGReSsywaPKKiQaphTk=;
+        b=hnybZPSoxrGMsNvTQa88HwLi4nRKBQnfQ95rng4eaARtP2YBPX47HbJDA4LSJ3f+NC
+         LmvTllgulvbhEt4p6Rf7Sn4pPx4Jw5QWcVWRfcJSrWDlVysM3RdnPcoKAlG0/x440d6L
+         AL4XJ3EttE7l4m4RWpFjc68qW5DUJe4JaWA0FWi2y/rR8D36uxYU780dvcpd9Dtbu7Z/
+         dW1A14u+OFQMMLxnEcN30jcagoiVuD8Ff2PzLgtrnA8Pp59P7UwSl507r2oPsmRCA+ws
+         GRosVJynkzYce/tQizK6anj6vJLZoBKal/gCU9c80CanVS8y2buAD1R3bu5v72N4J+28
+         1b3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D+0puK+taLmh7q2XEEEVa6EShVz+GcTC6xdX07f/2xM=;
-        b=FUDmHGL8tjCWImeK+DlefWzrgtLaGxbUDZZCgSO2PS2wT8L+X+4i8siCEqyFiFC9ym
-         10gQNlk+1qCEi+wDTLg7j45ZcVJqSB5A4hlGQppPwNQvyXlN+WY/ZvpK873y5RJcMIhL
-         QhAeV7ZoxizWLiMn0uVIY9cXEWddbInHTDnCk4FSrq8Rm1foQ9aTqpF1Tr1CwqRaE8fl
-         H9FFTHBnq69id8Ekqi4VfjyRwm2mjJMuamPK3KZsuD/0jWXRHiTjn3zrj5dsS59YO5Mn
-         rauF/NSW7+aqnBr6Ost1MinGgqOda0tcVQ88ud4LaSgOqigiAmMOtroj9Des0VdPApyw
-         deeg==
-X-Gm-Message-State: ANoB5pm3ziS480P0Ddq5R7ZdDj02XfN8OXxR/cFVYYdjDJ6WZi7N/01r
-	wP+Xoo1/aqa9w8TY6lSEQ8E=
-X-Google-Smtp-Source: AA0mqf5y9gWYmf+pcFz1umxzIPTKdlkS519VScjMl9s1exM8Iy1fPy4+9fRp1crTBhWfIGCdLQnFrA==
-X-Received: by 2002:a05:6000:1d92:b0:241:6e0a:bfe6 with SMTP id bk18-20020a0560001d9200b002416e0abfe6mr17967047wrb.34.1669461539782;
-        Sat, 26 Nov 2022 03:18:59 -0800 (PST)
-Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id p1-20020a1c5441000000b003b4cba4ef71sm12001305wmi.41.2022.11.26.03.18.59
+        bh=8dFxQI+/RVircnstLupR+wzSTGReSsywaPKKiQaphTk=;
+        b=dfAssPkJMHiiF0OQd0cX+r8zrzVvCKcW3HYebOwzAsFKqXmfCVBcb4A+RzVoE/r/aP
+         s/JQHa6RXOipth8/x/Zq1giW/d/eEKLNgiMd1Yk2smq+kI5XddnfcUqpa4WRAkHtASWT
+         gIL/qM2mFQU/c1sklUmG1wG8Jbvu4agMSWWLpAQQ27bRDd7bDLL+Rvw87oY+9eXRMvNJ
+         /xOsQh6gy/fySr29awuXrt/JpX/cs0gdhrdBOlvDAba1KRGxVBn9DTX/GJm0N4dFPs9G
+         Ul+HoOlllatLvID9T4khKGjj+TAPwkC5L+rljwwrNKVhROg9XN9ihfpD9FgdiW+iusQC
+         d5lg==
+X-Gm-Message-State: ANoB5pmbvNiI4kMWkugFJznyFyuJWRe5ERHGXfCC8fBT4Z114iR8Y81f
+	eUKhlwUpghVDEBGVWyZbbVo=
+X-Google-Smtp-Source: AA0mqf7hyQ/awHJ7ShPcK8/eUKE6NXbFHmLQ6tLT2iWM5FwJAvi7eqXiTFmx7TYF1k5B0B9yeUmhqA==
+X-Received: by 2002:a17:90b:888:b0:219:1a88:727b with SMTP id bj8-20020a17090b088800b002191a88727bmr6989938pjb.47.1669544308392;
+        Sun, 27 Nov 2022 02:18:28 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id f16-20020aa79690000000b00553d573222fsm5922088pfk.199.2022.11.27.02.18.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 03:18:59 -0800 (PST)
-Date: Sat, 26 Nov 2022 11:18:57 +0000
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/180] 5.15.80-rc2 review
-Message-ID: <Y4H2Iea9GqSXTkYx@debian>
-References: <20221125075750.019489581@linuxfoundation.org>
+        Sun, 27 Nov 2022 02:18:27 -0800 (PST)
+Date: Sun, 27 Nov 2022 19:18:21 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 08/12] mm, slub: refactor free debug processing
+Message-ID: <Y4M5bWgjSWKZEXnO@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-9-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,43 +60,277 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221125075750.019489581@linuxfoundation.org>
+In-Reply-To: <20221121171202.22080-9-vbabka@suse.cz>
 
-Hi Greg,
-
-On Fri, Nov 25, 2022 at 08:58:52AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.80 release.
-> There are 180 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Nov 21, 2022 at 06:11:58PM +0100, Vlastimil Babka wrote:
+> Since commit c7323a5ad078 ("mm/slub: restrict sysfs validation to debug
+> caches and make it safe"), caches with debugging enabled use the
+> free_debug_processing() function to do both freeing checks and actual
+> freeing to partial list under list_lock, bypassing the fast paths.
 > 
-> Responses should be made by Sun, 27 Nov 2022 07:57:16 +0000.
-> Anything received after that time might be too late.
+> We will want to use the same path for CONFIG_SLUB_TINY, but without the
+> debugging checks, so refactor the code so that free_debug_processing()
+> does only the checks, while the freeing is handled by a new function
+> free_to_partial_list().
+> 
+> For consistency, change return parameter alloc_debug_processing() from
+> int to bool and correct the !SLUB_DEBUG variant to return true and not
+> false. This didn't matter until now, but will in the following changes.
+> 
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  mm/slub.c | 154 +++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 83 insertions(+), 71 deletions(-)
+> 
+> diff --git a/mm/slub.c b/mm/slub.c
+> index bf726dd00f7d..fd56d7cca9c2 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -1368,7 +1368,7 @@ static inline int alloc_consistency_checks(struct kmem_cache *s,
+>  	return 1;
+>  }
+>  
+> -static noinline int alloc_debug_processing(struct kmem_cache *s,
+> +static noinline bool alloc_debug_processing(struct kmem_cache *s,
+>  			struct slab *slab, void *object, int orig_size)
+>  {
+>  	if (s->flags & SLAB_CONSISTENCY_CHECKS) {
+> @@ -1380,7 +1380,7 @@ static noinline int alloc_debug_processing(struct kmem_cache *s,
+>  	trace(s, slab, object, 1);
+>  	set_orig_size(s, object, orig_size);
+>  	init_object(s, object, SLUB_RED_ACTIVE);
+> -	return 1;
+> +	return true;
+>  
+>  bad:
+>  	if (folio_test_slab(slab_folio(slab))) {
+> @@ -1393,7 +1393,7 @@ static noinline int alloc_debug_processing(struct kmem_cache *s,
+>  		slab->inuse = slab->objects;
+>  		slab->freelist = NULL;
+>  	}
+> -	return 0;
+> +	return false;
+>  }
+>  
+>  static inline int free_consistency_checks(struct kmem_cache *s,
+> @@ -1646,17 +1646,17 @@ static inline void setup_object_debug(struct kmem_cache *s, void *object) {}
+>  static inline
+>  void setup_slab_debug(struct kmem_cache *s, struct slab *slab, void *addr) {}
+>  
+> -static inline int alloc_debug_processing(struct kmem_cache *s,
+> -	struct slab *slab, void *object, int orig_size) { return 0; }
+> +static inline bool alloc_debug_processing(struct kmem_cache *s,
+> +	struct slab *slab, void *object, int orig_size) { return true; }
+>  
+> -static inline void free_debug_processing(
+> -	struct kmem_cache *s, struct slab *slab,
+> -	void *head, void *tail, int bulk_cnt,
+> -	unsigned long addr) {}
+> +static inline bool free_debug_processing(struct kmem_cache *s,
+> +	struct slab *slab, void *head, void *tail, int *bulk_cnt,
+> +	unsigned long addr, depot_stack_handle_t handle) { return true; }
+>  
+>  static inline void slab_pad_check(struct kmem_cache *s, struct slab *slab) {}
+>  static inline int check_object(struct kmem_cache *s, struct slab *slab,
+>  			void *object, u8 val) { return 1; }
+> +static inline depot_stack_handle_t set_track_prepare(void) { return 0; }
+>  static inline void set_track(struct kmem_cache *s, void *object,
+>  			     enum track_item alloc, unsigned long addr) {}
+>  static inline void add_full(struct kmem_cache *s, struct kmem_cache_node *n,
+> @@ -2833,38 +2833,28 @@ static inline unsigned long node_nr_objs(struct kmem_cache_node *n)
+>  }
+>  
+>  /* Supports checking bulk free of a constructed freelist */
+> -static noinline void free_debug_processing(
+> -	struct kmem_cache *s, struct slab *slab,
+> -	void *head, void *tail, int bulk_cnt,
+> -	unsigned long addr)
+> +static inline bool free_debug_processing(struct kmem_cache *s,
+> +	struct slab *slab, void *head, void *tail, int *bulk_cnt,
+> +	unsigned long addr, depot_stack_handle_t handle)
+>  {
+> -	struct kmem_cache_node *n = get_node(s, slab_nid(slab));
+> -	struct slab *slab_free = NULL;
+> +	bool checks_ok = false;
+>  	void *object = head;
+>  	int cnt = 0;
+> -	unsigned long flags;
+> -	bool checks_ok = false;
+> -	depot_stack_handle_t handle = 0;
+> -
+> -	if (s->flags & SLAB_STORE_USER)
+> -		handle = set_track_prepare();
+> -
+> -	spin_lock_irqsave(&n->list_lock, flags);
+>  
+>  	if (s->flags & SLAB_CONSISTENCY_CHECKS) {
+>  		if (!check_slab(s, slab))
+>  			goto out;
+>  	}
+>  
+> -	if (slab->inuse < bulk_cnt) {
+> +	if (slab->inuse < *bulk_cnt) {
+>  		slab_err(s, slab, "Slab has %d allocated objects but %d are to be freed\n",
+> -			 slab->inuse, bulk_cnt);
+> +			 slab->inuse, *bulk_cnt);
+>  		goto out;
+>  	}
+>  
+>  next_object:
+>  
+> -	if (++cnt > bulk_cnt)
+> +	if (++cnt > *bulk_cnt)
+>  		goto out_cnt;
+>  
+>  	if (s->flags & SLAB_CONSISTENCY_CHECKS) {
+> @@ -2886,57 +2876,18 @@ static noinline void free_debug_processing(
+>  	checks_ok = true;
+>  
+>  out_cnt:
+> -	if (cnt != bulk_cnt)
+> +	if (cnt != *bulk_cnt) {
+>  		slab_err(s, slab, "Bulk free expected %d objects but found %d\n",
+> -			 bulk_cnt, cnt);
+> -
+> -out:
+> -	if (checks_ok) {
+> -		void *prior = slab->freelist;
+> -
+> -		/* Perform the actual freeing while we still hold the locks */
+> -		slab->inuse -= cnt;
+> -		set_freepointer(s, tail, prior);
+> -		slab->freelist = head;
+> -
+> -		/*
+> -		 * If the slab is empty, and node's partial list is full,
+> -		 * it should be discarded anyway no matter it's on full or
+> -		 * partial list.
+> -		 */
+> -		if (slab->inuse == 0 && n->nr_partial >= s->min_partial)
+> -			slab_free = slab;
+> -
+> -		if (!prior) {
+> -			/* was on full list */
+> -			remove_full(s, n, slab);
+> -			if (!slab_free) {
+> -				add_partial(n, slab, DEACTIVATE_TO_TAIL);
+> -				stat(s, FREE_ADD_PARTIAL);
+> -			}
+> -		} else if (slab_free) {
+> -			remove_partial(n, slab);
+> -			stat(s, FREE_REMOVE_PARTIAL);
+> -		}
+> +			 *bulk_cnt, cnt);
+> +		*bulk_cnt = cnt;
+>  	}
+>  
+> -	if (slab_free) {
+> -		/*
+> -		 * Update the counters while still holding n->list_lock to
+> -		 * prevent spurious validation warnings
+> -		 */
+> -		dec_slabs_node(s, slab_nid(slab_free), slab_free->objects);
+> -	}
+> -
+> -	spin_unlock_irqrestore(&n->list_lock, flags);
+> +out:
+>  
+>  	if (!checks_ok)
+>  		slab_fix(s, "Object at 0x%p not freed", object);
+>  
+> -	if (slab_free) {
+> -		stat(s, FREE_SLAB);
+> -		free_slab(s, slab_free);
+> -	}
+> +	return checks_ok;
+>  }
+>  #endif /* CONFIG_SLUB_DEBUG */
+>  
+> @@ -3453,6 +3404,67 @@ void *kmem_cache_alloc_node(struct kmem_cache *s, gfp_t gfpflags, int node)
+>  }
+>  EXPORT_SYMBOL(kmem_cache_alloc_node);
+>  
+> +static noinline void free_to_partial_list(
+> +	struct kmem_cache *s, struct slab *slab,
+> +	void *head, void *tail, int bulk_cnt,
+> +	unsigned long addr)
+> +{
+> +	struct kmem_cache_node *n = get_node(s, slab_nid(slab));
+> +	struct slab *slab_free = NULL;
+> +	int cnt = bulk_cnt;
+> +	unsigned long flags;
+> +	depot_stack_handle_t handle = 0;
+> +
+> +	if (s->flags & SLAB_STORE_USER)
+> +		handle = set_track_prepare();
+> +
+> +	spin_lock_irqsave(&n->list_lock, flags);
+> +
+> +	if (free_debug_processing(s, slab, head, tail, &cnt, addr, handle)) {
+> +		void *prior = slab->freelist;
+> +
+> +		/* Perform the actual freeing while we still hold the locks */
+> +		slab->inuse -= cnt;
+> +		set_freepointer(s, tail, prior);
+> +		slab->freelist = head;
+> +
+> +		/*
+> +		 * If the slab is empty, and node's partial list is full,
+> +		 * it should be discarded anyway no matter it's on full or
+> +		 * partial list.
+> +		 */
+> +		if (slab->inuse == 0 && n->nr_partial >= s->min_partial)
+> +			slab_free = slab;
+> +
+> +		if (!prior) {
+> +			/* was on full list */
+> +			remove_full(s, n, slab);
+> +			if (!slab_free) {
+> +				add_partial(n, slab, DEACTIVATE_TO_TAIL);
+> +				stat(s, FREE_ADD_PARTIAL);
+> +			}
+> +		} else if (slab_free) {
+> +			remove_partial(n, slab);
+> +			stat(s, FREE_REMOVE_PARTIAL);
+> +		}
+> +	}
+> +
+> +	if (slab_free) {
+> +		/*
+> +		 * Update the counters while still holding n->list_lock to
+> +		 * prevent spurious validation warnings
+> +		 */
+> +		dec_slabs_node(s, slab_nid(slab_free), slab_free->objects);
+> +	}
+> +
+> +	spin_unlock_irqrestore(&n->list_lock, flags);
+> +
+> +	if (slab_free) {
+> +		stat(s, FREE_SLAB);
+> +		free_slab(s, slab_free);
+> +	}
+> +}
+> +
+>  /*
+>   * Slow path handling. This may still be called frequently since objects
+>   * have a longer lifetime than the cpu slabs in most processing loads.
+> @@ -3479,7 +3491,7 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
+>  		return;
+>  
+>  	if (kmem_cache_debug(s)) {
+> -		free_debug_processing(s, slab, head, tail, cnt, addr);
+> +		free_to_partial_list(s, slab, head, tail, cnt, addr);
+>  		return;
+>  	}
+>  
+> -- 
+> 2.38.1
+>
 
-Build test (gcc version 12.2.1 20221016):
-mips: 62 configs -> no failure
-arm: 99 configs -> no failure
-arm64: 3 configs -> no failure
-x86_64: 4 configs -> no failure
-alpha allmodconfig -> no failure
-csky allmodconfig -> no failure
-powerpc allmodconfig -> no failure
-riscv allmodconfig -> no failure
-s390 allmodconfig -> no failure
-xtensa allmodconfig -> no failure
+Looks good to me.
 
-Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
-arm64: Booted on rpi4b (4GB model). No regression. [2]
-mips: Booted on ci20 board. No regression. [3]
-
-[1]. https://openqa.qa.codethink.co.uk/tests/2225
-[2]. https://openqa.qa.codethink.co.uk/tests/2227
-[3]. https://openqa.qa.codethink.co.uk/tests/2230
-
-Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
 -- 
-Regards
-Sudip
+Thanks,
+Hyeonggon
