@@ -1,42 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002277C
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 00:19:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F08C43470;
-	Mon, 28 Nov 2022 00:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDFB7E
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 01:10:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766D8C433D6;
+	Mon, 28 Nov 2022 01:10:34 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="GjPO03ju"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="MU2OjMQq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669594781;
+	t=1669597831;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CGDNWDlrjoKkV18bX013f+9WmWZM0g+YAx70BBOO/2Q=;
-	b=GjPO03juWqjidb6zzZMkl2qkH2uWs0O0x5Pxs3nWv0KJ+2r8iTUvJVFIBhmnACPzUtSIp/
-	6/TTNYlJ0z7LKrrL7Jmhy1qQRy6fbyZPCOqySSAcAOn7g+G4XSRK689oPPz3kP++anYvyq
-	37HBzL4b4azCFC4Tdx9+TyNM4pjx6MM=
+	bh=stMAcss9jJ+ArjSuYYut3Mj6Uflyd3mfK0Rrbcc1thA=;
+	b=MU2OjMQqCEH71ivdAPT2TW0zRLPCiLYZ6ARGx++xJuTWOmhODjIUdCULwq8qwO8VuZVwR+
+	giF10m4SCzuMU0SoKi75kEbguykMKyHDHscmKGgf+T2rQtKqDFlkYH+TfK6QzVT8cxXRdu
+	jJSLwdGeGb4D2RxGBUf9j7lEstjrjq8=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d135daf3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 28 Nov 2022 00:19:40 +0000 (UTC)
-Date: Mon, 28 Nov 2022 01:19:36 +0100
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 18f5231d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Nov 2022 01:10:31 +0000 (UTC)
+Date: Mon, 28 Nov 2022 02:10:29 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Samuel Neves <sneves@dei.uc.pt>
-Cc: Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v7 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-Message-ID: <Y4P+mOFu2A9tj5/y@zx2c4.com>
-References: <20221124165536.1631325-1-Jason@zx2c4.com>
- <20221124165536.1631325-4-Jason@zx2c4.com>
- <874jumy6me.ffs@tglx>
- <Y4PfjcQRfezjH4f+@zx2c4.com>
- <CAEX_ruEq8_W8i-+cfri2-BYBNDgZCinsfFKVeFjxNSfnGxW1xg@mail.gmail.com>
+To: Matthew Garrett <mjg59@srcf.ucam.org>
+Cc: linux-efi@vger.kernel.org, linux-crypto@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	ardb@kernel.org
+Subject: Re: [PATCH v3 1/5] efi: vars: prohibit reading random seed variables
+Message-ID: <Y4QKhRycxam5MIU1@zx2c4.com>
+References: <20221122020404.3476063-1-Jason@zx2c4.com>
+ <20221122020404.3476063-2-Jason@zx2c4.com>
+ <20221127210040.GA32253@srcf.ucam.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,59 +38,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAEX_ruEq8_W8i-+cfri2-BYBNDgZCinsfFKVeFjxNSfnGxW1xg@mail.gmail.com>
+In-Reply-To: <20221127210040.GA32253@srcf.ucam.org>
 
-On Sun, Nov 27, 2022 at 10:39:27PM +0000, Samuel Neves wrote:
-> On Sun, Nov 27, 2022 at 10:13 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >
-> > Hi Thomas,
-> >
-> > On Sat, Nov 26, 2022 at 12:08:41AM +0100, Thomas Gleixner wrote:
-> > > Jason!
-> > >
-> > > On Thu, Nov 24 2022 at 17:55, Jason A. Donenfeld wrote:
-> > > > +++ b/arch/x86/entry/vdso/vgetrandom-chacha.S
-> > > > +/*
-> > > > + * Very basic SSE2 implementation of ChaCha20. Produces a given positive number
-> > > > + * of blocks of output with a nonce of 0, taking an input key and 8-byte
-> > > > + * counter. Importantly does not spill to the stack. Its arguments are:
-> > >
-> > > Basic or not.
-> >
-> > Heh, FYI I didn't mean "basic" here as in "doesn't need a review", but
-> > just that it's a straightforward technique and doesn't do any
-> > complicated multiblock pyrotechnics (which frankly aren't really
-> > needed).
-> >
-> > > This needs a Reviewed-by from someone who understands SSE2
-> > > and ChaCha20 before this can go anywhere near the x86 tree.
-> >
-> > No problem. I'll see to it that somebody qualified gives this a review.
-> >
-> 
-> I did look at this earlier. It looks fine. I would recommend changing
-> 
-> + /* copy1,copy2 = key */
-> + movdqu 0x00(key),copy1
-> + movdqu 0x10(key),copy2
-> 
-> to
-> 
-> + /* copy1,copy2 = key */
-> + movups 0x00(key),copy1
-> + movups 0x10(key),copy2
-> 
-> which has the same semantics, but saves a couple of code bytes. Likewise for
-> 
-> + movdqu state0,0x00(output)
-> + movdqu state1,0x10(output)
-> + movdqu state2,0x20(output)
-> + movdqu state3,0x30(output)
-> 
-> Otherwise,
-> 
-> Reviewed-by: Samuel Neves <sneves@dei.uc.pt> # for vgetrandom-chacha.S
+Hi,
 
-Thanks for the review and for the suggestion. Will do.
+On Sun, Nov 27, 2022 at 09:00:40PM +0000, Matthew Garrett wrote:
+> On Tue, Nov 22, 2022 at 03:04:00AM +0100, Jason A. Donenfeld wrote:
+> > In anticipation of putting random seeds in EFI variables, it's important
+> > that the random GUID namespace of variables remains hidden from
+> > userspace. We accomplish this by not populating efivarfs with entries
+> > from that GUID, as well as denying the creation of new ones in that
+> > GUID.
+> 
+> What's the concern here? Booting an older kernel would allow a malicious 
+> actor to either read the seed variable or set it to a value under their 
+> control, so we can't guarantee that the information is secret.
+
+The security model is the same as that of random seed files, on, say,
+BSD. If you remove the hard drive or change the operating system or what
+have you, then sure, you can fiddle with the seed and read it. But the
+running operating system shouldn't show it to you if it can help it.
+Consider, for example, systemd's use of EFI variables for the
+SystemToken. There, they have PID 1 take care of chmod'ing it before
+other processes start.  But of course a different OS or even EFI shell
+could just read it. So, think of this as just basic runtime safety --
+like what people do when they set the umask before writing a random seed
+file -- rather than some type of ultimate secrecy.
+
+(And either way, the larger picture is that it's much more important to
+get as much random data from as many sources as possible as soon as
+possible, rather than being overly paranoid about every one single
+source that we start excluding sources. A plethora of sources is better
+off here.)
 
 Jason
