@@ -1,106 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02014A48B
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 20:41:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89410C43470
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 20:41:45 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pPYgIGBN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669668102;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=D8JvkqslPVbF1sVkadwrc/dHj4sGZrwzWhDSPyXC0iA=;
-	b=pPYgIGBNXAv0bVCjwg/sbyMF7Yw101W8pIkjWa7wbQipfGhKWsjhNNBkoeWkk4+tGST4fJ
-	knRjl2KJD4fD6bus0exJCsqM3BZU/JPhN4ZruzdElwRty8VCA/uiLSHcYN4c5UoNcbyo7T
-	Dk1N5vp8U+CVez+tnyNsWGp1rq75JKs=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 79a22b81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <patches@lists.linux.dev>;
-	Mon, 28 Nov 2022 20:41:42 +0000 (UTC)
-Received: by mail-ua1-f53.google.com with SMTP id p1so4309596uak.11
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 12:41:42 -0800 (PST)
-X-Gm-Message-State: ANoB5plwhuSIGqwPWxql6Jz+krI6kIh3ydNMG/gnHWvXnEDFAvQ6VRtW
-	BsezRqWQ9mLBhe5A4srOVVlgca4M/4ra8rIjx1s=
-X-Google-Smtp-Source: AA0mqf4UPjPrqMrKRlHIidUmjattarRbkI2y9HG3LAX9xwp/oLJ1brY9IeiJRTI7OlH2L1h0PSE8XR88ROmV6anlyfQ=
-X-Received: by 2002:ab0:3899:0:b0:419:1b4a:360b with SMTP id
- z25-20020ab03899000000b004191b4a360bmr5012971uav.102.1669668101214; Mon, 28
- Nov 2022 12:41:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86333A492
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 20:55:39 +0000 (UTC)
+Received: by mail-pl1-f174.google.com with SMTP id d3so6405104plr.10
+        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 12:55:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Aq/k14hHxyqv+R/E0+ZIRLUsEK+p2/petQlrLB89kfU=;
+        b=K6bgp2Ndbt8cB0g+NYsOVuj9p8BADh8negD17Pb9B7vzIIu4nezQjaxRFY87IeZZVw
+         vJ7lsGhQBj6fb/UGdc+NY09xBP2tZ1u/KX6Xs7yz5V7JMEC90rlNP/VREF4ke0jMTNTz
+         BaJO9SeUFy6GD4Bq8pQcuXFfYDnZUbwpmQezqqslq0TRlaiWeGzDa9FBwsa22rYBdBxt
+         dkhQ63wrfvhHdGfSdXB2omz1Pex/ChXOcL23SV+bK+vAla/CG8e3RZ5kYptqN7MZLcFo
+         Pw+vouFfmW5itJtz0EiIAJQ4wkI0J21NZMWjDhfMn+cs2VRC3Vo/RLLVX5LzymLJi+Nv
+         wUVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aq/k14hHxyqv+R/E0+ZIRLUsEK+p2/petQlrLB89kfU=;
+        b=kSDLmN+QBNBZQjsAwb+ocrSHYHbBuRRSdIpyOja8HIMEkGVUzl2XaBPDGuAaVMIQbq
+         wn/zEYbltG3870UHHZsq/rjNu8+nOWbatDekoJHltmAIwhYDGgctcK8brKxQ10sQfdXM
+         UkZTrEA3gX0G/B0QSwmbMTRYsJxwWARH96evBELfaxCV2jJGC62WDIhYkLnQBoVxmcn8
+         IZkY8vi14hkx/QTlSS8b20GfT5U/t+OVxyEI3KsTvUJRCy20q4eoybjPzsDeP3BId4gI
+         WVsvABemBonj7nTvTdgxbwKQpqoQb+k8DUAuXF7JoawvLLEytdjOzZs5I1UJ5nhY66+K
+         3ETg==
+X-Gm-Message-State: ANoB5pmPUNylqCkYLxpDY1odcRzpyBWyQK8UI8oiY810jW8TgBVwBv34
+	KTTubYQEbcEtGOGX9uUpU5Y=
+X-Google-Smtp-Source: AA0mqf4EmPJGQk9BL0tECBExCJGFn+d7sIW8KY71HLgIBfLHHjRTd0PRGwlA6xERrn4SCcY3sBVliA==
+X-Received: by 2002:a17:90a:5c85:b0:20a:92d2:226a with SMTP id r5-20020a17090a5c8500b0020a92d2226amr45039647pji.155.1669668938878;
+        Mon, 28 Nov 2022 12:55:38 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id b13-20020a170902d50d00b0017f73caf588sm9260002plg.218.2022.11.28.12.55.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 12:55:38 -0800 (PST)
+Message-ID: <1e5d85a0-6edc-bde4-6493-c2b2ac25c760@gmail.com>
+Date: Mon, 28 Nov 2022 12:55:33 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221128111829.2477505-1-Jason@zx2c4.com> <20221128111829.2477505-4-Jason@zx2c4.com>
- <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com> <Y4UKpP7/NOwPIkYe@zx2c4.com>
- <cd01e0b4-579f-48fc-995f-6e1acebd02af@app.fastmail.com> <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
-In-Reply-To: <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 28 Nov 2022 21:41:30 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oP4whduVJD7LYpjFaS76yhxd3r1YXRfNhpRBw4QCQe3g@mail.gmail.com>
-Message-ID: <CAHmME9oP4whduVJD7LYpjFaS76yhxd3r1YXRfNhpRBw4QCQe3g@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Thomas Gleixner <tglx@linutronix.de>, linux-crypto@vger.kernel.org, 
-	linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Christian Brauner <brauner@kernel.org>, Samuel Neves <sneves@dei.uc.pt>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 6.0 000/313] 6.0.10-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221125075804.064161337@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221125075804.064161337@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hey again,
+On 11/24/22 23:58, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.10 release.
+> There are 313 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 27 Nov 2022 07:57:07 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.10-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On Mon, Nov 28, 2022 at 9:02 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hi Arnd,
->
-> On Mon, Nov 28, 2022 at 8:57 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Mon, Nov 28, 2022, at 20:23, Jason A. Donenfeld wrote:
-> > > On Mon, Nov 28, 2022 at 08:18:12PM +0100, Arnd Bergmann wrote:
-> > >> On Mon, Nov 28, 2022, at 12:18, Jason A. Donenfeld wrote:
-> > >
-> > > That's more or less how v7 was, but Thomas thought the x86 stuff should
-> > > be separate. So for v8, the organization is:
-> > >
-> > > 1) generic syscall
-> > > 2) generic vdso
-> > > 3) x86 wiring
-> > >
-> > > The primary advantage is that future archs wanting to add this now can
-> > > just look at commit (3) only, and make a similar commit for that new
-> > > arch.
-> > >
-> > > If you think a different organization outweighs that advantage, can you
-> > > spell out what division of patches you want, and I'll do that for v9?
-> > > Or maybe this v8 is okay?
-> >
-> > My interest is that at the end of the series, all architectures
-> > are hooked up with the same syscall number, which avoids confusion
-> > and merge conflicts when we add the next syscall to all tables.
-> >
-> > How about one patch to add all the syscall table entries, and then
-> > have the x86 specific change just turn on the Kconfig symbol that
-> > actually enables the syscall?
->
-> Okay, I can split it that way. If I gather your meaning correctly:
->
-> 1) generic syscall C code
-> 2) #define __NR_... in asm-generic/unistd.h x86/.../unistd.h,
-> x86/.../syscall_64.tbl
-> 3) generic vdso C code
-> 4) hook up x86 vdso, and select the right Kconfig symbol to start
-> compiling the code
->
-> Is that what you have in mind? If so, I'll name (2) "arch: wire up
-> vgetrandom_alloc() syscall number".
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Well, I just did this, and it seems clean enough. The result is in:
-https://git.zx2c4.com/linux-rng/log/?h=vdso
-if you're curious to poke at it ahead of v9.
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-Jason
