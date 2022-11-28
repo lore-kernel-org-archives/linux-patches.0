@@ -1,108 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D86EA498
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:40:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987A5C433C1;
-	Mon, 28 Nov 2022 21:40:01 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="l29kvSGa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669671599;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Tfs5wzpKdXXvhME6DzZepIuBzlpHQXgovK4ad1gZ15Q=;
-	b=l29kvSGaXSZQ+bbI72z4UBsL7Ki877+bxUGmtzQH3YL82BbZHKRvxP8MNWh0p7C/CODQBp
-	YAQQT1BaiuVMctPMwIXdIz5mz3VB3Ulgevh7VssRhCHTJYMZDyC1u9HPkVlxT49YoUMLJv
-	fWeFXG/MNOgEkYQH0POQUOwETCVsjK8=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7a8f84e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 28 Nov 2022 21:39:58 +0000 (UTC)
-Date: Mon, 28 Nov 2022 22:39:54 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Samuel Neves <sneves@dei.uc.pt>
-Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-Message-ID: <Y4Uqqv4X2j/+dFww@zx2c4.com>
-References: <20221128111829.2477505-1-Jason@zx2c4.com>
- <20221128111829.2477505-4-Jason@zx2c4.com>
- <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com>
- <Y4UKpP7/NOwPIkYe@zx2c4.com>
- <cd01e0b4-579f-48fc-995f-6e1acebd02af@app.fastmail.com>
- <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
- <2cb4b4a7-1d39-4f63-aee0-b4fc43efa68d@app.fastmail.com>
- <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E29A498
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:56:02 +0000 (UTC)
+Received: by mail-pl1-f181.google.com with SMTP id y17so3639992plp.3
+        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 13:56:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PNE2hM5xuRQg1qTi7Jhb4FKs2enVjE/c6i2QY7o+wfk=;
+        b=ggl4s4VnvSif8ARoD9mDKXN/FZRm5YDoU5oWpDdy9kdO32JLUN4xSZEOGPcHBoUWgA
+         ZoObHJDHHhM10FUHSyjQt9Ko1rbfCGJ33K7Y72D53oR+DqjkBRyzeQMQC6YeWX5YSmrH
+         EJkj3agiRYkp1hKpvei60t7y7yAvgJiDpYVA2xJg8rMMSb1docHC1Dlois7qzoRByu6Y
+         CRXi4UnZa5+lwkQ7+N/3nzU93/3DLwmMfLLescvqsVP7gAUgcyU5umJCVjRvsryKS/rD
+         gRe0/j/0UIxjoOkUpXVxvCwi8GYXAeX09/V+Ir8nMHBUT9K8JFeucMozXw+bv0QEFIBF
+         CfOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PNE2hM5xuRQg1qTi7Jhb4FKs2enVjE/c6i2QY7o+wfk=;
+        b=p3m4UPZINxH7AYA4gCcpWLoKuHulM6Ov1p2BHL/lGnbxOW6OiWue82wfw7/9/1r57N
+         vM71k4pKy6Rzhg60X1RzT5TODJCFABtqxln1IYfEQcjEqfOiuiZ7KphDmTzFCakDA32V
+         OzMiMWJpZBrKgPy4nLYC5IjaT9Aac/hn+Mc0B8NGAHXfokKpfQqxNRWhQHBDpaXzgZwV
+         oObx1cNEgxeTsaPE+09UQLyXH2SjeMEhIou9l9KFvM3XOuz9k28NfVras9MSo9LHL5Mi
+         E2uCEvoRM0HlN8Glmakuw0o+MeSNW7ueOPBWUisc1PnU0J/yD2qJg1xQa8jlDwJIh1C8
+         2enQ==
+X-Gm-Message-State: ANoB5pkJdxSwqVeEm2MjIV44lYkgu6w9S63d1BUj5utqR9qo6VMxxjhZ
+	hSLboaqomLjLv2k7t94fNDY=
+X-Google-Smtp-Source: AA0mqf4Ic8U/2HubojmEHBWTW6lx07dDGX5ULtU6u+Lp5wFm6qolBN7MYcPQ0ef2hXtaB5KihKcTWw==
+X-Received: by 2002:a17:902:ca14:b0:188:dcfb:f2dc with SMTP id w20-20020a170902ca1400b00188dcfbf2dcmr33894941pld.5.1669672561860;
+        Mon, 28 Nov 2022 13:56:01 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id v11-20020a17090a520b00b0020ab246ac79sm2641175pjh.47.2022.11.28.13.55.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 13:56:01 -0800 (PST)
+Message-ID: <c241736c-f50f-97c9-f662-37b65d1b8a2d@gmail.com>
+Date: Mon, 28 Nov 2022 13:55:55 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 4.9 00/76] 4.9.334-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221123084546.742331901@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 28, 2022 at 10:29:29PM +0100, Jason A. Donenfeld wrote:
-> On Mon, Nov 28, 2022 at 10:13 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Mon, Nov 28, 2022, at 21:02, Jason A. Donenfeld wrote:
-> > > On Mon, Nov 28, 2022 at 8:57 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > > Okay, I can split it that way. If I gather your meaning correctly:
-> > >
-> > > 1) generic syscall C code
-> > > 2) #define __NR_... in asm-generic/unistd.h x86/.../unistd.h,
-> > > x86/.../syscall_64.tbl
-> >
-> > I mean all syscall*.tbl files, not just x86. There are currently
-> > eight architectures using asm-generic/unistd.h, the rest use
-> > syscall.tbl.
+On 11/23/22 00:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.9.334 release.
+> There are 76 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Oh okay, I'll add this to all of the *.tbl files.
+> Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.9.334-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.9.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Alright, so, it's looking like this now:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-commit 16751c0ac4efaf1cefd793a79c469f9d62ddb3ed
-Author: Jason A. Donenfeld <Jason@zx2c4.com>
-Date:   Mon Nov 28 21:37:14 2022
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-    arch: allocate vgetrandom_alloc() syscall number
-
-    Add vgetrandom_alloc() as syscall 451 (or 561 on alpha) by adding it to
-    all of the various syscall.tbl an unistd.h files.
-
-    Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-
- arch/alpha/kernel/syscalls/syscall.tbl              | 1 +
- arch/arm/tools/syscall.tbl                          | 1 +
- arch/arm64/include/asm/unistd32.h                   | 2 ++
- arch/ia64/kernel/syscalls/syscall.tbl               | 1 +
- arch/m68k/kernel/syscalls/syscall.tbl               | 1 +
- arch/microblaze/kernel/syscalls/syscall.tbl         | 1 +
- arch/mips/kernel/syscalls/syscall_n32.tbl           | 1 +
- arch/mips/kernel/syscalls/syscall_n64.tbl           | 1 +
- arch/mips/kernel/syscalls/syscall_o32.tbl           | 1 +
- arch/parisc/kernel/syscalls/syscall.tbl             | 1 +
- arch/powerpc/kernel/syscalls/syscall.tbl            | 1 +
- arch/s390/kernel/syscalls/syscall.tbl               | 1 +
- arch/sh/kernel/syscalls/syscall.tbl                 | 1 +
- arch/sparc/kernel/syscalls/syscall.tbl              | 1 +
- arch/x86/entry/syscalls/syscall_32.tbl              | 1 +
- arch/x86/entry/syscalls/syscall_64.tbl              | 1 +
- arch/xtensa/kernel/syscalls/syscall.tbl             | 1 +
- include/uapi/asm-generic/unistd.h                   | 5 ++++-
- tools/include/uapi/asm-generic/unistd.h             | 5 ++++-
- tools/perf/arch/mips/entry/syscalls/syscall_n64.tbl | 1 +
- tools/perf/arch/powerpc/entry/syscalls/syscall.tbl  | 1 +
- tools/perf/arch/s390/entry/syscalls/syscall.tbl     | 1 +
- tools/perf/arch/x86/entry/syscalls/syscall_64.tbl   | 1 +
- 23 files changed, 30 insertions(+), 2 deletions(-)
