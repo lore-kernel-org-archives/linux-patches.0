@@ -1,73 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CC0A498
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:29:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319F0C43147
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D86EA498
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987A5C433C1;
+	Mon, 28 Nov 2022 21:40:01 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="O8+J0w7n"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="l29kvSGa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669670982;
+	t=1669671599;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FDwebM2uChEaCsi7MjosOH4+1tmg5eYzvcVHA1vHqwc=;
-	b=O8+J0w7nm1u1C2pniytxA8ewP3/rfWk30E/nTkJpDltBj9Z9JT4504xRuwSXOjDSImv8hY
-	rDH4eOoF9kMaUA5YyZ8Vs6m3tWGIUwHo8jcZCDvRhHrXFdbjFOHLKgeGL/PAfhj+qDtPX5
-	qX31szZE1/vZ/ohSQngxnuu9hdBjMxA=
+	bh=Tfs5wzpKdXXvhME6DzZepIuBzlpHQXgovK4ad1gZ15Q=;
+	b=l29kvSGaXSZQ+bbI72z4UBsL7Ki877+bxUGmtzQH3YL82BbZHKRvxP8MNWh0p7C/CODQBp
+	YAQQT1BaiuVMctPMwIXdIz5mz3VB3Ulgevh7VssRhCHTJYMZDyC1u9HPkVlxT49YoUMLJv
+	fWeFXG/MNOgEkYQH0POQUOwETCVsjK8=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 58de59eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <patches@lists.linux.dev>;
-	Mon, 28 Nov 2022 21:29:41 +0000 (UTC)
-Received: by mail-vk1-f178.google.com with SMTP id v81so5945622vkv.5
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 13:29:41 -0800 (PST)
-X-Gm-Message-State: ANoB5pnLvxYPRhDNZastvgNUQpV+kyXm3XDE+GQy7sjNrNB0nc6QsQQq
-	2NDAUH5B8GU8EGiNWYWDbT+qLuf3aBADPxCWFAE=
-X-Google-Smtp-Source: AA0mqf6jEGtcBl+CWgyFJVs2ZeS81nOnWmoaLX1ReySbgTep0RXOEgf8bO6Lcga/AMkFmEat1SFfN9/9OHr2MrzzgUY=
-X-Received: by 2002:ac5:cdc7:0:b0:3bb:ddbe:899d with SMTP id
- u7-20020ac5cdc7000000b003bbddbe899dmr22572652vkn.41.1669670980428; Mon, 28
- Nov 2022 13:29:40 -0800 (PST)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7a8f84e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Nov 2022 21:39:58 +0000 (UTC)
+Date: Mon, 28 Nov 2022 22:39:54 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Thomas Gleixner <tglx@linutronix.de>, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Samuel Neves <sneves@dei.uc.pt>
+Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
+Message-ID: <Y4Uqqv4X2j/+dFww@zx2c4.com>
+References: <20221128111829.2477505-1-Jason@zx2c4.com>
+ <20221128111829.2477505-4-Jason@zx2c4.com>
+ <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com>
+ <Y4UKpP7/NOwPIkYe@zx2c4.com>
+ <cd01e0b4-579f-48fc-995f-6e1acebd02af@app.fastmail.com>
+ <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
+ <2cb4b4a7-1d39-4f63-aee0-b4fc43efa68d@app.fastmail.com>
+ <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221128111829.2477505-1-Jason@zx2c4.com> <20221128111829.2477505-4-Jason@zx2c4.com>
- <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com> <Y4UKpP7/NOwPIkYe@zx2c4.com>
- <cd01e0b4-579f-48fc-995f-6e1acebd02af@app.fastmail.com> <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
- <2cb4b4a7-1d39-4f63-aee0-b4fc43efa68d@app.fastmail.com>
-In-Reply-To: <2cb4b4a7-1d39-4f63-aee0-b4fc43efa68d@app.fastmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 28 Nov 2022 22:29:29 +0100
-X-Gmail-Original-Message-ID: <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
-Message-ID: <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Thomas Gleixner <tglx@linutronix.de>, linux-crypto@vger.kernel.org, 
-	linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Christian Brauner <brauner@kernel.org>, Samuel Neves <sneves@dei.uc.pt>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHmME9r6Hqy3KTJoNpXzJ4weUyFs=5xEPQEe94x4hO6QZWo-5g@mail.gmail.com>
 
-On Mon, Nov 28, 2022 at 10:13 PM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Mon, Nov 28, 2022, at 21:02, Jason A. Donenfeld wrote:
-> > On Mon, Nov 28, 2022 at 8:57 PM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> > Okay, I can split it that way. If I gather your meaning correctly:
+On Mon, Nov 28, 2022 at 10:29:29PM +0100, Jason A. Donenfeld wrote:
+> On Mon, Nov 28, 2022 at 10:13 PM Arnd Bergmann <arnd@arndb.de> wrote:
 > >
-> > 1) generic syscall C code
-> > 2) #define __NR_... in asm-generic/unistd.h x86/.../unistd.h,
-> > x86/.../syscall_64.tbl
->
-> I mean all syscall*.tbl files, not just x86. There are currently
-> eight architectures using asm-generic/unistd.h, the rest use
-> syscall.tbl.
+> > On Mon, Nov 28, 2022, at 21:02, Jason A. Donenfeld wrote:
+> > > On Mon, Nov 28, 2022 at 8:57 PM Arnd Bergmann <arnd@arndb.de> wrote:
+> >
+> > > Okay, I can split it that way. If I gather your meaning correctly:
+> > >
+> > > 1) generic syscall C code
+> > > 2) #define __NR_... in asm-generic/unistd.h x86/.../unistd.h,
+> > > x86/.../syscall_64.tbl
+> >
+> > I mean all syscall*.tbl files, not just x86. There are currently
+> > eight architectures using asm-generic/unistd.h, the rest use
+> > syscall.tbl.
+> 
+> Oh okay, I'll add this to all of the *.tbl files.
 
-Oh okay, I'll add this to all of the *.tbl files.
+Alright, so, it's looking like this now:
 
-Jason
+commit 16751c0ac4efaf1cefd793a79c469f9d62ddb3ed
+Author: Jason A. Donenfeld <Jason@zx2c4.com>
+Date:   Mon Nov 28 21:37:14 2022
+
+    arch: allocate vgetrandom_alloc() syscall number
+
+    Add vgetrandom_alloc() as syscall 451 (or 561 on alpha) by adding it to
+    all of the various syscall.tbl an unistd.h files.
+
+    Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+
+ arch/alpha/kernel/syscalls/syscall.tbl              | 1 +
+ arch/arm/tools/syscall.tbl                          | 1 +
+ arch/arm64/include/asm/unistd32.h                   | 2 ++
+ arch/ia64/kernel/syscalls/syscall.tbl               | 1 +
+ arch/m68k/kernel/syscalls/syscall.tbl               | 1 +
+ arch/microblaze/kernel/syscalls/syscall.tbl         | 1 +
+ arch/mips/kernel/syscalls/syscall_n32.tbl           | 1 +
+ arch/mips/kernel/syscalls/syscall_n64.tbl           | 1 +
+ arch/mips/kernel/syscalls/syscall_o32.tbl           | 1 +
+ arch/parisc/kernel/syscalls/syscall.tbl             | 1 +
+ arch/powerpc/kernel/syscalls/syscall.tbl            | 1 +
+ arch/s390/kernel/syscalls/syscall.tbl               | 1 +
+ arch/sh/kernel/syscalls/syscall.tbl                 | 1 +
+ arch/sparc/kernel/syscalls/syscall.tbl              | 1 +
+ arch/x86/entry/syscalls/syscall_32.tbl              | 1 +
+ arch/x86/entry/syscalls/syscall_64.tbl              | 1 +
+ arch/xtensa/kernel/syscalls/syscall.tbl             | 1 +
+ include/uapi/asm-generic/unistd.h                   | 5 ++++-
+ tools/include/uapi/asm-generic/unistd.h             | 5 ++++-
+ tools/perf/arch/mips/entry/syscalls/syscall_n64.tbl | 1 +
+ tools/perf/arch/powerpc/entry/syscalls/syscall.tbl  | 1 +
+ tools/perf/arch/s390/entry/syscalls/syscall.tbl     | 1 +
+ tools/perf/arch/x86/entry/syscalls/syscall_64.tbl   | 1 +
+ 23 files changed, 30 insertions(+), 2 deletions(-)
