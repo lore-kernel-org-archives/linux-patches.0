@@ -1,154 +1,114 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BB28BF0
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 13:19:27 +0000 (UTC)
-Received: by mail-pf1-f178.google.com with SMTP id 9so10411575pfx.11
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 05:19:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l2I2ksH5hcxruZfreywgq7pidAV/0mu8zfYab9h+BkA=;
-        b=XK6ygKE5iglL7w95u3VCz7wr6UE81S0x4emEPBh90kiX3Oe0gnMON+2O9Gof9M/x5C
-         c7DqpaX9PjNk20fK+KfSHQZ2ew5WkcAOFNL/JF9aXyRXjN9dbk3e8XuyICtCmHrf7KIf
-         CcuGRUvZYdicuSLp+eIVcW/7uMHHoDkk2rNpPOJnu5pi1qxiUyjG/o/OYdhHrF2x9W6L
-         Yt0oxSPtKSPnElk+5W8pt8HcFMubgrSmClSCrn3D2GqqVUtcD3XtO+A/Fcb1THKTmUw/
-         gaWmPGLiHzlJRH4aho3sXXxwjtkSR6JTl0dnKc9/KDZb0ZkiZCKhO8ercLw+racUzrol
-         ZHJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l2I2ksH5hcxruZfreywgq7pidAV/0mu8zfYab9h+BkA=;
-        b=b/H2bZDsWS/cZWyqNVfDyWXr6si6DziwCmmeTHRPBei5M1xMlUGIzLGEVVPpC5OaNm
-         kGkWBfHR/AmjjCzQZ3MaK3tVJII0OGCjBtQrMb4RyztNGEBvwiwt/5HTSoYjFLhJlVou
-         xUG3OHQqvy/0guLQfkIivo33zOL8YUfAYz+BqUMbgATdCqCk8FfB67jw4GFmJhOYFfgs
-         9eeUQ3IQVbXhBrh1l9K/Y9isXEcczv9tNiUr/XC3ynzj3FpJSPyIWnDGXHmD/UptDSKW
-         /oSY1omvquOYBqYyVajpdaUwEm5n3pPz/6Bw+PzUVk2wMTb7U41MUjZq3Yitz96WZ1dY
-         vjXw==
-X-Gm-Message-State: ANoB5pkUf+QWt3vfPvWwBqBv1giDYda8ke6HomjM2+IXMymHs+8Lx7ve
-	4Kbdpl8F+agLfbLqCN62+tI=
-X-Google-Smtp-Source: AA0mqf7DLSfwoEsdbA4QuKrOJVQUkrv+NqyBy5ZIm19QUA5xWknOkU8q6icj7VOL6HxmLj3MK9recg==
-X-Received: by 2002:aa7:9388:0:b0:56d:4c7e:777a with SMTP id t8-20020aa79388000000b0056d4c7e777amr54006766pfe.0.1669641566562;
-        Mon, 28 Nov 2022 05:19:26 -0800 (PST)
-Received: from hyeyoo ([114.29.91.56])
-        by smtp.gmail.com with ESMTPSA id t123-20020a625f81000000b005747b59fc54sm8271954pfb.172.2022.11.28.05.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 05:19:25 -0800 (PST)
-Date: Mon, 28 Nov 2022 22:19:19 +0900
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/12] mm, slub: don't aggressively inline with
- CONFIG_SLUB_TINY
-Message-ID: <Y4S1V9MNglgserVG@hyeyoo>
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-12-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648F18BF0
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 13:55:01 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5A65B5C0175;
+	Mon, 28 Nov 2022 08:55:00 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Mon, 28 Nov 2022 08:55:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1669643700; x=1669730100; bh=KQcpOA4V11
+	EXNrxS5nHlKDVdF9XDuHnhnKU0CEb1Oes=; b=oNyCR4OtmVBeFtiRZAUp6Ly3/0
+	49eqo8kBIYTm2G+DA9S3a8t4rYeBnPTT9iIt1PxJRxFBawR8+gxdAFoAHOvdV2ND
+	XCnuyUeyF7NFRNrZ08IQMxpORXpj8riuU4L5+6JuJ0Q7Hbu3kV84f/qxKOw+4j2+
+	xA6dxBtvnBh6CUbrTCwJJ58tvFPTAkJ64Waai18zwdR3tfJAQyh05yFVH9T7kLLh
+	oere6Le73Xul6vmrQa+3mPGLm52v0yAsj+hdKl30hixpraIPFIV8Q2lV8O94OKn1
+	nOJ/c78VTk1jAskPuMVK2jhot4LmkuRCLBN48W4sucerhQDc2IU4AO2DU+bg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1669643700; x=1669730100; bh=KQcpOA4V11EXNrxS5nHlKDVdF9XD
+	uHnhnKU0CEb1Oes=; b=C4PCw4tt5+3rl7gaf8IhBxTQbzecepZ6NfbPkZAPOpvC
+	GBQfrNUx3aFGt+rAZzSbDT0FY6rT+Ph5jmvwBpls67HlpT0Bq28cU8zxRlY9CkIg
+	YrHIIqbtOcyFlyMyhsCHCYdcRB8p4n5BIrYqYgOILtoLYiafj3i8ltiSQ8hFWcwT
+	smn+Ovwts0DjhE2Yq8tm43G/re3vIIWpI1BZaJDtuIkwsploYqemH4WRTUN1tEMN
+	wRVeZo8inTu3tYsjRR8dPZcChJu4JJPLPsptgRtILfPSl1xrhCqExAjrTdfGqRau
+	6TopQ5m3Gopf6Dnm5C9v5KGbWwbDabKobsVUxxdo3A==
+X-ME-Sender: <xms:tL2EY8rtAfRYnl5O2c2v3hbhBzYmybGlrv7NESXuMgRX2YEIK4gUHw>
+    <xme:tL2EYyrXo0oc2JV8G5JfLySzxLsSAxmccOrb0U1pG38D4fthuh63R4rgyh5ETacYy
+    LvzzfrU3FiKCSKXc7Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrjedvgdehkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+    hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:tL2EYxOxKrkP4qp07A8tuse86yXGL7QqpEcogYU_e3ripiDmUIrnCQ>
+    <xmx:tL2EYz7jqy4ACOKdgJRVWFB8crdOrLdYpi3dnjiHAbl-huQcYRI3ng>
+    <xmx:tL2EY745xcqCM79pfK40PtjTvPgOaFdR2nQntjZnfkcuYWE9CremXA>
+    <xmx:tL2EY4FPmIZPVvlRoFF1KWz1MGHZjRNkcD59bJFtKo9N_G1KyIjl5Q>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 0A1FAB60086; Mon, 28 Nov 2022 08:54:59 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221121171202.22080-12-vbabka@suse.cz>
+Mime-Version: 1.0
+Message-Id: <8f25aa1e-cb42-4ef0-a1ff-93dcf8651213@app.fastmail.com>
+In-Reply-To: <Y4PF+pBlNZGfZ0sr@zx2c4.com>
+References: <20221124165536.1631325-1-Jason@zx2c4.com>
+ <20221124165536.1631325-2-Jason@zx2c4.com> <87bkouyd90.ffs@tglx>
+ <Y4PF+pBlNZGfZ0sr@zx2c4.com>
+Date: Mon, 28 Nov 2022 14:54:39 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ "Thomas Gleixner" <tglx@linutronix.de>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
+ "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
+ "Christian Brauner" <brauner@kernel.org>
+Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
+Content-Type: text/plain
 
-On Mon, Nov 21, 2022 at 06:12:01PM +0100, Vlastimil Babka wrote:
-> SLUB fastpaths use __always_inline to avoid function calls. With
-> CONFIG_SLUB_TINY we would rather save the memory. Add a
-> __fastpath_inline macro that's __always_inline normally but empty with
-> CONFIG_SLUB_TINY.
-> 
-> bloat-o-meter results on x86_64 mm/slub.o:
-> 
-> add/remove: 3/1 grow/shrink: 1/8 up/down: 865/-1784 (-919)
-> Function                                     old     new   delta
-> kmem_cache_free                               20     281    +261
-> slab_alloc_node.isra                           -     245    +245
-> slab_free.constprop.isra                       -     231    +231
-> __kmem_cache_alloc_lru.isra                    -     128    +128
-> __kmem_cache_release                          88      83      -5
-> __kmem_cache_create                         1446    1436     -10
-> __kmem_cache_free                            271     142    -129
-> kmem_cache_alloc_node                        330     127    -203
-> kmem_cache_free_bulk.part                    826     613    -213
-> __kmem_cache_alloc_node                      230      10    -220
-> kmem_cache_alloc_lru                         325      12    -313
-> kmem_cache_alloc                             325      10    -315
-> kmem_cache_free.part                         376       -    -376
-> Total: Before=26103, After=25184, chg -3.52%
-> 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/slub.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/mm/slub.c b/mm/slub.c
-> index 7f1cd702c3b4..d54466e76503 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -187,6 +187,12 @@ do {					\
->  #define USE_LOCKLESS_FAST_PATH()	(false)
->  #endif
->  
-> +#ifndef CONFIG_SLUB_TINY
-> +#define __fastpath_inline __always_inline
-> +#else
-> +#define __fastpath_inline
-> +#endif
-> +
->  #ifdef CONFIG_SLUB_DEBUG
->  #ifdef CONFIG_SLUB_DEBUG_ON
->  DEFINE_STATIC_KEY_TRUE(slub_debug_enabled);
-> @@ -3386,7 +3392,7 @@ static __always_inline void maybe_wipe_obj_freeptr(struct kmem_cache *s,
->   *
->   * Otherwise we can simply pick the next object from the lockless free list.
->   */
-> -static __always_inline void *slab_alloc_node(struct kmem_cache *s, struct list_lru *lru,
-> +static __fastpath_inline void *slab_alloc_node(struct kmem_cache *s, struct list_lru *lru,
->  		gfp_t gfpflags, int node, unsigned long addr, size_t orig_size)
->  {
->  	void *object;
-> @@ -3412,13 +3418,13 @@ static __always_inline void *slab_alloc_node(struct kmem_cache *s, struct list_l
->  	return object;
->  }
->  
-> -static __always_inline void *slab_alloc(struct kmem_cache *s, struct list_lru *lru,
-> +static __fastpath_inline void *slab_alloc(struct kmem_cache *s, struct list_lru *lru,
->  		gfp_t gfpflags, unsigned long addr, size_t orig_size)
->  {
->  	return slab_alloc_node(s, lru, gfpflags, NUMA_NO_NODE, addr, orig_size);
->  }
->  
-> -static __always_inline
-> +static __fastpath_inline
->  void *__kmem_cache_alloc_lru(struct kmem_cache *s, struct list_lru *lru,
->  			     gfp_t gfpflags)
->  {
-> @@ -3733,7 +3739,7 @@ static void do_slab_free(struct kmem_cache *s,
->  }
->  #endif /* CONFIG_SLUB_TINY */
->  
-> -static __always_inline void slab_free(struct kmem_cache *s, struct slab *slab,
-> +static __fastpath_inline void slab_free(struct kmem_cache *s, struct slab *slab,
->  				      void *head, void *tail, void **p, int cnt,
->  				      unsigned long addr)
->  {
-> -- 
-> 2.38.1
+On Sun, Nov 27, 2022, at 21:18, Jason A. Donenfeld wrote:
+>> 
+>> config GENERIC_VDSO_RANDOM_WHATEVER
+>>        bool
+>>        select VGETRANDOM_ALLOC
+>> 
+>> This gives a clear Kconfig dependency instead of the random
+>> ADVISE_SYSCALLS select.
+>
+> That's much better indeed. I was trying to straddle the two conventions
+> of `#define __ARCH_...` for syscalls and a Kconfig for vDSO functions,
+> but doing it all together as you've suggested is nicer.
+>
+> I'll try to figure this out, though so far futzing around suggests there
+> might have to be both, because of unistd.h being a userspace header.
+> That is, include/uapi/asm-generic/unistd.h typically needs a `#if
+> __ARCH_WANT..., #define ...` in it. I'll give it a spin and you'll see
+> for v8. At the very least it should get rid of the more awkward
+> `select ADVISE_SYSCALLS if X86_64` part, and will better separate the
+> arch code from non-arch code.
 
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+I think you should not need an __ARCH_WANT_SYS_* symbol for this,
+the only place we actually need them for is the asm-generic/unistd.h
+header which is still used on a couple of architectures (I have
+an experimental series for replacing it with a generic syscall.tbl
+file, but it's not ready for 6.2). In most cases, the __ARCH_WANT_SYS_*
+symbols are only used for syscalls that are part of the table for
+old architectures but get skipped on newer targets that always had
+a replacement syscalls (e.g. getrlimit getting replaced by prlimit64)
 
--- 
-Thanks,
-Hyeonggon
+I think we should just reserve the syscall number for all architectures
+right away and #define the __NR_* macro. libc will generally need
+a runtime check anyway, and defining it now avoids the problem of
+the tables getting out of sync.
+
+The Kconfig symbol is fine in this case.
+
+      Arnd
