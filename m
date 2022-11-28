@@ -1,89 +1,199 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2119.outbound.protection.outlook.com [40.107.113.119])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9A217E
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 22:37:37 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id x13-20020a17090a46cd00b00218f611b6e9so11563539pjg.1
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 14:37:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OyvJmG+hXWLOKHOTgZkR3mwK6h+cOOTU1MyibLq0rL8=;
-        b=d1O68c2jREVtAGf4fuehr56UzAoZaqFYlQscerX97Zbtc7zzgV1cGYNJlJxyH0KUUR
-         hNXpQWXwdqFZhGX9UhUBg/zDV7wkR92eAeM78G++8vjpZvZnbqHyB7bWie5xWj4/Hoqe
-         ZZpa4U3OshBZ0PkYzMAdg8nDedS4H3BhKh18tp31Qiq595CnrDmUj7Yej0ALrymDACSs
-         5ZqwfAxBNRz7I12LZ65C2KSWulKoLJBZRwO4SdIugZI0+pZZhaSSG6QrPgOsBPVxPyEy
-         Vs+Rz5JtNHDZLWz2ksiedKWvbGU4vs9CO40PuYUTIuJlB9E5xkXM296O2JIFxN4ltxH6
-         OFQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OyvJmG+hXWLOKHOTgZkR3mwK6h+cOOTU1MyibLq0rL8=;
-        b=LCnCdv9WunbtqOsM6l6XKtYJ/6O4fjzNaiCOqFKyyRbiQf3/zg3o7mwbCdsGm1FzE2
-         jwpb259AQeGU6DczjleaVsX9nDUyx9D9USriGHUyZLk7spKKMvMJLvYXcmhjDLnILtB+
-         O110ouK7aR/9//5vnWv5dDQbi4TwYo6ceo9eDMpYIETKKn9XIlBQfWfU3d6Ewft/Gowo
-         h9McDuYRAdwKMVpuS71Q7jIcH1pjfCM1QXbmz8Od4qMGlrx0CKrPrKR/oTUr0pdfOsR0
-         jETu7MCCLHib21n5HziXenijXYs4+7n/HaVzyGFwHsBW+EPietXdKw4RC7sXUk4whrcT
-         GCLQ==
-X-Gm-Message-State: ANoB5pmAfqSsgom5UtxbcFihmhgdgQwj5NziCDN+sr9++VbAExDcIc8P
-	70xO7W7cQqVjMAOlVYoYZ3w=
-X-Google-Smtp-Source: AA0mqf7kc/v3b9KLCQ9a4qlUbo6+LOHUKgDLH3uwq/67IqdRSiE4NoAz0Lgb6k5EQJ30ADg2sjwldA==
-X-Received: by 2002:a17:90a:7d0d:b0:1fa:b51d:8d83 with SMTP id g13-20020a17090a7d0d00b001fab51d8d83mr35354570pjl.169.1669675057266;
-        Mon, 28 Nov 2022 14:37:37 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id pc16-20020a17090b3b9000b00212cf2fe8c3sm73446pjb.1.2022.11.28.14.37.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 14:37:36 -0800 (PST)
-Message-ID: <d87ecefc-0b71-fca6-2a0a-64f170d3d4d1@gmail.com>
-Date: Mon, 28 Nov 2022 14:37:31 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AEBAD32;
+	Mon, 28 Nov 2022 23:54:02 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=W/ncrzW0/FD4U+BxnJSg3mAYqKLP7+rj/qhEqgBc0dC1SLQgCNea4TvlV6OkytO12yJsYURJuvVdLeV8n2FYwZ035unn2/RsGk1ChjkhZq3j/xmoy8f4w3KWVDlf31xj6EPmxybVWr94e/2s+sy6UBnOphXUbet2YLAq8Bx7brz+thn+WBBdmlWV57WjIacvmN2fhfsNG0mpEG2ZDNu9229FWd/l27ukwWzHUmILW9k4bd9bCgrC8kzMMDatkBn+J9Jcp7mbzLqMWya1zJGF1Xdddsl5/Rf6JqBaL76psPrKKA9kzZZ3hEHYrzg45Abwd32v3EE345G8GRjaqOg98A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HX+0PmQp36/2l4TZL9L23ZFjRL0nVzvu99j9OEO0hDc=;
+ b=jvOK/m4dO6NNCae8kgiIhnz1/bnLW+3Pb0CDd9/qhiHOGcm6BrTn7MfjNmZBKJPoHCuHL8rwnUW9VixLVY/3Q37Blb71d0uQ+ncrDp/lUMblukRsYtL7OVjvFtsDbFmmaPLXjpNXnd5ITTZR2OSX6hUI0nzFc8WzOicqgy/QOEsNVfRCQ8C4MF/DIyqWrDRoXRHKPY9+sYMmcKmMTU4CM5n6Bz/XBO3m58TW0JMLtCHTYpdupQNK0URI1ryd8R2t8+VLo9dMZL9ory8GxZqHkeMfh+Sx8tpNxKc2/Q25krWyi3v3n12p+AqCfWsCPZT7UDlKJDo8TVyMRpIX0Pbc6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
+ header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HX+0PmQp36/2l4TZL9L23ZFjRL0nVzvu99j9OEO0hDc=;
+ b=mPHYjGv2RjQExjGGsjBeizhRVxWc+akJ9yc5CcHyTpzvIz0wU6ktyOJT5JTaaMrcrBUpArstjc4/LfCvn6rW2rsCdrOTCcUFpljxYt+HQmEyoBvg+N4ilBmIWv0o1UBais4iW4HveLJDUi2UacfOLDfwJiLKwk9UYhuEYAkOFPo=
+Received: from OSZPR01MB7019.jpnprd01.prod.outlook.com (2603:1096:604:13c::8)
+ by OS0PR01MB5492.jpnprd01.prod.outlook.com (2603:1096:604:a5::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5857.23; Mon, 28 Nov
+ 2022 23:53:59 +0000
+Received: from OSZPR01MB7019.jpnprd01.prod.outlook.com
+ ([fe80::2b87:97f9:d59f:8839]) by OSZPR01MB7019.jpnprd01.prod.outlook.com
+ ([fe80::2b87:97f9:d59f:8839%5]) with mapi id 15.20.5857.023; Mon, 28 Nov 2022
+ 23:53:58 +0000
+From: Prabhakar Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To: Nathan Chancellor <nathan@kernel.org>, Mauro Carvalho Chehab
+	<mchehab@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>
+CC: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+	"linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH] media: rzg2l-cru: Remove unnecessary shadowing of ret in
+ rzg2l_csi2_s_stream()
+Thread-Topic: [PATCH] media: rzg2l-cru: Remove unnecessary shadowing of ret in
+ rzg2l_csi2_s_stream()
+Thread-Index: AQHZAvD+TzEN+26BO0Oadq85NNUNv65VAWvg
+Date: Mon, 28 Nov 2022 23:53:58 +0000
+Message-ID:
+ <OSZPR01MB7019DDDF3BE79CABBD8A582FAA139@OSZPR01MB7019.jpnprd01.prod.outlook.com>
+References: <20221128061622.1470489-1-nathan@kernel.org>
+In-Reply-To: <20221128061622.1470489-1-nathan@kernel.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=bp.renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OSZPR01MB7019:EE_|OS0PR01MB5492:EE_
+x-ms-office365-filtering-correlation-id: 3b49d1fa-717e-47aa-2426-08dad19bd154
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ GbXXGkLade4vPuCny5nsPTThob5QYWDXmews5hcaeKwoDc3fG4xQR7iH2nJSdfL9a7CzhSZ1yQQgv9CpKugUKllQLFJe9bBQB2K8bE0ScHWzRnU5glhuI2naQdtuJ9LJaFBSMP9qrWBGF80fmVIMTdUgbnz6bipHf38quSsODI2cv0GNCPV81OVw99rxDudK/J5bK72Qgb6nRTDDAFIRT7DXx6rsGwPT+I79mGcuUc61HufucwCNW4Vqs5Ogrz7SHfQBeylFg9gPJiR+Ho+fJ9sUEz39MMPF+49STbjHGBKHFOQQpDzWlDkXH49TD+G+2DDbZLSSP7G/3dEEwaJVsGpLAmV6Us1oYzGKi4hNJnvGXmZwnsfblHFeJ1x859aycIcJpo7KzUJa8ohcGdnIt0EP6pkcWst+4UyMhkvC02ks/uR48z1LriUlv3uvY5TG3frP71lteRMTHZTox3O0K3wQOQgmC6qexQz2XvYEqdvAEiHXrgIr8qP34Req26EDwe2sovl4ZfH41wzLB/RdaW8ll34P3eAmKFuZes2yVoT1UM0BMPqDk7XcDFJLdrCGyJfFC/bIMndHeQt/BAuxYu+mfxPaM65qggjyjWFLL8CuixYopfDXEuzz/wGiIV2UX0qXl9TikpRahEIj/cA2xCfAVBS6gi0ZDson7RIjhAyG2jPhMYqr9FmnF7HKvpnayJVwuVYqZEv6ILJleM2f5WIdqeCcHCG8XOQ4jckTYa0=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSZPR01MB7019.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(39860400002)(366004)(376002)(346002)(396003)(451199015)(55016003)(38070700005)(2906002)(33656002)(86362001)(7696005)(71200400001)(966005)(478600001)(53546011)(6506007)(316002)(76116006)(66446008)(52536014)(66946007)(41300700001)(66476007)(45080400002)(5660300002)(4326008)(8676002)(54906003)(64756008)(66556008)(26005)(110136005)(8936002)(122000001)(9686003)(38100700002)(83380400001)(186003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?zeFVKnLvzob2kPGIjNbzjFmRo5+z8n9NDzVRdv0sYpsDuZN8zrwtiO5cGcTm?=
+ =?us-ascii?Q?DLhVkoJmtIzcDBC3QIlAbpaKzyv+4l8jm8hL5Aa7LadeFFRUe+ECpJPo284o?=
+ =?us-ascii?Q?mwpNdOdENhUU/F57QM1JUWOvQKy/WWMNjVQDrcUAwxwY1vdlOD1npEtx1IOx?=
+ =?us-ascii?Q?M6DHJEYXVW7QpJ0nsdsLkSlk4pKv7pMpAPTFLYGzBEZtUe5SBc1m8hcrMvFA?=
+ =?us-ascii?Q?EDzRhIaiC6+PdArALbc8ARTAQKrEHUJYAcScG1UR0My+1nQhCa2IecQVJDT5?=
+ =?us-ascii?Q?dh6eddqHu4dw0+2kSRZukPqmybG3tVGqGFG3tmTsiZQqIITo+cCltkzkJwv7?=
+ =?us-ascii?Q?EPd15sNfQggq4WGzOnJZ/HhuwPnAHD5rQ0Z9qtLSmqVikh5V/dFtE+c+ChS0?=
+ =?us-ascii?Q?goZm3Oi0PjCFMM0EIethGcS9pyf8+/s0JJMhik6AgpqQ4kzYiDimNxgB9TGj?=
+ =?us-ascii?Q?Wat3o5wTOZo09Nhv1pp+adsJG1DVywj8xLZvL5CxjR2eUOSS6uNRElJRbcwv?=
+ =?us-ascii?Q?h5By62LuMmQFKlseMaMfqfGh7InrQScr7ZZi74iutEQ7Csj8TPAOaR0yHcLz?=
+ =?us-ascii?Q?qxDc/5zw2Jc0X4kWBpdMDLoe9iEEXUsV8QGWkRLoDtlVfh4PXFQ5LE5V5/16?=
+ =?us-ascii?Q?E2jt6Pdr2q7M8TkEiG4RfW1ItuaXn5w9Wl09kziH65VUtBoFEuamou+kZ0jk?=
+ =?us-ascii?Q?mzVEBG6eJOYZ2vGVqdGpcqYZ0fLpC8LQU4V88X6ht5GuNR8HqjA0XSn9qm72?=
+ =?us-ascii?Q?ktShrnEKEoZcdgj8J92Z5vJIhiqT0COeFLdOLnSTuqzqwlgsJOeG9ZTIadly?=
+ =?us-ascii?Q?VYml0ZIkO93ONqvVHLa2VXGADQjy8EULSeXJvo39y2nR6b/PAJc1W5pvsTDh?=
+ =?us-ascii?Q?wT4rskUiCrTudvuIl+hw+AeYlv6qtuk8/1+V5CYZfBs1o3RT7XJYax0bCwkX?=
+ =?us-ascii?Q?yxodWW3OuB2uJEMnpzhxZjueKsfUwmG66Q5Op9pG3jIw+dEbU5Y3FyQphb49?=
+ =?us-ascii?Q?HYJJa7EpjLVUzRRppGMXCp4E/cDNlX3xnITVVId40L1xq2H2K2beeEMW/cMF?=
+ =?us-ascii?Q?iAfE9Tcq6UudVSPqGk64Q84dagSicnzDz23JfFFIavsPDXLPpCBMvCqYEoYP?=
+ =?us-ascii?Q?WliPk5XeCP7CKXwC/q2/MnOUCpI8Et3fVrF/G+/caLhrOveIqPl5RsD0EIH9?=
+ =?us-ascii?Q?RL/pz7SOPtinOV1vq1OzRIT4JKBMb02ZEBpv0dCgiydE4ygu9dr4LbfDH1nU?=
+ =?us-ascii?Q?zKE7H88C//zHcPc7sI2Qq30H8irnORKJ0iymhG3i9wz7uEiPq5rXa1exOe2G?=
+ =?us-ascii?Q?T8z02R8uvpvN8tHLmQJapfAXsSZUs27RczVqDwQj0VEHAMTRShBmgMqKyQI2?=
+ =?us-ascii?Q?lH5nypmQSbiyBPyS3d31QizzbVMw7naGZZWShJRZ/dpPzqAw4kXeKe9i8hQm?=
+ =?us-ascii?Q?VxTIhsHuhv4rHNuXZpmTTYo/DVVba38K6k8wi/C5DS+JPB7eKWhYUAGIb0pW?=
+ =?us-ascii?Q?LtG0WmwcDmqwap9AlhWjT56e3gtp0a8KXUarJawt52Kf9uWJPgI9f3SCcHho?=
+ =?us-ascii?Q?9EYthjrNzKx0J/PXQmEoCIsnq3znHgcAoMrTpsxGXhvDnf6JWR4aoWNsh8VQ?=
+ =?us-ascii?Q?d8V37M1GbjcN9ZbnYNpwMG4=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.10 000/149] 5.10.156-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221123084557.945845710@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: bp.renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB7019.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b49d1fa-717e-47aa-2426-08dad19bd154
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Nov 2022 23:53:58.8122
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wZyKMXg3yVibY+jfWSPqJXgxRQ3koM8lv0f68p+f+Wq8UtARqwktfJnnCi28+xhCQtaR5k/0ffTXLkrf9n4vHSwbOFgFIZwWN4h/NgW+HnK/YXY2jB3Fg2+FkY6xAXy9
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS0PR01MB5492
 
-On 11/23/22 00:49, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.156 release.
-> There are 149 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 25 Nov 2022 08:45:20 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.156-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Hi Nathan,
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Thank you for the patch.
 
+> -----Original Message-----
+> From: Nathan Chancellor <nathan@kernel.org>
+> Sent: 28 November 2022 06:16
+> To: Mauro Carvalho Chehab <mchehab@kernel.org>; Sakari Ailus <sakari.ailu=
+s@linux.intel.com>; Prabhakar
+> Mahadev Lad <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> Cc: Nick Desaulniers <ndesaulniers@google.com>; Tom Rix <trix@redhat.com>=
+; linux-
+> media@vger.kernel.org; linux-kernel@vger.kernel.org; llvm@lists.linux.dev=
+; patches@lists.linux.dev;
+> Nathan Chancellor <nathan@kernel.org>
+> Subject: [PATCH] media: rzg2l-cru: Remove unnecessary shadowing of ret in=
+ rzg2l_csi2_s_stream()
+>=20
+> Clang warns:
+>=20
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:7: error: var=
+iable 'ret' is used
+> uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninit=
+ialized]
+>                   if (ret)
+>                       ^~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: unin=
+itialized use occurs here
+>           return ret;
+>                 ^~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:3: note: remo=
+ve the 'if' if its condition
+> is always false
+>                   if (ret)
+>                   ^~~~~~~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:7: error: var=
+iable 'ret' is used
+> uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninit=
+ialized]
+>                   if (ret)
+>                       ^~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: unin=
+itialized use occurs here
+>           return ret;
+>                 ^~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:3: note: remo=
+ve the 'if' if its condition
+> is always false
+>                   if (ret)
+>                   ^~~~~~~~
+>   drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:431:9: note: init=
+ialize the variable 'ret' to
+> silence this warning
+>           int ret;
+>                 ^
+>                   =3D 0
+>   2 errors generated.
+>=20
+> ret is unnecessarily shadowed, meaning the assignments to ret within the =
+first 'if (enable)' block are
+> only applied to the inner scope, not the outer one as intended. Remove th=
+e shadowing to fix the
+> warnings and make everything work correctly.
+>=20
+> Fixes: 51e8415e39a9 ("media: platform: Add Renesas RZ/G2L MIPI CSI-2 rece=
+iver driver")
+> Link:
+> https://jpn01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithu=
+b.com%2FClangBuiltLinux%2Flinux
+> %2Fissues%2F1764&amp;data=3D05%7C01%7Cprabhakar.mahadev-
+> lad.rj%40bp.renesas.com%7C76d2a49f939a46e8d15208dad1081ed7%7C53d82571da19=
+47e49cb4625a166a4a2a%7C0%7C0%
+> 7C638052130064697087%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoi=
+V2luMzIiLCJBTiI6Ik1haWwiLCJXV
+> CI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=3Dfp%2F1JCtgKY8E6qVMRlLewVLYc9WDZ%2By=
+Ntg6t%2BGqIUvk%3D&amp;reserved=3D
+> 0
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c | 2 --
+>  1 file changed, 2 deletions(-)
+>=20
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+
+Cheers,
+Prabhakar
