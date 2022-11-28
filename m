@@ -1,95 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7858F6C
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 17:17:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B3AC433D6;
-	Mon, 28 Nov 2022 17:17:24 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="lgJAHmRg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669655843;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zx+xERd2IzI+idUZ4FTTj35GNfBVVHdMcem2M32A5rM=;
-	b=lgJAHmRg2fviMIGsKiHeOq7t5Opiaxy9sLeRGvooCfpC14Ba2i2UirnTWC1TWN9LNqTWhG
-	rAqareEvPn8JYyokXvOEY0/F4scn16gSLgMItFYXjfu7to/dCLFcmNEoBxomLwHdsMIs5t
-	I+UW36utDQAg5MqAIbJi5i7GOwFrFig=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b9d4e8ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 28 Nov 2022 17:17:22 +0000 (UTC)
-Date: Mon, 28 Nov 2022 18:17:16 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
-Message-ID: <Y4TtHMvCjTVc1do9@zx2c4.com>
-References: <20221124165536.1631325-1-Jason@zx2c4.com>
- <20221124165536.1631325-2-Jason@zx2c4.com>
- <87bkouyd90.ffs@tglx>
- <Y4PF+pBlNZGfZ0sr@zx2c4.com>
- <8f25aa1e-cb42-4ef0-a1ff-93dcf8651213@app.fastmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1C8A461
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 19:18:34 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8EC595C01CE;
+	Mon, 28 Nov 2022 14:18:33 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Mon, 28 Nov 2022 14:18:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1669663113; x=1669749513; bh=5KWIVqt9TJ
+	GuD+cVVciSmLqFdiVm+k4C5GFJJ1JiWg4=; b=XHxhWqjoMQP1E0rqSXQy8qnlaJ
+	6mMT28QC6GLbT7rJVoqflLXkINWGA6ngNCkggLnXGLIn1huqu1t+cRP0/dTfhzw3
+	WGdBx9LZIfJzW++a6tM6I0vcvncNJLCroMdxddCiYeKmzIqnAD3RQg1jOgW2VnKE
+	J0xcGJH1vbbMh2StlWvhL7JI+ejpdJ5GF49D9RgDOSOS1GKcwODHm6EdDFwjoJP0
+	aa5h1B0mpgSKmSKoz+OXgtJTnJvyp31HrRWSC/GbNulCbkaxmQL9Xz0Yj3lwgr2G
+	F4PixT4WMF0jsgLiqAzfuJ2WmV6+l+itf9Ff6GVJDiTm77ya+tNjUnXKzNmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1669663113; x=1669749513; bh=5KWIVqt9TJGuD+cVVciSmLqFdiVm
+	+k4C5GFJJ1JiWg4=; b=m/jrwwma6sCkBghxzm0WvcBZAZggmNBptQWON2KVOZEg
+	YSvtG1D2CC+KC4NpndiCjbbduafioQPfi1wTCxKJXyNFju3bRVue6fwpreoJj8LQ
+	YyPc/liNcfo1yoP5NtZ4OF1KNcwgsq4DlB/Ab3lhGtZOMGGqXEHZfmb0eqB+EpvC
+	xU/zyR7xMe9EIiuFSrIwGsTTI1dt8Sitz8DJ6OlSmq32zqM9fqQGz9GQ2hGQBEYB
+	hHoiTkJ68/x3pXCabqXyk+DLLDjXztpgLezCKI4LEcM17rwd3cL/0ZdRGF5uFGFJ
+	PNLTGSSl8w2evdw7a1GMA+CEpdQPyqjkOe0PLX0yXw==
+X-ME-Sender: <xms:iAmFY9L3gZ5qYQZCQSYaOGcLlG84W1UGN92sa0aAFQ8P-3giq91fMA>
+    <xme:iAmFY5JMixsgMFvWGIPclkaz7WBg4pV1MdeuXP8Txzhw7yJuzMsx2J58AB3_L_glt
+    MrHUYIFiwSZogq00N0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrjedvgdduvdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:iAmFY1seEws4hdlusCQAtcWGkYb3mJLBjAoDnrxSMFm7MdScwLRWNQ>
+    <xmx:iAmFY-YaMQ8z56Sa1ffbb8FrSJ06ThPZFr20k_z3DadUH_Yc0Srp-Q>
+    <xmx:iAmFY0bcXhL63fyEjoTBk20vNLL97NalqmyPY4SpM4kGHcgExf_oFQ>
+    <xmx:iQmFYxQM7Qeho8G1_IvVlWMjRFw5PRh6fOm2bum4iI_zdX7I7fYtuA>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 83080B60089; Mon, 28 Nov 2022 14:18:32 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8f25aa1e-cb42-4ef0-a1ff-93dcf8651213@app.fastmail.com>
+Mime-Version: 1.0
+Message-Id: <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com>
+In-Reply-To: <20221128111829.2477505-4-Jason@zx2c4.com>
+References: <20221128111829.2477505-1-Jason@zx2c4.com>
+ <20221128111829.2477505-4-Jason@zx2c4.com>
+Date: Mon, 28 Nov 2022 20:18:12 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, "Thomas Gleixner" <tglx@linutronix.de>
+Cc: linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
+ "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
+ "Christian Brauner" <brauner@kernel.org>, "Samuel Neves" <sneves@dei.uc.pt>
+Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
+Content-Type: text/plain
 
-Hi Arnd,
+On Mon, Nov 28, 2022, at 12:18, Jason A. Donenfeld wrote:
+> Hook up the generic vDSO implementation to the x86 vDSO data page. Since
+> the existing vDSO infrastructure is heavily based on the timekeeping
+> functionality, which works over arrays of bases, a new macro is
+> introduced for vvars that are not arrays.
+>
+> Also enable the vgetrandom_alloc() syscall, which the vDSO
+> implementation relies on.
+>
+> The vDSO function requires a ChaCha20 implementation that does not write
+> to the stack, yet can still do an entire ChaCha20 permutation, so
+> provide this using SSE2, since this is userland code that must work on
+> all x86-64 processors.
+>
+> Reviewed-by: Samuel Neves <sneves@dei.uc.pt> # for vgetrandom-chacha.S
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>  arch/x86/Kconfig                        |   1 +
+>  arch/x86/entry/syscalls/syscall_64.tbl  |   1 +
 
-On Mon, Nov 28, 2022 at 02:54:39PM +0100, Arnd Bergmann wrote:
-> On Sun, Nov 27, 2022, at 21:18, Jason A. Donenfeld wrote:
-> >> 
-> >> config GENERIC_VDSO_RANDOM_WHATEVER
-> >>        bool
-> >>        select VGETRANDOM_ALLOC
-> >> 
-> >> This gives a clear Kconfig dependency instead of the random
-> >> ADVISE_SYSCALLS select.
-> >
-> > That's much better indeed. I was trying to straddle the two conventions
-> > of `#define __ARCH_...` for syscalls and a Kconfig for vDSO functions,
-> > but doing it all together as you've suggested is nicer.
-> >
-> > I'll try to figure this out, though so far futzing around suggests there
-> > might have to be both, because of unistd.h being a userspace header.
-> > That is, include/uapi/asm-generic/unistd.h typically needs a `#if
-> > __ARCH_WANT..., #define ...` in it. I'll give it a spin and you'll see
-> > for v8. At the very least it should get rid of the more awkward
-> > `select ADVISE_SYSCALLS if X86_64` part, and will better separate the
-> > arch code from non-arch code.
-> 
-> I think you should not need an __ARCH_WANT_SYS_* symbol for this,
-> the only place we actually need them for is the asm-generic/unistd.h
-> header which is still used on a couple of architectures (I have
-> an experimental series for replacing it with a generic syscall.tbl
-> file, but it's not ready for 6.2). In most cases, the __ARCH_WANT_SYS_*
-> symbols are only used for syscalls that are part of the table for
-> old architectures but get skipped on newer targets that always had
-> a replacement syscalls (e.g. getrlimit getting replaced by prlimit64)
-> 
-> I think we should just reserve the syscall number for all architectures
-> right away and #define the __NR_* macro. libc will generally need
-> a runtime check anyway, and defining it now avoids the problem of
-> the tables getting out of sync.
-> 
-> The Kconfig symbol is fine in this case.
+I see that this enables the syscall in x86-64, while patch 1
+adds it to the eight architecures that use 
+include/uapi/asm-generic/unistd.h (with the __ARCH_WANT_*
+guard at the moment, but you already said that will be removed)
 
-Oh, great, okay. I'll get rid of the __ARCH stuff entirely then. I
-jumped the gun and posted v8 earlier today, but I'll include this in a
-v9, whenever it makes sense to send that. So when reading v8, just
-assume all he __ARCH_WANT_SYS_* business has been removed.
+I think ideally the syscall.tbl and unistd.h changes should be done
+in one patch for all architectures that doesn't mix it with
+any other changes. In particular I think it should be separate
+from the vdso changes, but could be in the patch that implements
+the syscall.
 
-Jason
+      Arnd
