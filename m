@@ -1,42 +1,96 @@
-Received: from cavan.codon.org.uk (cavan.codon.org.uk [176.126.240.207])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EB47E
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 01:35:24 +0000 (UTC)
-Received: by cavan.codon.org.uk (Postfix, from userid 1000)
-	id 15B6A424A2; Mon, 28 Nov 2022 01:35:23 +0000 (GMT)
-Date: Mon, 28 Nov 2022 01:35:23 +0000
-From: Matthew Garrett <mjg59@srcf.ucam.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-efi@vger.kernel.org, linux-crypto@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	ardb@kernel.org
-Subject: Re: [PATCH v3 2/5] efi: stub: use random seed from EFI variable
-Message-ID: <20221128013523.GA6780@srcf.ucam.org>
-References: <20221122020404.3476063-1-Jason@zx2c4.com>
- <20221122020404.3476063-3-Jason@zx2c4.com>
- <20221127211244.GB32253@srcf.ucam.org>
- <Y4QLBnoJGUoqwo4p@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AAE362;
+	Mon, 28 Nov 2022 06:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6428FC433D7;
+	Mon, 28 Nov 2022 06:16:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669616199;
+	bh=ypKwixzldPb7kQWuOxo+5LWR+IrDt1cLNbjX20e7Zeg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EdX6WAuLVe+R0n4yj7msuQgS3CTsToakfIhaZE0DkQqcxaDZunj9Y1UMhywWEDQmr
+	 fcMsF1PO0y5nkdbTGi3HXxvE+nkDwWNCaZto8bnVkqRZ2G10lEdmbsP2otwhvX4Neo
+	 TCfLlJxQfsnVqYDCWtoLCeQ1ljU09NnqZkbHWnf3lZBfA2gtUCaS4f5RZ4do0s5zSF
+	 D+11y7EDCeGmeY85WX9D0xA69Tj0YwYr8WV/bb9OBSd+nw6OHzoQnwYOWjAikfTN3T
+	 DkPqtWqB4Lw/64iBIvXT6l4UsAY/hnIVIzMyl+l2sBrLxjGXJR8VKW5YBiQGXZsxmQ
+	 S/exotE8Yv7uA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] media: rzg2l-cru: Remove unnecessary shadowing of ret in rzg2l_csi2_s_stream()
+Date: Sun, 27 Nov 2022 23:16:22 -0700
+Message-Id: <20221128061622.1470489-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y4QLBnoJGUoqwo4p@zx2c4.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 28, 2022 at 02:12:38AM +0100, Jason A. Donenfeld wrote:
+Clang warns:
 
-> Yea this is a bummer. During my first attempt at this, I actually
-> overwrote the whole thing with zeros and then deleted it. But Ard
-> pointed out that this doesn't make a difference anyway. But, as it turns
-> out, that's more or less the same thing that happens with seed files on
-> SSDs (nobody calls fstrim after overwriting a seed file). So at the very
-> least, it's no worse?
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:7: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+                  if (ret)
+                      ^~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: uninitialized use occurs here
+          return ret;
+                ^~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:3: note: remove the 'if' if its condition is always false
+                  if (ret)
+                  ^~~~~~~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:7: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+                  if (ret)
+                      ^~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: uninitialized use occurs here
+          return ret;
+                ^~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:3: note: remove the 'if' if its condition is always false
+                  if (ret)
+                  ^~~~~~~~
+  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:431:9: note: initialize the variable 'ret' to silence this warning
+          int ret;
+                ^
+                  = 0
+  2 errors generated.
 
-Anyone with the ability to directly read the flash variable store is 
-almost certainly in a position to do worse things, so I wouldn't worry 
-about it.
+ret is unnecessarily shadowed, meaning the assignments to ret within the
+first 'if (enable)' block are only applied to the inner scope, not the
+outer one as intended. Remove the shadowing to fix the warnings and make
+everything work correctly.
+
+Fixes: 51e8415e39a9 ("media: platform: Add Renesas RZ/G2L MIPI CSI-2 receiver driver")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1764
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
+index aa752b80574c..3deb09be6400 100644
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
+@@ -431,8 +431,6 @@ static int rzg2l_csi2_s_stream(struct v4l2_subdev *sd, int enable)
+ 	int ret;
+ 
+ 	if (enable) {
+-		int ret;
+-
+ 		ret = pm_runtime_resume_and_get(csi2->dev);
+ 		if (ret)
+ 			return ret;
+
+base-commit: 6a5a4514854a637d01c50f5ea17b28f78b31ddb8
+-- 
+2.38.1
+
