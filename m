@@ -1,96 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AAE362;
-	Mon, 28 Nov 2022 06:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6428FC433D7;
-	Mon, 28 Nov 2022 06:16:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669616199;
-	bh=ypKwixzldPb7kQWuOxo+5LWR+IrDt1cLNbjX20e7Zeg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EdX6WAuLVe+R0n4yj7msuQgS3CTsToakfIhaZE0DkQqcxaDZunj9Y1UMhywWEDQmr
-	 fcMsF1PO0y5nkdbTGi3HXxvE+nkDwWNCaZto8bnVkqRZ2G10lEdmbsP2otwhvX4Neo
-	 TCfLlJxQfsnVqYDCWtoLCeQ1ljU09NnqZkbHWnf3lZBfA2gtUCaS4f5RZ4do0s5zSF
-	 D+11y7EDCeGmeY85WX9D0xA69Tj0YwYr8WV/bb9OBSd+nw6OHzoQnwYOWjAikfTN3T
-	 DkPqtWqB4Lw/64iBIvXT6l4UsAY/hnIVIzMyl+l2sBrLxjGXJR8VKW5YBiQGXZsxmQ
-	 S/exotE8Yv7uA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] media: rzg2l-cru: Remove unnecessary shadowing of ret in rzg2l_csi2_s_stream()
-Date: Sun, 27 Nov 2022 23:16:22 -0700
-Message-Id: <20221128061622.1470489-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8C1FA4
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 09:12:27 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1669626740;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=egAkd5jcnw3WXfXnsitc16aTXvDigRVo0FyASpJ7HzA=;
+	b=fEZ52b6P2xXsYJ3imbGOViX9gJKxW0ix7VlMSP7XF0qWegibSTlzUTiEb3cwq6AHrI7n2Y
+	dWhWkhoO/kX0wruHyNMkW5PizFHxUgZd0VGBK1aK153YV7BmYjo/knRn+uO3NAeDDPMyf6
+	nRLuzBaIXF14pk/m3Ra8rHUzlvPGdjekw7v3QSyafHQ1cTMBKVoRRBcHWLSU+K3IZwMxJk
+	csJi0uUpd4LNq7J5XgqQ8oA+DXSZT7M93Spgwyw5cF1QCY/rxNB+ZCWWSD7qD2Rn8ip/Kn
+	u4u2JvCHS5LXVvuelc9Prh8WOA2HF0R+0RycSSUYtKrQC85xBaqVA2W8ErxSMQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1669626740;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=egAkd5jcnw3WXfXnsitc16aTXvDigRVo0FyASpJ7HzA=;
+	b=lGr49rOP7i+ovveWAhw2+02bhSFEHYgBkYWFAbYnd4I7CciOjIVzRxpzbj44G5+pUVzxnr
+	V5MNZXtUnRXPsWDg==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
+ Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+ Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v7 1/3] random: add vgetrandom_alloc() syscall
+In-Reply-To: <Y4PF+pBlNZGfZ0sr@zx2c4.com>
+References: <20221124165536.1631325-1-Jason@zx2c4.com>
+ <20221124165536.1631325-2-Jason@zx2c4.com> <87bkouyd90.ffs@tglx>
+ <Y4PF+pBlNZGfZ0sr@zx2c4.com>
+Date: Mon, 28 Nov 2022 10:12:19 +0100
+Message-ID: <87pmd7wih8.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Clang warns:
+On Sun, Nov 27 2022 at 21:18, Jason A. Donenfeld wrote:
+> On Fri, Nov 25, 2022 at 09:45:31PM +0100, Thomas Gleixner wrote:
+>> > --- a/arch/x86/include/asm/unistd.h
+>> > +++ b/arch/x86/include/asm/unistd.h
+>> > @@ -27,6 +27,7 @@
+>> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64
+>> >  #  define __ARCH_WANT_COMPAT_SYS_PREADV64V2
+>> >  #  define __ARCH_WANT_COMPAT_SYS_PWRITEV64V2
+>> > +#  define __ARCH_WANT_VGETRANDOM_ALLOC
+>> 
+>> So instead of this define, why can't you do:
+>> 
+>> config VGETRADOM_ALLOC
+>>        bool
+>>        select ADVISE_SYSCALLS
+>> 
+>> and then have
+>> 
+>> config GENERIC_VDSO_RANDOM_WHATEVER
+>>        bool
+>>        select VGETRANDOM_ALLOC
+>> 
+>> This gives a clear Kconfig dependency instead of the random
+>> ADVISE_SYSCALLS select.
+>
+> That's much better indeed. I was trying to straddle the two conventions
+> of `#define __ARCH_...` for syscalls and a Kconfig for vDSO functions,
+> but doing it all together as you've suggested is nicer.
+>
+> I'll try to figure this out, though so far futzing around suggests there
+> might have to be both, because of unistd.h being a userspace header.
+> That is, include/uapi/asm-generic/unistd.h typically needs a `#if
+> __ARCH_WANT..., #define ...` in it. I'll give it a spin and you'll see
 
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:7: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (ret)
-                      ^~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: uninitialized use occurs here
-          return ret;
-                ^~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:445:3: note: remove the 'if' if its condition is always false
-                  if (ret)
-                  ^~~~~~~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:7: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (ret)
-                      ^~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:475:9: note: uninitialized use occurs here
-          return ret;
-                ^~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:441:3: note: remove the 'if' if its condition is always false
-                  if (ret)
-                  ^~~~~~~~
-  drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c:431:9: note: initialize the variable 'ret' to silence this warning
-          int ret;
-                ^
-                  = 0
-  2 errors generated.
+Bah. Did not think about that user space part...
 
-ret is unnecessarily shadowed, meaning the assignments to ret within the
-first 'if (enable)' block are only applied to the inner scope, not the
-outer one as intended. Remove the shadowing to fix the warnings and make
-everything work correctly.
+Thanks,
 
-Fixes: 51e8415e39a9 ("media: platform: Add Renesas RZ/G2L MIPI CSI-2 receiver driver")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1764
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
-index aa752b80574c..3deb09be6400 100644
---- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
-+++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-csi2.c
-@@ -431,8 +431,6 @@ static int rzg2l_csi2_s_stream(struct v4l2_subdev *sd, int enable)
- 	int ret;
- 
- 	if (enable) {
--		int ret;
--
- 		ret = pm_runtime_resume_and_get(csi2->dev);
- 		if (ret)
- 			return ret;
-
-base-commit: 6a5a4514854a637d01c50f5ea17b28f78b31ddb8
--- 
-2.38.1
-
+        tglx
