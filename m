@@ -1,134 +1,347 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2046.outbound.protection.outlook.com [40.107.220.46])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB872113
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 09:37:02 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Yi8rY+L2pqa920HzlSAB5pK35RgfdJq+ui9utCqmmt4dxhbh7zev30dUaUO36PGGxPObc49P9jJH5Fo7Gjrc6l+sZUmQVpl/Qe7BTwnjVGC/Iihztg2rycOWI9nvzgAaCLIQVey9whP4scPpyChHdu7qNJ1Vpfxj6PyWpd/ki/guM4fyGZFZsnsYiqlIkYzyuBBGwDbQQf5aQ+Q1QWMCYYQ6SHk1EfJoRzFLN9Y9tKuufU3v4LYmj7exCWc8Ysd2tfQG68uuqZu70zZWbhrk17IHI7flTMSRjGuoAroKFYotIGDN8yFKbQ9AH0aOAnwLIGGg6/q97YsiObS4EDdl7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U+3nff5AGsEXoJVAb1Gkjsqc6oiGpUZ+i/xbPc+iEqc=;
- b=anobaWnlKzoW4y9IsrRHt+eD/OM8zZIpzRZGNrRLeyLIAqBJMSqBXJ34nJacWOcEnSgxCYWjDMLyapwWRN9ol2JKKkHSTkSg7wEMhzux11mF1gxkn8PV2OXkEcXU/1hH3orcWexdlLGeVa5NWZWLNMDaGQd75BjzK1gGeOjMHHQGYrPNjRUVYy4UwGDjWtCtJpc70EPYPIPfeV6WHrLCGezLwhpTBRCL7jhpGhZkoShw43dq+cFLX/GxjxFvSPrugIFo/P8GB6OGd8q3j2PXBvwCNcTos50+iLau+gnNOT/fhyqS6Ft8pVsFT7HZAHh3BRjpV+PAwlEbqv7iDjeKMg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U+3nff5AGsEXoJVAb1Gkjsqc6oiGpUZ+i/xbPc+iEqc=;
- b=YsAfH94PuI10qe4AEspAf90+AGz/+z1h+n9UHYUB80L1H94L40d84mxxbmNFID+QxAZ8nmteXI9bTenQMyKXPiU2+Vbad6MI22Z7nAPUKf7xzCeQ7t7pVQtwzpyjVTidBEfbqaFjmaH8KM6v+kpiSILPFUYxBB9i0IinU1BtzoAUw5rIOD7EqIJ5iuFHYJmeT7VzL2RIL7xd4P22hS6DrOkAW/u0+bs0m9N24MvWHxw7ObdzhOi6wV65Ei4FDTtrJdLbTAgfVavDRNTtEzSaue2gQTru9KrY78yfUwPXunWlL6qqffMQJHvK02LGr0X03ehT2YmZdMz66/mowO7A6A==
-Received: from DM6PR03CA0097.namprd03.prod.outlook.com (2603:10b6:5:333::30)
- by SA0PR12MB4496.namprd12.prod.outlook.com (2603:10b6:806:9b::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5857.23; Mon, 28 Nov
- 2022 09:36:56 +0000
-Received: from DM6NAM11FT041.eop-nam11.prod.protection.outlook.com
- (2603:10b6:5:333:cafe::b) by DM6PR03CA0097.outlook.office365.com
- (2603:10b6:5:333::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5857.23 via Frontend
- Transport; Mon, 28 Nov 2022 09:36:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DM6NAM11FT041.mail.protection.outlook.com (10.13.172.98) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5834.8 via Frontend Transport; Mon, 28 Nov 2022 09:36:55 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 28 Nov
- 2022 01:36:49 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 28 Nov
- 2022 01:36:49 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Mon, 28 Nov 2022 01:36:48 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.0 000/313] 6.0.10-rc2 review
-In-Reply-To: <20221125075804.064161337@linuxfoundation.org>
-References: <20221125075804.064161337@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213C52F43
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 11:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5110DC433D6;
+	Mon, 28 Nov 2022 11:18:48 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="hCxkxfS6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669634325;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=D+ZoXiEyT1rTMoXGufBQiKFPSYDGsJxKQmA+V7W15uE=;
+	b=hCxkxfS6FT2ll5LmPIKX4Pv0CNEbIU31pjeOdUb0rAI3O1IEQu8A0TQcLCoZy87yl+fe+j
+	i02IW1aNFwLwP5XgRJH7F5BDTcssuD2laVUWIDVZPZZJU5zydbDU9rfPkKQ2GAcHmAoQYw
+	f1liO08KGV8izQfGn+qXTOaRGhFfXZU=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6ab24c9b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Nov 2022 11:18:44 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	tglx@linutronix.de
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org,
+	x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH v8 0/3] implement getrandom() in vDSO
+Date: Mon, 28 Nov 2022 12:18:26 +0100
+Message-Id: <20221128111829.2477505-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <49e84476-b19d-48f5-932f-4f2393a7a4c9@rnnvmail205.nvidia.com>
-Date: Mon, 28 Nov 2022 01:36:48 -0800
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6NAM11FT041:EE_|SA0PR12MB4496:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6b2c0ca9-f34b-403c-4d1f-08dad12416d0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	DXEyUmlvFv1xJNL1Wdl/EKalKCzVvkt0YMfyIKr03tbxXoN9DEWUKJFXOBNsfAGnA2+pLtl2mOTYb2SdS/3F3EV6ontnVUaB/vjRIGVUnjzcVmKiCy/Q2Z+bKd3Bi5qIGp2kxy6+8Xe7U0ArMTNZg6NHwG28lxRaWXGCIJER3ZeGPRKV2AcCu8lHxBwzrrSIyxkV5wLz8bvz7pmFVXmpDUxRtIYi2Ul0ND7dW1spd/+IamYWs5h46jAbDPpR9ewfODHzKu39pvjCe1kv++zSQ3O8zwc7564QsrbHtENUvt1xdtzfC7aUnNfJtZPBgmRvpbwuFtGEnRK4yeY6nNy2U8LyiNnqvpdc1As9OAQ6k+sT6D84bMHygeyec8CDf4pmrfKtD+2bT8Q4Qk4gje+SJGMoWtL4MumyEAClGeras2BFCB+wDSV6JqiqDulxsubpS+KY1aftjcnXzPpKQINjnoxEWqTNZWOj5/VaHIN6yGVIs5FaVkHq4wnd2+vDMPWS5eZHki9XwDDYAQcSS4whevj2YVOqG4238BB0ZDWzaaiiO7sLMIAJTOukMDIphtNYHFjsJc5xM+PI0UWR4hU0BKPJPtEZrT1AFrS7Qxepm6S9F5KXlXb/RTowO+MgeZCUgdLPcEw70lcO8H/xkskuAdXg0v8wpOeLdVzvgG4lV/jhGqepFwSmjiJNl+pFcSQ1fDg3yHMCTLklAfQKQ6PGaQlAju5ly83pziocM7HiQ2METneIhKuvPoLlGRdUgqKXE7tU5bmq7igXh/6/Xh2vRN3uqDSPvrJ4OjvdA3x5bRM=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(396003)(376002)(39860400002)(136003)(346002)(451199015)(46966006)(36840700001)(40470700004)(70206006)(478600001)(70586007)(316002)(2906002)(54906003)(6916009)(966005)(40460700003)(7636003)(356005)(426003)(47076005)(82310400005)(36860700001)(82740400003)(40480700001)(26005)(86362001)(31696002)(336012)(186003)(5660300002)(7416002)(8936002)(41300700001)(31686004)(4326008)(8676002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2022 09:36:55.6561
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b2c0ca9-f34b-403c-4d1f-08dad12416d0
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM6NAM11FT041.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4496
+Content-Transfer-Encoding: 8bit
 
-On Fri, 25 Nov 2022 08:58:38 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.10 release.
-> There are 313 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 27 Nov 2022 07:57:07 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.10-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Changes v7->v8:
+--------------
+- Move lib/vdso/getrandom.h to include/vdso/getrandom.h in order to
+  avoid #include "../../../../../../../../../../../......".
+- Make use of two Kconfig symbols, VDSO_GETRANDOM and
+  VGETRANDOM_ALLOC_SYSCALL, to handle selecting dependencies and
+  conditionalizing code.
+- Rename chacha20_blocks_nostack assembly function to
+  __arch_chacha20_blocks_nostack, which allows removing the awkward C
+  inline wrapper function.
+- Save a byte per instruction by using movups instead of movdqu, and
+  don't bother clearing registers that hold public constants.
+- Add basic signal handling reentrancy protection to vDSO function.
+- Invalidate RNG generation counter if key-refresh syscall fails.
+- Reduce the defines in getrandom.c, which in turn requires using
+  `INT_MAX & PAGE_MASK` explicitly rather than the `MAX_RW_COUNT` macro.
+- Make use of 100 columns when it makes sense, and reformat various bits
+  of code for clarity.
+- Thoroughly document functions and add kernel-doc comments to several
+  key functions.
+- Hoist out repeated `sizeof(struct vgetrandom_state)` into variable.
+- Rename `memcpy_and_zero` to `memcpy_and_zero_src`, and define helper
+  macro outside of function.
+- Separate all x86 work, including syscall wiring, into the x86 commit,
+  so that the first two commits of this series are purely generic.
 
-All tests passing for Tegra ...
+Changes v6->v7:
+--------------
+- VERY EXCITING! There is now a rudimentary glibc implementation for
+  this from one of the glibc maintainers, Adhemerval Zanella (CC'd). A
+  commit that works with with this latest v7 revision is here:
 
-Test results for stable-v6.0:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+  https://github.com/bminor/glibc/commit/247ec6dd77ec2a047163fe3a1b60e57880464b39
 
-Linux version:	6.0.10-rc2-ge0b681e38dd4
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+- Pass an `unsigned int *` instead of an `unsigned long *` for the
+  syscall, to avoid having to add a compat syscall.
+- Use ordinary function framing in assembly, rather than kernel-specific
+  framing.
+- Don't hardcode the number '2', but derive it at compile time with the
+  expression `sizeof(state->batch_key) / CHACHA_BLOCK_SIZE`, as well as
+  adding a BUILD_BUG_ON() in case that doesn't divide cleanly.
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Changes v5->v6:
+--------------
+- Fix various build errors for odd configurations.
+- Do not leak any secrets onto the stack at all, to account for possibility of
+  fork()ing in a multithreaded scenario, which would ruin forward secrecy.
+  Instead provide a arch-specific implementation that doesn't need stack
+  space.
+- Prevent page alignment from overflowing variable, and clamp to acceptable
+  limits.
+- Read/write unaligned bytes using get/put_unaligned.
+- Add extensive comments to vDSO function explaining subtle aspects.
+- Account for fork() races when writing generation counter.
 
-Jon
+Changes v4->v5:
+--------------
+- Add example code to vDSO addition commit showing intended use and
+  interaction with allocations.
+- Reset buffer to beginning when retrying.
+- Rely on generation counter never being zero for fork detection, rather than
+  adding extra boolean.
+- Make use of __ARCH_WANT_VGETRANDOM_ALLOC macro around new syscall so that
+  it's condition by archs that actually choose to add this, and don't forget
+  to bump __NR_syscalls.
+- Separate __cvdso_getrandom() into __cvdso_getrandom() and
+  __cvdso_getrandom_data() so that powerpc can make a more efficient call.
+
+Changes v3->v4:
+--------------
+- Split up into small series rather than one big patch.
+- Use proper ordering in generation counter reads.
+- Make properly generic, not just a hairball with x86, by moving symbols into
+  correct files.
+
+Changes v2->v3:
+--------------
+
+Big changes:
+
+Thomas' previous objection was two-fold: 1) vgetrandom
+should really have the same function signature as getrandom, in
+addition to all of the same behavior, and 2) having vgetrandom_alloc
+be a vDSO function doesn't make sense, because it doesn't actually
+need anything from the VDSO data page and it doesn't correspond to an
+existing syscall.
+
+After a discussion at Plumbers this last week, we devised the following
+ways to fix these: 1) we make the opque state argument be the last
+argument of vgetrandom, rather than the first one, since the real
+syscall ignores the additional argument, and that way all the registers
+are the same, and no behavior changes; and 2) we make vgetrandom_alloc a
+syscall, rather than a vDSO function, which also gives it added
+flexibility for the future, which is good.
+
+Making those changes also reduced the size of this patch a bit.
+
+Smaller changes:
+- Properly add buffer offset position.
+- Don't EXPORT_SYMBOL for vDSO code.
+- Account for timens and vvar being in swapped pages.
+
+--------------
+
+Two statements:
+
+  1) Userspace wants faster cryptographically secure random numbers of
+     arbitrary size, big or small.
+
+  2) Userspace is currently unable to safely roll its own RNG with the
+     same security profile as getrandom().
+
+Statement (1) has been debated for years, with arguments ranging from
+"we need faster cryptographically secure card shuffling!" to "the only
+things that actually need good randomness are keys, which are few and
+far between" to "actually, TLS CBC nonces are frequent" and so on. I
+don't intend to wade into that debate substantially, except to note that
+recently glibc added arc4random(), whose goal is to return a
+cryptographically secure uint32_t, and there are real user reports of it
+being too slow. So here we are.
+
+Statement (2) is more interesting. The kernel is the nexus of all
+entropic inputs that influence the RNG. It is in the best position, and
+probably the only position, to decide anything at all about the current
+state of the RNG and of its entropy. One of the things it uniquely knows
+about is when reseeding is necessary.
+
+For example, when a virtual machine is forked, restored, or duplicated,
+it's imparative that the RNG doesn't generate the same outputs. For this
+reason, there's a small protocol between hypervisors and the kernel that
+indicates this has happened, alongside some ID, which the RNG uses to
+immediately reseed, so as not to return the same numbers. Were userspace
+to expand a getrandom() seed from time T1 for the next hour, and at some
+point T2 < hour, the virtual machine forked, userspace would continue to
+provide the same numbers to two (or more) different virtual machines,
+resulting in potential cryptographic catastrophe. Something similar
+happens on resuming from hibernation (or even suspend), with various
+compromise scenarios there in mind.
+
+There's a more general reason why userspace rolling its own RNG from a
+getrandom() seed is fraught. There's a lot of attention paid to this
+particular Linuxism we have of the RNG being initialized and thus
+non-blocking or uninitialized and thus blocking until it is initialized.
+These are our Two Big States that many hold to be the holy
+differentiating factor between safe and not safe, between
+cryptographically secure and garbage. The fact is, however, that the
+distinction between these two states is a hand-wavy wishy-washy inexact
+approximation. Outside of a few exceptional cases (e.g. a HW RNG is
+available), we actually don't really ever know with any rigor at all
+when the RNG is safe and ready (nor when it's compromised). We do the
+best we can to "estimate" it, but entropy estimation is fundamentally
+impossible in the general case. So really, we're just doing guess work,
+and hoping it's good and conservative enough. Let's then assume that
+there's always some potential error involved in this differentiator.
+
+In fact, under the surface, the RNG is engineered around a different
+principal, and that is trying to *use* new entropic inputs regularly and
+at the right specific moments in time. For example, close to boot time,
+the RNG reseeds itself more often than later. At certain events, like VM
+fork, the RNG reseeds itself immediately. The various heuristics for
+when the RNG will use new entropy and how often is really a core aspect
+of what the RNG has some potential to do decently enough (and something
+that will probably continue to improve in the future from random.c's
+present set of algorithms). So in your mind, put away the metal
+attachment to the Two Big States, which represent an approximation with
+a potential margin of error. Instead keep in mind that the RNG's primary
+operating heuristic is how often and exactly when it's going to reseed.
+
+So, if userspace takes a seed from getrandom() at point T1, and uses it
+for the next hour (or N megabytes or some other meaningless metric),
+during that time, potential errors in the Two Big States approximation
+are amplified. During that time potential reseeds are being lost,
+forgotten, not reflected in the output stream. That's not good.
+
+The simplest statement you could make is that userspace RNGs that expand
+a getrandom() seed at some point T1 are nearly always *worse*, in some
+way, than just calling getrandom() every time a random number is
+desired.
+
+For those reasons, after some discussion on libc-alpha, glibc's
+arc4random() now just calls getrandom() on each invocation. That's
+trivially safe, and gives us latitude to then make the safe thing faster
+without becoming unsafe at our leasure. Card shuffling isn't
+particularly fast, however.
+
+How do we rectify this? By putting a safe implementation of getrandom()
+in the vDSO, which has access to whatever information a
+particular iteration of random.c is using to make its decisions. I use
+that careful language of "particular iteration of random.c", because the
+set of things that a vDSO getrandom() implementation might need for making
+decisions as good as the kernel's will likely change over time. This
+isn't just a matter of exporting certain *data* to userspace. We're not
+going to commit to a "data API" where the various heuristics used are
+exposed, locking in how the kernel works for decades to come, and then
+leave it to various userspaces to roll something on top and shoot
+themselves in the foot and have all sorts of complexity disasters.
+Rather, vDSO getrandom() is supposed to be the *same exact algorithm*
+that runs in the kernel, except it's been hoisted into userspace as
+much as possible. And so vDSO getrandom() and kernel getrandom() will
+always mirror each other hermetically.
+
+API-wise, the vDSO gains this function:
+
+  ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state);
+
+The return value and the first 3 arguments are the same as ordinary
+getrandom(), while the last argument is a pointer to some state
+allocated with vgetrandom_alloc(), explained below. Were all four
+arguments passed to the getrandom syscall, nothing different would
+happen, and the functions would have the exact same behavior.
+
+Then, we introduce a new syscall:
+
+  void *vgetrandom_alloc([inout] unsigned int *num, [out] unsigned int *size_per_each, unsigned int flags);
+
+This takes the desired number of opaque states in `num`, and returns a
+pointer to an array of opaque states, the number actually allocated back
+in `num`, and the size in bytes of each one in `size_per_each`, enabling
+a libc to slice up the returned array into a state per each thread. (The
+`flags` argument is always zero for now.) We very intentionally do *not*
+leave state allocation up to the caller of vgetrandom, but provide
+vgetrandom_alloc for that allocation. There are too many weird things
+that can go wrong, and it's important that vDSO does not provide too
+generic of a mechanism. It's not going to store its state in just any
+old memory address. It'll do it only in ones it allocates.
+
+Right now this means it's a mlock'd page with WIPEONFORK set. In the
+future maybe there will be other interesting page flags or
+anti-heartbleed measures, or other platform-specific kernel-specific
+things that can be set from the syscall. Again, it's important that the
+kernel has a say in how this works rather than agreeing to operate on
+any old address; memory isn't neutral.
+
+The syscall currently accomplishes this with a call to vm_mmap() and
+then a call to do_madvise(). It'd be nice to do this all at once, but
+I'm not sure that a helper function exists for that now, and it seems a
+bit premature to add one, at least for now.
+
+The interesting meat of the implementation is in lib/vdso/getrandom.c,
+as generic C code, and it aims to mainly follow random.c's buffered fast
+key erasure logic. Before the RNG is initialized, it falls back to the
+syscall. Right now it uses a simple generation counter to make its decisions
+on reseeding (though this could be made more extensive over time).
+
+The actual place that has the most work to do is in all of the other
+files. Most of the vDSO shared page infrastructure is centered around
+gettimeofday, and so the main structs are all in arrays for different
+timestamp types, and attached to time namespaces, and so forth. I've
+done the best I could to add onto this in an unintrusive way.
+
+In my test results, performance is pretty stellar (around 15x for uint32_t
+generation), and it seems to be working. There's an extended example in the
+second commit of this series, showing how the syscall and the vDSO function
+are meant to be used together.
+
+Cc: linux-crypto@vger.kernel.org
+Cc: linux-api@vger.kernel.org
+Cc: x86@kernel.org
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>
+Cc: Carlos O'Donell <carlos@redhat.com>
+Cc: Florian Weimer <fweimer@redhat.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christian Brauner <brauner@kernel.org>
+
+Jason A. Donenfeld (3):
+  random: add vgetrandom_alloc() syscall
+  random: introduce generic vDSO getrandom() implementation
+  x86: vdso: Wire up getrandom() vDSO implementation
+
+ MAINTAINERS                             |   2 +
+ arch/x86/Kconfig                        |   1 +
+ arch/x86/entry/syscalls/syscall_64.tbl  |   1 +
+ arch/x86/entry/vdso/Makefile            |   3 +-
+ arch/x86/entry/vdso/vdso.lds.S          |   2 +
+ arch/x86/entry/vdso/vgetrandom-chacha.S | 177 ++++++++++++++++++++
+ arch/x86/entry/vdso/vgetrandom.c        |  17 ++
+ arch/x86/include/asm/unistd.h           |   1 +
+ arch/x86/include/asm/vdso/getrandom.h   |  55 +++++++
+ arch/x86/include/asm/vdso/vsyscall.h    |   2 +
+ arch/x86/include/asm/vvar.h             |  16 ++
+ drivers/char/random.c                   |  84 ++++++++++
+ include/uapi/asm-generic/unistd.h       |   7 +-
+ include/vdso/datapage.h                 |  11 ++
+ include/vdso/getrandom.h                |  24 +++
+ kernel/sys_ni.c                         |   3 +
+ lib/vdso/Kconfig                        |  14 +-
+ lib/vdso/getrandom.c                    | 204 ++++++++++++++++++++++++
+ scripts/checksyscalls.sh                |   4 +
+ tools/include/uapi/asm-generic/unistd.h |   7 +-
+ 20 files changed, 631 insertions(+), 4 deletions(-)
+ create mode 100644 arch/x86/entry/vdso/vgetrandom-chacha.S
+ create mode 100644 arch/x86/entry/vdso/vgetrandom.c
+ create mode 100644 arch/x86/include/asm/vdso/getrandom.h
+ create mode 100644 include/vdso/getrandom.h
+ create mode 100644 lib/vdso/getrandom.c
+
+-- 
+2.38.1
+
