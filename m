@@ -1,90 +1,103 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86333A492
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 20:55:39 +0000 (UTC)
-Received: by mail-pl1-f174.google.com with SMTP id d3so6405104plr.10
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 12:55:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Aq/k14hHxyqv+R/E0+ZIRLUsEK+p2/petQlrLB89kfU=;
-        b=K6bgp2Ndbt8cB0g+NYsOVuj9p8BADh8negD17Pb9B7vzIIu4nezQjaxRFY87IeZZVw
-         vJ7lsGhQBj6fb/UGdc+NY09xBP2tZ1u/KX6Xs7yz5V7JMEC90rlNP/VREF4ke0jMTNTz
-         BaJO9SeUFy6GD4Bq8pQcuXFfYDnZUbwpmQezqqslq0TRlaiWeGzDa9FBwsa22rYBdBxt
-         dkhQ63wrfvhHdGfSdXB2omz1Pex/ChXOcL23SV+bK+vAla/CG8e3RZ5kYptqN7MZLcFo
-         Pw+vouFfmW5itJtz0EiIAJQ4wkI0J21NZMWjDhfMn+cs2VRC3Vo/RLLVX5LzymLJi+Nv
-         wUVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Aq/k14hHxyqv+R/E0+ZIRLUsEK+p2/petQlrLB89kfU=;
-        b=kSDLmN+QBNBZQjsAwb+ocrSHYHbBuRRSdIpyOja8HIMEkGVUzl2XaBPDGuAaVMIQbq
-         wn/zEYbltG3870UHHZsq/rjNu8+nOWbatDekoJHltmAIwhYDGgctcK8brKxQ10sQfdXM
-         UkZTrEA3gX0G/B0QSwmbMTRYsJxwWARH96evBELfaxCV2jJGC62WDIhYkLnQBoVxmcn8
-         IZkY8vi14hkx/QTlSS8b20GfT5U/t+OVxyEI3KsTvUJRCy20q4eoybjPzsDeP3BId4gI
-         WVsvABemBonj7nTvTdgxbwKQpqoQb+k8DUAuXF7JoawvLLEytdjOzZs5I1UJ5nhY66+K
-         3ETg==
-X-Gm-Message-State: ANoB5pmPUNylqCkYLxpDY1odcRzpyBWyQK8UI8oiY810jW8TgBVwBv34
-	KTTubYQEbcEtGOGX9uUpU5Y=
-X-Google-Smtp-Source: AA0mqf4EmPJGQk9BL0tECBExCJGFn+d7sIW8KY71HLgIBfLHHjRTd0PRGwlA6xERrn4SCcY3sBVliA==
-X-Received: by 2002:a17:90a:5c85:b0:20a:92d2:226a with SMTP id r5-20020a17090a5c8500b0020a92d2226amr45039647pji.155.1669668938878;
-        Mon, 28 Nov 2022 12:55:38 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id b13-20020a170902d50d00b0017f73caf588sm9260002plg.218.2022.11.28.12.55.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 12:55:38 -0800 (PST)
-Message-ID: <1e5d85a0-6edc-bde4-6493-c2b2ac25c760@gmail.com>
-Date: Mon, 28 Nov 2022 12:55:33 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7ABA498
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:13:07 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8D22B5C008E;
+	Mon, 28 Nov 2022 16:13:06 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Mon, 28 Nov 2022 16:13:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1669669986; x=1669756386; bh=saJdYblUQM
+	ubkBKneHxz9xq/v51yMrwW6TpKBNrxMUc=; b=VNuOzTuWUe4xzXZd1+bVz+AXpG
+	isIWoZxNVSarVwznQVEUr1DB8YcCV8l91Nl+ZYLvHzty2SkT8U+kj0/hKp7O9v4X
+	5XfHiQWDKf0QSPSqsI1R9QsF30O8FdTMwQ4pk0C1oIkJ8jsg8S+Perp9fnrUXDUu
+	J7rhWFbbp4VDCWPrnTRVSIiNRga5HmtksExV75LqtQGIIjkvmY6z9bflKq668RHK
+	OEfiUwzPn+bCUEe0Cyf6/SziB/clx98nHOip/M0bocISbsR8LEOrH5/TWO4Y6iSo
+	cJpd3rghYnHyZ80DCsFjzDGMa0aC2RPQjPyeIiUOCl2ZpsuQYjVOzscMehBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1669669986; x=1669756386; bh=saJdYblUQMubkBKneHxz9xq/v51y
+	MrwW6TpKBNrxMUc=; b=dg4mdK3ypwpaf/P+1QvaxO1OOdXhg/7PvTl1klu5UC4D
+	dgYclGaLJqXuaWZg+bWxxPcZGsbv8PA82hx/LaajCzrwP7qrGprohi2Tljmm22Iu
+	8NLSH5EePfdqgtWt3kziPeOEIRQOH9wkLzJrt4ATB2uLqqBLGIW7XbcdEXSCpiia
+	rxW8XUsgwPBH+gsf+YPkiL2AKgsd13jrgwZOZqj8cWOjSexi4fIjfS2+n+3oSIMS
+	Jb7DuKtuuyhofj9bXWOINcTP3CGA9v6x5G7veJu5AaPbDyhw7NilH/3nCX7msSe4
+	vD8rIyvgSFmnltjr3Ax/TUMJMDQ7oCcwgoKOELicmQ==
+X-ME-Sender: <xms:YiSFYycuprpWWHuR5rUIurZNGq984gCwmPwPdOibr966lxxE6HhKnA>
+    <xme:YiSFY8PMImz5UCV5NMoGY9VR8UI2VSAj3cCCvnCx189FmlhcaryDjnvN-ShjQUcNh
+    bItd1HFZ967tsd_ntk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrjedvgddugeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:YiSFYzi57CPnWDMf2ru1BURcvDRsDQmcL5EGeICDF8aNTMzAuh-_uw>
+    <xmx:YiSFY_-Yto5zpTMKO5bIPpL9KlRKDa4AWZ0TYAEh6XR35Vhz2kewfg>
+    <xmx:YiSFY-sCjDr5rOjb0YxI_1mYCa0Rj77H1-7Zy3sOdZZR-aZLV58cng>
+    <xmx:YiSFY_kldfgFsLHciyaYrp_XVR28m-BClyR9D9ZBTQKkXX8yo2j7uQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 02039B60086; Mon, 28 Nov 2022 16:13:05 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.0 000/313] 6.0.10-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221125075804.064161337@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221125075804.064161337@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Message-Id: <2cb4b4a7-1d39-4f63-aee0-b4fc43efa68d@app.fastmail.com>
+In-Reply-To: 
+ <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
+References: <20221128111829.2477505-1-Jason@zx2c4.com>
+ <20221128111829.2477505-4-Jason@zx2c4.com>
+ <8f9326ba-f879-4b9e-9e5d-b65cad7cd726@app.fastmail.com>
+ <Y4UKpP7/NOwPIkYe@zx2c4.com>
+ <cd01e0b4-579f-48fc-995f-6e1acebd02af@app.fastmail.com>
+ <CAHmME9rp+Nx_S8OgABzadc1+j_FrSRbUvGu2r9W_svrr+HMjSg@mail.gmail.com>
+Date: Mon, 28 Nov 2022 22:12:45 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ "Thomas Gleixner" <tglx@linutronix.de>, linux-crypto@vger.kernel.org,
+ linux-api@vger.kernel.org, x86@kernel.org,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
+ "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
+ "Christian Brauner" <brauner@kernel.org>, "Samuel Neves" <sneves@dei.uc.pt>
+Subject: Re: [PATCH v8 3/3] x86: vdso: Wire up getrandom() vDSO implementation
+Content-Type: text/plain
 
-On 11/24/22 23:58, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.10 release.
-> There are 313 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 27 Nov 2022 07:57:07 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.10-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Mon, Nov 28, 2022, at 21:02, Jason A. Donenfeld wrote:
+> On Mon, Nov 28, 2022 at 8:57 PM Arnd Bergmann <arnd@arndb.de> wrote:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+> Okay, I can split it that way. If I gather your meaning correctly:
+>
+> 1) generic syscall C code
+> 2) #define __NR_... in asm-generic/unistd.h x86/.../unistd.h,
+> x86/.../syscall_64.tbl
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+I mean all syscall*.tbl files, not just x86. There are currently
+eight architectures using asm-generic/unistd.h, the rest use
+syscall.tbl.
 
+> 3) generic vdso C code
+> 4) hook up x86 vdso, and select the right Kconfig symbol to start
+> compiling the code
+>
+> Is that what you have in mind? If so, I'll name (2) "arch: wire up
+> vgetrandom_alloc() syscall number".
+
+That sounds good, yes.
+
+      Arnd
