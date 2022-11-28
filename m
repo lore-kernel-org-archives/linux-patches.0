@@ -1,45 +1,45 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E29A498
-	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 21:56:02 +0000 (UTC)
-Received: by mail-pl1-f181.google.com with SMTP id y17so3639992plp.3
-        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 13:56:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3881BA49F
+	for <patches@lists.linux.dev>; Mon, 28 Nov 2022 22:12:52 +0000 (UTC)
+Received: by mail-pg1-f177.google.com with SMTP id 6so11207560pgm.6
+        for <patches@lists.linux.dev>; Mon, 28 Nov 2022 14:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PNE2hM5xuRQg1qTi7Jhb4FKs2enVjE/c6i2QY7o+wfk=;
-        b=ggl4s4VnvSif8ARoD9mDKXN/FZRm5YDoU5oWpDdy9kdO32JLUN4xSZEOGPcHBoUWgA
-         ZoObHJDHHhM10FUHSyjQt9Ko1rbfCGJ33K7Y72D53oR+DqjkBRyzeQMQC6YeWX5YSmrH
-         EJkj3agiRYkp1hKpvei60t7y7yAvgJiDpYVA2xJg8rMMSb1docHC1Dlois7qzoRByu6Y
-         CRXi4UnZa5+lwkQ7+N/3nzU93/3DLwmMfLLescvqsVP7gAUgcyU5umJCVjRvsryKS/rD
-         gRe0/j/0UIxjoOkUpXVxvCwi8GYXAeX09/V+Ir8nMHBUT9K8JFeucMozXw+bv0QEFIBF
-         CfOA==
+        bh=7VnIiqkaLT/AOA+Uh3vYc89XGyhScngUhSEYmii9N7E=;
+        b=hf/Rd5cgspTnUYicP8bfp0SxkTZo9YWJxzNwarpU4xJULh5zWcfQXnuff3SuYQYzO2
+         1hUYiP8DJRkQP23pUYDWiUHSaT5pUDVGXcxNg/2asHYrasdRz1d5QLYVO2LBAdx1Dkqe
+         21Pf7WCRasOTddkVfVSFxdmDTpvc4zJMmNXI8SXYDGscpx0iwe0VCv1xLFwx9cPvqmoa
+         EavQ+dTGheMEqFf+eMklvPIy4rYjnvaoWdMRthxzrcPt9K+Vi6YANBMPD9vZy3k+bNlJ
+         sI/3o9p9RLgbGwGf0WvrhN3gY6iqLS01sIDVaV8bxJAMuqxx+w74yVtF/pC5Ymj7509+
+         ZeoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PNE2hM5xuRQg1qTi7Jhb4FKs2enVjE/c6i2QY7o+wfk=;
-        b=p3m4UPZINxH7AYA4gCcpWLoKuHulM6Ov1p2BHL/lGnbxOW6OiWue82wfw7/9/1r57N
-         vM71k4pKy6Rzhg60X1RzT5TODJCFABtqxln1IYfEQcjEqfOiuiZ7KphDmTzFCakDA32V
-         OzMiMWJpZBrKgPy4nLYC5IjaT9Aac/hn+Mc0B8NGAHXfokKpfQqxNRWhQHBDpaXzgZwV
-         oObx1cNEgxeTsaPE+09UQLyXH2SjeMEhIou9l9KFvM3XOuz9k28NfVras9MSo9LHL5Mi
-         E2uCEvoRM0HlN8Glmakuw0o+MeSNW7ueOPBWUisc1PnU0J/yD2qJg1xQa8jlDwJIh1C8
-         2enQ==
-X-Gm-Message-State: ANoB5pkJdxSwqVeEm2MjIV44lYkgu6w9S63d1BUj5utqR9qo6VMxxjhZ
-	hSLboaqomLjLv2k7t94fNDY=
-X-Google-Smtp-Source: AA0mqf4Ic8U/2HubojmEHBWTW6lx07dDGX5ULtU6u+Lp5wFm6qolBN7MYcPQ0ef2hXtaB5KihKcTWw==
-X-Received: by 2002:a17:902:ca14:b0:188:dcfb:f2dc with SMTP id w20-20020a170902ca1400b00188dcfbf2dcmr33894941pld.5.1669672561860;
-        Mon, 28 Nov 2022 13:56:01 -0800 (PST)
+        bh=7VnIiqkaLT/AOA+Uh3vYc89XGyhScngUhSEYmii9N7E=;
+        b=fZLVkrVA2bq1kskE6zo/5TW7WtL9MdHam8nT6kwahHS503PIAfL0QNrOIhAGm1vdha
+         rhQIYJjZdXSKVF9+BC7c8ZuQN9I2KV4DLhVMCsUysqcaAkcZfSGHgBvBajIz2529lXWQ
+         Zm2AS7B3CzluQLHzY+RjWHk6ocFDCyj+K2BBkYDzeuMztrFQP9bgimSsetgqxg/KQU9s
+         yXH08mOPnUsfFKP7Okl4vrduK3XIzFi1M0s9vEoFR1UkqGDqjXibqlPWj9wl9/s3Gi4n
+         WUQBn7/uF5t3rOBKoy382zWVxGM65azis2sanbjkPGKuECpdF6VJEaqcTGjculoX7T3y
+         UYHw==
+X-Gm-Message-State: ANoB5pkIDbAInBl7pqlw5NrGjF/UKoR93iPMB1tSQE36CnW1utvdYa5u
+	emBCYORz7j8Pg/Uk5VTfTKY=
+X-Google-Smtp-Source: AA0mqf7gi2938a6aMIhx7F3eopAf9BP6LPatYMG6aV5lHkMTn+qjJcYL7NMxg0OZsK+ou+Q0IcsCzQ==
+X-Received: by 2002:a62:84c5:0:b0:574:32ac:a47a with SMTP id k188-20020a6284c5000000b0057432aca47amr30644859pfd.7.1669673571506;
+        Mon, 28 Nov 2022 14:12:51 -0800 (PST)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id v11-20020a17090a520b00b0020ab246ac79sm2641175pjh.47.2022.11.28.13.55.57
+        by smtp.googlemail.com with ESMTPSA id pc16-20020a17090b3b9000b00212cf2fe8c3sm40644pjb.1.2022.11.28.14.12.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 13:56:01 -0800 (PST)
-Message-ID: <c241736c-f50f-97c9-f662-37b65d1b8a2d@gmail.com>
-Date: Mon, 28 Nov 2022 13:55:55 -0800
+        Mon, 28 Nov 2022 14:12:51 -0800 (PST)
+Message-ID: <e6d08779-6e40-ef74-fdde-25335bcb9cc0@gmail.com>
+Date: Mon, 28 Nov 2022 14:12:44 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 4.9 00/76] 4.9.334-rc1 review
+Subject: Re: [PATCH 5.4 000/156] 5.4.225-rc1 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -56,15 +56,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221123084546.742331901@linuxfoundation.org>
+References: <20221123084557.816085212@linuxfoundation.org>
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221123084546.742331901@linuxfoundation.org>
+In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/23/22 00:49, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.9.334 release.
-> There are 76 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.4.225 release.
+> There are 156 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,9 +72,9 @@ On 11/23/22 00:49, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.9.334-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.225-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.9.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
 > 
 > thanks,
