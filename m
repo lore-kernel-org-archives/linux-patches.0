@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6A679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514C9C433C1;
-	Wed, 30 Nov 2022 18:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9562A79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18834C433C1;
+	Wed, 30 Nov 2022 18:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833889;
-	bh=fTsos0t8V/7ytUC0Vqd4gBJMZRDd/hQkclnB477cRzA=;
+	s=korg; t=1669833892;
+	bh=JGizSkAcdCgwaI9LSxRfzZ2HHPebeBQd1bgb1VyHLdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oh4hzZYvu01OIkBniNWlBzscU9H9t4NX3xGsDGZkaxDAIuJUuKDdfmjM0q+wklfIW
-	 QUOrMOGTipF53Nw2dU06iGXEpd/IZPqO6fiDgtmYmzflKw1fd4kJU4lrUQ67oiUEGL
-	 3QfHWqQqI95GqRk2n5UjD1CoaAwzbaYARZuO28fA=
+	b=awxKfgP+sPJfplxlSGPO/ayeN9TT1vWy9mASkJiA43I0mbdX/PhIk2Lkn5xrouNMY
+	 SRTwLrlK4Zx5Fmd2abjqkmrSjRtlAVd/QDI/OHCES2+Yhe9xI0FodELNzb80M0au5S
+	 wFv4C81cpinKA5kk+CHA9rui45c4TjgP10aU7zmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian King <brking@linux.vnet.ibm.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 024/289] scsi: ibmvfc: Avoid path failures during live migration
-Date: Wed, 30 Nov 2022 19:20:09 +0100
-Message-Id: <20221130180544.681419159@linuxfoundation.org>
+Subject: [PATCH 6.0 025/289] scsi: scsi_debug: Make the READ CAPACITY response compliant with ZBC
+Date: Wed, 30 Nov 2022 19:20:10 +0100
+Message-Id: <20221130180544.704616101@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,63 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian King <brking@linux.vnet.ibm.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 62fa3ce05d5d73c5eccc40b2db493f55fecfc446 ]
+[ Upstream commit ecb8c2580d37dbb641451049376d80c8afaa387f ]
 
-Fix an issue reported when performing a live migration when multipath is
-configured with a short fast fail timeout of 5 seconds and also to have
-no_path_retry set to fail. In this scenario, all paths would go into the
-devloss state while the ibmvfc driver went through discovery to log back
-in. On a loaded system, the discovery might take longer than 5 seconds,
-which was resulting in all paths being marked failed, which then resulted
-in a read only filesystem.
+>From ZBC-1:
 
-This patch changes the migration code in ibmvfc to avoid deleting rports at
-all in this scenario, so we avoid losing all paths.
+ - RC BASIS = 0: The RETURNED LOGICAL BLOCK ADDRESS field indicates the
+   highest LBA of a contiguous range of zones that are not sequential write
+   required zones starting with the first zone.
 
-Signed-off-by: Brian King <brking@linux.vnet.ibm.com>
-Link: https://lore.kernel.org/r/20221026181356.148517-1-brking@linux.vnet.ibm.com
+ - RC BASIS = 1: The RETURNED LOGICAL BLOCK ADDRESS field indicates the LBA
+   of the last logical block on the logical unit.
+
+The current scsi_debug READ CAPACITY response does not comply with the
+above if there are one or more sequential write required zones. SCSI
+initiators need a way to retrieve the largest valid LBA from SCSI
+devices. Reporting the largest valid LBA if there are one or more
+sequential zones requires to set the RC BASIS field in the READ CAPACITY
+response to one. Hence this patch.
+
+Cc: Douglas Gilbert <dgilbert@interlog.com>
+Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Suggested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221102193248.3177608-1-bvanassche@acm.org
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi/ibmvfc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_debug.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
-index 00684e11976b..1a0c0b7289d2 100644
---- a/drivers/scsi/ibmvscsi/ibmvfc.c
-+++ b/drivers/scsi/ibmvscsi/ibmvfc.c
-@@ -708,8 +708,13 @@ static void ibmvfc_init_host(struct ibmvfc_host *vhost)
- 		memset(vhost->async_crq.msgs.async, 0, PAGE_SIZE);
- 		vhost->async_crq.cur = 0;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 95f940f5c996..7346098c1c68 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -1899,6 +1899,13 @@ static int resp_readcap16(struct scsi_cmnd *scp,
+ 			arr[14] |= 0x40;
+ 	}
  
--		list_for_each_entry(tgt, &vhost->targets, queue)
--			ibmvfc_del_tgt(tgt);
-+		list_for_each_entry(tgt, &vhost->targets, queue) {
-+			if (vhost->client_migrated)
-+				tgt->need_login = 1;
-+			else
-+				ibmvfc_del_tgt(tgt);
-+		}
++	/*
++	 * Since the scsi_debug READ CAPACITY implementation always reports the
++	 * total disk capacity, set RC BASIS = 1 for host-managed ZBC devices.
++	 */
++	if (devip->zmodel == BLK_ZONED_HM)
++		arr[12] |= 1 << 4;
 +
- 		scsi_block_requests(vhost->host);
- 		ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_INIT);
- 		vhost->job_step = ibmvfc_npiv_login;
-@@ -3235,9 +3240,12 @@ static void ibmvfc_handle_crq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost,
- 			/* We need to re-setup the interpartition connection */
- 			dev_info(vhost->dev, "Partition migrated, Re-enabling adapter\n");
- 			vhost->client_migrated = 1;
-+
-+			scsi_block_requests(vhost->host);
- 			ibmvfc_purge_requests(vhost, DID_REQUEUE);
--			ibmvfc_link_down(vhost, IBMVFC_LINK_DOWN);
-+			ibmvfc_set_host_state(vhost, IBMVFC_LINK_DOWN);
- 			ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_REENABLE);
-+			wake_up(&vhost->work_wait_q);
- 		} else if (crq->format == IBMVFC_PARTNER_FAILED || crq->format == IBMVFC_PARTNER_DEREGISTER) {
- 			dev_err(vhost->dev, "Host partner adapter deregistered or failed (rc=%d)\n", crq->format);
- 			ibmvfc_purge_requests(vhost, DID_ERROR);
+ 	arr[15] = sdebug_lowest_aligned & 0xff;
+ 
+ 	if (have_dif_prot) {
 -- 
 2.35.1
 
