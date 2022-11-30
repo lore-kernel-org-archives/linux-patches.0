@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2EBC433D6;
-	Wed, 30 Nov 2022 18:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB7479C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE01C433D6;
+	Wed, 30 Nov 2022 18:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833037;
-	bh=98hCcJiuIYZuWjnRVsehn5N1DMLnUcVlgKy4CDO6SYE=;
+	s=korg; t=1669833040;
+	bh=OwJx37HG/bepk19hnsvQmT6VFdCCw5bN3fLhV2fo8TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/5GlDYm4RJJg5kdElRbbhrmgON2Fk0yR0hl/YUA8iCUtIuKni4druCadSP2Phl+H
-	 4eoPwldgEoUxJcx5F40KpJ7/40agu8IPJ7zkInLilfj3d5cnAhhE3RLRSSKmbwRQ7C
-	 GYjwmP0YUlzcQ/LjjN3THWC1lpkdiAUsc0GE4Wy8=
+	b=wiiqaNcXPXl5n1aw+hZANt8tv8sNlzXDFY6uz/PkcUN3yk0fcuzlsLiTcsI8pmLBq
+	 Btiny1/9qG4W8TQyZZ2CtTWuIrFC4jcSngu62dQFlYA34rasKo4LKRzi6ayTGZ/53l
+	 /ARlArvg1CvGwDgQ8PkWDCHxZkD3n5V9BckuOLBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Carlos Llamas <cmllamas@google.com>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 5.10 128/162] binder: fix pointer cast warning
-Date: Wed, 30 Nov 2022 19:23:29 +0100
-Message-Id: <20221130180531.961223768@linuxfoundation.org>
+	Al Cooper <alcooperx@gmail.com>,
+	Kamal Dasu <kdasu.kdev@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 102/162] mmc: sdhci-brcmstb: Re-organize flags
+Date: Wed, 30 Nov 2022 19:23:03 +0100
+Message-Id: <20221130180531.256815683@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,42 +38,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Al Cooper <alcooperx@gmail.com>
 
-commit 9a0a930fe2535a76ad70d3f43caeccf0d86a3009 upstream.
+[ Upstream commit f3a70f991dd07330225ea11e158e1d07ad5733fb ]
 
-binder_uintptr_t is not the same as uintptr_t, so converting it into a
-pointer requires a second cast:
+Re-organize the flags by basing the bit names on the flag that they
+apply to. Also change the "flags" member in the "brcmstb_match_priv"
+struct to const.
 
-drivers/android/binder.c: In function 'binder_translate_fd_array':
-drivers/android/binder.c:2511:28: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
- 2511 |         sender_ufda_base = (void __user *)sender_uparent->buffer + fda->parent_offset;
-      |                            ^
-
-Fixes: 656e01f3ab54 ("binder: read pre-translated fds from sender buffer")
-Acked-by: Todd Kjos <tkjos@google.com>
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20211207122448.1185769-1-arnd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Cooper <alcooperx@gmail.com>
+Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20220427180853.35970-2-kdasu.kdev@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 56baa208f910 ("mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-brcmstb.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -2908,7 +2908,8 @@ static int binder_translate_fd_array(str
- 	 */
- 	fda_offset = (parent->buffer - (uintptr_t)t->buffer->user_data) +
- 		fda->parent_offset;
--	sender_ufda_base = (void __user *)sender_uparent->buffer + fda->parent_offset;
-+	sender_ufda_base = (void __user *)(uintptr_t)sender_uparent->buffer +
-+				fda->parent_offset;
+diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+index f24623aac2db..244780481193 100644
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -18,20 +18,22 @@
+ #define SDHCI_VENDOR 0x78
+ #define  SDHCI_VENDOR_ENHANCED_STRB 0x1
  
- 	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32)) ||
- 	    !IS_ALIGNED((unsigned long)sender_ufda_base, sizeof(u32))) {
+-#define BRCMSTB_PRIV_FLAGS_NO_64BIT		BIT(0)
+-#define BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT	BIT(1)
++#define BRCMSTB_MATCH_FLAGS_NO_64BIT		BIT(0)
++#define BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT	BIT(1)
++
++#define BRCMSTB_PRIV_FLAGS_HAS_CQE		BIT(0)
+ 
+ #define SDHCI_ARASAN_CQE_BASE_ADDR		0x200
+ 
+ struct sdhci_brcmstb_priv {
+ 	void __iomem *cfg_regs;
+-	bool has_cqe;
++	unsigned int flags;
+ };
+ 
+ struct brcmstb_match_priv {
+ 	void (*hs400es)(struct mmc_host *mmc, struct mmc_ios *ios);
+ 	struct sdhci_ops *ops;
+-	unsigned int flags;
++	const unsigned int flags;
+ };
+ 
+ static void sdhci_brcmstb_hs400es(struct mmc_host *mmc, struct mmc_ios *ios)
+@@ -134,13 +136,13 @@ static struct sdhci_ops sdhci_brcmstb_ops_7216 = {
+ };
+ 
+ static struct brcmstb_match_priv match_priv_7425 = {
+-	.flags = BRCMSTB_PRIV_FLAGS_NO_64BIT |
+-	BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
++	.flags = BRCMSTB_MATCH_FLAGS_NO_64BIT |
++	BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
+ 	.ops = &sdhci_brcmstb_ops,
+ };
+ 
+ static struct brcmstb_match_priv match_priv_7445 = {
+-	.flags = BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
++	.flags = BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
+ 	.ops = &sdhci_brcmstb_ops,
+ };
+ 
+@@ -176,7 +178,7 @@ static int sdhci_brcmstb_add_host(struct sdhci_host *host,
+ 	bool dma64;
+ 	int ret;
+ 
+-	if (!priv->has_cqe)
++	if ((priv->flags & BRCMSTB_PRIV_FLAGS_HAS_CQE) == 0)
+ 		return sdhci_add_host(host);
+ 
+ 	dev_dbg(mmc_dev(host->mmc), "CQE is enabled\n");
+@@ -225,7 +227,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	struct sdhci_brcmstb_priv *priv;
+ 	struct sdhci_host *host;
+ 	struct resource *iomem;
+-	bool has_cqe = false;
+ 	struct clk *clk;
+ 	int res;
+ 
+@@ -244,10 +245,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 		return res;
+ 
+ 	memset(&brcmstb_pdata, 0, sizeof(brcmstb_pdata));
+-	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
+-		has_cqe = true;
+-		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
+-	}
+ 	brcmstb_pdata.ops = match_priv->ops;
+ 	host = sdhci_pltfm_init(pdev, &brcmstb_pdata,
+ 				sizeof(struct sdhci_brcmstb_priv));
+@@ -258,7 +255,10 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 
+ 	pltfm_host = sdhci_priv(host);
+ 	priv = sdhci_pltfm_priv(pltfm_host);
+-	priv->has_cqe = has_cqe;
++	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
++		priv->flags |= BRCMSTB_PRIV_FLAGS_HAS_CQE;
++		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
++	}
+ 
+ 	/* Map in the non-standard CFG registers */
+ 	iomem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+@@ -287,14 +287,14 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	 * properties through mmc_of_parse().
+ 	 */
+ 	host->caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+-	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_NO_64BIT)
++	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_NO_64BIT)
+ 		host->caps &= ~SDHCI_CAN_64BIT;
+ 	host->caps1 = sdhci_readl(host, SDHCI_CAPABILITIES_1);
+ 	host->caps1 &= ~(SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_SDR104 |
+ 			 SDHCI_SUPPORT_DDR50);
+ 	host->quirks |= SDHCI_QUIRK_MISSING_CAPS;
+ 
+-	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT)
++	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT)
+ 		host->quirks |= SDHCI_QUIRK_BROKEN_TIMEOUT_VAL;
+ 
+ 	res = sdhci_brcmstb_add_host(host, priv);
+-- 
+2.35.1
+
 
 
