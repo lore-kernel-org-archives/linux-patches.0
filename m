@@ -1,106 +1,81 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FFD23AF
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 12:23:17 +0000 (UTC)
-Received: by mail-wr1-f53.google.com with SMTP id h11so19530115wrw.13
-        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 04:23:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YmOlYL+T1VcRv6GwjlbPVapzopZmzHsyfLnHJwg422g=;
-        b=QCk0NxAgMjKoO4MZ8ZHi9965Dj+VVNgu8hf2o4ri7t0luu+dp/7ZqfpCMg1OtndLa9
-         /n4esAFm2evvBeQ2rIcbRj3N2/ZbfyB9snQK4VMcjf6v2MWVXu/FqZ8K6KIE5vaX92i2
-         SAWV+NFe1eeM5IwhUUSserYBOPfFirV/797GOGfnuiVVbdfptXSlH9/imQGR1pcm/B9n
-         ahUhWS1wsi43AApK+CvetjVznIv7HLh1bMjbpmHwGu/MAXT8MUZiHbhePwqr5NOllh9T
-         frJVR85URP7gEJpwCbppmqhwU8sszJ7UfRhZ/yG17wvAln9AHw4AyUdwYcHaFUent4Rv
-         l78w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YmOlYL+T1VcRv6GwjlbPVapzopZmzHsyfLnHJwg422g=;
-        b=Vi2vW/JYLTNRPHEbZbDLEVILKV+L6nPgFn6hLvtnvKrQmXZBMQE2Yq/zzu5DhEdL5n
-         J8GwhTfmMbKR1A8y4tRrHCvA8SZLH3P9gkzViNWxVOGo9ypzpC1+5Ll2cDKnB/Xlpjzz
-         DK8QICRUvPrLf8V2fcKUMO7GDtI5YCfMTr8kTgct4IOYv3jjaQT3zxgmS6icp3ICpOyJ
-         E3FXAnudA+IfWRl6RaMiV3HqZUvRdftdyfdBS108pEqaQh27A3THCUBty2yB2DHLGivH
-         P4NIes7/eXOkyLVWyJbIRhl8MGHL6gB2u9m2H6o9sgxlKxT7zCn6C1egVMjQSX9ADrcr
-         OkfQ==
-X-Gm-Message-State: ANoB5pnIIsrzes4Mfaw0k2JoAgzgFPGgAfxMzxiqXtF7N6MIX4FAnJZi
-	KWgSx+6d7byW2Ya1j6uPDYh1kw==
-X-Google-Smtp-Source: AA0mqf50/mjoaNarDfeLyTKta3nb6bZmEZM+IvrC04UJESisouehFNwB7mVWUMM2IcSOwllHF4y3Ag==
-X-Received: by 2002:a5d:456c:0:b0:236:7135:24da with SMTP id a12-20020a5d456c000000b00236713524damr37935677wrc.264.1669810995282;
-        Wed, 30 Nov 2022 04:23:15 -0800 (PST)
-Received: from google.com (65.0.187.35.bc.googleusercontent.com. [35.187.0.65])
-        by smtp.gmail.com with ESMTPSA id o35-20020a05600c512300b003a3442f1229sm5986073wms.29.2022.11.30.04.23.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 04:23:14 -0800 (PST)
-Date: Wed, 30 Nov 2022 12:23:10 +0000
-From: Vincent Donnefort <vdonnefort@google.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Nicolas Schier <nicolas@fjasle.eu>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] modpost: Include '.text.*' in TEXT_SECTIONS
-Message-ID: <Y4dLLnc4LTX9UHaN@google.com>
-References: <20221129190123.872394-1-nathan@kernel.org>
- <20221129190123.872394-3-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A2F63B3
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 14:53:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E44C433D6;
+	Wed, 30 Nov 2022 14:53:23 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pMK/A5E6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669820001;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I0ES5jk4GEQeOlHUC9yT1zBbx4b4UMHigHQ+Fl9nJ/4=;
+	b=pMK/A5E6Lbyumh8idS2QVJbpD8XvaIuhI8pqx4ZGR8ta71bIZ04E9+/bu4Tr/zJflYz3oF
+	XIwLpaPqMuiCiqm1Wa5oCl/hd167z6kGHeSuk0ZvKikvGUZdf+UdyTv6A0cZMJJf9B98zd
+	Sl5+ALPxQoCy5XFP+i++BXrzOhEB0lM=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8e91d6ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 30 Nov 2022 14:53:20 +0000 (UTC)
+Date: Wed, 30 Nov 2022 15:51:01 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v10 3/4] random: introduce generic vDSO getrandom()
+ implementation
+Message-ID: <Y4dt1dLZMmogRlKa@zx2c4.com>
+References: <20221129210639.42233-1-Jason@zx2c4.com>
+ <20221129210639.42233-4-Jason@zx2c4.com>
+ <878rjs7mcx.fsf@oldenburg.str.redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221129190123.872394-3-nathan@kernel.org>
+In-Reply-To: <878rjs7mcx.fsf@oldenburg.str.redhat.com>
 
-On Tue, Nov 29, 2022 at 12:01:23PM -0700, Nathan Chancellor wrote:
-> Commit 6c730bfc894f ("modpost: handle -ffunction-sections") added
-> ".text.*" to the OTHER_TEXT_SECTIONS macro to fix certain section
-> mismatch warnings. Unfortunately, this makes it impossible for modpost
-> to warn about section mismatchs with LTO, which implies
-> '-ffunction-sections', as all functions are put in their own
-> '.text.<func_name>' sections, which may still reference functions in
-> sections they are not supposed to, such as __init.
-> 
-> Fix this by moving ".text.*" into TEXT_SECTIONS, so that configurations
-> with '-ffunction-sections' will see warnings about mismatched sections.
-> 
-> Link: https://lore.kernel.org/Y39kI3MOtVI5BAnV@google.com/
-> Reported-by: Vincent Donnefort <vdonnefort@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi Florian,
 
-Thanks!
-
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-
-> ---
->  scripts/mod/modpost.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+On Wed, Nov 30, 2022 at 11:44:30AM +0100, Florian Weimer wrote:
+> * Jason A. Donenfeld:
 > 
-> diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-> index 2c80da0220c3..c861beabc128 100644
-> --- a/scripts/mod/modpost.c
-> +++ b/scripts/mod/modpost.c
-> @@ -823,10 +823,10 @@ static void check_section(const char *modname, struct elf_info *elf,
->  #define ALL_EXIT_SECTIONS EXIT_SECTIONS, ALL_XXXEXIT_SECTIONS
->  
->  #define DATA_SECTIONS ".data", ".data.rel"
-> -#define TEXT_SECTIONS ".text", ".text.unlikely", ".sched.text", \
-> +#define TEXT_SECTIONS ".text", ".text.*", ".sched.text", \
->  		".kprobes.text", ".cpuidle.text", ".noinstr.text"
->  #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
-> -		".fixup", ".entry.text", ".exception.text", ".text.*", \
-> +		".fixup", ".entry.text", ".exception.text", \
->  		".coldtext", ".softirqentry.text"
->  
->  #define INIT_SECTIONS      ".init.*"
-> -- 
-> 2.38.1
+> > diff --git a/include/vdso/datapage.h b/include/vdso/datapage.h
+> > index 73eb622e7663..9ae4d76b36c7 100644
+> > --- a/include/vdso/datapage.h
+> > +++ b/include/vdso/datapage.h
+> > @@ -109,6 +109,16 @@ struct vdso_data {
+> >  	struct arch_vdso_data	arch_data;
+> >  };
+> >  
+> > +/**
+> > + * struct vdso_rng_data - vdso RNG state information
+> > + * @generation:	a counter representing the number of RNG reseeds
+> > + * @is_ready:	whether the RNG is initialized
+> > + */
+> > +struct vdso_rng_data {
+> > +	unsigned long	generation;
+> > +	bool		is_ready;
+> > +};
+> > +
 > 
+> I don't think you can use a type like long here.  The header says this:
+> 
+>  * vdso_data will be accessed by 64 bit and compat code at the same time
+>  * so we should be careful before modifying this structure.
+> 
+> So the ABI must be same for 32-bit and 64-bit mode, and long isn't.
+
+Excellent point. The size of the type needs to be explicit. Will fix.
+
+Jason
