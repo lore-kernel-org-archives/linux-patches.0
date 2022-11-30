@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AEE79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818ACC433C1;
-	Wed, 30 Nov 2022 18:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5C979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352B9C433D6;
+	Wed, 30 Nov 2022 18:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833291;
-	bh=3FEH4svVzkYeoaa6ZutCgXlK7jfyfHYi9LMUFaXwG4Q=;
+	s=korg; t=1669833294;
+	bh=yt9ZsKQP4pmQxT0l0VAhKwGcgfrLjTMisVi1orUE8Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ga9y3eovc2gtOfTZsP+PMj6p6LrQurDU1ZbkniSiGk/Y8104uOYHMyNd4N0NJSgxK
-	 jwpBNLa44jT/g8+eF4o0AuhF8UkL+32SBQ/wV5xYQ0qN9GGzvR68+nVWuwkbJh+MMw
-	 nPVB5X10sdxA51SOWdOGz7TLkhQiJhoRAb1U4rSI=
+	b=Ibp2z3R0/HsKS41Wy1M55jCZ9YkVLg3Y3gRvQcdtiehKpcQGrw7oLLEkGi1tmcn22
+	 4KCXjGPiQOAupG+tMqNNVbLAYJbDSV3ImBirpeXOaesQ7rPD+wXiY/pBqmamIKyaah
+	 aR6/OtR2ydRHO4C0WDBN3qjXjUwe4lN5JNjcY1B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Monil Patel <monil191989@gmail.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
+	Christian Langrock <christian.langrock@secunet.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/206] xfrm: fix "disable_policy" on ipv4 early demux
-Date: Wed, 30 Nov 2022 19:21:47 +0100
-Message-Id: <20221130180534.399820717@linuxfoundation.org>
+Subject: [PATCH 5.15 056/206] xfrm: replay: Fix ESN wrap around for GSO
+Date: Wed, 30 Nov 2022 19:21:48 +0100
+Message-Id: <20221130180534.426499694@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,52 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eyal Birger <eyal.birger@gmail.com>
+From: Christian Langrock <christian.langrock@secunet.com>
 
-[ Upstream commit 3a5913183aa1b14148c723bda030e6102ad73008 ]
+[ Upstream commit 4b549ccce941798703f159b227aa28c716aa78fa ]
 
-The commit in the "Fixes" tag tried to avoid a case where policy check
-is ignored due to dst caching in next hops.
+When using GSO it can happen that the wrong seq_hi is used for the last
+packets before the wrap around. This can lead to double usage of a
+sequence number. To avoid this, we should serialize this last GSO
+packet.
 
-However, when the traffic is locally consumed, the dst may be cached
-in a local TCP or UDP socket as part of early demux. In this case the
-"disable_policy" flag is not checked as ip_route_input_noref() was only
-called before caching, and thus, packets after the initial packet in a
-flow will be dropped if not matching policies.
-
-Fix by checking the "disable_policy" flag also when a valid dst is
-already available.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216557
-Reported-by: Monil Patel <monil191989@gmail.com>
-Fixes: e6175a2ed1f1 ("xfrm: fix "disable_policy" flag use when arriving from different devices")
-Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
-
-----
-
-v2: use dev instead of skb->dev
+Fixes: d7dbefc45cf5 ("xfrm: Add xfrm_replay_overflow functions for offloading")
+Co-developed-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Christian Langrock <christian.langrock@secunet.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_input.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/esp4_offload.c |  3 +++
+ net/ipv6/esp6_offload.c |  3 +++
+ net/xfrm/xfrm_device.c  | 15 ++++++++++++++-
+ net/xfrm/xfrm_replay.c  |  2 +-
+ 4 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
-index 459d7e630cb0..124bf8fdf924 100644
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -364,6 +364,11 @@ static int ip_rcv_finish_core(struct net *net, struct sock *sk,
- 					   iph->tos, dev);
- 		if (unlikely(err))
- 			goto drop_error;
-+	} else {
-+		struct in_device *in_dev = __in_dev_get_rcu(dev);
-+
-+		if (in_dev && IN_DEV_ORCONF(in_dev, NOPOLICY))
-+			IPCB(skb)->flags |= IPSKB_NOPOLICY;
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index dad5d29a6a8d..2ddba1e2cf22 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -311,6 +311,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
+ 			xo->seq.low += skb_shinfo(skb)->gso_segs;
  	}
  
- #ifdef CONFIG_IP_ROUTE_CLASSID
++	if (xo->seq.low < seq)
++		xo->seq.hi++;
++
+ 	esp.seqno = cpu_to_be64(seq + ((u64)xo->seq.hi << 32));
+ 
+ 	ip_hdr(skb)->tot_len = htons(skb->len);
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 302170882382..4cc19acfc369 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -343,6 +343,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
+ 			xo->seq.low += skb_shinfo(skb)->gso_segs;
+ 	}
+ 
++	if (xo->seq.low < seq)
++		xo->seq.hi++;
++
+ 	esp.seqno = cpu_to_be64(xo->seq.low + ((u64)xo->seq.hi << 32));
+ 
+ 	len = skb->len - sizeof(struct ipv6hdr);
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index c255aac6b816..8b8e957a69c3 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -97,6 +97,18 @@ static void xfrm_outer_mode_prep(struct xfrm_state *x, struct sk_buff *skb)
+ 	}
+ }
+ 
++static inline bool xmit_xfrm_check_overflow(struct sk_buff *skb)
++{
++	struct xfrm_offload *xo = xfrm_offload(skb);
++	__u32 seq = xo->seq.low;
++
++	seq += skb_shinfo(skb)->gso_segs;
++	if (unlikely(seq < xo->seq.low))
++		return true;
++
++	return false;
++}
++
+ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t features, bool *again)
+ {
+ 	int err;
+@@ -134,7 +146,8 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
+ 		return skb;
+ 	}
+ 
+-	if (skb_is_gso(skb) && unlikely(x->xso.dev != dev)) {
++	if (skb_is_gso(skb) && (unlikely(x->xso.dev != dev) ||
++				unlikely(xmit_xfrm_check_overflow(skb)))) {
+ 		struct sk_buff *segs;
+ 
+ 		/* Packet got rerouted, fixup features and segment it. */
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index 9277d81b344c..49dd788859d8 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -714,7 +714,7 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
+ 			oseq += skb_shinfo(skb)->gso_segs;
+ 		}
+ 
+-		if (unlikely(oseq < replay_esn->oseq)) {
++		if (unlikely(xo->seq.low < replay_esn->oseq)) {
+ 			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
+ 			xo->seq.hi = oseq_hi;
+ 			replay_esn->oseq_hi = oseq_hi;
 -- 
 2.35.1
 
