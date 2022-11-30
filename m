@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8486FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D9C433C1;
-	Wed, 30 Nov 2022 18:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5506FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D79C433C1;
+	Wed, 30 Nov 2022 18:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832986;
-	bh=pc4BtaUrD98jt9H/7KGSKKaWznqoptWwvMgCmmOT+A0=;
+	s=korg; t=1669832989;
+	bh=0Rw3glO7BbKdV2UUK99NIwbtnCBZNmi/5PROH3ajUa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tm1sb+qghxZZ0+6Ur1kCWhy/hXrLz0VG9upRXb6zNYu57WuUC9WaEPdUg48EuecEY
-	 1pJG9083hGC0V3/If/LVhORIB3fXHiwv4bQJ72Y8+LG98QZcUgg0mIl61kMsBh2cY5
-	 C9UZs0w0E8YJFUSb9y1BjhiDCusHwqG+t/7W5PvI=
+	b=NbQOrrLPLv3R89VgewHnpivLuto5gET2pNLn7FlIf8fbchs8IEdYjeKvd6upYe925
+	 Vc+9PnIA41WEixfkCrc/Y/aCkVn04hO7UoX62xwFdLdRZ1crycOG/3G3kTGzrMpe+e
+	 SvfqR5o+r2iHw8a7/ZGc7E/Pae9XTXJ+kNMfAC7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Venky Shankar <vshankar@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/162] ceph: fix off by one bugs in unsafe_request_wait()
-Date: Wed, 30 Nov 2022 19:23:12 +0100
-Message-Id: <20221130180531.497679959@linuxfoundation.org>
+Subject: [PATCH 5.10 112/162] ceph: put the requests/sessions when it fails to alloc memory
+Date: Wed, 30 Nov 2022 19:23:13 +0100
+Message-Id: <20221130180531.525751501@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,45 +37,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 708c87168b6121abc74b2a57d0c498baaf70cbea ]
+[ Upstream commit 89d43d0551a848e70e63d9ba11534aaeabc82443 ]
 
-The "> max" tests should be ">= max" to prevent an out of bounds access
-on the next lines.
+When failing to allocate the sessions memory we should make sure
+the req1 and req2 and the sessions get put. And also in case the
+max_sessions decreased so when kreallocate the new memory some
+sessions maybe missed being put.
 
+And if the max_sessions is 0 krealloc will return ZERO_SIZE_PTR,
+which will lead to a distinct access fault.
+
+URL: https://tracker.ceph.com/issues/53819
 Fixes: e1a4541ec0b9 ("ceph: flush the mdlog before waiting on unsafe reqs")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Venky Shankar <vshankar@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Stable-dep-of: 5bd76b8de5b7 ("ceph: fix NULL pointer dereference for req->r_session")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/caps.c | 55 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 18 deletions(-)
 
 diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 2fa6b7cc0cc4..f14d52848b91 100644
+index f14d52848b91..4e2fada35808 100644
 --- a/fs/ceph/caps.c
 +++ b/fs/ceph/caps.c
-@@ -2343,7 +2343,7 @@ static int unsafe_request_wait(struct inode *inode)
+@@ -2297,6 +2297,7 @@ static int unsafe_request_wait(struct inode *inode)
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_mds_request *req1 = NULL, *req2 = NULL;
++	unsigned int max_sessions;
+ 	int ret, err = 0;
+ 
+ 	spin_lock(&ci->i_unsafe_lock);
+@@ -2314,37 +2315,45 @@ static int unsafe_request_wait(struct inode *inode)
+ 	}
+ 	spin_unlock(&ci->i_unsafe_lock);
+ 
++	/*
++	 * The mdsc->max_sessions is unlikely to be changed
++	 * mostly, here we will retry it by reallocating the
++	 * sessions array memory to get rid of the mdsc->mutex
++	 * lock.
++	 */
++retry:
++	max_sessions = mdsc->max_sessions;
++
+ 	/*
+ 	 * Trigger to flush the journal logs in all the relevant MDSes
+ 	 * manually, or in the worst case we must wait at most 5 seconds
+ 	 * to wait the journal logs to be flushed by the MDSes periodically.
+ 	 */
+-	if (req1 || req2) {
++	if ((req1 || req2) && likely(max_sessions)) {
+ 		struct ceph_mds_session **sessions = NULL;
+ 		struct ceph_mds_session *s;
+ 		struct ceph_mds_request *req;
+-		unsigned int max;
+ 		int i;
+ 
+-		/*
+-		 * The mdsc->max_sessions is unlikely to be changed
+-		 * mostly, here we will retry it by reallocating the
+-		 * sessions arrary memory to get rid of the mdsc->mutex
+-		 * lock.
+-		 */
+-retry:
+-		max = mdsc->max_sessions;
+-		sessions = krealloc(sessions, max * sizeof(s), __GFP_ZERO);
+-		if (!sessions)
+-			return -ENOMEM;
++		sessions = kzalloc(max_sessions * sizeof(s), GFP_KERNEL);
++		if (!sessions) {
++			err = -ENOMEM;
++			goto out;
++		}
+ 
+ 		spin_lock(&ci->i_unsafe_lock);
+ 		if (req1) {
  			list_for_each_entry(req, &ci->i_unsafe_dirops,
  					    r_unsafe_dir_item) {
  				s = req->r_session;
--				if (unlikely(s->s_mds > max)) {
-+				if (unlikely(s->s_mds >= max)) {
+-				if (unlikely(s->s_mds >= max)) {
++				if (unlikely(s->s_mds >= max_sessions)) {
  					spin_unlock(&ci->i_unsafe_lock);
++					for (i = 0; i < max_sessions; i++) {
++						s = sessions[i];
++						if (s)
++							ceph_put_mds_session(s);
++					}
++					kfree(sessions);
  					goto retry;
  				}
-@@ -2357,7 +2357,7 @@ static int unsafe_request_wait(struct inode *inode)
+ 				if (!sessions[s->s_mds]) {
+@@ -2357,8 +2366,14 @@ static int unsafe_request_wait(struct inode *inode)
  			list_for_each_entry(req, &ci->i_unsafe_iops,
  					    r_unsafe_target_item) {
  				s = req->r_session;
--				if (unlikely(s->s_mds > max)) {
-+				if (unlikely(s->s_mds >= max)) {
+-				if (unlikely(s->s_mds >= max)) {
++				if (unlikely(s->s_mds >= max_sessions)) {
  					spin_unlock(&ci->i_unsafe_lock);
++					for (i = 0; i < max_sessions; i++) {
++						s = sessions[i];
++						if (s)
++							ceph_put_mds_session(s);
++					}
++					kfree(sessions);
  					goto retry;
  				}
+ 				if (!sessions[s->s_mds]) {
+@@ -2379,7 +2394,7 @@ static int unsafe_request_wait(struct inode *inode)
+ 		spin_unlock(&ci->i_ceph_lock);
+ 
+ 		/* send flush mdlog request to MDSes */
+-		for (i = 0; i < max; i++) {
++		for (i = 0; i < max_sessions; i++) {
+ 			s = sessions[i];
+ 			if (s) {
+ 				send_flush_mdlog(s);
+@@ -2396,15 +2411,19 @@ static int unsafe_request_wait(struct inode *inode)
+ 					ceph_timeout_jiffies(req1->r_timeout));
+ 		if (ret)
+ 			err = -EIO;
+-		ceph_mdsc_put_request(req1);
+ 	}
+ 	if (req2) {
+ 		ret = !wait_for_completion_timeout(&req2->r_safe_completion,
+ 					ceph_timeout_jiffies(req2->r_timeout));
+ 		if (ret)
+ 			err = -EIO;
+-		ceph_mdsc_put_request(req2);
+ 	}
++
++out:
++	if (req1)
++		ceph_mdsc_put_request(req1);
++	if (req2)
++		ceph_mdsc_put_request(req2);
+ 	return err;
+ }
+ 
 -- 
 2.35.1
 
