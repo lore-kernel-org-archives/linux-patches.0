@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABF279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B73C433D6;
-	Wed, 30 Nov 2022 18:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C2079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78802C433D6;
+	Wed, 30 Nov 2022 18:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833941;
-	bh=RsM9U6/xKbAefQV8+JmiwP1hFtWAvtolMARxW0onWKk=;
+	s=korg; t=1669833943;
+	bh=uG6c1lc/og1fvW/1KyWnWBfb2fg1Q1t6nyDYTdGjZoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VoJ3LYnfa+T+dFfJ++HXu+42Ewy8BEw97BML5EQwi5t8GO1DkuigaKsK+9se+jLXi
-	 UqiIs3eGX4qFS4UW8qv/dhfwTHJstoNL1p6UzHzHjIAAPMWRT4dl+nDZRy9fFnUES4
-	 sVGgHqNInNgxvrbVcfIUmAK0T/2PwfnYqyPB1mP8=
+	b=sjcd0m6DlfHEONxGA1uqnS7Rlf4+2mQMV5I1yivvENyJnxDtVgouNGdRNoOGsW8mA
+	 dCMgoHe4WQ77ZhSezI/8SWv9TpWIkBhvPJ8ahplXZU/ZF2hicpylJbjvEtephgyxe6
+	 X8SPgDDVgjuqc2a3WtPWr2y/4iwHIGKw60uD3hxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nicolas.ferre@microchip.com,
-	ludovic.desroches@microchip.com,
-	alexandre.belloni@bootlin.com,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@pengutronix.de,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 070/289] ARM: dts: at91: sam9g20ek: enable udc vbus gpio pinctrl
-Date: Wed, 30 Nov 2022 19:20:55 +0100
-Message-Id: <20221130180545.720282575@linuxfoundation.org>
+Subject: [PATCH 6.0 071/289] selftests: mptcp: gives slow test-case more time
+Date: Wed, 30 Nov 2022 19:20:56 +0100
+Message-Id: <20221130180545.747100752@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -40,55 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 40a2226e8bfacb79dd154dea68febeead9d847e9 ]
+[ Upstream commit 22b29557aef3c9d673c887911b504c6d47009de4 ]
 
-We set the PIOC to GPIO mode. This way the pin becomes an
-input signal will be usable by the controller. Without
-this change the udc on the 9g20ek does not work.
+On slow or busy VM, some test-cases still fail because the
+data transfer completes before the endpoint manipulation
+actually took effect.
 
-Cc: nicolas.ferre@microchip.com
-Cc: ludovic.desroches@microchip.com
-Cc: alexandre.belloni@bootlin.com
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: kernel@pengutronix.de
-Fixes: 5cb4e73575e3 ("ARM: at91: add at91sam9g20ek boards dt support")
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221114185923.1023249-3-m.grzeschik@pengutronix.de
+Address the issue by artificially increasing the runtime for
+the relevant test-cases.
+
+Fixes: ef360019db40 ("selftests: mptcp: signal addresses testcases")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/309
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91sam9g20ek_common.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-index 60d61291f344..024af2db638e 100644
---- a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-+++ b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-@@ -39,6 +39,13 @@ pinctrl_pck0_as_mck: pck0_as_mck {
- 
- 				};
- 
-+				usb1 {
-+					pinctrl_usb1_vbus_gpio: usb1_vbus_gpio {
-+						atmel,pins =
-+							<AT91_PIOC 5 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;	/* PC5 GPIO */
-+					};
-+				};
-+
- 				mmc0_slot1 {
- 					pinctrl_board_mmc0_slot1: mmc0_slot1-board {
- 						atmel,pins =
-@@ -84,6 +91,8 @@ macb0: ethernet@fffc4000 {
- 			};
- 
- 			usb1: gadget@fffa4000 {
-+				pinctrl-0 = <&pinctrl_usb1_vbus_gpio>;
-+				pinctrl-names = "default";
- 				atmel,vbus-gpio = <&pioC 5 GPIO_ACTIVE_HIGH>;
- 				status = "okay";
- 			};
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index ff83ef426df5..e52b79440123 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2105,7 +2105,7 @@ remove_tests()
+ 		pm_nl_set_limits $ns2 1 3
+ 		pm_nl_add_endpoint $ns2 10.0.3.2 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.4.2 flags subflow
+-		run_tests $ns1 $ns2 10.0.1.1 0 -1 -2 slow
++		run_tests $ns1 $ns2 10.0.1.1 0 -1 -2 speed_10
+ 		chk_join_nr 3 3 3
+ 		chk_add_nr 1 1
+ 		chk_rm_nr 2 2
+@@ -2118,7 +2118,7 @@ remove_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.4.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1 0 -3 0 slow
++		run_tests $ns1 $ns2 10.0.1.1 0 -3 0 speed_10
+ 		chk_join_nr 3 3 3
+ 		chk_add_nr 3 3
+ 		chk_rm_nr 3 3 invert
+@@ -2131,7 +2131,7 @@ remove_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1 0 -3 0 slow
++		run_tests $ns1 $ns2 10.0.1.1 0 -3 0 speed_10
+ 		chk_join_nr 1 1 1
+ 		chk_add_nr 3 3
+ 		chk_rm_nr 3 1 invert
 -- 
 2.35.1
 
