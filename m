@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7CE79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E329DC433D7;
-	Wed, 30 Nov 2022 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C3D79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DAEC433C1;
+	Wed, 30 Nov 2022 18:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834245;
-	bh=wX7lGQL8mYk2QdV4CKo/tO1NpZkiSpAAKnmqceBums0=;
+	s=korg; t=1669834248;
+	bh=tVYiFKwPcnQUHJ1gwGc/18utRcHek+UArW1VjVo3Gow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBCKcQC+Zsytr6NjbOYgPmtYNH3fTydAALeyYKPBt/TgOJRD8/0s6a3eKvHKrqRvb
-	 RcgSAalWZsF8cw1eayEv2FJRRs19fZ2Qc0PD4nZOsnMZBG8VxqqH9mqHaCTJ6YDJEY
-	 48IWRlrQ3r0F04Ri0InReta825DWqjGRs7LScHbU=
+	b=XblllFjsTPYKos0aqpaw1fp7jed7T5tinNEvXrjYfDxxcJyjVnOTfHYrFCaXyKbID
+	 b5KKOMECA4osxlnqqoczQ3Es6dK8n6h1wocyhl0kZS4DX44hj42rk4cUuX+cjmikRs
+	 jbFsw/YtZ2WFUf50dq7s3tczC8plK4DiiS4tmLrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Anders Blomdell <anders.blomdell@control.lth.se>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 183/289] init/Kconfig: fix CC_HAS_ASM_GOTO_TIED_OUTPUT test with dash
-Date: Wed, 30 Nov 2022 19:22:48 +0100
-Message-Id: <20221130180548.275417039@linuxfoundation.org>
+Subject: [PATCH 6.0 184/289] NFSD: Fix reads with a non-zero offset that dont end on a page boundary
+Date: Wed, 30 Nov 2022 19:22:49 +0100
+Message-Id: <20221130180548.297228210@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,45 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 534bd70374d646f17e2cebe0e6e4cdd478ce4f0c ]
+[ Upstream commit ac8db824ead0de2e9111337c401409d010fba2f0 ]
 
-When using dash as /bin/sh, the CC_HAS_ASM_GOTO_TIED_OUTPUT test fails
-with a syntax error which is not the one we are looking for:
+This was found when virtual machines with nfs-mounted qcow2 disks
+failed to boot properly.
 
-<stdin>: In function ‘foo’:
-<stdin>:1:29: warning: missing terminating " character
-<stdin>:1:29: error: missing terminating " character
-<stdin>:2:5: error: expected ‘:’ before ‘+’ token
-<stdin>:2:7: warning: missing terminating " character
-<stdin>:2:7: error: missing terminating " character
-<stdin>:2:5: error: expected declaration or statement at end of input
-
-Removing '\n' solves this.
-
-Fixes: 1aa0e8b144b6 ("Kconfig: Add option for asm goto w/ tied outputs to workaround clang-13 bug")
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reported-by: Anders Blomdell <anders.blomdell@control.lth.se>
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2142132
+Fixes: bfbfb6182ad1 ("nfsd_splice_actor(): handle compound pages")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/vfs.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 532362fcfe31..d1d779d6ba43 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -76,7 +76,7 @@ config CC_HAS_ASM_GOTO_OUTPUT
- config CC_HAS_ASM_GOTO_TIED_OUTPUT
- 	depends on CC_HAS_ASM_GOTO_OUTPUT
- 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
--	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .\n": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
-+	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index fc17b0ac8729..f3cd614e1f1e 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -847,10 +847,11 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
+ 	struct svc_rqst *rqstp = sd->u.data;
+ 	struct page *page = buf->page;	// may be a compound one
+ 	unsigned offset = buf->offset;
++	struct page *last_page;
  
- config TOOLS_SUPPORT_RELR
- 	def_bool $(success,env "CC=$(CC)" "LD=$(LD)" "NM=$(NM)" "OBJCOPY=$(OBJCOPY)" $(srctree)/scripts/tools-support-relr.sh)
+-	page += offset / PAGE_SIZE;
+-	for (int i = sd->len; i > 0; i -= PAGE_SIZE)
+-		svc_rqst_replace_page(rqstp, page++);
++	last_page = page + (offset + sd->len - 1) / PAGE_SIZE;
++	for (page += offset / PAGE_SIZE; page <= last_page; page++)
++		svc_rqst_replace_page(rqstp, page);
+ 	if (rqstp->rq_res.page_len == 0)	// first call
+ 		rqstp->rq_res.page_base = offset % PAGE_SIZE;
+ 	rqstp->rq_res.page_len += sd->len;
 -- 
 2.35.1
 
