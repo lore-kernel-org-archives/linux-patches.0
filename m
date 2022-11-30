@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD74B79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5027DC433D6;
-	Wed, 30 Nov 2022 18:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70B179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09537C433D6;
+	Wed, 30 Nov 2022 18:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834391;
-	bh=YHcjeRETRWjMGSO4ndh1O2l3ktz4uzoL4Rcq6wzbhSg=;
+	s=korg; t=1669834394;
+	bh=tpwxalOIr033n4zxpSwbmtQYC/89BGrEv8m6E7cmNn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeX5N306JTUKd7f8b8ewzlyiVmc28wCgEQQeKz7eXPBd1ocqr6rvl638ewxS69Zg3
-	 YmOjy1iZ5pvT/PSIw1R6cfYR+C45xu3C3BnaYX3EoZsQ6G9vvhAFcDbFP0M6oGfto5
-	 qImTpVt+fKYvcOmFE1AUIZVXm5ugIjYhr6EopMAg=
+	b=FUdWX28PZotrGEmK7+j7Ytw8Zt9aiUkqPiDb0/yzluYiTltoCHSi24PLzAAWA2Z1X
+	 /9+Y91SeBBHYL1f4zNtNdROdHa9aKvfTVcVmf2DvV1yyMghKzqYTC7wdeLLa6GfFtg
+	 tzR7vBJwL1WcfYMus4mqx65CsmdHucA6KP+gnkVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 237/289] Input: soc_button_array - add use_low_level_irq module parameter
-Date: Wed, 30 Nov 2022 19:23:42 +0100
-Message-Id: <20221130180549.483661249@linuxfoundation.org>
+Subject: [PATCH 6.0 238/289] Input: soc_button_array - add Acer Switch V 10 to dmi_use_low_level_irq[]
+Date: Wed, 30 Nov 2022 19:23:43 +0100
+Message-Id: <20221130180549.506085704@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,60 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8e9ada1d0e72b4737df400fe1bba48dc42a68df7 ]
+[ Upstream commit e13757f52496444b994a7ac67b6e517a15d89bbc ]
 
-It seems that the Windows drivers for the ACPI0011 soc_button_array
-device use low level triggered IRQs rather then using edge triggering.
+Like on the Acer Switch 10 SW5-012, the Acer Switch V 10 SW5-017's _LID
+method messes with home- and power-button GPIO IRQ settings, causing an
+IRQ storm.
 
-Some ACPI tables depend on this, directly poking the GPIO controller's
-registers to clear the trigger type when closing a laptop's/2-in-1's lid
-and re-instating the trigger when opening the lid again.
-
-Linux sets the edge/level on which to trigger to both low+high since
-it is using edge type IRQs, the ACPI tables then ends up also setting
-the bit for level IRQs and since both low and high level have been
-selected by Linux we get an IRQ storm leading to soft lockups.
-
-As a workaround for this the soc_button_array already contains
-a DMI quirk table with device models known to have this issue.
-
-Add a module parameter for this so that users can easily test if their
-device is affected too and so that they can use the module parameter
-as a workaround.
+Add a quirk entry for the Acer Switch V 10 to the dmi_use_low_level_irq[]
+DMI quirk list, to use low-level IRQs on this model, fixing the IRQ storm.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221106215320.67109-1-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20221106215320.67109-2-hdegoede@redhat.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/soc_button_array.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/misc/soc_button_array.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
-index 480476121c01..50497dd05027 100644
+index 50497dd05027..09489380afda 100644
 --- a/drivers/input/misc/soc_button_array.c
 +++ b/drivers/input/misc/soc_button_array.c
-@@ -18,6 +18,10 @@
- #include <linux/gpio.h>
- #include <linux/platform_device.h>
- 
-+static bool use_low_level_irq;
-+module_param(use_low_level_irq, bool, 0444);
-+MODULE_PARM_DESC(use_low_level_irq, "Use low-level triggered IRQ instead of edge triggered");
-+
- struct soc_button_info {
- 	const char *name;
- 	int acpi_index;
-@@ -164,7 +168,8 @@ soc_button_device_create(struct platform_device *pdev,
- 		}
- 
- 		/* See dmi_use_low_level_irq[] comment */
--		if (!autorepeat && dmi_check_system(dmi_use_low_level_irq)) {
-+		if (!autorepeat && (use_low_level_irq ||
-+				    dmi_check_system(dmi_use_low_level_irq))) {
- 			irq_set_irq_type(irq, IRQ_TYPE_LEVEL_LOW);
- 			gpio_keys[n_buttons].irq = irq;
- 			gpio_keys[n_buttons].gpio = -ENOENT;
+@@ -77,6 +77,13 @@ static const struct dmi_system_id dmi_use_low_level_irq[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
+ 		},
+ 	},
++	{
++		/* Acer Switch V 10 SW5-017, same issue as Acer Switch 10 SW5-012. */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
++		},
++	},
+ 	{
+ 		/*
+ 		 * Acer One S1003. _LID method messes with power-button GPIO
 -- 
 2.35.1
 
