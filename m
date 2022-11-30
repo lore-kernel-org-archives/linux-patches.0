@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810E6C433D6;
-	Wed, 30 Nov 2022 18:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2DC79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F00C433D6;
+	Wed, 30 Nov 2022 18:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833848;
-	bh=gGLteT8K6TxzFC9zMhFubn3DVHcCYF7LsJcYHZfDbXY=;
+	s=korg; t=1669833851;
+	bh=tRv5WwdaxG97eI2KuLkHEG9zd4M/A14LtI9mB7OzuRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yFfoT9dWuAWuP1hkgDLYmLDsw8jei3ohewsaV5LPkt3FpwF/DF/CyTrBdMoHPdTJO
-	 1k+NiSgNHlFaXIVHohxHJd17/2YwnoAaYbFkSX+aIsmaZZLOf/xsiBi1QTYRQohwH7
-	 ++ERDT38nJj/zQpCW7vvvmIXt3DKQQsQw+YRAc4g=
+	b=vscDPfkGgsHGw/O32/8WitoCzGUlSNIwa1F0aB1a7tT3fnx/0uKxcOThCq6zzgO5P
+	 qfPyB0yqHi0lLDbj4ABwb96+GGBwEYDQjJzSE4Sa0Rxwt2HckL4jCJx8k0cGTUpPP7
+	 kPFayWkhrOk6cmXMjBGhTcldKnxNgF4r8gOAZBJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asher Song <Asher.Song@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Manyi Li <limanyi@uniontech.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 037/289] Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""
-Date: Wed, 30 Nov 2022 19:20:22 +0100
-Message-Id: <20221130180544.973962153@linuxfoundation.org>
+Subject: [PATCH 6.0 020/289] platform/x86: ideapad-laptop: Disable touchpad_switch
+Date: Wed, 30 Nov 2022 19:20:05 +0100
+Message-Id: <20221130180544.590580781@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,62 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Asher Song <Asher.Song@amd.com>
+From: Manyi Li <limanyi@uniontech.com>
 
-[ Upstream commit 30b8e7b8ee3be003e0df85c857c5cd0e0bd58b82 ]
+[ Upstream commit a231224a601c1924b9df620281ad04472900d75f ]
 
-This reverts commit 4545ae2ed3f2f7c3f615a53399c9c8460ee5bca7.
+Ideapads for "Lenovo Yoga 3 Pro 1370" and "ZhaoYang K4e-IML" do not
+use EC to switch touchpad.
 
-The origin patch "drm/amdgpu: getting fan speed pwm for vega10 properly" works fine.
-Test failure is caused by test case self.
+Reading VPCCMD_R_TOUCHPAD will return zero thus touchpad may be blocked
+unexpectedly.
 
-Signed-off-by: Asher Song <Asher.Song@amd.com>
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Manyi Li <limanyi@uniontech.com>
+Link: https://lore.kernel.org/r/20221018095323.14591-1-limanyi@uniontech.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/pm/powerplay/hwmgr/vega10_thermal.c   | 25 +++++++++----------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/platform/x86/ideapad-laptop.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-index dad3e3741a4e..190af79f3236 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-@@ -67,22 +67,21 @@ int vega10_fan_ctrl_get_fan_speed_info(struct pp_hwmgr *hwmgr,
- int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
- 		uint32_t *speed)
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index abd0c81d62c4..33b3dfdd1b08 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -1533,6 +1533,24 @@ static const struct dmi_system_id hw_rfkill_list[] = {
+ 	{}
+ };
+ 
++static const struct dmi_system_id no_touchpad_switch_list[] = {
++	{
++	.ident = "Lenovo Yoga 3 Pro 1370",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "Lenovo YOGA 3"),
++		},
++	},
++	{
++	.ident = "ZhaoYang K4e-IML",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_VERSION, "ZhaoYang K4e-IML"),
++		},
++	},
++	{}
++};
++
+ static void ideapad_check_features(struct ideapad_private *priv)
  {
--	uint32_t current_rpm;
--	uint32_t percent = 0;
--
--	if (hwmgr->thermal_controller.fanInfo.bNoFan)
--		return 0;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	uint32_t duty100, duty;
-+	uint64_t tmp64;
+ 	acpi_handle handle = priv->adev->handle;
+@@ -1541,7 +1559,12 @@ static void ideapad_check_features(struct ideapad_private *priv)
+ 	priv->features.hw_rfkill_switch = dmi_check_system(hw_rfkill_list);
  
--	if (vega10_get_current_rpm(hwmgr, &current_rpm))
--		return -1;
-+	duty100 = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_FDO_CTRL1),
-+				CG_FDO_CTRL1, FMAX_DUTY100);
-+	duty = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_THERMAL_STATUS),
-+				CG_THERMAL_STATUS, FDO_PWM_DUTY);
+ 	/* Most ideapads with ELAN0634 touchpad don't use EC touchpad switch */
+-	priv->features.touchpad_ctrl_via_ec = !acpi_dev_present("ELAN0634", NULL, -1);
++	if (acpi_dev_present("ELAN0634", NULL, -1))
++		priv->features.touchpad_ctrl_via_ec = 0;
++	else if (dmi_check_system(no_touchpad_switch_list))
++		priv->features.touchpad_ctrl_via_ec = 0;
++	else
++		priv->features.touchpad_ctrl_via_ec = 1;
  
--	if (hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM != 0)
--		percent = current_rpm * 255 /
--			hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM;
-+	if (!duty100)
-+		return -EINVAL;
- 
--	*speed = MIN(percent, 255);
-+	tmp64 = (uint64_t)duty * 255;
-+	do_div(tmp64, duty100);
-+	*speed = MIN((uint32_t)tmp64, 255);
- 
- 	return 0;
- }
+ 	if (!read_ec_data(handle, VPCCMD_R_FAN, &val))
+ 		priv->features.fan_mode = true;
 -- 
 2.35.1
 
