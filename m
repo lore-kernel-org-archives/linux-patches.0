@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BB86FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E561C433C1;
-	Wed, 30 Nov 2022 18:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24436FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31620C433C1;
+	Wed, 30 Nov 2022 18:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832787;
-	bh=cKmvU80S9fjcBohJrBaiUIVEZO0+vnTU6+r/Ud+tRmQ=;
+	s=korg; t=1669832790;
+	bh=OByJ1g1fR5CWqeLeZ6ni0Q4SURrBNXSzkliDVQC89Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDSTe9JwMIs0hLFeKx1GBYfgcykSEY9irhlQ6VfeZhsA3+9O2Dnne1Ec5HN3+U2It
-	 MKvfUcmTVWmkzpCZXh0UINdIJIMnX34QKry5iHCLKuKAeZJspLmKsdCgXPKtWtKeAY
-	 dBnbi/76feuru8Z5SDXgL6gbfPW/02AdKTMM1Pnc=
+	b=f3/ce1v66xn5TMWq91QhOm85qNuvJYVMy6vATT5Nnh6m6cM9HBHhDnp+9KLwytn5z
+	 u+8NymQl4YYrNoMfFUbiGsDnz+/FFhGNr+t8ibhma/yPBTuRYvASky4z5ghVieDvcY
+	 WyzWBN+49M0/Z0Bm2xlmvsHNRUweePfNMm9gTZQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juan Tian <juantian@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Mitja Spes <mitja@lxnav.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/162] scsi: storvsc: Fix handling of srb_status and capacity change events
-Date: Wed, 30 Nov 2022 19:22:00 +0100
-Message-Id: <20221130180529.565295132@linuxfoundation.org>
+Subject: [PATCH 5.10 012/162] iio: pressure: ms5611: fixed value compensation bug
+Date: Wed, 30 Nov 2022 19:21:33 +0100
+Message-Id: <20221130180528.827834246@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,146 +36,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Mitja Spes <mitja@lxnav.com>
 
-[ Upstream commit b8a5376c321b4669f7ffabc708fd30c3970f3084 ]
+[ Upstream commit 17f442e7e47579d3881fc4d47354eaef09302e6f ]
 
-Current handling of the srb_status is incorrect. Commit 52e1b3b3daa9
-("scsi: storvsc: Correctly handle multiple flags in srb_status")
-is based on srb_status being a set of flags, when in fact only the
-2 high order bits are flags and the remaining 6 bits are an integer
-status. Because the integer values of interest mostly look like flags,
-the code actually works when treated that way.
+When using multiple instances of this driver the compensation PROM was
+overwritten by the last initialized sensor. Now each sensor has own PROM
+storage.
 
-But in the interest of correctness going forward, fix this by treating
-the low 6 bits of srb_status as an integer status code. Add handling
-for SRB_STATUS_INVALID_REQUEST, which was the original intent of commit
-52e1b3b3daa9. Furthermore, treat the ERROR, ABORTED, and INVALID_REQUEST
-srb status codes as essentially equivalent for the cases we care about.
-There's no harm in doing so, and it isn't always clear which status code
-current or older versions of Hyper-V report for particular conditions.
-
-Treating the srb status codes as equivalent has the additional benefit
-of ensuring that capacity change events result in an immediate rescan
-so that the new size is known to Linux. Existing code checks SCSI
-sense data for capacity change events when the srb status is ABORTED.
-But capacity change events are also being observed when Hyper-V reports
-the srb status as ERROR. Without the immediate rescan, the new size
-isn't known until something else causes a rescan (such as running
-fdisk to expand a partition), and in the meantime, tools such as "lsblk"
-continue to report the old size.
-
-Fixes: 52e1b3b3daa9 ("scsi: storvsc: Correctly handle multiple flags in srb_status")
-Reported-by: Juan Tian <juantian@microsoft.com>
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1668019722-1983-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Mitja Spes <mitja@lxnav.com>
+Fixes: 9690d81a02dc ("iio: pressure: ms5611: add support for MS5607 temperature and pressure sensor")
+Link: https://lore.kernel.org/r/20221021135827.1444793-2-mitja@lxnav.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 69 +++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 35 deletions(-)
+ drivers/iio/pressure/ms5611.h      | 12 +++----
+ drivers/iio/pressure/ms5611_core.c | 51 ++++++++++++++++--------------
+ 2 files changed, 31 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 7ac1090d4379..3fa8a0c94bdc 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -356,16 +356,21 @@ enum storvsc_request_type {
+diff --git a/drivers/iio/pressure/ms5611.h b/drivers/iio/pressure/ms5611.h
+index 345f3902e3e3..5e2d2d4d87b5 100644
+--- a/drivers/iio/pressure/ms5611.h
++++ b/drivers/iio/pressure/ms5611.h
+@@ -25,13 +25,6 @@ enum {
+ 	MS5607,
  };
  
+-struct ms5611_chip_info {
+-	u16 prom[MS5611_PROM_WORDS_NB];
+-
+-	int (*temp_and_pressure_compensate)(struct ms5611_chip_info *chip_info,
+-					    s32 *temp, s32 *pressure);
+-};
+-
  /*
-- * SRB status codes and masks; a subset of the codes used here.
-+ * SRB status codes and masks. In the 8-bit field, the two high order bits
-+ * are flags, while the remaining 6 bits are an integer status code.  The
-+ * definitions here include only the subset of the integer status codes that
-+ * are tested for in this driver.
-  */
--
- #define SRB_STATUS_AUTOSENSE_VALID	0x80
- #define SRB_STATUS_QUEUE_FROZEN		0x40
--#define SRB_STATUS_INVALID_LUN	0x20
--#define SRB_STATUS_SUCCESS	0x01
--#define SRB_STATUS_ABORTED	0x02
--#define SRB_STATUS_ERROR	0x04
--#define SRB_STATUS_DATA_OVERRUN	0x12
+  * OverSampling Rate descriptor.
+  * Warning: cmd MUST be kept aligned on a word boundary (see
+@@ -50,12 +43,15 @@ struct ms5611_state {
+ 	const struct ms5611_osr *pressure_osr;
+ 	const struct ms5611_osr *temp_osr;
+ 
++	u16 prom[MS5611_PROM_WORDS_NB];
 +
-+/* SRB status integer codes */
-+#define SRB_STATUS_SUCCESS		0x01
-+#define SRB_STATUS_ABORTED		0x02
-+#define SRB_STATUS_ERROR		0x04
-+#define SRB_STATUS_INVALID_REQUEST	0x06
-+#define SRB_STATUS_DATA_OVERRUN		0x12
-+#define SRB_STATUS_INVALID_LUN		0x20
+ 	int (*reset)(struct ms5611_state *st);
+ 	int (*read_prom_word)(struct ms5611_state *st, int index, u16 *word);
+ 	int (*read_adc_temp_and_pressure)(struct ms5611_state *st,
+ 					  s32 *temp, s32 *pressure);
  
- #define SRB_STATUS(status) \
- 	(status & ~(SRB_STATUS_AUTOSENSE_VALID | SRB_STATUS_QUEUE_FROZEN))
-@@ -995,38 +1000,25 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
- 	void (*process_err_fn)(struct work_struct *work);
- 	struct hv_host_device *host_dev = shost_priv(host);
+-	struct ms5611_chip_info *chip_info;
++	int (*compensate_temp_and_pressure)(struct ms5611_state *st, s32 *temp,
++					  s32 *pressure);
+ 	struct regulator *vdd;
+ };
  
--	/*
--	 * In some situations, Hyper-V sets multiple bits in the
--	 * srb_status, such as ABORTED and ERROR. So process them
--	 * individually, with the most specific bits first.
--	 */
--
--	if (vm_srb->srb_status & SRB_STATUS_INVALID_LUN) {
--		set_host_byte(scmnd, DID_NO_CONNECT);
--		process_err_fn = storvsc_remove_lun;
--		goto do_work;
--	}
-+	switch (SRB_STATUS(vm_srb->srb_status)) {
-+	case SRB_STATUS_ERROR:
-+	case SRB_STATUS_ABORTED:
-+	case SRB_STATUS_INVALID_REQUEST:
-+		if (vm_srb->srb_status & SRB_STATUS_AUTOSENSE_VALID) {
-+			/* Check for capacity change */
-+			if ((asc == 0x2a) && (ascq == 0x9)) {
-+				process_err_fn = storvsc_device_scan;
-+				/* Retry the I/O that triggered this. */
-+				set_host_byte(scmnd, DID_REQUEUE);
-+				goto do_work;
-+			}
+diff --git a/drivers/iio/pressure/ms5611_core.c b/drivers/iio/pressure/ms5611_core.c
+index 885ccb7914dc..874a73b3ea9d 100644
+--- a/drivers/iio/pressure/ms5611_core.c
++++ b/drivers/iio/pressure/ms5611_core.c
+@@ -85,7 +85,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
+ 	struct ms5611_state *st = iio_priv(indio_dev);
  
--	if (vm_srb->srb_status & SRB_STATUS_ABORTED) {
--		if (vm_srb->srb_status & SRB_STATUS_AUTOSENSE_VALID &&
--		    /* Capacity data has changed */
--		    (asc == 0x2a) && (ascq == 0x9)) {
--			process_err_fn = storvsc_device_scan;
- 			/*
--			 * Retry the I/O that triggered this.
-+			 * Otherwise, let upper layer deal with the
-+			 * error when sense message is present
- 			 */
--			set_host_byte(scmnd, DID_REQUEUE);
--			goto do_work;
--		}
--	}
--
--	if (vm_srb->srb_status & SRB_STATUS_ERROR) {
--		/*
--		 * Let upper layer deal with error when
--		 * sense message is present.
--		 */
--		if (vm_srb->srb_status & SRB_STATUS_AUTOSENSE_VALID)
- 			return;
-+		}
- 
- 		/*
- 		 * If there is an error; offline the device since all
-@@ -1049,6 +1041,13 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
- 		default:
- 			set_host_byte(scmnd, DID_ERROR);
+ 	for (i = 0; i < MS5611_PROM_WORDS_NB; i++) {
+-		ret = st->read_prom_word(st, i, &st->chip_info->prom[i]);
++		ret = st->read_prom_word(st, i, &st->prom[i]);
+ 		if (ret < 0) {
+ 			dev_err(&indio_dev->dev,
+ 				"failed to read prom at %d\n", i);
+@@ -93,7 +93,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
  		}
-+		return;
-+
-+	case SRB_STATUS_INVALID_LUN:
-+		set_host_byte(scmnd, DID_NO_CONNECT);
-+		process_err_fn = storvsc_remove_lun;
-+		goto do_work;
-+
  	}
- 	return;
  
+-	if (!ms5611_prom_is_valid(st->chip_info->prom, MS5611_PROM_WORDS_NB)) {
++	if (!ms5611_prom_is_valid(st->prom, MS5611_PROM_WORDS_NB)) {
+ 		dev_err(&indio_dev->dev, "PROM integrity check failed\n");
+ 		return -ENODEV;
+ 	}
+@@ -114,21 +114,20 @@ static int ms5611_read_temp_and_pressure(struct iio_dev *indio_dev,
+ 		return ret;
+ 	}
+ 
+-	return st->chip_info->temp_and_pressure_compensate(st->chip_info,
+-							   temp, pressure);
++	return st->compensate_temp_and_pressure(st, temp, pressure);
+ }
+ 
+-static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
++static int ms5611_temp_and_pressure_compensate(struct ms5611_state *st,
+ 					       s32 *temp, s32 *pressure)
+ {
+ 	s32 t = *temp, p = *pressure;
+ 	s64 off, sens, dt;
+ 
+-	dt = t - (chip_info->prom[5] << 8);
+-	off = ((s64)chip_info->prom[2] << 16) + ((chip_info->prom[4] * dt) >> 7);
+-	sens = ((s64)chip_info->prom[1] << 15) + ((chip_info->prom[3] * dt) >> 8);
++	dt = t - (st->prom[5] << 8);
++	off = ((s64)st->prom[2] << 16) + ((st->prom[4] * dt) >> 7);
++	sens = ((s64)st->prom[1] << 15) + ((st->prom[3] * dt) >> 8);
+ 
+-	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
++	t = 2000 + ((st->prom[6] * dt) >> 23);
+ 	if (t < 2000) {
+ 		s64 off2, sens2, t2;
+ 
+@@ -154,17 +153,17 @@ static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_inf
+ 	return 0;
+ }
+ 
+-static int ms5607_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
++static int ms5607_temp_and_pressure_compensate(struct ms5611_state *st,
+ 					       s32 *temp, s32 *pressure)
+ {
+ 	s32 t = *temp, p = *pressure;
+ 	s64 off, sens, dt;
+ 
+-	dt = t - (chip_info->prom[5] << 8);
+-	off = ((s64)chip_info->prom[2] << 17) + ((chip_info->prom[4] * dt) >> 6);
+-	sens = ((s64)chip_info->prom[1] << 16) + ((chip_info->prom[3] * dt) >> 7);
++	dt = t - (st->prom[5] << 8);
++	off = ((s64)st->prom[2] << 17) + ((st->prom[4] * dt) >> 6);
++	sens = ((s64)st->prom[1] << 16) + ((st->prom[3] * dt) >> 7);
+ 
+-	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
++	t = 2000 + ((st->prom[6] * dt) >> 23);
+ 	if (t < 2000) {
+ 		s64 off2, sens2, t2, tmp;
+ 
+@@ -342,15 +341,6 @@ static int ms5611_write_raw(struct iio_dev *indio_dev,
+ 
+ static const unsigned long ms5611_scan_masks[] = {0x3, 0};
+ 
+-static struct ms5611_chip_info chip_info_tbl[] = {
+-	[MS5611] = {
+-		.temp_and_pressure_compensate = ms5611_temp_and_pressure_compensate,
+-	},
+-	[MS5607] = {
+-		.temp_and_pressure_compensate = ms5607_temp_and_pressure_compensate,
+-	}
+-};
+-
+ static const struct iio_chan_spec ms5611_channels[] = {
+ 	{
+ 		.type = IIO_PRESSURE,
+@@ -433,7 +423,20 @@ int ms5611_probe(struct iio_dev *indio_dev, struct device *dev,
+ 	struct ms5611_state *st = iio_priv(indio_dev);
+ 
+ 	mutex_init(&st->lock);
+-	st->chip_info = &chip_info_tbl[type];
++
++	switch (type) {
++	case MS5611:
++		st->compensate_temp_and_pressure =
++			ms5611_temp_and_pressure_compensate;
++		break;
++	case MS5607:
++		st->compensate_temp_and_pressure =
++			ms5607_temp_and_pressure_compensate;
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	st->temp_osr =
+ 		&ms5611_avail_temp_osr[ARRAY_SIZE(ms5611_avail_temp_osr) - 1];
+ 	st->pressure_osr =
 -- 
 2.35.1
 
