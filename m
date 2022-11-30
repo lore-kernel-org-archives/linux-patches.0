@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745156FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B09C433D6;
-	Wed, 30 Nov 2022 18:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017576FBE
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A14C433B5;
+	Wed, 30 Nov 2022 18:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833486;
-	bh=7HHyqSVc3soU3pnAogdgyP/51LucL/+SDqKgQ0nJNX8=;
+	s=korg; t=1669833513;
+	bh=fO5QYi/lqBwa5/J9LtAfYEvPpCUCqBZeYJlgMLl2A3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/qvcHMhebtvpDk5utqEu4Tif+OyEKMUwpFOOZZeorTeEgCko3lAurO0TFezXvsrW
-	 LfKLAE84wzhd6qiwMzU20y3i6I9vD5poc5ge27xZ88jHBO7VNFVPi6vsRHN3sfI3BI
-	 ALq9DfFeqJwBaUpYvjmhZL6z/NYF8PaBo8GmGl3w=
+	b=BqZGK2tAh8/CEocHWSEDgK15VTPmandCFk22NtNjxFVj3D6fP6sDQGKtFnmQxIpus
+	 7xCT0UnRfgyuleqtc/iMbt12i9aB5oBHwR7hbNhnyl86AFMu4mHS/WPbREqf+oYGcA
+	 HPPirSNLjVENdETMW2uY1T1DJalg157Yw10o7qZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Roth Mark <rothm@mail.com>,
+	Zhihao Chen <chenzhihao@meizu.com>,
+	Thomas Jarosch <thomas.jarosch@intra2net.com>,
+	Antony Antony <antony.antony@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/206] s390/dasd: fix no record found for raw_track_access
-Date: Wed, 30 Nov 2022 19:22:55 +0100
-Message-Id: <20221130180536.177059624@linuxfoundation.org>
+Subject: [PATCH 5.15 107/206] xfrm: Fix oops in __xfrm_state_delete()
+Date: Wed, 30 Nov 2022 19:22:39 +0100
+Message-Id: <20221130180535.768438907@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,73 +39,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
 
-[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
+[ Upstream commit b97df039a68b2f3e848e238df5d5d06343ea497b ]
 
-For DASD devices in raw_track_access mode only full track images are
-read and written.
-For this purpose it is not necessary to do search operation in the
-locate record extended function. The documentation even states that
-this might fail if the searched record is not found on a track.
+Kernel 5.14 added a new "byseq" index to speed
+up xfrm_state lookups by sequence number in commit
+fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
 
-Currently the driver sets a value of 1 in the search field for the first
-record after record zero. This is the default for disks not in
-raw_track_access mode but record 1 might be missing on a completely
-empty track.
+While the patch was thorough, the function pfkey_send_new_mapping()
+in net/af_key.c also modifies x->km.seq and never added
+the current xfrm_state to the "byseq" index.
 
-There has not been any problem with this on IBM storage servers but it
-might lead to errors with DASD devices on other vendors storage servers.
+This leads to the following kernel Ooops:
+    BUG: kernel NULL pointer dereference, address: 0000000000000000
+    ..
+    RIP: 0010:__xfrm_state_delete+0xc9/0x1c0
+    ..
+    Call Trace:
+    <TASK>
+    xfrm_state_delete+0x1e/0x40
+    xfrm_del_sa+0xb0/0x110 [xfrm_user]
+    xfrm_user_rcv_msg+0x12d/0x270 [xfrm_user]
+    ? remove_entity_load_avg+0x8a/0xa0
+    ? copy_to_user_state_extra+0x580/0x580 [xfrm_user]
+    netlink_rcv_skb+0x51/0x100
+    xfrm_netlink_rcv+0x30/0x50 [xfrm_user]
+    netlink_unicast+0x1a6/0x270
+    netlink_sendmsg+0x22a/0x480
+    __sys_sendto+0x1a6/0x1c0
+    ? __audit_syscall_entry+0xd8/0x130
+    ? __audit_syscall_exit+0x249/0x2b0
+    __x64_sys_sendto+0x23/0x30
+    do_syscall_64+0x3a/0x90
+    entry_SYSCALL_64_after_hwframe+0x61/0xcb
 
-Fix this by setting the search field to 0. Record zero is always available
-even on a completely empty track.
+Exact location of the crash in __xfrm_state_delete():
+    if (x->km.seq)
+        hlist_del_rcu(&x->byseq);
 
-Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The hlist_node "byseq" was never populated.
+
+The bug only triggers if a new NAT traversal mapping (changed IP or port)
+is detected in esp_input_done2() / esp6_input_done2(), which in turn
+indirectly calls pfkey_send_new_mapping() *if* the kernel is compiled
+with CONFIG_NET_KEY and "af_key" is active.
+
+The PF_KEYv2 message SADB_X_NAT_T_NEW_MAPPING is not part of RFC 2367.
+Various implementations have been examined how they handle
+the "sadb_msg_seq" header field:
+
+- racoon (Android): does not process SADB_X_NAT_T_NEW_MAPPING
+- strongswan: does not care about sadb_msg_seq
+- openswan: does not care about sadb_msg_seq
+
+There is no standard how PF_KEYv2 sadb_msg_seq should be populated
+for SADB_X_NAT_T_NEW_MAPPING and it's not used in popular
+implementations either. Herbert Xu suggested we should just
+use the current km.seq value as is. This fixes the root cause
+of the oops since we no longer modify km.seq itself.
+
+The update of "km.seq" looks like a copy'n'paste error
+from pfkey_send_acquire(). SADB_ACQUIRE must indeed assign a unique km.seq
+number according to RFC 2367. It has been verified that code paths
+involving pfkey_send_acquire() don't cause the same Oops.
+
+PF_KEYv2 SADB_X_NAT_T_NEW_MAPPING support was originally added here:
+    https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+
+    commit cbc3488685b20e7b2a98ad387a1a816aada569d8
+    Author:     Derek Atkins <derek@ihtfp.com>
+    AuthorDate: Wed Apr 2 13:21:02 2003 -0800
+
+        [IPSEC]: Implement UDP Encapsulation framework.
+
+        In particular, implement ESPinUDP encapsulation for IPsec
+        Nat Traversal.
+
+A note on triggering the bug: I was not able to trigger it using VMs.
+There is one VPN using a high latency link on our production VPN server
+that triggered it like once a day though.
+
+Link: https://github.com/strongswan/strongswan/issues/992
+Link: https://lore.kernel.org/netdev/00959f33ee52c4b3b0084d42c430418e502db554.1652340703.git.antony.antony@secunet.com/T/
+Link: https://lore.kernel.org/netdev/20221027142455.3975224-1-chenzhihao@meizu.com/T/
+
+Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
+Reported-by: Roth Mark <rothm@mail.com>
+Reported-by: Zhihao Chen <chenzhihao@meizu.com>
+Tested-by: Roth Mark <rothm@mail.com>
+Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Acked-by: Antony Antony <antony.antony@secunet.com>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_eckd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/key/af_key.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
-index ff7b7d470e96..57dfc92aa756 100644
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -4696,7 +4696,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	struct dasd_device *basedev;
- 	struct req_iterator iter;
- 	struct dasd_ccw_req *cqr;
--	unsigned int first_offs;
- 	unsigned int trkcount;
- 	unsigned long *idaws;
- 	unsigned int size;
-@@ -4730,7 +4729,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
- 		DASD_RAW_SECTORS_PER_TRACK;
- 	trkcount = last_trk - first_trk + 1;
--	first_offs = 0;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index a654bd4bc437..1d6ae1df3886 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -3394,7 +3394,7 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	hdr->sadb_msg_len = size / sizeof(uint64_t);
+ 	hdr->sadb_msg_errno = 0;
+ 	hdr->sadb_msg_reserved = 0;
+-	hdr->sadb_msg_seq = x->km.seq = get_acqseq();
++	hdr->sadb_msg_seq = x->km.seq;
+ 	hdr->sadb_msg_pid = 0;
  
- 	if (rq_data_dir(req) == READ)
- 		cmd = DASD_ECKD_CCW_READ_TRACK;
-@@ -4774,13 +4772,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 
- 	if (use_prefix) {
- 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
--			   startdev, 1, first_offs + 1, trkcount, 0, 0);
-+			   startdev, 1, 0, trkcount, 0, 0);
- 	} else {
- 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
- 		ccw[-1].flags |= CCW_FLAG_CC;
- 
- 		data += sizeof(struct DE_eckd_data);
--		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
-+		locate_record_ext(ccw++, data, first_trk, 0,
- 				  trkcount, cmd, basedev, 0, 0);
- 	}
- 
+ 	/* SA */
 -- 
 2.35.1
 
