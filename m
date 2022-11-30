@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DD56FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C4DC433C1;
-	Wed, 30 Nov 2022 18:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BCB6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2247EC433C1;
+	Wed, 30 Nov 2022 18:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832810;
-	bh=w0I30QUcwoacNhiW7A8I6u9hG4L3PLnzcvps8TLedZQ=;
+	s=korg; t=1669832813;
+	bh=i3WrYBIzVHJC9IjL/1CbCeaxduQ7aFPmU80IatSUDqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXeDdEklR1cf9Bu3cSntOy73DxWgBjJhS/fReVLsoWvCCMHsIAGsHsWvQDzdYBOUm
-	 5a1fDHRQ9KXwNyCkshk0IrLj9gyWkKly0kFZ/tcugelFZAbGknm+VfJdnOhrZn5O+O
-	 a3a88mc4vv4/z2XGIV6Ou3xgv9RU7R8W0XjWMlBQ=
+	b=gd40Bg8g8zDAMeW7fWBkbRVKvbwnf0dBLKMV6rq7rwW3rtFYbpTHFitPhtaIV0BvW
+	 Jn500Cr9UEWR9XmYiLYm8oYCUEBmnKkMMQTDDjM1ft3KBCXflDv10IcPIxq96rZOPz
+	 IHklxPyYvEyiqiYrm9vQumCc+ZNwfqCH8XvBxBFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com,
+	Lin Ma <linma@zju.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/162] spi: dw-dma: decrease reference count in dw_spi_dma_init_mfld()
-Date: Wed, 30 Nov 2022 19:22:02 +0100
-Message-Id: <20221130180529.619461428@linuxfoundation.org>
+Subject: [PATCH 5.10 050/162] nfc/nci: fix race with opening and closing
+Date: Wed, 30 Nov 2022 19:22:11 +0100
+Message-Id: <20221130180529.865310420@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,45 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 804313b64e412a81b0b3389a10e7622452004aa6 ]
+[ Upstream commit 0ad6bded175e829c2ca261529c9dce39a32a042d ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. Since 'dma_dev' is only used to filter the channel in
-dw_spi_dma_chan_filer() after using it we need to call pci_dev_put() to
-decrease the reference count. Also add pci_dev_put() for the error case.
+Previously we leverage NCI_UNREG and the lock inside nci_close_device to
+prevent the race condition between opening a device and closing a
+device. However, it still has problem because a failed opening command
+will erase the NCI_UNREG flag and allow another opening command to
+bypass the status checking.
 
-Fixes: 7063c0d942a1 ("spi/dw_spi: add DMA support")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Acked-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/20221116093204.46700-1-wangxiongfeng2@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This fix corrects that by making sure the NCI_UNREG is held.
+
+Reported-by: syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com
+Fixes: 48b71a9e66c2 ("NFC: add NCI_UNREG flag to eliminate the race")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw-dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/nfc/nci/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
-index a09831c62192..32ac8f9068e8 100644
---- a/drivers/spi/spi-dw-dma.c
-+++ b/drivers/spi/spi-dw-dma.c
-@@ -127,12 +127,15 @@ static int dw_spi_dma_init_mfld(struct device *dev, struct dw_spi *dws)
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 2cfff70f70e0..ed9019d807c7 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -530,7 +530,7 @@ static int nci_open_device(struct nci_dev *ndev)
+ 		skb_queue_purge(&ndev->tx_q);
  
- 	dw_spi_dma_sg_burst_init(dws);
+ 		ndev->ops->close(ndev);
+-		ndev->flags = 0;
++		ndev->flags &= BIT(NCI_UNREG);
+ 	}
  
-+	pci_dev_put(dma_dev);
-+
- 	return 0;
- 
- free_rxchan:
- 	dma_release_channel(dws->rxchan);
- 	dws->rxchan = NULL;
- err_exit:
-+	pci_dev_put(dma_dev);
- 	return -EBUSY;
- }
- 
+ done:
 -- 
 2.35.1
 
