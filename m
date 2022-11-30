@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5331679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9661C433D6;
-	Wed, 30 Nov 2022 18:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103DD79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874BEC433C1;
+	Wed, 30 Nov 2022 18:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834229;
-	bh=RNswFvsxrYAixT8MUJa9Z0dM+GoyHDF7uEJ948NMrG4=;
+	s=korg; t=1669834231;
+	bh=G5BNTwF674l+IZbN/9mH7YmgwJu3d8ZWMmuVd7Cd+aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yz6BmIajSZnnNNBOMtls/nu1Ir4YTNGdDHratijn83dGsa73FPXuDGiywSo76G8fD
-	 WSpjrFsO3k6VtMGdwSp7m9Q0cBLuKBHLSrJCBiXl5padzzOFrkbr7Vm2Qnk8R+31DO
-	 cLYD2PRcpoBG3reeztCjEs8V8Hv3MWJnXE4m2KAY=
+	b=GRpy7SOoG88yy1tzgjL3RMWFNoru83eBXECKpCj2kJvvexmdFw1tXfbm1pdS/jRdq
+	 3oj0hABZ5jJ8lxYnaySceaPSY1q/ximIs19y8eiEP8BFACZfBwUprH9YKGkgpNyz05
+	 qr0vvPShR0NlRNFSqTpVbwnEow3BDVPSXhVOfvVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Borislav Petkov <bp@suse.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.0 177/289] virt/sev-guest: Prevent IV reuse in the SNP guest driver
-Date: Wed, 30 Nov 2022 19:22:42 +0100
-Message-Id: <20221130180548.141398315@linuxfoundation.org>
+	Huang Rui <ray.huang@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Perry Yuan <Perry.Yuan@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.0 178/289] cpufreq: amd-pstate: cpufreq: amd-pstate: reset MSR_AMD_PERF_CTL register at init
+Date: Wed, 30 Nov 2022 19:22:43 +0100
+Message-Id: <20221130180548.164273836@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,163 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Gonda <pgonda@google.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-commit 47894e0fa6a56a42be6a47c767e79cce8125489d upstream.
+commit 919f4557696939625085435ebde09a539de2349c upstream.
 
-The AMD Secure Processor (ASP) and an SNP guest use a series of
-AES-GCM keys called VMPCKs to communicate securely with each other.
-The IV to this scheme is a sequence number that both the ASP and the
-guest track.
+MSR_AMD_PERF_CTL is guaranteed to be 0 on a cold boot. However, on a
+kexec boot, for instance, it may have a non-zero value (if the cpu was
+in a non-P0 Pstate).  In such cases, the cores with non-P0 Pstates at
+boot will never be pushed to P0, let alone boost frequencies.
 
-Currently, this sequence number in a guest request must exactly match
-the sequence number tracked by the ASP. This means that if the guest
-sees an error from the host during a request it can only retry that
-exact request or disable the VMPCK to prevent an IV reuse. AES-GCM
-cannot tolerate IV reuse, see: "Authentication Failures in NIST version
-of GCM" - Antoine Joux et al.
+Kexec is a common workflow for reboot on Linux and this creates a
+regression in performance. Fix it by explicitly setting the
+MSR_AMD_PERF_CTL to 0 during amd_pstate driver init.
 
-In order to address this, make handle_guest_request() delete the VMPCK
-on any non successful return. To allow userspace querying the cert_data
-length make handle_guest_request() save the number of pages required by
-the host, then have handle_guest_request() retry the request without
-requesting the extended data, then return the number of pages required
-back to userspace.
-
-  [ bp: Massage, incorporate Tom's review comments. ]
-
-Fixes: fce96cf044308 ("virt: Add SEV-SNP guest driver")
-Reported-by: Peter Gonda <pgonda@google.com>
-Signed-off-by: Peter Gonda <pgonda@google.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20221116175558.2373112-1-pgonda@google.com
+Cc: All applicable <stable@vger.kernel.org>
+Acked-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Tested-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Perry Yuan <Perry.Yuan@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c | 84 ++++++++++++++++++++-----
- 1 file changed, 70 insertions(+), 14 deletions(-)
+ drivers/cpufreq/amd-pstate.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
-index f422f9c58ba7..1ea6d2e5b218 100644
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -67,8 +67,27 @@ static bool is_vmpck_empty(struct snp_guest_dev *snp_dev)
- 	return true;
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -483,12 +483,22 @@ static void amd_pstate_boost_init(struct
+ 	amd_pstate_driver.boost_enabled = true;
  }
  
-+/*
-+ * If an error is received from the host or AMD Secure Processor (ASP) there
-+ * are two options. Either retry the exact same encrypted request or discontinue
-+ * using the VMPCK.
-+ *
-+ * This is because in the current encryption scheme GHCB v2 uses AES-GCM to
-+ * encrypt the requests. The IV for this scheme is the sequence number. GCM
-+ * cannot tolerate IV reuse.
-+ *
-+ * The ASP FW v1.51 only increments the sequence numbers on a successful
-+ * guest<->ASP back and forth and only accepts messages at its exact sequence
-+ * number.
-+ *
-+ * So if the sequence number were to be reused the encryption scheme is
-+ * vulnerable. If the sequence number were incremented for a fresh IV the ASP
-+ * will reject the request.
-+ */
- static void snp_disable_vmpck(struct snp_guest_dev *snp_dev)
++static void amd_perf_ctl_reset(unsigned int cpu)
++{
++	wrmsrl_on_cpu(cpu, MSR_AMD_PERF_CTL, 0);
++}
++
+ static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
  {
-+	dev_alert(snp_dev->dev, "Disabling vmpck_id %d to prevent IV reuse.\n",
-+		  vmpck_id);
- 	memzero_explicit(snp_dev->vmpck, VMPCK_KEY_LEN);
- 	snp_dev->vmpck = NULL;
- }
-@@ -321,34 +340,71 @@ static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, in
- 	if (rc)
- 		return rc;
+ 	int min_freq, max_freq, nominal_freq, lowest_nonlinear_freq, ret;
+ 	struct device *dev;
+ 	struct amd_cpudata *cpudata;
  
--	/* Call firmware to process the request */
 +	/*
-+	 * Call firmware to process the request. In this function the encrypted
-+	 * message enters shared memory with the host. So after this call the
-+	 * sequence number must be incremented or the VMPCK must be deleted to
-+	 * prevent reuse of the IV.
++	 * Resetting PERF_CTL_MSR will put the CPU in P0 frequency,
++	 * which is ideal for initialization process.
 +	 */
- 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
-+
-+	/*
-+	 * If the extended guest request fails due to having too small of a
-+	 * certificate data buffer, retry the same guest request without the
-+	 * extended data request in order to increment the sequence number
-+	 * and thus avoid IV reuse.
-+	 */
-+	if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
-+	    err == SNP_GUEST_REQ_INVALID_LEN) {
-+		const unsigned int certs_npages = snp_dev->input.data_npages;
-+
-+		exit_code = SVM_VMGEXIT_GUEST_REQUEST;
-+
-+		/*
-+		 * If this call to the firmware succeeds, the sequence number can
-+		 * be incremented allowing for continued use of the VMPCK. If
-+		 * there is an error reflected in the return value, this value
-+		 * is checked further down and the result will be the deletion
-+		 * of the VMPCK and the error code being propagated back to the
-+		 * user as an ioctl() return code.
-+		 */
-+		rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
-+
-+		/*
-+		 * Override the error to inform callers the given extended
-+		 * request buffer size was too small and give the caller the
-+		 * required buffer size.
-+		 */
-+		err = SNP_GUEST_REQ_INVALID_LEN;
-+		snp_dev->input.data_npages = certs_npages;
-+	}
-+
- 	if (fw_err)
- 		*fw_err = err;
- 
--	if (rc)
--		return rc;
-+	if (rc) {
-+		dev_alert(snp_dev->dev,
-+			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
-+			  rc, *fw_err);
-+		goto disable_vmpck;
-+	}
- 
--	/*
--	 * The verify_and_dec_payload() will fail only if the hypervisor is
--	 * actively modifying the message header or corrupting the encrypted payload.
--	 * This hints that hypervisor is acting in a bad faith. Disable the VMPCK so that
--	 * the key cannot be used for any communication. The key is disabled to ensure
--	 * that AES-GCM does not use the same IV while encrypting the request payload.
--	 */
- 	rc = verify_and_dec_payload(snp_dev, resp_buf, resp_sz);
- 	if (rc) {
- 		dev_alert(snp_dev->dev,
--			  "Detected unexpected decode failure, disabling the vmpck_id %d\n",
--			  vmpck_id);
--		snp_disable_vmpck(snp_dev);
--		return rc;
-+			  "Detected unexpected decode failure from ASP. rc: %d\n",
-+			  rc);
-+		goto disable_vmpck;
- 	}
- 
- 	/* Increment to new message sequence after payload decryption was successful. */
- 	snp_inc_msg_seqno(snp_dev);
- 
- 	return 0;
-+
-+disable_vmpck:
-+	snp_disable_vmpck(snp_dev);
-+	return rc;
- }
- 
- static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
--- 
-2.38.1
-
++	amd_perf_ctl_reset(policy->cpu);
+ 	dev = get_cpu_device(policy->cpu);
+ 	if (!dev)
+ 		return -ENODEV;
 
 
