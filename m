@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD84979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA00C433C1;
-	Wed, 30 Nov 2022 18:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB3C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2292EC433D6;
+	Wed, 30 Nov 2022 18:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834481;
-	bh=r7DISqQvnY14qRs9H5Qq+197aEEUQtzbfRvG+51nz/E=;
+	s=korg; t=1669834484;
+	bh=3sEAuXqdmCN7iZT6EWzltdPqRr/qXuci+iP2DxFAtE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1q2mMiE4bvA1XLjatjoBSUNDXIb+goz8U4X1Kf3NlP1A500TlW3T/+vbjchhUd1qw
-	 rMAyoxGoufpHRHPH6QIaDAfVoEAw4vYba0gx18LwgRJ+H9e+3R1gY0eawXFXvm8KGK
-	 TEqAFgeUn3d04UInTBHb+nKvLAWCDVrVpPkTAPVc=
+	b=YId5k1zMVPfaOo4GaC5PWvjP5U/HbE1fgEhe2ObZ7D7iMTLGRWN+a/Y88wuw+0PU4
+	 Zynl/FaG6MTH03bBvCPlBO3saupVzLU2B95aesOQpgit5I8suvDezut4wfsl+dJt2B
+	 E0MwhKWfCbL5kR56VeAWLeGCzJjfDrYXRkL8o0tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Turnbull <philipturnbull@github.com>,
-	Ajay Kathat <ajay.kathat@microchip.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.0 270/289] wifi: wilc1000: validate number of channels
-Date: Wed, 30 Nov 2022 19:24:15 +0100
-Message-Id: <20221130180550.219335132@linuxfoundation.org>
+	syzbot+4ef9e52e464c6ff47d9d@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 271/289] btrfs: free btrfs_path before copying root refs to userspace
+Date: Wed, 30 Nov 2022 19:24:16 +0100
+Message-Id: <20221130180550.241732151@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,62 +36,210 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phil Turnbull <philipturnbull@github.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 0cdfa9e6f0915e3d243e2393bfa8a22e12d553b0 upstream.
+commit b740d806166979488e798e41743aaec051f2443f upstream.
 
-There is no validation of 'e->no_of_channels' which can trigger an
-out-of-bounds write in the following 'memset' call. Validate that the
-number of channels does not extends beyond the size of the channel list
-element.
+Syzbot reported the following lockdep splat
 
-Signed-off-by: Phil Turnbull <philipturnbull@github.com>
-Tested-by: Ajay Kathat <ajay.kathat@microchip.com>
-Acked-by: Ajay Kathat <ajay.kathat@microchip.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221123153543.8568-5-philipturnbull@github.com
+======================================================
+WARNING: possible circular locking dependency detected
+6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0 Not tainted
+------------------------------------------------------
+syz-executor307/3029 is trying to acquire lock:
+ffff0000c02525d8 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x54/0xb4 mm/memory.c:5576
+
+but task is already holding lock:
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
+
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #3 (btrfs-root-00){++++}-{3:3}:
+       down_read_nested+0x64/0x84 kernel/locking/rwsem.c:1624
+       __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+       btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+       btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
+       btrfs_search_slot_get_root+0x74/0x338 fs/btrfs/ctree.c:1637
+       btrfs_search_slot+0x1b0/0xfd8 fs/btrfs/ctree.c:1944
+       btrfs_update_root+0x6c/0x5a0 fs/btrfs/root-tree.c:132
+       commit_fs_roots+0x1f0/0x33c fs/btrfs/transaction.c:1459
+       btrfs_commit_transaction+0x89c/0x12d8 fs/btrfs/transaction.c:2343
+       flush_space+0x66c/0x738 fs/btrfs/space-info.c:786
+       btrfs_async_reclaim_metadata_space+0x43c/0x4e0 fs/btrfs/space-info.c:1059
+       process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
+       worker_thread+0x340/0x610 kernel/workqueue.c:2436
+       kthread+0x12c/0x158 kernel/kthread.c:376
+       ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+
+-> #2 (&fs_info->reloc_mutex){+.+.}-{3:3}:
+       __mutex_lock_common+0xd4/0xca8 kernel/locking/mutex.c:603
+       __mutex_lock kernel/locking/mutex.c:747 [inline]
+       mutex_lock_nested+0x38/0x44 kernel/locking/mutex.c:799
+       btrfs_record_root_in_trans fs/btrfs/transaction.c:516 [inline]
+       start_transaction+0x248/0x944 fs/btrfs/transaction.c:752
+       btrfs_start_transaction+0x34/0x44 fs/btrfs/transaction.c:781
+       btrfs_create_common+0xf0/0x1b4 fs/btrfs/inode.c:6651
+       btrfs_create+0x8c/0xb0 fs/btrfs/inode.c:6697
+       lookup_open fs/namei.c:3413 [inline]
+       open_last_lookups fs/namei.c:3481 [inline]
+       path_openat+0x804/0x11c4 fs/namei.c:3688
+       do_filp_open+0xdc/0x1b8 fs/namei.c:3718
+       do_sys_openat2+0xb8/0x22c fs/open.c:1313
+       do_sys_open fs/open.c:1329 [inline]
+       __do_sys_openat fs/open.c:1345 [inline]
+       __se_sys_openat fs/open.c:1340 [inline]
+       __arm64_sys_openat+0xb0/0xe0 fs/open.c:1340
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+-> #1 (sb_internal#2){.+.+}-{0:0}:
+       percpu_down_read include/linux/percpu-rwsem.h:51 [inline]
+       __sb_start_write include/linux/fs.h:1826 [inline]
+       sb_start_intwrite include/linux/fs.h:1948 [inline]
+       start_transaction+0x360/0x944 fs/btrfs/transaction.c:683
+       btrfs_join_transaction+0x30/0x40 fs/btrfs/transaction.c:795
+       btrfs_dirty_inode+0x50/0x140 fs/btrfs/inode.c:6103
+       btrfs_update_time+0x1c0/0x1e8 fs/btrfs/inode.c:6145
+       inode_update_time fs/inode.c:1872 [inline]
+       touch_atime+0x1f0/0x4a8 fs/inode.c:1945
+       file_accessed include/linux/fs.h:2516 [inline]
+       btrfs_file_mmap+0x50/0x88 fs/btrfs/file.c:2407
+       call_mmap include/linux/fs.h:2192 [inline]
+       mmap_region+0x7fc/0xc14 mm/mmap.c:1752
+       do_mmap+0x644/0x97c mm/mmap.c:1540
+       vm_mmap_pgoff+0xe8/0x1d0 mm/util.c:552
+       ksys_mmap_pgoff+0x1cc/0x278 mm/mmap.c:1586
+       __do_sys_mmap arch/arm64/kernel/sys.c:28 [inline]
+       __se_sys_mmap arch/arm64/kernel/sys.c:21 [inline]
+       __arm64_sys_mmap+0x58/0x6c arch/arm64/kernel/sys.c:21
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+-> #0 (&mm->mmap_lock){++++}-{3:3}:
+       check_prev_add kernel/locking/lockdep.c:3095 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3214 [inline]
+       validate_chain kernel/locking/lockdep.c:3829 [inline]
+       __lock_acquire+0x1530/0x30a4 kernel/locking/lockdep.c:5053
+       lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5666
+       __might_fault+0x7c/0xb4 mm/memory.c:5577
+       _copy_to_user include/linux/uaccess.h:134 [inline]
+       copy_to_user include/linux/uaccess.h:160 [inline]
+       btrfs_ioctl_get_subvol_rootref+0x3a8/0x4bc fs/btrfs/ioctl.c:3203
+       btrfs_ioctl+0xa08/0xa64 fs/btrfs/ioctl.c:5556
+       vfs_ioctl fs/ioctl.c:51 [inline]
+       __do_sys_ioctl fs/ioctl.c:870 [inline]
+       __se_sys_ioctl fs/ioctl.c:856 [inline]
+       __arm64_sys_ioctl+0xd0/0x140 fs/ioctl.c:856
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+other info that might help us debug this:
+
+Chain exists of:
+  &mm->mmap_lock --> &fs_info->reloc_mutex --> btrfs-root-00
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(btrfs-root-00);
+                               lock(&fs_info->reloc_mutex);
+                               lock(btrfs-root-00);
+  lock(&mm->mmap_lock);
+
+ *** DEADLOCK ***
+
+1 lock held by syz-executor307/3029:
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
+
+stack backtrace:
+CPU: 0 PID: 3029 Comm: syz-executor307 Not tainted 6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/30/2022
+Call trace:
+ dump_backtrace+0x1c4/0x1f0 arch/arm64/kernel/stacktrace.c:156
+ show_stack+0x2c/0x54 arch/arm64/kernel/stacktrace.c:163
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x104/0x16c lib/dump_stack.c:106
+ dump_stack+0x1c/0x58 lib/dump_stack.c:113
+ print_circular_bug+0x2c4/0x2c8 kernel/locking/lockdep.c:2053
+ check_noncircular+0x14c/0x154 kernel/locking/lockdep.c:2175
+ check_prev_add kernel/locking/lockdep.c:3095 [inline]
+ check_prevs_add kernel/locking/lockdep.c:3214 [inline]
+ validate_chain kernel/locking/lockdep.c:3829 [inline]
+ __lock_acquire+0x1530/0x30a4 kernel/locking/lockdep.c:5053
+ lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5666
+ __might_fault+0x7c/0xb4 mm/memory.c:5577
+ _copy_to_user include/linux/uaccess.h:134 [inline]
+ copy_to_user include/linux/uaccess.h:160 [inline]
+ btrfs_ioctl_get_subvol_rootref+0x3a8/0x4bc fs/btrfs/ioctl.c:3203
+ btrfs_ioctl+0xa08/0xa64 fs/btrfs/ioctl.c:5556
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __arm64_sys_ioctl+0xd0/0x140 fs/ioctl.c:856
+ __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+ invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+ el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+ do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+ el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+ el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+ el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+We do generally the right thing here, copying the references into a
+temporary buffer, however we are still holding the path when we do
+copy_to_user from the temporary buffer.  Fix this by freeing the path
+before we copy to user space.
+
+Reported-by: syzbot+4ef9e52e464c6ff47d9d@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/cfg80211.c |   22 +++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/btrfs/ioctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-+++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-@@ -978,19 +978,29 @@ static inline void wilc_wfi_cfg_parse_ch
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3194,6 +3194,8 @@ static int btrfs_ioctl_get_subvol_rootre
  	}
  
- 	if (ch_list_idx) {
--		u16 attr_size;
--		struct wilc_ch_list_elem *e;
--		int i;
-+		u16 elem_size;
- 
- 		ch_list = (struct wilc_attr_ch_list *)&buf[ch_list_idx];
--		attr_size = le16_to_cpu(ch_list->attr_len);
--		for (i = 0; i < attr_size;) {
-+		/* the number of bytes following the final 'elem' member */
-+		elem_size = le16_to_cpu(ch_list->attr_len) -
-+			(sizeof(*ch_list) - sizeof(struct wilc_attr_entry));
-+		for (unsigned int i = 0; i < elem_size;) {
-+			struct wilc_ch_list_elem *e;
+ out:
++	btrfs_free_path(path);
 +
- 			e = (struct wilc_ch_list_elem *)(ch_list->elem + i);
-+
-+			i += sizeof(*e);
-+			if (i > elem_size)
-+				break;
-+
-+			i += e->no_of_channels;
-+			if (i > elem_size)
-+				break;
-+
- 			if (e->op_class == WILC_WLAN_OPERATING_CLASS_2_4GHZ) {
- 				memset(e->ch_list, sta_ch, e->no_of_channels);
- 				break;
- 			}
--			i += e->no_of_channels;
- 		}
+ 	if (!ret || ret == -EOVERFLOW) {
+ 		rootrefs->num_items = found;
+ 		/* update min_treeid for next search */
+@@ -3205,7 +3207,6 @@ out:
  	}
  
+ 	kfree(rootrefs);
+-	btrfs_free_path(path);
+ 
+ 	return ret;
+ }
 
 
