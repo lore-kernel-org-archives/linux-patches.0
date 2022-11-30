@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91EF79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC24C433D6;
-	Wed, 30 Nov 2022 18:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0F679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F190C433D7;
+	Wed, 30 Nov 2022 18:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833172;
-	bh=bn/WLBy6iZS92XUhnFfckXH0YBn3TknrxPrIJ+PyRxw=;
+	s=korg; t=1669833175;
+	bh=EiVUydKqMlmhWZB3pUXbF6iKdIGZljJ9E4OID+VBjcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLY8ETf2SPZqNX8ou3uMzVprjbpMDUv6Rhcdq8HI2H5ymHBvQPnc1utFNj+cQJgnR
-	 3YIPOJ79fK34MSZYkKU5Ga/DvHY2kVGlEwml6RoOj9rtskjGERG8yh9gMuo0cfX6LK
-	 BJPfOD2M58GUZaySyXB9MCFt0Ti46g1r00nIMeg8=
+	b=bud1pChIA1p3jhO5miw0KRwf7qsBbMcnWY41E0lR8146mLxAbwLZ+zqedNGC3b7Wp
+	 4mdKh2dQrFYWBMDOu3xhMLslgOp9OwQm5JX62f5P6I25flgcPwj9JCaCYoYuqdlF9S
+	 i3y0veogV2b4K37Jo+VAuvuDVJ1UPUkaEKdBJrQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>,
+	Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/206] ata: libata-core: do not issue non-internal commands once EH is pending
-Date: Wed, 30 Nov 2022 19:21:05 +0100
-Message-Id: <20221130180533.333655278@linuxfoundation.org>
+Subject: [PATCH 5.15 014/206] drm/display: Dont assume dual mode adaptors support i2c sub-addressing
+Date: Wed, 30 Nov 2022 19:21:06 +0100
+Message-Id: <20221130180533.359483578@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,84 +37,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
 
-[ Upstream commit e20e81a24a4d58744a29715aac2f795cd1651955 ]
+[ Upstream commit 5954acbacbd1946b96ce8ee799d309cb0cd3cb9d ]
 
-While the ATA specification states that a device should return command
-aborted for all commands queued after the device has entered error state,
-since ATA only keeps the sense data for the latest command (in non-NCQ
-case), we really don't want to send block layer commands to the device
-after it has entered error state. (Only ATA EH commands should be sent,
-to read the sense data etc.)
+Current dual mode adaptor ("DP++") detection code assumes that all
+adaptors support i2c sub-addressing for read operations from the
+DP-HDMI adaptor ID buffer.  It has been observed that multiple
+adaptors do not in fact support this, and always return data starting
+at register 0.  On affected adaptors, the code fails to read the proper
+registers that would identify the device as a type 2 adaptor, and
+handles those as type 1, limiting the TMDS clock to 165MHz, even if
+the according register would announce a higher TMDS clock.
+Fix this by always reading the ID buffer starting from offset 0, and
+discarding any bytes before the actual offset of interest.
 
-Currently, scsi_queue_rq() will check if scsi_host_in_recovery()
-(state is SHOST_RECOVERY), and if so, it will _not_ issue a command via:
-scsi_dispatch_cmd() -> host->hostt->queuecommand() (ata_scsi_queuecmd())
--> __ata_scsi_queuecmd() -> ata_scsi_translate() -> ata_qc_issue()
+We tried finding authoritative documentation on whether or not this is
+allowed behaviour, but since all the official VESA docs are paywalled,
+the best we could come up with was the spec sheet for Texas Instruments'
+SNx5DP149 chip family.[1]  It explicitly mentions that sub-addressing is
+supported for register writes, but *not* for reads (See NOTE in
+section 8.5.3).  Unless TI openly decided to violate the VESA spec, one
+could take that as a hint that sub-addressing is in fact not mandated
+by VESA.
+The other two adaptors affected used the PS8409(A) and the LT8611,
+according to the data returned from their ID buffers.
 
-Before commit e494f6a72839 ("[SCSI] improved eh timeout handler"),
-when receiving a TFES error IRQ, the call chain looked like this:
-ahci_error_intr() -> ata_port_abort() -> ata_do_link_abort() ->
-ata_qc_complete() -> ata_qc_schedule_eh() -> blk_abort_request() ->
-blk_rq_timed_out() -> q->rq_timed_out_fn() (scsi_times_out()) ->
-scsi_eh_scmd_add() -> scsi_host_set_state(shost, SHOST_RECOVERY)
+[1] https://www.ti.com/lit/ds/symlink/sn75dp149.pdf
 
-Which meant that as soon as an error IRQ was serviced, SHOST_RECOVERY
-would be set.
-
-However, after commit e494f6a72839 ("[SCSI] improved eh timeout handler"),
-scsi_times_out() will instead call scsi_abort_command() which will queue
-delayed work, and the worker function scmd_eh_abort_handler() will call
-scsi_eh_scmd_add(), which calls scsi_host_set_state(shost, SHOST_RECOVERY).
-
-So now, after the TFES error IRQ has been serviced, we need to wait for
-the SCSI workqueue to run its work before SHOST_RECOVERY gets set.
-
-It is worth noting that, even before commit e494f6a72839 ("[SCSI] improved
-eh timeout handler"), we could receive an error IRQ from the time when
-scsi_queue_rq() checks scsi_host_in_recovery(), to the time when
-ata_scsi_queuecmd() is actually called.
-
-In order to handle both the delayed setting of SHOST_RECOVERY and the
-window where we can receive an error IRQ, add a check against
-ATA_PFLAG_EH_PENDING (which gets set when servicing the error IRQ),
-inside ata_scsi_queuecmd() itself, while holding the ap->lock.
-(Since the ap->lock is held while servicing IRQs.)
-
-Fixes: e494f6a72839 ("[SCSI] improved eh timeout handler")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Tested-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
+Reviewed-by: Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221006113314.41101987@computer
+Acked-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/drm_dp_dual_mode_helper.c | 51 +++++++++++++----------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 61b7e0b0bbf6..061d2f8feeb5 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3988,9 +3988,19 @@ void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd)
- 
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
+diff --git a/drivers/gpu/drm/drm_dp_dual_mode_helper.c b/drivers/gpu/drm/drm_dp_dual_mode_helper.c
+index 9faf49354cab..cb52a00ae1b1 100644
+--- a/drivers/gpu/drm/drm_dp_dual_mode_helper.c
++++ b/drivers/gpu/drm/drm_dp_dual_mode_helper.c
+@@ -63,23 +63,45 @@
+ ssize_t drm_dp_dual_mode_read(struct i2c_adapter *adapter,
+ 			      u8 offset, void *buffer, size_t size)
  {
-+	struct ata_port *ap = dev->link->ap;
- 	u8 scsi_op = scmd->cmnd[0];
- 	ata_xlat_func_t xlat_func;
- 
++	u8 zero = 0;
++	char *tmpbuf = NULL;
 +	/*
-+	 * scsi_queue_rq() will defer commands if scsi_host_in_recovery().
-+	 * However, this check is done without holding the ap->lock (a libata
-+	 * specific lock), so we can have received an error irq since then,
-+	 * therefore we must check if EH is pending, while holding ap->lock.
++	 * As sub-addressing is not supported by all adaptors,
++	 * always explicitly read from the start and discard
++	 * any bytes that come before the requested offset.
++	 * This way, no matter whether the adaptor supports it
++	 * or not, we'll end up reading the proper data.
 +	 */
-+	if (ap->pflags & (ATA_PFLAG_EH_PENDING | ATA_PFLAG_EH_IN_PROGRESS))
-+		return SCSI_MLQUEUE_DEVICE_BUSY;
-+
- 	if (unlikely(!scmd->cmd_len))
- 		goto bad_cdb_len;
+ 	struct i2c_msg msgs[] = {
+ 		{
+ 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
+ 			.flags = 0,
+ 			.len = 1,
+-			.buf = &offset,
++			.buf = &zero,
+ 		},
+ 		{
+ 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
+ 			.flags = I2C_M_RD,
+-			.len = size,
++			.len = size + offset,
+ 			.buf = buffer,
+ 		},
+ 	};
+ 	int ret;
  
++	if (offset) {
++		tmpbuf = kmalloc(size + offset, GFP_KERNEL);
++		if (!tmpbuf)
++			return -ENOMEM;
++
++		msgs[1].buf = tmpbuf;
++	}
++
+ 	ret = i2c_transfer(adapter, msgs, ARRAY_SIZE(msgs));
++	if (tmpbuf)
++		memcpy(buffer, tmpbuf + offset, size);
++
++	kfree(tmpbuf);
++
+ 	if (ret < 0)
+ 		return ret;
+ 	if (ret != ARRAY_SIZE(msgs))
+@@ -208,18 +230,6 @@ enum drm_dp_dual_mode_type drm_dp_dual_mode_detect(const struct drm_device *dev,
+ 	if (ret)
+ 		return DRM_DP_DUAL_MODE_UNKNOWN;
+ 
+-	/*
+-	 * Sigh. Some (maybe all?) type 1 adaptors are broken and ack
+-	 * the offset but ignore it, and instead they just always return
+-	 * data from the start of the HDMI ID buffer. So for a broken
+-	 * type 1 HDMI adaptor a single byte read will always give us
+-	 * 0x44, and for a type 1 DVI adaptor it should give 0x00
+-	 * (assuming it implements any registers). Fortunately neither
+-	 * of those values will match the type 2 signature of the
+-	 * DP_DUAL_MODE_ADAPTOR_ID register so we can proceed with
+-	 * the type 2 adaptor detection safely even in the presence
+-	 * of broken type 1 adaptors.
+-	 */
+ 	ret = drm_dp_dual_mode_read(adapter, DP_DUAL_MODE_ADAPTOR_ID,
+ 				    &adaptor_id, sizeof(adaptor_id));
+ 	drm_dbg_kms(dev, "DP dual mode adaptor ID: %02x (err %zd)\n", adaptor_id, ret);
+@@ -233,11 +243,10 @@ enum drm_dp_dual_mode_type drm_dp_dual_mode_detect(const struct drm_device *dev,
+ 				return DRM_DP_DUAL_MODE_TYPE2_DVI;
+ 		}
+ 		/*
+-		 * If neither a proper type 1 ID nor a broken type 1 adaptor
+-		 * as described above, assume type 1, but let the user know
+-		 * that we may have misdetected the type.
++		 * If not a proper type 1 ID, still assume type 1, but let
++		 * the user know that we may have misdetected the type.
+ 		 */
+-		if (!is_type1_adaptor(adaptor_id) && adaptor_id != hdmi_id[0])
++		if (!is_type1_adaptor(adaptor_id))
+ 			drm_err(dev, "Unexpected DP dual mode adaptor ID %02x\n", adaptor_id);
+ 
+ 	}
+@@ -343,10 +352,8 @@ EXPORT_SYMBOL(drm_dp_dual_mode_get_tmds_output);
+  * @enable: enable (as opposed to disable) the TMDS output buffers
+  *
+  * Set the state of the TMDS output buffers in the adaptor. For
+- * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register. As
+- * some type 1 adaptors have problems with registers (see comments
+- * in drm_dp_dual_mode_detect()) we avoid touching the register,
+- * making this function a no-op on type 1 adaptors.
++ * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register.
++ * Type1 adaptors do not support any register writes.
+  *
+  * Returns:
+  * 0 on success, negative error code on failure
 -- 
 2.35.1
 
