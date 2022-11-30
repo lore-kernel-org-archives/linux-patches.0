@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF40C79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BDFC433D6;
-	Wed, 30 Nov 2022 18:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B8879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9A7C433C1;
+	Wed, 30 Nov 2022 18:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833404;
-	bh=rB/LLxXBn3AcJDJmCbp0eYXzciCgP3OpmkAVWTTKrDE=;
+	s=korg; t=1669833407;
+	bh=2pz691OfsyP6cRZWoKAZ0660RZzdKn/bXNnKhcBx0/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFUmTwpE2ckuijwDawZchFzq9m3e/9r11sQBqPJvZuD6il/izgFSzuQSZy++8Ym13
-	 jDueK2ratq1DEkw588+NHj3hVBp7AAjeB2olknCll8h5+6A3MYh2lMdpXQKK1e99up
-	 +mpaYj92v5jQx27zrivZ8jMhylLrDr7XzPtQeQsE=
+	b=nPKnsDtwZN/BdRUROrYevAyXpS9axI6KvZgQJhaI+LK4ZMsZq/2H2BtMBPdyK/K2X
+	 v6BRpDRzbFYDihLNW0gfnpOs0bQoR8wl+jOhK7pLF1Kdp2CeSQg0D+JMYQ24JK49Cn
+	 MQd5Kt+rogNG32nqqmEASr6Thsm0yRBYGu8TQ0Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	zdi-disclosures@trendmicro.com,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/206] net: pch_gbe: fix pci device refcount leak while module exiting
-Date: Wed, 30 Nov 2022 19:22:26 +0100
-Message-Id: <20221130180535.419779674@linuxfoundation.org>
+Subject: [PATCH 5.15 077/206] rxrpc: Fix race between conn bundle lookup and bundle removal [ZDI-CAN-15975]
+Date: Wed, 30 Nov 2022 19:22:09 +0100
+Message-Id: <20221130180534.956816054@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,58 +38,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 5619537284f1017e9f6c7500b02b859b3830a06d ]
+[ Upstream commit 3bcd6c7eaa53b56c3f584da46a1f7652e759d0e5 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put().
+After rxrpc_unbundle_conn() has removed a connection from a bundle, it
+checks to see if there are any conns with available channels and, if not,
+removes and attempts to destroy the bundle.
 
-In pch_gbe_probe(), pci_get_domain_bus_and_slot() is called,
-so in error path in probe() and remove() function, pci_dev_put()
-should be called to avoid refcount leak. Compile tested only.
+Whilst it does check after grabbing client_bundles_lock that there are no
+connections attached, this races with rxrpc_look_up_bundle() retrieving the
+bundle, but not attaching a connection for the connection to be attached
+later.
 
-Fixes: 1a0bdadb4e36 ("net/pch_gbe: supports eg20t ptp clock")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221117135148.301014-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+There is therefore a window in which the bundle can get destroyed before we
+manage to attach a new connection to it.
+
+Fix this by adding an "active" counter to struct rxrpc_bundle:
+
+ (1) rxrpc_connect_call() obtains an active count by prepping/looking up a
+     bundle and ditches it before returning.
+
+ (2) If, during rxrpc_connect_call(), a connection is added to the bundle,
+     this obtains an active count, which is held until the connection is
+     discarded.
+
+ (3) rxrpc_deactivate_bundle() is created to drop an active count on a
+     bundle and destroy it when the active count reaches 0.  The active
+     count is checked inside client_bundles_lock() to prevent a race with
+     rxrpc_look_up_bundle().
+
+ (4) rxrpc_unbundle_conn() then calls rxrpc_deactivate_bundle().
+
+Fixes: 245500d853e9 ("rxrpc: Rewrite the client connection manager")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-15975
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: zdi-disclosures@trendmicro.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/rxrpc/ar-internal.h |  1 +
+ net/rxrpc/conn_client.c | 38 +++++++++++++++++++++++---------------
+ 2 files changed, 24 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-index 5a42ef6ca762..d555b4cc6049 100644
---- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-+++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-@@ -2465,6 +2465,7 @@ static void pch_gbe_remove(struct pci_dev *pdev)
- 	unregister_netdev(netdev);
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index 62c70709d798..e0123efa2a62 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -399,6 +399,7 @@ enum rxrpc_conn_proto_state {
+ struct rxrpc_bundle {
+ 	struct rxrpc_conn_parameters params;
+ 	refcount_t		ref;
++	atomic_t		active;		/* Number of active users */
+ 	unsigned int		debug_id;
+ 	bool			try_upgrade;	/* True if the bundle is attempting upgrade */
+ 	bool			alloc_conn;	/* True if someone's getting a conn */
+diff --git a/net/rxrpc/conn_client.c b/net/rxrpc/conn_client.c
+index 3c9eeb5b750c..bdb335cb2d05 100644
+--- a/net/rxrpc/conn_client.c
++++ b/net/rxrpc/conn_client.c
+@@ -40,6 +40,8 @@ __read_mostly unsigned long rxrpc_conn_idle_client_fast_expiry = 2 * HZ;
+ DEFINE_IDR(rxrpc_client_conn_ids);
+ static DEFINE_SPINLOCK(rxrpc_conn_id_lock);
  
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+	pci_dev_put(adapter->ptp_pdev);
++static void rxrpc_deactivate_bundle(struct rxrpc_bundle *bundle);
++
+ /*
+  * Get a connection ID and epoch for a client connection from the global pool.
+  * The connection struct pointer is then recorded in the idr radix tree.  The
+@@ -123,6 +125,7 @@ static struct rxrpc_bundle *rxrpc_alloc_bundle(struct rxrpc_conn_parameters *cp,
+ 		bundle->params = *cp;
+ 		rxrpc_get_peer(bundle->params.peer);
+ 		refcount_set(&bundle->ref, 1);
++		atomic_set(&bundle->active, 1);
+ 		spin_lock_init(&bundle->channel_lock);
+ 		INIT_LIST_HEAD(&bundle->waiting_calls);
+ 	}
+@@ -149,7 +152,7 @@ void rxrpc_put_bundle(struct rxrpc_bundle *bundle)
  
- 	free_netdev(netdev);
+ 	dead = __refcount_dec_and_test(&bundle->ref, &r);
+ 
+-	_debug("PUT B=%x %d", d, r);
++	_debug("PUT B=%x %d", d, r - 1);
+ 	if (dead)
+ 		rxrpc_free_bundle(bundle);
  }
-@@ -2540,7 +2541,7 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 	/* setup the private structure */
- 	ret = pch_gbe_sw_init(adapter);
- 	if (ret)
--		goto err_free_netdev;
-+		goto err_put_dev;
+@@ -338,6 +341,7 @@ static struct rxrpc_bundle *rxrpc_look_up_bundle(struct rxrpc_conn_parameters *c
+ 	rxrpc_free_bundle(candidate);
+ found_bundle:
+ 	rxrpc_get_bundle(bundle);
++	atomic_inc(&bundle->active);
+ 	spin_unlock(&local->client_bundles_lock);
+ 	_leave(" = %u [found]", bundle->debug_id);
+ 	return bundle;
+@@ -435,6 +439,7 @@ static void rxrpc_add_conn_to_bundle(struct rxrpc_bundle *bundle, gfp_t gfp)
+ 			if (old)
+ 				trace_rxrpc_client(old, -1, rxrpc_client_replace);
+ 			candidate->bundle_shift = shift;
++			atomic_inc(&bundle->active);
+ 			bundle->conns[i] = candidate;
+ 			for (j = 0; j < RXRPC_MAXCALLS; j++)
+ 				set_bit(shift + j, &bundle->avail_chans);
+@@ -725,6 +730,7 @@ int rxrpc_connect_call(struct rxrpc_sock *rx,
+ 	smp_rmb();
  
- 	/* Initialize PHY */
- 	ret = pch_gbe_init_phy(adapter);
-@@ -2598,6 +2599,8 @@ static int pch_gbe_probe(struct pci_dev *pdev,
+ out_put_bundle:
++	rxrpc_deactivate_bundle(bundle);
+ 	rxrpc_put_bundle(bundle);
+ out:
+ 	_leave(" = %d", ret);
+@@ -900,9 +906,8 @@ void rxrpc_disconnect_client_call(struct rxrpc_bundle *bundle, struct rxrpc_call
+ static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
+ {
+ 	struct rxrpc_bundle *bundle = conn->bundle;
+-	struct rxrpc_local *local = bundle->params.local;
+ 	unsigned int bindex;
+-	bool need_drop = false, need_put = false;
++	bool need_drop = false;
+ 	int i;
  
- err_free_adapter:
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+err_put_dev:
-+	pci_dev_put(adapter->ptp_pdev);
- err_free_netdev:
- 	free_netdev(netdev);
- 	return ret;
+ 	_enter("C=%x", conn->debug_id);
+@@ -921,15 +926,22 @@ static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
+ 	}
+ 	spin_unlock(&bundle->channel_lock);
+ 
+-	/* If there are no more connections, remove the bundle */
+-	if (!bundle->avail_chans) {
+-		_debug("maybe unbundle");
+-		spin_lock(&local->client_bundles_lock);
++	if (need_drop) {
++		rxrpc_deactivate_bundle(bundle);
++		rxrpc_put_connection(conn);
++	}
++}
+ 
+-		for (i = 0; i < ARRAY_SIZE(bundle->conns); i++)
+-			if (bundle->conns[i])
+-				break;
+-		if (i == ARRAY_SIZE(bundle->conns) && !bundle->params.exclusive) {
++/*
++ * Drop the active count on a bundle.
++ */
++static void rxrpc_deactivate_bundle(struct rxrpc_bundle *bundle)
++{
++	struct rxrpc_local *local = bundle->params.local;
++	bool need_put = false;
++
++	if (atomic_dec_and_lock(&bundle->active, &local->client_bundles_lock)) {
++		if (!bundle->params.exclusive) {
+ 			_debug("erase bundle");
+ 			rb_erase(&bundle->local_node, &local->client_bundles);
+ 			need_put = true;
+@@ -939,10 +951,6 @@ static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
+ 		if (need_put)
+ 			rxrpc_put_bundle(bundle);
+ 	}
+-
+-	if (need_drop)
+-		rxrpc_put_connection(conn);
+-	_leave("");
+ }
+ 
+ /*
 -- 
 2.35.1
 
