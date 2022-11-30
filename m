@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1F36FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C73C433C1;
-	Wed, 30 Nov 2022 18:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307386FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97023C433C1;
+	Wed, 30 Nov 2022 18:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833461;
-	bh=sKxE6Tg4H3AZRuWpOXQzKrZwCtWWGV+MsBjoklTO3B8=;
+	s=korg; t=1669833464;
+	bh=TL4/LfcOzX/iFFUIU99zkBlKhq3EMvJm4v/6KWidAlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zq3TjF9t5lAviqUREY17jnbUlFF7vpEk4Qq7l96otBiml32oLpxzeTU2BmnUH8Ry0
-	 gcngqiwTm4Ui4bm50nvUxRAEJu0dsU/P7goGIa0hgrfHByIJx7+43BS8KfwDpIX6Ne
-	 JiBux4Mp15OL+/cog6EzH0tqiVK1c7ou2uhz7Jvg=
+	b=ic3bEMkMfgw7qiiIs4boOM5P05cXmSv0YRdL9rJs23M2C42Xf6K+eYDH0ywR5dJqR
+	 KJpEmK09dQD4x+/Nae5HZEbBQt0uA7zSBBtt9N6unt6r/LK64ZfyCfMlFAo2ac2VTB
+	 ofGE1F+YryQSTxVez1Nwco55TGl+y2AUWfOkON9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Jon Maloy <jmaloy@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/206] tipc: check skb_linearize() return value in tipc_disc_rcv()
-Date: Wed, 30 Nov 2022 19:22:38 +0100
-Message-Id: <20221130180535.742590087@linuxfoundation.org>
+Subject: [PATCH 5.15 115/206] bnx2x: fix pci device refcount leak in bnx2x_vf_is_pcie_pending()
+Date: Wed, 30 Nov 2022 19:22:47 +0100
+Message-Id: <20221130180535.968632484@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,39 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit cd0f6421162201e4b22ce757a1966729323185eb ]
+[ Upstream commit 3637a29ccbb6461b7268c5c5db525935d510afc6 ]
 
-If skb_linearize() fails in tipc_disc_rcv(), we need to free the skb instead of
-handle it.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put(). Call pci_dev_put() before returning from
+bnx2x_vf_is_pcie_pending() to avoid refcount leak.
 
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Link: https://lore.kernel.org/r/20221119072832.7896-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b56e9670ffa4 ("bnx2x: Prepare device and initialize VF database")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221119070202.1407648-1-yangyingliang@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/discover.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index e8630707901e..e8dcdf267c0c 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -211,7 +211,10 @@ void tipc_disc_rcv(struct net *net, struct sk_buff *skb,
- 	u32 self;
- 	int err;
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
+index 561395731450..a9f202bbada1 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
+@@ -795,16 +795,20 @@ static void bnx2x_vf_enable_traffic(struct bnx2x *bp, struct bnx2x_virtf *vf)
  
--	skb_linearize(skb);
-+	if (skb_linearize(skb)) {
-+		kfree_skb(skb);
-+		return;
-+	}
- 	hdr = buf_msg(skb);
+ static u8 bnx2x_vf_is_pcie_pending(struct bnx2x *bp, u8 abs_vfid)
+ {
+-	struct pci_dev *dev;
+ 	struct bnx2x_virtf *vf = bnx2x_vf_by_abs_fid(bp, abs_vfid);
++	struct pci_dev *dev;
++	bool pending;
  
- 	if (caps & TIPC_NODE_ID128)
+ 	if (!vf)
+ 		return false;
+ 
+ 	dev = pci_get_domain_bus_and_slot(vf->domain, vf->bus, vf->devfn);
+-	if (dev)
+-		return bnx2x_is_pcie_pending(dev);
+-	return false;
++	if (!dev)
++		return false;
++	pending = bnx2x_is_pcie_pending(dev);
++	pci_dev_put(dev);
++
++	return pending;
+ }
+ 
+ int bnx2x_vf_flr_clnup_epilog(struct bnx2x *bp, u8 abs_vfid)
 -- 
 2.35.1
 
