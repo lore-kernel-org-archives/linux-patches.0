@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B4079C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EF5C433D7;
-	Wed, 30 Nov 2022 18:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD19F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526BFC433D6;
+	Wed, 30 Nov 2022 18:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834144;
-	bh=pLu0LTOaGgTRLtHLDNyNB3eH/64heXsfitmdw7/s9f8=;
+	s=korg; t=1669834147;
+	bh=bwvHFl9Opr0+Vk5fx87Eo2WZqjfI27RfWbBZ63smpFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLi/TNnHrvA4Ttmfeg7USvmrhPMU9bxfNuw1BqBICMvWktl7fs0j2f7lOfZI6HYXU
-	 XvYbQHyhdd3TkN2DEiEFjxn7bYZQOZSZAVQRkoThb7HwiMhGlo4Ty6WxOQSP4EafYQ
-	 i5171A+pIBuYyZkuzy8Cnq0pNQNnxz0diJRUBBQM=
+	b=yrp2XR3uEe7WM4F3sL+Igv2lXlkGG29iZHsW03dxXZDLDDqM9oY1oO5c0+/LkXUvF
+	 5LaiO7yYpM7qFa5Fix5bBLxbzOiO4d3NwE0zwayjrcuQgam1Jd30zwMisKCgjXASCY
+	 Wp1d9jFQoIEzDvZK+wcTMFb4SOPmOiZADbtiufzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Cangang <nalanzeyu@gmail.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 138/289] net: ethernet: mtk_eth_soc: fix resource leak in error path
-Date: Wed, 30 Nov 2022 19:22:03 +0100
-Message-Id: <20221130180547.266618387@linuxfoundation.org>
+Subject: [PATCH 6.0 147/289] nfc: st-nci: fix memory leaks in EVT_TRANSACTION
+Date: Wed, 30 Nov 2022 19:22:12 +0100
+Message-Id: <20221130180547.469781413@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,42 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Cangang <nalanzeyu@gmail.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit 8110437e59616293228cd781c486d8495a61e36a ]
+[ Upstream commit 440f2ae9c9f06e26f5dcea697a53717fc61a318c ]
 
-In mtk_probe(), when mtk_ppe_init() or mtk_eth_offload_init() failed,
-mtk_mdio_cleanup() isn't called. Fix it.
+Error path does not free previously allocated memory. Add devm_kfree() to
+the failure path.
 
-Fixes: ba37b7caf1ed ("net: ethernet: mtk_eth_soc: add support for initializing the PPE")
-Fixes: 502e84e2382d ("net: ethernet: mtk_eth_soc: add flow offloading support")
-Signed-off-by: Yan Cangang <nalanzeyu@gmail.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nfc/st-nci/se.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 3db24ddd1261..aee57b22c496 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4114,12 +4114,12 @@ static int mtk_probe(struct platform_device *pdev)
- 		eth->ppe = mtk_ppe_init(eth, eth->base + ppe_addr, 2);
- 		if (!eth->ppe) {
- 			err = -ENOMEM;
--			goto err_free_dev;
-+			goto err_deinit_mdio;
- 		}
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index 589e1dec78e7..fc59916ae5ae 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -339,8 +339,10 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
  
- 		err = mtk_eth_offload_init(eth);
- 		if (err)
--			goto err_free_dev;
-+			goto err_deinit_mdio;
- 	}
+ 		/* Check next byte is PARAMETERS tag (82) */
+ 		if (skb->data[transaction->aid_len + 2] !=
+-		    NFC_EVT_TRANSACTION_PARAMS_TAG)
++		    NFC_EVT_TRANSACTION_PARAMS_TAG) {
++			devm_kfree(dev, transaction);
+ 			return -EPROTO;
++		}
  
- 	for (i = 0; i < MTK_MAX_DEVS; i++) {
+ 		transaction->params_len = skb->data[transaction->aid_len + 3];
+ 		memcpy(transaction->params, skb->data +
 -- 
 2.35.1
 
