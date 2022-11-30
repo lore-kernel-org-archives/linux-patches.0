@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143D279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA89C433D6;
-	Wed, 30 Nov 2022 18:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF09F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E20EC433B5;
+	Wed, 30 Nov 2022 18:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834429;
-	bh=9CdGFcI6NSYYFit7v8Tf2qp4SHvPUavvWg7w2trO2Qg=;
+	s=korg; t=1669834432;
+	bh=NJFLyNPH/A3xeKugc0ptEUSMtciv3YBsbxUtW+VLVbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAw/78HUK1AnsUqtG8T0h7oj6KhOZWGZ/dMMvwpT9coiMcaKLcfQ3XUZi+mBtDsud
-	 paenAF0/u2GUzvc+z+1/cwZErZ4OSXSxvkJG0SWRIKKck0KGRlu5Pa0Gg6usrumrjs
-	 zK+axXi2itXDIxugM8I4zaZ19M4Xco3JkzyvL4YI=
+	b=GBICwmaELLieYGjJeOqLs6lQ+XzpnFHSNInq+KweVU9IkWlMaBC/PHIVOcRcZ/NkR
+	 dbaMhRhNmiuA0g5nzNoVz9oTE9dcjW3idWf7vPiO6QZuH005Ov1cqONXCo36BRTYrq
+	 dxle+U0dMmaea8qUHzf/mhAd82IW27RQP17ngqfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 250/289] drm/amdkfd: Fix a memory limit issue
-Date: Wed, 30 Nov 2022 19:23:55 +0100
-Message-Id: <20221130180549.773768643@linuxfoundation.org>
+Subject: [PATCH 6.0 251/289] zonefs: fix zone report size in __zonefs_io_error()
+Date: Wed, 30 Nov 2022 19:23:56 +0100
+Message-Id: <20221130180549.795738873@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,40 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 6f9eea4392a178af19360694b1db64f985d0b459 ]
+[ Upstream commit 7dd12d65ac646046a3fe0bbf9a4e86f4514207b3 ]
 
-It is to resolve a regression, which fails to allocate
-VRAM due to no free memory in application, the reason
-is we add check of vram_pin_size for memory limit, and
-application is pinning the memory for Peerdirect, KFD
-should not count it in memory limit. So removing
-vram_pin_size will resolve it.
+When an IO error occurs, the function __zonefs_io_error() is used to
+issue a zone report to obtain the latest zone information from the
+device. This function gets a zone report for all zones used as storage
+for a file, which is always 1 zone except for files representing
+aggregated conventional zones.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The number of zones of a zone report for a file is calculated in
+__zonefs_io_error() by doing a bit-shift of the inode i_zone_size field,
+which is equal to or larger than the device zone size. However, this
+calculation does not take into account that the last zone of a zoned
+device may be smaller than the zone size reported by bdev_zone_sectors()
+(which is used to set the bit shift size). As a result, if an error
+occurs for an IO targetting such last smaller zone, the zone report will
+ask for 0 zones, leading to an invalid zone report.
+
+Fix this by using the fact that all files require a 1 zone report,
+except if the inode i_zone_size field indicates a zone size larger than
+the device zone size. This exception case corresponds to a mount with
+aggregated conventional zones.
+
+A check for this exception is added to the file inode initialization
+during mount. If an invalid setup is detected, emit an error and fail
+the mount (check contributed by Johannes Thumshirn).
+
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/zonefs/super.c | 37 +++++++++++++++++++++++++++----------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 93ad00453f4b..7db4aef9c45c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -170,9 +170,7 @@ int amdgpu_amdkfd_reserve_mem_limit(struct amdgpu_device *adev,
- 	    (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
- 	     kfd_mem_limit.max_ttm_mem_limit) ||
- 	    (adev && adev->kfd.vram_used + vram_needed >
--	     adev->gmc.real_vram_size -
--	     atomic64_read(&adev->vram_pin_size) -
--	     reserved_for_pt)) {
-+	     adev->gmc.real_vram_size - reserved_for_pt)) {
- 		ret = -ENOMEM;
- 		goto release;
+diff --git a/fs/zonefs/super.c b/fs/zonefs/super.c
+index dfe7d410d1e4..2c53fbb8d918 100644
+--- a/fs/zonefs/super.c
++++ b/fs/zonefs/super.c
+@@ -489,14 +489,22 @@ static void __zonefs_io_error(struct inode *inode, bool write)
+ 	struct super_block *sb = inode->i_sb;
+ 	struct zonefs_sb_info *sbi = ZONEFS_SB(sb);
+ 	unsigned int noio_flag;
+-	unsigned int nr_zones =
+-		zi->i_zone_size >> (sbi->s_zone_sectors_shift + SECTOR_SHIFT);
++	unsigned int nr_zones = 1;
+ 	struct zonefs_ioerr_data err = {
+ 		.inode = inode,
+ 		.write = write,
+ 	};
+ 	int ret;
+ 
++	/*
++	 * The only files that have more than one zone are conventional zone
++	 * files with aggregated conventional zones, for which the inode zone
++	 * size is always larger than the device zone size.
++	 */
++	if (zi->i_zone_size > bdev_zone_sectors(sb->s_bdev))
++		nr_zones = zi->i_zone_size >>
++			(sbi->s_zone_sectors_shift + SECTOR_SHIFT);
++
+ 	/*
+ 	 * Memory allocations in blkdev_report_zones() can trigger a memory
+ 	 * reclaim which may in turn cause a recursion into zonefs as well as
+@@ -1418,6 +1426,14 @@ static int zonefs_init_file_inode(struct inode *inode, struct blk_zone *zone,
+ 	zi->i_ztype = type;
+ 	zi->i_zsector = zone->start;
+ 	zi->i_zone_size = zone->len << SECTOR_SHIFT;
++	if (zi->i_zone_size > bdev_zone_sectors(sb->s_bdev) << SECTOR_SHIFT &&
++	    !(sbi->s_features & ZONEFS_F_AGGRCNV)) {
++		zonefs_err(sb,
++			   "zone size %llu doesn't match device's zone sectors %llu\n",
++			   zi->i_zone_size,
++			   bdev_zone_sectors(sb->s_bdev) << SECTOR_SHIFT);
++		return -EINVAL;
++	}
+ 
+ 	zi->i_max_size = min_t(loff_t, MAX_LFS_FILESIZE,
+ 			       zone->capacity << SECTOR_SHIFT);
+@@ -1467,11 +1483,11 @@ static struct dentry *zonefs_create_inode(struct dentry *parent,
+ 	struct inode *dir = d_inode(parent);
+ 	struct dentry *dentry;
+ 	struct inode *inode;
+-	int ret;
++	int ret = -ENOMEM;
+ 
+ 	dentry = d_alloc_name(parent, name);
+ 	if (!dentry)
+-		return NULL;
++		return ERR_PTR(ret);
+ 
+ 	inode = new_inode(parent->d_sb);
+ 	if (!inode)
+@@ -1496,7 +1512,7 @@ static struct dentry *zonefs_create_inode(struct dentry *parent,
+ dput:
+ 	dput(dentry);
+ 
+-	return NULL;
++	return ERR_PTR(ret);
+ }
+ 
+ struct zonefs_zone_data {
+@@ -1516,7 +1532,7 @@ static int zonefs_create_zgroup(struct zonefs_zone_data *zd,
+ 	struct blk_zone *zone, *next, *end;
+ 	const char *zgroup_name;
+ 	char *file_name;
+-	struct dentry *dir;
++	struct dentry *dir, *dent;
+ 	unsigned int n = 0;
+ 	int ret;
+ 
+@@ -1534,8 +1550,8 @@ static int zonefs_create_zgroup(struct zonefs_zone_data *zd,
+ 		zgroup_name = "seq";
+ 
+ 	dir = zonefs_create_inode(sb->s_root, zgroup_name, NULL, type);
+-	if (!dir) {
+-		ret = -ENOMEM;
++	if (IS_ERR(dir)) {
++		ret = PTR_ERR(dir);
+ 		goto free;
  	}
+ 
+@@ -1581,8 +1597,9 @@ static int zonefs_create_zgroup(struct zonefs_zone_data *zd,
+ 		 * Use the file number within its group as file name.
+ 		 */
+ 		snprintf(file_name, ZONEFS_NAME_MAX - 1, "%u", n);
+-		if (!zonefs_create_inode(dir, file_name, zone, type)) {
+-			ret = -ENOMEM;
++		dent = zonefs_create_inode(dir, file_name, zone, type);
++		if (IS_ERR(dent)) {
++			ret = PTR_ERR(dent);
+ 			goto free;
+ 		}
+ 
 -- 
 2.35.1
 
