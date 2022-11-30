@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718E779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B959EC433D6;
-	Wed, 30 Nov 2022 18:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9991279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06718C433D6;
+	Wed, 30 Nov 2022 18:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833597;
-	bh=6wcgAe4V0idzEv5Ubdq6GCPPS7JDd+KR/SQEd1L3iZw=;
+	s=korg; t=1669833600;
+	bh=OwJx37HG/bepk19hnsvQmT6VFdCCw5bN3fLhV2fo8TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tB2vgXuobHyldG41Z0HfFECUEKKlOnrDSq9d0TgY+9a8FkTlrnTkopz2uyAAITZp+
-	 1t+rgviQLRz4FBAvqGQ3CnVYDpIIU2H3g/L9uvb4cT/sGmzDDKmIwtzYLiE8VC+bBm
-	 7ji6aLSPHRXqVZng0s4OsUZAWigu4MXxJVXTBECQ=
+	b=hpGAwwgaFstpKfkNgjS+K0hOtEcdtOwf+/Z1j0PnJrpD5NFvAqOBOy6C6biwK1CM+
+	 HR/L6G354V2UcLL1Q8CJmnskS0e+wsn5Ap6mnCTTmDeKovobnUykLSn7O1zvscBozb
+	 62m7hCE1hnE9XhR9BU+3tCU1PlnqnIffOIFnpg+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 154/206] gcov: clang: fix the buffer overflow issue
-Date: Wed, 30 Nov 2022 19:23:26 +0100
-Message-Id: <20221130180536.952761401@linuxfoundation.org>
+	Al Cooper <alcooperx@gmail.com>,
+	Kamal Dasu <kdasu.kdev@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 137/206] mmc: sdhci-brcmstb: Re-organize flags
+Date: Wed, 30 Nov 2022 19:23:09 +0100
+Message-Id: <20221130180536.525176172@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -38,88 +38,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Al Cooper <alcooperx@gmail.com>
 
-commit a6f810efabfd789d3bbafeacb4502958ec56c5ce upstream.
+[ Upstream commit f3a70f991dd07330225ea11e158e1d07ad5733fb ]
 
-Currently, in clang version of gcov code when module is getting removed
-gcov_info_add() incorrectly adds the sfn_ptr->counter to all the
-dst->functions and it result in the kernel panic in below crash report.
-Fix this by properly handling it.
+Re-organize the flags by basing the bit names on the flag that they
+apply to. Also change the "flags" member in the "brcmstb_match_priv"
+struct to const.
 
-[    8.899094][  T599] Unable to handle kernel write to read-only memory at virtual address ffffff80461cc000
-[    8.899100][  T599] Mem abort info:
-[    8.899102][  T599]   ESR = 0x9600004f
-[    8.899103][  T599]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    8.899105][  T599]   SET = 0, FnV = 0
-[    8.899107][  T599]   EA = 0, S1PTW = 0
-[    8.899108][  T599]   FSC = 0x0f: level 3 permission fault
-[    8.899110][  T599] Data abort info:
-[    8.899111][  T599]   ISV = 0, ISS = 0x0000004f
-[    8.899113][  T599]   CM = 0, WnR = 1
-[    8.899114][  T599] swapper pgtable: 4k pages, 39-bit VAs, pgdp=00000000ab8de000
-[    8.899116][  T599] [ffffff80461cc000] pgd=18000009ffcde003, p4d=18000009ffcde003, pud=18000009ffcde003, pmd=18000009ffcad003, pte=00600000c61cc787
-[    8.899124][  T599] Internal error: Oops: 9600004f [#1] PREEMPT SMP
-[    8.899265][  T599] Skip md ftrace buffer dump for: 0x1609e0
-....
-..,
-[    8.899544][  T599] CPU: 7 PID: 599 Comm: modprobe Tainted: G S         OE     5.15.41-android13-8-g38e9b1af6bce #1
-[    8.899547][  T599] Hardware name: XXX (DT)
-[    8.899549][  T599] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
-[    8.899551][  T599] pc : gcov_info_add+0x9c/0xb8
-[    8.899557][  T599] lr : gcov_event+0x28c/0x6b8
-[    8.899559][  T599] sp : ffffffc00e733b00
-[    8.899560][  T599] x29: ffffffc00e733b00 x28: ffffffc00e733d30 x27: ffffffe8dc297470
-[    8.899563][  T599] x26: ffffffe8dc297000 x25: ffffffe8dc297000 x24: ffffffe8dc297000
-[    8.899566][  T599] x23: ffffffe8dc0a6200 x22: ffffff880f68bf20 x21: 0000000000000000
-[    8.899569][  T599] x20: ffffff880f68bf00 x19: ffffff8801babc00 x18: ffffffc00d7f9058
-[    8.899572][  T599] x17: 0000000000088793 x16: ffffff80461cbe00 x15: 9100052952800785
-[    8.899575][  T599] x14: 0000000000000200 x13: 0000000000000041 x12: 9100052952800785
-[    8.899577][  T599] x11: ffffffe8dc297000 x10: ffffffe8dc297000 x9 : ffffff80461cbc80
-[    8.899580][  T599] x8 : ffffff8801babe80 x7 : ffffffe8dc2ec000 x6 : ffffffe8dc2ed000
-[    8.899583][  T599] x5 : 000000008020001f x4 : fffffffe2006eae0 x3 : 000000008020001f
-[    8.899586][  T599] x2 : ffffff8027c49200 x1 : ffffff8801babc20 x0 : ffffff80461cb3a0
-[    8.899589][  T599] Call trace:
-[    8.899590][  T599]  gcov_info_add+0x9c/0xb8
-[    8.899592][  T599]  gcov_module_notifier+0xbc/0x120
-[    8.899595][  T599]  blocking_notifier_call_chain+0xa0/0x11c
-[    8.899598][  T599]  do_init_module+0x2a8/0x33c
-[    8.899600][  T599]  load_module+0x23cc/0x261c
-[    8.899602][  T599]  __arm64_sys_finit_module+0x158/0x194
-[    8.899604][  T599]  invoke_syscall+0x94/0x2bc
-[    8.899607][  T599]  el0_svc_common+0x1d8/0x34c
-[    8.899609][  T599]  do_el0_svc+0x40/0x54
-[    8.899611][  T599]  el0_svc+0x94/0x2f0
-[    8.899613][  T599]  el0t_64_sync_handler+0x88/0xec
-[    8.899615][  T599]  el0t_64_sync+0x1b4/0x1b8
-[    8.899618][  T599] Code: f905f56c f86e69ec f86e6a0f 8b0c01ec (f82e6a0c)
-[    8.899620][  T599] ---[ end trace ed5218e9e5b6e2e6 ]---
-
-Link: https://lkml.kernel.org/r/1668020497-13142-1-git-send-email-quic_mojha@quicinc.com
-Fixes: e178a5beb369 ("gcov: clang support")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: <stable@vger.kernel.org>	[5.2+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Cooper <alcooperx@gmail.com>
+Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20220427180853.35970-2-kdasu.kdev@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 56baa208f910 ("mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gcov/clang.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/sdhci-brcmstb.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/kernel/gcov/clang.c
-+++ b/kernel/gcov/clang.c
-@@ -280,6 +280,8 @@ void gcov_info_add(struct gcov_info *dst
+diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+index f24623aac2db..244780481193 100644
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -18,20 +18,22 @@
+ #define SDHCI_VENDOR 0x78
+ #define  SDHCI_VENDOR_ENHANCED_STRB 0x1
  
- 		for (i = 0; i < sfn_ptr->num_counters; i++)
- 			dfn_ptr->counters[i] += sfn_ptr->counters[i];
+-#define BRCMSTB_PRIV_FLAGS_NO_64BIT		BIT(0)
+-#define BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT	BIT(1)
++#define BRCMSTB_MATCH_FLAGS_NO_64BIT		BIT(0)
++#define BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT	BIT(1)
 +
-+		sfn_ptr = list_next_entry(sfn_ptr, head);
- 	}
- }
++#define BRCMSTB_PRIV_FLAGS_HAS_CQE		BIT(0)
  
+ #define SDHCI_ARASAN_CQE_BASE_ADDR		0x200
+ 
+ struct sdhci_brcmstb_priv {
+ 	void __iomem *cfg_regs;
+-	bool has_cqe;
++	unsigned int flags;
+ };
+ 
+ struct brcmstb_match_priv {
+ 	void (*hs400es)(struct mmc_host *mmc, struct mmc_ios *ios);
+ 	struct sdhci_ops *ops;
+-	unsigned int flags;
++	const unsigned int flags;
+ };
+ 
+ static void sdhci_brcmstb_hs400es(struct mmc_host *mmc, struct mmc_ios *ios)
+@@ -134,13 +136,13 @@ static struct sdhci_ops sdhci_brcmstb_ops_7216 = {
+ };
+ 
+ static struct brcmstb_match_priv match_priv_7425 = {
+-	.flags = BRCMSTB_PRIV_FLAGS_NO_64BIT |
+-	BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
++	.flags = BRCMSTB_MATCH_FLAGS_NO_64BIT |
++	BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
+ 	.ops = &sdhci_brcmstb_ops,
+ };
+ 
+ static struct brcmstb_match_priv match_priv_7445 = {
+-	.flags = BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
++	.flags = BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
+ 	.ops = &sdhci_brcmstb_ops,
+ };
+ 
+@@ -176,7 +178,7 @@ static int sdhci_brcmstb_add_host(struct sdhci_host *host,
+ 	bool dma64;
+ 	int ret;
+ 
+-	if (!priv->has_cqe)
++	if ((priv->flags & BRCMSTB_PRIV_FLAGS_HAS_CQE) == 0)
+ 		return sdhci_add_host(host);
+ 
+ 	dev_dbg(mmc_dev(host->mmc), "CQE is enabled\n");
+@@ -225,7 +227,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	struct sdhci_brcmstb_priv *priv;
+ 	struct sdhci_host *host;
+ 	struct resource *iomem;
+-	bool has_cqe = false;
+ 	struct clk *clk;
+ 	int res;
+ 
+@@ -244,10 +245,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 		return res;
+ 
+ 	memset(&brcmstb_pdata, 0, sizeof(brcmstb_pdata));
+-	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
+-		has_cqe = true;
+-		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
+-	}
+ 	brcmstb_pdata.ops = match_priv->ops;
+ 	host = sdhci_pltfm_init(pdev, &brcmstb_pdata,
+ 				sizeof(struct sdhci_brcmstb_priv));
+@@ -258,7 +255,10 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 
+ 	pltfm_host = sdhci_priv(host);
+ 	priv = sdhci_pltfm_priv(pltfm_host);
+-	priv->has_cqe = has_cqe;
++	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
++		priv->flags |= BRCMSTB_PRIV_FLAGS_HAS_CQE;
++		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
++	}
+ 
+ 	/* Map in the non-standard CFG registers */
+ 	iomem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+@@ -287,14 +287,14 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	 * properties through mmc_of_parse().
+ 	 */
+ 	host->caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+-	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_NO_64BIT)
++	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_NO_64BIT)
+ 		host->caps &= ~SDHCI_CAN_64BIT;
+ 	host->caps1 = sdhci_readl(host, SDHCI_CAPABILITIES_1);
+ 	host->caps1 &= ~(SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_SDR104 |
+ 			 SDHCI_SUPPORT_DDR50);
+ 	host->quirks |= SDHCI_QUIRK_MISSING_CAPS;
+ 
+-	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT)
++	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT)
+ 		host->quirks |= SDHCI_QUIRK_BROKEN_TIMEOUT_VAL;
+ 
+ 	res = sdhci_brcmstb_add_host(host, priv);
+-- 
+2.35.1
+
 
 
