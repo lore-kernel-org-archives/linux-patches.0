@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F8279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F01C433C1;
-	Wed, 30 Nov 2022 18:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354AB79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70E7C433D6;
+	Wed, 30 Nov 2022 18:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833438;
-	bh=ySM7WMAUi+iHkTm/tXD90O6rNr2qYnNWawf/pNYiTtc=;
+	s=korg; t=1669833441;
+	bh=PotTzQ0z9I0OWyHSSgd0Jdczu+WnOXmgIMsO3N2zjeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfaPgVBQeT9jrP2xHuhXqjIfnMX8j3wkALhtODopVp3q5avgcmqdoNjIluHKw5jVh
-	 9O1n40Y4/iI2gBEjj10KMRqqph5hwNkKH+a+MRALnTY71lYEHHZ08NQHvXhbe/yuL+
-	 c3C/TpxHODGbmssl3CjxtvPXXtCtmVP4aZVdMPZQ=
+	b=FLdCP6LodgnLFOWS0acOdmCZy9IfVjnmQ5cOVWad9HBIO/dW8d6E/+b/eLEySesgi
+	 cxbRmBv/4OXT4lcJmWgaRXnMA1QCo2/YsZgYc7ErPSKokUu6Wb2Nhna4ToU/+jwO4B
+	 wN04MqM3Gs8yVA6U1HAnL4pw6Mow+/yffccjN44g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com,
+	Lin Ma <linma@zju.edu.cn>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/206] net: dsa: sja1105: disallow C45 transactions on the BASE-TX MDIO bus
-Date: Wed, 30 Nov 2022 19:22:10 +0100
-Message-Id: <20221130180534.982500311@linuxfoundation.org>
+Subject: [PATCH 5.15 079/206] nfc/nci: fix race with opening and closing
+Date: Wed, 30 Nov 2022 19:22:11 +0100
+Message-Id: <20221130180535.008246858@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,69 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 24deec6b9e4a051635f75777844ffc184644fec9 ]
+[ Upstream commit 0ad6bded175e829c2ca261529c9dce39a32a042d ]
 
-You'd think people know that the internal 100BASE-TX PHY on the SJA1110
-responds only to clause 22 MDIO transactions, but they don't :)
+Previously we leverage NCI_UNREG and the lock inside nci_close_device to
+prevent the race condition between opening a device and closing a
+device. However, it still has problem because a failed opening command
+will erase the NCI_UNREG flag and allow another opening command to
+bypass the status checking.
 
-When a clause 45 transaction is attempted, sja1105_base_tx_mdio_read()
-and sja1105_base_tx_mdio_write() don't expect "reg" to contain bit 30
-set (MII_ADDR_C45) and pack this value into the SPI transaction buffer.
+This fix corrects that by making sure the NCI_UNREG is held.
 
-But the field in the SPI buffer has a width smaller than 30 bits, so we
-see this confusing message from the packing() API rather than a proper
-rejection of C45 transactions:
-
-Call trace:
- dump_stack+0x1c/0x38
- sja1105_pack+0xbc/0xc0 [sja1105]
- sja1105_xfer+0x114/0x2b0 [sja1105]
- sja1105_xfer_u32+0x44/0xf4 [sja1105]
- sja1105_base_tx_mdio_read+0x44/0x7c [sja1105]
- mdiobus_read+0x44/0x80
- get_phy_c45_ids+0x70/0x234
- get_phy_device+0x68/0x15c
- fwnode_mdiobus_register_phy+0x74/0x240
- of_mdiobus_register+0x13c/0x380
- sja1105_mdiobus_register+0x368/0x490 [sja1105]
- sja1105_setup+0x94/0x119c [sja1105]
-Cannot store 401d2405 inside bits 24-4 (would truncate)
-
-Fixes: 5a8f09748ee7 ("net: dsa: sja1105: register the MDIO buses for 100base-T1 and 100base-TX")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reported-by: syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com
+Fixes: 48b71a9e66c2 ("NFC: add NCI_UNREG flag to eliminate the race")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_mdio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/nfc/nci/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_mdio.c b/drivers/net/dsa/sja1105/sja1105_mdio.c
-index 215dd17ca790..4059fcc8c832 100644
---- a/drivers/net/dsa/sja1105/sja1105_mdio.c
-+++ b/drivers/net/dsa/sja1105/sja1105_mdio.c
-@@ -256,6 +256,9 @@ static int sja1105_base_tx_mdio_read(struct mii_bus *bus, int phy, int reg)
- 	u32 tmp;
- 	int rc;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 189c9f428a3c..7b6cf9a44aea 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -542,7 +542,7 @@ static int nci_open_device(struct nci_dev *ndev)
+ 		skb_queue_purge(&ndev->tx_q);
  
-+	if (reg & MII_ADDR_C45)
-+		return -EOPNOTSUPP;
-+
- 	rc = sja1105_xfer_u32(priv, SPI_READ, regs->mdio_100base_tx + reg,
- 			      &tmp, NULL);
- 	if (rc < 0)
-@@ -272,6 +275,9 @@ static int sja1105_base_tx_mdio_write(struct mii_bus *bus, int phy, int reg,
- 	const struct sja1105_regs *regs = priv->info->regs;
- 	u32 tmp = val;
+ 		ndev->ops->close(ndev);
+-		ndev->flags = 0;
++		ndev->flags &= BIT(NCI_UNREG);
+ 	}
  
-+	if (reg & MII_ADDR_C45)
-+		return -EOPNOTSUPP;
-+
- 	return sja1105_xfer_u32(priv, SPI_WRITE, regs->mdio_100base_tx + reg,
- 				&tmp, NULL);
- }
+ done:
 -- 
 2.35.1
 
