@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81E679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20019C433D7;
-	Wed, 30 Nov 2022 18:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DC679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69348C433C1;
+	Wed, 30 Nov 2022 18:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833297;
-	bh=XQ+BDpOhfi1eVF41GsLvxvVEKygi9L4SB9nMGuMQli0=;
+	s=korg; t=1669833300;
+	bh=FNLcCxLKPSv+7vCV2X6Cn4/ZN+mViG4o31A9b3kLhgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+TeuPuqMukn+olor+vMh6T1TxCV1jo40vmMBBc7CJMGHiCKg2oTAdPF5f+X7sIYm
-	 +toWB9qSaJvuq0kaM2h1FtlTum+PJYshUFO9fSNR24Axg3aY0XzLEgl3hFW1/pV8Jr
-	 ZMBT18C/K2zTDjRaatLDYfQ71o/zifXmJgc+geIg=
+	b=oK0DWWn+nCe9Q6JzqPSk6fAD5VtMK+ZDqNTwuWM5afeRp6VeXCA/PZT75Hs5DMbpx
+	 fRfiS1tW5NcgHaD6/vjlVzfYQkBDT6MVBLkCmk5bb4kagbXPEOt4BmxPIt1Krb+ro5
+	 V3M2pCW6Moz95/mKyaIow8pbzKhbr9TRcYtjW/uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Dominik Haller <d.haller@phytec.de>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/206] af_key: Fix send_acquire race with pfkey_register
-Date: Wed, 30 Nov 2022 19:21:49 +0100
-Message-Id: <20221130180534.455191435@linuxfoundation.org>
+Subject: [PATCH 5.15 058/206] ARM: dts: am335x-pcm-953: Define fixed regulators in root node
+Date: Wed, 30 Nov 2022 19:21:50 +0100
+Message-Id: <20221130180534.479510964@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -38,145 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Dominik Haller <d.haller@phytec.de>
 
-[ Upstream commit 7f57f8165cb6d2c206e2b9ada53b9e2d6d8af42f ]
+[ Upstream commit 8950f345a67d8046d2472dd6ea81fa18ef5b4844 ]
 
-The function pfkey_send_acquire may race with pfkey_register
-(which could even be in a different name space).  This may result
-in a buffer overrun.
+Remove the regulators node and define fixed regulators in the root node.
+Prevents the sdhci-omap driver from waiting in probe deferral forever
+because of the missing vmmc-supply and keeps am335x-pcm-953 consistent with
+the other Phytec AM335 boards.
 
-Allocating the maximum amount of memory that could be used prevents
-this.
-
-Reported-by: syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: bb07a829ec38 ("ARM: dts: Add support for phyCORE-AM335x PCM-953 carrier board")
+Signed-off-by: Dominik Haller <d.haller@phytec.de>
+Message-Id: <20221011143115.248003-1-d.haller@phytec.de>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ arch/arm/boot/dts/am335x-pcm-953.dtsi | 28 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index 53cca9019158..a654bd4bc437 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -2905,7 +2905,7 @@ static int count_ah_combs(const struct xfrm_tmpl *t)
- 			break;
- 		if (!aalg->pfkey_supported)
- 			continue;
--		if (aalg_tmpl_set(t, aalg) && aalg->available)
-+		if (aalg_tmpl_set(t, aalg))
- 			sz += sizeof(struct sadb_comb);
- 	}
- 	return sz + sizeof(struct sadb_prop);
-@@ -2923,7 +2923,7 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
- 		if (!ealg->pfkey_supported)
- 			continue;
+diff --git a/arch/arm/boot/dts/am335x-pcm-953.dtsi b/arch/arm/boot/dts/am335x-pcm-953.dtsi
+index 124026fa0d09..f207499461b3 100644
+--- a/arch/arm/boot/dts/am335x-pcm-953.dtsi
++++ b/arch/arm/boot/dts/am335x-pcm-953.dtsi
+@@ -12,22 +12,20 @@ / {
+ 	compatible = "phytec,am335x-pcm-953", "phytec,am335x-phycore-som", "ti,am33xx";
  
--		if (!(ealg_tmpl_set(t, ealg) && ealg->available))
-+		if (!(ealg_tmpl_set(t, ealg)))
- 			continue;
+ 	/* Power */
+-	regulators {
+-		vcc3v3: fixedregulator@1 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "vcc3v3";
+-			regulator-min-microvolt = <3300000>;
+-			regulator-max-microvolt = <3300000>;
+-			regulator-boot-on;
+-		};
++	vcc3v3: fixedregulator1 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++	};
  
- 		for (k = 1; ; k++) {
-@@ -2934,16 +2934,17 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
- 			if (!aalg->pfkey_supported)
- 				continue;
+-		vcc1v8: fixedregulator@2 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "vcc1v8";
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-boot-on;
+-		};
++	vcc1v8: fixedregulator2 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc1v8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-boot-on;
+ 	};
  
--			if (aalg_tmpl_set(t, aalg) && aalg->available)
-+			if (aalg_tmpl_set(t, aalg))
- 				sz += sizeof(struct sadb_comb);
- 		}
- 	}
- 	return sz + sizeof(struct sadb_prop);
- }
- 
--static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
-+static int dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- {
- 	struct sadb_prop *p;
-+	int sz = 0;
- 	int i;
- 
- 	p = skb_put(skb, sizeof(struct sadb_prop));
-@@ -2971,13 +2972,17 @@ static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- 			c->sadb_comb_soft_addtime = 20*60*60;
- 			c->sadb_comb_hard_usetime = 8*60*60;
- 			c->sadb_comb_soft_usetime = 7*60*60;
-+			sz += sizeof(*c);
- 		}
- 	}
-+
-+	return sz + sizeof(*p);
- }
- 
--static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
-+static int dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- {
- 	struct sadb_prop *p;
-+	int sz = 0;
- 	int i, k;
- 
- 	p = skb_put(skb, sizeof(struct sadb_prop));
-@@ -3019,8 +3024,11 @@ static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- 			c->sadb_comb_soft_addtime = 20*60*60;
- 			c->sadb_comb_hard_usetime = 8*60*60;
- 			c->sadb_comb_soft_usetime = 7*60*60;
-+			sz += sizeof(*c);
- 		}
- 	}
-+
-+	return sz + sizeof(*p);
- }
- 
- static int key_notify_policy_expire(struct xfrm_policy *xp, const struct km_event *c)
-@@ -3150,6 +3158,7 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	struct sadb_x_sec_ctx *sec_ctx;
- 	struct xfrm_sec_ctx *xfrm_ctx;
- 	int ctx_size = 0;
-+	int alg_size = 0;
- 
- 	sockaddr_size = pfkey_sockaddr_size(x->props.family);
- 	if (!sockaddr_size)
-@@ -3161,16 +3170,16 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 		sizeof(struct sadb_x_policy);
- 
- 	if (x->id.proto == IPPROTO_AH)
--		size += count_ah_combs(t);
-+		alg_size = count_ah_combs(t);
- 	else if (x->id.proto == IPPROTO_ESP)
--		size += count_esp_combs(t);
-+		alg_size = count_esp_combs(t);
- 
- 	if ((xfrm_ctx = x->security)) {
- 		ctx_size = PFKEY_ALIGN8(xfrm_ctx->ctx_len);
- 		size +=  sizeof(struct sadb_x_sec_ctx) + ctx_size;
- 	}
- 
--	skb =  alloc_skb(size + 16, GFP_ATOMIC);
-+	skb =  alloc_skb(size + alg_size + 16, GFP_ATOMIC);
- 	if (skb == NULL)
- 		return -ENOMEM;
- 
-@@ -3224,10 +3233,13 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	pol->sadb_x_policy_priority = xp->priority;
- 
- 	/* Set sadb_comb's. */
-+	alg_size = 0;
- 	if (x->id.proto == IPPROTO_AH)
--		dump_ah_combs(skb, t);
-+		alg_size = dump_ah_combs(skb, t);
- 	else if (x->id.proto == IPPROTO_ESP)
--		dump_esp_combs(skb, t);
-+		alg_size = dump_esp_combs(skb, t);
-+
-+	hdr->sadb_msg_len += alg_size / 8;
- 
- 	/* security context */
- 	if (xfrm_ctx) {
+ 	/* User IO */
 -- 
 2.35.1
 
