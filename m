@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10576FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F85C433C1;
-	Wed, 30 Nov 2022 18:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D26D6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49E7C433D6;
+	Wed, 30 Nov 2022 18:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832759;
-	bh=yjQ99BQ+hsRK0Umb/tiUk8l4Y/ViyKyhCBcCEgyoA6k=;
+	s=korg; t=1669832762;
+	bh=kTrLym0Zt7CUv9DpQFsNg8OhVuZybzyAwzKOAgNgc1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUI/MGJhfBAnRO8wylbKQ8i+FJd2MgxBziYJUZem0RISHyS5XRdLKpNkDwDR+rJGs
-	 KWnbkOAHoo3EW3ZqTzA5ED7O9HwVZmk7orIfrg5Ai/XkYZRbdUdM3Qw5zWnNVFXA8P
-	 PMLGj8WLtI7xCNdvbYOsq3+qmoyzmToe0dJqUMVY=
+	b=i1efPDnxtC/T8/oXro/Or80z/Yqejlpo4mG5IoF938BsDq3AEaQZ1sibY4Nzi4l66
+	 LQ4pw1Mjh59csEfhjbdqZq1yBAFAJdYwi0aGdL4rki0iF4AiJdhklsLWs6dpemKtGr
+	 9O9QMEGx3NRQcP6KJ+ideWJL8mjJf7d3pPnu1LI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/162] RISC-V: vdso: Do not add missing symbols to version section in linker script
-Date: Wed, 30 Nov 2022 19:21:51 +0100
-Message-Id: <20221130180529.321532657@linuxfoundation.org>
+Subject: [PATCH 5.10 031/162] MIPS: pic32: treat port as signed integer
+Date: Wed, 30 Nov 2022 19:21:52 +0100
+Message-Id: <20221130180529.348059288@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,66 +35,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit fcae44fd36d052e956e69a64642fc03820968d78 ]
+[ Upstream commit 648060902aa302331b5d6e4f26d8ee0761d239ab ]
 
-Recently, ld.lld moved from '--undefined-version' to
-'--no-undefined-version' as the default, which breaks the compat vDSO
-build:
+get_port_from_cmdline() returns an int, yet is assigned to a char, which
+is wrong in its own right, but also, with char becoming unsigned, this
+poses problems, because -1 is used as an error value. Further
+complicating things, fw_init_early_console() is only ever called with a
+-1 argument. Fix this up by removing the unused argument from
+fw_init_early_console() and treating port as a proper signed integer.
 
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_gettimeofday' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_gettime' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_getres' failed: symbol not defined
-
-These symbols are not present in the compat vDSO or the regular vDSO for
-32-bit but they are unconditionally included in the version section of
-the linker script, which is prohibited with '--no-undefined-version'.
-
-Fix this issue by only including the symbols that are actually exported
-in the version section of the linker script.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1756
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221108171324.3377226-1-nathan@kernel.org/
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile   | 3 +++
- arch/riscv/kernel/vdso/vdso.lds.S | 2 ++
- 2 files changed, 5 insertions(+)
+ arch/mips/include/asm/fw/fw.h             |  2 +-
+ arch/mips/pic32/pic32mzda/early_console.c | 13 ++++++-------
+ arch/mips/pic32/pic32mzda/init.c          |  2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 926ab3960f9e..c92b55a0ec1c 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -28,6 +28,9 @@ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
+diff --git a/arch/mips/include/asm/fw/fw.h b/arch/mips/include/asm/fw/fw.h
+index d0ef8b4892bb..d0494ce4b337 100644
+--- a/arch/mips/include/asm/fw/fw.h
++++ b/arch/mips/include/asm/fw/fw.h
+@@ -26,6 +26,6 @@ extern char *fw_getcmdline(void);
+ extern void fw_meminit(void);
+ extern char *fw_getenv(char *name);
+ extern unsigned long fw_getenvl(char *name);
+-extern void fw_init_early_console(char port);
++extern void fw_init_early_console(void);
  
- obj-y += vdso.o vdso-syms.o
- CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
-+ifneq ($(filter vgettimeofday, $(vdso-syms)),)
-+CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
-+endif
+ #endif /* __ASM_FW_H_ */
+diff --git a/arch/mips/pic32/pic32mzda/early_console.c b/arch/mips/pic32/pic32mzda/early_console.c
+index 25372e62783b..3cd1b408fa1c 100644
+--- a/arch/mips/pic32/pic32mzda/early_console.c
++++ b/arch/mips/pic32/pic32mzda/early_console.c
+@@ -27,7 +27,7 @@
+ #define U_BRG(x)	(UART_BASE(x) + 0x40)
  
- # Disable -pg to prevent insert call site
- CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE)
-diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
-index e6f558bca71b..b3e58402c342 100644
---- a/arch/riscv/kernel/vdso/vdso.lds.S
-+++ b/arch/riscv/kernel/vdso/vdso.lds.S
-@@ -64,9 +64,11 @@ VERSION
- 	LINUX_4.15 {
- 	global:
- 		__vdso_rt_sigreturn;
-+#ifdef HAS_VGETTIMEOFDAY
- 		__vdso_gettimeofday;
- 		__vdso_clock_gettime;
- 		__vdso_clock_getres;
-+#endif
- 		__vdso_getcpu;
- 		__vdso_flush_icache;
- 	local: *;
+ static void __iomem *uart_base;
+-static char console_port = -1;
++static int console_port = -1;
+ 
+ static int __init configure_uart_pins(int port)
+ {
+@@ -47,7 +47,7 @@ static int __init configure_uart_pins(int port)
+ 	return 0;
+ }
+ 
+-static void __init configure_uart(char port, int baud)
++static void __init configure_uart(int port, int baud)
+ {
+ 	u32 pbclk;
+ 
+@@ -60,7 +60,7 @@ static void __init configure_uart(char port, int baud)
+ 		     uart_base + PIC32_SET(U_STA(port)));
+ }
+ 
+-static void __init setup_early_console(char port, int baud)
++static void __init setup_early_console(int port, int baud)
+ {
+ 	if (configure_uart_pins(port))
+ 		return;
+@@ -130,16 +130,15 @@ static int __init get_baud_from_cmdline(char *arch_cmdline)
+ 	return baud;
+ }
+ 
+-void __init fw_init_early_console(char port)
++void __init fw_init_early_console(void)
+ {
+ 	char *arch_cmdline = pic32_getcmdline();
+-	int baud = -1;
++	int baud, port;
+ 
+ 	uart_base = ioremap(PIC32_BASE_UART, 0xc00);
+ 
+ 	baud = get_baud_from_cmdline(arch_cmdline);
+-	if (port == -1)
+-		port = get_port_from_cmdline(arch_cmdline);
++	port = get_port_from_cmdline(arch_cmdline);
+ 
+ 	if (port == -1)
+ 		port = EARLY_CONSOLE_PORT;
+diff --git a/arch/mips/pic32/pic32mzda/init.c b/arch/mips/pic32/pic32mzda/init.c
+index f232c77ff526..488c0bee7ebf 100644
+--- a/arch/mips/pic32/pic32mzda/init.c
++++ b/arch/mips/pic32/pic32mzda/init.c
+@@ -60,7 +60,7 @@ void __init plat_mem_setup(void)
+ 		strlcpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);
+ 
+ #ifdef CONFIG_EARLY_PRINTK
+-	fw_init_early_console(-1);
++	fw_init_early_console();
+ #endif
+ 	pic32_config_init();
+ }
 -- 
 2.35.1
 
