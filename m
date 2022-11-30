@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2510779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4BCC433D6;
-	Wed, 30 Nov 2022 18:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08A579C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53285C433D6;
+	Wed, 30 Nov 2022 18:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834471;
-	bh=T2hPKsWNW7abcrcjLBMijRjZLL8m3qgeJM8HhFt9LdU=;
+	s=korg; t=1669834473;
+	bh=bu42splrzhCHF6VqW318c0/mtzMLIiilfw/NzAf782Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYuh+OFbfdznMVf/FTJYzJ3X9JG+ejvdwf/mZAMsqkeW0COmPD+afDBRnlOMTi1aj
-	 GIOQ6wgNDRCfGQKtsBOr16rIrUUFsa7mXCyVC3XK5nFdFw/8ufjQvrlrWt1ZW7uGci
-	 UQUr4ua9WiViQ/1pX/aykCRk2/HVbQz+KUeXyrCk=
+	b=ZaC5DSBGy2peIuBxgdLLlHcgmodmB3X5PLRQf5g6LEYawBdWX9BZ3vQB91SaFAHkY
+	 3Q2wLvHJepB+msz04/CXjdi8YawjWj4dh6GyKj/u65HSBP1+VKoItqmQFG7QlUp3HY
+	 ual1087DD4KNTL4YYZahoo3Rd2ho9yjC13TZgMb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 258/289] dm-integrity: set dma_alignment limit in io_hints
-Date: Wed, 30 Nov 2022 19:24:03 +0100
-Message-Id: <20221130180549.952398087@linuxfoundation.org>
+	Phil Turnbull <philipturnbull@github.com>,
+	Ajay Kathat <ajay.kathat@microchip.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.0 267/289] wifi: wilc1000: validate pairwise and authentication suite offsets
+Date: Wed, 30 Nov 2022 19:24:12 +0100
+Message-Id: <20221130180550.151206167@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Phil Turnbull <philipturnbull@github.com>
 
-[ Upstream commit 29aa778bb66795e6a78b1c99beadc83887827868 ]
+commit cd21d99e595ec1d8721e1058dcdd4f1f7de1d793 upstream.
 
-This device mapper needs bio vectors to be sized and memory aligned to
-the logical block size. Set the minimum required queue limit
-accordingly.
+There is no validation of 'offset' which can trigger an out-of-bounds
+read when extracting RSN capabilities.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221110184501.2451620-5-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Phil Turnbull <philipturnbull@github.com>
+Tested-by: Ajay Kathat <ajay.kathat@microchip.com>
+Acked-by: Ajay Kathat <ajay.kathat@microchip.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221123153543.8568-2-philipturnbull@github.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/microchip/wilc1000/hif.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index aaf2472df6e5..e1e7b205573f 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3370,6 +3370,7 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
- 		limits->logical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
- 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
- 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
-+		limits->dma_alignment = limits->logical_block_size - 1;
- 	}
- }
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -482,14 +482,25 @@ void *wilc_parse_join_bss_param(struct c
  
--- 
-2.35.1
-
+ 	rsn_ie = cfg80211_find_ie(WLAN_EID_RSN, ies->data, ies->len);
+ 	if (rsn_ie) {
++		int rsn_ie_len = sizeof(struct element) + rsn_ie[1];
+ 		int offset = 8;
+ 
+-		param->mode_802_11i = 2;
+-		param->rsn_found = true;
+ 		/* extract RSN capabilities */
+-		offset += (rsn_ie[offset] * 4) + 2;
+-		offset += (rsn_ie[offset] * 4) + 2;
+-		memcpy(param->rsn_cap, &rsn_ie[offset], 2);
++		if (offset < rsn_ie_len) {
++			/* skip over pairwise suites */
++			offset += (rsn_ie[offset] * 4) + 2;
++
++			if (offset < rsn_ie_len) {
++				/* skip over authentication suites */
++				offset += (rsn_ie[offset] * 4) + 2;
++
++				if (offset + 1 < rsn_ie_len) {
++					param->mode_802_11i = 2;
++					param->rsn_found = true;
++					memcpy(param->rsn_cap, &rsn_ie[offset], 2);
++				}
++			}
++		}
+ 	}
+ 
+ 	if (param->rsn_found) {
 
 
