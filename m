@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE24879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A2CC433D7;
-	Wed, 30 Nov 2022 18:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D404879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBE9C433D6;
+	Wed, 30 Nov 2022 18:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833128;
-	bh=IEvJufulOUzsOw8HWUl/FBQXPLnQ/gWmtxA5mxixfYU=;
+	s=korg; t=1669833131;
+	bh=AHuQ2crU9VmKDSrHaoFqqKvRP1+7eD8yQs5aVRFjzn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNCYcTUFL1glYA2tbRLHJjlL5fIg9zLu7OxRTjIN6XhcoQz3Wv2xaJ8F+PgJb/fpx
-	 /J5SXOh0hQ2BKIAyJQV5gjgLPwqJ65RmGZEuEZgKy2tfTjPYxgYuwvnf8zouYuCdpw
-	 9P8bGJN55taMv1E62c98QNE1NKeaDi3CoK8tB8Zc=
+	b=sV9M0SvP/Fb2ZCeelBhA6o20Mo95IETUU48IfeGjZZzOR38cQyvgmABtkZizU/3yz
+	 E/hmWu/cdsqSVfdpuSOAgmVQelFtlCMRR0OvfAlSbesxdKouCOWqf9k46FVoMCkRGL
+	 kt2ZRz7N3qE4CMMSswGw/QWyhBpR12goVa2sQy4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Su Bao Cheng <baocheng.su@siemens.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/162] serial: 8250: 8250_omap: Avoid RS485 RTS glitch on ->set_termios()
-Date: Wed, 30 Nov 2022 19:23:34 +0100
-Message-Id: <20221130180532.093642005@linuxfoundation.org>
+Subject: [PATCH 5.10 134/162] Input: goodix - try resetting the controller when no config is set
+Date: Wed, 30 Nov 2022 19:23:35 +0100
+Message-Id: <20221130180532.119825215@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,92 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 038ee49fef18710bedd38b531d173ccd746b2d8d ]
+[ Upstream commit c7e37cc6240767f794678d11704935d49cc81d59 ]
 
-RS485-enabled UART ports on TI Sitara SoCs with active-low polarity
-exhibit a Transmit Enable glitch on ->set_termios():
+On ACPI systems (irq_pin_access_method == IRQ_PIN_ACCESS_ACPI_*) the driver
+does not reset the controller at probe time, because sometimes the system
+firmware loads a config and resetting might loose this config.
 
-omap8250_restore_regs(), which is called from omap_8250_set_termios(),
-sets the TCRTLR bit in the MCR register and clears all other bits,
-including RTS.  If RTS uses active-low polarity, it is now asserted
-for no reason.
+On the Nanote UMPC-01 device OTOH the config is in flash of the controller,
+the controller needs a reset to load this; and the system firmware does not
+reset the controller on a cold boot.
 
-The TCRTLR bit is subsequently cleared by writing up->mcr to the MCR
-register.  That variable is always zero, so the RTS bit is still cleared
-(incorrectly so if RTS is active-high).
+To fix the Nanote UMPC-01 touchscreen not working on a cold boot, try
+resetting the controller and then re-reading the config when encountering
+a config with 0 width/height/max_touch_num value and the controller has
+not already been reset by goodix_ts_probe().
 
-(up->mcr is not, as one might think, a cache of the MCR register's
-current value.  Rather, it only caches a single bit of that register,
-the AFE bit.  And it only does so if the UART supports the AFE bit,
-which OMAP does not.  For details see serial8250_do_set_termios() and
-serial8250_do_set_mctrl().)
+This should be safe to do in general because normally we should never
+encounter a config with 0 width/height/max_touch_num. Doing this in
+general not only avoids the need for a DMI quirk, but also might help
+other systems.
 
-Finally at the end of omap8250_restore_regs(), the MCR register is
-restored (and RTS deasserted) by a call to up->port.ops->set_mctrl()
-(which equals serial8250_set_mctrl()) and serial8250_em485_stop_tx().
-
-So there's an RTS glitch between setting TCRTLR and calling
-serial8250_em485_stop_tx().  Avoid by using a read-modify-write
-when setting TCRTLR.
-
-While at it, drop a redundant initialization of up->mcr.  As explained
-above, the variable isn't used by the driver and it is already
-initialized to zero because it is part of the static struct
-serial8250_ports[] declared in 8250_core.c.  (Static structs are
-initialized to zero per section 6.7.8 nr. 10 of the C99 standard.)
-
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Su Bao Cheng <baocheng.su@siemens.com>
-Tested-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/r/6554b0241a2c7fd50f32576fdbafed96709e11e8.1664278942.git.lukas@wunner.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20221025122930.421377-2-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/input/touchscreen/goodix.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 3f7379f16a36..483fff3a95c9 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -293,6 +293,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- {
- 	struct omap8250_priv *priv = up->port.private_data;
- 	struct uart_8250_dma	*dma = up->dma;
-+	u8 mcr = serial8250_in_MCR(up);
+diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
+index b23abde5d7db..b7f87ad4b9a9 100644
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -1059,6 +1059,7 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
+ 	input_set_abs_params(ts->input_dev, ABS_MT_WIDTH_MAJOR, 0, 255, 0, 0);
+ 	input_set_abs_params(ts->input_dev, ABS_MT_TOUCH_MAJOR, 0, 255, 0, 0);
  
- 	if (dma && dma->tx_running) {
- 		/*
-@@ -309,7 +310,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- 	serial_out(up, UART_EFR, UART_EFR_ECB);
++retry_read_config:
+ 	/* Read configuration and apply touchscreen parameters */
+ 	goodix_read_config(ts);
  
- 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_A);
--	serial8250_out_MCR(up, UART_MCR_TCRTLR);
-+	serial8250_out_MCR(up, mcr | UART_MCR_TCRTLR);
- 	serial_out(up, UART_FCR, up->fcr);
+@@ -1066,6 +1067,16 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
+ 	touchscreen_parse_properties(ts->input_dev, true, &ts->prop);
  
- 	omap8250_update_scr(up, priv);
-@@ -325,7 +326,8 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- 	serial_out(up, UART_LCR, 0);
- 
- 	/* drop TCR + TLR access, we setup XON/XOFF later */
--	serial8250_out_MCR(up, up->mcr);
-+	serial8250_out_MCR(up, mcr);
-+
- 	serial_out(up, UART_IER, up->ier);
- 
- 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
-@@ -684,7 +686,6 @@ static int omap_8250_startup(struct uart_port *port)
- 
- 	pm_runtime_get_sync(port->dev);
- 
--	up->mcr = 0;
- 	serial_out(up, UART_FCR, UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
- 
- 	serial_out(up, UART_LCR, UART_LCR_WLEN8);
+ 	if (!ts->prop.max_x || !ts->prop.max_y || !ts->max_touch_num) {
++		if (!ts->reset_controller_at_probe &&
++		    ts->irq_pin_access_method != IRQ_PIN_ACCESS_NONE) {
++			dev_info(&ts->client->dev, "Config not set, resetting controller\n");
++			/* Retry after a controller reset */
++			ts->reset_controller_at_probe = true;
++			error = goodix_reset(ts);
++			if (error)
++				return error;
++			goto retry_read_config;
++		}
+ 		dev_err(&ts->client->dev,
+ 			"Invalid config (%d, %d, %d), using defaults\n",
+ 			ts->prop.max_x, ts->prop.max_y, ts->max_touch_num);
 -- 
 2.35.1
 
