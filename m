@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332576FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AA0C433C1;
-	Wed, 30 Nov 2022 18:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077BF6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83077C433D6;
+	Wed, 30 Nov 2022 18:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832910;
-	bh=sxnnJLIiZ8jwbvZfagUCDnSXi1a6/s1fGy/enlusS5E=;
+	s=korg; t=1669832912;
+	bh=27AmGXMxJTFCi8iQCbww9sVarFzRt07skejGkJ61NYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roLOB7Lbpm1291e02qLh46FzxFM8gXCXHzDvyF0u9l0f/w/P8CB6Y+V/USfOSbm9S
-	 rBL0rUoZW9cPPIpc5egFuGpgGu7cz0EanvmGyFhK6iuABmzATZJVwy+7HZ8Q+ZoUCF
-	 BOqf4cmdU/8m6OoLUWIWyh87Etl13hfwYoJQ3Ptk=
+	b=DA9BSpMZViPvu1UXeIEDrlXFVmqu29iCHp70qwW/cBAlKshYLtCt6IIxIvgQ8d8Sm
+	 P4SHsGbt7OJZcRn4i6h70joEwmr9UBmFsxPeVv44QM+173vQmD2wvEZ4SO0J8ds70h
+	 5WQYM6VFyPE4tcqMccvb6amwUdGBxFogOHIOJRZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/162] arcnet: fix potential memory leak in com20020_probe()
-Date: Wed, 30 Nov 2022 19:22:45 +0100
-Message-Id: <20221130180530.774242709@linuxfoundation.org>
+Subject: [PATCH 5.10 085/162] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
+Date: Wed, 30 Nov 2022 19:22:46 +0100
+Message-Id: <20221130180530.799313347@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,59 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit 1c40cde6b5171d9c8dfc69be00464fd1c75e210b ]
+[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
 
-In com20020_probe(), if com20020_config() fails, dev and info
-will not be freed, which will lead to a memory leak.
+The first validation check for EVT_TRANSACTION has two different checks
+tied together with logical AND. One is a check for minimum packet length,
+and the other is for a valid aid_tag. If either condition is true (fails),
+then an error should be triggered. The fix is to change && to ||.
 
-This patch adds freeing dev and info after com20020_config()
-fails to fix this bug.
-
-Compile tested only.
-
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/arcnet/com20020_cs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/nfc/st-nci/se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/arcnet/com20020_cs.c b/drivers/net/arcnet/com20020_cs.c
-index 9cc5eb6a8e90..e0c7720bd5da 100644
---- a/drivers/net/arcnet/com20020_cs.c
-+++ b/drivers/net/arcnet/com20020_cs.c
-@@ -113,6 +113,7 @@ static int com20020_probe(struct pcmcia_device *p_dev)
- 	struct com20020_dev *info;
- 	struct net_device *dev;
- 	struct arcnet_local *lp;
-+	int ret = -ENOMEM;
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index 807eae04c1e3..b1ee5a38f964 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -327,7 +327,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+ 		 * AID          81      5 to 16
+ 		 * PARAMETERS   82      0 to 255
+ 		 */
+-		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
++		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
+ 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
+ 			return -EPROTO;
  
- 	dev_dbg(&p_dev->dev, "com20020_attach()\n");
- 
-@@ -142,12 +143,18 @@ static int com20020_probe(struct pcmcia_device *p_dev)
- 	info->dev = dev;
- 	p_dev->priv = info;
- 
--	return com20020_config(p_dev);
-+	ret = com20020_config(p_dev);
-+	if (ret)
-+		goto fail_config;
-+
-+	return 0;
- 
-+fail_config:
-+	free_arcdev(dev);
- fail_alloc_dev:
- 	kfree(info);
- fail_alloc_info:
--	return -ENOMEM;
-+	return ret;
- } /* com20020_attach */
- 
- static void com20020_detach(struct pcmcia_device *link)
 -- 
 2.35.1
 
