@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DBD79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4454C433C1;
-	Wed, 30 Nov 2022 18:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC1879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818FEC433D6;
+	Wed, 30 Nov 2022 18:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834191;
-	bh=0UE29nwUynVKzO0dAM11rnMEA4+fasz6dd8cQikoU7k=;
+	s=korg; t=1669834193;
+	bh=1D4f8fUU4CIABjMo6IeZN+Z7Fi+qbxtxwOrDsACa/W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6Cxy4+DgKLZyK6zj0SHGo23v5cxnIkBjsQRCHqog6Boidyc7jqzLEdmfPHADnKEn
-	 kYMO6aEUle6KMZ8Vyq1U/2JSRCESngH7ukKj852boJV1fjc46IxLWQgnf26wk/Xs3J
-	 Ie9Rl+25PlFOAfBJ79iDukIJjmIFXIBb+TvfvhzA=
+	b=seKTX+t2haStO/buLAwqazguHfsTW3sazunjPM4gUJGorofLsLX3bXx39758ZlBHo
+	 AtvySVRJmeLZSCXDz9xTyynylBalsUSc+y2OOxS19Qs08IJ99Nl395HjZvJOueikVx
+	 7nhCPNq2uCq3e8ag/izTGWMAPY6tBazLjzBXom6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH 6.0 162/289] usb: dwc3: exynos: Fix remove() function
-Date: Wed, 30 Nov 2022 19:22:27 +0100
-Message-Id: <20221130180547.806661145@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 6.0 163/289] usb: cdnsp: Fix issue with Clear Feature Halt Endpoint
+Date: Wed, 30 Nov 2022 19:22:28 +0100
+Message-Id: <20221130180547.829165697@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,51 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit e0481e5b3cc12ea7ccf4552d41518c89d3509004 upstream.
+commit b25264f22b498dff3fa5c70c9bea840e83fff0d1 upstream.
 
-The core DWC3 device node was not properly removed by the custom
-dwc3_exynos_remove_child() function. Replace it with generic
-of_platform_depopulate() which does that job right.
+During handling Clear Halt Endpoint Feature request, driver invokes
+Reset Endpoint command. Because this command has some issue with
+transition endpoint from Running to Idle state the driver must
+stop the endpoint by using Stop Endpoint command.
 
-Fixes: adcf20dcd262 ("usb: dwc3: exynos: Use of_platform API to create dwc3 core pdev")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Link: https://lore.kernel.org/r/20221110154131.2577-1-m.szyprowski@samsung.com
+cc: <stable@vger.kernel.org>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/20221110063005.370656-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-exynos.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/usb/cdns3/cdnsp-gadget.c |   12 ++++--------
+ drivers/usb/cdns3/cdnsp-ring.c   |    3 ++-
+ 2 files changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-exynos.c
-+++ b/drivers/usb/dwc3/dwc3-exynos.c
-@@ -37,15 +37,6 @@ struct dwc3_exynos {
- 	struct regulator	*vdd10;
- };
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -600,11 +600,11 @@ int cdnsp_halt_endpoint(struct cdnsp_dev
  
--static int dwc3_exynos_remove_child(struct device *dev, void *unused)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--
--	platform_device_unregister(pdev);
--
--	return 0;
--}
--
- static int dwc3_exynos_probe(struct platform_device *pdev)
- {
- 	struct dwc3_exynos	*exynos;
-@@ -142,7 +133,7 @@ static int dwc3_exynos_remove(struct pla
- 	struct dwc3_exynos	*exynos = platform_get_drvdata(pdev);
- 	int i;
+ 	trace_cdnsp_ep_halt(value ? "Set" : "Clear");
  
--	device_for_each_child(&pdev->dev, NULL, dwc3_exynos_remove_child);
-+	of_platform_depopulate(&pdev->dev);
+-	if (value) {
+-		ret = cdnsp_cmd_stop_ep(pdev, pep);
+-		if (ret)
+-			return ret;
++	ret = cdnsp_cmd_stop_ep(pdev, pep);
++	if (ret)
++		return ret;
  
- 	for (i = exynos->num_clks - 1; i >= 0; i--)
- 		clk_disable_unprepare(exynos->clks[i]);
++	if (value) {
+ 		if (GET_EP_CTX_STATE(pep->out_ctx) == EP_STATE_STOPPED) {
+ 			cdnsp_queue_halt_endpoint(pdev, pep->idx);
+ 			cdnsp_ring_cmd_db(pdev);
+@@ -613,10 +613,6 @@ int cdnsp_halt_endpoint(struct cdnsp_dev
+ 
+ 		pep->ep_state |= EP_HALTED;
+ 	} else {
+-		/*
+-		 * In device mode driver can call reset endpoint command
+-		 * from any endpoint state.
+-		 */
+ 		cdnsp_queue_reset_ep(pdev, pep->idx);
+ 		cdnsp_ring_cmd_db(pdev);
+ 		ret = cdnsp_wait_for_cmd_compl(pdev);
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -2076,7 +2076,8 @@ int cdnsp_cmd_stop_ep(struct cdnsp_devic
+ 	u32 ep_state = GET_EP_CTX_STATE(pep->out_ctx);
+ 	int ret = 0;
+ 
+-	if (ep_state == EP_STATE_STOPPED || ep_state == EP_STATE_DISABLED) {
++	if (ep_state == EP_STATE_STOPPED || ep_state == EP_STATE_DISABLED ||
++	    ep_state == EP_STATE_HALTED) {
+ 		trace_cdnsp_ep_stopped_or_disabled(pep->out_ctx);
+ 		goto ep_stopped;
+ 	}
 
 
