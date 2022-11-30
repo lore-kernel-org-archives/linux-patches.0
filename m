@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E50679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F77C433C1;
-	Wed, 30 Nov 2022 18:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069A679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E0BC433C1;
+	Wed, 30 Nov 2022 18:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833322;
-	bh=7YUEQNDGA0vOxlITCjEjDaauczgHKcdjWHCvmreHK6o=;
+	s=korg; t=1669833324;
+	bh=TomiSg0/tPM/eAFX4ziItQI0rSmeP5P5C+JLWpQJBwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJv+JoSQINwRbeBxvlc/fQ/Irvr4Dp6x2iAOcNeRxZzRjYb3L5fLmMqXU9KY+8qA8
-	 fPN6ZnskFillOdUwKPNuCJtzQpvy/uvkoDA0MgLD4cJdHxPNZT/521evIIQJeMcJDN
-	 xEaII2Hm5tRhx/crhLh4W0gyx7cXa900bZFeHOCU=
+	b=necnLSXxvD5QS7f1lmvWUMwA0JXXijd4IGNr+JYZeXsGMn5z6C1y+u62sO1N3Xxco
+	 +qSjWkVr6QKBxuBbfpugXZCOOX4qSGSflcRUVTHnt0UU2PB7bjyQTNiRNc2j1xgTBx
+	 LvyB64gqUjYGZUJ8ajxlFu6JXQHUyCNbEWyI5FP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudolf Polzer <rpolzer@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Simon Ser <contact@emersion.fr>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/206] drm: panel-orientation-quirks: Add quirk for Acer Switch V 10 (SW5-017)
-Date: Wed, 30 Nov 2022 19:21:39 +0100
-Message-Id: <20221130180534.196097800@linuxfoundation.org>
+Subject: [PATCH 5.15 065/206] regulator: core: fix kobject release warning and memory leak in regulator_register()
+Date: Wed, 30 Nov 2022 19:21:57 +0100
+Message-Id: <20221130180534.652714626@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,40 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 653f2d94fcda200b02bd79cea2e0307b26c1b747 ]
+[ Upstream commit 5f4b204b6b8153923d5be8002c5f7082985d153f ]
 
-Like the Acer Switch One 10 S1003, for which there already is a quirk,
-the Acer Switch V 10 (SW5-017) has a 800x1280 portrait screen mounted
-in the tablet part of a landscape oriented 2-in-1. Add a quirk for this.
+Here is a warning report about lack of registered release()
+from kobject lib:
 
-Cc: Rudolf Polzer <rpolzer@google.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221106215052.66995-1-hdegoede@redhat.com
+Device '(null)' does not have a release() function, it is broken and must be fixed.
+WARNING: CPU: 0 PID: 48430 at drivers/base/core.c:2332 device_release+0x104/0x120
+Call Trace:
+ kobject_put+0xdc/0x180
+ put_device+0x1b/0x30
+ regulator_register+0x651/0x1170
+ devm_regulator_register+0x4f/0xb0
+
+When regulator_register() returns fail and directly goto `clean` symbol,
+rdev->dev has not registered release() function yet (which is registered
+by regulator_class in the following), so rdev needs to be freed manually.
+If rdev->dev.of_node is not NULL, which means the of_node has gotten by
+regulator_of_get_init_data(), it needs to call of_node_put() to avoid
+refcount leak.
+
+Otherwise, only calling put_device() would lead memory leak of rdev
+in further:
+
+unreferenced object 0xffff88810d0b1000 (size 2048):
+  comm "107-i2c-rtq6752", pid 48430, jiffies 4342258431 (age 1341.780s)
+  backtrace:
+    kmalloc_trace+0x22/0x110
+    regulator_register+0x184/0x1170
+    devm_regulator_register+0x4f/0xb0
+
+When regulator_register() returns fail and goto `wash` symbol,
+rdev->dev has registered release() function, so directly call
+put_device() to cleanup everything.
+
+Fixes: d3c731564e09 ("regulator: plug of_node leak in regulator_register()'s error path")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221116074339.1024240-1-zengheng4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/regulator/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 083273736c83..ca0fefeaab20 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -128,6 +128,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "One S1003"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* Acer Switch V 10 (SW5-017) */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
-+		},
-+		.driver_data = (void *)&lcd800x1280_rightside_up,
- 	}, {	/* Anbernic Win600 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Anbernic"),
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index aa4d78b02483..fd61c5c54a07 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5549,11 +5549,15 @@ regulator_register(const struct regulator_desc *regulator_desc,
+ 	mutex_lock(&regulator_list_mutex);
+ 	regulator_ena_gpio_free(rdev);
+ 	mutex_unlock(&regulator_list_mutex);
++	put_device(&rdev->dev);
++	rdev = NULL;
+ clean:
+ 	if (dangling_of_gpiod)
+ 		gpiod_put(config->ena_gpiod);
++	if (rdev && rdev->dev.of_node)
++		of_node_put(rdev->dev.of_node);
++	kfree(rdev);
+ 	kfree(config);
+-	put_device(&rdev->dev);
+ rinse:
+ 	if (dangling_cfg_gpiod)
+ 		gpiod_put(cfg->ena_gpiod);
 -- 
 2.35.1
 
