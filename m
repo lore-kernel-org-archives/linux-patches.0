@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A04A79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD08C433C1;
-	Wed, 30 Nov 2022 18:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624C579C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB33BC433D7;
+	Wed, 30 Nov 2022 18:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833353;
-	bh=KOH7+RQT+uGmHeZ6pATcxN1+BPy/mxwR9/qr3fBh9Yo=;
+	s=korg; t=1669833356;
+	bh=G02EEvcYH5gnTW8yQ8yQBaC17QixYgFD0fZ0pWxC4Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+9RIX2mfSh0A3LT4qzHAxKzrZ3mFmlwkUEaujuFxDoAsBtyTBYAYCD/VQhGdKcLJ
-	 FFa2FVLpPWIP5g2SbboJ8bacDcqtXtCb4yi+spibx6tuQZxGi2irJegHvQj5UIWx+G
-	 gkeBFDeiLRggj9wrmGYEuYN5Kg0Qm83Hxmr0C1NI=
+	b=Ljl8iYDB9Q0NYHsgSEFcrBJe8zLPwLKoVeX06T/Gd33c7Xx2DGOX5nHQ0dbK5n3GP
+	 GrRoYSiTs482MD2QQfRmjWhn03S1+Ng5WsKi2efJHG/respS63ZhVf3Q91QkeWtnSP
+	 GAsgQypinzKEh9w8tWxcVOL1tqhXm44NoBw00E98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/206] block, bfq: fix null pointer dereference in bfq_bio_bfqg()
-Date: Wed, 30 Nov 2022 19:21:40 +0100
-Message-Id: <20221130180534.221241973@linuxfoundation.org>
+Subject: [PATCH 5.15 049/206] arm64/syscall: Include asm/ptrace.h in syscall_wrapper header.
+Date: Wed, 30 Nov 2022 19:21:41 +0100
+Message-Id: <20221130180534.246729684@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,149 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit f02be9002c480cd3ec0fcf184ad27cf531bd6ece ]
+[ Upstream commit acfc35cfcee5df419391671ef1a631f43feee4e3 ]
 
-Out test found a following problem in kernel 5.10, and the same problem
-should exist in mainline:
+Add the same change for ARM64 as done in the commit 9440c4294160
+("x86/syscall: Include asm/ptrace.h in syscall_wrapper header") to
+make sure all syscalls see 'struct pt_regs' definition and resulted
+BTF for '__arm64_sys_*(struct pt_regs *regs)' functions point to
+actual struct.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000094
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP
-CPU: 7 PID: 155 Comm: kworker/7:1 Not tainted 5.10.0-01932-g19e0ace2ca1d-dirty 4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ?-20190727_073836-b4
-Workqueue: kthrotld blk_throtl_dispatch_work_fn
-RIP: 0010:bfq_bio_bfqg+0x52/0xc0
-Code: 94 00 00 00 00 75 2e 48 8b 40 30 48 83 05 35 06 c8 0b 01 48 85 c0 74 3d 4b
-RSP: 0018:ffffc90001a1fba0 EFLAGS: 00010002
-RAX: ffff888100d60400 RBX: ffff8881132e7000 RCX: 0000000000000000
-RDX: 0000000000000017 RSI: ffff888103580a18 RDI: ffff888103580a18
-RBP: ffff8881132e7000 R08: 0000000000000000 R09: ffffc90001a1fe10
-R10: 0000000000000a20 R11: 0000000000034320 R12: 0000000000000000
-R13: ffff888103580a18 R14: ffff888114447000 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff88881fdc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000094 CR3: 0000000100cdb000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- bfq_bic_update_cgroup+0x3c/0x350
- ? ioc_create_icq+0x42/0x270
- bfq_init_rq+0xfd/0x1060
- bfq_insert_requests+0x20f/0x1cc0
- ? ioc_create_icq+0x122/0x270
- blk_mq_sched_insert_requests+0x86/0x1d0
- blk_mq_flush_plug_list+0x193/0x2a0
- blk_flush_plug_list+0x127/0x170
- blk_finish_plug+0x31/0x50
- blk_throtl_dispatch_work_fn+0x151/0x190
- process_one_work+0x27c/0x5f0
- worker_thread+0x28b/0x6b0
- ? rescuer_thread+0x590/0x590
- kthread+0x153/0x1b0
- ? kthread_flush_work+0x170/0x170
- ret_from_fork+0x1f/0x30
-Modules linked in:
-CR2: 0000000000000094
----[ end trace e2e59ac014314547 ]---
-RIP: 0010:bfq_bio_bfqg+0x52/0xc0
-Code: 94 00 00 00 00 75 2e 48 8b 40 30 48 83 05 35 06 c8 0b 01 48 85 c0 74 3d 4b
-RSP: 0018:ffffc90001a1fba0 EFLAGS: 00010002
-RAX: ffff888100d60400 RBX: ffff8881132e7000 RCX: 0000000000000000
-RDX: 0000000000000017 RSI: ffff888103580a18 RDI: ffff888103580a18
-RBP: ffff8881132e7000 R08: 0000000000000000 R09: ffffc90001a1fe10
-R10: 0000000000000a20 R11: 0000000000034320 R12: 0000000000000000
-R13: ffff888103580a18 R14: ffff888114447000 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff88881fdc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000094 CR3: 0000000100cdb000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Without this patch, the BPF verifier refuses to load a tracing prog
+which accesses pt_regs.
 
-Root cause is quite complex:
+  bpf(BPF_PROG_LOAD, {prog_type=0x1a, ...}, 128) = -1 EACCES
 
-1) use bfq elevator for the test device.
-2) create a cgroup CG
-3) config blk throtl in CG
+With this patch, we can see the correct error, which saves us time
+in debugging the prog.
 
-   blkg_conf_prep
-    blkg_create
+  bpf(BPF_PROG_LOAD, {prog_type=0x1a, ...}, 128) = 4
+  bpf(BPF_RAW_TRACEPOINT_OPEN, {raw_tracepoint={name=NULL, prog_fd=4}}, 128) = -1 ENOTSUPP
 
-4) create a thread T1 and issue async io in CG:
-
-   bio_init
-    bio_associate_blkg
-   ...
-   submit_bio
-    submit_bio_noacct
-     blk_throtl_bio -> io is throttled
-     // io submit is done
-
-5) switch elevator:
-
-   bfq_exit_queue
-    blkcg_deactivate_policy
-     list_for_each_entry(blkg, &q->blkg_list, q_node)
-      blkg->pd[] = NULL
-      // bfq policy is removed
-
-5) thread t1 exist, then remove the cgroup CG:
-
-   blkcg_unpin_online
-    blkcg_destroy_blkgs
-     blkg_destroy
-      list_del_init(&blkg->q_node)
-      // blkg is removed from queue list
-
-6) switch elevator back to bfq
-
- bfq_init_queue
-  bfq_create_group_hierarchy
-   blkcg_activate_policy
-    list_for_each_entry_reverse(blkg, &q->blkg_list)
-     // blkg is removed from list, hence bfq policy is still NULL
-
-7) throttled io is dispatched to bfq:
-
- bfq_insert_requests
-  bfq_init_rq
-   bfq_bic_update_cgroup
-    bfq_bio_bfqg
-     bfqg = blkg_to_bfqg(blkg)
-     // bfqg is NULL because bfq policy is NULL
-
-The problem is only possible in bfq because only bfq can be deactivated and
-activated while queue is online, while others can only be deactivated while
-the device is removed.
-
-Fix the problem in bfq by checking if blkg is online before calling
-blkg_to_bfqg().
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221108103434.2853269-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221031215728.50389-1-kuniyu@amazon.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-cgroup.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/syscall_wrapper.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index e2e765a54fe9..a8d0b4c71b05 100644
---- a/block/bfq-cgroup.c
-+++ b/block/bfq-cgroup.c
-@@ -613,6 +613,10 @@ struct bfq_group *bfq_bio_bfqg(struct bfq_data *bfqd, struct bio *bio)
- 	struct bfq_group *bfqg;
+diff --git a/arch/arm64/include/asm/syscall_wrapper.h b/arch/arm64/include/asm/syscall_wrapper.h
+index b383b4802a7b..d30217c21eff 100644
+--- a/arch/arm64/include/asm/syscall_wrapper.h
++++ b/arch/arm64/include/asm/syscall_wrapper.h
+@@ -8,7 +8,7 @@
+ #ifndef __ASM_SYSCALL_WRAPPER_H
+ #define __ASM_SYSCALL_WRAPPER_H
  
- 	while (blkg) {
-+		if (!blkg->online) {
-+			blkg = blkg->parent;
-+			continue;
-+		}
- 		bfqg = blkg_to_bfqg(blkg);
- 		if (bfqg->online) {
- 			bio_associate_blkg_from_css(bio, &blkg->blkcg->css);
+-struct pt_regs;
++#include <asm/ptrace.h>
+ 
+ #define SC_ARM64_REGS_TO_ARGS(x, ...)				\
+ 	__MAP(x,__SC_ARGS					\
 -- 
 2.35.1
 
