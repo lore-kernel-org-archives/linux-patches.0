@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B4B79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C4C433D6;
-	Wed, 30 Nov 2022 18:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DCA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20657C433D6;
+	Wed, 30 Nov 2022 18:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834364;
-	bh=yM6PhSAuhvv+31l2AspF9tEuZMHMN+tXRIz7ApHLkI8=;
+	s=korg; t=1669834367;
+	bh=Ffrg4MH1kKEzpy9NhJ2ONABLjMus7mc83yJw2bCzBfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5pYZYb4HMYTPtka1JVFjO7GZQsvQi3zRsrw7Z/l1Gfq4Qtfcq49p4rMdOLbQiNgx
-	 sMifBuMf9/o9TtDcd/WJgBzP61nKoiF6Ru64XcVOkjAPV0d5Hrfpv8BEVz/VXzXFcS
-	 YzZqAmLUNPr5KQR5iXpsOfb3tBQxt8dkkVRhv2Xg=
+	b=XAx9dxK6YAzb8L7/9nfap4XZI7R5nOQOU6vW/pbhiuujvSd1wXux7p5gsRaoE0WoW
+	 eSHRWnOUQtWMnCJzrRchTQ4XCz8h6PSn32+s7DuddwsmOXODMUtBuW1miIDoVihI4t
+	 Vq3J7K0dvgMr2iv3+w+4uhCUgHYbj6rXSp+nZfdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 226/289] ASoC: Intel: bytcht_es8316: Add quirk for the Nanote UMPC-01
-Date: Wed, 30 Nov 2022 19:23:31 +0100
-Message-Id: <20221130180549.238184719@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Tejun Heo <tj@kernel.org>,
+	zefan li <lizefan.x@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 200/289] mm/cgroup/reclaim: fix dirty pages throttling on cgroup v1
+Date: Wed, 30 Nov 2022 19:23:05 +0100
+Message-Id: <20221130180548.654898585@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,42 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 8bb0ac0e6f64ebdf15d963c26b028de391c9bcf9 ]
+commit 81a70c21d9170de67a45843bdd627f4cce9c4215 upstream.
 
-The Nanote UMPC-01 mini laptop has stereo speakers, while the default
-bytcht_es8316 settings assume a mono speaker setup. Add a quirk for this.
+balance_dirty_pages doesn't do the required dirty throttling on cgroupv1.
+See commit 9badce000e2c ("cgroup, writeback: don't enable cgroup writeback
+on traditional hierarchies").  Instead, the kernel depends on writeback
+throttling in shrink_folio_list to achieve the same goal.  With large
+memory systems, the flusher may not be able to writeback quickly enough
+such that we will start finding pages in the shrink_folio_list already in
+writeback.  Hence for cgroupv1 let's do a reclaim throttle after waking up
+the flusher.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20221025140942.509066-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The below test which used to fail on a 256GB system completes till the the
+file system is full with this change.
+
+root@lp2:/sys/fs/cgroup/memory# mkdir test
+root@lp2:/sys/fs/cgroup/memory# cd test/
+root@lp2:/sys/fs/cgroup/memory/test# echo 120M > memory.limit_in_bytes
+root@lp2:/sys/fs/cgroup/memory/test# echo $$ > tasks
+root@lp2:/sys/fs/cgroup/memory/test# dd if=/dev/zero of=/home/kvaneesh/test bs=1M
+Killed
+
+Link: https://lkml.kernel.org/r/20221118070603.84081-1-aneesh.kumar@linux.ibm.com
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: zefan li <lizefan.x@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/vmscan.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 6432b83f616f..a935c5fd9edb 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -443,6 +443,13 @@ static const struct dmi_system_id byt_cht_es8316_quirk_table[] = {
- 					| BYT_CHT_ES8316_INTMIC_IN2_MAP
- 					| BYT_CHT_ES8316_JD_INVERTED),
- 	},
-+	{	/* Nanote UMPC-01 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "RWC CO.,LTD"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "UMPC-01"),
-+		},
-+		.driver_data = (void *)BYT_CHT_ES8316_INTMIC_IN1_MAP,
-+	},
- 	{	/* Teclast X98 Plus II */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "TECLAST"),
--- 
-2.35.1
-
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2472,8 +2472,20 @@ shrink_inactive_list(unsigned long nr_to
+ 	 * the flushers simply cannot keep up with the allocation
+ 	 * rate. Nudge the flusher threads in case they are asleep.
+ 	 */
+-	if (stat.nr_unqueued_dirty == nr_taken)
++	if (stat.nr_unqueued_dirty == nr_taken) {
+ 		wakeup_flusher_threads(WB_REASON_VMSCAN);
++		/*
++		 * For cgroupv1 dirty throttling is achieved by waking up
++		 * the kernel flusher here and later waiting on folios
++		 * which are in writeback to finish (see shrink_folio_list()).
++		 *
++		 * Flusher may not be able to issue writeback quickly
++		 * enough for cgroupv1 writeback throttling to work
++		 * on a large system.
++		 */
++		if (!writeback_throttling_sane(sc))
++			reclaim_throttle(pgdat, VMSCAN_THROTTLE_WRITEBACK);
++	}
+ 
+ 	sc->nr.dirty += stat.nr_dirty;
+ 	sc->nr.congested += stat.nr_congested;
 
 
