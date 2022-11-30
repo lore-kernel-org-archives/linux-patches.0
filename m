@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09687C433C1;
-	Wed, 30 Nov 2022 18:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F1C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB96C433D6;
+	Wed, 30 Nov 2022 18:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833146;
-	bh=mdl75R+gU7RwTuXafW+aDi9m0pjNtWkhPNnYRGQi85c=;
+	s=korg; t=1669833149;
+	bh=q2Ld8eZeF8pN943m2bD3B9oYPtCEkqbrEETlJgiQNEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUtC5IQ8GUTCzv1YUOUP3+XOM1zD3bprEKEt7Mq9IMG5MbUF089BxQ9Qt9CLeRPVh
-	 SOcOUsX4ZlUjuYjSW0mkkAiIzDcGCpSmsJp2UoS48ZMbIQ4/xy9+oFWiExb3J59ALc
-	 CF9XLbm5UzgJDSVdB57YOzjh2iEMQJJakCrkzgtc=
+	b=LukeCoihgU4UjgtloWGdJkH2B0w4+STSlrnYyia/afHmHLVRjhMZsALBb3m5YaPPa
+	 jFr8DCbdzx0Mp/UucFBqTQFgiyHZF5UJCsoB4x4IxKg8QW0mQGxueBYPdse9XOq3RQ
+	 kv1vlnGfpYTbZ4NypnuW+szZlCQLTmoUQI1RytWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Kjos <tkjos@google.com>,
-	stable <stable@kernel.org>,
-	Alessandro Astone <ales.astone@gmail.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.10 129/162] binder: Address corner cases in deferred copy and fixup
-Date: Wed, 30 Nov 2022 19:23:30 +0100
-Message-Id: <20221130180531.987664469@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 160/162] drm/amd/dc/dce120: Fix audio register mapping, stop triggering KASAN
+Date: Wed, 30 Nov 2022 19:24:01 +0100
+Message-Id: <20221130180532.811392367@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,58 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Astone <ales.astone@gmail.com>
+From: Lyude Paul <lyude@redhat.com>
 
-commit 2d1746e3fda0c3612143d7c06f8e1d1830c13e23 upstream.
+commit 44035ec2fde1114254ee465f9ba3bb246b0b6283 upstream.
 
-When handling BINDER_TYPE_FDA object we are pushing a parent fixup
-with a certain skip_size but no scatter-gather copy object, since
-the copy is handled standalone.
-If BINDER_TYPE_FDA is the last children the scatter-gather copy
-loop will never stop to skip it, thus we are left with an item in
-the parent fixup list. This will trigger the BUG_ON().
+There's been a very long running bug that seems to have been neglected for
+a while, where amdgpu consistently triggers a KASAN error at start:
 
-This is reproducible in android when playing a video.
-We receive a transaction that looks like this:
-    obj[0] BINDER_TYPE_PTR, parent
-    obj[1] BINDER_TYPE_PTR, child
-    obj[2] BINDER_TYPE_PTR, child
-    obj[3] BINDER_TYPE_FDA, child
+  BUG: KASAN: global-out-of-bounds in read_indirect_azalia_reg+0x1d4/0x2a0 [amdgpu]
+  Read of size 4 at addr ffffffffc2274b28 by task modprobe/1889
 
-Fixes: 09184ae9b575 ("binder: defer copies of pre-patched txn data")
-Acked-by: Todd Kjos <tkjos@google.com>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Alessandro Astone <ales.astone@gmail.com>
-Link: https://lore.kernel.org/r/20220415120015.52684-2-ales.astone@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
+After digging through amd's rather creative method for accessing registers,
+I eventually discovered the problem likely has to do with the fact that on
+my dce120 GPU there are supposedly 7 sets of audio registers. But we only
+define a register mapping for 6 sets.
+
+So, fix this and fix the KASAN warning finally.
+
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -2695,6 +2695,7 @@ static int binder_do_deferred_txn_copies
- {
- 	int ret = 0;
- 	struct binder_sg_copy *sgc, *tmpsgc;
-+	struct binder_ptr_fixup *tmppf;
- 	struct binder_ptr_fixup *pf =
- 		list_first_entry_or_null(pf_head, struct binder_ptr_fixup,
- 					 node);
-@@ -2749,7 +2750,11 @@ static int binder_do_deferred_txn_copies
- 		list_del(&sgc->node);
- 		kfree(sgc);
- 	}
--	BUG_ON(!list_empty(pf_head));
-+	list_for_each_entry_safe(pf, tmppf, pf_head, node) {
-+		BUG_ON(pf->skip_size == 0);
-+		list_del(&pf->node);
-+		kfree(pf);
-+	}
- 	BUG_ON(!list_empty(sgc_head));
+--- a/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
+@@ -361,7 +361,8 @@ static const struct dce_audio_registers
+ 	audio_regs(2),
+ 	audio_regs(3),
+ 	audio_regs(4),
+-	audio_regs(5)
++	audio_regs(5),
++	audio_regs(6),
+ };
  
- 	return ret > 0 ? -EINVAL : ret;
+ #define DCE120_AUD_COMMON_MASK_SH_LIST(mask_sh)\
 
 
