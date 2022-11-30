@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD13079C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F311C433C1;
-	Wed, 30 Nov 2022 18:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A19879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E458C433C1;
+	Wed, 30 Nov 2022 18:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833192;
-	bh=8nTnG9hu8oT2NRcUp/J54lLllLrNZvDdpuy/MhuIf/w=;
+	s=korg; t=1669833195;
+	bh=3iks4pyKQbBxx5OPkeB21/BEmVJwOls7wqnK5JgVhIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRvojP8FdOMWzUsUs9+5hByeh/Ygq2yGA8iJPDR60oe4K9aorz9m96Nlw396TWoaU
-	 8b8rh2eFVVGfluVBzJS8rP1X1qnR5x/dyJwj1B2uB6ZA/vrqKu/1hG/Qk3ppKjyGR3
-	 v+y6ibghi1Cm0DnTxnzKQj67LlTtxK8AgPScyb10=
+	b=NUqJSKkkT6h5uX1vCtIgGkxcUPoiUAK1Zr2mBss5WGPdc40VjEXwfECf+XS+4hbZY
+	 A7gD2e/4TEgupaT6DmBwfR5qUbsWNdLg9WKDAay3532YwzyVJOPvHKmEjdz5UAuBjg
+	 qXGt9n6Or39+l0oVhF5EkxTmpm1Zt7h6rPF82Rjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Chen <chenzhen126@huawei.com>,
-	Caowangbao <caowangbao@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/206] sctp: clear out_curr if all frag chunks of current msg are pruned
-Date: Wed, 30 Nov 2022 19:20:59 +0100
-Message-Id: <20221130180533.177426918@linuxfoundation.org>
+Subject: [PATCH 5.15 008/206] cifs: introduce new helper for cifs_reconnect()
+Date: Wed, 30 Nov 2022 19:21:00 +0100
+Message-Id: <20221130180533.204728493@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,66 +36,201 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-[ Upstream commit 2f201ae14ae0f91dbf1cffea7bb1e29e81d4d108 ]
+[ Upstream commit 43b459aa5e222cb6610dac8723b40c19532ea00d ]
 
-A crash was reported by Zhen Chen:
+Create cifs_mark_tcp_ses_conns_for_reconnect() helper to mark all
+sessions and tcons for reconnect when reconnecting tcp server.
 
-  list_del corruption, ffffa035ddf01c18->next is NULL
-  WARNING: CPU: 1 PID: 250682 at lib/list_debug.c:49 __list_del_entry_valid+0x59/0xe0
-  RIP: 0010:__list_del_entry_valid+0x59/0xe0
-  Call Trace:
-   sctp_sched_dequeue_common+0x17/0x70 [sctp]
-   sctp_sched_fcfs_dequeue+0x37/0x50 [sctp]
-   sctp_outq_flush_data+0x85/0x360 [sctp]
-   sctp_outq_uncork+0x77/0xa0 [sctp]
-   sctp_cmd_interpreter.constprop.0+0x164/0x1450 [sctp]
-   sctp_side_effects+0x37/0xe0 [sctp]
-   sctp_do_sm+0xd0/0x230 [sctp]
-   sctp_primitive_SEND+0x2f/0x40 [sctp]
-   sctp_sendmsg_to_asoc+0x3fa/0x5c0 [sctp]
-   sctp_sendmsg+0x3d5/0x440 [sctp]
-   sock_sendmsg+0x5b/0x70
-
-and in sctp_sched_fcfs_dequeue() it dequeued a chunk from stream
-out_curr outq while this outq was empty.
-
-Normally stream->out_curr must be set to NULL once all frag chunks of
-current msg are dequeued, as we can see in sctp_sched_dequeue_done().
-However, in sctp_prsctp_prune_unsent() as it is not a proper dequeue,
-sctp_sched_dequeue_done() is not called to do this.
-
-This patch is to fix it by simply setting out_curr to NULL when the
-last frag chunk of current msg is dequeued from out_curr stream in
-sctp_prsctp_prune_unsent().
-
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: Zhen Chen <chenzhen126@huawei.com>
-Tested-by: Caowangbao <caowangbao@huawei.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 1dcdf5f5b213 ("cifs: Fix connections leak when tlink setup failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/outqueue.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/cifs/connect.c | 139 +++++++++++++++++++++++++---------------------
+ 1 file changed, 75 insertions(+), 64 deletions(-)
 
-diff --git a/net/sctp/outqueue.c b/net/sctp/outqueue.c
-index 6fcc4ff97f94..dc29ac0f8d3f 100644
---- a/net/sctp/outqueue.c
-+++ b/net/sctp/outqueue.c
-@@ -403,6 +403,11 @@ static int sctp_prsctp_prune_unsent(struct sctp_association *asoc,
- 		sout = SCTP_SO(&asoc->stream, chk->sinfo.sinfo_stream);
- 		sout->ext->abandoned_unsent[SCTP_PR_INDEX(PRIO)]++;
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index ad5c935f7f06..ed429a442808 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -199,80 +199,29 @@ static inline int reconn_setup_dfs_targets(struct cifs_sb_info *cifs_sb,
+ }
+ #endif
  
-+		/* clear out_curr if all frag chunks are pruned */
-+		if (asoc->stream.out_curr == sout &&
-+		    list_is_last(&chk->frag_list, &chk->msg->chunks))
-+			asoc->stream.out_curr = NULL;
+-/*
+- * cifs tcp session reconnection
++/**
++ * Mark all sessions and tcons for reconnect.
+  *
+- * mark tcp session as reconnecting so temporarily locked
+- * mark all smb sessions as reconnecting for tcp session
+- * reconnect tcp session
+- * wake up waiters on reconnection? - (not needed currently)
++ * @server needs to be previously set to CifsNeedReconnect.
+  */
+-int
+-cifs_reconnect(struct TCP_Server_Info *server)
++static void cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server)
+ {
+-	int rc = 0;
+ 	struct list_head *tmp, *tmp2;
+ 	struct cifs_ses *ses;
+ 	struct cifs_tcon *tcon;
+ 	struct mid_q_entry *mid_entry;
+ 	struct list_head retry_list;
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	struct super_block *sb = NULL;
+-	struct cifs_sb_info *cifs_sb = NULL;
+-	struct dfs_cache_tgt_list tgt_list = DFS_CACHE_TGT_LIST_INIT(tgt_list);
+-	struct dfs_cache_tgt_iterator *tgt_it = NULL;
+-#endif
+ 
+-	spin_lock(&GlobalMid_Lock);
+-	server->nr_targets = 1;
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	spin_unlock(&GlobalMid_Lock);
+-	sb = cifs_get_tcp_super(server);
+-	if (IS_ERR(sb)) {
+-		rc = PTR_ERR(sb);
+-		cifs_dbg(FYI, "%s: will not do DFS failover: rc = %d\n",
+-			 __func__, rc);
+-		sb = NULL;
+-	} else {
+-		cifs_sb = CIFS_SB(sb);
+-		rc = reconn_setup_dfs_targets(cifs_sb, &tgt_list);
+-		if (rc) {
+-			cifs_sb = NULL;
+-			if (rc != -EOPNOTSUPP) {
+-				cifs_server_dbg(VFS, "%s: no target servers for DFS failover\n",
+-						__func__);
+-			}
+-		} else {
+-			server->nr_targets = dfs_cache_get_nr_tgts(&tgt_list);
+-		}
+-	}
+-	cifs_dbg(FYI, "%s: will retry %d target(s)\n", __func__,
+-		 server->nr_targets);
+-	spin_lock(&GlobalMid_Lock);
+-#endif
+-	if (server->tcpStatus == CifsExiting) {
+-		/* the demux thread will exit normally
+-		next time through the loop */
+-		spin_unlock(&GlobalMid_Lock);
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-		dfs_cache_free_tgts(&tgt_list);
+-		cifs_put_tcp_super(sb);
+-#endif
+-		wake_up(&server->response_q);
+-		return rc;
+-	} else
+-		server->tcpStatus = CifsNeedReconnect;
+-	spin_unlock(&GlobalMid_Lock);
+ 	server->maxBuf = 0;
+ 	server->max_read = 0;
+ 
+ 	cifs_dbg(FYI, "Mark tcp session as need reconnect\n");
+ 	trace_smb3_reconnect(server->CurrentMid, server->conn_id, server->hostname);
+-
+-	/* before reconnecting the tcp session, mark the smb session (uid)
+-		and the tid bad so they are not used until reconnected */
+-	cifs_dbg(FYI, "%s: marking sessions and tcons for reconnect\n",
+-		 __func__);
++	/*
++	 * before reconnecting the tcp session, mark the smb session (uid) and the tid bad so they
++	 * are not used until reconnected.
++	 */
++	cifs_dbg(FYI, "%s: marking sessions and tcons for reconnect\n", __func__);
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each(tmp, &server->smb_ses_list) {
+ 		ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
+@@ -290,11 +239,11 @@ cifs_reconnect(struct TCP_Server_Info *server)
+ 	cifs_dbg(FYI, "%s: tearing down socket\n", __func__);
+ 	mutex_lock(&server->srv_mutex);
+ 	if (server->ssocket) {
+-		cifs_dbg(FYI, "State: 0x%x Flags: 0x%lx\n",
+-			 server->ssocket->state, server->ssocket->flags);
++		cifs_dbg(FYI, "State: 0x%x Flags: 0x%lx\n", server->ssocket->state,
++			 server->ssocket->flags);
+ 		kernel_sock_shutdown(server->ssocket, SHUT_WR);
+-		cifs_dbg(FYI, "Post shutdown state: 0x%x Flags: 0x%lx\n",
+-			 server->ssocket->state, server->ssocket->flags);
++		cifs_dbg(FYI, "Post shutdown state: 0x%x Flags: 0x%lx\n", server->ssocket->state,
++			 server->ssocket->flags);
+ 		sock_release(server->ssocket);
+ 		server->ssocket = NULL;
+ 	}
+@@ -333,6 +282,68 @@ cifs_reconnect(struct TCP_Server_Info *server)
+ 		smbd_destroy(server);
+ 		mutex_unlock(&server->srv_mutex);
+ 	}
++}
 +
- 		msg_len -= chk->skb->truesize + sizeof(struct sctp_chunk);
- 		sctp_chunk_free(chk);
- 		if (msg_len <= 0)
++/*
++ * cifs tcp session reconnection
++ *
++ * mark tcp session as reconnecting so temporarily locked
++ * mark all smb sessions as reconnecting for tcp session
++ * reconnect tcp session
++ * wake up waiters on reconnection? - (not needed currently)
++ */
++int
++cifs_reconnect(struct TCP_Server_Info *server)
++{
++	int rc = 0;
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	struct super_block *sb = NULL;
++	struct cifs_sb_info *cifs_sb = NULL;
++	struct dfs_cache_tgt_list tgt_list = DFS_CACHE_TGT_LIST_INIT(tgt_list);
++	struct dfs_cache_tgt_iterator *tgt_it = NULL;
++#endif
++
++	spin_lock(&GlobalMid_Lock);
++	server->nr_targets = 1;
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	spin_unlock(&GlobalMid_Lock);
++	sb = cifs_get_tcp_super(server);
++	if (IS_ERR(sb)) {
++		rc = PTR_ERR(sb);
++		cifs_dbg(FYI, "%s: will not do DFS failover: rc = %d\n",
++			 __func__, rc);
++		sb = NULL;
++	} else {
++		cifs_sb = CIFS_SB(sb);
++		rc = reconn_setup_dfs_targets(cifs_sb, &tgt_list);
++		if (rc) {
++			cifs_sb = NULL;
++			if (rc != -EOPNOTSUPP) {
++				cifs_server_dbg(VFS, "%s: no target servers for DFS failover\n",
++						__func__);
++			}
++		} else {
++			server->nr_targets = dfs_cache_get_nr_tgts(&tgt_list);
++		}
++	}
++	cifs_dbg(FYI, "%s: will retry %d target(s)\n", __func__,
++		 server->nr_targets);
++	spin_lock(&GlobalMid_Lock);
++#endif
++	if (server->tcpStatus == CifsExiting) {
++		/* the demux thread will exit normally next time through the loop */
++		spin_unlock(&GlobalMid_Lock);
++#ifdef CONFIG_CIFS_DFS_UPCALL
++		dfs_cache_free_tgts(&tgt_list);
++		cifs_put_tcp_super(sb);
++#endif
++		wake_up(&server->response_q);
++		return rc;
++	} else
++		server->tcpStatus = CifsNeedReconnect;
++	spin_unlock(&GlobalMid_Lock);
++
++	cifs_mark_tcp_ses_conns_for_reconnect(server);
+ 
+ 	do {
+ 		try_to_freeze();
 -- 
 2.35.1
 
