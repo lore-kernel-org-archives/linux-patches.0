@@ -1,90 +1,129 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from conssluserg-03.nifty.com (conssluserg-03.nifty.com [210.131.2.82])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDCB801
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 20:35:54 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id k2-20020a17090a4c8200b002187cce2f92so3119406pjh.2
-        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 12:35:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gSEjPF93GMI3z5E1hQkgEscxi559x8HTBtezk/0B3sM=;
-        b=F0XixuXZEk2UTAsNqC7vceNho1K4AE+FJ0RvADRizDnWeTE9clf7X6O8B2gy6wUnZV
-         JHGZ8sB0kSijDJfB9lOYv/za7yVGmeWvMgKrh5h9/ocxd6zpBh4iH8+Ac8kGiKA24S7S
-         LDy4WxejU6DA3oRZvhxGdEddA+imoExbJvbnBQKAuAhJUy+zpTENRyQYUWu4tjcRjMOR
-         EcYR8wPn8kAnMP2yWcbI0ZctL8KIHcCd5rjAw2M5jW7vjMvmutDMz62AmRmk57v7JLAg
-         h7SWjFNNJst8+tNLfUklZAS0izR4pQikWoge3vmcJbQ5lqToZ9XnHHGuCupUs8ZvaEJ9
-         POIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gSEjPF93GMI3z5E1hQkgEscxi559x8HTBtezk/0B3sM=;
-        b=LTgaaxb6FuGMVhMWp4KUyetPnQR7CXeXZUgatPeyMoxYZAn5Xfms+k1JdZ58+9jOPn
-         WQeArWNCi3RKq0faSaK2ifz6L8AS8UAGsHdTWaJjbz3T7W8e+Y3gI6G7YfxNAkpzK3pk
-         WYVTripNx94gY+j983znIKTx7vwUH6yfpc8w9B5EkHu06cmj/WtW7Ljx9d5lPcoD37Zg
-         6Pc8vQems+MpB3KLAHC+p+pN+mkBDbmSG/Jla6ZRk3mTFnzcqhuBzFbb1sQochU4VQmq
-         EYkq2HXiVqWLzkNmb+eWZn5XDYhEE76QqnLQIkld60BvGSo7aZkSRV53+DhZkWJw2UNv
-         KoJg==
-X-Gm-Message-State: ANoB5plEA0C9YFMZCPZJldhlGNJSwvrH+uu/UspXdc6B2IfYTX3/sE7I
-	LAZFgutdyYv2lmUKnmguFbgRXVDI06Q=
-X-Google-Smtp-Source: AA0mqf5DhFdlnhKi8U10qOmeowf+5XiyAAeogl4c6RW380zZBR5Wev9gOPnGQJ36tCRMNA49oIvJvg==
-X-Received: by 2002:a17:903:32ca:b0:189:9031:675c with SMTP id i10-20020a17090332ca00b001899031675cmr14548535plr.139.1669840554198;
-        Wed, 30 Nov 2022 12:35:54 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id c1-20020a63d501000000b004351358f056sm1333987pgg.85.2022.11.30.12.35.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 12:35:53 -0800 (PST)
-Message-ID: <8a1564c1-3321-e180-7340-f70cdddd40fd@gmail.com>
-Date: Wed, 30 Nov 2022 12:35:49 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8788BBA51;
+	Wed, 30 Nov 2022 22:21:41 +0000 (UTC)
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174]) (authenticated)
+	by conssluserg-03.nifty.com with ESMTP id 2AUMLOTp018641;
+	Thu, 1 Dec 2022 07:21:24 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 2AUMLOTp018641
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+	s=dec2015msa; t=1669846885;
+	bh=k5TnRkjFmB+0wMVTITyaBsYH4EkERxs/m8UlcytiUqA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=wezRxcPL57rNZmvQDUfqHkvrnpWW6KcJuM5zkvY4DWlVXSwmILOWeW7EnKHIcGxzC
+	 Agu37VlemU6SjxxPDu2gzZkCd6+lmu4SGVFvnj/6TuP1qTJ6Ixxx1LWcc1BuEYdaDS
+	 AWh6/yLOw1gJak/wKaB4+oSl7NWcw14iYftsWMV0Q2gsBJRHKZkFPu0EophkAljJux
+	 mINa+xUJRAZT9gqXFGcF3C61zUb4LCrL7l53DdX6btf1Y1sslZci2kZUBNkhRxNurc
+	 1dAItGSzvagxjhaNwL+7czO78HV9CtUYzRXVUIKQ4xOX7Zp1+hNUplWXoin6hsBYvQ
+	 hAnxvKLakmEVA==
+X-Nifty-SrcIP: [209.85.167.174]
+Received: by mail-oi1-f174.google.com with SMTP id m204so135023oib.6;
+        Wed, 30 Nov 2022 14:21:24 -0800 (PST)
+X-Gm-Message-State: ANoB5pndhIOZLzkn7irFjpLmvYwpol5OctKco8IEjcR20kauND4bKx6J
+	1hSUKVACf/3hpZntbcs2fumwac+/f5WbiEfCl2w=
+X-Google-Smtp-Source: AA0mqf6or5JAcRyjvHHEkc7ygsMt2uCHycUgQSriEZZOcXQJpheBCozq7ScqXqGnuUQJLwC7n8y7iHcjChYlkCgNDz8=
+X-Received: by 2002:aca:1c06:0:b0:354:28ae:23b3 with SMTP id
+ c6-20020aca1c06000000b0035428ae23b3mr21855293oic.287.1669846883543; Wed, 30
+ Nov 2022 14:21:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.0 000/289] 6.0.11-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221130180544.105550592@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20221129190123.872394-1-nathan@kernel.org> <20221129190123.872394-2-nathan@kernel.org>
+In-Reply-To: <20221129190123.872394-2-nathan@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Thu, 1 Dec 2022 07:20:47 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATMtRu00GYwJW_VvTSTcY6eqnx=4EEj8PFC5adrnHunSw@mail.gmail.com>
+Message-ID: <CAK7LNATMtRu00GYwJW_VvTSTcY6eqnx=4EEj8PFC5adrnHunSw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] padata: Do not mark padata_mt_helper() as __init
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Sami Tolvanen <samitolvanen@google.com>,
+        Vincent Donnefort <vdonnefort@google.com>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Daniel Jordan <daniel.m.jordan@oracle.com>,
+        linux-crypto@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/30/22 10:19, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.11 release.
-> There are 289 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Nov 30, 2022 at 4:02 AM Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> When building arm64 allmodconfig + ThinLTO with clang and a proposed
+> modpost update to account for -ffuncton-sections, the following warning
+> appears:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+
+How to enable -ffuncton-sections for ARCH=arm64 ?
+(in other words, how to set CONFIG_LD_DEAD_CODE_DATA_ELIMINATION ?)
+
+In upstream, it is only possible for mips and powerpc.
+
+./arch/mips/Kconfig:82: select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
+./arch/powerpc/Kconfig:237: select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
+
+
+
+Is there another proposal to add it for arm64,
+or is this about a downstream kernel?
+
+
+
+
+
+>
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>
+> In both cases, an __init function calls padata_work_init(), which is not
+> marked __init, with padata_mt_helper(), another __init function, as a
+> work function argument.
+>
+> padata_work_init() is called from non-init paths, otherwise it could be
+> marked __init to resolve the warning. Instead, remove __init from
+> padata_mt_helper() to resolve the warning.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Cc: Steffen Klassert <steffen.klassert@secunet.com>
+> Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+> Cc: linux-crypto@vger.kernel.org
+> ---
+>  kernel/padata.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/kernel/padata.c b/kernel/padata.c
+> index e5819bb8bd1d..c2271d7e446d 100644
+> --- a/kernel/padata.c
+> +++ b/kernel/padata.c
+> @@ -45,7 +45,7 @@ struct padata_mt_job_state {
+>  };
+>
+>  static void padata_free_pd(struct parallel_data *pd);
+> -static void __init padata_mt_helper(struct work_struct *work);
+> +static void padata_mt_helper(struct work_struct *work);
+>
+>  static int padata_index_to_cpu(struct parallel_data *pd, int cpu_index)
+>  {
+> @@ -425,7 +425,7 @@ static int padata_setup_cpumasks(struct padata_instance *pinst)
+>         return err;
+>  }
+>
+> -static void __init padata_mt_helper(struct work_struct *w)
+> +static void padata_mt_helper(struct work_struct *w)
+>  {
+>         struct padata_work *pw = container_of(w, struct padata_work, pw_work);
+>         struct padata_mt_job_state *ps = pw->pw_data;
+> --
+> 2.38.1
+>
+
+
 -- 
-Florian
-
+Best Regards
+Masahiro Yamada
