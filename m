@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7717379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34EAC433B5;
-	Wed, 30 Nov 2022 18:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638BA79C1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0148C433D7;
+	Wed, 30 Nov 2022 18:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833634;
-	bh=a6bHEQVEFd+aK+9YIuyHr0/Qthvk5OY9LIX39P389tM=;
+	s=korg; t=1669833637;
+	bh=zAQpQivTUrQeULADrqynRP/ht9xmNo+DvDiRY6+dG7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAbd+LQpYPBG2p7KAKLLEpkevb7HlhGinJblmwLn4AXhIXkr32ig/V+amKVYjN86O
-	 DFhT4fYAnjjLn9zR+CSXAOPRhSxlpq0bJ0266gTM6xZu4DSFWsgonofHUiYcLqrwon
-	 8ImeQkCvux+/FO4ZOaPWw6Gcp6HJxYoXhPvUqGIc=
+	b=sj3tWcXuTQX+WrSVA8bLaSn1+lZapqf5FuajxhT3hSfnU5+YllZE9y0pbUao/Yfuy
+	 U7+0aUmtmEZoQXv5mUkOlzdUhuJ+sGdTlGytEVY1mMUpQJubhU7dxOmf0Z6wOEA0BY
+	 EbEg/yxZGCtwm6OLk290nG578R8WMzMr3Uhb8nns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/206] mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI
-Date: Wed, 30 Nov 2022 19:23:11 +0100
-Message-Id: <20221130180536.577219246@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.15 140/206] KVM: arm64: pkvm: Fixup boot mode to reflect that the kernel resumes from EL1
+Date: Wed, 30 Nov 2022 19:23:12 +0100
+Message-Id: <20221130180536.601894233@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,71 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 56baa208f91061ff27ec2d93fbc483f624d373b4 ]
+The kernel has an awfully complicated boot sequence in order to cope
+with the various EL2 configurations, including those that "enhanced"
+the architecture. We go from EL2 to EL1, then back to EL2, staying
+at EL2 if VHE capable and otherwise go back to EL1.
 
-[[ NOTE: this is completely untested by the author, but included solely
-    because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
-    SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
-    drivers using CQHCI might benefit from a similar change, if they
-    also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
-    bug on at least MSM, Arasan, and Intel hardware. ]]
+Here's a paracetamol tablet for you.
 
-SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
-tracking that properly in software. When out of sync, we may trigger
-various timeouts.
+The cpu_resume path follows the same logic, because coming up with
+two versions of a square wheel is hard.
 
-It's not typical to perform resets while CQE is enabled, but this may
-occur in some suspend or error recovery scenarios.
+However, things aren't this straightforward with pKVM, as the host
+resume path is always proxied by the hypervisor, which means that
+the kernel is always entered at EL1. Which contradicts what the
+__boot_cpu_mode[] array contains (it obviously says EL2).
 
-Include this fix by way of the new sdhci_and_cqhci_reset() helper.
+This thus triggers a HVC call from EL1 to EL2 in a vain attempt
+to upgrade from EL1 to EL2 VHE, which we are, funnily enough,
+reluctant to grant to the host kernel. This is also completely
+unexpected, and puzzles your average EL2 hacker.
 
-I only patch the bcm7216 variant even though others potentially *could*
-provide the 'supports-cqe' property (and thus enable CQHCI), because
-d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing
-(CQE)") and some Broadcom folks confirm that only the 7216 variant
-actually supports it.
+Address it by fixing up the boot mode at the point the host gets
+deprivileged. is_hyp_mode_available() and co already have a static
+branch to deal with this, making it pretty safe.
 
-This patch depends on (and should not compile without) the patch
-entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
-CQHCI".
+This stable fix doesn't have an upstream version. The entire bootflow
+has been reworked from 6.0 and that fixed the boot mode at the same
+time, from commit 005e12676af0 ("arm64: head: record CPU boot mode after
+enabling the MMU") to be precise. However, the latter is part of a 20
+patches long series and can't be simply cherry-pick'ed.
 
-Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026124150.v4.3.I6a715feab6d01f760455865e968ecf0d85036018@changeid
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20220624150651.1358849-1-ardb@kernel.org/
+Link: https://lore.kernel.org/r/20221011165400.1241729-1-maz@kernel.org/
+Cc: <stable@vger.kernel.org> # 5.15+
+Reported-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Tested-by: Vincent Donnefort <vdonnefort@google.com>
+[Vincent: Add a paragraph about why this patch is for stable only]
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
 ---
- drivers/mmc/host/sdhci-brcmstb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-index 683d0c685748..4d42b1810ace 100644
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -12,6 +12,7 @@
- #include <linux/bitops.h>
- #include <linux/delay.h>
- 
-+#include "sdhci-cqhci.h"
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
- 
-@@ -53,7 +54,7 @@ void brcmstb_reset(struct sdhci_host *host, u8 mask)
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
- 
--	sdhci_reset(host, mask);
-+	sdhci_and_cqhci_reset(host, mask);
- 
- 	/* Reset will clear this, so re-enable it */
- 	if (priv->flags & BRCMSTB_PRIV_FLAGS_GATE_CLOCK)
--- 
-2.35.1
-
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -2000,6 +2000,17 @@ static int pkvm_drop_host_privileges(voi
+ 	 * once the host stage 2 is installed.
+ 	 */
+ 	static_branch_enable(&kvm_protected_mode_initialized);
++
++	/*
++	 * Fixup the boot mode so that we don't take spurious round
++	 * trips via EL2 on cpu_resume. Flush to the PoC for a good
++	 * measure, so that it can be observed by a CPU coming out of
++	 * suspend with the MMU off.
++	 */
++	__boot_cpu_mode[0] = __boot_cpu_mode[1] = BOOT_CPU_MODE_EL1;
++	dcache_clean_poc((unsigned long)__boot_cpu_mode,
++			 (unsigned long)(__boot_cpu_mode + 2));
++
+ 	on_each_cpu(_kvm_host_prot_finalize, &ret, 1);
+ 	return ret;
+ }
 
 
