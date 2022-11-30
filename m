@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7F46FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE25C433C1;
-	Wed, 30 Nov 2022 18:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C326E6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF2DC433C1;
+	Wed, 30 Nov 2022 18:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832830;
-	bh=bo47dcqfnvY8c+vhOvHvDfgNZrE5+EvDdyJ1RrYo9Cw=;
+	s=korg; t=1669832833;
+	bh=ELfAWij46Wt02A5ynXbjy8/nvc20JrIwgveo3uDJNNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kc0zJQ3+OSifk259UuZ2otur0HDkGv8vRtP7BfWf+EhB+AMYLgnk0AEIE/2+X3mNI
-	 7oUyF+GvynpfUWSU+ui+6NI65OL1WwTgVO2/MFQQxJLbv52A7QrTXz4ylSo7OPTG23
-	 BhXQUhiSOc4pmVtwGAuTEIoRB3Q4jQuPyL6zbKRA=
+	b=Xg5O74aSfIxMuGepKd6Q7YNDmtGa4N3Q3jpfjomfLTypyrnHBUrQMB+Gunt/l9xZs
+	 gX71+cdvkeIMnjIT3FmrXcTkJIj1Umen5unTSY1l+P9znPaRUprb7PVeCEoKiUqt0c
+	 4Rb88FTNKqffRQuOCdC3Qg8K+GRtBVuPagYmePaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Peter Kosyh <pkosyh@yandex.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/162] net: ethernet: mtk_eth_soc: fix error handling in mtk_open()
-Date: Wed, 30 Nov 2022 19:22:17 +0100
-Message-Id: <20221130180530.027288958@linuxfoundation.org>
+Subject: [PATCH 5.10 057/162] net/mlx4: Check retval of mlx4_bitmap_init
+Date: Wed, 30 Nov 2022 19:22:18 +0100
+Message-Id: <20221130180530.054979006@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,39 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Jian <liujian56@huawei.com>
+From: Peter Kosyh <pkosyh@yandex.ru>
 
-[ Upstream commit f70074140524c59a0935947b06dd6cb6e1ea642d ]
+[ Upstream commit 594c61ffc77de0a197934aa0f1df9285c68801c6 ]
 
-If mtk_start_dma() fails, invoke phylink_disconnect_phy() to perform
-cleanup. phylink_disconnect_phy() contains the put_device action. If
-phylink_disconnect_phy is not performed, the Kref of netdev will leak.
+If mlx4_bitmap_init fails, mlx4_bitmap_alloc_range will dereference
+the NULL pointer (bitmap->table).
 
-Fixes: b8fc9f30821e ("net: ethernet: mediatek: Add basic PHYLINK support")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20221117111356.161547-1-liujian56@huawei.com
+Make sure, that mlx4_bitmap_alloc_range called in no error case.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d57febe1a478 ("net/mlx4: Add A0 hybrid steering")
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Peter Kosyh <pkosyh@yandex.ru>
+Link: https://lore.kernel.org/r/20221117152806.278072-1-pkosyh@yandex.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/qp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index c7aff89141e1..217dc67c48fa 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2299,7 +2299,10 @@ static int mtk_open(struct net_device *dev)
- 		int err = mtk_start_dma(eth);
+diff --git a/drivers/net/ethernet/mellanox/mlx4/qp.c b/drivers/net/ethernet/mellanox/mlx4/qp.c
+index 427e7a31862c..d7f2890c254f 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/qp.c
++++ b/drivers/net/ethernet/mellanox/mlx4/qp.c
+@@ -697,7 +697,8 @@ static int mlx4_create_zones(struct mlx4_dev *dev,
+ 			err = mlx4_bitmap_init(*bitmap + k, 1,
+ 					       MLX4_QP_TABLE_RAW_ETH_SIZE - 1, 0,
+ 					       0);
+-			mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
++			if (!err)
++				mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
+ 		}
  
  		if (err)
-+		if (err) {
-+			phylink_disconnect_phy(mac->phylink);
- 			return err;
-+		}
- 
- 		mtk_gdm_config(eth, MTK_GDMA_TO_PDMA);
- 
 -- 
 2.35.1
 
