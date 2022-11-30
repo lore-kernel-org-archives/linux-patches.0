@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F90679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D908BC433C1;
-	Wed, 30 Nov 2022 18:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A1B79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E787EC433D6;
+	Wed, 30 Nov 2022 18:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833519;
-	bh=nU+ZHSJSa5x5rNW9g2A2vRDAftXxMPaQPzcDIbV/nL0=;
+	s=korg; t=1669833522;
+	bh=jG0XedHarOoE4DAkfdYrxyVLMBof5krotME9ffIJRGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMQO4RXPuxfcmtdc/bzEQ8MXWCPfCpYFJRFB2Td8jHCK/ezDZeRZ4NYNURgtnm6l+
-	 +WQkFeSUR3CkfoYlgpNFiKCfF6XKTnDt6UULjoImk5//KNVtlde5hZPsih5+NK/gbd
-	 qfcsXKlPQzRE5r+5uGJ8YFefM8f9nwjy5ueHcnyc=
+	b=jqFuZ4DUX3gEMl9fw8UCuyKJdJwBZ2bY7xavGgerHfmYm99D+MflHVG2U/9EJ+F1r
+	 z4ZoTyJYSJMJzEnuU8RfJL4N09AgftoRFMMcdzdmwbgkRPeLCstuglS+9fQ/GkodWO
+	 JKeDFj/qEte2PGSsbsgUGJKovZspeNEMLuvrl3vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Efremov <denis.e.efremov@oracle.com>,
-	Guenter Roeck <groeck@google.com>,
-	Martin Faltesek <mfaltesek@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/206] nfc: st-nci: fix incorrect sizing calculations in EVT_TRANSACTION
-Date: Wed, 30 Nov 2022 19:22:58 +0100
-Message-Id: <20221130180536.251651748@linuxfoundation.org>
+Subject: [PATCH 5.15 127/206] net: enetc: manage ENETC_F_QBV in priv->active_offloads only when enabled
+Date: Wed, 30 Nov 2022 19:22:59 +0100
+Message-Id: <20221130180536.276866674@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -38,113 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Faltesek <mfaltesek@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0254f31a7df3bb3b90c2d9dd2d4052f7b95eb287 ]
+[ Upstream commit 32bf8e1f6fb9f6dc334b2b98dffc2e5dcd51e513 ]
 
-The transaction buffer is allocated by using the size of the packet buf,
-and subtracting two which seems intended to remove the two tags which are
-not present in the target structure. This calculation leads to under
-counting memory because of differences between the packet contents and the
-target structure. The aid_len field is a u8 in the packet, but a u32 in
-the structure, resulting in at least 3 bytes always being under counted.
-Further, the aid data is a variable length field in the packet, but fixed
-in the structure, so if this field is less than the max, the difference is
-added to the under counting.
+Future work in this driver would like to look at priv->active_offloads &
+ENETC_F_QBV to determine whether a tc-taprio qdisc offload was
+installed, but this does not produce the intended effect.
 
-To fix, perform validation checks progressively to safely reach the
-next field, to determine the size of both buffers and verify both tags.
-Once all validation checks pass, allocate the buffer and copy the data.
-This eliminates freeing memory on the error path, as validation checks are
-moved ahead of memory allocation.
+All the other flags in priv->active_offloads are managed dynamically,
+except ENETC_F_QBV which is set statically based on the probed SI capability.
 
-Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
-Reviewed-by: Guenter Roeck <groeck@google.com>
-Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
-Signed-off-by: Martin Faltesek <mfaltesek@google.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This change makes priv->active_offloads & ENETC_F_QBV really track the
+presence of a tc-taprio schedule on the port.
+
+Some existing users, like the enetc_sched_speed_set() call from
+phylink_mac_link_up(), are best kept using the old logic: the tc-taprio
+offload does not re-trigger another link mode resolve, so the scheduler
+needs to be functional from the get go, as long as Qbv is supported at
+all on the port. So to preserve functionality there, look at the static
+station interface capability from pf->si->hw_features instead.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 290b5fe096e7 ("net: enetc: preserve TX ring priority across reconfiguration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c | 51 +++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c  | 6 ++----
+ drivers/net/ethernet/freescale/enetc/enetc_qos.c | 6 ++++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index a915cad909b4..04a2cea6d6b6 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -312,6 +312,8 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
- 	int r = 0;
- 	struct device *dev = &ndev->nfc_dev->dev;
- 	struct nfc_evt_transaction *transaction;
-+	u32 aid_len;
-+	u8 params_len;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index 3615357cc60f..5efb079ef25f 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -800,9 +800,6 @@ static void enetc_pf_netdev_setup(struct enetc_si *si, struct net_device *ndev,
  
- 	pr_debug("connectivity gate event: %x\n", event);
+ 	ndev->priv_flags |= IFF_UNICAST_FLT;
  
-@@ -325,28 +327,47 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
- 		 * Description  Tag     Length
- 		 * AID          81      5 to 16
- 		 * PARAMETERS   82      0 to 255
-+		 *
-+		 * The key differences are aid storage length is variably sized
-+		 * in the packet, but fixed in nfc_evt_transaction, and that
-+		 * the aid_len is u8 in the packet, but u32 in the structure,
-+		 * and the tags in the packet are not included in
-+		 * nfc_evt_transaction.
-+		 *
-+		 * size(b):  1          1       5-16 1             1           0-255
-+		 * offset:   0          1       2    aid_len + 2   aid_len + 3 aid_len + 4
-+		 * mem name: aid_tag(M) aid_len aid  params_tag(M) params_len  params
-+		 * example:  0x81       5-16    X    0x82          0-255       X
- 		 */
--		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
--		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
-+		if (skb->len < 2 || skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
- 			return -EPROTO;
+-	if (si->hw_features & ENETC_SI_F_QBV)
+-		priv->active_offloads |= ENETC_F_QBV;
+-
+ 	if (si->hw_features & ENETC_SI_F_PSFP && !enetc_psfp_enable(priv)) {
+ 		priv->active_offloads |= ENETC_F_QCI;
+ 		ndev->features |= NETIF_F_HW_TC;
+@@ -1053,7 +1050,8 @@ static void enetc_pl_mac_link_up(struct phylink_config *config,
+ 	int idx;
  
--		transaction = devm_kzalloc(dev, skb->len - 2, GFP_KERNEL);
--		if (!transaction)
--			return -ENOMEM;
-+		aid_len = skb->data[1];
- 
--		transaction->aid_len = skb->data[1];
--		memcpy(transaction->aid, &skb->data[2], transaction->aid_len);
-+		if (skb->len < aid_len + 4 ||
-+		    aid_len > sizeof(transaction->aid))
-+			return -EPROTO;
- 
--		/* Check next byte is PARAMETERS tag (82) */
--		if (skb->data[transaction->aid_len + 2] !=
--		    NFC_EVT_TRANSACTION_PARAMS_TAG) {
--			devm_kfree(dev, transaction);
-+		params_len = skb->data[aid_len + 3];
+ 	priv = netdev_priv(pf->si->ndev);
+-	if (priv->active_offloads & ENETC_F_QBV)
 +
-+		/* Verify PARAMETERS tag is (82), and final check that there is
-+		 * enough space in the packet to read everything.
-+		 */
-+		if (skb->data[aid_len + 2] != NFC_EVT_TRANSACTION_PARAMS_TAG ||
-+		    skb->len < aid_len + 4 + params_len)
- 			return -EPROTO;
--		}
++	if (pf->si->hw_features & ENETC_SI_F_QBV)
+ 		enetc_sched_speed_set(priv, speed);
  
--		transaction->params_len = skb->data[transaction->aid_len + 3];
--		memcpy(transaction->params, skb->data +
--		       transaction->aid_len + 4, transaction->params_len);
-+		transaction = devm_kzalloc(dev, sizeof(*transaction) +
-+					   params_len, GFP_KERNEL);
-+		if (!transaction)
-+			return -ENOMEM;
+ 	if (!phylink_autoneg_inband(mode) &&
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+index 6b236e0fd806..9fd9abad34f8 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+@@ -71,6 +71,9 @@ static int enetc_setup_taprio(struct net_device *ndev,
+ 		enetc_wr(&priv->si->hw,
+ 			 ENETC_QBV_PTGCR_OFFSET,
+ 			 tge & (~ENETC_QBV_TGE));
 +
-+		transaction->aid_len = aid_len;
-+		transaction->params_len = params_len;
++		priv->active_offloads &= ~ENETC_F_QBV;
 +
-+		memcpy(transaction->aid, &skb->data[2], aid_len);
-+		memcpy(transaction->params, &skb->data[aid_len + 4],
-+		       params_len);
+ 		return 0;
+ 	}
  
- 		r = nfc_se_transaction(ndev->nfc_dev, host, transaction);
- 		break;
+@@ -136,6 +139,9 @@ static int enetc_setup_taprio(struct net_device *ndev,
+ 	dma_free_coherent(&priv->si->pdev->dev, data_size + ENETC_QOS_ALIGN,
+ 			  tmp, dma);
+ 
++	if (!err)
++		priv->active_offloads |= ENETC_F_QBV;
++
+ 	return err;
+ }
+ 
 -- 
 2.35.1
 
