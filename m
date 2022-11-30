@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33836FBD
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09135C433D7;
-	Wed, 30 Nov 2022 18:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C225C6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F231C433D6;
+	Wed, 30 Nov 2022 18:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832875;
-	bh=iwdhQ6p98LMn/sZl2qxziTaaWZbCqbtebWd5D3SkSQM=;
+	s=korg; t=1669832878;
+	bh=No7X3F63a1P9DLZ/xNqSkEkSo2PYqklPX/Vkx4QwJh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvmopPgKi0pWHZEGBUIVcl3tkE6JpfsmUS10WDkVn5T3BdG6XKeLYzBn1/J4laqeu
-	 bvSB7HLlapuguxEbGU8n7UXoJROpm+hAntitNyNN0p11UOoiHf0Eyy44th74Mcy1vf
-	 t2K8FzwVuz0dsxNh3d1/4iKWd8Or4ao/MCYRzKVM=
+	b=KPTHYxOaDGPpzl9kIGnmxpY3YmnkMdUHRtCDIT8rNkwY/eTWvVFqB1Z99OVsSyZch
+	 YbpreiCYVruenX+58dwrtU0UDOmxRMcgvp289ozwRpAUS2kIUg6/enZEGT6WsftK8F
+	 LfhhiizhHG7DrNFEq7XhSZQEIysF7ZNvg5fA2E1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nicolas.ferre@microchip.com,
-	ludovic.desroches@microchip.com,
-	alexandre.belloni@bootlin.com,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@pengutronix.de,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeed@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/162] ARM: dts: at91: sam9g20ek: enable udc vbus gpio pinctrl
-Date: Wed, 30 Nov 2022 19:22:06 +0100
-Message-Id: <20221130180529.727911882@linuxfoundation.org>
+Subject: [PATCH 5.10 046/162] net: liquidio: simplify if expression
+Date: Wed, 30 Nov 2022 19:22:07 +0100
+Message-Id: <20221130180529.754400228@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -40,55 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 40a2226e8bfacb79dd154dea68febeead9d847e9 ]
+[ Upstream commit 733d4bbf9514890eb53ebe75827bf1fb4fd25ebe ]
 
-We set the PIOC to GPIO mode. This way the pin becomes an
-input signal will be usable by the controller. Without
-this change the udc on the 9g20ek does not work.
+Fix the warning reported by kbuild:
 
-Cc: nicolas.ferre@microchip.com
-Cc: ludovic.desroches@microchip.com
-Cc: alexandre.belloni@bootlin.com
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: kernel@pengutronix.de
-Fixes: 5cb4e73575e3 ("ARM: at91: add at91sam9g20ek boards dt support")
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221114185923.1023249-3-m.grzeschik@pengutronix.de
+cocci warnings: (new ones prefixed by >>)
+>> drivers/net/ethernet/cavium/liquidio/lio_main.c:1797:54-56: WARNING !A || A && B is equivalent to !A || B
+   drivers/net/ethernet/cavium/liquidio/lio_main.c:1827:54-56: WARNING !A || A && B is equivalent to !A || B
+
+Fixes: 8979f428a4af ("net: liquidio: release resources when liquidio driver open failed")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91sam9g20ek_common.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/cavium/liquidio/lio_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-index ca03685f0f08..4783e657b4cb 100644
---- a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-+++ b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-@@ -39,6 +39,13 @@ pinctrl_pck0_as_mck: pck0_as_mck {
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index c4dc6e2ccd6b..eefb25bcf57f 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -1798,7 +1798,7 @@ static int liquidio_open(struct net_device *netdev)
  
- 				};
+ 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
  
-+				usb1 {
-+					pinctrl_usb1_vbus_gpio: usb1_vbus_gpio {
-+						atmel,pins =
-+							<AT91_PIOC 5 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;	/* PC5 GPIO */
-+					};
-+				};
-+
- 				mmc0_slot1 {
- 					pinctrl_board_mmc0_slot1: mmc0_slot1-board {
- 						atmel,pins =
-@@ -84,6 +91,8 @@ macb0: ethernet@fffc4000 {
- 			};
+-	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
++	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on) {
+ 		ret = setup_tx_poll_fn(netdev);
+ 		if (ret)
+ 			goto err_poll;
+@@ -1828,7 +1828,7 @@ static int liquidio_open(struct net_device *netdev)
+ 	return 0;
  
- 			usb1: gadget@fffa4000 {
-+				pinctrl-0 = <&pinctrl_usb1_vbus_gpio>;
-+				pinctrl-names = "default";
- 				atmel,vbus-gpio = <&pioC 5 GPIO_ACTIVE_HIGH>;
- 				status = "okay";
- 			};
+ err_rx_ctrl:
+-	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
++	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on)
+ 		cleanup_tx_poll_fn(netdev);
+ err_poll:
+ 	if (lio->ptp_clock) {
 -- 
 2.35.1
 
