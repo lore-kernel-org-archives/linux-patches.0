@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF3279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0901C433C1;
-	Wed, 30 Nov 2022 18:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B4B79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C4C433D6;
+	Wed, 30 Nov 2022 18:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834362;
-	bh=wwNQnLOKV3Su2JrpkBV2pkUxadD8MRYDCSxAHiGhqx4=;
+	s=korg; t=1669834364;
+	bh=yM6PhSAuhvv+31l2AspF9tEuZMHMN+tXRIz7ApHLkI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlXiIgMxHik97faPPEY8exuGyTIaflWtyEl0/27SiQJQeE0MPIWTev76qDic01l4+
-	 VWeHwD8SI2gAKpWBw4vJ0hlJtLE9sjb0MpdAsPCHiNtSxzFBNBSF1iJ0L0+N0ofuZA
-	 J+xyqKBQNut+m96IPyr6ulNebGywg/r5TiCDppQg=
+	b=g5pYZYb4HMYTPtka1JVFjO7GZQsvQi3zRsrw7Z/l1Gfq4Qtfcq49p4rMdOLbQiNgx
+	 sMifBuMf9/o9TtDcd/WJgBzP61nKoiF6Ru64XcVOkjAPV0d5Hrfpv8BEVz/VXzXFcS
+	 YzZqAmLUNPr5KQR5iXpsOfb3tBQxt8dkkVRhv2Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brent Mendelsohn <mendiebm@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 225/289] ASoC: amd: yc: Add Alienware m17 R5 AMD into DMI table
-Date: Wed, 30 Nov 2022 19:23:30 +0100
-Message-Id: <20221130180549.216179012@linuxfoundation.org>
+Subject: [PATCH 6.0 226/289] ASoC: Intel: bytcht_es8316: Add quirk for the Nanote UMPC-01
+Date: Wed, 30 Nov 2022 19:23:31 +0100
+Message-Id: <20221130180549.238184719@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,42 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brent Mendelsohn <mendiebm@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d40b6529c6269cd5afddb1116a383cab9f126694 ]
+[ Upstream commit 8bb0ac0e6f64ebdf15d963c26b028de391c9bcf9 ]
 
-This model requires an additional detection quirk to enable the
-internal microphone - BIOS doesn't seem to support AcpDmicConnected
-(nothing in acpidump output).
+The Nanote UMPC-01 mini laptop has stereo speakers, while the default
+bytcht_es8316 settings assume a mono speaker setup. Add a quirk for this.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216590
-Signed-off-by: Brent Mendelsohn <mendiebm@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221024174227.4160-1-mendiebm@gmail.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221025140942.509066-1-hdegoede@redhat.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ sound/soc/intel/boards/bytcht_es8316.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 6c0f1de10429..d9715bea965e 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -206,6 +206,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
- 		}
+diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
+index 6432b83f616f..a935c5fd9edb 100644
+--- a/sound/soc/intel/boards/bytcht_es8316.c
++++ b/sound/soc/intel/boards/bytcht_es8316.c
+@@ -443,6 +443,13 @@ static const struct dmi_system_id byt_cht_es8316_quirk_table[] = {
+ 					| BYT_CHT_ES8316_INTMIC_IN2_MAP
+ 					| BYT_CHT_ES8316_JD_INVERTED),
  	},
-+	{
-+		.driver_data = &acp6x_card,
++	{	/* Nanote UMPC-01 */
 +		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
-+		}
++			DMI_MATCH(DMI_SYS_VENDOR, "RWC CO.,LTD"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "UMPC-01"),
++		},
++		.driver_data = (void *)BYT_CHT_ES8316_INTMIC_IN1_MAP,
 +	},
- 	{}
- };
- 
+ 	{	/* Teclast X98 Plus II */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "TECLAST"),
 -- 
 2.35.1
 
