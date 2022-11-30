@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADDB79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32648C433D6;
-	Wed, 30 Nov 2022 18:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EEB79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17412C433D6;
+	Wed, 30 Nov 2022 18:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833229;
-	bh=x7MgMSBYsh7ZsW8NjRE23dg4v8oznSggoiJ1A8oIq7M=;
+	s=korg; t=1669833232;
+	bh=KBla2T1u1IXm/WEkLDbWo9TEJ9Bv7mjXDp8ams7vGLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qK5977oJ1FJVWgLPABplnI9OUKlWCouo4DiteWXmqypPoGc0LflRL5iiSLZr2J/nh
-	 7ZBhnHVkJZMws6B8jt6y9Za/m5XOV45l+cyRV2i169fjmgxIY6pZdvOTlH8Iihg8Up
-	 sZiGY80mR4ca3KzZYoLdqjc6ukyqi4fPEFMwdA1g=
+	b=iO+kd59t94kV6gFWLaWJXF4jfxKhWSYgHEDCwgVuBjJ3yRI9fAQx/pib4PyXDjntG
+	 fvOTtm4ZxfU/nvjt5dBW/F2svyfFvyPmkR48Q0V+GpODcbF71PUtEIr6u3nVlfjOaq
+	 bQ6mfBPgY2xYeRhaGYr8qKSoIY7fpcgcBfVF2tFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/206] riscv: dts: sifive unleashed: Add PWM controlled LEDs
-Date: Wed, 30 Nov 2022 19:21:25 +0100
-Message-Id: <20221130180533.833711872@linuxfoundation.org>
+Subject: [PATCH 5.15 034/206] audit: fix undefined behavior in bit shift for AUDIT_BIT
+Date: Wed, 30 Nov 2022 19:21:26 +0100
+Message-Id: <20221130180533.861182914@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,81 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 8bc8824d30193eb7755043d5bb65fa7f0d11a595 ]
+[ Upstream commit 986d93f55bdeab1cac858d1e47b41fac10b2d7f6 ]
 
-This adds the 4 PWM controlled green LEDs to the HiFive Unleashed device
-tree. The schematic doesn't specify any special function for the LEDs,
-so they're added here without any default triggers and named d1, d2, d3
-and d4 just like in the schematic.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221012110928.352910-1-emil.renner.berthing@canonical.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+UBSAN: shift-out-of-bounds in kernel/auditfilter.c:179:23
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ audit_register_class+0x9d/0x137
+ audit_classes_init+0x4d/0xb8
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
+
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+[PM: remove bad 'Fixes' tag as issue predates git, added in v2.6.6-rc1]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/sifive/hifive-unleashed-a00.dts  | 38 +++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ include/uapi/linux/audit.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/sifive/hifive-unleashed-a00.dts b/arch/riscv/boot/dts/sifive/hifive-unleashed-a00.dts
-index 22f971e97161..2f4d677c9c4f 100644
---- a/arch/riscv/boot/dts/sifive/hifive-unleashed-a00.dts
-+++ b/arch/riscv/boot/dts/sifive/hifive-unleashed-a00.dts
-@@ -3,6 +3,8 @@
+diff --git a/include/uapi/linux/audit.h b/include/uapi/linux/audit.h
+index daa481729e9b..27799acd0e5e 100644
+--- a/include/uapi/linux/audit.h
++++ b/include/uapi/linux/audit.h
+@@ -182,7 +182,7 @@
+ #define AUDIT_MAX_KEY_LEN  256
+ #define AUDIT_BITMASK_SIZE 64
+ #define AUDIT_WORD(nr) ((__u32)((nr)/32))
+-#define AUDIT_BIT(nr)  (1 << ((nr) - AUDIT_WORD(nr)*32))
++#define AUDIT_BIT(nr)  (1U << ((nr) - AUDIT_WORD(nr)*32))
  
- #include "fu540-c000.dtsi"
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pwm/pwm.h>
- 
- /* Clock frequency (in Hz) of the PCB crystal for rtcclk */
- #define RTCCLK_FREQ		1000000
-@@ -46,6 +48,42 @@ gpio-restart {
- 		compatible = "gpio-restart";
- 		gpios = <&gpio 10 GPIO_ACTIVE_LOW>;
- 	};
-+
-+	led-controller {
-+		compatible = "pwm-leds";
-+
-+		led-d1 {
-+			pwms = <&pwm0 0 7812500 PWM_POLARITY_INVERTED>;
-+			active-low;
-+			color = <LED_COLOR_ID_GREEN>;
-+			max-brightness = <255>;
-+			label = "d1";
-+		};
-+
-+		led-d2 {
-+			pwms = <&pwm0 1 7812500 PWM_POLARITY_INVERTED>;
-+			active-low;
-+			color = <LED_COLOR_ID_GREEN>;
-+			max-brightness = <255>;
-+			label = "d2";
-+		};
-+
-+		led-d3 {
-+			pwms = <&pwm0 2 7812500 PWM_POLARITY_INVERTED>;
-+			active-low;
-+			color = <LED_COLOR_ID_GREEN>;
-+			max-brightness = <255>;
-+			label = "d3";
-+		};
-+
-+		led-d4 {
-+			pwms = <&pwm0 3 7812500 PWM_POLARITY_INVERTED>;
-+			active-low;
-+			color = <LED_COLOR_ID_GREEN>;
-+			max-brightness = <255>;
-+			label = "d4";
-+		};
-+	};
- };
- 
- &uart0 {
+ #define AUDIT_SYSCALL_CLASSES 16
+ #define AUDIT_CLASS_DIR_WRITE 0
 -- 
 2.35.1
 
