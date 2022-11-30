@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2DC79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F00C433D6;
-	Wed, 30 Nov 2022 18:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB4379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035F6C433D6;
+	Wed, 30 Nov 2022 18:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833851;
-	bh=tRv5WwdaxG97eI2KuLkHEG9zd4M/A14LtI9mB7OzuRg=;
+	s=korg; t=1669833854;
+	bh=nSqaoTuAp7ixxWx2uU45tc3fXGYqyn+7fl8a/mxvdqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vscDPfkGgsHGw/O32/8WitoCzGUlSNIwa1F0aB1a7tT3fnx/0uKxcOThCq6zzgO5P
-	 qfPyB0yqHi0lLDbj4ABwb96+GGBwEYDQjJzSE4Sa0Rxwt2HckL4jCJx8k0cGTUpPP7
-	 kPFayWkhrOk6cmXMjBGhTcldKnxNgF4r8gOAZBJU=
+	b=kvPKQFv/1GB8SPi8gYHxwyYUn/jNvANwn80mQNQ2GIiMfcMd3GhwVZRLA4WlJSn4G
+	 JV35GJhgWNhxXaaCLjijbcnq6qsrUZcYCDsVeB8VJu/ZNkNhMyk+rD8mDyKczPPkL6
+	 CWKE2B7Tgul15JWYtZDuof7J7pi6maFksti3Txdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manyi Li <limanyi@uniontech.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 020/289] platform/x86: ideapad-laptop: Disable touchpad_switch
-Date: Wed, 30 Nov 2022 19:20:05 +0100
-Message-Id: <20221130180544.590580781@linuxfoundation.org>
+Subject: [PATCH 6.0 038/289] drm/amdgpu: Drop eviction lock when allocating PT BO
+Date: Wed, 30 Nov 2022 19:20:23 +0100
+Message-Id: <20221130180544.995989131@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,68 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manyi Li <limanyi@uniontech.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit a231224a601c1924b9df620281ad04472900d75f ]
+[ Upstream commit e034a0d9aaee5c9129d5dfdfdfcab988a953412d ]
 
-Ideapads for "Lenovo Yoga 3 Pro 1370" and "ZhaoYang K4e-IML" do not
-use EC to switch touchpad.
+Re-take the eviction lock immediately again after the allocation is
+completed, to fix circular locking warning with drm_buddy allocator.
 
-Reading VPCCMD_R_TOUCHPAD will return zero thus touchpad may be blocked
-unexpectedly.
+Move amdgpu_vm_eviction_lock/unlock/trylock to amdgpu_vm.h as they are
+called from multiple files.
 
-Signed-off-by: Manyi Li <limanyi@uniontech.com>
-Link: https://lore.kernel.org/r/20221018095323.14591-1-limanyi@uniontech.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ideapad-laptop.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c    | 26 -----------------------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h    | 26 +++++++++++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c |  2 ++
+ 3 files changed, 28 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
-index abd0c81d62c4..33b3dfdd1b08 100644
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -1533,6 +1533,24 @@ static const struct dmi_system_id hw_rfkill_list[] = {
- 	{}
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 04130f8813ef..369c0d03e3c6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -143,32 +143,6 @@ int amdgpu_vm_set_pasid(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 	return 0;
+ }
  
-+static const struct dmi_system_id no_touchpad_switch_list[] = {
-+	{
-+	.ident = "Lenovo Yoga 3 Pro 1370",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "Lenovo YOGA 3"),
-+		},
-+	},
-+	{
-+	.ident = "ZhaoYang K4e-IML",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_VERSION, "ZhaoYang K4e-IML"),
-+		},
-+	},
-+	{}
-+};
+-/*
+- * vm eviction_lock can be taken in MMU notifiers. Make sure no reclaim-FS
+- * happens while holding this lock anywhere to prevent deadlocks when
+- * an MMU notifier runs in reclaim-FS context.
+- */
+-static inline void amdgpu_vm_eviction_lock(struct amdgpu_vm *vm)
+-{
+-	mutex_lock(&vm->eviction_lock);
+-	vm->saved_flags = memalloc_noreclaim_save();
+-}
+-
+-static inline int amdgpu_vm_eviction_trylock(struct amdgpu_vm *vm)
+-{
+-	if (mutex_trylock(&vm->eviction_lock)) {
+-		vm->saved_flags = memalloc_noreclaim_save();
+-		return 1;
+-	}
+-	return 0;
+-}
+-
+-static inline void amdgpu_vm_eviction_unlock(struct amdgpu_vm *vm)
+-{
+-	memalloc_noreclaim_restore(vm->saved_flags);
+-	mutex_unlock(&vm->eviction_lock);
+-}
+-
+ /**
+  * amdgpu_vm_bo_evicted - vm_bo is evicted
+  *
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+index 278512535b51..39d2898caede 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -503,4 +503,30 @@ static inline uint64_t amdgpu_vm_tlb_seq(struct amdgpu_vm *vm)
+ 	return atomic64_read(&vm->tlb_seq);
+ }
+ 
++/*
++ * vm eviction_lock can be taken in MMU notifiers. Make sure no reclaim-FS
++ * happens while holding this lock anywhere to prevent deadlocks when
++ * an MMU notifier runs in reclaim-FS context.
++ */
++static inline void amdgpu_vm_eviction_lock(struct amdgpu_vm *vm)
++{
++	mutex_lock(&vm->eviction_lock);
++	vm->saved_flags = memalloc_noreclaim_save();
++}
 +
- static void ideapad_check_features(struct ideapad_private *priv)
- {
- 	acpi_handle handle = priv->adev->handle;
-@@ -1541,7 +1559,12 @@ static void ideapad_check_features(struct ideapad_private *priv)
- 	priv->features.hw_rfkill_switch = dmi_check_system(hw_rfkill_list);
++static inline bool amdgpu_vm_eviction_trylock(struct amdgpu_vm *vm)
++{
++	if (mutex_trylock(&vm->eviction_lock)) {
++		vm->saved_flags = memalloc_noreclaim_save();
++		return true;
++	}
++	return false;
++}
++
++static inline void amdgpu_vm_eviction_unlock(struct amdgpu_vm *vm)
++{
++	memalloc_noreclaim_restore(vm->saved_flags);
++	mutex_unlock(&vm->eviction_lock);
++}
++
+ #endif
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index 88de9f0d4728..983899574464 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -597,7 +597,9 @@ static int amdgpu_vm_pt_alloc(struct amdgpu_device *adev,
+ 	if (entry->bo)
+ 		return 0;
  
- 	/* Most ideapads with ELAN0634 touchpad don't use EC touchpad switch */
--	priv->features.touchpad_ctrl_via_ec = !acpi_dev_present("ELAN0634", NULL, -1);
-+	if (acpi_dev_present("ELAN0634", NULL, -1))
-+		priv->features.touchpad_ctrl_via_ec = 0;
-+	else if (dmi_check_system(no_touchpad_switch_list))
-+		priv->features.touchpad_ctrl_via_ec = 0;
-+	else
-+		priv->features.touchpad_ctrl_via_ec = 1;
++	amdgpu_vm_eviction_unlock(vm);
+ 	r = amdgpu_vm_pt_create(adev, vm, cursor->level, immediate, &pt);
++	amdgpu_vm_eviction_lock(vm);
+ 	if (r)
+ 		return r;
  
- 	if (!read_ec_data(handle, VPCCMD_R_FAN, &val))
- 		priv->features.fan_mode = true;
 -- 
 2.35.1
 
