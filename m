@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E3179C1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06230C43470;
-	Wed, 30 Nov 2022 18:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF0279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742BBC433C1;
+	Wed, 30 Nov 2022 18:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833341;
-	bh=iwdhQ6p98LMn/sZl2qxziTaaWZbCqbtebWd5D3SkSQM=;
+	s=korg; t=1669833338;
+	bh=145tM/n+McrsB9DA5tQdPX9E/pQpxCCBfrlA1QShAIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIutF1hqFlDSQEg/GcXHNWz7AN7qD07nQ8wGl9dFPLIUpymq49JSU7rXgrMGHgYMe
-	 9rR4w1n0II7pIZ/g80XjNNPgLebVGl+9zETwYMRh8psmv3hWdaqJYhXEMf/wX15VDT
-	 s5WtJ0N/+jRIM6hRG+OQY/gWYFqaO6FlrNclyKfc=
+	b=gJNokaifcfHuVxujCh/Wweb/kbXha0I1WvCMl24KPIMVqUCdgieF8UvfoEO4Q3DWr
+	 imWiGLfHFN8j03YeScu+dCGC/MWPe8sJY9YJruCUE4XY87MOjlCWW/YeOx7PkCGBTP
+	 JtiJH27XLDvWZTA5cJ2wZ38EtlhRNLnqL4xLr91c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nicolas.ferre@microchip.com,
-	ludovic.desroches@microchip.com,
-	alexandre.belloni@bootlin.com,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@pengutronix.de,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/206] ARM: dts: at91: sam9g20ek: enable udc vbus gpio pinctrl
-Date: Wed, 30 Nov 2022 19:22:03 +0100
-Message-Id: <20221130180534.803415744@linuxfoundation.org>
+Subject: [PATCH 5.15 070/206] tee: optee: fix possible memory leak in optee_register_device()
+Date: Wed, 30 Nov 2022 19:22:02 +0100
+Message-Id: <20221130180534.780030658@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -40,55 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 40a2226e8bfacb79dd154dea68febeead9d847e9 ]
+[ Upstream commit cce616e012c215d65c15e5d1afa73182dea49389 ]
 
-We set the PIOC to GPIO mode. This way the pin becomes an
-input signal will be usable by the controller. Without
-this change the udc on the 9g20ek does not work.
+If device_register() returns error in optee_register_device(),
+the name allocated by dev_set_name() need be freed. As comment
+of device_register() says, it should use put_device() to give
+up the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup(),
+and optee_device is freed in optee_release_device().
 
-Cc: nicolas.ferre@microchip.com
-Cc: ludovic.desroches@microchip.com
-Cc: alexandre.belloni@bootlin.com
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: kernel@pengutronix.de
-Fixes: 5cb4e73575e3 ("ARM: at91: add at91sam9g20ek boards dt support")
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221114185923.1023249-3-m.grzeschik@pengutronix.de
+Fixes: c3fa24af9244 ("tee: optee: add TEE bus device enumeration support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91sam9g20ek_common.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/tee/optee/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-index ca03685f0f08..4783e657b4cb 100644
---- a/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-+++ b/arch/arm/boot/dts/at91sam9g20ek_common.dtsi
-@@ -39,6 +39,13 @@ pinctrl_pck0_as_mck: pck0_as_mck {
+diff --git a/drivers/tee/optee/device.c b/drivers/tee/optee/device.c
+index 128a2d2a50a1..a74d82e230e3 100644
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -80,7 +80,7 @@ static int optee_register_device(const uuid_t *device_uuid)
+ 	rc = device_register(&optee_device->dev);
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+-		kfree(optee_device);
++		put_device(&optee_device->dev);
+ 	}
  
- 				};
- 
-+				usb1 {
-+					pinctrl_usb1_vbus_gpio: usb1_vbus_gpio {
-+						atmel,pins =
-+							<AT91_PIOC 5 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;	/* PC5 GPIO */
-+					};
-+				};
-+
- 				mmc0_slot1 {
- 					pinctrl_board_mmc0_slot1: mmc0_slot1-board {
- 						atmel,pins =
-@@ -84,6 +91,8 @@ macb0: ethernet@fffc4000 {
- 			};
- 
- 			usb1: gadget@fffa4000 {
-+				pinctrl-0 = <&pinctrl_usb1_vbus_gpio>;
-+				pinctrl-names = "default";
- 				atmel,vbus-gpio = <&pioC 5 GPIO_ACTIVE_HIGH>;
- 				status = "okay";
- 			};
+ 	return rc;
 -- 
 2.35.1
 
