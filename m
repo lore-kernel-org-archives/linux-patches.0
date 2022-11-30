@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144AC79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BC2C433C1;
-	Wed, 30 Nov 2022 18:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D706379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FF1C433D6;
+	Wed, 30 Nov 2022 18:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833723;
-	bh=r8taBK0juFTsm9rFk+xkwG9CEgBXIN5Wo0LyZmOehcg=;
+	s=korg; t=1669833726;
+	bh=RUpOMe3BO0dzbxwVHpa6aIEvvuaeeCposlJJy+mWPjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+0IU5K/84uvOfTKZJAo02UlVGpA8B8Dop4HfTp6/XrpUs2bWL3V+KGNS6AGKe6ai
-	 5vMQBK3vVb0Bv/KlG+QnsRRHgXUK9WpWV42uL3h6Vq8UPdWyAkkiIDDGrZTJ02dB2O
-	 unru1MR52/Jg4+Bvn/OMbnxI8yDyyaDRWW/U5hG8=
+	b=kTOjtt8fYgzNNJP4ncwq7ki7kE54Z/81YRfB4QID6AN73DQKPwsQM6ajQn1AnIY+O
+	 sYg92CMAseUEp8fIYNDw+JmLOhBjWqTOeIMYwHYbIcSAO8Xvg7CvisSXiLvv2QPlk8
+	 dGsGy18kHhEwyGsM5ipOc2fvKWtMPlP55vp9FoUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/206] Input: soc_button_array - add Acer Switch V 10 to dmi_use_low_level_irq[]
-Date: Wed, 30 Nov 2022 19:23:42 +0100
-Message-Id: <20221130180537.351728938@linuxfoundation.org>
+Subject: [PATCH 5.15 171/206] Input: i8042 - apply probe defer to more ASUS ZenBook models
+Date: Wed, 30 Nov 2022 19:23:43 +0100
+Message-Id: <20221130180537.376669320@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,43 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e13757f52496444b994a7ac67b6e517a15d89bbc ]
+[ Upstream commit 26c263bf1847d4dadba016a0457c4c5f446407bf ]
 
-Like on the Acer Switch 10 SW5-012, the Acer Switch V 10 SW5-017's _LID
-method messes with home- and power-button GPIO IRQ settings, causing an
-IRQ storm.
+There are yet a few more ASUS ZenBook models that require the deferred
+probe.  At least, there are different ZenBook UX325x and UX425x
+models.  Let's extend the DMI matching table entries for adapting
+those missing models.
 
-Add a quirk entry for the Acer Switch V 10 to the dmi_use_low_level_irq[]
-DMI quirk list, to use low-level IRQs on this model, fixing the IRQ storm.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221106215320.67109-2-hdegoede@redhat.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20221108142027.28480-1-tiwai@suse.de
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/soc_button_array.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/serio/i8042-x86ia64io.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
-index 46ba8218de99..31c02c2019c1 100644
---- a/drivers/input/misc/soc_button_array.c
-+++ b/drivers/input/misc/soc_button_array.c
-@@ -77,6 +77,13 @@ static const struct dmi_system_id dmi_use_low_level_irq[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
- 		},
+diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
+index 4b0201cf71f5..3a41ac9af2e7 100644
+--- a/drivers/input/serio/i8042-x86ia64io.h
++++ b/drivers/input/serio/i8042-x86ia64io.h
+@@ -114,18 +114,18 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_NEVER)
  	},
-+	{
-+		/* Acer Switch V 10 SW5-017, same issue as Acer Switch 10 SW5-012. */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
-+		},
-+	},
  	{
- 		/*
- 		 * Acer One S1003. _LID method messes with power-button GPIO
+-		/* ASUS ZenBook UX425UA */
++		/* ASUS ZenBook UX425UA/QA */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX425UA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX425"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
+ 	},
+ 	{
+-		/* ASUS ZenBook UM325UA */
++		/* ASUS ZenBook UM325UA/QA */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325UA_UM325UA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
+ 	},
 -- 
 2.35.1
 
