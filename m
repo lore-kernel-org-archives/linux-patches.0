@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658579C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF320C433D6;
-	Wed, 30 Nov 2022 18:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B5679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889D1C433D6;
+	Wed, 30 Nov 2022 18:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833306;
-	bh=njObzzihETDEyRFwwlBVKg3ZyPlZClxXNh1sTuzSlOs=;
+	s=korg; t=1669833309;
+	bh=+cC/2A0O1a+NCRlywGAt4AB719e1jYGnJMf/hFAt0po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRK/z0FzSntURLI0wKkJa0g7Uqwvz2yV6zm9YSGrcYnul1OiDAA86iEThSblm32V7
-	 YwjNLoo3+Q+YdGy0FAsKW1bjWhd73FemzqBpbMBfwzwCZOX473qbPLjKk3mzg8UXqo
-	 k7VW+mZ0jLrjgj4hM6fy8r8Jfgi2KzkjlCk8FuRo=
+	b=kfwS8HFXRAw1zIe2CQ45vj81HP/GrcZypIpD+vI+CgzSev80CEtyjDjmEcobrzGHy
+	 T19/TTXpEm6wEUJveg4W94U7yxL0iaU8SQFznU0X3zd5xiLa4rtawpvtR4mVt7xCiv
+	 D6yfmsDYdMFciK844pNi0qRc9uSOMZKeB2eh6rXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Fabio Estevam <festevam@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/206] ASoC: sgtl5000: Reset the CHIP_CLK_CTRL reg on remove
-Date: Wed, 30 Nov 2022 19:21:52 +0100
-Message-Id: <20221130180534.530369200@linuxfoundation.org>
+Subject: [PATCH 5.15 061/206] ASoC: soc-pcm: Dont zero TDM masks in __soc_pcm_open()
+Date: Wed, 30 Nov 2022 19:21:53 +0100
+Message-Id: <20221130180534.554967684@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,46 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 0bb8e9b36b5b7f2e77892981ff6c27ee831d8026 ]
+[ Upstream commit 39bd801d6908900e9ab0cdc2655150f95ddd4f1a ]
 
-Since commit bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove"),
-the device power control registers are reset when the driver is
-removed/shutdown.
+The DAI tx_mask and rx_mask are set by snd_soc_dai_set_tdm_slot()
+and used by later code that depends on the TDM settings. So
+__soc_pcm_open() should not be obliterating those mask values.
 
-This is an issue when the device is configured to use the PLL clock. The
-device will stop responding if it is still configured to use the PLL
-clock but the PLL clock is powered down.
+The code in __soc_pcm_hw_params() uses these masks to calculate the
+active channels so that only the AIF_IN/AIF_OUT widgets for the
+active TDM slots are enabled. The zeroing of the masks in
+__soc_pcm_open() disables this functionality so all AIF widgets
+were enabled even for channels that are not assigned to a TDM slot.
 
-When rebooting linux, the probe function will show:
-sgtl5000 0-000a: Error reading chip id -11
-
-Make sure that the CHIP_CLK_CTRL is reset to its default value before
-powering down the device.
-
-Fixes: bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove")
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/20221110190612.1341469-1-detlev.casanova@collabora.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 2e5894d73789 ("ASoC: pcm: Add support for DAI multicodec")
+Link: https://lore.kernel.org/r/20221104132213.121847-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sgtl5000.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/soc-pcm.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/sound/soc/codecs/sgtl5000.c b/sound/soc/codecs/sgtl5000.c
-index dc56e6c6b668..3c5a4fe2fad6 100644
---- a/sound/soc/codecs/sgtl5000.c
-+++ b/sound/soc/codecs/sgtl5000.c
-@@ -1797,6 +1797,7 @@ static int sgtl5000_i2c_remove(struct i2c_client *client)
- {
- 	struct sgtl5000_priv *sgtl5000 = i2c_get_clientdata(client);
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 48f71bb81a2f..f6dc71e8ea87 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -759,11 +759,6 @@ static int soc_pcm_open(struct snd_pcm_substream *substream)
+ 		ret = snd_soc_dai_startup(dai, substream);
+ 		if (ret < 0)
+ 			goto err;
+-
+-		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-			dai->tx_mask = 0;
+-		else
+-			dai->rx_mask = 0;
+ 	}
  
-+	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_CLK_CTRL, SGTL5000_CHIP_CLK_CTRL_DEFAULT);
- 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_DIG_POWER, SGTL5000_DIG_POWER_DEFAULT);
- 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_ANA_POWER, SGTL5000_ANA_POWER_DEFAULT);
- 
+ 	/* Dynamic PCM DAI links compat checks use dynamic capabilities */
 -- 
 2.35.1
 
