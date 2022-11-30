@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2F779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CABC433D7;
-	Wed, 30 Nov 2022 18:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1976A79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66945C433C1;
+	Wed, 30 Nov 2022 18:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833683;
-	bh=HadPS6m+pVrsJNuaQ3ZS4WSXZB7phsZTAMFfdRfLCSc=;
+	s=korg; t=1669833685;
+	bh=GcXlIGsa+nuE2ry+v6H1EZ8MlBMsb6KWVkWdNb6emWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1Lg+C9W2m9B0MGOuEKScX4j2mtQgFrUAKp93WUugq9fnMROP0VaKh9p+v2VE6stu
-	 WYUjqg1oGVKJo14J2Mr9qaC+6ncikFHxkzZ1OOLwoze7SXIeb9LweNxaZS3EM2yEFE
-	 7nNxk1s0miyeJkynmmZw4TFosqs8lsQdyXArpI3Q=
+	b=e5i7jSRZXngKrPWE87vnyXrLd8xvDtwtz+VcJqWyMAUq1Ids5UvYnIuTRC29TBLb8
+	 qQ+0rv0cVV7SxCi9bAOLlJcllnJKHH/dRfjxK1rPyCzHGw6o70wAl23LEkgJouynwR
+	 tqkyKnK3AdxMKRGKpgXADg7niEuDI2pVQLu5+6uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Guanghui <zhouguanghui1@huawei.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/206] scsi: iscsi: Fix possible memory leak when device_register() failed
-Date: Wed, 30 Nov 2022 19:23:55 +0100
-Message-Id: <20221130180537.674378633@linuxfoundation.org>
+Subject: [PATCH 5.15 184/206] gpu: host1x: Avoid trying to use GART on Tegra20
+Date: Wed, 30 Nov 2022 19:23:56 +0100
+Message-Id: <20221130180537.699239392@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,134 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhou Guanghui <zhouguanghui1@huawei.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit f014165faa7b953b81dcbf18835936e5f8d01f2a ]
+[ Upstream commit c2418f911a31a266af4fbaca998dc73d3676475a ]
 
-If device_register() returns error, the name allocated by the
-dev_set_name() need be freed. As described in the comment of
-device_register(), we should use put_device() to give up the reference in
-the error path.
+Since commit c7e3ca515e78 ("iommu/tegra: gart: Do not register with
+bus") quite some time ago, the GART driver has effectively disabled
+itself to avoid issues with the GPU driver expecting it to work in ways
+that it doesn't. As of commit 57365a04c921 ("iommu: Move bus setup to
+IOMMU device registration") that bodge no longer works, but really the
+GPU driver should be responsible for its own behaviour anyway. Make the
+workaround explicit.
 
-Fix this by calling put_device(), the name will be freed in the
-kobject_cleanup(), and this patch modified resources will be released by
-calling the corresponding callback function in the device_release().
-
-Signed-off-by: Zhou Guanghui <zhouguanghui1@huawei.com>
-Link: https://lore.kernel.org/r/20221110033729.1555-1-zhouguanghui1@huawei.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Suggested-by: Dmitry Osipenko <digetx@gmail.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 31 +++++++++++++++--------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/tegra/drm.c | 4 ++++
+ drivers/gpu/host1x/dev.c    | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index f46ae5391758..cc39cbef9d7f 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -232,7 +232,7 @@ iscsi_create_endpoint(int dd_size)
- 	dev_set_name(&ep->dev, "ep-%d", id);
- 	err = device_register(&ep->dev);
-         if (err)
--		goto free_id;
-+		goto put_dev;
+diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
+index 611cd8dad46e..4f5affdc6080 100644
+--- a/drivers/gpu/drm/tegra/drm.c
++++ b/drivers/gpu/drm/tegra/drm.c
+@@ -1083,6 +1083,10 @@ static bool host1x_drm_wants_iommu(struct host1x_device *dev)
+ 	struct host1x *host1x = dev_get_drvdata(dev->dev.parent);
+ 	struct iommu_domain *domain;
  
- 	err = sysfs_create_group(&ep->dev.kobj, &iscsi_endpoint_group);
- 	if (err)
-@@ -246,10 +246,12 @@ iscsi_create_endpoint(int dd_size)
- 	device_unregister(&ep->dev);
- 	return NULL;
++	/* Our IOMMU usage policy doesn't currently play well with GART */
++	if (of_machine_is_compatible("nvidia,tegra20"))
++		return false;
++
+ 	/*
+ 	 * If the Tegra DRM clients are backed by an IOMMU, push buffers are
+ 	 * likely to be allocated beyond the 32-bit boundary if sufficient
+diff --git a/drivers/gpu/host1x/dev.c b/drivers/gpu/host1x/dev.c
+index fc9f54282f7d..c2a4bf2aae61 100644
+--- a/drivers/gpu/host1x/dev.c
++++ b/drivers/gpu/host1x/dev.c
+@@ -204,6 +204,10 @@ static void host1x_setup_sid_table(struct host1x *host)
  
--free_id:
-+put_dev:
- 	mutex_lock(&iscsi_ep_idr_mutex);
- 	idr_remove(&iscsi_ep_idr, id);
- 	mutex_unlock(&iscsi_ep_idr_mutex);
-+	put_device(&ep->dev);
-+	return NULL;
- free_ep:
- 	kfree(ep);
- 	return NULL;
-@@ -767,7 +769,7 @@ iscsi_create_iface(struct Scsi_Host *shost, struct iscsi_transport *transport,
- 
- 	err = device_register(&iface->dev);
- 	if (err)
--		goto free_iface;
-+		goto put_dev;
- 
- 	err = sysfs_create_group(&iface->dev.kobj, &iscsi_iface_group);
- 	if (err)
-@@ -781,9 +783,8 @@ iscsi_create_iface(struct Scsi_Host *shost, struct iscsi_transport *transport,
- 	device_unregister(&iface->dev);
- 	return NULL;
- 
--free_iface:
--	put_device(iface->dev.parent);
--	kfree(iface);
-+put_dev:
-+	put_device(&iface->dev);
- 	return NULL;
- }
- EXPORT_SYMBOL_GPL(iscsi_create_iface);
-@@ -1252,15 +1253,15 @@ iscsi_create_flashnode_sess(struct Scsi_Host *shost, int index,
- 
- 	err = device_register(&fnode_sess->dev);
- 	if (err)
--		goto free_fnode_sess;
-+		goto put_dev;
- 
- 	if (dd_size)
- 		fnode_sess->dd_data = &fnode_sess[1];
- 
- 	return fnode_sess;
- 
--free_fnode_sess:
--	kfree(fnode_sess);
-+put_dev:
-+	put_device(&fnode_sess->dev);
- 	return NULL;
- }
- EXPORT_SYMBOL_GPL(iscsi_create_flashnode_sess);
-@@ -1300,15 +1301,15 @@ iscsi_create_flashnode_conn(struct Scsi_Host *shost,
- 
- 	err = device_register(&fnode_conn->dev);
- 	if (err)
--		goto free_fnode_conn;
-+		goto put_dev;
- 
- 	if (dd_size)
- 		fnode_conn->dd_data = &fnode_conn[1];
- 
- 	return fnode_conn;
- 
--free_fnode_conn:
--	kfree(fnode_conn);
-+put_dev:
-+	put_device(&fnode_conn->dev);
- 	return NULL;
- }
- EXPORT_SYMBOL_GPL(iscsi_create_flashnode_conn);
-@@ -4838,7 +4839,7 @@ iscsi_register_transport(struct iscsi_transport *tt)
- 	dev_set_name(&priv->dev, "%s", tt->name);
- 	err = device_register(&priv->dev);
- 	if (err)
--		goto free_priv;
-+		goto put_dev;
- 
- 	err = sysfs_create_group(&priv->dev.kobj, &iscsi_transport_group);
- 	if (err)
-@@ -4873,8 +4874,8 @@ iscsi_register_transport(struct iscsi_transport *tt)
- unregister_dev:
- 	device_unregister(&priv->dev);
- 	return NULL;
--free_priv:
--	kfree(priv);
-+put_dev:
-+	put_device(&priv->dev);
- 	return NULL;
- }
- EXPORT_SYMBOL_GPL(iscsi_register_transport);
+ static bool host1x_wants_iommu(struct host1x *host1x)
+ {
++	/* Our IOMMU usage policy doesn't currently play well with GART */
++	if (of_machine_is_compatible("nvidia,tegra20"))
++		return false;
++
+ 	/*
+ 	 * If we support addressing a maximum of 32 bits of physical memory
+ 	 * and if the host1x firewall is enabled, there's no need to enable
 -- 
 2.35.1
 
