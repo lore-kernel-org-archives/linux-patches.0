@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36487C433C1;
-	Wed, 30 Nov 2022 18:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD3779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115DCC433D6;
+	Wed, 30 Nov 2022 18:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834042;
-	bh=x2yTGj/fFb6Sb1QdNj+QCq1cNfH3NMhGrYyAF4JACWM=;
+	s=korg; t=1669834045;
+	bh=7dHZJmFJG/j5evOZe0xzlY320tlTbBLwd/v+rdY3Fc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCj7eF0clmyNM5+hEPfI9hT4Ch6BlGKrepwrRiUF6vchfmk5np/4q3vm/zcQUPMYZ
-	 VFJqKN11DlqMCbKW1NI7dVoLPR5Blbwagmh3yeIaHxSrJzxf5HNiuy7M4PnYAEdMFP
-	 WImyAisyugW7lrt3tcRf6iHHojtwwspgwYo9HV80=
+	b=wTkIEpY8WApxGerxnnvMBjaonKfIQH7jQJup7Ztba2DUjQA1wCNtSRe/SWhpoKQ5W
+	 7LmEUwiw5oE51SyN5Z5QMHOXKl22ITb0t3UnU1E6u3LBwZgp3VUAGm4zn/1s1LvqwO
+	 4yX32gsNbIPkoNIrv6xWRaE4ap4ZPOlINpahiBmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 107/289] net/mlx5: cmdif, Print info on any firmware cmd failure to tracepoint
-Date: Wed, 30 Nov 2022 19:21:32 +0100
-Message-Id: <20221130180546.565817387@linuxfoundation.org>
+Subject: [PATCH 6.0 081/289] 9p/fd: fix issue of list_del corruption in p9_fd_cancel()
+Date: Wed, 30 Nov 2022 19:21:06 +0100
+Message-Id: <20221130180545.980920485@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,213 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 870c2481174b839e7159555127bc8b5a5d0699ba ]
+[ Upstream commit 11c10956515b8ec44cf4f2a7b9d8bf8b9dc05ec4 ]
 
-While moving to new CMD API (quiet API), some pre-existing flows may call the new API
-function that in case of error, returns the error instead of printing it as previously done.
-For such flows we bring back the print but to tracepoint this time for sys admins to
-have the ability to check for errors especially for commands using the new quiet API.
+Syz reported the following issue:
+kernel BUG at lib/list_debug.c:53!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+RIP: 0010:__list_del_entry_valid.cold+0x5c/0x72
+Call Trace:
+<TASK>
+p9_fd_cancel+0xb1/0x270
+p9_client_rpc+0x8ea/0xba0
+p9_client_create+0x9c0/0xed0
+v9fs_session_init+0x1e0/0x1620
+v9fs_mount+0xba/0xb80
+legacy_get_tree+0x103/0x200
+vfs_get_tree+0x89/0x2d0
+path_mount+0x4c0/0x1ac0
+__x64_sys_mount+0x33b/0x430
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+</TASK>
 
-Tracepoint output example:
-         devlink-1333    [001] .....   822.746922: mlx5_cmd: ACCESS_REG(0x805) op_mod(0x0) failed, status bad resource(0x5), syndrome (0xb06e1f), err(-22)
+The process is as follows:
+Thread A:                       Thread B:
+p9_poll_workfn()                p9_client_create()
+...                                 ...
+    p9_conn_cancel()                p9_fd_cancel()
+        list_del()                      ...
+        ...                             list_del()  //list_del
+                                                      corruption
+There is no lock protection when deleting list in p9_conn_cancel(). After
+deleting list in Thread A, thread B will delete the same list again. It
+will cause issue of list_del corruption.
 
-Fixes: f23519e542e5 ("net/mlx5: cmdif, Add new api for command execution")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Setting req->status to REQ_STATUS_ERROR under lock prevents other
+cleanup paths from trying to manipulate req_list.
+The other thread can safely check req->status because it still holds a
+reference to req at this point.
+
+Link: https://lkml.kernel.org/r/20221110122606.383352-1-shaozhengchao@huawei.com
+Fixes: 52f1c45dde91 ("9p: trans_fd/p9_conn_cancel: drop client lock earlier")
+Reported-by: syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+[Dominique: add description of the fix in commit message]
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 41 +++++++++--------
- .../mellanox/mlx5/core/diag/cmd_tracepoint.h  | 45 +++++++++++++++++++
- include/linux/mlx5/driver.h                   |  1 +
- 3 files changed, 68 insertions(+), 19 deletions(-)
- create mode 100644 drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
+ net/9p/trans_fd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 2e0d59ca62b5..df3e284ca5c6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -45,6 +45,8 @@
- #include "mlx5_core.h"
- #include "lib/eq.h"
- #include "lib/tout.h"
-+#define CREATE_TRACE_POINTS
-+#include "diag/cmd_tracepoint.h"
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index 0191f22d1ec3..8487321c1fc7 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -202,9 +202,11 @@ static void p9_conn_cancel(struct p9_conn *m, int err)
  
- enum {
- 	CMD_IF_REV = 5,
-@@ -785,27 +787,14 @@ EXPORT_SYMBOL(mlx5_cmd_out_err);
- static void cmd_status_print(struct mlx5_core_dev *dev, void *in, void *out)
- {
- 	u16 opcode, op_mod;
--	u32 syndrome;
--	u8  status;
- 	u16 uid;
--	int err;
--
--	syndrome = MLX5_GET(mbox_out, out, syndrome);
--	status = MLX5_GET(mbox_out, out, status);
+ 	list_for_each_entry_safe(req, rtmp, &m->req_list, req_list) {
+ 		list_move(&req->req_list, &cancel_list);
++		req->status = REQ_STATUS_ERROR;
+ 	}
+ 	list_for_each_entry_safe(req, rtmp, &m->unsent_req_list, req_list) {
+ 		list_move(&req->req_list, &cancel_list);
++		req->status = REQ_STATUS_ERROR;
+ 	}
  
- 	opcode = MLX5_GET(mbox_in, in, opcode);
- 	op_mod = MLX5_GET(mbox_in, in, op_mod);
- 	uid    = MLX5_GET(mbox_in, in, uid);
- 
--	err = cmd_status_to_err(status);
--
- 	if (!uid && opcode != MLX5_CMD_OP_DESTROY_MKEY)
- 		mlx5_cmd_out_err(dev, opcode, op_mod, out);
--	else
--		mlx5_core_dbg(dev,
--			"%s(0x%x) op_mod(0x%x) uid(%d) failed, status %s(0x%x), syndrome (0x%x), err(%d)\n",
--			mlx5_command_str(opcode), opcode, op_mod, uid,
--			cmd_status_str(status), status, syndrome, err);
- }
- 
- int mlx5_cmd_check(struct mlx5_core_dev *dev, int err, void *in, void *out)
-@@ -1892,6 +1881,16 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
- 	return err;
- }
- 
-+static void mlx5_cmd_err_trace(struct mlx5_core_dev *dev, u16 opcode, u16 op_mod, void *out)
-+{
-+	u32 syndrome = MLX5_GET(mbox_out, out, syndrome);
-+	u8 status = MLX5_GET(mbox_out, out, status);
-+
-+	trace_mlx5_cmd(mlx5_command_str(opcode), opcode, op_mod,
-+		       cmd_status_str(status), status, syndrome,
-+		       cmd_status_to_err(status));
-+}
-+
- static void cmd_status_log(struct mlx5_core_dev *dev, u16 opcode, u8 status,
- 			   u32 syndrome, int err)
- {
-@@ -1914,7 +1913,7 @@ static void cmd_status_log(struct mlx5_core_dev *dev, u16 opcode, u8 status,
- }
- 
- /* preserve -EREMOTEIO for outbox.status != OK, otherwise return err as is */
--static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, void *out)
-+static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, u16 op_mod, void *out)
- {
- 	u32 syndrome = MLX5_GET(mbox_out, out, syndrome);
- 	u8 status = MLX5_GET(mbox_out, out, status);
-@@ -1922,8 +1921,10 @@ static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, void *
- 	if (err == -EREMOTEIO) /* -EREMOTEIO is preserved */
- 		err = -EIO;
- 
--	if (!err && status != MLX5_CMD_STAT_OK)
-+	if (!err && status != MLX5_CMD_STAT_OK) {
- 		err = -EREMOTEIO;
-+		mlx5_cmd_err_trace(dev, opcode, op_mod, out);
-+	}
- 
- 	cmd_status_log(dev, opcode, status, syndrome, err);
- 	return err;
-@@ -1951,9 +1952,9 @@ int mlx5_cmd_do(struct mlx5_core_dev *dev, void *in, int in_size, void *out, int
- {
- 	int err = cmd_exec(dev, in, in_size, out, out_size, NULL, NULL, false);
- 	u16 opcode = MLX5_GET(mbox_in, in, opcode);
-+	u16 op_mod = MLX5_GET(mbox_in, in, op_mod);
- 
--	err = cmd_status_err(dev, err, opcode, out);
--	return err;
-+	return cmd_status_err(dev, err, opcode, op_mod, out);
- }
- EXPORT_SYMBOL(mlx5_cmd_do);
- 
-@@ -1997,8 +1998,9 @@ int mlx5_cmd_exec_polling(struct mlx5_core_dev *dev, void *in, int in_size,
- {
- 	int err = cmd_exec(dev, in, in_size, out, out_size, NULL, NULL, true);
- 	u16 opcode = MLX5_GET(mbox_in, in, opcode);
-+	u16 op_mod = MLX5_GET(mbox_in, in, op_mod);
- 
--	err = cmd_status_err(dev, err, opcode, out);
-+	err = cmd_status_err(dev, err, opcode, op_mod, out);
- 	return mlx5_cmd_check(dev, err, in, out);
- }
- EXPORT_SYMBOL(mlx5_cmd_exec_polling);
-@@ -2034,7 +2036,7 @@ static void mlx5_cmd_exec_cb_handler(int status, void *_work)
- 	struct mlx5_async_ctx *ctx;
- 
- 	ctx = work->ctx;
--	status = cmd_status_err(ctx->dev, status, work->opcode, work->out);
-+	status = cmd_status_err(ctx->dev, status, work->opcode, work->op_mod, work->out);
- 	work->user_callback(status, work);
- 	if (atomic_dec_and_test(&ctx->num_inflight))
- 		complete(&ctx->inflight_done);
-@@ -2049,6 +2051,7 @@ int mlx5_cmd_exec_cb(struct mlx5_async_ctx *ctx, void *in, int in_size,
- 	work->ctx = ctx;
- 	work->user_callback = callback;
- 	work->opcode = MLX5_GET(mbox_in, in, opcode);
-+	work->op_mod = MLX5_GET(mbox_in, in, op_mod);
- 	work->out = out;
- 	if (WARN_ON(!atomic_inc_not_zero(&ctx->num_inflight)))
- 		return -EIO;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h b/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
-new file mode 100644
-index 000000000000..406ebe17405f
---- /dev/null
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
-@@ -0,0 +1,45 @@
-+/* SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB */
-+/* Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved. */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM mlx5
-+
-+#if !defined(_MLX5_CMD_TP_H_) || defined(TRACE_HEADER_MULTI_READ)
-+#define _MLX5_CMD_TP_H_
-+
-+#include <linux/tracepoint.h>
-+#include <linux/trace_seq.h>
-+
-+TRACE_EVENT(mlx5_cmd,
-+	    TP_PROTO(const char *command_str, u16 opcode, u16 op_mod,
-+		     const char *status_str, u8 status, u32 syndrome, int err),
-+	    TP_ARGS(command_str, opcode, op_mod, status_str, status, syndrome, err),
-+	    TP_STRUCT__entry(__string(command_str, command_str)
-+			     __field(u16, opcode)
-+			     __field(u16, op_mod)
-+			    __string(status_str, status_str)
-+			    __field(u8, status)
-+			    __field(u32, syndrome)
-+			    __field(int, err)
-+			    ),
-+	    TP_fast_assign(__assign_str(command_str, command_str);
-+			__entry->opcode = opcode;
-+			__entry->op_mod = op_mod;
-+			__assign_str(status_str, status_str);
-+			__entry->status = status;
-+			__entry->syndrome = syndrome;
-+			__entry->err = err;
-+	    ),
-+	    TP_printk("%s(0x%x) op_mod(0x%x) failed, status %s(0x%x), syndrome (0x%x), err(%d)",
-+		      __get_str(command_str), __entry->opcode, __entry->op_mod,
-+		      __get_str(status_str), __entry->status, __entry->syndrome,
-+		      __entry->err)
-+);
-+
-+#endif /* _MLX5_CMD_TP_H_ */
-+
-+#undef TRACE_INCLUDE_PATH
-+#define TRACE_INCLUDE_PATH ./diag
-+#undef TRACE_INCLUDE_FILE
-+#define TRACE_INCLUDE_FILE cmd_tracepoint
-+#include <trace/define_trace.h>
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 454dab40baf6..2d56cfe0911d 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -984,6 +984,7 @@ struct mlx5_async_work {
- 	struct mlx5_async_ctx *ctx;
- 	mlx5_async_cbk_t user_callback;
- 	u16 opcode; /* cmd opcode */
-+	u16 op_mod; /* cmd op_mod */
- 	void *out; /* pointer to the cmd output buffer */
- };
- 
+ 	spin_unlock(&m->req_lock);
 -- 
 2.35.1
 
