@@ -1,113 +1,106 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7FDEBE
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 10:52:21 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id B170932004E7;
-	Wed, 30 Nov 2022 05:52:19 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Wed, 30 Nov 2022 05:52:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1669805539; x=1669891939; bh=LVUWCgBa8D
-	QSz0Eyns9wgPpfLDCR/8+BYL2daAtg2dA=; b=SoBM0u1SYcGu1DX//wMHeIVWVS
-	Y2TostUqhFvjW66YGqiMK0ZF2cz9LID8GIsxAv7pUwiUsA8qVo5boDfTRv530Wbw
-	nbKmBgFCzrxotCO/TDxDsMTQ3G7XKgaZkeXmhToGW+dMuVQAjyZ8Pt8lWv3qyJkS
-	GSeCSHjE6rzsvmAXiu/376YPQb1HyuhTyOGlLkD0iiT0HDkdeTQlF1RUs0HefKxQ
-	mViBt2Mo9Rmi4E3CJZh1GVA1hnshPccOtwV52R3FygSnQgLhaUGzxlNZQGemeTBj
-	mio7tBPE1+B4b7kg/lVx6JSiD0ERF1HvLY09KbVv9ld2+luIB0TH6oHe/x5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669805539; x=1669891939; bh=LVUWCgBa8DQSz0Eyns9wgPpfLDCR
-	/8+BYL2daAtg2dA=; b=WwW11BPoOGbbQEtcp3PAQd5e9SAUOQCEn268/7LOTkg3
-	q2CrW2GWs5bvodx2qXnq57VhTcKfQ+RXXW/z/3vfg6z/gNEkxB34Cy0M/xEUPq+B
-	tWHyyeO1sTvQXBUXHrcwNwa21dTWm8Bz3QT02sqJQfwu1dDKRjuo+payzp177XzJ
-	Axdx+bC3RePZ03upAJNxZAAhyiWnXtvS8b+qfUZVGNfM8ii/88ND6oBosX1n3J3S
-	FjOZpTaLzXusiBHSPKx3Y8HMeAW8bsP4Oif2aNmc+wTxpymZb+dza6Ki5rRrvldl
-	2tavNeg9XXVcQHooc2WuLc17cSpEVi6JOmiqI5ldYA==
-X-ME-Sender: <xms:4jWHY_mVQ5MZHA3HIG6vMu6yQHVQkcAQWO-ADzT83TP8qYngKPvLew>
-    <xme:4jWHYy2tBuSAe1M2RSRAs-erhvEpLHed_lBLRDwzqWCCXxXjlDkpLIdQfBb0_VDD_
-    jnpSYwzaqVKupspObg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrtdefgddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
-    hnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:4jWHY1qCSrlPmakc9h1yn4Nsj2FFJLqTyJZLuS-ug9dORR8zWdLYbQ>
-    <xmx:4jWHY3nIsVEeVhmr1iL23EkOHQUEImPLjKCRGlPUD2jqiNuQOwdvaQ>
-    <xmx:4jWHY93VnnwoXYsGKjBzMrV6H7j5D2hi-5zDdXQGhl20ZWRa5Obacw>
-    <xmx:4zWHY2uZijqMU7ijNB_fpey8loDwDEwXX30w-ZUH1jVV2X7GKqNMwQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id CADD0B60086; Wed, 30 Nov 2022 05:52:18 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FFD23AF
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 12:23:17 +0000 (UTC)
+Received: by mail-wr1-f53.google.com with SMTP id h11so19530115wrw.13
+        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 04:23:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YmOlYL+T1VcRv6GwjlbPVapzopZmzHsyfLnHJwg422g=;
+        b=QCk0NxAgMjKoO4MZ8ZHi9965Dj+VVNgu8hf2o4ri7t0luu+dp/7ZqfpCMg1OtndLa9
+         /n4esAFm2evvBeQ2rIcbRj3N2/ZbfyB9snQK4VMcjf6v2MWVXu/FqZ8K6KIE5vaX92i2
+         SAWV+NFe1eeM5IwhUUSserYBOPfFirV/797GOGfnuiVVbdfptXSlH9/imQGR1pcm/B9n
+         ahUhWS1wsi43AApK+CvetjVznIv7HLh1bMjbpmHwGu/MAXT8MUZiHbhePwqr5NOllh9T
+         frJVR85URP7gEJpwCbppmqhwU8sszJ7UfRhZ/yG17wvAln9AHw4AyUdwYcHaFUent4Rv
+         l78w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YmOlYL+T1VcRv6GwjlbPVapzopZmzHsyfLnHJwg422g=;
+        b=Vi2vW/JYLTNRPHEbZbDLEVILKV+L6nPgFn6hLvtnvKrQmXZBMQE2Yq/zzu5DhEdL5n
+         J8GwhTfmMbKR1A8y4tRrHCvA8SZLH3P9gkzViNWxVOGo9ypzpC1+5Ll2cDKnB/Xlpjzz
+         DK8QICRUvPrLf8V2fcKUMO7GDtI5YCfMTr8kTgct4IOYv3jjaQT3zxgmS6icp3ICpOyJ
+         E3FXAnudA+IfWRl6RaMiV3HqZUvRdftdyfdBS108pEqaQh27A3THCUBty2yB2DHLGivH
+         P4NIes7/eXOkyLVWyJbIRhl8MGHL6gB2u9m2H6o9sgxlKxT7zCn6C1egVMjQSX9ADrcr
+         OkfQ==
+X-Gm-Message-State: ANoB5pnIIsrzes4Mfaw0k2JoAgzgFPGgAfxMzxiqXtF7N6MIX4FAnJZi
+	KWgSx+6d7byW2Ya1j6uPDYh1kw==
+X-Google-Smtp-Source: AA0mqf50/mjoaNarDfeLyTKta3nb6bZmEZM+IvrC04UJESisouehFNwB7mVWUMM2IcSOwllHF4y3Ag==
+X-Received: by 2002:a5d:456c:0:b0:236:7135:24da with SMTP id a12-20020a5d456c000000b00236713524damr37935677wrc.264.1669810995282;
+        Wed, 30 Nov 2022 04:23:15 -0800 (PST)
+Received: from google.com (65.0.187.35.bc.googleusercontent.com. [35.187.0.65])
+        by smtp.gmail.com with ESMTPSA id o35-20020a05600c512300b003a3442f1229sm5986073wms.29.2022.11.30.04.23.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 04:23:14 -0800 (PST)
+Date: Wed, 30 Nov 2022 12:23:10 +0000
+From: Vincent Donnefort <vdonnefort@google.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Nicolas Schier <nicolas@fjasle.eu>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 2/2] modpost: Include '.text.*' in TEXT_SECTIONS
+Message-ID: <Y4dLLnc4LTX9UHaN@google.com>
+References: <20221129190123.872394-1-nathan@kernel.org>
+ <20221129190123.872394-3-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <a4dd027b-e36a-4e84-b814-785381fe2817@app.fastmail.com>
-In-Reply-To: <Y4crL0dqX7U4wnHH@zx2c4.com>
-References: <20221129210639.42233-1-Jason@zx2c4.com>
- <20221129210639.42233-3-Jason@zx2c4.com>
- <CAMuHMdUGkhFu7X8eUMU1qqTOLKC=xsXWG2obPUeTwzyMGD8grw@mail.gmail.com>
- <Y4crL0dqX7U4wnHH@zx2c4.com>
-Date: Wed, 30 Nov 2022 11:51:57 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- "Thomas Gleixner" <tglx@linutronix.de>, linux-crypto@vger.kernel.org,
- linux-api@vger.kernel.org, x86@kernel.org,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
- "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
- "Christian Brauner" <brauner@kernel.org>
-Subject: Re: [PATCH v10 2/4] arch: allocate vgetrandom_alloc() syscall number
-Content-Type: text/plain
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221129190123.872394-3-nathan@kernel.org>
 
-On Wed, Nov 30, 2022, at 11:06, Jason A. Donenfeld wrote:
-> On Wed, Nov 30, 2022 at 09:56:06AM +0100, Geert Uytterhoeven wrote:
->> Hi Jason,
->> 
->> On Tue, Nov 29, 2022 at 10:09 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->> > Add vgetrandom_alloc() as syscall 451 (or 561 on alpha) by adding it to
->> > all of the various syscall.tbl and unistd.h files.
->> >
->> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
->> 
->> Thanks for your patch!
->> 
->> What's the policy regarding adding syscall numbers for VDSO-related
->> syscalls on architectures that do not support VDSOs yet?
->
-> I don't know exactly what the /policy/ is, but not wanting to rock the
-> boat, the first iterations of this series only added it to x86. But then
-> Arnd joined the thread and said I should add it to all of them all at
-> once and separate that out into this commit, so that's what we have
-> here. I think the idea is to keep syscall numbers synchronized these
-> days between archs if possible.
+On Tue, Nov 29, 2022 at 12:01:23PM -0700, Nathan Chancellor wrote:
+> Commit 6c730bfc894f ("modpost: handle -ffunction-sections") added
+> ".text.*" to the OTHER_TEXT_SECTIONS macro to fix certain section
+> mismatch warnings. Unfortunately, this makes it impossible for modpost
+> to warn about section mismatchs with LTO, which implies
+> '-ffunction-sections', as all functions are put in their own
+> '.text.<func_name>' sections, which may still reference functions in
+> sections they are not supposed to, such as __init.
+> 
+> Fix this by moving ".text.*" into TEXT_SECTIONS, so that configurations
+> with '-ffunction-sections' will see warnings about mismatched sections.
+> 
+> Link: https://lore.kernel.org/Y39kI3MOtVI5BAnV@google.com/
+> Reported-by: Vincent Donnefort <vdonnefort@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Right, it shouldn't matter if the syscall has anything to do with vdso
-or some other feature, the important bit is that this is an optional
-syscall that may or may not exist in a kernel.
+Thanks!
 
-Adding every new syscall number to all architectures helps avoid
-merge conflicts and keeps the numbers synchronized. It's entirely
-plausible that this one gets enabled on an architecture that starts
-out with the default -ENOSYS implementation, and has that
-backported to 6.2 (or even older kernels in principle) for a
-distro release, so it also makes sense to have it in the uapi
-table as soon as we have fixed the number.
+Tested-by: Vincent Donnefort <vdonnefort@google.com>
 
-     Arnd
+> ---
+>  scripts/mod/modpost.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+> index 2c80da0220c3..c861beabc128 100644
+> --- a/scripts/mod/modpost.c
+> +++ b/scripts/mod/modpost.c
+> @@ -823,10 +823,10 @@ static void check_section(const char *modname, struct elf_info *elf,
+>  #define ALL_EXIT_SECTIONS EXIT_SECTIONS, ALL_XXXEXIT_SECTIONS
+>  
+>  #define DATA_SECTIONS ".data", ".data.rel"
+> -#define TEXT_SECTIONS ".text", ".text.unlikely", ".sched.text", \
+> +#define TEXT_SECTIONS ".text", ".text.*", ".sched.text", \
+>  		".kprobes.text", ".cpuidle.text", ".noinstr.text"
+>  #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
+> -		".fixup", ".entry.text", ".exception.text", ".text.*", \
+> +		".fixup", ".entry.text", ".exception.text", \
+>  		".coldtext", ".softirqentry.text"
+>  
+>  #define INIT_SECTIONS      ".init.*"
+> -- 
+> 2.38.1
+> 
