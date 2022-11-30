@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995A86FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F53C433C1;
-	Wed, 30 Nov 2022 18:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34BE6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F70C433C1;
+	Wed, 30 Nov 2022 18:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832708;
-	bh=9IeXYuqFLKTIBIisciMvF2DPlCmQSlBrqChoV2t5joc=;
+	s=korg; t=1669832711;
+	bh=vTw5Lp3covrhUzRVWOrBXZH+2sr1/im0RgX/xQVCBbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4F+CCDdfxP0f5JbA+hY3vNBn2UjXhOcRbG+1ugSWANyeQAwmHitxgJWfMofatTdA
-	 3h1NGmTVyRb7VQ+MW6YOiJBMjkWV5T0AeVENVgh0bCbePCGKnBhWWj2OAR3PDdLmar
-	 fjvr5u+/lsQxsz43DLlHI4XjRfoK6EGbxRhk/j8I=
+	b=jSGGnxl0+PE5+W0QovtnVJiXE1ntuwp/hrY9ks4P+W6UhNRCVjCDY7DOrArvUvcjL
+	 Bz8YNyQfjhvyGsr0QKsXWm1Jz0fwBaHR5P4SaCr953uBYM7UVq36++jGSwt1KwjoEk
+	 nbpiPpNYNOGwnmI1EH/R5FT2QnVkZnQ4paFbCoJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>,
+	Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/162] bridge: switchdev: Fix memory leaks when changing VLAN protocol
-Date: Wed, 30 Nov 2022 19:21:26 +0100
-Message-Id: <20221130180528.630625164@linuxfoundation.org>
+Subject: [PATCH 5.10 006/162] drm/display: Dont assume dual mode adaptors support i2c sub-addressing
+Date: Wed, 30 Nov 2022 19:21:27 +0100
+Message-Id: <20221130180528.658269789@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,118 +37,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
 
-[ Upstream commit 9d45921ee4cb364910097e7d1b7558559c2f9fd2 ]
+[ Upstream commit 5954acbacbd1946b96ce8ee799d309cb0cd3cb9d ]
 
-The bridge driver can offload VLANs to the underlying hardware either
-via switchdev or the 8021q driver. When the former is used, the VLAN is
-marked in the bridge driver with the 'BR_VLFLAG_ADDED_BY_SWITCHDEV'
-private flag.
+Current dual mode adaptor ("DP++") detection code assumes that all
+adaptors support i2c sub-addressing for read operations from the
+DP-HDMI adaptor ID buffer.  It has been observed that multiple
+adaptors do not in fact support this, and always return data starting
+at register 0.  On affected adaptors, the code fails to read the proper
+registers that would identify the device as a type 2 adaptor, and
+handles those as type 1, limiting the TMDS clock to 165MHz, even if
+the according register would announce a higher TMDS clock.
+Fix this by always reading the ID buffer starting from offset 0, and
+discarding any bytes before the actual offset of interest.
 
-To avoid the memory leaks mentioned in the cited commit, the bridge
-driver will try to delete a VLAN via the 8021q driver if the VLAN is not
-marked with the previously mentioned flag.
+We tried finding authoritative documentation on whether or not this is
+allowed behaviour, but since all the official VESA docs are paywalled,
+the best we could come up with was the spec sheet for Texas Instruments'
+SNx5DP149 chip family.[1]  It explicitly mentions that sub-addressing is
+supported for register writes, but *not* for reads (See NOTE in
+section 8.5.3).  Unless TI openly decided to violate the VESA spec, one
+could take that as a hint that sub-addressing is in fact not mandated
+by VESA.
+The other two adaptors affected used the PS8409(A) and the LT8611,
+according to the data returned from their ID buffers.
 
-When the VLAN protocol of the bridge changes, switchdev drivers are
-notified via the 'SWITCHDEV_ATTR_ID_BRIDGE_VLAN_PROTOCOL' attribute, but
-the 8021q driver is also called to add the existing VLANs with the new
-protocol and delete them with the old protocol.
+[1] https://www.ti.com/lit/ds/symlink/sn75dp149.pdf
 
-In case the VLANs were offloaded via switchdev, the above behavior is
-both redundant and buggy. Redundant because the VLANs are already
-programmed in hardware and drivers that support VLAN protocol change
-(currently only mlx5) change the protocol upon the switchdev attribute
-notification. Buggy because the 8021q driver is called despite these
-VLANs being marked with 'BR_VLFLAG_ADDED_BY_SWITCHDEV'. This leads to
-memory leaks [1] when the VLANs are deleted.
-
-Fix by not calling the 8021q driver for VLANs that were already
-programmed via switchdev.
-
-[1]
-unreferenced object 0xffff8881f6771200 (size 256):
-  comm "ip", pid 446855, jiffies 4298238841 (age 55.240s)
-  hex dump (first 32 bytes):
-    00 00 7f 0e 83 88 ff ff 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000012819ac>] vlan_vid_add+0x437/0x750
-    [<00000000f2281fad>] __br_vlan_set_proto+0x289/0x920
-    [<000000000632b56f>] br_changelink+0x3d6/0x13f0
-    [<0000000089d25f04>] __rtnl_newlink+0x8ae/0x14c0
-    [<00000000f6276baf>] rtnl_newlink+0x5f/0x90
-    [<00000000746dc902>] rtnetlink_rcv_msg+0x336/0xa00
-    [<000000001c2241c0>] netlink_rcv_skb+0x11d/0x340
-    [<0000000010588814>] netlink_unicast+0x438/0x710
-    [<00000000e1a4cd5c>] netlink_sendmsg+0x788/0xc40
-    [<00000000e8992d4e>] sock_sendmsg+0xb0/0xe0
-    [<00000000621b8f91>] ____sys_sendmsg+0x4ff/0x6d0
-    [<000000000ea26996>] ___sys_sendmsg+0x12e/0x1b0
-    [<00000000684f7e25>] __sys_sendmsg+0xab/0x130
-    [<000000004538b104>] do_syscall_64+0x3d/0x90
-    [<0000000091ed9678>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 279737939a81 ("net: bridge: Fix VLANs memory leak")
-Reported-by: Vlad Buslov <vladbu@nvidia.com>
-Tested-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20221114084509.860831-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Simon Rettberg <simon.rettberg@rz.uni-freiburg.de>
+Reviewed-by: Rafael Gieschke <rafael.gieschke@rz.uni-freiburg.de>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221006113314.41101987@computer
+Acked-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_dp_dual_mode_helper.c | 51 +++++++++++++----------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 7e5968e7aad5..1dc5db07650c 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -878,6 +878,8 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto)
- 	list_for_each_entry(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
- 		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			err = vlan_vid_add(p->dev, proto, vlan->vid);
- 			if (err)
- 				goto err_filt;
-@@ -892,8 +894,11 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto)
- 	/* Delete VLANs for the old proto from the device filter. */
- 	list_for_each_entry(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
--		list_for_each_entry(vlan, &vg->vlan_list, vlist)
-+		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			vlan_vid_del(p->dev, oldproto, vlan->vid);
-+		}
- 	}
+diff --git a/drivers/gpu/drm/drm_dp_dual_mode_helper.c b/drivers/gpu/drm/drm_dp_dual_mode_helper.c
+index 1c9ea9f7fdaf..f2ff0bfdf54d 100644
+--- a/drivers/gpu/drm/drm_dp_dual_mode_helper.c
++++ b/drivers/gpu/drm/drm_dp_dual_mode_helper.c
+@@ -62,23 +62,45 @@
+ ssize_t drm_dp_dual_mode_read(struct i2c_adapter *adapter,
+ 			      u8 offset, void *buffer, size_t size)
+ {
++	u8 zero = 0;
++	char *tmpbuf = NULL;
++	/*
++	 * As sub-addressing is not supported by all adaptors,
++	 * always explicitly read from the start and discard
++	 * any bytes that come before the requested offset.
++	 * This way, no matter whether the adaptor supports it
++	 * or not, we'll end up reading the proper data.
++	 */
+ 	struct i2c_msg msgs[] = {
+ 		{
+ 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
+ 			.flags = 0,
+ 			.len = 1,
+-			.buf = &offset,
++			.buf = &zero,
+ 		},
+ 		{
+ 			.addr = DP_DUAL_MODE_SLAVE_ADDRESS,
+ 			.flags = I2C_M_RD,
+-			.len = size,
++			.len = size + offset,
+ 			.buf = buffer,
+ 		},
+ 	};
+ 	int ret;
  
- 	return 0;
-@@ -902,13 +907,19 @@ int __br_vlan_set_proto(struct net_bridge *br, __be16 proto)
- 	attr.u.vlan_protocol = ntohs(oldproto);
- 	switchdev_port_attr_set(br->dev, &attr);
- 
--	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist)
-+	list_for_each_entry_continue_reverse(vlan, &vg->vlan_list, vlist) {
-+		if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+			continue;
- 		vlan_vid_del(p->dev, proto, vlan->vid);
++	if (offset) {
++		tmpbuf = kmalloc(size + offset, GFP_KERNEL);
++		if (!tmpbuf)
++			return -ENOMEM;
++
++		msgs[1].buf = tmpbuf;
 +	}
++
+ 	ret = i2c_transfer(adapter, msgs, ARRAY_SIZE(msgs));
++	if (tmpbuf)
++		memcpy(buffer, tmpbuf + offset, size);
++
++	kfree(tmpbuf);
++
+ 	if (ret < 0)
+ 		return ret;
+ 	if (ret != ARRAY_SIZE(msgs))
+@@ -205,18 +227,6 @@ enum drm_dp_dual_mode_type drm_dp_dual_mode_detect(struct i2c_adapter *adapter)
+ 	if (ret)
+ 		return DRM_DP_DUAL_MODE_UNKNOWN;
  
- 	list_for_each_entry_continue_reverse(p, &br->port_list, list) {
- 		vg = nbp_vlan_group(p);
--		list_for_each_entry(vlan, &vg->vlan_list, vlist)
-+		list_for_each_entry(vlan, &vg->vlan_list, vlist) {
-+			if (vlan->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
-+				continue;
- 			vlan_vid_del(p->dev, proto, vlan->vid);
-+		}
- 	}
+-	/*
+-	 * Sigh. Some (maybe all?) type 1 adaptors are broken and ack
+-	 * the offset but ignore it, and instead they just always return
+-	 * data from the start of the HDMI ID buffer. So for a broken
+-	 * type 1 HDMI adaptor a single byte read will always give us
+-	 * 0x44, and for a type 1 DVI adaptor it should give 0x00
+-	 * (assuming it implements any registers). Fortunately neither
+-	 * of those values will match the type 2 signature of the
+-	 * DP_DUAL_MODE_ADAPTOR_ID register so we can proceed with
+-	 * the type 2 adaptor detection safely even in the presence
+-	 * of broken type 1 adaptors.
+-	 */
+ 	ret = drm_dp_dual_mode_read(adapter, DP_DUAL_MODE_ADAPTOR_ID,
+ 				    &adaptor_id, sizeof(adaptor_id));
+ 	DRM_DEBUG_KMS("DP dual mode adaptor ID: %02x (err %zd)\n",
+@@ -231,11 +241,10 @@ enum drm_dp_dual_mode_type drm_dp_dual_mode_detect(struct i2c_adapter *adapter)
+ 				return DRM_DP_DUAL_MODE_TYPE2_DVI;
+ 		}
+ 		/*
+-		 * If neither a proper type 1 ID nor a broken type 1 adaptor
+-		 * as described above, assume type 1, but let the user know
+-		 * that we may have misdetected the type.
++		 * If not a proper type 1 ID, still assume type 1, but let
++		 * the user know that we may have misdetected the type.
+ 		 */
+-		if (!is_type1_adaptor(adaptor_id) && adaptor_id != hdmi_id[0])
++		if (!is_type1_adaptor(adaptor_id))
+ 			DRM_ERROR("Unexpected DP dual mode adaptor ID %02x\n",
+ 				  adaptor_id);
  
- 	return err;
+@@ -339,10 +348,8 @@ EXPORT_SYMBOL(drm_dp_dual_mode_get_tmds_output);
+  * @enable: enable (as opposed to disable) the TMDS output buffers
+  *
+  * Set the state of the TMDS output buffers in the adaptor. For
+- * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register. As
+- * some type 1 adaptors have problems with registers (see comments
+- * in drm_dp_dual_mode_detect()) we avoid touching the register,
+- * making this function a no-op on type 1 adaptors.
++ * type2 this is set via the DP_DUAL_MODE_TMDS_OEN register.
++ * Type1 adaptors do not support any register writes.
+  *
+  * Returns:
+  * 0 on success, negative error code on failure
 -- 
 2.35.1
 
