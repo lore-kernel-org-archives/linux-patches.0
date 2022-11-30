@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3120279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC428C433D6;
-	Wed, 30 Nov 2022 18:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D5E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F44C433D7;
+	Wed, 30 Nov 2022 18:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834064;
-	bh=ySM7WMAUi+iHkTm/tXD90O6rNr2qYnNWawf/pNYiTtc=;
+	s=korg; t=1669834066;
+	bh=tJdmi+VAmUh1K1AL9Xxugcz4t2un5dZEBZ/utV+HkzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v815capHdHqtLiMxagaCWC2Y+yNMDjBI40tE8aamRkZltCf/eoWXihItqV8TkVRez
-	 cKM71rB41GeLFdaENr7BoC7mNEUbXENsl/O3IT33xEKjdaelz/qCb714xgPH5hhfHF
-	 i5vCgpb5miXpRnHryqPsech5R4gZ3XJYnPLZO/3c=
+	b=xYhFrStFdUb6Xlz7Mo6z0w49+hCyRxolUaMuqs0dJUVp8/A4wD8ww4Hrn9h8FBYSG
+	 O0oPP1D8865eOGhoVxyTmpJnAL06kH8qbqLikchETharq0B+KNfC40EIOBLdYFsjAk
+	 7RwQhdgCX/w86KiapgkTof/CVcXRE4qs8DrCRkuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Roi Dayan <roid@nvidia.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 078/289] net: dsa: sja1105: disallow C45 transactions on the BASE-TX MDIO bus
-Date: Wed, 30 Nov 2022 19:21:03 +0100
-Message-Id: <20221130180545.911253179@linuxfoundation.org>
+Subject: [PATCH 6.0 109/289] net/mlx5: E-Switch, Set correctly vport destination
+Date: Wed, 30 Nov 2022 19:21:34 +0100
+Message-Id: <20221130180546.611470563@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,69 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit 24deec6b9e4a051635f75777844ffc184644fec9 ]
+[ Upstream commit 6d942e40448931be9371f1ba8cb592778807ce18 ]
 
-You'd think people know that the internal 100BASE-TX PHY on the SJA1110
-responds only to clause 22 MDIO transactions, but they don't :)
+The cited commit moved from using reformat_id integer to packet_reformat
+pointer which introduced the possibility to null pointer dereference.
+When setting packet reformat flag and pkt_reformat pointer must
+exists so checking MLX5_ESW_DEST_ENCAP is not enough, we need
+to make sure the pkt_reformat is valid and check for MLX5_ESW_DEST_ENCAP_VALID.
+If the dest encap valid flag does not exists then pkt_reformat can be
+either invalid address or null.
+Also, to make sure we don't try to access invalid pkt_reformat set it to
+null when invalidated and invalidate it before calling add flow code as
+its logically more correct and to be safe.
 
-When a clause 45 transaction is attempted, sja1105_base_tx_mdio_read()
-and sja1105_base_tx_mdio_write() don't expect "reg" to contain bit 30
-set (MII_ADDR_C45) and pack this value into the SPI transaction buffer.
-
-But the field in the SPI buffer has a width smaller than 30 bits, so we
-see this confusing message from the packing() API rather than a proper
-rejection of C45 transactions:
-
-Call trace:
- dump_stack+0x1c/0x38
- sja1105_pack+0xbc/0xc0 [sja1105]
- sja1105_xfer+0x114/0x2b0 [sja1105]
- sja1105_xfer_u32+0x44/0xf4 [sja1105]
- sja1105_base_tx_mdio_read+0x44/0x7c [sja1105]
- mdiobus_read+0x44/0x80
- get_phy_c45_ids+0x70/0x234
- get_phy_device+0x68/0x15c
- fwnode_mdiobus_register_phy+0x74/0x240
- of_mdiobus_register+0x13c/0x380
- sja1105_mdiobus_register+0x368/0x490 [sja1105]
- sja1105_setup+0x94/0x119c [sja1105]
-Cannot store 401d2405 inside bits 24-4 (would truncate)
-
-Fixes: 5a8f09748ee7 ("net: dsa: sja1105: register the MDIO buses for 100base-T1 and 100base-TX")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2b688ea5efde ("net/mlx5: Add flow steering actions to fs_cmd shim layer")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Chris Mi <cmi@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_mdio.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c  | 10 ++++++----
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c |  2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_mdio.c b/drivers/net/dsa/sja1105/sja1105_mdio.c
-index 215dd17ca790..4059fcc8c832 100644
---- a/drivers/net/dsa/sja1105/sja1105_mdio.c
-+++ b/drivers/net/dsa/sja1105/sja1105_mdio.c
-@@ -256,6 +256,9 @@ static int sja1105_base_tx_mdio_read(struct mii_bus *bus, int phy, int reg)
- 	u32 tmp;
- 	int rc;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+index 5aff97914367..5b6a79d2034e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+@@ -224,15 +224,16 @@ void mlx5e_tc_encap_flows_del(struct mlx5e_priv *priv,
+ 	list_for_each_entry(flow, flow_list, tmp_list) {
+ 		if (!mlx5e_is_offloaded_flow(flow) || flow_flag_test(flow, SLOW))
+ 			continue;
+-		spec = &flow->attr->parse_attr->spec;
+-
+-		/* update from encap rule to slow path rule */
+-		rule = mlx5e_tc_offload_to_slow_path(esw, flow, spec);
  
-+	if (reg & MII_ADDR_C45)
-+		return -EOPNOTSUPP;
+ 		attr = mlx5e_tc_get_encap_attr(flow);
+ 		esw_attr = attr->esw_attr;
+ 		/* mark the flow's encap dest as non-valid */
+ 		esw_attr->dests[flow->tmp_entry_index].flags &= ~MLX5_ESW_DEST_ENCAP_VALID;
++		esw_attr->dests[flow->tmp_entry_index].pkt_reformat = NULL;
 +
- 	rc = sja1105_xfer_u32(priv, SPI_READ, regs->mdio_100base_tx + reg,
- 			      &tmp, NULL);
- 	if (rc < 0)
-@@ -272,6 +275,9 @@ static int sja1105_base_tx_mdio_write(struct mii_bus *bus, int phy, int reg,
- 	const struct sja1105_regs *regs = priv->info->regs;
- 	u32 tmp = val;
++		/* update from encap rule to slow path rule */
++		spec = &flow->attr->parse_attr->spec;
++		rule = mlx5e_tc_offload_to_slow_path(esw, flow, spec);
  
-+	if (reg & MII_ADDR_C45)
-+		return -EOPNOTSUPP;
-+
- 	return sja1105_xfer_u32(priv, SPI_WRITE, regs->mdio_100base_tx + reg,
- 				&tmp, NULL);
+ 		if (IS_ERR(rule)) {
+ 			err = PTR_ERR(rule);
+@@ -251,6 +252,7 @@ void mlx5e_tc_encap_flows_del(struct mlx5e_priv *priv,
+ 	/* we know that the encap is valid */
+ 	e->flags &= ~MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5_packet_reformat_dealloc(priv->mdev, e->pkt_reformat);
++	e->pkt_reformat = NULL;
  }
+ 
+ static void mlx5e_take_tmp_flow(struct mlx5e_tc_flow *flow,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 3c68cac4a9c2..061ac8799354 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -431,7 +431,7 @@ esw_setup_vport_dest(struct mlx5_flow_destination *dest, struct mlx5_flow_act *f
+ 		    mlx5_lag_mpesw_is_activated(esw->dev))
+ 			dest[dest_idx].type = MLX5_FLOW_DESTINATION_TYPE_UPLINK;
+ 	}
+-	if (esw_attr->dests[attr_idx].flags & MLX5_ESW_DEST_ENCAP) {
++	if (esw_attr->dests[attr_idx].flags & MLX5_ESW_DEST_ENCAP_VALID) {
+ 		if (pkt_reformat) {
+ 			flow_act->action |= MLX5_FLOW_CONTEXT_ACTION_PACKET_REFORMAT;
+ 			flow_act->pkt_reformat = esw_attr->dests[attr_idx].pkt_reformat;
 -- 
 2.35.1
 
