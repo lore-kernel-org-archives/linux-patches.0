@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEDB79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135F4C433D6;
-	Wed, 30 Nov 2022 18:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680AD79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8531C433C1;
+	Wed, 30 Nov 2022 18:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834215;
-	bh=W3VaSAIb0CuClyxjcVTCGSCdRW0GIgv/c7vRm1jJe28=;
+	s=korg; t=1669834218;
+	bh=xMJkzBIVWQrmtu7hgyrOOw+KdBPXmnY7o6g9MkAUpJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kcES9rPxHpMqR9O1g5BXWHR+TO4aSW73DXIpSsvBU4ZqVPa50YZI+elfEaDus9u/
-	 Z3eWy+Yfzz4mQUbznAxFS5xx297swFAz0FFmI0p5oDpK2cTJVNKIsMjZ+GDdHwHDc6
-	 9oxaxoFgboWbKsfvN44oRHGry7WO1sSEsLK+wPgY=
+	b=QgznraUaMxYNhzGqWQJjwpbti5cy/UfbYNx/TQ593ypSfiFk8Xwf8kHfv+gV+IsPV
+	 nzroqst4lVZXTJDYZ190pOSAa5tkLY8lXPwupBtaCApV7GB4FHvHnagwi4Pa7DBWwI
+	 838xOsFKn/SX5EiaITL3WCQASIQHWg8ZRF/vJqzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+a76f6a6e524cf2080aa3@syzkaller.appspotmail.com,
+	David Howells <dhowells@redhat.com>,
+	Zhang Peng <zhangpeng362@huawei.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	v9fs-developer@lists.sourceforge.net,
+	linux-cachefs@redhat.com,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 144/289] s390/dasd: fix no record found for raw_track_access
-Date: Wed, 30 Nov 2022 19:22:09 +0100
-Message-Id: <20221130180547.402275161@linuxfoundation.org>
+Subject: [PATCH 6.0 145/289] fscache: fix OOB Read in __fscache_acquire_volume
+Date: Wed, 30 Nov 2022 19:22:10 +0100
+Message-Id: <20221130180547.424547936@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,73 +42,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
+[ Upstream commit 9f0933ac026f7e54fe096797af9de20724e79097 ]
 
-For DASD devices in raw_track_access mode only full track images are
-read and written.
-For this purpose it is not necessary to do search operation in the
-locate record extended function. The documentation even states that
-this might fail if the searched record is not found on a track.
+The type of a->key[0] is char in fscache_volume_same().  If the length
+of cache volume key is greater than 127, the value of a->key[0] is less
+than 0.  In this case, klen becomes much larger than 255 after type
+conversion, because the type of klen is size_t.  As a result, memcmp()
+is read out of bounds.
 
-Currently the driver sets a value of 1 in the search field for the first
-record after record zero. This is the default for disks not in
-raw_track_access mode but record 1 might be missing on a completely
-empty track.
+This causes a slab-out-of-bounds Read in __fscache_acquire_volume(), as
+reported by Syzbot.
 
-There has not been any problem with this on IBM storage servers but it
-might lead to errors with DASD devices on other vendors storage servers.
+Fix this by changing the type of the stored key to "u8 *" rather than
+"char *" (it isn't a simple string anyway).  Also put in a check that
+the volume name doesn't exceed NAME_MAX.
 
-Fix this by setting the search field to 0. Record zero is always available
-even on a completely empty track.
+  BUG: KASAN: slab-out-of-bounds in memcmp+0x16f/0x1c0 lib/string.c:757
+  Read of size 8 at addr ffff888016f3aa90 by task syz-executor344/3613
+  Call Trace:
+   memcmp+0x16f/0x1c0 lib/string.c:757
+   memcmp include/linux/fortify-string.h:420 [inline]
+   fscache_volume_same fs/fscache/volume.c:133 [inline]
+   fscache_hash_volume fs/fscache/volume.c:171 [inline]
+   __fscache_acquire_volume+0x76c/0x1080 fs/fscache/volume.c:328
+   fscache_acquire_volume include/linux/fscache.h:204 [inline]
+   v9fs_cache_session_get_cookie+0x143/0x240 fs/9p/cache.c:34
+   v9fs_session_init+0x1166/0x1810 fs/9p/v9fs.c:473
+   v9fs_mount+0xba/0xc90 fs/9p/vfs_super.c:126
+   legacy_get_tree+0x105/0x220 fs/fs_context.c:610
+   vfs_get_tree+0x89/0x2f0 fs/super.c:1530
+   do_new_mount fs/namespace.c:3040 [inline]
+   path_mount+0x1326/0x1e20 fs/namespace.c:3370
+   do_mount fs/namespace.c:3383 [inline]
+   __do_sys_mount fs/namespace.c:3591 [inline]
+   __se_sys_mount fs/namespace.c:3568 [inline]
+   __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
 
-Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 62ab63352350 ("fscache: Implement volume registration")
+Reported-by: syzbot+a76f6a6e524cf2080aa3@syzkaller.appspotmail.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Zhang Peng <zhangpeng362@huawei.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+cc: Dominique Martinet <asmadeus@codewreck.org>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: v9fs-developer@lists.sourceforge.net
+cc: linux-cachefs@redhat.com
+Link: https://lore.kernel.org/r/Y3OH+Dmi0QIOK18n@codewreck.org/ # Zhang Peng's v1 fix
+Link: https://lore.kernel.org/r/20221115140447.2971680-1-zhangpeng362@huawei.com/ # Zhang Peng's v2 fix
+Link: https://lore.kernel.org/r/166869954095.3793579.8500020902371015443.stgit@warthog.procyon.org.uk/ # v1
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_eckd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/fscache/volume.c     | 7 +++++--
+ include/linux/fscache.h | 2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
-index 3cc93e2e4e15..2dec81e7e6ab 100644
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -4681,7 +4681,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	struct dasd_device *basedev;
- 	struct req_iterator iter;
- 	struct dasd_ccw_req *cqr;
--	unsigned int first_offs;
- 	unsigned int trkcount;
- 	unsigned long *idaws;
- 	unsigned int size;
-@@ -4715,7 +4714,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
- 		DASD_RAW_SECTORS_PER_TRACK;
- 	trkcount = last_trk - first_trk + 1;
--	first_offs = 0;
+diff --git a/fs/fscache/volume.c b/fs/fscache/volume.c
+index a058e0136bfe..ab8ceddf9efa 100644
+--- a/fs/fscache/volume.c
++++ b/fs/fscache/volume.c
+@@ -203,7 +203,11 @@ static struct fscache_volume *fscache_alloc_volume(const char *volume_key,
+ 	struct fscache_volume *volume;
+ 	struct fscache_cache *cache;
+ 	size_t klen, hlen;
+-	char *key;
++	u8 *key;
++
++	klen = strlen(volume_key);
++	if (klen > NAME_MAX)
++		return NULL;
  
- 	if (rq_data_dir(req) == READ)
- 		cmd = DASD_ECKD_CCW_READ_TRACK;
-@@ -4759,13 +4757,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 
- 	if (use_prefix) {
- 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
--			   startdev, 1, first_offs + 1, trkcount, 0, 0);
-+			   startdev, 1, 0, trkcount, 0, 0);
- 	} else {
- 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
- 		ccw[-1].flags |= CCW_FLAG_CC;
- 
- 		data += sizeof(struct DE_eckd_data);
--		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
-+		locate_record_ext(ccw++, data, first_trk, 0,
- 				  trkcount, cmd, basedev, 0, 0);
- 	}
- 
+ 	if (!coherency_data)
+ 		coherency_len = 0;
+@@ -229,7 +233,6 @@ static struct fscache_volume *fscache_alloc_volume(const char *volume_key,
+ 	/* Stick the length on the front of the key and pad it out to make
+ 	 * hashing easier.
+ 	 */
+-	klen = strlen(volume_key);
+ 	hlen = round_up(1 + klen + 1, sizeof(__le32));
+ 	key = kzalloc(hlen, GFP_KERNEL);
+ 	if (!key)
+diff --git a/include/linux/fscache.h b/include/linux/fscache.h
+index 36e5dd84cf59..8e312c8323a8 100644
+--- a/include/linux/fscache.h
++++ b/include/linux/fscache.h
+@@ -75,7 +75,7 @@ struct fscache_volume {
+ 	atomic_t			n_accesses;	/* Number of cache accesses in progress */
+ 	unsigned int			debug_id;
+ 	unsigned int			key_hash;	/* Hash of key string */
+-	char				*key;		/* Volume ID, eg. "afs@example.com@1234" */
++	u8				*key;		/* Volume ID, eg. "afs@example.com@1234" */
+ 	struct list_head		proc_link;	/* Link in /proc/fs/fscache/volumes */
+ 	struct hlist_bl_node		hash_link;	/* Link in hash table */
+ 	struct work_struct		work;
 -- 
 2.35.1
 
