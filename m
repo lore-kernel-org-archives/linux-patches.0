@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D86379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94034C433C1;
-	Wed, 30 Nov 2022 18:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D956479C1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A889C433D6;
+	Wed, 30 Nov 2022 18:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834288;
-	bh=/YSZ8nbcA/DXPP9n/JqT/uG4NdyF9vNqvUJGcGQ4pEo=;
+	s=korg; t=1669834291;
+	bh=NiqP+/tqGFYeoN6wpdDIVc9ONAxT5v8f1gMSWOWXhyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdxiXcq9wIMPD1mWOKwR+j1Smg3ex/Z+og4SKFmvHE+PjY2Mp5vVDSe8nFIDhra23
-	 pBABtfWiucK2Zq8dPP2HtvdffcXTspOwBgq6StLc3DG37S63UCMOkmAStbXZ2PJVXb
-	 oypHEhoqvsZcqHqS/jaXDQ+ffy8Dqp7JjFWdsrHE=
+	b=iSOSwoutKQhpANMUQ6AvJas71a17DazgeyjzH/TYFo5WI67AZvUbmHuyJ9Fx49yqp
+	 thv4K+r+aX2ynltwSGTE4N/bLC0TIMVV31HfVzMplXctTokRkdE6ylXoMLQcPg9n6m
+	 x5DIq2yFjqC330Mj7XQyysg3usCObXy57ZhSSI3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>,
+	Matt Ranostay <matt.ranostay@konsulko.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.0 171/289] iio: adc: aspeed: Remove the trim valid dts property.
-Date: Wed, 30 Nov 2022 19:22:36 +0100
-Message-Id: <20221130180548.008181553@linuxfoundation.org>
+Subject: [PATCH 6.0 172/289] iio: light: apds9960: fix wrong register for gesture gain
+Date: Wed, 30 Nov 2022 19:22:37 +0100
+Message-Id: <20221130180548.030733256@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,53 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Alejandro Concepción Rodríguez <asconcepcion@acoro.eu>
 
-commit fdd0d6b2eb35c83d6b1226ad20b346a4b45ddfb8 upstream.
+commit 0aa60ff5d996d4ecdd4a62699c01f6d00f798d59 upstream.
 
-The dts property "aspeed,trim-data-valid" is currently used to determine
-whether to read trimming data from the OTP register. If this is set on
-a device without valid trimming data in the OTP the ADC will not function
-correctly. This patch drops the use of this property and instead uses the
-default (unprogrammed) OTP value of 0 to detect when a fallback value of
-0x8 should be used rather then the value read from the OTP.
+Gesture Gain Control is in REG_GCONF_2 (0xa3), not in REG_CONFIG_2 (0x90).
 
-Fixes: d0a4c17b4073 ("iio: adc: aspeed: Get and set trimming data.")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20221114025057.10843-1-billy_tsai@aspeedtech.com
+Fixes: aff268cd532e ("iio: light: add APDS9960 ALS + promixity driver")
+Signed-off-by: Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>
+Acked-by: Matt Ranostay <matt.ranostay@konsulko.com>
 Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/EaT-NKC-H4DNX5z4Lg9B6IWPD5TrTrYBr5DYB784wfDKQkTmzPXkoYqyUOrOgJH-xvTsEkFLcVkeAPZRUODEFI5dGziaWXwjpfBNLeNGfNc=@acoro.eu
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/aspeed_adc.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/iio/light/apds9960.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/adc/aspeed_adc.c
-+++ b/drivers/iio/adc/aspeed_adc.c
-@@ -202,6 +202,8 @@ static int aspeed_adc_set_trim_data(stru
- 				((scu_otp) &
- 				 (data->model_data->trim_locate->field)) >>
- 				__ffs(data->model_data->trim_locate->field);
-+			if (!trimming_val)
-+				trimming_val = 0x8;
- 		}
- 		dev_dbg(data->dev,
- 			"trimming val = %d, offset = %08x, fields = %08x\n",
-@@ -563,12 +565,9 @@ static int aspeed_adc_probe(struct platf
- 	if (ret)
- 		return ret;
+--- a/drivers/iio/light/apds9960.c
++++ b/drivers/iio/light/apds9960.c
+@@ -54,9 +54,6 @@
+ #define APDS9960_REG_CONTROL_PGAIN_MASK_SHIFT	2
  
--	if (of_find_property(data->dev->of_node, "aspeed,trim-data-valid",
--			     NULL)) {
--		ret = aspeed_adc_set_trim_data(indio_dev);
--		if (ret)
--			return ret;
--	}
-+	ret = aspeed_adc_set_trim_data(indio_dev);
-+	if (ret)
-+		return ret;
+ #define APDS9960_REG_CONFIG_2	0x90
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK	0x60
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT	5
+-
+ #define APDS9960_REG_ID		0x92
  
- 	if (of_find_property(data->dev->of_node, "aspeed,battery-sensing",
- 			     NULL)) {
+ #define APDS9960_REG_STATUS	0x93
+@@ -77,6 +74,9 @@
+ #define APDS9960_REG_GCONF_1_GFIFO_THRES_MASK_SHIFT	6
+ 
+ #define APDS9960_REG_GCONF_2	0xa3
++#define APDS9960_REG_GCONF_2_GGAIN_MASK			0x60
++#define APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT		5
++
+ #define APDS9960_REG_GOFFSET_U	0xa4
+ #define APDS9960_REG_GOFFSET_D	0xa5
+ #define APDS9960_REG_GPULSE	0xa6
+@@ -396,9 +396,9 @@ static int apds9960_set_pxs_gain(struct
+ 			}
+ 
+ 			ret = regmap_update_bits(data->regmap,
+-				APDS9960_REG_CONFIG_2,
+-				APDS9960_REG_CONFIG_2_GGAIN_MASK,
+-				idx << APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT);
++				APDS9960_REG_GCONF_2,
++				APDS9960_REG_GCONF_2_GGAIN_MASK,
++				idx << APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT);
+ 			if (!ret)
+ 				data->pxs_gain = idx;
+ 			mutex_unlock(&data->lock);
 
 
