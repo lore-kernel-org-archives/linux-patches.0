@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C2979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27E5C433D6;
-	Wed, 30 Nov 2022 18:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4CBC433C1;
+	Wed, 30 Nov 2022 18:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834305;
-	bh=EVfho+zLHPxYxdwXd9akYpefZ3o0MbhXSCRSb8mNpyU=;
+	s=korg; t=1669834307;
+	bh=YLrg8ntQURUwsi8m0ia5yo1tFR4YA5+hqoUHkCRok8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ta6NK/I/f8AGqo5aQOlsHP7pi6LbakwjD70duEGbdzVtWFZi67j/JLYbI2fSr822q
-	 ogfKH7sN4nGBh6Dn/hQSWR89XR8SLYJ9Vp9f/j09bpaX0WkxQyR4xKR9r2Xq4yVsq4
-	 wuNJJqDQKd3dYtEUcW5HqwkW48X0O3/txCPijYmI=
+	b=dHaTCSWRguMTyqKMYzv102RBrzqcX+cFAbNDEM4UciaLtF5ozc/2RTgJE9OoWfgwq
+	 0isj+K1CBUDLqsrhmICeFORAWvNoF8ivCS5cghD+3W6Q5kyqqnXWufDKpjXqzJ3xT/
+	 2TdBTarYXRqgbc4xEkztN0k1dNq74gAIZII2AmqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 167/289] cifs: Use after free in debug code
-Date: Wed, 30 Nov 2022 19:22:32 +0100
-Message-Id: <20221130180547.918599330@linuxfoundation.org>
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	syzbot+77e4f0...@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 198/289] nilfs2: fix nilfs_sufile_mark_dirty() not set segment usage as dirty
+Date: Wed, 30 Nov 2022 19:23:03 +0100
+Message-Id: <20221130180548.610059258@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,47 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit f391d6ee002ea022c62dc0b09d0578f3ccce81be upstream.
+commit 512c5ca01a3610ab14ff6309db363de51f1c13a6 upstream.
 
-This debug code dereferences "old_iface" after it was already freed by
-the call to release_iface().  Re-order the debugging to avoid this
-issue.
+When extending segments, nilfs_sufile_alloc() is called to get an
+unassigned segment, then mark it as dirty to avoid accidentally allocating
+the same segment in the future.
 
-Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
-Cc: stable@vger.kernel.org # 5.19+
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+But for some special cases such as a corrupted image it can be unreliable.
+If such corruption of the dirty state of the segment occurs, nilfs2 may
+reallocate a segment that is in use and pick the same segment for writing
+twice at the same time.
+
+This will cause the problem reported by syzkaller:
+https://syzkaller.appspot.com/bug?id=c7c4748e11ffcc367cef04f76e02e931833cbd24
+
+This case started with segbuf1.segnum = 3, nextnum = 4 when constructed.
+It supposed segment 4 has already been allocated and marked as dirty.
+
+However the dirty state was corrupted and segment 4 usage was not dirty.
+For the first time nilfs_segctor_extend_segments() segment 4 was allocated
+again, which made segbuf2 and next segbuf3 had same segment 4.
+
+sb_getblk() will get same bh for segbuf2 and segbuf3, and this bh is added
+to both buffer lists of two segbuf.  It makes the lists broken which
+causes NULL pointer dereference.
+
+Fix the problem by setting usage as dirty every time in
+nilfs_sufile_mark_dirty(), which is called during constructing current
+segment to be written out and before allocating next segment.
+
+[chenzhongjin@huawei.com: add lock protection per Ryusuke]
+  Link: https://lkml.kernel.org/r/20221121091141.214703-1-chenzhongjin@huawei.com
+Link: https://lkml.kernel.org/r/20221118063304.140187-1-chenzhongjin@huawei.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reported-by: <syzbot+77e4f0...@syzkaller.appspotmail.com>
+Reported-by: Liu Shixin <liushixin2@huawei.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/sess.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/sufile.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/cifs/sess.c b/fs/cifs/sess.c
-index 92e4278ec35d..9e7d9f0baa18 100644
---- a/fs/cifs/sess.c
-+++ b/fs/cifs/sess.c
-@@ -302,14 +302,14 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -495,14 +495,22 @@ void nilfs_sufile_do_free(struct inode *
+ int nilfs_sufile_mark_dirty(struct inode *sufile, __u64 segnum)
+ {
+ 	struct buffer_head *bh;
++	void *kaddr;
++	struct nilfs_segment_usage *su;
+ 	int ret;
  
- 	/* now drop the ref to the current iface */
- 	if (old_iface && iface) {
--		kref_put(&old_iface->refcount, release_iface);
- 		cifs_dbg(FYI, "replacing iface: %pIS with %pIS\n",
- 			 &old_iface->sockaddr,
- 			 &iface->sockaddr);
--	} else if (old_iface) {
- 		kref_put(&old_iface->refcount, release_iface);
-+	} else if (old_iface) {
- 		cifs_dbg(FYI, "releasing ref to iface: %pIS\n",
- 			 &old_iface->sockaddr);
-+		kref_put(&old_iface->refcount, release_iface);
- 	} else {
- 		WARN_ON(!iface);
- 		cifs_dbg(FYI, "adding new iface: %pIS\n", &iface->sockaddr);
--- 
-2.38.1
-
++	down_write(&NILFS_MDT(sufile)->mi_sem);
+ 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
+ 	if (!ret) {
+ 		mark_buffer_dirty(bh);
+ 		nilfs_mdt_mark_dirty(sufile);
++		kaddr = kmap_atomic(bh->b_page);
++		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
++		nilfs_segment_usage_set_dirty(su);
++		kunmap_atomic(kaddr);
+ 		brelse(bh);
+ 	}
++	up_write(&NILFS_MDT(sufile)->mi_sem);
+ 	return ret;
+ }
+ 
 
 
