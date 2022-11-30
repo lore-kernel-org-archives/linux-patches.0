@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71FBC433D6;
-	Wed, 30 Nov 2022 18:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F20279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96111C433D6;
+	Wed, 30 Nov 2022 18:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833648;
-	bh=s3thEW0isS/uoxzi+LNN7ueMp0Fh87h9RAXlRApO5ts=;
+	s=korg; t=1669833650;
+	bh=V0JtBzyNcM8vdmPVOHLs2Qx6zVmUQfzvpE48LVouQzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOxE5NooCdBSTKAqSjwpd1EUxOZ8ZQpw56N42gBKVRDNPF1w3wE/bzvLD5hRoJckZ
-	 nH48xc0+k6QvarAVLzB4ewDWO6S7YK/+K3KhGT+PUM8KnZKyqtVkUprIGtPBWb8o7B
-	 6d3kg1Ci/CXEjnND3GanyrT3hiqeG3ufhA3eiJCI=
+	b=C+kGq6TrQTELpBhRezp/wW3GY6Nw/2FJsDM3IoSIKA0HL3udHRHSONyCUlH/H6HLd
+	 E3yt78B9kM0JaR0DTFf6PDQyAjGBgu4VfOWakWoQ3hAGWLWe1nyUn1ux7riupsvhv7
+	 FVAfySIDWJb5BrVvDC5LO/ldkdprJaGn8ZczF+r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 144/206] ext4: fix use-after-free in ext4_ext_shift_extents
-Date: Wed, 30 Nov 2022 19:23:16 +0100
-Message-Id: <20221130180536.702399526@linuxfoundation.org>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 135/206] init/Kconfig: fix CC_HAS_ASM_GOTO_TIED_OUTPUT test with dash
+Date: Wed, 30 Nov 2022 19:23:07 +0100
+Message-Id: <20221130180536.474994719@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,98 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-commit f6b1a1cf1c3ee430d3f5e47847047ce789a690aa upstream.
+[ Upstream commit 534bd70374d646f17e2cebe0e6e4cdd478ce4f0c ]
 
-If the starting position of our insert range happens to be in the hole
-between the two ext4_extent_idx, because the lblk of the ext4_extent in
-the previous ext4_extent_idx is always less than the start, which leads
-to the "extent" variable access across the boundary, the following UAF is
-triggered:
-==================================================================
-BUG: KASAN: use-after-free in ext4_ext_shift_extents+0x257/0x790
-Read of size 4 at addr ffff88819807a008 by task fallocate/8010
-CPU: 3 PID: 8010 Comm: fallocate Tainted: G            E     5.10.0+ #492
-Call Trace:
- dump_stack+0x7d/0xa3
- print_address_description.constprop.0+0x1e/0x220
- kasan_report.cold+0x67/0x7f
- ext4_ext_shift_extents+0x257/0x790
- ext4_insert_range+0x5b6/0x700
- ext4_fallocate+0x39e/0x3d0
- vfs_fallocate+0x26f/0x470
- ksys_fallocate+0x3a/0x70
- __x64_sys_fallocate+0x4f/0x60
- do_syscall_64+0x33/0x40
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-==================================================================
+When using dash as /bin/sh, the CC_HAS_ASM_GOTO_TIED_OUTPUT test fails
+with a syntax error which is not the one we are looking for:
 
-For right shifts, we can divide them into the following situations：
+<stdin>: In function ‘foo’:
+<stdin>:1:29: warning: missing terminating " character
+<stdin>:1:29: error: missing terminating " character
+<stdin>:2:5: error: expected ‘:’ before ‘+’ token
+<stdin>:2:7: warning: missing terminating " character
+<stdin>:2:7: error: missing terminating " character
+<stdin>:2:5: error: expected declaration or statement at end of input
 
-1. When the first ee_block of ext4_extent_idx is greater than or equal to
-   start, make right shifts directly from the first ee_block.
-    1) If it is greater than start, we need to continue searching in the
-       previous ext4_extent_idx.
-    2) If it is equal to start, we can exit the loop (iterator=NULL).
+Removing '\n' solves this.
 
-2. When the first ee_block of ext4_extent_idx is less than start, then
-   traverse from the last extent to find the first extent whose ee_block
-   is less than start.
-    1) If extent is still the last extent after traversal, it means that
-       the last ee_block of ext4_extent_idx is less than start, that is,
-       start is located in the hole between idx and (idx+1), so we can
-       exit the loop directly (break) without right shifts.
-    2) Otherwise, make right shifts at the corresponding position of the
-       found extent, and then exit the loop (iterator=NULL).
-
-Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
-Cc: stable@vger.kernel.org # v4.2+
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20220922120434.1294789-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1aa0e8b144b6 ("Kconfig: Add option for asm goto w/ tied outputs to workaround clang-13 bug")
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ init/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5190,6 +5190,7 @@ ext4_ext_shift_extents(struct inode *ino
- 	 * and it is decreased till we reach start.
- 	 */
- again:
-+	ret = 0;
- 	if (SHIFT == SHIFT_LEFT)
- 		iterator = &start;
- 	else
-@@ -5233,14 +5234,21 @@ again:
- 					ext4_ext_get_actual_len(extent);
- 		} else {
- 			extent = EXT_FIRST_EXTENT(path[depth].p_hdr);
--			if (le32_to_cpu(extent->ee_block) > 0)
-+			if (le32_to_cpu(extent->ee_block) > start)
- 				*iterator = le32_to_cpu(extent->ee_block) - 1;
--			else
--				/* Beginning is reached, end of the loop */
-+			else if (le32_to_cpu(extent->ee_block) == start)
- 				iterator = NULL;
--			/* Update path extent in case we need to stop */
--			while (le32_to_cpu(extent->ee_block) < start)
-+			else {
-+				extent = EXT_LAST_EXTENT(path[depth].p_hdr);
-+				while (le32_to_cpu(extent->ee_block) >= start)
-+					extent--;
-+
-+				if (extent == EXT_LAST_EXTENT(path[depth].p_hdr))
-+					break;
-+
- 				extent++;
-+				iterator = NULL;
-+			}
- 			path[depth].p_ext = extent;
- 		}
- 		ret = ext4_ext_shift_path_extents(path, shift, inode,
+diff --git a/init/Kconfig b/init/Kconfig
+index d19ed66aba3b..a4144393717b 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -80,7 +80,7 @@ config CC_HAS_ASM_GOTO_OUTPUT
+ config CC_HAS_ASM_GOTO_TIED_OUTPUT
+ 	depends on CC_HAS_ASM_GOTO_OUTPUT
+ 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
+-	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .\n": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
++	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
+ 
+ config TOOLS_SUPPORT_RELR
+ 	def_bool $(success,env "CC=$(CC)" "LD=$(LD)" "NM=$(NM)" "OBJCOPY=$(OBJCOPY)" $(srctree)/scripts/tools-support-relr.sh)
+-- 
+2.35.1
+
 
 
