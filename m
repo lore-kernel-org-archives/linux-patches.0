@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683D6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC24C433C1;
-	Wed, 30 Nov 2022 18:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCB56FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB1AC433D6;
+	Wed, 30 Nov 2022 18:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833014;
-	bh=oqG+IQtVoH+tSphIa4c2TVSL/tIj3/UNBF1UQeUd0Vg=;
+	s=korg; t=1669833017;
+	bh=aOwSf5WsNy9eAqVQMmP0v1Bqdimm4oBqKJfks05NHX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSneJEgaDATyJxiKQNbt9zGetvPi1N6Lyjo0e3nBljP36i+yZHbrAeajeqlha7Xdn
-	 EyLji0pL5XezoGtgJ6m93D52RIhsfEErs3ltUGjOyjG/prCSpt0jc6EmtiGbIfZNgC
-	 D2MFPkoPLAzursQb9V6xR9Pvjb4kLuWul4ULIyOY=
+	b=V+ty0nrZ1W55OAsh5uXIgLTAXQ62Mmmo65FRM/dj/IwcO9/XU5/mJajFvlGeYUdng
+	 S2bC//AkgfkeUM42tlrUwxkUCHS97X2aTJsttJUgug3B4/qaI6nCd95zOdOpqRAoco
+	 SmjW+3DfeNP3E9jp5pBqijKYe7Wv1/3cPY667aT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Rik van Riel <riel@surriel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Hugh Dickins <hughd@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 120/162] gcov: clang: fix the buffer overflow issue
-Date: Wed, 30 Nov 2022 19:23:21 +0100
-Message-Id: <20221130180531.744941808@linuxfoundation.org>
+Subject: [PATCH 5.10 121/162] mm: vmscan: fix extreme overreclaim and swap floods
+Date: Wed, 30 Nov 2022 19:23:22 +0100
+Message-Id: <20221130180531.772344962@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,88 +38,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit a6f810efabfd789d3bbafeacb4502958ec56c5ce upstream.
+commit f53af4285d775cd9a9a146fc438bd0a1bee1838a upstream.
 
-Currently, in clang version of gcov code when module is getting removed
-gcov_info_add() incorrectly adds the sfn_ptr->counter to all the
-dst->functions and it result in the kernel panic in below crash report.
-Fix this by properly handling it.
+During proactive reclaim, we sometimes observe severe overreclaim, with
+several thousand times more pages reclaimed than requested.
 
-[    8.899094][  T599] Unable to handle kernel write to read-only memory at virtual address ffffff80461cc000
-[    8.899100][  T599] Mem abort info:
-[    8.899102][  T599]   ESR = 0x9600004f
-[    8.899103][  T599]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    8.899105][  T599]   SET = 0, FnV = 0
-[    8.899107][  T599]   EA = 0, S1PTW = 0
-[    8.899108][  T599]   FSC = 0x0f: level 3 permission fault
-[    8.899110][  T599] Data abort info:
-[    8.899111][  T599]   ISV = 0, ISS = 0x0000004f
-[    8.899113][  T599]   CM = 0, WnR = 1
-[    8.899114][  T599] swapper pgtable: 4k pages, 39-bit VAs, pgdp=00000000ab8de000
-[    8.899116][  T599] [ffffff80461cc000] pgd=18000009ffcde003, p4d=18000009ffcde003, pud=18000009ffcde003, pmd=18000009ffcad003, pte=00600000c61cc787
-[    8.899124][  T599] Internal error: Oops: 9600004f [#1] PREEMPT SMP
-[    8.899265][  T599] Skip md ftrace buffer dump for: 0x1609e0
-....
-..,
-[    8.899544][  T599] CPU: 7 PID: 599 Comm: modprobe Tainted: G S         OE     5.15.41-android13-8-g38e9b1af6bce #1
-[    8.899547][  T599] Hardware name: XXX (DT)
-[    8.899549][  T599] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
-[    8.899551][  T599] pc : gcov_info_add+0x9c/0xb8
-[    8.899557][  T599] lr : gcov_event+0x28c/0x6b8
-[    8.899559][  T599] sp : ffffffc00e733b00
-[    8.899560][  T599] x29: ffffffc00e733b00 x28: ffffffc00e733d30 x27: ffffffe8dc297470
-[    8.899563][  T599] x26: ffffffe8dc297000 x25: ffffffe8dc297000 x24: ffffffe8dc297000
-[    8.899566][  T599] x23: ffffffe8dc0a6200 x22: ffffff880f68bf20 x21: 0000000000000000
-[    8.899569][  T599] x20: ffffff880f68bf00 x19: ffffff8801babc00 x18: ffffffc00d7f9058
-[    8.899572][  T599] x17: 0000000000088793 x16: ffffff80461cbe00 x15: 9100052952800785
-[    8.899575][  T599] x14: 0000000000000200 x13: 0000000000000041 x12: 9100052952800785
-[    8.899577][  T599] x11: ffffffe8dc297000 x10: ffffffe8dc297000 x9 : ffffff80461cbc80
-[    8.899580][  T599] x8 : ffffff8801babe80 x7 : ffffffe8dc2ec000 x6 : ffffffe8dc2ed000
-[    8.899583][  T599] x5 : 000000008020001f x4 : fffffffe2006eae0 x3 : 000000008020001f
-[    8.899586][  T599] x2 : ffffff8027c49200 x1 : ffffff8801babc20 x0 : ffffff80461cb3a0
-[    8.899589][  T599] Call trace:
-[    8.899590][  T599]  gcov_info_add+0x9c/0xb8
-[    8.899592][  T599]  gcov_module_notifier+0xbc/0x120
-[    8.899595][  T599]  blocking_notifier_call_chain+0xa0/0x11c
-[    8.899598][  T599]  do_init_module+0x2a8/0x33c
-[    8.899600][  T599]  load_module+0x23cc/0x261c
-[    8.899602][  T599]  __arm64_sys_finit_module+0x158/0x194
-[    8.899604][  T599]  invoke_syscall+0x94/0x2bc
-[    8.899607][  T599]  el0_svc_common+0x1d8/0x34c
-[    8.899609][  T599]  do_el0_svc+0x40/0x54
-[    8.899611][  T599]  el0_svc+0x94/0x2f0
-[    8.899613][  T599]  el0t_64_sync_handler+0x88/0xec
-[    8.899615][  T599]  el0t_64_sync+0x1b4/0x1b8
-[    8.899618][  T599] Code: f905f56c f86e69ec f86e6a0f 8b0c01ec (f82e6a0c)
-[    8.899620][  T599] ---[ end trace ed5218e9e5b6e2e6 ]---
+This trace was obtained from shrink_lruvec() during such an instance:
 
-Link: https://lkml.kernel.org/r/1668020497-13142-1-git-send-email-quic_mojha@quicinc.com
-Fixes: e178a5beb369 ("gcov: clang support")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Tom Rix <trix@redhat.com>
-Cc: <stable@vger.kernel.org>	[5.2+]
+    prio:0 anon_cost:1141521 file_cost:7767
+    nr_reclaimed:4387406 nr_to_reclaim:1047 (or_factor:4190)
+    nr=[7161123 345 578 1111]
+
+While he reclaimer requested 4M, vmscan reclaimed close to 16G, most of it
+by swapping.  These requests take over a minute, during which the write()
+to memory.reclaim is unkillably stuck inside the kernel.
+
+Digging into the source, this is caused by the proportional reclaim
+bailout logic.  This code tries to resolve a fundamental conflict: to
+reclaim roughly what was requested, while also aging all LRUs fairly and
+in accordance to their size, swappiness, refault rates etc.  The way it
+attempts fairness is that once the reclaim goal has been reached, it stops
+scanning the LRUs with the smaller remaining scan targets, and adjusts the
+remainder of the bigger LRUs according to how much of the smaller LRUs was
+scanned.  It then finishes scanning that remainder regardless of the
+reclaim goal.
+
+This works fine if priority levels are low and the LRU lists are
+comparable in size.  However, in this instance, the cgroup that is
+targeted by proactive reclaim has almost no files left - they've already
+been squeezed out by proactive reclaim earlier - and the remaining anon
+pages are hot.  Anon rotations cause the priority level to drop to 0,
+which results in reclaim targeting all of anon (a lot) and all of file
+(almost nothing).  By the time reclaim decides to bail, it has scanned
+most or all of the file target, and therefor must also scan most or all of
+the enormous anon target.  This target is thousands of times larger than
+the reclaim goal, thus causing the overreclaim.
+
+The bailout code hasn't changed in years, why is this failing now?  The
+most likely explanations are two other recent changes in anon reclaim:
+
+1. Before the series starting with commit 5df741963d52 ("mm: fix LRU
+   balancing effect of new transparent huge pages"), the VM was
+   overall relatively reluctant to swap at all, even if swap was
+   configured. This means the LRU balancing code didn't come into play
+   as often as it does now, and mostly in high pressure situations
+   where pronounced swap activity wouldn't be as surprising.
+
+2. For historic reasons, shrink_lruvec() loops on the scan targets of
+   all LRU lists except the active anon one, meaning it would bail if
+   the only remaining pages to scan were active anon - even if there
+   were a lot of them.
+
+   Before the series starting with commit ccc5dc67340c ("mm/vmscan:
+   make active/inactive ratio as 1:1 for anon lru"), most anon pages
+   would live on the active LRU; the inactive one would contain only a
+   handful of preselected reclaim candidates. After the series, anon
+   gets aged similarly to file, and the inactive list is the default
+   for new anon pages as well, making it often the much bigger list.
+
+   As a result, the VM is now more likely to actually finish large
+   anon targets than before.
+
+Change the code such that only one SWAP_CLUSTER_MAX-sized nudge toward the
+larger LRU lists is made before bailing out on a met reclaim goal.
+
+This fixes the extreme overreclaim problem.
+
+Fairness is more subtle and harder to evaluate.  No obvious misbehavior
+was observed on the test workload, in any case.  Conceptually, fairness
+should primarily be a cumulative effect from regular, lower priority
+scans.  Once the VM is in trouble and needs to escalate scan targets to
+make forward progress, fairness needs to take a backseat.  This is also
+acknowledged by the myriad exceptions in get_scan_count().  This patch
+makes fairness decrease gradually, as it keeps fairness work static over
+increasing priority levels with growing scan targets.  This should make
+more sense - although we may have to re-visit the exact values.
+
+Link: https://lkml.kernel.org/r/20220802162811.39216-1-hannes@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gcov/clang.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/vmscan.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/kernel/gcov/clang.c
-+++ b/kernel/gcov/clang.c
-@@ -327,6 +327,8 @@ void gcov_info_add(struct gcov_info *dst
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2439,8 +2439,8 @@ static void shrink_lruvec(struct lruvec
+ 	enum lru_list lru;
+ 	unsigned long nr_reclaimed = 0;
+ 	unsigned long nr_to_reclaim = sc->nr_to_reclaim;
++	bool proportional_reclaim;
+ 	struct blk_plug plug;
+-	bool scan_adjusted;
  
- 		for (i = 0; i < sfn_ptr->num_counters; i++)
- 			dfn_ptr->counters[i] += sfn_ptr->counters[i];
-+
-+		sfn_ptr = list_next_entry(sfn_ptr, head);
+ 	get_scan_count(lruvec, sc, nr);
+ 
+@@ -2458,8 +2458,8 @@ static void shrink_lruvec(struct lruvec
+ 	 * abort proportional reclaim if either the file or anon lru has already
+ 	 * dropped to zero at the first pass.
+ 	 */
+-	scan_adjusted = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
+-			 sc->priority == DEF_PRIORITY);
++	proportional_reclaim = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
++				sc->priority == DEF_PRIORITY);
+ 
+ 	blk_start_plug(&plug);
+ 	while (nr[LRU_INACTIVE_ANON] || nr[LRU_ACTIVE_FILE] ||
+@@ -2479,7 +2479,7 @@ static void shrink_lruvec(struct lruvec
+ 
+ 		cond_resched();
+ 
+-		if (nr_reclaimed < nr_to_reclaim || scan_adjusted)
++		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
+ 
+ 		/*
+@@ -2530,8 +2530,6 @@ static void shrink_lruvec(struct lruvec
+ 		nr_scanned = targets[lru] - nr[lru];
+ 		nr[lru] = targets[lru] * (100 - percentage) / 100;
+ 		nr[lru] -= min(nr[lru], nr_scanned);
+-
+-		scan_adjusted = true;
  	}
- }
- 
+ 	blk_finish_plug(&plug);
+ 	sc->nr_reclaimed += nr_reclaimed;
 
 
