@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D08C433C1;
-	Wed, 30 Nov 2022 18:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1250679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B22C433D6;
+	Wed, 30 Nov 2022 18:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834237;
-	bh=yFqVmtyF1pBSKDJccdOVN1CzDLQTWzm5XEMtqdUhcdA=;
+	s=korg; t=1669834239;
+	bh=3WX50qTqO/8QYogW+x6n11KWeXNnWx2Sg8qqP3ImZnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7wVUO9E/gJFUH6NWc/ScuNu+bVytawdech2vfd4YU7lMrF3IR9L12L8OzhZYPL6b
-	 zcEoNMEnahEs5eUfo4WZmAldTxWXH/+oSw0+NdMqJpJLxC7ebtA1AHiokMmeyf86MH
-	 OljdWA+Q3fn5gL8M+3i8wWvk10u+P+2VMt+Rnefw=
+	b=Vsh8nPCFFjfEnkjxNZ9ERn2vyHRhYWwDGnqh4KFX11nHsTM4ru5LUfI5QQY7oBZm/
+	 k1f/FD5mgwQ1/Hm07779xHAYk2DHmSJXzhVGrohrSBufuusH74fNnddQlXgtXYZ125
+	 zLM5gnInQYYStX9PZMWYTjpDQiuFnc5xZWUYVjWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.0 180/289] bus: ixp4xx: Dont touch bit 7 on IXP42x
-Date: Wed, 30 Nov 2022 19:22:45 +0100
-Message-Id: <20221130180548.209254973@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	David Jander <david@protonic.nl>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>
+Subject: [PATCH 6.0 181/289] spi: spi-imx: Fix spi_bus_clk if requested clock is higher than input clock
+Date: Wed, 30 Nov 2022 19:22:46 +0100
+Message-Id: <20221130180548.231443046@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -34,68 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-commit ff5a19909b49fe5c0b01ae197f84b741e0f698dc upstream.
+commit db2d2dc9a0b58c6faefb6b002fdbed4f0362d1a4 upstream.
 
-We face some regressions on a few IXP42x systems when
-accessing flash, the following unrelated error prints
-appear from the PCI driver:
+In case the requested bus clock is higher than the input clock, the correct
+dividers (pre = 0, post = 0) are returned from mx51_ecspi_clkdiv(), but
+*fres is left uninitialized and therefore contains an arbitrary value.
 
-ixp4xx-pci c0000000.pci: PCI: abort_handler addr = 0xff9ffb5f,
-	   isr = 0x0, status = 0x22a0
-ixp4xx-pci c0000000.pci: imprecise abort
-(...)
+This causes trouble for the recently introduced PIO polling feature as the
+value in spi_imx->spi_bus_clk is used there to calculate for which
+transfers to enable PIO polling.
 
-It turns out that while bit 7 is masked "reserved" it is
-not unused, so masking it off as zero is dangerous, and
-breaks flash access on some systems such as the NSLU2.
-Be more careful and avoid masking off any of the reserved
-bits 7, 8, 9 or 30. Only keep masking EXP_WORD (bit 2)
-on IXP43x which is necessary in some setups.
+Fix this by setting *fres even if no clock dividers are in use.
 
-Fixes: 1c953bda90ca ("bus: ixp4xx: Add a driver for IXP4xx expansion bus")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+This issue was observed on Kontron BL i.MX8MM with an SPI peripheral clock set
+to 50 MHz by default and a requested SPI bus clock of 80 MHz for the SPI NOR
+flash.
+
+With the fix applied the debug message from mx51_ecspi_clkdiv() now prints the
+following:
+
+spi_imx 30820000.spi: mx51_ecspi_clkdiv: fin: 50000000, fspi: 50000000,
+post: 0, pre: 0
+
+Fixes: 6fd8b8503a0d ("spi: spi-imx: Fix out-of-order CS/SCLK operation at low speeds")
+Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: David Jander <david@protonic.nl>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Marek Vasut <marex@denx.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221122134411.2030372-1-linus.walleij@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Fabio Estevam <festevam@gmail.com>
+Acked-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20221115181002.2068270-1-frieder@fris.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/intel-ixp4xx-eb.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/spi/spi-imx.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/bus/intel-ixp4xx-eb.c
-+++ b/drivers/bus/intel-ixp4xx-eb.c
-@@ -49,7 +49,7 @@
- #define IXP4XX_EXP_SIZE_SHIFT		10
- #define IXP4XX_EXP_CNFG_0		BIT(9) /* Always zero */
- #define IXP43X_EXP_SYNC_INTEL		BIT(8) /* Only on IXP43x */
--#define IXP43X_EXP_EXP_CHIP		BIT(7) /* Only on IXP43x */
-+#define IXP43X_EXP_EXP_CHIP		BIT(7) /* Only on IXP43x, dangerous to touch on IXP42x */
- #define IXP4XX_EXP_BYTE_RD16		BIT(6)
- #define IXP4XX_EXP_HRDY_POL		BIT(5) /* Only on IXP42x */
- #define IXP4XX_EXP_MUX_EN		BIT(4)
-@@ -57,8 +57,6 @@
- #define IXP4XX_EXP_WORD			BIT(2) /* Always zero */
- #define IXP4XX_EXP_WR_EN		BIT(1)
- #define IXP4XX_EXP_BYTE_EN		BIT(0)
--#define IXP42X_RESERVED			(BIT(30)|IXP4XX_EXP_CNFG_0|BIT(8)|BIT(7)|IXP4XX_EXP_WORD)
--#define IXP43X_RESERVED			(BIT(30)|IXP4XX_EXP_CNFG_0|BIT(5)|IXP4XX_EXP_WORD)
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -444,8 +444,7 @@ static unsigned int mx51_ecspi_clkdiv(st
+ 	unsigned int pre, post;
+ 	unsigned int fin = spi_imx->spi_clk;
  
- #define IXP4XX_EXP_CNFG0		0x20
- #define IXP4XX_EXP_CNFG0_MEM_MAP	BIT(31)
-@@ -252,10 +250,9 @@ static void ixp4xx_exp_setup_chipselect(
- 		cs_cfg |= val << IXP4XX_EXP_CYC_TYPE_SHIFT;
- 	}
+-	if (unlikely(fspi > fin))
+-		return 0;
++	fspi = min(fspi, fin);
  
--	if (eb->is_42x)
--		cs_cfg &= ~IXP42X_RESERVED;
- 	if (eb->is_43x) {
--		cs_cfg &= ~IXP43X_RESERVED;
-+		/* Should always be zero */
-+		cs_cfg &= ~IXP4XX_EXP_WORD;
- 		/*
- 		 * This bit for Intel strata flash is currently unused, but let's
- 		 * report it if we find one.
+ 	post = fls(fin) - fls(fspi);
+ 	if (fin > fspi << post)
 
 
