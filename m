@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24436FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31620C433C1;
-	Wed, 30 Nov 2022 18:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946786FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197DEC433C1;
+	Wed, 30 Nov 2022 18:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832790;
-	bh=OByJ1g1fR5CWqeLeZ6ni0Q4SURrBNXSzkliDVQC89Ys=;
+	s=korg; t=1669832793;
+	bh=nCl8VUdqjDdIGYK0NPBCPNGX5RBo/mSM7xKiI8PAYMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3/ce1v66xn5TMWq91QhOm85qNuvJYVMy6vATT5Nnh6m6cM9HBHhDnp+9KLwytn5z
-	 u+8NymQl4YYrNoMfFUbiGsDnz+/FFhGNr+t8ibhma/yPBTuRYvASky4z5ghVieDvcY
-	 WyzWBN+49M0/Z0Bm2xlmvsHNRUweePfNMm9gTZQk=
+	b=Ar3bQKiISd8/k6mPhu1LcWq9bDSaMSo777wgl7mMZKW8fk/joQAkVAFAOuH19ngNK
+	 KHVTupVnZek2BtFtxVIqFIaCyv0qnXZpKbvjKn3p06Ad4j2SuW/5H/CRZdGuIegq5a
+	 /QrECa9pz5aMDyweD+FBN/SXXRoBByFtEWz0sJ4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitja Spes <mitja@lxnav.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/162] iio: pressure: ms5611: fixed value compensation bug
-Date: Wed, 30 Nov 2022 19:21:33 +0100
-Message-Id: <20221130180528.827834246@linuxfoundation.org>
+Subject: [PATCH 5.10 013/162] ceph: do not update snapshot context when there is no new snapshot
+Date: Wed, 30 Nov 2022 19:21:34 +0100
+Message-Id: <20221130180528.855134475@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,171 +36,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mitja Spes <mitja@lxnav.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 17f442e7e47579d3881fc4d47354eaef09302e6f ]
+[ Upstream commit 2e586641c950e7f3e7e008404bd783a466b9b590 ]
 
-When using multiple instances of this driver the compensation PROM was
-overwritten by the last initialized sensor. Now each sensor has own PROM
-storage.
+We will only track the uppest parent snapshot realm from which we
+need to rebuild the snapshot contexts _downward_ in hierarchy. For
+all the others having no new snapshot we will do nothing.
 
-Signed-off-by: Mitja Spes <mitja@lxnav.com>
-Fixes: 9690d81a02dc ("iio: pressure: ms5611: add support for MS5607 temperature and pressure sensor")
-Link: https://lore.kernel.org/r/20221021135827.1444793-2-mitja@lxnav.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This fix will avoid calling ceph_queue_cap_snap() on some inodes
+inappropriately. For example, with the code in mainline, suppose there
+are 2 directory hierarchies (with 6 directories total), like this:
+
+/dir_X1/dir_X2/dir_X3/
+/dir_Y1/dir_Y2/dir_Y3/
+
+Firstly, make a snapshot under /dir_X1/dir_X2/.snap/snap_X2, then make a
+root snapshot under /.snap/root_snap. Every time we make snapshots under
+/dir_Y1/..., the kclient will always try to rebuild the snap context for
+snap_X2 realm and finally will always try to queue cap snaps for dir_Y2
+and dir_Y3, which makes no sense.
+
+That's because the snap_X2's seq is 2 and root_snap's seq is 3. So when
+creating a new snapshot under /dir_Y1/... the new seq will be 4, and
+the mds will send the kclient a snapshot backtrace in _downward_
+order: seqs 4, 3.
+
+When ceph_update_snap_trace() is called, it will always rebuild the from
+the last realm, that's the root_snap. So later when rebuilding the snap
+context, the current logic will always cause it to rebuild the snap_X2
+realm and then try to queue cap snaps for all the inodes related in that
+realm, even though it's not necessary.
+
+This is accompanied by a lot of these sorts of dout messages:
+
+    "ceph:  queue_cap_snap 00000000a42b796b nothing dirty|writing"
+
+Fix the logic to avoid this situation.
+
+Also, the 'invalidate' word is not precise here. In actuality, it will
+cause a rebuild of the existing snapshot contexts or just build
+non-existent ones. Rename it to 'rebuild_snapcs'.
+
+URL: https://tracker.ceph.com/issues/44100
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 51884d153f7e ("ceph: avoid putting the realm twice when decoding snaps fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/ms5611.h      | 12 +++----
- drivers/iio/pressure/ms5611_core.c | 51 ++++++++++++++++--------------
- 2 files changed, 31 insertions(+), 32 deletions(-)
+ fs/ceph/snap.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/iio/pressure/ms5611.h b/drivers/iio/pressure/ms5611.h
-index 345f3902e3e3..5e2d2d4d87b5 100644
---- a/drivers/iio/pressure/ms5611.h
-+++ b/drivers/iio/pressure/ms5611.h
-@@ -25,13 +25,6 @@ enum {
- 	MS5607,
- };
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index 0369f672a76f..e779f0e2bdb8 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -699,7 +699,8 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	__le64 *prior_parent_snaps;        /* encoded */
+ 	struct ceph_snap_realm *realm = NULL;
+ 	struct ceph_snap_realm *first_realm = NULL;
+-	int invalidate = 0;
++	struct ceph_snap_realm *realm_to_rebuild = NULL;
++	int rebuild_snapcs;
+ 	int err = -ENOMEM;
+ 	LIST_HEAD(dirty_realms);
  
--struct ms5611_chip_info {
--	u16 prom[MS5611_PROM_WORDS_NB];
--
--	int (*temp_and_pressure_compensate)(struct ms5611_chip_info *chip_info,
--					    s32 *temp, s32 *pressure);
--};
--
- /*
-  * OverSampling Rate descriptor.
-  * Warning: cmd MUST be kept aligned on a word boundary (see
-@@ -50,12 +43,15 @@ struct ms5611_state {
- 	const struct ms5611_osr *pressure_osr;
- 	const struct ms5611_osr *temp_osr;
+@@ -707,6 +708,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
  
-+	u16 prom[MS5611_PROM_WORDS_NB];
-+
- 	int (*reset)(struct ms5611_state *st);
- 	int (*read_prom_word)(struct ms5611_state *st, int index, u16 *word);
- 	int (*read_adc_temp_and_pressure)(struct ms5611_state *st,
- 					  s32 *temp, s32 *pressure);
+ 	dout("update_snap_trace deletion=%d\n", deletion);
+ more:
++	rebuild_snapcs = 0;
+ 	ceph_decode_need(&p, e, sizeof(*ri), bad);
+ 	ri = p;
+ 	p += sizeof(*ri);
+@@ -730,7 +732,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	err = adjust_snap_realm_parent(mdsc, realm, le64_to_cpu(ri->parent));
+ 	if (err < 0)
+ 		goto fail;
+-	invalidate += err;
++	rebuild_snapcs += err;
  
--	struct ms5611_chip_info *chip_info;
-+	int (*compensate_temp_and_pressure)(struct ms5611_state *st, s32 *temp,
-+					  s32 *pressure);
- 	struct regulator *vdd;
- };
+ 	if (le64_to_cpu(ri->seq) > realm->seq) {
+ 		dout("update_snap_trace updating %llx %p %lld -> %lld\n",
+@@ -755,22 +757,30 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 		if (realm->seq > mdsc->last_snap_seq)
+ 			mdsc->last_snap_seq = realm->seq;
  
-diff --git a/drivers/iio/pressure/ms5611_core.c b/drivers/iio/pressure/ms5611_core.c
-index 885ccb7914dc..874a73b3ea9d 100644
---- a/drivers/iio/pressure/ms5611_core.c
-+++ b/drivers/iio/pressure/ms5611_core.c
-@@ -85,7 +85,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
- 	struct ms5611_state *st = iio_priv(indio_dev);
- 
- 	for (i = 0; i < MS5611_PROM_WORDS_NB; i++) {
--		ret = st->read_prom_word(st, i, &st->chip_info->prom[i]);
-+		ret = st->read_prom_word(st, i, &st->prom[i]);
- 		if (ret < 0) {
- 			dev_err(&indio_dev->dev,
- 				"failed to read prom at %d\n", i);
-@@ -93,7 +93,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
- 		}
+-		invalidate = 1;
++		rebuild_snapcs = 1;
+ 	} else if (!realm->cached_context) {
+ 		dout("update_snap_trace %llx %p seq %lld new\n",
+ 		     realm->ino, realm, realm->seq);
+-		invalidate = 1;
++		rebuild_snapcs = 1;
+ 	} else {
+ 		dout("update_snap_trace %llx %p seq %lld unchanged\n",
+ 		     realm->ino, realm, realm->seq);
  	}
  
--	if (!ms5611_prom_is_valid(st->chip_info->prom, MS5611_PROM_WORDS_NB)) {
-+	if (!ms5611_prom_is_valid(st->prom, MS5611_PROM_WORDS_NB)) {
- 		dev_err(&indio_dev->dev, "PROM integrity check failed\n");
- 		return -ENODEV;
- 	}
-@@ -114,21 +114,20 @@ static int ms5611_read_temp_and_pressure(struct iio_dev *indio_dev,
- 		return ret;
- 	}
+-	dout("done with %llx %p, invalidated=%d, %p %p\n", realm->ino,
+-	     realm, invalidate, p, e);
++	dout("done with %llx %p, rebuild_snapcs=%d, %p %p\n", realm->ino,
++	     realm, rebuild_snapcs, p, e);
  
--	return st->chip_info->temp_and_pressure_compensate(st->chip_info,
--							   temp, pressure);
-+	return st->compensate_temp_and_pressure(st, temp, pressure);
- }
- 
--static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
-+static int ms5611_temp_and_pressure_compensate(struct ms5611_state *st,
- 					       s32 *temp, s32 *pressure)
- {
- 	s32 t = *temp, p = *pressure;
- 	s64 off, sens, dt;
- 
--	dt = t - (chip_info->prom[5] << 8);
--	off = ((s64)chip_info->prom[2] << 16) + ((chip_info->prom[4] * dt) >> 7);
--	sens = ((s64)chip_info->prom[1] << 15) + ((chip_info->prom[3] * dt) >> 8);
-+	dt = t - (st->prom[5] << 8);
-+	off = ((s64)st->prom[2] << 16) + ((st->prom[4] * dt) >> 7);
-+	sens = ((s64)st->prom[1] << 15) + ((st->prom[3] * dt) >> 8);
- 
--	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
-+	t = 2000 + ((st->prom[6] * dt) >> 23);
- 	if (t < 2000) {
- 		s64 off2, sens2, t2;
- 
-@@ -154,17 +153,17 @@ static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_inf
- 	return 0;
- }
- 
--static int ms5607_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
-+static int ms5607_temp_and_pressure_compensate(struct ms5611_state *st,
- 					       s32 *temp, s32 *pressure)
- {
- 	s32 t = *temp, p = *pressure;
- 	s64 off, sens, dt;
- 
--	dt = t - (chip_info->prom[5] << 8);
--	off = ((s64)chip_info->prom[2] << 17) + ((chip_info->prom[4] * dt) >> 6);
--	sens = ((s64)chip_info->prom[1] << 16) + ((chip_info->prom[3] * dt) >> 7);
-+	dt = t - (st->prom[5] << 8);
-+	off = ((s64)st->prom[2] << 17) + ((st->prom[4] * dt) >> 6);
-+	sens = ((s64)st->prom[1] << 16) + ((st->prom[3] * dt) >> 7);
- 
--	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
-+	t = 2000 + ((st->prom[6] * dt) >> 23);
- 	if (t < 2000) {
- 		s64 off2, sens2, t2, tmp;
- 
-@@ -342,15 +341,6 @@ static int ms5611_write_raw(struct iio_dev *indio_dev,
- 
- static const unsigned long ms5611_scan_masks[] = {0x3, 0};
- 
--static struct ms5611_chip_info chip_info_tbl[] = {
--	[MS5611] = {
--		.temp_and_pressure_compensate = ms5611_temp_and_pressure_compensate,
--	},
--	[MS5607] = {
--		.temp_and_pressure_compensate = ms5607_temp_and_pressure_compensate,
--	}
--};
--
- static const struct iio_chan_spec ms5611_channels[] = {
- 	{
- 		.type = IIO_PRESSURE,
-@@ -433,7 +423,20 @@ int ms5611_probe(struct iio_dev *indio_dev, struct device *dev,
- 	struct ms5611_state *st = iio_priv(indio_dev);
- 
- 	mutex_init(&st->lock);
--	st->chip_info = &chip_info_tbl[type];
+-	/* invalidate when we reach the _end_ (root) of the trace */
+-	if (invalidate && p >= e)
+-		rebuild_snap_realms(realm, &dirty_realms);
++	/*
++	 * this will always track the uppest parent realm from which
++	 * we need to rebuild the snapshot contexts _downward_ in
++	 * hierarchy.
++	 */
++	if (rebuild_snapcs)
++		realm_to_rebuild = realm;
 +
-+	switch (type) {
-+	case MS5611:
-+		st->compensate_temp_and_pressure =
-+			ms5611_temp_and_pressure_compensate;
-+		break;
-+	case MS5607:
-+		st->compensate_temp_and_pressure =
-+			ms5607_temp_and_pressure_compensate;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
- 	st->temp_osr =
- 		&ms5611_avail_temp_osr[ARRAY_SIZE(ms5611_avail_temp_osr) - 1];
- 	st->pressure_osr =
++	/* rebuild_snapcs when we reach the _end_ (root) of the trace */
++	if (realm_to_rebuild && p >= e)
++		rebuild_snap_realms(realm_to_rebuild, &dirty_realms);
+ 
+ 	if (!first_realm)
+ 		first_realm = realm;
 -- 
 2.35.1
 
