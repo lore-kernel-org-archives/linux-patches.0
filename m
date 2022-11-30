@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BEF6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:24:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3B4C433D6;
-	Wed, 30 Nov 2022 18:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244A76FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F03C433D6;
+	Wed, 30 Nov 2022 18:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832696;
-	bh=9QPTpe3O4Wdgo90IBeO2bl3KONhzK17Ryo0NBFw1d58=;
+	s=korg; t=1669832700;
+	bh=/LU7KhhLGCBwYlV1athXwzYO16Y9i5WAWlBi4A+vZns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3jcYPuRebN7w4E62Ir/2PeLUK7D6JL199APibzGCW6LkdLjjY7HWsD3ll8KB56uR
-	 iqvaUeVCH7HZu9ad4Eip2p38weqxIL+UeSd+G7Bmy2DOOhqI0qLkc3kkHHswv7mZCe
-	 aoJONQe9O1UFJrIuycsRjPf+SAxDkLuCqb/vQciA=
+	b=TBd1H3ckmuKekghkCS1eC6TnvRvyt4Ss/r5+4ajt1u2/XWdYtbt/HLeENsGk7cs8c
+	 5H82mwsVNjjExoNpAyrHr/pbVUOAX5VuhN6wGrrNcPdtWyUdkYTi/rpHvy5xo1SjOc
+	 Swh6M57S/RQPl1efjQBi5/4VcaheCTvfXMbvmEwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wenchao Hao <haowenchao@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/162] scsi: scsi_transport_sas: Fix error handling in sas_phy_add()
-Date: Wed, 30 Nov 2022 19:21:22 +0100
-Message-Id: <20221130180528.511582916@linuxfoundation.org>
+Subject: [PATCH 5.10 002/162] ata: libata-scsi: simplify __ata_scsi_queuecmd()
+Date: Wed, 30 Nov 2022 19:21:23 +0100
+Message-Id: <20221130180528.539515175@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,75 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wenchao Hao <haowenchao@huawei.com>
 
-[ Upstream commit 5d7bebf2dfb0dc97aac1fbace0910e557ecdb16f ]
+[ Upstream commit 84eac327af543f03172085d5ef9f98ea25a51191 ]
 
-If transport_add_device() fails in sas_phy_add(), the kernel will crash
-trying to delete the device in transport_remove_device() called from
-sas_remove_host().
+This patch cleans up the code of __ata_scsi_queuecmd(). Since each
+branch of the "if" condition check that scmd->cmd_len is not zero, move
+this check out of the "if" to simplify the conditions being checked in
+the "else" branch.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 61 PID: 42829 Comm: rmmod Kdump: loaded Tainted: G        W          6.1.0-rc1+ #173
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_phy_delete+0x30/0x60 [scsi_transport_sas]
- do_sas_phy_delete+0x6c/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x40/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- hisi_sas_remove+0x40/0x68 [hisi_sas_main]
- hisi_sas_v2_remove+0x20/0x30 [hisi_sas_v2_hw]
- platform_remove+0x2c/0x60
+While at it, avoid the if-else-if-else structure using if-else if
+structure and remove the redundant rc local variable.
 
-Fix this by checking and handling return value of transport_add_device()
-in sas_phy_add().
+This patch does not change the function logic.
 
-Fixes: c7ebbbce366c ("[SCSI] SAS transport class")
-Suggested-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221107124828.115557-1-yangyingliang@huawei.com
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Stable-dep-of: e20e81a24a4d ("ata: libata-core: do not issue non-internal commands once EH is pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_sas.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/ata/libata-scsi.c | 45 ++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 4a96fb05731d..c6256fdc24b1 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -716,12 +716,17 @@ int sas_phy_add(struct sas_phy *phy)
- 	int error;
- 
- 	error = device_add(&phy->dev);
--	if (!error) {
--		transport_add_device(&phy->dev);
--		transport_configure_device(&phy->dev);
-+	if (error)
-+		return error;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 459ece666c62..70744439359d 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4034,42 +4034,39 @@ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
+ {
+ 	u8 scsi_op = scmd->cmnd[0];
+ 	ata_xlat_func_t xlat_func;
+-	int rc = 0;
 +
-+	error = transport_add_device(&phy->dev);
-+	if (error) {
-+		device_del(&phy->dev);
-+		return error;
++	if (unlikely(!scmd->cmd_len))
++		goto bad_cdb_len;
+ 
+ 	if (dev->class == ATA_DEV_ATA || dev->class == ATA_DEV_ZAC) {
+-		if (unlikely(!scmd->cmd_len || scmd->cmd_len > dev->cdb_len))
++		if (unlikely(scmd->cmd_len > dev->cdb_len))
+ 			goto bad_cdb_len;
+ 
+ 		xlat_func = ata_get_xlat_func(dev, scsi_op);
+-	} else {
+-		if (unlikely(!scmd->cmd_len))
+-			goto bad_cdb_len;
++	} else if (likely((scsi_op != ATA_16) || !atapi_passthru16)) {
++		/* relay SCSI command to ATAPI device */
++		int len = COMMAND_SIZE(scsi_op);
+ 
+-		xlat_func = NULL;
+-		if (likely((scsi_op != ATA_16) || !atapi_passthru16)) {
+-			/* relay SCSI command to ATAPI device */
+-			int len = COMMAND_SIZE(scsi_op);
+-			if (unlikely(len > scmd->cmd_len ||
+-				     len > dev->cdb_len ||
+-				     scmd->cmd_len > ATAPI_CDB_LEN))
+-				goto bad_cdb_len;
++		if (unlikely(len > scmd->cmd_len ||
++			     len > dev->cdb_len ||
++			     scmd->cmd_len > ATAPI_CDB_LEN))
++			goto bad_cdb_len;
+ 
+-			xlat_func = atapi_xlat;
+-		} else {
+-			/* ATA_16 passthru, treat as an ATA command */
+-			if (unlikely(scmd->cmd_len > 16))
+-				goto bad_cdb_len;
++		xlat_func = atapi_xlat;
++	} else {
++		/* ATA_16 passthru, treat as an ATA command */
++		if (unlikely(scmd->cmd_len > 16))
++			goto bad_cdb_len;
+ 
+-			xlat_func = ata_get_xlat_func(dev, scsi_op);
+-		}
++		xlat_func = ata_get_xlat_func(dev, scsi_op);
  	}
-+	transport_configure_device(&phy->dev);
  
--	return error;
+ 	if (xlat_func)
+-		rc = ata_scsi_translate(dev, scmd, xlat_func);
+-	else
+-		ata_scsi_simulate(dev, scmd);
++		return ata_scsi_translate(dev, scmd, xlat_func);
+ 
+-	return rc;
++	ata_scsi_simulate(dev, scmd);
++
 +	return 0;
- }
- EXPORT_SYMBOL(sas_phy_add);
  
+  bad_cdb_len:
+ 	DPRINTK("bad CDB len=%u, scsi_op=0x%02x, max=%u\n",
 -- 
 2.35.1
 
