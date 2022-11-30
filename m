@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497D4C433C1;
-	Wed, 30 Nov 2022 18:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BA179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DD1C433C1;
+	Wed, 30 Nov 2022 18:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833568;
-	bh=BtqEnEqpe17lsYSv4xP7wVnbYXa/vNShkM9fP1IuSsc=;
+	s=korg; t=1669833571;
+	bh=HsLGXRRJQ/APUtlGd+ovyydURbfrIHWxOV9hO6z8EaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxeGpf08Vg270v94DZP27JRl87bIrIeZR0AnGirdz91RnHFSAj/wqcQ8owiuxZN7D
-	 UWbBwc9ITpOiwwYR8Na++li0ZMs2auHqFAcuejV9zESf5t/hJ2Iockakt2qaZnvhdS
-	 MDELEB5TdehkTPA+8gYVEt2S9XpPMbipSlEqQhf8=
+	b=Y5GCJAThSuBlwzhvmy4waToo/nZZGavZEVRlM2HwadWven42UTd3WkWHvvXI4Vaaj
+	 4ZOhLHZJ5KVLScKEw45va3k+byrf1VN2uRwTlVLIItROdsUy55WSAv+YUZJ5lgOmDe
+	 deCqjBAfFiU7vfhnluJnUnV1b7muDFPD6+4q8ydU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/206] nios2: add FORCE for vmlinuz.gz
-Date: Wed, 30 Nov 2022 19:23:08 +0100
-Message-Id: <20221130180536.501036085@linuxfoundation.org>
+	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.15 145/206] arm64: dts: rockchip: lower rk3399-puma-haikou SD controller clock frequency
+Date: Wed, 30 Nov 2022 19:23:17 +0100
+Message-Id: <20221130180536.727390264@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,37 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
 
-[ Upstream commit 869e4ae4cd2a23d625aaa14ae62dbebf768cb77d ]
+commit 91e8b74fe6381e083f8aa55217bb0562785ab398 upstream.
 
-Add FORCE to placate a warning from make:
+CRC errors (code -84 EILSEQ) have been observed for some SanDisk
+Ultra A1 cards when running at 50MHz.
 
-arch/nios2/boot/Makefile:24: FORCE prerequisite is missing
+Waveform analysis suggest that the level shifters that are used on the
+RK3399-Q7 module for voltage translation between 3.0 and 3.3V don't
+handle clock rates at or above 48MHz properly. Back off to 40MHz for
+some safety margin.
 
-Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
+Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/nios2/boot/Makefile | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/nios2/boot/Makefile b/arch/nios2/boot/Makefile
-index 37dfc7e584bc..0b704c1f379f 100644
---- a/arch/nios2/boot/Makefile
-+++ b/arch/nios2/boot/Makefile
-@@ -20,7 +20,7 @@ $(obj)/vmlinux.bin: vmlinux FORCE
- $(obj)/vmlinux.gz: $(obj)/vmlinux.bin FORCE
- 	$(call if_changed,gzip)
- 
--$(obj)/vmImage: $(obj)/vmlinux.gz
-+$(obj)/vmImage: $(obj)/vmlinux.gz FORCE
- 	$(call if_changed,uimage)
- 	@$(kecho) 'Kernel: $@ is ready'
- 
--- 
-2.35.1
-
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+@@ -207,7 +207,7 @@
+ 	cap-sd-highspeed;
+ 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+-	max-frequency = <150000000>;
++	max-frequency = <40000000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
+ 	vmmc-supply = <&vcc3v3_baseboard>;
 
 
