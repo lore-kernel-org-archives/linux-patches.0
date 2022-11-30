@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09FE79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D43C433D6;
-	Wed, 30 Nov 2022 18:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71A879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE54C433D6;
+	Wed, 30 Nov 2022 18:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833954;
-	bh=XcSzRWqW0B4aUdTFiS3pjydaXAg11V6kt3WtwX4EGd0=;
+	s=korg; t=1669833957;
+	bh=1hxq+5procx+PKPqz24ogZFnK68ScjqL0nen4a7xnjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RASvFSuKUQa4o328h0n/Q+lzFBAi0Pj+nfZlrte+O2gdrdJH9s609eZ+rwPU4bN3E
-	 dg8Sb0UkdHkrgRCWTlg4x4bN24VAmnBiEj1dwMm79MyrDTaRO9FjdXE+6CeGNpJDdh
-	 3IoR8C/9HYqLI410txpTLpj/qt8CpBQpfYGaXW5g=
+	b=b1U0ZpTutHMo7gqXhyBgO7QjNYbyUBkI+XKYcVr+KUskyvAHEFlA526DzP1nArF/s
+	 DVsjMdbxf78QZOVzqPRZ6zxW/dPARXdd/gKjdRNe4JQx5Ta5UKcgrK2yBct4jQNY9D
+	 9UHkpk5B92fDDl9R/i8l5mnTIWViNsCpQKGFCD6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zeitlhofer <thomas.zeitlhofer+lkml@ze-it.at>,
+	Mahesh Bandewar <maheshb@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 075/289] net: neigh: decrement the family specific qlen
-Date: Wed, 30 Nov 2022 19:21:00 +0100
-Message-Id: <20221130180545.841413547@linuxfoundation.org>
+Subject: [PATCH 6.0 076/289] ipvlan: hold lower dev to avoid possible use-after-free
+Date: Wed, 30 Nov 2022 19:21:01 +0100
+Message-Id: <20221130180545.864186535@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,169 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Zeitlhofer <thomas.zeitlhofer+lkml@ze-it.at>
+From: Mahesh Bandewar <maheshb@google.com>
 
-[ Upstream commit 8207f253a097fe15c93d85ac15ebb73c5e39e1e1 ]
+[ Upstream commit 40b9d1ab63f5c4f3cb69450044d07b45e5af72e1 ]
 
-Commit 0ff4eb3d5ebb ("neighbour: make proxy_queue.qlen limit
-per-device") introduced the length counter qlen in struct neigh_parms.
-There are separate neigh_parms instances for IPv4/ARP and IPv6/ND, and
-while the family specific qlen is incremented in pneigh_enqueue(), the
-mentioned commit decrements always the IPv4/ARP specific qlen,
-regardless of the currently processed family, in pneigh_queue_purge()
-and neigh_proxy_process().
+Recently syzkaller discovered the issue of disappearing lower
+device (NETDEV_UNREGISTER) while the virtual device (like
+macvlan) is still having it as a lower device. So it's just
+a matter of time similar discovery will be made for IPvlan
+device setup. So fixing it preemptively. Also while at it,
+add a refcount tracker.
 
-As a result, with IPv6/ND, the family specific qlen is only incremented
-(and never decremented) until it exceeds PROXY_QLEN, and then, according
-to the check in pneigh_enqueue(), neighbor solicitations are not
-answered anymore. As an example, this is noted when using the
-subnet-router anycast address to access a Linux router. After a certain
-amount of time (in the observed case, qlen exceeded PROXY_QLEN after two
-days), the Linux router stops answering neighbor solicitations for its
-subnet-router anycast address and effectively becomes unreachable.
-
-Another result with IPv6/ND is that the IPv4/ARP specific qlen is
-decremented more often than incremented. This leads to negative qlen
-values, as a signed integer has been used for the length counter qlen,
-and potentially to an integer overflow.
-
-Fix this by introducing the helper function neigh_parms_qlen_dec(),
-which decrements the family specific qlen. Thereby, make use of the
-existing helper function neigh_get_dev_parms_rcu(), whose definition
-therefore needs to be placed earlier in neighbour.c. Take the family
-member from struct neigh_table to determine the currently processed
-family and appropriately call neigh_parms_qlen_dec() from
-pneigh_queue_purge() and neigh_proxy_process().
-
-Additionally, use an unsigned integer for the length counter qlen.
-
-Fixes: 0ff4eb3d5ebb ("neighbour: make proxy_queue.qlen limit per-device")
-Signed-off-by: Thomas Zeitlhofer <thomas.zeitlhofer+lkml@ze-it.at>
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Signed-off-by: Mahesh Bandewar <maheshb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/neighbour.h |  2 +-
- net/core/neighbour.c    | 58 +++++++++++++++++++++--------------------
- 2 files changed, 31 insertions(+), 29 deletions(-)
+ drivers/net/ipvlan/ipvlan.h      | 1 +
+ drivers/net/ipvlan/ipvlan_main.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/include/net/neighbour.h b/include/net/neighbour.h
-index 3827a6b395fd..bce6b228cf56 100644
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -83,7 +83,7 @@ struct neigh_parms {
- 	struct rcu_head rcu_head;
- 
- 	int	reachable_time;
--	int	qlen;
-+	u32	qlen;
- 	int	data[NEIGH_VAR_DATA_MAX];
- 	DECLARE_BITMAP(data_state, NEIGH_VAR_DATA_MAX);
+diff --git a/drivers/net/ipvlan/ipvlan.h b/drivers/net/ipvlan/ipvlan.h
+index de94921cbef9..025e0c19ec25 100644
+--- a/drivers/net/ipvlan/ipvlan.h
++++ b/drivers/net/ipvlan/ipvlan.h
+@@ -98,6 +98,7 @@ struct ipvl_port {
+ 	struct sk_buff_head	backlog;
+ 	int			count;
+ 	struct ida		ida;
++	netdevice_tracker	dev_tracker;
  };
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 84755db81e9d..35f5a3125808 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -307,7 +307,31 @@ static int neigh_del_timer(struct neighbour *n)
+ 
+ struct ipvl_skb_cb {
+diff --git a/drivers/net/ipvlan/ipvlan_main.c b/drivers/net/ipvlan/ipvlan_main.c
+index 49ba8a50dfb1..9043bcd1b41d 100644
+--- a/drivers/net/ipvlan/ipvlan_main.c
++++ b/drivers/net/ipvlan/ipvlan_main.c
+@@ -83,6 +83,7 @@ static int ipvlan_port_create(struct net_device *dev)
+ 	if (err)
+ 		goto err;
+ 
++	netdev_hold(dev, &port->dev_tracker, GFP_KERNEL);
  	return 0;
- }
  
--static void pneigh_queue_purge(struct sk_buff_head *list, struct net *net)
-+static struct neigh_parms *neigh_get_dev_parms_rcu(struct net_device *dev,
-+						   int family)
-+{
-+	switch (family) {
-+	case AF_INET:
-+		return __in_dev_arp_parms_get_rcu(dev);
-+	case AF_INET6:
-+		return __in6_dev_nd_parms_get_rcu(dev);
-+	}
-+	return NULL;
-+}
-+
-+static void neigh_parms_qlen_dec(struct net_device *dev, int family)
-+{
-+	struct neigh_parms *p;
-+
-+	rcu_read_lock();
-+	p = neigh_get_dev_parms_rcu(dev, family);
-+	if (p)
-+		p->qlen--;
-+	rcu_read_unlock();
-+}
-+
-+static void pneigh_queue_purge(struct sk_buff_head *list, struct net *net,
-+			       int family)
- {
- 	struct sk_buff_head tmp;
- 	unsigned long flags;
-@@ -321,13 +345,7 @@ static void pneigh_queue_purge(struct sk_buff_head *list, struct net *net)
- 		struct net_device *dev = skb->dev;
+ err:
+@@ -95,6 +96,7 @@ static void ipvlan_port_destroy(struct net_device *dev)
+ 	struct ipvl_port *port = ipvlan_port_get_rtnl(dev);
+ 	struct sk_buff *skb;
  
- 		if (net == NULL || net_eq(dev_net(dev), net)) {
--			struct in_device *in_dev;
--
--			rcu_read_lock();
--			in_dev = __in_dev_get_rcu(dev);
--			if (in_dev)
--				in_dev->arp_parms->qlen--;
--			rcu_read_unlock();
-+			neigh_parms_qlen_dec(dev, family);
- 			__skb_unlink(skb, list);
- 			__skb_queue_tail(&tmp, skb);
- 		}
-@@ -409,7 +427,8 @@ static int __neigh_ifdown(struct neigh_table *tbl, struct net_device *dev,
- 	write_lock_bh(&tbl->lock);
- 	neigh_flush_dev(tbl, dev, skip_perm);
- 	pneigh_ifdown_and_unlock(tbl, dev);
--	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL);
-+	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL,
-+			   tbl->family);
- 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
- 		del_timer_sync(&tbl->proxy_timer);
- 	return 0;
-@@ -1621,13 +1640,8 @@ static void neigh_proxy_process(struct timer_list *t)
- 
- 		if (tdif <= 0) {
- 			struct net_device *dev = skb->dev;
--			struct in_device *in_dev;
- 
--			rcu_read_lock();
--			in_dev = __in_dev_get_rcu(dev);
--			if (in_dev)
--				in_dev->arp_parms->qlen--;
--			rcu_read_unlock();
-+			neigh_parms_qlen_dec(dev, tbl->family);
- 			__skb_unlink(skb, &tbl->proxy_queue);
- 
- 			if (tbl->proxy_redo && netif_running(dev)) {
-@@ -1821,7 +1835,7 @@ int neigh_table_clear(int index, struct neigh_table *tbl)
- 	cancel_delayed_work_sync(&tbl->managed_work);
- 	cancel_delayed_work_sync(&tbl->gc_work);
- 	del_timer_sync(&tbl->proxy_timer);
--	pneigh_queue_purge(&tbl->proxy_queue, NULL);
-+	pneigh_queue_purge(&tbl->proxy_queue, NULL, tbl->family);
- 	neigh_ifdown(tbl, NULL);
- 	if (atomic_read(&tbl->entries))
- 		pr_crit("neighbour leakage\n");
-@@ -3542,18 +3556,6 @@ static int proc_unres_qlen(struct ctl_table *ctl, int write,
- 	return ret;
- }
- 
--static struct neigh_parms *neigh_get_dev_parms_rcu(struct net_device *dev,
--						   int family)
--{
--	switch (family) {
--	case AF_INET:
--		return __in_dev_arp_parms_get_rcu(dev);
--	case AF_INET6:
--		return __in6_dev_nd_parms_get_rcu(dev);
--	}
--	return NULL;
--}
--
- static void neigh_copy_dflt_parms(struct net *net, struct neigh_parms *p,
- 				  int index)
- {
++	netdev_put(dev, &port->dev_tracker);
+ 	if (port->mode == IPVLAN_MODE_L3S)
+ 		ipvlan_l3s_unregister(port);
+ 	netdev_rx_handler_unregister(dev);
 -- 
 2.35.1
 
