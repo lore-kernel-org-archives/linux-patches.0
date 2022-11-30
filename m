@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48F79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EA4C433C1;
-	Wed, 30 Nov 2022 18:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F8279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F01C433C1;
+	Wed, 30 Nov 2022 18:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833435;
-	bh=qTeA3oofInzsCnXMSbUnfXbnJ++E2L1je2Cb98SZBeM=;
+	s=korg; t=1669833438;
+	bh=ySM7WMAUi+iHkTm/tXD90O6rNr2qYnNWawf/pNYiTtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hx3uC35OONeMX9twIi0+UPPfEIme8Tva78QsWhsMBiARx4HAl6TbOSPdSF/B2cuk+
-	 7ytgRpVaG2LslsEpXezZGQc3pETEVF5JT26S84fa8GHJGS67COOiUiG3x8kEMebL2M
-	 KO92xYN7LYlSzvPC1qjZm4gZ4WYVQYQXdzaBsDrg=
+	b=KfaPgVBQeT9jrP2xHuhXqjIfnMX8j3wkALhtODopVp3q5avgcmqdoNjIluHKw5jVh
+	 9O1n40Y4/iI2gBEjj10KMRqqph5hwNkKH+a+MRALnTY71lYEHHZ08NQHvXhbe/yuL+
+	 c3C/TpxHODGbmssl3CjxtvPXXtCtmVP4aZVdMPZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/206] tipc: set con sock in tipc_conn_alloc
-Date: Wed, 30 Nov 2022 19:22:36 +0100
-Message-Id: <20221130180535.692176705@linuxfoundation.org>
+Subject: [PATCH 5.15 078/206] net: dsa: sja1105: disallow C45 transactions on the BASE-TX MDIO bus
+Date: Wed, 30 Nov 2022 19:22:10 +0100
+Message-Id: <20221130180534.982500311@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,104 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0e5d56c64afcd6fd2d132ea972605b66f8a7d3c4 ]
+[ Upstream commit 24deec6b9e4a051635f75777844ffc184644fec9 ]
 
-A crash was reported by Wei Chen:
+You'd think people know that the internal 100BASE-TX PHY on the SJA1110
+responds only to clause 22 MDIO transactions, but they don't :)
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-  RIP: 0010:tipc_conn_close+0x12/0x100
-  Call Trace:
-   tipc_topsrv_exit_net+0x139/0x320
-   ops_exit_list.isra.9+0x49/0x80
-   cleanup_net+0x31a/0x540
-   process_one_work+0x3fa/0x9f0
-   worker_thread+0x42/0x5c0
+When a clause 45 transaction is attempted, sja1105_base_tx_mdio_read()
+and sja1105_base_tx_mdio_write() don't expect "reg" to contain bit 30
+set (MII_ADDR_C45) and pack this value into the SPI transaction buffer.
 
-It was caused by !con->sock in tipc_conn_close(). In tipc_topsrv_accept(),
-con is allocated in conn_idr then its sock is set:
+But the field in the SPI buffer has a width smaller than 30 bits, so we
+see this confusing message from the packing() API rather than a proper
+rejection of C45 transactions:
 
-  con = tipc_conn_alloc();
-  ...                    <----[1]
-  con->sock = newsock;
+Call trace:
+ dump_stack+0x1c/0x38
+ sja1105_pack+0xbc/0xc0 [sja1105]
+ sja1105_xfer+0x114/0x2b0 [sja1105]
+ sja1105_xfer_u32+0x44/0xf4 [sja1105]
+ sja1105_base_tx_mdio_read+0x44/0x7c [sja1105]
+ mdiobus_read+0x44/0x80
+ get_phy_c45_ids+0x70/0x234
+ get_phy_device+0x68/0x15c
+ fwnode_mdiobus_register_phy+0x74/0x240
+ of_mdiobus_register+0x13c/0x380
+ sja1105_mdiobus_register+0x368/0x490 [sja1105]
+ sja1105_setup+0x94/0x119c [sja1105]
+Cannot store 401d2405 inside bits 24-4 (would truncate)
 
-If tipc_conn_close() is called in anytime of [1], the null-pointer-def
-is triggered by con->sock->sk due to con->sock is not yet set.
-
-This patch fixes it by moving the con->sock setting to tipc_conn_alloc()
-under s->idr_lock. So that con->sock can never be NULL when getting the
-con from s->conn_idr. It will be also safer to move con->server and flag
-CF_CONNECTED setting under s->idr_lock, as they should all be set before
-tipc_conn_alloc() is called.
-
-Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5a8f09748ee7 ("net: dsa: sja1105: register the MDIO buses for 100base-T1 and 100base-TX")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/topsrv.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_mdio.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
-index d92ec92f0b71..b0f9aa521670 100644
---- a/net/tipc/topsrv.c
-+++ b/net/tipc/topsrv.c
-@@ -176,7 +176,7 @@ static void tipc_conn_close(struct tipc_conn *con)
- 	conn_put(con);
+diff --git a/drivers/net/dsa/sja1105/sja1105_mdio.c b/drivers/net/dsa/sja1105/sja1105_mdio.c
+index 215dd17ca790..4059fcc8c832 100644
+--- a/drivers/net/dsa/sja1105/sja1105_mdio.c
++++ b/drivers/net/dsa/sja1105/sja1105_mdio.c
+@@ -256,6 +256,9 @@ static int sja1105_base_tx_mdio_read(struct mii_bus *bus, int phy, int reg)
+ 	u32 tmp;
+ 	int rc;
+ 
++	if (reg & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
+ 	rc = sja1105_xfer_u32(priv, SPI_READ, regs->mdio_100base_tx + reg,
+ 			      &tmp, NULL);
+ 	if (rc < 0)
+@@ -272,6 +275,9 @@ static int sja1105_base_tx_mdio_write(struct mii_bus *bus, int phy, int reg,
+ 	const struct sja1105_regs *regs = priv->info->regs;
+ 	u32 tmp = val;
+ 
++	if (reg & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
+ 	return sja1105_xfer_u32(priv, SPI_WRITE, regs->mdio_100base_tx + reg,
+ 				&tmp, NULL);
  }
- 
--static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s)
-+static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s, struct socket *sock)
- {
- 	struct tipc_conn *con;
- 	int ret;
-@@ -202,10 +202,11 @@ static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s)
- 	}
- 	con->conid = ret;
- 	s->idr_in_use++;
--	spin_unlock_bh(&s->idr_lock);
- 
- 	set_bit(CF_CONNECTED, &con->flags);
- 	con->server = s;
-+	con->sock = sock;
-+	spin_unlock_bh(&s->idr_lock);
- 
- 	return con;
- }
-@@ -467,7 +468,7 @@ static void tipc_topsrv_accept(struct work_struct *work)
- 		ret = kernel_accept(lsock, &newsock, O_NONBLOCK);
- 		if (ret < 0)
- 			return;
--		con = tipc_conn_alloc(srv);
-+		con = tipc_conn_alloc(srv, newsock);
- 		if (IS_ERR(con)) {
- 			ret = PTR_ERR(con);
- 			sock_release(newsock);
-@@ -479,7 +480,6 @@ static void tipc_topsrv_accept(struct work_struct *work)
- 		newsk->sk_data_ready = tipc_conn_data_ready;
- 		newsk->sk_write_space = tipc_conn_write_space;
- 		newsk->sk_user_data = con;
--		con->sock = newsock;
- 		write_unlock_bh(&newsk->sk_callback_lock);
- 
- 		/* Wake up receive process in case of 'SYN+' message */
-@@ -577,12 +577,11 @@ bool tipc_topsrv_kern_subscr(struct net *net, u32 port, u32 type, u32 lower,
- 	sub.filter = filter;
- 	*(u64 *)&sub.usr_handle = (u64)port;
- 
--	con = tipc_conn_alloc(tipc_topsrv(net));
-+	con = tipc_conn_alloc(tipc_topsrv(net), NULL);
- 	if (IS_ERR(con))
- 		return false;
- 
- 	*conid = con->conid;
--	con->sock = NULL;
- 	rc = tipc_conn_rcv_sub(tipc_topsrv(net), con, &sub);
- 	if (rc >= 0)
- 		return true;
 -- 
 2.35.1
 
