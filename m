@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753146FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D68C433C1;
-	Wed, 30 Nov 2022 18:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2839E6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E20AC433D6;
+	Wed, 30 Nov 2022 18:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832726;
-	bh=62Fqnu0SpwoA4vK91A3SZ3ETuJz1j4DVnrjfKEssupE=;
+	s=korg; t=1669832729;
+	bh=hfMegzL/zjsoVf6PqGS/2uoBSVp/9SGCkpzQUO1mGLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TkODjCpudfDhF+W3v5wVNN0s2cMZERDF3zqrCCpxNTimPBGEP0hLDKiefO70fms5O
-	 8oqSVh8EAO+GboYd+i1fGbGpUPeprUaZ/RrPjUI6B5ZHj6NdOvQvk4ZoBk/M7HaefE
-	 gUibNnexdysWD8LY3He/l0B0I6hd6ROB72zgwjjc=
+	b=yS00MIbQcnYpep0pFquMvFKTxFsgd6mffdgJmaJOp1+Yxn7iGrQ3Z6H71jwOFb/kK
+	 CX3bCHloCuFGfkzRcwxQTgYmDSEynydcCFHprz4HC8DrraRdDO9C4fv5DrRHaGX0fw
+	 ZPZh24eo1SKTCB/3OjHPESco54t8uKrlzfTx6SWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/162] wifi: airo: do not assign -1 to unsigned char
-Date: Wed, 30 Nov 2022 19:21:40 +0100
-Message-Id: <20221130180529.017718295@linuxfoundation.org>
+Subject: [PATCH 5.10 020/162] wifi: mac80211: Fix ack frame idr leak when mesh has no route
+Date: Wed, 30 Nov 2022 19:21:41 +0100
+Message-Id: <20221130180529.043107199@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,73 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit e6cb8769452e8236b52134e5cb4a18b8f5986932 ]
+[ Upstream commit 39e7b5de9853bd92ddbfa4b14165babacd7da0ba ]
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, we get a warning when assigning the
-unchecked output of hex_to_bin() to that unsigned char. Mark `key` as a
-`u8`, which matches the struct's type, and then check each call to
-hex_to_bin() before casting.
+When trying to transmit an data frame with tx_status to a destination
+that have no route in the mesh, then it is dropped without recrediting
+the ack_status_frames idr.
 
-Cc: Kalle Valo <kvalo@kernel.org>
-Cc: linux-wireless@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221024162843.535921-1-Jason@zx2c4.com
+Once it is exhausted, wpa_supplicant starts failing to do SAE with
+NL80211_CMD_FRAME and logs "nl80211: Frame command failed".
+
+Use ieee80211_free_txskb() instead of kfree_skb() to fix it.
+
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Link: https://lore.kernel.org/r/20221027140133.1504-1-nicolas.cavallari@green-communications.fr
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/cisco/airo.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ net/mac80211/mesh_pathtbl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/cisco/airo.c b/drivers/net/wireless/cisco/airo.c
-index 0569f37e9ed5..8c9c6bfbaeee 100644
---- a/drivers/net/wireless/cisco/airo.c
-+++ b/drivers/net/wireless/cisco/airo.c
-@@ -5236,7 +5236,7 @@ static int get_wep_tx_idx(struct airo_info *ai)
- 	return -1;
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 870c8eafef92..c2b051e0610a 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -718,7 +718,7 @@ int mesh_path_send_to_gates(struct mesh_path *mpath)
+ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+ 			     struct sk_buff *skb)
+ {
+-	kfree_skb(skb);
++	ieee80211_free_txskb(&sdata->local->hw, skb);
+ 	sdata->u.mesh.mshstats.dropped_frames_no_route++;
  }
  
--static int set_wep_key(struct airo_info *ai, u16 index, const char *key,
-+static int set_wep_key(struct airo_info *ai, u16 index, const u8 *key,
- 		       u16 keylen, int perm, int lock)
- {
- 	static const unsigned char macaddr[ETH_ALEN] = { 0x01, 0, 0, 0, 0, 0 };
-@@ -5287,7 +5287,7 @@ static void proc_wepkey_on_close(struct inode *inode, struct file *file)
- 	struct net_device *dev = PDE_DATA(inode);
- 	struct airo_info *ai = dev->ml_priv;
- 	int i, rc;
--	char key[16];
-+	u8 key[16];
- 	u16 index = 0;
- 	int j = 0;
- 
-@@ -5315,12 +5315,22 @@ static void proc_wepkey_on_close(struct inode *inode, struct file *file)
- 	}
- 
- 	for (i = 0; i < 16*3 && data->wbuffer[i+j]; i++) {
-+		int val;
-+
-+		if (i % 3 == 2)
-+			continue;
-+
-+		val = hex_to_bin(data->wbuffer[i+j]);
-+		if (val < 0) {
-+			airo_print_err(ai->dev->name, "WebKey passed invalid key hex");
-+			return;
-+		}
- 		switch(i%3) {
- 		case 0:
--			key[i/3] = hex_to_bin(data->wbuffer[i+j])<<4;
-+			key[i/3] = (u8)val << 4;
- 			break;
- 		case 1:
--			key[i/3] |= hex_to_bin(data->wbuffer[i+j]);
-+			key[i/3] |= (u8)val;
- 			break;
- 		}
- 	}
 -- 
 2.35.1
 
