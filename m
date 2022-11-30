@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D20579C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA861C433D6;
-	Wed, 30 Nov 2022 18:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF04A79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635C9C433D6;
+	Wed, 30 Nov 2022 18:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833152;
-	bh=02f8O6FWNWlv3zF9r1pu4H01Ab8pPZeNwIsqBE4Zc9M=;
+	s=korg; t=1669833155;
+	bh=pLyDsuzvftZ1wyqyqFC7Qnj+LsNadvkJ/wdF6YGEroA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0/9UgdEbQrIo6qfSgNtpFUxvXOaUZbu+GbRcCnKXsbyEYp53yVPaD/YdMoMCPIdh
-	 O4uSkbVv4Ypj4zniFGTbweFzTWHsc6JCt0s0ZmWf+hIRRi7120ITFCJ1nJ3zZjQRzO
-	 mTvU/mq6zDLyu864GFiyErAXnud3NVOXnO6/6/0M=
+	b=ATGiE2YWF9CuihwUlODy3HlaZXkYKuXwTRHWTKWsthZQ6KjacKh8KXhxzjZw06VjF
+	 CK+6hfi7vqYrGyNJCFxDQOJyqymVPpnGMxjSqfN6ao6tMoxT+nzuqBiXxQkK+9ScqI
+	 dtf0uNcIpPiir68HWYRY+hZrxhLhuV7JQdQtegN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>
-Subject: [PATCH 5.10 161/162] drm/amdgpu: always register an MMU notifier for userptr
-Date: Wed, 30 Nov 2022 19:24:02 +0100
-Message-Id: <20221130180532.837493976@linuxfoundation.org>
+	Chris Wilson <chris.p.wilson@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 162/162] drm/i915: fix TLB invalidation for Gen12 video and compute engines
+Date: Wed, 30 Nov 2022 19:24:03 +0100
+Message-Id: <20221130180532.864197955@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,39 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Andrzej Hajda <andrzej.hajda@intel.com>
 
-commit b39df63b16b64a3af42695acb9bc567aad144776 upstream.
+commit 04aa64375f48a5d430b5550d9271f8428883e550 upstream.
 
-Since switching to HMM we always need that because we no longer grab
-references to the pages.
+In case of Gen12 video and compute engines, TLB_INV registers are masked -
+to modify one bit, corresponding bit in upper half of the register must
+be enabled, otherwise nothing happens.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
-CC: stable@vger.kernel.org
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+CVE: CVE-2022-4139
+Suggested-by: Chris Wilson <chris.p.wilson@intel.com>
+Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Fixes: 7938d61591d3 ("drm/i915: Flush TLBs before releasing backing store")
+Cc: stable@vger.kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -341,11 +341,9 @@ int amdgpu_gem_userptr_ioctl(struct drm_
- 	if (r)
- 		goto release_object;
+--- a/drivers/gpu/drm/i915/gt/intel_gt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt.c
+@@ -745,6 +745,10 @@ void intel_gt_invalidate_tlbs(struct int
+ 		if (!i915_mmio_reg_offset(rb.reg))
+ 			continue;
  
--	if (args->flags & AMDGPU_GEM_USERPTR_REGISTER) {
--		r = amdgpu_mn_register(bo, args->addr);
--		if (r)
--			goto release_object;
--	}
-+	r = amdgpu_mn_register(bo, args->addr);
-+	if (r)
-+		goto release_object;
++		if (INTEL_GEN(i915) == 12 && (engine->class == VIDEO_DECODE_CLASS ||
++		    engine->class == VIDEO_ENHANCEMENT_CLASS))
++			rb.bit = _MASKED_BIT_ENABLE(rb.bit);
++
+ 		intel_uncore_write_fw(uncore, rb.reg, rb.bit);
+ 	}
  
- 	if (args->flags & AMDGPU_GEM_USERPTR_VALIDATE) {
- 		r = amdgpu_ttm_tt_get_user_pages(bo, bo->tbo.ttm->pages);
 
 
