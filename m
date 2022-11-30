@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231FE79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9D1C433C1;
-	Wed, 30 Nov 2022 18:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7AA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FA1C433C1;
+	Wed, 30 Nov 2022 18:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833898;
-	bh=crlVn6UUuZzHzKIKE7nBQg2KCq61S0dGC5C5q4gum0Q=;
+	s=korg; t=1669833900;
+	bh=uE2C/AYCMVB9oR/iTpZfYuQ9ILoQOQhV0NIWMrUtgEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUbFfgM6M0LIYLi8UD9iCqC+3PzyiWqe/BgR6XHj1buJr2+zS2ECwZLpMb+TCDE2R
-	 v6F/WnLbyN1Ci+C1aeRRF0v/E1gxa938vk/22hcfmWd1i8JPniMGgMde1BVCRQTeya
-	 4OgecxmDfCQ/fuKvQ0grggfvSj3EWf+WwYWg4XEk=
+	b=WsI/QL5nP/e/5SEDna/ZH7HwfaGUh1ss8YPpZQh/yvpjm4axc3JD7x1CaV+YwoLdB
+	 ZkzltZQ/XwjxLrZeZLrjvb2Q50Ac3321blhHN0T3sannsfV0ktFux4ULIzpd4+2yTP
+	 2hKGd/ReXUAIOXD7gtSiYN28Tc/y9CJlI31u9+a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudolf Polzer <rpolzer@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Simon Ser <contact@emersion.fr>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antoine Tenart <atenart@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 027/289] drm: panel-orientation-quirks: Add quirk for Acer Switch V 10 (SW5-017)
-Date: Wed, 30 Nov 2022 19:20:12 +0100
-Message-Id: <20221130180544.749015423@linuxfoundation.org>
+Subject: [PATCH 6.0 018/289] Revert "net: macsec: report real_dev features when HW offloading is enabled"
+Date: Wed, 30 Nov 2022 19:20:03 +0100
+Message-Id: <20221130180544.546179054@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,40 +37,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 653f2d94fcda200b02bd79cea2e0307b26c1b747 ]
+[ Upstream commit 8bcd560ae8784da57c610d857118c5d6576b1a8f ]
 
-Like the Acer Switch One 10 S1003, for which there already is a quirk,
-the Acer Switch V 10 (SW5-017) has a 800x1280 portrait screen mounted
-in the tablet part of a landscape oriented 2-in-1. Add a quirk for this.
+This reverts commit c850240b6c4132574a00f2da439277ab94265b66.
 
-Cc: Rudolf Polzer <rpolzer@google.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221106215052.66995-1-hdegoede@redhat.com
+That commit tried to improve the performance of macsec offload by
+taking advantage of some of the NIC's features, but in doing so, broke
+macsec offload when the lower device supports both macsec and ipsec
+offload, as the ipsec offload feature flags (mainly NETIF_F_HW_ESP)
+were copied from the real device. Since the macsec device doesn't
+provide xdo_* ops, the XFRM core rejects the registration of the new
+macsec device in xfrm_api_check.
+
+Example perf trace when running
+  ip link add link eni1np1 type macsec port 4 offload mac
+
+    ip   737 [003]   795.477676: probe:xfrm_dev_event__REGISTER      name="macsec0" features=0x1c000080014869
+              xfrm_dev_event+0x3a
+              notifier_call_chain+0x47
+              register_netdevice+0x846
+              macsec_newlink+0x25a
+
+    ip   737 [003]   795.477687:   probe:xfrm_dev_event__return      ret=0x8002 (NOTIFY_BAD)
+             notifier_call_chain+0x47
+             register_netdevice+0x846
+             macsec_newlink+0x25a
+
+dev->features includes NETIF_F_HW_ESP (0x04000000000000), so
+xfrm_api_check returns NOTIFY_BAD because we don't have
+dev->xfrmdev_ops on the macsec device.
+
+We could probably propagate GSO and a few other features from the
+lower device, similar to macvlan. This will be done in a future patch.
+
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/macsec.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index f0f6fa306521..52d8800a8ab8 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -134,6 +134,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "One S1003"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* Acer Switch V 10 (SW5-017) */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
-+		},
-+		.driver_data = (void *)&lcd800x1280_rightside_up,
- 	}, {	/* Anbernic Win600 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Anbernic"),
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index ddfa853ec9b5..d145ad189778 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -2685,11 +2685,6 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
+ 	if (ret)
+ 		goto rollback;
+ 
+-	/* Force features update, since they are different for SW MACSec and
+-	 * HW offloading cases.
+-	 */
+-	netdev_update_features(dev);
+-
+ 	rtnl_unlock();
+ 	return 0;
+ 
+@@ -3457,16 +3452,9 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ 	return ret;
+ }
+ 
+-#define SW_MACSEC_FEATURES \
++#define MACSEC_FEATURES \
+ 	(NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST)
+ 
+-/* If h/w offloading is enabled, use real device features save for
+- *   VLAN_FEATURES - they require additional ops
+- *   HW_MACSEC - no reason to report it
+- */
+-#define REAL_DEV_FEATURES(dev) \
+-	((dev)->features & ~(NETIF_F_VLAN_FEATURES | NETIF_F_HW_MACSEC))
+-
+ static int macsec_dev_init(struct net_device *dev)
+ {
+ 	struct macsec_dev *macsec = macsec_priv(dev);
+@@ -3483,12 +3471,8 @@ static int macsec_dev_init(struct net_device *dev)
+ 		return err;
+ 	}
+ 
+-	if (macsec_is_offloaded(macsec)) {
+-		dev->features = REAL_DEV_FEATURES(real_dev);
+-	} else {
+-		dev->features = real_dev->features & SW_MACSEC_FEATURES;
+-		dev->features |= NETIF_F_LLTX | NETIF_F_GSO_SOFTWARE;
+-	}
++	dev->features = real_dev->features & MACSEC_FEATURES;
++	dev->features |= NETIF_F_LLTX | NETIF_F_GSO_SOFTWARE;
+ 
+ 	dev->needed_headroom = real_dev->needed_headroom +
+ 			       MACSEC_NEEDED_HEADROOM;
+@@ -3520,10 +3504,7 @@ static netdev_features_t macsec_fix_features(struct net_device *dev,
+ 	struct macsec_dev *macsec = macsec_priv(dev);
+ 	struct net_device *real_dev = macsec->real_dev;
+ 
+-	if (macsec_is_offloaded(macsec))
+-		return REAL_DEV_FEATURES(real_dev);
+-
+-	features &= (real_dev->features & SW_MACSEC_FEATURES) |
++	features &= (real_dev->features & MACSEC_FEATURES) |
+ 		    NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES;
+ 	features |= NETIF_F_LLTX;
+ 
 -- 
 2.35.1
 
