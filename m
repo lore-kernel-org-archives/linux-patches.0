@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055DA6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE69C433D6;
-	Wed, 30 Nov 2022 18:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE206FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C32EC433D6;
+	Wed, 30 Nov 2022 18:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833480;
-	bh=+IxhaEtM4URwruUoh5XoA1j99yFakBL/THQsyyEISC8=;
+	s=korg; t=1669833483;
+	bh=lZYlX9R6NTrGrPiEc9g8ilQ9Jaf88CamsoT5XaqCdGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxpXKUah8STGZKS8o2XfM0uizBL1+3Oip2gd9q4Qx36qy7e75zuu/VynCo8Lwk/cl
-	 XDbNMJayDFc7yp695R41BaKZTzTEACiDP1C+XWy+/sT0UE+5nW9XXQY3ekDweoxW3j
-	 pAyuFGDT28sqdSxdMDqjR+4Om/GuvP9MRInS6Qec=
+	b=yQ0nDHNhs6KppMzdIdik+RejiMaQ0/B8bmDJu3ch6mGPgqSNNHPg5cAC9Vn6lwGTf
+	 4a0XSHJQk0mR1n+6ul4dZL8By9EQk45GLg8EGobaehYoLzwXigx7Xpp2lULqkvbFV1
+	 E8E7sFrxRNzWCB4XlSwZyJK9IT4NEdn6l1Y1bByM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/206] ipv4: Fix error return code in fib_table_insert()
-Date: Wed, 30 Nov 2022 19:22:53 +0100
-Message-Id: <20221130180536.127431707@linuxfoundation.org>
+Subject: [PATCH 5.15 122/206] arcnet: fix potential memory leak in com20020_probe()
+Date: Wed, 30 Nov 2022 19:22:54 +0100
+Message-Id: <20221130180536.152285242@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,38 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 568fe84940ac0e4e0b2cd7751b8b4911f7b9c215 ]
+[ Upstream commit 1c40cde6b5171d9c8dfc69be00464fd1c75e210b ]
 
-In fib_table_insert(), if the alias was already inserted, but node not
-exist, the error code should be set before return from error handling path.
+In com20020_probe(), if com20020_config() fails, dev and info
+will not be freed, which will lead to a memory leak.
 
-Fixes: a6c76c17df02 ("ipv4: Notify route after insertion to the routing table")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Link: https://lore.kernel.org/r/20221120072838.2167047-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch adds freeing dev and info after com20020_config()
+fails to fix this bug.
+
+Compile tested only.
+
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_trie.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/arcnet/com20020_cs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 19c6e7b93d3d..52f9f69f57b3 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1375,8 +1375,10 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
+diff --git a/drivers/net/arcnet/com20020_cs.c b/drivers/net/arcnet/com20020_cs.c
+index b88a109b3b15..26ee263d8f3a 100644
+--- a/drivers/net/arcnet/com20020_cs.c
++++ b/drivers/net/arcnet/com20020_cs.c
+@@ -113,6 +113,7 @@ static int com20020_probe(struct pcmcia_device *p_dev)
+ 	struct com20020_dev *info;
+ 	struct net_device *dev;
+ 	struct arcnet_local *lp;
++	int ret = -ENOMEM;
  
- 	/* The alias was already inserted, so the node must exist. */
- 	l = l ? l : fib_find_node(t, &tp, key);
--	if (WARN_ON_ONCE(!l))
-+	if (WARN_ON_ONCE(!l)) {
-+		err = -ENOENT;
- 		goto out_free_new_fa;
-+	}
+ 	dev_dbg(&p_dev->dev, "com20020_attach()\n");
  
- 	if (fib_find_alias(&l->leaf, new_fa->fa_slen, 0, 0, tb->tb_id, true) ==
- 	    new_fa) {
+@@ -142,12 +143,18 @@ static int com20020_probe(struct pcmcia_device *p_dev)
+ 	info->dev = dev;
+ 	p_dev->priv = info;
+ 
+-	return com20020_config(p_dev);
++	ret = com20020_config(p_dev);
++	if (ret)
++		goto fail_config;
++
++	return 0;
+ 
++fail_config:
++	free_arcdev(dev);
+ fail_alloc_dev:
+ 	kfree(info);
+ fail_alloc_info:
+-	return -ENOMEM;
++	return ret;
+ } /* com20020_attach */
+ 
+ static void com20020_detach(struct pcmcia_device *link)
 -- 
 2.35.1
 
