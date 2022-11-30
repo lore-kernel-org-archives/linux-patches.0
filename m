@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C1479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CEDC433D7;
-	Wed, 30 Nov 2022 18:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21758C433C1;
+	Wed, 30 Nov 2022 18:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833688;
-	bh=v66fulPJRAbe362XXmlQRB9aC6DdXPUbLjGF7wDArHA=;
+	s=korg; t=1669833691;
+	bh=+mdOOawsROZ05nKnWMg7Ny0gxbQnSYHhax8kFStudto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqnlbPd88G9p/hDEcRgPBTo9tvSCE13zGmUmr19Jn2TkFR2l0LvrW7h321ZjnmPFV
-	 Y0ypEJIn+yqTmGCmt/phdVRcU2a9b5cYQqSJCBXoCqLAN7ymcLUB20amzfpn3J963t
-	 C6BbzB7HcELffgwnpf63tzN7F5p3TcAUgG7aYk0M=
+	b=XhbMBsFS63D3L2bdnyWas+0Q0/20sZsuR8sux5LqYNEuAHgDKveMaiAXlU4jeV8+z
+	 W0cZjv2AYanzPeaxknftCiy85rxKL5i8NNLut20R103DPMNwLhHl2+LutpenYGi0qz
+	 sbcnYqVOTn7MmSDTgAKYPkC5K6mSvFtL+HcE7wR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Su Bao Cheng <baocheng.su@siemens.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/206] serial: 8250: 8250_omap: Avoid RS485 RTS glitch on ->set_termios()
-Date: Wed, 30 Nov 2022 19:23:39 +0100
-Message-Id: <20221130180537.278079316@linuxfoundation.org>
+Subject: [PATCH 5.15 185/206] dm integrity: flush the journal on suspend
+Date: Wed, 30 Nov 2022 19:23:57 +0100
+Message-Id: <20221130180537.724286983@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,92 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 038ee49fef18710bedd38b531d173ccd746b2d8d ]
+[ Upstream commit 5e5dab5ec763d600fe0a67837dd9155bdc42f961 ]
 
-RS485-enabled UART ports on TI Sitara SoCs with active-low polarity
-exhibit a Transmit Enable glitch on ->set_termios():
+This commit flushes the journal on suspend. It is prerequisite for the
+next commit that enables activating dm integrity devices in read-only mode.
 
-omap8250_restore_regs(), which is called from omap_8250_set_termios(),
-sets the TCRTLR bit in the MCR register and clears all other bits,
-including RTS.  If RTS uses active-low polarity, it is now asserted
-for no reason.
+Note that we deliberately didn't flush the journal on suspend, so that the
+journal replay code would be tested. However, the dm-integrity code is 5
+years old now, so that journal replay is well-tested, and we can make this
+change now.
 
-The TCRTLR bit is subsequently cleared by writing up->mcr to the MCR
-register.  That variable is always zero, so the RTS bit is still cleared
-(incorrectly so if RTS is active-high).
-
-(up->mcr is not, as one might think, a cache of the MCR register's
-current value.  Rather, it only caches a single bit of that register,
-the AFE bit.  And it only does so if the UART supports the AFE bit,
-which OMAP does not.  For details see serial8250_do_set_termios() and
-serial8250_do_set_mctrl().)
-
-Finally at the end of omap8250_restore_regs(), the MCR register is
-restored (and RTS deasserted) by a call to up->port.ops->set_mctrl()
-(which equals serial8250_set_mctrl()) and serial8250_em485_stop_tx().
-
-So there's an RTS glitch between setting TCRTLR and calling
-serial8250_em485_stop_tx().  Avoid by using a read-modify-write
-when setting TCRTLR.
-
-While at it, drop a redundant initialization of up->mcr.  As explained
-above, the variable isn't used by the driver and it is already
-initialized to zero because it is part of the static struct
-serial8250_ports[] declared in 8250_core.c.  (Static structs are
-initialized to zero per section 6.7.8 nr. 10 of the C99 standard.)
-
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Su Bao Cheng <baocheng.su@siemens.com>
-Tested-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/r/6554b0241a2c7fd50f32576fdbafed96709e11e8.1664278942.git.lukas@wunner.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/dm-integrity.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 469fdb91830e..078a7028ee5a 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -293,6 +293,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- {
- 	struct omap8250_priv *priv = up->port.private_data;
- 	struct uart_8250_dma	*dma = up->dma;
-+	u8 mcr = serial8250_in_MCR(up);
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index d5b827086962..bfdcb40f330a 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -2575,10 +2575,6 @@ static void integrity_writer(struct work_struct *w)
  
- 	if (dma && dma->tx_running) {
- 		/*
-@@ -309,7 +310,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- 	serial_out(up, UART_EFR, UART_EFR_ECB);
+ 	unsigned prev_free_sectors;
  
- 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_A);
--	serial8250_out_MCR(up, UART_MCR_TCRTLR);
-+	serial8250_out_MCR(up, mcr | UART_MCR_TCRTLR);
- 	serial_out(up, UART_FCR, up->fcr);
+-	/* the following test is not needed, but it tests the replay code */
+-	if (unlikely(dm_post_suspending(ic->ti)) && !ic->meta_dev)
+-		return;
+-
+ 	spin_lock_irq(&ic->endio_wait.lock);
+ 	write_start = ic->committed_section;
+ 	write_sections = ic->n_committed_sections;
+@@ -3085,8 +3081,7 @@ static void dm_integrity_postsuspend(struct dm_target *ti)
+ 	drain_workqueue(ic->commit_wq);
  
- 	omap8250_update_scr(up, priv);
-@@ -325,7 +326,8 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
- 	serial_out(up, UART_LCR, 0);
- 
- 	/* drop TCR + TLR access, we setup XON/XOFF later */
--	serial8250_out_MCR(up, up->mcr);
-+	serial8250_out_MCR(up, mcr);
-+
- 	serial_out(up, UART_IER, up->ier);
- 
- 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
-@@ -684,7 +686,6 @@ static int omap_8250_startup(struct uart_port *port)
- 
- 	pm_runtime_get_sync(port->dev);
- 
--	up->mcr = 0;
- 	serial_out(up, UART_FCR, UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
- 
- 	serial_out(up, UART_LCR, UART_LCR_WLEN8);
+ 	if (ic->mode == 'J') {
+-		if (ic->meta_dev)
+-			queue_work(ic->writer_wq, &ic->writer_work);
++		queue_work(ic->writer_wq, &ic->writer_work);
+ 		drain_workqueue(ic->writer_wq);
+ 		dm_integrity_flush_buffers(ic, true);
+ 	}
 -- 
 2.35.1
 
