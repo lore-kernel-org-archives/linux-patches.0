@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4026FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12361C43470;
-	Wed, 30 Nov 2022 18:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DD56FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C4DC433C1;
+	Wed, 30 Nov 2022 18:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832807;
-	bh=9tx7pA5CqDPX8H1bM0ars1Crqz9DjsOQL/HbdemxgKo=;
+	s=korg; t=1669832810;
+	bh=w0I30QUcwoacNhiW7A8I6u9hG4L3PLnzcvps8TLedZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNk1sIFRyxZomXxRF/jE2GubBvnjyoc3c11OzUOMc3JeMgf3n5xQom+h6AyzGBWBv
-	 VPdeRq/+4M35zIRUJPQpzCLEDraLlkXvK/eF0lOPRq0BWMUIyRzwBaBB1DO7eyw6MV
-	 ug+q9g3awxf0LD/L0hUSkLnCnvaA3042hdcmbqMI=
+	b=pXeDdEklR1cf9Bu3cSntOy73DxWgBjJhS/fReVLsoWvCCMHsIAGsHsWvQDzdYBOUm
+	 5a1fDHRQ9KXwNyCkshk0IrLj9gyWkKly0kFZ/tcugelFZAbGknm+VfJdnOhrZn5O+O
+	 a3a88mc4vv4/z2XGIV6Ou3xgv9RU7R8W0XjWMlBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/162] nvme-pci: add NVME_QUIRK_BOGUS_NID for Micron Nitro
-Date: Wed, 30 Nov 2022 19:21:29 +0100
-Message-Id: <20221130180528.713016075@linuxfoundation.org>
+Subject: [PATCH 5.10 041/162] spi: dw-dma: decrease reference count in dw_spi_dma_init_mfld()
+Date: Wed, 30 Nov 2022 19:22:02 +0100
+Message-Id: <20221130180529.619461428@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,33 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bean Huo <beanhuo@micron.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit d5ceb4d1c50786d21de3d4b06c3f43109ec56dd8 ]
+[ Upstream commit 804313b64e412a81b0b3389a10e7622452004aa6 ]
 
-Added a quirk to fix Micron Nitro NVMe reporting duplicate NGUIDs.
+pci_get_device() will increase the reference count for the returned
+pci_dev. Since 'dma_dev' is only used to filter the channel in
+dw_spi_dma_chan_filer() after using it we need to call pci_dev_put() to
+decrease the reference count. Also add pci_dev_put() for the error case.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 7063c0d942a1 ("spi/dw_spi: add DMA support")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Acked-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/20221116093204.46700-1-wangxiongfeng2@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-dw-dma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7e2ee636c5f9..089f39103584 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3254,6 +3254,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
- 	 { PCI_DEVICE(0x1344, 0x5407), /* Micron Technology Inc NVMe SSD */
- 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
-+	 { PCI_DEVICE(0x1344, 0x6001),   /* Micron Nitro NVMe */
-+		 .driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
- 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
- 	{ PCI_DEVICE(0x15b7, 0x2001),   /*  Sandisk Skyhawk */
+diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
+index a09831c62192..32ac8f9068e8 100644
+--- a/drivers/spi/spi-dw-dma.c
++++ b/drivers/spi/spi-dw-dma.c
+@@ -127,12 +127,15 @@ static int dw_spi_dma_init_mfld(struct device *dev, struct dw_spi *dws)
+ 
+ 	dw_spi_dma_sg_burst_init(dws);
+ 
++	pci_dev_put(dma_dev);
++
+ 	return 0;
+ 
+ free_rxchan:
+ 	dma_release_channel(dws->rxchan);
+ 	dws->rxchan = NULL;
+ err_exit:
++	pci_dev_put(dma_dev);
+ 	return -EBUSY;
+ }
+ 
 -- 
 2.35.1
 
