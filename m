@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2966FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22F9C433D7;
-	Wed, 30 Nov 2022 18:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D39D6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C518FC433C1;
+	Wed, 30 Nov 2022 18:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832890;
-	bh=TgqyQ5VWujSySgmPWLO4Y7eWFWe+EjWlU+ueiJzqwvs=;
+	s=korg; t=1669832893;
+	bh=YO+RCPUvFy9njpcq6uUAyvLMXBbZkuaE9lymaeqIwGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YD6qVWr2WtShVa+cJdQ1wgAXIkEtg+w+RyGu8dbr9KOtN2vLie2dQRQCnALeiojyI
-	 W6HDbNYi7X6lq32hCymK629Ls477p0pZWVUrrjiszowaExvvbPeqCWnztomLNpMztS
-	 xUsfE8trsvs4sSTQXQIuA0YxSUwNKgIpZaNcIxD0=
+	b=d7/9cKYNaTVmY1vp/JwuBFAnoYApzNXfXEmG9AHe7j2bQ+E79fH6F4HGNUby6TGWF
+	 Z9iVqmLNmabvr52+zqvwJ32HgVSwX4vsO8sDyzV4c0paoUtTBYaafYZ4hssA8S0kM4
+	 yIBxAIUn/P6KMVbNeotY9ookp3n1+FP2QUz+a2sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/162] regulator: core: fix kobject release warning and memory leak in regulator_register()
-Date: Wed, 30 Nov 2022 19:22:01 +0100
-Message-Id: <20221130180529.591622547@linuxfoundation.org>
+Subject: [PATCH 5.10 070/162] tipc: add an extra conn_get in tipc_conn_alloc
+Date: Wed, 30 Nov 2022 19:22:31 +0100
+Message-Id: <20221130180530.402696689@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,72 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 5f4b204b6b8153923d5be8002c5f7082985d153f ]
+[ Upstream commit a7b42969d63f47320853a802efd879fbdc4e010e ]
 
-Here is a warning report about lack of registered release()
-from kobject lib:
+One extra conn_get() is needed in tipc_conn_alloc(), as after
+tipc_conn_alloc() is called, tipc_conn_close() may free this
+con before deferencing it in tipc_topsrv_accept():
 
-Device '(null)' does not have a release() function, it is broken and must be fixed.
-WARNING: CPU: 0 PID: 48430 at drivers/base/core.c:2332 device_release+0x104/0x120
-Call Trace:
- kobject_put+0xdc/0x180
- put_device+0x1b/0x30
- regulator_register+0x651/0x1170
- devm_regulator_register+0x4f/0xb0
+   tipc_conn_alloc();
+   newsk = newsock->sk;
+                                 <---- tipc_conn_close();
+   write_lock_bh(&sk->sk_callback_lock);
+   newsk->sk_data_ready = tipc_conn_data_ready;
 
-When regulator_register() returns fail and directly goto `clean` symbol,
-rdev->dev has not registered release() function yet (which is registered
-by regulator_class in the following), so rdev needs to be freed manually.
-If rdev->dev.of_node is not NULL, which means the of_node has gotten by
-regulator_of_get_init_data(), it needs to call of_node_put() to avoid
-refcount leak.
+Then an uaf issue can be triggered:
 
-Otherwise, only calling put_device() would lead memory leak of rdev
-in further:
+  BUG: KASAN: use-after-free in tipc_topsrv_accept+0x1e7/0x370 [tipc]
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x33/0x46
+   print_report+0x178/0x4b0
+   kasan_report+0x8c/0x100
+   kasan_check_range+0x179/0x1e0
+   tipc_topsrv_accept+0x1e7/0x370 [tipc]
+   process_one_work+0x6a3/0x1030
+   worker_thread+0x8a/0xdf0
 
-unreferenced object 0xffff88810d0b1000 (size 2048):
-  comm "107-i2c-rtq6752", pid 48430, jiffies 4342258431 (age 1341.780s)
-  backtrace:
-    kmalloc_trace+0x22/0x110
-    regulator_register+0x184/0x1170
-    devm_regulator_register+0x4f/0xb0
+This patch fixes it by holding it in tipc_conn_alloc(), then after
+all accessing in tipc_topsrv_accept() releasing it. Note when does
+this in tipc_topsrv_kern_subscr(), as tipc_conn_rcv_sub() returns
+0 or -1 only, we don't need to check for "> 0".
 
-When regulator_register() returns fail and goto `wash` symbol,
-rdev->dev has registered release() function, so directly call
-put_device() to cleanup everything.
-
-Fixes: d3c731564e09 ("regulator: plug of_node leak in regulator_register()'s error path")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221116074339.1024240-1-zengheng4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tipc/topsrv.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index bf8ba73d6c7c..f43c668e1630 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5401,11 +5401,15 @@ regulator_register(const struct regulator_desc *regulator_desc,
- 	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
- 	mutex_unlock(&regulator_list_mutex);
-+	put_device(&rdev->dev);
-+	rdev = NULL;
- clean:
- 	if (dangling_of_gpiod)
- 		gpiod_put(config->ena_gpiod);
-+	if (rdev && rdev->dev.of_node)
-+		of_node_put(rdev->dev.of_node);
-+	kfree(rdev);
- 	kfree(config);
--	put_device(&rdev->dev);
- rinse:
- 	if (dangling_cfg_gpiod)
- 		gpiod_put(cfg->ena_gpiod);
+diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
+index dcd4afb3640f..89d8a2bd30cd 100644
+--- a/net/tipc/topsrv.c
++++ b/net/tipc/topsrv.c
+@@ -206,6 +206,7 @@ static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s, struct socket *s
+ 	set_bit(CF_CONNECTED, &con->flags);
+ 	con->server = s;
+ 	con->sock = sock;
++	conn_get(con);
+ 	spin_unlock_bh(&s->idr_lock);
+ 
+ 	return con;
+@@ -484,6 +485,7 @@ static void tipc_topsrv_accept(struct work_struct *work)
+ 
+ 		/* Wake up receive process in case of 'SYN+' message */
+ 		newsk->sk_data_ready(newsk);
++		conn_put(con);
+ 	}
+ }
+ 
+@@ -583,10 +585,11 @@ bool tipc_topsrv_kern_subscr(struct net *net, u32 port, u32 type, u32 lower,
+ 
+ 	*conid = con->conid;
+ 	rc = tipc_conn_rcv_sub(tipc_topsrv(net), con, &sub);
+-	if (rc >= 0)
+-		return true;
++	if (rc)
++		conn_put(con);
++
+ 	conn_put(con);
+-	return false;
++	return !rc;
+ }
+ 
+ void tipc_topsrv_kern_unsubscr(struct net *net, int conid)
 -- 
 2.35.1
 
