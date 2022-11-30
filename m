@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103DD79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874BEC433C1;
-	Wed, 30 Nov 2022 18:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD35F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32171C433D6;
+	Wed, 30 Nov 2022 18:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834231;
-	bh=G5BNTwF674l+IZbN/9mH7YmgwJu3d8ZWMmuVd7Cd+aU=;
+	s=korg; t=1669834234;
+	bh=suEp+A+LfDUvUNvfSUstNEaMJts4aZeulICiQ0+/Tgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRpy7SOoG88yy1tzgjL3RMWFNoru83eBXECKpCj2kJvvexmdFw1tXfbm1pdS/jRdq
-	 3oj0hABZ5jJ8lxYnaySceaPSY1q/ximIs19y8eiEP8BFACZfBwUprH9YKGkgpNyz05
-	 qr0vvPShR0NlRNFSqTpVbwnEow3BDVPSXhVOfvVw=
+	b=0QapKaQNvYU8q8b3WmfRU9s/FJmhKyk5q0TVYyVt1AD7oHGPYAxKGCjx8F3cpsmQU
+	 gk7VuJIHIY4xe/caVYCpVM7N+Pn/C4tZVTytfKCf+kmo+RDvGRR5jDWH7Jh61Gn3fK
+	 U5Z5Km6NLBbhLZ+t/lRWWnl1FTsSP3eVL0mtPkTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Rui <ray.huang@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Perry Yuan <Perry.Yuan@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.0 178/289] cpufreq: amd-pstate: cpufreq: amd-pstate: reset MSR_AMD_PERF_CTL register at init
-Date: Wed, 30 Nov 2022 19:22:43 +0100
-Message-Id: <20221130180548.164273836@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Subject: [PATCH 6.0 179/289] zonefs: Fix active zone accounting
+Date: Wed, 30 Nov 2022 19:22:44 +0100
+Message-Id: <20221130180548.186944732@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,55 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wyes Karny <wyes.karny@amd.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 919f4557696939625085435ebde09a539de2349c upstream.
+commit db58653ce0c7cf4d155727852607106f890005c0 upstream.
 
-MSR_AMD_PERF_CTL is guaranteed to be 0 on a cold boot. However, on a
-kexec boot, for instance, it may have a non-zero value (if the cpu was
-in a non-P0 Pstate).  In such cases, the cores with non-P0 Pstates at
-boot will never be pushed to P0, let alone boost frequencies.
+If a file zone transitions to the offline or readonly state from an
+active state, we must clear the zone active flag and decrement the
+active seq file counter. Do so in zonefs_account_active() using the new
+zonefs inode flags ZONEFS_ZONE_OFFLINE and ZONEFS_ZONE_READONLY. These
+flags are set if necessary in zonefs_check_zone_condition() based on the
+result of report zones operation after an IO error.
 
-Kexec is a common workflow for reboot on Linux and this creates a
-regression in performance. Fix it by explicitly setting the
-MSR_AMD_PERF_CTL to 0 during amd_pstate driver init.
-
-Cc: All applicable <stable@vger.kernel.org>
-Acked-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Tested-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Perry Yuan <Perry.Yuan@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 87c9ce3ffec9 ("zonefs: Add active seq file accounting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/zonefs/super.c  |   11 +++++++++++
+ fs/zonefs/zonefs.h |    6 ++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -483,12 +483,22 @@ static void amd_pstate_boost_init(struct
- 	amd_pstate_driver.boost_enabled = true;
+--- a/fs/zonefs/super.c
++++ b/fs/zonefs/super.c
+@@ -41,6 +41,13 @@ static void zonefs_account_active(struct
+ 		return;
+ 
+ 	/*
++	 * For zones that transitioned to the offline or readonly condition,
++	 * we only need to clear the active state.
++	 */
++	if (zi->i_flags & (ZONEFS_ZONE_OFFLINE | ZONEFS_ZONE_READONLY))
++		goto out;
++
++	/*
+ 	 * If the zone is active, that is, if it is explicitly open or
+ 	 * partially written, check if it was already accounted as active.
+ 	 */
+@@ -53,6 +60,7 @@ static void zonefs_account_active(struct
+ 		return;
+ 	}
+ 
++out:
+ 	/* The zone is not active. If it was, update the active count */
+ 	if (zi->i_flags & ZONEFS_ZONE_ACTIVE) {
+ 		zi->i_flags &= ~ZONEFS_ZONE_ACTIVE;
+@@ -324,6 +332,7 @@ static loff_t zonefs_check_zone_conditio
+ 		inode->i_flags |= S_IMMUTABLE;
+ 		inode->i_mode &= ~0777;
+ 		zone->wp = zone->start;
++		zi->i_flags |= ZONEFS_ZONE_OFFLINE;
+ 		return 0;
+ 	case BLK_ZONE_COND_READONLY:
+ 		/*
+@@ -342,8 +351,10 @@ static loff_t zonefs_check_zone_conditio
+ 			zone->cond = BLK_ZONE_COND_OFFLINE;
+ 			inode->i_mode &= ~0777;
+ 			zone->wp = zone->start;
++			zi->i_flags |= ZONEFS_ZONE_OFFLINE;
+ 			return 0;
+ 		}
++		zi->i_flags |= ZONEFS_ZONE_READONLY;
+ 		inode->i_mode &= ~0222;
+ 		return i_size_read(inode);
+ 	case BLK_ZONE_COND_FULL:
+--- a/fs/zonefs/zonefs.h
++++ b/fs/zonefs/zonefs.h
+@@ -39,8 +39,10 @@ static inline enum zonefs_ztype zonefs_z
+ 	return ZONEFS_ZTYPE_SEQ;
  }
  
-+static void amd_perf_ctl_reset(unsigned int cpu)
-+{
-+	wrmsrl_on_cpu(cpu, MSR_AMD_PERF_CTL, 0);
-+}
-+
- static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
- {
- 	int min_freq, max_freq, nominal_freq, lowest_nonlinear_freq, ret;
- 	struct device *dev;
- 	struct amd_cpudata *cpudata;
+-#define ZONEFS_ZONE_OPEN	(1 << 0)
+-#define ZONEFS_ZONE_ACTIVE	(1 << 1)
++#define ZONEFS_ZONE_OPEN	(1U << 0)
++#define ZONEFS_ZONE_ACTIVE	(1U << 1)
++#define ZONEFS_ZONE_OFFLINE	(1U << 2)
++#define ZONEFS_ZONE_READONLY	(1U << 3)
  
-+	/*
-+	 * Resetting PERF_CTL_MSR will put the CPU in P0 frequency,
-+	 * which is ideal for initialization process.
-+	 */
-+	amd_perf_ctl_reset(policy->cpu);
- 	dev = get_cpu_device(policy->cpu);
- 	if (!dev)
- 		return -ENODEV;
+ /*
+  * In-memory inode data.
 
 
