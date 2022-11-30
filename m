@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCF679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2408C433C1;
-	Wed, 30 Nov 2022 18:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2510779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4BCC433D6;
+	Wed, 30 Nov 2022 18:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834468;
-	bh=i62pXkbM8jq3FwMIp1Yu4olWnfxvvXuVJj5DLFQdd78=;
+	s=korg; t=1669834471;
+	bh=T2hPKsWNW7abcrcjLBMijRjZLL8m3qgeJM8HhFt9LdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnajh5g0BysTwt9a5cE2K3OBzynDwLprcg0pCTPTJyiNOgYS9fHvRksN4D+vcV030
-	 VaCk2k68ZtbIi2OZTEZlROLtsbahcdIUymqy0eeqI9Yp1J22WNcXAQDNS+zKS1ZMGX
-	 3N31jxjQSIdOPzFTBEGCQNi9fit5J/nX/Xpnz9KE=
+	b=PYuh+OFbfdznMVf/FTJYzJ3X9JG+ejvdwf/mZAMsqkeW0COmPD+afDBRnlOMTi1aj
+	 GIOQ6wgNDRCfGQKtsBOr16rIrUUFsa7mXCyVC3XK5nFdFw/8ufjQvrlrWt1ZW7uGci
+	 UQUr4ua9WiViQ/1pX/aykCRk2/HVbQz+KUeXyrCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 227/289] ASoC: Intel: soc-acpi: add ES83x6 support to IceLake
-Date: Wed, 30 Nov 2022 19:23:32 +0100
-Message-Id: <20221130180549.260451997@linuxfoundation.org>
+Subject: [PATCH 6.0 258/289] dm-integrity: set dma_alignment limit in io_hints
+Date: Wed, 30 Nov 2022 19:24:03 +0100
+Message-Id: <20221130180549.952398087@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,53 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 9a1d248bb4beaf1b43d17ba12481ee0629fa29b9 ]
+[ Upstream commit 29aa778bb66795e6a78b1c99beadc83887827868 ]
 
-Missing entry to find a machine driver for ES83x6-based platforms.
+This device mapper needs bio vectors to be sized and memory aligned to
+the logical block size. Set the minimum required queue limit
+accordingly.
 
-Link: https://github.com/thesofproject/linux/issues/3873
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20221031195836.250193-1-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221110184501.2451620-5-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-icl-match.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/md/dm-integrity.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-icl-match.c b/sound/soc/intel/common/soc-acpi-intel-icl-match.c
-index b032bc07de8b..d0062f2cd256 100644
---- a/sound/soc/intel/common/soc-acpi-intel-icl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-icl-match.c
-@@ -10,6 +10,11 @@
- #include <sound/soc-acpi-intel-match.h>
- #include "../skylake/skl.h"
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index aaf2472df6e5..e1e7b205573f 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3370,6 +3370,7 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
+ 		limits->logical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
+ 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
+ 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
++		limits->dma_alignment = limits->logical_block_size - 1;
+ 	}
+ }
  
-+static const struct snd_soc_acpi_codecs essx_83x6 = {
-+	.num_codecs = 3,
-+	.codecs = { "ESSX8316", "ESSX8326", "ESSX8336"},
-+};
-+
- static struct skl_machine_pdata icl_pdata = {
- 	.use_tplg_pcm = true,
- };
-@@ -27,6 +32,14 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_icl_machines[] = {
- 		.drv_name = "sof_rt5682",
- 		.sof_tplg_filename = "sof-icl-rt5682.tplg",
- 	},
-+	{
-+		.comp_ids = &essx_83x6,
-+		.drv_name = "sof-essx8336",
-+		.sof_tplg_filename = "sof-icl-es8336", /* the tplg suffix is added at run time */
-+		.tplg_quirk_mask = SND_SOC_ACPI_TPLG_INTEL_SSP_NUMBER |
-+					SND_SOC_ACPI_TPLG_INTEL_SSP_MSB |
-+					SND_SOC_ACPI_TPLG_INTEL_DMIC_NUMBER,
-+	},
- 	{},
- };
- EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_icl_machines);
 -- 
 2.35.1
 
