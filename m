@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0289C79C1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7D1C433C1;
-	Wed, 30 Nov 2022 18:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E9E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBA7C433C1;
+	Wed, 30 Nov 2022 18:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834223;
-	bh=v3qPkOMglHPrRRzDMVGJiot7/RVnBh3S11lvZll3PwM=;
+	s=korg; t=1669834226;
+	bh=FKGhaVxwAGwu5iaiTqEH7+OEvdPrGig4qQdjDqnvSWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ph6JvTtqegTVYPwlP0hUMFYcNRF+vbrA7RlGACrsQjwLPcAKeNzPufxd/AEg71NAb
-	 /kNciQH4wEtFjyzuj82o7JVzkqkAJtkaJeTqgRnz7zfScMcfAvhAgvXffTi9ls7lu1
-	 auZTqnMq7N8D1ceij9lGIH+cC4hDB/0LWZl7NhEo=
+	b=G3ehFHyqr3zDlKKPXyx2V1Pjd+vy+sUJq8kc13sAF8PtpGjeWGBuKtc5iaXAxh+5+
+	 cVZ9qWdRVBlY/mvy+Zc9OD1CLGr3ghQaEaxFhEmWHgQm968mPpkPaDQ6U18D5F6dRv
+	 3/AZSZbd0FigMffPxVMHP95rshyjATlkKpW12wBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Bo Jiao <Bo.Jiao@mediatek.com>,
-	Sujuan Chen <sujuan.chen@mediatek.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 137/289] net: ethernet: mtk_eth_soc: move ppe table hash offset to mtk_soc_data structure
-Date: Wed, 30 Nov 2022 19:22:02 +0100
-Message-Id: <20221130180547.244489504@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 168/289] ext4: fix use-after-free in ext4_ext_shift_extents
+Date: Wed, 30 Nov 2022 19:22:33 +0100
+Message-Id: <20221130180547.941353141@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -38,193 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit ba2fc48c5e1e9e1934939f0d12ff8b985dcc6e5d ]
+commit f6b1a1cf1c3ee430d3f5e47847047ce789a690aa upstream.
 
-This is a preliminary patch to introduce mt7986 hw packet engine.
+If the starting position of our insert range happens to be in the hole
+between the two ext4_extent_idx, because the lblk of the ext4_extent in
+the previous ext4_extent_idx is always less than the start, which leads
+to the "extent" variable access across the boundary, the following UAF is
+triggered:
+==================================================================
+BUG: KASAN: use-after-free in ext4_ext_shift_extents+0x257/0x790
+Read of size 4 at addr ffff88819807a008 by task fallocate/8010
+CPU: 3 PID: 8010 Comm: fallocate Tainted: G            E     5.10.0+ #492
+Call Trace:
+ dump_stack+0x7d/0xa3
+ print_address_description.constprop.0+0x1e/0x220
+ kasan_report.cold+0x67/0x7f
+ ext4_ext_shift_extents+0x257/0x790
+ ext4_insert_range+0x5b6/0x700
+ ext4_fallocate+0x39e/0x3d0
+ vfs_fallocate+0x26f/0x470
+ ksys_fallocate+0x3a/0x70
+ __x64_sys_fallocate+0x4f/0x60
+ do_syscall_64+0x33/0x40
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+==================================================================
 
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Co-developed-by: Bo Jiao <Bo.Jiao@mediatek.com>
-Signed-off-by: Bo Jiao <Bo.Jiao@mediatek.com>
-Co-developed-by: Sujuan Chen <sujuan.chen@mediatek.com>
-Signed-off-by: Sujuan Chen <sujuan.chen@mediatek.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 8110437e5961 ("net: ethernet: mtk_eth_soc: fix resource leak in error path")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For right shifts, we can divide them into the following situations：
+
+1. When the first ee_block of ext4_extent_idx is greater than or equal to
+   start, make right shifts directly from the first ee_block.
+    1) If it is greater than start, we need to continue searching in the
+       previous ext4_extent_idx.
+    2) If it is equal to start, we can exit the loop (iterator=NULL).
+
+2. When the first ee_block of ext4_extent_idx is less than start, then
+   traverse from the last extent to find the first extent whose ee_block
+   is less than start.
+    1) If extent is still the last extent after traversal, it means that
+       the last ee_block of ext4_extent_idx is less than start, that is,
+       start is located in the hole between idx and (idx+1), so we can
+       exit the loop directly (break) without right shifts.
+    2) Otherwise, make right shifts at the corresponding position of the
+       found extent, and then exit the loop (iterator=NULL).
+
+Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
+Cc: stable@vger.kernel.org # v4.2+
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20220922120434.1294789-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c |  4 ++++
- drivers/net/ethernet/mediatek/mtk_eth_soc.h |  2 ++
- drivers/net/ethernet/mediatek/mtk_ppe.c     | 24 +++++++++++++++------
- drivers/net/ethernet/mediatek/mtk_ppe.h     |  2 +-
- 4 files changed, 25 insertions(+), 7 deletions(-)
+ fs/ext4/extents.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 83c636d44142..3db24ddd1261 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4210,6 +4210,7 @@ static const struct mtk_soc_data mt7621_data = {
- 	.required_clks = MT7621_CLKS_BITMAP,
- 	.required_pctl = false,
- 	.offload_version = 2,
-+	.hash_offset = 2,
- 	.txrx = {
- 		.txd_size = sizeof(struct mtk_tx_dma),
- 		.rxd_size = sizeof(struct mtk_rx_dma),
-@@ -4228,6 +4229,7 @@ static const struct mtk_soc_data mt7622_data = {
- 	.required_clks = MT7622_CLKS_BITMAP,
- 	.required_pctl = false,
- 	.offload_version = 2,
-+	.hash_offset = 2,
- 	.txrx = {
- 		.txd_size = sizeof(struct mtk_tx_dma),
- 		.rxd_size = sizeof(struct mtk_rx_dma),
-@@ -4245,6 +4247,7 @@ static const struct mtk_soc_data mt7623_data = {
- 	.required_clks = MT7623_CLKS_BITMAP,
- 	.required_pctl = true,
- 	.offload_version = 2,
-+	.hash_offset = 2,
- 	.txrx = {
- 		.txd_size = sizeof(struct mtk_tx_dma),
- 		.rxd_size = sizeof(struct mtk_rx_dma),
-@@ -4278,6 +4281,7 @@ static const struct mtk_soc_data mt7986_data = {
- 	.caps = MT7986_CAPS,
- 	.required_clks = MT7986_CLKS_BITMAP,
- 	.required_pctl = false,
-+	.hash_offset = 4,
- 	.txrx = {
- 		.txd_size = sizeof(struct mtk_tx_dma_v2),
- 		.rxd_size = sizeof(struct mtk_rx_dma_v2),
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 511752729f5c..26ed1c8b77c3 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -969,6 +969,7 @@ struct mtk_reg_map {
-  *				the target SoC
-  * @required_pctl		A bool value to show whether the SoC requires
-  *				the extra setup for those pins used by GMAC.
-+ * @hash_offset			Flow table hash offset.
-  * @txd_size			Tx DMA descriptor size.
-  * @rxd_size			Rx DMA descriptor size.
-  * @rx_irq_done_mask		Rx irq done register mask.
-@@ -983,6 +984,7 @@ struct mtk_soc_data {
- 	u32		required_clks;
- 	bool		required_pctl;
- 	u8		offload_version;
-+	u8		hash_offset;
- 	netdev_features_t hw_features;
- 	struct {
- 		u32	txd_size;
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
-index 148ea636ef97..6ecac461fd76 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
-@@ -88,7 +88,7 @@ static void mtk_ppe_cache_enable(struct mtk_ppe *ppe, bool enable)
- 		enable * MTK_PPE_CACHE_CTL_EN);
- }
- 
--static u32 mtk_ppe_hash_entry(struct mtk_foe_entry *e)
-+static u32 mtk_ppe_hash_entry(struct mtk_eth *eth, struct mtk_foe_entry *e)
- {
- 	u32 hv1, hv2, hv3;
- 	u32 hash;
-@@ -122,7 +122,7 @@ static u32 mtk_ppe_hash_entry(struct mtk_foe_entry *e)
- 	hash = (hash >> 24) | ((hash & 0xffffff) << 8);
- 	hash ^= hv1 ^ hv2 ^ hv3;
- 	hash ^= hash >> 16;
--	hash <<= 1;
-+	hash <<= (ffs(eth->soc->hash_offset) - 1);
- 	hash &= MTK_PPE_ENTRIES - 1;
- 
- 	return hash;
-@@ -540,15 +540,16 @@ mtk_foe_entry_commit_l2(struct mtk_ppe *ppe, struct mtk_flow_entry *entry)
- int mtk_foe_entry_commit(struct mtk_ppe *ppe, struct mtk_flow_entry *entry)
- {
- 	int type = FIELD_GET(MTK_FOE_IB1_PACKET_TYPE, entry->data.ib1);
-+	const struct mtk_soc_data *soc = ppe->eth->soc;
- 	u32 hash;
- 
- 	if (type == MTK_PPE_PKT_TYPE_BRIDGE)
- 		return mtk_foe_entry_commit_l2(ppe, entry);
- 
--	hash = mtk_ppe_hash_entry(&entry->data);
-+	hash = mtk_ppe_hash_entry(ppe->eth, &entry->data);
- 	entry->hash = 0xffff;
- 	spin_lock_bh(&ppe_lock);
--	hlist_add_head(&entry->list, &ppe->foe_flow[hash / 2]);
-+	hlist_add_head(&entry->list, &ppe->foe_flow[hash / soc->hash_offset]);
- 	spin_unlock_bh(&ppe_lock);
- 
- 	return 0;
-@@ -558,6 +559,7 @@ static void
- mtk_foe_entry_commit_subflow(struct mtk_ppe *ppe, struct mtk_flow_entry *entry,
- 			     u16 hash)
- {
-+	const struct mtk_soc_data *soc = ppe->eth->soc;
- 	struct mtk_flow_entry *flow_info;
- 	struct mtk_foe_entry foe, *hwe;
- 	struct mtk_foe_mac_info *l2;
-@@ -572,7 +574,8 @@ mtk_foe_entry_commit_subflow(struct mtk_ppe *ppe, struct mtk_flow_entry *entry,
- 	flow_info->l2_data.base_flow = entry;
- 	flow_info->type = MTK_FLOW_TYPE_L2_SUBFLOW;
- 	flow_info->hash = hash;
--	hlist_add_head(&flow_info->list, &ppe->foe_flow[hash / 2]);
-+	hlist_add_head(&flow_info->list,
-+		       &ppe->foe_flow[hash / soc->hash_offset]);
- 	hlist_add_head(&flow_info->l2_data.list, &entry->l2_flows);
- 
- 	hwe = &ppe->foe_table[hash];
-@@ -596,7 +599,8 @@ mtk_foe_entry_commit_subflow(struct mtk_ppe *ppe, struct mtk_flow_entry *entry,
- 
- void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
- {
--	struct hlist_head *head = &ppe->foe_flow[hash / 2];
-+	const struct mtk_soc_data *soc = ppe->eth->soc;
-+	struct hlist_head *head = &ppe->foe_flow[hash / soc->hash_offset];
- 	struct mtk_foe_entry *hwe = &ppe->foe_table[hash];
- 	struct mtk_flow_entry *entry;
- 	struct mtk_foe_bridge key = {};
-@@ -680,9 +684,11 @@ int mtk_foe_entry_idle_time(struct mtk_ppe *ppe, struct mtk_flow_entry *entry)
- struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base,
- 		 int version)
- {
-+	const struct mtk_soc_data *soc = eth->soc;
- 	struct device *dev = eth->dev;
- 	struct mtk_foe_entry *foe;
- 	struct mtk_ppe *ppe;
-+	u32 foe_flow_size;
- 
- 	ppe = devm_kzalloc(dev, sizeof(*ppe), GFP_KERNEL);
- 	if (!ppe)
-@@ -705,6 +711,12 @@ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base,
- 
- 	ppe->foe_table = foe;
- 
-+	foe_flow_size = (MTK_PPE_ENTRIES / soc->hash_offset) *
-+			sizeof(*ppe->foe_flow);
-+	ppe->foe_flow = devm_kzalloc(dev, foe_flow_size, GFP_KERNEL);
-+	if (!ppe->foe_flow)
-+		return NULL;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5183,6 +5183,7 @@ ext4_ext_shift_extents(struct inode *ino
+ 	 * and it is decreased till we reach start.
+ 	 */
+ again:
++	ret = 0;
+ 	if (SHIFT == SHIFT_LEFT)
+ 		iterator = &start;
+ 	else
+@@ -5226,14 +5227,21 @@ again:
+ 					ext4_ext_get_actual_len(extent);
+ 		} else {
+ 			extent = EXT_FIRST_EXTENT(path[depth].p_hdr);
+-			if (le32_to_cpu(extent->ee_block) > 0)
++			if (le32_to_cpu(extent->ee_block) > start)
+ 				*iterator = le32_to_cpu(extent->ee_block) - 1;
+-			else
+-				/* Beginning is reached, end of the loop */
++			else if (le32_to_cpu(extent->ee_block) == start)
+ 				iterator = NULL;
+-			/* Update path extent in case we need to stop */
+-			while (le32_to_cpu(extent->ee_block) < start)
++			else {
++				extent = EXT_LAST_EXTENT(path[depth].p_hdr);
++				while (le32_to_cpu(extent->ee_block) >= start)
++					extent--;
 +
- 	mtk_ppe_debugfs_init(ppe);
- 
- 	return ppe;
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
-index ceb7dfe281de..7a16503690f3 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.h
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
-@@ -270,7 +270,7 @@ struct mtk_ppe {
- 	dma_addr_t foe_phys;
- 
- 	u16 foe_check_time[MTK_PPE_ENTRIES];
--	struct hlist_head foe_flow[MTK_PPE_ENTRIES / 2];
-+	struct hlist_head *foe_flow;
- 
- 	struct rhashtable l2_flows;
- 
--- 
-2.35.1
-
++				if (extent == EXT_LAST_EXTENT(path[depth].p_hdr))
++					break;
++
+ 				extent++;
++				iterator = NULL;
++			}
+ 			path[depth].p_ext = extent;
+ 		}
+ 		ret = ext4_ext_shift_path_extents(path, shift, inode,
 
 
