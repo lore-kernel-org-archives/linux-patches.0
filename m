@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEFD79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BB0C433C1;
-	Wed, 30 Nov 2022 18:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71FBC433D6;
+	Wed, 30 Nov 2022 18:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833645;
-	bh=QI+SsreTKs5rxJGhRrfDkvSaD0nLatiDiVuNdJNGZKM=;
+	s=korg; t=1669833648;
+	bh=s3thEW0isS/uoxzi+LNN7ueMp0Fh87h9RAXlRApO5ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8lM8OSJjWNN8ZI36J3Dor6vdraOu1Qh1a4S2fNrCoNo0efNIQd2LqCAd/YXWi/3x
-	 5sAvuqPhx+r2INDM/reRssKXheFNLkPNhy2fd0zLn0/haWUzTH6uLu0ZgXJcTizdAm
-	 /Szpp5gIHjghYzIodSut9aGn1lqxyir2rUKpntxA=
+	b=OOxE5NooCdBSTKAqSjwpd1EUxOZ8ZQpw56N42gBKVRDNPF1w3wE/bzvLD5hRoJckZ
+	 nH48xc0+k6QvarAVLzB4ewDWO6S7YK/+K3KhGT+PUM8KnZKyqtVkUprIGtPBWb8o7B
+	 6d3kg1Ci/CXEjnND3GanyrT3hiqeG3ufhA3eiJCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 143/206] usb: cdnsp: fix issue with ZLP - added TD_SIZE = 1
-Date: Wed, 30 Nov 2022 19:23:15 +0100
-Message-Id: <20221130180536.676761686@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 144/206] ext4: fix use-after-free in ext4_ext_shift_extents
+Date: Wed, 30 Nov 2022 19:23:16 +0100
+Message-Id: <20221130180536.702399526@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -34,70 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 7a21b27aafa3edead79ed97e6f22236be6b9f447 upstream.
+commit f6b1a1cf1c3ee430d3f5e47847047ce789a690aa upstream.
 
-Patch modifies the TD_SIZE in TRB before ZLP TRB.
-The TD_SIZE in TRB before ZLP TRB must be set to 1 to force
-processing ZLP TRB by controller.
+If the starting position of our insert range happens to be in the hole
+between the two ext4_extent_idx, because the lblk of the ext4_extent in
+the previous ext4_extent_idx is always less than the start, which leads
+to the "extent" variable access across the boundary, the following UAF is
+triggered:
+==================================================================
+BUG: KASAN: use-after-free in ext4_ext_shift_extents+0x257/0x790
+Read of size 4 at addr ffff88819807a008 by task fallocate/8010
+CPU: 3 PID: 8010 Comm: fallocate Tainted: G            E     5.10.0+ #492
+Call Trace:
+ dump_stack+0x7d/0xa3
+ print_address_description.constprop.0+0x1e/0x220
+ kasan_report.cold+0x67/0x7f
+ ext4_ext_shift_extents+0x257/0x790
+ ext4_insert_range+0x5b6/0x700
+ ext4_fallocate+0x39e/0x3d0
+ vfs_fallocate+0x26f/0x470
+ ksys_fallocate+0x3a/0x70
+ __x64_sys_fallocate+0x4f/0x60
+ do_syscall_64+0x33/0x40
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+==================================================================
 
-cc: <stable@vger.kernel.org>
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20221115092218.421267-1-pawell@cadence.com
+For right shifts, we can divide them into the following situations：
+
+1. When the first ee_block of ext4_extent_idx is greater than or equal to
+   start, make right shifts directly from the first ee_block.
+    1) If it is greater than start, we need to continue searching in the
+       previous ext4_extent_idx.
+    2) If it is equal to start, we can exit the loop (iterator=NULL).
+
+2. When the first ee_block of ext4_extent_idx is less than start, then
+   traverse from the last extent to find the first extent whose ee_block
+   is less than start.
+    1) If extent is still the last extent after traversal, it means that
+       the last ee_block of ext4_extent_idx is less than start, that is,
+       start is located in the hole between idx and (idx+1), so we can
+       exit the loop directly (break) without right shifts.
+    2) Otherwise, make right shifts at the corresponding position of the
+       found extent, and then exit the loop (iterator=NULL).
+
+Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
+Cc: stable@vger.kernel.org # v4.2+
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20220922120434.1294789-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/ext4/extents.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -1763,10 +1763,15 @@ static u32 cdnsp_td_remainder(struct cdn
- 			      int trb_buff_len,
- 			      unsigned int td_total_len,
- 			      struct cdnsp_request *preq,
--			      bool more_trbs_coming)
-+			      bool more_trbs_coming,
-+			      bool zlp)
- {
- 	u32 maxp, total_packet_count;
- 
-+	/* Before ZLP driver needs set TD_SIZE = 1. */
-+	if (zlp)
-+		return 1;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5190,6 +5190,7 @@ ext4_ext_shift_extents(struct inode *ino
+ 	 * and it is decreased till we reach start.
+ 	 */
+ again:
++	ret = 0;
+ 	if (SHIFT == SHIFT_LEFT)
+ 		iterator = &start;
+ 	else
+@@ -5233,14 +5234,21 @@ again:
+ 					ext4_ext_get_actual_len(extent);
+ 		} else {
+ 			extent = EXT_FIRST_EXTENT(path[depth].p_hdr);
+-			if (le32_to_cpu(extent->ee_block) > 0)
++			if (le32_to_cpu(extent->ee_block) > start)
+ 				*iterator = le32_to_cpu(extent->ee_block) - 1;
+-			else
+-				/* Beginning is reached, end of the loop */
++			else if (le32_to_cpu(extent->ee_block) == start)
+ 				iterator = NULL;
+-			/* Update path extent in case we need to stop */
+-			while (le32_to_cpu(extent->ee_block) < start)
++			else {
++				extent = EXT_LAST_EXTENT(path[depth].p_hdr);
++				while (le32_to_cpu(extent->ee_block) >= start)
++					extent--;
 +
- 	/* One TRB with a zero-length data packet. */
- 	if (!more_trbs_coming || (transferred == 0 && trb_buff_len == 0) ||
- 	    trb_buff_len == td_total_len)
-@@ -1960,7 +1965,8 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
- 		/* Set the TRB length, TD size, and interrupter fields. */
- 		remainder = cdnsp_td_remainder(pdev, enqd_len, trb_buff_len,
- 					       full_len, preq,
--					       more_trbs_coming);
-+					       more_trbs_coming,
-+					       zero_len_trb);
- 
- 		length_field = TRB_LEN(trb_buff_len) | TRB_TD_SIZE(remainder) |
- 			TRB_INTR_TARGET(0);
-@@ -2025,7 +2031,7 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
- 
- 	if (preq->request.length > 0) {
- 		remainder = cdnsp_td_remainder(pdev, 0, preq->request.length,
--					       preq->request.length, preq, 1);
-+					       preq->request.length, preq, 1, 0);
- 
- 		length_field = TRB_LEN(preq->request.length) |
- 				TRB_TD_SIZE(remainder) | TRB_INTR_TARGET(0);
-@@ -2226,7 +2232,7 @@ static int cdnsp_queue_isoc_tx(struct cd
- 		/* Set the TRB length, TD size, & interrupter fields. */
- 		remainder = cdnsp_td_remainder(pdev, running_total,
- 					       trb_buff_len, td_len, preq,
--					       more_trbs_coming);
-+					       more_trbs_coming, 0);
- 
- 		length_field = TRB_LEN(trb_buff_len) | TRB_INTR_TARGET(0);
- 
++				if (extent == EXT_LAST_EXTENT(path[depth].p_hdr))
++					break;
++
+ 				extent++;
++				iterator = NULL;
++			}
+ 			path[depth].p_ext = extent;
+ 		}
+ 		ret = ext4_ext_shift_path_extents(path, shift, inode,
 
 
