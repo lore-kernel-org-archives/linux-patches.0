@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269A76FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B3FC433D6;
-	Wed, 30 Nov 2022 18:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E416FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0A4C433D6;
+	Wed, 30 Nov 2022 18:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832896;
-	bh=UV+0nHrSa7yUpsFqeWau9e23bfLf2BcKWsZVkITrMp4=;
+	s=korg; t=1669832898;
+	bh=9cYjmbsWxsYJhreDPMVUCgrau34hx8crnku4kVLqCZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IbXX1dP5EW2U+2WLDRhSDJKiHrmlQxEDts7s9STrbhmqemfkAxRWLAMkUAYRZzK/t
-	 uOf0m/MYDSz6QDLVbwSau56gVHk9tXH1RLrCUSpH4dsaDQgE8h+NlYQGE1GE76r/jT
-	 i44htWpig6i3OfK7Fvjp6VT7o1lnH36+QSIWAmck=
+	b=ejGuNQ0Em189BoFD4Nb7LAYh6a192hv1HcrH/EaCaZFHHuHavrmEVd3jvMHeQmv2M
+	 316avTCjXTrOptOw/D3NS0kbyNUlpri/f6aWtyQxplbLIi5CLgjjElPt4kymSoOq2j
+	 xq7nR2O4qB6i5haVfD8JJWuKWIWzGSa6vBjtTadg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Monroe <chad.monroe@smartrg.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/162] netfilter: flowtable_offload: add missing locking
-Date: Wed, 30 Nov 2022 19:22:40 +0100
-Message-Id: <20221130180530.645716293@linuxfoundation.org>
+Subject: [PATCH 5.10 080/162] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
+Date: Wed, 30 Nov 2022 19:22:41 +0100
+Message-Id: <20221130180530.671093834@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,53 +37,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit bcd9e3c1656d0f7dd9743598c65c3ae24efb38d0 ]
+[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
 
-nf_flow_table_block_setup and the driver TC_SETUP_FT call can modify the flow
-block cb list while they are being traversed elsewhere, causing a crash.
-Add a write lock around the calls to protect readers
+When connect() is called on a socket bound to the wildcard address,
+we change the socket's saddr to a local address.  If the socket
+fails to connect() to the destination, we have to reset the saddr.
 
-Fixes: c29f74e0df7a ("netfilter: nf_flow_table: hardware offload support")
-Reported-by: Chad Monroe <chad.monroe@smartrg.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+However, when an error occurs after inet_hash6?_connect() in
+(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
+the socket bound to the address.
+
+>From the user's point of view, whether saddr is reset or not varies
+with errno.  Let's fix this inconsistent behaviour.
+
+Note that after this patch, the repro [0] will trigger the WARN_ON()
+in inet_csk_get_port() again, but this patch is not buggy and rather
+fixes a bug papering over the bhash2's bug for which we need another
+fix.
+
+For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
+by this sequence:
+
+  s1 = socket()
+  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s1.bind(('127.0.0.1', 10000))
+  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
+  # or s1.connect(('127.0.0.1', 10000))
+
+  s2 = socket()
+  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s2.bind(('0.0.0.0', 10000))
+  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
+
+  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
+
+[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
+
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_offload.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/dccp/ipv4.c     | 2 ++
+ net/dccp/ipv6.c     | 2 ++
+ net/ipv4/tcp_ipv4.c | 2 ++
+ net/ipv6/tcp_ipv6.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index d1862782be45..28306cb66719 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -910,6 +910,7 @@ static int nf_flow_table_block_setup(struct nf_flowtable *flowtable,
- 	struct flow_block_cb *block_cb, *next;
- 	int err = 0;
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 2455b0c0e486..a2a8b952b3c5 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -130,6 +130,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * This unhashes the socket and releases the local port, if necessary.
+ 	 */
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 2be5c69824f9..21c61a9c3b15 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -957,6 +957,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
-+	down_write(&flowtable->flow_block_lock);
- 	switch (cmd) {
- 	case FLOW_BLOCK_BIND:
- 		list_splice(&bo->cb_list, &flowtable->flow_block.cb_list);
-@@ -924,6 +925,7 @@ static int nf_flow_table_block_setup(struct nf_flowtable *flowtable,
- 		WARN_ON_ONCE(1);
- 		err = -EOPNOTSUPP;
- 	}
-+	up_write(&flowtable->flow_block_lock);
+ late_failure:
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	__sk_dst_reset(sk);
+ failure:
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 31a8009f74ee..8bd7b1ec3b6a 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -322,6 +322,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * if necessary.
+ 	 */
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index a558dd9d177b..c599e14be414 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -339,6 +339,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
- 	return err;
- }
-@@ -980,7 +982,9 @@ static int nf_flow_table_offload_cmd(struct flow_block_offload *bo,
- 
- 	nf_flow_table_block_offload_init(bo, dev_net(dev), cmd, flowtable,
- 					 extack);
-+	down_write(&flowtable->flow_block_lock);
- 	err = dev->netdev_ops->ndo_setup_tc(dev, TC_SETUP_FT, bo);
-+	up_write(&flowtable->flow_block_lock);
- 	if (err < 0)
- 		return err;
- 
+ late_failure:
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ failure:
+ 	inet->inet_dport = 0;
+ 	sk->sk_route_caps = 0;
 -- 
 2.35.1
 
