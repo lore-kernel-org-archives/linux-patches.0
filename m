@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FD96FBD
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51151C433D7;
-	Wed, 30 Nov 2022 18:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34856FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2629DC433C1;
+	Wed, 30 Nov 2022 18:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832915;
-	bh=9xTXb2yhB4Wuygg0fvBxzrDmnQ/4y28Si1owxgAxoq0=;
+	s=korg; t=1669832921;
+	bh=KQCY3Is2onlKwYsNc3RXt1t2Y5VaEazYTKXHL7TbxNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZYR0eRB1XJTAogG5ROICCtVffeK0hvlDf9p89W2h9rDuCJR3FpWDzucIS1FXOFXO
-	 plPudJW4uPj3fTny/ZOynM1f3TNDB1FzPEIQFhHjwDw+LePkyiOyPkNYs3u7DB7RPI
-	 klbzbJwdXi2WjWyXwtFO/w29wr08u2FR88ZyD544=
+	b=W3Haz+aWD1pRtc+bIYYLddPdofc8PSF1QpAiyF2cVd42sE+SuqWMDgXBwl5dSQ/VS
+	 mIFDMzPG+lj22qUAx+VfbMUj5A7TVjoEKq8WyIV+98tHpb1IBg7jcrJXRA8BNOs2M9
+	 Lyf/REUyM8Is5AaB6h9nbRe62y5Kh9uwsOMImImw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Efremov <denis.e.efremov@oracle.com>,
-	Guenter Roeck <groeck@google.com>,
-	Martin Faltesek <mfaltesek@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/162] nfc: st-nci: fix memory leaks in EVT_TRANSACTION
-Date: Wed, 30 Nov 2022 19:22:47 +0100
-Message-Id: <20221130180530.827760286@linuxfoundation.org>
+Subject: [PATCH 5.10 088/162] s390/crashdump: fix TOD programmable field size
+Date: Wed, 30 Nov 2022 19:22:49 +0100
+Message-Id: <20221130180530.883520190@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,40 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Faltesek <mfaltesek@google.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 440f2ae9c9f06e26f5dcea697a53717fc61a318c ]
+[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
 
-Error path does not free previously allocated memory. Add devm_kfree() to
-the failure path.
+The size of the TOD programmable field was incorrectly increased from
+four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
+save area handling").
+This leads to an elf notes section NT_S390_TODPREG which has a size of
+eight instead of four bytes in case of kdump, however even worse is
+that the contents is incorrect: it is supposed to contain only the
+contents of the TOD programmable field, but in fact contains a mix of
+the TOD programmable field (32 bit upper bits) and parts of the CPU
+timer register (lower 32 bits).
 
-Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
-Reviewed-by: Guenter Roeck <groeck@google.com>
-Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
-Signed-off-by: Martin Faltesek <mfaltesek@google.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by simply changing the size of the todpreg field within the
+save area structure. This will implicitly also fix the size of the
+corresponding elf notes sections.
+
+This also gets rid of this compile time warning:
+
+in function ‘fortify_memcpy_chk’,
+    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
+./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
+   declared with attribute warning: detected read beyond size of field
+   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/crash_dump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index b1ee5a38f964..37d397aae9b9 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -340,8 +340,10 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
- 
- 		/* Check next byte is PARAMETERS tag (82) */
- 		if (skb->data[transaction->aid_len + 2] !=
--		    NFC_EVT_TRANSACTION_PARAMS_TAG)
-+		    NFC_EVT_TRANSACTION_PARAMS_TAG) {
-+			devm_kfree(dev, transaction);
- 			return -EPROTO;
-+		}
- 
- 		transaction->params_len = skb->data[transaction->aid_len + 3];
- 		memcpy(transaction->params, skb->data +
+diff --git a/arch/s390/kernel/crash_dump.c b/arch/s390/kernel/crash_dump.c
+index 76762dc67ca9..f292c3e10671 100644
+--- a/arch/s390/kernel/crash_dump.c
++++ b/arch/s390/kernel/crash_dump.c
+@@ -44,7 +44,7 @@ struct save_area {
+ 	u64 fprs[16];
+ 	u32 fpc;
+ 	u32 prefix;
+-	u64 todpreg;
++	u32 todpreg;
+ 	u64 timer;
+ 	u64 todcmp;
+ 	u64 vxrs_low[16];
 -- 
 2.35.1
 
