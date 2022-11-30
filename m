@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A929279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC76C433D6;
-	Wed, 30 Nov 2022 18:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AAD79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6E0C43144;
+	Wed, 30 Nov 2022 18:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833718;
-	bh=3VrYr1zEJ0SxNScNtndKFexlUKePXKAllikEjllQaz8=;
+	s=korg; t=1669833721;
+	bh=yo4vx89wcKuh+ZbIVTuXWYGqPrrUOxpS8eEJxC3Dpec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K73I9KcevZBpo45wB84TTlh63Zi5hVTZRbtuTv+38gnNrNnc/UaOXsUCIQPYY/kmR
-	 O+YqfBzd7v6wbgcKTbnhJGrnl8VtEqW07fKSasWtO4vnlVRhlnMOCrZbLCG6SqJ0GS
-	 iD4F2aO8oS5pmlcjqk8NEhgKUtk62UuFl0p426A0=
+	b=YQ4mHwwN0IUCmgj1A8ty/AztLerNSuPAC3kyDA+SzM49mJ+b9k60FgrIG6wh21Zov
+	 ql6aaq76EwRHE5S6xEncfHWupCOR3jnUnXu0frsFyMFZIKodBYo6xzqdzlM1pLmNTx
+	 aQ23fWToi2aXkPXKTeyddNA4FsIZQSKREOTkdSAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
-	Bastien Nocera <hadess@hadess.net>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/206] Input: goodix - try resetting the controller when no config is set
-Date: Wed, 30 Nov 2022 19:23:40 +0100
-Message-Id: <20221130180537.302571918@linuxfoundation.org>
+Subject: [PATCH 5.15 169/206] Input: soc_button_array - add use_low_level_irq module parameter
+Date: Wed, 30 Nov 2022 19:23:41 +0100
+Message-Id: <20221130180537.327372930@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -38,64 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit c7e37cc6240767f794678d11704935d49cc81d59 ]
+[ Upstream commit 8e9ada1d0e72b4737df400fe1bba48dc42a68df7 ]
 
-On ACPI systems (irq_pin_access_method == IRQ_PIN_ACCESS_ACPI_*) the driver
-does not reset the controller at probe time, because sometimes the system
-firmware loads a config and resetting might loose this config.
+It seems that the Windows drivers for the ACPI0011 soc_button_array
+device use low level triggered IRQs rather then using edge triggering.
 
-On the Nanote UMPC-01 device OTOH the config is in flash of the controller,
-the controller needs a reset to load this; and the system firmware does not
-reset the controller on a cold boot.
+Some ACPI tables depend on this, directly poking the GPIO controller's
+registers to clear the trigger type when closing a laptop's/2-in-1's lid
+and re-instating the trigger when opening the lid again.
 
-To fix the Nanote UMPC-01 touchscreen not working on a cold boot, try
-resetting the controller and then re-reading the config when encountering
-a config with 0 width/height/max_touch_num value and the controller has
-not already been reset by goodix_ts_probe().
+Linux sets the edge/level on which to trigger to both low+high since
+it is using edge type IRQs, the ACPI tables then ends up also setting
+the bit for level IRQs and since both low and high level have been
+selected by Linux we get an IRQ storm leading to soft lockups.
 
-This should be safe to do in general because normally we should never
-encounter a config with 0 width/height/max_touch_num. Doing this in
-general not only avoids the need for a DMI quirk, but also might help
-other systems.
+As a workaround for this the soc_button_array already contains
+a DMI quirk table with device models known to have this issue.
+
+Add a module parameter for this so that users can easily test if their
+device is affected too and so that they can use the module parameter
+as a workaround.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20221025122930.421377-2-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20221106215320.67109-1-hdegoede@redhat.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/goodix.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/input/misc/soc_button_array.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index 9a9deea51163..0b513fcd51d1 100644
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -1039,6 +1039,7 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
- 	input_set_abs_params(ts->input_dev, ABS_MT_WIDTH_MAJOR, 0, 255, 0, 0);
- 	input_set_abs_params(ts->input_dev, ABS_MT_TOUCH_MAJOR, 0, 255, 0, 0);
+diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
+index efffcf0ebd3b..46ba8218de99 100644
+--- a/drivers/input/misc/soc_button_array.c
++++ b/drivers/input/misc/soc_button_array.c
+@@ -18,6 +18,10 @@
+ #include <linux/gpio.h>
+ #include <linux/platform_device.h>
  
-+retry_read_config:
- 	/* Read configuration and apply touchscreen parameters */
- 	goodix_read_config(ts);
++static bool use_low_level_irq;
++module_param(use_low_level_irq, bool, 0444);
++MODULE_PARM_DESC(use_low_level_irq, "Use low-level triggered IRQ instead of edge triggered");
++
+ struct soc_button_info {
+ 	const char *name;
+ 	int acpi_index;
+@@ -164,7 +168,8 @@ soc_button_device_create(struct platform_device *pdev,
+ 		}
  
-@@ -1046,6 +1047,16 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
- 	touchscreen_parse_properties(ts->input_dev, true, &ts->prop);
- 
- 	if (!ts->prop.max_x || !ts->prop.max_y || !ts->max_touch_num) {
-+		if (!ts->reset_controller_at_probe &&
-+		    ts->irq_pin_access_method != IRQ_PIN_ACCESS_NONE) {
-+			dev_info(&ts->client->dev, "Config not set, resetting controller\n");
-+			/* Retry after a controller reset */
-+			ts->reset_controller_at_probe = true;
-+			error = goodix_reset(ts);
-+			if (error)
-+				return error;
-+			goto retry_read_config;
-+		}
- 		dev_err(&ts->client->dev,
- 			"Invalid config (%d, %d, %d), using defaults\n",
- 			ts->prop.max_x, ts->prop.max_y, ts->max_touch_num);
+ 		/* See dmi_use_low_level_irq[] comment */
+-		if (!autorepeat && dmi_check_system(dmi_use_low_level_irq)) {
++		if (!autorepeat && (use_low_level_irq ||
++				    dmi_check_system(dmi_use_low_level_irq))) {
+ 			irq_set_irq_type(irq, IRQ_TYPE_LEVEL_LOW);
+ 			gpio_keys[n_buttons].irq = irq;
+ 			gpio_keys[n_buttons].gpio = -ENOENT;
 -- 
 2.35.1
 
