@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38C86FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C9BC433D6;
-	Wed, 30 Nov 2022 18:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA6B6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BF3C433D6;
+	Wed, 30 Nov 2022 18:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832946;
-	bh=jg29UixbMaXOtHQO1/q+5au2IcDVATzvDZAKVEnJ5Jk=;
+	s=korg; t=1669832949;
+	bh=QadTQEQjb8BsBepPUwjSEhtiqOSTAQrx0tNUvsTDKnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FCC9qug8T5xjzf70CAS583Y7wmADxWHNKLLkBz8jeA8Zav1Qf6LvxbPrwIGOPsGqz
-	 9eWbUW12UuaBFW13YyO06H6ljgkyxUJjg7LoxpzTD6Qp7L5dqn69Oz6kQ3wDRrapjN
-	 iAB17ux3hm4OlCnwsV5u5HxvR3CJeRgs64HyJ8Nc=
+	b=OjLjfwzNRMQb6X+7l01zB5uJXaInmwGVueE/aKaVyO21QQ42pX1pesa/pi+1S6RrQ
+	 SDkx2W5ioMmcVS/MJsuqGdzjRvT4OY0vLyAwY2B2zECCjtIpjPq8ybTJtC8db9tYEy
+	 U3IH1biIqm89SirNjgm4qOf97/uApTYm4YKk7Cz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 096/162] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
-Date: Wed, 30 Nov 2022 19:22:57 +0100
-Message-Id: <20221130180531.096102454@linuxfoundation.org>
+	Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>,
+	Matt Ranostay <matt.ranostay@konsulko.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 097/162] iio: light: apds9960: fix wrong register for gesture gain
+Date: Wed, 30 Nov 2022 19:22:58 +0100
+Message-Id: <20221130180531.121965505@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -34,44 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam James <sam@gentoo.org>
+From: Alejandro Concepción Rodríguez <asconcepcion@acoro.eu>
 
-commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 upstream.
+commit 0aa60ff5d996d4ecdd4a62699c01f6d00f798d59 upstream.
 
-Add missing <linux/string.h> include for strcmp.
+Gesture Gain Control is in REG_GCONF_2 (0xa3), not in REG_CONFIG_2 (0x90).
 
-Clang 16 makes -Wimplicit-function-declaration an error by default.
-Unfortunately, out of tree modules may use this in configure scripts,
-which means failure might cause silent miscompilation or misconfiguration.
-
-For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
-or the (new) c-std-porting mailing list [3].
-
-[0] https://lwn.net/Articles/913505/
-[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
-[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
-[3] hosted at lists.linux.dev.
-
-[akpm@linux-foundation.org: remember "linux/"]
-Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
-Signed-off-by: Sam James <sam@gentoo.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: aff268cd532e ("iio: light: add APDS9960 ALS + promixity driver")
+Signed-off-by: Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>
+Acked-by: Matt Ranostay <matt.ranostay@konsulko.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/EaT-NKC-H4DNX5z4Lg9B6IWPD5TrTrYBr5DYB784wfDKQkTmzPXkoYqyUOrOgJH-xvTsEkFLcVkeAPZRUODEFI5dGziaWXwjpfBNLeNGfNc=@acoro.eu
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/license.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/light/apds9960.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/license.h
-+++ b/include/linux/license.h
-@@ -2,6 +2,8 @@
- #ifndef __LICENSE_H
- #define __LICENSE_H
+--- a/drivers/iio/light/apds9960.c
++++ b/drivers/iio/light/apds9960.c
+@@ -53,9 +53,6 @@
+ #define APDS9960_REG_CONTROL_PGAIN_MASK_SHIFT	2
  
-+#include <linux/string.h>
+ #define APDS9960_REG_CONFIG_2	0x90
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK	0x60
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT	5
+-
+ #define APDS9960_REG_ID		0x92
+ 
+ #define APDS9960_REG_STATUS	0x93
+@@ -76,6 +73,9 @@
+ #define APDS9960_REG_GCONF_1_GFIFO_THRES_MASK_SHIFT	6
+ 
+ #define APDS9960_REG_GCONF_2	0xa3
++#define APDS9960_REG_GCONF_2_GGAIN_MASK			0x60
++#define APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT		5
 +
- static inline int license_is_gpl_compatible(const char *license)
- {
- 	return (strcmp(license, "GPL") == 0
+ #define APDS9960_REG_GOFFSET_U	0xa4
+ #define APDS9960_REG_GOFFSET_D	0xa5
+ #define APDS9960_REG_GPULSE	0xa6
+@@ -395,9 +395,9 @@ static int apds9960_set_pxs_gain(struct
+ 			}
+ 
+ 			ret = regmap_update_bits(data->regmap,
+-				APDS9960_REG_CONFIG_2,
+-				APDS9960_REG_CONFIG_2_GGAIN_MASK,
+-				idx << APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT);
++				APDS9960_REG_GCONF_2,
++				APDS9960_REG_GCONF_2_GGAIN_MASK,
++				idx << APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT);
+ 			if (!ret)
+ 				data->pxs_gain = idx;
+ 			mutex_unlock(&data->lock);
 
 
