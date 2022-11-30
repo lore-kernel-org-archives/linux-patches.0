@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0726979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDB1C433D6;
-	Wed, 30 Nov 2022 18:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA32C433D6;
+	Wed, 30 Nov 2022 18:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833878;
-	bh=k15nZ2uswjyl282ZHx5wxlDg02vv/vOaRlw8yZJA0yY=;
+	s=korg; t=1669833881;
+	bh=Gm8JFboUmsArV9djczJYkmbVr/Q96kRmgCLB4KV9uVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQuOp0bKsHdvgpTHnS4TmVkewzEwS0z3fcU8+95sj2VK1V7cW9stb0jwS6G0Neyxk
-	 Y2AbjnNd+uW9Kc45YsigKxXTHlUdn2uZkvyvgX1a+q+nkSXGqez33YmVJPGZJ2Ibwg
-	 Uzg1BZscV1s6ywhwnTgUsrbkgxZly22/6AjLIhIE=
+	b=2wbE88LoY/l7ItnzatLHGSnYlA5Hw8pxEWTU2JRbEfSiB2Dvq7U/V0PRLZdxf3soE
+	 WVYXJdYWvngOo7FyihQBIap5d5LHCqAFtqpkMv7B791b1bpzUksehXKMmJzz4NSs1b
+	 KFpzMZW8Jn6z5T212zbRneGDb0VO5c4oclYkTrD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 047/289] af_key: Fix send_acquire race with pfkey_register
-Date: Wed, 30 Nov 2022 19:20:32 +0100
-Message-Id: <20221130180545.196053131@linuxfoundation.org>
+Subject: [PATCH 6.0 021/289] platform/x86: touchscreen_dmi: Add info for the RCA Cambio W101 v2 2-in-1
+Date: Wed, 30 Nov 2022 19:20:06 +0100
+Message-Id: <20221130180544.614745109@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -38,145 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 7f57f8165cb6d2c206e2b9ada53b9e2d6d8af42f ]
+[ Upstream commit 0df044b34bf33e7e35c32b3bf6747fde6279c162 ]
 
-The function pfkey_send_acquire may race with pfkey_register
-(which could even be in a different name space).  This may result
-in a buffer overrun.
+Add touchscreen info for the RCA Cambio W101 v2 2-in-1.
 
-Allocating the maximum amount of memory that could be used prevents
-this.
-
-Reported-by: syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Link: https://github.com/onitake/gsl-firmware/discussions/193
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221025141131.509211-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/platform/x86/touchscreen_dmi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index c85df5b958d2..213287814328 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -2905,7 +2905,7 @@ static int count_ah_combs(const struct xfrm_tmpl *t)
- 			break;
- 		if (!aalg->pfkey_supported)
- 			continue;
--		if (aalg_tmpl_set(t, aalg) && aalg->available)
-+		if (aalg_tmpl_set(t, aalg))
- 			sz += sizeof(struct sadb_comb);
- 	}
- 	return sz + sizeof(struct sadb_prop);
-@@ -2923,7 +2923,7 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
- 		if (!ealg->pfkey_supported)
- 			continue;
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index bc97bfa8e8a6..baae3120efd0 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -770,6 +770,22 @@ static const struct ts_dmi_data predia_basic_data = {
+ 	.properties	= predia_basic_props,
+ };
  
--		if (!(ealg_tmpl_set(t, ealg) && ealg->available))
-+		if (!(ealg_tmpl_set(t, ealg)))
- 			continue;
- 
- 		for (k = 1; ; k++) {
-@@ -2934,16 +2934,17 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
- 			if (!aalg->pfkey_supported)
- 				continue;
- 
--			if (aalg_tmpl_set(t, aalg) && aalg->available)
-+			if (aalg_tmpl_set(t, aalg))
- 				sz += sizeof(struct sadb_comb);
- 		}
- 	}
- 	return sz + sizeof(struct sadb_prop);
- }
- 
--static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
-+static int dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- {
- 	struct sadb_prop *p;
-+	int sz = 0;
- 	int i;
- 
- 	p = skb_put(skb, sizeof(struct sadb_prop));
-@@ -2971,13 +2972,17 @@ static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- 			c->sadb_comb_soft_addtime = 20*60*60;
- 			c->sadb_comb_hard_usetime = 8*60*60;
- 			c->sadb_comb_soft_usetime = 7*60*60;
-+			sz += sizeof(*c);
- 		}
- 	}
++static const struct property_entry rca_cambio_w101_v2_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
++	PROPERTY_ENTRY_U32("touchscreen-min-y", 20),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1644),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 874),
++	PROPERTY_ENTRY_BOOL("touchscreen-swapped-x-y"),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rca-cambio-w101-v2.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	{ }
++};
 +
-+	return sz + sizeof(*p);
- }
- 
--static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
-+static int dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- {
- 	struct sadb_prop *p;
-+	int sz = 0;
- 	int i, k;
- 
- 	p = skb_put(skb, sizeof(struct sadb_prop));
-@@ -3019,8 +3024,11 @@ static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
- 			c->sadb_comb_soft_addtime = 20*60*60;
- 			c->sadb_comb_hard_usetime = 8*60*60;
- 			c->sadb_comb_soft_usetime = 7*60*60;
-+			sz += sizeof(*c);
- 		}
- 	}
++static const struct ts_dmi_data rca_cambio_w101_v2_data = {
++	.acpi_name = "MSSL1680:00",
++	.properties = rca_cambio_w101_v2_props,
++};
 +
-+	return sz + sizeof(*p);
- }
- 
- static int key_notify_policy_expire(struct xfrm_policy *xp, const struct km_event *c)
-@@ -3150,6 +3158,7 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	struct sadb_x_sec_ctx *sec_ctx;
- 	struct xfrm_sec_ctx *xfrm_ctx;
- 	int ctx_size = 0;
-+	int alg_size = 0;
- 
- 	sockaddr_size = pfkey_sockaddr_size(x->props.family);
- 	if (!sockaddr_size)
-@@ -3161,16 +3170,16 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 		sizeof(struct sadb_x_policy);
- 
- 	if (x->id.proto == IPPROTO_AH)
--		size += count_ah_combs(t);
-+		alg_size = count_ah_combs(t);
- 	else if (x->id.proto == IPPROTO_ESP)
--		size += count_esp_combs(t);
-+		alg_size = count_esp_combs(t);
- 
- 	if ((xfrm_ctx = x->security)) {
- 		ctx_size = PFKEY_ALIGN8(xfrm_ctx->ctx_len);
- 		size +=  sizeof(struct sadb_x_sec_ctx) + ctx_size;
- 	}
- 
--	skb =  alloc_skb(size + 16, GFP_ATOMIC);
-+	skb =  alloc_skb(size + alg_size + 16, GFP_ATOMIC);
- 	if (skb == NULL)
- 		return -ENOMEM;
- 
-@@ -3224,10 +3233,13 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	pol->sadb_x_policy_priority = xp->priority;
- 
- 	/* Set sadb_comb's. */
-+	alg_size = 0;
- 	if (x->id.proto == IPPROTO_AH)
--		dump_ah_combs(skb, t);
-+		alg_size = dump_ah_combs(skb, t);
- 	else if (x->id.proto == IPPROTO_ESP)
--		dump_esp_combs(skb, t);
-+		alg_size = dump_esp_combs(skb, t);
-+
-+	hdr->sadb_msg_len += alg_size / 8;
- 
- 	/* security context */
- 	if (xfrm_ctx) {
+ static const struct property_entry rwc_nanote_p8_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-min-y", 46),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1728),
+@@ -1409,6 +1425,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_EXACT_MATCH(DMI_BOARD_NAME, "0E57"),
+ 		},
+ 	},
++	{
++		/* RCA Cambio W101 v2 */
++		/* https://github.com/onitake/gsl-firmware/discussions/193 */
++		.driver_data = (void *)&rca_cambio_w101_v2_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "RCA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "W101SA23T1"),
++		},
++	},
+ 	{
+ 		/* RWC NANOTE P8 */
+ 		.driver_data = (void *)&rwc_nanote_p8_data,
 -- 
 2.35.1
 
