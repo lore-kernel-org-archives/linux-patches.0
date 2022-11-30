@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456B779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8F6C433C1;
-	Wed, 30 Nov 2022 18:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081F779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE76C433D6;
+	Wed, 30 Nov 2022 18:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833933;
-	bh=aIm2H0w0AbMFu6hd3E1qbf70hMRpHFCJC1b8eZ5JeOY=;
+	s=korg; t=1669833935;
+	bh=cVdOIEB+97bkgazS7BZdOZ/ofZztyZOhoOSd+z7p9gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7+BbnnZwkIbXNDKVBCLV1rtwQTYGkSiUxR/I1u3BIbYh4zt9eCg36JlLFNWDc4xZ
-	 Dszov5xzZKcbfK2QTVOjwBX2V7n3tpLp9WI5jlWIGttDPKoyU3QGZjCBtEquFdb09T
-	 FivY3usnUFhPCG95lUIO4KLVNJ7QR3f76v81au4s=
+	b=2W+5lywIQ3bY4z8ZfJF9OM1bGiEHO+oVIE1Ag51T/NvsW+Zqx0sE2O9kIuRM2YQCs
+	 ytaVkXMlB6F1RZHAh26J08fJ0iIwCjAnTV5yYmmjvSoVFGa3OQmzum5e6dWZL+1TNq
+	 UsOzjUFb4kBtI3zMPonS3H3NmDbBjSpxRhU/0Cvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Haller <d.haller@phytec.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 050/289] ARM: dts: am335x-pcm-953: Define fixed regulators in root node
-Date: Wed, 30 Nov 2022 19:20:35 +0100
-Message-Id: <20221130180545.264086211@linuxfoundation.org>
+Subject: [PATCH 6.0 068/289] tee: optee: fix possible memory leak in optee_register_device()
+Date: Wed, 30 Nov 2022 19:20:53 +0100
+Message-Id: <20221130180545.671158467@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,64 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Haller <d.haller@phytec.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8950f345a67d8046d2472dd6ea81fa18ef5b4844 ]
+[ Upstream commit cce616e012c215d65c15e5d1afa73182dea49389 ]
 
-Remove the regulators node and define fixed regulators in the root node.
-Prevents the sdhci-omap driver from waiting in probe deferral forever
-because of the missing vmmc-supply and keeps am335x-pcm-953 consistent with
-the other Phytec AM335 boards.
+If device_register() returns error in optee_register_device(),
+the name allocated by dev_set_name() need be freed. As comment
+of device_register() says, it should use put_device() to give
+up the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup(),
+and optee_device is freed in optee_release_device().
 
-Fixes: bb07a829ec38 ("ARM: dts: Add support for phyCORE-AM335x PCM-953 carrier board")
-Signed-off-by: Dominik Haller <d.haller@phytec.de>
-Message-Id: <20221011143115.248003-1-d.haller@phytec.de>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+Fixes: c3fa24af9244 ("tee: optee: add TEE bus device enumeration support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am335x-pcm-953.dtsi | 28 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/tee/optee/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/am335x-pcm-953.dtsi b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-index dae448040a97..947497413977 100644
---- a/arch/arm/boot/dts/am335x-pcm-953.dtsi
-+++ b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-@@ -12,22 +12,20 @@ / {
- 	compatible = "phytec,am335x-pcm-953", "phytec,am335x-phycore-som", "ti,am33xx";
+diff --git a/drivers/tee/optee/device.c b/drivers/tee/optee/device.c
+index f3947be13e2e..64f0e047c23d 100644
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -80,7 +80,7 @@ static int optee_register_device(const uuid_t *device_uuid)
+ 	rc = device_register(&optee_device->dev);
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+-		kfree(optee_device);
++		put_device(&optee_device->dev);
+ 	}
  
- 	/* Power */
--	regulators {
--		vcc3v3: fixedregulator@1 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc3v3";
--			regulator-min-microvolt = <3300000>;
--			regulator-max-microvolt = <3300000>;
--			regulator-boot-on;
--		};
-+	vcc3v3: fixedregulator1 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc3v3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-boot-on;
-+	};
- 
--		vcc1v8: fixedregulator@2 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc1v8";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
--			regulator-boot-on;
--		};
-+	vcc1v8: fixedregulator2 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc1v8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-boot-on;
- 	};
- 
- 	/* User IO */
+ 	return rc;
 -- 
 2.35.1
 
