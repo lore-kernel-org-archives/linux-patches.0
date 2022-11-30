@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08DC79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE5FC433C1;
-	Wed, 30 Nov 2022 18:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E50679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F77C433C1;
+	Wed, 30 Nov 2022 18:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833318;
-	bh=ZAwl0ACzd3+G4lbTVx/VqBe3fLgAPj+hpodVWq+QNA8=;
+	s=korg; t=1669833322;
+	bh=7YUEQNDGA0vOxlITCjEjDaauczgHKcdjWHCvmreHK6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bb4GxVn4qAzTUVFv6X617snY2fKBm5UZIqzjb7IcxLatJ5mziltsyYly484HYNUK0
-	 O+xBTKJrDFmaAMK6A0Sw9SYa8bMnsxoyDnvSx4zQ2rRfNJT0WN3TNoqy0u68tbpGub
-	 3PlkmOM+EtmauXT7GmxSyiizw1BPBMYwuOwGjtg4=
+	b=uJv+JoSQINwRbeBxvlc/fQ/Irvr4Dp6x2iAOcNeRxZzRjYb3L5fLmMqXU9KY+8qA8
+	 fPN6ZnskFillOdUwKPNuCJtzQpvy/uvkoDA0MgLD4cJdHxPNZT/521evIIQJeMcJDN
+	 xEaII2Hm5tRhx/crhLh4W0gyx7cXa900bZFeHOCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Rudolf Polzer <rpolzer@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Simon Ser <contact@emersion.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/206] ASoC: max98373: Add checks for devm_kcalloc
-Date: Wed, 30 Nov 2022 19:21:56 +0100
-Message-Id: <20221130180534.627991536@linuxfoundation.org>
+Subject: [PATCH 5.15 047/206] drm: panel-orientation-quirks: Add quirk for Acer Switch V 10 (SW5-017)
+Date: Wed, 30 Nov 2022 19:21:39 +0100
+Message-Id: <20221130180534.196097800@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,38 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 60591bbf6d5eb44f275eb733943b7757325c1b60 ]
+[ Upstream commit 653f2d94fcda200b02bd79cea2e0307b26c1b747 ]
 
-As the devm_kcalloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference.
+Like the Acer Switch One 10 S1003, for which there already is a quirk,
+the Acer Switch V 10 (SW5-017) has a 800x1280 portrait screen mounted
+in the tablet part of a landscape oriented 2-in-1. Add a quirk for this.
 
-Fixes: 349dd23931d1 ("ASoC: max98373: don't access volatile registers in bias level off")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20221116082508.17418-1-jiasheng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Rudolf Polzer <rpolzer@google.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Simon Ser <contact@emersion.fr>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221106215052.66995-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98373-i2c.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/codecs/max98373-i2c.c b/sound/soc/codecs/max98373-i2c.c
-index ddb6436835d7..68497a4521dd 100644
---- a/sound/soc/codecs/max98373-i2c.c
-+++ b/sound/soc/codecs/max98373-i2c.c
-@@ -551,6 +551,10 @@ static int max98373_i2c_probe(struct i2c_client *i2c,
- 	max98373->cache = devm_kcalloc(&i2c->dev, max98373->cache_num,
- 				       sizeof(*max98373->cache),
- 				       GFP_KERNEL);
-+	if (!max98373->cache) {
-+		ret = -ENOMEM;
-+		return ret;
-+	}
- 
- 	for (i = 0; i < max98373->cache_num; i++)
- 		max98373->cache[i].reg = max98373_i2c_cache_reg[i];
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 083273736c83..ca0fefeaab20 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -128,6 +128,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "One S1003"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* Acer Switch V 10 (SW5-017) */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
++		},
++		.driver_data = (void *)&lcd800x1280_rightside_up,
+ 	}, {	/* Anbernic Win600 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Anbernic"),
 -- 
 2.35.1
 
