@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FD76FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF8FC433D6;
-	Wed, 30 Nov 2022 18:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0462A6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704D9C433D6;
+	Wed, 30 Nov 2022 18:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832972;
-	bh=aVEhu81fYiUkOZZElSTvCrp3+PHlarNZ2JC0hV8EM/0=;
+	s=korg; t=1669832974;
+	bh=vnxPLGCp658xJCMoxLSm84akS/VsHYUn41XMswurxuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=irm1sgaeUlLU7lik6mW1opmcqSeXVDe7/C/zEvmYbgZ91QgGnOh1+y7YAbiaR0mQv
-	 VYQXCWyKYdiyIr5X4IZhsRJNTJcj6HtIZ+OxO+9DdnhbSilJ1/bUSTxdLqnJVtsqpv
-	 P4tndKzSDBlodPlULEw3/PXB/DbLePORihd46pKY=
+	b=JiHTR9iR3eDktQ09+nduJEo2HnWCcLPb8p0eYxHFxLJU8FPRBOsV5h5sCmQoSwt1r
+	 AUKUhSBFmFXe9BacL9pohzKg4phdk5qdozG0Zb6DZIIiHbsOsk+n1ZQnm9Xr3m8enm
+	 8xOxyEamgtJEsR9OQ+NbYqrm7GXCNAJORZvKiUqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Li <set_pte_at@outlook.com>,
-	Andrew Davis <afd@ti.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/162] dma-buf: fix racing conflict of dma_heap_add()
-Date: Wed, 30 Nov 2022 19:22:39 +0100
-Message-Id: <20221130180530.619510450@linuxfoundation.org>
+Subject: [PATCH 5.10 069/162] tipc: set con sock in tipc_conn_alloc
+Date: Wed, 30 Nov 2022 19:22:30 +0100
+Message-Id: <20221130180530.376078511@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,89 +37,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dawei Li <set_pte_at@outlook.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 432e25902b9651622578c6248e549297d03caf66 ]
+[ Upstream commit 0e5d56c64afcd6fd2d132ea972605b66f8a7d3c4 ]
 
-Racing conflict could be:
-task A                 task B
-list_for_each_entry
-strcmp(h->name))
-                       list_for_each_entry
-                       strcmp(h->name)
-kzalloc                kzalloc
-......                 .....
-device_create          device_create
-list_add
-                       list_add
+A crash was reported by Wei Chen:
 
-The root cause is that task B has no idea about the fact someone
-else(A) has inserted heap with same name when it calls list_add,
-so a potential collision occurs.
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+  RIP: 0010:tipc_conn_close+0x12/0x100
+  Call Trace:
+   tipc_topsrv_exit_net+0x139/0x320
+   ops_exit_list.isra.9+0x49/0x80
+   cleanup_net+0x31a/0x540
+   process_one_work+0x3fa/0x9f0
+   worker_thread+0x42/0x5c0
 
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
-Signed-off-by: Dawei Li <set_pte_at@outlook.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/TYCP286MB2323873BBDF88020781FB986CA3B9@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+It was caused by !con->sock in tipc_conn_close(). In tipc_topsrv_accept(),
+con is allocated in conn_idr then its sock is set:
+
+  con = tipc_conn_alloc();
+  ...                    <----[1]
+  con->sock = newsock;
+
+If tipc_conn_close() is called in anytime of [1], the null-pointer-def
+is triggered by con->sock->sk due to con->sock is not yet set.
+
+This patch fixes it by moving the con->sock setting to tipc_conn_alloc()
+under s->idr_lock. So that con->sock can never be NULL when getting the
+con from s->conn_idr. It will be also safer to move con->server and flag
+CF_CONNECTED setting under s->idr_lock, as they should all be set before
+tipc_conn_alloc() is called.
+
+Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-heap.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ net/tipc/topsrv.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
-index 798f86fcd50f..dcbb023acc45 100644
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -209,18 +209,6 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
- 		return ERR_PTR(-EINVAL);
+diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
+index 561e709ae06a..dcd4afb3640f 100644
+--- a/net/tipc/topsrv.c
++++ b/net/tipc/topsrv.c
+@@ -176,7 +176,7 @@ static void tipc_conn_close(struct tipc_conn *con)
+ 	conn_put(con);
+ }
+ 
+-static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s)
++static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s, struct socket *sock)
+ {
+ 	struct tipc_conn *con;
+ 	int ret;
+@@ -202,10 +202,11 @@ static struct tipc_conn *tipc_conn_alloc(struct tipc_topsrv *s)
  	}
+ 	con->conid = ret;
+ 	s->idr_in_use++;
+-	spin_unlock_bh(&s->idr_lock);
  
--	/* check the name is unique */
--	mutex_lock(&heap_list_lock);
--	list_for_each_entry(h, &heap_list, list) {
--		if (!strcmp(h->name, exp_info->name)) {
--			mutex_unlock(&heap_list_lock);
--			pr_err("dma_heap: Already registered heap named %s\n",
--			       exp_info->name);
--			return ERR_PTR(-EINVAL);
--		}
--	}
--	mutex_unlock(&heap_list_lock);
--
- 	heap = kzalloc(sizeof(*heap), GFP_KERNEL);
- 	if (!heap)
- 		return ERR_PTR(-ENOMEM);
-@@ -259,13 +247,27 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
- 		err_ret = ERR_CAST(dev_ret);
- 		goto err2;
- 	}
--	/* Add heap to the list */
-+
- 	mutex_lock(&heap_list_lock);
-+	/* check the name is unique */
-+	list_for_each_entry(h, &heap_list, list) {
-+		if (!strcmp(h->name, exp_info->name)) {
-+			mutex_unlock(&heap_list_lock);
-+			pr_err("dma_heap: Already registered heap named %s\n",
-+			       exp_info->name);
-+			err_ret = ERR_PTR(-EINVAL);
-+			goto err3;
-+		}
-+	}
-+
-+	/* Add heap to the list */
- 	list_add(&heap->list, &heap_list);
- 	mutex_unlock(&heap_list_lock);
+ 	set_bit(CF_CONNECTED, &con->flags);
+ 	con->server = s;
++	con->sock = sock;
++	spin_unlock_bh(&s->idr_lock);
  
- 	return heap;
+ 	return con;
+ }
+@@ -467,7 +468,7 @@ static void tipc_topsrv_accept(struct work_struct *work)
+ 		ret = kernel_accept(lsock, &newsock, O_NONBLOCK);
+ 		if (ret < 0)
+ 			return;
+-		con = tipc_conn_alloc(srv);
++		con = tipc_conn_alloc(srv, newsock);
+ 		if (IS_ERR(con)) {
+ 			ret = PTR_ERR(con);
+ 			sock_release(newsock);
+@@ -479,7 +480,6 @@ static void tipc_topsrv_accept(struct work_struct *work)
+ 		newsk->sk_data_ready = tipc_conn_data_ready;
+ 		newsk->sk_write_space = tipc_conn_write_space;
+ 		newsk->sk_user_data = con;
+-		con->sock = newsock;
+ 		write_unlock_bh(&newsk->sk_callback_lock);
  
-+err3:
-+	device_destroy(dma_heap_class, heap->heap_devt);
- err2:
- 	cdev_del(&heap->heap_cdev);
- err1:
+ 		/* Wake up receive process in case of 'SYN+' message */
+@@ -577,12 +577,11 @@ bool tipc_topsrv_kern_subscr(struct net *net, u32 port, u32 type, u32 lower,
+ 	sub.filter = filter;
+ 	*(u64 *)&sub.usr_handle = (u64)port;
+ 
+-	con = tipc_conn_alloc(tipc_topsrv(net));
++	con = tipc_conn_alloc(tipc_topsrv(net), NULL);
+ 	if (IS_ERR(con))
+ 		return false;
+ 
+ 	*conid = con->conid;
+-	con->sock = NULL;
+ 	rc = tipc_conn_rcv_sub(tipc_topsrv(net), con, &sub);
+ 	if (rc >= 0)
+ 		return true;
 -- 
 2.35.1
 
