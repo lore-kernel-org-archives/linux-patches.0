@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA06B79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:43:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8DAC433C1;
-	Wed, 30 Nov 2022 18:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A602179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:43:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BA2C433D6;
+	Wed, 30 Nov 2022 18:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833799;
-	bh=2eIZVKRdyWTi+TtsyTwI17f7oViA0B4JHT34CtM4hVo=;
+	s=korg; t=1669833802;
+	bh=q/BJ+//GJyKpfHhVMqvr+v+pGDKuEWPiV8o1bGKTibg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VpRl7+ACcR0Mi86gQWSNZ8i3f9HJag12xWui/oaAGZF5qWZitrO5KsAGZ7iuk5DiM
-	 VEdfqfoji439hmtd0gRX9gNR3QlzokBMzB0RyFwR6MQ8YN5/UlgPPzl2m+wn5/I7oh
-	 qzLZq+g30T5twrPrgfN62RXKtD7/gN30Ydw533FM=
+	b=s9dslespamM758xZQjFZWmdmyl5SUFbr0i5MaZcoBdcIhK3wvgwjTBDoPJBHGu3EO
+	 iK23DeXA3lsnbByRWjIXBVoJv4NXsd8U5cFccHSC73hSJY2Rqp63fC3EBbVyw6OX4Z
+	 ZEukUIVdX09m9YfSXVjM4WrGbBYK0GvZxP8xczgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	taozhang <taozhang@bestechnic.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 003/289] ceph: fix NULL pointer dereference for req->r_session
-Date: Wed, 30 Nov 2022 19:19:48 +0100
-Message-Id: <20221130180544.191441145@linuxfoundation.org>
+Subject: [PATCH 6.0 004/289] wifi: mac80211: fix memory free error when registering wiphy fail
+Date: Wed, 30 Nov 2022 19:19:49 +0100
+Message-Id: <20221130180544.214601340@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,123 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: taozhang <taozhang@bestechnic.com>
 
-[ Upstream commit 5bd76b8de5b74fa941a6eafee87728a0fe072267 ]
+[ Upstream commit 50b2e8711462409cd368c41067405aa446dfa2af ]
 
-The request's r_session maybe changed when it was forwarded or
-resent. Both the forwarding and resending cases the requests will
-be protected by the mdsc->mutex.
+ieee80211_register_hw free the allocated cipher suites when
+registering wiphy fail, and ieee80211_free_hw will re-free it.
 
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2137955
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+set wiphy_ciphers_allocated to false after freeing allocated
+cipher suites.
+
+Signed-off-by: taozhang <taozhang@bestechnic.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 48 ++++++++++++------------------------------------
- 1 file changed, 12 insertions(+), 36 deletions(-)
+ net/mac80211/main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 1eb2ff0f6bd8..02b5c0ac5654 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -2247,7 +2247,6 @@ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
- 	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
- 	struct ceph_inode_info *ci = ceph_inode(inode);
- 	struct ceph_mds_request *req1 = NULL, *req2 = NULL;
--	unsigned int max_sessions;
- 	int ret, err = 0;
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 5b1c47ed0cc0..87e24bba4c67 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1437,8 +1437,10 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 	ieee80211_led_exit(local);
+ 	destroy_workqueue(local->workqueue);
+  fail_workqueue:
+-	if (local->wiphy_ciphers_allocated)
++	if (local->wiphy_ciphers_allocated) {
+ 		kfree(local->hw.wiphy->cipher_suites);
++		local->wiphy_ciphers_allocated = false;
++	}
+ 	kfree(local->int_scan_req);
+ 	return result;
+ }
+@@ -1506,8 +1508,10 @@ void ieee80211_free_hw(struct ieee80211_hw *hw)
+ 	mutex_destroy(&local->iflist_mtx);
+ 	mutex_destroy(&local->mtx);
  
- 	spin_lock(&ci->i_unsafe_lock);
-@@ -2265,28 +2264,24 @@ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
- 	}
- 	spin_unlock(&ci->i_unsafe_lock);
+-	if (local->wiphy_ciphers_allocated)
++	if (local->wiphy_ciphers_allocated) {
+ 		kfree(local->hw.wiphy->cipher_suites);
++		local->wiphy_ciphers_allocated = false;
++	}
  
--	/*
--	 * The mdsc->max_sessions is unlikely to be changed
--	 * mostly, here we will retry it by reallocating the
--	 * sessions array memory to get rid of the mdsc->mutex
--	 * lock.
--	 */
--retry:
--	max_sessions = mdsc->max_sessions;
--
- 	/*
- 	 * Trigger to flush the journal logs in all the relevant MDSes
- 	 * manually, or in the worst case we must wait at most 5 seconds
- 	 * to wait the journal logs to be flushed by the MDSes periodically.
- 	 */
--	if ((req1 || req2) && likely(max_sessions)) {
--		struct ceph_mds_session **sessions = NULL;
--		struct ceph_mds_session *s;
-+	if (req1 || req2) {
- 		struct ceph_mds_request *req;
-+		struct ceph_mds_session **sessions;
-+		struct ceph_mds_session *s;
-+		unsigned int max_sessions;
- 		int i;
- 
-+		mutex_lock(&mdsc->mutex);
-+		max_sessions = mdsc->max_sessions;
-+
- 		sessions = kcalloc(max_sessions, sizeof(s), GFP_KERNEL);
- 		if (!sessions) {
-+			mutex_unlock(&mdsc->mutex);
- 			err = -ENOMEM;
- 			goto out;
- 		}
-@@ -2298,16 +2293,6 @@ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
- 				s = req->r_session;
- 				if (!s)
- 					continue;
--				if (unlikely(s->s_mds >= max_sessions)) {
--					spin_unlock(&ci->i_unsafe_lock);
--					for (i = 0; i < max_sessions; i++) {
--						s = sessions[i];
--						if (s)
--							ceph_put_mds_session(s);
--					}
--					kfree(sessions);
--					goto retry;
--				}
- 				if (!sessions[s->s_mds]) {
- 					s = ceph_get_mds_session(s);
- 					sessions[s->s_mds] = s;
-@@ -2320,16 +2305,6 @@ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
- 				s = req->r_session;
- 				if (!s)
- 					continue;
--				if (unlikely(s->s_mds >= max_sessions)) {
--					spin_unlock(&ci->i_unsafe_lock);
--					for (i = 0; i < max_sessions; i++) {
--						s = sessions[i];
--						if (s)
--							ceph_put_mds_session(s);
--					}
--					kfree(sessions);
--					goto retry;
--				}
- 				if (!sessions[s->s_mds]) {
- 					s = ceph_get_mds_session(s);
- 					sessions[s->s_mds] = s;
-@@ -2341,11 +2316,12 @@ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
- 		/* the auth MDS */
- 		spin_lock(&ci->i_ceph_lock);
- 		if (ci->i_auth_cap) {
--		      s = ci->i_auth_cap->session;
--		      if (!sessions[s->s_mds])
--			      sessions[s->s_mds] = ceph_get_mds_session(s);
-+			s = ci->i_auth_cap->session;
-+			if (!sessions[s->s_mds])
-+				sessions[s->s_mds] = ceph_get_mds_session(s);
- 		}
- 		spin_unlock(&ci->i_ceph_lock);
-+		mutex_unlock(&mdsc->mutex);
- 
- 		/* send flush mdlog request to MDSes */
- 		for (i = 0; i < max_sessions; i++) {
+ 	idr_for_each(&local->ack_status_frames,
+ 		     ieee80211_free_ack_frame, NULL);
 -- 
 2.35.1
 
