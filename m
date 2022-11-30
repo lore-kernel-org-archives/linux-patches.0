@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3F679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F086C433D7;
-	Wed, 30 Nov 2022 18:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7CE79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E329DC433D7;
+	Wed, 30 Nov 2022 18:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834242;
-	bh=HcP+71BM3SnGxy9OqCi44C8XtNSsKtqVG0uhMhAkcNU=;
+	s=korg; t=1669834245;
+	bh=wX7lGQL8mYk2QdV4CKo/tO1NpZkiSpAAKnmqceBums0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qj++1DQsL446iN3gZLMxA53vk2IXB6wlnM4SMFaLPsQyMF+gJjZZwXcreCxYswHR/
-	 YjvB1Z+rWmNgPMDDWwyouZsaKjbGQvwUji+5m+YMq88JwMOuoLr9FMQJ59EkycT8T9
-	 6KvN6gzjU6TQLF/aQywm3DZ7xuSd6NRIhamooV2o=
+	b=GBCKcQC+Zsytr6NjbOYgPmtYNH3fTydAALeyYKPBt/TgOJRD8/0s6a3eKvHKrqRvb
+	 RcgSAalWZsF8cw1eayEv2FJRRs19fZ2Qc0PD4nZOsnMZBG8VxqqH9mqHaCTJ6YDJEY
+	 48IWRlrQ3r0F04Ri0InReta825DWqjGRs7LScHbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	David Jander <david@protonic.nl>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 182/289] spi: spi-imx: spi_imx_transfer_one(): check for DMA transfer first
-Date: Wed, 30 Nov 2022 19:22:47 +0100
-Message-Id: <20221130180548.253428826@linuxfoundation.org>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 183/289] init/Kconfig: fix CC_HAS_ASM_GOTO_TIED_OUTPUT test with dash
+Date: Wed, 30 Nov 2022 19:22:48 +0100
+Message-Id: <20221130180548.275417039@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,77 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-commit e85e9e0d8cb759013d6474011c227f92e442d746 upstream.
+[ Upstream commit 534bd70374d646f17e2cebe0e6e4cdd478ce4f0c ]
 
-The SPI framework checks for each transfer (with the struct
-spi_controller::can_dma callback) whether the driver wants to use DMA
-for the transfer. If the driver returns true, the SPI framework will
-map the transfer's data to the device, start the actual transfer and
-map the data back.
+When using dash as /bin/sh, the CC_HAS_ASM_GOTO_TIED_OUTPUT test fails
+with a syntax error which is not the one we are looking for:
 
-In commit 07e759387788 ("spi: spi-imx: add PIO polling support") the
-spi-imx driver's spi_imx_transfer_one() function was extended. If the
-estimated duration of a transfer does not exceed a configurable
-duration, a polling transfer function is used. This check happens
-before checking if the driver decided earlier for a DMA transfer.
+<stdin>: In function ‘foo’:
+<stdin>:1:29: warning: missing terminating " character
+<stdin>:1:29: error: missing terminating " character
+<stdin>:2:5: error: expected ‘:’ before ‘+’ token
+<stdin>:2:7: warning: missing terminating " character
+<stdin>:2:7: error: missing terminating " character
+<stdin>:2:5: error: expected declaration or statement at end of input
 
-If spi_imx_can_dma() decided to use a DMA transfer, and the user
-configured a big maximum polling duration, a polling transfer will be
-used. The DMA unmap after the transfer destroys the transferred data.
+Removing '\n' solves this.
 
-To fix this problem check in spi_imx_transfer_one() if the driver
-decided for DMA transfer first, then check the limits for a polling
-transfer.
-
-Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
-Link: https://lore.kernel.org/all/20221111003032.82371-1-festevam@gmail.com
-Reported-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reported-by: Fabio Estevam <festevam@gmail.com>
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Cc: David Jander <david@protonic.nl>
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://lore.kernel.org/r/20221116164930.855362-1-mkl@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1aa0e8b144b6 ("Kconfig: Add option for asm goto w/ tied outputs to workaround clang-13 bug")
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ init/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 468ce0a2b282..d209930069cf 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1606,6 +1606,13 @@ static int spi_imx_transfer_one(struct spi_controller *controller,
- 	if (spi_imx->slave_mode)
- 		return spi_imx_pio_transfer_slave(spi, transfer);
+diff --git a/init/Kconfig b/init/Kconfig
+index 532362fcfe31..d1d779d6ba43 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -76,7 +76,7 @@ config CC_HAS_ASM_GOTO_OUTPUT
+ config CC_HAS_ASM_GOTO_TIED_OUTPUT
+ 	depends on CC_HAS_ASM_GOTO_OUTPUT
+ 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
+-	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .\n": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
++	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
  
-+	/*
-+	 * If we decided in spi_imx_can_dma() that we want to do a DMA
-+	 * transfer, the SPI transfer has already been mapped, so we
-+	 * have to do the DMA transfer here.
-+	 */
-+	if (spi_imx->usedma)
-+		return spi_imx_dma_transfer(spi_imx, transfer);
- 	/*
- 	 * Calculate the estimated time in us the transfer runs. Find
- 	 * the number of Hz per byte per polling limit.
-@@ -1617,9 +1624,6 @@ static int spi_imx_transfer_one(struct spi_controller *controller,
- 	if (transfer->len < byte_limit)
- 		return spi_imx_poll_transfer(spi, transfer);
- 
--	if (spi_imx->usedma)
--		return spi_imx_dma_transfer(spi_imx, transfer);
--
- 	return spi_imx_pio_transfer(spi, transfer);
- }
- 
+ config TOOLS_SUPPORT_RELR
+ 	def_bool $(success,env "CC=$(CC)" "LD=$(LD)" "NM=$(NM)" "OBJCOPY=$(OBJCOPY)" $(srctree)/scripts/tools-support-relr.sh)
 -- 
-2.38.1
+2.35.1
 
 
 
