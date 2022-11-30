@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A550879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B24C433C1;
-	Wed, 30 Nov 2022 18:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FBBC433C1;
+	Wed, 30 Nov 2022 18:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834139;
-	bh=W//OmPfWRKXAljE4o/NC2tKrnsZmXO+aVCDxGZET3oI=;
+	s=korg; t=1669834142;
+	bh=b9+Z4gmbwmch9Sr8pgKO1b6zA82QYs/8fxDBm15Lap8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHgu/Xdn/yN0dJSvpUB2mlFaXgycLTMUOaA5e3aEl3FLJFNEnru7f6WprvFjtqCDM
-	 xjOxy12xjhpLVec3/85Jecf3BEMICpwXw0MbEFwFjtFRIUoFIA8wSYi15yDL8vfoTf
-	 9mKGrsqdPaF4a3ljZJ8MIc8Ftvk9mlozrB0j+Imc=
+	b=FJ0S5SzYY1kWd8YEN5rB8J2gceyukqnrUqrMcBexFzvXIJ0AZMlVlxk08B8kYdKnd
+	 RuepYVva0nGYWEZw5wB5BQ4hZhmsT1emr+THv83J2hA/P0dEB7TF3bJA+zGEsVNWhy
+	 SwmOlKbC34D3ItvkKQ1lTo8fSCF7tpAlyVHJG3Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roth Mark <rothm@mail.com>,
-	Zhihao Chen <chenzhihao@meizu.com>,
-	Thomas Jarosch <thomas.jarosch@intra2net.com>,
-	Antony Antony <antony.antony@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Eran Ben Elisha <eranbe@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 117/289] xfrm: Fix oops in __xfrm_state_delete()
-Date: Wed, 30 Nov 2022 19:21:42 +0100
-Message-Id: <20221130180546.791932880@linuxfoundation.org>
+Subject: [PATCH 6.0 108/289] net/mlx5: Fix handling of entry refcount when command is not issued to FW
+Date: Wed, 30 Nov 2022 19:21:33 +0100
+Message-Id: <20221130180546.588390699@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -39,117 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit b97df039a68b2f3e848e238df5d5d06343ea497b ]
+[ Upstream commit aaf2e65cac7f2e1ae729c2fbc849091df9699f96 ]
 
-Kernel 5.14 added a new "byseq" index to speed
-up xfrm_state lookups by sequence number in commit
-fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
+In case command interface is down, or the command is not allowed, driver
+did not increment the entry refcount, but might have decrement as part
+of forced completion handling.
 
-While the patch was thorough, the function pfkey_send_new_mapping()
-in net/af_key.c also modifies x->km.seq and never added
-the current xfrm_state to the "byseq" index.
+Fix that by always increment and decrement the refcount to make it
+symmetric for all flows.
 
-This leads to the following kernel Ooops:
-    BUG: kernel NULL pointer dereference, address: 0000000000000000
-    ..
-    RIP: 0010:__xfrm_state_delete+0xc9/0x1c0
-    ..
-    Call Trace:
-    <TASK>
-    xfrm_state_delete+0x1e/0x40
-    xfrm_del_sa+0xb0/0x110 [xfrm_user]
-    xfrm_user_rcv_msg+0x12d/0x270 [xfrm_user]
-    ? remove_entity_load_avg+0x8a/0xa0
-    ? copy_to_user_state_extra+0x580/0x580 [xfrm_user]
-    netlink_rcv_skb+0x51/0x100
-    xfrm_netlink_rcv+0x30/0x50 [xfrm_user]
-    netlink_unicast+0x1a6/0x270
-    netlink_sendmsg+0x22a/0x480
-    __sys_sendto+0x1a6/0x1c0
-    ? __audit_syscall_entry+0xd8/0x130
-    ? __audit_syscall_exit+0x249/0x2b0
-    __x64_sys_sendto+0x23/0x30
-    do_syscall_64+0x3a/0x90
-    entry_SYSCALL_64_after_hwframe+0x61/0xcb
-
-Exact location of the crash in __xfrm_state_delete():
-    if (x->km.seq)
-        hlist_del_rcu(&x->byseq);
-
-The hlist_node "byseq" was never populated.
-
-The bug only triggers if a new NAT traversal mapping (changed IP or port)
-is detected in esp_input_done2() / esp6_input_done2(), which in turn
-indirectly calls pfkey_send_new_mapping() *if* the kernel is compiled
-with CONFIG_NET_KEY and "af_key" is active.
-
-The PF_KEYv2 message SADB_X_NAT_T_NEW_MAPPING is not part of RFC 2367.
-Various implementations have been examined how they handle
-the "sadb_msg_seq" header field:
-
-- racoon (Android): does not process SADB_X_NAT_T_NEW_MAPPING
-- strongswan: does not care about sadb_msg_seq
-- openswan: does not care about sadb_msg_seq
-
-There is no standard how PF_KEYv2 sadb_msg_seq should be populated
-for SADB_X_NAT_T_NEW_MAPPING and it's not used in popular
-implementations either. Herbert Xu suggested we should just
-use the current km.seq value as is. This fixes the root cause
-of the oops since we no longer modify km.seq itself.
-
-The update of "km.seq" looks like a copy'n'paste error
-from pfkey_send_acquire(). SADB_ACQUIRE must indeed assign a unique km.seq
-number according to RFC 2367. It has been verified that code paths
-involving pfkey_send_acquire() don't cause the same Oops.
-
-PF_KEYv2 SADB_X_NAT_T_NEW_MAPPING support was originally added here:
-    https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
-
-    commit cbc3488685b20e7b2a98ad387a1a816aada569d8
-    Author:     Derek Atkins <derek@ihtfp.com>
-    AuthorDate: Wed Apr 2 13:21:02 2003 -0800
-
-        [IPSEC]: Implement UDP Encapsulation framework.
-
-        In particular, implement ESPinUDP encapsulation for IPsec
-        Nat Traversal.
-
-A note on triggering the bug: I was not able to trigger it using VMs.
-There is one VPN using a high latency link on our production VPN server
-that triggered it like once a day though.
-
-Link: https://github.com/strongswan/strongswan/issues/992
-Link: https://lore.kernel.org/netdev/00959f33ee52c4b3b0084d42c430418e502db554.1652340703.git.antony.antony@secunet.com/T/
-Link: https://lore.kernel.org/netdev/20221027142455.3975224-1-chenzhihao@meizu.com/T/
-
-Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
-Reported-by: Roth Mark <rothm@mail.com>
-Reported-by: Zhihao Chen <chenzhihao@meizu.com>
-Tested-by: Roth Mark <rothm@mail.com>
-Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Acked-by: Antony Antony <antony.antony@secunet.com>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 50b2412b7e78 ("net/mlx5: Avoid possible free of command entry while timeout comp handler")
+Signed-off-by: Eran Ben Elisha <eranbe@nvidia.com>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reported-by: Jack Wang <jinpu.wang@ionos.com>
+Tested-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index 213287814328..95edcbedf6ef 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -3394,7 +3394,7 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	hdr->sadb_msg_len = size / sizeof(uint64_t);
- 	hdr->sadb_msg_errno = 0;
- 	hdr->sadb_msg_reserved = 0;
--	hdr->sadb_msg_seq = x->km.seq = get_acqseq();
-+	hdr->sadb_msg_seq = x->km.seq;
- 	hdr->sadb_msg_pid = 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index df3e284ca5c6..74bd05e5dda2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1005,6 +1005,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 		cmd_ent_get(ent);
+ 	set_bit(MLX5_CMD_ENT_STATE_PENDING_COMP, &ent->state);
  
- 	/* SA */
++	cmd_ent_get(ent); /* for the _real_ FW event on completion */
+ 	/* Skip sending command to fw if internal error */
+ 	if (mlx5_cmd_is_down(dev) || !opcode_allowed(&dev->cmd, ent->op)) {
+ 		ent->ret = -ENXIO;
+@@ -1012,7 +1013,6 @@ static void cmd_work_handler(struct work_struct *work)
+ 		return;
+ 	}
+ 
+-	cmd_ent_get(ent); /* for the _real_ FW event on completion */
+ 	/* ring doorbell after the descriptor is valid */
+ 	mlx5_core_dbg(dev, "writing 0x%x to command doorbell\n", 1 << ent->idx);
+ 	wmb();
+@@ -1661,8 +1661,8 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
+ 				cmd_ent_put(ent); /* timeout work was canceled */
+ 
+ 			if (!forced || /* Real FW completion */
+-			    pci_channel_offline(dev->pdev) || /* FW is inaccessible */
+-			    dev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)
++			     mlx5_cmd_is_down(dev) || /* No real FW completion is expected */
++			     !opcode_allowed(cmd, ent->op))
+ 				cmd_ent_put(ent);
+ 
+ 			ent->ts2 = ktime_get_ns();
 -- 
 2.35.1
 
