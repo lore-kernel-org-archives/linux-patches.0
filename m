@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4E279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E79C433D6;
-	Wed, 30 Nov 2022 18:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06C079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CECC433C1;
+	Wed, 30 Nov 2022 18:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834270;
-	bh=RYiL9DUddLCPgw9J51Sa4l2kovyOTMBBMqb6P5ZaWec=;
+	s=korg; t=1669834272;
+	bh=Dl9iN3/Uw59lY5QvvZ+rLQGrSv0FcMLxreELFTDdWnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLfA3RiVNGIuGp+nBCFP8FBU4DFyFaSn8judcswlMnbhxYu8eyPNEt1UJtjKU0TjT
-	 srmzm9mbIjfK0z1qC/UWw2vUhabxVG8SRQvyaXa2CF7suVxcJMkUGEUGyNSey83omx
-	 okE9bTxDY4uvOP+GCmrFgvHZdlHwWYV1NkHj/EjI=
+	b=qaTJA16s5VEEr1mvDztczZ1BY8QRIDTRRNidkV46k3TTu7Ksux7tI8EOpaltTHpRg
+	 JDTxFiwn5zgYsydgsjOd6Ha8A7IiCCYrHwwpyIHbdcgiMQRe96NaKWJ5/RJ63c0PuQ
+	 WumHIX+tejGIxTVJC445QAqzuQKdBY0/0IvnAQvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 191/289] drm/amd/display: Fix calculation for cursor CAB allocation
-Date: Wed, 30 Nov 2022 19:22:56 +0100
-Message-Id: <20221130180548.453712583@linuxfoundation.org>
+Subject: [PATCH 6.0 192/289] usb: dwc3: gadget: conditionally remove requests
+Date: Wed, 30 Nov 2022 19:22:57 +0100
+Message-Id: <20221130180548.477097968@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -38,70 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Shen <george.shen@amd.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit 4d285241230676ba8b888701b89684b4e0360fcc ]
+[ Upstream commit b44c0e7fef51ee7e8ca8c6efbf706f5613787100 ]
 
-[Why]
-The cursor size (in memory) is currently incorrectly calculated,
-resulting not enough CAB being allocated for static screen cursor
-in MALL refresh. This results in cursor image corruption.
+The functions stop_active_transfers and ep_disable are both calling
+remove_requests. This functions in both cases will giveback the requests
+with status ESHUTDOWN, which also represents an physical disconnection.
+For ep_disable this is not true. This patch adds the status parameter to
+remove_requests and sets the status to ECONNRESET on ep_disable.
 
-[How]
-Use cursor pitch instead of cursor width when calculating cursor size.
-Update num cache lines calculation to use the result of the cursor size
-calculation instead of manually recalculating again.
-
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Link: https://lore.kernel.org/r/20220720213523.1055897-1-m.grzeschik@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f90f5afd5083 ("usb: dwc3: gadget: Clear ep descriptor last")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/usb/dwc3/gadget.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index 84a20ce9bd36..bbc0bfbec6c4 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -284,8 +284,7 @@ static uint32_t dcn32_calculate_cab_allocation(struct dc *dc, struct dc_state *c
- 			using the max for calculation */
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 0ed9826a4c47..ffff6f41d2ac 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -965,7 +965,7 @@ static int __dwc3_gadget_ep_enable(struct dwc3_ep *dep, unsigned int action)
+ 	return 0;
+ }
  
- 		if (hubp->curs_attr.width > 0) {
--				// Round cursor width to next multiple of 64
--				cursor_size = (((hubp->curs_attr.width + 63) / 64) * 64) * hubp->curs_attr.height;
-+				cursor_size = hubp->curs_attr.pitch * hubp->curs_attr.height;
+-static void dwc3_remove_requests(struct dwc3 *dwc, struct dwc3_ep *dep)
++static void dwc3_remove_requests(struct dwc3 *dwc, struct dwc3_ep *dep, int status)
+ {
+ 	struct dwc3_request		*req;
  
- 				switch (pipe->stream->cursor_attributes.color_format) {
- 				case CURSOR_MODE_MONO:
-@@ -310,9 +309,9 @@ static uint32_t dcn32_calculate_cab_allocation(struct dc *dc, struct dc_state *c
- 						cursor_size > 16384) {
- 					/* cursor_num_mblk = CEILING(num_cursors*cursor_width*cursor_width*cursor_Bpe/mblk_bytes, 1)
- 					 */
--					cache_lines_used += (((hubp->curs_attr.width * hubp->curs_attr.height * cursor_bpp +
--										DCN3_2_MALL_MBLK_SIZE_BYTES - 1) / DCN3_2_MALL_MBLK_SIZE_BYTES) *
--										DCN3_2_MALL_MBLK_SIZE_BYTES) / dc->caps.cache_line_size + 2;
-+					cache_lines_used += (((cursor_size + DCN3_2_MALL_MBLK_SIZE_BYTES - 1) /
-+							DCN3_2_MALL_MBLK_SIZE_BYTES) * DCN3_2_MALL_MBLK_SIZE_BYTES) /
-+							dc->caps.cache_line_size + 2;
- 				}
- 				break;
- 			}
-@@ -730,10 +729,7 @@ void dcn32_update_mall_sel(struct dc *dc, struct dc_state *context)
- 		struct hubp *hubp = pipe->plane_res.hubp;
+@@ -975,19 +975,19 @@ static void dwc3_remove_requests(struct dwc3 *dwc, struct dwc3_ep *dep)
+ 	while (!list_empty(&dep->started_list)) {
+ 		req = next_request(&dep->started_list);
  
- 		if (pipe->stream && pipe->plane_state && hubp && hubp->funcs->hubp_update_mall_sel) {
--			//Round cursor width up to next multiple of 64
--			int cursor_width = ((hubp->curs_attr.width + 63) / 64) * 64;
--			int cursor_height = hubp->curs_attr.height;
--			int cursor_size = cursor_width * cursor_height;
-+			int cursor_size = hubp->curs_attr.pitch * hubp->curs_attr.height;
+-		dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		dwc3_gadget_giveback(dep, req, status);
+ 	}
  
- 			switch (hubp->curs_attr.color_format) {
- 			case CURSOR_MODE_MONO:
+ 	while (!list_empty(&dep->pending_list)) {
+ 		req = next_request(&dep->pending_list);
+ 
+-		dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		dwc3_gadget_giveback(dep, req, status);
+ 	}
+ 
+ 	while (!list_empty(&dep->cancelled_list)) {
+ 		req = next_request(&dep->cancelled_list);
+ 
+-		dwc3_gadget_giveback(dep, req, -ESHUTDOWN);
++		dwc3_gadget_giveback(dep, req, status);
+ 	}
+ }
+ 
+@@ -1022,7 +1022,7 @@ static int __dwc3_gadget_ep_disable(struct dwc3_ep *dep)
+ 		dep->endpoint.desc = NULL;
+ 	}
+ 
+-	dwc3_remove_requests(dwc, dep);
++	dwc3_remove_requests(dwc, dep, -ECONNRESET);
+ 
+ 	dep->stream_capable = false;
+ 	dep->type = 0;
+@@ -2350,7 +2350,7 @@ static void dwc3_stop_active_transfers(struct dwc3 *dwc)
+ 		if (!dep)
+ 			continue;
+ 
+-		dwc3_remove_requests(dwc, dep);
++		dwc3_remove_requests(dwc, dep, -ESHUTDOWN);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
