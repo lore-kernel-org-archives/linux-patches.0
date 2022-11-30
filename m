@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD3D79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C783C433C1;
-	Wed, 30 Nov 2022 18:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D637879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3B9C433D6;
+	Wed, 30 Nov 2022 18:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833361;
-	bh=gGLteT8K6TxzFC9zMhFubn3DVHcCYF7LsJcYHZfDbXY=;
+	s=korg; t=1669833364;
+	bh=OSKBnjS0CLNwFCl54XfBSFAtollL0k1rDe7M1vayXpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGMvutTEnq4K7EnpeQDyDsnTnty0t9bnWcLOfXYZuizFgBvzkvn7WZMfgM5ageRjC
-	 wAAre+9aMRuTVPgdvp5LreG3cXknKC9O/YbKy82UzgpOmttgCsPhpDzN5p8Mxh2wUh
-	 hnDTbk4QSpDCK1ME5Y3Pg8is9nQ8Fs49j0AKnHeE=
+	b=iZCh6dd+nMuJzw/zMrWV5lAXgIMuIdK9BnSWIRAmqyxsx9Zp8BnSd3SnJqinwJiv0
+	 fWjycldp+cZiTKFLtmQV9rvJ9PtsVWSAiOr/yb24BVIo/RsDX2PmV2PsoDfQgF4RSj
+	 tbaGG/TujJjADRj9QGfNZX3Hd+FuYO/jBuuSaHbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asher Song <Asher.Song@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ai Chao <aichao@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/206] Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""
-Date: Wed, 30 Nov 2022 19:21:43 +0100
-Message-Id: <20221130180534.297591027@linuxfoundation.org>
+Subject: [PATCH 5.15 052/206] ALSA: usb-audio: add quirk to fix Hamedal C20 disconnect issue
+Date: Wed, 30 Nov 2022 19:21:44 +0100
+Message-Id: <20221130180534.323012017@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,62 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Asher Song <Asher.Song@amd.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-[ Upstream commit 30b8e7b8ee3be003e0df85c857c5cd0e0bd58b82 ]
+[ Upstream commit bf990c10231937c0f51e5da5558e08cf5adc6a78 ]
 
-This reverts commit 4545ae2ed3f2f7c3f615a53399c9c8460ee5bca7.
+For Hamedal C20, the current rate is different from the runtime rate,
+snd_usb_endpoint stop and close endpoint to resetting rate.
+if snd_usb_endpoint close the endpoint, sometimes usb will
+disconnect the device.
 
-The origin patch "drm/amdgpu: getting fan speed pwm for vega10 properly" works fine.
-Test failure is caused by test case self.
-
-Signed-off-by: Asher Song <Asher.Song@amd.com>
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Link: https://lore.kernel.org/r/20221110063452.295110-1-aichao@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/pm/powerplay/hwmgr/vega10_thermal.c   | 25 +++++++++----------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ sound/usb/endpoint.c | 3 ++-
+ sound/usb/quirks.c   | 2 ++
+ sound/usb/usbaudio.h | 3 +++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-index dad3e3741a4e..190af79f3236 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-@@ -67,22 +67,21 @@ int vega10_fan_ctrl_get_fan_speed_info(struct pp_hwmgr *hwmgr,
- int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
- 		uint32_t *speed)
- {
--	uint32_t current_rpm;
--	uint32_t percent = 0;
--
--	if (hwmgr->thermal_controller.fanInfo.bNoFan)
--		return 0;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	uint32_t duty100, duty;
-+	uint64_t tmp64;
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 3bbc227769d0..092350eb5f4e 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -887,7 +887,8 @@ void snd_usb_endpoint_close(struct snd_usb_audio *chip,
+ 	usb_audio_dbg(chip, "Closing EP 0x%x (count %d)\n",
+ 		      ep->ep_num, ep->opened);
  
--	if (vega10_get_current_rpm(hwmgr, &current_rpm))
--		return -1;
-+	duty100 = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_FDO_CTRL1),
-+				CG_FDO_CTRL1, FMAX_DUTY100);
-+	duty = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_THERMAL_STATUS),
-+				CG_THERMAL_STATUS, FDO_PWM_DUTY);
+-	if (!--ep->iface_ref->opened)
++	if (!--ep->iface_ref->opened &&
++		!(chip->quirk_flags & QUIRK_FLAG_IFACE_SKIP_CLOSE))
+ 		endpoint_set_interface(chip, ep, false);
  
--	if (hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM != 0)
--		percent = current_rpm * 255 /
--			hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM;
-+	if (!duty100)
-+		return -EINVAL;
+ 	if (!--ep->opened) {
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 879d8b1f301c..2ae9ad993ff4 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1884,6 +1884,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0031, /* Fiero SC-01 (firmware v1.1.0) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x0525, 0xa4ad, /* Hamedal C20 usb camero */
++		   QUIRK_FLAG_IFACE_SKIP_CLOSE),
  
--	*speed = MIN(percent, 255);
-+	tmp64 = (uint64_t)duty * 255;
-+	do_div(tmp64, duty100);
-+	*speed = MIN((uint32_t)tmp64, 255);
+ 	/* Vendor matches */
+ 	VENDOR_FLG(0x045e, /* MS Lifecam */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 39c3c61a7e49..ec06f441e890 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -169,6 +169,8 @@ extern bool snd_usb_skip_validation;
+  *  Apply the generic implicit feedback sync mode (same as implicit_fb=1 option)
+  * QUIRK_FLAG_SKIP_IMPLICIT_FB
+  *  Don't apply implicit feedback sync mode
++ * QUIRK_FLAG_IFACE_SKIP_CLOSE
++ *  Don't closed interface during setting sample rate
+  */
  
- 	return 0;
- }
+ #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
+@@ -190,5 +192,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_SET_IFACE_FIRST	(1U << 16)
+ #define QUIRK_FLAG_GENERIC_IMPLICIT_FB	(1U << 17)
+ #define QUIRK_FLAG_SKIP_IMPLICIT_FB	(1U << 18)
++#define QUIRK_FLAG_IFACE_SKIP_CLOSE	(1U << 19)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.35.1
 
