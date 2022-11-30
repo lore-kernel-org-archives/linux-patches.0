@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303A179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D05FC433C1;
-	Wed, 30 Nov 2022 18:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E2179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6674EC433D7;
+	Wed, 30 Nov 2022 18:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833026;
-	bh=wrwmUT9CGF7VPCAMKuCM/INJr3l8x1wMFRTeW9wPXOQ=;
+	s=korg; t=1669833028;
+	bh=KyLHJ6keqKq3hjw1KVLFhrymkPsM84M14ZlDI/6UAnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvX8J+KlRW8c7HaG2Gf3NnuCcCQhKW5X1piLYhatkpiI3yWP3cP3BfddVvF9FFM3B
-	 JwyGzXQrCU1qXzCSsEzHRrTPXjy6h8avsoZeow9jWtPnV2q7X7dxEKObNTJ1y0+gtJ
-	 +fUdWNZknvCAA+m3AQJybzbYceRYafleKmBxyib8=
+	b=0+25wJkc1J2i9HqJetOYssy7QDw6MjZIteTlofNqhY6dOFu4qqYB9gqy22hQecfog
+	 HlBYVPSURMHpHyk7um8QpDIzG/mlRHRAdd33H+8cxOYfI6zdZfJnILDlFPezkN2+Z0
+	 KZY3XByreaLtNVHn7xS3XKJgIa/LK+QdGhuA/pvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Borislav Petkov <bp@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 124/162] x86/ioremap: Fix page aligned size calculation in __ioremap_caller()
-Date: Wed, 30 Nov 2022 19:23:25 +0100
-Message-Id: <20221130180531.851837895@linuxfoundation.org>
+	Martijn Coenen <maco@android.com>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Todd Kjos <tkjos@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.10 125/162] binder: avoid potential data leakage when copying txn
+Date: Wed, 30 Nov 2022 19:23:26 +0100
+Message-Id: <20221130180531.880694262@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,49 +36,228 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Todd Kjos <tkjos@google.com>
 
-commit 4dbd6a3e90e03130973688fd79e19425f720d999 upstream.
+commit 6d98eb95b450a75adb4516a1d33652dc78d2b20c upstream.
 
-Current code re-calculates the size after aligning the starting and
-ending physical addresses on a page boundary. But the re-calculation
-also embeds the masking of high order bits that exceed the size of
-the physical address space (via PHYSICAL_PAGE_MASK). If the masking
-removes any high order bits, the size calculation results in a huge
-value that is likely to immediately fail.
+Transactions are copied from the sender to the target
+first and objects like BINDER_TYPE_PTR and BINDER_TYPE_FDA
+are then fixed up. This means there is a short period where
+the sender's version of these objects are visible to the
+target prior to the fixups.
 
-Fix this by re-calculating the page-aligned size first. Then mask any
-high order bits using PHYSICAL_PAGE_MASK.
+Instead of copying all of the data first, copy data only
+after any needed fixups have been applied.
 
-Fixes: ffa71f33a820 ("x86, ioremap: Fix incorrect physical address handling in PAE mode")
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/1668624097-14884-2-git-send-email-mikelley@microsoft.com
+Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
+Reviewed-by: Martijn Coenen <maco@android.com>
+Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
+Signed-off-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20211130185152.437403-3-tkjos@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[cmllamas: fix trivial merge conflict]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ioremap.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/android/binder.c |   94 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 70 insertions(+), 24 deletions(-)
 
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -216,9 +216,15 @@ __ioremap_caller(resource_size_t phys_ad
- 	 * Mappings have to be page-aligned
- 	 */
- 	offset = phys_addr & ~PAGE_MASK;
--	phys_addr &= PHYSICAL_PAGE_MASK;
-+	phys_addr &= PAGE_MASK;
- 	size = PAGE_ALIGN(last_addr+1) - phys_addr;
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2008,15 +2008,21 @@ static void binder_cleanup_transaction(s
+ /**
+  * binder_get_object() - gets object and checks for valid metadata
+  * @proc:	binder_proc owning the buffer
++ * @u:		sender's user pointer to base of buffer
+  * @buffer:	binder_buffer that we're parsing.
+  * @offset:	offset in the @buffer at which to validate an object.
+  * @object:	struct binder_object to read into
+  *
+- * Return:	If there's a valid metadata object at @offset in @buffer, the
++ * Copy the binder object at the given offset into @object. If @u is
++ * provided then the copy is from the sender's buffer. If not, then
++ * it is copied from the target's @buffer.
++ *
++ * Return:	If there's a valid metadata object at @offset, the
+  *		size of that object. Otherwise, it returns zero. The object
+  *		is read into the struct binder_object pointed to by @object.
+  */
+ static size_t binder_get_object(struct binder_proc *proc,
++				const void __user *u,
+ 				struct binder_buffer *buffer,
+ 				unsigned long offset,
+ 				struct binder_object *object)
+@@ -2026,10 +2032,16 @@ static size_t binder_get_object(struct b
+ 	size_t object_size = 0;
  
-+	/*
-+	 * Mask out any bits not part of the actual physical
-+	 * address, like memory encryption bits.
-+	 */
-+	phys_addr &= PHYSICAL_PAGE_MASK;
+ 	read_size = min_t(size_t, sizeof(*object), buffer->data_size - offset);
+-	if (offset > buffer->data_size || read_size < sizeof(*hdr) ||
+-	    binder_alloc_copy_from_buffer(&proc->alloc, object, buffer,
+-					  offset, read_size))
++	if (offset > buffer->data_size || read_size < sizeof(*hdr))
+ 		return 0;
++	if (u) {
++		if (copy_from_user(object, u + offset, read_size))
++			return 0;
++	} else {
++		if (binder_alloc_copy_from_buffer(&proc->alloc, object, buffer,
++						  offset, read_size))
++			return 0;
++	}
+ 
+ 	/* Ok, now see if we read a complete object. */
+ 	hdr = &object->hdr;
+@@ -2102,7 +2114,7 @@ static struct binder_buffer_object *bind
+ 					  b, buffer_offset,
+ 					  sizeof(object_offset)))
+ 		return NULL;
+-	object_size = binder_get_object(proc, b, object_offset, object);
++	object_size = binder_get_object(proc, NULL, b, object_offset, object);
+ 	if (!object_size || object->hdr.type != BINDER_TYPE_PTR)
+ 		return NULL;
+ 	if (object_offsetp)
+@@ -2167,7 +2179,8 @@ static bool binder_validate_fixup(struct
+ 		unsigned long buffer_offset;
+ 		struct binder_object last_object;
+ 		struct binder_buffer_object *last_bbo;
+-		size_t object_size = binder_get_object(proc, b, last_obj_offset,
++		size_t object_size = binder_get_object(proc, NULL, b,
++						       last_obj_offset,
+ 						       &last_object);
+ 		if (object_size != sizeof(*last_bbo))
+ 			return false;
+@@ -2282,7 +2295,7 @@ static void binder_transaction_buffer_re
+ 		if (!binder_alloc_copy_from_buffer(&proc->alloc, &object_offset,
+ 						   buffer, buffer_offset,
+ 						   sizeof(object_offset)))
+-			object_size = binder_get_object(proc, buffer,
++			object_size = binder_get_object(proc, NULL, buffer,
+ 							object_offset, &object);
+ 		if (object_size == 0) {
+ 			pr_err("transaction release %d bad object at offset %lld, size %zd\n",
+@@ -2848,6 +2861,7 @@ static void binder_transaction(struct bi
+ 	binder_size_t off_start_offset, off_end_offset;
+ 	binder_size_t off_min;
+ 	binder_size_t sg_buf_offset, sg_buf_end_offset;
++	binder_size_t user_offset = 0;
+ 	struct binder_proc *target_proc = NULL;
+ 	struct binder_thread *target_thread = NULL;
+ 	struct binder_node *target_node = NULL;
+@@ -2862,6 +2876,8 @@ static void binder_transaction(struct bi
+ 	int t_debug_id = atomic_inc_return(&binder_last_id);
+ 	char *secctx = NULL;
+ 	u32 secctx_sz = 0;
++	const void __user *user_buffer = (const void __user *)
++				(uintptr_t)tr->data.ptr.buffer;
+ 
+ 	e = binder_transaction_log_add(&binder_transaction_log);
+ 	e->debug_id = t_debug_id;
+@@ -3175,19 +3191,6 @@ static void binder_transaction(struct bi
+ 
+ 	if (binder_alloc_copy_user_to_buffer(
+ 				&target_proc->alloc,
+-				t->buffer, 0,
+-				(const void __user *)
+-					(uintptr_t)tr->data.ptr.buffer,
+-				tr->data_size)) {
+-		binder_user_error("%d:%d got transaction with invalid data ptr\n",
+-				proc->pid, thread->pid);
+-		return_error = BR_FAILED_REPLY;
+-		return_error_param = -EFAULT;
+-		return_error_line = __LINE__;
+-		goto err_copy_data_failed;
+-	}
+-	if (binder_alloc_copy_user_to_buffer(
+-				&target_proc->alloc,
+ 				t->buffer,
+ 				ALIGN(tr->data_size, sizeof(void *)),
+ 				(const void __user *)
+@@ -3230,6 +3233,7 @@ static void binder_transaction(struct bi
+ 		size_t object_size;
+ 		struct binder_object object;
+ 		binder_size_t object_offset;
++		binder_size_t copy_size;
+ 
+ 		if (binder_alloc_copy_from_buffer(&target_proc->alloc,
+ 						  &object_offset,
+@@ -3241,8 +3245,27 @@ static void binder_transaction(struct bi
+ 			return_error_line = __LINE__;
+ 			goto err_bad_offset;
+ 		}
+-		object_size = binder_get_object(target_proc, t->buffer,
+-						object_offset, &object);
 +
- 	retval = memtype_reserve(phys_addr, (u64)phys_addr + size,
- 						pcm, &new_pcm);
- 	if (retval) {
++		/*
++		 * Copy the source user buffer up to the next object
++		 * that will be processed.
++		 */
++		copy_size = object_offset - user_offset;
++		if (copy_size && (user_offset > object_offset ||
++				binder_alloc_copy_user_to_buffer(
++					&target_proc->alloc,
++					t->buffer, user_offset,
++					user_buffer + user_offset,
++					copy_size))) {
++			binder_user_error("%d:%d got transaction with invalid data ptr\n",
++					proc->pid, thread->pid);
++			return_error = BR_FAILED_REPLY;
++			return_error_param = -EFAULT;
++			return_error_line = __LINE__;
++			goto err_copy_data_failed;
++		}
++		object_size = binder_get_object(target_proc, user_buffer,
++				t->buffer, object_offset, &object);
+ 		if (object_size == 0 || object_offset < off_min) {
+ 			binder_user_error("%d:%d got transaction with invalid offset (%lld, min %lld max %lld) or object.\n",
+ 					  proc->pid, thread->pid,
+@@ -3254,6 +3277,11 @@ static void binder_transaction(struct bi
+ 			return_error_line = __LINE__;
+ 			goto err_bad_offset;
+ 		}
++		/*
++		 * Set offset to the next buffer fragment to be
++		 * copied
++		 */
++		user_offset = object_offset + object_size;
+ 
+ 		hdr = &object.hdr;
+ 		off_min = object_offset + object_size;
+@@ -3349,9 +3377,14 @@ static void binder_transaction(struct bi
+ 			}
+ 			ret = binder_translate_fd_array(fda, parent, t, thread,
+ 							in_reply_to);
+-			if (ret < 0) {
++			if (!ret)
++				ret = binder_alloc_copy_to_buffer(&target_proc->alloc,
++								  t->buffer,
++								  object_offset,
++								  fda, sizeof(*fda));
++			if (ret) {
+ 				return_error = BR_FAILED_REPLY;
+-				return_error_param = ret;
++				return_error_param = ret > 0 ? -EINVAL : ret;
+ 				return_error_line = __LINE__;
+ 				goto err_translate_failed;
+ 			}
+@@ -3421,6 +3454,19 @@ static void binder_transaction(struct bi
+ 			goto err_bad_object_type;
+ 		}
+ 	}
++	/* Done processing objects, copy the rest of the buffer */
++	if (binder_alloc_copy_user_to_buffer(
++				&target_proc->alloc,
++				t->buffer, user_offset,
++				user_buffer + user_offset,
++				tr->data_size - user_offset)) {
++		binder_user_error("%d:%d got transaction with invalid data ptr\n",
++				proc->pid, thread->pid);
++		return_error = BR_FAILED_REPLY;
++		return_error_param = -EFAULT;
++		return_error_line = __LINE__;
++		goto err_copy_data_failed;
++	}
+ 	tcomplete->type = BINDER_WORK_TRANSACTION_COMPLETE;
+ 	t->work.type = BINDER_WORK_TRANSACTION;
+ 
 
 
