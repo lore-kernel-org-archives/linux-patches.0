@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5979279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A435DC433C1;
-	Wed, 30 Nov 2022 18:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5185179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD91C433D6;
+	Wed, 30 Nov 2022 18:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833286;
-	bh=Dx/JRLHBnP/KP931JmuIqKXx4TjyT17GNgZETmUH2oY=;
+	s=korg; t=1669833289;
+	bh=3zZn3OsW/KStF3spWVf6h6zcdQchxOL8Mrxm9Btxl/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQAA/p+BCNDmc+1bFlG5tGFq4iYCLHUOfzM21TFHwpY1mcluUc71FoQcU0jkTJKxR
-	 qzdca74WJR6j51pHGpVIjBo/GSAkq+n+KbthycNFC9jQBa8Dm8vTCeJapgS3oNCAF2
-	 YM+0XrpUOTwLwZYdjYL2tTdbfsX2+62gcsz5YxKE=
+	b=SuAwfeWT7n0xQBwiopJiaGUuVIMElLqLDPurqICw6fVaDWMEU8wQfkBNE4JpL5chA
+	 DAZqecYNu7lNw6npzjngILSZ2MO4mZn2kEG7dTZ/4dEkSpjEfkOnvGsrSXTKNNPHgD
+	 wb1hGdNF+sAMX9Y2iDwcm6NbJQcdBLnwBBa2LVWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Savernik <l.savernik@aon.at>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/206] nvme: add a bogus subsystem NQN quirk for Micron MTFDKBA2T0TFH
-Date: Wed, 30 Nov 2022 19:21:07 +0100
-Message-Id: <20221130180533.386128055@linuxfoundation.org>
+Subject: [PATCH 5.15 046/206] scsi: scsi_debug: Make the READ CAPACITY response compliant with ZBC
+Date: Wed, 30 Nov 2022 19:21:38 +0100
+Message-Id: <20221130180534.171750991@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,35 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Savernik <l.savernik@aon.at>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 41f38043f884c66af4114a7109cf540d6222f450 ]
+[ Upstream commit ecb8c2580d37dbb641451049376d80c8afaa387f ]
 
-The Micron MTFDKBA2T0TFH device reports the same subsysem NQN for
-all devices.  Add a quick to ignore it.
+>From ZBC-1:
 
-Signed-off-by: Leo Savernik <l.savernik@aon.at>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: d5ceb4d1c507 ("nvme-pci: add NVME_QUIRK_BOGUS_NID for Micron Nitro")
+ - RC BASIS = 0: The RETURNED LOGICAL BLOCK ADDRESS field indicates the
+   highest LBA of a contiguous range of zones that are not sequential write
+   required zones starting with the first zone.
+
+ - RC BASIS = 1: The RETURNED LOGICAL BLOCK ADDRESS field indicates the LBA
+   of the last logical block on the logical unit.
+
+The current scsi_debug READ CAPACITY response does not comply with the
+above if there are one or more sequential write required zones. SCSI
+initiators need a way to retrieve the largest valid LBA from SCSI
+devices. Reporting the largest valid LBA if there are one or more
+sequential zones requires to set the RC BASIS field in the READ CAPACITY
+response to one. Hence this patch.
+
+Cc: Douglas Gilbert <dgilbert@interlog.com>
+Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Suggested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221102193248.3177608-1-bvanassche@acm.org
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/scsi_debug.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index e9f3701dda3f..4fa2955dbf6c 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3351,6 +3351,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 	{ PCI_DEVICE(0x1cc1, 0x8201),   /* ADATA SX8200PNP 512GB */
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
- 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
-+	 { PCI_DEVICE(0x1344, 0x5407), /* Micron Technology Inc NVMe SSD */
-+		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN },
- 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
- 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
- 	{ PCI_DEVICE(0x15b7, 0x2001),   /*  Sandisk Skyhawk */
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 2b5e249f5d5b..0b16061d8da8 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -1879,6 +1879,13 @@ static int resp_readcap16(struct scsi_cmnd *scp,
+ 			arr[14] |= 0x40;
+ 	}
+ 
++	/*
++	 * Since the scsi_debug READ CAPACITY implementation always reports the
++	 * total disk capacity, set RC BASIS = 1 for host-managed ZBC devices.
++	 */
++	if (devip->zmodel == BLK_ZONED_HM)
++		arr[12] |= 1 << 4;
++
+ 	arr[15] = sdebug_lowest_aligned & 0xff;
+ 
+ 	if (have_dif_prot) {
 -- 
 2.35.1
 
