@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAF479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23485C433D6;
-	Wed, 30 Nov 2022 18:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCF679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2408C433C1;
+	Wed, 30 Nov 2022 18:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834465;
-	bh=NP08Bu41lnXELqkflD2hs9IQL0DrhHcjsLCdz4Yc2as=;
+	s=korg; t=1669834468;
+	bh=i62pXkbM8jq3FwMIp1Yu4olWnfxvvXuVJj5DLFQdd78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5wo2rM+c77omhdnKWj1jrQrgrEud9ShRjkJDkLNuQ21Yi5ic/2TyF26UowqY9UUB
-	 nS4xZaffPau+iW6NiILIhlfJgIgmfeGgmU6IKpx17kC1xjQ+XjP+iE5spyBROo/yIQ
-	 mIMEFc29fhNLn1djVvNoq2Q149kMLMarHwfAhvfA=
+	b=qnajh5g0BysTwt9a5cE2K3OBzynDwLprcg0pCTPTJyiNOgYS9fHvRksN4D+vcV030
+	 VaCk2k68ZtbIi2OZTEZlROLtsbahcdIUymqy0eeqI9Yp1J22WNcXAQDNS+zKS1ZMGX
+	 3N31jxjQSIdOPzFTBEGCQNi9fit5J/nX/Xpnz9KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Ning <zhuning@everest-semi.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 236/289] ASoC: sof_es8336: reduce pop noise on speaker
-Date: Wed, 30 Nov 2022 19:23:41 +0100
-Message-Id: <20221130180549.461699381@linuxfoundation.org>
+Subject: [PATCH 6.0 227/289] ASoC: Intel: soc-acpi: add ES83x6 support to IceLake
+Date: Wed, 30 Nov 2022 19:23:32 +0100
+Message-Id: <20221130180549.260451997@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,136 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Ning <zhuning0077@gmail.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 89cdb224f2abe37ec4ac21ba0d9ddeb5a6a9cf68 ]
+[ Upstream commit 9a1d248bb4beaf1b43d17ba12481ee0629fa29b9 ]
 
-The Speaker GPIO needs to be turned on slightly behind the codec turned on.
-It also need to be turned off slightly before the codec turned down.
-Current code uses delay in DAPM_EVENT to do it but the mdelay delays the
-DAPM itself and thus has no effect. A delayed_work is added to turn on the
-speaker.
-The Speaker is turned off in .trigger since trigger is called slightly
-before the DAPM events.
+Missing entry to find a machine driver for ES83x6-based platforms.
 
-Signed-off-by: Zhu Ning <zhuning@everest-semi.com>
-
-------------
-
-v1: cancel delayed work while disabling speaker.
-Link: https://lore.kernel.org/r/20221028020456.90286-1-zhuning0077@gmail.com
+Link: https://github.com/thesofproject/linux/issues/3873
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20221031195836.250193-1-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_es8336.c | 60 ++++++++++++++++++++++-------
- 1 file changed, 46 insertions(+), 14 deletions(-)
+ sound/soc/intel/common/soc-acpi-intel-icl-match.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
-index 606cc3242a60..5c218a39ca20 100644
---- a/sound/soc/intel/boards/sof_es8336.c
-+++ b/sound/soc/intel/boards/sof_es8336.c
-@@ -63,6 +63,7 @@ struct sof_es8336_private {
- 	struct snd_soc_jack jack;
- 	struct list_head hdmi_pcm_list;
- 	bool speaker_en;
-+	struct delayed_work pcm_pop_work;
+diff --git a/sound/soc/intel/common/soc-acpi-intel-icl-match.c b/sound/soc/intel/common/soc-acpi-intel-icl-match.c
+index b032bc07de8b..d0062f2cd256 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-icl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-icl-match.c
+@@ -10,6 +10,11 @@
+ #include <sound/soc-acpi-intel-match.h>
+ #include "../skylake/skl.h"
+ 
++static const struct snd_soc_acpi_codecs essx_83x6 = {
++	.num_codecs = 3,
++	.codecs = { "ESSX8316", "ESSX8326", "ESSX8336"},
++};
++
+ static struct skl_machine_pdata icl_pdata = {
+ 	.use_tplg_pcm = true,
  };
- 
- struct sof_hdmi_pcm {
-@@ -111,6 +112,46 @@ static void log_quirks(struct device *dev)
- 		dev_info(dev, "quirk headset at mic1 port enabled\n");
- }
- 
-+static void pcm_pop_work_events(struct work_struct *work)
-+{
-+	struct sof_es8336_private *priv =
-+		container_of(work, struct sof_es8336_private, pcm_pop_work.work);
-+
-+	gpiod_set_value_cansleep(priv->gpio_speakers, priv->speaker_en);
-+
-+	if (quirk & SOF_ES8336_HEADPHONE_GPIO)
-+		gpiod_set_value_cansleep(priv->gpio_headphone, priv->speaker_en);
-+
-+}
-+
-+static int sof_8336_trigger(struct snd_pcm_substream *substream, int cmd)
-+{
-+	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
-+	struct snd_soc_card *card = rtd->card;
-+	struct sof_es8336_private *priv = snd_soc_card_get_drvdata(card);
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+		break;
-+
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_STOP:
-+		if (priv->speaker_en == false)
-+			if (substream->stream == 0) {
-+				cancel_delayed_work(&priv->pcm_pop_work);
-+				gpiod_set_value_cansleep(priv->gpio_speakers, true);
-+			}
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int sof_es8316_speaker_power_event(struct snd_soc_dapm_widget *w,
- 					  struct snd_kcontrol *kcontrol, int event)
- {
-@@ -122,19 +163,7 @@ static int sof_es8316_speaker_power_event(struct snd_soc_dapm_widget *w,
- 
- 	priv->speaker_en = !SND_SOC_DAPM_EVENT_ON(event);
- 
--	if (SND_SOC_DAPM_EVENT_ON(event))
--		msleep(70);
--
--	gpiod_set_value_cansleep(priv->gpio_speakers, priv->speaker_en);
--
--	if (!(quirk & SOF_ES8336_HEADPHONE_GPIO))
--		return 0;
--
--	if (SND_SOC_DAPM_EVENT_ON(event))
--		msleep(70);
--
--	gpiod_set_value_cansleep(priv->gpio_headphone, priv->speaker_en);
--
-+	queue_delayed_work(system_wq, &priv->pcm_pop_work, msecs_to_jiffies(70));
- 	return 0;
- }
- 
-@@ -344,6 +373,7 @@ static int sof_es8336_hw_params(struct snd_pcm_substream *substream,
- /* machine stream operations */
- static struct snd_soc_ops sof_es8336_ops = {
- 	.hw_params = sof_es8336_hw_params,
-+	.trigger = sof_8336_trigger,
+@@ -27,6 +32,14 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_icl_machines[] = {
+ 		.drv_name = "sof_rt5682",
+ 		.sof_tplg_filename = "sof-icl-rt5682.tplg",
+ 	},
++	{
++		.comp_ids = &essx_83x6,
++		.drv_name = "sof-essx8336",
++		.sof_tplg_filename = "sof-icl-es8336", /* the tplg suffix is added at run time */
++		.tplg_quirk_mask = SND_SOC_ACPI_TPLG_INTEL_SSP_NUMBER |
++					SND_SOC_ACPI_TPLG_INTEL_SSP_MSB |
++					SND_SOC_ACPI_TPLG_INTEL_DMIC_NUMBER,
++	},
+ 	{},
  };
- 
- static struct snd_soc_dai_link_component platform_component[] = {
-@@ -722,7 +752,8 @@ static int sof_es8336_probe(struct platform_device *pdev)
- 	}
- 
- 	INIT_LIST_HEAD(&priv->hdmi_pcm_list);
--
-+	INIT_DELAYED_WORK(&priv->pcm_pop_work,
-+				pcm_pop_work_events);
- 	snd_soc_card_set_drvdata(card, priv);
- 
- 	if (mach->mach_params.dmic_num > 0) {
-@@ -751,6 +782,7 @@ static int sof_es8336_remove(struct platform_device *pdev)
- 	struct snd_soc_card *card = platform_get_drvdata(pdev);
- 	struct sof_es8336_private *priv = snd_soc_card_get_drvdata(card);
- 
-+	cancel_delayed_work(&priv->pcm_pop_work);
- 	gpiod_put(priv->gpio_speakers);
- 	device_remove_software_node(priv->codec_dev);
- 	put_device(priv->codec_dev);
+ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_icl_machines);
 -- 
 2.35.1
 
