@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BA179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DD1C433C1;
-	Wed, 30 Nov 2022 18:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FA079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD99C433D7;
+	Wed, 30 Nov 2022 18:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833571;
-	bh=HsLGXRRJQ/APUtlGd+ovyydURbfrIHWxOV9hO6z8EaA=;
+	s=korg; t=1669833574;
+	bh=jg29UixbMaXOtHQO1/q+5au2IcDVATzvDZAKVEnJ5Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5GCJAThSuBlwzhvmy4waToo/nZZGavZEVRlM2HwadWven42UTd3WkWHvvXI4Vaaj
-	 4ZOhLHZJ5KVLScKEw45va3k+byrf1VN2uRwTlVLIItROdsUy55WSAv+YUZJ5lgOmDe
-	 deCqjBAfFiU7vfhnluJnUnV1b7muDFPD6+4q8ydU=
+	b=dgkiL8f+epsmN2+iQVdwgHt4QWvqOErO6s/2iNRZ84oQTJXS47xVjtnklWRAEIUvg
+	 mLTzREewyRzRV7Q9OQwQXy3NQ+v8iXeemmRDmRWXPPTeqlQLjePnBNSlNV8LXDwLB/
+	 m8/2b1P2Q1GsRo2JHwz2P88hBFUGKP0IrqnFLVSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.15 145/206] arm64: dts: rockchip: lower rk3399-puma-haikou SD controller clock frequency
-Date: Wed, 30 Nov 2022 19:23:17 +0100
-Message-Id: <20221130180536.727390264@linuxfoundation.org>
+	Sam James <sam@gentoo.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 146/206] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
+Date: Wed, 30 Nov 2022 19:23:18 +0100
+Message-Id: <20221130180536.752407228@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,39 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+From: Sam James <sam@gentoo.org>
 
-commit 91e8b74fe6381e083f8aa55217bb0562785ab398 upstream.
+commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 upstream.
 
-CRC errors (code -84 EILSEQ) have been observed for some SanDisk
-Ultra A1 cards when running at 50MHz.
+Add missing <linux/string.h> include for strcmp.
 
-Waveform analysis suggest that the level shifters that are used on the
-RK3399-Q7 module for voltage translation between 3.0 and 3.3V don't
-handle clock rates at or above 48MHz properly. Back off to 40MHz for
-some safety margin.
+Clang 16 makes -Wimplicit-function-declaration an error by default.
+Unfortunately, out of tree modules may use this in configure scripts,
+which means failure might cause silent miscompilation or misconfiguration.
 
-Cc: stable@vger.kernel.org
-Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
-Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
+or the (new) c-std-porting mailing list [3].
+
+[0] https://lwn.net/Articles/913505/
+[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
+[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
+[3] hosted at lists.linux.dev.
+
+[akpm@linux-foundation.org: remember "linux/"]
+Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/license.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-@@ -207,7 +207,7 @@
- 	cap-sd-highspeed;
- 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
- 	disable-wp;
--	max-frequency = <150000000>;
-+	max-frequency = <40000000>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
- 	vmmc-supply = <&vcc3v3_baseboard>;
+--- a/include/linux/license.h
++++ b/include/linux/license.h
+@@ -2,6 +2,8 @@
+ #ifndef __LICENSE_H
+ #define __LICENSE_H
+ 
++#include <linux/string.h>
++
+ static inline int license_is_gpl_compatible(const char *license)
+ {
+ 	return (strcmp(license, "GPL") == 0
 
 
