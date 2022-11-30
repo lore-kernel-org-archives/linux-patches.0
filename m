@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36852C433C1;
-	Wed, 30 Nov 2022 18:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38A779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B089C433C1;
+	Wed, 30 Nov 2022 18:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833551;
-	bh=/0psIQho1RFC+D5g8y9yrHyJwjM0n9XsrIY1ssCZiKw=;
+	s=korg; t=1669833554;
+	bh=boW4vrn7tEmgGFU85fz9ofdYzZvaS+ccAqeV3Z+iheA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aO/jS1hlZYhZx+Yc4ahs7iEGqX0AY/W2Aq9P8gUs/NcMfgQMq+ubTnWG7CX0z5WD+
-	 Bs3YbFVVZ3njMA4o/vhJsaKt4dzMIbs7LWasdShyQbcMb5geB3NWeX2wkoKX/PlQEH
-	 a5erohqGkoRQxNwOjZOGMwg5WvP7cl6vvXwdu+UA=
+	b=lxk7jDZV4jeFnsyjC3GHrBpH8dgjOVjYOB/hW5P8h6EOjThgwzVY9dVf57SuersfJ
+	 mWb5M3pF8nJm8zkqNxSTAq5xK8bi/LmVhbIhk9HQghxkK6hqXP1pdZ7JuMKl+oO59a
+	 n2dPGVuskxqvZ+peIGYF26hVl+twwZ1DfpERhu4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Liu Jian <liujian56@huawei.com>,
+	Bjarni Jonasson <bjarni.jonasson@microchip.com>,
+	Steen Hegelund <steen.hegelund@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/206] sfc: fix potential memleak in __ef100_hard_start_xmit()
-Date: Wed, 30 Nov 2022 19:22:42 +0100
-Message-Id: <20221130180535.843417567@linuxfoundation.org>
+Subject: [PATCH 5.15 111/206] net: sparx5: fix error handling in sparx5_port_open()
+Date: Wed, 30 Nov 2022 19:22:43 +0100
+Message-Id: <20221130180535.868983141@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,35 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit aad98abd5cb8133507f22654f56bcb443aaa2d89 ]
+[ Upstream commit 4305fe232b8aa59af3761adc9fe6b6aa40913960 ]
 
-The __ef100_hard_start_xmit() returns NETDEV_TX_OK without freeing skb
-in error handling case, add dev_kfree_skb_any() to fix it.
+If phylink_of_phy_connect() fails, the port should be disabled.
+If sparx5_serdes_set()/phy_power_on() fails, the port should be
+disabled and the phylink should be stopped and disconnected.
 
-Fixes: 51b35a454efd ("sfc: skeleton EF100 PF driver")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/1668671409-10909-1-git-send-email-zhangchangzhong@huawei.com
+Fixes: 946e7fd5053a ("net: sparx5: add port module support")
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Tested-by: Bjarni Jonasson <bjarni.jonasson@microchip.com>
+Reviewed-by: Steen Hegelund <steen.hegelund@microchip.com>
+Link: https://lore.kernel.org/r/20221117125918.203997-1-liujian56@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef100_netdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/ethernet/microchip/sparx5/sparx5_netdev.c  | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
-index 67fe44db6b61..63a44ee763be 100644
---- a/drivers/net/ethernet/sfc/ef100_netdev.c
-+++ b/drivers/net/ethernet/sfc/ef100_netdev.c
-@@ -200,6 +200,7 @@ static netdev_tx_t ef100_hard_start_xmit(struct sk_buff *skb,
- 		   skb->len, skb->data_len, channel->channel);
- 	if (!efx->n_channels || !efx->n_tx_channels || !channel) {
- 		netif_stop_queue(net_dev);
-+		dev_kfree_skb_any(skb);
- 		goto err;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+index cb68eaaac881..5c7b21ce64ed 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+@@ -83,7 +83,7 @@ static int sparx5_port_open(struct net_device *ndev)
+ 	err = phylink_of_phy_connect(port->phylink, port->of_node, 0);
+ 	if (err) {
+ 		netdev_err(ndev, "Could not attach to PHY\n");
+-		return err;
++		goto err_connect;
  	}
+ 
+ 	phylink_start(port->phylink);
+@@ -95,10 +95,20 @@ static int sparx5_port_open(struct net_device *ndev)
+ 			err = sparx5_serdes_set(port->sparx5, port, &port->conf);
+ 		else
+ 			err = phy_power_on(port->serdes);
+-		if (err)
++		if (err) {
+ 			netdev_err(ndev, "%s failed\n", __func__);
++			goto out_power;
++		}
+ 	}
+ 
++	return 0;
++
++out_power:
++	phylink_stop(port->phylink);
++	phylink_disconnect_phy(port->phylink);
++err_connect:
++	sparx5_port_enable(port, false);
++
+ 	return err;
+ }
  
 -- 
 2.35.1
