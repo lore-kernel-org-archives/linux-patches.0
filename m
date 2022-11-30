@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6D26FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BD4C433C1;
-	Wed, 30 Nov 2022 18:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B646FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04057C433D6;
+	Wed, 30 Nov 2022 18:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832745;
-	bh=wMoAmFrAKqCRnCDoXLuanE2Lmzf9mTTi195NSVnTMOw=;
+	s=korg; t=1669832748;
+	bh=7YUEQNDGA0vOxlITCjEjDaauczgHKcdjWHCvmreHK6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JSjHmGuFaze28PVe5VRxtD8TI0x29HmTeStfSvqwmeULPhqQC5dYa0njiskiddkH2
-	 YYvD39tSJD28we5CYicklgro8obh2b/ZOJXOurxbdt7cPL1wmPbJxn/P/DpxSYR1jr
-	 g6f5Vsb3gJnT+D5fndXAR+OsKRnkwBrWlV8XVt9M=
+	b=Z2PnPGD9qiwsJ+FrVM18CJ0L6mssnVAej8kSewn8ucZPmxUmOUnUUF1dxjnUctU9M
+	 KJUnNn/5pV1Eapys8jb7VD8zKGrIUPJ30y2P9WQacDM4SYAoksGqxCFDZrs/VeuAKu
+	 sfjTH54IP4+bF9kpSsWEPR4RZJJwKeBr/ielmVOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rudolf Polzer <rpolzer@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Simon Ser <contact@emersion.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/162] scsi: scsi_debug: Make the READ CAPACITY response compliant with ZBC
-Date: Wed, 30 Nov 2022 19:21:47 +0100
-Message-Id: <20221130180529.214763570@linuxfoundation.org>
+Subject: [PATCH 5.10 027/162] drm: panel-orientation-quirks: Add quirk for Acer Switch V 10 (SW5-017)
+Date: Wed, 30 Nov 2022 19:21:48 +0100
+Message-Id: <20221130180529.241785973@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,57 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit ecb8c2580d37dbb641451049376d80c8afaa387f ]
+[ Upstream commit 653f2d94fcda200b02bd79cea2e0307b26c1b747 ]
 
->From ZBC-1:
+Like the Acer Switch One 10 S1003, for which there already is a quirk,
+the Acer Switch V 10 (SW5-017) has a 800x1280 portrait screen mounted
+in the tablet part of a landscape oriented 2-in-1. Add a quirk for this.
 
- - RC BASIS = 0: The RETURNED LOGICAL BLOCK ADDRESS field indicates the
-   highest LBA of a contiguous range of zones that are not sequential write
-   required zones starting with the first zone.
-
- - RC BASIS = 1: The RETURNED LOGICAL BLOCK ADDRESS field indicates the LBA
-   of the last logical block on the logical unit.
-
-The current scsi_debug READ CAPACITY response does not comply with the
-above if there are one or more sequential write required zones. SCSI
-initiators need a way to retrieve the largest valid LBA from SCSI
-devices. Reporting the largest valid LBA if there are one or more
-sequential zones requires to set the RC BASIS field in the READ CAPACITY
-response to one. Hence this patch.
-
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Suggested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221102193248.3177608-1-bvanassche@acm.org
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Rudolf Polzer <rpolzer@google.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Simon Ser <contact@emersion.fr>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221106215052.66995-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 261b915835b4..cc20621bb49d 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -1878,6 +1878,13 @@ static int resp_readcap16(struct scsi_cmnd *scp,
- 			arr[14] |= 0x40;
- 	}
- 
-+	/*
-+	 * Since the scsi_debug READ CAPACITY implementation always reports the
-+	 * total disk capacity, set RC BASIS = 1 for host-managed ZBC devices.
-+	 */
-+	if (devip->zmodel == BLK_ZONED_HM)
-+		arr[12] |= 1 << 4;
-+
- 	arr[15] = sdebug_lowest_aligned & 0xff;
- 
- 	if (have_dif_prot) {
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 083273736c83..ca0fefeaab20 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -128,6 +128,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "One S1003"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* Acer Switch V 10 (SW5-017) */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
++		},
++		.driver_data = (void *)&lcd800x1280_rightside_up,
+ 	}, {	/* Anbernic Win600 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Anbernic"),
 -- 
 2.35.1
 
