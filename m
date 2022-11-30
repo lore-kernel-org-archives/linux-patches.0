@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406F79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6A6C433B5;
-	Wed, 30 Nov 2022 18:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E643C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68151C433D6;
+	Wed, 30 Nov 2022 18:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833988;
-	bh=igflZgYMzKeilMrkzZu32VaQSFE3nYNVYzSKS3WcPG4=;
+	s=korg; t=1669833990;
+	bh=g2WIqdFXdE5EjQDyff6iGvwtakaJ+ICMwIn4XY8FVrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUjMlThAaLQzQl/Ej22XY9kSYukLy3b/cdALYBZ61DYkK/DQsf10ilVk3BaWKdax4
-	 cSmhQAW6PnV8vrKbpPPPCHxjJTTBXEUsdPJQb3Gr1M8Rs/4fRdrslvXMjMTZa6bZ+a
-	 UjZ2JmWbKERTPzoBxotOp8t85NdZY/mfS004ZEZI=
+	b=LQiwDrAYbJVIJSRH0Efa2ZlRcDIDpRkjBz2befPxPKzHnbkbDYPxZj/O3WP96MSXK
+	 SpzP00E9CF+IK6Vo0PeyJW99dOgaOWvBT5GVrBFZndfNNrI76MCaeMHUQyjy2mvbZ6
+	 KYAfrjIjtj/bfOVbyaJ57ld/DPoQp3x1L+26QI2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
+	Fabio Estevam <festevam@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 088/289] ARM: mxs: fix memory leak in mxs_machine_init()
-Date: Wed, 30 Nov 2022 19:21:13 +0100
-Message-Id: <20221130180546.140390263@linuxfoundation.org>
+Subject: [PATCH 6.0 089/289] ARM: dts: imx6q-prti6q: Fix ref/tcxo-clock-frequency properties
+Date: Wed, 30 Nov 2022 19:21:14 +0100
+Message-Id: <20221130180546.162955680@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,38 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit f31e3c204d1844b8680a442a48868af5ac3d5481 ]
+[ Upstream commit e68be7b39f21d8a9291a5a3019787cd3ca999dd7 ]
 
-If of_property_read_string() failed, 'soc_dev_attr' should be
-freed before return. Otherwise there is a memory leak.
+make dtbs_check gives the following errors:
 
-Fixes: 2046338dcbc6 ("ARM: mxs: Use soc bus infrastructure")
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+ref-clock-frequency: size (9) error for type uint32
+tcxo-clock-frequency: size (9) error for type uint32
+
+Fix it by passing the frequencies inside < > as documented in
+Documentation/devicetree/bindings/net/wireless/ti,wlcore.yaml.
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Fixes: 0d446a505592 ("ARM: dts: add Protonic PRTI6Q board")
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mxs/mach-mxs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/imx6q-prti6q.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-mxs/mach-mxs.c b/arch/arm/mach-mxs/mach-mxs.c
-index 25c9d184fa4c..1c57ac401649 100644
---- a/arch/arm/mach-mxs/mach-mxs.c
-+++ b/arch/arm/mach-mxs/mach-mxs.c
-@@ -393,8 +393,10 @@ static void __init mxs_machine_init(void)
+diff --git a/arch/arm/boot/dts/imx6q-prti6q.dts b/arch/arm/boot/dts/imx6q-prti6q.dts
+index b4605edfd2ab..d8fa83effd63 100644
+--- a/arch/arm/boot/dts/imx6q-prti6q.dts
++++ b/arch/arm/boot/dts/imx6q-prti6q.dts
+@@ -364,8 +364,8 @@ wifi {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_wifi>;
+ 		interrupts-extended = <&gpio1 30 IRQ_TYPE_LEVEL_HIGH>;
+-		ref-clock-frequency = "38400000";
+-		tcxo-clock-frequency = "19200000";
++		ref-clock-frequency = <38400000>;
++		tcxo-clock-frequency = <19200000>;
+ 	};
+ };
  
- 	root = of_find_node_by_path("/");
- 	ret = of_property_read_string(root, "model", &soc_dev_attr->machine);
--	if (ret)
-+	if (ret) {
-+		kfree(soc_dev_attr);
- 		return;
-+	}
- 
- 	soc_dev_attr->family = "Freescale MXS Family";
- 	soc_dev_attr->soc_id = mxs_get_soc_id();
 -- 
 2.35.1
 
