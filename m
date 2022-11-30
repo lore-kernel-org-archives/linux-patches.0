@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6406879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A060FC433D6;
-	Wed, 30 Nov 2022 18:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B05079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:36:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90946C433C1;
+	Wed, 30 Nov 2022 18:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833399;
-	bh=vf8x7GvCkmVz5ivFzVWH5/3eH937GfSPlNt+gcZZkuw=;
+	s=korg; t=1669833401;
+	bh=RdMKuR59+cfjW3qoX1f8MVBOm3AMjcmS5SfvyHPiHmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFNuzOEiDdu08JbZ2YVWQYCN0/H7Jzfm7qv+sbcwCsUE4zPJ6jN5H/FE/7lLQOmdu
-	 UabqTuZyMs+/nUGPdvAyQeIP+qE3KmbZ/f+g2sff6XpVs50Wi0XwsMsIFRIkt33mr7
-	 V8BYKF9ta5you9hxJlc3/GEy5+sXzdy+hdfkrJ+o=
+	b=tlXP16B2ZsxXbKkmAFwpJ6B7JN5Bqajt+KZjmeb3RbKdgv1Q58Jl2EcbwWYSTFZO4
+	 Y7Rj5fqayk99yzTtqiZhvBdSDIKWoloiAtdrsFnEWQpdu7SMTseByhn7l6ZwswwUVW
+	 uhWSYZMecyMFrJ2PU0WIgm45lcJbSyiDoav5JBA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/206] net/qla3xxx: fix potential memleak in ql3xxx_send()
-Date: Wed, 30 Nov 2022 19:22:24 +0100
-Message-Id: <20221130180535.364594741@linuxfoundation.org>
+Subject: [PATCH 5.15 093/206] octeontx2-af: debugsfs: fix pci device refcount leak
+Date: Wed, 30 Nov 2022 19:22:25 +0100
+Message-Id: <20221130180535.391875608@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,33 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 62a7311fb96c61d281da9852dbee4712fc8c3277 ]
+[ Upstream commit d66608803aa2ffb9e475623343f69996305771ae ]
 
-The ql3xxx_send() returns NETDEV_TX_OK without freeing skb in error
-handling case, add dev_kfree_skb_any() to fix it.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put().
 
-Fixes: bd36b0ac5d06 ("qla3xxx: Add support for Qlogic 4032 chip.")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/r/1668675039-21138-1-git-send-email-zhangchangzhong@huawei.com
+So before returning from rvu_dbg_rvu_pf_cgx_map_display() or
+cgx_print_dmac_flt(), pci_dev_put() is called to avoid refcount
+leak.
+
+Fixes: dbc52debf95f ("octeontx2-af: Debugfs support for DMAC filters")
+Fixes: e2fb37303865 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221117124658.162409-1-yangyingliang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qla3xxx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qla3xxx.c b/drivers/net/ethernet/qlogic/qla3xxx.c
-index 40d14d80f6f1..29837e533cee 100644
---- a/drivers/net/ethernet/qlogic/qla3xxx.c
-+++ b/drivers/net/ethernet/qlogic/qla3xxx.c
-@@ -2469,6 +2469,7 @@ static netdev_tx_t ql3xxx_send(struct sk_buff *skb,
- 					     skb_shinfo(skb)->nr_frags);
- 	if (tx_cb->seg_count == -1) {
- 		netdev_err(ndev, "%s: invalid segment count!\n", __func__);
-+		dev_kfree_skb_any(skb);
- 		return NETDEV_TX_OK;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index f001579569a2..66d34699f160 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -441,6 +441,8 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
+ 		sprintf(lmac, "LMAC%d", lmac_id);
+ 		seq_printf(filp, "%s\t0x%x\t\tNIX%d\t\t%s\t%s\n",
+ 			   dev_name(&pdev->dev), pcifunc, blkid, cgx, lmac);
++
++		pci_dev_put(pdev);
  	}
+ 	return 0;
+ }
+@@ -2127,6 +2129,7 @@ static int cgx_print_dmac_flt(struct seq_file *s, int lmac_id)
+ 		}
+ 	}
+ 
++	pci_dev_put(pdev);
+ 	return 0;
+ }
  
 -- 
 2.35.1
