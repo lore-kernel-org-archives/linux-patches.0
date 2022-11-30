@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB0F79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CABC433C1;
-	Wed, 30 Nov 2022 18:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD74B79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5027DC433D6;
+	Wed, 30 Nov 2022 18:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834388;
-	bh=HQnziATy9GXeouqLcZTi0GRYACLnIQvqj6pEI65EoMw=;
+	s=korg; t=1669834391;
+	bh=YHcjeRETRWjMGSO4ndh1O2l3ktz4uzoL4Rcq6wzbhSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdZ3TFgpt+sIvuScJD4GEjDOEfQBZFIIAKiPlkjTGpxoGRkid2pSw9gjh4d+jH+T6
-	 wVAtQ9KUbsNSXZFCOM7yCYE20PsaKgpxxsl5N55mCiYuvXeubnOFQGqsmFc/opmv85
-	 lMA/T91c5nZreDSCcdlpATHwcmoa/46QgiTDFQg4=
+	b=BeX5N306JTUKd7f8b8ewzlyiVmc28wCgEQQeKz7eXPBd1ocqr6rvl638ewxS69Zg3
+	 YmOjy1iZ5pvT/PSIw1R6cfYR+C45xu3C3BnaYX3EoZsQ6G9vvhAFcDbFP0M6oGfto5
+	 qImTpVt+fKYvcOmFE1AUIZVXm5ugIjYhr6EopMAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 228/289] tools: iio: iio_generic_buffer: Fix read size
-Date: Wed, 30 Nov 2022 19:23:33 +0100
-Message-Id: <20221130180549.283587335@linuxfoundation.org>
+Subject: [PATCH 6.0 237/289] Input: soc_button_array - add use_low_level_irq module parameter
+Date: Wed, 30 Nov 2022 19:23:42 +0100
+Message-Id: <20221130180549.483661249@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,60 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 7c919b619bcc68158921b1bd968f0e704549bbb6 ]
+[ Upstream commit 8e9ada1d0e72b4737df400fe1bba48dc42a68df7 ]
 
-When noevents is true and small buffer is used the allocated memory for
-holding the data may be smaller than the hard-coded 64 bytes. This can
-cause the iio_generic_buffer to crash.
+It seems that the Windows drivers for the ACPI0011 soc_button_array
+device use low level triggered IRQs rather then using edge triggering.
 
-Following was recorded on beagle bone black with v6.0 kernel and the
-digit fix patch:
-https://lore.kernel.org/all/Y0f+tKCz+ZAIoroQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi/
-using valgrind;
+Some ACPI tables depend on this, directly poking the GPIO controller's
+registers to clear the trigger type when closing a laptop's/2-in-1's lid
+and re-instating the trigger when opening the lid again.
 
-==339== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==339== Command: /iio_generic_buffer -n kx022-accel -T0 -e -l 10 -a -w 2000000
-==339== Parent PID: 307
-==339==
-==339== Syscall param read(buf) points to unaddressable byte(s)
-==339==    at 0x496BFA4: read (read.c:26)
-==339==    by 0x11699: main (iio_generic_buffer.c:724)
-==339==  Address 0x4ab3518 is 0 bytes after a block of size 160 alloc'd
-==339==    at 0x4864B70: malloc (vg_replace_malloc.c:381)
-==339==    by 0x115BB: main (iio_generic_buffer.c:677)
+Linux sets the edge/level on which to trigger to both low+high since
+it is using edge type IRQs, the ACPI tables then ends up also setting
+the bit for level IRQs and since both low and high level have been
+selected by Linux we get an IRQ storm leading to soft lockups.
 
-Fix this by always using the same size for reading as was used for
-data storage allocation.
+As a workaround for this the soc_button_array already contains
+a DMI quirk table with device models known to have this issue.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/Y0kMh0t5qUXJw3nQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add a module parameter for this so that users can easily test if their
+device is affected too and so that they can use the module parameter
+as a workaround.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221106215320.67109-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/misc/soc_button_array.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 2491c54a5e4f..f8deae4e26a1 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -715,12 +715,12 @@ int main(int argc, char **argv)
- 				continue;
- 			}
+diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
+index 480476121c01..50497dd05027 100644
+--- a/drivers/input/misc/soc_button_array.c
++++ b/drivers/input/misc/soc_button_array.c
+@@ -18,6 +18,10 @@
+ #include <linux/gpio.h>
+ #include <linux/platform_device.h>
  
--			toread = buf_len;
- 		} else {
- 			usleep(timedelay);
--			toread = 64;
++static bool use_low_level_irq;
++module_param(use_low_level_irq, bool, 0444);
++MODULE_PARM_DESC(use_low_level_irq, "Use low-level triggered IRQ instead of edge triggered");
++
+ struct soc_button_info {
+ 	const char *name;
+ 	int acpi_index;
+@@ -164,7 +168,8 @@ soc_button_device_create(struct platform_device *pdev,
  		}
  
-+		toread = buf_len;
-+
- 		read_size = read(buf_fd, data, toread * scan_size);
- 		if (read_size < 0) {
- 			if (errno == EAGAIN) {
+ 		/* See dmi_use_low_level_irq[] comment */
+-		if (!autorepeat && dmi_check_system(dmi_use_low_level_irq)) {
++		if (!autorepeat && (use_low_level_irq ||
++				    dmi_check_system(dmi_use_low_level_irq))) {
+ 			irq_set_irq_type(irq, IRQ_TYPE_LEVEL_LOW);
+ 			gpio_keys[n_buttons].irq = irq;
+ 			gpio_keys[n_buttons].gpio = -ENOENT;
 -- 
 2.35.1
 
