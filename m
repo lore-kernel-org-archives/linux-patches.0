@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B7979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FF8C433D7;
-	Wed, 30 Nov 2022 18:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0694479C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC80C433C1;
+	Wed, 30 Nov 2022 18:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834378;
-	bh=lZ8IV3RGQVMuKf/P2TSW30SoHqygVejhggepNHHuK8E=;
+	s=korg; t=1669834380;
+	bh=/7nNmNLkVrG6cnl4XZM4dyEmfIA/rHGBXc7NZRApXoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q09j3Rt6Gqoibpz4DT0y3tKNg2efc9SEDjX205HCXJ8CRSQxg0zW5ZsNej7yI4vLn
-	 zQj+Wia9uuQGxRuQvcIQjeJY/Xdj2rDETh14AFE7900bBkExxyTpwGmahhTjLOGdDX
-	 9jEUj++GpogMxCLlRz9OHzK4S3EGDPQfc0Qf8M6g=
+	b=vwIm0LY+LrgX5CHkqhjNrQHHPSIpVjaVOIZMfAr6MTfII1qIuST7ljX98OCLOxr9u
+	 1KyOlY7dMUxgCEj7KPaS6JRhWuwRDzOPLjk+9NCId+x2O+4rqI2wgLAUFypmnW+aYX
+	 yKAz5KMVRDS1yPqf0IvAMlMZKSVfJyiRrt5gCXWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	stable@kernel.org,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 204/289] KVM: x86/xen: Only do in-kernel acceleration of hypercalls for guest CPL0
-Date: Wed, 30 Nov 2022 19:23:09 +0100
-Message-Id: <20221130180548.744269853@linuxfoundation.org>
+Subject: [PATCH 6.0 205/289] KVM: x86/xen: Validate port number in SCHEDOP_poll
+Date: Wed, 30 Nov 2022 19:23:10 +0100
+Message-Id: <20221130180548.767960200@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -39,12 +39,14 @@ Content-Transfer-Encoding: 8bit
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit c2b8cdfaf3a6721afe0c8c060a631b1c67a7f1ee upstream.
+commit 4ea9439fd537313f3381f0af4ebbf05e3f51a58c upstream.
 
-There are almost no hypercalls which are valid from CPL > 0, and definitely
-none which are handled by the kernel.
+We shouldn't allow guests to poll on arbitrary port numbers off the end
+of the event channel table.
 
-Fixes: 2fd6df2f2b47 ("KVM: x86/xen: intercept EVTCHNOP_send from guests")
+Fixes: 1a65105a5aba ("KVM: x86/xen: handle PV spinlocks slowpath")
+[dwmw2: my bug though; the original version did check the validity as a
+ side-effect of an idr_find() which I ripped out in refactoring.]
 Reported-by: Michal Luczaj <mhal@rbox.co>
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Sean Christopherson <seanjc@google.com>
@@ -52,49 +54,51 @@ Cc: stable@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kvm/xen.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 --- a/arch/x86/kvm/xen.c
 +++ b/arch/x86/kvm/xen.c
-@@ -1216,6 +1216,7 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
- 	bool longmode;
- 	u64 input, params[6], r = -ENOSYS;
- 	bool handled = false;
-+	u8 cpl;
+@@ -954,6 +954,14 @@ static int kvm_xen_hypercall_complete_us
+ 	return kvm_xen_hypercall_set_result(vcpu, run->xen.u.hcall.result);
+ }
  
- 	input = (u64)kvm_register_read(vcpu, VCPU_REGS_RAX);
- 
-@@ -1243,9 +1244,17 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
- 		params[5] = (u64)kvm_r9_read(vcpu);
- 	}
- #endif
-+	cpl = static_call(kvm_x86_get_cpl)(vcpu);
- 	trace_kvm_xen_hypercall(input, params[0], params[1], params[2],
- 				params[3], params[4], params[5]);
- 
-+	/*
-+	 * Only allow hypercall acceleration for CPL0. The rare hypercalls that
-+	 * are permitted in guest userspace can be handled by the VMM.
-+	 */
-+	if (unlikely(cpl > 0))
-+		goto handle_in_userspace;
++static inline int max_evtchn_port(struct kvm *kvm)
++{
++	if (IS_ENABLED(CONFIG_64BIT) && kvm->arch.xen.long_mode)
++		return EVTCHN_2L_NR_CHANNELS;
++	else
++		return COMPAT_EVTCHN_2L_NR_CHANNELS;
++}
 +
- 	switch (input) {
- 	case __HYPERVISOR_xen_version:
- 		if (params[0] == XENVER_version && vcpu->kvm->arch.xen.xen_version) {
-@@ -1280,10 +1289,11 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
- 	if (handled)
- 		return kvm_xen_hypercall_set_result(vcpu, r);
+ static bool wait_pending_event(struct kvm_vcpu *vcpu, int nr_ports,
+ 			       evtchn_port_t *ports)
+ {
+@@ -1042,6 +1050,10 @@ static bool kvm_xen_schedop_poll(struct
+ 			*r = -EFAULT;
+ 			goto out;
+ 		}
++		if (ports[i] >= max_evtchn_port(vcpu->kvm)) {
++			*r = -EINVAL;
++			goto out;
++		}
+ 	}
  
-+handle_in_userspace:
- 	vcpu->run->exit_reason = KVM_EXIT_XEN;
- 	vcpu->run->xen.type = KVM_EXIT_XEN_HCALL;
- 	vcpu->run->xen.u.hcall.longmode = longmode;
--	vcpu->run->xen.u.hcall.cpl = static_call(kvm_x86_get_cpl)(vcpu);
-+	vcpu->run->xen.u.hcall.cpl = cpl;
- 	vcpu->run->xen.u.hcall.input = input;
- 	vcpu->run->xen.u.hcall.params[0] = params[0];
- 	vcpu->run->xen.u.hcall.params[1] = params[1];
+ 	if (sched_poll.nr_ports == 1)
+@@ -1308,14 +1320,6 @@ handle_in_userspace:
+ 	return 0;
+ }
+ 
+-static inline int max_evtchn_port(struct kvm *kvm)
+-{
+-	if (IS_ENABLED(CONFIG_64BIT) && kvm->arch.xen.long_mode)
+-		return EVTCHN_2L_NR_CHANNELS;
+-	else
+-		return COMPAT_EVTCHN_2L_NR_CHANNELS;
+-}
+-
+ static void kvm_xen_check_poller(struct kvm_vcpu *vcpu, int port)
+ {
+ 	int poll_evtchn = vcpu->arch.xen.poll_evtchn;
 
 
