@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5185179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD91C433D6;
-	Wed, 30 Nov 2022 18:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AEE79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818ACC433C1;
+	Wed, 30 Nov 2022 18:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833289;
-	bh=3zZn3OsW/KStF3spWVf6h6zcdQchxOL8Mrxm9Btxl/g=;
+	s=korg; t=1669833291;
+	bh=3FEH4svVzkYeoaa6ZutCgXlK7jfyfHYi9LMUFaXwG4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuAwfeWT7n0xQBwiopJiaGUuVIMElLqLDPurqICw6fVaDWMEU8wQfkBNE4JpL5chA
-	 DAZqecYNu7lNw6npzjngILSZ2MO4mZn2kEG7dTZ/4dEkSpjEfkOnvGsrSXTKNNPHgD
-	 wb1hGdNF+sAMX9Y2iDwcm6NbJQcdBLnwBBa2LVWc=
+	b=Ga9y3eovc2gtOfTZsP+PMj6p6LrQurDU1ZbkniSiGk/Y8104uOYHMyNd4N0NJSgxK
+	 jwpBNLa44jT/g8+eF4o0AuhF8UkL+32SBQ/wV5xYQ0qN9GGzvR68+nVWuwkbJh+MMw
+	 nPVB5X10sdxA51SOWdOGz7TLkhQiJhoRAb1U4rSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Monil Patel <monil191989@gmail.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/206] scsi: scsi_debug: Make the READ CAPACITY response compliant with ZBC
-Date: Wed, 30 Nov 2022 19:21:38 +0100
-Message-Id: <20221130180534.171750991@linuxfoundation.org>
+Subject: [PATCH 5.15 055/206] xfrm: fix "disable_policy" on ipv4 early demux
+Date: Wed, 30 Nov 2022 19:21:47 +0100
+Message-Id: <20221130180534.399820717@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,57 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-[ Upstream commit ecb8c2580d37dbb641451049376d80c8afaa387f ]
+[ Upstream commit 3a5913183aa1b14148c723bda030e6102ad73008 ]
 
->From ZBC-1:
+The commit in the "Fixes" tag tried to avoid a case where policy check
+is ignored due to dst caching in next hops.
 
- - RC BASIS = 0: The RETURNED LOGICAL BLOCK ADDRESS field indicates the
-   highest LBA of a contiguous range of zones that are not sequential write
-   required zones starting with the first zone.
+However, when the traffic is locally consumed, the dst may be cached
+in a local TCP or UDP socket as part of early demux. In this case the
+"disable_policy" flag is not checked as ip_route_input_noref() was only
+called before caching, and thus, packets after the initial packet in a
+flow will be dropped if not matching policies.
 
- - RC BASIS = 1: The RETURNED LOGICAL BLOCK ADDRESS field indicates the LBA
-   of the last logical block on the logical unit.
+Fix by checking the "disable_policy" flag also when a valid dst is
+already available.
 
-The current scsi_debug READ CAPACITY response does not comply with the
-above if there are one or more sequential write required zones. SCSI
-initiators need a way to retrieve the largest valid LBA from SCSI
-devices. Reporting the largest valid LBA if there are one or more
-sequential zones requires to set the RC BASIS field in the READ CAPACITY
-response to one. Hence this patch.
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216557
+Reported-by: Monil Patel <monil191989@gmail.com>
+Fixes: e6175a2ed1f1 ("xfrm: fix "disable_policy" flag use when arriving from different devices")
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
 
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Suggested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221102193248.3177608-1-bvanassche@acm.org
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+----
+
+v2: use dev instead of skb->dev
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv4/ip_input.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 2b5e249f5d5b..0b16061d8da8 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -1879,6 +1879,13 @@ static int resp_readcap16(struct scsi_cmnd *scp,
- 			arr[14] |= 0x40;
+diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
+index 459d7e630cb0..124bf8fdf924 100644
+--- a/net/ipv4/ip_input.c
++++ b/net/ipv4/ip_input.c
+@@ -364,6 +364,11 @@ static int ip_rcv_finish_core(struct net *net, struct sock *sk,
+ 					   iph->tos, dev);
+ 		if (unlikely(err))
+ 			goto drop_error;
++	} else {
++		struct in_device *in_dev = __in_dev_get_rcu(dev);
++
++		if (in_dev && IN_DEV_ORCONF(in_dev, NOPOLICY))
++			IPCB(skb)->flags |= IPSKB_NOPOLICY;
  	}
  
-+	/*
-+	 * Since the scsi_debug READ CAPACITY implementation always reports the
-+	 * total disk capacity, set RC BASIS = 1 for host-managed ZBC devices.
-+	 */
-+	if (devip->zmodel == BLK_ZONED_HM)
-+		arr[12] |= 1 << 4;
-+
- 	arr[15] = sdebug_lowest_aligned & 0xff;
- 
- 	if (have_dif_prot) {
+ #ifdef CONFIG_IP_ROUTE_CLASSID
 -- 
 2.35.1
 
