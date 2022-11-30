@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EC979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FA1C433D6;
-	Wed, 30 Nov 2022 18:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D4579C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0309FC433D6;
+	Wed, 30 Nov 2022 18:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833628;
-	bh=OEz5pe170WRbn7bIErG4oxky6D1iXWKCqtNHxTaSKzI=;
+	s=korg; t=1669833631;
+	bh=aMN0ODm9/+ic3zIBhwAGdEfUsgdV3cDgwPG4ESolaJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqMpe5M8+buMukQuahQtbDZCQX6b95D5PrsIyMidMy/MEknPpPi1wltPjnZTBNTbI
-	 kutS9TjLDJR8FX00yPjlE5tA/VEXiLGGLP+Z36afyfHEaLQt1svMc2bsmQ88S4JDpY
-	 jDuETodygIuz9WhAMcpRLMCcfERbiYs3K3w9YG04=
+	b=2CN3w/4ZhlpxjNFY8mIFdmMwTy8uGxwKve7MhVfSeMsKh7/LXIpvsaKW5s9XKeReZ
+	 ExQOgGhbk0EQg3apQaGbQ8TjNuKyWJfHBukac9VgqaYl290sfrnTceS2TFxkW4z1Gq
+	 tYtgE36+ZIAyUSCIKIBS+O6SNb/0oT80vNVbU7d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aman Dhoot <amandhoot12@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Al Cooper <alcooperx@gmail.com>,
+	Kamal Dasu <kdasu.kdev@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/206] Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode
-Date: Wed, 30 Nov 2022 19:23:36 +0100
-Message-Id: <20221130180537.202237666@linuxfoundation.org>
+Subject: [PATCH 5.15 138/206] mmc: sdhci-brcmstb: Enable Clock Gating to save power
+Date: Wed, 30 Nov 2022 19:23:10 +0100
+Message-Id: <20221130180536.550537786@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,32 +38,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aman Dhoot <amandhoot12@gmail.com>
+From: Al Cooper <alcooperx@gmail.com>
 
-[ Upstream commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 ]
+[ Upstream commit 6bcc55fe648b860ef0c2b8dc23adc05bcddb93c2 ]
 
-The device works fine in native RMI mode, there is no reason to use legacy
-PS/2 mode with it.
+Enabling this feature will allow the controller to stop the bus
+clock when the bus is idle. The feature is not part of the standard
+and is unique to newer Arasan cores and is enabled with a bit in a
+vendor specific register. This feature will only be enabled for
+non-removable devices because they don't switch the voltage and
+clock gating breaks SD Card volatge switching.
 
-Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Al Cooper <alcooperx@gmail.com>
+Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20220427180853.35970-3-kdasu.kdev@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 56baa208f910 ("mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci-brcmstb.c | 35 +++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index ffad142801b3..973a4c1d5d09 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -191,6 +191,7 @@ static const char * const smbus_pnp_ids[] = {
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
-+	"SYN3286", /* HP Laptop 15-da3001TU */
- 	NULL
+diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+index 244780481193..683d0c685748 100644
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -17,11 +17,14 @@
+ 
+ #define SDHCI_VENDOR 0x78
+ #define  SDHCI_VENDOR_ENHANCED_STRB 0x1
++#define  SDHCI_VENDOR_GATE_SDCLK_EN 0x2
+ 
+ #define BRCMSTB_MATCH_FLAGS_NO_64BIT		BIT(0)
+ #define BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT	BIT(1)
++#define BRCMSTB_MATCH_FLAGS_HAS_CLOCK_GATE	BIT(2)
+ 
+ #define BRCMSTB_PRIV_FLAGS_HAS_CQE		BIT(0)
++#define BRCMSTB_PRIV_FLAGS_GATE_CLOCK		BIT(1)
+ 
+ #define SDHCI_ARASAN_CQE_BASE_ADDR		0x200
+ 
+@@ -36,6 +39,27 @@ struct brcmstb_match_priv {
+ 	const unsigned int flags;
  };
  
++static inline void enable_clock_gating(struct sdhci_host *host)
++{
++	u32 reg;
++
++	reg = sdhci_readl(host, SDHCI_VENDOR);
++	reg |= SDHCI_VENDOR_GATE_SDCLK_EN;
++	sdhci_writel(host, reg, SDHCI_VENDOR);
++}
++
++void brcmstb_reset(struct sdhci_host *host, u8 mask)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
++
++	sdhci_reset(host, mask);
++
++	/* Reset will clear this, so re-enable it */
++	if (priv->flags & BRCMSTB_PRIV_FLAGS_GATE_CLOCK)
++		enable_clock_gating(host);
++}
++
+ static void sdhci_brcmstb_hs400es(struct mmc_host *mmc, struct mmc_ios *ios)
+ {
+ 	struct sdhci_host *host = mmc_priv(mmc);
+@@ -131,7 +155,7 @@ static struct sdhci_ops sdhci_brcmstb_ops = {
+ static struct sdhci_ops sdhci_brcmstb_ops_7216 = {
+ 	.set_clock = sdhci_brcmstb_set_clock,
+ 	.set_bus_width = sdhci_set_bus_width,
+-	.reset = sdhci_reset,
++	.reset = brcmstb_reset,
+ 	.set_uhs_signaling = sdhci_brcmstb_set_uhs_signaling,
+ };
+ 
+@@ -147,6 +171,7 @@ static struct brcmstb_match_priv match_priv_7445 = {
+ };
+ 
+ static const struct brcmstb_match_priv match_priv_7216 = {
++	.flags = BRCMSTB_MATCH_FLAGS_HAS_CLOCK_GATE,
+ 	.hs400es = sdhci_brcmstb_hs400es,
+ 	.ops = &sdhci_brcmstb_ops_7216,
+ };
+@@ -273,6 +298,14 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+ 	if (res)
+ 		goto err;
+ 
++	/*
++	 * Automatic clock gating does not work for SD cards that may
++	 * voltage switch so only enable it for non-removable devices.
++	 */
++	if ((match_priv->flags & BRCMSTB_MATCH_FLAGS_HAS_CLOCK_GATE) &&
++	    (host->mmc->caps & MMC_CAP_NONREMOVABLE))
++		priv->flags |= BRCMSTB_PRIV_FLAGS_GATE_CLOCK;
++
+ 	/*
+ 	 * If the chip has enhanced strobe and it's enabled, add
+ 	 * callback
 -- 
 2.35.1
 
