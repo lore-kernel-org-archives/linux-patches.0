@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3645A79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B65C433D7;
-	Wed, 30 Nov 2022 18:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D3E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871AFC433C1;
+	Wed, 30 Nov 2022 18:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834457;
-	bh=A1+gXr/J1eW15FIYEW2BhNsHdK78cXwj+fpdKfBzjfw=;
+	s=korg; t=1669834459;
+	bh=VFy8a2ipHZFKrG15yzz2Sg92hKqPjoopdq0PKSsFYJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hH/mUeE05JtqQbG0zYOOfMKJQzP+O4NvhDvKRY25jxjcormhPPGDlmzLrWpkqZlEZ
-	 iyUcLdtMctxDcEFUwiYyWcC9T1NU2YJBf3/HwtOXL5iHTKNA+wQ7VoW6ZPgDX1bOsb
-	 oJJP3UoaalaZ0ZrNEc2RzHXfb4nrS4ju21/3/7vw=
+	b=QD5B3KBSyVq1dYYlNcO/0C0SMY8PIK6QoEm0XaHZXA2WZD0vRqAjUDNU1zmQmMLXF
+	 WgJ+YeZx3X/Oh1O1n+fivNEeb0CDPI0K57jJCUtEX2O+6H1PiG64ogVfWDcFBXKYZa
+	 PsnHyijTjXA3I4LZ0okJnoT9HWAzhuy35UzCb0AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Daniel Starke <daniel.starke@siemens.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 233/289] Revert "tty: n_gsm: replace kicktimer with delayed_work"
-Date: Wed, 30 Nov 2022 19:23:38 +0100
-Message-Id: <20221130180549.395225899@linuxfoundation.org>
+Subject: [PATCH 6.0 234/289] Input: goodix - try resetting the controller when no config is set
+Date: Wed, 30 Nov 2022 19:23:39 +0100
+Message-Id: <20221130180549.417352709@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,87 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 15743ae50e04aa907131e3ae8d66e9a2964ea232 ]
+[ Upstream commit c7e37cc6240767f794678d11704935d49cc81d59 ]
 
-This reverts commit c9ab053e56ce13a949977398c8edc12e6c02fc95.
+On ACPI systems (irq_pin_access_method == IRQ_PIN_ACCESS_ACPI_*) the driver
+does not reset the controller at probe time, because sometimes the system
+firmware loads a config and resetting might loose this config.
 
-The above commit is reverted as it was a prerequisite for tx_mutex
-introduction and tx_mutex has been removed as it does not correctly
-work in order to protect tx data.
+On the Nanote UMPC-01 device OTOH the config is in flash of the controller,
+the controller needs a reset to load this; and the system firmware does not
+reset the controller on a cold boot.
 
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Reviewed-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20221008110221.13645-3-pchelkin@ispras.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To fix the Nanote UMPC-01 touchscreen not working on a cold boot, try
+resetting the controller and then re-reading the config when encountering
+a config with 0 width/height/max_touch_num value and the controller has
+not already been reset by goodix_ts_probe().
+
+This should be safe to do in general because normally we should never
+encounter a config with 0 width/height/max_touch_num. Doing this in
+general not only avoids the need for a DMI quirk, but also might help
+other systems.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20221025122930.421377-2-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/input/touchscreen/goodix.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index 3cd6a2c55d9c..ae02aed6bd0c 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -256,7 +256,7 @@ struct gsm_mux {
- 	struct list_head tx_data_list;	/* Pending data packets */
+diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
+index 21c0dddbe41d..25e6ba132bbc 100644
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -1158,6 +1158,7 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
+ 	input_set_abs_params(ts->input_dev, ABS_MT_WIDTH_MAJOR, 0, 255, 0, 0);
+ 	input_set_abs_params(ts->input_dev, ABS_MT_TOUCH_MAJOR, 0, 255, 0, 0);
  
- 	/* Control messages */
--	struct delayed_work kick_timeout;	/* Kick TX queuing on timeout */
-+	struct timer_list kick_timer;	/* Kick TX queuing on timeout */
- 	struct timer_list t2_timer;	/* Retransmit timer for commands */
- 	int cretries;			/* Command retry counter */
- 	struct gsm_control *pending_cmd;/* Our current pending command */
-@@ -1009,7 +1009,7 @@ static void __gsm_data_queue(struct gsm_dlci *dlci, struct gsm_msg *msg)
- 	gsm->tx_bytes += msg->len;
++retry_read_config:
+ 	/* Read configuration and apply touchscreen parameters */
+ 	goodix_read_config(ts);
  
- 	gsmld_write_trigger(gsm);
--	schedule_delayed_work(&gsm->kick_timeout, 10 * gsm->t1 * HZ / 100);
-+	mod_timer(&gsm->kick_timer, jiffies + 10 * gsm->t1 * HZ / 100);
- }
+@@ -1165,6 +1166,16 @@ static int goodix_configure_dev(struct goodix_ts_data *ts)
+ 	touchscreen_parse_properties(ts->input_dev, true, &ts->prop);
  
- /**
-@@ -1984,16 +1984,16 @@ static void gsm_dlci_command(struct gsm_dlci *dlci, const u8 *data, int len)
- }
- 
- /**
-- *	gsm_kick_timeout	-	transmit if possible
-- *	@work: work contained in our gsm object
-+ *	gsm_kick_timer	-	transmit if possible
-+ *	@t: timer contained in our gsm object
-  *
-  *	Transmit data from DLCIs if the queue is empty. We can't rely on
-  *	a tty wakeup except when we filled the pipe so we need to fire off
-  *	new data ourselves in other cases.
-  */
--static void gsm_kick_timeout(struct work_struct *work)
-+static void gsm_kick_timer(struct timer_list *t)
- {
--	struct gsm_mux *gsm = container_of(work, struct gsm_mux, kick_timeout.work);
-+	struct gsm_mux *gsm = from_timer(gsm, t, kick_timer);
- 	unsigned long flags;
- 	int sent = 0;
- 
-@@ -2458,7 +2458,7 @@ static void gsm_cleanup_mux(struct gsm_mux *gsm, bool disc)
- 	}
- 
- 	/* Finish outstanding timers, making sure they are done */
--	cancel_delayed_work_sync(&gsm->kick_timeout);
-+	del_timer_sync(&gsm->kick_timer);
- 	del_timer_sync(&gsm->t2_timer);
- 
- 	/* Finish writing to ldisc */
-@@ -2605,7 +2605,7 @@ static struct gsm_mux *gsm_alloc_mux(void)
- 	kref_init(&gsm->ref);
- 	INIT_LIST_HEAD(&gsm->tx_ctrl_list);
- 	INIT_LIST_HEAD(&gsm->tx_data_list);
--	INIT_DELAYED_WORK(&gsm->kick_timeout, gsm_kick_timeout);
-+	timer_setup(&gsm->kick_timer, gsm_kick_timer, 0);
- 	timer_setup(&gsm->t2_timer, gsm_control_retransmit, 0);
- 	INIT_WORK(&gsm->tx_work, gsmld_write_task);
- 	init_waitqueue_head(&gsm->event);
+ 	if (!ts->prop.max_x || !ts->prop.max_y || !ts->max_touch_num) {
++		if (!ts->reset_controller_at_probe &&
++		    ts->irq_pin_access_method != IRQ_PIN_ACCESS_NONE) {
++			dev_info(&ts->client->dev, "Config not set, resetting controller\n");
++			/* Retry after a controller reset */
++			ts->reset_controller_at_probe = true;
++			error = goodix_reset(ts);
++			if (error)
++				return error;
++			goto retry_read_config;
++		}
+ 		dev_err(&ts->client->dev,
+ 			"Invalid config (%d, %d, %d), using defaults\n",
+ 			ts->prop.max_x, ts->prop.max_y, ts->max_touch_num);
 -- 
 2.35.1
 
