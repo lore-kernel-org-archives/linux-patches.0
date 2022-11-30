@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC7779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB0C433D6;
-	Wed, 30 Nov 2022 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB0679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F298AC433D6;
+	Wed, 30 Nov 2022 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833979;
-	bh=BCIJym950TnquZjxl5iHrUPPs/wpZiKMKZTxo1q9xMI=;
+	s=korg; t=1669833982;
+	bh=+0mCiMLXDuHKOibpJFG05HDbiqBQy6oz5ba9lzIm1xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiBUQsxeubiAJs0IgbrLaMNF5w+IE6ijgCgvS/SHitEFrD2hgtYI7erZuxVOw+ZEp
-	 zSkKIDZqC6qGxAuTmTn0cbhGm3/YSVJV/9kT9oh79W3Py6GkTGbuiZoNwxaNOjHd7E
-	 Mxf4IIXOcjF7eH716oeTw3ICKLGWwedOenmjz1Sk=
+	b=LUv9befKvQwm33N+4o6I+as3P0xdmbXR5jxL0fEHGKytcGmfJUum/1MFQO+SDXHHp
+	 CSdr4LGTRrLG1rNOjGeyT02bsybXCp3kMAuztWFqS24MLN3yWnABXfZKrCkf8FJDZM
+	 BdWigPufP34SDI8eukZVvh5aSzvpGHojL5LUxOXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Ondrej Jirman <megi@xff.cz>,
+	Samuel Holland <samuel@sholland.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 057/289] x86/hyperv: Restore VP assist page after cpu offlining/onlining
-Date: Wed, 30 Nov 2022 19:20:42 +0100
-Message-Id: <20221130180545.424379317@linuxfoundation.org>
+Subject: [PATCH 6.0 048/289] power: supply: ip5xxx: Fix integer overflow in current_now calculation
+Date: Wed, 30 Nov 2022 19:20:33 +0100
+Message-Id: <20221130180545.218325247@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,123 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Ondrej Jirman <megi@xff.cz>
 
-[ Upstream commit ee6815416380bc069b7dcbdff0682d4c53617527 ]
+[ Upstream commit f9be5cb6c1f0191f8bcf4413b7e17e58e8dfaaa1 ]
 
-Commit e5d9b714fe40 ("x86/hyperv: fix root partition faults when writing
-to VP assist page MSR") moved 'wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE)' under
-'if (*hvp)' condition. This works for root partition as hv_cpu_die()
-does memunmap() and sets 'hv_vp_assist_page[cpu]' to NULL but breaks
-non-root partitions as hv_cpu_die() doesn't free 'hv_vp_assist_page[cpu]'
-for them. This causes VP assist page to remain unset after CPU
-offline/online cycle:
+When current is larger than ~2A, the multiplication in current_now
+property overflows and the kernel reports invalid negative current
+value. Change the numerator and denominator while preserving their
+ratio to allow up to +-6A before the overflow.
 
-$ rdmsr -p 24 0x40000073
-  10212f001
-$ echo 0 > /sys/devices/system/cpu/cpu24/online
-$ echo 1 > /sys/devices/system/cpu/cpu24/online
-$ rdmsr -p 24 0x40000073
-  0
-
-Fix the issue by always writing to HV_X64_MSR_VP_ASSIST_PAGE in
-hv_cpu_init(). Note, checking 'if (!*hvp)', for root partition is
-pointless as hv_cpu_die() always sets 'hv_vp_assist_page[cpu]' to
-NULL (and it's also NULL initially).
-
-Note: the fact that 'hv_vp_assist_page[cpu]' is reset to NULL may
-present a (potential) issue for KVM. While Hyper-V uses
-CPUHP_AP_ONLINE_DYN stage in CPU hotplug, KVM uses CPUHP_AP_KVM_STARTING
-which comes earlier in CPU teardown sequence. It is theoretically
-possible that Enlightened VMCS is still in use. It is unclear if the
-issue is real and if using KVM with Hyper-V root partition is even
-possible.
-
-While on it, drop the unneeded smp_processor_id() call from hv_cpu_init().
-
-Fixes: e5d9b714fe40 ("x86/hyperv: fix root partition faults when writing to VP assist page MSR")
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20221103190601.399343-1-vkuznets@redhat.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 75853406fa27 ("power: supply: Add a driver for Injoinic power bank ICs")
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Reviewed-by: Samuel Holland <samuel@sholland.org>
+[use 149197/200 instead of 261095/350 as suggested by Samuel]
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/hyperv/hv_init.c | 54 +++++++++++++++++++--------------------
- 1 file changed, 26 insertions(+), 28 deletions(-)
+ drivers/power/supply/ip5xxx_power.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
-index 3de6d8b53367..a0165df3c4d8 100644
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -77,7 +77,7 @@ static int hyperv_init_ghcb(void)
- static int hv_cpu_init(unsigned int cpu)
- {
- 	union hv_vp_assist_msr_contents msr = { 0 };
--	struct hv_vp_assist_page **hvp = &hv_vp_assist_page[smp_processor_id()];
-+	struct hv_vp_assist_page **hvp = &hv_vp_assist_page[cpu];
- 	int ret;
+diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
+index 218e8e689a3f..00221e9c0bfc 100644
+--- a/drivers/power/supply/ip5xxx_power.c
++++ b/drivers/power/supply/ip5xxx_power.c
+@@ -352,7 +352,7 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
+ 		ret = ip5xxx_battery_read_adc(ip5xxx, IP5XXX_BATIADC_DAT0,
+ 					      IP5XXX_BATIADC_DAT1, &raw);
  
- 	ret = hv_common_cpu_init(cpu);
-@@ -87,34 +87,32 @@ static int hv_cpu_init(unsigned int cpu)
- 	if (!hv_vp_assist_page)
+-		val->intval = DIV_ROUND_CLOSEST(raw * 745985, 1000);
++		val->intval = DIV_ROUND_CLOSEST(raw * 149197, 200);
  		return 0;
  
--	if (!*hvp) {
--		if (hv_root_partition) {
--			/*
--			 * For root partition we get the hypervisor provided VP assist
--			 * page, instead of allocating a new page.
--			 */
--			rdmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
--			*hvp = memremap(msr.pfn <<
--					HV_X64_MSR_VP_ASSIST_PAGE_ADDRESS_SHIFT,
--					PAGE_SIZE, MEMREMAP_WB);
--		} else {
--			/*
--			 * The VP assist page is an "overlay" page (see Hyper-V TLFS's
--			 * Section 5.2.1 "GPA Overlay Pages"). Here it must be zeroed
--			 * out to make sure we always write the EOI MSR in
--			 * hv_apic_eoi_write() *after* the EOI optimization is disabled
--			 * in hv_cpu_die(), otherwise a CPU may not be stopped in the
--			 * case of CPU offlining and the VM will hang.
--			 */
-+	if (hv_root_partition) {
-+		/*
-+		 * For root partition we get the hypervisor provided VP assist
-+		 * page, instead of allocating a new page.
-+		 */
-+		rdmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
-+		*hvp = memremap(msr.pfn << HV_X64_MSR_VP_ASSIST_PAGE_ADDRESS_SHIFT,
-+				PAGE_SIZE, MEMREMAP_WB);
-+	} else {
-+		/*
-+		 * The VP assist page is an "overlay" page (see Hyper-V TLFS's
-+		 * Section 5.2.1 "GPA Overlay Pages"). Here it must be zeroed
-+		 * out to make sure we always write the EOI MSR in
-+		 * hv_apic_eoi_write() *after* the EOI optimization is disabled
-+		 * in hv_cpu_die(), otherwise a CPU may not be stopped in the
-+		 * case of CPU offlining and the VM will hang.
-+		 */
-+		if (!*hvp)
- 			*hvp = __vmalloc(PAGE_SIZE, GFP_KERNEL | __GFP_ZERO);
--			if (*hvp)
--				msr.pfn = vmalloc_to_pfn(*hvp);
--		}
--		WARN_ON(!(*hvp));
--		if (*hvp) {
--			msr.enable = 1;
--			wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
--		}
-+		if (*hvp)
-+			msr.pfn = vmalloc_to_pfn(*hvp);
-+
-+	}
-+	if (!WARN_ON(!(*hvp))) {
-+		msr.enable = 1;
-+		wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
- 	}
- 
- 	return hyperv_init_ghcb();
+ 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
 -- 
 2.35.1
 
