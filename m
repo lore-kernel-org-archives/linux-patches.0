@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D445F79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:31:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A73EC433D6;
-	Wed, 30 Nov 2022 18:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868BA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A48CC433D6;
+	Wed, 30 Nov 2022 18:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833114;
-	bh=7BsYg0Wu24udDsEfeVOVwU5rmbccxKV3SpG0/Fd7mGI=;
+	s=korg; t=1669833117;
+	bh=YSy58kK1DPwjJ5A2w5b6vVIdGuy1k6y4qj5AFGrWzw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn9SejUhZtI4LLcDo+mHjB4hHCeRhb7aEyfe2QNy6Bx++0/DU7tq2i9xWB0awQP9B
-	 0GO6ESTiHZRTBqFqywygU8k/BpvFa+0a62zgHBkFGWv/BSaxpyqRRJa5stsxu0WizD
-	 BQ5E8ZKKJK0+BHXeAt5J0Tjte+EFLL+2ce1TeQMk=
+	b=BfbC0VnPVPq3m5pxMVwwiCrUCcUXNmhN8x17G9o2SkR1oySb6qxB0mpt8T08Fpb58
+	 tbDSwlTNxed5/JUgxEqXN5sqwBNCn6uYQebgXJwr0izrRO5HEcx8QWTzKis/ajR7bs
+	 pTv5CUMNu3tcxLaH9uDtnNYfmeJqIOjIm4E+piG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.10 155/162] genirq: Take the proposed affinity at face value if force==true
-Date: Wed, 30 Nov 2022 19:23:56 +0100
-Message-Id: <20221130180532.677827540@linuxfoundation.org>
+	syzbot+4ef9e52e464c6ff47d9d@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 156/162] btrfs: free btrfs_path before copying root refs to userspace
+Date: Wed, 30 Nov 2022 19:23:57 +0100
+Message-Id: <20221130180532.704842560@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,58 +36,210 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Capitulino <luizcap@amazon.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-From: Marc Zyngier <maz@kernel.org>
+commit b740d806166979488e798e41743aaec051f2443f upstream.
 
-commit c48c8b829d2b966a6649827426bcdba082ccf922 upstream.
+Syzbot reported the following lockdep splat
 
-Although setting the affinity of an interrupt to a set of CPUs that doesn't
-have any online CPU is generally frowned apon, there are a few limited
-cases where such affinity is set from a CPUHP notifier, setting the
-affinity to a CPU that isn't online yet.
+======================================================
+WARNING: possible circular locking dependency detected
+6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0 Not tainted
+------------------------------------------------------
+syz-executor307/3029 is trying to acquire lock:
+ffff0000c02525d8 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x54/0xb4 mm/memory.c:5576
 
-The saving grace is that this is always done using the 'force' attribute,
-which gives a hint that the affinity setting can be outside of the online
-CPU mask and the callsite set this flag with the knowledge that the
-underlying interrupt controller knows to handle it.
+but task is already holding lock:
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
 
-This restores the expected behaviour on Marek's system.
+which lock already depends on the new lock.
 
-Fixes: 33de0aa4bae9 ("genirq: Always limit the affinity to online CPUs")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/4b7fc13c-887b-a664-26e8-45aed13f048a@samsung.com
-Link: https://lore.kernel.org/r/20220414140011.541725-1-maz@kernel.org
+the existing dependency chain (in reverse order) is:
 
-Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
+-> #3 (btrfs-root-00){++++}-{3:3}:
+       down_read_nested+0x64/0x84 kernel/locking/rwsem.c:1624
+       __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+       btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+       btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
+       btrfs_search_slot_get_root+0x74/0x338 fs/btrfs/ctree.c:1637
+       btrfs_search_slot+0x1b0/0xfd8 fs/btrfs/ctree.c:1944
+       btrfs_update_root+0x6c/0x5a0 fs/btrfs/root-tree.c:132
+       commit_fs_roots+0x1f0/0x33c fs/btrfs/transaction.c:1459
+       btrfs_commit_transaction+0x89c/0x12d8 fs/btrfs/transaction.c:2343
+       flush_space+0x66c/0x738 fs/btrfs/space-info.c:786
+       btrfs_async_reclaim_metadata_space+0x43c/0x4e0 fs/btrfs/space-info.c:1059
+       process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
+       worker_thread+0x340/0x610 kernel/workqueue.c:2436
+       kthread+0x12c/0x158 kernel/kthread.c:376
+       ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+
+-> #2 (&fs_info->reloc_mutex){+.+.}-{3:3}:
+       __mutex_lock_common+0xd4/0xca8 kernel/locking/mutex.c:603
+       __mutex_lock kernel/locking/mutex.c:747 [inline]
+       mutex_lock_nested+0x38/0x44 kernel/locking/mutex.c:799
+       btrfs_record_root_in_trans fs/btrfs/transaction.c:516 [inline]
+       start_transaction+0x248/0x944 fs/btrfs/transaction.c:752
+       btrfs_start_transaction+0x34/0x44 fs/btrfs/transaction.c:781
+       btrfs_create_common+0xf0/0x1b4 fs/btrfs/inode.c:6651
+       btrfs_create+0x8c/0xb0 fs/btrfs/inode.c:6697
+       lookup_open fs/namei.c:3413 [inline]
+       open_last_lookups fs/namei.c:3481 [inline]
+       path_openat+0x804/0x11c4 fs/namei.c:3688
+       do_filp_open+0xdc/0x1b8 fs/namei.c:3718
+       do_sys_openat2+0xb8/0x22c fs/open.c:1313
+       do_sys_open fs/open.c:1329 [inline]
+       __do_sys_openat fs/open.c:1345 [inline]
+       __se_sys_openat fs/open.c:1340 [inline]
+       __arm64_sys_openat+0xb0/0xe0 fs/open.c:1340
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+-> #1 (sb_internal#2){.+.+}-{0:0}:
+       percpu_down_read include/linux/percpu-rwsem.h:51 [inline]
+       __sb_start_write include/linux/fs.h:1826 [inline]
+       sb_start_intwrite include/linux/fs.h:1948 [inline]
+       start_transaction+0x360/0x944 fs/btrfs/transaction.c:683
+       btrfs_join_transaction+0x30/0x40 fs/btrfs/transaction.c:795
+       btrfs_dirty_inode+0x50/0x140 fs/btrfs/inode.c:6103
+       btrfs_update_time+0x1c0/0x1e8 fs/btrfs/inode.c:6145
+       inode_update_time fs/inode.c:1872 [inline]
+       touch_atime+0x1f0/0x4a8 fs/inode.c:1945
+       file_accessed include/linux/fs.h:2516 [inline]
+       btrfs_file_mmap+0x50/0x88 fs/btrfs/file.c:2407
+       call_mmap include/linux/fs.h:2192 [inline]
+       mmap_region+0x7fc/0xc14 mm/mmap.c:1752
+       do_mmap+0x644/0x97c mm/mmap.c:1540
+       vm_mmap_pgoff+0xe8/0x1d0 mm/util.c:552
+       ksys_mmap_pgoff+0x1cc/0x278 mm/mmap.c:1586
+       __do_sys_mmap arch/arm64/kernel/sys.c:28 [inline]
+       __se_sys_mmap arch/arm64/kernel/sys.c:21 [inline]
+       __arm64_sys_mmap+0x58/0x6c arch/arm64/kernel/sys.c:21
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+-> #0 (&mm->mmap_lock){++++}-{3:3}:
+       check_prev_add kernel/locking/lockdep.c:3095 [inline]
+       check_prevs_add kernel/locking/lockdep.c:3214 [inline]
+       validate_chain kernel/locking/lockdep.c:3829 [inline]
+       __lock_acquire+0x1530/0x30a4 kernel/locking/lockdep.c:5053
+       lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5666
+       __might_fault+0x7c/0xb4 mm/memory.c:5577
+       _copy_to_user include/linux/uaccess.h:134 [inline]
+       copy_to_user include/linux/uaccess.h:160 [inline]
+       btrfs_ioctl_get_subvol_rootref+0x3a8/0x4bc fs/btrfs/ioctl.c:3203
+       btrfs_ioctl+0xa08/0xa64 fs/btrfs/ioctl.c:5556
+       vfs_ioctl fs/ioctl.c:51 [inline]
+       __do_sys_ioctl fs/ioctl.c:870 [inline]
+       __se_sys_ioctl fs/ioctl.c:856 [inline]
+       __arm64_sys_ioctl+0xd0/0x140 fs/ioctl.c:856
+       __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+       invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+       el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+       do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+       el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+       el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+       el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+other info that might help us debug this:
+
+Chain exists of:
+  &mm->mmap_lock --> &fs_info->reloc_mutex --> btrfs-root-00
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(btrfs-root-00);
+                               lock(&fs_info->reloc_mutex);
+                               lock(btrfs-root-00);
+  lock(&mm->mmap_lock);
+
+ *** DEADLOCK ***
+
+1 lock held by syz-executor307/3029:
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: __btrfs_tree_read_lock fs/btrfs/locking.c:134 [inline]
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_tree_read_lock fs/btrfs/locking.c:140 [inline]
+ #0: ffff0000c958a608 (btrfs-root-00){++++}-{3:3}, at: btrfs_read_lock_root_node+0x13c/0x1c0 fs/btrfs/locking.c:279
+
+stack backtrace:
+CPU: 0 PID: 3029 Comm: syz-executor307 Not tainted 6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/30/2022
+Call trace:
+ dump_backtrace+0x1c4/0x1f0 arch/arm64/kernel/stacktrace.c:156
+ show_stack+0x2c/0x54 arch/arm64/kernel/stacktrace.c:163
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x104/0x16c lib/dump_stack.c:106
+ dump_stack+0x1c/0x58 lib/dump_stack.c:113
+ print_circular_bug+0x2c4/0x2c8 kernel/locking/lockdep.c:2053
+ check_noncircular+0x14c/0x154 kernel/locking/lockdep.c:2175
+ check_prev_add kernel/locking/lockdep.c:3095 [inline]
+ check_prevs_add kernel/locking/lockdep.c:3214 [inline]
+ validate_chain kernel/locking/lockdep.c:3829 [inline]
+ __lock_acquire+0x1530/0x30a4 kernel/locking/lockdep.c:5053
+ lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5666
+ __might_fault+0x7c/0xb4 mm/memory.c:5577
+ _copy_to_user include/linux/uaccess.h:134 [inline]
+ copy_to_user include/linux/uaccess.h:160 [inline]
+ btrfs_ioctl_get_subvol_rootref+0x3a8/0x4bc fs/btrfs/ioctl.c:3203
+ btrfs_ioctl+0xa08/0xa64 fs/btrfs/ioctl.c:5556
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __arm64_sys_ioctl+0xd0/0x140 fs/ioctl.c:856
+ __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+ invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+ el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+ do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+ el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+ el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+ el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+
+We do generally the right thing here, copying the references into a
+temporary buffer, however we are still holding the path when we do
+copy_to_user from the temporary buffer.  Fix this by freeing the path
+before we copy to user space.
+
+Reported-by: syzbot+4ef9e52e464c6ff47d9d@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/manage.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -267,10 +267,16 @@ int irq_do_set_affinity(struct irq_data
- 		prog_mask = mask;
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2903,6 +2903,8 @@ static int btrfs_ioctl_get_subvol_rootre
  	}
  
--	/* Make sure we only provide online CPUs to the irqchip */
-+	/*
-+	 * Make sure we only provide online CPUs to the irqchip,
-+	 * unless we are being asked to force the affinity (in which
-+	 * case we do as we are told).
-+	 */
- 	cpumask_and(&tmp_mask, prog_mask, cpu_online_mask);
--	if (!cpumask_empty(&tmp_mask))
-+	if (!force && !cpumask_empty(&tmp_mask))
- 		ret = chip->irq_set_affinity(data, &tmp_mask, force);
-+	else if (force)
-+		ret = chip->irq_set_affinity(data, mask, force);
- 	else
- 		ret = -EINVAL;
+ out:
++	btrfs_free_path(path);
++
+ 	if (!ret || ret == -EOVERFLOW) {
+ 		rootrefs->num_items = found;
+ 		/* update min_treeid for next search */
+@@ -2914,7 +2916,6 @@ out:
+ 	}
  
+ 	kfree(rootrefs);
+-	btrfs_free_path(path);
+ 
+ 	return ret;
+ }
 
 
