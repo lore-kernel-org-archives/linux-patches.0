@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28AF79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DA7C433D6;
-	Wed, 30 Nov 2022 18:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BB5C433D6;
+	Wed, 30 Nov 2022 18:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834031;
-	bh=M9Cdb9EKSh6xBbuv64roB52dnuM/zZES8ZOgtQu9TYk=;
+	s=korg; t=1669834034;
+	bh=zll4oUZn+dvMKHBx8B0YWV5FQlSxmV/vB4eQmqejaVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DooRh/NG3Gstp4pcZZnSHgYtsAzYsuHFmYvEIKpqhIqFg6walGFGjTU3ikhngbUhR
-	 LYyA4cNOFncHJzqHGbOIrFKPnVBIrRxsCnkF9fDEn5vltzCU853Ay5LlZ0nXTqAShJ
-	 NrQHIAqBE5jsCnGdBO5mX8jgnkURiu4M2FBS0GFM=
+	b=2NWzDn1Pv7fjA4LEe+uPwXCqKZkRrKH5RMdILL7pB4VBZx3rUUR50P/ixWd5h1NCw
+	 Rl0aepXqnvIa0CoBk99+u9eiAR2OX6+pdI+80cIRmzBjMfd8FrMYkz5MPByrM9plkH
+	 468FGIGjso9dh+JwM4TBLZKVkYb3Uudol+cV64KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hunt <johunt@akamai.com>,
-	Vishwanath Pai <vpai@akamai.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Roy Novich <royno@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 103/289] netfilter: ipset: regression in ip_set_hash_ip.c
-Date: Wed, 30 Nov 2022 19:21:28 +0100
-Message-Id: <20221130180546.474490848@linuxfoundation.org>
+Subject: [PATCH 6.0 104/289] net/mlx5: Do not query pci info while pci disabled
+Date: Wed, 30 Nov 2022 19:21:29 +0100
+Message-Id: <20221130180546.497168657@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,64 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishwanath Pai <vpai@akamai.com>
+From: Roy Novich <royno@nvidia.com>
 
-[ Upstream commit c7aa1a76d4a0a3c401025b60c401412bbb60f8c6 ]
+[ Upstream commit 394164f9d5a3020a7fd719d228386d48d544ec67 ]
 
-This patch introduced a regression: commit 48596a8ddc46 ("netfilter:
-ipset: Fix adding an IPv4 range containing more than 2^31 addresses")
+The driver should not interact with PCI while PCI is disabled. Trying to
+do so may result in being unable to get vital signs during PCI reset,
+driver gets timed out and fails to recover.
 
-The variable e.ip is passed to adtfn() function which finally adds the
-ip address to the set. The patch above refactored the for loop and moved
-e.ip = htonl(ip) to the end of the for loop.
-
-What this means is that if the value of "ip" changes between the first
-assignement of e.ip and the forloop, then e.ip is pointing to a
-different ip address than "ip".
-
-Test case:
-$ ipset create jdtest_tmp hash:ip family inet hashsize 2048 maxelem 100000
-$ ipset add jdtest_tmp 10.0.1.1/31
-ipset v6.21.1: Element cannot be added to the set: it's already added
-
-The value of ip gets updated inside the  "else if (tb[IPSET_ATTR_CIDR])"
-block but e.ip is still pointing to the old value.
-
-Fixes: 48596a8ddc46 ("netfilter: ipset: Fix adding an IPv4 range containing more than 2^31 addresses")
-Reviewed-by: Joshua Hunt <johunt@akamai.com>
-Signed-off-by: Vishwanath Pai <vpai@akamai.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: fad1783a6d66 ("net/mlx5: Print more info on pci error handlers")
+Signed-off-by: Roy Novich <royno@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Aya Levin <ayal@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_ip.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_ip.c b/net/netfilter/ipset/ip_set_hash_ip.c
-index dd30c03d5a23..75d556d71652 100644
---- a/net/netfilter/ipset/ip_set_hash_ip.c
-+++ b/net/netfilter/ipset/ip_set_hash_ip.c
-@@ -151,18 +151,16 @@ hash_ip4_uadt(struct ip_set *set, struct nlattr *tb[],
- 	if (((u64)ip_to - ip + 1) >> (32 - h->netmask) > IPSET_MAX_RANGE)
- 		return -ERANGE;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index e5e32430b6af..ac178796e484 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1759,7 +1759,8 @@ static pci_ers_result_t mlx5_pci_err_detected(struct pci_dev *pdev,
+ 	res = state == pci_channel_io_perm_failure ?
+ 		PCI_ERS_RESULT_DISCONNECT : PCI_ERS_RESULT_NEED_RESET;
  
--	if (retried) {
-+	if (retried)
- 		ip = ntohl(h->next.ip);
--		e.ip = htonl(ip);
--	}
- 	for (; ip <= ip_to;) {
-+		e.ip = htonl(ip);
- 		ret = adtfn(set, &e, &ext, &ext, flags);
- 		if (ret && !ip_set_eexist(ret, flags))
- 			return ret;
+-	mlx5_pci_trace(dev, "Exit, result = %d, %s\n",  res, result2str(res));
++	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Exit, result = %d, %s\n",
++		       __func__, dev->state, dev->pci_status, res, result2str(res));
+ 	return res;
+ }
  
- 		ip += hosts;
--		e.ip = htonl(ip);
--		if (e.ip == 0)
-+		if (ip == 0)
- 			return 0;
+@@ -1798,7 +1799,8 @@ static pci_ers_result_t mlx5_pci_slot_reset(struct pci_dev *pdev)
+ 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
+ 	int err;
  
- 		ret = 0;
+-	mlx5_pci_trace(dev, "Enter\n");
++	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Enter\n",
++		       __func__, dev->state, dev->pci_status);
+ 
+ 	err = mlx5_pci_enable_device(dev);
+ 	if (err) {
+@@ -1820,7 +1822,8 @@ static pci_ers_result_t mlx5_pci_slot_reset(struct pci_dev *pdev)
+ 
+ 	res = PCI_ERS_RESULT_RECOVERED;
+ out:
+-	mlx5_pci_trace(dev, "Exit, err = %d, result = %d, %s\n", err, res, result2str(res));
++	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Exit, err = %d, result = %d, %s\n",
++		       __func__, dev->state, dev->pci_status, err, res, result2str(res));
+ 	return res;
+ }
+ 
 -- 
 2.35.1
 
