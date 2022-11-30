@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB079C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA32C433D6;
-	Wed, 30 Nov 2022 18:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8172879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:44:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E45C433C1;
+	Wed, 30 Nov 2022 18:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833881;
-	bh=Gm8JFboUmsArV9djczJYkmbVr/Q96kRmgCLB4KV9uVI=;
+	s=korg; t=1669833884;
+	bh=4F6l+GTfifoW8ZfiZu68QNiySBmgTAO7o1adpcIkHug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wbE88LoY/l7ItnzatLHGSnYlA5Hw8pxEWTU2JRbEfSiB2Dvq7U/V0PRLZdxf3soE
-	 WVYXJdYWvngOo7FyihQBIap5d5LHCqAFtqpkMv7B791b1bpzUksehXKMmJzz4NSs1b
-	 KFpzMZW8Jn6z5T212zbRneGDb0VO5c4oclYkTrD4=
+	b=fUKFCB8haZb/rxk9ge3kZlaRjzhimChcx0ro99TpmVG0spc8UG2CZ64MKCtbk6sPh
+	 8PrRiijER1dlPH9Y9BlhXBMnBSH31GHuRr73dusjRPukcW6WNqZTBeWiy5SX+5Zj64
+	 1GHe/be+brp1tgKWk1npahn/Qncbd30tvniIFMUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"David E. Box" <david.e.box@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 021/289] platform/x86: touchscreen_dmi: Add info for the RCA Cambio W101 v2 2-in-1
-Date: Wed, 30 Nov 2022 19:20:06 +0100
-Message-Id: <20221130180544.614745109@linuxfoundation.org>
+Subject: [PATCH 6.0 022/289] platform/x86/intel/pmt: Sapphire Rapids PMT errata fix
+Date: Wed, 30 Nov 2022 19:20:07 +0100
+Message-Id: <20221130180544.636178894@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -34,63 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 0df044b34bf33e7e35c32b3bf6747fde6279c162 ]
+[ Upstream commit bcdfa1f77ea7f67368d20384932a9d1e3047ddd2 ]
 
-Add touchscreen info for the RCA Cambio W101 v2 2-in-1.
+On Sapphire Rapids, due to a hardware issue affecting the PUNIT telemetry
+region, reads that are not done in QWORD quantities and alignment may
+return incorrect data. Use a custom 64-bit copy for this region.
 
-Link: https://github.com/onitake/gsl-firmware/discussions/193
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Link: https://lore.kernel.org/r/20221105034228.1376677-1-david.e.box@linux.intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221025141131.509211-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/platform/x86/intel/pmt/class.c | 31 +++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index bc97bfa8e8a6..baae3120efd0 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -770,6 +770,22 @@ static const struct ts_dmi_data predia_basic_data = {
- 	.properties	= predia_basic_props,
- };
+diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
+index 53d7fd2943b4..46598dcb634a 100644
+--- a/drivers/platform/x86/intel/pmt/class.c
++++ b/drivers/platform/x86/intel/pmt/class.c
+@@ -9,6 +9,7 @@
+  */
  
-+static const struct property_entry rca_cambio_w101_v2_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 20),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1644),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 874),
-+	PROPERTY_ENTRY_BOOL("touchscreen-swapped-x-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-rca-cambio-w101-v2.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	{ }
-+};
+ #include <linux/kernel.h>
++#include <linux/io-64-nonatomic-lo-hi.h>
+ #include <linux/module.h>
+ #include <linux/mm.h>
+ #include <linux/pci.h>
+@@ -19,6 +20,7 @@
+ #define PMT_XA_START		0
+ #define PMT_XA_MAX		INT_MAX
+ #define PMT_XA_LIMIT		XA_LIMIT(PMT_XA_START, PMT_XA_MAX)
++#define GUID_SPR_PUNIT		0x9956f43f
+ 
+ bool intel_pmt_is_early_client_hw(struct device *dev)
+ {
+@@ -33,6 +35,29 @@ bool intel_pmt_is_early_client_hw(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(intel_pmt_is_early_client_hw);
+ 
++static inline int
++pmt_memcpy64_fromio(void *to, const u64 __iomem *from, size_t count)
++{
++	int i, remain;
++	u64 *buf = to;
 +
-+static const struct ts_dmi_data rca_cambio_w101_v2_data = {
-+	.acpi_name = "MSSL1680:00",
-+	.properties = rca_cambio_w101_v2_props,
-+};
++	if (!IS_ALIGNED((unsigned long)from, 8))
++		return -EFAULT;
 +
- static const struct property_entry rwc_nanote_p8_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-min-y", 46),
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1728),
-@@ -1409,6 +1425,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_EXACT_MATCH(DMI_BOARD_NAME, "0E57"),
- 		},
- 	},
-+	{
-+		/* RCA Cambio W101 v2 */
-+		/* https://github.com/onitake/gsl-firmware/discussions/193 */
-+		.driver_data = (void *)&rca_cambio_w101_v2_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "RCA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "W101SA23T1"),
-+		},
-+	},
- 	{
- 		/* RWC NANOTE P8 */
- 		.driver_data = (void *)&rwc_nanote_p8_data,
++	for (i = 0; i < count/8; i++)
++		buf[i] = readq(&from[i]);
++
++	/* Copy any remaining bytes */
++	remain = count % 8;
++	if (remain) {
++		u64 tmp = readq(&from[i]);
++
++		memcpy(&buf[i], &tmp, remain);
++	}
++
++	return count;
++}
++
+ /*
+  * sysfs
+  */
+@@ -54,7 +79,11 @@ intel_pmt_read(struct file *filp, struct kobject *kobj,
+ 	if (count > entry->size - off)
+ 		count = entry->size - off;
+ 
+-	memcpy_fromio(buf, entry->base + off, count);
++	if (entry->guid == GUID_SPR_PUNIT)
++		/* PUNIT on SPR only supports aligned 64-bit read */
++		count = pmt_memcpy64_fromio(buf, entry->base + off, count);
++	else
++		memcpy_fromio(buf, entry->base + off, count);
+ 
+ 	return count;
+ }
 -- 
 2.35.1
 
