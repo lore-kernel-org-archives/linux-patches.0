@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8631C79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0881DC433C1;
-	Wed, 30 Nov 2022 18:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4542479C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0CCC433C1;
+	Wed, 30 Nov 2022 18:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834294;
-	bh=nUZmhGt3oAptX1QO4ocpry3wQOSVe5Q+F1aUzH4oK2g=;
+	s=korg; t=1669834297;
+	bh=Ntv+QrQhxvM2sihsRpq7Evvd5odVbtJd1ujvzk2p3t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x69IiJN2OhPJToWlMKabyTXScrk/y90O2VuJH3kXL8DBbL8yXkozR6QSZcf5cVkJS
-	 /G5Dtr2WRzTjLd5UXG9IODuFlCD6FBbTlfO3UmyN9Z54/ic5tIfP/8oa8Mjq5Yvg7T
-	 lkspkwzKqHjlsTsPnrbaXA4MjtGCFSrs5kK7aXiA=
+	b=uUCThYxSIMDpH4cluRaUOl/Mlku0mZTgnHeXASUzD+JmuXRsUjo5n7wrLwn1EJCbv
+	 S4W3Pbk/5mJASZp16ABv99mns014xBkfSA8r7TsRNL7wWjVFP9SL9vIMBQ+LhGxLuf
+	 KA6y77aH7Cn9eLyLulRUlfHp0zFRXmSlk8B1f0ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	Jagath Jog J <jagathjog1996@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.0 173/289] iio: core: Fix entry not deleted when iio_register_sw_trigger_type() fails
-Date: Wed, 30 Nov 2022 19:22:38 +0100
-Message-Id: <20221130180548.052805896@linuxfoundation.org>
+Subject: [PATCH 6.0 174/289] iio: accel: bma400: Fix memory leak in bma400_get_steps_reg()
+Date: Wed, 30 Nov 2022 19:22:39 +0100
+Message-Id: <20221130180548.074482290@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,52 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-commit 4ad09d956f8eacff61e67e5b13ba8ebec3232f76 upstream.
+commit 20690cd50e68c0313472c7539460168b8ea6444d upstream.
 
-In iio_register_sw_trigger_type(), configfs_register_default_group() is
-possible to fail, but the entry add to iio_trigger_types_list is not
-deleted.
+When regmap_bulk_read() fails, it does not free steps_raw,
+which will cause a memory leak issue, this patch fixes it.
 
-This leaves wild in iio_trigger_types_list, which can cause page fault
-when module is loading again. So fix this by list_del(&t->list) in error
-path.
-
-BUG: unable to handle page fault for address: fffffbfff81d7400
-Call Trace:
-<TASK>
- iio_register_sw_trigger_type
- do_one_initcall
- do_init_module
- load_module
- ...
-
-Fixes: b662f809d410 ("iio: core: Introduce IIO software triggers")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221108032802.168623-1-chenzhongjin@huawei.com
+Fixes: d221de60eee3 ("iio: accel: bma400: Add separate channel for step counter")
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: Jagath Jog J <jagathjog1996@gmail.com>
+Link: https://lore.kernel.org/r/20221110010726.235601-1-dongchenchen2@huawei.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-sw-trigger.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/accel/bma400_core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-sw-trigger.c
-+++ b/drivers/iio/industrialio-sw-trigger.c
-@@ -58,8 +58,12 @@ int iio_register_sw_trigger_type(struct
+--- a/drivers/iio/accel/bma400_core.c
++++ b/drivers/iio/accel/bma400_core.c
+@@ -673,8 +673,10 @@ static int bma400_get_steps_reg(struct b
  
- 	t->group = configfs_register_default_group(iio_triggers_group, t->name,
- 						&iio_trigger_type_group_type);
--	if (IS_ERR(t->group))
-+	if (IS_ERR(t->group)) {
-+		mutex_lock(&iio_trigger_types_lock);
-+		list_del(&t->list);
-+		mutex_unlock(&iio_trigger_types_lock);
- 		ret = PTR_ERR(t->group);
+ 	ret = regmap_bulk_read(data->regmap, BMA400_STEP_CNT0_REG,
+ 			       steps_raw, BMA400_STEP_RAW_LEN);
+-	if (ret)
++	if (ret) {
++		kfree(steps_raw);
+ 		return ret;
 +	}
- 
- 	return ret;
- }
+ 	*val = get_unaligned_le24(steps_raw);
+ 	kfree(steps_raw);
+ 	return IIO_VAL_INT;
 
 
