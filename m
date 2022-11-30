@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E094D79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63506C433C1;
-	Wed, 30 Nov 2022 18:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937A379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B76BC433D6;
+	Wed, 30 Nov 2022 18:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834085;
-	bh=gF8aaP9WpcIBEagXhF9SJqQyp67+oR/CbMheHWlgdik=;
+	s=korg; t=1669834088;
+	bh=1wWcSZOrffOL9UCugvCXVVK6u6zCS1DYuBWgx8tTP8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UnFpmraIDyAjhhZ6o9Sq2gxbyz/Y657JOTBfETpDQDibhsn56eqFfL+DeqKtuoLhJ
-	 SY9H04cYr0A5y2fLrq9LBUfvQA1dC0OCHo2FcPwrmNl7UgRUsf97SoDRFXavG904Q5
-	 grcaNuu7U9mOyYuC0eRCypBSgweD4SkKq4l+Z/Mk=
+	b=1LA4KUEmhLEeWnNnxyQUSNI0c94qGF54mcICKeGEAsxIN1e7oLeff21wIfUSeEXn8
+	 eI9K1k13tcfMZAK12C8ByOW1EQZktMDV6wxlEnlawGloZAs3xAs/I5adHBofUx9NJ2
+	 Ro9IdL56r7oppRA1wByNArMO53jm5wnaizK7v2Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Mark Brown <broonie@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 124/289] regulator: twl6030: re-add TWL6032_SUBCLASS
-Date: Wed, 30 Nov 2022 19:21:49 +0100
-Message-Id: <20221130180546.952096259@linuxfoundation.org>
+Subject: [PATCH 6.0 125/289] bnx2x: fix pci device refcount leak in bnx2x_vf_is_pcie_pending()
+Date: Wed, 30 Nov 2022 19:21:50 +0100
+Message-Id: <20221130180546.974423323@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,45 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 3d6c982b26db94cc21bc9f7784f63e8286b7be62 ]
+[ Upstream commit 3637a29ccbb6461b7268c5c5db525935d510afc6 ]
 
-In former times, info->feature was populated via the parent driver
-by pdata/regulator_init_data->driver_data for all regulators when
-USB_PRODUCT_ID_LSB indicates a TWL6032.
-Today, the information is not set, so re-add it at the regulator
-definitions.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put(). Call pci_dev_put() before returning from
+bnx2x_vf_is_pcie_pending() to avoid refcount leak.
 
-Fixes: 25d82337705e2 ("regulator: twl: make driver DT only")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://lore.kernel.org/r/20221120221208.3093727-2-andreas@kemnade.info
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b56e9670ffa4 ("bnx2x: Prepare device and initialize VF database")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221119070202.1407648-1-yangyingliang@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/twl6030-regulator.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/twl6030-regulator.c b/drivers/regulator/twl6030-regulator.c
-index 430265c404d6..7c7e3648ea4b 100644
---- a/drivers/regulator/twl6030-regulator.c
-+++ b/drivers/regulator/twl6030-regulator.c
-@@ -530,6 +530,7 @@ static const struct twlreg_info TWL6030_INFO_##label = { \
- #define TWL6032_ADJUSTABLE_LDO(label, offset) \
- static const struct twlreg_info TWL6032_INFO_##label = { \
- 	.base = offset, \
-+	.features = TWL6032_SUBCLASS, \
- 	.desc = { \
- 		.name = #label, \
- 		.id = TWL6032_REG_##label, \
-@@ -562,6 +563,7 @@ static const struct twlreg_info TWLFIXED_INFO_##label = { \
- #define TWL6032_ADJUSTABLE_SMPS(label, offset) \
- static const struct twlreg_info TWLSMPS_INFO_##label = { \
- 	.base = offset, \
-+	.features = TWL6032_SUBCLASS, \
- 	.desc = { \
- 		.name = #label, \
- 		.id = TWL6032_REG_##label, \
+diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
+index 11d15cd03600..77d4cb4ad782 100644
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
+@@ -795,16 +795,20 @@ static void bnx2x_vf_enable_traffic(struct bnx2x *bp, struct bnx2x_virtf *vf)
+ 
+ static u8 bnx2x_vf_is_pcie_pending(struct bnx2x *bp, u8 abs_vfid)
+ {
+-	struct pci_dev *dev;
+ 	struct bnx2x_virtf *vf = bnx2x_vf_by_abs_fid(bp, abs_vfid);
++	struct pci_dev *dev;
++	bool pending;
+ 
+ 	if (!vf)
+ 		return false;
+ 
+ 	dev = pci_get_domain_bus_and_slot(vf->domain, vf->bus, vf->devfn);
+-	if (dev)
+-		return bnx2x_is_pcie_pending(dev);
+-	return false;
++	if (!dev)
++		return false;
++	pending = bnx2x_is_pcie_pending(dev);
++	pci_dev_put(dev);
++
++	return pending;
+ }
+ 
+ int bnx2x_vf_flr_clnup_epilog(struct bnx2x *bp, u8 abs_vfid)
 -- 
 2.35.1
 
