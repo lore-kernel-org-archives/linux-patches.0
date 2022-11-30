@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C2C79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1575AC433C1;
-	Wed, 30 Nov 2022 18:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686E279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC19C433C1;
+	Wed, 30 Nov 2022 18:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833617;
-	bh=dBoQOsh1Xe06phC4XNOmGxDRKPniEr02U1iI7jaKcDs=;
+	s=korg; t=1669833620;
+	bh=/tFq7FGP1l3LFyPub9keewn4aS3mDL04fM+A35ifRIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gp2AJhGznXnO7yVb4Nh/GtxYtv5B8v/VdTI7yHdAZBxWk2C510pOnZH0pv0YXGGEz
-	 rPVmYDa7poeJWx53OhSo06dS1tq/gJUYFyIngT/6L8r7lQXtWmzK90/oKDmWY+Pz+E
-	 WD2eoRcNX4/J83iFww3Sv+yWfriMtTszlblOGuuA=
+	b=yFGmCB5c8FzaB9pwze+TvH+oWBG5jyXGAhXgPs/aaD2Pg2FevAzSa3Yz+68gN2n4C
+	 9p2WIOK0DdZ0SgdN2UE/bRtTR05ipnxo6WJb29c6UYLxpYDmHwKPDZkXgwAYGsFH70
+	 ksexzbW4emLBKz+w//N3z7ZcA5t0KtaHw0KNjSOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 160/206] KVM: x86: remove exit_int_info warning in svm_handle_exit
-Date: Wed, 30 Nov 2022 19:23:32 +0100
-Message-Id: <20221130180537.104414534@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 161/206] x86/tsx: Add a feature bit for TSX control MSR support
+Date: Wed, 30 Nov 2022 19:23:33 +0100
+Message-Id: <20221130180537.128827808@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -34,58 +37,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 05311ce954aebe75935d9ae7d38ac82b5b796e33 upstream.
+commit aaa65d17eec372c6a9756833f3964ba05b05ea14 upstream.
 
-It is valid to receive external interrupt and have broken IDT entry,
-which will lead to #GP with exit_int_into that will contain the index of
-the IDT entry (e.g any value).
+Support for the TSX control MSR is enumerated in MSR_IA32_ARCH_CAPABILITIES.
+This is different from how other CPU features are enumerated i.e. via
+CPUID. Currently, a call to tsx_ctrl_is_supported() is required for
+enumerating the feature. In the absence of a feature bit for TSX control,
+any code that relies on checking feature bits directly will not work.
 
-Other exceptions can happen as well, like #NP or #SS
-(if stack switch fails).
+In preparation for adding a feature bit check in MSR save/restore
+during suspend/resume, set a new feature bit X86_FEATURE_TSX_CTRL when
+MSR_IA32_TSX_CTRL is present. Also make tsx_ctrl_is_supported() use the
+new feature bit to avoid any overhead of reading the MSR.
 
-Thus this warning can be user triggred and has very little value.
+  [ bp: Remove tsx_ctrl_is_supported(), add room for two more feature
+    bits in word 11 which are coming up in the next merge window. ]
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221103141351.50662-10-mlevitsk@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/de619764e1d98afbb7a5fa58424f1278ede37b45.1668539735.git.pawan.kumar.gupta@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   15 ---------------
- 1 file changed, 15 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |    3 ++
+ arch/x86/kernel/cpu/tsx.c          |   38 ++++++++++++++++---------------------
+ 2 files changed, 20 insertions(+), 21 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -317,12 +317,6 @@ int svm_set_efer(struct kvm_vcpu *vcpu,
- 	return 0;
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -303,6 +303,9 @@
+ #define X86_FEATURE_USE_IBPB_FW		(11*32+16) /* "" Use IBPB during runtime firmware calls */
+ #define X86_FEATURE_RSB_VMEXIT_LITE	(11*32+17) /* "" Fill RSB on VM exit when EIBRS is enabled */
+ 
++
++#define X86_FEATURE_MSR_TSX_CTRL	(11*32+20) /* "" MSR IA32_TSX_CTRL (Intel) implemented */
++
+ /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX), word 12 */
+ #define X86_FEATURE_AVX_VNNI		(12*32+ 4) /* AVX VNNI instructions */
+ #define X86_FEATURE_AVX512_BF16		(12*32+ 5) /* AVX512 BFLOAT16 instructions */
+--- a/arch/x86/kernel/cpu/tsx.c
++++ b/arch/x86/kernel/cpu/tsx.c
+@@ -58,24 +58,6 @@ static void tsx_enable(void)
+ 	wrmsrl(MSR_IA32_TSX_CTRL, tsx);
  }
  
--static int is_external_interrupt(u32 info)
+-static bool tsx_ctrl_is_supported(void)
 -{
--	info &= SVM_EVTINJ_TYPE_MASK | SVM_EVTINJ_VALID;
--	return info == (SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_INTR);
+-	u64 ia32_cap = x86_read_arch_cap_msr();
+-
+-	/*
+-	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
+-	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
+-	 *
+-	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
+-	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
+-	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
+-	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
+-	 * tsx= cmdline requests will do nothing on CPUs without
+-	 * MSR_IA32_TSX_CTRL support.
+-	 */
+-	return !!(ia32_cap & ARCH_CAP_TSX_CTRL_MSR);
 -}
 -
- static u32 svm_get_interrupt_shadow(struct kvm_vcpu *vcpu)
+ static enum tsx_ctrl_states x86_get_tsx_auto_mode(void)
  {
- 	struct vcpu_svm *svm = to_svm(vcpu);
-@@ -3360,15 +3354,6 @@ static int handle_exit(struct kvm_vcpu *
- 		return 0;
+ 	if (boot_cpu_has_bug(X86_BUG_TAA))
+@@ -135,7 +117,7 @@ static void tsx_clear_cpuid(void)
+ 		rdmsrl(MSR_TSX_FORCE_ABORT, msr);
+ 		msr |= MSR_TFA_TSX_CPUID_CLEAR;
+ 		wrmsrl(MSR_TSX_FORCE_ABORT, msr);
+-	} else if (tsx_ctrl_is_supported()) {
++	} else if (cpu_feature_enabled(X86_FEATURE_MSR_TSX_CTRL)) {
+ 		rdmsrl(MSR_IA32_TSX_CTRL, msr);
+ 		msr |= TSX_CTRL_CPUID_CLEAR;
+ 		wrmsrl(MSR_IA32_TSX_CTRL, msr);
+@@ -158,7 +140,8 @@ static void tsx_dev_mode_disable(void)
+ 	u64 mcu_opt_ctrl;
+ 
+ 	/* Check if RTM_ALLOW exists */
+-	if (!boot_cpu_has_bug(X86_BUG_TAA) || !tsx_ctrl_is_supported() ||
++	if (!boot_cpu_has_bug(X86_BUG_TAA) ||
++	    !cpu_feature_enabled(X86_FEATURE_MSR_TSX_CTRL) ||
+ 	    !cpu_feature_enabled(X86_FEATURE_SRBDS_CTRL))
+ 		return;
+ 
+@@ -191,7 +174,20 @@ void __init tsx_init(void)
+ 		return;
  	}
  
--	if (is_external_interrupt(svm->vmcb->control.exit_int_info) &&
--	    exit_code != SVM_EXIT_EXCP_BASE + PF_VECTOR &&
--	    exit_code != SVM_EXIT_NPF && exit_code != SVM_EXIT_TASK_SWITCH &&
--	    exit_code != SVM_EXIT_INTR && exit_code != SVM_EXIT_NMI)
--		printk(KERN_ERR "%s: unexpected exit_int_info 0x%x "
--		       "exit_code 0x%x\n",
--		       __func__, svm->vmcb->control.exit_int_info,
--		       exit_code);
--
- 	if (exit_fastpath != EXIT_FASTPATH_NONE)
- 		return 1;
- 
+-	if (!tsx_ctrl_is_supported()) {
++	/*
++	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
++	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
++	 *
++	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
++	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
++	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
++	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
++	 * tsx= cmdline requests will do nothing on CPUs without
++	 * MSR_IA32_TSX_CTRL support.
++	 */
++	if (x86_read_arch_cap_msr() & ARCH_CAP_TSX_CTRL_MSR) {
++		setup_force_cpu_cap(X86_FEATURE_MSR_TSX_CTRL);
++	} else {
+ 		tsx_ctrl_state = TSX_CTRL_NOT_SUPPORTED;
+ 		return;
+ 	}
 
 
