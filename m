@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FC679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8E1C433D6;
-	Wed, 30 Nov 2022 18:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A3E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610BFC433C1;
+	Wed, 30 Nov 2022 18:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834416;
-	bh=1VEU9O42H1rgdwk4tsEI2XVTh9Gyc8mZWzHlL48sqj4=;
+	s=korg; t=1669834418;
+	bh=ZBzGAWl3jAjXsuaAxqAReEc8x1UE2t/I3rQ6tqO6rrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fl+NENeIe7SJWdc7vrdOq4lBkm9CsjHADaIYGkrNyoccrU0EsevSeHnSVjBISvM1n
-	 hfnBmBGIxfdq3JjuQmE6ECHcEkAIYdXIGQlF/OCuSbLuGR4TA5lTFpAmVQ/fMJTjx5
-	 S0G/RVw5YOYyTavke+m/Q1Ug6DcoNAF2omqPs7mU=
+	b=rZa4MXJognNxDcJuJF6QdipyNckUJ9Vr68C9iLt69Jsi4r4V7Bm97A5GXRHlMdbyv
+	 3V48IXpqJdvIRGJYlDG2Tyrc2gB7jvm0bMMNP5sItKqeOFxJJfO4sSv2ONZK9fFP1/
+	 TNS3hh+LULnyk8KW+BmBorb5bHUAqdt4cl/UEXgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudolf Polzer <rpolzer@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 246/289] platform/x86: acer-wmi: Enable SW_TABLET_MODE on Switch V 10 (SW5-017)
-Date: Wed, 30 Nov 2022 19:23:51 +0100
-Message-Id: <20221130180549.685542519@linuxfoundation.org>
+Subject: [PATCH 6.0 229/289] ASoC: hda: intel-dsp-config: add ES83x6 quirk for IceLake
+Date: Wed, 30 Nov 2022 19:23:34 +0100
+Message-Id: <20221130180549.305585318@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,45 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 1e817b889c7d8c14e7005258e15fec62edafe03c ]
+[ Upstream commit 5d73263f9e7c54ccb20814dc50809b9deb9e2bc7 ]
 
-Like the Acer Switch 10 (SW5-012) and Acer Switch 10 (S1003) models
-the Acer Switch V 10 (SW5-017) supports reporting SW_TABLET_MODE
-through acer-wmi.
+Yet another hardware variant we need to handle.
 
-Add a DMI quirk for the SW5-017 setting force_caps to ACER_CAP_KBD_DOCK
-(these devices have no other acer-wmi based functionality).
-
-Cc: Rudolf Polzer <rpolzer@google.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221111111639.35730-1-hdegoede@redhat.com
+Link: https://github.com/thesofproject/linux/issues/3873
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20221031195639.250062-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/hda/intel-dsp-config.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index f1259d81d86d..df4c1f08f0c6 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -564,6 +564,15 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
- 		},
- 		.driver_data = (void *)ACER_CAP_KBD_DOCK,
+diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
+index b9eb3208f288..ae31bb127594 100644
+--- a/sound/hda/intel-dsp-config.c
++++ b/sound/hda/intel-dsp-config.c
+@@ -320,6 +320,11 @@ static const struct config_entry config_table[] = {
+ 			{}
+ 		}
  	},
 +	{
-+		.callback = set_force_caps,
-+		.ident = "Acer Aspire Switch V 10 SW5-017",
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
-+		},
-+		.driver_data = (void *)ACER_CAP_KBD_DOCK,
++		.flags = FLAG_SOF,
++		.device = 0x34c8,
++		.codec_hid =  &essx_83x6,
 +	},
  	{
- 		.callback = set_force_caps,
- 		.ident = "Acer One 10 (S1003)",
+ 		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
+ 		.device = 0x34c8,
 -- 
 2.35.1
 
