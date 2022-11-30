@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626D979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9F9C433C1;
-	Wed, 30 Nov 2022 18:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB0F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CABC433C1;
+	Wed, 30 Nov 2022 18:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834386;
-	bh=DVsudJYSfD+iO/RcDDvNNWuARIoeYEMC5wmf+b26liY=;
+	s=korg; t=1669834388;
+	bh=HQnziATy9GXeouqLcZTi0GRYACLnIQvqj6pEI65EoMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSbXXkcFh0WvfYE8RVWYYqlqmSCiYvW2kt9j9OX5MK8T6fl+eRiTzW9+Boy48jNfK
-	 N1kR6viIjIwYGRYsi+VFhE9E6Bi/J8NVRiEjyAwqZd0fB//34SGY6/tyPxPQ+VZHph
-	 FYgANAxrt8YluuZqPDn2g931xsasL+Y61bf2qsHE=
+	b=YdZ3TFgpt+sIvuScJD4GEjDOEfQBZFIIAKiPlkjTGpxoGRkid2pSw9gjh4d+jH+T6
+	 wVAtQ9KUbsNSXZFCOM7yCYE20PsaKgpxxsl5N55mCiYuvXeubnOFQGqsmFc/opmv85
+	 lMA/T91c5nZreDSCcdlpATHwcmoa/46QgiTDFQg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 197/289] io_uring: clear TIF_NOTIFY_SIGNAL if set and task_work not available
-Date: Wed, 30 Nov 2022 19:23:02 +0100
-Message-Id: <20221130180548.587691737@linuxfoundation.org>
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 228/289] tools: iio: iio_generic_buffer: Fix read size
+Date: Wed, 30 Nov 2022 19:23:33 +0100
+Message-Id: <20221130180549.283587335@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -33,41 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 7cfe7a09489c1cefee7181e07b5f2bcbaebd9f41 upstream.
+[ Upstream commit 7c919b619bcc68158921b1bd968f0e704549bbb6 ]
 
-With how task_work is added and signaled, we can have TIF_NOTIFY_SIGNAL
-set and no task_work pending as it got run in a previous loop. Treat
-TIF_NOTIFY_SIGNAL like get_signal(), always clear it if set regardless
-of whether or not task_work is pending to run.
+When noevents is true and small buffer is used the allocated memory for
+holding the data may be smaller than the hard-coded 64 bytes. This can
+cause the iio_generic_buffer to crash.
 
-Cc: stable@vger.kernel.org
-Fixes: 46a525e199e4 ("io_uring: don't gate task_work run on TIF_NOTIFY_SIGNAL")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Following was recorded on beagle bone black with v6.0 kernel and the
+digit fix patch:
+https://lore.kernel.org/all/Y0f+tKCz+ZAIoroQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi/
+using valgrind;
+
+==339== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==339== Command: /iio_generic_buffer -n kx022-accel -T0 -e -l 10 -a -w 2000000
+==339== Parent PID: 307
+==339==
+==339== Syscall param read(buf) points to unaddressable byte(s)
+==339==    at 0x496BFA4: read (read.c:26)
+==339==    by 0x11699: main (iio_generic_buffer.c:724)
+==339==  Address 0x4ab3518 is 0 bytes after a block of size 160 alloc'd
+==339==    at 0x4864B70: malloc (vg_replace_malloc.c:381)
+==339==    by 0x115BB: main (iio_generic_buffer.c:677)
+
+Fix this by always using the same size for reading as was used for
+data storage allocation.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://lore.kernel.org/r/Y0kMh0t5qUXJw3nQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.h |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/iio/iio_generic_buffer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -229,9 +229,14 @@ static inline unsigned int io_sqring_ent
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index 2491c54a5e4f..f8deae4e26a1 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -715,12 +715,12 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
  
- static inline bool io_run_task_work(void)
- {
-+	/*
-+	 * Always check-and-clear the task_work notification signal. With how
-+	 * signaling works for task_work, we can find it set with nothing to
-+	 * run. We need to clear it for that case, like get_signal() does.
-+	 */
-+	if (test_thread_flag(TIF_NOTIFY_SIGNAL))
-+		clear_notify_signal();
- 	if (task_work_pending(current)) {
--		if (test_thread_flag(TIF_NOTIFY_SIGNAL))
--			clear_notify_signal();
- 		__set_current_state(TASK_RUNNING);
- 		task_work_run();
- 		return 1;
+-			toread = buf_len;
+ 		} else {
+ 			usleep(timedelay);
+-			toread = 64;
+ 		}
+ 
++		toread = buf_len;
++
+ 		read_size = read(buf_fd, data, toread * scan_size);
+ 		if (read_size < 0) {
+ 			if (errno == EAGAIN) {
+-- 
+2.35.1
+
 
 
