@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445FF79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA2FC433D6;
-	Wed, 30 Nov 2022 18:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED13A79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73361C433B5;
+	Wed, 30 Nov 2022 18:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834118;
-	bh=xL0QLBhARx3V2fKRqnoxqZLf5A3hP+k6oYzYu2F/iYw=;
+	s=korg; t=1669834120;
+	bh=pOjs84J4/OzkFaq56jzvhkDHt04VPcLgs9YN3OnZtD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POiN/2z6gVXl9E5I9FJbYFU9zAzXZ7gz5Rw7T8zSBP40fcJ1bvg/wgCCMvXvI6ZVg
-	 wYOVBY5C2Bj+CXyNK433CrG6yO9EWDpHM4fJBLxHZ8HLLZFckBPsVarS5evNB2Gn+a
-	 3jhBUpT4SN9cKVQL2jP/dxfcrwXM/6DcrrTHjczQ=
+	b=AgsHsPA7X2G8f2rLVQ2wN5oeXfpMXlt9ISo1RW1RbTn7QK6ytbntE+06YgIHMvSRT
+	 L6JNh0/4xCAbfjcCG1ce6IicoYUaBy9cndhTpuNJPtiPBsOpdiRLhLf1cbZhNt3WJm
+	 zsZ82lqPTtyBnSh81WvukWtSPyq/sNw0UHd60kEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 135/289] net: ethernet: mtk_eth_soc: fix potential memory leak in mtk_rx_alloc()
-Date: Wed, 30 Nov 2022 19:22:00 +0100
-Message-Id: <20221130180547.198925844@linuxfoundation.org>
+Subject: [PATCH 6.0 136/289] net: ethernet: mtk_eth_soc: move gdma_to_ppe and ppe_base definitions in mtk register map
+Date: Wed, 30 Nov 2022 19:22:01 +0100
+Message-Id: <20221130180547.221529708@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,44 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 3213f808ae21be3891885de2f3a775afafcda987 ]
+[ Upstream commit 329bce5139cfb00dba40f038ec090572b81ff2a9 ]
 
-When fail to dma_map_single() in mtk_rx_alloc(), it returns directly.
-But the memory allocated for local variable data is not freed, and
-local variabel data has not been attached to ring->data[i] yet, so the
-memory allocated for local variable data will not be freed outside
-mtk_rx_alloc() too. Thus memory leak would occur in this scenario.
+This is a preliminary patch to introduce mt7986 hw packet engine.
 
-Add skb_free_frag(data) when dma_map_single() failed.
-
-Fixes: 23233e577ef9 ("net: ethernet: mtk_eth_soc: rely on page_pool for single page buffers")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Acked-by: Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
-Link: https://lore.kernel.org/r/20221120035405.1464341-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 8110437e5961 ("net: ethernet: mtk_eth_soc: fix resource leak in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 15 +++++++++++----
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h |  3 ++-
+ drivers/net/ethernet/mediatek/mtk_ppe.h     |  2 --
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index a75f5931f746..916b570bdbf4 100644
+index 916b570bdbf4..83c636d44142 100644
 --- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
 +++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2363,8 +2363,10 @@ static int mtk_rx_alloc(struct mtk_eth *eth, int ring_no, int rx_flag)
- 				data + NET_SKB_PAD + eth->ip_align,
- 				ring->buf_size, DMA_FROM_DEVICE);
- 			if (unlikely(dma_mapping_error(eth->dma_dev,
--						       dma_addr)))
-+						       dma_addr))) {
-+				skb_free_frag(data);
- 				return -ENOMEM;
-+			}
+@@ -73,6 +73,8 @@ static const struct mtk_reg_map mtk_reg_map = {
+ 		.fq_blen	= 0x1b2c,
+ 	},
+ 	.gdm1_cnt		= 0x2400,
++	.gdma_to_ppe		= 0x4444,
++	.ppe_base		= 0x0c00,
+ };
+ 
+ static const struct mtk_reg_map mt7628_reg_map = {
+@@ -126,6 +128,8 @@ static const struct mtk_reg_map mt7986_reg_map = {
+ 		.fq_blen	= 0x472c,
+ 	},
+ 	.gdm1_cnt		= 0x1c00,
++	.gdma_to_ppe		= 0x3333,
++	.ppe_base		= 0x2000,
+ };
+ 
+ /* strings used by ethtool */
+@@ -2978,6 +2982,7 @@ static int mtk_open(struct net_device *dev)
+ 
+ 	/* we run 2 netdevs on the same dma ring so we only bring it up once */
+ 	if (!refcount_read(&eth->dma_refcnt)) {
++		const struct mtk_soc_data *soc = eth->soc;
+ 		u32 gdm_config = MTK_GDMA_TO_PDMA;
+ 
+ 		err = mtk_start_dma(eth);
+@@ -2986,15 +2991,15 @@ static int mtk_open(struct net_device *dev)
+ 			return err;
  		}
- 		rxd->rxd1 = (unsigned int)dma_addr;
- 		ring->data[i] = data;
+ 
+-		if (eth->soc->offload_version && mtk_ppe_start(eth->ppe) == 0)
+-			gdm_config = MTK_GDMA_TO_PPE;
++		if (soc->offload_version && mtk_ppe_start(eth->ppe) == 0)
++			gdm_config = soc->reg_map->gdma_to_ppe;
+ 
+ 		mtk_gdm_config(eth, gdm_config);
+ 
+ 		napi_enable(&eth->tx_napi);
+ 		napi_enable(&eth->rx_napi);
+ 		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
+-		mtk_rx_irq_enable(eth, eth->soc->txrx.rx_irq_done_mask);
++		mtk_rx_irq_enable(eth, soc->txrx.rx_irq_done_mask);
+ 		refcount_set(&eth->dma_refcnt, 1);
+ 	}
+ 	else
+@@ -4104,7 +4109,9 @@ static int mtk_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	if (eth->soc->offload_version) {
+-		eth->ppe = mtk_ppe_init(eth, eth->base + MTK_ETH_PPE_BASE, 2);
++		u32 ppe_addr = eth->soc->reg_map->ppe_base;
++
++		eth->ppe = mtk_ppe_init(eth, eth->base + ppe_addr, 2);
+ 		if (!eth->ppe) {
+ 			err = -ENOMEM;
+ 			goto err_free_dev;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index 0f9668a4079d..511752729f5c 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -105,7 +105,6 @@
+ #define MTK_GDMA_TCS_EN		BIT(21)
+ #define MTK_GDMA_UCS_EN		BIT(20)
+ #define MTK_GDMA_TO_PDMA	0x0
+-#define MTK_GDMA_TO_PPE		0x4444
+ #define MTK_GDMA_DROP_ALL       0x7777
+ 
+ /* Unicast Filter MAC Address Register - Low */
+@@ -955,6 +954,8 @@ struct mtk_reg_map {
+ 		u32	fq_blen;	/* fq free page buffer length */
+ 	} qdma;
+ 	u32	gdm1_cnt;
++	u32	gdma_to_ppe;
++	u32	ppe_base;
+ };
+ 
+ /* struct mtk_eth_data -	This is the structure holding all differences
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
+index 69ffce04d630..ceb7dfe281de 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.h
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
+@@ -8,8 +8,6 @@
+ #include <linux/bitfield.h>
+ #include <linux/rhashtable.h>
+ 
+-#define MTK_ETH_PPE_BASE		0xc00
+-
+ #define MTK_PPE_ENTRIES_SHIFT		3
+ #define MTK_PPE_ENTRIES			(1024 << MTK_PPE_ENTRIES_SHIFT)
+ #define MTK_PPE_HASH_MASK		(MTK_PPE_ENTRIES - 1)
 -- 
 2.35.1
 
