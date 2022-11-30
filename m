@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C4179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD484C433C1;
-	Wed, 30 Nov 2022 18:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A1379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658E7C433C1;
+	Wed, 30 Nov 2022 18:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834351;
-	bh=3VdAy2PEBXUnn1HvDET1/q+F/baVPl6abTe7pVq/tPU=;
+	s=korg; t=1669834353;
+	bh=wAM2RrphKK6hrGOiSZ7thggmjnRwAkLm4NS99SqovzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coXJBFYzAgaUnAa0v69Ft7ECvbXYMGQkKj5xmrmVLAdGsTg4QtcQhUfSUFQkT2BM8
-	 rzf78umunoEyu6eH7v+FELfmnz+P5LM/40X+cr49fzLWgp4AeOz9omdHCnZnnoArEQ
-	 mgUdSFdPZm4BqW7y/us0hsyH/SeS/22n4aNgeWtQ=
+	b=2eUr2nH7roLZDu3+D+YC5i202diO0kJj1G8l8SN/EAxSpSGpoVAJaLLVOQHkR6T0M
+	 YFxsub2e9IP/HK3kf3rxO8HykQNVxx6XgWJdrCt4e2yo1BzAqYbEY+uAF5GP4+4Eiv
+	 I6U3lRsigLn9FVd0Mh89eCCBo8Xf5xXATwZ/JqiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 221/289] ASoC: Intel: fix unused-variable warning in probe_codec
-Date: Wed, 30 Nov 2022 19:23:26 +0100
-Message-Id: <20221130180549.128057955@linuxfoundation.org>
+Subject: [PATCH 6.0 222/289] ASoC: Intel: Skylake: fix possible memory leak in skl_codec_device_init()
+Date: Wed, 30 Nov 2022 19:23:27 +0100
+Message-Id: <20221130180549.150405726@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,40 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 515626a33a194c4caaf2879dbf9e00e882582af0 upstream.
+commit 0e213813df02da048ffd22a2c4fac041768ca327 upstream.
 
-In configurations with CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC=n,
-gcc warns about an unused variable:
+If snd_hdac_device_register() fails, 'codec' and name allocated in
+dev_set_name() called in snd_hdac_device_init() are leaked. Fix this
+by calling put_device(), so they can be freed in snd_hda_codec_dev_release()
+and kobject_cleanup().
 
-sound/soc/intel/skylake/skl.c: In function ‘probe_codec’:
-sound/soc/intel/skylake/skl.c:729:18: error: unused variable ‘skl’ [-Werror=unused-variable]
-  struct skl_dev *skl = bus_to_skl(bus);
-                  ^~~
-cc1: all warnings being treated as errors
-
-Fixes: 3fd63658caed9 ("ASoC: Intel: Drop hdac_ext usage for codec device creation")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20220822035133.2147381-1-cuigaosheng1@huawei.com
+Fixes: e4746d94d00c ("ASoC: Intel: Skylake: Introduce HDA codec init and exit routines")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Suggested-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20221020105937.1448951-1-yangyingliang@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/skylake/skl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/skylake/skl.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
 --- a/sound/soc/intel/skylake/skl.c
 +++ b/sound/soc/intel/skylake/skl.c
-@@ -726,8 +726,8 @@ static int probe_codec(struct hdac_bus *
- 	unsigned int cmd = (addr << 28) | (AC_NODE_ROOT << 20) |
- 		(AC_VERB_PARAMETERS << 8) | AC_PAR_VENDOR_ID;
- 	unsigned int res = -1;
--	struct skl_dev *skl = bus_to_skl(bus);
- #if IS_ENABLED(CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC)
-+	struct skl_dev *skl = bus_to_skl(bus);
- 	struct hdac_hda_priv *hda_codec;
- #endif
+@@ -689,11 +689,6 @@ static void load_codec_module(struct hda
+ 
+ #endif /* CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC */
+ 
+-static void skl_codec_device_exit(struct device *dev)
+-{
+-	snd_hdac_device_exit(dev_to_hdac_dev(dev));
+-}
+-
+ static struct hda_codec *skl_codec_device_init(struct hdac_bus *bus, int addr)
+ {
  	struct hda_codec *codec;
+@@ -706,12 +701,11 @@ static struct hda_codec *skl_codec_devic
+ 	}
+ 
+ 	codec->core.type = HDA_DEV_ASOC;
+-	codec->core.dev.release = skl_codec_device_exit;
+ 
+ 	ret = snd_hdac_device_register(&codec->core);
+ 	if (ret) {
+ 		dev_err(bus->dev, "failed to register hdac device\n");
+-		snd_hdac_device_exit(&codec->core);
++		put_device(&codec->core.dev);
+ 		return ERR_PTR(ret);
+ 	}
+ 
 
 
