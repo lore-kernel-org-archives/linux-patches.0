@@ -1,203 +1,124 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+Received: from condef-08.nifty.com (condef-08.nifty.com [202.248.20.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDF5BA51
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 22:39:43 +0000 (UTC)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-50-6YXDDUj9OhOl-PdOYMK1rg-1; Wed, 30 Nov 2022 22:39:39 +0000
-X-MC-Unique: 6YXDDUj9OhOl-PdOYMK1rg-1
-Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
- (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.42; Wed, 30 Nov
- 2022 22:39:38 +0000
-Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
- id 15.00.1497.044; Wed, 30 Nov 2022 22:39:38 +0000
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Thomas Gleixner' <tglx@linutronix.de>, "Jason A. Donenfeld"
-	<Jason@zx2c4.com>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-CC: "Jason A. Donenfeld" <Jason@zx2c4.com>, "linux-crypto@vger.kernel.org"
-	<linux-crypto@vger.kernel.org>, "linux-api@vger.kernel.org"
-	<linux-api@vger.kernel.org>, "x86@kernel.org" <x86@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
-	<adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
-	"Florian Weimer" <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: RE: [PATCH v10 1/4] random: add vgetrandom_alloc() syscall
-Thread-Topic: [PATCH v10 1/4] random: add vgetrandom_alloc() syscall
-Thread-Index: AQHZBD5MKfvjUBqLyk+xAMt8s9EHVq5YDxQQ
-Date: Wed, 30 Nov 2022 22:39:38 +0000
-Message-ID: <310b91f650424d338e56794b8861a088@AcuMS.aculab.com>
-References: <20221129210639.42233-1-Jason@zx2c4.com>
- <20221129210639.42233-2-Jason@zx2c4.com> <87cz95v2q2.ffs@tglx>
-In-Reply-To: <87cz95v2q2.ffs@tglx>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249A0D50F;
+	Wed, 30 Nov 2022 22:42:33 +0000 (UTC)
+Received: from conssluserg-02.nifty.com ([10.126.8.81])by condef-08.nifty.com with ESMTP id 2AUMamcg016400;
+	Thu, 1 Dec 2022 07:36:48 +0900
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48]) (authenticated)
+	by conssluserg-02.nifty.com with ESMTP id 2AUMaaXl030754;
+	Thu, 1 Dec 2022 07:36:36 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-02.nifty.com 2AUMaaXl030754
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+	s=dec2015msa; t=1669847797;
+	bh=RCOA2Nmk8RchnYckPF/4P1hJEvsAWuR5bSpQkzBr1MI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=T0NDgbQuBl8lsVdF+pJOLVK+pE948s/ldkHOx6f4DNRKzEek5HOkHSnh+Zd+7V5VI
+	 4iVPKRYIWH84jTGcPFYeXdcDn4vp0/z0ltg+FIzOShm9r/+QhZeJSDMCiiq5iuLaKQ
+	 YuJiSW9fT+bwQW9RJdMl2sMKbaTWCa3sz8BoJrzaHhhwMbx/NrulFYUeAZDYUF0g8U
+	 uTFhuvuKJTslSvyotDwHEi8AB4ZQnwVGH76bRH/XlaF9kLYcZDlX+yT3xIih/yLzjf
+	 1ECUf9MJWaPyy2OcE7WuBauXLReuu+cRw52lsitxh3jSU2oduXgE1uA+g7ffdtLe5D
+	 Q9hPwVdtCfSGQ==
+X-Nifty-SrcIP: [209.85.210.48]
+Received: by mail-ot1-f48.google.com with SMTP id m7-20020a9d6447000000b0066da0504b5eso12163286otl.13;
+        Wed, 30 Nov 2022 14:36:36 -0800 (PST)
+X-Gm-Message-State: ANoB5plmQELaVm6YV07d53h7yXXqmD9iXUv+ppu0f5L/nYN7zVgXwKYl
+	Ic+sJGxO6SZFiFelo8T26nNfJm7G+aWPPiBfCOM=
+X-Google-Smtp-Source: AA0mqf6bqBcmrS+eVxJO24zhJa/RBxv8Svo2IRZ/K95H2IEpB2iBNtH1xgryc3UFbM4saaKjmEq+Ef/miyv+iNxynPw=
+X-Received: by 2002:a05:6830:1b67:b0:661:8d9e:1959 with SMTP id
+ d7-20020a0568301b6700b006618d9e1959mr31870741ote.225.1669847795651; Wed, 30
+ Nov 2022 14:36:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20221129190123.872394-1-nathan@kernel.org> <20221129190123.872394-2-nathan@kernel.org>
+In-Reply-To: <20221129190123.872394-2-nathan@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Thu, 1 Dec 2022 07:35:59 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASdOhcTqbnRibPumMH1o+78dxBjLuzLK+JS+AiHyTiY6A@mail.gmail.com>
+Message-ID: <CAK7LNASdOhcTqbnRibPumMH1o+78dxBjLuzLK+JS+AiHyTiY6A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] padata: Do not mark padata_mt_helper() as __init
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Sami Tolvanen <samitolvanen@google.com>,
+        Vincent Donnefort <vdonnefort@google.com>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        Daniel Jordan <daniel.m.jordan@oracle.com>,
+        linux-crypto@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Thomas Gleixner
-> Sent: 29 November 2022 22:02
->=20
-> Jason!
->=20
-> On Tue, Nov 29 2022 at 22:06, Jason A. Donenfeld wrote:
-> > +
-> > +/********************************************************************
-> > + *
-> > + * vDSO support helpers.
-> > + *
-> > + * The actual vDSO function is defined over in lib/vdso/getrandom.c,
-> > + * but this section contains the kernel-mode helpers to support that.
-> > + *
-> > + ********************************************************************/
-> > +
-> > +#ifdef CONFIG_VGETRANDOM_ALLOC_SYSCALL
-> > +/**
-> > + * vgetrandom_alloc - allocate opaque states for use with vDSO getrand=
-om().
-> > + *
-> > + * @num: on input, a pointer to a suggested hint of how many states to
-> > + * allocate, and on output the number of states actually allocated.
-> > + *
-> > + * @size_per_each: the size of each state allocated, so that the calle=
-r can
-> > + * split up the returned allocation into individual states.
-> > + *
-> > + * @flags: currently always zero.
->=20
-> NIT!
->=20
-> I personally prefer and ask for it in stuff I maintain:
->=20
->  * @num:=09=09On input, a pointer to a suggested hint of how many states =
-to
->  *=09=09=09allocate, and on output the number of states actually allocate=
-d.
->  *
->  * @size_per_each: =09The size of each state allocated, so that the calle=
-r can
->  * =09=09=09split up the returned allocation into individual states.
->  *
->  * @flags: =09=09Currently always zero.
->=20
-> But your turf :)
->=20
-> > + *
-> > + * The getrandom() vDSO function in userspace requires an opaque state=
-, which
-> > + * this function allocates by mapping a certain number of special page=
-s into
-> > + * the calling process. It takes a hint as to the number of opaque sta=
-tes
-> > + * desired, and provides the caller with the number of opaque states a=
-ctually
-> > + * allocated, the size of each one in bytes, and the address of the fi=
-rst
-> > + * state.
->=20
-> make W=3D1 rightfully complains about:
->=20
-> > +
->=20
-> drivers/char/random.c:182: warning: bad line:
->=20
-> > + * Returns a pointer to the first state in the allocation.
->=20
-> I have serious doubts that this statement is correct.
->=20
-> Think about this comment and documentation as a boiler plate for the
-> mandatory man page for a new syscall (hint...)
->=20
-> > + *
-> > + */
->=20
-> and W=3D1 also complains rightfully here:
->=20
-> > +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned int __user *, num,
-> > +=09=09unsigned int __user *, size_per_each, unsigned int, flags)
->=20
-> drivers/char/random.c:188: warning: expecting prototype for vgetrandom_al=
-loc(). Prototype was for
-> sys_vgetrandom_alloc() instead
->=20
-> > +{
-> > diff --git a/include/vdso/getrandom.h b/include/vdso/getrandom.h
-> > new file mode 100644
-> > index 000000000000..5f04c8bf4bd4
-> > --- /dev/null
-> > +++ b/include/vdso/getrandom.h
-> > @@ -0,0 +1,24 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +/*
-> > + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights=
- Reserved.
-> > + */
-> > +
-> > +#ifndef _VDSO_GETRANDOM_H
-> > +#define _VDSO_GETRANDOM_H
-> > +
-> > +#include <crypto/chacha.h>
-> > +
-> > +struct vgetrandom_state {
-> > +=09union {
-> > +=09=09struct {
-> > +=09=09=09u8 batch[CHACHA_BLOCK_SIZE * 3 / 2];
-> > +=09=09=09u32 key[CHACHA_KEY_SIZE / sizeof(u32)];
-> > +=09=09};
-> > +=09=09u8 batch_key[CHACHA_BLOCK_SIZE * 2];
-> > +=09};
-> > +=09unsigned long generation;
-> > +=09u8 pos;
-> > +=09bool in_use;
-> > +};
->=20
-> Again, please make this properly tabular:
->=20
-> struct vgetrandom_state {
-> =09union {
-> =09=09struct {
-> =09=09=09u8=09batch[CHACHA_BLOCK_SIZE * 3 / 2];
-> =09=09=09u32=09key[CHACHA_KEY_SIZE / sizeof(u32)];
-> =09=09};
-> =09=09u8=09batch_key[CHACHA_BLOCK_SIZE * 2];
-> =09};
-> =09unsigned long=09generation;
-> =09u8=09=09pos;
-> =09bool=09=09in_use;
-> };
->=20
-> Plus some kernel doc which explains what this is about.
+On Wed, Nov 30, 2022 at 4:02 AM Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> When building arm64 allmodconfig + ThinLTO with clang and a proposed
+> modpost update to account for -ffuncton-sections, the following warning
+> appears:
+>
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>
+> In both cases, an __init function calls padata_work_init(), which is not
+> marked __init, with padata_mt_helper(), another __init function, as a
+> work function argument.
+>
+> padata_work_init() is called from non-init paths, otherwise it could be
+> marked __init to resolve the warning. Instead, remove __init from
+> padata_mt_helper() to resolve the warning.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Cc: Steffen Klassert <steffen.klassert@secunet.com>
+> Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+> Cc: linux-crypto@vger.kernel.org
+> ---
+>  kernel/padata.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/kernel/padata.c b/kernel/padata.c
+> index e5819bb8bd1d..c2271d7e446d 100644
+> --- a/kernel/padata.c
+> +++ b/kernel/padata.c
+> @@ -45,7 +45,7 @@ struct padata_mt_job_state {
+>  };
+>
+>  static void padata_free_pd(struct parallel_data *pd);
+> -static void __init padata_mt_helper(struct work_struct *work);
+> +static void padata_mt_helper(struct work_struct *work);
+>
+>  static int padata_index_to_cpu(struct parallel_data *pd, int cpu_index)
+>  {
+> @@ -425,7 +425,7 @@ static int padata_setup_cpumasks(struct padata_instance *pinst)
+>         return err;
+>  }
+>
+> -static void __init padata_mt_helper(struct work_struct *w)
+> +static void padata_mt_helper(struct work_struct *w)
+>  {
+>         struct padata_work *pw = container_of(w, struct padata_work, pw_work);
+>         struct padata_mt_job_state *ps = pw->pw_data;
+> --
+> 2.38.1
+>
 
-That structure looks horrid - especially for something shared
-between entities.
-The 'unsigned long' should be either u32 or u64.
-There is 'hidden' padding at the end.
-If 'pos' is an index into something (longer name would be
-better) then there is no reason to squeeze the value into
-1 byte - it doesn't save anything and might make things bigger.
+This patch seems wrong.
 
-(I think Jason might have blocked my emails, he doesn't like
-critisicism/feedback.)
+padata_work_init() does not reference to padata_mt_helper()
 
-=09David
 
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
+padata_work_alloc_mt() and padata_do_multithreaded() do.
 
+
+
+
+
+
+
+
+-- 
+Best Regards
+Masahiro Yamada
