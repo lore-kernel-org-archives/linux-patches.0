@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F736FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D38C433C1;
-	Wed, 30 Nov 2022 18:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF75E6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CE5C433C1;
+	Wed, 30 Nov 2022 18:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832870;
-	bh=JODpgBCq16X/gi/Ru6zvD83AxvADc7n8VSdvV+sftKk=;
+	s=korg; t=1669832872;
+	bh=PdjsyfUFFISR63Czh+HBKeA4N1fXE8yF7fnwmozk7YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNpZGMSTGsEjgtW1oRh0tDk8+Ly0y/Y1RP+roBkFQz0WoUjIo0oe7raTFxJ44yeEE
-	 CqwdldaUtUrSR0zzXsr6Z2V7R24fYoIclvrszbMT1bQSdAMwmO2UG36jvZyy8/eQxE
-	 7Zbweo4Yco8VClczabsOrMrQjzKNRIxZU7/7Z95Q=
+	b=AvE08W1lYju0aWfcxYQoCmVmevx2sE6Ii6PCt4bGdL8fT8VwdP7gguvVVsw7sOr1B
+	 qDO1BU0C0ZDNc2GPm++bcy7JErowjbu0d6qcphI0q8MJPR/GWkCK/SVjclo8EcMLhK
+	 8plwTxPHDt8fjTYMT48a/E7fa9dGDPREE5W8z0FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/162] bus: sunxi-rsb: Support atomic transfers
-Date: Wed, 30 Nov 2022 19:22:04 +0100
-Message-Id: <20221130180529.673975628@linuxfoundation.org>
+Subject: [PATCH 5.10 044/162] tee: optee: fix possible memory leak in optee_register_device()
+Date: Wed, 30 Nov 2022 19:22:05 +0100
+Message-Id: <20221130180529.701251181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,90 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 077686da0e2162c4ea5ae0df205849c2a7a84479 ]
+[ Upstream commit cce616e012c215d65c15e5d1afa73182dea49389 ]
 
-When communicating with a PMIC during system poweroff (pm_power_off()),
-IRQs are disabled and we are in a RCU read-side critical section, so we
-cannot use wait_for_completion_io_timeout(). Instead, poll the status
-register for transfer completion.
+If device_register() returns error in optee_register_device(),
+the name allocated by dev_set_name() need be freed. As comment
+of device_register() says, it should use put_device() to give
+up the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup(),
+and optee_device is freed in optee_release_device().
 
-Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221114015749.28490-3-samuel@sholland.org
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Fixes: c3fa24af9244 ("tee: optee: add TEE bus device enumeration support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/sunxi-rsb.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/tee/optee/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
-index 9b1a5e62417c..f8c29b888e6b 100644
---- a/drivers/bus/sunxi-rsb.c
-+++ b/drivers/bus/sunxi-rsb.c
-@@ -268,6 +268,9 @@ EXPORT_SYMBOL_GPL(sunxi_rsb_driver_register);
- /* common code that starts a transfer */
- static int _sunxi_rsb_run_xfer(struct sunxi_rsb *rsb)
- {
-+	u32 int_mask, status;
-+	bool timeout;
-+
- 	if (readl(rsb->regs + RSB_CTRL) & RSB_CTRL_START_TRANS) {
- 		dev_dbg(rsb->dev, "RSB transfer still in progress\n");
- 		return -EBUSY;
-@@ -275,13 +278,23 @@ static int _sunxi_rsb_run_xfer(struct sunxi_rsb *rsb)
- 
- 	reinit_completion(&rsb->complete);
- 
--	writel(RSB_INTS_LOAD_BSY | RSB_INTS_TRANS_ERR | RSB_INTS_TRANS_OVER,
--	       rsb->regs + RSB_INTE);
-+	int_mask = RSB_INTS_LOAD_BSY | RSB_INTS_TRANS_ERR | RSB_INTS_TRANS_OVER;
-+	writel(int_mask, rsb->regs + RSB_INTE);
- 	writel(RSB_CTRL_START_TRANS | RSB_CTRL_GLOBAL_INT_ENB,
- 	       rsb->regs + RSB_CTRL);
- 
--	if (!wait_for_completion_io_timeout(&rsb->complete,
--					    msecs_to_jiffies(100))) {
-+	if (irqs_disabled()) {
-+		timeout = readl_poll_timeout_atomic(rsb->regs + RSB_INTS,
-+						    status, (status & int_mask),
-+						    10, 100000);
-+		writel(status, rsb->regs + RSB_INTS);
-+	} else {
-+		timeout = !wait_for_completion_io_timeout(&rsb->complete,
-+							  msecs_to_jiffies(100));
-+		status = rsb->status;
-+	}
-+
-+	if (timeout) {
- 		dev_dbg(rsb->dev, "RSB timeout\n");
- 
- 		/* abort the transfer */
-@@ -293,18 +306,18 @@ static int _sunxi_rsb_run_xfer(struct sunxi_rsb *rsb)
- 		return -ETIMEDOUT;
+diff --git a/drivers/tee/optee/device.c b/drivers/tee/optee/device.c
+index 031806468af4..60ffc54da003 100644
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -80,7 +80,7 @@ static int optee_register_device(const uuid_t *device_uuid)
+ 	rc = device_register(&optee_device->dev);
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+-		kfree(optee_device);
++		put_device(&optee_device->dev);
  	}
  
--	if (rsb->status & RSB_INTS_LOAD_BSY) {
-+	if (status & RSB_INTS_LOAD_BSY) {
- 		dev_dbg(rsb->dev, "RSB busy\n");
- 		return -EBUSY;
- 	}
- 
--	if (rsb->status & RSB_INTS_TRANS_ERR) {
--		if (rsb->status & RSB_INTS_TRANS_ERR_ACK) {
-+	if (status & RSB_INTS_TRANS_ERR) {
-+		if (status & RSB_INTS_TRANS_ERR_ACK) {
- 			dev_dbg(rsb->dev, "RSB slave nack\n");
- 			return -EINVAL;
- 		}
- 
--		if (rsb->status & RSB_INTS_TRANS_ERR_DATA) {
-+		if (status & RSB_INTS_TRANS_ERR_DATA) {
- 			dev_dbg(rsb->dev, "RSB transfer data error\n");
- 			return -EIO;
- 		}
+ 	return rc;
 -- 
 2.35.1
 
