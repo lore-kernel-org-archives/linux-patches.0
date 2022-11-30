@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF236FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FC2C433D6;
-	Wed, 30 Nov 2022 18:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FD76FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF8FC433D6;
+	Wed, 30 Nov 2022 18:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832969;
-	bh=d/AnVJzBFAz+9KnaNy/xnoW9x0pcOK+olS1ivZdpiRM=;
+	s=korg; t=1669832972;
+	bh=aVEhu81fYiUkOZZElSTvCrp3+PHlarNZ2JC0hV8EM/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meClOE6jUVZmwZR/OetqECBllSToEIiGu9/rSqD/vv2+N+bNQkRbspDk1ZsEGf42Z
-	 hhVIQLVj7vZQM421BknhDPYxmOVXjk//wzW2lxRKiFOPJt7RBeAyYi+4jKdB4Xqr+4
-	 dyet5eFvVug0Afecli7qOIozIQgvMHlxyIHnkNVI=
+	b=irm1sgaeUlLU7lik6mW1opmcqSeXVDe7/C/zEvmYbgZ91QgGnOh1+y7YAbiaR0mQv
+	 VYQXCWyKYdiyIr5X4IZhsRJNTJcj6HtIZ+OxO+9DdnhbSilJ1/bUSTxdLqnJVtsqpv
+	 P4tndKzSDBlodPlULEw3/PXB/DbLePORihd46pKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dawei Li <set_pte_at@outlook.com>,
+	Andrew Davis <afd@ti.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/162] bnx2x: fix pci device refcount leak in bnx2x_vf_is_pcie_pending()
-Date: Wed, 30 Nov 2022 19:22:38 +0100
-Message-Id: <20221130180530.592723743@linuxfoundation.org>
+Subject: [PATCH 5.10 078/162] dma-buf: fix racing conflict of dma_heap_add()
+Date: Wed, 30 Nov 2022 19:22:39 +0100
+Message-Id: <20221130180530.619510450@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,56 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Dawei Li <set_pte_at@outlook.com>
 
-[ Upstream commit 3637a29ccbb6461b7268c5c5db525935d510afc6 ]
+[ Upstream commit 432e25902b9651622578c6248e549297d03caf66 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). Call pci_dev_put() before returning from
-bnx2x_vf_is_pcie_pending() to avoid refcount leak.
+Racing conflict could be:
+task A                 task B
+list_for_each_entry
+strcmp(h->name))
+                       list_for_each_entry
+                       strcmp(h->name)
+kzalloc                kzalloc
+......                 .....
+device_create          device_create
+list_add
+                       list_add
 
-Fixes: b56e9670ffa4 ("bnx2x: Prepare device and initialize VF database")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221119070202.1407648-1-yangyingliang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The root cause is that task B has no idea about the fact someone
+else(A) has inserted heap with same name when it calls list_add,
+so a potential collision occurs.
+
+Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
+Signed-off-by: Dawei Li <set_pte_at@outlook.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/TYCP286MB2323873BBDF88020781FB986CA3B9@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/dma-buf/dma-heap.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-index 08437eaacbb9..ac327839eed9 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-@@ -795,16 +795,20 @@ static void bnx2x_vf_enable_traffic(struct bnx2x *bp, struct bnx2x_virtf *vf)
+diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
+index 798f86fcd50f..dcbb023acc45 100644
+--- a/drivers/dma-buf/dma-heap.c
++++ b/drivers/dma-buf/dma-heap.c
+@@ -209,18 +209,6 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
- static u8 bnx2x_vf_is_pcie_pending(struct bnx2x *bp, u8 abs_vfid)
- {
--	struct pci_dev *dev;
- 	struct bnx2x_virtf *vf = bnx2x_vf_by_abs_fid(bp, abs_vfid);
-+	struct pci_dev *dev;
-+	bool pending;
- 
- 	if (!vf)
- 		return false;
- 
- 	dev = pci_get_domain_bus_and_slot(vf->domain, vf->bus, vf->devfn);
--	if (dev)
--		return bnx2x_is_pcie_pending(dev);
--	return false;
-+	if (!dev)
-+		return false;
-+	pending = bnx2x_is_pcie_pending(dev);
-+	pci_dev_put(dev);
+-	/* check the name is unique */
+-	mutex_lock(&heap_list_lock);
+-	list_for_each_entry(h, &heap_list, list) {
+-		if (!strcmp(h->name, exp_info->name)) {
+-			mutex_unlock(&heap_list_lock);
+-			pr_err("dma_heap: Already registered heap named %s\n",
+-			       exp_info->name);
+-			return ERR_PTR(-EINVAL);
+-		}
+-	}
+-	mutex_unlock(&heap_list_lock);
+-
+ 	heap = kzalloc(sizeof(*heap), GFP_KERNEL);
+ 	if (!heap)
+ 		return ERR_PTR(-ENOMEM);
+@@ -259,13 +247,27 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
+ 		err_ret = ERR_CAST(dev_ret);
+ 		goto err2;
+ 	}
+-	/* Add heap to the list */
 +
-+	return pending;
- }
+ 	mutex_lock(&heap_list_lock);
++	/* check the name is unique */
++	list_for_each_entry(h, &heap_list, list) {
++		if (!strcmp(h->name, exp_info->name)) {
++			mutex_unlock(&heap_list_lock);
++			pr_err("dma_heap: Already registered heap named %s\n",
++			       exp_info->name);
++			err_ret = ERR_PTR(-EINVAL);
++			goto err3;
++		}
++	}
++
++	/* Add heap to the list */
+ 	list_add(&heap->list, &heap_list);
+ 	mutex_unlock(&heap_list_lock);
  
- int bnx2x_vf_flr_clnup_epilog(struct bnx2x *bp, u8 abs_vfid)
+ 	return heap;
+ 
++err3:
++	device_destroy(dma_heap_class, heap->heap_devt);
+ err2:
+ 	cdev_del(&heap->heap_cdev);
+ err1:
 -- 
 2.35.1
 
