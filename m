@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5B879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B13C433C1;
-	Wed, 30 Nov 2022 18:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0688279C1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A23DC433B5;
+	Wed, 30 Nov 2022 18:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834091;
-	bh=sTXKwoIwrmBKPGu/Yp8Rqee3FuXZ0Ejd9Z9fdqONnbg=;
+	s=korg; t=1669834093;
+	bh=3kmCxi2YoCk9wj4QlSqGV5e4a8PuKAJzfCYVhTx1c4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCEeLwrRhvH+SneWwozFpmytOfUgdFSr/EeVzQWDnWL/qHykZwAk2MjqFALXb/sEY
-	 rO5H5FJyuK0eHIwz8Ko2qOxa3La0nJyTeKjOU7UwDZ3WQfuVwF1uJp/RKdSa2TbgqP
-	 cozCkmutgAq2VJN51wmOx2b4bcOQi61kmjmopvF4=
+	b=0BwSHTGb3XqBWexqRJHAToeIEMQaxF59i07zZn1H9XdGO9T3QAtQPzLO6YV+VpRWp
+	 GLzv3/rGTfozUQnfov9vVAYyAbkRwW2jULN2rBRFbeyj2GwC+D0zT5EKt+bWv03xwK
+	 2wNUNyS3ep1sv6tCsUYtAIvlfteygFaG0+J8YoX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Li <set_pte_at@outlook.com>,
-	Andrew Davis <afd@ti.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 126/289] dma-buf: fix racing conflict of dma_heap_add()
-Date: Wed, 30 Nov 2022 19:21:51 +0100
-Message-Id: <20221130180546.997188139@linuxfoundation.org>
+Subject: [PATCH 6.0 127/289] tsnep: Fix rotten packets
+Date: Wed, 30 Nov 2022 19:21:52 +0100
+Message-Id: <20221130180547.019472958@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,89 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dawei Li <set_pte_at@outlook.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 432e25902b9651622578c6248e549297d03caf66 ]
+[ Upstream commit 2dc4ac91f845b690ddf2ad39172c3698b2769fa2 ]
 
-Racing conflict could be:
-task A                 task B
-list_for_each_entry
-strcmp(h->name))
-                       list_for_each_entry
-                       strcmp(h->name)
-kzalloc                kzalloc
-......                 .....
-device_create          device_create
-list_add
-                       list_add
+If PTP synchronisation is done every second, then sporadic the interval
+is higher than one second:
 
-The root cause is that task B has no idea about the fact someone
-else(A) has inserted heap with same name when it calls list_add,
-so a potential collision occurs.
+ptp4l[696.582]: master offset        -17 s2 freq   -1891 path delay 573
+ptp4l[697.582]: master offset        -22 s2 freq   -1901 path delay 573
+ptp4l[699.368]: master offset         -1 s2 freq   -1887 path delay 573
+      ^^^^^^^ Should be 698.582!
 
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
-Signed-off-by: Dawei Li <set_pte_at@outlook.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/TYCP286MB2323873BBDF88020781FB986CA3B9@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
+This problem is caused by rotten packets, which are received after
+polling but before interrupts are enabled again. This can be fixed by
+checking for pending work and rescheduling if necessary after interrupts
+has been enabled again.
+
+Fixes: 403f69bbdbad ("tsnep: Add TSN endpoint Ethernet MAC driver")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Link: https://lore.kernel.org/r/20221119211825.81805-1-gerhard@engleder-embedded.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-heap.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/engleder/tsnep_main.c | 57 +++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/dma-heap.c b/drivers/dma-buf/dma-heap.c
-index 8f5848aa144f..59d158873f4c 100644
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -233,18 +233,6 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
- 		return ERR_PTR(-EINVAL);
- 	}
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index a5f7152a1716..6a2617cc5490 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -504,6 +504,27 @@ static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
+ 	return (budget != 0);
+ }
  
--	/* check the name is unique */
--	mutex_lock(&heap_list_lock);
--	list_for_each_entry(h, &heap_list, list) {
--		if (!strcmp(h->name, exp_info->name)) {
--			mutex_unlock(&heap_list_lock);
--			pr_err("dma_heap: Already registered heap named %s\n",
--			       exp_info->name);
--			return ERR_PTR(-EINVAL);
--		}
--	}
--	mutex_unlock(&heap_list_lock);
--
- 	heap = kzalloc(sizeof(*heap), GFP_KERNEL);
- 	if (!heap)
- 		return ERR_PTR(-ENOMEM);
-@@ -283,13 +271,27 @@ struct dma_heap *dma_heap_add(const struct dma_heap_export_info *exp_info)
- 		err_ret = ERR_CAST(dev_ret);
- 		goto err2;
- 	}
--	/* Add heap to the list */
++static bool tsnep_tx_pending(struct tsnep_tx *tx)
++{
++	unsigned long flags;
++	struct tsnep_tx_entry *entry;
++	bool pending = false;
 +
- 	mutex_lock(&heap_list_lock);
-+	/* check the name is unique */
-+	list_for_each_entry(h, &heap_list, list) {
-+		if (!strcmp(h->name, exp_info->name)) {
-+			mutex_unlock(&heap_list_lock);
-+			pr_err("dma_heap: Already registered heap named %s\n",
-+			       exp_info->name);
-+			err_ret = ERR_PTR(-EINVAL);
-+			goto err3;
++	spin_lock_irqsave(&tx->lock, flags);
++
++	if (tx->read != tx->write) {
++		entry = &tx->entry[tx->read];
++		if ((__le32_to_cpu(entry->desc_wb->properties) &
++		     TSNEP_TX_DESC_OWNER_MASK) ==
++		    (entry->properties & TSNEP_TX_DESC_OWNER_MASK))
++			pending = true;
++	}
++
++	spin_unlock_irqrestore(&tx->lock, flags);
++
++	return pending;
++}
++
+ static int tsnep_tx_open(struct tsnep_adapter *adapter, void __iomem *addr,
+ 			 struct tsnep_tx *tx)
+ {
+@@ -751,6 +772,19 @@ static int tsnep_rx_poll(struct tsnep_rx *rx, struct napi_struct *napi,
+ 	return done;
+ }
+ 
++static bool tsnep_rx_pending(struct tsnep_rx *rx)
++{
++	struct tsnep_rx_entry *entry;
++
++	entry = &rx->entry[rx->read];
++	if ((__le32_to_cpu(entry->desc_wb->properties) &
++	     TSNEP_DESC_OWNER_COUNTER_MASK) ==
++	    (entry->properties & TSNEP_DESC_OWNER_COUNTER_MASK))
++		return true;
++
++	return false;
++}
++
+ static int tsnep_rx_open(struct tsnep_adapter *adapter, void __iomem *addr,
+ 			 struct tsnep_rx *rx)
+ {
+@@ -795,6 +829,17 @@ static void tsnep_rx_close(struct tsnep_rx *rx)
+ 	tsnep_rx_ring_cleanup(rx);
+ }
+ 
++static bool tsnep_pending(struct tsnep_queue *queue)
++{
++	if (queue->tx && tsnep_tx_pending(queue->tx))
++		return true;
++
++	if (queue->rx && tsnep_rx_pending(queue->rx))
++		return true;
++
++	return false;
++}
++
+ static int tsnep_poll(struct napi_struct *napi, int budget)
+ {
+ 	struct tsnep_queue *queue = container_of(napi, struct tsnep_queue,
+@@ -815,9 +860,19 @@ static int tsnep_poll(struct napi_struct *napi, int budget)
+ 	if (!complete)
+ 		return budget;
+ 
+-	if (likely(napi_complete_done(napi, done)))
++	if (likely(napi_complete_done(napi, done))) {
+ 		tsnep_enable_irq(queue->adapter, queue->irq_mask);
+ 
++		/* reschedule if work is already pending, prevent rotten packets
++		 * which are transmitted or received after polling but before
++		 * interrupt enable
++		 */
++		if (tsnep_pending(queue)) {
++			tsnep_disable_irq(queue->adapter, queue->irq_mask);
++			napi_schedule(napi);
 +		}
 +	}
 +
-+	/* Add heap to the list */
- 	list_add(&heap->list, &heap_list);
- 	mutex_unlock(&heap_list_lock);
+ 	return min(done, budget - 1);
+ }
  
- 	return heap;
- 
-+err3:
-+	device_destroy(dma_heap_class, heap->heap_devt);
- err2:
- 	cdev_del(&heap->heap_cdev);
- err1:
 -- 
 2.35.1
 
