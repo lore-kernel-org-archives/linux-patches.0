@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DC679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69348C433C1;
-	Wed, 30 Nov 2022 18:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F6F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26252C433C1;
+	Wed, 30 Nov 2022 18:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833300;
-	bh=FNLcCxLKPSv+7vCV2X6Cn4/ZN+mViG4o31A9b3kLhgs=;
+	s=korg; t=1669833303;
+	bh=+OjShQvoVO2sfoGe1cW8c5l7565D24ROvEYNQhALPtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oK0DWWn+nCe9Q6JzqPSk6fAD5VtMK+ZDqNTwuWM5afeRp6VeXCA/PZT75Hs5DMbpx
-	 fRfiS1tW5NcgHaD6/vjlVzfYQkBDT6MVBLkCmk5bb4kagbXPEOt4BmxPIt1Krb+ro5
-	 V3M2pCW6Moz95/mKyaIow8pbzKhbr9TRcYtjW/uQ=
+	b=iaRH9eiexM5WzC471VuU4GflCTQipLi1e9n235+pCY+/yrwWGcJvp8R3yIi4yfkHi
+	 cdse36b1ROI4gLzuCvJUI4uMJCL6iMhEuFEdc7vRS/AS3rvvSoIUkzIKtuT0Cnlqsk
+	 bfuKsBY1o9aTMuX1evlutvrq5LbYwQeZyXo3U8J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Haller <d.haller@phytec.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Furong Zhou <furong.zhou@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/206] ARM: dts: am335x-pcm-953: Define fixed regulators in root node
-Date: Wed, 30 Nov 2022 19:21:50 +0100
-Message-Id: <20221130180534.479510964@linuxfoundation.org>
+Subject: [PATCH 5.15 059/206] ASoC: hdac_hda: fix hda pcm buffer overflow issue
+Date: Wed, 30 Nov 2022 19:21:51 +0100
+Message-Id: <20221130180534.504440880@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,64 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Haller <d.haller@phytec.de>
+From: Junxiao Chang <junxiao.chang@intel.com>
 
-[ Upstream commit 8950f345a67d8046d2472dd6ea81fa18ef5b4844 ]
+[ Upstream commit 37882100cd0629d830db430a8cee0b724fe1fea3 ]
 
-Remove the regulators node and define fixed regulators in the root node.
-Prevents the sdhci-omap driver from waiting in probe deferral forever
-because of the missing vmmc-supply and keeps am335x-pcm-953 consistent with
-the other Phytec AM335 boards.
+When KASAN is enabled, below log might be dumped with Intel EHL hardware:
+[   48.583597] ==================================================================
+[   48.585921] BUG: KASAN: slab-out-of-bounds in hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+[   48.587995] Write of size 4 at addr ffff888103489708 by task pulseaudio/759
 
-Fixes: bb07a829ec38 ("ARM: dts: Add support for phyCORE-AM335x PCM-953 carrier board")
-Signed-off-by: Dominik Haller <d.haller@phytec.de>
-Message-Id: <20221011143115.248003-1-d.haller@phytec.de>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+[   48.589237] CPU: 2 PID: 759 Comm: pulseaudio Tainted: G     U      E     5.15.71-intel-ese-standard-lts #9
+[   48.591272] Hardware name: Intel Corporation Elkhart Lake Embedded Platform/ElkhartLake LPDDR4x T3 CRB, BIOS EHLSFWI1.R00.4251.A01.2206130432 06/13/2022
+[   48.593010] Call Trace:
+[   48.593648]  <TASK>
+[   48.593852]  dump_stack_lvl+0x34/0x48
+[   48.594404]  print_address_description.constprop.0+0x1f/0x140
+[   48.595174]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+[   48.595868]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+[   48.596519]  kasan_report.cold+0x7f/0x11b
+[   48.597003]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+[   48.597885]  hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+
+HDAC_LAST_DAI_ID is last index id, pcm buffer array size should
+be +1 to avoid out of bound access.
+
+Fixes: 608b8c36c371 ("ASoC: hdac_hda: add support for HDMI/DP as a HDA codec")
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
+Signed-off-by: Furong Zhou <furong.zhou@intel.com>
+Link: https://lore.kernel.org/r/20221109234023.3111035-1-junxiao.chang@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am335x-pcm-953.dtsi | 28 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ sound/soc/codecs/hdac_hda.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/am335x-pcm-953.dtsi b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-index 124026fa0d09..f207499461b3 100644
---- a/arch/arm/boot/dts/am335x-pcm-953.dtsi
-+++ b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-@@ -12,22 +12,20 @@ / {
- 	compatible = "phytec,am335x-pcm-953", "phytec,am335x-phycore-som", "ti,am33xx";
+diff --git a/sound/soc/codecs/hdac_hda.h b/sound/soc/codecs/hdac_hda.h
+index d0efc5e254ae..da0ed74758b0 100644
+--- a/sound/soc/codecs/hdac_hda.h
++++ b/sound/soc/codecs/hdac_hda.h
+@@ -14,7 +14,7 @@ enum {
+ 	HDAC_HDMI_1_DAI_ID,
+ 	HDAC_HDMI_2_DAI_ID,
+ 	HDAC_HDMI_3_DAI_ID,
+-	HDAC_LAST_DAI_ID = HDAC_HDMI_3_DAI_ID,
++	HDAC_DAI_ID_NUM
+ };
  
- 	/* Power */
--	regulators {
--		vcc3v3: fixedregulator@1 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc3v3";
--			regulator-min-microvolt = <3300000>;
--			regulator-max-microvolt = <3300000>;
--			regulator-boot-on;
--		};
-+	vcc3v3: fixedregulator1 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc3v3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-boot-on;
-+	};
+ struct hdac_hda_pcm {
+@@ -24,7 +24,7 @@ struct hdac_hda_pcm {
  
--		vcc1v8: fixedregulator@2 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc1v8";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
--			regulator-boot-on;
--		};
-+	vcc1v8: fixedregulator2 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc1v8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-boot-on;
- 	};
+ struct hdac_hda_priv {
+ 	struct hda_codec codec;
+-	struct hdac_hda_pcm pcm[HDAC_LAST_DAI_ID];
++	struct hdac_hda_pcm pcm[HDAC_DAI_ID_NUM];
+ 	bool need_display_power;
+ };
  
- 	/* User IO */
 -- 
 2.35.1
 
