@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E8979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92C6C433D7;
-	Wed, 30 Nov 2022 18:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1173F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A064C433D7;
+	Wed, 30 Nov 2022 18:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834487;
-	bh=fZLI1CPH88FenommfFpLbeK1+E6fqz51/ETnB9VyKKU=;
+	s=korg; t=1669834489;
+	bh=6MgwmTuqgsvdaRvrXaBLfFyxlosEVFgbd20R89yiodI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puu+eVsn/5SjnafGqGquZMeSV5nOVLiDdBMkSO71UwzbE2xN1A4/iTOfMRpczd0tK
-	 r2U6+JNPsNYMZyWXV/f2ROkZjwfyp3kRVHuGCLUiOv6qdzo1UYaF2h0Ojm6N+R7pnP
-	 NKLqK3dQkE4YVRmT7OwT9elEk2lg825nX+fAfCGk=
+	b=C/IUA7pV6gyhkadPLA7QVcUToWeggts0vhagfBkqlv2A1okZOjLyEnxY/5q6N+Hyk
+	 0pASDyMkUdgg8/Vlx5CuoUiPUaOlXwhA24DugJrr0vsbOQYO7Gd/CHe+ClOTCFwk9A
+	 czUapIXwNO2V7UzAYEHaU5fA1W8a5C+tmYlARtGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.0 272/289] btrfs: free btrfs_path before copying inodes to userspace
-Date: Wed, 30 Nov 2022 19:24:17 +0100
-Message-Id: <20221130180550.264083403@linuxfoundation.org>
+Subject: [PATCH 6.0 273/289] btrfs: free btrfs_path before copying fspath to userspace
+Date: Wed, 30 Nov 2022 19:24:18 +0100
+Message-Id: <20221130180550.287370728@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,13 +36,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Anand Jain <anand.jain@oracle.com>
 
-commit 418ffb9e3cf6c4e2574d3a732b724916684bd133 upstream.
+commit 8cf96b409d9b3946ece58ced13f92d0f775b0442 upstream.
 
-btrfs_ioctl_logical_to_ino() frees the search path after the userspace
-copy from the temp buffer @inodes. Which potentially can lead to a lock
-splat.
+btrfs_ioctl_ino_to_path() frees the search path after the userspace copy
+from the temp buffer @ipath->fspath. Which potentially can lead to a lock
+splat warning.
 
-Fix this by freeing the path before we copy @inodes to userspace.
+Fix this by freeing the path before we copy it to userspace.
 
 CC: stable@vger.kernel.org # 4.19+
 Signed-off-by: Anand Jain <anand.jain@oracle.com>
@@ -50,47 +50,19 @@ Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ fs/btrfs/ioctl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/btrfs/ioctl.c
 +++ b/fs/btrfs/ioctl.c
-@@ -4282,21 +4282,20 @@ static long btrfs_ioctl_logical_to_ino(s
- 		size = min_t(u32, loi->size, SZ_16M);
+@@ -4232,6 +4232,8 @@ static long btrfs_ioctl_ino_to_path(stru
+ 		ipath->fspath->val[i] = rel_ptr;
  	}
  
--	path = btrfs_alloc_path();
--	if (!path) {
--		ret = -ENOMEM;
--		goto out;
--	}
--
- 	inodes = init_data_container(size);
- 	if (IS_ERR(inodes)) {
- 		ret = PTR_ERR(inodes);
--		inodes = NULL;
--		goto out;
-+		goto out_loi;
- 	}
- 
-+	path = btrfs_alloc_path();
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
- 	ret = iterate_inodes_from_logical(loi->logical, fs_info, path,
- 					  inodes, ignore_offset);
 +	btrfs_free_path(path);
- 	if (ret == -EINVAL)
- 		ret = -ENOENT;
- 	if (ret < 0)
-@@ -4308,7 +4307,6 @@ static long btrfs_ioctl_logical_to_ino(s
- 		ret = -EFAULT;
- 
- out:
--	btrfs_free_path(path);
- 	kvfree(inodes);
- out_loi:
- 	kfree(loi);
++	path = NULL;
+ 	ret = copy_to_user((void __user *)(unsigned long)ipa->fspath,
+ 			   ipath->fspath, size);
+ 	if (ret) {
 
 
