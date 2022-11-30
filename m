@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC33879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42419C433D7;
-	Wed, 30 Nov 2022 18:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B23679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2429C433C1;
+	Wed, 30 Nov 2022 18:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833772;
-	bh=7wledAcK5/EHBpNh29ihx3WxkATSoD8c8+rbUobE2tc=;
+	s=korg; t=1669833775;
+	bh=m6MOVYM1TiX79ZuuE2JOpGw4gj4kiQANSSH0ufvIg7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbpbQvLGLp0VJi3zZ22NFb88oATvmM0rS0yFAjNKBvgQCN2o++LUEFp4BtTx97OyF
-	 zwQauaSYjA5q9sysC5P+wB5kma7GlWqUurs66dwFak9VRG5pM5YSYSUqOn7XqXoZlZ
-	 gdzJnCpXaVlJqUvqw0sX5y4oeuE9blV/ZORI8gUw=
+	b=bdPmq2eUKN4leuXjeeTVoz4Qo88T96QwEdNoGnsJjrEjjh3jO0B83Y75bA+9IC6aY
+	 KlQmB+6ZYjt3N3z4HvvLrQkn0vKjkmmon/6Csrt5Owey7Ax/ri91+JaOD+YRiAbHEP
+	 n60qa6GxDg+x9fA/IbDbcl2G2Ms8Ll/YhjDazBb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Todd Kjos <tkjos@google.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 001/289] binder: validate alloc->mm in ->mmap() handler
-Date: Wed, 30 Nov 2022 19:19:46 +0100
-Message-Id: <20221130180544.143405331@linuxfoundation.org>
+Subject: [PATCH 6.0 010/289] wifi: airo: do not assign -1 to unsigned char
+Date: Wed, 30 Nov 2022 19:19:55 +0100
+Message-Id: <20221130180544.364976944@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,64 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit 3ce00bb7e91cf57d723905371507af57182c37ef ]
+[ Upstream commit e6cb8769452e8236b52134e5cb4a18b8f5986932 ]
 
-Since commit 1da52815d5f1 ("binder: fix alloc->vma_vm_mm null-ptr
-dereference") binder caches a pointer to the current->mm during open().
-This fixes a null-ptr dereference reported by syzkaller. Unfortunately,
-it also opens the door for a process to update its mm after the open(),
-(e.g. via execve) making the cached alloc->mm pointer invalid.
+With char becoming unsigned by default, and with `char` alone being
+ambiguous and based on architecture, we get a warning when assigning the
+unchecked output of hex_to_bin() to that unsigned char. Mark `key` as a
+`u8`, which matches the struct's type, and then check each call to
+hex_to_bin() before casting.
 
-Things get worse when the process continues to mmap() a vma. From this
-point forward, binder will attempt to find this vma using an obsolete
-alloc->mm reference. Such as in binder_update_page_range(), where the
-wrong vma is obtained via vma_lookup(), yet binder proceeds to happily
-insert new pages into it.
-
-To avoid this issue fail the ->mmap() callback if we detect a mismatch
-between the vma->vm_mm and the original alloc->mm pointer. This prevents
-alloc->vm_addr from getting set, so that any subsequent vma_lookup()
-calls fail as expected.
-
-Fixes: 1da52815d5f1 ("binder: fix alloc->vma_vm_mm null-ptr dereference")
-Reported-by: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org> # 5.15+
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Acked-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20221104231235.348958-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221024162843.535921-1-Jason@zx2c4.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder_alloc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/cisco/airo.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/android/binder_alloc.c b/drivers/android/binder_alloc.c
-index 9b1778c00610..64999777e0bf 100644
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -760,6 +760,12 @@ int binder_alloc_mmap_handler(struct binder_alloc *alloc,
- 	const char *failure_string;
- 	struct binder_buffer *buffer;
+diff --git a/drivers/net/wireless/cisco/airo.c b/drivers/net/wireless/cisco/airo.c
+index 10daef81c355..fb2c35bd73bb 100644
+--- a/drivers/net/wireless/cisco/airo.c
++++ b/drivers/net/wireless/cisco/airo.c
+@@ -5232,7 +5232,7 @@ static int get_wep_tx_idx(struct airo_info *ai)
+ 	return -1;
+ }
  
-+	if (unlikely(vma->vm_mm != alloc->vma_vm_mm)) {
-+		ret = -EINVAL;
-+		failure_string = "invalid vma->vm_mm";
-+		goto err_invalid_mm;
-+	}
+-static int set_wep_key(struct airo_info *ai, u16 index, const char *key,
++static int set_wep_key(struct airo_info *ai, u16 index, const u8 *key,
+ 		       u16 keylen, int perm, int lock)
+ {
+ 	static const unsigned char macaddr[ETH_ALEN] = { 0x01, 0, 0, 0, 0, 0 };
+@@ -5283,7 +5283,7 @@ static void proc_wepkey_on_close(struct inode *inode, struct file *file)
+ 	struct net_device *dev = pde_data(inode);
+ 	struct airo_info *ai = dev->ml_priv;
+ 	int i, rc;
+-	char key[16];
++	u8 key[16];
+ 	u16 index = 0;
+ 	int j = 0;
+ 
+@@ -5311,12 +5311,22 @@ static void proc_wepkey_on_close(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	for (i = 0; i < 16*3 && data->wbuffer[i+j]; i++) {
++		int val;
 +
- 	mutex_lock(&binder_alloc_mmap_lock);
- 	if (alloc->buffer_size) {
- 		ret = -EBUSY;
-@@ -806,6 +812,7 @@ int binder_alloc_mmap_handler(struct binder_alloc *alloc,
- 	alloc->buffer_size = 0;
- err_already_mapped:
- 	mutex_unlock(&binder_alloc_mmap_lock);
-+err_invalid_mm:
- 	binder_alloc_debug(BINDER_DEBUG_USER_ERROR,
- 			   "%s: %d %lx-%lx %s failed %d\n", __func__,
- 			   alloc->pid, vma->vm_start, vma->vm_end,
++		if (i % 3 == 2)
++			continue;
++
++		val = hex_to_bin(data->wbuffer[i+j]);
++		if (val < 0) {
++			airo_print_err(ai->dev->name, "WebKey passed invalid key hex");
++			return;
++		}
+ 		switch(i%3) {
+ 		case 0:
+-			key[i/3] = hex_to_bin(data->wbuffer[i+j])<<4;
++			key[i/3] = (u8)val << 4;
+ 			break;
+ 		case 1:
+-			key[i/3] |= hex_to_bin(data->wbuffer[i+j]);
++			key[i/3] |= (u8)val;
+ 			break;
+ 		}
+ 	}
 -- 
 2.35.1
 
