@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E2179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6674EC433D7;
-	Wed, 30 Nov 2022 18:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD3C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A91C433C1;
+	Wed, 30 Nov 2022 18:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833028;
-	bh=KyLHJ6keqKq3hjw1KVLFhrymkPsM84M14ZlDI/6UAnU=;
+	s=korg; t=1669833031;
+	bh=bY6R7Gm2vTxbc550MGLejzqrpvqbxceAwCN6sbcM6Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+25wJkc1J2i9HqJetOYssy7QDw6MjZIteTlofNqhY6dOFu4qqYB9gqy22hQecfog
-	 HlBYVPSURMHpHyk7um8QpDIzG/mlRHRAdd33H+8cxOYfI6zdZfJnILDlFPezkN2+Z0
-	 KZY3XByreaLtNVHn7xS3XKJgIa/LK+QdGhuA/pvs=
+	b=DEAlkKKbvrfb/tyqBoi38REM5SgPd6ZFYoVYJSRJxslsUeaY8Q7X6MVSzqRxfe3yX
+	 1QJszQYguV9AsSxKcN1fK99FpKdR8T95zhLzfuH5h0/+QWSDhg8HC4sBszRhk3KxPt
+	 5fTc/7FuYUjZQuTlYRzbXeXPuewUukwm8FkOl/Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Brauner <christian.brauner@ubuntu.com>,
 	Todd Kjos <tkjos@google.com>,
 	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.10 125/162] binder: avoid potential data leakage when copying txn
-Date: Wed, 30 Nov 2022 19:23:26 +0100
-Message-Id: <20221130180531.880694262@linuxfoundation.org>
+Subject: [PATCH 5.10 126/162] binder: read pre-translated fds from sender buffer
+Date: Wed, 30 Nov 2022 19:23:27 +0100
+Message-Id: <20221130180531.906626595@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,226 +38,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Todd Kjos <tkjos@google.com>
 
-commit 6d98eb95b450a75adb4516a1d33652dc78d2b20c upstream.
+commit 656e01f3ab54afe71bed066996fc2640881e1220 upstream.
 
-Transactions are copied from the sender to the target
-first and objects like BINDER_TYPE_PTR and BINDER_TYPE_FDA
-are then fixed up. This means there is a short period where
-the sender's version of these objects are visible to the
-target prior to the fixups.
+This patch is to prepare for an up coming patch where we read
+pre-translated fds from the sender buffer and translate them before
+copying them to the target.  It does not change run time.
 
-Instead of copying all of the data first, copy data only
-after any needed fixups have been applied.
+The patch adds two new parameters to binder_translate_fd_array() to
+hold the sender buffer and sender buffer parent.  These parameters let
+us call copy_from_user() directly from the sender instead of using
+binder_alloc_copy_from_buffer() to copy from the target.  Also the patch
+adds some new alignment checks.  Previously the alignment checks would
+have been done in a different place, but this lets us print more
+useful error messages.
 
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
 Reviewed-by: Martijn Coenen <maco@android.com>
 Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
 Signed-off-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20211130185152.437403-3-tkjos@google.com
+Link: https://lore.kernel.org/r/20211130185152.437403-4-tkjos@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[cmllamas: fix trivial merge conflict]
 Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   94 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 70 insertions(+), 24 deletions(-)
+ drivers/android/binder.c |   39 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 7 deletions(-)
 
 --- a/drivers/android/binder.c
 +++ b/drivers/android/binder.c
-@@ -2008,15 +2008,21 @@ static void binder_cleanup_transaction(s
- /**
-  * binder_get_object() - gets object and checks for valid metadata
-  * @proc:	binder_proc owning the buffer
-+ * @u:		sender's user pointer to base of buffer
-  * @buffer:	binder_buffer that we're parsing.
-  * @offset:	offset in the @buffer at which to validate an object.
-  * @object:	struct binder_object to read into
-  *
-- * Return:	If there's a valid metadata object at @offset in @buffer, the
-+ * Copy the binder object at the given offset into @object. If @u is
-+ * provided then the copy is from the sender's buffer. If not, then
-+ * it is copied from the target's @buffer.
-+ *
-+ * Return:	If there's a valid metadata object at @offset, the
-  *		size of that object. Otherwise, it returns zero. The object
-  *		is read into the struct binder_object pointed to by @object.
-  */
- static size_t binder_get_object(struct binder_proc *proc,
-+				const void __user *u,
- 				struct binder_buffer *buffer,
- 				unsigned long offset,
- 				struct binder_object *object)
-@@ -2026,10 +2032,16 @@ static size_t binder_get_object(struct b
- 	size_t object_size = 0;
+@@ -2634,15 +2634,17 @@ err_fd_not_accepted:
+ }
  
- 	read_size = min_t(size_t, sizeof(*object), buffer->data_size - offset);
--	if (offset > buffer->data_size || read_size < sizeof(*hdr) ||
--	    binder_alloc_copy_from_buffer(&proc->alloc, object, buffer,
--					  offset, read_size))
-+	if (offset > buffer->data_size || read_size < sizeof(*hdr))
- 		return 0;
-+	if (u) {
-+		if (copy_from_user(object, u + offset, read_size))
-+			return 0;
-+	} else {
-+		if (binder_alloc_copy_from_buffer(&proc->alloc, object, buffer,
-+						  offset, read_size))
-+			return 0;
-+	}
+ static int binder_translate_fd_array(struct binder_fd_array_object *fda,
++				     const void __user *sender_ubuffer,
+ 				     struct binder_buffer_object *parent,
++				     struct binder_buffer_object *sender_uparent,
+ 				     struct binder_transaction *t,
+ 				     struct binder_thread *thread,
+ 				     struct binder_transaction *in_reply_to)
+ {
+ 	binder_size_t fdi, fd_buf_size;
+ 	binder_size_t fda_offset;
++	const void __user *sender_ufda_base;
+ 	struct binder_proc *proc = thread->proc;
+-	struct binder_proc *target_proc = t->to_proc;
  
- 	/* Ok, now see if we read a complete object. */
- 	hdr = &object->hdr;
-@@ -2102,7 +2114,7 @@ static struct binder_buffer_object *bind
- 					  b, buffer_offset,
- 					  sizeof(object_offset)))
- 		return NULL;
--	object_size = binder_get_object(proc, b, object_offset, object);
-+	object_size = binder_get_object(proc, NULL, b, object_offset, object);
- 	if (!object_size || object->hdr.type != BINDER_TYPE_PTR)
- 		return NULL;
- 	if (object_offsetp)
-@@ -2167,7 +2179,8 @@ static bool binder_validate_fixup(struct
- 		unsigned long buffer_offset;
- 		struct binder_object last_object;
- 		struct binder_buffer_object *last_bbo;
--		size_t object_size = binder_get_object(proc, b, last_obj_offset,
-+		size_t object_size = binder_get_object(proc, NULL, b,
-+						       last_obj_offset,
- 						       &last_object);
- 		if (object_size != sizeof(*last_bbo))
- 			return false;
-@@ -2282,7 +2295,7 @@ static void binder_transaction_buffer_re
- 		if (!binder_alloc_copy_from_buffer(&proc->alloc, &object_offset,
- 						   buffer, buffer_offset,
- 						   sizeof(object_offset)))
--			object_size = binder_get_object(proc, buffer,
-+			object_size = binder_get_object(proc, NULL, buffer,
- 							object_offset, &object);
- 		if (object_size == 0) {
- 			pr_err("transaction release %d bad object at offset %lld, size %zd\n",
-@@ -2848,6 +2861,7 @@ static void binder_transaction(struct bi
- 	binder_size_t off_start_offset, off_end_offset;
- 	binder_size_t off_min;
- 	binder_size_t sg_buf_offset, sg_buf_end_offset;
-+	binder_size_t user_offset = 0;
- 	struct binder_proc *target_proc = NULL;
- 	struct binder_thread *target_thread = NULL;
- 	struct binder_node *target_node = NULL;
-@@ -2862,6 +2876,8 @@ static void binder_transaction(struct bi
- 	int t_debug_id = atomic_inc_return(&binder_last_id);
- 	char *secctx = NULL;
- 	u32 secctx_sz = 0;
-+	const void __user *user_buffer = (const void __user *)
-+				(uintptr_t)tr->data.ptr.buffer;
- 
- 	e = binder_transaction_log_add(&binder_transaction_log);
- 	e->debug_id = t_debug_id;
-@@ -3175,19 +3191,6 @@ static void binder_transaction(struct bi
- 
- 	if (binder_alloc_copy_user_to_buffer(
- 				&target_proc->alloc,
--				t->buffer, 0,
--				(const void __user *)
--					(uintptr_t)tr->data.ptr.buffer,
--				tr->data_size)) {
--		binder_user_error("%d:%d got transaction with invalid data ptr\n",
--				proc->pid, thread->pid);
--		return_error = BR_FAILED_REPLY;
--		return_error_param = -EFAULT;
--		return_error_line = __LINE__;
--		goto err_copy_data_failed;
--	}
--	if (binder_alloc_copy_user_to_buffer(
--				&target_proc->alloc,
- 				t->buffer,
- 				ALIGN(tr->data_size, sizeof(void *)),
- 				(const void __user *)
-@@ -3230,6 +3233,7 @@ static void binder_transaction(struct bi
- 		size_t object_size;
- 		struct binder_object object;
- 		binder_size_t object_offset;
-+		binder_size_t copy_size;
- 
- 		if (binder_alloc_copy_from_buffer(&target_proc->alloc,
- 						  &object_offset,
-@@ -3241,8 +3245,27 @@ static void binder_transaction(struct bi
- 			return_error_line = __LINE__;
- 			goto err_bad_offset;
- 		}
--		object_size = binder_get_object(target_proc, t->buffer,
--						object_offset, &object);
+ 	fd_buf_size = sizeof(u32) * fda->num_fds;
+ 	if (fda->num_fds >= SIZE_MAX / sizeof(u32)) {
+@@ -2666,7 +2668,10 @@ static int binder_translate_fd_array(str
+ 	 */
+ 	fda_offset = (parent->buffer - (uintptr_t)t->buffer->user_data) +
+ 		fda->parent_offset;
+-	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32))) {
++	sender_ufda_base = (void __user *)sender_uparent->buffer + fda->parent_offset;
 +
-+		/*
-+		 * Copy the source user buffer up to the next object
-+		 * that will be processed.
-+		 */
-+		copy_size = object_offset - user_offset;
-+		if (copy_size && (user_offset > object_offset ||
-+				binder_alloc_copy_user_to_buffer(
-+					&target_proc->alloc,
-+					t->buffer, user_offset,
-+					user_buffer + user_offset,
-+					copy_size))) {
-+			binder_user_error("%d:%d got transaction with invalid data ptr\n",
-+					proc->pid, thread->pid);
-+			return_error = BR_FAILED_REPLY;
-+			return_error_param = -EFAULT;
-+			return_error_line = __LINE__;
-+			goto err_copy_data_failed;
-+		}
-+		object_size = binder_get_object(target_proc, user_buffer,
-+				t->buffer, object_offset, &object);
- 		if (object_size == 0 || object_offset < off_min) {
- 			binder_user_error("%d:%d got transaction with invalid offset (%lld, min %lld max %lld) or object.\n",
- 					  proc->pid, thread->pid,
-@@ -3254,6 +3277,11 @@ static void binder_transaction(struct bi
- 			return_error_line = __LINE__;
- 			goto err_bad_offset;
- 		}
-+		/*
-+		 * Set offset to the next buffer fragment to be
-+		 * copied
-+		 */
-+		user_offset = object_offset + object_size;
++	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32)) ||
++	    !IS_ALIGNED((unsigned long)sender_ufda_base, sizeof(u32))) {
+ 		binder_user_error("%d:%d parent offset not aligned correctly.\n",
+ 				  proc->pid, thread->pid);
+ 		return -EINVAL;
+@@ -2675,10 +2680,9 @@ static int binder_translate_fd_array(str
+ 		u32 fd;
+ 		int ret;
+ 		binder_size_t offset = fda_offset + fdi * sizeof(fd);
++		binder_size_t sender_uoffset = fdi * sizeof(fd);
  
- 		hdr = &object.hdr;
- 		off_min = object_offset + object_size;
-@@ -3349,9 +3377,14 @@ static void binder_transaction(struct bi
- 			}
- 			ret = binder_translate_fd_array(fda, parent, t, thread,
- 							in_reply_to);
--			if (ret < 0) {
-+			if (!ret)
-+				ret = binder_alloc_copy_to_buffer(&target_proc->alloc,
-+								  t->buffer,
-+								  object_offset,
-+								  fda, sizeof(*fda));
-+			if (ret) {
- 				return_error = BR_FAILED_REPLY;
--				return_error_param = ret;
-+				return_error_param = ret > 0 ? -EINVAL : ret;
+-		ret = binder_alloc_copy_from_buffer(&target_proc->alloc,
+-						    &fd, t->buffer,
+-						    offset, sizeof(fd));
++		ret = copy_from_user(&fd, sender_ufda_base + sender_uoffset, sizeof(fd));
+ 		if (!ret)
+ 			ret = binder_translate_fd(fd, offset, t, thread,
+ 						  in_reply_to);
+@@ -3344,6 +3348,8 @@ static void binder_transaction(struct bi
+ 		case BINDER_TYPE_FDA: {
+ 			struct binder_object ptr_object;
+ 			binder_size_t parent_offset;
++			struct binder_object user_object;
++			size_t user_parent_size;
+ 			struct binder_fd_array_object *fda =
+ 				to_binder_fd_array_object(hdr);
+ 			size_t num_valid = (buffer_offset - off_start_offset) /
+@@ -3375,8 +3381,27 @@ static void binder_transaction(struct bi
  				return_error_line = __LINE__;
- 				goto err_translate_failed;
+ 				goto err_bad_parent;
  			}
-@@ -3421,6 +3454,19 @@ static void binder_transaction(struct bi
- 			goto err_bad_object_type;
- 		}
- 	}
-+	/* Done processing objects, copy the rest of the buffer */
-+	if (binder_alloc_copy_user_to_buffer(
-+				&target_proc->alloc,
-+				t->buffer, user_offset,
-+				user_buffer + user_offset,
-+				tr->data_size - user_offset)) {
-+		binder_user_error("%d:%d got transaction with invalid data ptr\n",
-+				proc->pid, thread->pid);
-+		return_error = BR_FAILED_REPLY;
-+		return_error_param = -EFAULT;
-+		return_error_line = __LINE__;
-+		goto err_copy_data_failed;
-+	}
- 	tcomplete->type = BINDER_WORK_TRANSACTION_COMPLETE;
- 	t->work.type = BINDER_WORK_TRANSACTION;
- 
+-			ret = binder_translate_fd_array(fda, parent, t, thread,
+-							in_reply_to);
++			/*
++			 * We need to read the user version of the parent
++			 * object to get the original user offset
++			 */
++			user_parent_size =
++				binder_get_object(proc, user_buffer, t->buffer,
++						  parent_offset, &user_object);
++			if (user_parent_size != sizeof(user_object.bbo)) {
++				binder_user_error("%d:%d invalid ptr object size: %zd vs %zd\n",
++						  proc->pid, thread->pid,
++						  user_parent_size,
++						  sizeof(user_object.bbo));
++				return_error = BR_FAILED_REPLY;
++				return_error_param = -EINVAL;
++				return_error_line = __LINE__;
++				goto err_bad_parent;
++			}
++			ret = binder_translate_fd_array(fda, user_buffer,
++							parent,
++							&user_object.bbo, t,
++							thread, in_reply_to);
+ 			if (!ret)
+ 				ret = binder_alloc_copy_to_buffer(&target_proc->alloc,
+ 								  t->buffer,
 
 
