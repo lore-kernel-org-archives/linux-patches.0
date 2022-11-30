@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946226FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E1CC433D6;
-	Wed, 30 Nov 2022 18:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2966FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22F9C433D7;
+	Wed, 30 Nov 2022 18:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832887;
-	bh=1y3L8WacqdOjMqAZ3CbKv6L/9eBNEBttGjCfqCECLjY=;
+	s=korg; t=1669832890;
+	bh=TgqyQ5VWujSySgmPWLO4Y7eWFWe+EjWlU+ueiJzqwvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuJNy7ZAQwE3eazlfIOhpBoH4ogyrKOcgnvCTPTDrCBDYgokSRkV3TOwF7TegtTOw
-	 SPs28+SfLncwpIVN3SipXqUBCz5s7OI1ROnQKSxKoblpljvHpjMEzbD/gML/iYWT+I
-	 kr3EN+IZKS1OoJdt4aKzH+JoaS3OVXpY4w2MXueQ=
+	b=YD6qVWr2WtShVa+cJdQ1wgAXIkEtg+w+RyGu8dbr9KOtN2vLie2dQRQCnALeiojyI
+	 W6HDbNYi7X6lq32hCymK629Ls477p0pZWVUrrjiszowaExvvbPeqCWnztomLNpMztS
+	 xUsfE8trsvs4sSTQXQIuA0YxSUwNKgIpZaNcIxD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	zdi-disclosures@trendmicro.com,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"David S. Miller" <davem@davemloft.net>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/162] rxrpc: Fix race between conn bundle lookup and bundle removal [ZDI-CAN-15975]
-Date: Wed, 30 Nov 2022 19:22:10 +0100
-Message-Id: <20221130180529.836898111@linuxfoundation.org>
+Subject: [PATCH 5.10 040/162] regulator: core: fix kobject release warning and memory leak in regulator_register()
+Date: Wed, 30 Nov 2022 19:22:01 +0100
+Message-Id: <20221130180529.591622547@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,170 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 3bcd6c7eaa53b56c3f584da46a1f7652e759d0e5 ]
+[ Upstream commit 5f4b204b6b8153923d5be8002c5f7082985d153f ]
 
-After rxrpc_unbundle_conn() has removed a connection from a bundle, it
-checks to see if there are any conns with available channels and, if not,
-removes and attempts to destroy the bundle.
+Here is a warning report about lack of registered release()
+from kobject lib:
 
-Whilst it does check after grabbing client_bundles_lock that there are no
-connections attached, this races with rxrpc_look_up_bundle() retrieving the
-bundle, but not attaching a connection for the connection to be attached
-later.
+Device '(null)' does not have a release() function, it is broken and must be fixed.
+WARNING: CPU: 0 PID: 48430 at drivers/base/core.c:2332 device_release+0x104/0x120
+Call Trace:
+ kobject_put+0xdc/0x180
+ put_device+0x1b/0x30
+ regulator_register+0x651/0x1170
+ devm_regulator_register+0x4f/0xb0
 
-There is therefore a window in which the bundle can get destroyed before we
-manage to attach a new connection to it.
+When regulator_register() returns fail and directly goto `clean` symbol,
+rdev->dev has not registered release() function yet (which is registered
+by regulator_class in the following), so rdev needs to be freed manually.
+If rdev->dev.of_node is not NULL, which means the of_node has gotten by
+regulator_of_get_init_data(), it needs to call of_node_put() to avoid
+refcount leak.
 
-Fix this by adding an "active" counter to struct rxrpc_bundle:
+Otherwise, only calling put_device() would lead memory leak of rdev
+in further:
 
- (1) rxrpc_connect_call() obtains an active count by prepping/looking up a
-     bundle and ditches it before returning.
+unreferenced object 0xffff88810d0b1000 (size 2048):
+  comm "107-i2c-rtq6752", pid 48430, jiffies 4342258431 (age 1341.780s)
+  backtrace:
+    kmalloc_trace+0x22/0x110
+    regulator_register+0x184/0x1170
+    devm_regulator_register+0x4f/0xb0
 
- (2) If, during rxrpc_connect_call(), a connection is added to the bundle,
-     this obtains an active count, which is held until the connection is
-     discarded.
+When regulator_register() returns fail and goto `wash` symbol,
+rdev->dev has registered release() function, so directly call
+put_device() to cleanup everything.
 
- (3) rxrpc_deactivate_bundle() is created to drop an active count on a
-     bundle and destroy it when the active count reaches 0.  The active
-     count is checked inside client_bundles_lock() to prevent a race with
-     rxrpc_look_up_bundle().
-
- (4) rxrpc_unbundle_conn() then calls rxrpc_deactivate_bundle().
-
-Fixes: 245500d853e9 ("rxrpc: Rewrite the client connection manager")
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-15975
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: zdi-disclosures@trendmicro.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d3c731564e09 ("regulator: plug of_node leak in regulator_register()'s error path")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221116074339.1024240-1-zengheng4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h |  1 +
- net/rxrpc/conn_client.c | 38 +++++++++++++++++++++++---------------
- 2 files changed, 24 insertions(+), 15 deletions(-)
+ drivers/regulator/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index 08552ad82f50..d86894a1c35d 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -384,6 +384,7 @@ enum rxrpc_conn_proto_state {
- struct rxrpc_bundle {
- 	struct rxrpc_conn_parameters params;
- 	refcount_t		ref;
-+	atomic_t		active;		/* Number of active users */
- 	unsigned int		debug_id;
- 	bool			try_upgrade;	/* True if the bundle is attempting upgrade */
- 	bool			alloc_conn;	/* True if someone's getting a conn */
-diff --git a/net/rxrpc/conn_client.c b/net/rxrpc/conn_client.c
-index 6e2ffafcc98d..f5fa5f3083bd 100644
---- a/net/rxrpc/conn_client.c
-+++ b/net/rxrpc/conn_client.c
-@@ -40,6 +40,8 @@ __read_mostly unsigned long rxrpc_conn_idle_client_fast_expiry = 2 * HZ;
- DEFINE_IDR(rxrpc_client_conn_ids);
- static DEFINE_SPINLOCK(rxrpc_conn_id_lock);
- 
-+static void rxrpc_deactivate_bundle(struct rxrpc_bundle *bundle);
-+
- /*
-  * Get a connection ID and epoch for a client connection from the global pool.
-  * The connection struct pointer is then recorded in the idr radix tree.  The
-@@ -123,6 +125,7 @@ static struct rxrpc_bundle *rxrpc_alloc_bundle(struct rxrpc_conn_parameters *cp,
- 		bundle->params = *cp;
- 		rxrpc_get_peer(bundle->params.peer);
- 		refcount_set(&bundle->ref, 1);
-+		atomic_set(&bundle->active, 1);
- 		spin_lock_init(&bundle->channel_lock);
- 		INIT_LIST_HEAD(&bundle->waiting_calls);
- 	}
-@@ -149,7 +152,7 @@ void rxrpc_put_bundle(struct rxrpc_bundle *bundle)
- 
- 	dead = __refcount_dec_and_test(&bundle->ref, &r);
- 
--	_debug("PUT B=%x %d", d, r);
-+	_debug("PUT B=%x %d", d, r - 1);
- 	if (dead)
- 		rxrpc_free_bundle(bundle);
- }
-@@ -344,6 +347,7 @@ static struct rxrpc_bundle *rxrpc_look_up_bundle(struct rxrpc_conn_parameters *c
- 	rxrpc_free_bundle(candidate);
- found_bundle:
- 	rxrpc_get_bundle(bundle);
-+	atomic_inc(&bundle->active);
- 	spin_unlock(&local->client_bundles_lock);
- 	_leave(" = %u [found]", bundle->debug_id);
- 	return bundle;
-@@ -441,6 +445,7 @@ static void rxrpc_add_conn_to_bundle(struct rxrpc_bundle *bundle, gfp_t gfp)
- 			if (old)
- 				trace_rxrpc_client(old, -1, rxrpc_client_replace);
- 			candidate->bundle_shift = shift;
-+			atomic_inc(&bundle->active);
- 			bundle->conns[i] = candidate;
- 			for (j = 0; j < RXRPC_MAXCALLS; j++)
- 				set_bit(shift + j, &bundle->avail_chans);
-@@ -731,6 +736,7 @@ int rxrpc_connect_call(struct rxrpc_sock *rx,
- 	smp_rmb();
- 
- out_put_bundle:
-+	rxrpc_deactivate_bundle(bundle);
- 	rxrpc_put_bundle(bundle);
- out:
- 	_leave(" = %d", ret);
-@@ -906,9 +912,8 @@ void rxrpc_disconnect_client_call(struct rxrpc_bundle *bundle, struct rxrpc_call
- static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
- {
- 	struct rxrpc_bundle *bundle = conn->bundle;
--	struct rxrpc_local *local = bundle->params.local;
- 	unsigned int bindex;
--	bool need_drop = false, need_put = false;
-+	bool need_drop = false;
- 	int i;
- 
- 	_enter("C=%x", conn->debug_id);
-@@ -927,15 +932,22 @@ static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
- 	}
- 	spin_unlock(&bundle->channel_lock);
- 
--	/* If there are no more connections, remove the bundle */
--	if (!bundle->avail_chans) {
--		_debug("maybe unbundle");
--		spin_lock(&local->client_bundles_lock);
-+	if (need_drop) {
-+		rxrpc_deactivate_bundle(bundle);
-+		rxrpc_put_connection(conn);
-+	}
-+}
- 
--		for (i = 0; i < ARRAY_SIZE(bundle->conns); i++)
--			if (bundle->conns[i])
--				break;
--		if (i == ARRAY_SIZE(bundle->conns) && !bundle->params.exclusive) {
-+/*
-+ * Drop the active count on a bundle.
-+ */
-+static void rxrpc_deactivate_bundle(struct rxrpc_bundle *bundle)
-+{
-+	struct rxrpc_local *local = bundle->params.local;
-+	bool need_put = false;
-+
-+	if (atomic_dec_and_lock(&bundle->active, &local->client_bundles_lock)) {
-+		if (!bundle->params.exclusive) {
- 			_debug("erase bundle");
- 			rb_erase(&bundle->local_node, &local->client_bundles);
- 			need_put = true;
-@@ -945,10 +957,6 @@ static void rxrpc_unbundle_conn(struct rxrpc_connection *conn)
- 		if (need_put)
- 			rxrpc_put_bundle(bundle);
- 	}
--
--	if (need_drop)
--		rxrpc_put_connection(conn);
--	_leave("");
- }
- 
- /*
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index bf8ba73d6c7c..f43c668e1630 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5401,11 +5401,15 @@ regulator_register(const struct regulator_desc *regulator_desc,
+ 	mutex_lock(&regulator_list_mutex);
+ 	regulator_ena_gpio_free(rdev);
+ 	mutex_unlock(&regulator_list_mutex);
++	put_device(&rdev->dev);
++	rdev = NULL;
+ clean:
+ 	if (dangling_of_gpiod)
+ 		gpiod_put(config->ena_gpiod);
++	if (rdev && rdev->dev.of_node)
++		of_node_put(rdev->dev.of_node);
++	kfree(rdev);
+ 	kfree(config);
+-	put_device(&rdev->dev);
+ rinse:
+ 	if (dangling_cfg_gpiod)
+ 		gpiod_put(cfg->ena_gpiod);
 -- 
 2.35.1
 
