@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024AA6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F5BC433C1;
-	Wed, 30 Nov 2022 18:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7F46FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE25C433C1;
+	Wed, 30 Nov 2022 18:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832827;
-	bh=g2WIqdFXdE5EjQDyff6iGvwtakaJ+ICMwIn4XY8FVrQ=;
+	s=korg; t=1669832830;
+	bh=bo47dcqfnvY8c+vhOvHvDfgNZrE5+EvDdyJ1RrYo9Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJOzI7u6pzOjaKmX7UTJ3TbacEqHDYeEo11zUu0+/Kp255b7QxocfMFmHx3uGKhdx
-	 L7qS0t3Zm2lPp39Oea7+MbTUf+obfnjd7VWQtbdOjMet0AUlPt4pErSZjOegEAiw+W
-	 056kGZ5vZz9lgDE1V4iNNEeTwEFRNDK7OhpkZAzA=
+	b=kc0zJQ3+OSifk259UuZ2otur0HDkGv8vRtP7BfWf+EhB+AMYLgnk0AEIE/2+X3mNI
+	 7oUyF+GvynpfUWSU+ui+6NI65OL1WwTgVO2/MFQQxJLbv52A7QrTXz4ylSo7OPTG23
+	 BhXQUhiSOc4pmVtwGAuTEIoRB3Q4jQuPyL6zbKRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/162] ARM: dts: imx6q-prti6q: Fix ref/tcxo-clock-frequency properties
-Date: Wed, 30 Nov 2022 19:22:16 +0100
-Message-Id: <20221130180529.999213762@linuxfoundation.org>
+Subject: [PATCH 5.10 056/162] net: ethernet: mtk_eth_soc: fix error handling in mtk_open()
+Date: Wed, 30 Nov 2022 19:22:17 +0100
+Message-Id: <20221130180530.027288958@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit e68be7b39f21d8a9291a5a3019787cd3ca999dd7 ]
+[ Upstream commit f70074140524c59a0935947b06dd6cb6e1ea642d ]
 
-make dtbs_check gives the following errors:
+If mtk_start_dma() fails, invoke phylink_disconnect_phy() to perform
+cleanup. phylink_disconnect_phy() contains the put_device action. If
+phylink_disconnect_phy is not performed, the Kref of netdev will leak.
 
-ref-clock-frequency: size (9) error for type uint32
-tcxo-clock-frequency: size (9) error for type uint32
-
-Fix it by passing the frequencies inside < > as documented in
-Documentation/devicetree/bindings/net/wireless/ti,wlcore.yaml.
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Fixes: 0d446a505592 ("ARM: dts: add Protonic PRTI6Q board")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: b8fc9f30821e ("net: ethernet: mediatek: Add basic PHYLINK support")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20221117111356.161547-1-liujian56@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6q-prti6q.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6q-prti6q.dts b/arch/arm/boot/dts/imx6q-prti6q.dts
-index b4605edfd2ab..d8fa83effd63 100644
---- a/arch/arm/boot/dts/imx6q-prti6q.dts
-+++ b/arch/arm/boot/dts/imx6q-prti6q.dts
-@@ -364,8 +364,8 @@ wifi {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_wifi>;
- 		interrupts-extended = <&gpio1 30 IRQ_TYPE_LEVEL_HIGH>;
--		ref-clock-frequency = "38400000";
--		tcxo-clock-frequency = "19200000";
-+		ref-clock-frequency = <38400000>;
-+		tcxo-clock-frequency = <19200000>;
- 	};
- };
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index c7aff89141e1..217dc67c48fa 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -2299,7 +2299,10 @@ static int mtk_open(struct net_device *dev)
+ 		int err = mtk_start_dma(eth);
+ 
+ 		if (err)
++		if (err) {
++			phylink_disconnect_phy(mac->phylink);
+ 			return err;
++		}
+ 
+ 		mtk_gdm_config(eth, MTK_GDMA_TO_PDMA);
  
 -- 
 2.35.1
