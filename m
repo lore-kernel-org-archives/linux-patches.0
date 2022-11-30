@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ECE79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F85C433D6;
-	Wed, 30 Nov 2022 18:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC33879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42419C433D7;
+	Wed, 30 Nov 2022 18:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833769;
-	bh=YYFfguAR0WLT78RoSoOuxno6o1fkXPZ4RaOq44hCWHs=;
+	s=korg; t=1669833772;
+	bh=7wledAcK5/EHBpNh29ihx3WxkATSoD8c8+rbUobE2tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I33UX2S4HfhOlicpI2/gH26XMMwaB58cg6IPwzYd355BrIsbMglk+WUIC4ylbxnHf
-	 sid9uzb86Lat5v0N7BUP75cQVb6hCAbyGR6OPyzUmPQSOwy7PgJnRNsdIxKIs4cmgn
-	 j4veqThmHMAdov4iqhnpIIx18c3eXoILAyEVP1wc=
+	b=FbpbQvLGLp0VJi3zZ22NFb88oATvmM0rS0yFAjNKBvgQCN2o++LUEFp4BtTx97OyF
+	 zwQauaSYjA5q9sysC5P+wB5kma7GlWqUurs66dwFak9VRG5pM5YSYSUqOn7XqXoZlZ
+	 gdzJnCpXaVlJqUvqw0sX5y4oeuE9blV/ZORI8gUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.15 195/206] genirq: Take the proposed affinity at face value if force==true
-Date: Wed, 30 Nov 2022 19:24:07 +0100
-Message-Id: <20221130180537.979195798@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 001/289] binder: validate alloc->mm in ->mmap() handler
+Date: Wed, 30 Nov 2022 19:19:46 +0100
+Message-Id: <20221130180544.143405331@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
-References: <20221130180532.974348590@linuxfoundation.org>
+In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
+References: <20221130180544.105550592@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,58 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Capitulino <luizcap@amazon.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-From: Marc Zyngier <maz@kernel.org>
+[ Upstream commit 3ce00bb7e91cf57d723905371507af57182c37ef ]
 
-commit c48c8b829d2b966a6649827426bcdba082ccf922 upstream.
+Since commit 1da52815d5f1 ("binder: fix alloc->vma_vm_mm null-ptr
+dereference") binder caches a pointer to the current->mm during open().
+This fixes a null-ptr dereference reported by syzkaller. Unfortunately,
+it also opens the door for a process to update its mm after the open(),
+(e.g. via execve) making the cached alloc->mm pointer invalid.
 
-Although setting the affinity of an interrupt to a set of CPUs that doesn't
-have any online CPU is generally frowned apon, there are a few limited
-cases where such affinity is set from a CPUHP notifier, setting the
-affinity to a CPU that isn't online yet.
+Things get worse when the process continues to mmap() a vma. From this
+point forward, binder will attempt to find this vma using an obsolete
+alloc->mm reference. Such as in binder_update_page_range(), where the
+wrong vma is obtained via vma_lookup(), yet binder proceeds to happily
+insert new pages into it.
 
-The saving grace is that this is always done using the 'force' attribute,
-which gives a hint that the affinity setting can be outside of the online
-CPU mask and the callsite set this flag with the knowledge that the
-underlying interrupt controller knows to handle it.
+To avoid this issue fail the ->mmap() callback if we detect a mismatch
+between the vma->vm_mm and the original alloc->mm pointer. This prevents
+alloc->vm_addr from getting set, so that any subsequent vma_lookup()
+calls fail as expected.
 
-This restores the expected behaviour on Marek's system.
-
-Fixes: 33de0aa4bae9 ("genirq: Always limit the affinity to online CPUs")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/4b7fc13c-887b-a664-26e8-45aed13f048a@samsung.com
-Link: https://lore.kernel.org/r/20220414140011.541725-1-maz@kernel.org
-
-Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
+Fixes: 1da52815d5f1 ("binder: fix alloc->vma_vm_mm null-ptr dereference")
+Reported-by: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org> # 5.15+
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20221104231235.348958-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/manage.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/android/binder_alloc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -266,10 +266,16 @@ int irq_do_set_affinity(struct irq_data
- 		prog_mask = mask;
- 	}
+diff --git a/drivers/android/binder_alloc.c b/drivers/android/binder_alloc.c
+index 9b1778c00610..64999777e0bf 100644
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -760,6 +760,12 @@ int binder_alloc_mmap_handler(struct binder_alloc *alloc,
+ 	const char *failure_string;
+ 	struct binder_buffer *buffer;
  
--	/* Make sure we only provide online CPUs to the irqchip */
-+	/*
-+	 * Make sure we only provide online CPUs to the irqchip,
-+	 * unless we are being asked to force the affinity (in which
-+	 * case we do as we are told).
-+	 */
- 	cpumask_and(&tmp_mask, prog_mask, cpu_online_mask);
--	if (!cpumask_empty(&tmp_mask))
-+	if (!force && !cpumask_empty(&tmp_mask))
- 		ret = chip->irq_set_affinity(data, &tmp_mask, force);
-+	else if (force)
-+		ret = chip->irq_set_affinity(data, mask, force);
- 	else
- 		ret = -EINVAL;
- 
++	if (unlikely(vma->vm_mm != alloc->vma_vm_mm)) {
++		ret = -EINVAL;
++		failure_string = "invalid vma->vm_mm";
++		goto err_invalid_mm;
++	}
++
+ 	mutex_lock(&binder_alloc_mmap_lock);
+ 	if (alloc->buffer_size) {
+ 		ret = -EBUSY;
+@@ -806,6 +812,7 @@ int binder_alloc_mmap_handler(struct binder_alloc *alloc,
+ 	alloc->buffer_size = 0;
+ err_already_mapped:
+ 	mutex_unlock(&binder_alloc_mmap_lock);
++err_invalid_mm:
+ 	binder_alloc_debug(BINDER_DEBUG_USER_ERROR,
+ 			   "%s: %d %lx-%lx %s failed %d\n", __func__,
+ 			   alloc->pid, vma->vm_start, vma->vm_end,
+-- 
+2.35.1
+
 
 
