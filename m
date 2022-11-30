@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C72979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D67C433C1;
-	Wed, 30 Nov 2022 18:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F52779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4D0C433D6;
+	Wed, 30 Nov 2022 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833184;
-	bh=f+lxCLA+CNJtDVBpW/eLQdk9ausdDEo9yuAXKj/QmqU=;
+	s=korg; t=1669833186;
+	bh=6IvDh34C/rgwk7a536aughaCJNLONvfI5Yuq1vZeVls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JH48SBRN+6ipgipTZ4+tGRRSW1vpqWIEsMXE9Am5VdJ8qrgF/PB2nJhqTw1STkaQr
-	 dUmVhXxgsFAcUmCFcYzBSmGMO+aZC8+U//ZOBB1JP9wFFdiK39f5z5ef7kPpn80I3V
-	 UotLHPviGWj/Gh0GDjUqfJrCqpmPVOaXHwgSYRTk=
+	b=m/LiHWmV+WQ1MqEv0wR3WADnii+zPPmssfuHHjlsYg9yGloDt/NhRHfhq5ch8DKwl
+	 VMMuXLG5UABCF0T5KBmQQigtadvJz3lqiVcWVQ+APxxugomjnE7qyM/sXSem1aSWmQ
+	 XYBBJhcF68gbKPkS3u+b47QKRT06nxY2IKr0m64Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/206] serial: fsl_lpuart: Fill in rs485_supported
-Date: Wed, 30 Nov 2022 19:20:56 +0100
-Message-Id: <20221130180533.096405962@linuxfoundation.org>
+Subject: [PATCH 5.15 005/206] tty: serial: fsl_lpuart: dont break the on-going transfer when global reset
+Date: Wed, 30 Nov 2022 19:20:57 +0100
+Message-Id: <20221130180533.124630598@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -34,45 +34,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 07481f448b635d7cebb92d5940f5bea5c4395a26 ]
+[ Upstream commit 76bad3f88750f8cc465c489e6846249e0bc3d8f5 ]
 
-Add information on supported serial_rs485 features.
+lpuart_global_reset() shouldn't break the on-going transmit engine, need
+to recover the on-going data transfer after reset.
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20220606100433.13793-16-ilpo.jarvinen@linux.intel.com
+This can help earlycon here, since commit 60f361722ad2 ("serial:
+fsl_lpuart: Reset prior to registration") moved lpuart_global_reset()
+before uart_add_one_port(), earlycon is writing during global reset,
+as global reset will disable the TX and clear the baud rate register,
+which caused the earlycon cannot work any more after reset, needs to
+restore the baud rate and re-enable the transmitter to recover the
+earlycon write.
+
+Also move the lpuart_global_reset() down, then we can reuse the
+lpuart32_tx_empty() without declaration.
+
+Fixes: bd5305dcabbc ("tty: serial: fsl_lpuart: do software reset for imx7ulp and imx8qxp")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20221024085844.22786-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 76bad3f88750 ("tty: serial: fsl_lpuart: don't break the on-going transfer when global reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c | 76 +++++++++++++++++++++------------
+ 1 file changed, 49 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 44ed4285e1ef..1d13d88ea363 100644
+index 1d13d88ea363..595430aedc0d 100644
 --- a/drivers/tty/serial/fsl_lpuart.c
 +++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2644,6 +2644,11 @@ static struct uart_driver lpuart_reg = {
- 	.cons		= LPUART_CONSOLE,
+@@ -12,6 +12,7 @@
+ #include <linux/dmaengine.h>
+ #include <linux/dmapool.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -395,33 +396,6 @@ static unsigned int lpuart_get_baud_clk_rate(struct lpuart_port *sport)
+ #define lpuart_enable_clks(x)	__lpuart_enable_clks(x, true)
+ #define lpuart_disable_clks(x)	__lpuart_enable_clks(x, false)
+ 
+-static int lpuart_global_reset(struct lpuart_port *sport)
+-{
+-	struct uart_port *port = &sport->port;
+-	void __iomem *global_addr;
+-	int ret;
+-
+-	if (uart_console(port))
+-		return 0;
+-
+-	ret = clk_prepare_enable(sport->ipg_clk);
+-	if (ret) {
+-		dev_err(sport->port.dev, "failed to enable uart ipg clk: %d\n", ret);
+-		return ret;
+-	}
+-
+-	if (is_imx7ulp_lpuart(sport) || is_imx8qxp_lpuart(sport)) {
+-		global_addr = port->membase + UART_GLOBAL - IMX_REG_OFF;
+-		writel(UART_GLOBAL_RST, global_addr);
+-		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
+-		writel(0, global_addr);
+-		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
+-	}
+-
+-	clk_disable_unprepare(sport->ipg_clk);
+-	return 0;
+-}
+-
+ static void lpuart_stop_tx(struct uart_port *port)
+ {
+ 	unsigned char temp;
+@@ -2649,6 +2623,54 @@ static const struct serial_rs485 lpuart_rs485_supported = {
+ 	/* delay_rts_* and RX_DURING_TX are not supported */
  };
  
-+static const struct serial_rs485 lpuart_rs485_supported = {
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND,
-+	/* delay_rts_* and RX_DURING_TX are not supported */
-+};
++static int lpuart_global_reset(struct lpuart_port *sport)
++{
++	struct uart_port *port = &sport->port;
++	void __iomem *global_addr;
++	unsigned long ctrl, bd;
++	unsigned int val = 0;
++	int ret;
++
++	ret = clk_prepare_enable(sport->ipg_clk);
++	if (ret) {
++		dev_err(sport->port.dev, "failed to enable uart ipg clk: %d\n", ret);
++		return ret;
++	}
++
++	if (is_imx7ulp_lpuart(sport) || is_imx8qxp_lpuart(sport)) {
++		/*
++		 * If the transmitter is used by earlycon, wait for transmit engine to
++		 * complete and then reset.
++		 */
++		ctrl = lpuart32_read(port, UARTCTRL);
++		if (ctrl & UARTCTRL_TE) {
++			bd = lpuart32_read(&sport->port, UARTBAUD);
++			if (read_poll_timeout(lpuart32_tx_empty, val, val, 1, 100000, false,
++					      port)) {
++				dev_warn(sport->port.dev,
++					 "timeout waiting for transmit engine to complete\n");
++				clk_disable_unprepare(sport->ipg_clk);
++				return 0;
++			}
++		}
++
++		global_addr = port->membase + UART_GLOBAL - IMX_REG_OFF;
++		writel(UART_GLOBAL_RST, global_addr);
++		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
++		writel(0, global_addr);
++		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
++
++		/* Recover the transmitter for earlycon. */
++		if (ctrl & UARTCTRL_TE) {
++			lpuart32_write(port, bd, UARTBAUD);
++			lpuart32_write(port, ctrl, UARTCTRL);
++		}
++	}
++
++	clk_disable_unprepare(sport->ipg_clk);
++	return 0;
++}
 +
  static int lpuart_probe(struct platform_device *pdev)
  {
  	const struct lpuart_soc_data *sdata = of_device_get_match_data(&pdev->dev);
-@@ -2683,6 +2688,7 @@ static int lpuart_probe(struct platform_device *pdev)
- 		sport->port.rs485_config = lpuart32_config_rs485;
- 	else
- 		sport->port.rs485_config = lpuart_config_rs485;
-+	sport->port.rs485_supported = &lpuart_rs485_supported;
- 
- 	sport->ipg_clk = devm_clk_get(&pdev->dev, "ipg");
- 	if (IS_ERR(sport->ipg_clk)) {
 -- 
 2.35.1
 
