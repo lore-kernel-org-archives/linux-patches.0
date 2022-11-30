@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1365A79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:43:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FCAC433D6;
-	Wed, 30 Nov 2022 18:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255CC79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:43:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4197DC433D6;
+	Wed, 30 Nov 2022 18:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833807;
-	bh=uwVoDLx9EELOFvfhEKxjq6PnRru0ru5IPNbS2FWvSsM=;
+	s=korg; t=1669833810;
+	bh=Towjjd0EAPoJybY2VIHs/VOxm8/bpYQWV6iv1wHKx9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CAX7ONoOE4Vqca6E15BoNDpdnju3utEtX5gZtV7EP7Jmv3DpVrZMsT+r4Ml5m+/2U
-	 s0flaig0SRsI3Bc7MJv6wHJsdu9TmZIuQmVAz7VjCr6NciG6x0A7AzpvDMS0vp43zg
-	 T1Zqy5vNPjowGNGJRvgZSKhKyLWOK7iRpY51/Cg8=
+	b=DssvckmiJHyVWmzL9qpLQ2gTJ17Ljeo6zqI08qcOs2B5yCD/D4fmoh+3ZmCy4XVIA
+	 QI3i6VeG+4w+maTgRyGK2ryhXAqj2O+uh4nydolXDBUNwhVg2/ewvuoIybBANc5rJa
+	 S97lV6XGAGnFyUB8XwhEAu9CytgSfEuXpV+SIiPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 006/289] wifi: mac80211_hwsim: fix debugfs attribute ps with rc table support
-Date: Wed, 30 Nov 2022 19:19:51 +0100
-Message-Id: <20221130180544.262095178@linuxfoundation.org>
+Subject: [PATCH 6.0 007/289] spi: tegra210-quad: Dont initialise DMA if not supported
+Date: Wed, 30 Nov 2022 19:19:52 +0100
+Message-Id: <20221130180544.287430592@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,55 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 69188df5f6e4cecc6b76b958979ba363cd5240e8 ]
+[ Upstream commit ae4b3c1252f0fd0951d2f072a02ba46cac8d6c92 ]
 
-Fixes a warning that occurs when rc table support is enabled
-(IEEE80211_HW_SUPPORTS_RC_TABLE) in mac80211_hwsim and the PS mode
-is changed via the exported debugfs attribute.
+The following error messages are observed on boot for Tegra234 ...
 
-When the PS mode is changed, a packet is broadcasted via
-hwsim_send_nullfunc by creating and transmitting a plain skb with only
-header initialized. The ieee80211 rate array in the control buffer is
-zero-initialized. When ratetbl support is enabled, ieee80211_get_tx_rates
-is called for the skb with sta parameter set to NULL and thus no
-ratetbl can be used. The final rate array then looks like
-[-1,0; 0,0; 0,0; 0,0] which causes the warning in ieee80211_get_tx_rate.
+ ERR KERN tegra-qspi 3270000.spi: cannot use DMA: -19
+ ERR KERN tegra-qspi 3270000.spi: falling back to PIO
 
-The issue is fixed by setting the count of the first rate with idx '0'
-to 1 and hence ieee80211_get_tx_rates won't overwrite it with idx '-1'.
+Tegra234 does not support DMA for the QSPI and so initialising the DMA
+is expected to fail. The above error messages are misleading for devices
+that don't support DMA and so fix this by skipping the DMA
+initialisation for devices that don't support DMA.
 
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20221026155633.141792-1-jonathanh@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mac80211_hwsim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-tegra210-quad.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index a074552bcec3..3179682daca7 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -910,6 +910,7 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
- 	struct hwsim_vif_priv *vp = (void *)vif->drv_priv;
- 	struct sk_buff *skb;
- 	struct ieee80211_hdr *hdr;
-+	struct ieee80211_tx_info *cb;
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 904972606bd4..10f0c5a6e0dc 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -720,6 +720,9 @@ static int tegra_qspi_start_cpu_based_transfer(struct tegra_qspi *qspi, struct s
  
- 	if (!vp->assoc)
- 		return;
-@@ -931,6 +932,10 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
- 	memcpy(hdr->addr2, mac, ETH_ALEN);
- 	memcpy(hdr->addr3, vp->bssid, ETH_ALEN);
- 
-+	cb = IEEE80211_SKB_CB(skb);
-+	cb->control.rates[0].count = 1;
-+	cb->control.rates[1].idx = -1;
+ static void tegra_qspi_deinit_dma(struct tegra_qspi *tqspi)
+ {
++	if (!tqspi->soc_data->has_dma)
++		return;
 +
- 	rcu_read_lock();
- 	mac80211_hwsim_tx_frame(data->hw, skb,
- 				rcu_dereference(vif->bss_conf.chanctx_conf)->def.chan);
+ 	if (tqspi->tx_dma_buf) {
+ 		dma_free_coherent(tqspi->dev, tqspi->dma_buf_size,
+ 				  tqspi->tx_dma_buf, tqspi->tx_dma_phys);
+@@ -750,6 +753,9 @@ static int tegra_qspi_init_dma(struct tegra_qspi *tqspi)
+ 	u32 *dma_buf;
+ 	int err;
+ 
++	if (!tqspi->soc_data->has_dma)
++		return 0;
++
+ 	dma_chan = dma_request_chan(tqspi->dev, "rx");
+ 	if (IS_ERR(dma_chan)) {
+ 		err = PTR_ERR(dma_chan);
 -- 
 2.35.1
 
