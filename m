@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9370279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8C2C433D7;
-	Wed, 30 Nov 2022 18:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF3279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0901C433C1;
+	Wed, 30 Nov 2022 18:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834359;
-	bh=OEz5pe170WRbn7bIErG4oxky6D1iXWKCqtNHxTaSKzI=;
+	s=korg; t=1669834362;
+	bh=wwNQnLOKV3Su2JrpkBV2pkUxadD8MRYDCSxAHiGhqx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vszxdBLKtEPq6ZkMkOXb1HPOvob6d3Ou22eqv+i8U+9EZnn4bn5+um17zz6gi6dU9
-	 5AVUpX5dRvyG/pRwCq9k4uJNITQVV4c/BinE41zfTBR1nxBiUBy1PXyucEkKfOgGJl
-	 hYIIPrMC78V393brnFxQWR5RsMyq9Xanf8Qr9hPo=
+	b=YlXiIgMxHik97faPPEY8exuGyTIaflWtyEl0/27SiQJQeE0MPIWTev76qDic01l4+
+	 VWeHwD8SI2gAKpWBw4vJ0hlJtLE9sjb0MpdAsPCHiNtSxzFBNBSF1iJ0L0+N0ofuZA
+	 J+xyqKBQNut+m96IPyr6ulNebGywg/r5TiCDppQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aman Dhoot <amandhoot12@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Brent Mendelsohn <mendiebm@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 224/289] Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode
-Date: Wed, 30 Nov 2022 19:23:29 +0100
-Message-Id: <20221130180549.194762639@linuxfoundation.org>
+Subject: [PATCH 6.0 225/289] ASoC: amd: yc: Add Alienware m17 R5 AMD into DMI table
+Date: Wed, 30 Nov 2022 19:23:30 +0100
+Message-Id: <20221130180549.216179012@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,30 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aman Dhoot <amandhoot12@gmail.com>
+From: Brent Mendelsohn <mendiebm@gmail.com>
 
-[ Upstream commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 ]
+[ Upstream commit d40b6529c6269cd5afddb1116a383cab9f126694 ]
 
-The device works fine in native RMI mode, there is no reason to use legacy
-PS/2 mode with it.
+This model requires an additional detection quirk to enable the
+internal microphone - BIOS doesn't seem to support AcpDmicConnected
+(nothing in acpidump output).
 
-Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216590
+Signed-off-by: Brent Mendelsohn <mendiebm@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20221024174227.4160-1-mendiebm@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index ffad142801b3..973a4c1d5d09 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -191,6 +191,7 @@ static const char * const smbus_pnp_ids[] = {
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
-+	"SYN3286", /* HP Laptop 15-da3001TU */
- 	NULL
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 6c0f1de10429..d9715bea965e 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -206,6 +206,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
++		}
++	},
+ 	{}
  };
  
 -- 
