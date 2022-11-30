@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A009179C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255E6C433D6;
-	Wed, 30 Nov 2022 18:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B42E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41B6C433D6;
+	Wed, 30 Nov 2022 18:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834177;
-	bh=JCH72JDUDQ2nGutUOZoiUTytcoqaFhAg6An4Lrj36QY=;
+	s=korg; t=1669834180;
+	bh=s2ScoLa4SwBW+KNz5q1Dv64Psh9/a1eK8ADyBSc5nn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1ikuBhc3bqfNn3UB8tVWH1SoQjrCUeoTVhQpRYQ/EMiaFvIa/helOrEE/GVmh/ci
-	 2OslCV7cw991ptBpqOBcM7ZK4KzftuP4U3M6+3TBjfif6TEUxUgJddSDmHK3srS0DW
-	 Fpst7HqT1kuFWLL9EnKYLomykbjGkcJN7rZ91lvA=
+	b=RrBmV9C06uJbd4iBB7Q4WdN4a+LkgBcYFTo3Nymo8C7SHgQJ59+nD7AcQ+3PeKHdB
+	 3SviwSE/xFIJfdPMAi/umexMT92Nj6f3BqeG5yQF6T0OzNL9FrWeQGkpT3gjlAuQSu
+	 JOOPi97wS0ko6ZEA7Bi0zFCNdRHDVRSY+i+J1xfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 157/289] s390/crashdump: fix TOD programmable field size
-Date: Wed, 30 Nov 2022 19:22:22 +0100
-Message-Id: <20221130180547.693659388@linuxfoundation.org>
+Subject: [PATCH 6.0 158/289] io_uring/filetable: fix file reference underflow
+Date: Wed, 30 Nov 2022 19:22:23 +0100
+Message-Id: <20221130180547.716606538@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,56 +35,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
+[ Upstream commit 9d94c04c0db024922e886c9fd429659f22f48ea4 ]
 
-The size of the TOD programmable field was incorrectly increased from
-four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
-save area handling").
-This leads to an elf notes section NT_S390_TODPREG which has a size of
-eight instead of four bytes in case of kdump, however even worse is
-that the contents is incorrect: it is supposed to contain only the
-contents of the TOD programmable field, but in fact contains a mix of
-the TOD programmable field (32 bit upper bits) and parts of the CPU
-timer register (lower 32 bits).
+There is an interesting reference bug when -ENOMEM occurs in calling of
+io_install_fixed_file(). KASan report like below:
 
-Fix this by simply changing the size of the todpreg field within the
-save area structure. This will implicitly also fix the size of the
-corresponding elf notes sections.
+[   14.057131] ==================================================================
+[   14.059161] BUG: KASAN: use-after-free in unix_get_socket+0x10/0x90
+[   14.060975] Read of size 8 at addr ffff88800b09cf20 by task kworker/u8:2/45
+[   14.062684]
+[   14.062768] CPU: 2 PID: 45 Comm: kworker/u8:2 Not tainted 6.1.0-rc4 #1
+[   14.063099] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[   14.063666] Workqueue: events_unbound io_ring_exit_work
+[   14.063936] Call Trace:
+[   14.064065]  <TASK>
+[   14.064175]  dump_stack_lvl+0x34/0x48
+[   14.064360]  print_report+0x172/0x475
+[   14.064547]  ? _raw_spin_lock_irq+0x83/0xe0
+[   14.064758]  ? __virt_addr_valid+0xef/0x170
+[   14.064975]  ? unix_get_socket+0x10/0x90
+[   14.065167]  kasan_report+0xad/0x130
+[   14.065353]  ? unix_get_socket+0x10/0x90
+[   14.065553]  unix_get_socket+0x10/0x90
+[   14.065744]  __io_sqe_files_unregister+0x87/0x1e0
+[   14.065989]  ? io_rsrc_refs_drop+0x1c/0xd0
+[   14.066199]  io_ring_exit_work+0x388/0x6a5
+[   14.066410]  ? io_uring_try_cancel_requests+0x5bf/0x5bf
+[   14.066674]  ? try_to_wake_up+0xdb/0x910
+[   14.066873]  ? virt_to_head_page+0xbe/0xbe
+[   14.067080]  ? __schedule+0x574/0xd20
+[   14.067273]  ? read_word_at_a_time+0xe/0x20
+[   14.067492]  ? strscpy+0xb5/0x190
+[   14.067665]  process_one_work+0x423/0x710
+[   14.067879]  worker_thread+0x2a2/0x6f0
+[   14.068073]  ? process_one_work+0x710/0x710
+[   14.068284]  kthread+0x163/0x1a0
+[   14.068454]  ? kthread_complete_and_exit+0x20/0x20
+[   14.068697]  ret_from_fork+0x22/0x30
+[   14.068886]  </TASK>
+[   14.069000]
+[   14.069088] Allocated by task 289:
+[   14.069269]  kasan_save_stack+0x1e/0x40
+[   14.069463]  kasan_set_track+0x21/0x30
+[   14.069652]  __kasan_slab_alloc+0x58/0x70
+[   14.069899]  kmem_cache_alloc+0xc5/0x200
+[   14.070100]  __alloc_file+0x20/0x160
+[   14.070283]  alloc_empty_file+0x3b/0xc0
+[   14.070479]  path_openat+0xc3/0x1770
+[   14.070689]  do_filp_open+0x150/0x270
+[   14.070888]  do_sys_openat2+0x113/0x270
+[   14.071081]  __x64_sys_openat+0xc8/0x140
+[   14.071283]  do_syscall_64+0x3b/0x90
+[   14.071466]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   14.071791]
+[   14.071874] Freed by task 0:
+[   14.072027]  kasan_save_stack+0x1e/0x40
+[   14.072224]  kasan_set_track+0x21/0x30
+[   14.072415]  kasan_save_free_info+0x2a/0x50
+[   14.072627]  __kasan_slab_free+0x106/0x190
+[   14.072858]  kmem_cache_free+0x98/0x340
+[   14.073075]  rcu_core+0x427/0xe50
+[   14.073249]  __do_softirq+0x110/0x3cd
+[   14.073440]
+[   14.073523] Last potentially related work creation:
+[   14.073801]  kasan_save_stack+0x1e/0x40
+[   14.074017]  __kasan_record_aux_stack+0x97/0xb0
+[   14.074264]  call_rcu+0x41/0x550
+[   14.074436]  task_work_run+0xf4/0x170
+[   14.074619]  exit_to_user_mode_prepare+0x113/0x120
+[   14.074858]  syscall_exit_to_user_mode+0x1d/0x40
+[   14.075092]  do_syscall_64+0x48/0x90
+[   14.075272]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   14.075529]
+[   14.075612] Second to last potentially related work creation:
+[   14.075900]  kasan_save_stack+0x1e/0x40
+[   14.076098]  __kasan_record_aux_stack+0x97/0xb0
+[   14.076325]  task_work_add+0x72/0x1b0
+[   14.076512]  fput+0x65/0xc0
+[   14.076657]  filp_close+0x8e/0xa0
+[   14.076825]  __x64_sys_close+0x15/0x50
+[   14.077019]  do_syscall_64+0x3b/0x90
+[   14.077199]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[   14.077448]
+[   14.077530] The buggy address belongs to the object at ffff88800b09cf00
+[   14.077530]  which belongs to the cache filp of size 232
+[   14.078105] The buggy address is located 32 bytes inside of
+[   14.078105]  232-byte region [ffff88800b09cf00, ffff88800b09cfe8)
+[   14.078685]
+[   14.078771] The buggy address belongs to the physical page:
+[   14.079046] page:000000001bd520e7 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800b09de00 pfn:0xb09c
+[   14.079575] head:000000001bd520e7 order:1 compound_mapcount:0 compound_pincount:0
+[   14.079946] flags: 0x100000000010200(slab|head|node=0|zone=1)
+[   14.080244] raw: 0100000000010200 0000000000000000 dead000000000001 ffff88800493cc80
+[   14.080629] raw: ffff88800b09de00 0000000080190018 00000001ffffffff 0000000000000000
+[   14.081016] page dumped because: kasan: bad access detected
+[   14.081293]
+[   14.081376] Memory state around the buggy address:
+[   14.081618]  ffff88800b09ce00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[   14.081974]  ffff88800b09ce80: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+[   14.082336] >ffff88800b09cf00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[   14.082690]                                ^
+[   14.082909]  ffff88800b09cf80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc
+[   14.083266]  ffff88800b09d000: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+[   14.083622] ==================================================================
 
-This also gets rid of this compile time warning:
+The actual tracing of this bug is shown below:
 
-in function ‘fortify_memcpy_chk’,
-    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
-./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
-   declared with attribute warning: detected read beyond size of field
-   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+commit 8c71fe750215 ("io_uring: ensure fput() called correspondingly
+when direct install fails") adds an additional fput() in
+io_fixed_fd_install() when io_file_bitmap_get() returns error values. In
+that case, the routine will never make it to io_install_fixed_file() due
+to an early return.
 
-Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+static int io_fixed_fd_install(...)
+{
+  if (alloc_slot) {
+    ...
+    ret = io_file_bitmap_get(ctx);
+    if (unlikely(ret < 0)) {
+      io_ring_submit_unlock(ctx, issue_flags);
+      fput(file);
+      return ret;
+    }
+    ...
+  }
+  ...
+  ret = io_install_fixed_file(req, file, issue_flags, file_slot);
+  ...
+}
+
+In the above scenario, the reference is okay as io_fixed_fd_install()
+ensures the fput() is called when something bad happens, either via
+bitmap or via inner io_install_fixed_file().
+
+However, the commit 61c1b44a21d7 ("io_uring: fix deadlock on iowq file
+slot alloc") breaks the balance because it places fput() into the common
+path for both io_file_bitmap_get() and io_install_fixed_file(). Since
+io_install_fixed_file() handles the fput() itself, the reference
+underflow come across then.
+
+There are some extra commits make the current code into
+io_fixed_fd_install() -> __io_fixed_fd_install() ->
+io_install_fixed_file()
+
+However, the fact that there is an extra fput() is called if
+io_install_fixed_file() calls fput(). Traversing through the code, I
+find that the existing two callers to __io_fixed_fd_install():
+io_fixed_fd_install() and io_msg_send_fd() have fput() when handling
+error return, this patch simply removes the fput() in
+io_install_fixed_file() to fix the bug.
+
+Fixes: 61c1b44a21d7 ("io_uring: fix deadlock on iowq file slot alloc")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://lore.kernel.org/r/be4ba4b.5d44.184a0a406a4.Coremail.linma@zju.edu.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/crash_dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/filetable.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/s390/kernel/crash_dump.c b/arch/s390/kernel/crash_dump.c
-index bad8f47fc5d6..c1b2b0d4af77 100644
---- a/arch/s390/kernel/crash_dump.c
-+++ b/arch/s390/kernel/crash_dump.c
-@@ -45,7 +45,7 @@ struct save_area {
- 	u64 fprs[16];
- 	u32 fpc;
- 	u32 prefix;
--	u64 todpreg;
-+	u32 todpreg;
- 	u64 timer;
- 	u64 todcmp;
- 	u64 vxrs_low[16];
+diff --git a/io_uring/filetable.c b/io_uring/filetable.c
+index 7b473259f3f4..68dfc6936aa7 100644
+--- a/io_uring/filetable.c
++++ b/io_uring/filetable.c
+@@ -101,8 +101,6 @@ static int io_install_fixed_file(struct io_ring_ctx *ctx, struct file *file,
+ err:
+ 	if (needs_switch)
+ 		io_rsrc_node_switch(ctx, ctx->file_data);
+-	if (ret)
+-		fput(file);
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
