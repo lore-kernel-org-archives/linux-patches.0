@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5C979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352B9C433D6;
-	Wed, 30 Nov 2022 18:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81E679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20019C433D7;
+	Wed, 30 Nov 2022 18:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833294;
-	bh=yt9ZsKQP4pmQxT0l0VAhKwGcgfrLjTMisVi1orUE8Pk=;
+	s=korg; t=1669833297;
+	bh=XQ+BDpOhfi1eVF41GsLvxvVEKygi9L4SB9nMGuMQli0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ibp2z3R0/HsKS41Wy1M55jCZ9YkVLg3Y3gRvQcdtiehKpcQGrw7oLLEkGi1tmcn22
-	 4KCXjGPiQOAupG+tMqNNVbLAYJbDSV3ImBirpeXOaesQ7rPD+wXiY/pBqmamIKyaah
-	 aR6/OtR2ydRHO4C0WDBN3qjXjUwe4lN5JNjcY1B8=
+	b=E+TeuPuqMukn+olor+vMh6T1TxCV1jo40vmMBBc7CJMGHiCKg2oTAdPF5f+X7sIYm
+	 +toWB9qSaJvuq0kaM2h1FtlTum+PJYshUFO9fSNR24Axg3aY0XzLEgl3hFW1/pV8Jr
+	 ZMBT18C/K2zTDjRaatLDYfQ71o/zifXmJgc+geIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Langrock <christian.langrock@secunet.com>,
+	syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/206] xfrm: replay: Fix ESN wrap around for GSO
-Date: Wed, 30 Nov 2022 19:21:48 +0100
-Message-Id: <20221130180534.426499694@linuxfoundation.org>
+Subject: [PATCH 5.15 057/206] af_key: Fix send_acquire race with pfkey_register
+Date: Wed, 30 Nov 2022 19:21:49 +0100
+Message-Id: <20221130180534.455191435@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,101 +38,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Langrock <christian.langrock@secunet.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 4b549ccce941798703f159b227aa28c716aa78fa ]
+[ Upstream commit 7f57f8165cb6d2c206e2b9ada53b9e2d6d8af42f ]
 
-When using GSO it can happen that the wrong seq_hi is used for the last
-packets before the wrap around. This can lead to double usage of a
-sequence number. To avoid this, we should serialize this last GSO
-packet.
+The function pfkey_send_acquire may race with pfkey_register
+(which could even be in a different name space).  This may result
+in a buffer overrun.
 
-Fixes: d7dbefc45cf5 ("xfrm: Add xfrm_replay_overflow functions for offloading")
-Co-developed-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Christian Langrock <christian.langrock@secunet.com>
+Allocating the maximum amount of memory that could be used prevents
+this.
+
+Reported-by: syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4_offload.c |  3 +++
- net/ipv6/esp6_offload.c |  3 +++
- net/xfrm/xfrm_device.c  | 15 ++++++++++++++-
- net/xfrm/xfrm_replay.c  |  2 +-
- 4 files changed, 21 insertions(+), 2 deletions(-)
+ net/key/af_key.c | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
-index dad5d29a6a8d..2ddba1e2cf22 100644
---- a/net/ipv4/esp4_offload.c
-+++ b/net/ipv4/esp4_offload.c
-@@ -311,6 +311,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
- 			xo->seq.low += skb_shinfo(skb)->gso_segs;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 53cca9019158..a654bd4bc437 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -2905,7 +2905,7 @@ static int count_ah_combs(const struct xfrm_tmpl *t)
+ 			break;
+ 		if (!aalg->pfkey_supported)
+ 			continue;
+-		if (aalg_tmpl_set(t, aalg) && aalg->available)
++		if (aalg_tmpl_set(t, aalg))
+ 			sz += sizeof(struct sadb_comb);
  	}
+ 	return sz + sizeof(struct sadb_prop);
+@@ -2923,7 +2923,7 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
+ 		if (!ealg->pfkey_supported)
+ 			continue;
  
-+	if (xo->seq.low < seq)
-+		xo->seq.hi++;
-+
- 	esp.seqno = cpu_to_be64(seq + ((u64)xo->seq.hi << 32));
+-		if (!(ealg_tmpl_set(t, ealg) && ealg->available))
++		if (!(ealg_tmpl_set(t, ealg)))
+ 			continue;
  
- 	ip_hdr(skb)->tot_len = htons(skb->len);
-diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
-index 302170882382..4cc19acfc369 100644
---- a/net/ipv6/esp6_offload.c
-+++ b/net/ipv6/esp6_offload.c
-@@ -343,6 +343,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
- 			xo->seq.low += skb_shinfo(skb)->gso_segs;
+ 		for (k = 1; ; k++) {
+@@ -2934,16 +2934,17 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
+ 			if (!aalg->pfkey_supported)
+ 				continue;
+ 
+-			if (aalg_tmpl_set(t, aalg) && aalg->available)
++			if (aalg_tmpl_set(t, aalg))
+ 				sz += sizeof(struct sadb_comb);
+ 		}
  	}
- 
-+	if (xo->seq.low < seq)
-+		xo->seq.hi++;
-+
- 	esp.seqno = cpu_to_be64(xo->seq.low + ((u64)xo->seq.hi << 32));
- 
- 	len = skb->len - sizeof(struct ipv6hdr);
-diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index c255aac6b816..8b8e957a69c3 100644
---- a/net/xfrm/xfrm_device.c
-+++ b/net/xfrm/xfrm_device.c
-@@ -97,6 +97,18 @@ static void xfrm_outer_mode_prep(struct xfrm_state *x, struct sk_buff *skb)
- 	}
+ 	return sz + sizeof(struct sadb_prop);
  }
  
-+static inline bool xmit_xfrm_check_overflow(struct sk_buff *skb)
-+{
-+	struct xfrm_offload *xo = xfrm_offload(skb);
-+	__u32 seq = xo->seq.low;
-+
-+	seq += skb_shinfo(skb)->gso_segs;
-+	if (unlikely(seq < xo->seq.low))
-+		return true;
-+
-+	return false;
-+}
-+
- struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t features, bool *again)
+-static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
++static int dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
  {
- 	int err;
-@@ -134,7 +146,8 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
- 		return skb;
+ 	struct sadb_prop *p;
++	int sz = 0;
+ 	int i;
+ 
+ 	p = skb_put(skb, sizeof(struct sadb_prop));
+@@ -2971,13 +2972,17 @@ static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
+ 			c->sadb_comb_soft_addtime = 20*60*60;
+ 			c->sadb_comb_hard_usetime = 8*60*60;
+ 			c->sadb_comb_soft_usetime = 7*60*60;
++			sz += sizeof(*c);
+ 		}
+ 	}
++
++	return sz + sizeof(*p);
+ }
+ 
+-static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
++static int dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
+ {
+ 	struct sadb_prop *p;
++	int sz = 0;
+ 	int i, k;
+ 
+ 	p = skb_put(skb, sizeof(struct sadb_prop));
+@@ -3019,8 +3024,11 @@ static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
+ 			c->sadb_comb_soft_addtime = 20*60*60;
+ 			c->sadb_comb_hard_usetime = 8*60*60;
+ 			c->sadb_comb_soft_usetime = 7*60*60;
++			sz += sizeof(*c);
+ 		}
+ 	}
++
++	return sz + sizeof(*p);
+ }
+ 
+ static int key_notify_policy_expire(struct xfrm_policy *xp, const struct km_event *c)
+@@ -3150,6 +3158,7 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	struct sadb_x_sec_ctx *sec_ctx;
+ 	struct xfrm_sec_ctx *xfrm_ctx;
+ 	int ctx_size = 0;
++	int alg_size = 0;
+ 
+ 	sockaddr_size = pfkey_sockaddr_size(x->props.family);
+ 	if (!sockaddr_size)
+@@ -3161,16 +3170,16 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 		sizeof(struct sadb_x_policy);
+ 
+ 	if (x->id.proto == IPPROTO_AH)
+-		size += count_ah_combs(t);
++		alg_size = count_ah_combs(t);
+ 	else if (x->id.proto == IPPROTO_ESP)
+-		size += count_esp_combs(t);
++		alg_size = count_esp_combs(t);
+ 
+ 	if ((xfrm_ctx = x->security)) {
+ 		ctx_size = PFKEY_ALIGN8(xfrm_ctx->ctx_len);
+ 		size +=  sizeof(struct sadb_x_sec_ctx) + ctx_size;
  	}
  
--	if (skb_is_gso(skb) && unlikely(x->xso.dev != dev)) {
-+	if (skb_is_gso(skb) && (unlikely(x->xso.dev != dev) ||
-+				unlikely(xmit_xfrm_check_overflow(skb)))) {
- 		struct sk_buff *segs;
+-	skb =  alloc_skb(size + 16, GFP_ATOMIC);
++	skb =  alloc_skb(size + alg_size + 16, GFP_ATOMIC);
+ 	if (skb == NULL)
+ 		return -ENOMEM;
  
- 		/* Packet got rerouted, fixup features and segment it. */
-diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
-index 9277d81b344c..49dd788859d8 100644
---- a/net/xfrm/xfrm_replay.c
-+++ b/net/xfrm/xfrm_replay.c
-@@ -714,7 +714,7 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
- 			oseq += skb_shinfo(skb)->gso_segs;
- 		}
+@@ -3224,10 +3233,13 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	pol->sadb_x_policy_priority = xp->priority;
  
--		if (unlikely(oseq < replay_esn->oseq)) {
-+		if (unlikely(xo->seq.low < replay_esn->oseq)) {
- 			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
- 			xo->seq.hi = oseq_hi;
- 			replay_esn->oseq_hi = oseq_hi;
+ 	/* Set sadb_comb's. */
++	alg_size = 0;
+ 	if (x->id.proto == IPPROTO_AH)
+-		dump_ah_combs(skb, t);
++		alg_size = dump_ah_combs(skb, t);
+ 	else if (x->id.proto == IPPROTO_ESP)
+-		dump_esp_combs(skb, t);
++		alg_size = dump_esp_combs(skb, t);
++
++	hdr->sadb_msg_len += alg_size / 8;
+ 
+ 	/* security context */
+ 	if (xfrm_ctx) {
 -- 
 2.35.1
 
