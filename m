@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B42E79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41B6C433D6;
-	Wed, 30 Nov 2022 18:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECE379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:49:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A173C433D6;
+	Wed, 30 Nov 2022 18:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834180;
-	bh=s2ScoLa4SwBW+KNz5q1Dv64Psh9/a1eK8ADyBSc5nn8=;
+	s=korg; t=1669834183;
+	bh=8VUJviAZu9DREPgUYsje3/HirMm0w8ZisG56Eu6lYbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrBmV9C06uJbd4iBB7Q4WdN4a+LkgBcYFTo3Nymo8C7SHgQJ59+nD7AcQ+3PeKHdB
-	 3SviwSE/xFIJfdPMAi/umexMT92Nj6f3BqeG5yQF6T0OzNL9FrWeQGkpT3gjlAuQSu
-	 JOOPi97wS0ko6ZEA7Bi0zFCNdRHDVRSY+i+J1xfk=
+	b=JLqlmBY6oAJff7YVFMltI/xuDS3jMcUdUHueXJRIDub4h+v8iwlckcvp02sXwunFi
+	 67zdZn1HqrTmq4ByvmA4C83qeZr4sjUuxfTrSG3sc7iJCUZd/3EFv9TSml7noUPtZl
+	 x0sO/gAbhNyfbMPq/XMZrbyICNlF/DZXsImc2NDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lin Ma <linma@zju.edu.cn>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 158/289] io_uring/filetable: fix file reference underflow
-Date: Wed, 30 Nov 2022 19:22:23 +0100
-Message-Id: <20221130180547.716606538@linuxfoundation.org>
+Subject: [PATCH 6.0 159/289] io_uring/poll: fix poll_refs race with cancelation
+Date: Wed, 30 Nov 2022 19:22:24 +0100
+Message-Id: <20221130180547.738600572@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,178 +38,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9d94c04c0db024922e886c9fd429659f22f48ea4 ]
+[ Upstream commit 12ad3d2d6c5b0131a6052de91360849e3e154846 ]
 
-There is an interesting reference bug when -ENOMEM occurs in calling of
-io_install_fixed_file(). KASan report like below:
+There is an interesting race condition of poll_refs which could result
+in a NULL pointer dereference. The crash trace is like:
 
-[   14.057131] ==================================================================
-[   14.059161] BUG: KASAN: use-after-free in unix_get_socket+0x10/0x90
-[   14.060975] Read of size 8 at addr ffff88800b09cf20 by task kworker/u8:2/45
-[   14.062684]
-[   14.062768] CPU: 2 PID: 45 Comm: kworker/u8:2 Not tainted 6.1.0-rc4 #1
-[   14.063099] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-[   14.063666] Workqueue: events_unbound io_ring_exit_work
-[   14.063936] Call Trace:
-[   14.064065]  <TASK>
-[   14.064175]  dump_stack_lvl+0x34/0x48
-[   14.064360]  print_report+0x172/0x475
-[   14.064547]  ? _raw_spin_lock_irq+0x83/0xe0
-[   14.064758]  ? __virt_addr_valid+0xef/0x170
-[   14.064975]  ? unix_get_socket+0x10/0x90
-[   14.065167]  kasan_report+0xad/0x130
-[   14.065353]  ? unix_get_socket+0x10/0x90
-[   14.065553]  unix_get_socket+0x10/0x90
-[   14.065744]  __io_sqe_files_unregister+0x87/0x1e0
-[   14.065989]  ? io_rsrc_refs_drop+0x1c/0xd0
-[   14.066199]  io_ring_exit_work+0x388/0x6a5
-[   14.066410]  ? io_uring_try_cancel_requests+0x5bf/0x5bf
-[   14.066674]  ? try_to_wake_up+0xdb/0x910
-[   14.066873]  ? virt_to_head_page+0xbe/0xbe
-[   14.067080]  ? __schedule+0x574/0xd20
-[   14.067273]  ? read_word_at_a_time+0xe/0x20
-[   14.067492]  ? strscpy+0xb5/0x190
-[   14.067665]  process_one_work+0x423/0x710
-[   14.067879]  worker_thread+0x2a2/0x6f0
-[   14.068073]  ? process_one_work+0x710/0x710
-[   14.068284]  kthread+0x163/0x1a0
-[   14.068454]  ? kthread_complete_and_exit+0x20/0x20
-[   14.068697]  ret_from_fork+0x22/0x30
-[   14.068886]  </TASK>
-[   14.069000]
-[   14.069088] Allocated by task 289:
-[   14.069269]  kasan_save_stack+0x1e/0x40
-[   14.069463]  kasan_set_track+0x21/0x30
-[   14.069652]  __kasan_slab_alloc+0x58/0x70
-[   14.069899]  kmem_cache_alloc+0xc5/0x200
-[   14.070100]  __alloc_file+0x20/0x160
-[   14.070283]  alloc_empty_file+0x3b/0xc0
-[   14.070479]  path_openat+0xc3/0x1770
-[   14.070689]  do_filp_open+0x150/0x270
-[   14.070888]  do_sys_openat2+0x113/0x270
-[   14.071081]  __x64_sys_openat+0xc8/0x140
-[   14.071283]  do_syscall_64+0x3b/0x90
-[   14.071466]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[   14.071791]
-[   14.071874] Freed by task 0:
-[   14.072027]  kasan_save_stack+0x1e/0x40
-[   14.072224]  kasan_set_track+0x21/0x30
-[   14.072415]  kasan_save_free_info+0x2a/0x50
-[   14.072627]  __kasan_slab_free+0x106/0x190
-[   14.072858]  kmem_cache_free+0x98/0x340
-[   14.073075]  rcu_core+0x427/0xe50
-[   14.073249]  __do_softirq+0x110/0x3cd
-[   14.073440]
-[   14.073523] Last potentially related work creation:
-[   14.073801]  kasan_save_stack+0x1e/0x40
-[   14.074017]  __kasan_record_aux_stack+0x97/0xb0
-[   14.074264]  call_rcu+0x41/0x550
-[   14.074436]  task_work_run+0xf4/0x170
-[   14.074619]  exit_to_user_mode_prepare+0x113/0x120
-[   14.074858]  syscall_exit_to_user_mode+0x1d/0x40
-[   14.075092]  do_syscall_64+0x48/0x90
-[   14.075272]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[   14.075529]
-[   14.075612] Second to last potentially related work creation:
-[   14.075900]  kasan_save_stack+0x1e/0x40
-[   14.076098]  __kasan_record_aux_stack+0x97/0xb0
-[   14.076325]  task_work_add+0x72/0x1b0
-[   14.076512]  fput+0x65/0xc0
-[   14.076657]  filp_close+0x8e/0xa0
-[   14.076825]  __x64_sys_close+0x15/0x50
-[   14.077019]  do_syscall_64+0x3b/0x90
-[   14.077199]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[   14.077448]
-[   14.077530] The buggy address belongs to the object at ffff88800b09cf00
-[   14.077530]  which belongs to the cache filp of size 232
-[   14.078105] The buggy address is located 32 bytes inside of
-[   14.078105]  232-byte region [ffff88800b09cf00, ffff88800b09cfe8)
-[   14.078685]
-[   14.078771] The buggy address belongs to the physical page:
-[   14.079046] page:000000001bd520e7 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88800b09de00 pfn:0xb09c
-[   14.079575] head:000000001bd520e7 order:1 compound_mapcount:0 compound_pincount:0
-[   14.079946] flags: 0x100000000010200(slab|head|node=0|zone=1)
-[   14.080244] raw: 0100000000010200 0000000000000000 dead000000000001 ffff88800493cc80
-[   14.080629] raw: ffff88800b09de00 0000000080190018 00000001ffffffff 0000000000000000
-[   14.081016] page dumped because: kasan: bad access detected
-[   14.081293]
-[   14.081376] Memory state around the buggy address:
-[   14.081618]  ffff88800b09ce00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   14.081974]  ffff88800b09ce80: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
-[   14.082336] >ffff88800b09cf00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   14.082690]                                ^
-[   14.082909]  ffff88800b09cf80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc
-[   14.083266]  ffff88800b09d000: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-[   14.083622] ==================================================================
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 0 PID: 30781 Comm: syz-executor.2 Not tainted 6.0.0-g493ffd6605b2 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:io_poll_remove_entry io_uring/poll.c:154 [inline]
+RIP: 0010:io_poll_remove_entries+0x171/0x5b4 io_uring/poll.c:190
+Code: ...
+RSP: 0018:ffff88810dfefba0 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000000 RCX: 0000000000040000
+RDX: ffffc900030c4000 RSI: 000000000003ffff RDI: 0000000000040000
+RBP: 0000000000000008 R08: ffffffff9764d3dd R09: fffffbfff3836781
+R10: fffffbfff3836781 R11: 0000000000000000 R12: 1ffff11003422d60
+R13: ffff88801a116b04 R14: ffff88801a116ac0 R15: dffffc0000000000
+FS:  00007f9c07497700(0000) GS:ffff88811a600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffb5c00ea98 CR3: 0000000105680005 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ io_apoll_task_func+0x3f/0xa0 io_uring/poll.c:299
+ handle_tw_list io_uring/io_uring.c:1037 [inline]
+ tctx_task_work+0x37e/0x4f0 io_uring/io_uring.c:1090
+ task_work_run+0x13a/0x1b0 kernel/task_work.c:177
+ get_signal+0x2402/0x25a0 kernel/signal.c:2635
+ arch_do_signal_or_restart+0x3b/0x660 arch/x86/kernel/signal.c:869
+ exit_to_user_mode_loop kernel/entry/common.c:166 [inline]
+ exit_to_user_mode_prepare+0xc2/0x160 kernel/entry/common.c:201
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:283 [inline]
+ syscall_exit_to_user_mode+0x58/0x160 kernel/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The actual tracing of this bug is shown below:
+The root cause for this is a tiny overlooking in
+io_poll_check_events() when cocurrently run with poll cancel routine
+io_poll_cancel_req().
 
-commit 8c71fe750215 ("io_uring: ensure fput() called correspondingly
-when direct install fails") adds an additional fput() in
-io_fixed_fd_install() when io_file_bitmap_get() returns error values. In
-that case, the routine will never make it to io_install_fixed_file() due
-to an early return.
+The interleaving to trigger use-after-free:
 
-static int io_fixed_fd_install(...)
-{
-  if (alloc_slot) {
-    ...
-    ret = io_file_bitmap_get(ctx);
-    if (unlikely(ret < 0)) {
-      io_ring_submit_unlock(ctx, issue_flags);
-      fput(file);
-      return ret;
-    }
-    ...
-  }
-  ...
-  ret = io_install_fixed_file(req, file, issue_flags, file_slot);
-  ...
-}
+CPU0                                       |  CPU1
+                                           |
+io_apoll_task_func()                       |  io_poll_cancel_req()
+ io_poll_check_events()                    |
+  // do while first loop                   |
+  v = atomic_read(...)                     |
+  // v = poll_refs = 1                     |
+  ...                                      |  io_poll_mark_cancelled()
+                                           |   atomic_or()
+                                           |   // poll_refs =
+IO_POLL_CANCEL_FLAG | 1
+                                           |
+  atomic_sub_return(...)                   |
+  // poll_refs = IO_POLL_CANCEL_FLAG       |
+  // loop continue                         |
+                                           |
+                                           |  io_poll_execute()
+                                           |   io_poll_get_ownership()
+                                           |   // poll_refs =
+IO_POLL_CANCEL_FLAG | 1
+                                           |   // gets the ownership
+  v = atomic_read(...)                     |
+  // poll_refs not change                  |
+                                           |
+  if (v & IO_POLL_CANCEL_FLAG)             |
+   return -ECANCELED;                      |
+  // io_poll_check_events return           |
+  // will go into                          |
+  // io_req_complete_failed() free req     |
+                                           |
+                                           |  io_apoll_task_func()
+                                           |  // also go into
+io_req_complete_failed()
 
-In the above scenario, the reference is okay as io_fixed_fd_install()
-ensures the fput() is called when something bad happens, either via
-bitmap or via inner io_install_fixed_file().
+And the interleaving to trigger the kernel WARNING:
 
-However, the commit 61c1b44a21d7 ("io_uring: fix deadlock on iowq file
-slot alloc") breaks the balance because it places fput() into the common
-path for both io_file_bitmap_get() and io_install_fixed_file(). Since
-io_install_fixed_file() handles the fput() itself, the reference
-underflow come across then.
+CPU0                                       |  CPU1
+                                           |
+io_apoll_task_func()                       |  io_poll_cancel_req()
+ io_poll_check_events()                    |
+  // do while first loop                   |
+  v = atomic_read(...)                     |
+  // v = poll_refs = 1                     |
+  ...                                      |  io_poll_mark_cancelled()
+                                           |   atomic_or()
+                                           |   // poll_refs =
+IO_POLL_CANCEL_FLAG | 1
+                                           |
+  atomic_sub_return(...)                   |
+  // poll_refs = IO_POLL_CANCEL_FLAG       |
+  // loop continue                         |
+                                           |
+  v = atomic_read(...)                     |
+  // v = IO_POLL_CANCEL_FLAG               |
+                                           |  io_poll_execute()
+                                           |   io_poll_get_ownership()
+                                           |   // poll_refs =
+IO_POLL_CANCEL_FLAG | 1
+                                           |   // gets the ownership
+                                           |
+  WARN_ON_ONCE(!(v & IO_POLL_REF_MASK)))   |
+  // v & IO_POLL_REF_MASK = 0 WARN         |
+                                           |
+                                           |  io_apoll_task_func()
+                                           |  // also go into
+io_req_complete_failed()
 
-There are some extra commits make the current code into
-io_fixed_fd_install() -> __io_fixed_fd_install() ->
-io_install_fixed_file()
+By looking up the source code and communicating with Pavel, the
+implementation of this atomic poll refs should continue the loop of
+io_poll_check_events() just to avoid somewhere else to grab the
+ownership. Therefore, this patch simply adds another AND operation to
+make sure the loop will stop if it finds the poll_refs is exactly equal
+to IO_POLL_CANCEL_FLAG. Since io_poll_cancel_req() grabs ownership and
+will finally make its way to io_req_complete_failed(), the req will
+be reclaimed as expected.
 
-However, the fact that there is an extra fput() is called if
-io_install_fixed_file() calls fput(). Traversing through the code, I
-find that the existing two callers to __io_fixed_fd_install():
-io_fixed_fd_install() and io_msg_send_fd() have fput() when handling
-error return, this patch simply removes the fput() in
-io_install_fixed_file() to fix the bug.
-
-Fixes: 61c1b44a21d7 ("io_uring: fix deadlock on iowq file slot alloc")
+Fixes: aa43477b0402 ("io_uring: poll rework")
 Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/be4ba4b.5d44.184a0a406a4.Coremail.linma@zju.edu.cn
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+[axboe: tweak description and code style]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/filetable.c | 2 --
- 1 file changed, 2 deletions(-)
+ io_uring/poll.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/filetable.c b/io_uring/filetable.c
-index 7b473259f3f4..68dfc6936aa7 100644
---- a/io_uring/filetable.c
-+++ b/io_uring/filetable.c
-@@ -101,8 +101,6 @@ static int io_install_fixed_file(struct io_ring_ctx *ctx, struct file *file,
- err:
- 	if (needs_switch)
- 		io_rsrc_node_switch(ctx, ctx->file_data);
--	if (ret)
--		fput(file);
- 	return ret;
- }
+diff --git a/io_uring/poll.c b/io_uring/poll.c
+index 055632e9092a..0d721f8c4bc4 100644
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -274,7 +274,8 @@ static int io_poll_check_events(struct io_kiocb *req, bool *locked)
+ 		 * Release all references, retry if someone tried to restart
+ 		 * task_work while we were executing it.
+ 		 */
+-	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs));
++	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
++					IO_POLL_REF_MASK);
  
+ 	return IOU_POLL_NO_ACTION;
+ }
 -- 
 2.35.1
 
