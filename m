@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44C879C1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D38C433D6;
-	Wed, 30 Nov 2022 18:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444FB79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B913EC433B5;
+	Wed, 30 Nov 2022 18:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834399;
-	bh=VwXXeRt6xQyQwBK4ROVGyz1SFb5IlEYz5klkPODi2E8=;
+	s=korg; t=1669834397;
+	bh=cXUFPo7OqE2nILNuP6wEGNjVgk3DTRgoHCsjSSUkV4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0TcPSO0IaqUA8/AlH89hSGkecMTvDOKwfVK5uHrAxG1taQ+9o7dDXWi+lecLEP0z
-	 ab2hCLEqz9zQCIFdQvYahPYczze4qDd/MBrP1JNpazrRDK6zQ0WTD85g1o5WgNqsEf
-	 ooxenOaUUFug1ZMiGtrQjERKX2tLijPkdfN4iU3g=
+	b=bcall1uUstnRI1gGKTUxonGjlJpbaMghKi4Hp1jR+bwciIJHBG2ZqoqpihB+S8Mf4
+	 ldX/UXuVmfRYjo5aegVrZL9RbjvUTagVIHDJayoywLvRTzpVf73WAYUj6fqljFpbae
+	 brtqSbt8naw9AYpeoGyR1bUDPgM2m25L2cFAg8/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Anjana Hari <quic_ahari@quicinc.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 240/289] Input: i8042 - apply probe defer to more ASUS ZenBook models
-Date: Wed, 30 Nov 2022 19:23:45 +0100
-Message-Id: <20221130180549.551977903@linuxfoundation.org>
+Subject: [PATCH 6.0 239/289] pinctrl: qcom: sc8280xp: Rectify UFS reset pins
+Date: Wed, 30 Nov 2022 19:23:44 +0100
+Message-Id: <20221130180549.529446113@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,50 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Anjana Hari <quic_ahari@quicinc.com>
 
-[ Upstream commit 26c263bf1847d4dadba016a0457c4c5f446407bf ]
+[ Upstream commit f04a2862f9c3f64962b8709c75d788efba6df26b ]
 
-There are yet a few more ASUS ZenBook models that require the deferred
-probe.  At least, there are different ZenBook UX325x and UX425x
-models.  Let's extend the DMI matching table entries for adapting
-those missing models.
+UFS reset pin offsets are wrongly configured for SC8280XP,
+correcting the same for both UFS instances here.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20221108142027.28480-1-tiwai@suse.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # QDrive3
+Link: https://lore.kernel.org/r/20221103181051.26912-1-quic_bjorande@quicinc.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-x86ia64io.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
-index 4fbec7bbecca..5043dc7b8fb3 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-x86ia64io.h
-@@ -114,18 +114,18 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_NEVER)
- 	},
- 	{
--		/* ASUS ZenBook UX425UA */
-+		/* ASUS ZenBook UX425UA/QA */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX425UA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX425"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
- 	},
- 	{
--		/* ASUS ZenBook UM325UA */
-+		/* ASUS ZenBook UM325UA/QA */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325UA_UM325UA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
- 	},
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+index aa2075390f3e..e96c00686a25 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+@@ -1873,8 +1873,8 @@ static const struct msm_pingroup sc8280xp_groups[] = {
+ 	[225] = PINGROUP(225, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[226] = PINGROUP(226, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+ 	[227] = PINGROUP(227, hs3_mi2s, phase_flag, _, _, _, _, egpio),
+-	[228] = UFS_RESET(ufs_reset, 0xf1004),
+-	[229] = UFS_RESET(ufs1_reset, 0xf3004),
++	[228] = UFS_RESET(ufs_reset, 0xf1000),
++	[229] = UFS_RESET(ufs1_reset, 0xf3000),
+ 	[230] = SDC_QDSD_PINGROUP(sdc2_clk, 0xe8000, 14, 6),
+ 	[231] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xe8000, 11, 3),
+ 	[232] = SDC_QDSD_PINGROUP(sdc2_data, 0xe8000, 9, 0),
 -- 
 2.35.1
 
