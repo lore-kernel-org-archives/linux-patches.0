@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B2A79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CD3C433D7;
-	Wed, 30 Nov 2022 18:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDA979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46E2C433D7;
+	Wed, 30 Nov 2022 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834069;
-	bh=I1rJnkTUb/sNAbOH8+zMk8Xhf/dUN1XPGyNvueiIeik=;
+	s=korg; t=1669834072;
+	bh=pghWzr987WErM7R0k86Xmm4qfYwvkEnvraBvVp1CQeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOV0yw3f8xL16GzhrXt58Ax0U7DdMFF+E+3R9RPckTnTi9GJg0G/wGuWQWxRARRHZ
-	 apGlvDe7LSsG5Lgr1lMXujy8Bo6xU/5W0l+JfhCpIRl9PDbDG7g0ctuIfjIGyCb5WJ
-	 yySU7z//dakwWmRKR5F0PCExSZlPc9OMuDFMOfgg=
+	b=YOG+0xwvVzyLY3HGffzav2/gFQUoZFGT3fY/W4JN8mMRSEgYJRqOGepaZvG62LVy/
+	 QYAwjdlUcN6+um54xlnLThW3eCEfgZnVlj60kwXyMIV8DMxnuT8+NhSmLrgkjVi+Et
+	 UCPyovJVBdJF44Duj0YwjG0C4e4ep3fk+jY5U+Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 118/289] xfrm: Fix ignored return value in xfrm6_init()
-Date: Wed, 30 Nov 2022 19:21:43 +0100
-Message-Id: <20221130180546.815257342@linuxfoundation.org>
+Subject: [PATCH 6.0 119/289] net: wwan: iosm: use ACPI_FREE() but not kfree() in ipc_pcie_read_bios_cfg()
+Date: Wed, 30 Nov 2022 19:21:44 +0100
+Message-Id: <20221130180546.838021766@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,57 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 40781bfb836eda57d19c0baa37c7e72590e05fdc ]
+[ Upstream commit e541dd7763fc34aec2f93f652a396cc2e7b92d8d ]
 
-When IPv6 module initializing in xfrm6_init(), register_pernet_subsys()
-is possible to fail but its return value is ignored.
+acpi_evaluate_dsm() should be coupled with ACPI_FREE() to free the ACPI
+memory, because we need to track the allocation of acpi_object when
+ACPI_DBG_TRACK_ALLOCATIONS enabled, so use ACPI_FREE() instead of kfree().
 
-If IPv6 initialization fails later and xfrm6_fini() is called,
-removing uninitialized list in xfrm6_net_ops will cause null-ptr-deref:
-
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 330 Comm: insmod
-RIP: 0010:unregister_pernet_operations+0xc9/0x450
-Call Trace:
- <TASK>
- unregister_pernet_subsys+0x31/0x3e
- xfrm6_fini+0x16/0x30 [ipv6]
- ip6_route_init+0xcd/0x128 [ipv6]
- inet6_init+0x29c/0x602 [ipv6]
- ...
-
-Fix it by catching the error return value of register_pernet_subsys().
-
-Fixes: 8d068875caca ("xfrm: make gc_thresh configurable in all namespaces")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: d38a648d2d6c ("net: wwan: iosm: fix memory leak in ipc_pcie_read_bios_cfg")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221118062447.2324881-1-bobo.shaobowang@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index 4a4b0e49ec92..ea435eba3053 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -287,9 +287,13 @@ int __init xfrm6_init(void)
- 	if (ret)
- 		goto out_state;
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+index 97cb6846c6ae..f604d4a01e1b 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+@@ -249,7 +249,7 @@ static enum ipc_pcie_sleep_state ipc_pcie_read_bios_cfg(struct device *dev)
+ 	if (object->integer.value == 3)
+ 		sleep_state = IPC_PCIE_D3L2;
  
--	register_pernet_subsys(&xfrm6_net_ops);
-+	ret = register_pernet_subsys(&xfrm6_net_ops);
-+	if (ret)
-+		goto out_protocol;
- out:
- 	return ret;
-+out_protocol:
-+	xfrm6_protocol_fini();
- out_state:
- 	xfrm6_state_fini();
- out_policy:
+-	kfree(object);
++	ACPI_FREE(object);
+ 
+ default_ret:
+ 	return sleep_state;
 -- 
 2.35.1
 
