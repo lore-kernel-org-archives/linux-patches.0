@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE206FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C32EC433D6;
-	Wed, 30 Nov 2022 18:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745156FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B09C433D6;
+	Wed, 30 Nov 2022 18:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833483;
-	bh=lZYlX9R6NTrGrPiEc9g8ilQ9Jaf88CamsoT5XaqCdGg=;
+	s=korg; t=1669833486;
+	bh=7HHyqSVc3soU3pnAogdgyP/51LucL/+SDqKgQ0nJNX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQ0nDHNhs6KppMzdIdik+RejiMaQ0/B8bmDJu3ch6mGPgqSNNHPg5cAC9Vn6lwGTf
-	 4a0XSHJQk0mR1n+6ul4dZL8By9EQk45GLg8EGobaehYoLzwXigx7Xpp2lULqkvbFV1
-	 E8E7sFrxRNzWCB4XlSwZyJK9IT4NEdn6l1Y1bByM=
+	b=U/qvcHMhebtvpDk5utqEu4Tif+OyEKMUwpFOOZZeorTeEgCko3lAurO0TFezXvsrW
+	 LfKLAE84wzhd6qiwMzU20y3i6I9vD5poc5ge27xZ88jHBO7VNFVPi6vsRHN3sfI3BI
+	 ALq9DfFeqJwBaUpYvjmhZL6z/NYF8PaBo8GmGl3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/206] arcnet: fix potential memory leak in com20020_probe()
-Date: Wed, 30 Nov 2022 19:22:54 +0100
-Message-Id: <20221130180536.152285242@linuxfoundation.org>
+Subject: [PATCH 5.15 123/206] s390/dasd: fix no record found for raw_track_access
+Date: Wed, 30 Nov 2022 19:22:55 +0100
+Message-Id: <20221130180536.177059624@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,59 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 1c40cde6b5171d9c8dfc69be00464fd1c75e210b ]
+[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
 
-In com20020_probe(), if com20020_config() fails, dev and info
-will not be freed, which will lead to a memory leak.
+For DASD devices in raw_track_access mode only full track images are
+read and written.
+For this purpose it is not necessary to do search operation in the
+locate record extended function. The documentation even states that
+this might fail if the searched record is not found on a track.
 
-This patch adds freeing dev and info after com20020_config()
-fails to fix this bug.
+Currently the driver sets a value of 1 in the search field for the first
+record after record zero. This is the default for disks not in
+raw_track_access mode but record 1 might be missing on a completely
+empty track.
 
-Compile tested only.
+There has not been any problem with this on IBM storage servers but it
+might lead to errors with DASD devices on other vendors storage servers.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this by setting the search field to 0. Record zero is always available
+even on a completely empty track.
+
+Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/arcnet/com20020_cs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_eckd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/arcnet/com20020_cs.c b/drivers/net/arcnet/com20020_cs.c
-index b88a109b3b15..26ee263d8f3a 100644
---- a/drivers/net/arcnet/com20020_cs.c
-+++ b/drivers/net/arcnet/com20020_cs.c
-@@ -113,6 +113,7 @@ static int com20020_probe(struct pcmcia_device *p_dev)
- 	struct com20020_dev *info;
- 	struct net_device *dev;
- 	struct arcnet_local *lp;
-+	int ret = -ENOMEM;
+diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
+index ff7b7d470e96..57dfc92aa756 100644
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -4696,7 +4696,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	struct dasd_device *basedev;
+ 	struct req_iterator iter;
+ 	struct dasd_ccw_req *cqr;
+-	unsigned int first_offs;
+ 	unsigned int trkcount;
+ 	unsigned long *idaws;
+ 	unsigned int size;
+@@ -4730,7 +4729,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
+ 		DASD_RAW_SECTORS_PER_TRACK;
+ 	trkcount = last_trk - first_trk + 1;
+-	first_offs = 0;
  
- 	dev_dbg(&p_dev->dev, "com20020_attach()\n");
+ 	if (rq_data_dir(req) == READ)
+ 		cmd = DASD_ECKD_CCW_READ_TRACK;
+@@ -4774,13 +4772,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
  
-@@ -142,12 +143,18 @@ static int com20020_probe(struct pcmcia_device *p_dev)
- 	info->dev = dev;
- 	p_dev->priv = info;
+ 	if (use_prefix) {
+ 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
+-			   startdev, 1, first_offs + 1, trkcount, 0, 0);
++			   startdev, 1, 0, trkcount, 0, 0);
+ 	} else {
+ 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
+ 		ccw[-1].flags |= CCW_FLAG_CC;
  
--	return com20020_config(p_dev);
-+	ret = com20020_config(p_dev);
-+	if (ret)
-+		goto fail_config;
-+
-+	return 0;
+ 		data += sizeof(struct DE_eckd_data);
+-		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
++		locate_record_ext(ccw++, data, first_trk, 0,
+ 				  trkcount, cmd, basedev, 0, 0);
+ 	}
  
-+fail_config:
-+	free_arcdev(dev);
- fail_alloc_dev:
- 	kfree(info);
- fail_alloc_info:
--	return -ENOMEM;
-+	return ret;
- } /* com20020_attach */
- 
- static void com20020_detach(struct pcmcia_device *link)
 -- 
 2.35.1
 
