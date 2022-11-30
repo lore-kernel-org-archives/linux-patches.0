@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D8879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:55:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D36AC433D6;
-	Wed, 30 Nov 2022 18:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5BA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DB4C433D6;
+	Wed, 30 Nov 2022 18:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834511;
-	bh=WX4oFpBuivAEH3Atm49kqOuBUqSZBeAYJBFKI3hSAds=;
+	s=korg; t=1669834514;
+	bh=QLWc+4j4o5RmaCGc/s1KZ0/n5GazixD2L5Dcg1U/T1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvCAX/KUKBXm9WTeIyFT/lOuFEgs+6UzE0mIbJIJe0Ya0SEDHVwc4fiPY4EvnQbIF
-	 5X/6bNMESMVv2WQf2XgW53cP3pb2EyAu8MoyK0Rk9BBOem0Wy+Z+/BUzYPQlZJUR2g
-	 p139hVAjcMuxM8YdXngNI4/BI1jnIxQv8w+raZOI=
+	b=BqPoTuv5o+/4b8H0WS9cKyRirMsMG+GhbRKOSJFEkNwu3bvPuN3hATgXXkwlOoCgp
+	 h1OeVs+3YbSOJT+z9P/eoXDUyMypYuL+DjBxnt6J6NpmP2xBP16jpT17CecLumcMFy
+	 deH2zt8Xfh8t5AZHmdkc2sORPF05q21gI75S0AW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lyude Paul <lyude@redhat.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 280/289] drm/display/dp_mst: Fix drm_dp_mst_add_affected_dsc_crtcs() return code
-Date: Wed, 30 Nov 2022 19:24:25 +0100
-Message-Id: <20221130180550.450735110@linuxfoundation.org>
+Subject: [PATCH 6.0 281/289] drm/amd/dc/dce120: Fix audio register mapping, stop triggering KASAN
+Date: Wed, 30 Nov 2022 19:24:26 +0100
+Message-Id: <20221130180550.473870554@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,34 +36,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Lyude Paul <lyude@redhat.com>
 
-commit 2f3a1273862cb82cca227630cc7f04ce0c94b6bb upstream.
+commit 44035ec2fde1114254ee465f9ba3bb246b0b6283 upstream.
 
-Looks like that we're accidentally dropping a pretty important return code
-here. For some reason, we just return -EINVAL if we fail to get the MST
-topology state. This is wrong: error codes are important and should never
-be squashed without being handled, which here seems to have the potential
-to cause a deadlock.
+There's been a very long running bug that seems to have been neglected for
+a while, where amdgpu consistently triggers a KASAN error at start:
+
+  BUG: KASAN: global-out-of-bounds in read_indirect_azalia_reg+0x1d4/0x2a0 [amdgpu]
+  Read of size 4 at addr ffffffffc2274b28 by task modprobe/1889
+
+After digging through amd's rather creative method for accessing registers,
+I eventually discovered the problem likely has to do with the fact that on
+my dce120 GPU there are supposedly 7 sets of audio registers. But we only
+define a register mapping for 6 sets.
+
+So, fix this and fix the KASAN warning finally.
 
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
-Fixes: 8ec046716ca8 ("drm/dp_mst: Add helper to trigger modeset on affected DSC MST CRTCs")
-Cc: <stable@vger.kernel.org> # v5.6+
+Cc: stable@vger.kernel.org
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -5293,7 +5293,7 @@ int drm_dp_mst_add_affected_dsc_crtcs(st
- 	mst_state = drm_atomic_get_mst_topology_state(state, mgr);
+--- a/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
+@@ -359,7 +359,8 @@ static const struct dce_audio_registers
+ 	audio_regs(2),
+ 	audio_regs(3),
+ 	audio_regs(4),
+-	audio_regs(5)
++	audio_regs(5),
++	audio_regs(6),
+ };
  
- 	if (IS_ERR(mst_state))
--		return -EINVAL;
-+		return PTR_ERR(mst_state);
- 
- 	list_for_each_entry(pos, &mst_state->vcpis, next) {
- 
+ #define DCE120_AUD_COMMON_MASK_SH_LIST(mask_sh)\
 
 
