@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE23279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DF3C433D6;
-	Wed, 30 Nov 2022 18:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7A079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C44C433C1;
+	Wed, 30 Nov 2022 18:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834283;
-	bh=sF5DUyQuX3s7ZH9I+27R45aJbbL3a//E7JnNavXSbCg=;
+	s=korg; t=1669834286;
+	bh=jg29UixbMaXOtHQO1/q+5au2IcDVATzvDZAKVEnJ5Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+NDkRXjlIQBcOnPB/PWla7cHJXFirfT4NvMuKTpvHw9HV8iNUAN4Q+tC7/OhRRPb
-	 7i6t3ijXQq86tF9Dh52+CVo3y9KRRjRTE2+hWvHVU598BXl7f4uzHFj6W0W3hjw8JL
-	 Z2wWZuUE34et0xVRnxfNNXcB2rV+NVjRZujzTZE4=
+	b=HUM+KDeA/tXVZbMxUXA0onS+NiWmAfbD8HaqUaJ0NB2/X9KlA60xDxEV8MdVRzQYw
+	 sU9WBO6v4tbgmNp9FbvBBJpaqbELaCQ09x+46ER15bgckHJXF0CvtpBH2vslEgFK/b
+	 UwT5mkU12/Dd0txcU0/c1W1AG9onoUaG/83SV0iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 196/289] io_uring: make poll refs more robust
-Date: Wed, 30 Nov 2022 19:23:01 +0100
-Message-Id: <20221130180548.564361784@linuxfoundation.org>
+	Sam James <sam@gentoo.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 170/289] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
+Date: Wed, 30 Nov 2022 19:22:35 +0100
+Message-Id: <20221130180547.986195010@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,101 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Sam James <sam@gentoo.org>
 
-commit a26a35e9019fd70bf3cf647dcfdae87abc7bacea upstream.
+commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 upstream.
 
-poll_refs carry two functions, the first is ownership over the request.
-The second is notifying the io_poll_check_events() that there was an
-event but wake up couldn't grab the ownership, so io_poll_check_events()
-should retry.
+Add missing <linux/string.h> include for strcmp.
 
-We want to make poll_refs more robust against overflows. Instead of
-always incrementing it, which covers two purposes with one atomic, check
-if poll_refs is elevated enough and if so set a retry flag without
-attempts to grab ownership. The gap between the bias check and following
-atomics may seem racy, but we don't need it to be strict. Moreover there
-might only be maximum 4 parallel updates: by the first and the second
-poll entries, __io_arm_poll_handler() and cancellation. From those four,
-only poll wake ups may be executed multiple times, but they're protected
-by a spin.
+Clang 16 makes -Wimplicit-function-declaration an error by default.
+Unfortunately, out of tree modules may use this in configure scripts,
+which means failure might cause silent miscompilation or misconfiguration.
 
-Cc: stable@vger.kernel.org
-Reported-by: Lin Ma <linma@zju.edu.cn>
-Fixes: aa43477b04025 ("io_uring: poll rework")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/c762bc31f8683b3270f3587691348a7119ef9c9d.1668963050.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
+or the (new) c-std-porting mailing list [3].
+
+[0] https://lwn.net/Articles/913505/
+[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
+[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
+[3] hosted at lists.linux.dev.
+
+[akpm@linux-foundation.org: remember "linux/"]
+Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ include/linux/license.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -40,7 +40,14 @@ struct io_poll_table {
- };
+--- a/include/linux/license.h
++++ b/include/linux/license.h
+@@ -2,6 +2,8 @@
+ #ifndef __LICENSE_H
+ #define __LICENSE_H
  
- #define IO_POLL_CANCEL_FLAG	BIT(31)
--#define IO_POLL_REF_MASK	GENMASK(30, 0)
-+#define IO_POLL_RETRY_FLAG	BIT(30)
-+#define IO_POLL_REF_MASK	GENMASK(29, 0)
++#include <linux/string.h>
 +
-+/*
-+ * We usually have 1-2 refs taken, 128 is more than enough and we want to
-+ * maximise the margin between this amount and the moment when it overflows.
-+ */
-+#define IO_POLL_REF_BIAS	128
- 
- #define IO_WQE_F_DOUBLE		1
- 
-@@ -58,6 +65,21 @@ static inline bool wqe_is_double(struct
- 	return priv & IO_WQE_F_DOUBLE;
- }
- 
-+static bool io_poll_get_ownership_slowpath(struct io_kiocb *req)
-+{
-+	int v;
-+
-+	/*
-+	 * poll_refs are already elevated and we don't have much hope for
-+	 * grabbing the ownership. Instead of incrementing set a retry flag
-+	 * to notify the loop that there might have been some change.
-+	 */
-+	v = atomic_fetch_or(IO_POLL_RETRY_FLAG, &req->poll_refs);
-+	if (v & IO_POLL_REF_MASK)
-+		return false;
-+	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
-+}
-+
- /*
-  * If refs part of ->poll_refs (see IO_POLL_REF_MASK) is 0, it's free. We can
-  * bump it and acquire ownership. It's disallowed to modify requests while not
-@@ -66,6 +88,8 @@ static inline bool wqe_is_double(struct
-  */
- static inline bool io_poll_get_ownership(struct io_kiocb *req)
+ static inline int license_is_gpl_compatible(const char *license)
  {
-+	if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
-+		return io_poll_get_ownership_slowpath(req);
- 	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
- }
- 
-@@ -235,6 +259,16 @@ static int io_poll_check_events(struct i
- 		 */
- 		if ((v & IO_POLL_REF_MASK) != 1)
- 			req->cqe.res = 0;
-+		if (v & IO_POLL_RETRY_FLAG) {
-+			req->cqe.res = 0;
-+			/*
-+			 * We won't find new events that came in between
-+			 * vfs_poll and the ref put unless we clear the flag
-+			 * in advance.
-+			 */
-+			atomic_andnot(IO_POLL_RETRY_FLAG, &req->poll_refs);
-+			v &= ~IO_POLL_RETRY_FLAG;
-+		}
- 
- 		/* the mask was stashed in __io_poll_execute */
- 		if (!req->cqe.res) {
+ 	return (strcmp(license, "GPL") == 0
 
 
