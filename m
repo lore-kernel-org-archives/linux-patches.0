@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678676FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4903C433D7;
-	Wed, 30 Nov 2022 18:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266636FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759B5C433B5;
+	Wed, 30 Nov 2022 18:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832799;
-	bh=lOjJ92ySfAV9G+uygflEoFdCaYxc2VJLfKHKYksRM5M=;
+	s=korg; t=1669832802;
+	bh=KDw9EjK9+mwAfTvh1wRhZgqj6HHKnxmWbRovU+8NZ0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uSJM++ifO54HkHWhyEEzQQWKgyhMXh3dS99GRq4vXr1ReYZ4RllkAWyTzMVm/cQW6
-	 60y0Md49wvq3xbB+0PPY5zZy0HUlTwa8K8yuxhd/b7g1MrEx5NR3buYY2aDIUcb0h6
-	 0LV1gQ4RtqWHBClIs4FOhh5kpW7wDtYd+ey6rLuM=
+	b=jzDAsZojHl93WFogipGsouA28pCX3q1MaksPzg4Lhw27paNYARaeNyPxWn+F7gW9j
+	 MOBEXVktAaL1SP83asm01vKA45biXJXTLrvipgIugunv6JCZSrVOk4h5vdYlVZXCER
+	 BqcYn1RuOu3BzgVacF3+2cFfl2g3F0v3J/jS/1TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	taozhang <taozhang@bestechnic.com>,
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/162] wifi: mac80211: fix memory free error when registering wiphy fail
-Date: Wed, 30 Nov 2022 19:21:36 +0100
-Message-Id: <20221130180528.909282003@linuxfoundation.org>
+Subject: [PATCH 5.10 016/162] wifi: mac80211_hwsim: fix debugfs attribute ps with rc table support
+Date: Wed, 30 Nov 2022 19:21:37 +0100
+Message-Id: <20221130180528.937927614@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,51 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: taozhang <taozhang@bestechnic.com>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-[ Upstream commit 50b2e8711462409cd368c41067405aa446dfa2af ]
+[ Upstream commit 69188df5f6e4cecc6b76b958979ba363cd5240e8 ]
 
-ieee80211_register_hw free the allocated cipher suites when
-registering wiphy fail, and ieee80211_free_hw will re-free it.
+Fixes a warning that occurs when rc table support is enabled
+(IEEE80211_HW_SUPPORTS_RC_TABLE) in mac80211_hwsim and the PS mode
+is changed via the exported debugfs attribute.
 
-set wiphy_ciphers_allocated to false after freeing allocated
-cipher suites.
+When the PS mode is changed, a packet is broadcasted via
+hwsim_send_nullfunc by creating and transmitting a plain skb with only
+header initialized. The ieee80211 rate array in the control buffer is
+zero-initialized. When ratetbl support is enabled, ieee80211_get_tx_rates
+is called for the skb with sta parameter set to NULL and thus no
+ratetbl can be used. The final rate array then looks like
+[-1,0; 0,0; 0,0; 0,0] which causes the warning in ieee80211_get_tx_rate.
 
-Signed-off-by: taozhang <taozhang@bestechnic.com>
+The issue is fixed by setting the count of the first rate with idx '0'
+to 1 and hence ieee80211_get_tx_rates won't overwrite it with idx '-1'.
+
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mac80211_hwsim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index 73893025922f..ae90ac3be59a 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1349,8 +1349,10 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
- 	ieee80211_led_exit(local);
- 	destroy_workqueue(local->workqueue);
-  fail_workqueue:
--	if (local->wiphy_ciphers_allocated)
-+	if (local->wiphy_ciphers_allocated) {
- 		kfree(local->hw.wiphy->cipher_suites);
-+		local->wiphy_ciphers_allocated = false;
-+	}
- 	kfree(local->int_scan_req);
- 	return result;
- }
-@@ -1420,8 +1422,10 @@ void ieee80211_free_hw(struct ieee80211_hw *hw)
- 	mutex_destroy(&local->iflist_mtx);
- 	mutex_destroy(&local->mtx);
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index a6d4ff4760ad..255286b2324e 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -775,6 +775,7 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
+ 	struct hwsim_vif_priv *vp = (void *)vif->drv_priv;
+ 	struct sk_buff *skb;
+ 	struct ieee80211_hdr *hdr;
++	struct ieee80211_tx_info *cb;
  
--	if (local->wiphy_ciphers_allocated)
-+	if (local->wiphy_ciphers_allocated) {
- 		kfree(local->hw.wiphy->cipher_suites);
-+		local->wiphy_ciphers_allocated = false;
-+	}
+ 	if (!vp->assoc)
+ 		return;
+@@ -796,6 +797,10 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
+ 	memcpy(hdr->addr2, mac, ETH_ALEN);
+ 	memcpy(hdr->addr3, vp->bssid, ETH_ALEN);
  
- 	idr_for_each(&local->ack_status_frames,
- 		     ieee80211_free_ack_frame, NULL);
++	cb = IEEE80211_SKB_CB(skb);
++	cb->control.rates[0].count = 1;
++	cb->control.rates[1].idx = -1;
++
+ 	rcu_read_lock();
+ 	mac80211_hwsim_tx_frame(data->hw, skb,
+ 				rcu_dereference(vif->chanctx_conf)->def.chan);
 -- 
 2.35.1
 
