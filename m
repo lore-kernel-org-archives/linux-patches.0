@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34856FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2629DC433C1;
-	Wed, 30 Nov 2022 18:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553466FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C839BC433D6;
+	Wed, 30 Nov 2022 18:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832921;
-	bh=KQCY3Is2onlKwYsNc3RXt1t2Y5VaEazYTKXHL7TbxNs=;
+	s=korg; t=1669832924;
+	bh=g53hb0b6F5F6lbypay0JNJNo0d4BghcPRYihPdWj9Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3Haz+aWD1pRtc+bIYYLddPdofc8PSF1QpAiyF2cVd42sE+SuqWMDgXBwl5dSQ/VS
-	 mIFDMzPG+lj22qUAx+VfbMUj5A7TVjoEKq8WyIV+98tHpb1IBg7jcrJXRA8BNOs2M9
-	 Lyf/REUyM8Is5AaB6h9nbRe62y5Kh9uwsOMImImw=
+	b=Fk2YaAyVglzB8/hC+SRfy4VCGn2y0iBXQKkUbOBTflqKTa9wkKwxQjUrnHhr6AzTZ
+	 QiJVUIH97DdGDk/uIRSumadRnSe3gPSvCCPMl/WZR1K0XVN6IuTT+kRYsZlRomXeHg
+	 hM9Sp3W8n7fZSDlcTmbgb5u1IiRlI8ACOwR3Vmqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/162] s390/crashdump: fix TOD programmable field size
-Date: Wed, 30 Nov 2022 19:22:49 +0100
-Message-Id: <20221130180530.883520190@linuxfoundation.org>
+Subject: [PATCH 5.10 071/162] tipc: check skb_linearize() return value in tipc_disc_rcv()
+Date: Wed, 30 Nov 2022 19:22:32 +0100
+Message-Id: <20221130180530.431332300@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,56 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
+[ Upstream commit cd0f6421162201e4b22ce757a1966729323185eb ]
 
-The size of the TOD programmable field was incorrectly increased from
-four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
-save area handling").
-This leads to an elf notes section NT_S390_TODPREG which has a size of
-eight instead of four bytes in case of kdump, however even worse is
-that the contents is incorrect: it is supposed to contain only the
-contents of the TOD programmable field, but in fact contains a mix of
-the TOD programmable field (32 bit upper bits) and parts of the CPU
-timer register (lower 32 bits).
+If skb_linearize() fails in tipc_disc_rcv(), we need to free the skb instead of
+handle it.
 
-Fix this by simply changing the size of the todpreg field within the
-save area structure. This will implicitly also fix the size of the
-corresponding elf notes sections.
-
-This also gets rid of this compile time warning:
-
-in function ‘fortify_memcpy_chk’,
-    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
-./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
-   declared with attribute warning: detected read beyond size of field
-   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Link: https://lore.kernel.org/r/20221119072832.7896-1-yuehaibing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/crash_dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/discover.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/crash_dump.c b/arch/s390/kernel/crash_dump.c
-index 76762dc67ca9..f292c3e10671 100644
---- a/arch/s390/kernel/crash_dump.c
-+++ b/arch/s390/kernel/crash_dump.c
-@@ -44,7 +44,7 @@ struct save_area {
- 	u64 fprs[16];
- 	u32 fpc;
- 	u32 prefix;
--	u64 todpreg;
-+	u32 todpreg;
- 	u64 timer;
- 	u64 todcmp;
- 	u64 vxrs_low[16];
+diff --git a/net/tipc/discover.c b/net/tipc/discover.c
+index 2ae268b67465..2730310249e3 100644
+--- a/net/tipc/discover.c
++++ b/net/tipc/discover.c
+@@ -210,7 +210,10 @@ void tipc_disc_rcv(struct net *net, struct sk_buff *skb,
+ 	u32 self;
+ 	int err;
+ 
+-	skb_linearize(skb);
++	if (skb_linearize(skb)) {
++		kfree_skb(skb);
++		return;
++	}
+ 	hdr = buf_msg(skb);
+ 
+ 	if (caps & TIPC_NODE_ID128)
 -- 
 2.35.1
 
