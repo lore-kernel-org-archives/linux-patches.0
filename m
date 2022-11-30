@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0694479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC80C433C1;
-	Wed, 30 Nov 2022 18:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63BF79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B797C433C1;
+	Wed, 30 Nov 2022 18:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834380;
-	bh=/7nNmNLkVrG6cnl4XZM4dyEmfIA/rHGBXc7NZRApXoo=;
+	s=korg; t=1669834383;
+	bh=QRMQNKU5WrmXKfWnnUxMxBy3de40RPScvOym+3sJIEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwIm0LY+LrgX5CHkqhjNrQHHPSIpVjaVOIZMfAr6MTfII1qIuST7ljX98OCLOxr9u
-	 1KyOlY7dMUxgCEj7KPaS6JRhWuwRDzOPLjk+9NCId+x2O+4rqI2wgLAUFypmnW+aYX
-	 yKAz5KMVRDS1yPqf0IvAMlMZKSVfJyiRrt5gCXWQ=
+	b=NdCh0CPa56JMDzBgaSU4Nav3CXmZPPX8bFrraoBCxicTZrUPDG3jh6Vop4i1FNfUa
+	 vR1fCyRctOjpGiq4TpWGHgSjwWJ4HauL+91Hwb0Oj+XlSov04yhgfpCOFkLyUlArbX
+	 ckZKM3IAZxe8oB+igwwau8x7wraYl9q2iqzdbzEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	David Woodhouse <dwmw@amazon.co.uk>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
-	stable@kernel.org,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 205/289] KVM: x86/xen: Validate port number in SCHEDOP_poll
-Date: Wed, 30 Nov 2022 19:23:10 +0100
-Message-Id: <20221130180548.767960200@linuxfoundation.org>
+	Zhenyu Wang <zhenyuw@linux.intel.com>
+Subject: [PATCH 6.0 206/289] drm/i915/gvt: Get reference to KVM iff attachment to VM is successful
+Date: Wed, 30 Nov 2022 19:23:11 +0100
+Message-Id: <20221130180548.790451779@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,68 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4ea9439fd537313f3381f0af4ebbf05e3f51a58c upstream.
+commit 9ed1fdee9ee324f3505ff066287ee53143caaaa2 upstream.
 
-We shouldn't allow guests to poll on arbitrary port numbers off the end
-of the event channel table.
+Get a reference to KVM if and only if a vGPU is successfully attached to
+the VM to avoid leaking a reference if there's no available vGPU.  On
+open_device() failure, vfio_device_open() doesn't invoke close_device().
 
-Fixes: 1a65105a5aba ("KVM: x86/xen: handle PV spinlocks slowpath")
-[dwmw2: my bug though; the original version did check the validity as a
- side-effect of an idr_find() which I ripped out in refactoring.]
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Cc: stable@kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 421cfe6596f6 ("vfio: remove VFIO_GROUP_NOTIFY_SET_KVM")
+Cc: stable@vger.kernel.org
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Link: http://patchwork.freedesktop.org/patch/msgid/20221111002225.2418386-2-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gvt/kvmgt.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -954,6 +954,14 @@ static int kvm_xen_hypercall_complete_us
- 	return kvm_xen_hypercall_set_result(vcpu, run->xen.u.hcall.result);
- }
- 
-+static inline int max_evtchn_port(struct kvm *kvm)
-+{
-+	if (IS_ENABLED(CONFIG_64BIT) && kvm->arch.xen.long_mode)
-+		return EVTCHN_2L_NR_CHANNELS;
-+	else
-+		return COMPAT_EVTCHN_2L_NR_CHANNELS;
-+}
-+
- static bool wait_pending_event(struct kvm_vcpu *vcpu, int nr_ports,
- 			       evtchn_port_t *ports)
- {
-@@ -1042,6 +1050,10 @@ static bool kvm_xen_schedop_poll(struct
- 			*r = -EFAULT;
- 			goto out;
- 		}
-+		if (ports[i] >= max_evtchn_port(vcpu->kvm)) {
-+			*r = -EINVAL;
-+			goto out;
-+		}
+--- a/drivers/gpu/drm/i915/gvt/kvmgt.c
++++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
+@@ -765,8 +765,6 @@ static int intel_vgpu_open_device(struct
+ 		return -ESRCH;
  	}
  
- 	if (sched_poll.nr_ports == 1)
-@@ -1308,14 +1320,6 @@ handle_in_userspace:
- 	return 0;
- }
- 
--static inline int max_evtchn_port(struct kvm *kvm)
--{
--	if (IS_ENABLED(CONFIG_64BIT) && kvm->arch.xen.long_mode)
--		return EVTCHN_2L_NR_CHANNELS;
--	else
--		return COMPAT_EVTCHN_2L_NR_CHANNELS;
--}
+-	kvm_get_kvm(vgpu->vfio_device.kvm);
 -
- static void kvm_xen_check_poller(struct kvm_vcpu *vcpu, int port)
- {
- 	int poll_evtchn = vcpu->arch.xen.poll_evtchn;
+ 	if (__kvmgt_vgpu_exist(vgpu))
+ 		return -EEXIST;
+ 
+@@ -777,6 +775,7 @@ static int intel_vgpu_open_device(struct
+ 
+ 	vgpu->track_node.track_write = kvmgt_page_track_write;
+ 	vgpu->track_node.track_flush_slot = kvmgt_page_track_flush_slot;
++	kvm_get_kvm(vgpu->vfio_device.kvm);
+ 	kvm_page_track_register_notifier(vgpu->vfio_device.kvm,
+ 					 &vgpu->track_node);
+ 
 
 
