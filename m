@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91E279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B33AC433D6;
-	Wed, 30 Nov 2022 18:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F92C433C1;
+	Wed, 30 Nov 2022 18:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834500;
-	bh=YV/g4gHeGL9nPftnW7aDWYSFRYJ/FYEbVp5rDMcHxy4=;
+	s=korg; t=1669834503;
+	bh=zATKBruJEbS9/K5LcSmtgTYJmmhqPIEx0VmGc2c278A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbge9bP+TDWfKP84NDmmTrmOf4EuD312BFyVerMWD/vT5ydnpA/dIBrxpqKl53XyP
-	 Kc00y7RKg17K1EFMyWc8SOKDU8a0CYO6QzsMdr6fUmBy0qP7acrG3Wgwn00yysby2h
-	 UIT8315LV8xiaBpOc4huOm4w1/paEJ85Y/eJLokE=
+	b=VC0chcT2QJdWAnQFbgv0cH14Y0amvjhatFaNUbE0lSIg311GtsHamotJBosq0C+1o
+	 Kc88zfvCKnYDTJ0bdBnaJTt3J3zb0tJjqFe7JIBAaLVY9avIUIQEFncGEK0Axtyxve
+	 nlk2LiJqmQCAxJCT/b3g4HTA5eWfX3v43BiFxZqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 259/289] dm-log-writes: set dma_alignment limit in io_hints
-Date: Wed, 30 Nov 2022 19:24:04 +0100
-Message-Id: <20221130180549.974631689@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 277/289] btrfs: sysfs: normalize the error handling branch in btrfs_init_sysfs()
+Date: Wed, 30 Nov 2022 19:24:22 +0100
+Message-Id: <20221130180550.381936194@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,37 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 50a893359cd2643ee1afc96eedc9e7084cab49fa ]
+commit ffdbb44f2f23f963b8f5672e35c3a26088177a62 upstream.
 
-This device mapper needs bio vectors to be sized and memory aligned to
-the logical block size. Set the minimum required queue limit
-accordingly.
+Although kset_unregister() can eventually remove all attribute files,
+explicitly rolling back with the matching function makes the code logic
+look clearer.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221110184501.2451620-6-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-writes.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/sysfs.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-log-writes.c b/drivers/md/dm-log-writes.c
-index 20fd688f72e7..178e13a5b059 100644
---- a/drivers/md/dm-log-writes.c
-+++ b/drivers/md/dm-log-writes.c
-@@ -875,6 +875,7 @@ static void log_writes_io_hints(struct dm_target *ti, struct queue_limits *limit
- 	limits->logical_block_size = bdev_logical_block_size(lc->dev->bdev);
- 	limits->physical_block_size = bdev_physical_block_size(lc->dev->bdev);
- 	limits->io_min = limits->physical_block_size;
-+	limits->dma_alignment = limits->logical_block_size - 1;
- }
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -2251,8 +2251,11 @@ int __init btrfs_init_sysfs(void)
  
- #if IS_ENABLED(CONFIG_FS_DAX)
--- 
-2.35.1
-
+ #ifdef CONFIG_BTRFS_DEBUG
+ 	ret = sysfs_create_group(&btrfs_kset->kobj, &btrfs_debug_feature_attr_group);
+-	if (ret)
+-		goto out2;
++	if (ret) {
++		sysfs_unmerge_group(&btrfs_kset->kobj,
++				    &btrfs_static_feature_attr_group);
++		goto out_remove_group;
++	}
+ #endif
+ 
+ 	return 0;
 
 
