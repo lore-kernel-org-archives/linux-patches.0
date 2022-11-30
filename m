@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAB079C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7E8C43470;
-	Wed, 30 Nov 2022 18:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8692C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D14EC433D6;
+	Wed, 30 Nov 2022 18:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834077;
-	bh=3q6CbR9Daz+CWEQlDNBBRQRCzD7MDoU9zpaxHvt2D10=;
+	s=korg; t=1669834080;
+	bh=FhQqqWuJ6F8EHCReW61RTMLhlKsnEk/WF1GTOixciRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+9tTT4n62UhjmOxPyLo7jGP2f08POClDLSyeaPYGkyYB4gcg3L6qLOXRCJI3eEhr
-	 YdsHKudqJkzq/Z2EtMiSQRdOpI/vCK7eoXouQRM5ARx31sIrS5esBD+VC6ySk9SrKS
-	 cn7pO9l4+MyEj7vnOiHuwahG6uDBCGacZg1ZcyZ0=
+	b=tS/xYahqs4qzPgoG41CfyByLF0Syd1AWcTlmkAO9qJ4aSkdTk2uF6MgPnAuggwAXf
+	 Rs0QZLd8sT/mnSfPhPc1miNFs50ygs3iZ5nP+mBmjTVrk40CQ9/FqnQMpmlsIddFbp
+	 aLTh+SS81nqNLM5VB6hCWjNo/SRKXf6pb0JdJy5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Bjarni Jonasson <bjarni.jonasson@microchip.com>,
-	Steen Hegelund <steen.hegelund@microchip.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 121/289] net: sparx5: fix error handling in sparx5_port_open()
-Date: Wed, 30 Nov 2022 19:21:46 +0100
-Message-Id: <20221130180546.883777666@linuxfoundation.org>
+Subject: [PATCH 6.0 122/289] net: sched: allow act_ct to be built without NF_NAT
+Date: Wed, 30 Nov 2022 19:21:47 +0100
+Message-Id: <20221130180546.907129986@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,60 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Jian <liujian56@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 4305fe232b8aa59af3761adc9fe6b6aa40913960 ]
+[ Upstream commit 8427fd100c7b7793650e212a81e42f1cf124613d ]
 
-If phylink_of_phy_connect() fails, the port should be disabled.
-If sparx5_serdes_set()/phy_power_on() fails, the port should be
-disabled and the phylink should be stopped and disconnected.
+In commit f11fe1dae1c4 ("net/sched: Make NET_ACT_CT depends on NF_NAT"),
+it fixed the build failure when NF_NAT is m and NET_ACT_CT is y by
+adding depends on NF_NAT for NET_ACT_CT. However, it would also cause
+NET_ACT_CT cannot be built without NF_NAT, which is not expected. This
+patch fixes it by changing to use "(!NF_NAT || NF_NAT)" as the depend.
 
-Fixes: 946e7fd5053a ("net: sparx5: add port module support")
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Tested-by: Bjarni Jonasson <bjarni.jonasson@microchip.com>
-Reviewed-by: Steen Hegelund <steen.hegelund@microchip.com>
-Link: https://lore.kernel.org/r/20221117125918.203997-1-liujian56@huawei.com
+Fixes: f11fe1dae1c4 ("net/sched: Make NET_ACT_CT depends on NF_NAT")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/b6386f28d1ba34721795fb776a91cbdabb203447.1668807183.git.lucien.xin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/sparx5/sparx5_netdev.c  | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/sched/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-index af4d3e1f1a6d..3f112a897a60 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
-@@ -103,7 +103,7 @@ static int sparx5_port_open(struct net_device *ndev)
- 	err = phylink_of_phy_connect(port->phylink, port->of_node, 0);
- 	if (err) {
- 		netdev_err(ndev, "Could not attach to PHY\n");
--		return err;
-+		goto err_connect;
- 	}
+diff --git a/net/sched/Kconfig b/net/sched/Kconfig
+index 1e8ab4749c6c..4662a6ce8a7e 100644
+--- a/net/sched/Kconfig
++++ b/net/sched/Kconfig
+@@ -976,7 +976,7 @@ config NET_ACT_TUNNEL_KEY
  
- 	phylink_start(port->phylink);
-@@ -115,10 +115,20 @@ static int sparx5_port_open(struct net_device *ndev)
- 			err = sparx5_serdes_set(port->sparx5, port, &port->conf);
- 		else
- 			err = phy_power_on(port->serdes);
--		if (err)
-+		if (err) {
- 			netdev_err(ndev, "%s failed\n", __func__);
-+			goto out_power;
-+		}
- 	}
- 
-+	return 0;
-+
-+out_power:
-+	phylink_stop(port->phylink);
-+	phylink_disconnect_phy(port->phylink);
-+err_connect:
-+	sparx5_port_enable(port, false);
-+
- 	return err;
- }
+ config NET_ACT_CT
+ 	tristate "connection tracking tc action"
+-	depends on NET_CLS_ACT && NF_CONNTRACK && NF_NAT && NF_FLOW_TABLE
++	depends on NET_CLS_ACT && NF_CONNTRACK && (!NF_NAT || NF_NAT) && NF_FLOW_TABLE
+ 	help
+ 	  Say Y here to allow sending the packets to conntrack module.
  
 -- 
 2.35.1
