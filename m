@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C4F6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FDCC4347C;
-	Wed, 30 Nov 2022 18:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB536FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C3AC4347C;
+	Wed, 30 Nov 2022 18:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832850;
-	bh=lhCckk7m1S8yEYPQuCjIH3xoM3s/UW8mHvCfdyKhirU=;
+	s=korg; t=1669832853;
+	bh=krs0EqdIHkxl+jin83NrgsvSxco2LvipJuLkbCCkoG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qd0mM/IJ0zPWVRc2XI/2PRl9AlPNH653ijS+1QcW5iWQ2lhrWALTqk5Uim7YbI9BK
-	 a69/d2VgmWtiSMICB8ivGfdPIngnSHiyOBUWzSe+6wXpUjMWR5YSeXzTi/qno9pIbb
-	 qgmKM6fejw2WXSJSUABM6YH40S3HRmC+pcrWC3Ls=
+	b=uNyUhR+gPY9dd4370UyIzbNDnCqd9+mZ4ck4r1cpiOTrBZa8e2SIViKNg3p7sZrwg
+	 o4MaRY+edU+QCND0Gw4xoZfGuPuepAUOmy6iLWDxPGdDGlc830vn+unhss1H1m6dtB
+	 n9Q+Nd/N2ORJqlZA7+Tk70XHSSbGJIX86RSsGL68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Saeed Mahameed <saeed@kernel.org>,
-	Antoine Tenart <atenart@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/162] macsec: Fix invalid error code set
-Date: Wed, 30 Nov 2022 19:22:23 +0100
-Message-Id: <20221130180530.187671811@linuxfoundation.org>
+Subject: [PATCH 5.10 063/162] Drivers: hv: vmbus: fix double free in the error path of vmbus_add_channel_work()
+Date: Wed, 30 Nov 2022 19:22:24 +0100
+Message-Id: <20221130180530.213903225@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -37,36 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7cef6b73fba96abef731a53501924fc3c4a0f947 ]
+[ Upstream commit f92a4b50f0bd7fd52391dc4bb9a309085d278f91 ]
 
-'ret' is defined twice in macsec_changelink(), when it is set in macsec_is_offloaded
-case, it will be invalid before return.
+In the error path of vmbus_device_register(), device_unregister()
+is called, which calls vmbus_device_release().  The latter frees
+the struct hv_device that was passed in to vmbus_device_register().
+So remove the kfree() in vmbus_add_channel_work() to avoid a double
+free.
 
-Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.org>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://lore.kernel.org/r/20221118011249.48112-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c2e5df616e1a ("vmbus: add per-channel sysfs info")
+Suggested-by: Michael Kelley <mikelley@microsoft.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20221119081135.1564691-2-yangyingliang@huawei.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/hv/channel_mgmt.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index c20ebf44acfe..3e564158c401 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -3813,7 +3813,6 @@ static int macsec_changelink(struct net_device *dev, struct nlattr *tb[],
- 	if (macsec_is_offloaded(macsec)) {
- 		const struct macsec_ops *ops;
- 		struct macsec_context ctx;
--		int ret;
+diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
+index 10188b1a6a08..5b902adb0d1b 100644
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -501,13 +501,17 @@ static void vmbus_add_channel_work(struct work_struct *work)
+ 	 * Add the new device to the bus. This will kick off device-driver
+ 	 * binding which eventually invokes the device driver's AddDevice()
+ 	 * method.
++	 *
++	 * If vmbus_device_register() fails, the 'device_obj' is freed in
++	 * vmbus_device_release() as called by device_unregister() in the
++	 * error path of vmbus_device_register(). In the outside error
++	 * path, there's no need to free it.
+ 	 */
+ 	ret = vmbus_device_register(newchannel->device_obj);
  
- 		ops = macsec_get_ops(netdev_priv(dev), &ctx);
- 		if (!ops) {
+ 	if (ret != 0) {
+ 		pr_err("unable to add child device object (relid %d)\n",
+ 			newchannel->offermsg.child_relid);
+-		kfree(newchannel->device_obj);
+ 		goto err_deq_chan;
+ 	}
+ 
 -- 
 2.35.1
 
