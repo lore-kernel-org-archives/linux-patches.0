@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED13A79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73361C433B5;
-	Wed, 30 Nov 2022 18:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C66F79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216A4C433C1;
+	Wed, 30 Nov 2022 18:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834120;
-	bh=pOjs84J4/OzkFaq56jzvhkDHt04VPcLgs9YN3OnZtD4=;
+	s=korg; t=1669834123;
+	bh=GE3kwDtCumDCI5KccpVifHJ8JGoLJn5lTtjXZz9M/mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgsHsPA7X2G8f2rLVQ2wN5oeXfpMXlt9ISo1RW1RbTn7QK6ytbntE+06YgIHMvSRT
-	 L6JNh0/4xCAbfjcCG1ce6IicoYUaBy9cndhTpuNJPtiPBsOpdiRLhLf1cbZhNt3WJm
-	 zsZ82lqPTtyBnSh81WvukWtSPyq/sNw0UHd60kEs=
+	b=bAd3b/ptf59dW8XZ71Itc2gdaJV9Z6hHzHqugVeLZg1tBYwh1ZVseDDLd++OYQp25
+	 IAbQDl4p24HllJJvZPJa4s8VUPmzBSNLA/uCn8nskWwJwczR1egNy2bP4DaJMTtID5
+	 RwiEanFsPVwP2K14x4XSAYI4tL/Tim6gIhOVjpCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 136/289] net: ethernet: mtk_eth_soc: move gdma_to_ppe and ppe_base definitions in mtk register map
-Date: Wed, 30 Nov 2022 19:22:01 +0100
-Message-Id: <20221130180547.221529708@linuxfoundation.org>
+Subject: [PATCH 6.0 111/289] net/mlx5e: Offload rule only when all encaps are valid
+Date: Wed, 30 Nov 2022 19:21:36 +0100
+Message-Id: <20221130180546.657391146@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,117 +36,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit 329bce5139cfb00dba40f038ec090572b81ff2a9 ]
+[ Upstream commit f377422044b2093c835e5f3717f8c8c58da1db1f ]
 
-This is a preliminary patch to introduce mt7986 hw packet engine.
+The cited commit adds a for loop to support multiple encapsulations.
+But it only checks if the last encap is valid.
 
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 8110437e5961 ("net: ethernet: mtk_eth_soc: fix resource leak in error path")
+Fix it by setting slow path flag when one of the encap is invalid.
+
+Fixes: f493f15534ec ("net/mlx5e: Move flow attr reformat action bit to per dest flags")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 15 +++++++++++----
- drivers/net/ethernet/mediatek/mtk_eth_soc.h |  3 ++-
- drivers/net/ethernet/mediatek/mtk_ppe.h     |  2 --
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ .../mellanox/mlx5/core/en/tc_tun_encap.c        |  6 ++----
+ .../mellanox/mlx5/core/en/tc_tun_encap.h        |  3 +--
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 17 ++++++-----------
+ 3 files changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 916b570bdbf4..83c636d44142 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -73,6 +73,8 @@ static const struct mtk_reg_map mtk_reg_map = {
- 		.fq_blen	= 0x1b2c,
- 	},
- 	.gdm1_cnt		= 0x2400,
-+	.gdma_to_ppe		= 0x4444,
-+	.ppe_base		= 0x0c00,
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+index 5b6a79d2034e..ff73d25bc6eb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
+@@ -764,8 +764,7 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
+ 		       struct net_device *mirred_dev,
+ 		       int out_index,
+ 		       struct netlink_ext_ack *extack,
+-		       struct net_device **encap_dev,
+-		       bool *encap_valid)
++		       struct net_device **encap_dev)
+ {
+ 	struct mlx5_eswitch *esw = priv->mdev->priv.eswitch;
+ 	struct mlx5e_tc_flow_parse_attr *parse_attr;
+@@ -880,9 +879,8 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
+ 	if (e->flags & MLX5_ENCAP_ENTRY_VALID) {
+ 		attr->esw_attr->dests[out_index].pkt_reformat = e->pkt_reformat;
+ 		attr->esw_attr->dests[out_index].flags |= MLX5_ESW_DEST_ENCAP_VALID;
+-		*encap_valid = true;
+ 	} else {
+-		*encap_valid = false;
++		flow_flag_set(flow, SLOW);
+ 	}
+ 	mutex_unlock(&esw->offloads.encap_tbl_lock);
  
- static const struct mtk_reg_map mt7628_reg_map = {
-@@ -126,6 +128,8 @@ static const struct mtk_reg_map mt7986_reg_map = {
- 		.fq_blen	= 0x472c,
- 	},
- 	.gdm1_cnt		= 0x1c00,
-+	.gdma_to_ppe		= 0x3333,
-+	.ppe_base		= 0x2000,
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.h b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.h
+index d542b8476491..8ad273dde40e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.h
+@@ -17,8 +17,7 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
+ 		       struct net_device *mirred_dev,
+ 		       int out_index,
+ 		       struct netlink_ext_ack *extack,
+-		       struct net_device **encap_dev,
+-		       bool *encap_valid);
++		       struct net_device **encap_dev);
  
- /* strings used by ethtool */
-@@ -2978,6 +2982,7 @@ static int mtk_open(struct net_device *dev)
+ int mlx5e_attach_decap(struct mlx5e_priv *priv,
+ 		       struct mlx5e_tc_flow *flow,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 229c14b1af00..949ef560df78 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -1620,7 +1620,6 @@ set_encap_dests(struct mlx5e_priv *priv,
+ 		struct mlx5e_tc_flow *flow,
+ 		struct mlx5_flow_attr *attr,
+ 		struct netlink_ext_ack *extack,
+-		bool *encap_valid,
+ 		bool *vf_tun)
+ {
+ 	struct mlx5e_tc_flow_parse_attr *parse_attr;
+@@ -1637,7 +1636,6 @@ set_encap_dests(struct mlx5e_priv *priv,
+ 	parse_attr = attr->parse_attr;
+ 	esw_attr = attr->esw_attr;
+ 	*vf_tun = false;
+-	*encap_valid = true;
  
- 	/* we run 2 netdevs on the same dma ring so we only bring it up once */
- 	if (!refcount_read(&eth->dma_refcnt)) {
-+		const struct mtk_soc_data *soc = eth->soc;
- 		u32 gdm_config = MTK_GDMA_TO_PDMA;
- 
- 		err = mtk_start_dma(eth);
-@@ -2986,15 +2991,15 @@ static int mtk_open(struct net_device *dev)
- 			return err;
+ 	for (out_index = 0; out_index < MLX5_MAX_FLOW_FWD_VPORTS; out_index++) {
+ 		struct net_device *out_dev;
+@@ -1654,7 +1652,7 @@ set_encap_dests(struct mlx5e_priv *priv,
+ 			goto out;
  		}
+ 		err = mlx5e_attach_encap(priv, flow, attr, out_dev, out_index,
+-					 extack, &encap_dev, encap_valid);
++					 extack, &encap_dev);
+ 		dev_put(out_dev);
+ 		if (err)
+ 			goto out;
+@@ -1718,8 +1716,8 @@ mlx5e_tc_add_fdb_flow(struct mlx5e_priv *priv,
+ 	struct mlx5e_tc_flow_parse_attr *parse_attr;
+ 	struct mlx5_flow_attr *attr = flow->attr;
+ 	struct mlx5_esw_flow_attr *esw_attr;
+-	bool vf_tun, encap_valid;
+ 	u32 max_prio, max_chain;
++	bool vf_tun;
+ 	int err = 0;
  
--		if (eth->soc->offload_version && mtk_ppe_start(eth->ppe) == 0)
--			gdm_config = MTK_GDMA_TO_PPE;
-+		if (soc->offload_version && mtk_ppe_start(eth->ppe) == 0)
-+			gdm_config = soc->reg_map->gdma_to_ppe;
- 
- 		mtk_gdm_config(eth, gdm_config);
- 
- 		napi_enable(&eth->tx_napi);
- 		napi_enable(&eth->rx_napi);
- 		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
--		mtk_rx_irq_enable(eth, eth->soc->txrx.rx_irq_done_mask);
-+		mtk_rx_irq_enable(eth, soc->txrx.rx_irq_done_mask);
- 		refcount_set(&eth->dma_refcnt, 1);
+ 	parse_attr = attr->parse_attr;
+@@ -1809,7 +1807,7 @@ mlx5e_tc_add_fdb_flow(struct mlx5e_priv *priv,
+ 		esw_attr->int_port = int_port;
  	}
+ 
+-	err = set_encap_dests(priv, flow, attr, extack, &encap_valid, &vf_tun);
++	err = set_encap_dests(priv, flow, attr, extack, &vf_tun);
+ 	if (err)
+ 		goto err_out;
+ 
+@@ -1839,7 +1837,7 @@ mlx5e_tc_add_fdb_flow(struct mlx5e_priv *priv,
+ 	 * (1) there's no error
+ 	 * (2) there's an encap action and we don't have valid neigh
+ 	 */
+-	if (!encap_valid || flow_flag_test(flow, SLOW))
++	if (flow_flag_test(flow, SLOW))
+ 		flow->rule[0] = mlx5e_tc_offload_to_slow_path(esw, flow, &parse_attr->spec);
  	else
-@@ -4104,7 +4109,9 @@ static int mtk_probe(struct platform_device *pdev)
- 	}
+ 		flow->rule[0] = mlx5e_tc_offload_fdb_rules(esw, flow, &parse_attr->spec, attr);
+@@ -3737,7 +3735,7 @@ alloc_flow_post_acts(struct mlx5e_tc_flow *flow, struct netlink_ext_ack *extack)
+ 	struct mlx5e_post_act *post_act = get_post_action(flow->priv);
+ 	struct mlx5_flow_attr *attr, *next_attr = NULL;
+ 	struct mlx5e_post_act_handle *handle;
+-	bool vf_tun, encap_valid = true;
++	bool vf_tun;
+ 	int err;
  
- 	if (eth->soc->offload_version) {
--		eth->ppe = mtk_ppe_init(eth, eth->base + MTK_ETH_PPE_BASE, 2);
-+		u32 ppe_addr = eth->soc->reg_map->ppe_base;
-+
-+		eth->ppe = mtk_ppe_init(eth, eth->base + ppe_addr, 2);
- 		if (!eth->ppe) {
- 			err = -ENOMEM;
- 			goto err_free_dev;
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 0f9668a4079d..511752729f5c 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -105,7 +105,6 @@
- #define MTK_GDMA_TCS_EN		BIT(21)
- #define MTK_GDMA_UCS_EN		BIT(20)
- #define MTK_GDMA_TO_PDMA	0x0
--#define MTK_GDMA_TO_PPE		0x4444
- #define MTK_GDMA_DROP_ALL       0x7777
+ 	/* This is going in reverse order as needed.
+@@ -3759,13 +3757,10 @@ alloc_flow_post_acts(struct mlx5e_tc_flow *flow, struct netlink_ext_ack *extack)
+ 		if (list_is_last(&attr->list, &flow->attrs))
+ 			break;
  
- /* Unicast Filter MAC Address Register - Low */
-@@ -955,6 +954,8 @@ struct mtk_reg_map {
- 		u32	fq_blen;	/* fq free page buffer length */
- 	} qdma;
- 	u32	gdm1_cnt;
-+	u32	gdma_to_ppe;
-+	u32	ppe_base;
- };
+-		err = set_encap_dests(flow->priv, flow, attr, extack, &encap_valid, &vf_tun);
++		err = set_encap_dests(flow->priv, flow, attr, extack, &vf_tun);
+ 		if (err)
+ 			goto out_free;
  
- /* struct mtk_eth_data -	This is the structure holding all differences
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
-index 69ffce04d630..ceb7dfe281de 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.h
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
-@@ -8,8 +8,6 @@
- #include <linux/bitfield.h>
- #include <linux/rhashtable.h>
- 
--#define MTK_ETH_PPE_BASE		0xc00
+-		if (!encap_valid)
+-			flow_flag_set(flow, SLOW);
 -
- #define MTK_PPE_ENTRIES_SHIFT		3
- #define MTK_PPE_ENTRIES			(1024 << MTK_PPE_ENTRIES_SHIFT)
- #define MTK_PPE_HASH_MASK		(MTK_PPE_ENTRIES - 1)
+ 		err = actions_prepare_mod_hdr_actions(flow->priv, flow, attr, extack);
+ 		if (err)
+ 			goto out_free;
 -- 
 2.35.1
 
