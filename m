@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CED879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4639C433D7;
-	Wed, 30 Nov 2022 18:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E1D79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C572C433D6;
+	Wed, 30 Nov 2022 18:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834370;
-	bh=HZV8+YzxqOj9V9ATIlKcP1jgAum2SRz3pjfbxusNBn0=;
+	s=korg; t=1669834372;
+	bh=Totxfezu9bhWZZve0dZ+6YN/1arN0WKEOUyiqCG0Kkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCiHilHBLv6ifCIgd0hxTSNW11j0mpjdci1ICmlrnKJr9lvoPtuBMqYjF//mx68wd
-	 OgvGsmUHZkbVvNOqUY7Visi9xHuHYiESaYOQzh4Z/m0yByey5ER9hEtyJJWc/mglDN
-	 ne/59C7kyUl+HMslLVj1xr0q5jxbdgoqvS3EiR5s=
+	b=Bd21DTmLbBDBqfdHUnZcx+QogpS7mO0svEwmo1jaXdCvBPWOn8G182ZRCPJVNOT2q
+	 RFZNKmMAkLlIryIb9NZtIeyNI2Vd1CEeW1WZ1EThZbM7WqxuMWc3nFd0fuHb5GvgZw
+	 XHr6d9tdp52pOoRvyKRWutFJKwjGS0BWj+5jndE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Rik van Riel <riel@surriel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Hugh Dickins <hughd@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 201/289] mm: vmscan: fix extreme overreclaim and swap floods
-Date: Wed, 30 Nov 2022 19:23:06 +0100
-Message-Id: <20221130180548.677518816@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Xu Yilun <yilun.xu@intel.com>
+Subject: [PATCH 6.0 202/289] fpga: m10bmc-sec: Fix kconfig dependencies
+Date: Wed, 30 Nov 2022 19:23:07 +0100
+Message-Id: <20221130180548.700013161@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -38,137 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Russ Weight <russell.h.weight@intel.com>
 
-commit f53af4285d775cd9a9a146fc438bd0a1bee1838a upstream.
+commit dfd10332596ef11ceafd29c4e21b4117be423fc4 upstream.
 
-During proactive reclaim, we sometimes observe severe overreclaim, with
-several thousand times more pages reclaimed than requested.
+The secure update driver depends on the firmware-upload functionality of
+the firmware-loader. The firmware-loader is carried in the firmware-class
+driver which is enabled with the tristate CONFIG_FW_LOADER option. The
+firmware-upload functionality is included in the firmware-class driver if
+the bool FW_UPLOAD config is set.
 
-This trace was obtained from shrink_lruvec() during such an instance:
+The current dependency statement, "depends on FW_UPLOAD", is not adequate
+because it does not implicitly turn on FW_LOADER. Instead of adding a
+dependency, follow the convention used by drivers that require the
+FW_LOADER_USER_HELPER functionality of the firmware-loader by using
+select for both FW_LOADER and FW_UPLOAD.
 
-    prio:0 anon_cost:1141521 file_cost:7767
-    nr_reclaimed:4387406 nr_to_reclaim:1047 (or_factor:4190)
-    nr=[7161123 345 578 1111]
-
-While he reclaimer requested 4M, vmscan reclaimed close to 16G, most of it
-by swapping.  These requests take over a minute, during which the write()
-to memory.reclaim is unkillably stuck inside the kernel.
-
-Digging into the source, this is caused by the proportional reclaim
-bailout logic.  This code tries to resolve a fundamental conflict: to
-reclaim roughly what was requested, while also aging all LRUs fairly and
-in accordance to their size, swappiness, refault rates etc.  The way it
-attempts fairness is that once the reclaim goal has been reached, it stops
-scanning the LRUs with the smaller remaining scan targets, and adjusts the
-remainder of the bigger LRUs according to how much of the smaller LRUs was
-scanned.  It then finishes scanning that remainder regardless of the
-reclaim goal.
-
-This works fine if priority levels are low and the LRU lists are
-comparable in size.  However, in this instance, the cgroup that is
-targeted by proactive reclaim has almost no files left - they've already
-been squeezed out by proactive reclaim earlier - and the remaining anon
-pages are hot.  Anon rotations cause the priority level to drop to 0,
-which results in reclaim targeting all of anon (a lot) and all of file
-(almost nothing).  By the time reclaim decides to bail, it has scanned
-most or all of the file target, and therefor must also scan most or all of
-the enormous anon target.  This target is thousands of times larger than
-the reclaim goal, thus causing the overreclaim.
-
-The bailout code hasn't changed in years, why is this failing now?  The
-most likely explanations are two other recent changes in anon reclaim:
-
-1. Before the series starting with commit 5df741963d52 ("mm: fix LRU
-   balancing effect of new transparent huge pages"), the VM was
-   overall relatively reluctant to swap at all, even if swap was
-   configured. This means the LRU balancing code didn't come into play
-   as often as it does now, and mostly in high pressure situations
-   where pronounced swap activity wouldn't be as surprising.
-
-2. For historic reasons, shrink_lruvec() loops on the scan targets of
-   all LRU lists except the active anon one, meaning it would bail if
-   the only remaining pages to scan were active anon - even if there
-   were a lot of them.
-
-   Before the series starting with commit ccc5dc67340c ("mm/vmscan:
-   make active/inactive ratio as 1:1 for anon lru"), most anon pages
-   would live on the active LRU; the inactive one would contain only a
-   handful of preselected reclaim candidates. After the series, anon
-   gets aged similarly to file, and the inactive list is the default
-   for new anon pages as well, making it often the much bigger list.
-
-   As a result, the VM is now more likely to actually finish large
-   anon targets than before.
-
-Change the code such that only one SWAP_CLUSTER_MAX-sized nudge toward the
-larger LRU lists is made before bailing out on a met reclaim goal.
-
-This fixes the extreme overreclaim problem.
-
-Fairness is more subtle and harder to evaluate.  No obvious misbehavior
-was observed on the test workload, in any case.  Conceptually, fairness
-should primarily be a cumulative effect from regular, lower priority
-scans.  Once the VM is in trouble and needs to escalate scan targets to
-make forward progress, fairness needs to take a backseat.  This is also
-acknowledged by the myriad exceptions in get_scan_count().  This patch
-makes fairness decrease gradually, as it keeps fairness work static over
-increasing priority levels with growing scan targets.  This should make
-more sense - although we may have to re-visit the exact values.
-
-Link: https://lkml.kernel.org/r/20220802162811.39216-1-hannes@cmpxchg.org
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: bdf86d0e6ca3 ("fpga: m10bmc-sec: create max10 bmc secure update")
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Russ Weight <russell.h.weight@intel.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20221115001127.289890-1-russell.h.weight@intel.com
+Signed-off-by: Xu Yilun <yilun.xu@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/fpga/Kconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2967,8 +2967,8 @@ static void shrink_lruvec(struct lruvec
- 	enum lru_list lru;
- 	unsigned long nr_reclaimed = 0;
- 	unsigned long nr_to_reclaim = sc->nr_to_reclaim;
-+	bool proportional_reclaim;
- 	struct blk_plug plug;
--	bool scan_adjusted;
+diff --git a/drivers/fpga/Kconfig b/drivers/fpga/Kconfig
+index 6c416955da53..bbe0a7cabb75 100644
+--- a/drivers/fpga/Kconfig
++++ b/drivers/fpga/Kconfig
+@@ -246,7 +246,9 @@ config FPGA_MGR_VERSAL_FPGA
  
- 	get_scan_count(lruvec, sc, nr);
- 
-@@ -2986,8 +2986,8 @@ static void shrink_lruvec(struct lruvec
- 	 * abort proportional reclaim if either the file or anon lru has already
- 	 * dropped to zero at the first pass.
- 	 */
--	scan_adjusted = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
--			 sc->priority == DEF_PRIORITY);
-+	proportional_reclaim = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
-+				sc->priority == DEF_PRIORITY);
- 
- 	blk_start_plug(&plug);
- 	while (nr[LRU_INACTIVE_ANON] || nr[LRU_ACTIVE_FILE] ||
-@@ -3007,7 +3007,7 @@ static void shrink_lruvec(struct lruvec
- 
- 		cond_resched();
- 
--		if (nr_reclaimed < nr_to_reclaim || scan_adjusted)
-+		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
- 			continue;
- 
- 		/*
-@@ -3058,8 +3058,6 @@ static void shrink_lruvec(struct lruvec
- 		nr_scanned = targets[lru] - nr[lru];
- 		nr[lru] = targets[lru] * (100 - percentage) / 100;
- 		nr[lru] -= min(nr[lru], nr_scanned);
--
--		scan_adjusted = true;
- 	}
- 	blk_finish_plug(&plug);
- 	sc->nr_reclaimed += nr_reclaimed;
+ config FPGA_M10_BMC_SEC_UPDATE
+ 	tristate "Intel MAX10 BMC Secure Update driver"
+-	depends on MFD_INTEL_M10_BMC && FW_UPLOAD
++	depends on MFD_INTEL_M10_BMC
++	select FW_LOADER
++	select FW_UPLOAD
+ 	help
+ 	  Secure update support for the Intel MAX10 board management
+ 	  controller.
+-- 
+2.38.1
+
 
 
