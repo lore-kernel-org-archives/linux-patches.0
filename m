@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2776FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32464C433D6;
-	Wed, 30 Nov 2022 18:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8786FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56CFC433D6;
+	Wed, 30 Nov 2022 18:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832901;
-	bh=5ks3EvlR+03RwnL2JDEr3cyY01bfjAhZ6ToSpXDnwVQ=;
+	s=korg; t=1669832904;
+	bh=dxU7GQ6y7EbjdtJ2vHoHYTRsyqJyR1aM76v0IhwAXpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9dtnboSIeXZsR10PnZaWwa/kzEsnHeRQYAS2NzzcpScbbmsTdjlWIUPoINTa6Cpr
-	 FlS+K6TIU9X6/37Q0Bg41Un3gMLR9XOclyHMTQmyuCthjOc0bQ7IBQeWAdnqNWDiK6
-	 W4wjEAS00x4aB5sV8lDLKhmr+H55vv1KcOPQO13I=
+	b=LeJFTwY4VOBqbdONVv2zik9xzVsEKE596R5EnqLr0Jp835Cju6cXCIeyEnKbPc6Du
+	 BNfeS5Vc9NpoTxEhUnFCkbUB1S2uqmuSxKo7jK/9vH1+wDrz0lJYt9JNyOYnamFFKS
+	 eqTfIXCFRkleDu9zOF6tnKjfrHzBugwC4XCanjQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/162] ipv4: Fix error return code in fib_table_insert()
-Date: Wed, 30 Nov 2022 19:22:42 +0100
-Message-Id: <20221130180530.696900654@linuxfoundation.org>
+Subject: [PATCH 5.10 082/162] s390/dasd: fix no record found for raw_track_access
+Date: Wed, 30 Nov 2022 19:22:43 +0100
+Message-Id: <20221130180530.722152510@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,38 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 568fe84940ac0e4e0b2cd7751b8b4911f7b9c215 ]
+[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
 
-In fib_table_insert(), if the alias was already inserted, but node not
-exist, the error code should be set before return from error handling path.
+For DASD devices in raw_track_access mode only full track images are
+read and written.
+For this purpose it is not necessary to do search operation in the
+locate record extended function. The documentation even states that
+this might fail if the searched record is not found on a track.
 
-Fixes: a6c76c17df02 ("ipv4: Notify route after insertion to the routing table")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Link: https://lore.kernel.org/r/20221120072838.2167047-1-william.xuanziyang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Currently the driver sets a value of 1 in the search field for the first
+record after record zero. This is the default for disks not in
+raw_track_access mode but record 1 might be missing on a completely
+empty track.
+
+There has not been any problem with this on IBM storage servers but it
+might lead to errors with DASD devices on other vendors storage servers.
+
+Fix this by setting the search field to 0. Record zero is always available
+even on a completely empty track.
+
+Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_trie.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/s390/block/dasd_eckd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index a28f525e2c47..d11fb16234a6 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1331,8 +1331,10 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
+diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
+index 7749deb614d7..53d22975a32f 100644
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -4627,7 +4627,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	struct dasd_device *basedev;
+ 	struct req_iterator iter;
+ 	struct dasd_ccw_req *cqr;
+-	unsigned int first_offs;
+ 	unsigned int trkcount;
+ 	unsigned long *idaws;
+ 	unsigned int size;
+@@ -4661,7 +4660,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
+ 		DASD_RAW_SECTORS_PER_TRACK;
+ 	trkcount = last_trk - first_trk + 1;
+-	first_offs = 0;
  
- 	/* The alias was already inserted, so the node must exist. */
- 	l = l ? l : fib_find_node(t, &tp, key);
--	if (WARN_ON_ONCE(!l))
-+	if (WARN_ON_ONCE(!l)) {
-+		err = -ENOENT;
- 		goto out_free_new_fa;
-+	}
+ 	if (rq_data_dir(req) == READ)
+ 		cmd = DASD_ECKD_CCW_READ_TRACK;
+@@ -4705,13 +4703,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
  
- 	if (fib_find_alias(&l->leaf, new_fa->fa_slen, 0, 0, tb->tb_id, true) ==
- 	    new_fa) {
+ 	if (use_prefix) {
+ 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
+-			   startdev, 1, first_offs + 1, trkcount, 0, 0);
++			   startdev, 1, 0, trkcount, 0, 0);
+ 	} else {
+ 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
+ 		ccw[-1].flags |= CCW_FLAG_CC;
+ 
+ 		data += sizeof(struct DE_eckd_data);
+-		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
++		locate_record_ext(ccw++, data, first_trk, 0,
+ 				  trkcount, cmd, basedev, 0, 0);
+ 	}
+ 
 -- 
 2.35.1
 
