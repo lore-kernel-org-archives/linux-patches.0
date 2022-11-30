@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F6079C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C8DC433D6;
-	Wed, 30 Nov 2022 18:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893E79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF508C433C1;
+	Wed, 30 Nov 2022 18:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834053;
-	bh=Fv8nXdI2n5EjYdqad/ATbirVjg0EAUyWREtemZaiNaU=;
+	s=korg; t=1669834056;
+	bh=vui+33nApGcRe50LJCagqShTTUIgMYwkXmyEVkUn16o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twnAcdN6kUkMzX/AB3nqGwRxR3a/LroX3xz6vT0wrSSzaz6v1p4KnSZaDXV08rDul
-	 noLcOhhBb9AadbHkplB4xhvBn6N4uQpabP9f+6bfY1rsopzhgiwvsMQox5QQ8tALm+
-	 59F5uQBaSqOgiSYcHphjRrYjuLh9LpFj0+PIac5A=
+	b=vc3gLW+7TB4rOtxPRjAzX1/kVYtQ/f+5SBzrg/9adSYVy1lhtiTN1kjqe2GRt7Cqd
+	 reqL6tIjlQDUp1bbhmbu+b/W3uvrKmjdQe26A4fJ1uzC/NovjsHehRd490BYB8NQ1o
+	 bRMexupFtC5HQOmKq2qbuifMVOaITrjO+iDvnTBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,12 +20,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Patryk Piotrowski <patryk.piotrowski@intel.com>,
 	SlawomirX Laba <slawomirx.laba@intel.com>,
 	Ivan Vecera <ivecera@redhat.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Konrad Jankowski <konrad0.jankowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 084/289] iavf: Fix a crash during reset task
-Date: Wed, 30 Nov 2022 19:21:09 +0100
-Message-Id: <20221130180546.049732150@linuxfoundation.org>
+Subject: [PATCH 6.0 085/289] iavf: Do not restart Tx queues after reset task failure
+Date: Wed, 30 Nov 2022 19:21:10 +0100
+Message-Id: <20221130180546.072857329@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -41,91 +42,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit c678669d6b13b77de3b99b97526aaf23c3088d0a ]
+[ Upstream commit 08f1c147b7265245d67321585c68a27e990e0c4b ]
 
-Recent commit aa626da947e9 ("iavf: Detach device during reset task")
-removed netif_tx_stop_all_queues() with an assumption that Tx queues
-are already stopped by netif_device_detach() in the beginning of
-reset task. This assumption is incorrect because during reset
-task a potential link event can start Tx queues again.
-Revert this change to fix this issue.
+After commit aa626da947e9 ("iavf: Detach device during reset task")
+the device is detached during reset task and re-attached at its end.
+The problem occurs when reset task fails because Tx queues are
+restarted during device re-attach and this leads later to a crash.
+
+To resolve this issue properly close the net device in cause of
+failure in reset task to avoid restarting of tx queues at the end.
+Also replace the hacky manipulation with IFF_UP flag by device close
+that clears properly both IFF_UP and __LINK_STATE_START flags.
+In these case iavf_close() does not do anything because the adapter
+state is already __IAVF_DOWN.
 
 Reproducer:
-1. Run some Tx traffic (e.g. iperf3) over iavf interface
-2. Switch MTU of this interface in a loop
+1) Run some Tx traffic (e.g. iperf3) over iavf interface
+2) Set VF trusted / untrusted in loop
 
 [root@host ~]# cat repro.sh
 
-IF=enp2s0f0v0
+PF=enp65s0f0
+IF=${PF}v0
+
+ip link set up $IF
+ip addr add 192.168.0.2/24 dev $IF
+sleep 1
 
 iperf3 -c 192.168.0.1 -t 600 --logfile /dev/null &
 sleep 2
 
 while :; do
-        for i in 1280 1500 2000 900 ; do
-                ip link set $IF mtu $i
-                sleep 2
-        done
+        ip link set $PF vf 0 trust on
+        ip link set $PF vf 0 trust off
 done
 [root@host ~]# ./repro.sh
 
 Result:
-[  306.199917] iavf 0000:02:02.0 enp2s0f0v0: NIC Link is Up Speed is 40 Gbps Full Duplex
-[  308.205944] iavf 0000:02:02.0 enp2s0f0v0: NIC Link is Up Speed is 40 Gbps Full Duplex
-[  310.103223] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[  310.110179] #PF: supervisor write access in kernel mode
-[  310.115396] #PF: error_code(0x0002) - not-present page
-[  310.120526] PGD 0 P4D 0
-[  310.123057] Oops: 0002 [#1] PREEMPT SMP NOPTI
-[  310.127408] CPU: 24 PID: 183 Comm: kworker/u64:9 Kdump: loaded Not tainted 6.1.0-rc3+ #2
-[  310.135485] Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.4 04/13/2022
-[  310.145728] Workqueue: iavf iavf_reset_task [iavf]
-[  310.150520] RIP: 0010:iavf_xmit_frame_ring+0xd1/0xf70 [iavf]
-[  310.156180] Code: d0 0f 86 da 00 00 00 83 e8 01 0f b7 fa 29 f8 01 c8 39 c6 0f 8f a0 08 00 00 48 8b 45 20 48 8d 14 92 bf 01 00 00 00 4c 8d 3c d0 <49> 89 5f 08 8b 43 70 66 41 89 7f 14 41 89 47 10 f6 83 82 00 00 00
-[  310.174918] RSP: 0018:ffffbb5f0082caa0 EFLAGS: 00010293
-[  310.180137] RAX: 0000000000000000 RBX: ffff92345471a6e8 RCX: 0000000000000200
-[  310.187259] RDX: 0000000000000000 RSI: 000000000000000d RDI: 0000000000000001
-[  310.194385] RBP: ffff92341d249000 R08: ffff92434987fcac R09: 0000000000000001
-[  310.201509] R10: 0000000011f683b9 R11: 0000000011f50641 R12: 0000000000000008
-[  310.208631] R13: ffff923447500000 R14: 0000000000000000 R15: 0000000000000000
-[  310.215756] FS:  0000000000000000(0000) GS:ffff92434ee00000(0000) knlGS:0000000000000000
-[  310.223835] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  310.229572] CR2: 0000000000000008 CR3: 0000000fbc210004 CR4: 0000000000770ee0
-[  310.236696] PKRU: 55555554
-[  310.239399] Call Trace:
-[  310.241844]  <IRQ>
-[  310.243855]  ? dst_alloc+0x5b/0xb0
-[  310.247260]  dev_hard_start_xmit+0x9e/0x1f0
-[  310.251439]  sch_direct_xmit+0xa0/0x370
-[  310.255276]  __qdisc_run+0x13e/0x580
-[  310.258848]  __dev_queue_xmit+0x431/0xd00
-[  310.262851]  ? selinux_ip_postroute+0x147/0x3f0
-[  310.267377]  ip_finish_output2+0x26c/0x540
+[ 2006.650969] iavf 0000:41:01.0: Failed to init adminq: -53
+[ 2006.675662] ice 0000:41:00.0: VF 0 is now trusted
+[ 2006.689997] iavf 0000:41:01.0: Reset task did not complete, VF disabled
+[ 2006.696611] iavf 0000:41:01.0: failed to allocate resources during reinit
+[ 2006.703209] ice 0000:41:00.0: VF 0 is now untrusted
+[ 2006.737011] ice 0000:41:00.0: VF 0 is now trusted
+[ 2006.764536] ice 0000:41:00.0: VF 0 is now untrusted
+[ 2006.768919] BUG: kernel NULL pointer dereference, address: 0000000000000b4a
+[ 2006.776358] #PF: supervisor read access in kernel mode
+[ 2006.781488] #PF: error_code(0x0000) - not-present page
+[ 2006.786620] PGD 0 P4D 0
+[ 2006.789152] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[ 2006.792903] ice 0000:41:00.0: VF 0 is now trusted
+[ 2006.793501] CPU: 4 PID: 0 Comm: swapper/4 Kdump: loaded Not tainted 6.1.0-rc3+ #2
+[ 2006.805668] Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.4 04/13/2022
+[ 2006.815915] RIP: 0010:iavf_xmit_frame_ring+0x96/0xf70 [iavf]
+[ 2006.821028] ice 0000:41:00.0: VF 0 is now untrusted
+[ 2006.821572] Code: 48 83 c1 04 48 c1 e1 04 48 01 f9 48 83 c0 10 6b 50 f8 55 c1 ea 14 45 8d 64 14 01 48 39 c8 75 eb 41 83 fc 07 0f 8f e9 08 00 00 <0f> b7 45 4a 0f b7 55 48 41 8d 74 24 05 31 c9 66 39 d0 0f 86 da 00
+[ 2006.845181] RSP: 0018:ffffb253004bc9e8 EFLAGS: 00010293
+[ 2006.850397] RAX: ffff9d154de45b00 RBX: ffff9d15497d52e8 RCX: ffff9d154de45b00
+[ 2006.856327] ice 0000:41:00.0: VF 0 is now trusted
+[ 2006.857523] RDX: 0000000000000000 RSI: 00000000000005a8 RDI: ffff9d154de45ac0
+[ 2006.857525] RBP: 0000000000000b00 R08: ffff9d159cb010ac R09: 0000000000000001
+[ 2006.857526] R10: ffff9d154de45940 R11: 0000000000000000 R12: 0000000000000002
+[ 2006.883600] R13: ffff9d1770838dc0 R14: 0000000000000000 R15: ffffffffc07b8380
+[ 2006.885840] ice 0000:41:00.0: VF 0 is now untrusted
+[ 2006.890725] FS:  0000000000000000(0000) GS:ffff9d248e900000(0000) knlGS:0000000000000000
+[ 2006.890727] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 2006.909419] CR2: 0000000000000b4a CR3: 0000000c39c10002 CR4: 0000000000770ee0
+[ 2006.916543] PKRU: 55555554
+[ 2006.918254] ice 0000:41:00.0: VF 0 is now trusted
+[ 2006.919248] Call Trace:
+[ 2006.919250]  <IRQ>
+[ 2006.919252]  dev_hard_start_xmit+0x9e/0x1f0
+[ 2006.932587]  sch_direct_xmit+0xa0/0x370
+[ 2006.936424]  __dev_queue_xmit+0x7af/0xd00
+[ 2006.940429]  ip_finish_output2+0x26c/0x540
+[ 2006.944519]  ip_output+0x71/0x110
+[ 2006.947831]  ? __ip_finish_output+0x2b0/0x2b0
+[ 2006.952180]  __ip_queue_xmit+0x16d/0x400
+[ 2006.952721] ice 0000:41:00.0: VF 0 is now untrusted
+[ 2006.956098]  __tcp_transmit_skb+0xa96/0xbf0
+[ 2006.965148]  __tcp_retransmit_skb+0x174/0x860
+[ 2006.969499]  ? cubictcp_cwnd_event+0x40/0x40
+[ 2006.973769]  tcp_retransmit_skb+0x14/0xb0
+...
 
 Fixes: aa626da947e9 ("iavf: Detach device during reset task")
 Cc: Jacob Keller <jacob.e.keller@intel.com>
 Cc: Patryk Piotrowski <patryk.piotrowski@intel.com>
 Cc: SlawomirX Laba <slawomirx.laba@intel.com>
 Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 79fef8c59d65..7d349ca708c7 100644
+index 7d349ca708c7..f59b725785eb 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3033,6 +3033,7 @@ static void iavf_reset_task(struct work_struct *work)
- 
- 	if (running) {
- 		netif_carrier_off(netdev);
-+		netif_tx_stop_all_queues(netdev);
- 		adapter->link_up = false;
- 		iavf_napi_disable_all(adapter);
+@@ -2921,7 +2921,6 @@ static void iavf_disable_vf(struct iavf_adapter *adapter)
+ 	iavf_free_queues(adapter);
+ 	memset(adapter->vf_res, 0, IAVF_VIRTCHNL_VF_RESOURCE_SIZE);
+ 	iavf_shutdown_adminq(&adapter->hw);
+-	adapter->netdev->flags &= ~IFF_UP;
+ 	adapter->flags &= ~IAVF_FLAG_RESET_PENDING;
+ 	iavf_change_state(adapter, __IAVF_DOWN);
+ 	wake_up(&adapter->down_waitqueue);
+@@ -3021,6 +3020,11 @@ static void iavf_reset_task(struct work_struct *work)
+ 		iavf_disable_vf(adapter);
+ 		mutex_unlock(&adapter->client_lock);
+ 		mutex_unlock(&adapter->crit_lock);
++		if (netif_running(netdev)) {
++			rtnl_lock();
++			dev_close(netdev);
++			rtnl_unlock();
++		}
+ 		return; /* Do not attempt to reinit. It's dead, Jim. */
  	}
+ 
+@@ -3173,6 +3177,16 @@ static void iavf_reset_task(struct work_struct *work)
+ 
+ 	mutex_unlock(&adapter->client_lock);
+ 	mutex_unlock(&adapter->crit_lock);
++
++	if (netif_running(netdev)) {
++		/* Close device to ensure that Tx queues will not be started
++		 * during netif_device_attach() at the end of the reset task.
++		 */
++		rtnl_lock();
++		dev_close(netdev);
++		rtnl_unlock();
++	}
++
+ 	dev_err(&adapter->pdev->dev, "failed to allocate resources during reinit\n");
+ reset_finish:
+ 	rtnl_lock();
 -- 
 2.35.1
 
