@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C02379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12062C433C1;
-	Wed, 30 Nov 2022 18:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3120279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC428C433D6;
+	Wed, 30 Nov 2022 18:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834061;
-	bh=zuHEPewD/+5cJDy1OGWQYNJ990utv2Uu1eOhXrNaSYY=;
+	s=korg; t=1669834064;
+	bh=ySM7WMAUi+iHkTm/tXD90O6rNr2qYnNWawf/pNYiTtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjiMy/Y+7Lfnw1vkDCB5xDfXACqp5CjbU/iOnjk1znLoyQEWgV6B+TyV6YEzTzdrL
-	 mIGC3lDHtyzHKwOyAYY9X+3sE5rq0CPHMelcql7o4whhNfCoG9FoX5jtbkrh3Qpfoj
-	 LUX7sM7WfGBp0cBZ1n5OCbFqRIyznxqbYGr/cz7s=
+	b=v815capHdHqtLiMxagaCWC2Y+yNMDjBI40tE8aamRkZltCf/eoWXihItqV8TkVRez
+	 cKM71rB41GeLFdaENr7BoC7mNEUbXENsl/O3IT33xEKjdaelz/qCb714xgPH5hhfHF
+	 i5vCgpb5miXpRnHryqPsech5R4gZ3XJYnPLZO/3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slawomir Laba <slawomirx.laba@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Marek Szlosek <marek.szlosek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 087/289] iavf: Fix race condition between iavf_shutdown and iavf_remove
-Date: Wed, 30 Nov 2022 19:21:12 +0100
-Message-Id: <20221130180546.117910015@linuxfoundation.org>
+Subject: [PATCH 6.0 078/289] net: dsa: sja1105: disallow C45 transactions on the BASE-TX MDIO bus
+Date: Wed, 30 Nov 2022 19:21:03 +0100
+Message-Id: <20221130180545.911253179@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,64 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Slawomir Laba <slawomirx.laba@intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a8417330f8a57275ed934293e832982b6d882713 ]
+[ Upstream commit 24deec6b9e4a051635f75777844ffc184644fec9 ]
 
-Fix a deadlock introduced by commit
-974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
-due to race condition between iavf_shutdown and iavf_remove, where
-iavf_remove stucks forever in while loop since iavf_shutdown already
-set __IAVF_REMOVE adapter state.
+You'd think people know that the internal 100BASE-TX PHY on the SJA1110
+responds only to clause 22 MDIO transactions, but they don't :)
 
-Fix this by checking if the __IAVF_IN_REMOVE_TASK has already been
-set and return if so.
+When a clause 45 transaction is attempted, sja1105_base_tx_mdio_read()
+and sja1105_base_tx_mdio_write() don't expect "reg" to contain bit 30
+set (MII_ADDR_C45) and pack this value into the SPI transaction buffer.
 
-Fixes: 974578017fc1 ("iavf: Add waiting so the port is initialized in remove")
-Signed-off-by: Slawomir Laba <slawomirx.laba@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Marek Szlosek <marek.szlosek@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+But the field in the SPI buffer has a width smaller than 30 bits, so we
+see this confusing message from the packing() API rather than a proper
+rejection of C45 transactions:
+
+Call trace:
+ dump_stack+0x1c/0x38
+ sja1105_pack+0xbc/0xc0 [sja1105]
+ sja1105_xfer+0x114/0x2b0 [sja1105]
+ sja1105_xfer_u32+0x44/0xf4 [sja1105]
+ sja1105_base_tx_mdio_read+0x44/0x7c [sja1105]
+ mdiobus_read+0x44/0x80
+ get_phy_c45_ids+0x70/0x234
+ get_phy_device+0x68/0x15c
+ fwnode_mdiobus_register_phy+0x74/0x240
+ of_mdiobus_register+0x13c/0x380
+ sja1105_mdiobus_register+0x368/0x490 [sja1105]
+ sja1105_setup+0x94/0x119c [sja1105]
+Cannot store 401d2405 inside bits 24-4 (would truncate)
+
+Fixes: 5a8f09748ee7 ("net: dsa: sja1105: register the MDIO buses for 100base-T1 and 100base-TX")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_mdio.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 005bb8378c76..cff03723f4f9 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -5042,23 +5042,21 @@ static int __maybe_unused iavf_resume(struct device *dev_d)
- static void iavf_remove(struct pci_dev *pdev)
- {
- 	struct iavf_adapter *adapter = iavf_pdev_to_adapter(pdev);
--	struct net_device *netdev = adapter->netdev;
- 	struct iavf_fdir_fltr *fdir, *fdirtmp;
- 	struct iavf_vlan_filter *vlf, *vlftmp;
-+	struct iavf_cloud_filter *cf, *cftmp;
- 	struct iavf_adv_rss *rss, *rsstmp;
- 	struct iavf_mac_filter *f, *ftmp;
--	struct iavf_cloud_filter *cf, *cftmp;
--	struct iavf_hw *hw = &adapter->hw;
-+	struct net_device *netdev;
-+	struct iavf_hw *hw;
- 	int err;
+diff --git a/drivers/net/dsa/sja1105/sja1105_mdio.c b/drivers/net/dsa/sja1105/sja1105_mdio.c
+index 215dd17ca790..4059fcc8c832 100644
+--- a/drivers/net/dsa/sja1105/sja1105_mdio.c
++++ b/drivers/net/dsa/sja1105/sja1105_mdio.c
+@@ -256,6 +256,9 @@ static int sja1105_base_tx_mdio_read(struct mii_bus *bus, int phy, int reg)
+ 	u32 tmp;
+ 	int rc;
  
--	/* When reboot/shutdown is in progress no need to do anything
--	 * as the adapter is already REMOVE state that was set during
--	 * iavf_shutdown() callback.
--	 */
--	if (adapter->state == __IAVF_REMOVE)
-+	netdev = adapter->netdev;
-+	hw = &adapter->hw;
++	if (reg & MII_ADDR_C45)
++		return -EOPNOTSUPP;
 +
-+	if (test_and_set_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section))
- 		return;
+ 	rc = sja1105_xfer_u32(priv, SPI_READ, regs->mdio_100base_tx + reg,
+ 			      &tmp, NULL);
+ 	if (rc < 0)
+@@ -272,6 +275,9 @@ static int sja1105_base_tx_mdio_write(struct mii_bus *bus, int phy, int reg,
+ 	const struct sja1105_regs *regs = priv->info->regs;
+ 	u32 tmp = val;
  
--	set_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section);
- 	/* Wait until port initialization is complete.
- 	 * There are flows where register/unregister netdev may race.
- 	 */
++	if (reg & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
+ 	return sja1105_xfer_u32(priv, SPI_WRITE, regs->mdio_100base_tx + reg,
+ 				&tmp, NULL);
+ }
 -- 
 2.35.1
 
