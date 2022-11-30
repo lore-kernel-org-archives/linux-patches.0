@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E6379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67337C433D6;
-	Wed, 30 Nov 2022 18:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09687C433C1;
+	Wed, 30 Nov 2022 18:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833143;
-	bh=mb+pGKqyYHoKta2t0TvbE4ss9Y74jYvBeT3Shr+CzvU=;
+	s=korg; t=1669833146;
+	bh=mdl75R+gU7RwTuXafW+aDi9m0pjNtWkhPNnYRGQi85c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wf+FUCItyIpYw02/e0vtfzH+KBeeZvaA6hI3o2Uc8/PVScQ/02tvdl+eONFImcVr9
-	 Six9R6IniBZEjg1GD3u5dFihRs5Qge/1QAd46g6JdEYmHqm/Ng62aulP2YhMMn8ulj
-	 E0H5p9urWDo253O9zuby1FB54B4bbIXowMioOMbU=
+	b=hUtC5IQ8GUTCzv1YUOUP3+XOM1zD3bprEKEt7Mq9IMG5MbUF089BxQ9Qt9CLeRPVh
+	 SOcOUsX4ZlUjuYjSW0mkkAiIzDcGCpSmsJp2UoS48ZMbIQ4/xy9+oFWiExb3J59ALc
+	 CF9XLbm5UzgJDSVdB57YOzjh2iEMQJJakCrkzgtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 138/162] xen/platform-pci: add missing free_irq() in error path
-Date: Wed, 30 Nov 2022 19:23:39 +0100
-Message-Id: <20221130180532.225912160@linuxfoundation.org>
+	Todd Kjos <tkjos@google.com>,
+	stable <stable@kernel.org>,
+	Alessandro Astone <ales.astone@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.10 129/162] binder: Address corner cases in deferred copy and fixup
+Date: Wed, 30 Nov 2022 19:23:30 +0100
+Message-Id: <20221130180531.987664469@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -36,54 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Alessandro Astone <ales.astone@gmail.com>
 
-[ Upstream commit c53717e1e3f0d0f9129b2e0dbc6dcc5e0a8132e9 ]
+commit 2d1746e3fda0c3612143d7c06f8e1d1830c13e23 upstream.
 
-free_irq() is missing in case of error in platform_pci_probe(), fix that.
+When handling BINDER_TYPE_FDA object we are pushing a parent fixup
+with a certain skip_size but no scatter-gather copy object, since
+the copy is handled standalone.
+If BINDER_TYPE_FDA is the last children the scatter-gather copy
+loop will never stop to skip it, thus we are left with an item in
+the parent fixup list. This will trigger the BUG_ON().
 
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Link: https://lore.kernel.org/r/20221114112124.1965611-1-ruanjinjie@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is reproducible in android when playing a video.
+We receive a transaction that looks like this:
+    obj[0] BINDER_TYPE_PTR, parent
+    obj[1] BINDER_TYPE_PTR, child
+    obj[2] BINDER_TYPE_PTR, child
+    obj[3] BINDER_TYPE_FDA, child
+
+Fixes: 09184ae9b575 ("binder: defer copies of pre-patched txn data")
+Acked-by: Todd Kjos <tkjos@google.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alessandro Astone <ales.astone@gmail.com>
+Link: https://lore.kernel.org/r/20220415120015.52684-2-ales.astone@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/platform-pci.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/android/binder.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/platform-pci.c b/drivers/xen/platform-pci.c
-index 9db557b76511..804d8f4d0e73 100644
---- a/drivers/xen/platform-pci.c
-+++ b/drivers/xen/platform-pci.c
-@@ -137,7 +137,7 @@ static int platform_pci_probe(struct pci_dev *pdev,
- 		if (ret) {
- 			dev_warn(&pdev->dev, "Unable to set the evtchn callback "
- 					 "err=%d\n", ret);
--			goto out;
-+			goto irq_out;
- 		}
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2695,6 +2695,7 @@ static int binder_do_deferred_txn_copies
+ {
+ 	int ret = 0;
+ 	struct binder_sg_copy *sgc, *tmpsgc;
++	struct binder_ptr_fixup *tmppf;
+ 	struct binder_ptr_fixup *pf =
+ 		list_first_entry_or_null(pf_head, struct binder_ptr_fixup,
+ 					 node);
+@@ -2749,7 +2750,11 @@ static int binder_do_deferred_txn_copies
+ 		list_del(&sgc->node);
+ 		kfree(sgc);
  	}
+-	BUG_ON(!list_empty(pf_head));
++	list_for_each_entry_safe(pf, tmppf, pf_head, node) {
++		BUG_ON(pf->skip_size == 0);
++		list_del(&pf->node);
++		kfree(pf);
++	}
+ 	BUG_ON(!list_empty(sgc_head));
  
-@@ -145,13 +145,16 @@ static int platform_pci_probe(struct pci_dev *pdev,
- 	grant_frames = alloc_xen_mmio(PAGE_SIZE * max_nr_gframes);
- 	ret = gnttab_setup_auto_xlat_frames(grant_frames);
- 	if (ret)
--		goto out;
-+		goto irq_out;
- 	ret = gnttab_init();
- 	if (ret)
- 		goto grant_out;
- 	return 0;
- grant_out:
- 	gnttab_free_auto_xlat_frames();
-+irq_out:
-+	if (!xen_have_vector_callback)
-+		free_irq(pdev->irq, pdev);
- out:
- 	pci_release_region(pdev, 0);
- mem_out:
--- 
-2.35.1
-
+ 	return ret > 0 ? -EINVAL : ret;
 
 
