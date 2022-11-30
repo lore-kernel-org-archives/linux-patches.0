@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6231C79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9159C433D6;
-	Wed, 30 Nov 2022 18:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3CD79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9361FC433D6;
+	Wed, 30 Nov 2022 18:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833949;
-	bh=dFKG4d4GyPk4MtCSrEG1TjKp8KZ+TzLZS0mbkwVpKNU=;
+	s=korg; t=1669833952;
+	bh=0XcLy5my8Kvj45Zcm0F/EAaxra5Vtns/7FgnzOhpwrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlxL/RQVDUmxysqU8Dm+kzJj3UQT+zIYClvIc9G+mhfYdovI95PujXGdRb9Sk2JBT
-	 trg6gh1gpRQ0PM/lq4zpqshwmPWoMPSxJHgGY77gQ6Npeckf9cXAbRxkvAOpE8tuwe
-	 bCeafA44aVjyEOqxlRQp8rnL2ZwCdkpKKw2V95Es=
+	b=yyxRWAN88qYpmNRoaRhidbf2m7qMjbJetMH4bpBVJFWDAUlS5QdTpSFwm7+rhZC/+
+	 doZzlYE5YccpDSTry8XYVzf8leX6cfhxymvfqmFvA1UFm4YKzP+pIQDwtHv+2SMgV2
+	 H1UP58e079e34wowg2P/I5R0UnlR6swYJrEMZHgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeed@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 073/289] selftests: mptcp: fix mibit vs mbit mix up
-Date: Wed, 30 Nov 2022 19:20:58 +0100
-Message-Id: <20221130180545.796202217@linuxfoundation.org>
+Subject: [PATCH 6.0 074/289] net: liquidio: simplify if expression
+Date: Wed, 30 Nov 2022 19:20:59 +0100
+Message-Id: <20221130180545.819324132@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,50 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 3de88b95c4d436d78afc0266a0bed76c35ddeb62 ]
+[ Upstream commit 733d4bbf9514890eb53ebe75827bf1fb4fd25ebe ]
 
-The estimated time was supposing the rate was expressed in mibit
-(bit * 1024^2) but it is in mbit (bit * 1000^2).
+Fix the warning reported by kbuild:
 
-This makes the threshold higher but in a more realistic way to avoid
-false positives reported by CI instances.
+cocci warnings: (new ones prefixed by >>)
+>> drivers/net/ethernet/cavium/liquidio/lio_main.c:1797:54-56: WARNING !A || A && B is equivalent to !A || B
+   drivers/net/ethernet/cavium/liquidio/lio_main.c:1827:54-56: WARNING !A || A && B is equivalent to !A || B
 
-Before this patch, the thresholds were at 7561/4005ms and now they are
-at 7906/4178ms.
-
-While at it, also fix a typo in the linked comment, spotted by Mat.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/310
-Fixes: 1a418cb8e888 ("mptcp: simult flow self-tests")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8979f428a4af ("net: liquidio: release resources when liquidio driver open failed")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/lio_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/simult_flows.sh b/tools/testing/selftests/net/mptcp/simult_flows.sh
-index ffa13a957a36..40aeb5a71a2a 100755
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -247,9 +247,10 @@ run_test()
- 	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1
- 	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index bf6a72143040..1e5dc0ea0e31 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -1799,7 +1799,7 @@ static int liquidio_open(struct net_device *netdev)
  
--	# time is measured in ms, account for transfer size, affegated link speed
-+	# time is measured in ms, account for transfer size, aggregated link speed
- 	# and header overhead (10%)
--	local time=$((size * 8 * 1000 * 10 / (( $rate1 + $rate2) * 1024 *1024 * 9) ))
-+	#              ms    byte -> bit   10%        mbit      -> kbit -> bit  10%
-+	local time=$((1000 * size  *  8  * 10 / ((rate1 + rate2) * 1000 * 1000 * 9) ))
+ 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
  
- 	# mptcp_connect will do some sleeps to allow the mp_join handshake
- 	# completion (see mptcp_connect): 200ms on each side, add some slack
+-	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
++	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on) {
+ 		ret = setup_tx_poll_fn(netdev);
+ 		if (ret)
+ 			goto err_poll;
+@@ -1829,7 +1829,7 @@ static int liquidio_open(struct net_device *netdev)
+ 	return 0;
+ 
+ err_rx_ctrl:
+-	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
++	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on)
+ 		cleanup_tx_poll_fn(netdev);
+ err_poll:
+ 	if (lio->ptp_clock) {
 -- 
 2.35.1
 
