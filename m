@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E9E79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBA7C433C1;
-	Wed, 30 Nov 2022 18:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5331679C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9661C433D6;
+	Wed, 30 Nov 2022 18:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834226;
-	bh=FKGhaVxwAGwu5iaiTqEH7+OEvdPrGig4qQdjDqnvSWA=;
+	s=korg; t=1669834229;
+	bh=RNswFvsxrYAixT8MUJa9Z0dM+GoyHDF7uEJ948NMrG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3ehFHyqr3zDlKKPXyx2V1Pjd+vy+sUJq8kc13sAF8PtpGjeWGBuKtc5iaXAxh+5+
-	 cVZ9qWdRVBlY/mvy+Zc9OD1CLGr3ghQaEaxFhEmWHgQm968mPpkPaDQ6U18D5F6dRv
-	 3/AZSZbd0FigMffPxVMHP95rshyjATlkKpW12wBQ=
+	b=yz6BmIajSZnnNNBOMtls/nu1Ir4YTNGdDHratijn83dGsa73FPXuDGiywSo76G8fD
+	 WSpjrFsO3k6VtMGdwSp7m9Q0cBLuKBHLSrJCBiXl5padzzOFrkbr7Vm2Qnk8R+31DO
+	 cLYD2PRcpoBG3reeztCjEs8V8Hv3MWJnXE4m2KAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 168/289] ext4: fix use-after-free in ext4_ext_shift_extents
-Date: Wed, 30 Nov 2022 19:22:33 +0100
-Message-Id: <20221130180547.941353141@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Borislav Petkov <bp@suse.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 6.0 177/289] virt/sev-guest: Prevent IV reuse in the SNP guest driver
+Date: Wed, 30 Nov 2022 19:22:42 +0100
+Message-Id: <20221130180548.141398315@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,98 +36,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Peter Gonda <pgonda@google.com>
 
-commit f6b1a1cf1c3ee430d3f5e47847047ce789a690aa upstream.
+commit 47894e0fa6a56a42be6a47c767e79cce8125489d upstream.
 
-If the starting position of our insert range happens to be in the hole
-between the two ext4_extent_idx, because the lblk of the ext4_extent in
-the previous ext4_extent_idx is always less than the start, which leads
-to the "extent" variable access across the boundary, the following UAF is
-triggered:
-==================================================================
-BUG: KASAN: use-after-free in ext4_ext_shift_extents+0x257/0x790
-Read of size 4 at addr ffff88819807a008 by task fallocate/8010
-CPU: 3 PID: 8010 Comm: fallocate Tainted: G            E     5.10.0+ #492
-Call Trace:
- dump_stack+0x7d/0xa3
- print_address_description.constprop.0+0x1e/0x220
- kasan_report.cold+0x67/0x7f
- ext4_ext_shift_extents+0x257/0x790
- ext4_insert_range+0x5b6/0x700
- ext4_fallocate+0x39e/0x3d0
- vfs_fallocate+0x26f/0x470
- ksys_fallocate+0x3a/0x70
- __x64_sys_fallocate+0x4f/0x60
- do_syscall_64+0x33/0x40
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-==================================================================
+The AMD Secure Processor (ASP) and an SNP guest use a series of
+AES-GCM keys called VMPCKs to communicate securely with each other.
+The IV to this scheme is a sequence number that both the ASP and the
+guest track.
 
-For right shifts, we can divide them into the following situations：
+Currently, this sequence number in a guest request must exactly match
+the sequence number tracked by the ASP. This means that if the guest
+sees an error from the host during a request it can only retry that
+exact request or disable the VMPCK to prevent an IV reuse. AES-GCM
+cannot tolerate IV reuse, see: "Authentication Failures in NIST version
+of GCM" - Antoine Joux et al.
 
-1. When the first ee_block of ext4_extent_idx is greater than or equal to
-   start, make right shifts directly from the first ee_block.
-    1) If it is greater than start, we need to continue searching in the
-       previous ext4_extent_idx.
-    2) If it is equal to start, we can exit the loop (iterator=NULL).
+In order to address this, make handle_guest_request() delete the VMPCK
+on any non successful return. To allow userspace querying the cert_data
+length make handle_guest_request() save the number of pages required by
+the host, then have handle_guest_request() retry the request without
+requesting the extended data, then return the number of pages required
+back to userspace.
 
-2. When the first ee_block of ext4_extent_idx is less than start, then
-   traverse from the last extent to find the first extent whose ee_block
-   is less than start.
-    1) If extent is still the last extent after traversal, it means that
-       the last ee_block of ext4_extent_idx is less than start, that is,
-       start is located in the hole between idx and (idx+1), so we can
-       exit the loop directly (break) without right shifts.
-    2) Otherwise, make right shifts at the corresponding position of the
-       found extent, and then exit the loop (iterator=NULL).
+  [ bp: Massage, incorporate Tom's review comments. ]
 
-Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
-Cc: stable@vger.kernel.org # v4.2+
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20220922120434.1294789-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: fce96cf044308 ("virt: Add SEV-SNP guest driver")
+Reported-by: Peter Gonda <pgonda@google.com>
+Signed-off-by: Peter Gonda <pgonda@google.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20221116175558.2373112-1-pgonda@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/virt/coco/sev-guest/sev-guest.c | 84 ++++++++++++++++++++-----
+ 1 file changed, 70 insertions(+), 14 deletions(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5183,6 +5183,7 @@ ext4_ext_shift_extents(struct inode *ino
- 	 * and it is decreased till we reach start.
- 	 */
- again:
-+	ret = 0;
- 	if (SHIFT == SHIFT_LEFT)
- 		iterator = &start;
- 	else
-@@ -5226,14 +5227,21 @@ again:
- 					ext4_ext_get_actual_len(extent);
- 		} else {
- 			extent = EXT_FIRST_EXTENT(path[depth].p_hdr);
--			if (le32_to_cpu(extent->ee_block) > 0)
-+			if (le32_to_cpu(extent->ee_block) > start)
- 				*iterator = le32_to_cpu(extent->ee_block) - 1;
--			else
--				/* Beginning is reached, end of the loop */
-+			else if (le32_to_cpu(extent->ee_block) == start)
- 				iterator = NULL;
--			/* Update path extent in case we need to stop */
--			while (le32_to_cpu(extent->ee_block) < start)
-+			else {
-+				extent = EXT_LAST_EXTENT(path[depth].p_hdr);
-+				while (le32_to_cpu(extent->ee_block) >= start)
-+					extent--;
+diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
+index f422f9c58ba7..1ea6d2e5b218 100644
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -67,8 +67,27 @@ static bool is_vmpck_empty(struct snp_guest_dev *snp_dev)
+ 	return true;
+ }
+ 
++/*
++ * If an error is received from the host or AMD Secure Processor (ASP) there
++ * are two options. Either retry the exact same encrypted request or discontinue
++ * using the VMPCK.
++ *
++ * This is because in the current encryption scheme GHCB v2 uses AES-GCM to
++ * encrypt the requests. The IV for this scheme is the sequence number. GCM
++ * cannot tolerate IV reuse.
++ *
++ * The ASP FW v1.51 only increments the sequence numbers on a successful
++ * guest<->ASP back and forth and only accepts messages at its exact sequence
++ * number.
++ *
++ * So if the sequence number were to be reused the encryption scheme is
++ * vulnerable. If the sequence number were incremented for a fresh IV the ASP
++ * will reject the request.
++ */
+ static void snp_disable_vmpck(struct snp_guest_dev *snp_dev)
+ {
++	dev_alert(snp_dev->dev, "Disabling vmpck_id %d to prevent IV reuse.\n",
++		  vmpck_id);
+ 	memzero_explicit(snp_dev->vmpck, VMPCK_KEY_LEN);
+ 	snp_dev->vmpck = NULL;
+ }
+@@ -321,34 +340,71 @@ static int handle_guest_request(struct snp_guest_dev *snp_dev, u64 exit_code, in
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Call firmware to process the request */
++	/*
++	 * Call firmware to process the request. In this function the encrypted
++	 * message enters shared memory with the host. So after this call the
++	 * sequence number must be incremented or the VMPCK must be deleted to
++	 * prevent reuse of the IV.
++	 */
+ 	rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
 +
-+				if (extent == EXT_LAST_EXTENT(path[depth].p_hdr))
-+					break;
++	/*
++	 * If the extended guest request fails due to having too small of a
++	 * certificate data buffer, retry the same guest request without the
++	 * extended data request in order to increment the sequence number
++	 * and thus avoid IV reuse.
++	 */
++	if (exit_code == SVM_VMGEXIT_EXT_GUEST_REQUEST &&
++	    err == SNP_GUEST_REQ_INVALID_LEN) {
++		const unsigned int certs_npages = snp_dev->input.data_npages;
 +
- 				extent++;
-+				iterator = NULL;
-+			}
- 			path[depth].p_ext = extent;
- 		}
- 		ret = ext4_ext_shift_path_extents(path, shift, inode,
++		exit_code = SVM_VMGEXIT_GUEST_REQUEST;
++
++		/*
++		 * If this call to the firmware succeeds, the sequence number can
++		 * be incremented allowing for continued use of the VMPCK. If
++		 * there is an error reflected in the return value, this value
++		 * is checked further down and the result will be the deletion
++		 * of the VMPCK and the error code being propagated back to the
++		 * user as an ioctl() return code.
++		 */
++		rc = snp_issue_guest_request(exit_code, &snp_dev->input, &err);
++
++		/*
++		 * Override the error to inform callers the given extended
++		 * request buffer size was too small and give the caller the
++		 * required buffer size.
++		 */
++		err = SNP_GUEST_REQ_INVALID_LEN;
++		snp_dev->input.data_npages = certs_npages;
++	}
++
+ 	if (fw_err)
+ 		*fw_err = err;
+ 
+-	if (rc)
+-		return rc;
++	if (rc) {
++		dev_alert(snp_dev->dev,
++			  "Detected error from ASP request. rc: %d, fw_err: %llu\n",
++			  rc, *fw_err);
++		goto disable_vmpck;
++	}
+ 
+-	/*
+-	 * The verify_and_dec_payload() will fail only if the hypervisor is
+-	 * actively modifying the message header or corrupting the encrypted payload.
+-	 * This hints that hypervisor is acting in a bad faith. Disable the VMPCK so that
+-	 * the key cannot be used for any communication. The key is disabled to ensure
+-	 * that AES-GCM does not use the same IV while encrypting the request payload.
+-	 */
+ 	rc = verify_and_dec_payload(snp_dev, resp_buf, resp_sz);
+ 	if (rc) {
+ 		dev_alert(snp_dev->dev,
+-			  "Detected unexpected decode failure, disabling the vmpck_id %d\n",
+-			  vmpck_id);
+-		snp_disable_vmpck(snp_dev);
+-		return rc;
++			  "Detected unexpected decode failure from ASP. rc: %d\n",
++			  rc);
++		goto disable_vmpck;
+ 	}
+ 
+ 	/* Increment to new message sequence after payload decryption was successful. */
+ 	snp_inc_msg_seqno(snp_dev);
+ 
+ 	return 0;
++
++disable_vmpck:
++	snp_disable_vmpck(snp_dev);
++	return rc;
+ }
+ 
+ static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
+-- 
+2.38.1
+
 
 
