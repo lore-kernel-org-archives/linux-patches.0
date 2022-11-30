@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC59479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E51C433C1;
-	Wed, 30 Nov 2022 18:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9370279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8C2C433D7;
+	Wed, 30 Nov 2022 18:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834356;
-	bh=OS7k5IHaaA7nPZ1aTv4XgPqO+LcHs92Sxw1hXzbGk/U=;
+	s=korg; t=1669834359;
+	bh=OEz5pe170WRbn7bIErG4oxky6D1iXWKCqtNHxTaSKzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD9xVXASPKGZs7txPtl4XR1B8ON7MV2DQSd8XhXbjZZNm/xbGwXnEOZeIG7hO90zR
-	 UxFTBLGypiXAClLRa58NtpdYOMdDPsMJEUWONO0dxA9akmJzi9diShxNnRmZi0fBVs
-	 rlcgMArr19aqm+13MMUybZCOAQyBQQaKSPmdIA80=
+	b=vszxdBLKtEPq6ZkMkOXb1HPOvob6d3Ou22eqv+i8U+9EZnn4bn5+um17zz6gi6dU9
+	 5AVUpX5dRvyG/pRwCq9k4uJNITQVV4c/BinE41zfTBR1nxBiUBy1PXyucEkKfOgGJl
+	 hYIIPrMC78V393brnFxQWR5RsMyq9Xanf8Qr9hPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 223/289] ASoC: SOF: Intel: hda-codec: fix possible memory leak in hda_codec_device_init()
-Date: Wed, 30 Nov 2022 19:23:28 +0100
-Message-Id: <20221130180549.172387095@linuxfoundation.org>
+	Aman Dhoot <amandhoot12@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 224/289] Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode
+Date: Wed, 30 Nov 2022 19:23:29 +0100
+Message-Id: <20221130180549.194762639@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,53 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Aman Dhoot <amandhoot12@gmail.com>
 
-commit e9441675edc1bb8dbfadacf68aafacca60d65a25 upstream.
+[ Upstream commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 ]
 
-If snd_hdac_device_register() fails, 'codec' and name allocated in
-dev_set_name() called in snd_hdac_device_init() are leaked. Fix this
-by calling put_device(), so they can be freed in snd_hda_codec_dev_release()
-and kobject_cleanup().
+The device works fine in native RMI mode, there is no reason to use legacy
+PS/2 mode with it.
 
-Fixes: 829c67319806 ("ASoC: SOF: Intel: Introduce HDA codec init and exit routines")
-Fixes: dfe66a18780d ("ALSA: hdac_ext: add extended HDA bus")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20221020110157.1450191-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-codec.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/input/mouse/synaptics.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/sof/intel/hda-codec.c
-+++ b/sound/soc/sof/intel/hda-codec.c
-@@ -109,11 +109,6 @@ EXPORT_SYMBOL_NS(hda_codec_jack_check, S
- #define is_generic_config(x)	0
- #endif
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index ffad142801b3..973a4c1d5d09 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -191,6 +191,7 @@ static const char * const smbus_pnp_ids[] = {
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
+ 	"SYN3257", /* HP Envy 13-ad105ng */
++	"SYN3286", /* HP Laptop 15-da3001TU */
+ 	NULL
+ };
  
--static void hda_codec_device_exit(struct device *dev)
--{
--	snd_hdac_device_exit(dev_to_hdac_dev(dev));
--}
--
- static struct hda_codec *hda_codec_device_init(struct hdac_bus *bus, int addr, int type)
- {
- 	struct hda_codec *codec;
-@@ -126,12 +121,11 @@ static struct hda_codec *hda_codec_devic
- 	}
- 
- 	codec->core.type = type;
--	codec->core.dev.release = hda_codec_device_exit;
- 
- 	ret = snd_hdac_device_register(&codec->core);
- 	if (ret) {
- 		dev_err(bus->dev, "failed to register hdac device\n");
--		snd_hdac_device_exit(&codec->core);
-+		put_device(&codec->core.dev);
- 		return ERR_PTR(ret);
- 	}
- 
+-- 
+2.35.1
+
 
 
