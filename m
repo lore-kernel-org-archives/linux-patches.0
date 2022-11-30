@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E879C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4FEC433C1;
-	Wed, 30 Nov 2022 18:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36487C433C1;
+	Wed, 30 Nov 2022 18:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834039;
-	bh=yZ7aF3Mp1Bylz7DgT3GKYun4oXjlEmEgO8GyOXdR5a4=;
+	s=korg; t=1669834042;
+	bh=x2yTGj/fFb6Sb1QdNj+QCq1cNfH3NMhGrYyAF4JACWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKhYIDeg1hVbusJ48uGYNHRyjZrYvnqCouwO3XB4ghszGLBVIOB2xEfsvM+p0WJwj
-	 vAnH2420Ll/KkmajAOUYUUXm7m1RQ+StFnY4UKCYWIwOQO2P/LbSV6xjOAUkavF1JW
-	 T4RiEi4cIFw4HyyUUKFqrMEwsHBrTuGyNZPdu5kE=
+	b=cCj7eF0clmyNM5+hEPfI9hT4Ch6BlGKrepwrRiUF6vchfmk5np/4q3vm/zcQUPMYZ
+	 VFJqKN11DlqMCbKW1NI7dVoLPR5Blbwagmh3yeIaHxSrJzxf5HNiuy7M4PnYAEdMFP
+	 WImyAisyugW7lrt3tcRf6iHHojtwwspgwYo9HV80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Shay Drory <shayd@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 106/289] net/mlx5: SF: Fix probing active SFs during driver probe phase
-Date: Wed, 30 Nov 2022 19:21:31 +0100
-Message-Id: <20221130180546.542343915@linuxfoundation.org>
+Subject: [PATCH 6.0 107/289] net/mlx5: cmdif, Print info on any firmware cmd failure to tracepoint
+Date: Wed, 30 Nov 2022 19:21:32 +0100
+Message-Id: <20221130180546.565817387@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,171 +37,213 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 4f57332d6a551185ba729617f04455e83fbe4e41 ]
+[ Upstream commit 870c2481174b839e7159555127bc8b5a5d0699ba ]
 
-When SF devices and SF port representors are located on different
-functions, unloading and reloading of SF parent driver doesn't recreate
-the existing SF present in the device.
-Fix it by querying SFs and probe active SFs during driver probe phase.
+While moving to new CMD API (quiet API), some pre-existing flows may call the new API
+function that in case of error, returns the error instead of printing it as previously done.
+For such flows we bring back the print but to tracepoint this time for sys admins to
+have the ability to check for errors especially for commands using the new quiet API.
 
-Fixes: 90d010b8634b ("net/mlx5: SF, Add auxiliary device support")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
+Tracepoint output example:
+         devlink-1333    [001] .....   822.746922: mlx5_cmd: ACCESS_REG(0x805) op_mod(0x0) failed, status bad resource(0x5), syndrome (0xb06e1f), err(-22)
+
+Fixes: f23519e542e5 ("net/mlx5: cmdif, Add new api for command execution")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/sf/dev/dev.c  | 88 +++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 41 +++++++++--------
+ .../mellanox/mlx5/core/diag/cmd_tracepoint.h  | 45 +++++++++++++++++++
+ include/linux/mlx5/driver.h                   |  1 +
+ 3 files changed, 68 insertions(+), 19 deletions(-)
+ create mode 100644 drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/dev.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/dev.c
-index 7da012ff0d41..8e2abbab05f0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/dev.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/dev.c
-@@ -18,6 +18,10 @@ struct mlx5_sf_dev_table {
- 	phys_addr_t base_address;
- 	u64 sf_bar_length;
- 	struct notifier_block nb;
-+	struct mutex table_lock; /* Serializes sf life cycle and vhca state change handler */
-+	struct workqueue_struct *active_wq;
-+	struct work_struct work;
-+	u8 stop_active_wq:1;
- 	struct mlx5_core_dev *dev;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index 2e0d59ca62b5..df3e284ca5c6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -45,6 +45,8 @@
+ #include "mlx5_core.h"
+ #include "lib/eq.h"
+ #include "lib/tout.h"
++#define CREATE_TRACE_POINTS
++#include "diag/cmd_tracepoint.h"
+ 
+ enum {
+ 	CMD_IF_REV = 5,
+@@ -785,27 +787,14 @@ EXPORT_SYMBOL(mlx5_cmd_out_err);
+ static void cmd_status_print(struct mlx5_core_dev *dev, void *in, void *out)
+ {
+ 	u16 opcode, op_mod;
+-	u32 syndrome;
+-	u8  status;
+ 	u16 uid;
+-	int err;
+-
+-	syndrome = MLX5_GET(mbox_out, out, syndrome);
+-	status = MLX5_GET(mbox_out, out, status);
+ 
+ 	opcode = MLX5_GET(mbox_in, in, opcode);
+ 	op_mod = MLX5_GET(mbox_in, in, op_mod);
+ 	uid    = MLX5_GET(mbox_in, in, uid);
+ 
+-	err = cmd_status_to_err(status);
+-
+ 	if (!uid && opcode != MLX5_CMD_OP_DESTROY_MKEY)
+ 		mlx5_cmd_out_err(dev, opcode, op_mod, out);
+-	else
+-		mlx5_core_dbg(dev,
+-			"%s(0x%x) op_mod(0x%x) uid(%d) failed, status %s(0x%x), syndrome (0x%x), err(%d)\n",
+-			mlx5_command_str(opcode), opcode, op_mod, uid,
+-			cmd_status_str(status), status, syndrome, err);
+ }
+ 
+ int mlx5_cmd_check(struct mlx5_core_dev *dev, int err, void *in, void *out)
+@@ -1892,6 +1881,16 @@ static int cmd_exec(struct mlx5_core_dev *dev, void *in, int in_size, void *out,
+ 	return err;
+ }
+ 
++static void mlx5_cmd_err_trace(struct mlx5_core_dev *dev, u16 opcode, u16 op_mod, void *out)
++{
++	u32 syndrome = MLX5_GET(mbox_out, out, syndrome);
++	u8 status = MLX5_GET(mbox_out, out, status);
++
++	trace_mlx5_cmd(mlx5_command_str(opcode), opcode, op_mod,
++		       cmd_status_str(status), status, syndrome,
++		       cmd_status_to_err(status));
++}
++
+ static void cmd_status_log(struct mlx5_core_dev *dev, u16 opcode, u8 status,
+ 			   u32 syndrome, int err)
+ {
+@@ -1914,7 +1913,7 @@ static void cmd_status_log(struct mlx5_core_dev *dev, u16 opcode, u8 status,
+ }
+ 
+ /* preserve -EREMOTEIO for outbox.status != OK, otherwise return err as is */
+-static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, void *out)
++static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, u16 op_mod, void *out)
+ {
+ 	u32 syndrome = MLX5_GET(mbox_out, out, syndrome);
+ 	u8 status = MLX5_GET(mbox_out, out, status);
+@@ -1922,8 +1921,10 @@ static int cmd_status_err(struct mlx5_core_dev *dev, int err, u16 opcode, void *
+ 	if (err == -EREMOTEIO) /* -EREMOTEIO is preserved */
+ 		err = -EIO;
+ 
+-	if (!err && status != MLX5_CMD_STAT_OK)
++	if (!err && status != MLX5_CMD_STAT_OK) {
+ 		err = -EREMOTEIO;
++		mlx5_cmd_err_trace(dev, opcode, op_mod, out);
++	}
+ 
+ 	cmd_status_log(dev, opcode, status, syndrome, err);
+ 	return err;
+@@ -1951,9 +1952,9 @@ int mlx5_cmd_do(struct mlx5_core_dev *dev, void *in, int in_size, void *out, int
+ {
+ 	int err = cmd_exec(dev, in, in_size, out, out_size, NULL, NULL, false);
+ 	u16 opcode = MLX5_GET(mbox_in, in, opcode);
++	u16 op_mod = MLX5_GET(mbox_in, in, op_mod);
+ 
+-	err = cmd_status_err(dev, err, opcode, out);
+-	return err;
++	return cmd_status_err(dev, err, opcode, op_mod, out);
+ }
+ EXPORT_SYMBOL(mlx5_cmd_do);
+ 
+@@ -1997,8 +1998,9 @@ int mlx5_cmd_exec_polling(struct mlx5_core_dev *dev, void *in, int in_size,
+ {
+ 	int err = cmd_exec(dev, in, in_size, out, out_size, NULL, NULL, true);
+ 	u16 opcode = MLX5_GET(mbox_in, in, opcode);
++	u16 op_mod = MLX5_GET(mbox_in, in, op_mod);
+ 
+-	err = cmd_status_err(dev, err, opcode, out);
++	err = cmd_status_err(dev, err, opcode, op_mod, out);
+ 	return mlx5_cmd_check(dev, err, in, out);
+ }
+ EXPORT_SYMBOL(mlx5_cmd_exec_polling);
+@@ -2034,7 +2036,7 @@ static void mlx5_cmd_exec_cb_handler(int status, void *_work)
+ 	struct mlx5_async_ctx *ctx;
+ 
+ 	ctx = work->ctx;
+-	status = cmd_status_err(ctx->dev, status, work->opcode, work->out);
++	status = cmd_status_err(ctx->dev, status, work->opcode, work->op_mod, work->out);
+ 	work->user_callback(status, work);
+ 	if (atomic_dec_and_test(&ctx->num_inflight))
+ 		complete(&ctx->inflight_done);
+@@ -2049,6 +2051,7 @@ int mlx5_cmd_exec_cb(struct mlx5_async_ctx *ctx, void *in, int in_size,
+ 	work->ctx = ctx;
+ 	work->user_callback = callback;
+ 	work->opcode = MLX5_GET(mbox_in, in, opcode);
++	work->op_mod = MLX5_GET(mbox_in, in, op_mod);
+ 	work->out = out;
+ 	if (WARN_ON(!atomic_inc_not_zero(&ctx->num_inflight)))
+ 		return -EIO;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h b/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
+new file mode 100644
+index 000000000000..406ebe17405f
+--- /dev/null
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/cmd_tracepoint.h
+@@ -0,0 +1,45 @@
++/* SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB */
++/* Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved. */
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM mlx5
++
++#if !defined(_MLX5_CMD_TP_H_) || defined(TRACE_HEADER_MULTI_READ)
++#define _MLX5_CMD_TP_H_
++
++#include <linux/tracepoint.h>
++#include <linux/trace_seq.h>
++
++TRACE_EVENT(mlx5_cmd,
++	    TP_PROTO(const char *command_str, u16 opcode, u16 op_mod,
++		     const char *status_str, u8 status, u32 syndrome, int err),
++	    TP_ARGS(command_str, opcode, op_mod, status_str, status, syndrome, err),
++	    TP_STRUCT__entry(__string(command_str, command_str)
++			     __field(u16, opcode)
++			     __field(u16, op_mod)
++			    __string(status_str, status_str)
++			    __field(u8, status)
++			    __field(u32, syndrome)
++			    __field(int, err)
++			    ),
++	    TP_fast_assign(__assign_str(command_str, command_str);
++			__entry->opcode = opcode;
++			__entry->op_mod = op_mod;
++			__assign_str(status_str, status_str);
++			__entry->status = status;
++			__entry->syndrome = syndrome;
++			__entry->err = err;
++	    ),
++	    TP_printk("%s(0x%x) op_mod(0x%x) failed, status %s(0x%x), syndrome (0x%x), err(%d)",
++		      __get_str(command_str), __entry->opcode, __entry->op_mod,
++		      __get_str(status_str), __entry->status, __entry->syndrome,
++		      __entry->err)
++);
++
++#endif /* _MLX5_CMD_TP_H_ */
++
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH ./diag
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE cmd_tracepoint
++#include <trace/define_trace.h>
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 454dab40baf6..2d56cfe0911d 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -984,6 +984,7 @@ struct mlx5_async_work {
+ 	struct mlx5_async_ctx *ctx;
+ 	mlx5_async_cbk_t user_callback;
+ 	u16 opcode; /* cmd opcode */
++	u16 op_mod; /* cmd op_mod */
+ 	void *out; /* pointer to the cmd output buffer */
  };
  
-@@ -168,6 +172,7 @@ mlx5_sf_dev_state_change_handler(struct notifier_block *nb, unsigned long event_
- 		return 0;
- 
- 	sf_index = event->function_id - base_id;
-+	mutex_lock(&table->table_lock);
- 	sf_dev = xa_load(&table->devices, sf_index);
- 	switch (event->new_vhca_state) {
- 	case MLX5_VHCA_STATE_INVALID:
-@@ -191,6 +196,7 @@ mlx5_sf_dev_state_change_handler(struct notifier_block *nb, unsigned long event_
- 	default:
- 		break;
- 	}
-+	mutex_unlock(&table->table_lock);
- 	return 0;
- }
- 
-@@ -215,6 +221,78 @@ static int mlx5_sf_dev_vhca_arm_all(struct mlx5_sf_dev_table *table)
- 	return 0;
- }
- 
-+static void mlx5_sf_dev_add_active_work(struct work_struct *work)
-+{
-+	struct mlx5_sf_dev_table *table = container_of(work, struct mlx5_sf_dev_table, work);
-+	u32 out[MLX5_ST_SZ_DW(query_vhca_state_out)] = {};
-+	struct mlx5_core_dev *dev = table->dev;
-+	u16 max_functions;
-+	u16 function_id;
-+	u16 sw_func_id;
-+	int err = 0;
-+	u8 state;
-+	int i;
-+
-+	max_functions = mlx5_sf_max_functions(dev);
-+	function_id = MLX5_CAP_GEN(dev, sf_base_id);
-+	for (i = 0; i < max_functions; i++, function_id++) {
-+		if (table->stop_active_wq)
-+			return;
-+		err = mlx5_cmd_query_vhca_state(dev, function_id, out, sizeof(out));
-+		if (err)
-+			/* A failure of specific vhca doesn't mean others will
-+			 * fail as well.
-+			 */
-+			continue;
-+		state = MLX5_GET(query_vhca_state_out, out, vhca_state_context.vhca_state);
-+		if (state != MLX5_VHCA_STATE_ACTIVE)
-+			continue;
-+
-+		sw_func_id = MLX5_GET(query_vhca_state_out, out, vhca_state_context.sw_function_id);
-+		mutex_lock(&table->table_lock);
-+		/* Don't probe device which is already probe */
-+		if (!xa_load(&table->devices, i))
-+			mlx5_sf_dev_add(dev, i, function_id, sw_func_id);
-+		/* There is a race where SF got inactive after the query
-+		 * above. e.g.: the query returns that the state of the
-+		 * SF is active, and after that the eswitch manager set it to
-+		 * inactive.
-+		 * This case cannot be managed in SW, since the probing of the
-+		 * SF is on one system, and the inactivation is on a different
-+		 * system.
-+		 * If the inactive is done after the SF perform init_hca(),
-+		 * the SF will fully probe and then removed. If it was
-+		 * done before init_hca(), the SF probe will fail.
-+		 */
-+		mutex_unlock(&table->table_lock);
-+	}
-+}
-+
-+/* In case SFs are generated externally, probe active SFs */
-+static int mlx5_sf_dev_queue_active_work(struct mlx5_sf_dev_table *table)
-+{
-+	if (MLX5_CAP_GEN(table->dev, eswitch_manager))
-+		return 0; /* the table is local */
-+
-+	/* Use a workqueue to probe active SFs, which are in large
-+	 * quantity and may take up to minutes to probe.
-+	 */
-+	table->active_wq = create_singlethread_workqueue("mlx5_active_sf");
-+	if (!table->active_wq)
-+		return -ENOMEM;
-+	INIT_WORK(&table->work, &mlx5_sf_dev_add_active_work);
-+	queue_work(table->active_wq, &table->work);
-+	return 0;
-+}
-+
-+static void mlx5_sf_dev_destroy_active_work(struct mlx5_sf_dev_table *table)
-+{
-+	if (table->active_wq) {
-+		table->stop_active_wq = true;
-+		destroy_workqueue(table->active_wq);
-+	}
-+}
-+
- void mlx5_sf_dev_table_create(struct mlx5_core_dev *dev)
- {
- 	struct mlx5_sf_dev_table *table;
-@@ -240,11 +318,17 @@ void mlx5_sf_dev_table_create(struct mlx5_core_dev *dev)
- 	table->base_address = pci_resource_start(dev->pdev, 2);
- 	table->max_sfs = max_sfs;
- 	xa_init(&table->devices);
-+	mutex_init(&table->table_lock);
- 	dev->priv.sf_dev_table = table;
- 
- 	err = mlx5_vhca_event_notifier_register(dev, &table->nb);
- 	if (err)
- 		goto vhca_err;
-+
-+	err = mlx5_sf_dev_queue_active_work(table);
-+	if (err)
-+		goto add_active_err;
-+
- 	err = mlx5_sf_dev_vhca_arm_all(table);
- 	if (err)
- 		goto arm_err;
-@@ -252,6 +336,8 @@ void mlx5_sf_dev_table_create(struct mlx5_core_dev *dev)
- 	return;
- 
- arm_err:
-+	mlx5_sf_dev_destroy_active_work(table);
-+add_active_err:
- 	mlx5_vhca_event_notifier_unregister(dev, &table->nb);
- vhca_err:
- 	table->max_sfs = 0;
-@@ -279,7 +365,9 @@ void mlx5_sf_dev_table_destroy(struct mlx5_core_dev *dev)
- 	if (!table)
- 		return;
- 
-+	mlx5_sf_dev_destroy_active_work(table);
- 	mlx5_vhca_event_notifier_unregister(dev, &table->nb);
-+	mutex_destroy(&table->table_lock);
- 
- 	/* Now that event handler is not running, it is safe to destroy
- 	 * the sf device without race.
 -- 
 2.35.1
 
