@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4446FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A7DC433C1;
-	Wed, 30 Nov 2022 18:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBFB79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293F3C433D7;
+	Wed, 30 Nov 2022 18:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833510;
-	bh=ZPDmWSaOqn5huWzPEXF+kprFKieBxgNMfANb1/7wSNE=;
+	s=korg; t=1669833516;
+	bh=hnDeOxY67/rhT8mtH1IlQcKERjAyvkPAUoZ1t041Nxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZ8+V7bqDGESlXJXY4KnYk9FCRACscrBZx8dZk8AF91DHzkdmJRA7jbq37rX8oO2b
-	 0IN1zUqvoGacpRrwu/r2XqkEQpgbg//tdW9plpM5hx2mjbZvlUcOnVLvAqr+pPRb0g
-	 hpUrv/qS1jhCDXv10BV70Pi6OSkjwRW+JlXBdggw=
+	b=0VOUfG+v3KN1PKCgCbhkfo78RIcpLo2bkqUIYxqXjsuDgKwN1YQ0WSoKbpZGCrsuP
+	 enKRhwJiFdFJAEkOWMVYKALMPDlULwfeY7baGRmui0CEKqKnCqQnrn7yKanZLMU62h
+	 MaUs0X/WEs0BYYbsKtnyYKRZyu/HU1/mdzgYPu5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/206] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
-Date: Wed, 30 Nov 2022 19:22:56 +0100
-Message-Id: <20221130180536.202052667@linuxfoundation.org>
+Subject: [PATCH 5.15 125/206] nfc: st-nci: fix memory leaks in EVT_TRANSACTION
+Date: Wed, 30 Nov 2022 19:22:57 +0100
+Message-Id: <20221130180536.226563305@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -40,12 +40,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
+[ Upstream commit 440f2ae9c9f06e26f5dcea697a53717fc61a318c ]
 
-The first validation check for EVT_TRANSACTION has two different checks
-tied together with logical AND. One is a check for minimum packet length,
-and the other is for a valid aid_tag. If either condition is true (fails),
-then an error should be triggered. The fix is to change && to ||.
+Error path does not free previously allocated memory. Add devm_kfree() to
+the failure path.
 
 Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
 Reviewed-by: Guenter Roeck <groeck@google.com>
@@ -55,22 +53,25 @@ Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/st-nci/se.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index 5fd89f72969d..522b7a128f4c 100644
+index 522b7a128f4c..a915cad909b4 100644
 --- a/drivers/nfc/st-nci/se.c
 +++ b/drivers/nfc/st-nci/se.c
-@@ -326,7 +326,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
- 		 * AID          81      5 to 16
- 		 * PARAMETERS   82      0 to 255
- 		 */
--		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
-+		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
- 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
- 			return -EPROTO;
+@@ -339,8 +339,10 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
  
+ 		/* Check next byte is PARAMETERS tag (82) */
+ 		if (skb->data[transaction->aid_len + 2] !=
+-		    NFC_EVT_TRANSACTION_PARAMS_TAG)
++		    NFC_EVT_TRANSACTION_PARAMS_TAG) {
++			devm_kfree(dev, transaction);
+ 			return -EPROTO;
++		}
+ 
+ 		transaction->params_len = skb->data[transaction->aid_len + 3];
+ 		memcpy(transaction->params, skb->data +
 -- 
 2.35.1
 
