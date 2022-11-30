@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D4F79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27611C433C1;
-	Wed, 30 Nov 2022 18:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9796C79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8C9C433D7;
+	Wed, 30 Nov 2022 18:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833178;
-	bh=EjHKj7MXqckKih90OKtfWa2/WONzKLDU1+s8sYS1UDs=;
+	s=korg; t=1669833181;
+	bh=Hkcp8xg1UcYtoHvl6vXfQ0Vdx6Qor5VWkONlaoPZwPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlTA//gmpfBQCKuJA4e0M1wKLUlBVhxH/7eHfEdll5BiFJhUqyWgMj/X7kSn9CQVG
-	 k1RJQX+MGtBm3xwdlObfkSd4TFwCmLqqkVJFtRxPeYUwdb0AYcrsblM2NcLC7qpxJ1
-	 ZMVVU1Df0/ll16oqnE5VZmSxTAUNM14pDeO+brVA=
+	b=kN6nzpPi1r8ZCCACwIuuY8VenO89+R8iltJg1M9vCVnCei5qalzeawuhwRUbD2l8/
+	 RXF0B85TSzukEGVlmBbmvbQZLdiM1KNxS+5NC5mR0CIqUkOZBSBWD7bybVsB5FVmlL
+	 lXV/YY4hsm9dHkX+uD6fXZ0M5Us3KYNpmIlzGypc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Zanders <maarten.zanders@mind.be>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/206] ASoC: fsl_asrc fsl_esai fsl_sai: allow CONFIG_PM=N
-Date: Wed, 30 Nov 2022 19:20:54 +0100
-Message-Id: <20221130180533.041335300@linuxfoundation.org>
+Subject: [PATCH 5.15 003/206] serial: Add rs485_supported to uart_port
+Date: Wed, 30 Nov 2022 19:20:55 +0100
+Message-Id: <20221130180533.069929301@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,72 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maarten Zanders <maarten.zanders@mind.be>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6a564338a23cefcfc29c4a535b98402d13efdda6 ]
+[ Upstream commit 8925c31c1ac2f1e05da988581f2a70a2a8c4d638 ]
 
-When CONFIG_PM=N, pm_runtime_put_sync() returns -ENOSYS
-which breaks the probe function of these drivers.
+Preparing to move serial_rs485 struct sanitization into serial core,
+each driver has to provide what fields/flags it supports. This
+information is pointed into by rs485_supported.
 
-Other users of pm_runtime_put_sync() typically don't check
-the return value. In order to keep the program flow as
-intended, check for -ENOSYS.
-
-This commit is similar to commit 0434d3f (omap-mailbox.c).
-
-Fixes: cab04ab5900f ("ASoC: fsl_asrc: Don't use devm_regmap_init_mmio_clk")
-Fixes: 203773e39347 ("ASoC: fsl_esai: Don't use devm_regmap_init_mmio_clk")
-Fixes: 2277e7e36b4b ("ASoC: fsl_sai: Don't use devm_regmap_init_mmio_clk")
-Signed-off-by: Maarten Zanders <maarten.zanders@mind.be>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20221028141129.100702-1-maarten.zanders@mind.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20220606100433.13793-4-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 76bad3f88750 ("tty: serial: fsl_lpuart: don't break the on-going transfer when global reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 2 +-
- sound/soc/fsl/fsl_esai.c | 2 +-
- sound/soc/fsl/fsl_sai.c  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/8250/8250_core.c | 1 +
+ include/linux/serial_core.h         | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index 44dcbf49456c..08ca410ef551 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -1226,7 +1226,7 @@ static int fsl_asrc_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = pm_runtime_put_sync(&pdev->dev);
--	if (ret < 0)
-+	if (ret < 0 && ret != -ENOSYS)
- 		goto err_pm_get_sync;
- 
- 	ret = devm_snd_soc_register_component(&pdev->dev, &fsl_asrc_component,
-diff --git a/sound/soc/fsl/fsl_esai.c b/sound/soc/fsl/fsl_esai.c
-index bda66b30e063..763f5f0592af 100644
---- a/sound/soc/fsl/fsl_esai.c
-+++ b/sound/soc/fsl/fsl_esai.c
-@@ -1070,7 +1070,7 @@ static int fsl_esai_probe(struct platform_device *pdev)
- 	regmap_write(esai_priv->regmap, REG_ESAI_RSMB, 0);
- 
- 	ret = pm_runtime_put_sync(&pdev->dev);
--	if (ret < 0)
-+	if (ret < 0 && ret != -ENOSYS)
- 		goto err_pm_get_sync;
- 
- 	/*
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index bcf6b66a5ac0..5ba06df2ace5 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -1150,7 +1150,7 @@ static int fsl_sai_probe(struct platform_device *pdev)
- 	}
- 
- 	ret = pm_runtime_put_sync(dev);
--	if (ret < 0)
-+	if (ret < 0 && ret != -ENOSYS)
- 		goto err_pm_get_sync;
- 
- 	/*
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index c3348d5af922..f3bfaa1a794b 100644
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -1016,6 +1016,7 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
+ 		uart->port.throttle	= up->port.throttle;
+ 		uart->port.unthrottle	= up->port.unthrottle;
+ 		uart->port.rs485_config	= up->port.rs485_config;
++		uart->port.rs485_supported = up->port.rs485_supported;
+ 		uart->port.rs485	= up->port.rs485;
+ 		uart->rs485_start_tx	= up->rs485_start_tx;
+ 		uart->rs485_stop_tx	= up->rs485_stop_tx;
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index 86fa187f6d65..d5b6b1550d59 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -254,6 +254,7 @@ struct uart_port {
+ 	struct attribute_group	*attr_group;		/* port specific attributes */
+ 	const struct attribute_group **tty_groups;	/* all attributes (serial core use only) */
+ 	struct serial_rs485     rs485;
++	const struct serial_rs485	*rs485_supported;	/* Supported mask for serial_rs485 */
+ 	struct gpio_desc	*rs485_term_gpio;	/* enable RS485 bus termination */
+ 	struct serial_iso7816   iso7816;
+ 	void			*private_data;		/* generic platform data pointer */
 -- 
 2.35.1
 
