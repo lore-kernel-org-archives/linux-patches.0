@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E16679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F3FC433D7;
-	Wed, 30 Nov 2022 18:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FD079C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC053C433C1;
+	Wed, 30 Nov 2022 18:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834318;
-	bh=q51cfXcAd2IEW0MTKUE22THgyYxqezUhnFjD4AwEMaU=;
+	s=korg; t=1669834321;
+	bh=Aph1UzH0p5kDxalQytBzj5SgY+FGJY9E+jZSvqrObqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCifcmprtTe6NirNkcGqEHMvnW2ur9889IZk5J97zQSILwkiOwd/God64onulsFbO
-	 bnRUISifSwR6HahDBJCOdYfQmrm3vLo9Ux1UGdLZ0LodFN2v/3J3OIdpnVSdzL9F1I
-	 1ld37ZAPRGa30S5JH5nPy4bsHd53F/P4OlsYbaSU=
+	b=IHBqrK2KtsnmvX++Jdc9pRCuVPsdCtqhQCj9suS81K1vIs3ZvOdRhvYG53LYEdcCA
+	 Dn2z+P8Upts1wNbHPTVzfdThL1c+bo+otxQ5o8u/XEW5j3aws4C4jajxtVOnb209Wg
+	 aoLHbKl9i66O6vZZR8agHdPyQ9ZIMoDfgjijU8QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxim Levitsky <mlevitsk@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 210/289] KVM: x86: add kvm_leave_nested
-Date: Wed, 30 Nov 2022 19:23:15 +0100
-Message-Id: <20221130180548.881195643@linuxfoundation.org>
+Subject: [PATCH 6.0 211/289] KVM: x86: remove exit_int_info warning in svm_handle_exit
+Date: Wed, 30 Nov 2022 19:23:16 +0100
+Message-Id: <20221130180548.902841027@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,69 +36,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit f9697df251438b0798780900e8b43bdb12a56d64 upstream.
+commit 05311ce954aebe75935d9ae7d38ac82b5b796e33 upstream.
 
-add kvm_leave_nested which wraps a call to nested_ops->leave_nested
-into a function.
+It is valid to receive external interrupt and have broken IDT entry,
+which will lead to #GP with exit_int_into that will contain the index of
+the IDT entry (e.g any value).
+
+Other exceptions can happen as well, like #NP or #SS
+(if stack switch fails).
+
+Thus this warning can be user triggred and has very little value.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221103141351.50662-4-mlevitsk@redhat.com>
+Message-Id: <20221103141351.50662-10-mlevitsk@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    3 ---
- arch/x86/kvm/vmx/nested.c |    3 ---
- arch/x86/kvm/x86.c        |    8 +++++++-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/svm.c |   15 ---------------
+ 1 file changed, 15 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1164,9 +1164,6 @@ void svm_free_nested(struct vcpu_svm *sv
- 	svm->nested.initialized = false;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -346,12 +346,6 @@ int svm_set_efer(struct kvm_vcpu *vcpu,
+ 	return 0;
  }
  
--/*
-- * Forcibly leave nested mode in order to be able to reset the VCPU later on.
-- */
- void svm_leave_nested(struct kvm_vcpu *vcpu)
+-static int is_external_interrupt(u32 info)
+-{
+-	info &= SVM_EVTINJ_TYPE_MASK | SVM_EVTINJ_VALID;
+-	return info == (SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_INTR);
+-}
+-
+ static u32 svm_get_interrupt_shadow(struct kvm_vcpu *vcpu)
  {
  	struct vcpu_svm *svm = to_svm(vcpu);
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -6294,9 +6294,6 @@ out:
- 	return kvm_state.size;
- }
+@@ -3427,15 +3421,6 @@ static int svm_handle_exit(struct kvm_vc
+ 		return 0;
+ 	}
  
--/*
-- * Forcibly leave nested mode in order to be able to reset the VCPU later on.
-- */
- void vmx_leave_nested(struct kvm_vcpu *vcpu)
- {
- 	if (is_guest_mode(vcpu)) {
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -611,6 +611,12 @@ void kvm_deliver_exception_payload(struc
- }
- EXPORT_SYMBOL_GPL(kvm_deliver_exception_payload);
- 
-+/* Forcibly leave the nested mode in cases like a vCPU reset */
-+static void kvm_leave_nested(struct kvm_vcpu *vcpu)
-+{
-+	kvm_x86_ops.nested_ops->leave_nested(vcpu);
-+}
-+
- static void kvm_multiple_exception(struct kvm_vcpu *vcpu,
- 		unsigned nr, bool has_error, u32 error_code,
- 	        bool has_payload, unsigned long payload, bool reinject)
-@@ -5154,7 +5160,7 @@ static int kvm_vcpu_ioctl_x86_set_vcpu_e
- 
- 	if (events->flags & KVM_VCPUEVENT_VALID_SMM) {
- 		if (!!(vcpu->arch.hflags & HF_SMM_MASK) != events->smi.smm) {
--			kvm_x86_ops.nested_ops->leave_nested(vcpu);
-+			kvm_leave_nested(vcpu);
- 			kvm_smm_changed(vcpu, events->smi.smm);
- 		}
+-	if (is_external_interrupt(svm->vmcb->control.exit_int_info) &&
+-	    exit_code != SVM_EXIT_EXCP_BASE + PF_VECTOR &&
+-	    exit_code != SVM_EXIT_NPF && exit_code != SVM_EXIT_TASK_SWITCH &&
+-	    exit_code != SVM_EXIT_INTR && exit_code != SVM_EXIT_NMI)
+-		printk(KERN_ERR "%s: unexpected exit_int_info 0x%x "
+-		       "exit_code 0x%x\n",
+-		       __func__, svm->vmcb->control.exit_int_info,
+-		       exit_code);
+-
+ 	if (exit_fastpath != EXIT_FASTPATH_NONE)
+ 		return 1;
  
 
 
