@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3C779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCE3C433D6;
-	Wed, 30 Nov 2022 18:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006FA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F95C433D6;
+	Wed, 30 Nov 2022 18:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834134;
-	bh=sKxE6Tg4H3AZRuWpOXQzKrZwCtWWGV+MsBjoklTO3B8=;
+	s=korg; t=1669834136;
+	bh=t/zrEWdsKP4nkibCe8XHi2Juj12u50c+6yrnYnblzq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RN9+v42GFhwoi7w8BmCIW4Y32sbTcGSMhJXeD8KyXvsSEyDUrSYShM85G7fetDYfa
-	 NQ7Cmgig6BjIKeAXh1rrP73R0Saxr1lc9fzxgMMyuFbOQWqzeWL16r+Hr+J/oKUk+Q
-	 PUzInN0z/MYXf7xlDzp/zrEln5SgUcCPTv9pq7tQ=
+	b=D7hUyOkPf1Dj1VnePhioiHKaGiVr/KFBLWmU2AzRhCGOSugUzXkNyB7CjuGMg29H5
+	 bclthz/vfmFbmHQ0moq02B6dnAK5KhDlLRUY1kF3RDQ8X2yFerbUnga8pv091lfuMW
+	 PwJbTzIhPxb4ZvydCwWhNOVjLC9c9kD5GzJmFKK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 115/289] tipc: check skb_linearize() return value in tipc_disc_rcv()
-Date: Wed, 30 Nov 2022 19:21:40 +0100
-Message-Id: <20221130180546.746678622@linuxfoundation.org>
+Subject: [PATCH 6.0 116/289] zonefs: Fix race between modprobe and mount
+Date: Wed, 30 Nov 2022 19:21:41 +0100
+Message-Id: <20221130180546.768595062@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,39 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit cd0f6421162201e4b22ce757a1966729323185eb ]
+[ Upstream commit 4e45886956a20942800259f326a04417292ae314 ]
 
-If skb_linearize() fails in tipc_disc_rcv(), we need to free the skb instead of
-handle it.
+There is a race between modprobe and mount as below:
 
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Link: https://lore.kernel.org/r/20221119072832.7896-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ modprobe zonefs                | mount -t zonefs
+--------------------------------|-------------------------
+ zonefs_init                    |
+  register_filesystem       [1] |
+                                | zonefs_fill_super    [2]
+  zonefs_sysfs_init         [3] |
+
+1. register zonefs suceess, then
+2. user can mount the zonefs
+3. if sysfs initialize failed, the module initialize failed.
+
+Then the mount process maybe some error happened since the module
+initialize failed.
+
+Let's register zonefs after all dependency resource ready. And
+reorder the dependency resource release in module exit.
+
+Fixes: 9277a6d4fbd4 ("zonefs: Export open zone resource information through sysfs")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/discover.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/zonefs/super.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index e8630707901e..e8dcdf267c0c 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -211,7 +211,10 @@ void tipc_disc_rcv(struct net *net, struct sk_buff *skb,
- 	u32 self;
- 	int err;
+diff --git a/fs/zonefs/super.c b/fs/zonefs/super.c
+index 860f0b1032c6..625749fbedf4 100644
+--- a/fs/zonefs/super.c
++++ b/fs/zonefs/super.c
+@@ -1905,18 +1905,18 @@ static int __init zonefs_init(void)
+ 	if (ret)
+ 		return ret;
  
--	skb_linearize(skb);
-+	if (skb_linearize(skb)) {
-+		kfree_skb(skb);
-+		return;
-+	}
- 	hdr = buf_msg(skb);
+-	ret = register_filesystem(&zonefs_type);
++	ret = zonefs_sysfs_init();
+ 	if (ret)
+ 		goto destroy_inodecache;
  
- 	if (caps & TIPC_NODE_ID128)
+-	ret = zonefs_sysfs_init();
++	ret = register_filesystem(&zonefs_type);
+ 	if (ret)
+-		goto unregister_fs;
++		goto sysfs_exit;
+ 
+ 	return 0;
+ 
+-unregister_fs:
+-	unregister_filesystem(&zonefs_type);
++sysfs_exit:
++	zonefs_sysfs_exit();
+ destroy_inodecache:
+ 	zonefs_destroy_inodecache();
+ 
+@@ -1925,9 +1925,9 @@ static int __init zonefs_init(void)
+ 
+ static void __exit zonefs_exit(void)
+ {
++	unregister_filesystem(&zonefs_type);
+ 	zonefs_sysfs_exit();
+ 	zonefs_destroy_inodecache();
+-	unregister_filesystem(&zonefs_type);
+ }
+ 
+ MODULE_AUTHOR("Damien Le Moal");
 -- 
 2.35.1
 
