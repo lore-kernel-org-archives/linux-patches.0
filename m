@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BB5C433D6;
-	Wed, 30 Nov 2022 18:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495F879C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95987C433D6;
+	Wed, 30 Nov 2022 18:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834034;
-	bh=zll4oUZn+dvMKHBx8B0YWV5FQlSxmV/vB4eQmqejaVw=;
+	s=korg; t=1669834037;
+	bh=58VhntbweTWsIryvu2HAcruVX0w5sRK6/prRhQR3Yag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NWzDn1Pv7fjA4LEe+uPwXCqKZkRrKH5RMdILL7pB4VBZx3rUUR50P/ixWd5h1NCw
-	 Rl0aepXqnvIa0CoBk99+u9eiAR2OX6+pdI+80cIRmzBjMfd8FrMYkz5MPByrM9plkH
-	 468FGIGjso9dh+JwM4TBLZKVkYb3Uudol+cV64KE=
+	b=2fu84hhH2Yojeg38g3cIgVCUBCemTJzIcYOkG777+/+vydFv/Q0X01Li1vQvxTQ0/
+	 cUXBtiPEGmf8zAmxNVXJqA/2UiOiO+ZsyI6hKTnTruP+Oo7kGniFEhCDqJIC/6XSSE
+	 OLvqdnhfJdIHYC2kfjQcmNudooeau6VaemCZFXKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Novich <royno@nvidia.com>,
 	Moshe Shemesh <moshe@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
+	Feras Daoud <ferasda@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 104/289] net/mlx5: Do not query pci info while pci disabled
-Date: Wed, 30 Nov 2022 19:21:29 +0100
-Message-Id: <20221130180546.497168657@linuxfoundation.org>
+Subject: [PATCH 6.0 105/289] net/mlx5: Fix FW tracer timestamp calculation
+Date: Wed, 30 Nov 2022 19:21:30 +0100
+Message-Id: <20221130180546.519537713@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,58 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roy Novich <royno@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 394164f9d5a3020a7fd719d228386d48d544ec67 ]
+[ Upstream commit 61db3d7b99a367416e489ccf764cc5f9b00d62a1 ]
 
-The driver should not interact with PCI while PCI is disabled. Trying to
-do so may result in being unable to get vital signs during PCI reset,
-driver gets timed out and fails to recover.
+Fix a bug in calculation of FW tracer timestamp. Decreasing one in the
+calculation should effect only bits 52_7 and not effect bits 6_0 of the
+timestamp, otherwise bits 6_0 are always set in this calculation.
 
-Fixes: fad1783a6d66 ("net/mlx5: Print more info on pci error handlers")
-Signed-off-by: Roy Novich <royno@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
+Fixes: 70dd6fdb8987 ("net/mlx5: FW tracer, parse traces and kernel tracing support")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Feras Daoud <ferasda@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index e5e32430b6af..ac178796e484 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1759,7 +1759,8 @@ static pci_ers_result_t mlx5_pci_err_detected(struct pci_dev *pdev,
- 	res = state == pci_channel_io_perm_failure ?
- 		PCI_ERS_RESULT_DISCONNECT : PCI_ERS_RESULT_NEED_RESET;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index 978a2bb8e122..21831386b26e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -638,7 +638,7 @@ static void mlx5_tracer_handle_timestamp_trace(struct mlx5_fw_tracer *tracer,
+ 			trace_timestamp = (timestamp_event.timestamp & MASK_52_7) |
+ 					  (str_frmt->timestamp & MASK_6_0);
+ 		else
+-			trace_timestamp = ((timestamp_event.timestamp & MASK_52_7) - 1) |
++			trace_timestamp = ((timestamp_event.timestamp - 1) & MASK_52_7) |
+ 					  (str_frmt->timestamp & MASK_6_0);
  
--	mlx5_pci_trace(dev, "Exit, result = %d, %s\n",  res, result2str(res));
-+	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Exit, result = %d, %s\n",
-+		       __func__, dev->state, dev->pci_status, res, result2str(res));
- 	return res;
- }
- 
-@@ -1798,7 +1799,8 @@ static pci_ers_result_t mlx5_pci_slot_reset(struct pci_dev *pdev)
- 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
- 	int err;
- 
--	mlx5_pci_trace(dev, "Enter\n");
-+	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Enter\n",
-+		       __func__, dev->state, dev->pci_status);
- 
- 	err = mlx5_pci_enable_device(dev);
- 	if (err) {
-@@ -1820,7 +1822,8 @@ static pci_ers_result_t mlx5_pci_slot_reset(struct pci_dev *pdev)
- 
- 	res = PCI_ERS_RESULT_RECOVERED;
- out:
--	mlx5_pci_trace(dev, "Exit, err = %d, result = %d, %s\n", err, res, result2str(res));
-+	mlx5_core_info(dev, "%s Device state = %d pci_status: %d. Exit, err = %d, result = %d, %s\n",
-+		       __func__, dev->state, dev->pci_status, err, res, result2str(res));
- 	return res;
- }
- 
+ 		mlx5_tracer_print_trace(str_frmt, dev, trace_timestamp);
 -- 
 2.35.1
 
