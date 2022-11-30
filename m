@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDC06FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C829AC433D7;
-	Wed, 30 Nov 2022 18:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3407E6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC146C433C1;
+	Wed, 30 Nov 2022 18:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833475;
-	bh=5mapLmXspd7Q3ev6ebEvK9hPfCj01WNkCJWr9OAEpPo=;
+	s=korg; t=1669833478;
+	bh=kj0K1L8KgiADotXKOebfiv3PcpAj71fxo0GW5gjfrBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6oq5f3bXXWQHSFNmkqadMkx7pdNUkamjVvhN3+S7fhKmt7wBndcvsjKJaQ3O/hpF
-	 RQpbd/sDqV0b0yXHNLDoUV2o8qBu6HlFHaYeP3ovhflQjsAPcptCK3ziXkNAiwh5CB
-	 I2LU9THW3TLR6vHwER2Bcy1lTrf8uRR4KDdr/kVk=
+	b=ilLB4lw/Z1bkZVY9xg8dYxjx7w1QwANrvuVACtP4Ho/JJ9znNm/aSU+RRDQ0GuKqG
+	 Twfo8Vvx3q2NVA5tj5Y9X+oPpgG+/K0gdvepqok/mM9MGuL5k+YiW18rIeDtpmW9Aa
+	 0+KaBuVo0WV3hQDtWtc6QlyJQJ4AxF9Cokqnk1Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ba92bd00d5093f7e371@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Svyatoslav Feldsherov <feldsherov@google.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/206] fs: do not update freeing inode i_io_list
-Date: Wed, 30 Nov 2022 19:22:51 +0100
-Message-Id: <20221130180536.070740242@linuxfoundation.org>
+Subject: [PATCH 5.15 120/206] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
+Date: Wed, 30 Nov 2022 19:22:52 +0100
+Message-Id: <20221130180536.101370574@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -37,82 +37,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Svyatoslav Feldsherov <feldsherov@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 4e3c51f4e805291b057d12f5dda5aeb50a538dc4 ]
+[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
 
-After commit cbfecb927f42 ("fs: record I_DIRTY_TIME even if inode
-already has I_DIRTY_INODE") writeback_single_inode can push inode with
-I_DIRTY_TIME set to b_dirty_time list. In case of freeing inode with
-I_DIRTY_TIME set this can happen after deletion of inode from i_io_list
-at evict. Stack trace is following.
+When connect() is called on a socket bound to the wildcard address,
+we change the socket's saddr to a local address.  If the socket
+fails to connect() to the destination, we have to reset the saddr.
 
-evict
-fat_evict_inode
-fat_truncate_blocks
-fat_flush_inodes
-writeback_inode
-sync_inode_metadata(inode, sync=0)
-writeback_single_inode(inode, wbc) <- wbc->sync_mode == WB_SYNC_NONE
+However, when an error occurs after inet_hash6?_connect() in
+(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
+the socket bound to the address.
 
-This will lead to use after free in flusher thread.
+>From the user's point of view, whether saddr is reset or not varies
+with errno.  Let's fix this inconsistent behaviour.
 
-Similar issue can be triggered if writeback_single_inode in the
-stack trace update inode->i_io_list. Add explicit check to avoid it.
+Note that after this patch, the repro [0] will trigger the WARN_ON()
+in inet_csk_get_port() again, but this patch is not buggy and rather
+fixes a bug papering over the bhash2's bug for which we need another
+fix.
 
-Fixes: cbfecb927f42 ("fs: record I_DIRTY_TIME even if inode already has I_DIRTY_INODE")
-Reported-by: syzbot+6ba92bd00d5093f7e371@syzkaller.appspotmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Svyatoslav Feldsherov <feldsherov@google.com>
-Link: https://lore.kernel.org/r/20221115202001.324188-1-feldsherov@google.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
+by this sequence:
+
+  s1 = socket()
+  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s1.bind(('127.0.0.1', 10000))
+  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
+  # or s1.connect(('127.0.0.1', 10000))
+
+  s2 = socket()
+  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s2.bind(('0.0.0.0', 10000))
+  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
+
+  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
+
+[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
+
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ net/dccp/ipv4.c     | 2 ++
+ net/dccp/ipv6.c     | 2 ++
+ net/ipv4/tcp_ipv4.c | 2 ++
+ net/ipv6/tcp_ipv6.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 2a27f0256fa3..f4a5a0c2858a 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -1739,18 +1739,26 @@ static int writeback_single_inode(struct inode *inode,
- 	wb = inode_to_wb_and_lock_list(inode);
- 	spin_lock(&inode->i_lock);
- 	/*
--	 * If the inode is now fully clean, then it can be safely removed from
--	 * its writeback list (if any).  Otherwise the flusher threads are
--	 * responsible for the writeback lists.
-+	 * If the inode is freeing, its i_io_list shoudn't be updated
-+	 * as it can be finally deleted at this moment.
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 0ea29270d7e5..5bcfa1e9a941 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -137,6 +137,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * This unhashes the socket and releases the local port, if necessary.
  	 */
--	if (!(inode->i_state & I_DIRTY_ALL))
--		inode_cgwb_move_to_attached(inode, wb);
--	else if (!(inode->i_state & I_SYNC_QUEUED)) {
--		if ((inode->i_state & I_DIRTY))
--			redirty_tail_locked(inode, wb);
--		else if (inode->i_state & I_DIRTY_TIME) {
--			inode->dirtied_when = jiffies;
--			inode_io_list_move_locked(inode, wb, &wb->b_dirty_time);
-+	if (!(inode->i_state & I_FREEING)) {
-+		/*
-+		 * If the inode is now fully clean, then it can be safely
-+		 * removed from its writeback list (if any). Otherwise the
-+		 * flusher threads are responsible for the writeback lists.
-+		 */
-+		if (!(inode->i_state & I_DIRTY_ALL))
-+			inode_cgwb_move_to_attached(inode, wb);
-+		else if (!(inode->i_state & I_SYNC_QUEUED)) {
-+			if ((inode->i_state & I_DIRTY))
-+				redirty_tail_locked(inode, wb);
-+			else if (inode->i_state & I_DIRTY_TIME) {
-+				inode->dirtied_when = jiffies;
-+				inode_io_list_move_locked(inode,
-+							  wb,
-+							  &wb->b_dirty_time);
-+			}
- 		}
- 	}
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index fa663518fa0e..071620622e1e 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -967,6 +967,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
+ late_failure:
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	__sk_dst_reset(sk);
+ failure:
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 42d4af632495..0e1fbad17dbe 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -324,6 +324,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * if necessary.
+ 	 */
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 51f4d330e820..93b3e7c247ce 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -339,6 +339,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
+ 
+ late_failure:
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ failure:
+ 	inet->inet_dport = 0;
+ 	sk->sk_route_caps = 0;
 -- 
 2.35.1
 
