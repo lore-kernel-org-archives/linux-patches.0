@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71BF79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A481C433C1;
-	Wed, 30 Nov 2022 18:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DCD79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:48:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B5AC433D6;
+	Wed, 30 Nov 2022 18:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834096;
-	bh=O412ofarK3CvQdJ8OrdghLE4xpBqQrJ9bMNUgQb295A=;
+	s=korg; t=1669834099;
+	bh=NX8DFexWJh1/E/nR91ZWF5kGhB/3R59QU5Z+wx7iR7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIeRfvWeGen+tMfxswOKvJe/9gxIiOSVkhdc6JxCrmR/q5e8H/HfgcyTV1t33oxfX
-	 V86mSAx+VkHTph0ZBIFy43+2G42d0Yhfj5/s0x+bM91690ZP22/TN7uRkYYmDPnP6K
-	 NCg3iqfpO2UQlEBu89OcsGkNV8GR35jdBxOoYSok=
+	b=zVF6jCsYAFsn6MMVObGyydibX0t6Dl0v0AFlXzCvjTTzKRaHKNenNsMmhNvy2OA+m
+	 wXrZR7jAnuw6lci7ywoRw3PVJ1PuNps84cj6+3XnIPqXSMPTAF/xjIZ47eXCv9P+Ic
+	 y+ls1RidVrd1Ofy/BskXg9ZUJPOfqjS9DkFahCSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Huang Rui <ray.huang@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Perry Yuan <Perry.Yuan@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 110/289] net/mlx5: Fix sync reset event handler error flow
-Date: Wed, 30 Nov 2022 19:21:35 +0100
-Message-Id: <20221130180546.634648189@linuxfoundation.org>
+Subject: [PATCH 6.0 128/289] cpufreq: amd-pstate: change amd-pstate driver to be built-in type
+Date: Wed, 30 Nov 2022 19:21:53 +0100
+Message-Id: <20221130180547.041616390@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,62 +38,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Perry Yuan <Perry.Yuan@amd.com>
 
-[ Upstream commit e1ad07b9227f9cbaf4bd2b6ec00b84c303657593 ]
+[ Upstream commit 456ca88d8a5258fc66edc42a10053ac8473de2b1 ]
 
-When sync reset now event handling fails on mlx5_pci_link_toggle() then
-no reset was done. However, since mlx5_cmd_fast_teardown_hca() was
-already done, the firmware function is closed and the driver is left
-without firmware functionality.
+Currently when the amd-pstate and acpi_cpufreq are both built into
+kernel as module driver, amd-pstate will not be loaded by default
+in this case.
 
-Fix it by setting device error state and reopen the firmware resources.
-Reopening is done by the thread that was called for devlink reload
-fw_activate as it already holds the devlink lock.
+Change amd-pstate driver as built-in type, it will resolve the loading
+sequence problem to allow user to make amd-pstate driver as the default
+cpufreq scaling driver.
 
-Fixes: 5ec697446f46 ("net/mlx5: Add support for devlink reload action fw activate")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Acked-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Tested-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Perry Yuan <Perry.Yuan@amd.com>
+Fixes: ec437d71db77 ("cpufreq: amd-pstate: Introduce a new AMD P-State driver to support future processors")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/cpufreq/Kconfig.x86  |  2 +-
+ drivers/cpufreq/amd-pstate.c | 11 +----------
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index 9d908a0ccfef..1e46f9afa40e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -9,7 +9,8 @@ enum {
- 	MLX5_FW_RESET_FLAGS_RESET_REQUESTED,
- 	MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST,
- 	MLX5_FW_RESET_FLAGS_PENDING_COMP,
--	MLX5_FW_RESET_FLAGS_DROP_NEW_REQUESTS
-+	MLX5_FW_RESET_FLAGS_DROP_NEW_REQUESTS,
-+	MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED
- };
+diff --git a/drivers/cpufreq/Kconfig.x86 b/drivers/cpufreq/Kconfig.x86
+index 55516043b656..8184378f67ef 100644
+--- a/drivers/cpufreq/Kconfig.x86
++++ b/drivers/cpufreq/Kconfig.x86
+@@ -35,7 +35,7 @@ config X86_PCC_CPUFREQ
+ 	  If in doubt, say N.
  
- struct mlx5_fw_reset {
-@@ -406,7 +407,7 @@ static void mlx5_sync_reset_now_event(struct work_struct *work)
- 	err = mlx5_pci_link_toggle(dev);
- 	if (err) {
- 		mlx5_core_warn(dev, "mlx5_pci_link_toggle failed, no reset done, err %d\n", err);
--		goto done;
-+		set_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags);
- 	}
+ config X86_AMD_PSTATE
+-	tristate "AMD Processor P-State driver"
++	bool "AMD Processor P-State driver"
+ 	depends on X86 && ACPI
+ 	select ACPI_PROCESSOR
+ 	select ACPI_CPPC_LIB if X86_64
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index d63a28c5f95a..e808d2b3ef57 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -718,16 +718,7 @@ static int __init amd_pstate_init(void)
  
- 	mlx5_enter_error_state(dev, true);
-@@ -482,6 +483,10 @@ int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev)
- 		goto out;
- 	}
- 	err = fw_reset->ret;
-+	if (test_and_clear_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags)) {
-+		mlx5_unload_one_devl_locked(dev);
-+		mlx5_load_one_devl_locked(dev, false);
-+	}
- out:
- 	clear_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags);
- 	return err;
+ 	return ret;
+ }
+-
+-static void __exit amd_pstate_exit(void)
+-{
+-	cpufreq_unregister_driver(&amd_pstate_driver);
+-
+-	amd_pstate_enable(false);
+-}
+-
+-module_init(amd_pstate_init);
+-module_exit(amd_pstate_exit);
++device_initcall(amd_pstate_init);
+ 
+ MODULE_AUTHOR("Huang Rui <ray.huang@amd.com>");
+ MODULE_DESCRIPTION("AMD Processor P-state Frequency Driver");
 -- 
 2.35.1
 
