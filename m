@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8656FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B6AC433C1;
-	Wed, 30 Nov 2022 18:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ACE6FBD
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:29:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1FFC433D6;
+	Wed, 30 Nov 2022 18:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832938;
-	bh=0UE29nwUynVKzO0dAM11rnMEA4+fasz6dd8cQikoU7k=;
+	s=korg; t=1669832941;
+	bh=z7m7ZFde/q678vPYOnqep7qAq055H2WNJPADW7CWmno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juXerGe78KYbSiZa2NJzKaKtCV7AgjLS+EqTnrkkAtFF/5cG+xZDhhN8HUtRErIM8
-	 oKUo9KVIng3oMd2jlLFXWUfoG/cDeEP39L9OmWjvPVujodogub4E55+N/p3VYQaD5L
-	 0nzhBGrIU4KZK/MpEAfMqDqkWWK78lY9gi1TLtn4=
+	b=qJpo2hbGxWTlO8Btyl7WUizsHdflQMUTRIM1KxHrIOlUCFqXa83ZIGiduGjlyaZCr
+	 L6V90C7TGqBZZehp0TFARridb4pgxmnwgQ4Up0XP9m7XCiGG8RmbISv3EBY5DxHvYq
+	 wrMmGemtSi/uMERSCoTqEzf5VbT+1Sp9ZsP1FDFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH 5.10 093/162] usb: dwc3: exynos: Fix remove() function
-Date: Wed, 30 Nov 2022 19:22:54 +0100
-Message-Id: <20221130180531.017006140@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 094/162] ext4: fix use-after-free in ext4_ext_shift_extents
+Date: Wed, 30 Nov 2022 19:22:55 +0100
+Message-Id: <20221130180531.042804699@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -35,51 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e0481e5b3cc12ea7ccf4552d41518c89d3509004 upstream.
+commit f6b1a1cf1c3ee430d3f5e47847047ce789a690aa upstream.
 
-The core DWC3 device node was not properly removed by the custom
-dwc3_exynos_remove_child() function. Replace it with generic
-of_platform_depopulate() which does that job right.
+If the starting position of our insert range happens to be in the hole
+between the two ext4_extent_idx, because the lblk of the ext4_extent in
+the previous ext4_extent_idx is always less than the start, which leads
+to the "extent" variable access across the boundary, the following UAF is
+triggered:
+==================================================================
+BUG: KASAN: use-after-free in ext4_ext_shift_extents+0x257/0x790
+Read of size 4 at addr ffff88819807a008 by task fallocate/8010
+CPU: 3 PID: 8010 Comm: fallocate Tainted: G            E     5.10.0+ #492
+Call Trace:
+ dump_stack+0x7d/0xa3
+ print_address_description.constprop.0+0x1e/0x220
+ kasan_report.cold+0x67/0x7f
+ ext4_ext_shift_extents+0x257/0x790
+ ext4_insert_range+0x5b6/0x700
+ ext4_fallocate+0x39e/0x3d0
+ vfs_fallocate+0x26f/0x470
+ ksys_fallocate+0x3a/0x70
+ __x64_sys_fallocate+0x4f/0x60
+ do_syscall_64+0x33/0x40
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+==================================================================
 
-Fixes: adcf20dcd262 ("usb: dwc3: exynos: Use of_platform API to create dwc3 core pdev")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Link: https://lore.kernel.org/r/20221110154131.2577-1-m.szyprowski@samsung.com
+For right shifts, we can divide them into the following situations：
+
+1. When the first ee_block of ext4_extent_idx is greater than or equal to
+   start, make right shifts directly from the first ee_block.
+    1) If it is greater than start, we need to continue searching in the
+       previous ext4_extent_idx.
+    2) If it is equal to start, we can exit the loop (iterator=NULL).
+
+2. When the first ee_block of ext4_extent_idx is less than start, then
+   traverse from the last extent to find the first extent whose ee_block
+   is less than start.
+    1) If extent is still the last extent after traversal, it means that
+       the last ee_block of ext4_extent_idx is less than start, that is,
+       start is located in the hole between idx and (idx+1), so we can
+       exit the loop directly (break) without right shifts.
+    2) Otherwise, make right shifts at the corresponding position of the
+       found extent, and then exit the loop (iterator=NULL).
+
+Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
+Cc: stable@vger.kernel.org # v4.2+
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20220922120434.1294789-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-exynos.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ fs/ext4/extents.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-exynos.c
-+++ b/drivers/usb/dwc3/dwc3-exynos.c
-@@ -37,15 +37,6 @@ struct dwc3_exynos {
- 	struct regulator	*vdd10;
- };
- 
--static int dwc3_exynos_remove_child(struct device *dev, void *unused)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--
--	platform_device_unregister(pdev);
--
--	return 0;
--}
--
- static int dwc3_exynos_probe(struct platform_device *pdev)
- {
- 	struct dwc3_exynos	*exynos;
-@@ -142,7 +133,7 @@ static int dwc3_exynos_remove(struct pla
- 	struct dwc3_exynos	*exynos = platform_get_drvdata(pdev);
- 	int i;
- 
--	device_for_each_child(&pdev->dev, NULL, dwc3_exynos_remove_child);
-+	of_platform_depopulate(&pdev->dev);
- 
- 	for (i = exynos->num_clks - 1; i >= 0; i--)
- 		clk_disable_unprepare(exynos->clks[i]);
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5182,6 +5182,7 @@ ext4_ext_shift_extents(struct inode *ino
+ 	 * and it is decreased till we reach start.
+ 	 */
+ again:
++	ret = 0;
+ 	if (SHIFT == SHIFT_LEFT)
+ 		iterator = &start;
+ 	else
+@@ -5225,14 +5226,21 @@ again:
+ 					ext4_ext_get_actual_len(extent);
+ 		} else {
+ 			extent = EXT_FIRST_EXTENT(path[depth].p_hdr);
+-			if (le32_to_cpu(extent->ee_block) > 0)
++			if (le32_to_cpu(extent->ee_block) > start)
+ 				*iterator = le32_to_cpu(extent->ee_block) - 1;
+-			else
+-				/* Beginning is reached, end of the loop */
++			else if (le32_to_cpu(extent->ee_block) == start)
+ 				iterator = NULL;
+-			/* Update path extent in case we need to stop */
+-			while (le32_to_cpu(extent->ee_block) < start)
++			else {
++				extent = EXT_LAST_EXTENT(path[depth].p_hdr);
++				while (le32_to_cpu(extent->ee_block) >= start)
++					extent--;
++
++				if (extent == EXT_LAST_EXTENT(path[depth].p_hdr))
++					break;
++
+ 				extent++;
++				iterator = NULL;
++			}
+ 			path[depth].p_ext = extent;
+ 		}
+ 		ret = ext4_ext_shift_path_extents(path, shift, inode,
 
 
