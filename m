@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EEB79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17412C433D6;
-	Wed, 30 Nov 2022 18:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F66979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:33:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BD7C433D6;
+	Wed, 30 Nov 2022 18:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833232;
-	bh=KBla2T1u1IXm/WEkLDbWo9TEJ9Bv7mjXDp8ams7vGLM=;
+	s=korg; t=1669833235;
+	bh=+5UgjmHzDMCUgjCTNTZ9rCitNZotq/ZNj2ltOhrj0UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iO+kd59t94kV6gFWLaWJXF4jfxKhWSYgHEDCwgVuBjJ3yRI9fAQx/pib4PyXDjntG
-	 fvOTtm4ZxfU/nvjt5dBW/F2svyfFvyPmkR48Q0V+GpODcbF71PUtEIr6u3nVlfjOaq
-	 bQ6mfBPgY2xYeRhaGYr8qKSoIY7fpcgcBfVF2tFs=
+	b=LVRh9Lmon2JzdrFBwZ+lKBellrUQ31zjCPGyUWsuti8fPheFAoaQP9QXZ4FJwNwek
+	 0IfySwqjnn/d4c2rBj91vDFyA2ULtOebxWno+zFE40R2oe4a9EFKO64+k2SY75hgLS
+	 /vGsxzCewuK/aigD302jMdMvgoDzrdibRrc/RBG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Arman Hajishafieha <arman.hajishafieha@hotmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/206] audit: fix undefined behavior in bit shift for AUDIT_BIT
-Date: Wed, 30 Nov 2022 19:21:26 +0100
-Message-Id: <20221130180533.861182914@linuxfoundation.org>
+Subject: [PATCH 5.15 017/206] nvme-pci: disable namespace identifiers for the MAXIO MAP1001
+Date: Wed, 30 Nov 2022 19:21:09 +0100
+Message-Id: <20221130180533.435872651@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,50 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 986d93f55bdeab1cac858d1e47b41fac10b2d7f6 ]
+[ Upstream commit 70ce3455345d056b5fc427c3bb4a3ff4d126b6d5 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+The MAXIO MAP1001 controllers reports completely bogus Namespace
+identifiers that even change after suspend cycles.  Disable using
+the Identifiers entirely.
 
-UBSAN: shift-out-of-bounds in kernel/auditfilter.c:179:23
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- audit_register_class+0x9d/0x137
- audit_classes_init+0x4d/0xb8
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-[PM: remove bad 'Fixes' tag as issue predates git, added in v2.6.6-rc1]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Reported-by: Arman Hajishafieha <arman.hajishafieha@hotmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Tested-by: Arman Hajishafieha <arman.hajishafieha@hotmail.com>
+Stable-dep-of: 8d6e38f636ac ("nvme-pci: add NVME_QUIRK_BOGUS_NID for Netac NV7000")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/audit.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/uapi/linux/audit.h b/include/uapi/linux/audit.h
-index daa481729e9b..27799acd0e5e 100644
---- a/include/uapi/linux/audit.h
-+++ b/include/uapi/linux/audit.h
-@@ -182,7 +182,7 @@
- #define AUDIT_MAX_KEY_LEN  256
- #define AUDIT_BITMASK_SIZE 64
- #define AUDIT_WORD(nr) ((__u32)((nr)/32))
--#define AUDIT_BIT(nr)  (1 << ((nr) - AUDIT_WORD(nr)*32))
-+#define AUDIT_BIT(nr)  (1U << ((nr) - AUDIT_WORD(nr)*32))
- 
- #define AUDIT_SYSCALL_CLASSES 16
- #define AUDIT_CLASS_DIR_WRITE 0
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 278302771841..66e252af9218 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3365,6 +3365,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0x2646, 0x2263),   /* KINGSTON A2000 NVMe SSD  */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
++	{ PCI_DEVICE(0x1e4B, 0x1001),   /* MAXIO MAP1001 */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1e4B, 0x1002),   /* MAXIO MAP1002 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1e4B, 0x1202),   /* MAXIO MAP1202 */
 -- 
 2.35.1
 
