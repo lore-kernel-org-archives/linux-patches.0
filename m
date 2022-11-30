@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D39479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01986C43148;
-	Wed, 30 Nov 2022 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2F779C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CABC433D7;
+	Wed, 30 Nov 2022 18:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833680;
-	bh=IbwlYfRKx2oPLPSg64B39bC2Nx553yI3ldTK0aVs/ZM=;
+	s=korg; t=1669833683;
+	bh=HadPS6m+pVrsJNuaQ3ZS4WSXZB7phsZTAMFfdRfLCSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpwWmXDLzkLTFNu8HZpHO0Lq+WuHztb+4g3ZSzHdWGTQh3x1NAy1R54XotUtzHSGP
-	 sCpzB4DydGKs0She/BnV7GNvYr1gw5GiZ6rYHOUio0daphfnlbIJc+sa8wnD0nzDy8
-	 kEcc16JAEDHR5BcDQv+heOLSVrwhgglsXa87Q22U=
+	b=T1Lg+C9W2m9B0MGOuEKScX4j2mtQgFrUAKp93WUugq9fnMROP0VaKh9p+v2VE6stu
+	 WYUjqg1oGVKJo14J2Mr9qaC+6ncikFHxkzZ1OOLwoze7SXIeb9LweNxaZS3EM2yEFE
+	 7nNxk1s0miyeJkynmmZw4TFosqs8lsQdyXArpI3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhou Guanghui <zhouguanghui1@huawei.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/206] net: usb: qmi_wwan: add Telit 0x103a composition
-Date: Wed, 30 Nov 2022 19:23:54 +0100
-Message-Id: <20221130180537.648244968@linuxfoundation.org>
+Subject: [PATCH 5.15 183/206] scsi: iscsi: Fix possible memory leak when device_register() failed
+Date: Wed, 30 Nov 2022 19:23:55 +0100
+Message-Id: <20221130180537.674378633@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -36,35 +36,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Zhou Guanghui <zhouguanghui1@huawei.com>
 
-[ Upstream commit e103ba33998d0f25653cc8ebe745b68d1ee10cda ]
+[ Upstream commit f014165faa7b953b81dcbf18835936e5f8d01f2a ]
 
-Add the following Telit LE910C4-WWX composition:
+If device_register() returns error, the name allocated by the
+dev_set_name() need be freed. As described in the comment of
+device_register(), we should use put_device() to give up the reference in
+the error path.
 
-0x103a: rmnet
+Fix this by calling put_device(), the name will be freed in the
+kobject_cleanup(), and this patch modified resources will be released by
+calling the corresponding callback function in the device_release().
 
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20221115105859.14324-1-enrico.sau@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zhou Guanghui <zhouguanghui1@huawei.com>
+Link: https://lore.kernel.org/r/20221110033729.1555-1-zhouguanghui1@huawei.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_transport_iscsi.c | 31 +++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 6bf5c75f519d..d886f903e428 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1353,6 +1353,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
- 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x103a, 0)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1040, 2)},	/* Telit LE922A */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1060, 2)},	/* Telit LN920 */
+diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
+index f46ae5391758..cc39cbef9d7f 100644
+--- a/drivers/scsi/scsi_transport_iscsi.c
++++ b/drivers/scsi/scsi_transport_iscsi.c
+@@ -232,7 +232,7 @@ iscsi_create_endpoint(int dd_size)
+ 	dev_set_name(&ep->dev, "ep-%d", id);
+ 	err = device_register(&ep->dev);
+         if (err)
+-		goto free_id;
++		goto put_dev;
+ 
+ 	err = sysfs_create_group(&ep->dev.kobj, &iscsi_endpoint_group);
+ 	if (err)
+@@ -246,10 +246,12 @@ iscsi_create_endpoint(int dd_size)
+ 	device_unregister(&ep->dev);
+ 	return NULL;
+ 
+-free_id:
++put_dev:
+ 	mutex_lock(&iscsi_ep_idr_mutex);
+ 	idr_remove(&iscsi_ep_idr, id);
+ 	mutex_unlock(&iscsi_ep_idr_mutex);
++	put_device(&ep->dev);
++	return NULL;
+ free_ep:
+ 	kfree(ep);
+ 	return NULL;
+@@ -767,7 +769,7 @@ iscsi_create_iface(struct Scsi_Host *shost, struct iscsi_transport *transport,
+ 
+ 	err = device_register(&iface->dev);
+ 	if (err)
+-		goto free_iface;
++		goto put_dev;
+ 
+ 	err = sysfs_create_group(&iface->dev.kobj, &iscsi_iface_group);
+ 	if (err)
+@@ -781,9 +783,8 @@ iscsi_create_iface(struct Scsi_Host *shost, struct iscsi_transport *transport,
+ 	device_unregister(&iface->dev);
+ 	return NULL;
+ 
+-free_iface:
+-	put_device(iface->dev.parent);
+-	kfree(iface);
++put_dev:
++	put_device(&iface->dev);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(iscsi_create_iface);
+@@ -1252,15 +1253,15 @@ iscsi_create_flashnode_sess(struct Scsi_Host *shost, int index,
+ 
+ 	err = device_register(&fnode_sess->dev);
+ 	if (err)
+-		goto free_fnode_sess;
++		goto put_dev;
+ 
+ 	if (dd_size)
+ 		fnode_sess->dd_data = &fnode_sess[1];
+ 
+ 	return fnode_sess;
+ 
+-free_fnode_sess:
+-	kfree(fnode_sess);
++put_dev:
++	put_device(&fnode_sess->dev);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(iscsi_create_flashnode_sess);
+@@ -1300,15 +1301,15 @@ iscsi_create_flashnode_conn(struct Scsi_Host *shost,
+ 
+ 	err = device_register(&fnode_conn->dev);
+ 	if (err)
+-		goto free_fnode_conn;
++		goto put_dev;
+ 
+ 	if (dd_size)
+ 		fnode_conn->dd_data = &fnode_conn[1];
+ 
+ 	return fnode_conn;
+ 
+-free_fnode_conn:
+-	kfree(fnode_conn);
++put_dev:
++	put_device(&fnode_conn->dev);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(iscsi_create_flashnode_conn);
+@@ -4838,7 +4839,7 @@ iscsi_register_transport(struct iscsi_transport *tt)
+ 	dev_set_name(&priv->dev, "%s", tt->name);
+ 	err = device_register(&priv->dev);
+ 	if (err)
+-		goto free_priv;
++		goto put_dev;
+ 
+ 	err = sysfs_create_group(&priv->dev.kobj, &iscsi_transport_group);
+ 	if (err)
+@@ -4873,8 +4874,8 @@ iscsi_register_transport(struct iscsi_transport *tt)
+ unregister_dev:
+ 	device_unregister(&priv->dev);
+ 	return NULL;
+-free_priv:
+-	kfree(priv);
++put_dev:
++	put_device(&priv->dev);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(iscsi_register_transport);
 -- 
 2.35.1
 
