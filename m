@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE7D79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E68C433D7;
-	Wed, 30 Nov 2022 18:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B7979C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FF8C433D7;
+	Wed, 30 Nov 2022 18:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834375;
-	bh=HXjxvFunY2RdDYdrly02Z428P3Y1pItHFrUrcpIp4oI=;
+	s=korg; t=1669834378;
+	bh=lZ8IV3RGQVMuKf/P2TSW30SoHqygVejhggepNHHuK8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JI+3pxKLGxF5xU6kgT6uuYeN0LmFDEVkSlyZaXj24ihh37YtYmNVewzxml2YqHY/2
-	 scCIw5BhHpgUBU/VUhWEGaK1ElI/NfNWExE5pR1SBPVg5NtWI7tfLFRE6qK72HGiBJ
-	 dsWckNxn/DYcHHsfRwfcRKYPpdhLt9iUwxE85lIM=
+	b=q09j3Rt6Gqoibpz4DT0y3tKNg2efc9SEDjX205HCXJ8CRSQxg0zW5ZsNej7yI4vLn
+	 zQj+Wia9uuQGxRuQvcIQjeJY/Xdj2rDETh14AFE7900bBkExxyTpwGmahhTjLOGdDX
+	 9jEUj++GpogMxCLlRz9OHzK4S3EGDPQfc0Qf8M6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Sean Christopherson <seanjc@google.com>,
+	stable@kernel.org,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 203/289] KVM: x86/mmu: Fix race condition in direct_page_fault
-Date: Wed, 30 Nov 2022 19:23:08 +0100
-Message-Id: <20221130180548.722111040@linuxfoundation.org>
+Subject: [PATCH 6.0 204/289] KVM: x86/xen: Only do in-kernel acceleration of hypercalls for guest CPL0
+Date: Wed, 30 Nov 2022 19:23:09 +0100
+Message-Id: <20221130180548.744269853@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -34,101 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 47b0c2e4c220f2251fd8dcfbb44479819c715e15 upstream.
+commit c2b8cdfaf3a6721afe0c8c060a631b1c67a7f1ee upstream.
 
-make_mmu_pages_available() must be called with mmu_lock held for write.
-However, if the TDP MMU is used, it will be called with mmu_lock held for
-read.
-This function does nothing unless shadow pages are used, so there is no
-race unless nested TDP is used.
-Since nested TDP uses shadow pages, old shadow pages may be zapped by this
-function even when the TDP MMU is enabled.
-Since shadow pages are never allocated by kvm_tdp_mmu_map(), a race
-condition can be avoided by not calling make_mmu_pages_available() if the
-TDP MMU is currently in use.
+There are almost no hypercalls which are valid from CPL > 0, and definitely
+none which are handled by the kernel.
 
-I encountered this when repeatedly starting and stopping nested VM.
-It can be artificially caused by allocating a large number of nested TDP
-SPTEs.
-
-For example, the following BUG and general protection fault are caused in
-the host kernel.
-
-pte_list_remove: 00000000cd54fc10 many->many
-------------[ cut here ]------------
-kernel BUG at arch/x86/kvm/mmu/mmu.c:963!
-invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:pte_list_remove.cold+0x16/0x48 [kvm]
-Call Trace:
- <TASK>
- drop_spte+0xe0/0x180 [kvm]
- mmu_page_zap_pte+0x4f/0x140 [kvm]
- __kvm_mmu_prepare_zap_page+0x62/0x3e0 [kvm]
- kvm_mmu_zap_oldest_mmu_pages+0x7d/0xf0 [kvm]
- direct_page_fault+0x3cb/0x9b0 [kvm]
- kvm_tdp_page_fault+0x2c/0xa0 [kvm]
- kvm_mmu_page_fault+0x207/0x930 [kvm]
- npf_interception+0x47/0xb0 [kvm_amd]
- svm_invoke_exit_handler+0x13c/0x1a0 [kvm_amd]
- svm_handle_exit+0xfc/0x2c0 [kvm_amd]
- kvm_arch_vcpu_ioctl_run+0xa79/0x1780 [kvm]
- kvm_vcpu_ioctl+0x29b/0x6f0 [kvm]
- __x64_sys_ioctl+0x95/0xd0
- do_syscall_64+0x5c/0x90
-
-general protection fault, probably for non-canonical address
-0xdead000000000122: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:kvm_mmu_commit_zap_page.part.0+0x4b/0xe0 [kvm]
-Call Trace:
- <TASK>
- kvm_mmu_zap_oldest_mmu_pages+0xae/0xf0 [kvm]
- direct_page_fault+0x3cb/0x9b0 [kvm]
- kvm_tdp_page_fault+0x2c/0xa0 [kvm]
- kvm_mmu_page_fault+0x207/0x930 [kvm]
- npf_interception+0x47/0xb0 [kvm_amd]
-
-CVE: CVE-2022-45869
-Fixes: a2855afc7ee8 ("KVM: x86/mmu: Allow parallel page faults for the TDP MMU")
-Signed-off-by: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
-Cc: stable@vger.kernel.org
+Fixes: 2fd6df2f2b47 ("KVM: x86/xen: intercept EVTCHNOP_send from guests")
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Cc: stable@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/x86/kvm/xen.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2431,6 +2431,7 @@ static bool __kvm_mmu_prepare_zap_page(s
- {
- 	bool list_unstable, zapped_root = false;
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -1216,6 +1216,7 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
+ 	bool longmode;
+ 	u64 input, params[6], r = -ENOSYS;
+ 	bool handled = false;
++	u8 cpl;
  
-+	lockdep_assert_held_write(&kvm->mmu_lock);
- 	trace_kvm_mmu_prepare_zap_page(sp);
- 	++kvm->stat.mmu_shadow_zapped;
- 	*nr_zapped = mmu_zap_unsync_children(kvm, sp, invalid_list);
-@@ -4250,14 +4251,14 @@ static int direct_page_fault(struct kvm_
- 	if (is_page_fault_stale(vcpu, fault, mmu_seq))
- 		goto out_unlock;
+ 	input = (u64)kvm_register_read(vcpu, VCPU_REGS_RAX);
  
--	r = make_mmu_pages_available(vcpu);
--	if (r)
--		goto out_unlock;
--
--	if (is_tdp_mmu_fault)
-+	if (is_tdp_mmu_fault) {
- 		r = kvm_tdp_mmu_map(vcpu, fault);
--	else
-+	} else {
-+		r = make_mmu_pages_available(vcpu);
-+		if (r)
-+			goto out_unlock;
- 		r = __direct_map(vcpu, fault);
-+	}
+@@ -1243,9 +1244,17 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
+ 		params[5] = (u64)kvm_r9_read(vcpu);
+ 	}
+ #endif
++	cpl = static_call(kvm_x86_get_cpl)(vcpu);
+ 	trace_kvm_xen_hypercall(input, params[0], params[1], params[2],
+ 				params[3], params[4], params[5]);
  
- out_unlock:
- 	if (is_tdp_mmu_fault)
++	/*
++	 * Only allow hypercall acceleration for CPL0. The rare hypercalls that
++	 * are permitted in guest userspace can be handled by the VMM.
++	 */
++	if (unlikely(cpl > 0))
++		goto handle_in_userspace;
++
+ 	switch (input) {
+ 	case __HYPERVISOR_xen_version:
+ 		if (params[0] == XENVER_version && vcpu->kvm->arch.xen.xen_version) {
+@@ -1280,10 +1289,11 @@ int kvm_xen_hypercall(struct kvm_vcpu *v
+ 	if (handled)
+ 		return kvm_xen_hypercall_set_result(vcpu, r);
+ 
++handle_in_userspace:
+ 	vcpu->run->exit_reason = KVM_EXIT_XEN;
+ 	vcpu->run->xen.type = KVM_EXIT_XEN_HCALL;
+ 	vcpu->run->xen.u.hcall.longmode = longmode;
+-	vcpu->run->xen.u.hcall.cpl = static_call(kvm_x86_get_cpl)(vcpu);
++	vcpu->run->xen.u.hcall.cpl = cpl;
+ 	vcpu->run->xen.u.hcall.input = input;
+ 	vcpu->run->xen.u.hcall.params[0] = params[0];
+ 	vcpu->run->xen.u.hcall.params[1] = params[1];
 
 
