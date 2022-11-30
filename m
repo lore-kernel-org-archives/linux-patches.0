@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B38B6FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE21C433D6;
-	Wed, 30 Nov 2022 18:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBC26FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5913C433D6;
+	Wed, 30 Nov 2022 18:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832776;
-	bh=+OjShQvoVO2sfoGe1cW8c5l7565D24ROvEYNQhALPtM=;
+	s=korg; t=1669832779;
+	bh=JT4/EOII5U4Vev/JsR9Uok1QnPBvVJU6qrAIcS1c8ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnR8Fea1V44lIzo6jDnbxZ4DqpU9OAFpWlhV75fn2hIzSh818B+xvF4qAtCAfAGQ9
-	 77ExLWboy99jcRbLrX/HyX8t07CBQqKyFF+S7EkaDjv3gPuQHgjrmB6kchIGhrkM1Z
-	 kBwto821QaT4Swr5cdE3p61rdXvSjxDJCNHPxrS8=
+	b=G5dECcyT2txZ2ejiKWXskgCRC2X1ZQSW0ZMUjPvV2kD29WB5dVQdxHa3BmWGYgJTT
+	 aLLhn3Fp1Qd3/wyEDAfKo6RTde7kNdKt1nYOPHJx0HzZYQsOMZcFqTEOKPGbXzJyaE
+	 Spstm7GBGWNSQk178KPbjjfEeWpHC7KlV0YqfaRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Junxiao Chang <junxiao.chang@intel.com>,
-	Furong Zhou <furong.zhou@intel.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/162] ASoC: hdac_hda: fix hda pcm buffer overflow issue
-Date: Wed, 30 Nov 2022 19:21:57 +0100
-Message-Id: <20221130180529.484696219@linuxfoundation.org>
+Subject: [PATCH 5.10 037/162] ASoC: sgtl5000: Reset the CHIP_CLK_CTRL reg on remove
+Date: Wed, 30 Nov 2022 19:21:58 +0100
+Message-Id: <20221130180529.512167447@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,63 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junxiao Chang <junxiao.chang@intel.com>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 37882100cd0629d830db430a8cee0b724fe1fea3 ]
+[ Upstream commit 0bb8e9b36b5b7f2e77892981ff6c27ee831d8026 ]
 
-When KASAN is enabled, below log might be dumped with Intel EHL hardware:
-[   48.583597] ==================================================================
-[   48.585921] BUG: KASAN: slab-out-of-bounds in hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
-[   48.587995] Write of size 4 at addr ffff888103489708 by task pulseaudio/759
+Since commit bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove"),
+the device power control registers are reset when the driver is
+removed/shutdown.
 
-[   48.589237] CPU: 2 PID: 759 Comm: pulseaudio Tainted: G     U      E     5.15.71-intel-ese-standard-lts #9
-[   48.591272] Hardware name: Intel Corporation Elkhart Lake Embedded Platform/ElkhartLake LPDDR4x T3 CRB, BIOS EHLSFWI1.R00.4251.A01.2206130432 06/13/2022
-[   48.593010] Call Trace:
-[   48.593648]  <TASK>
-[   48.593852]  dump_stack_lvl+0x34/0x48
-[   48.594404]  print_address_description.constprop.0+0x1f/0x140
-[   48.595174]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
-[   48.595868]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
-[   48.596519]  kasan_report.cold+0x7f/0x11b
-[   48.597003]  ? hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
-[   48.597885]  hdac_hda_dai_hw_params+0x20a/0x22b [snd_soc_hdac_hda]
+This is an issue when the device is configured to use the PLL clock. The
+device will stop responding if it is still configured to use the PLL
+clock but the PLL clock is powered down.
 
-HDAC_LAST_DAI_ID is last index id, pcm buffer array size should
-be +1 to avoid out of bound access.
+When rebooting linux, the probe function will show:
+sgtl5000 0-000a: Error reading chip id -11
 
-Fixes: 608b8c36c371 ("ASoC: hdac_hda: add support for HDMI/DP as a HDA codec")
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
-Signed-off-by: Furong Zhou <furong.zhou@intel.com>
-Link: https://lore.kernel.org/r/20221109234023.3111035-1-junxiao.chang@intel.com
+Make sure that the CHIP_CLK_CTRL is reset to its default value before
+powering down the device.
+
+Fixes: bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20221110190612.1341469-1-detlev.casanova@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/sgtl5000.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/hdac_hda.h b/sound/soc/codecs/hdac_hda.h
-index d0efc5e254ae..da0ed74758b0 100644
---- a/sound/soc/codecs/hdac_hda.h
-+++ b/sound/soc/codecs/hdac_hda.h
-@@ -14,7 +14,7 @@ enum {
- 	HDAC_HDMI_1_DAI_ID,
- 	HDAC_HDMI_2_DAI_ID,
- 	HDAC_HDMI_3_DAI_ID,
--	HDAC_LAST_DAI_ID = HDAC_HDMI_3_DAI_ID,
-+	HDAC_DAI_ID_NUM
- };
+diff --git a/sound/soc/codecs/sgtl5000.c b/sound/soc/codecs/sgtl5000.c
+index f066e016a874..edde0323799a 100644
+--- a/sound/soc/codecs/sgtl5000.c
++++ b/sound/soc/codecs/sgtl5000.c
+@@ -1797,6 +1797,7 @@ static int sgtl5000_i2c_remove(struct i2c_client *client)
+ {
+ 	struct sgtl5000_priv *sgtl5000 = i2c_get_clientdata(client);
  
- struct hdac_hda_pcm {
-@@ -24,7 +24,7 @@ struct hdac_hda_pcm {
- 
- struct hdac_hda_priv {
- 	struct hda_codec codec;
--	struct hdac_hda_pcm pcm[HDAC_LAST_DAI_ID];
-+	struct hdac_hda_pcm pcm[HDAC_DAI_ID_NUM];
- 	bool need_display_power;
- };
++	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_CLK_CTRL, SGTL5000_CHIP_CLK_CTRL_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_DIG_POWER, SGTL5000_DIG_POWER_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_ANA_POWER, SGTL5000_ANA_POWER_DEFAULT);
  
 -- 
 2.35.1
