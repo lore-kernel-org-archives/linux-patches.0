@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59C679C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BB1C433C1;
-	Wed, 30 Nov 2022 18:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCE379C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:52:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58CCC433C1;
+	Wed, 30 Nov 2022 18:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834334;
-	bh=uCIGiAuqGAVMbpt4JwS0/7OI7J0r5rjJfCXTUC/FzTA=;
+	s=korg; t=1669834337;
+	bh=6wcgAe4V0idzEv5Ubdq6GCPPS7JDd+KR/SQEd1L3iZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SrNXPMaCdJTkWZhZNByltrsGXCrKFNNDmLS4fhlfM+Os+DN9zng+Tixq7H7OZnlFM
-	 S8FTO1nn4Ofv3vkLlp4l4lEfK0Cgq8BqXZ0yfPbcpahBDrTM4am2piMR8ROGliPYuG
-	 B2IW+fJVo8lzQqOeIfepbf0mwxCG1oX+bhTj3ybA=
+	b=ZSMdIBU5Fuez7E5ev3+e27y3RfBS1/ccHS7gTJTRPV5m/opNmiAhzOL8qFavO5r0P
+	 kCnKYwJZyH6YRmtmsN6qOYHi4UG2YqcTsTWgjYM+d7plqiYLmXWbG9mX2xBftbfYkN
+	 wmBXavVd2EasRgvuv8sAltZEhSLCRSlnK/wRdVjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Matthew Wilcox <willy@infradead.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 216/289] mm: fix unexpected changes to {failslab|fail_page_alloc}.attr
-Date: Wed, 30 Nov 2022 19:23:21 +0100
-Message-Id: <20221130180549.015082388@linuxfoundation.org>
+Subject: [PATCH 6.0 199/289] gcov: clang: fix the buffer overflow issue
+Date: Wed, 30 Nov 2022 19:23:04 +0100
+Message-Id: <20221130180548.631771641@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -38,165 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-commit ea4452de2ae987342fadbdd2c044034e6480daad upstream.
+commit a6f810efabfd789d3bbafeacb4502958ec56c5ce upstream.
 
-When we specify __GFP_NOWARN, we only expect that no warnings will be
-issued for current caller.  But in the __should_failslab() and
-__should_fail_alloc_page(), the local GFP flags alter the global
-{failslab|fail_page_alloc}.attr, which is persistent and shared by all
-tasks.  This is not what we expected, let's fix it.
+Currently, in clang version of gcov code when module is getting removed
+gcov_info_add() incorrectly adds the sfn_ptr->counter to all the
+dst->functions and it result in the kernel panic in below crash report.
+Fix this by properly handling it.
 
-[akpm@linux-foundation.org: unexport should_fail_ex()]
-Link: https://lkml.kernel.org/r/20221118100011.2634-1-zhengqi.arch@bytedance.com
-Fixes: 3f913fc5f974 ("mm: fix missing handler for __GFP_NOWARN")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reported-by: Dmitry Vyukov <dvyukov@google.com>
-Reviewed-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
+[    8.899094][  T599] Unable to handle kernel write to read-only memory at virtual address ffffff80461cc000
+[    8.899100][  T599] Mem abort info:
+[    8.899102][  T599]   ESR = 0x9600004f
+[    8.899103][  T599]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    8.899105][  T599]   SET = 0, FnV = 0
+[    8.899107][  T599]   EA = 0, S1PTW = 0
+[    8.899108][  T599]   FSC = 0x0f: level 3 permission fault
+[    8.899110][  T599] Data abort info:
+[    8.899111][  T599]   ISV = 0, ISS = 0x0000004f
+[    8.899113][  T599]   CM = 0, WnR = 1
+[    8.899114][  T599] swapper pgtable: 4k pages, 39-bit VAs, pgdp=00000000ab8de000
+[    8.899116][  T599] [ffffff80461cc000] pgd=18000009ffcde003, p4d=18000009ffcde003, pud=18000009ffcde003, pmd=18000009ffcad003, pte=00600000c61cc787
+[    8.899124][  T599] Internal error: Oops: 9600004f [#1] PREEMPT SMP
+[    8.899265][  T599] Skip md ftrace buffer dump for: 0x1609e0
+....
+..,
+[    8.899544][  T599] CPU: 7 PID: 599 Comm: modprobe Tainted: G S         OE     5.15.41-android13-8-g38e9b1af6bce #1
+[    8.899547][  T599] Hardware name: XXX (DT)
+[    8.899549][  T599] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
+[    8.899551][  T599] pc : gcov_info_add+0x9c/0xb8
+[    8.899557][  T599] lr : gcov_event+0x28c/0x6b8
+[    8.899559][  T599] sp : ffffffc00e733b00
+[    8.899560][  T599] x29: ffffffc00e733b00 x28: ffffffc00e733d30 x27: ffffffe8dc297470
+[    8.899563][  T599] x26: ffffffe8dc297000 x25: ffffffe8dc297000 x24: ffffffe8dc297000
+[    8.899566][  T599] x23: ffffffe8dc0a6200 x22: ffffff880f68bf20 x21: 0000000000000000
+[    8.899569][  T599] x20: ffffff880f68bf00 x19: ffffff8801babc00 x18: ffffffc00d7f9058
+[    8.899572][  T599] x17: 0000000000088793 x16: ffffff80461cbe00 x15: 9100052952800785
+[    8.899575][  T599] x14: 0000000000000200 x13: 0000000000000041 x12: 9100052952800785
+[    8.899577][  T599] x11: ffffffe8dc297000 x10: ffffffe8dc297000 x9 : ffffff80461cbc80
+[    8.899580][  T599] x8 : ffffff8801babe80 x7 : ffffffe8dc2ec000 x6 : ffffffe8dc2ed000
+[    8.899583][  T599] x5 : 000000008020001f x4 : fffffffe2006eae0 x3 : 000000008020001f
+[    8.899586][  T599] x2 : ffffff8027c49200 x1 : ffffff8801babc20 x0 : ffffff80461cb3a0
+[    8.899589][  T599] Call trace:
+[    8.899590][  T599]  gcov_info_add+0x9c/0xb8
+[    8.899592][  T599]  gcov_module_notifier+0xbc/0x120
+[    8.899595][  T599]  blocking_notifier_call_chain+0xa0/0x11c
+[    8.899598][  T599]  do_init_module+0x2a8/0x33c
+[    8.899600][  T599]  load_module+0x23cc/0x261c
+[    8.899602][  T599]  __arm64_sys_finit_module+0x158/0x194
+[    8.899604][  T599]  invoke_syscall+0x94/0x2bc
+[    8.899607][  T599]  el0_svc_common+0x1d8/0x34c
+[    8.899609][  T599]  do_el0_svc+0x40/0x54
+[    8.899611][  T599]  el0_svc+0x94/0x2f0
+[    8.899613][  T599]  el0t_64_sync_handler+0x88/0xec
+[    8.899615][  T599]  el0t_64_sync+0x1b4/0x1b8
+[    8.899618][  T599] Code: f905f56c f86e69ec f86e6a0f 8b0c01ec (f82e6a0c)
+[    8.899620][  T599] ---[ end trace ed5218e9e5b6e2e6 ]---
+
+Link: https://lkml.kernel.org/r/1668020497-13142-1-git-send-email-quic_mojha@quicinc.com
+Fixes: e178a5beb369 ("gcov: clang support")
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Tom Rix <trix@redhat.com>
+Cc: <stable@vger.kernel.org>	[5.2+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fault-inject.h |    7 +++++--
- lib/fault-inject.c           |   13 ++++++++-----
- mm/failslab.c                |   12 ++++++++++--
- mm/page_alloc.c              |    7 +++++--
- 4 files changed, 28 insertions(+), 11 deletions(-)
+ kernel/gcov/clang.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/fault-inject.h
-+++ b/include/linux/fault-inject.h
-@@ -20,7 +20,6 @@ struct fault_attr {
- 	atomic_t space;
- 	unsigned long verbose;
- 	bool task_filter;
--	bool no_warn;
- 	unsigned long stacktrace_depth;
- 	unsigned long require_start;
- 	unsigned long require_end;
-@@ -32,6 +31,10 @@ struct fault_attr {
- 	struct dentry *dname;
- };
+--- a/kernel/gcov/clang.c
++++ b/kernel/gcov/clang.c
+@@ -280,6 +280,8 @@ void gcov_info_add(struct gcov_info *dst
  
-+enum fault_flags {
-+	FAULT_NOWARN =	1 << 0,
-+};
+ 		for (i = 0; i < sfn_ptr->num_counters; i++)
+ 			dfn_ptr->counters[i] += sfn_ptr->counters[i];
 +
- #define FAULT_ATTR_INITIALIZER {					\
- 		.interval = 1,						\
- 		.times = ATOMIC_INIT(1),				\
-@@ -40,11 +43,11 @@ struct fault_attr {
- 		.ratelimit_state = RATELIMIT_STATE_INIT_DISABLED,	\
- 		.verbose = 2,						\
- 		.dname = NULL,						\
--		.no_warn = false,					\
++		sfn_ptr = list_next_entry(sfn_ptr, head);
  	}
- 
- #define DECLARE_FAULT_ATTR(name) struct fault_attr name = FAULT_ATTR_INITIALIZER
- int setup_fault_attr(struct fault_attr *attr, char *str);
-+bool should_fail_ex(struct fault_attr *attr, ssize_t size, int flags);
- bool should_fail(struct fault_attr *attr, ssize_t size);
- 
- #ifdef CONFIG_FAULT_INJECTION_DEBUG_FS
---- a/lib/fault-inject.c
-+++ b/lib/fault-inject.c
-@@ -41,9 +41,6 @@ EXPORT_SYMBOL_GPL(setup_fault_attr);
- 
- static void fail_dump(struct fault_attr *attr)
- {
--	if (attr->no_warn)
--		return;
--
- 	if (attr->verbose > 0 && __ratelimit(&attr->ratelimit_state)) {
- 		printk(KERN_NOTICE "FAULT_INJECTION: forcing a failure.\n"
- 		       "name %pd, interval %lu, probability %lu, "
-@@ -103,7 +100,7 @@ static inline bool fail_stacktrace(struc
-  * http://www.nongnu.org/failmalloc/
-  */
- 
--bool should_fail(struct fault_attr *attr, ssize_t size)
-+bool should_fail_ex(struct fault_attr *attr, ssize_t size, int flags)
- {
- 	if (in_task()) {
- 		unsigned int fail_nth = READ_ONCE(current->fail_nth);
-@@ -146,13 +143,19 @@ bool should_fail(struct fault_attr *attr
- 		return false;
- 
- fail:
--	fail_dump(attr);
-+	if (!(flags & FAULT_NOWARN))
-+		fail_dump(attr);
- 
- 	if (atomic_read(&attr->times) != -1)
- 		atomic_dec_not_zero(&attr->times);
- 
- 	return true;
- }
-+
-+bool should_fail(struct fault_attr *attr, ssize_t size)
-+{
-+	return should_fail_ex(attr, size, 0);
-+}
- EXPORT_SYMBOL_GPL(should_fail);
- 
- #ifdef CONFIG_FAULT_INJECTION_DEBUG_FS
---- a/mm/failslab.c
-+++ b/mm/failslab.c
-@@ -16,6 +16,8 @@ static struct {
- 
- bool __should_failslab(struct kmem_cache *s, gfp_t gfpflags)
- {
-+	int flags = 0;
-+
- 	/* No fault-injection for bootstrap cache */
- 	if (unlikely(s == kmem_cache))
- 		return false;
-@@ -30,10 +32,16 @@ bool __should_failslab(struct kmem_cache
- 	if (failslab.cache_filter && !(s->flags & SLAB_FAILSLAB))
- 		return false;
- 
-+	/*
-+	 * In some cases, it expects to specify __GFP_NOWARN
-+	 * to avoid printing any information(not just a warning),
-+	 * thus avoiding deadlocks. See commit 6b9dbedbe349 for
-+	 * details.
-+	 */
- 	if (gfpflags & __GFP_NOWARN)
--		failslab.attr.no_warn = true;
-+		flags |= FAULT_NOWARN;
- 
--	return should_fail(&failslab.attr, s->object_size);
-+	return should_fail_ex(&failslab.attr, s->object_size, flags);
  }
  
- static int __init setup_failslab(char *str)
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -3883,6 +3883,8 @@ __setup("fail_page_alloc=", setup_fail_p
- 
- static bool __should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
- {
-+	int flags = 0;
-+
- 	if (order < fail_page_alloc.min_order)
- 		return false;
- 	if (gfp_mask & __GFP_NOFAIL)
-@@ -3893,10 +3895,11 @@ static bool __should_fail_alloc_page(gfp
- 			(gfp_mask & __GFP_DIRECT_RECLAIM))
- 		return false;
- 
-+	/* See comment in __should_failslab() */
- 	if (gfp_mask & __GFP_NOWARN)
--		fail_page_alloc.attr.no_warn = true;
-+		flags |= FAULT_NOWARN;
- 
--	return should_fail(&fail_page_alloc.attr, 1 << order);
-+	return should_fail_ex(&fail_page_alloc.attr, 1 << order, flags);
- }
- 
- #ifdef CONFIG_FAULT_INJECTION_DEBUG_FS
 
 
