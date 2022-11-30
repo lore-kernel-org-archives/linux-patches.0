@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB536FA1
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C3AC4347C;
-	Wed, 30 Nov 2022 18:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639FF6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD50C433D6;
+	Wed, 30 Nov 2022 18:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669832853;
-	bh=krs0EqdIHkxl+jin83NrgsvSxco2LvipJuLkbCCkoG4=;
+	s=korg; t=1669832856;
+	bh=PQEa3v5c3BgZ1lWHyaybLS3+y+QeCcyKkH3UOXDZE1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNyUhR+gPY9dd4370UyIzbNDnCqd9+mZ4ck4r1cpiOTrBZa8e2SIViKNg3p7sZrwg
-	 o4MaRY+edU+QCND0Gw4xoZfGuPuepAUOmy6iLWDxPGdDGlc830vn+unhss1H1m6dtB
-	 n9Q+Nd/N2ORJqlZA7+Tk70XHSSbGJIX86RSsGL68=
+	b=bV9ru+klV/sq4CjJI72EMJDPO2NAihTbJIKmscW2P8eWFJx02DMOh9REeUvXl4Vb6
+	 Xvzm3EjEsiO4VUTYWk4TbuD5OeQP2t9DMVKE+UNxwUMS+3TCDZ1KscVePvzZ7HpXUu
+	 WEZKZDtyfJIC1GuAZw1GkmAsE6Yg0t/7ju13y8f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
 	Yang Yingliang <yangyingliang@huawei.com>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/162] Drivers: hv: vmbus: fix double free in the error path of vmbus_add_channel_work()
-Date: Wed, 30 Nov 2022 19:22:24 +0100
-Message-Id: <20221130180530.213903225@linuxfoundation.org>
+Subject: [PATCH 5.10 064/162] Drivers: hv: vmbus: fix possible memory leak in vmbus_device_register()
+Date: Wed, 30 Nov 2022 19:22:25 +0100
+Message-Id: <20221130180530.240608798@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -38,46 +38,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f92a4b50f0bd7fd52391dc4bb9a309085d278f91 ]
+[ Upstream commit 25c94b051592c010abe92c85b0485f1faedc83f3 ]
 
-In the error path of vmbus_device_register(), device_unregister()
-is called, which calls vmbus_device_release().  The latter frees
-the struct hv_device that was passed in to vmbus_device_register().
-So remove the kfree() in vmbus_add_channel_work() to avoid a double
-free.
+If device_register() returns error in vmbus_device_register(),
+the name allocated by dev_set_name() must be freed. As comment
+of device_register() says, it should use put_device() to give
+up the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: c2e5df616e1a ("vmbus: add per-channel sysfs info")
-Suggested-by: Michael Kelley <mikelley@microsoft.com>
+Fixes: 09d50ff8a233 ("Staging: hv: make the Hyper-V virtual bus code build")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20221119081135.1564691-2-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221119081135.1564691-3-yangyingliang@huawei.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hv/vmbus_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 10188b1a6a08..5b902adb0d1b 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -501,13 +501,17 @@ static void vmbus_add_channel_work(struct work_struct *work)
- 	 * Add the new device to the bus. This will kick off device-driver
- 	 * binding which eventually invokes the device driver's AddDevice()
- 	 * method.
-+	 *
-+	 * If vmbus_device_register() fails, the 'device_obj' is freed in
-+	 * vmbus_device_release() as called by device_unregister() in the
-+	 * error path of vmbus_device_register(). In the outside error
-+	 * path, there's no need to free it.
- 	 */
- 	ret = vmbus_device_register(newchannel->device_obj);
- 
- 	if (ret != 0) {
- 		pr_err("unable to add child device object (relid %d)\n",
- 			newchannel->offermsg.child_relid);
--		kfree(newchannel->device_obj);
- 		goto err_deq_chan;
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 514279dac7cb..e99400f3ae1d 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2020,6 +2020,7 @@ int vmbus_device_register(struct hv_device *child_device_obj)
+ 	ret = device_register(&child_device_obj->device);
+ 	if (ret) {
+ 		pr_err("Unable to register child device\n");
++		put_device(&child_device_obj->device);
+ 		return ret;
  	}
  
 -- 
