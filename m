@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E789EA5B
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFB9C433D7;
-	Wed, 30 Nov 2022 18:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161B06FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DE1C433D6;
+	Wed, 30 Nov 2022 18:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833005;
-	bh=a2qXSDAP4OsB5CGmbAwdX2vHYynzwSMa22Z/WeVtAmw=;
+	s=korg; t=1669833008;
+	bh=9laoublTZwXPOpx4i8qgiZZcYzr2CpBZc1dUrUyOgk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFYZGeCLFB7gO7V9ilRnp3qyFoWgWBVDG5zydEQsUSqt0+RDBencYqBZ7XeFQcA8I
-	 cFVcJ2V0QBgehBK8CZ96IW/rwp9+3l6eErcv4f+JROCJ7JZ5Yk2BuhI4kHpT0OZvIl
-	 z+Gv58T/QTxv/taCJgVx56+nKjGIalvInhyOU7gg=
+	b=XC7ETxameDmp9uO8TDRPOdy5thDWWt2jVz9z7omBNoZaYIGgVDFLWy7VPsZewLOVe
+	 LlemfdFHgu4SXvC+dpgv2f9gaEU5wjlkxYZM19tSzHWA6bO7k7K7hv2xqIV3BMAwcd
+	 GKzNcY1kYmINWcMD64MU4JZI8cpJCMtFIbx7j73o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/162] usb: dwc3: gadget: Clear ep descriptor last
-Date: Wed, 30 Nov 2022 19:23:19 +0100
-Message-Id: <20221130180531.691005327@linuxfoundation.org>
+Subject: [PATCH 5.10 101/162] KVM: x86: emulator: update the emulation mode after rsm
+Date: Wed, 30 Nov 2022 19:23:02 +0100
+Message-Id: <20221130180531.230294812@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 References: <20221130180528.466039523@linuxfoundation.org>
@@ -34,52 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit f90f5afd5083a7cb4aee13bd4cc0ae600bd381ca ]
+[ Upstream commit 055f37f84e304e59c046d1accfd8f08462f52c4c ]
 
-Until the endpoint is disabled, its descriptors should remain valid.
-When its requests are removed from ep disable, the request completion
-routine may attempt to access the endpoint's descriptor. Don't clear the
-descriptors before that.
+Update the emulation mode after RSM so that RIP will be correctly
+written back, because the RSM instruction can switch the CPU mode from
+32 bit (or less) to 64 bit.
 
-Fixes: f09ddcfcb8c5 ("usb: dwc3: gadget: Prevent EP queuing while stopping transfers")
+This fixes a guest crash in case the #SMI is received while the guest
+runs a code from an address > 32 bit.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-13-mlevitsk@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/45db7c83b209259115bf652af210f8b2b3b1a383.1668561364.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/kvm/emulate.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 2b4e1c0d02d5..a9a43d649478 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -803,18 +803,18 @@ static int __dwc3_gadget_ep_disable(struct dwc3_ep *dep)
- 	reg &= ~DWC3_DALEPENA_EP(dep->number);
- 	dwc3_writel(dwc->regs, DWC3_DALEPENA, reg);
+diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+index 63efccc8f429..716d54b624e0 100644
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -2746,6 +2746,15 @@ static int em_rsm(struct x86_emulate_ctxt *ctxt)
  
--	/* Clear out the ep descriptors for non-ep0 */
--	if (dep->number > 1) {
--		dep->endpoint.comp_desc = NULL;
--		dep->endpoint.desc = NULL;
--	}
--
- 	dwc3_remove_requests(dwc, dep, -ESHUTDOWN);
+ 	ctxt->ops->post_leave_smm(ctxt);
  
- 	dep->stream_capable = false;
- 	dep->type = 0;
- 	dep->flags = 0;
- 
-+	/* Clear out the ep descriptors for non-ep0 */
-+	if (dep->number > 1) {
-+		dep->endpoint.comp_desc = NULL;
-+		dep->endpoint.desc = NULL;
-+	}
++	/*
++	 * Note, the ctxt->ops callbacks are responsible for handling side
++	 * effects when writing MSRs and CRs, e.g. MMU context resets, CPUID
++	 * runtime updates, etc...  If that changes, e.g. this flow is moved
++	 * out of the emulator to make it look more like enter_smm(), then
++	 * those side effects need to be explicitly handled for both success
++	 * and shutdown.
++	 */
 +
- 	return 0;
+ 	return X86EMUL_CONTINUE;
  }
  
 -- 
