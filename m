@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9991279C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06718C433D6;
-	Wed, 30 Nov 2022 18:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C63279C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74E1C433C1;
+	Wed, 30 Nov 2022 18:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833600;
-	bh=OwJx37HG/bepk19hnsvQmT6VFdCCw5bN3fLhV2fo8TQ=;
+	s=korg; t=1669833603;
+	bh=dEVUNWnn3ztIfF2Cjk+94KNRd46GIxRsDDlwkddTlE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpGAwwgaFstpKfkNgjS+K0hOtEcdtOwf+/Z1j0PnJrpD5NFvAqOBOy6C6biwK1CM+
-	 HR/L6G354V2UcLL1Q8CJmnskS0e+wsn5Ap6mnCTTmDeKovobnUykLSn7O1zvscBozb
-	 62m7hCE1hnE9XhR9BU+3tCU1PlnqnIffOIFnpg+M=
+	b=umNaVWcY+lyqj4ajrPv8keoYARr7WAn4BjSqBev5FzUf5vM9RmmS8KL054oVqQhfa
+	 Ue815+UGQmaBaWBJLVaA6udwff1IJtZTV4zuofBukQrgJJ73bBP+eWnTVFM25nEEr/
+	 hIQAjZSkkqbuXtHeMHfJhujeeKV6WPDY+JtnZit0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Cooper <alcooperx@gmail.com>,
-	Kamal Dasu <kdasu.kdev@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/206] mmc: sdhci-brcmstb: Re-organize flags
-Date: Wed, 30 Nov 2022 19:23:09 +0100
-Message-Id: <20221130180536.525176172@linuxfoundation.org>
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Rik van Riel <riel@surriel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Hugh Dickins <hughd@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 155/206] mm: vmscan: fix extreme overreclaim and swap floods
+Date: Wed, 30 Nov 2022 19:23:27 +0100
+Message-Id: <20221130180536.978519186@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -38,133 +38,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Cooper <alcooperx@gmail.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit f3a70f991dd07330225ea11e158e1d07ad5733fb ]
+commit f53af4285d775cd9a9a146fc438bd0a1bee1838a upstream.
 
-Re-organize the flags by basing the bit names on the flag that they
-apply to. Also change the "flags" member in the "brcmstb_match_priv"
-struct to const.
+During proactive reclaim, we sometimes observe severe overreclaim, with
+several thousand times more pages reclaimed than requested.
 
-Signed-off-by: Al Cooper <alcooperx@gmail.com>
-Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20220427180853.35970-2-kdasu.kdev@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 56baa208f910 ("mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This trace was obtained from shrink_lruvec() during such an instance:
+
+    prio:0 anon_cost:1141521 file_cost:7767
+    nr_reclaimed:4387406 nr_to_reclaim:1047 (or_factor:4190)
+    nr=[7161123 345 578 1111]
+
+While he reclaimer requested 4M, vmscan reclaimed close to 16G, most of it
+by swapping.  These requests take over a minute, during which the write()
+to memory.reclaim is unkillably stuck inside the kernel.
+
+Digging into the source, this is caused by the proportional reclaim
+bailout logic.  This code tries to resolve a fundamental conflict: to
+reclaim roughly what was requested, while also aging all LRUs fairly and
+in accordance to their size, swappiness, refault rates etc.  The way it
+attempts fairness is that once the reclaim goal has been reached, it stops
+scanning the LRUs with the smaller remaining scan targets, and adjusts the
+remainder of the bigger LRUs according to how much of the smaller LRUs was
+scanned.  It then finishes scanning that remainder regardless of the
+reclaim goal.
+
+This works fine if priority levels are low and the LRU lists are
+comparable in size.  However, in this instance, the cgroup that is
+targeted by proactive reclaim has almost no files left - they've already
+been squeezed out by proactive reclaim earlier - and the remaining anon
+pages are hot.  Anon rotations cause the priority level to drop to 0,
+which results in reclaim targeting all of anon (a lot) and all of file
+(almost nothing).  By the time reclaim decides to bail, it has scanned
+most or all of the file target, and therefor must also scan most or all of
+the enormous anon target.  This target is thousands of times larger than
+the reclaim goal, thus causing the overreclaim.
+
+The bailout code hasn't changed in years, why is this failing now?  The
+most likely explanations are two other recent changes in anon reclaim:
+
+1. Before the series starting with commit 5df741963d52 ("mm: fix LRU
+   balancing effect of new transparent huge pages"), the VM was
+   overall relatively reluctant to swap at all, even if swap was
+   configured. This means the LRU balancing code didn't come into play
+   as often as it does now, and mostly in high pressure situations
+   where pronounced swap activity wouldn't be as surprising.
+
+2. For historic reasons, shrink_lruvec() loops on the scan targets of
+   all LRU lists except the active anon one, meaning it would bail if
+   the only remaining pages to scan were active anon - even if there
+   were a lot of them.
+
+   Before the series starting with commit ccc5dc67340c ("mm/vmscan:
+   make active/inactive ratio as 1:1 for anon lru"), most anon pages
+   would live on the active LRU; the inactive one would contain only a
+   handful of preselected reclaim candidates. After the series, anon
+   gets aged similarly to file, and the inactive list is the default
+   for new anon pages as well, making it often the much bigger list.
+
+   As a result, the VM is now more likely to actually finish large
+   anon targets than before.
+
+Change the code such that only one SWAP_CLUSTER_MAX-sized nudge toward the
+larger LRU lists is made before bailing out on a met reclaim goal.
+
+This fixes the extreme overreclaim problem.
+
+Fairness is more subtle and harder to evaluate.  No obvious misbehavior
+was observed on the test workload, in any case.  Conceptually, fairness
+should primarily be a cumulative effect from regular, lower priority
+scans.  Once the VM is in trouble and needs to escalate scan targets to
+make forward progress, fairness needs to take a backseat.  This is also
+acknowledged by the myriad exceptions in get_scan_count().  This patch
+makes fairness decrease gradually, as it keeps fairness work static over
+increasing priority levels with growing scan targets.  This should make
+more sense - although we may have to re-visit the exact values.
+
+Link: https://lkml.kernel.org/r/20220802162811.39216-1-hannes@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-brcmstb.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ mm/vmscan.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-index f24623aac2db..244780481193 100644
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -18,20 +18,22 @@
- #define SDHCI_VENDOR 0x78
- #define  SDHCI_VENDOR_ENHANCED_STRB 0x1
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2791,8 +2791,8 @@ static void shrink_lruvec(struct lruvec
+ 	enum lru_list lru;
+ 	unsigned long nr_reclaimed = 0;
+ 	unsigned long nr_to_reclaim = sc->nr_to_reclaim;
++	bool proportional_reclaim;
+ 	struct blk_plug plug;
+-	bool scan_adjusted;
  
--#define BRCMSTB_PRIV_FLAGS_NO_64BIT		BIT(0)
--#define BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT	BIT(1)
-+#define BRCMSTB_MATCH_FLAGS_NO_64BIT		BIT(0)
-+#define BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT	BIT(1)
-+
-+#define BRCMSTB_PRIV_FLAGS_HAS_CQE		BIT(0)
+ 	get_scan_count(lruvec, sc, nr);
  
- #define SDHCI_ARASAN_CQE_BASE_ADDR		0x200
- 
- struct sdhci_brcmstb_priv {
- 	void __iomem *cfg_regs;
--	bool has_cqe;
-+	unsigned int flags;
- };
- 
- struct brcmstb_match_priv {
- 	void (*hs400es)(struct mmc_host *mmc, struct mmc_ios *ios);
- 	struct sdhci_ops *ops;
--	unsigned int flags;
-+	const unsigned int flags;
- };
- 
- static void sdhci_brcmstb_hs400es(struct mmc_host *mmc, struct mmc_ios *ios)
-@@ -134,13 +136,13 @@ static struct sdhci_ops sdhci_brcmstb_ops_7216 = {
- };
- 
- static struct brcmstb_match_priv match_priv_7425 = {
--	.flags = BRCMSTB_PRIV_FLAGS_NO_64BIT |
--	BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
-+	.flags = BRCMSTB_MATCH_FLAGS_NO_64BIT |
-+	BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
- 	.ops = &sdhci_brcmstb_ops,
- };
- 
- static struct brcmstb_match_priv match_priv_7445 = {
--	.flags = BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT,
-+	.flags = BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT,
- 	.ops = &sdhci_brcmstb_ops,
- };
- 
-@@ -176,7 +178,7 @@ static int sdhci_brcmstb_add_host(struct sdhci_host *host,
- 	bool dma64;
- 	int ret;
- 
--	if (!priv->has_cqe)
-+	if ((priv->flags & BRCMSTB_PRIV_FLAGS_HAS_CQE) == 0)
- 		return sdhci_add_host(host);
- 
- 	dev_dbg(mmc_dev(host->mmc), "CQE is enabled\n");
-@@ -225,7 +227,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
- 	struct sdhci_brcmstb_priv *priv;
- 	struct sdhci_host *host;
- 	struct resource *iomem;
--	bool has_cqe = false;
- 	struct clk *clk;
- 	int res;
- 
-@@ -244,10 +245,6 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
- 		return res;
- 
- 	memset(&brcmstb_pdata, 0, sizeof(brcmstb_pdata));
--	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
--		has_cqe = true;
--		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
--	}
- 	brcmstb_pdata.ops = match_priv->ops;
- 	host = sdhci_pltfm_init(pdev, &brcmstb_pdata,
- 				sizeof(struct sdhci_brcmstb_priv));
-@@ -258,7 +255,10 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
- 
- 	pltfm_host = sdhci_priv(host);
- 	priv = sdhci_pltfm_priv(pltfm_host);
--	priv->has_cqe = has_cqe;
-+	if (device_property_read_bool(&pdev->dev, "supports-cqe")) {
-+		priv->flags |= BRCMSTB_PRIV_FLAGS_HAS_CQE;
-+		match_priv->ops->irq = sdhci_brcmstb_cqhci_irq;
-+	}
- 
- 	/* Map in the non-standard CFG registers */
- 	iomem = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-@@ -287,14 +287,14 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
- 	 * properties through mmc_of_parse().
+@@ -2810,8 +2810,8 @@ static void shrink_lruvec(struct lruvec
+ 	 * abort proportional reclaim if either the file or anon lru has already
+ 	 * dropped to zero at the first pass.
  	 */
- 	host->caps = sdhci_readl(host, SDHCI_CAPABILITIES);
--	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_NO_64BIT)
-+	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_NO_64BIT)
- 		host->caps &= ~SDHCI_CAN_64BIT;
- 	host->caps1 = sdhci_readl(host, SDHCI_CAPABILITIES_1);
- 	host->caps1 &= ~(SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_SDR104 |
- 			 SDHCI_SUPPORT_DDR50);
- 	host->quirks |= SDHCI_QUIRK_MISSING_CAPS;
+-	scan_adjusted = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
+-			 sc->priority == DEF_PRIORITY);
++	proportional_reclaim = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
++				sc->priority == DEF_PRIORITY);
  
--	if (match_priv->flags & BRCMSTB_PRIV_FLAGS_BROKEN_TIMEOUT)
-+	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT)
- 		host->quirks |= SDHCI_QUIRK_BROKEN_TIMEOUT_VAL;
+ 	blk_start_plug(&plug);
+ 	while (nr[LRU_INACTIVE_ANON] || nr[LRU_ACTIVE_FILE] ||
+@@ -2831,7 +2831,7 @@ static void shrink_lruvec(struct lruvec
  
- 	res = sdhci_brcmstb_add_host(host, priv);
--- 
-2.35.1
-
+ 		cond_resched();
+ 
+-		if (nr_reclaimed < nr_to_reclaim || scan_adjusted)
++		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
+ 
+ 		/*
+@@ -2882,8 +2882,6 @@ static void shrink_lruvec(struct lruvec
+ 		nr_scanned = targets[lru] - nr[lru];
+ 		nr[lru] = targets[lru] * (100 - percentage) / 100;
+ 		nr[lru] -= min(nr[lru], nr_scanned);
+-
+-		scan_adjusted = true;
+ 	}
+ 	blk_finish_plug(&plug);
+ 	sc->nr_reclaimed += nr_reclaimed;
 
 
