@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1606379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA42C433C1;
-	Wed, 30 Nov 2022 18:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A3B79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32497C433D6;
+	Wed, 30 Nov 2022 18:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833962;
-	bh=wQ1TQKEtgLvGpaqIS9oK3fMBCTHOdoBr+UClWwmLv1A=;
+	s=korg; t=1669833965;
+	bh=SACIet4rI6RT99ooF1BnEEeciyx4H/mj7PXOQzGF7t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itjV2okftc7H08FzXxdt0jDuzN5bExlQIf989NbWaOOYaniHBxh0jqFI8WvjSnYOP
-	 4H6FLsZA3BiRTE/gCvog/6Z3kOE433hrT9iixGQ7aSlDZxoxtw8moEJV9LJqPdcVJF
-	 YHcE+N/5T92nhT4opxXF9vDg//ok90N0WrPsm+bY=
+	b=gHmPUMCs9UcwgJZLthJiN2DNwfF77ZV5OnUOXB+BGdiXBN1H1ZMtgICZJE+NXnd/o
+	 LTyxj3OKsJq10iJcluXZb4McU9DjRlJ6nJE5X/ojO35qwE2T3Kdm6zk7/eiPDmTIyX
+	 2IcG7dFtkxNQyYFNwfQvBl6XhIJ42Qic7/W0s8Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 051/289] ASoC: Intel: Skylake: Introduce HDA codec init and exit routines
-Date: Wed, 30 Nov 2022 19:20:36 +0100
-Message-Id: <20221130180545.287259157@linuxfoundation.org>
+Subject: [PATCH 6.0 052/289] ASoC: SOF: Intel: Introduce HDA codec init and exit routines
+Date: Wed, 30 Nov 2022 19:20:37 +0100
+Message-Id: <20221130180545.309338514@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -40,7 +40,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit e4746d94d00c52918461bc169e009b6784a38e21 ]
+[ Upstream commit 829c67319806009abfe3b0b82b3b8b153a2c5e32 ]
 
 Preliminary step in making snd_hda_codec_device_init() the only
 constructor for struct hda_codec instances. To do that, existing usage
@@ -50,28 +50,29 @@ Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20220816111727.3218543-2-cezary.rojewski@intel.com
+Link: https://lore.kernel.org/r/20220816111727.3218543-3-cezary.rojewski@intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: 37882100cd06 ("ASoC: hdac_hda: fix hda pcm buffer overflow issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/skylake/skl.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ sound/soc/sof/intel/hda-codec.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
-index aeca58246fc7..33b0ed6b0534 100644
---- a/sound/soc/intel/skylake/skl.c
-+++ b/sound/soc/intel/skylake/skl.c
-@@ -689,6 +689,35 @@ static void load_codec_module(struct hda_codec *codec)
+diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
+index 2f3f4a733d9e..4c128ba02340 100644
+--- a/sound/soc/sof/intel/hda-codec.c
++++ b/sound/soc/sof/intel/hda-codec.c
+@@ -109,6 +109,36 @@ EXPORT_SYMBOL_NS(hda_codec_jack_check, SND_SOC_SOF_HDA_AUDIO_CODEC);
+ #define is_generic_config(x)	0
+ #endif
  
- #endif /* CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC */
- 
-+static void skl_codec_device_exit(struct device *dev)
++static void hda_codec_device_exit(struct device *dev)
 +{
 +	snd_hdac_device_exit(dev_to_hdac_dev(dev));
 +}
 +
-+static __maybe_unused struct hda_codec *skl_codec_device_init(struct hdac_bus *bus, int addr)
++static __maybe_unused struct hda_codec *
++hda_codec_device_init(struct hdac_bus *bus, int addr, int type)
 +{
 +	struct hda_codec *codec;
 +	int ret;
@@ -82,8 +83,8 @@ index aeca58246fc7..33b0ed6b0534 100644
 +		return codec;
 +	}
 +
-+	codec->core.type = HDA_DEV_ASOC;
-+	codec->core.dev.release = skl_codec_device_exit;
++	codec->core.type = type;
++	codec->core.dev.release = hda_codec_device_exit;
 +
 +	ret = snd_hdac_device_register(&codec->core);
 +	if (ret) {
@@ -95,9 +96,9 @@ index aeca58246fc7..33b0ed6b0534 100644
 +	return codec;
 +}
 +
- /*
-  * Probe the given codec address
-  */
+ /* probe individual codec */
+ static int hda_codec_probe(struct snd_sof_dev *sdev, int address,
+ 			   bool hda_codec_use_common_hdmi)
 -- 
 2.35.1
 
