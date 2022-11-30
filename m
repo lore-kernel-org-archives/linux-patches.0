@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB10379C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD75C433D6;
-	Wed, 30 Nov 2022 18:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEDB79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:50:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135F4C433D6;
+	Wed, 30 Nov 2022 18:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834212;
-	bh=4U3+mb3n70ovb4Lg9tEv9Oo48vEG3Fcv7bNdFjel2yw=;
+	s=korg; t=1669834215;
+	bh=W3VaSAIb0CuClyxjcVTCGSCdRW0GIgv/c7vRm1jJe28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDtVx2N2Mn4G8nSLOjkgoZSrP1ZJFg9TWX0FK1evl2crp2wxX2w/j6PblYeTCzumD
-	 3bkMgGkNIs5RQDuKHg4bX40z0PX/ZcaX77M1foQIOMN+obyc4lCpR1cKbzHacsAwRb
-	 o+JoNG4VThqqIdG8jVapQCRZCWZdUBVgJZPJSoYE=
+	b=0kcES9rPxHpMqR9O1g5BXWHR+TO4aSW73DXIpSsvBU4ZqVPa50YZI+elfEaDus9u/
+	 Z3eWy+Yfzz4mQUbznAxFS5xx297swFAz0FFmI0p5oDpK2cTJVNKIsMjZ+GDdHwHDc6
+	 9oxaxoFgboWbKsfvN44oRHGry7WO1sSEsLK+wPgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 143/289] s390/ap: fix memory leak in ap_init_qci_info()
-Date: Wed, 30 Nov 2022 19:22:08 +0100
-Message-Id: <20221130180547.379953035@linuxfoundation.org>
+Subject: [PATCH 6.0 144/289] s390/dasd: fix no record found for raw_track_access
+Date: Wed, 30 Nov 2022 19:22:09 +0100
+Message-Id: <20221130180547.402275161@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -36,40 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 9ac74f0666ceab0b1047e9d59be846a3345e4e98 ]
+[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
 
-If kzalloc() for 'ap_qci_info_old' failed, 'ap_qci_info' shold be
-freed before return. Otherwise it is a memory leak.
+For DASD devices in raw_track_access mode only full track images are
+read and written.
+For this purpose it is not necessary to do search operation in the
+locate record extended function. The documentation even states that
+this might fail if the searched record is not found on a track.
 
-Link: https://lore.kernel.org/r/20221114110830.542246-1-weiyongjun@huaweicloud.com
-Fixes: 283915850a44 ("s390/ap: notify drivers on config changed and scan complete callbacks")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Currently the driver sets a value of 1 in the search field for the first
+record after record zero. This is the default for disks not in
+raw_track_access mode but record 1 might be missing on a completely
+empty track.
+
+There has not been any problem with this on IBM storage servers but it
+might lead to errors with DASD devices on other vendors storage servers.
+
+Fix this by setting the search field to 0. Record zero is always available
+even on a completely empty track.
+
+Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/ap_bus.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/s390/block/dasd_eckd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
-index 59ac98f2bd27..b02c631f3b71 100644
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -233,8 +233,11 @@ static void __init ap_init_qci_info(void)
- 	if (!ap_qci_info)
- 		return;
- 	ap_qci_info_old = kzalloc(sizeof(*ap_qci_info_old), GFP_KERNEL);
--	if (!ap_qci_info_old)
-+	if (!ap_qci_info_old) {
-+		kfree(ap_qci_info);
-+		ap_qci_info = NULL;
- 		return;
-+	}
- 	if (ap_fetch_qci_info(ap_qci_info) != 0) {
- 		kfree(ap_qci_info);
- 		kfree(ap_qci_info_old);
+diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
+index 3cc93e2e4e15..2dec81e7e6ab 100644
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -4681,7 +4681,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	struct dasd_device *basedev;
+ 	struct req_iterator iter;
+ 	struct dasd_ccw_req *cqr;
+-	unsigned int first_offs;
+ 	unsigned int trkcount;
+ 	unsigned long *idaws;
+ 	unsigned int size;
+@@ -4715,7 +4714,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
+ 		DASD_RAW_SECTORS_PER_TRACK;
+ 	trkcount = last_trk - first_trk + 1;
+-	first_offs = 0;
+ 
+ 	if (rq_data_dir(req) == READ)
+ 		cmd = DASD_ECKD_CCW_READ_TRACK;
+@@ -4759,13 +4757,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 
+ 	if (use_prefix) {
+ 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
+-			   startdev, 1, first_offs + 1, trkcount, 0, 0);
++			   startdev, 1, 0, trkcount, 0, 0);
+ 	} else {
+ 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
+ 		ccw[-1].flags |= CCW_FLAG_CC;
+ 
+ 		data += sizeof(struct DE_eckd_data);
+-		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
++		locate_record_ext(ccw++, data, first_trk, 0,
+ 				  trkcount, cmd, basedev, 0, 0);
+ 	}
+ 
 -- 
 2.35.1
 
