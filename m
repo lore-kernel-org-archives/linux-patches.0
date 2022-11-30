@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444FB79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B913EC433B5;
-	Wed, 30 Nov 2022 18:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C2179C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:53:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170EDC433D7;
+	Wed, 30 Nov 2022 18:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834397;
-	bh=cXUFPo7OqE2nILNuP6wEGNjVgk3DTRgoHCsjSSUkV4k=;
+	s=korg; t=1669834402;
+	bh=9eK/YfM8SsXmkglH0WxqzhlfaZd4V7b6t66rSlpQoZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcall1uUstnRI1gGKTUxonGjlJpbaMghKi4Hp1jR+bwciIJHBG2ZqoqpihB+S8Mf4
-	 ldX/UXuVmfRYjo5aegVrZL9RbjvUTagVIHDJayoywLvRTzpVf73WAYUj6fqljFpbae
-	 brtqSbt8naw9AYpeoGyR1bUDPgM2m25L2cFAg8/k=
+	b=sIXkD6e32zWbNAyRITjur3Ja5vv36wpGnjsLZmeh7Pd2FEcklVhgB8iGNE+/2dc7T
+	 IdCPy5qLeQi8HGiPaWEzmDUxLZgJ0fbkZ9W3Cj6NDsoo4Qtih5EXHt00vO8t/hvmlu
+	 fFzJjARbEsXV9KsMtvwQeVlNpidvSZ8kNwRu56Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjana Hari <quic_ahari@quicinc.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 239/289] pinctrl: qcom: sc8280xp: Rectify UFS reset pins
-Date: Wed, 30 Nov 2022 19:23:44 +0100
-Message-Id: <20221130180549.529446113@linuxfoundation.org>
+Subject: [PATCH 6.0 241/289] ASoC: stm32: dfsdm: manage cb buffers cleanup
+Date: Wed, 30 Nov 2022 19:23:46 +0100
+Message-Id: <20221130180549.573905141@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,39 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anjana Hari <quic_ahari@quicinc.com>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit f04a2862f9c3f64962b8709c75d788efba6df26b ]
+[ Upstream commit 7d945b046be3d2605dbb1806e73095aadd7ae129 ]
 
-UFS reset pin offsets are wrongly configured for SC8280XP,
-correcting the same for both UFS instances here.
+Ensure that resources allocated by iio_channel_get_all_cb()
+are released on driver unbind.
 
-Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # QDrive3
-Link: https://lore.kernel.org/r/20221103181051.26912-1-quic_bjorande@quicinc.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://lore.kernel.org/r/20221109170849.273719-1-olivier.moysan@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/stm/stm32_adfsdm.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-index aa2075390f3e..e96c00686a25 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-@@ -1873,8 +1873,8 @@ static const struct msm_pingroup sc8280xp_groups[] = {
- 	[225] = PINGROUP(225, hs3_mi2s, phase_flag, _, _, _, _, egpio),
- 	[226] = PINGROUP(226, hs3_mi2s, phase_flag, _, _, _, _, egpio),
- 	[227] = PINGROUP(227, hs3_mi2s, phase_flag, _, _, _, _, egpio),
--	[228] = UFS_RESET(ufs_reset, 0xf1004),
--	[229] = UFS_RESET(ufs1_reset, 0xf3004),
-+	[228] = UFS_RESET(ufs_reset, 0xf1000),
-+	[229] = UFS_RESET(ufs1_reset, 0xf3000),
- 	[230] = SDC_QDSD_PINGROUP(sdc2_clk, 0xe8000, 14, 6),
- 	[231] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xe8000, 11, 3),
- 	[232] = SDC_QDSD_PINGROUP(sdc2_data, 0xe8000, 9, 0),
+diff --git a/sound/soc/stm/stm32_adfsdm.c b/sound/soc/stm/stm32_adfsdm.c
+index 643fc8a17018..837c1848d9bf 100644
+--- a/sound/soc/stm/stm32_adfsdm.c
++++ b/sound/soc/stm/stm32_adfsdm.c
+@@ -304,6 +304,11 @@ static int stm32_adfsdm_dummy_cb(const void *data, void *private)
+ 	return 0;
+ }
+ 
++static void stm32_adfsdm_cleanup(void *data)
++{
++	iio_channel_release_all_cb(data);
++}
++
+ static struct snd_soc_component_driver stm32_adfsdm_soc_platform = {
+ 	.open		= stm32_adfsdm_pcm_open,
+ 	.close		= stm32_adfsdm_pcm_close,
+@@ -350,6 +355,12 @@ static int stm32_adfsdm_probe(struct platform_device *pdev)
+ 	if (IS_ERR(priv->iio_cb))
+ 		return PTR_ERR(priv->iio_cb);
+ 
++	ret = devm_add_action_or_reset(&pdev->dev, stm32_adfsdm_cleanup, priv->iio_cb);
++	if (ret < 0)  {
++		dev_err(&pdev->dev, "Unable to add action\n");
++		return ret;
++	}
++
+ 	component = devm_kzalloc(&pdev->dev, sizeof(*component), GFP_KERNEL);
+ 	if (!component)
+ 		return -ENOMEM;
 -- 
 2.35.1
 
