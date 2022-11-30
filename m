@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2518479C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C580C433D6;
-	Wed, 30 Nov 2022 18:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83CA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:46:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5209EC433C1;
+	Wed, 30 Nov 2022 18:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834007;
-	bh=iB2XXafWB6sPtvm/rS6M7JoEG+uilRxIduf5jRE5be4=;
+	s=korg; t=1669834009;
+	bh=ubWr2LBAMKv29Gash1VfjbJGaVoWs2clwZWGv+MxLdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPJWdg/FSmaBaXpNU+Q4F6BjDWZGVqTy6JVF3gFF3qP3EHWblRQoNy7R/nLQ/50C6
-	 n7UeLomNBiCNeEBhzpl9B4ctaqHuh+fbuA+0CDGI8YRRweFKfzTpnRC8Ayh9JVWKvh
-	 mhTE/1K6isqq2ooG+lLtxjurvwoQz3UsK+c58AeA=
+	b=LtRLD3cHEW/ydCxPuauFPHVoHCr9aT+R4uDYSZLXCAxg+/onwoRnGL1BG1eOT974B
+	 O1BK/80W6pAaV/lr8Q0xsLfDNGZCDz6T6MlrYxWnfYo6Lblx7aLwMev2fqEASxX8sk
+	 v4QRK4089PH3ZKDzsdoy0kZ6d4EEtzGlVROElzw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Diana Wang <na.wang@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 095/289] net: pch_gbe: fix pci device refcount leak while module exiting
-Date: Wed, 30 Nov 2022 19:21:20 +0100
-Message-Id: <20221130180546.296189102@linuxfoundation.org>
+Subject: [PATCH 6.0 096/289] nfp: fill splittable of devlink_port_attrs correctly
+Date: Wed, 30 Nov 2022 19:21:21 +0100
+Message-Id: <20221130180546.318503892@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -35,58 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Diana Wang <na.wang@corigine.com>
 
-[ Upstream commit 5619537284f1017e9f6c7500b02b859b3830a06d ]
+[ Upstream commit 4abd9600b9d15d3d92a9ac25cf200422a4c415ee ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put().
+The error is reflected in that it shows wrong splittable status of
+port when executing "devlink port show".
+The reason which leads the error is that the assigned operation of
+splittable is just a simple negation operation of split and it does
+not consider port lanes quantity. A splittable port should have
+several lanes that can be split(lanes quantity > 1).
+If without the judgement, it will show wrong message for some
+firmware, such as 2x25G, 2x10G.
 
-In pch_gbe_probe(), pci_get_domain_bus_and_slot() is called,
-so in error path in probe() and remove() function, pci_dev_put()
-should be called to avoid refcount leak. Compile tested only.
-
-Fixes: 1a0bdadb4e36 ("net/pch_gbe: supports eg20t ptp clock")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221117135148.301014-1-yangyingliang@huawei.com
+Fixes: a0f49b548652 ("devlink: Add a new devlink port split ability attribute and pass to netlink")
+Signed-off-by: Diana Wang <na.wang@corigine.com>
+Reviewed-by: Louis Peens <louis.peens@corigine.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund@corigine.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/netronome/nfp/nfp_devlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-index 98792907a4c3..63b6b7d86ccb 100644
---- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-+++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-@@ -2460,6 +2460,7 @@ static void pch_gbe_remove(struct pci_dev *pdev)
- 	unregister_netdev(netdev);
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_devlink.c b/drivers/net/ethernet/netronome/nfp/nfp_devlink.c
+index 405786c00334..cb08d7bf9524 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_devlink.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_devlink.c
+@@ -341,7 +341,7 @@ int nfp_devlink_port_register(struct nfp_app *app, struct nfp_port *port)
+ 		return ret;
  
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+	pci_dev_put(adapter->ptp_pdev);
- 
- 	free_netdev(netdev);
- }
-@@ -2535,7 +2536,7 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 	/* setup the private structure */
- 	ret = pch_gbe_sw_init(adapter);
- 	if (ret)
--		goto err_free_netdev;
-+		goto err_put_dev;
- 
- 	/* Initialize PHY */
- 	ret = pch_gbe_init_phy(adapter);
-@@ -2593,6 +2594,8 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 
- err_free_adapter:
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+err_put_dev:
-+	pci_dev_put(adapter->ptp_pdev);
- err_free_netdev:
- 	free_netdev(netdev);
- 	return ret;
+ 	attrs.split = eth_port.is_split;
+-	attrs.splittable = !attrs.split;
++	attrs.splittable = eth_port.port_lanes > 1 && !attrs.split;
+ 	attrs.lanes = eth_port.port_lanes;
+ 	attrs.flavour = DEVLINK_PORT_FLAVOUR_PHYSICAL;
+ 	attrs.phys.port_number = eth_port.label_port;
 -- 
 2.35.1
 
