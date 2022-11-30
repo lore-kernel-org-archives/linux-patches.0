@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893E79C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF508C433C1;
-	Wed, 30 Nov 2022 18:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A9A79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:47:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE15C433C1;
+	Wed, 30 Nov 2022 18:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834056;
-	bh=vui+33nApGcRe50LJCagqShTTUIgMYwkXmyEVkUn16o=;
+	s=korg; t=1669834058;
+	bh=tvvS7rGrVp9+aAGXSNka3A9XunDVMnGZzk6TWHgY8Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc3gLW+7TB4rOtxPRjAzX1/kVYtQ/f+5SBzrg/9adSYVy1lhtiTN1kjqe2GRt7Cqd
-	 reqL6tIjlQDUp1bbhmbu+b/W3uvrKmjdQe26A4fJ1uzC/NovjsHehRd490BYB8NQ1o
-	 bRMexupFtC5HQOmKq2qbuifMVOaITrjO+iDvnTBo=
+	b=1ADR4l+IoEwoy9xJ4JPknowv8h0rlfa8ggfvcWX7wlUfeUVmRD4Ye+RjGt48EXLBw
+	 D+14beTW/wzQWBQP4p5PXxnpMymEm5AJCevwQxAXM77Sx8pFIl+GIcU9bOdzlJ4m9x
+	 WB9GD6wRDiqu2gkOzPFUqgBLHZRbswj6BY9K0n28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Patryk Piotrowski <patryk.piotrowski@intel.com>,
-	SlawomirX Laba <slawomirx.laba@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Stefan Assmann <sassmann@kpanic.de>,
 	Konrad Jankowski <konrad0.jankowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 085/289] iavf: Do not restart Tx queues after reset task failure
-Date: Wed, 30 Nov 2022 19:21:10 +0100
-Message-Id: <20221130180546.072857329@linuxfoundation.org>
+Subject: [PATCH 6.0 086/289] iavf: remove INITIAL_MAC_SET to allow gARP to work properly
+Date: Wed, 30 Nov 2022 19:21:11 +0100
+Message-Id: <20221130180546.095313002@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -40,147 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Stefan Assmann <sassmann@kpanic.de>
 
-[ Upstream commit 08f1c147b7265245d67321585c68a27e990e0c4b ]
+[ Upstream commit bb861c14f1b8cb9cbf03a132db7f22ec4e692b91 ]
 
-After commit aa626da947e9 ("iavf: Detach device during reset task")
-the device is detached during reset task and re-attached at its end.
-The problem occurs when reset task fails because Tx queues are
-restarted during device re-attach and this leads later to a crash.
+IAVF_FLAG_INITIAL_MAC_SET prevents waiting on iavf_is_mac_set_handled()
+the first time the MAC is set. This breaks gratuitous ARP because the
+MAC address has not been updated yet when the gARP packet is sent out.
 
-To resolve this issue properly close the net device in cause of
-failure in reset task to avoid restarting of tx queues at the end.
-Also replace the hacky manipulation with IFF_UP flag by device close
-that clears properly both IFF_UP and __LINK_STATE_START flags.
-In these case iavf_close() does not do anything because the adapter
-state is already __IAVF_DOWN.
+Current behaviour:
+$ echo 1 > /sys/class/net/ens4f0/device/sriov_numvfs
+iavf 0000:88:02.0: MAC address: ee:04:19:14:ec:ea
+$ ip addr add 192.168.1.1/24 dev ens4f0v0
+$ ip link set dev ens4f0v0 up
+$ echo 1 > /proc/sys/net/ipv4/conf/ens4f0v0/arp_notify
+$ ip link set ens4f0v0 addr 00:11:22:33:44:55
+07:23:41.676611 ee:04:19:14:ec:ea > ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 192.168.1.1 tell 192.168.1.1, length 28
 
-Reproducer:
-1) Run some Tx traffic (e.g. iperf3) over iavf interface
-2) Set VF trusted / untrusted in loop
+With IAVF_FLAG_INITIAL_MAC_SET removed:
+$ echo 1 > /sys/class/net/ens4f0/device/sriov_numvfs
+iavf 0000:88:02.0: MAC address: 3e:8a:16:a2:37:6d
+$ ip addr add 192.168.1.1/24 dev ens4f0v0
+$ ip link set dev ens4f0v0 up
+$ echo 1 > /proc/sys/net/ipv4/conf/ens4f0v0/arp_notify
+$ ip link set ens4f0v0 addr 00:11:22:33:44:55
+07:28:01.836608 00:11:22:33:44:55 > ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 192.168.1.1 tell 192.168.1.1, length 28
 
-[root@host ~]# cat repro.sh
-
-PF=enp65s0f0
-IF=${PF}v0
-
-ip link set up $IF
-ip addr add 192.168.0.2/24 dev $IF
-sleep 1
-
-iperf3 -c 192.168.0.1 -t 600 --logfile /dev/null &
-sleep 2
-
-while :; do
-        ip link set $PF vf 0 trust on
-        ip link set $PF vf 0 trust off
-done
-[root@host ~]# ./repro.sh
-
-Result:
-[ 2006.650969] iavf 0000:41:01.0: Failed to init adminq: -53
-[ 2006.675662] ice 0000:41:00.0: VF 0 is now trusted
-[ 2006.689997] iavf 0000:41:01.0: Reset task did not complete, VF disabled
-[ 2006.696611] iavf 0000:41:01.0: failed to allocate resources during reinit
-[ 2006.703209] ice 0000:41:00.0: VF 0 is now untrusted
-[ 2006.737011] ice 0000:41:00.0: VF 0 is now trusted
-[ 2006.764536] ice 0000:41:00.0: VF 0 is now untrusted
-[ 2006.768919] BUG: kernel NULL pointer dereference, address: 0000000000000b4a
-[ 2006.776358] #PF: supervisor read access in kernel mode
-[ 2006.781488] #PF: error_code(0x0000) - not-present page
-[ 2006.786620] PGD 0 P4D 0
-[ 2006.789152] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[ 2006.792903] ice 0000:41:00.0: VF 0 is now trusted
-[ 2006.793501] CPU: 4 PID: 0 Comm: swapper/4 Kdump: loaded Not tainted 6.1.0-rc3+ #2
-[ 2006.805668] Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.4 04/13/2022
-[ 2006.815915] RIP: 0010:iavf_xmit_frame_ring+0x96/0xf70 [iavf]
-[ 2006.821028] ice 0000:41:00.0: VF 0 is now untrusted
-[ 2006.821572] Code: 48 83 c1 04 48 c1 e1 04 48 01 f9 48 83 c0 10 6b 50 f8 55 c1 ea 14 45 8d 64 14 01 48 39 c8 75 eb 41 83 fc 07 0f 8f e9 08 00 00 <0f> b7 45 4a 0f b7 55 48 41 8d 74 24 05 31 c9 66 39 d0 0f 86 da 00
-[ 2006.845181] RSP: 0018:ffffb253004bc9e8 EFLAGS: 00010293
-[ 2006.850397] RAX: ffff9d154de45b00 RBX: ffff9d15497d52e8 RCX: ffff9d154de45b00
-[ 2006.856327] ice 0000:41:00.0: VF 0 is now trusted
-[ 2006.857523] RDX: 0000000000000000 RSI: 00000000000005a8 RDI: ffff9d154de45ac0
-[ 2006.857525] RBP: 0000000000000b00 R08: ffff9d159cb010ac R09: 0000000000000001
-[ 2006.857526] R10: ffff9d154de45940 R11: 0000000000000000 R12: 0000000000000002
-[ 2006.883600] R13: ffff9d1770838dc0 R14: 0000000000000000 R15: ffffffffc07b8380
-[ 2006.885840] ice 0000:41:00.0: VF 0 is now untrusted
-[ 2006.890725] FS:  0000000000000000(0000) GS:ffff9d248e900000(0000) knlGS:0000000000000000
-[ 2006.890727] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 2006.909419] CR2: 0000000000000b4a CR3: 0000000c39c10002 CR4: 0000000000770ee0
-[ 2006.916543] PKRU: 55555554
-[ 2006.918254] ice 0000:41:00.0: VF 0 is now trusted
-[ 2006.919248] Call Trace:
-[ 2006.919250]  <IRQ>
-[ 2006.919252]  dev_hard_start_xmit+0x9e/0x1f0
-[ 2006.932587]  sch_direct_xmit+0xa0/0x370
-[ 2006.936424]  __dev_queue_xmit+0x7af/0xd00
-[ 2006.940429]  ip_finish_output2+0x26c/0x540
-[ 2006.944519]  ip_output+0x71/0x110
-[ 2006.947831]  ? __ip_finish_output+0x2b0/0x2b0
-[ 2006.952180]  __ip_queue_xmit+0x16d/0x400
-[ 2006.952721] ice 0000:41:00.0: VF 0 is now untrusted
-[ 2006.956098]  __tcp_transmit_skb+0xa96/0xbf0
-[ 2006.965148]  __tcp_retransmit_skb+0x174/0x860
-[ 2006.969499]  ? cubictcp_cwnd_event+0x40/0x40
-[ 2006.973769]  tcp_retransmit_skb+0x14/0xb0
-...
-
-Fixes: aa626da947e9 ("iavf: Detach device during reset task")
-Cc: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Patryk Piotrowski <patryk.piotrowski@intel.com>
-Cc: SlawomirX Laba <slawomirx.laba@intel.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 35a2443d0910 ("iavf: Add waiting for response from PF in set mac")
+Signed-off-by: Stefan Assmann <sassmann@kpanic.de>
 Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf.h      | 1 -
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 8 --------
+ 2 files changed, 9 deletions(-)
 
+diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
+index 3f6187c16424..0d1bab4ac1b0 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf.h
++++ b/drivers/net/ethernet/intel/iavf/iavf.h
+@@ -298,7 +298,6 @@ struct iavf_adapter {
+ #define IAVF_FLAG_QUEUES_DISABLED		BIT(17)
+ #define IAVF_FLAG_SETUP_NETDEV_FEATURES		BIT(18)
+ #define IAVF_FLAG_REINIT_MSIX_NEEDED		BIT(20)
+-#define IAVF_FLAG_INITIAL_MAC_SET		BIT(23)
+ /* duplicates for common code */
+ #define IAVF_FLAG_DCB_ENABLED			0
+ 	/* flags for admin queue service task */
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 7d349ca708c7..f59b725785eb 100644
+index f59b725785eb..005bb8378c76 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -2921,7 +2921,6 @@ static void iavf_disable_vf(struct iavf_adapter *adapter)
- 	iavf_free_queues(adapter);
- 	memset(adapter->vf_res, 0, IAVF_VIRTCHNL_VF_RESOURCE_SIZE);
- 	iavf_shutdown_adminq(&adapter->hw);
--	adapter->netdev->flags &= ~IFF_UP;
- 	adapter->flags &= ~IAVF_FLAG_RESET_PENDING;
- 	iavf_change_state(adapter, __IAVF_DOWN);
- 	wake_up(&adapter->down_waitqueue);
-@@ -3021,6 +3020,11 @@ static void iavf_reset_task(struct work_struct *work)
- 		iavf_disable_vf(adapter);
- 		mutex_unlock(&adapter->client_lock);
- 		mutex_unlock(&adapter->crit_lock);
-+		if (netif_running(netdev)) {
-+			rtnl_lock();
-+			dev_close(netdev);
-+			rtnl_unlock();
-+		}
- 		return; /* Do not attempt to reinit. It's dead, Jim. */
+@@ -1087,12 +1087,6 @@ static int iavf_set_mac(struct net_device *netdev, void *p)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* If this is an initial set MAC during VF spawn do not wait */
+-	if (adapter->flags & IAVF_FLAG_INITIAL_MAC_SET) {
+-		adapter->flags &= ~IAVF_FLAG_INITIAL_MAC_SET;
+-		return 0;
+-	}
+-
+ 	ret = wait_event_interruptible_timeout(adapter->vc_waitqueue,
+ 					       iavf_is_mac_set_handled(netdev, addr->sa_data),
+ 					       msecs_to_jiffies(2500));
+@@ -2605,8 +2599,6 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 		ether_addr_copy(netdev->perm_addr, adapter->hw.mac.addr);
  	}
  
-@@ -3173,6 +3177,16 @@ static void iavf_reset_task(struct work_struct *work)
- 
- 	mutex_unlock(&adapter->client_lock);
- 	mutex_unlock(&adapter->crit_lock);
-+
-+	if (netif_running(netdev)) {
-+		/* Close device to ensure that Tx queues will not be started
-+		 * during netif_device_attach() at the end of the reset task.
-+		 */
-+		rtnl_lock();
-+		dev_close(netdev);
-+		rtnl_unlock();
-+	}
-+
- 	dev_err(&adapter->pdev->dev, "failed to allocate resources during reinit\n");
- reset_finish:
- 	rtnl_lock();
+-	adapter->flags |= IAVF_FLAG_INITIAL_MAC_SET;
+-
+ 	adapter->tx_desc_count = IAVF_DEFAULT_TXD;
+ 	adapter->rx_desc_count = IAVF_DEFAULT_RXD;
+ 	err = iavf_init_interrupt_scheme(adapter);
 -- 
 2.35.1
 
