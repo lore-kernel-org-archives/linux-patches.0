@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C779C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4CBC433C1;
-	Wed, 30 Nov 2022 18:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FBA79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08547C433C1;
+	Wed, 30 Nov 2022 18:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669834307;
-	bh=YLrg8ntQURUwsi8m0ia5yo1tFR4YA5+hqoUHkCRok8Y=;
+	s=korg; t=1669834310;
+	bh=pdTzps9UqRVl9daPs67KLsC1Lyk4trMv+f5paLHWHjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHaTCSWRguMTyqKMYzv102RBrzqcX+cFAbNDEM4UciaLtF5ozc/2RTgJE9OoWfgwq
-	 0isj+K1CBUDLqsrhmICeFORAWvNoF8ivCS5cghD+3W6Q5kyqqnXWufDKpjXqzJ3xT/
-	 2TdBTarYXRqgbc4xEkztN0k1dNq74gAIZII2AmqE=
+	b=thrhg+nvc9pPLWXfl0idO4rKxtwqDcFwDZqdwcIsx0Dj4JFUx0PXitfoi711bD+qc
+	 Hr8Q1opiO7Zd+dGW37JE2W/fWHatdDSlTmHN+LBsT4kQyWVS4iYm8euqlKu9T6rnNT
+	 Pk71WjVKzixRRB8BEIByDEmkzuP+HEtYS33f49tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	syzbot+77e4f0...@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 198/289] nilfs2: fix nilfs_sufile_mark_dirty() not set segment usage as dirty
-Date: Wed, 30 Nov 2022 19:23:03 +0100
-Message-Id: <20221130180548.610059258@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 207/289] KVM: x86: nSVM: leave nested mode on vCPU free
+Date: Wed, 30 Nov 2022 19:23:12 +0100
+Message-Id: <20221130180548.812789144@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
 References: <20221130180544.105550592@linuxfoundation.org>
@@ -37,77 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 512c5ca01a3610ab14ff6309db363de51f1c13a6 upstream.
+commit 917401f26a6af5756d89b550a8e1bd50cf42b07e upstream.
 
-When extending segments, nilfs_sufile_alloc() is called to get an
-unassigned segment, then mark it as dirty to avoid accidentally allocating
-the same segment in the future.
+If the VM was terminated while nested, we free the nested state
+while the vCPU still is in nested mode.
 
-But for some special cases such as a corrupted image it can be unreliable.
-If such corruption of the dirty state of the segment occurs, nilfs2 may
-reallocate a segment that is in use and pick the same segment for writing
-twice at the same time.
+Soon a warning will be added for this condition.
 
-This will cause the problem reported by syzkaller:
-https://syzkaller.appspot.com/bug?id=c7c4748e11ffcc367cef04f76e02e931833cbd24
-
-This case started with segbuf1.segnum = 3, nextnum = 4 when constructed.
-It supposed segment 4 has already been allocated and marked as dirty.
-
-However the dirty state was corrupted and segment 4 usage was not dirty.
-For the first time nilfs_segctor_extend_segments() segment 4 was allocated
-again, which made segbuf2 and next segbuf3 had same segment 4.
-
-sb_getblk() will get same bh for segbuf2 and segbuf3, and this bh is added
-to both buffer lists of two segbuf.  It makes the lists broken which
-causes NULL pointer dereference.
-
-Fix the problem by setting usage as dirty every time in
-nilfs_sufile_mark_dirty(), which is called during constructing current
-segment to be written out and before allocating next segment.
-
-[chenzhongjin@huawei.com: add lock protection per Ryusuke]
-  Link: https://lkml.kernel.org/r/20221121091141.214703-1-chenzhongjin@huawei.com
-Link: https://lkml.kernel.org/r/20221118063304.140187-1-chenzhongjin@huawei.com
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reported-by: <syzbot+77e4f0...@syzkaller.appspotmail.com>
-Reported-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221103141351.50662-2-mlevitsk@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sufile.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kvm/svm/svm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -495,14 +495,22 @@ void nilfs_sufile_do_free(struct inode *
- int nilfs_sufile_mark_dirty(struct inode *sufile, __u64 segnum)
- {
- 	struct buffer_head *bh;
-+	void *kaddr;
-+	struct nilfs_segment_usage *su;
- 	int ret;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1440,6 +1440,7 @@ static void svm_vcpu_free(struct kvm_vcp
+ 	 */
+ 	svm_clear_current_vmcb(svm->vmcb);
  
-+	down_write(&NILFS_MDT(sufile)->mi_sem);
- 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
- 	if (!ret) {
- 		mark_buffer_dirty(bh);
- 		nilfs_mdt_mark_dirty(sufile);
-+		kaddr = kmap_atomic(bh->b_page);
-+		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
-+		nilfs_segment_usage_set_dirty(su);
-+		kunmap_atomic(kaddr);
- 		brelse(bh);
- 	}
-+	up_write(&NILFS_MDT(sufile)->mi_sem);
- 	return ret;
- }
++	svm_leave_nested(vcpu);
+ 	svm_free_nested(svm);
  
+ 	sev_free_vcpu(vcpu);
 
 
