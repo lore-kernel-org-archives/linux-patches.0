@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E5979C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954A2C433C1;
-	Wed, 30 Nov 2022 18:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91EF79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:32:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC24C433D6;
+	Wed, 30 Nov 2022 18:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833169;
-	bh=b7WBZuhADWnLTsk75huPI9h6dbLNsrX7kEu3QKuNwF0=;
+	s=korg; t=1669833172;
+	bh=bn/WLBy6iZS92XUhnFfckXH0YBn3TknrxPrIJ+PyRxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JrKCwbvg0a46E6orJN4lXmy0/IA3aoiiwGkbwsAaIm8phq3i3V200tDPoN0C7mZe
-	 k4C0b45gLxSk4V5Twqb59LKT05UWjJ/VNSHNMXxb3Hb9Q+ofYryzoY5WJEI1gKxlGx
-	 n2WKpC1OFsktsly5hcPPmQasVhi0Yee4u2MPN7mA=
+	b=oLY8ETf2SPZqNX8ou3uMzVprjbpMDUv6Rhcdq8HI2H5ymHBvQPnc1utFNj+cQJgnR
+	 3YIPOJ79fK34MSZYkKU5Ga/DvHY2kVGlEwml6RoOj9rtskjGERG8yh9gMuo0cfX6LK
+	 BJPfOD2M58GUZaySyXB9MCFt0Ti46g1r00nIMeg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao@huawei.com>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	John Garry <john.g.garry@oracle.com>,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/206] ata: libata-scsi: simplify __ata_scsi_queuecmd()
-Date: Wed, 30 Nov 2022 19:21:04 +0100
-Message-Id: <20221130180533.308433809@linuxfoundation.org>
+Subject: [PATCH 5.15 013/206] ata: libata-core: do not issue non-internal commands once EH is pending
+Date: Wed, 30 Nov 2022 19:21:05 +0100
+Message-Id: <20221130180533.333655278@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,96 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao@huawei.com>
+From: Niklas Cassel <niklas.cassel@wdc.com>
 
-[ Upstream commit 84eac327af543f03172085d5ef9f98ea25a51191 ]
+[ Upstream commit e20e81a24a4d58744a29715aac2f795cd1651955 ]
 
-This patch cleans up the code of __ata_scsi_queuecmd(). Since each
-branch of the "if" condition check that scmd->cmd_len is not zero, move
-this check out of the "if" to simplify the conditions being checked in
-the "else" branch.
+While the ATA specification states that a device should return command
+aborted for all commands queued after the device has entered error state,
+since ATA only keeps the sense data for the latest command (in non-NCQ
+case), we really don't want to send block layer commands to the device
+after it has entered error state. (Only ATA EH commands should be sent,
+to read the sense data etc.)
 
-While at it, avoid the if-else-if-else structure using if-else if
-structure and remove the redundant rc local variable.
+Currently, scsi_queue_rq() will check if scsi_host_in_recovery()
+(state is SHOST_RECOVERY), and if so, it will _not_ issue a command via:
+scsi_dispatch_cmd() -> host->hostt->queuecommand() (ata_scsi_queuecmd())
+-> __ata_scsi_queuecmd() -> ata_scsi_translate() -> ata_qc_issue()
 
-This patch does not change the function logic.
+Before commit e494f6a72839 ("[SCSI] improved eh timeout handler"),
+when receiving a TFES error IRQ, the call chain looked like this:
+ahci_error_intr() -> ata_port_abort() -> ata_do_link_abort() ->
+ata_qc_complete() -> ata_qc_schedule_eh() -> blk_abort_request() ->
+blk_rq_timed_out() -> q->rq_timed_out_fn() (scsi_times_out()) ->
+scsi_eh_scmd_add() -> scsi_host_set_state(shost, SHOST_RECOVERY)
 
-Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
+Which meant that as soon as an error IRQ was serviced, SHOST_RECOVERY
+would be set.
+
+However, after commit e494f6a72839 ("[SCSI] improved eh timeout handler"),
+scsi_times_out() will instead call scsi_abort_command() which will queue
+delayed work, and the worker function scmd_eh_abort_handler() will call
+scsi_eh_scmd_add(), which calls scsi_host_set_state(shost, SHOST_RECOVERY).
+
+So now, after the TFES error IRQ has been serviced, we need to wait for
+the SCSI workqueue to run its work before SHOST_RECOVERY gets set.
+
+It is worth noting that, even before commit e494f6a72839 ("[SCSI] improved
+eh timeout handler"), we could receive an error IRQ from the time when
+scsi_queue_rq() checks scsi_host_in_recovery(), to the time when
+ata_scsi_queuecmd() is actually called.
+
+In order to handle both the delayed setting of SHOST_RECOVERY and the
+window where we can receive an error IRQ, add a check against
+ATA_PFLAG_EH_PENDING (which gets set when servicing the error IRQ),
+inside ata_scsi_queuecmd() itself, while holding the ap->lock.
+(Since the ap->lock is held while servicing IRQs.)
+
+Fixes: e494f6a72839 ("[SCSI] improved eh timeout handler")
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Tested-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: e20e81a24a4d ("ata: libata-core: do not issue non-internal commands once EH is pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 45 ++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ drivers/ata/libata-scsi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ef41cb385a0d..61b7e0b0bbf6 100644
+index 61b7e0b0bbf6..061d2f8feeb5 100644
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -3990,42 +3990,39 @@ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
+@@ -3988,9 +3988,19 @@ void ata_scsi_dump_cdb(struct ata_port *ap, struct scsi_cmnd *cmd)
+ 
+ int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev)
  {
++	struct ata_port *ap = dev->link->ap;
  	u8 scsi_op = scmd->cmnd[0];
  	ata_xlat_func_t xlat_func;
--	int rc = 0;
+ 
++	/*
++	 * scsi_queue_rq() will defer commands if scsi_host_in_recovery().
++	 * However, this check is done without holding the ap->lock (a libata
++	 * specific lock), so we can have received an error irq since then,
++	 * therefore we must check if EH is pending, while holding ap->lock.
++	 */
++	if (ap->pflags & (ATA_PFLAG_EH_PENDING | ATA_PFLAG_EH_IN_PROGRESS))
++		return SCSI_MLQUEUE_DEVICE_BUSY;
 +
-+	if (unlikely(!scmd->cmd_len))
-+		goto bad_cdb_len;
+ 	if (unlikely(!scmd->cmd_len))
+ 		goto bad_cdb_len;
  
- 	if (dev->class == ATA_DEV_ATA || dev->class == ATA_DEV_ZAC) {
--		if (unlikely(!scmd->cmd_len || scmd->cmd_len > dev->cdb_len))
-+		if (unlikely(scmd->cmd_len > dev->cdb_len))
- 			goto bad_cdb_len;
- 
- 		xlat_func = ata_get_xlat_func(dev, scsi_op);
--	} else {
--		if (unlikely(!scmd->cmd_len))
--			goto bad_cdb_len;
-+	} else if (likely((scsi_op != ATA_16) || !atapi_passthru16)) {
-+		/* relay SCSI command to ATAPI device */
-+		int len = COMMAND_SIZE(scsi_op);
- 
--		xlat_func = NULL;
--		if (likely((scsi_op != ATA_16) || !atapi_passthru16)) {
--			/* relay SCSI command to ATAPI device */
--			int len = COMMAND_SIZE(scsi_op);
--			if (unlikely(len > scmd->cmd_len ||
--				     len > dev->cdb_len ||
--				     scmd->cmd_len > ATAPI_CDB_LEN))
--				goto bad_cdb_len;
-+		if (unlikely(len > scmd->cmd_len ||
-+			     len > dev->cdb_len ||
-+			     scmd->cmd_len > ATAPI_CDB_LEN))
-+			goto bad_cdb_len;
- 
--			xlat_func = atapi_xlat;
--		} else {
--			/* ATA_16 passthru, treat as an ATA command */
--			if (unlikely(scmd->cmd_len > 16))
--				goto bad_cdb_len;
-+		xlat_func = atapi_xlat;
-+	} else {
-+		/* ATA_16 passthru, treat as an ATA command */
-+		if (unlikely(scmd->cmd_len > 16))
-+			goto bad_cdb_len;
- 
--			xlat_func = ata_get_xlat_func(dev, scsi_op);
--		}
-+		xlat_func = ata_get_xlat_func(dev, scsi_op);
- 	}
- 
- 	if (xlat_func)
--		rc = ata_scsi_translate(dev, scmd, xlat_func);
--	else
--		ata_scsi_simulate(dev, scmd);
-+		return ata_scsi_translate(dev, scmd, xlat_func);
- 
--	return rc;
-+	ata_scsi_simulate(dev, scmd);
-+
-+	return 0;
- 
-  bad_cdb_len:
- 	DPRINTK("bad CDB len=%u, scsi_op=0x%02x, max=%u\n",
 -- 
 2.35.1
 
