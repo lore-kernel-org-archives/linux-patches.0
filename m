@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F323F6FBE
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5842EC433C1;
-	Wed, 30 Nov 2022 18:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503A6FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374B9C433B5;
+	Wed, 30 Nov 2022 18:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833455;
-	bh=Ypp2SBjgSXau1PaMgUbb5neQRBY2TLj5cZz+OyTDuTA=;
+	s=korg; t=1669833458;
+	bh=wi8sleZ0X9vkpu7C+g3d2CAQP6cXhiOxjWE6DOmnsto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vv/yN+vpKfoHOpZnLDBhUYgU6yw9nU9GAzyGvyu5ylf5sO2L+bb+aMBwWblexgm3J
-	 8L4fnp+XH8F92HCpcCVuaFSGhdyuL3S4I+0MN8OHn+AnrvnOkcMRY7pXRwnT2w69gq
-	 4+dCAXAeNm1VB+A8bcokNJpTjIKiIT06ea9D+LzQ=
+	b=FCIAqKITXY5Ha7//7j/eML+knVJi7StvzQwdqIR6aL5to+Hfs2AUrpU5FOHqjJ0i9
+	 XLa6Nb4MphwEkrkSKSgU/giS6zd2WrPY9gQyI0ESBkcCHMIt/5Kr2xjFDc0O8/duhj
+	 X35DpLqipaf9Rgc2ksed/lLv5KG7MIXOmyi9Zhdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Patryk Piotrowski <patryk.piotrowski@intel.com>,
-	SlawomirX Laba <slawomirx.laba@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/206] iavf: Fix a crash during reset task
-Date: Wed, 30 Nov 2022 19:22:16 +0100
-Message-Id: <20221130180535.142568206@linuxfoundation.org>
+Subject: [PATCH 5.15 075/206] rxrpc: Allow list of in-use local UDP endpoints to be viewed in /proc
+Date: Wed, 30 Nov 2022 19:22:07 +0100
+Message-Id: <20221130180534.907627732@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -39,93 +37,254 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c678669d6b13b77de3b99b97526aaf23c3088d0a ]
+[ Upstream commit 33912c2639ad76660988c8ca97e4d18fca89b668 ]
 
-Recent commit aa626da947e9 ("iavf: Detach device during reset task")
-removed netif_tx_stop_all_queues() with an assumption that Tx queues
-are already stopped by netif_device_detach() in the beginning of
-reset task. This assumption is incorrect because during reset
-task a potential link event can start Tx queues again.
-Revert this change to fix this issue.
+Allow the list of in-use local UDP endpoints in the current network
+namespace to be viewed in /proc.
 
-Reproducer:
-1. Run some Tx traffic (e.g. iperf3) over iavf interface
-2. Switch MTU of this interface in a loop
+To aid with this, the endpoint list is converted to an hlist and RCU-safe
+manipulation is used so that the list can be read with only the RCU
+read lock held.
 
-[root@host ~]# cat repro.sh
-
-IF=enp2s0f0v0
-
-iperf3 -c 192.168.0.1 -t 600 --logfile /dev/null &
-sleep 2
-
-while :; do
-        for i in 1280 1500 2000 900 ; do
-                ip link set $IF mtu $i
-                sleep 2
-        done
-done
-[root@host ~]# ./repro.sh
-
-Result:
-[  306.199917] iavf 0000:02:02.0 enp2s0f0v0: NIC Link is Up Speed is 40 Gbps Full Duplex
-[  308.205944] iavf 0000:02:02.0 enp2s0f0v0: NIC Link is Up Speed is 40 Gbps Full Duplex
-[  310.103223] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[  310.110179] #PF: supervisor write access in kernel mode
-[  310.115396] #PF: error_code(0x0002) - not-present page
-[  310.120526] PGD 0 P4D 0
-[  310.123057] Oops: 0002 [#1] PREEMPT SMP NOPTI
-[  310.127408] CPU: 24 PID: 183 Comm: kworker/u64:9 Kdump: loaded Not tainted 6.1.0-rc3+ #2
-[  310.135485] Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.4 04/13/2022
-[  310.145728] Workqueue: iavf iavf_reset_task [iavf]
-[  310.150520] RIP: 0010:iavf_xmit_frame_ring+0xd1/0xf70 [iavf]
-[  310.156180] Code: d0 0f 86 da 00 00 00 83 e8 01 0f b7 fa 29 f8 01 c8 39 c6 0f 8f a0 08 00 00 48 8b 45 20 48 8d 14 92 bf 01 00 00 00 4c 8d 3c d0 <49> 89 5f 08 8b 43 70 66 41 89 7f 14 41 89 47 10 f6 83 82 00 00 00
-[  310.174918] RSP: 0018:ffffbb5f0082caa0 EFLAGS: 00010293
-[  310.180137] RAX: 0000000000000000 RBX: ffff92345471a6e8 RCX: 0000000000000200
-[  310.187259] RDX: 0000000000000000 RSI: 000000000000000d RDI: 0000000000000001
-[  310.194385] RBP: ffff92341d249000 R08: ffff92434987fcac R09: 0000000000000001
-[  310.201509] R10: 0000000011f683b9 R11: 0000000011f50641 R12: 0000000000000008
-[  310.208631] R13: ffff923447500000 R14: 0000000000000000 R15: 0000000000000000
-[  310.215756] FS:  0000000000000000(0000) GS:ffff92434ee00000(0000) knlGS:0000000000000000
-[  310.223835] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  310.229572] CR2: 0000000000000008 CR3: 0000000fbc210004 CR4: 0000000000770ee0
-[  310.236696] PKRU: 55555554
-[  310.239399] Call Trace:
-[  310.241844]  <IRQ>
-[  310.243855]  ? dst_alloc+0x5b/0xb0
-[  310.247260]  dev_hard_start_xmit+0x9e/0x1f0
-[  310.251439]  sch_direct_xmit+0xa0/0x370
-[  310.255276]  __qdisc_run+0x13e/0x580
-[  310.258848]  __dev_queue_xmit+0x431/0xd00
-[  310.262851]  ? selinux_ip_postroute+0x147/0x3f0
-[  310.267377]  ip_finish_output2+0x26c/0x540
-
-Fixes: aa626da947e9 ("iavf: Detach device during reset task")
-Cc: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Patryk Piotrowski <patryk.piotrowski@intel.com>
-Cc: SlawomirX Laba <slawomirx.laba@intel.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3bcd6c7eaa53 ("rxrpc: Fix race between conn bundle lookup and bundle removal [ZDI-CAN-15975]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rxrpc/ar-internal.h  |  5 +--
+ net/rxrpc/local_object.c | 37 +++++++++++----------
+ net/rxrpc/net_ns.c       |  5 ++-
+ net/rxrpc/proc.c         | 69 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 94 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 629ebdfa48b8..493d3c407d4f 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -2381,6 +2381,7 @@ static void iavf_reset_task(struct work_struct *work)
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index f2e3fb77a02d..38dd63169aac 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -88,7 +88,7 @@ struct rxrpc_net {
+ 	struct work_struct	client_conn_reaper;
+ 	struct timer_list	client_conn_reap_timer;
  
- 	if (running) {
- 		netif_carrier_off(netdev);
-+		netif_tx_stop_all_queues(netdev);
- 		adapter->link_up = false;
- 		iavf_napi_disable_all(adapter);
- 	}
+-	struct list_head	local_endpoints;
++	struct hlist_head	local_endpoints;
+ 	struct mutex		local_mutex;	/* Lock for ->local_endpoints */
+ 
+ 	DECLARE_HASHTABLE	(peer_hash, 10);
+@@ -281,7 +281,7 @@ struct rxrpc_local {
+ 	atomic_t		active_users;	/* Number of users of the local endpoint */
+ 	atomic_t		usage;		/* Number of references to the structure */
+ 	struct rxrpc_net	*rxnet;		/* The network ns in which this resides */
+-	struct list_head	link;
++	struct hlist_node	link;
+ 	struct socket		*socket;	/* my UDP socket */
+ 	struct work_struct	processor;
+ 	struct rxrpc_sock __rcu	*service;	/* Service(s) listening on this endpoint */
+@@ -1016,6 +1016,7 @@ void rxrpc_put_peer_locked(struct rxrpc_peer *);
+ extern const struct seq_operations rxrpc_call_seq_ops;
+ extern const struct seq_operations rxrpc_connection_seq_ops;
+ extern const struct seq_operations rxrpc_peer_seq_ops;
++extern const struct seq_operations rxrpc_local_seq_ops;
+ 
+ /*
+  * recvmsg.c
+diff --git a/net/rxrpc/local_object.c b/net/rxrpc/local_object.c
+index 1d15940f61d7..0cbbbbcf490e 100644
+--- a/net/rxrpc/local_object.c
++++ b/net/rxrpc/local_object.c
+@@ -82,7 +82,7 @@ static struct rxrpc_local *rxrpc_alloc_local(struct rxrpc_net *rxnet,
+ 		atomic_set(&local->usage, 1);
+ 		atomic_set(&local->active_users, 1);
+ 		local->rxnet = rxnet;
+-		INIT_LIST_HEAD(&local->link);
++		INIT_HLIST_NODE(&local->link);
+ 		INIT_WORK(&local->processor, rxrpc_local_processor);
+ 		init_rwsem(&local->defrag_sem);
+ 		skb_queue_head_init(&local->reject_queue);
+@@ -181,7 +181,7 @@ struct rxrpc_local *rxrpc_lookup_local(struct net *net,
+ {
+ 	struct rxrpc_local *local;
+ 	struct rxrpc_net *rxnet = rxrpc_net(net);
+-	struct list_head *cursor;
++	struct hlist_node *cursor;
+ 	const char *age;
+ 	long diff;
+ 	int ret;
+@@ -191,16 +191,12 @@ struct rxrpc_local *rxrpc_lookup_local(struct net *net,
+ 
+ 	mutex_lock(&rxnet->local_mutex);
+ 
+-	for (cursor = rxnet->local_endpoints.next;
+-	     cursor != &rxnet->local_endpoints;
+-	     cursor = cursor->next) {
+-		local = list_entry(cursor, struct rxrpc_local, link);
++	hlist_for_each(cursor, &rxnet->local_endpoints) {
++		local = hlist_entry(cursor, struct rxrpc_local, link);
+ 
+ 		diff = rxrpc_local_cmp_key(local, srx);
+-		if (diff < 0)
++		if (diff != 0)
+ 			continue;
+-		if (diff > 0)
+-			break;
+ 
+ 		/* Services aren't allowed to share transport sockets, so
+ 		 * reject that here.  It is possible that the object is dying -
+@@ -212,9 +208,10 @@ struct rxrpc_local *rxrpc_lookup_local(struct net *net,
+ 			goto addr_in_use;
+ 		}
+ 
+-		/* Found a match.  We replace a dying object.  Attempting to
+-		 * bind the transport socket may still fail if we're attempting
+-		 * to use a local address that the dying object is still using.
++		/* Found a match.  We want to replace a dying object.
++		 * Attempting to bind the transport socket may still fail if
++		 * we're attempting to use a local address that the dying
++		 * object is still using.
+ 		 */
+ 		if (!rxrpc_use_local(local))
+ 			break;
+@@ -231,10 +228,12 @@ struct rxrpc_local *rxrpc_lookup_local(struct net *net,
+ 	if (ret < 0)
+ 		goto sock_error;
+ 
+-	if (cursor != &rxnet->local_endpoints)
+-		list_replace_init(cursor, &local->link);
+-	else
+-		list_add_tail(&local->link, cursor);
++	if (cursor) {
++		hlist_replace_rcu(cursor, &local->link);
++		cursor->pprev = NULL;
++	} else {
++		hlist_add_head_rcu(&local->link, &rxnet->local_endpoints);
++	}
+ 	age = "new";
+ 
+ found:
+@@ -375,7 +374,7 @@ static void rxrpc_local_destroyer(struct rxrpc_local *local)
+ 	local->dead = true;
+ 
+ 	mutex_lock(&rxnet->local_mutex);
+-	list_del_init(&local->link);
++	hlist_del_init_rcu(&local->link);
+ 	mutex_unlock(&rxnet->local_mutex);
+ 
+ 	rxrpc_clean_up_local_conns(local);
+@@ -462,9 +461,9 @@ void rxrpc_destroy_all_locals(struct rxrpc_net *rxnet)
+ 
+ 	flush_workqueue(rxrpc_workqueue);
+ 
+-	if (!list_empty(&rxnet->local_endpoints)) {
++	if (!hlist_empty(&rxnet->local_endpoints)) {
+ 		mutex_lock(&rxnet->local_mutex);
+-		list_for_each_entry(local, &rxnet->local_endpoints, link) {
++		hlist_for_each_entry(local, &rxnet->local_endpoints, link) {
+ 			pr_err("AF_RXRPC: Leaked local %p {%d}\n",
+ 			       local, atomic_read(&local->usage));
+ 		}
+diff --git a/net/rxrpc/net_ns.c b/net/rxrpc/net_ns.c
+index e4d6d432515b..bb4c25d6df64 100644
+--- a/net/rxrpc/net_ns.c
++++ b/net/rxrpc/net_ns.c
+@@ -72,7 +72,7 @@ static __net_init int rxrpc_init_net(struct net *net)
+ 	timer_setup(&rxnet->client_conn_reap_timer,
+ 		    rxrpc_client_conn_reap_timeout, 0);
+ 
+-	INIT_LIST_HEAD(&rxnet->local_endpoints);
++	INIT_HLIST_HEAD(&rxnet->local_endpoints);
+ 	mutex_init(&rxnet->local_mutex);
+ 
+ 	hash_init(rxnet->peer_hash);
+@@ -98,6 +98,9 @@ static __net_init int rxrpc_init_net(struct net *net)
+ 	proc_create_net("peers", 0444, rxnet->proc_net,
+ 			&rxrpc_peer_seq_ops,
+ 			sizeof(struct seq_net_private));
++	proc_create_net("locals", 0444, rxnet->proc_net,
++			&rxrpc_local_seq_ops,
++			sizeof(struct seq_net_private));
+ 	return 0;
+ 
+ err_proc:
+diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
+index 5a67955cc00f..7d007a66eba5 100644
+--- a/net/rxrpc/proc.c
++++ b/net/rxrpc/proc.c
+@@ -328,3 +328,72 @@ const struct seq_operations rxrpc_peer_seq_ops = {
+ 	.stop   = rxrpc_peer_seq_stop,
+ 	.show   = rxrpc_peer_seq_show,
+ };
++
++/*
++ * Generate a list of extant virtual local endpoints in /proc/net/rxrpc/locals
++ */
++static int rxrpc_local_seq_show(struct seq_file *seq, void *v)
++{
++	struct rxrpc_local *local;
++	char lbuff[50];
++
++	if (v == SEQ_START_TOKEN) {
++		seq_puts(seq,
++			 "Proto Local                                          "
++			 " Use Act\n");
++		return 0;
++	}
++
++	local = hlist_entry(v, struct rxrpc_local, link);
++
++	sprintf(lbuff, "%pISpc", &local->srx.transport);
++
++	seq_printf(seq,
++		   "UDP   %-47.47s %3u %3u\n",
++		   lbuff,
++		   atomic_read(&local->usage),
++		   atomic_read(&local->active_users));
++
++	return 0;
++}
++
++static void *rxrpc_local_seq_start(struct seq_file *seq, loff_t *_pos)
++	__acquires(rcu)
++{
++	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
++	unsigned int n;
++
++	rcu_read_lock();
++
++	if (*_pos >= UINT_MAX)
++		return NULL;
++
++	n = *_pos;
++	if (n == 0)
++		return SEQ_START_TOKEN;
++
++	return seq_hlist_start_rcu(&rxnet->local_endpoints, n - 1);
++}
++
++static void *rxrpc_local_seq_next(struct seq_file *seq, void *v, loff_t *_pos)
++{
++	struct rxrpc_net *rxnet = rxrpc_net(seq_file_net(seq));
++
++	if (*_pos >= UINT_MAX)
++		return NULL;
++
++	return seq_hlist_next_rcu(v, &rxnet->local_endpoints, _pos);
++}
++
++static void rxrpc_local_seq_stop(struct seq_file *seq, void *v)
++	__releases(rcu)
++{
++	rcu_read_unlock();
++}
++
++const struct seq_operations rxrpc_local_seq_ops = {
++	.start  = rxrpc_local_seq_start,
++	.next   = rxrpc_local_seq_next,
++	.stop   = rxrpc_local_seq_stop,
++	.show   = rxrpc_local_seq_show,
++};
 -- 
 2.35.1
 
