@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017576FBE
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A14C433B5;
-	Wed, 30 Nov 2022 18:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4446FA1
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:38:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A7DC433C1;
+	Wed, 30 Nov 2022 18:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833513;
-	bh=fO5QYi/lqBwa5/J9LtAfYEvPpCUCqBZeYJlgMLl2A3c=;
+	s=korg; t=1669833510;
+	bh=ZPDmWSaOqn5huWzPEXF+kprFKieBxgNMfANb1/7wSNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqZGK2tAh8/CEocHWSEDgK15VTPmandCFk22NtNjxFVj3D6fP6sDQGKtFnmQxIpus
-	 7xCT0UnRfgyuleqtc/iMbt12i9aB5oBHwR7hbNhnyl86AFMu4mHS/WPbREqf+oYGcA
-	 HPPirSNLjVENdETMW2uY1T1DJalg157Yw10o7qZg=
+	b=dZ8+V7bqDGESlXJXY4KnYk9FCRACscrBZx8dZk8AF91DHzkdmJRA7jbq37rX8oO2b
+	 0IN1zUqvoGacpRrwu/r2XqkEQpgbg//tdW9plpM5hx2mjbZvlUcOnVLvAqr+pPRb0g
+	 hpUrv/qS1jhCDXv10BV70Pi6OSkjwRW+JlXBdggw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roth Mark <rothm@mail.com>,
-	Zhihao Chen <chenzhihao@meizu.com>,
-	Thomas Jarosch <thomas.jarosch@intra2net.com>,
-	Antony Antony <antony.antony@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/206] xfrm: Fix oops in __xfrm_state_delete()
-Date: Wed, 30 Nov 2022 19:22:39 +0100
-Message-Id: <20221130180535.768438907@linuxfoundation.org>
+Subject: [PATCH 5.15 124/206] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
+Date: Wed, 30 Nov 2022 19:22:56 +0100
+Message-Id: <20221130180536.202052667@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -39,117 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit b97df039a68b2f3e848e238df5d5d06343ea497b ]
+[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
 
-Kernel 5.14 added a new "byseq" index to speed
-up xfrm_state lookups by sequence number in commit
-fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
+The first validation check for EVT_TRANSACTION has two different checks
+tied together with logical AND. One is a check for minimum packet length,
+and the other is for a valid aid_tag. If either condition is true (fails),
+then an error should be triggered. The fix is to change && to ||.
 
-While the patch was thorough, the function pfkey_send_new_mapping()
-in net/af_key.c also modifies x->km.seq and never added
-the current xfrm_state to the "byseq" index.
-
-This leads to the following kernel Ooops:
-    BUG: kernel NULL pointer dereference, address: 0000000000000000
-    ..
-    RIP: 0010:__xfrm_state_delete+0xc9/0x1c0
-    ..
-    Call Trace:
-    <TASK>
-    xfrm_state_delete+0x1e/0x40
-    xfrm_del_sa+0xb0/0x110 [xfrm_user]
-    xfrm_user_rcv_msg+0x12d/0x270 [xfrm_user]
-    ? remove_entity_load_avg+0x8a/0xa0
-    ? copy_to_user_state_extra+0x580/0x580 [xfrm_user]
-    netlink_rcv_skb+0x51/0x100
-    xfrm_netlink_rcv+0x30/0x50 [xfrm_user]
-    netlink_unicast+0x1a6/0x270
-    netlink_sendmsg+0x22a/0x480
-    __sys_sendto+0x1a6/0x1c0
-    ? __audit_syscall_entry+0xd8/0x130
-    ? __audit_syscall_exit+0x249/0x2b0
-    __x64_sys_sendto+0x23/0x30
-    do_syscall_64+0x3a/0x90
-    entry_SYSCALL_64_after_hwframe+0x61/0xcb
-
-Exact location of the crash in __xfrm_state_delete():
-    if (x->km.seq)
-        hlist_del_rcu(&x->byseq);
-
-The hlist_node "byseq" was never populated.
-
-The bug only triggers if a new NAT traversal mapping (changed IP or port)
-is detected in esp_input_done2() / esp6_input_done2(), which in turn
-indirectly calls pfkey_send_new_mapping() *if* the kernel is compiled
-with CONFIG_NET_KEY and "af_key" is active.
-
-The PF_KEYv2 message SADB_X_NAT_T_NEW_MAPPING is not part of RFC 2367.
-Various implementations have been examined how they handle
-the "sadb_msg_seq" header field:
-
-- racoon (Android): does not process SADB_X_NAT_T_NEW_MAPPING
-- strongswan: does not care about sadb_msg_seq
-- openswan: does not care about sadb_msg_seq
-
-There is no standard how PF_KEYv2 sadb_msg_seq should be populated
-for SADB_X_NAT_T_NEW_MAPPING and it's not used in popular
-implementations either. Herbert Xu suggested we should just
-use the current km.seq value as is. This fixes the root cause
-of the oops since we no longer modify km.seq itself.
-
-The update of "km.seq" looks like a copy'n'paste error
-from pfkey_send_acquire(). SADB_ACQUIRE must indeed assign a unique km.seq
-number according to RFC 2367. It has been verified that code paths
-involving pfkey_send_acquire() don't cause the same Oops.
-
-PF_KEYv2 SADB_X_NAT_T_NEW_MAPPING support was originally added here:
-    https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
-
-    commit cbc3488685b20e7b2a98ad387a1a816aada569d8
-    Author:     Derek Atkins <derek@ihtfp.com>
-    AuthorDate: Wed Apr 2 13:21:02 2003 -0800
-
-        [IPSEC]: Implement UDP Encapsulation framework.
-
-        In particular, implement ESPinUDP encapsulation for IPsec
-        Nat Traversal.
-
-A note on triggering the bug: I was not able to trigger it using VMs.
-There is one VPN using a high latency link on our production VPN server
-that triggered it like once a day though.
-
-Link: https://github.com/strongswan/strongswan/issues/992
-Link: https://lore.kernel.org/netdev/00959f33ee52c4b3b0084d42c430418e502db554.1652340703.git.antony.antony@secunet.com/T/
-Link: https://lore.kernel.org/netdev/20221027142455.3975224-1-chenzhihao@meizu.com/T/
-
-Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
-Reported-by: Roth Mark <rothm@mail.com>
-Reported-by: Zhihao Chen <chenzhihao@meizu.com>
-Tested-by: Roth Mark <rothm@mail.com>
-Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Acked-by: Antony Antony <antony.antony@secunet.com>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 2 +-
+ drivers/nfc/st-nci/se.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index a654bd4bc437..1d6ae1df3886 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -3394,7 +3394,7 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	hdr->sadb_msg_len = size / sizeof(uint64_t);
- 	hdr->sadb_msg_errno = 0;
- 	hdr->sadb_msg_reserved = 0;
--	hdr->sadb_msg_seq = x->km.seq = get_acqseq();
-+	hdr->sadb_msg_seq = x->km.seq;
- 	hdr->sadb_msg_pid = 0;
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index 5fd89f72969d..522b7a128f4c 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -326,7 +326,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+ 		 * AID          81      5 to 16
+ 		 * PARAMETERS   82      0 to 255
+ 		 */
+-		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
++		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
+ 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
+ 			return -EPROTO;
  
- 	/* SA */
 -- 
 2.35.1
 
