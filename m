@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF0579C0
-	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66AFC433D6;
-	Wed, 30 Nov 2022 18:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2845D79C0
+	for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E97C433D6;
+	Wed, 30 Nov 2022 18:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669833729;
-	bh=vxQEmq6QOTh8Aq/SoTk5RoDWRPXf0GWAr+VGwhZm6q8=;
+	s=korg; t=1669833732;
+	bh=RW4HlKrC8HJ1IjGXRBDcvUafv7RxhxgfYV7vWL5KbOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMpZ73Pr0iGAtBZL+r5woFyB8CTVWB2XvxbZJNkJsQ0E/EpTw3YhSiQlE6A+ydu1+
-	 ZuFFX9VdTXYvdZeHxgIDNCBA22TQfy17cQx8M0VO3pn7id78/UN1jsyYHrdqsA6ZOr
-	 8PVl3PO0XEuuCb3ffe7m8+ZX5SOwf/K4m16X5Of8=
+	b=z7hzU9IZVNFQxfOY1x5Tn53+DHsGnOFkokiIAHvzqtMiDid/qOmpEpJ9O9MiFNmeX
+	 ztQMkdzejIQXJdEZakOUJ0QfTn6mUIGeQ7hrcWn0rf86Os/22BYKcW9ra1lV804wde
+	 iPIvnupF6aAu0bJ0wk7TG0OMvrzELiL8jqJSzH0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 172/206] ASoC: stm32: dfsdm: manage cb buffers cleanup
-Date: Wed, 30 Nov 2022 19:23:44 +0100
-Message-Id: <20221130180537.402790108@linuxfoundation.org>
+Subject: [PATCH 5.15 173/206] xen-pciback: Allow setting PCI_MSIX_FLAGS_MASKALL too
+Date: Wed, 30 Nov 2022 19:23:45 +0100
+Message-Id: <20221130180537.428090510@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 References: <20221130180532.974348590@linuxfoundation.org>
@@ -35,50 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 
-[ Upstream commit 7d945b046be3d2605dbb1806e73095aadd7ae129 ]
+[ Upstream commit 5e29500eba2aa19e1323df46f64dafcd4a327092 ]
 
-Ensure that resources allocated by iio_channel_get_all_cb()
-are released on driver unbind.
+When Xen domain configures MSI-X, the usual approach is to enable MSI-X
+together with masking all of them via the config space, then fill the
+table and only then clear PCI_MSIX_FLAGS_MASKALL. Allow doing this via
+QEMU running in a stub domain.
 
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Link: https://lore.kernel.org/r/20221109170849.273719-1-olivier.moysan@foss.st.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Previously, when changing PCI_MSIX_FLAGS_MASKALL was not allowed, the
+whole write was aborted, preventing change to the PCI_MSIX_FLAGS_ENABLE
+bit too.
+
+Note the Xen hypervisor intercepts this write anyway, and may keep the
+PCI_MSIX_FLAGS_MASKALL bit set if it wishes to. It will store the
+guest-requested state and will apply it eventually.
+
+Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Link: https://lore.kernel.org/r/20221114103110.1519413-1-marmarek@invisiblethingslab.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_adfsdm.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/xen/xen-pciback/conf_space_capability.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/stm/stm32_adfsdm.c b/sound/soc/stm/stm32_adfsdm.c
-index e6078f50e508..1e9b4b1df69e 100644
---- a/sound/soc/stm/stm32_adfsdm.c
-+++ b/sound/soc/stm/stm32_adfsdm.c
-@@ -303,6 +303,11 @@ static int stm32_adfsdm_dummy_cb(const void *data, void *private)
- 	return 0;
- }
+diff --git a/drivers/xen/xen-pciback/conf_space_capability.c b/drivers/xen/xen-pciback/conf_space_capability.c
+index 5e53b4817f16..097316a74126 100644
+--- a/drivers/xen/xen-pciback/conf_space_capability.c
++++ b/drivers/xen/xen-pciback/conf_space_capability.c
+@@ -190,13 +190,16 @@ static const struct config_field caplist_pm[] = {
+ };
  
-+static void stm32_adfsdm_cleanup(void *data)
-+{
-+	iio_channel_release_all_cb(data);
-+}
-+
- static struct snd_soc_component_driver stm32_adfsdm_soc_platform = {
- 	.open		= stm32_adfsdm_pcm_open,
- 	.close		= stm32_adfsdm_pcm_close,
-@@ -349,6 +354,12 @@ static int stm32_adfsdm_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->iio_cb))
- 		return PTR_ERR(priv->iio_cb);
+ static struct msi_msix_field_config {
+-	u16          enable_bit; /* bit for enabling MSI/MSI-X */
+-	unsigned int int_type;   /* interrupt type for exclusiveness check */
++	u16          enable_bit;   /* bit for enabling MSI/MSI-X */
++	u16          allowed_bits; /* bits allowed to be changed */
++	unsigned int int_type;     /* interrupt type for exclusiveness check */
+ } msi_field_config = {
+ 	.enable_bit	= PCI_MSI_FLAGS_ENABLE,
++	.allowed_bits	= PCI_MSI_FLAGS_ENABLE,
+ 	.int_type	= INTERRUPT_TYPE_MSI,
+ }, msix_field_config = {
+ 	.enable_bit	= PCI_MSIX_FLAGS_ENABLE,
++	.allowed_bits	= PCI_MSIX_FLAGS_ENABLE | PCI_MSIX_FLAGS_MASKALL,
+ 	.int_type	= INTERRUPT_TYPE_MSIX,
+ };
  
-+	ret = devm_add_action_or_reset(&pdev->dev, stm32_adfsdm_cleanup, priv->iio_cb);
-+	if (ret < 0)  {
-+		dev_err(&pdev->dev, "Unable to add action\n");
-+		return ret;
-+	}
-+
- 	component = devm_kzalloc(&pdev->dev, sizeof(*component), GFP_KERNEL);
- 	if (!component)
- 		return -ENOMEM;
+@@ -229,7 +232,7 @@ static int msi_msix_flags_write(struct pci_dev *dev, int offset, u16 new_value,
+ 		return 0;
+ 
+ 	if (!dev_data->allow_interrupt_control ||
+-	    (new_value ^ old_value) & ~field_config->enable_bit)
++	    (new_value ^ old_value) & ~field_config->allowed_bits)
+ 		return PCIBIOS_SET_FAILED;
+ 
+ 	if (new_value & field_config->enable_bit) {
 -- 
 2.35.1
 
