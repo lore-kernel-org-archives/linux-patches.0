@@ -1,131 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B710A28
-	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 02:16:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99982C433D6;
-	Thu,  1 Dec 2022 02:16:30 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="W9BC4zgH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669860987;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=u3FTOtZpdTZLy3/k78tZkT54sf8xZfaUw16L7xc/1go=;
-	b=W9BC4zgHnBzwICnH/96H72eXUR+/bnlmnKyNj58IytMW4u+R3rETOIp1hrjekTSMOU77Bt
-	SPWUBmYkAArZxIZarKQbdCW5TM6vPas2sTEbM9K4UCnTLM3AYldAIOeJUj5PYKP1G++C/b
-	bmfxZ1yb5uXK/F+TeQZpd9Q+KJO3FZ4=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d009f39a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Dec 2022 02:16:27 +0000 (UTC)
-Date: Thu, 1 Dec 2022 03:16:20 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v10 1/4] random: add vgetrandom_alloc() syscall
-Message-ID: <Y4gOdC8J+zzRsago@zx2c4.com>
-References: <20221129210639.42233-1-Jason@zx2c4.com>
- <20221129210639.42233-2-Jason@zx2c4.com>
- <877czc7m0g.fsf@oldenburg.str.redhat.com>
- <Y4d5SyU3akA9ZBaJ@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7895DA28
+	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 02:20:04 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id k5so522251pjo.5
+        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 18:20:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6y9AUyAqq0punB0p25H3aQ8RSZH3MKAHnozHOyjdT/o=;
+        b=GkZbysRbQz2Phy3zO7CnVjp8oZ3E1AIXTQMfBWKR51wcKg9K6ymnCmz0eBo5jCz4oD
+         Zm1cqfAb1ajgztTvYr6L/QakMxwGWXUbhljQb9j1L8NuvFH2hKSNdCkMnnCvXkAI5pp5
+         rmdZ4qDJ9egcNLwVa3hiQV+RnGbY5AfJ4+/t+H0uWlpneNWcBmVfOJnalZo0vW3urCBn
+         teX13Pdl/lMyiasmQftLVuyzEQ0XI5gWV0+d4OGlgAlm/JDTU9TUSg9uLSmf8i7mi7La
+         yIriDqpDX23oOTtowOdATtzKYsNyvG5ieGtPnAxieuBWOuvwX8tfpx20xl5EOSyQt0op
+         vTGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6y9AUyAqq0punB0p25H3aQ8RSZH3MKAHnozHOyjdT/o=;
+        b=ohD1AtKpu5kRsmxjR7plU6tKgZj4d4a0I9ZMWpplbJIaHwpsMIvN3uqEw5NF8LKBqF
+         DAtgp8Tl7cGPVTHphiGTGhzQdt/H/ySXjnifMOjmTwBCfAl59fck7KCWkC7N9JMYA4M4
+         HEdQ9xc0aBsPm1Zksw5cK+aUd07ikBn0bQeG5KhP2iMKuuk2yEg2GwkmpIRXj9oEPqRX
+         MYuJrYcfD+6uWbQXgZpIwo8gVj+4vWMhdEgmEKS4O7c5sbw9mEEgvPRWiDmQytluV0wr
+         FyQ38bDOG+EAWMr57iqxz0/Opza3RSppLKy/JJJYBIKD22ZVeXHXn4VjQ5mFMFWATRYN
+         aijA==
+X-Gm-Message-State: ANoB5pnTKfugcLeTWOjk6GkUchBoMhlpMdaJsedMp1G5sL2WsFpq46eE
+	6EiBjuTxEZvZlDlibvjJg4MtjW9qaM1ZVpx+Fgs=
+X-Google-Smtp-Source: AA0mqf5rVSN3sU8H7annQKroyzCuVfNG6TOykuN/kwAF13K5JIWuu8skyrXchhhBPXYsKpgRNQ8TlQ516IH3mgc28ME=
+X-Received: by 2002:a17:90a:a88e:b0:213:13ab:c309 with SMTP id
+ h14-20020a17090aa88e00b0021313abc309mr67274062pjq.80.1669861203738; Wed, 30
+ Nov 2022 18:20:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y4d5SyU3akA9ZBaJ@zx2c4.com>
+References: <20221130180544.105550592@linuxfoundation.org>
+In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
+From: Zan Aziz <zanaziz313@gmail.com>
+Date: Wed, 30 Nov 2022 19:19:52 -0700
+Message-ID: <CAFU3qoaA-_ixnfFFZXvnSp3t5YPTQzY01US4gOyaJedfFg56aw@mail.gmail.com>
+Subject: Re: [PATCH 6.0 000/289] 6.0.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 30, 2022 at 04:39:55PM +0100, Jason A. Donenfeld wrote:
-> > Can userspace use the memory for something else if it's not passed to
-> > getrandom?
-> 
-> I suspect the documentation answer here is, "no", even if technically it
-> might happen to work on this kernel or that kernel. I suppose this could
-> even be quasi-enforced by xoring the top bits with some vdso
-> compile-time constant, so you can't rely on being able to dereference
-> it yourself.
-> [...]
-> Then they're caught holding the bag? This doesn't seem much different
-> from userspace shooting themselves in general, like writing garbage into
-> the allocated states and then trying to use them. If this is something
-> you really, really are concerned about, then maybe my cheesy dumb xor
-> thing mentioned above would be a low effort mitigation here.
+On Wed, Nov 30, 2022 at 3:16 PM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.0.11 release.
+> There are 289 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I implemented a sample of this, below. I think this is a bit silly,
-though, and making this fully robust could take some effort. Overall, I
-don't think we should do this.
+Hi Greg,
 
-However, the more I think about the args thing from the last email,
-the more I like *that* idea. So I think I'll roll with that.
+Compiled and booted on my test system Lenovo P50s: Intel Core i7
+No emergency and critical messages in the dmesg
 
-But this cheesy pointer obfuscation thing here, meh. But here's what it
-could look like anyway:
+./perf bench sched all
+# Running sched/messaging benchmark...
+# 20 sender and receiver processes per group
+# 10 groups == 400 processes run
 
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index 2aaeb48d11be..7aff45165ce5 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -228,7 +228,7 @@ SYSCALL_DEFINE2(vgetrandom_alloc, struct vgetrandom_alloc_args __user *, uargs,
- 	if (args.flags & VGRA_DEALLOCATE) {
- 		if (args.size_per_each != state_size || args.num > max_states || !args.states)
- 			return -EINVAL;
--		return vm_munmap(args.states, args.num * state_size);
-+		return vm_munmap(args.states ^ VGETRANDOM_STATE_HI_TAINT, args.num * state_size);
- 	}
+     Total time: 0.710 [sec]
 
- 	/* These don't make sense as input values if allocating, so reject them. */
-@@ -249,7 +249,7 @@ SYSCALL_DEFINE2(vgetrandom_alloc, struct vgetrandom_alloc_args __user *, uargs,
+# Running sched/pipe benchmark...
+# Executed 1000000 pipe operations between two processes
 
- 	args.num = num_states;
- 	args.size_per_each = state_size;
--	args.states = pages_addr;
-+	args.states = pages_addr ^ VGETRANDOM_STATE_HI_TAINT;
+     Total time: 9.551 [sec]
 
- 	ret = -EFAULT;
- 	if (copy_to_user(uargs, &args, sizeof(args)))
-diff --git a/include/vdso/getrandom.h b/include/vdso/getrandom.h
-index cb624799a8e7..9a6aaf4d99d4 100644
---- a/include/vdso/getrandom.h
-+++ b/include/vdso/getrandom.h
-@@ -8,6 +8,7 @@
+       9.551475 usecs/op
+         104695 ops/sec
 
- #include <crypto/chacha.h>
- #include <vdso/limits.h>
-+#include <linux/version.h>
+Tested-by: Zan Aziz <zanaziz313@gmail.com>
 
- /**
-  * struct vgetrandom_state - State used by vDSO getrandom() and allocated by vgetrandom_alloc().
-@@ -41,4 +42,10 @@ struct vgetrandom_state {
- 	bool 			in_use;
- };
-
-+/* Be annoying by changing frequently enough. */
-+#define VGETRANDOM_STATE_HI_TAINT ((unsigned long)(((LINUX_VERSION_CODE >> 16) + \
-+				    (LINUX_VERSION_CODE >>  8) + (LINUX_VERSION_CODE >>  0) + \
-+				    __GNUC__ + __GNUC_MINOR__ + __GNUC_PATCHLEVEL__) \
-+				   & 0xff) << (BITS_PER_LONG - 8))
-+
- #endif /* _VDSO_GETRANDOM_H */
-diff --git a/lib/vdso/getrandom.c b/lib/vdso/getrandom.c
-index 9ca624756432..14cbd349186c 100644
---- a/lib/vdso/getrandom.c
-+++ b/lib/vdso/getrandom.c
-@@ -57,7 +57,7 @@ __cvdso_getrandom_data(const struct vdso_rng_data *rng_info, void *buffer, size_
- 		       unsigned int flags, void *opaque_state)
- {
- 	ssize_t ret = min_t(size_t, INT_MAX & PAGE_MASK /* = MAX_RW_COUNT */, len);
--	struct vgetrandom_state *state = opaque_state;
-+	struct vgetrandom_state *state = (void *)((unsigned long)opaque_state ^ VGETRANDOM_STATE_HI_TAINT);
- 	size_t batch_len, nblocks, orig_len = len;
- 	unsigned long current_generation;
- 	void *orig_buffer = buffer;
+Thanks
+-Zan
