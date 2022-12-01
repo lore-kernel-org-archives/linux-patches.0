@@ -1,104 +1,186 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B410E8;
-	Thu,  1 Dec 2022 08:26:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921A6C433D6;
-	Thu,  1 Dec 2022 08:26:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669883202;
-	bh=bYN7sFnrzXsqdokyyNjsM57Xzrjedk4SiEcICca4yv8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jBziYPIcz32Zipj7BRwvOAXfBQOI7SAumemnTscF+KrvwpcQ6o6LPYwqi465aB2cN
-	 zwgN9DbsD4LMtEgamCL8UVshzL4U0OJeXGgJ5ieVLBX74ESoA+n1jJjJUL6WEDodKw
-	 g7R9/qpkKEb7oSxwnYCIWEc0NAyKKq+GpVd5Fd7M=
-Date: Thu, 1 Dec 2022 08:56:58 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Daniel Borkmann <daniel@iogearbox.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, bpf <bpf@vger.kernel.org>,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH 6.0 000/289] 6.0.11-rc1 review
-Message-ID: <Y4heSvsjubdeCT1P@kroah.com>
-References: <20221130180544.105550592@linuxfoundation.org>
- <CA+G9fYuJVxhKbeN9OGCr2_zyfa1k3j4DS1gAoTW0P89Eyz2FHg@mail.gmail.com>
- <Y4hQVCBYfwU0abvO@dev-arch.thelio-3990X>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62D910F6
+	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 08:54:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1669884856; x=1701420856;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=5S04XEVszvqHluDKodEz2778W3pgCoVJ2UKcAubiyDY=;
+  b=KHxYhFtKjQm73hryU65PoKr4Y61zVLADRRFKIMmagr+J212XZjeRZuoY
+   Fo/RbpEp5HQi6hXfZoncjZKzdXbhsye3iBevvxMJ2W5lgAhfE5xjCFeII
+   9eQKrZCBYfkT6e0NwMddMQAE2jR6MTr3YP/bcmoLPBUQFkzrjr0b8k/Xt
+   DGrJlGY8LWHK2h7UdukKXiF5p/4MR5GUsPJOSWs+ePeMIagk1g/dKQFxu
+   L6qLxW2RzYqUSiGJBRT0zD05wEzzSZqKfdPWmnVMesQk3UGxPw8ru0kfF
+   cX3Ege/nlD/N3aPwwlUDhpZ1693po21fEG4FtN3NLxiNYg+vT0+xijClN
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10547"; a="342555745"
+X-IronPort-AV: E=Sophos;i="5.96,209,1665471600"; 
+   d="scan'208";a="342555745"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2022 00:54:15 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10547"; a="646679278"
+X-IronPort-AV: E=Sophos;i="5.96,209,1665471600"; 
+   d="scan'208";a="646679278"
+Received: from akoroglu-mobl.ger.corp.intel.com ([10.251.212.165])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2022 00:54:13 -0800
+Date: Thu, 1 Dec 2022 10:54:08 +0200 (EET)
+From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+    Sherry Sun <sherry.sun@nxp.com>
+cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+    Sasha Levin <sashal@kernel.org>
+Subject: [PATCH proper backport to 5.15 1/1] tty: serial: fsl_lpuart: don't
+ break the on-going transfer when global reset
+Message-ID: <1b26798d-fdbd-9e21-b745-1ed335e75b@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y4hQVCBYfwU0abvO@dev-arch.thelio-3990X>
+Content-Type: text/plain; charset=US-ASCII
 
-On Wed, Nov 30, 2022 at 11:57:24PM -0700, Nathan Chancellor wrote:
-> On Thu, Dec 01, 2022 at 11:44:53AM +0530, Naresh Kamboju wrote:
-> > On Thu, 1 Dec 2022 at 00:13, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.0.11 release.
-> > > There are 289 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.11-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > 
-> > Results from Linaro's test farm.
-> > Regressions found on x86_64:
-> > 
-> >     - build-clang-15-allmodconfig-x86_64
-> >     - build-clang-nightly-allmodconfig-x86_64
-> > 
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> >     bpf: Convert BPF_DISPATCHER to use static_call() (not ftrace)
-> >     [ Upstream commit c86df29d11dfba27c0a1f5039cd6fe387fbf4239 ]
-> > 
-> > Causing the following build warnings / errors with clang-15 allmodconfig
-> > on x86_64,
-> > 
-> > Build error:
-> > make --silent --keep-going --jobs=8
-> > O=/home/tuxbuild/.cache/tuxmake/builds/1/build LLVM=1 LLVM_IAS=1
-> > ARCH=x86_64 SRCARCH=x86 CROSS_COMPILE=x86_64-linux-gnu-
-> > 'HOSTCC=sccache clang' 'CC=sccache clang'
-> > kernel/bpf/dispatcher.c:126:33: error: pointer type mismatch ('void *'
-> > and 'unsigned int (*)(const void *, const struct bpf_insn *,
-> > bpf_func_t)' (aka 'unsigned int (*)(const void *, const struct
-> > bpf_insn *, unsigned int (*)(const void *, const struct bpf_insn
-> > *))')) [-Werror,-Wpointer-type-mismatch]
-> >         __BPF_DISPATCHER_UPDATE(d, new ?: &bpf_dispatcher_nop_func);
-> >                                    ~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~
-> > include/linux/bpf.h:938:54: note: expanded from macro '__BPF_DISPATCHER_UPDATE'
-> >         __static_call_update((_d)->sc_key, (_d)->sc_tramp, (_new))
-> >                                                             ^~~~
-> > 1 error generated.
-> 
-> Thanks for the report! This is fixed with upstream commit a679120edfcf
-> ("bpf: Add explicit cast to 'void *' for __BPF_DISPATCHER_UPDATE()"),
-> which was marked as a fix for c86df29d11df.
+[ Upstream commit 76bad3f88750f8cc465c489e6846249e0bc3d8f5 ]
 
-Now queued up.  I forgot to run my "do we need fixes for the fixes"
-script on the queues, sorry about that.
+lpuart_global_reset() shouldn't break the on-going transmit engine, need
+to recover the on-going data transfer after reset.
 
-greg k-h
+This can help earlycon here, since commit 60f361722ad2 ("serial:
+fsl_lpuart: Reset prior to registration") moved lpuart_global_reset()
+before uart_add_one_port(), earlycon is writing during global reset,
+as global reset will disable the TX and clear the baud rate register,
+which caused the earlycon cannot work any more after reset, needs to
+restore the baud rate and re-enable the transmitter to recover the
+earlycon write.
+
+Also move the lpuart_global_reset() down, then we can reuse the
+lpuart32_tx_empty() without declaration.
+
+Fixes: bd5305dcabbc ("tty: serial: fsl_lpuart: do software reset for imx7ulp and imx8qxp")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20221024085844.22786-1-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+Hi stable folks,
+
+These two stable-deps seem to be pulled into stable only due to diff 
+context:
+
+07481f448b63 ("serial: fsl_lpuart: Fill in rs485_supported")
+8925c31c1ac2 ("serial: Add rs485_supported to uart_port")
+
+I think those two should be dropped from the stable queue and the queued 
+fix for 76bad3f88750 ("tty: serial: fsl_lpuart: don't break the on-going 
+transfer when global reset") replaced with this backport.
+
+ drivers/tty/serial/fsl_lpuart.c | 76 +++++++++++++++++++++------------
+ 1 file changed, 49 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 44ed4285e1ef..df6254724729 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -12,6 +12,7 @@
+ #include <linux/dmaengine.h>
+ #include <linux/dmapool.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/irq.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -395,33 +396,6 @@ static unsigned int lpuart_get_baud_clk_rate(struct lpuart_port *sport)
+ #define lpuart_enable_clks(x)	__lpuart_enable_clks(x, true)
+ #define lpuart_disable_clks(x)	__lpuart_enable_clks(x, false)
+ 
+-static int lpuart_global_reset(struct lpuart_port *sport)
+-{
+-	struct uart_port *port = &sport->port;
+-	void __iomem *global_addr;
+-	int ret;
+-
+-	if (uart_console(port))
+-		return 0;
+-
+-	ret = clk_prepare_enable(sport->ipg_clk);
+-	if (ret) {
+-		dev_err(sport->port.dev, "failed to enable uart ipg clk: %d\n", ret);
+-		return ret;
+-	}
+-
+-	if (is_imx7ulp_lpuart(sport) || is_imx8qxp_lpuart(sport)) {
+-		global_addr = port->membase + UART_GLOBAL - IMX_REG_OFF;
+-		writel(UART_GLOBAL_RST, global_addr);
+-		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
+-		writel(0, global_addr);
+-		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
+-	}
+-
+-	clk_disable_unprepare(sport->ipg_clk);
+-	return 0;
+-}
+-
+ static void lpuart_stop_tx(struct uart_port *port)
+ {
+ 	unsigned char temp;
+@@ -2644,6 +2618,54 @@ static struct uart_driver lpuart_reg = {
+ 	.cons		= LPUART_CONSOLE,
+ };
+ 
++static int lpuart_global_reset(struct lpuart_port *sport)
++{
++	struct uart_port *port = &sport->port;
++	void __iomem *global_addr;
++	unsigned long ctrl, bd;
++	unsigned int val = 0;
++	int ret;
++
++	ret = clk_prepare_enable(sport->ipg_clk);
++	if (ret) {
++		dev_err(sport->port.dev, "failed to enable uart ipg clk: %d\n", ret);
++		return ret;
++	}
++
++	if (is_imx7ulp_lpuart(sport) || is_imx8qxp_lpuart(sport)) {
++		/*
++		 * If the transmitter is used by earlycon, wait for transmit engine to
++		 * complete and then reset.
++		 */
++		ctrl = lpuart32_read(port, UARTCTRL);
++		if (ctrl & UARTCTRL_TE) {
++			bd = lpuart32_read(&sport->port, UARTBAUD);
++			if (read_poll_timeout(lpuart32_tx_empty, val, val, 1, 100000, false,
++					      port)) {
++				dev_warn(sport->port.dev,
++					 "timeout waiting for transmit engine to complete\n");
++				clk_disable_unprepare(sport->ipg_clk);
++				return 0;
++			}
++		}
++
++		global_addr = port->membase + UART_GLOBAL - IMX_REG_OFF;
++		writel(UART_GLOBAL_RST, global_addr);
++		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
++		writel(0, global_addr);
++		usleep_range(GLOBAL_RST_MIN_US, GLOBAL_RST_MAX_US);
++
++		/* Recover the transmitter for earlycon. */
++		if (ctrl & UARTCTRL_TE) {
++			lpuart32_write(port, bd, UARTBAUD);
++			lpuart32_write(port, ctrl, UARTCTRL);
++		}
++	}
++
++	clk_disable_unprepare(sport->ipg_clk);
++	return 0;
++}
++
+ static int lpuart_probe(struct platform_device *pdev)
+ {
+ 	const struct lpuart_soc_data *sdata = of_device_get_match_data(&pdev->dev);
+-- 
+2.30.2
+
