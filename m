@@ -1,42 +1,42 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF8DA28
-	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 01:00:02 +0000 (UTC)
-Received: by mail-io1-f50.google.com with SMTP id y6so119215iof.9
-        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 17:00:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89123A28
+	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 01:00:30 +0000 (UTC)
+Received: by mail-io1-f41.google.com with SMTP id i80so157616ioa.0
+        for <patches@lists.linux.dev>; Wed, 30 Nov 2022 17:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dKpFb6/jlaeH7F8uv4T9zwnKFkBq6SD8TT8AzfJXYiw=;
-        b=XpCF7ey4k8U6+L2Vy6Th3///Gdku7SiVUm+VDShkmzrHdgxlUSuyaPG0P6Oft7FeuL
-         UphY9ztPeYjA0ZNrk463cTwV2gG72jUDpm6ro/BXLPT6n+ixeC7QGDTm6mrwK5dNWBoN
-         Fw32i0GV/YzVhUJGdvpOdxe8VujMcicEUryLU=
+        bh=Gq418pOxGsBTfRyr8gCSPbFR3N09kGLIlLy3UXEsQeM=;
+        b=L3Xy+1GjYg6llIu1tdWJwoUyaSwgJMiWCAIHwKXgf4CWBAxkskW84a7pOq1CxpUStK
+         tTcmTQbCzmwIYPDWOtM+iwWzkWcCGYYiNNzEeoRTFQ8gz8LOMoSQKKNZyS0wdZOMDrQ2
+         oHVg9MVdMQe8C7gdWEpGZAmlabz4c4+yMVHSE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKpFb6/jlaeH7F8uv4T9zwnKFkBq6SD8TT8AzfJXYiw=;
-        b=xTv2UljblDqhyvkyIwsDEvD7d5sHIUsmbD70NH4sdmb6B/LDYentOTnDpx0Uep1K4k
-         wamUcv9g3UvKdtEUg+SGER6U+sti7N/aiYzixl6XLzqerwTRvl97TKRlzoroTwXpo9iT
-         n2Qs/nf1L9/GW2IJOlYotq/+vyHLzkyNo51G/fHW/dv5+a3GCYTRIeVVLHR5eTqH+Hvn
-         HvXXxGe7joBg7ogjzfIUK8k5bYs4keCJUptxkow5CiOZbkz6ZgGn3G4gQhOs1OufjKjG
-         T7WiHupkPycdvpVDCCsLVUN+beiCU8SJ6RG3fB600/wV8PAdngJYDoSnNr5/5j7cp3Th
-         JBcw==
-X-Gm-Message-State: ANoB5ploGz6+Ep5QdEn7UH32M7XdYexOaGkzRwFUo4hviy5KmIv7fP9j
-	feCXt5/um5MOKEzCVF1Aj8/Xcg==
-X-Google-Smtp-Source: AA0mqf41TEBl48geLh1CMchiDPpIgKNU9buz5NwCnp6hEefNdxo8QFhdXuKNdPLlQSHN0XL72OsBWA==
-X-Received: by 2002:a05:6638:4410:b0:363:aec1:9a04 with SMTP id bp16-20020a056638441000b00363aec19a04mr30680397jab.78.1669856401180;
-        Wed, 30 Nov 2022 17:00:01 -0800 (PST)
+        bh=Gq418pOxGsBTfRyr8gCSPbFR3N09kGLIlLy3UXEsQeM=;
+        b=x6gTpaTxE42DORtb7S8lpkmo1GgnVDG5eWD4zeH0m3P3QKjVnbFsIA3B2X4CNXJZk9
+         lvyXqbp1/4Spw2SRlu9VukaZNYNGqS8Jb2/544iS9XEAR4/+CylvgR/cGNQOLvoyoSjW
+         8qZTSw9mtkxTCwKlLJqk7XPOvMiuZdCm3abqcv0eKzL1uu8oTkXobCuUWATrsnwHUpVk
+         WKO1Uh2lGiqnstmI8NmTS0XYXRcXhnUQYb5oscmDFP0AgkuCc6u3iTsZA+mzfcQNOiUN
+         keA9iAe0Y+liWjNjbi2tLSMJsb+xebdQKFv9vdmL4KK1TY8g0PIvhRo3TH5IM/tC2Txj
+         SHCg==
+X-Gm-Message-State: ANoB5plhs8kt2bDQbGqjncumKU6TxiCDNsvZFhpzFNj3VWHqE34kBY5S
+	9+u7aqlG6oUSp+s+BKc1MMxJSA==
+X-Google-Smtp-Source: AA0mqf6D3VNev1EHeQDCHM26HLKhO/W02AerFY7qEtCLM4S7Cr2KVt4WH6uXCoIVBlnC5RdCVHs0Ig==
+X-Received: by 2002:a02:3f60:0:b0:375:2d83:f970 with SMTP id c32-20020a023f60000000b003752d83f970mr29200510jaf.205.1669856429573;
+        Wed, 30 Nov 2022 17:00:29 -0800 (PST)
 Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id g20-20020a0566380bd400b003734c4d01d2sm1127219jad.61.2022.11.30.17.00.00
+        by smtp.gmail.com with ESMTPSA id o1-20020a027401000000b00375126ae55fsm1104248jac.58.2022.11.30.17.00.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 17:00:00 -0800 (PST)
-Message-ID: <45ea7769-42fc-a77b-c323-ca1c2f065f5d@linuxfoundation.org>
-Date: Wed, 30 Nov 2022 17:59:59 -0700
+        Wed, 30 Nov 2022 17:00:29 -0800 (PST)
+Message-ID: <58bf2dab-0832-86f9-9cee-c1900c862cda@linuxfoundation.org>
+Date: Wed, 30 Nov 2022 18:00:28 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,7 +45,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 6.0 000/289] 6.0.11-rc1 review
+Subject: Re: [PATCH 5.15 000/206] 5.15.81-rc1 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -54,15 +54,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20221130180544.105550592@linuxfoundation.org>
+References: <20221130180532.974348590@linuxfoundation.org>
 From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20221130180544.105550592@linuxfoundation.org>
+In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/30/22 11:19, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.11 release.
-> There are 289 patches in this series, all will be posted as a response
+On 11/30/22 11:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.81 release.
+> There are 206 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -70,9 +70,9 @@ On 11/30/22 11:19, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.11-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.81-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 > 
 > thanks,
