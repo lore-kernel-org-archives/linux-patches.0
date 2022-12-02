@@ -1,100 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159AC4C71
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 16:16:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F3EC43470;
-	Fri,  2 Dec 2022 16:16:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669997806;
-	bh=YyjXthwblgrT88DPLFu+XIPGLqjTiZLg+Xpj0PN4MaE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUVfcvaGJdF/n2QAZNTbyYm5gbDZ+FvzXb1+V8Q7HwFKlarV3seVo1NnOevDs7f9A
-	 uxcx1Ce9O/9sI14ZMd98O5sFBiUUgCcucTb4+KI/zXlega/CNBZpzsuRiXAlpPUEux
-	 oPtm3kxnmuw1fAt/iUFshg9JMuKQZavSA/KJpFUAd8Rl2yUN8Hbu+6kOtRGKw3hyBp
-	 I3ZSh6nvGSQ6ddBxn2yHDHPvwNJKZDL8JoiLX3U6mkmv8zs1eWyZhXSzHNioAell2D
-	 8+znw2S00T/44bGNXLEEUmiMlyC/YIDBT6y9MFZowF6EDXr+RVIhfRd0/qFm5ZqEUb
-	 wCkPYCWBYfpTA==
-From: ojeda@kernel.org
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>
-Cc: rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH v2 28/28] rust: types: add `Opaque` type
-Date: Fri,  2 Dec 2022 17:14:59 +0100
-Message-Id: <20221202161502.385525-29-ojeda@kernel.org>
-In-Reply-To: <20221202161502.385525-1-ojeda@kernel.org>
-References: <20221202161502.385525-1-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7A24C89
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 17:17:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1670001448;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9IxPEAqF9SN/Ec6+MrDMnr/2mkqvaWqnJM9SdEQtL8I=;
+	b=iXwG/CSmPnEa7kY3VhvA9R+WfWu/+BB1n7srzpM0m92TEuzgCYD0HG8aNgZ3IaWF0/O9n7
+	IyP3xD9p2fQmq2bDYzN3YA+Im8BNjo8flXJiuMCt+nlSXzsvUtUpej2nh6lPwWL9fe6y7O
+	mrGvC7Yd+ihmUCwH4FU9l76hujXdLvE=
+Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
+ [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-159-izNlqvCZOEqgJaFW-E2R4g-1; Fri, 02 Dec 2022 12:17:24 -0500
+X-MC-Unique: izNlqvCZOEqgJaFW-E2R4g-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com [10.11.54.7])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 314193817971;
+	Fri,  2 Dec 2022 17:17:23 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.87])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 1481D145454E;
+	Fri,  2 Dec 2022 17:17:20 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,
+  linux-api@vger.kernel.org,  x86@kernel.org,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>,
+  Arnd Bergmann <arnd@arndb.de>,  Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v10 1/4] random: add vgetrandom_alloc() syscall
+References: <20221129210639.42233-1-Jason@zx2c4.com>
+	<20221129210639.42233-2-Jason@zx2c4.com>
+	<877czc7m0g.fsf@oldenburg.str.redhat.com> <Y4d5SyU3akA9ZBaJ@zx2c4.com>
+Date: Fri, 02 Dec 2022 18:17:17 +0100
+In-Reply-To: <Y4d5SyU3akA9ZBaJ@zx2c4.com> (Jason A. Donenfeld's message of
+	"Wed, 30 Nov 2022 16:39:55 +0100")
+Message-ID: <87v8mtpvxe.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
 
-From: Wedson Almeida Filho <wedsonaf@gmail.com>
+* Jason A. Donenfeld:
 
-Add the `Opaque` type, which is meant to be used with FFI objects
-that are never interpreted by Rust code, e.g.:
+> I don't think zapping that memory is supported, or even a sensible thing
+> to do. In the first place, I don't think we should suggest that the user
+> can dereference that pointer, at all. In that sense, maybe it's best to
+> call it a "handle" or something similar (a "HANDLE"! a "HWND"? a "HRNG"?
 
-    struct Waiter {
-        completion: Opaque<bindings::completion>,
-        next: *mut Waiter,
+Surely the caller has to carve up the allocation, so the returned
+pointer is not opaque at all.  From Adhemerval's glibc patch:
+
+      grnd_allocator.cap = new_cap;
+      grnd_allocator.states = new_states;
+
+      for (size_t i = 0; i < num; ++i)
+	{
+	  grnd_allocator.states[i] = new_block;
+	  new_block += size_per_each;
+	}
+      grnd_allocator.len = num;
     }
 
-It has the advantage that the objects don't have to be
-zero-initialised before calling their init functions, making
-the code performance closer to C.
+That's the opposite of a handle, really.
 
-Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-[Reworded, adapted for upstream and applied latest changes]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/types.rs | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+>> But it will constrain future
+>> evolution of the implementation because you can't add registration
+>> (retaining a reference to the passed-in area in getrandom) after the
+>> fact.  But I'm not sure if this is possible with the current interface,
+>> either.  Userspace has to make some assumptions about the life-cycle to
+>> avoid a memory leak on thread exit.
+>
+> It sounds like this is sort of a different angle on Rasmus' earlier
+> comment about how munmap leaks implementation details. Maybe there's
+> something to that after all? Or not? I see two approaches:
+>
+> 1) Keep munmap as the allocation function. If later on we do fancy
+>    registration and in-kernel state tracking, or add fancy protection
+>    flags, or whatever else, munmap should be able to identify these
+>    pages and carry out whatever special treatment is necessary.
 
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index 3b0c44769708..e84e51ec9716 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -2,6 +2,31 @@
- 
- //! Kernel types.
- 
-+use core::{cell::UnsafeCell, mem::MaybeUninit};
-+
-+/// Stores an opaque value.
-+///
-+/// This is meant to be used with FFI objects that are never interpreted by Rust code.
-+#[repr(transparent)]
-+pub struct Opaque<T>(MaybeUninit<UnsafeCell<T>>);
-+
-+impl<T> Opaque<T> {
-+    /// Creates a new opaque value.
-+    pub const fn new(value: T) -> Self {
-+        Self(MaybeUninit::new(UnsafeCell::new(value)))
-+    }
-+
-+    /// Creates an uninitialised value.
-+    pub const fn uninit() -> Self {
-+        Self(MaybeUninit::uninit())
-+    }
-+
-+    /// Returns a raw pointer to the opaque data.
-+    pub fn get(&self) -> *mut T {
-+        UnsafeCell::raw_get(self.0.as_ptr())
-+    }
-+}
-+
- /// A sum type that always holds either a value of type `L` or `R`.
- pub enum Either<L, R> {
-     /// Constructs an instance of [`Either`] containing a value of type `L`.
--- 
-2.38.1
+munmap is fine, but the interface needs to say how to use it, and what
+length to pass.
+
+>> > +	num_states = clamp_t(size_t, num_hint, 1, (SIZE_MAX & PAGE_MASK) / state_size);
+>> > +	alloc_size = PAGE_ALIGN(num_states * state_size);
+>> 
+>> Doesn't this waste space for one state if state_size happens to be a
+>> power of 2?  Why do this SIZE_MAX & PAGE_MASK thing at all?  Shouldn't
+>> it be PAGE_SIZE / state_size?
+>
+> The first line is a clamp. That fixes num_hint between 1 and the largest
+> number that when multiplied and rounded up won't overflow.
+>
+> So, if state_size is a power of two, let's say 256, and there's only one
+> state, here's what that looks like:
+>
+>     num_states = clamp(1, 1, (0xffffffff & (~(4096 - 1))) / 256 = 16777200) = 1
+>     alloc_size = PAGE_ALIGN(1 * 256) = 4096
+>
+> So that seems like it's working as intended, right? Or if not, maybe
+> it'd help to write out the digits you're concerned about?
+
+I think I was just confused.
+
+>> > +	if (put_user(alloc_size / state_size, num) || put_user(state_size, size_per_each))
+>> > +		return -EFAULT;
+>> > +
+>> > +	pages_addr = vm_mmap(NULL, 0, alloc_size, PROT_READ | PROT_WRITE,
+>> > +			     MAP_PRIVATE | MAP_ANONYMOUS | MAP_LOCKED, 0);
+>> 
+>> I think Rasmus has already raised questions about MAP_LOCKED.
+>> 
+>> I think the kernel cannot rely on it because userspace could call
+>> munlock on the allocation.
+>
+> Then they're caught holding the bag? This doesn't seem much different
+> from userspace shooting themselves in general, like writing garbage into
+> the allocated states and then trying to use them. If this is something
+> you really, really are concerned about, then maybe my cheesy dumb xor
+> thing mentioned above would be a low effort mitigation here.
+
+So the MAP_LOCKED is just there to prevent leakage to swap?
+
+Thanks,
+Florian
 
