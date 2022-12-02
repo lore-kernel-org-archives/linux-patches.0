@@ -1,87 +1,94 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B657B
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 11:04:30 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id 140so4593543pfz.6
-        for <patches@lists.linux.dev>; Fri, 02 Dec 2022 03:04:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D1KXzSfZtuAisNZ05G51clQ324jnx8aq/gsDbzWWu5w=;
-        b=RF10Mb34k2R5dAeYwD2YhiPWcI2Lcs/g4SWXS3huGVHmzpcWS3aJCJjenoi5+J5qNL
-         N3PGDtE7158fXkTpnGTBESokd8cDI4BVGr2BjHh9zxuiC0jIT0ixgMWzN5Cqrgd5aeqd
-         1zCBIzqITcDuwDjvZ4zN50m/xb9TGNBnSluxE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D1KXzSfZtuAisNZ05G51clQ324jnx8aq/gsDbzWWu5w=;
-        b=qNRymF5ScHkiys2m8PgOvxlEVS34e+WEtjuDFV9Be+6fa9jhLdpUsaxxlIIKOSlW6R
-         L7klQVSEj4X4FN/YwDlGS7zL+TmZbc7dOzfeU+WJrpWSZqrtV+Oy/lHh8mTVj3KPFuDq
-         NLlTg8DbcGLE/uW/mB2AKiRDy8FkdQG8M6VSR5UJG07LeefZr4loNY53M0+50nAMvdoF
-         0gNDcga99b1FBzZO8DBdhbTynKFN2cDpZSNjbaeqxedG/nu7XPuP80ptB4sJVZ4ppsUX
-         U7i4oNmTuEU0gE1LaVZQXxFCIC9glyXCPD7XahD7mDXrm9QPjMxbOAdXVXQ7bpuYdQTh
-         b4Ww==
-X-Gm-Message-State: ANoB5pl/KLbTvQHqUuD8m2CVehI3KL37Iw8Xq7T9rU0mbu0G5c4MVpqt
-	MsuirpZ9wu81VNT1OwKC+JDaHQ==
-X-Google-Smtp-Source: AA0mqf7wTZc+5wt4aeoquiU5DMuMCNEz7aE23amfAwhpaX6SQfiBJKju3DcbsUGJ+ZaHl0jVjFfUGA==
-X-Received: by 2002:aa7:85c8:0:b0:574:5789:b8a4 with SMTP id z8-20020aa785c8000000b005745789b8a4mr44798364pfn.47.1669979068145;
-        Fri, 02 Dec 2022 03:04:28 -0800 (PST)
-Received: from d86934a8d1b3 ([220.253.112.46])
-        by smtp.gmail.com with ESMTPSA id mm10-20020a17090b358a00b00218f9bd50c7sm4519127pjb.50.2022.12.02.03.04.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 03:04:27 -0800 (PST)
-Date: Fri, 2 Dec 2022 11:04:20 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604747B
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 11:49:18 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id CFD5F1C09FE; Fri,  2 Dec 2022 12:49:09 +0100 (CET)
+Date: Fri, 2 Dec 2022 12:49:09 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, mlevitsk@redhat.com,
+	samuel.thibault@ens-lyon.org, pawell@cadence.com
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/280] 6.0.11-rc2 review
-Message-ID: <20221202110420.GA20583@d86934a8d1b3>
-References: <20221201131113.897261583@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 000/162] 5.10.157-rc1 review
+Message-ID: <Y4nmNb46aqbm7JuS@duo.ucw.cz>
+References: <20221130180528.466039523@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bpIs/ozp+cN40TDf"
 Content-Disposition: inline
-In-Reply-To: <20221201131113.897261583@linuxfoundation.org>
+In-Reply-To: <20221130180528.466039523@linuxfoundation.org>
 
-On Thu, Dec 01, 2022 at 02:11:47PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.11 release.
-> There are 280 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
 
-Hi Greg,
+--bpIs/ozp+cN40TDf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-6.0.11-rc2 tested.
+Hi!
 
-Run tested on:
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
-- SolidRun Cubox-i Dual/Quad - NXP iMX6 (Cubox-i4Pro)
+[If I cc-ed you, you are author of one of patches below. Please take a
+look.]
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- Allwinner H6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
+> Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
+> Anything received after that time might be too late.
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+I hope to make it :-). I
+
+> Pawel Laszczak <pawell@cadence.com>
+>     usb: cdnsp: Device side header file for CDNSP driver
+>=20
+> Pawel Laszczak <pawell@cadence.com>
+>     usb: cdns3: Add support for DRD CDNSP
+
+These two together are 1500+ lines, and are marked as Stable-dep-of:
+9d5333c93134 ("usb: cdns3: host: fix endless superspeed hub port
+reset") . But we don't have that one in 5.10 tree. Likely we should
+not have these either.
+
+> Maxim Levitsky <mlevitsk@redhat.com>
+>     KVM: x86: emulator: update the emulation mode after rsm
+
+No. The patch does not do anything. Mainline commit this referenced
+changed the return value, this changes just a comment. Wrong backport?
+
+> Samuel Thibault <samuel.thibault@ens-lyon.org>
+>     speakup: Generate speakupmap.h automatically
+
+Ok, so this one rewrites some header generation and is buggy. 500+ lines.
+
+> =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail.com>
+>     speakup: replace utils' u_char with unsigned char
+
+With this patch fixing it. The rewrite is marked as stable depedncency
+of the fix, but fix would not be needed if we did not apply the
+rewrite. We should not have these two in stable.
+
+Best regards,
+								Pavel
+
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--bpIs/ozp+cN40TDf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY4nmNQAKCRAw5/Bqldv6
+8slCAJ9szYXOohy0lnupI0Mkyz6PA/P5VQCeJJG/B7MCigs9ur+cypbg+M7O2us=
+=EERt
+-----END PGP SIGNATURE-----
+
+--bpIs/ozp+cN40TDf--
