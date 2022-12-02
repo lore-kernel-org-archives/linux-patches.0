@@ -1,105 +1,81 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A0B10798
-	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 23:09:59 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 9AA0B8033B6E
-	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 22:46:18 +0000 (UTC)
-Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 83CD3100455B4
-	for <patches@lists.linux.dev>; Thu,  1 Dec 2022 22:45:42 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 0sJKprUW4WeeU0sJKp5AV7; Thu, 01 Dec 2022 22:45:42 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=TIeA93pa c=1 sm=1 tr=0 ts=63892e96
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=sHyYjHe8cH0A:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=2KJtrLILN+pT1iLsHsrn8W96EsY6GQ6YuMVEiFFxtEQ=; b=I6V+si9giEis4Q40SlPGd4sMWl
-	YW/dAdCzoRMAlbzXHhWbjG8E2VfdHyXID3DVDeE9nwi0AJFNm7NnlxgUlVYVyxAzOoK9TwCjLqjkg
-	SjggyFkQc2zHsniJ3wCbmJfqdk9+nN5BJ5KZds20lNQlDQGGO+TLFxMwFAOslNwoACnL4+F/wi7cq
-	JGMr+TNtEA3EXp8Je5VoC1rLxNE5XEHX6O8F1Z/hSYy8cM1OdHSFmNLe/qbonOWZot72xiLSM05oe
-	tE44/cj+x7/WzxfXFsTaSqEIMvRQStwplOtbv+D1Lgy6yHVnbtzbTHHr3tMz7TVkP5hauNxjouSGh
-	K8r/OTIg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:59700 helo=[10.0.1.48])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1p0sJI-001rT7-OE;
-	Thu, 01 Dec 2022 15:45:40 -0700
-Subject: Re: [PATCH 5.15 000/206] 5.15.81-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20221130180532.974348590@linuxfoundation.org>
-In-Reply-To: <20221130180532.974348590@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <466967c9-afc4-2bff-a7f2-3b3b00cf6153@w6rz.net>
-Date: Thu, 1 Dec 2022 14:45:37 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C5110EB
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 01:43:56 +0000 (UTC)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-12c8312131fso4199593fac.4
+        for <patches@lists.linux.dev>; Thu, 01 Dec 2022 17:43:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EDAw+k7/ZK1+ApeJfLb7KmbDjE8+VFTywcK2NeWnPYs=;
+        b=l3VU1hWeYUqaYSxqmFL7JLE214mr/ZCBJI7yMMK1Zv98TbfYXLpMuuAMOTJzl51nvQ
+         HcV+Oj1QdjfAZrei5nTpZi1bEvKDKmZ+v8zPnq1FN1pZOs2gS09NDmYgIxT78JqPVl7U
+         uUPAOLP3PhGX0XLAOknASuS6JPApRYJaoKe/FAL0mR+DsnL8FaihfgJAdjRtbE9BDaE7
+         sf52IFDVpcuPFKVFFv11wOWBabMsagaLjD8mPV1V2wHlTaVFyEClQoXJpUybGuXSksOB
+         OPw+OpVN6NS0oPHTPN2kM55gqXEznUSZTE4tAv1ngDAXekhU7OP//yOWepftBOSOg96A
+         lFEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EDAw+k7/ZK1+ApeJfLb7KmbDjE8+VFTywcK2NeWnPYs=;
+        b=73zG/vph83W7pbSi/etZkQUwkhrE3qOXUPeBOZErvcvs//VpMbZZ6gDTc9rOSau6Dv
+         sM85iA2ULVWrvPkSu9iC/FiHMPiRUJwy49R3Z0hcJhgxf8GnED3hjuOMYTmeh8Rw4y3/
+         482joyrWpikZfcHrq7I877WPb/D+kvwxta9Uoq7Ua78RDP82EiJZ7yg7wbLZe2U/UFnW
+         zIA/tVfurIymfYDQO83sO3mN8LpAIlrytBnhd2ab4d1gfMVzAsG3D2fVqbosiDCWpyjg
+         xtd1zGRwQFbd0QkigyDN/vI1006x0x8PgKPzvStErZATQKV2IJfSaXqe6PBLZi3bnUNB
+         K0sA==
+X-Gm-Message-State: ANoB5pn3dB8wpDFjR9lzbA8PmQH937+7TPngdo8GweQXmd9T3Bau6Qru
+	sUU8pCT3pNPA35ZVRxzc/8Q=
+X-Google-Smtp-Source: AA0mqf6U9hus+hGon+eWJAZLXnx15a4jf8LkIA7TcNeEwiaFyxshHup8CZbdMB92acViWUaT88Lzwg==
+X-Received: by 2002:a05:6870:d1cd:b0:143:75da:a5b with SMTP id b13-20020a056870d1cd00b0014375da0a5bmr19439027oac.74.1669945435247;
+        Thu, 01 Dec 2022 17:43:55 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id cy23-20020a056830699700b006391adb6034sm2816308otb.72.2022.12.01.17.43.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Dec 2022 17:43:54 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 1 Dec 2022 17:43:53 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 000/280] 6.0.11-rc2 review
+Message-ID: <20221202014353.GA2255418@roeck-us.net>
+References: <20221201131113.897261583@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1p0sJI-001rT7-OE
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:59700
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221201131113.897261583@linuxfoundation.org>
 
-On 11/30/22 10:20 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.81 release.
-> There are 206 patches in this series, all will be posted as a response
+On Thu, Dec 01, 2022 at 02:11:47PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.11 release.
+> There are 280 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
+> 
+> Responses should be made by Sat, 03 Dec 2022 13:10:41 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.81-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> 
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Build results:
+	total: 155 pass: 155 fail: 0
+Qemu test results:
+	total: 500 pass: 500 fail: 0
 
-Tested-by: Ron Economos <re@w6rz.net>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
+Guenter
