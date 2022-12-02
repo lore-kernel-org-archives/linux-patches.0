@@ -1,102 +1,97 @@
-Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0035F1C03
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 08:13:36 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id C1813100479D9
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 08:13:14 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 11AYpgtMDjdmX11AYpQx2z; Fri, 02 Dec 2022 08:13:14 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=VbkygHl9 c=1 sm=1 tr=0 ts=6389b39a
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=sHyYjHe8cH0A:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=ZdDHwmQx841hCOd20V4A:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=xC1ZscGpz2W0msH3XQLMYcDoa9d9yA2DEKPefVi6klw=; b=m8U67dK1LSlZwfgDvZCxRavXtG
-	Nl+fEUlvQHP5RlGH9fk+hPdMgP6B9hDBUAopBgH3ccT/EdvOacPp0ooidRhH3QHT4grkhjg6rMyVu
-	Ov+yu96lz8fzAHAOwKSO72Y8BgNavNQa2BoNEb3QOGQp4qImfWaW+8JGiF0tHwAvuLShghL4EiFGz
-	zRCM1RdR9W6LgLWaqF2KZxqyFhyiXDFoyx3l+mwqG1QJcplHlnutgZ7tc9vXi3Q1038dNpygAG3Po
-	k1FI6VKS6pil7anvoKTulZVgj+OiAy3mhmIcljfafVifstkJE2YlfC/zuZmlkh7wjT0EZySfFomIK
-	F3ZYUaeg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:59790 helo=[10.0.1.48])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1p11AX-001I9h-OJ;
-	Fri, 02 Dec 2022 01:13:13 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7041FA9
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 10:18:09 +0000 (UTC)
+Received: by mail-wm1-f48.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so3871579wmi.3
+        for <patches@lists.linux.dev>; Fri, 02 Dec 2022 02:18:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TWifImDgU7rHybo8rHu3koXB7xojTPgIH7LvV9QbOUE=;
+        b=a9SSakxT3CPnWDAc/fAmnACSKYR07SGM0Xx+z4D4+CznUE2v01eUhlTuKTvgEfV5HH
+         ddXwNgHUB/APv0c+HTnhQYZcB+O3GBq1WiUyfBnzj/+5hXSa9LK5iI3FAyyVz8zGbMB/
+         z1TmPzyeCY9muLjATJkTVZ/GWQGVsS6gW8GS44uBo71nclfXW4TzJqjb30+4qNx7taBP
+         Up0AWlIT7ENFmpJMjA3NstTymOaGulfNY4gywP2jFz5YDx/CaIgwMI5FWEN7ZUHPj9PB
+         DVAOSed14WLZ6DruDcA7ZIfv5TCGJTYwdWOwHEsUGNzPTRLzhf481wtmz47X1C0NP5MO
+         2lQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TWifImDgU7rHybo8rHu3koXB7xojTPgIH7LvV9QbOUE=;
+        b=uDgUyT2+0c2f8XzAYS4ymzWv/g1sWVYeedah55j4tdfTXYsI83yNQYkMbwTpMOBWPe
+         M4NCtg5qB8ltZ0xApQ9934GLxJYTwLGESBn4vOcetx61oaWLZ/aWJgAIbXrlBvxn9SeL
+         8P8+Q8st7bFZ+dyLEW3zmMQXDRYOfWz40vlyn1ry8a5I3s1zeunmnPOHHTLdrqTKyZ7g
+         9vH/JPY6sgVxgEJCFBROAjZwe7uKa8ENwrDZ8AGqoWBOSM1IaQPG5dWEzZ9T0OPApdEW
+         rp/iR9BPM2011u/O9lqizqMYM2pE8IxE5iYDzmQst1nBJx/npEz0ASx5g5UwAhPalg5U
+         epUQ==
+X-Gm-Message-State: ANoB5pntv09sTTgDIevzf37oV3QFJUyzgjb5QmtJzYqhkT6v01FeXlla
+	jpepyjstVE9ci9MpAN3kWJs=
+X-Google-Smtp-Source: AA0mqf7VLLsEPMXxHahA+d8woSWlMcxL1IgEpAx0Dwakte6+dL8FX3JxCY9ChD8h0xMV7ramnFgajA==
+X-Received: by 2002:a05:600c:3d16:b0:3c6:de4a:d768 with SMTP id bh22-20020a05600c3d1600b003c6de4ad768mr38070878wmb.61.1669976287300;
+        Fri, 02 Dec 2022 02:18:07 -0800 (PST)
+Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
+        by smtp.gmail.com with ESMTPSA id n3-20020a05600c3b8300b003cfbbd54178sm13831873wms.2.2022.12.02.02.18.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Dec 2022 02:18:07 -0800 (PST)
+Date: Fri, 2 Dec 2022 10:18:05 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
 Subject: Re: [PATCH 6.0 000/280] 6.0.11-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
+Message-ID: <Y4nQ3ZqWHD2U8iP6@debian>
 References: <20221201131113.897261583@linuxfoundation.org>
-In-Reply-To: <20221201131113.897261583@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <f2038b0f-2ffe-1574-ae78-ef26dbca9dd2@w6rz.net>
-Date: Fri, 2 Dec 2022 00:13:10 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1p11AX-001I9h-OJ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:59790
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221201131113.897261583@linuxfoundation.org>
 
-On 12/1/22 5:11 AM, Greg Kroah-Hartman wrote:
+Hi Greg,
+
+On Thu, Dec 01, 2022 at 02:11:47PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.0.11 release.
 > There are 280 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Sat, 03 Dec 2022 13:10:41 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.11-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Build test (gcc version 12.2.1 20221127):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-Tested-by: Ron Economos <re@w6rz.net>
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+mips: Booted on ci20 board. No regression. [2]
 
+[1]. https://openqa.qa.codethink.co.uk/tests/2263
+[2]. https://openqa.qa.codethink.co.uk/tests/2264
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
