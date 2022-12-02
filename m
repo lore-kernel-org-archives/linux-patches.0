@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF404C71
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 16:15:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E1EC43470;
-	Fri,  2 Dec 2022 16:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512A54C71
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 16:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2A7C433D6;
+	Fri,  2 Dec 2022 16:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669997730;
-	bh=VSt+/hGabeANQLeUUkDMOId6k6ru4ZPGzmVrw2MIUuE=;
+	s=k20201202; t=1669997734;
+	bh=7z0Z9/aBWDg8zSLO+3RcUCw+p+zedYDCyRSDGcvfevk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beKukvFATiP3u3Xmr1v5gXIFi9wWHxS2ykMD9tlunHXc0BjJhHm/7q+kk4wJE0ZDd
-	 hZqg8ob2kXYdCh+NZA7oIOv6mMoIPjK2nTBZEo22zPv58BgXDSvVRTZeNSzmto5K6u
-	 3FaBYP0EzT4WRCn/By0vFwDnxZpt+mODz4ADYxZGtf9aYrTSam0ZBk1iuRxxTYiswM
-	 l788yFfb5w8NzJqPmgWhfR0a6KD4pvHRZ60BjMVHyxPs9E6GbMYv9hGBsOxzmiaLY0
-	 FKpbd2GlRVljMf5qO/NaoUzsNPUQBB8fjz1/nJFavwPt8woD+NzJ+gQdGzI1oQ6YRw
-	 gZenyb9qJdpgA==
+	b=dE1pDe6w8AxHp1/+K2aWGBuvWfYhIil3ojm6M3ha2cTGjROUHYhV5MZv5ZQ62D8aa
+	 2k3udFmoViSaLrQ9t0zCAtQrLMc9maUZmei9Ek1ii4txa8cJjXziDFObCk6WGKItpK
+	 8tyiTKgbDMyFdavl2aXHURArQb2jpnYnT8DlEGzcEQN981dGDO9QInXsAkgDhjgmQ/
+	 iz7DJ8/gFMoQ/e19ii1gxoYR38d081jfG/nXpiJO5x83AIefLAsy0Qulh0ftPLWzdd
+	 OYZJPvj/hpwTCjiZV2rdqQSUMYuWEwHtJ+hYg6BD0uQRl7ehBBF9Ma6D99+rDkePl9
+	 P8tWFwmLCkMsw==
 From: ojeda@kernel.org
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -25,10 +25,12 @@ To: Miguel Ojeda <ojeda@kernel.org>,
 Cc: rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v2 01/28] rust: prelude: split re-exports into groups
-Date: Fri,  2 Dec 2022 17:14:32 +0100
-Message-Id: <20221202161502.385525-2-ojeda@kernel.org>
+	Adam Bratschi-Kaye <ark.email@gmail.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Sergio Gonzalez Collado <sergio.collado@gmail.com>
+Subject: [PATCH v2 02/28] rust: print: add more `pr_*!` levels
+Date: Fri,  2 Dec 2022 17:14:33 +0100
+Message-Id: <20221202161502.385525-3-ojeda@kernel.org>
 In-Reply-To: <20221202161502.385525-1-ojeda@kernel.org>
 References: <20221202161502.385525-1-ojeda@kernel.org>
 Precedence: bulk
@@ -41,45 +43,217 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-Split the prelude re-exports into groups: first the ones coming
-from the `core` crate, then `alloc`, then our own crates and
-finally the ones from modules from `kernel` itself (i.e. `super`).
+Currently, only `pr_info!` (for the minimal sample) and
+`pr_emerg!` (for the panic handler) are there.
 
-We are doing this manually for the moment, but ideally, long-term,
-this could be automated via `rustfmt` with options such as
-`group_imports` and `imports_granularity` (both currently unstable).
+Add the other levels as new macros, i.e. `pr_alert!`, `pr_crit!`,
+`pr_err!`, `pr_warn!`, `pr_notice!` and `pr_debug!`.
 
+Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+Co-developed-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+Co-developed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
 Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Sergio Gonzalez Collado <sergio.collado@gmail.com>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/prelude.rs | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ rust/kernel/prelude.rs |   2 +-
+ rust/kernel/print.rs   | 154 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 155 insertions(+), 1 deletion(-)
 
 diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-index 495e22250726..f8219285d8c0 100644
+index f8219285d8c0..6a1c6b38327f 100644
 --- a/rust/kernel/prelude.rs
 +++ b/rust/kernel/prelude.rs
-@@ -11,10 +11,14 @@
- //! use kernel::prelude::*;
- //! ```
+@@ -17,7 +17,7 @@ pub use alloc::{boxed::Box, vec::Vec};
  
--pub use super::{
--    error::{Error, Result},
--    pr_emerg, pr_info, ThisModule,
--};
--pub use alloc::{boxed::Box, vec::Vec};
- pub use core::pin::Pin;
-+
-+pub use alloc::{boxed::Box, vec::Vec};
-+
  pub use macros::module;
+ 
+-pub use super::{pr_emerg, pr_info};
++pub use super::{pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info, pr_notice, pr_warn};
+ 
+ pub use super::error::{Error, Result};
+ 
+diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
+index 55db5a1ba752..694f51c6da5c 100644
+--- a/rust/kernel/print.rs
++++ b/rust/kernel/print.rs
+@@ -74,7 +74,13 @@ pub mod format_strings {
+     // Furthermore, `static` instead of `const` is used to share the strings
+     // for all the kernel.
+     pub static EMERG: [u8; LENGTH] = generate(false, bindings::KERN_EMERG);
++    pub static ALERT: [u8; LENGTH] = generate(false, bindings::KERN_ALERT);
++    pub static CRIT: [u8; LENGTH] = generate(false, bindings::KERN_CRIT);
++    pub static ERR: [u8; LENGTH] = generate(false, bindings::KERN_ERR);
++    pub static WARNING: [u8; LENGTH] = generate(false, bindings::KERN_WARNING);
++    pub static NOTICE: [u8; LENGTH] = generate(false, bindings::KERN_NOTICE);
+     pub static INFO: [u8; LENGTH] = generate(false, bindings::KERN_INFO);
++    pub static DEBUG: [u8; LENGTH] = generate(false, bindings::KERN_DEBUG);
+ }
+ 
+ /// Prints a message via the kernel's [`_printk`].
+@@ -172,6 +178,126 @@ macro_rules! pr_emerg (
+     )
+ );
+ 
++/// Prints an alert-level message (level 1).
++///
++/// Use this level if action must be taken immediately.
++///
++/// Equivalent to the kernel's [`pr_alert`] macro.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_alert`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_alert
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_alert!("hello {}\n", "there");
++/// ```
++#[macro_export]
++macro_rules! pr_alert (
++    ($($arg:tt)*) => (
++        $crate::print_macro!($crate::print::format_strings::ALERT, $($arg)*)
++    )
++);
 +
-+pub use super::{pr_emerg, pr_info};
++/// Prints a critical-level message (level 2).
++///
++/// Use this level for critical conditions.
++///
++/// Equivalent to the kernel's [`pr_crit`] macro.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_crit`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_crit
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_crit!("hello {}\n", "there");
++/// ```
++#[macro_export]
++macro_rules! pr_crit (
++    ($($arg:tt)*) => (
++        $crate::print_macro!($crate::print::format_strings::CRIT, $($arg)*)
++    )
++);
 +
-+pub use super::error::{Error, Result};
++/// Prints an error-level message (level 3).
++///
++/// Use this level for error conditions.
++///
++/// Equivalent to the kernel's [`pr_err`] macro.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_err`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_err
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_err!("hello {}\n", "there");
++/// ```
++#[macro_export]
++macro_rules! pr_err (
++    ($($arg:tt)*) => (
++        $crate::print_macro!($crate::print::format_strings::ERR, $($arg)*)
++    )
++);
 +
-+pub use super::ThisModule;
++/// Prints a warning-level message (level 4).
++///
++/// Use this level for warning conditions.
++///
++/// Equivalent to the kernel's [`pr_warn`] macro.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_warn`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_warn
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_warn!("hello {}\n", "there");
++/// ```
++#[macro_export]
++macro_rules! pr_warn (
++    ($($arg:tt)*) => (
++        $crate::print_macro!($crate::print::format_strings::WARNING, $($arg)*)
++    )
++);
++
++/// Prints a notice-level message (level 5).
++///
++/// Use this level for normal but significant conditions.
++///
++/// Equivalent to the kernel's [`pr_notice`] macro.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_notice`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_notice
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_notice!("hello {}\n", "there");
++/// ```
++#[macro_export]
++macro_rules! pr_notice (
++    ($($arg:tt)*) => (
++        $crate::print_macro!($crate::print::format_strings::NOTICE, $($arg)*)
++    )
++);
++
+ /// Prints an info-level message (level 6).
+ ///
+ /// Use this level for informational messages.
+@@ -196,3 +322,31 @@ macro_rules! pr_info (
+         $crate::print_macro!($crate::print::format_strings::INFO, $($arg)*)
+     )
+ );
++
++/// Prints a debug-level message (level 7).
++///
++/// Use this level for debug messages.
++///
++/// Equivalent to the kernel's [`pr_debug`] macro, except that it doesn't support dynamic debug
++/// yet.
++///
++/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
++/// `alloc::format!` for information about the formatting syntax.
++///
++/// [`pr_debug`]: https://www.kernel.org/doc/html/latest/core-api/printk-basics.html#c.pr_debug
++/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
++///
++/// # Examples
++///
++/// ```
++/// pr_debug!("hello {}\n", "there");
++/// ```
++#[macro_export]
++#[doc(alias = "print")]
++macro_rules! pr_debug (
++    ($($arg:tt)*) => (
++        if cfg!(debug_assertions) {
++            $crate::print_macro!($crate::print::format_strings::DEBUG, $($arg)*)
++        }
++    )
++);
 -- 
 2.38.1
 
