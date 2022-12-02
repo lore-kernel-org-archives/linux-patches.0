@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC2A4C71
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 16:15:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB730C433D7;
-	Fri,  2 Dec 2022 16:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0897D4C71
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 16:15:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F36C43146;
+	Fri,  2 Dec 2022 16:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669997752;
-	bh=3ozUOhrx52YHTps33arj4MB6UyVgxyGlHJRWzGu7eJ0=;
+	s=k20201202; t=1669997754;
+	bh=8fgcMdAohdJYjCkWzYvRkRAqAWDQxKAVkDLoxRdowB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrlQLClCl6lfpp1Axk7H9bFmwhtWQUtAGk45+2MVLgUfucuVL18toqPILDZqakMEa
-	 q4xgxTxkPKcVEnR0ei12ZpVF5v/5KQJN95pGG057rOFV8OHNC0F1sCPQYCUL7Gm2aC
-	 wKGHcsNz8rLyKzXdBcbB4tfsWHLI1dZ+DsoEJA8Uw9htPCOgbyRp3UmA90bFBysBvU
-	 06Fuw2TDtnG1pWBBPQkchyWi6t9Mkz6GNIVDFQs4S90BBbDjn3cPwJktAlOd/3AcOZ
-	 G/J0pvRKUlBjyAtKsYF/bPGO74BvwLz1phTne5YnvFDUZ4jhXZ/mMbf683kZjvaJlN
-	 emn0duyZHTbug==
+	b=YYwF93ZCf7UzzXELsUSmRSnkfBJntXg8aLS8HuPV3a2J+ECFCY4+zLfWSyTjUBbV9
+	 mZu5WpsHUtugXp36Jntkp3lfpE9LfC2GoSA9wID41WKDBmeNor1D8dm5lDkqEOjn71
+	 x7fESbWVL3HkGd/xljpCodYSqtujtN16IbAID2aPCoPT2/PuMEqtF/Yj4DJcKCUZZL
+	 Qk7cXQf7FiwsrgXAaWpWyOPvTJx2COYvaGQXhyHiwnGsAP+HQyAUZ9JSDBpN8lQb+8
+	 IZJ4pBSL2MDljf1Pvo0z4TfbWyBDCzvtNexWqV8QHlrbFEn4wyLl+MNx9eOCCBOLZW
+	 rSvYxHlQuZ8yA==
 From: ojeda@kernel.org
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -25,10 +25,10 @@ To: Miguel Ojeda <ojeda@kernel.org>,
 Cc: rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Finn Behrens <me@kloenk.dev>
-Subject: [PATCH v2 08/28] rust: error: declare errors using macro
-Date: Fri,  2 Dec 2022 17:14:39 +0100
-Message-Id: <20221202161502.385525-9-ojeda@kernel.org>
+	Viktor Garske <viktor@v-gar.de>
+Subject: [PATCH v2 09/28] rust: error: add codes from `errno-base.h`
+Date: Fri,  2 Dec 2022 17:14:40 +0100
+Message-Id: <20221202161502.385525-10-ojeda@kernel.org>
 In-Reply-To: <20221202161502.385525-1-ojeda@kernel.org>
 References: <20221202161502.385525-1-ojeda@kernel.org>
 Precedence: bulk
@@ -39,40 +39,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Finn Behrens <me@kloenk.dev>
+From: Viktor Garske <viktor@v-gar.de>
 
-Add a macro to declare errors, which simplifies the work needed to
-add each one, avoids repetition of the code and makes it easier to
-change the way they are declared.
+Only a few codes were added so far. With the `declare_err!`
+macro in place, add the remaining ones (which is most of them)
+from `include/uapi/asm-generic/errno-base.h`.
 
-Signed-off-by: Finn Behrens <me@kloenk.dev>
+Co-developed-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+Signed-off-by: Viktor Garske <viktor@v-gar.de>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 [Reworded, adapted for upstream and applied latest changes]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/error.rs | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ rust/kernel/error.rs | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
 diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index 466b2a8fe569..b843f3445483 100644
+index b843f3445483..861746f2422d 100644
 --- a/rust/kernel/error.rs
 +++ b/rust/kernel/error.rs
-@@ -8,8 +8,16 @@ use alloc::collections::TryReserveError;
+@@ -17,7 +17,40 @@ pub mod code {
+         };
+     }
  
- /// Contains the C-compatible error codes.
- pub mod code {
--    /// Out of memory.
--    pub const ENOMEM: super::Error = super::Error(-(crate::bindings::ENOMEM as i32));
-+    macro_rules! declare_err {
-+        ($err:tt $(,)? $($doc:expr),+) => {
-+            $(
-+            #[doc = $doc]
-+            )*
-+            pub const $err: super::Error = super::Error(-(crate::bindings::$err as i32));
-+        };
-+    }
-+
-+    declare_err!(ENOMEM, "Out of memory.");
++    declare_err!(EPERM, "Operation not permitted.");
++    declare_err!(ENOENT, "No such file or directory.");
++    declare_err!(ESRCH, "No such process.");
++    declare_err!(EINTR, "Interrupted system call.");
++    declare_err!(EIO, "I/O error.");
++    declare_err!(ENXIO, "No such device or address.");
++    declare_err!(E2BIG, "Argument list too long.");
++    declare_err!(ENOEXEC, "Exec format error.");
++    declare_err!(EBADF, "Bad file number.");
++    declare_err!(ECHILD, "Exec format error.");
++    declare_err!(EAGAIN, "Try again.");
+     declare_err!(ENOMEM, "Out of memory.");
++    declare_err!(EACCES, "Permission denied.");
++    declare_err!(EFAULT, "Bad address.");
++    declare_err!(ENOTBLK, "Block device required.");
++    declare_err!(EBUSY, "Device or resource busy.");
++    declare_err!(EEXIST, "File exists.");
++    declare_err!(EXDEV, "Cross-device link.");
++    declare_err!(ENODEV, "No such device.");
++    declare_err!(ENOTDIR, "Not a directory.");
++    declare_err!(EISDIR, "Is a directory.");
++    declare_err!(EINVAL, "Invalid argument.");
++    declare_err!(ENFILE, "File table overflow.");
++    declare_err!(EMFILE, "Too many open files.");
++    declare_err!(ENOTTY, "Not a typewriter.");
++    declare_err!(ETXTBSY, "Text file busy.");
++    declare_err!(EFBIG, "File too large.");
++    declare_err!(ENOSPC, "No space left on device.");
++    declare_err!(ESPIPE, "Illegal seek.");
++    declare_err!(EROFS, "Read-only file system.");
++    declare_err!(EMLINK, "Too many links.");
++    declare_err!(EPIPE, "Broken pipe.");
++    declare_err!(EDOM, "Math argument out of domain of func.");
++    declare_err!(ERANGE, "Math result not representable.");
  }
  
  /// Generic integer kernel error.
