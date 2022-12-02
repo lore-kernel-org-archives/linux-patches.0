@@ -1,58 +1,90 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082EE23D3
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 12:34:00 +0000 (UTC)
-Received: by mail-wm1-f52.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so6380600wma.1
-        for <patches@lists.linux.dev>; Fri, 02 Dec 2022 04:34:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3F5VNxfTKyX6PR+sW41djwfBxWIbg3en8d5fF7dJfIk=;
-        b=mQ6FPmuhqOfaeQd+TrxoA/zz5LXCSnpmq1JA509g9a7+RsroPVWL3hg1Y2R2mEPzv2
-         gktmnTU7c6cgIj/wJ+/73gn1mXg67h7ald6IftYa6TWbj9elL0GA8wkWlDcpEny8X87w
-         F+eeFr0v1xMvRVfwtT7xwechvCuw5iecZpOJVyteTzx17884a2fAe4OccI8c7zDPeM4Y
-         Mf1h7ks1fU2QAmS8HX7qZa2E7+zi/28tYC0tDFVH7LXuL6zgS3ChIY7HH3nWbL3sCMBg
-         cK1zZGZSSJtjG299m9oAKVcMr9/I/mYAB4FcVf+gB83IesCLB9nvSN6ryReRnyHuNhxt
-         vXRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3F5VNxfTKyX6PR+sW41djwfBxWIbg3en8d5fF7dJfIk=;
-        b=L5TEKMueVzm6iv0T0g7Tpznu2hv/GJXtoLq+KV0qpCKidIyb2Bz5UcKfAM5d8zcEi3
-         noMnV8x0ZwSkMnPLPZcFRhvRMxBq4ZwoITOKCSJPqG3D+aL4T9RH4J9i7oL+DhlrOuNV
-         zpsNOunU82lvXQRkW9aBcoAHfwyPaBEYzlAYQHZwIKglTw9FcXCU76QZKIkoIIGPEizU
-         vVaafou7JbQ2VuKG+FmpkuZ0NgeP0ZFWYSXjtbiy7lnxGPyG3J+NBEX9keyzAvL30Ixt
-         SSwWjuuJ8qEjju8s8k8Q12xehOXea6p8CibiIystXcw2PW2J+b/7VzYThirbSH7dxA3Z
-         L4Zw==
-X-Gm-Message-State: ANoB5plYX5P1yEkprweqm7y5a96bG+V4E98Up8NOhGtrJ8jddVyaGXM8
-	MPQ/CpC60D1anmXCbT9VqA5EBqFEc7VrNl0Qckg=
-X-Google-Smtp-Source: AA0mqf4jTaPPu5I7MfaXRWWcmi8TzcblzWY216hb3SlPhlMJMzzTD/6X+bjJuC1A2b9ye+p0Py5kKo+w4iFZc7GC5Go=
-X-Received: by 2002:a05:600c:5127:b0:3cf:a4c4:777e with SMTP id
- o39-20020a05600c512700b003cfa4c4777emr45782892wms.72.1669984439131; Fri, 02
- Dec 2022 04:33:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF82F1C04
+	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 12:39:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54F8C433C1;
+	Fri,  2 Dec 2022 12:39:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1669984769;
+	bh=KtngymIfyeQ0A30J7Xlx/WGy9n4uZFsRswH4rUF7oro=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=1q1mZ+R6LUf75CDSex3BDNdhBG8+vmdP34vZs3K5d5+2jcc/TVfeZ1uaXcWVl0rgC
+	 0C4uXk7Ynhp9w/zpF4U0Jyi2zdKwQIbZIwzpC/NmgGG+D4R7zjU/qVrMlCLPKcIIbf
+	 0qmoYtnqXn2YTs/MLxhKIz9uIfcvIbrJlAV6uNDA=
+Date: Fri, 2 Dec 2022 13:39:24 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pavel Machek <pavel@denx.de>
+Cc: mlevitsk@redhat.com, samuel.thibault@ens-lyon.org, pawell@cadence.com,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/162] 5.10.157-rc1 review
+Message-ID: <Y4nx/HMggCOhdIMy@kroah.com>
+References: <20221130180528.466039523@linuxfoundation.org>
+ <Y4nmNb46aqbm7JuS@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Received: by 2002:a5d:55c5:0:0:0:0:0 with HTTP; Fri, 2 Dec 2022 04:33:58 -0800 (PST)
-Reply-To: keenjr54@gmail.com
-From: "keen J. Richardson" <laurarichard051@gmail.com>
-Date: Fri, 2 Dec 2022 12:33:58 +0000
-Message-ID: <CAL=4qitXHqAXuFEx5_jJ50AFFo5_8UL2-VzVCOtrbuRvYGy-Hw@mail.gmail.com>
-Subject: =?UTF-8?B?2KfZhNiz2YTYp9mFINi52YTZitmD2YU=?=
-To: richardsonkeenj@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y4nmNb46aqbm7JuS@duo.ucw.cz>
 
-LS0gDQrYqtmFINil2LHYs9in2YQg2KjYsdmK2K8g2KXZhNmK2YMg2YHZiiDZiNmC2Kog2YXYpyDY
-p9mE2KPYs9io2YjYuSDYp9mE2YXYp9i22Yog2YXYuSDYqtmI2YLYuQ0K2KrZhNmC2Yog2KjYsdmK
-2K8g2LnZiNiv2Kkg2YXZhtmDINmI2YTZg9mGINmE2K/Zh9i02KrZiiDZhNmFINiq2YPZhNmBINmG
-2YHYs9mDINi52YbYp9ihINin2YTYsdivLg0K2YrYsdis2Ykg2KfZhNix2K8g2YTZhdiy2YrYryDZ
-hdmGINin2YTYpdmK2LbYp9it2KfYqi4NCg0K2YXYuSDYp9mE2KfYrdiq2LHYp9mFINmE2YPYjA0K
-2YPZitmGINis2Yog2LHZitiq2LTYp9ix2K/Ys9mI2YYuDQo=
+On Fri, Dec 02, 2022 at 12:49:09PM +0100, Pavel Machek wrote:
+> Hi!
+> 
+> [If I cc-ed you, you are author of one of patches below. Please take a
+> look.]
+> 
+> > Responses should be made by Fri, 02 Dec 2022 18:05:05 +0000.
+> > Anything received after that time might be too late.
+> 
+> I hope to make it :-). I
+> 
+> > Pawel Laszczak <pawell@cadence.com>
+> >     usb: cdnsp: Device side header file for CDNSP driver
+> > 
+> > Pawel Laszczak <pawell@cadence.com>
+> >     usb: cdns3: Add support for DRD CDNSP
+> 
+> These two together are 1500+ lines, and are marked as Stable-dep-of:
+> 9d5333c93134 ("usb: cdns3: host: fix endless superspeed hub port
+> reset") . But we don't have that one in 5.10 tree. Likely we should
+> not have these either.
+
+I already dropped these yesterday.
+
+> > Maxim Levitsky <mlevitsk@redhat.com>
+> >     KVM: x86: emulator: update the emulation mode after rsm
+> 
+> No. The patch does not do anything. Mainline commit this referenced
+> changed the return value, this changes just a comment. Wrong backport?
+
+I will look at this.
+
+> > Samuel Thibault <samuel.thibault@ens-lyon.org>
+> >     speakup: Generate speakupmap.h automatically
+> 
+> Ok, so this one rewrites some header generation and is buggy. 500+ lines.
+
+Already dropped yesterday.
+
+> > Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> >     speakup: replace utils' u_char with unsigned char
+> 
+> With this patch fixing it. The rewrite is marked as stable depedncency
+> of the fix, but fix would not be needed if we did not apply the
+> rewrite. We should not have these two in stable.
+
+Again, already dropped.
+
+thanks for the review.
+
+greg k-h
