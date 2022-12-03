@@ -1,92 +1,76 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1AE1C26
-	for <patches@lists.linux.dev>; Fri,  2 Dec 2022 23:42:03 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 37A6232007D7;
-	Fri,  2 Dec 2022 18:42:02 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 02 Dec 2022 18:42:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	joshtriplett.org; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1670024521; x=
-	1670110921; bh=yxT7HiP0z6PnQ571PxQPFu/NQAI3ieVo9QcKWIVPNaY=; b=y
-	BQsZRxe+jKL9ygzmShsmMjLR1wogByCB42nEcbzwc3ogTNmLjcb14HIW6/IpCuuz
-	/zarw10mAOt/Hz1WYVNViEfpD9PU19KCXZJPS7v5In486WdgCPt2hd5d+1qWLF34
-	72fOmIOa1l1STZfu1XWBQd6R/AvWDHdHk01DzWEERajAxn9j7lhJN4gSXpyWhocw
-	SIQI5y4QS3FSxC32Cb1hGkDnZoIUgtvfv6l/J5NW7XM/b1f3cgsfpKl8Tt/ErY4N
-	ldcxTa65hQjwdTLumFaQ5I1rTInppkxCFdW1Z99WFp13r47vtPKw0H7uyNqJLn/0
-	BGaNvGJ3AjFJQEeQVIUsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1670024521; x=1670110921; bh=yxT7HiP0z6PnQ571PxQPFu/NQAI3
-	ieVo9QcKWIVPNaY=; b=KiA9VVRLK3HOjYjDlUzTuRq57Duc2zEq9XTkNOTfQaXJ
-	K0VJJ0icSrbMM0BJ6o2+ZZIEeZrNc1NyCAD+iQKnIxyQLzcM2FhE8SpMydo6EB57
-	Z71vCWaMcCmnSahY7RC1+HUq2ZAIOfHtTIgUyG0UL/+WTTlZEQql5qwm7hKd2zFc
-	qH3fhds7DrVNDSd3W6aCh4RCRdw66CzDiDOs2Co3ah7bk83PWVZ/rMb8e52IEOOW
-	PuuDb4FNmLOq3ykSFpGX3VbO6ePWSHEy5yXkT8PHaSatCcuysoi6oOX5mcopUHp+
-	ndOXZXO3BAC++XloqgtQU12Ds9HHgkHroFT7IMPvzA==
-X-ME-Sender: <xms:SY2KY4pqXDtFrjBzrV_d6DSuGqLHNx-pn1N5u7VYUpn-7pyY24rDzQ>
-    <xme:SY2KY-p0P3lsb2-BR0TDveJGLPvctvLbtUaCrhW1ZuLqPFlMqSPKmgwDv3oQYSlHy
-    AozvFWvBgMRx2FfmXM>
-X-ME-Received: <xmr:SY2KY9NbJ05JoJNBfUEvBHhpzz0drKS0jLFvE_mZuVCiXR6gOZWTjd1dLCY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrtdelgddufecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflohhshhcu
-    vfhrihhplhgvthhtuceojhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgheqnecugg
-    ftrfgrthhtvghrnhepudeigeehieejuedvtedufeevtdejfeegueefgffhkefgleefteet
-    ledvtdfftefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepjhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgh
-X-ME-Proxy: <xmx:SY2KY_4WqYiCD1w-e1GVqNbGO5ZQSviQlTOIg1RvHwqf0AX4FRNKjg>
-    <xmx:SY2KY37CEs2o58XgsOAmBmtM2MsGlhT9rfhW2ruINiuDHxBoZwUf5g>
-    <xmx:SY2KY_ifyDx6lG-UslUL3zM770lY_71GjwlbADYE1sNHiEL9oZOzIA>
-    <xmx:SY2KYxvfABpQOiUcLsA2UQfw8ZVSFhzHpPknfBhURXYaiagcULxSYw>
-Feedback-ID: i83e94755:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 Dec 2022 18:42:00 -0500 (EST)
-Date: Fri, 2 Dec 2022 15:41:59 -0800
-From: Josh Triplett <josh@joshtriplett.org>
-To: ojeda@kernel.org
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v2 27/28] rust: types: add `Either` type
-Message-ID: <Y4qNR+Nn9utDftHq@localhost>
-References: <20221202161502.385525-1-ojeda@kernel.org>
- <20221202161502.385525-28-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C93B7B
+	for <patches@lists.linux.dev>; Sat,  3 Dec 2022 13:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDB6C433D6;
+	Sat,  3 Dec 2022 13:37:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670074663;
+	bh=t4ArHHIwrmlapzf4XV0Waa9/7j7j6XoY6aIQqWNitn8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aPsnomRVoxDVeOZz9h6V5/Mu4Qa3ageEhXXgONQ3B0uxUvR2T1McgITHZO41hhjiR
+	 ZNIwESb3nE/BOyEEemAxX3LfIU/uBooGyeCzZUOB6Kg7JoXnFn6FfOlF30UV359zeN
+	 C3tPwA20dquW8dQgSG35i9RVOPRzASaEzzS/m8u8=
+Date: Sat, 3 Dec 2022 14:37:39 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Sherry Sun <sherry.sun@nxp.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH proper backport to 5.15 1/1] tty: serial: fsl_lpuart:
+ don't break the on-going transfer when global reset
+Message-ID: <Y4tRI3CQL/PZj7Di@kroah.com>
+References: <1b26798d-fdbd-9e21-b745-1ed335e75b@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20221202161502.385525-28-ojeda@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1b26798d-fdbd-9e21-b745-1ed335e75b@linux.intel.com>
 
-On Fri, Dec 02, 2022 at 05:14:58PM +0100, ojeda@kernel.org wrote:
-> From: Wedson Almeida Filho <wedsonaf@gmail.com>
+On Thu, Dec 01, 2022 at 10:54:08AM +0200, Ilpo Järvinen wrote:
+> [ Upstream commit 76bad3f88750f8cc465c489e6846249e0bc3d8f5 ]
 > 
-> Introduce the new `types` module of the `kernel` crate with
-> `Either` as its first type.
+> lpuart_global_reset() shouldn't break the on-going transmit engine, need
+> to recover the on-going data transfer after reset.
 > 
-> `Either<L, R>` is a sum type that always holds either a value
-> of type `L` (`Left` variant) or `R` (`Right` variant).
+> This can help earlycon here, since commit 60f361722ad2 ("serial:
+> fsl_lpuart: Reset prior to registration") moved lpuart_global_reset()
+> before uart_add_one_port(), earlycon is writing during global reset,
+> as global reset will disable the TX and clear the baud rate register,
+> which caused the earlycon cannot work any more after reset, needs to
+> restore the baud rate and re-enable the transmitter to recover the
+> earlycon write.
 > 
-> For instance:
+> Also move the lpuart_global_reset() down, then we can reuse the
+> lpuart32_tx_empty() without declaration.
 > 
->     struct Executor {
->         queue: Either<BoxedQueue, &'static Queue>,
->     }
+> Fixes: bd5305dcabbc ("tty: serial: fsl_lpuart: do software reset for imx7ulp and imx8qxp")
+> Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+> Link: https://lore.kernel.org/r/20221024085844.22786-1-sherry.sun@nxp.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> 
+> Hi stable folks,
+> 
+> These two stable-deps seem to be pulled into stable only due to diff 
+> context:
+> 
+> 07481f448b63 ("serial: fsl_lpuart: Fill in rs485_supported")
+> 8925c31c1ac2 ("serial: Add rs485_supported to uart_port")
+> 
+> I think those two should be dropped from the stable queue and the queued 
+> fix for 76bad3f88750 ("tty: serial: fsl_lpuart: don't break the on-going 
+> transfer when global reset") replaced with this backport.
 
-This specific example seems like it would be better served by the
-existing `Cow` type.
+As the above are already applied, can you send a fix-up patch to resolve
+the problems in the backport that you found?
+
+thanks,
+
+greg k-h
