@@ -1,155 +1,180 @@
-Received: from mx.treblig.org (mx.treblig.org [46.43.15.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938D43C28
-	for <patches@lists.linux.dev>; Sun,  4 Dec 2022 16:04:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID
-	:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID
-	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
-	Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
-	:List-Post:List-Owner:List-Archive;
-	bh=+wJRlMho2FnAbXYg6+mlmNW9Tp+g4pBu1hc7038i/W8=; b=k5+S41vpJRy8VXu9WSCdXEzK4K
-	sgBVsnQrNv2MMxOxy6/uVkCuQPy40UNA0LQkWR/V9cD510olMOCkUBARvmaOqY5yW8YA/lQEPflyX
-	NW8yYNz6GWZBb4JQMc/4IYpt0r/FQXkvcJhorct2DxoouGaM3uzXGxQmncgt6A7r9Vvnd1XHJ5X8U
-	GjJd1/u7trHt+WctKwPirpyB+c2viPYvpoxaCMQPPU6gYqqHgj54IbmVIfHJpbKrzlTRfua4mHWPy
-	stbf6IxtUcLlhs8Wc5KfS3Igb5TIhDAMit1s9ZbrCry474WOClCNu435InNED9vWvLAEDPCmDFmmA
-	3OyWdGFQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.94.2)
-	(envelope-from <dg@treblig.org>)
-	id 1p1r7K-0052UU-UT; Sun, 04 Dec 2022 15:41:22 +0000
-Date: Sun, 4 Dec 2022 15:41:22 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: ojeda@kernel.org
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>
-Subject: Re: [PATCH v2 20/28] rust: str: add `Formatter` type
-Message-ID: <Y4y/ovfF3len/22J@gallifrey>
-References: <20221202161502.385525-1-ojeda@kernel.org>
- <20221202161502.385525-21-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAD23C3F
+	for <patches@lists.linux.dev>; Sun,  4 Dec 2022 17:27:06 +0000 (UTC)
+Received: by mail-oi1-f170.google.com with SMTP id c129so10676649oia.0
+        for <patches@lists.linux.dev>; Sun, 04 Dec 2022 09:27:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CkwAPeoCUs3lm02qIrL4crb0Gr5/YPZRr/bbYFtEjJM=;
+        b=BToVcvWVqt9/dfNi5D4HDFG8I8T1lfwFvGoyJmi++n51KK7MBib3/9z31yn7jRS4uJ
+         79lNNS3qbDNxkZ4Ph2vPwmDS/DEfVp3RXu7sZ52MH40JjkjPLOUUyYn08wv6AKJBnYLY
+         LERgDaCM4FeyvqtmUMhubj2De1IzVMXsM+ZxlU+tedPEY7r8hsQXhOeKafNDAbtIlq7G
+         30F3Rv5YzL5idkpFXBR1zEByZowe3iROUkILvgxC+KChDIn2gMtR2NLNzF6kLSxmazt2
+         x/9UnoWzn5I//QHkG//pYu1ujugrCDWBjM2hWmzKWIQvj21NtQYdjKv2STDUe7I718y/
+         eQww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CkwAPeoCUs3lm02qIrL4crb0Gr5/YPZRr/bbYFtEjJM=;
+        b=IjeXTROb7iGlQU6aNJ4SK0QE6RiYpoMTzGCSYofIcw4t+YdjWhcFEXj2m/XNyRmh33
+         xBYgZBew99QtD8BouRO1cqPsz5y0KEUM8y3Og8yLexJDYxDOGwz+K226BMQRluT8ZADA
+         VRV5fo88aCxkTsX/drPV2sEdlRj8tb9IvfwNUMFvtWjGvhKTlBzLSXApsnYsRTCNZr6O
+         ije9HqSe+WUSRSoRGP93beA7gi8FHEmRaFxvWH8CobZHbwaSk2O/2u0m8sNnKZcBOF0b
+         GADPWSW+JJutTVCQzR7o/zYReek1q42MlVSJ6Ze0So/g8vfx6pz9sQelAyiQtwCNKWWL
+         v13w==
+X-Gm-Message-State: ANoB5pnqgLvaIBZeTGMBvJuDiMKIIyTcu4N/Dzul4juNa+hCBvqZ+XE3
+	0KBzKJ5l4FuPzkeY+Ty7B6HTbfYaScHayxY0NzY=
+X-Google-Smtp-Source: AA0mqf4h+bzPRaf0PWI9aa0KezTRo2S2If1j3UH0ur7AeUbJWwysICYOSoL1ykwETMU6PNiPG+d7IwV9JoGpjdYFSvQ=
+X-Received: by 2002:a05:6808:1705:b0:359:c652:ff7e with SMTP id
+ bc5-20020a056808170500b00359c652ff7emr29267495oib.254.1670174825561; Sun, 04
+ Dec 2022 09:27:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20221202161502.385525-21-ojeda@kernel.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/5.10.0-12-amd64 (x86_64)
-X-Uptime: 15:37:53 up 268 days,  2:03,  2 users,  load average: 0.00, 0.01,
- 0.00
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <20221202161502.385525-1-ojeda@kernel.org> <20221202161502.385525-21-ojeda@kernel.org>
+ <Y4y/ovfF3len/22J@gallifrey>
+In-Reply-To: <Y4y/ovfF3len/22J@gallifrey>
+From: Wedson Almeida Filho <wedsonaf@gmail.com>
+Date: Sun, 4 Dec 2022 17:26:54 +0000
+Message-ID: <CANeycqrT69HJWEBZwbuhTehSy1qFF7A4q38cb5TqU1yf=nMLOQ@mail.gmail.com>
+Subject: Re: [PATCH v2 20/28] rust: str: add `Formatter` type
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: ojeda@kernel.org, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-* ojeda@kernel.org (ojeda@kernel.org) wrote:
-> From: Wedson Almeida Filho <wedsonaf@gmail.com>
-> 
-> Add the `Formatter` type, which leverages `RawFormatter`,
-> but fails if callers attempt to write more than will fit
-> in the buffer.
-> 
-> In order to so, implement the `RawFormatter::from_buffer()`
-> constructor as well.
-> 
-> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Reviewed-by: Gary Guo <gary@garyguo.net>
-> [Reworded, adapted for upstream and applied latest changes]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  rust/kernel/str.rs | 57 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 57 insertions(+)
-> 
-> diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
-> index a995db36486f..ce207d1b3d2a 100644
-> --- a/rust/kernel/str.rs
-> +++ b/rust/kernel/str.rs
-> @@ -406,6 +406,23 @@ impl RawFormatter {
->          }
->      }
->  
-> +    /// Creates a new instance of [`RawFormatter`] with the given buffer.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
-> +    /// for the lifetime of the returned [`RawFormatter`].
-> +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
-> +        let pos = buf as usize;
-> +        // INVARIANT: We ensure that `end` is never less then `buf`, and the safety requirements
-> +        // guarantees that the memory region is valid for writes.
-> +        Self {
-> +            pos,
-> +            beg: pos,
-> +            end: pos.saturating_add(len),
-> +        }
-> +    }
-> +
->      /// Returns the current insert position.
->      ///
->      /// N.B. It may point to invalid memory.
-> @@ -439,3 +456,43 @@ impl fmt::Write for RawFormatter {
->          Ok(())
->      }
->  }
-> +
-> +/// Allows formatting of [`fmt::Arguments`] into a raw buffer.
-> +///
-> +/// Fails if callers attempt to write more than will fit in the buffer.
-> +pub(crate) struct Formatter(RawFormatter);
-> +
-> +impl Formatter {
-> +    /// Creates a new instance of [`Formatter`] with the given buffer.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
-> +    /// for the lifetime of the returned [`Formatter`].
-> +    #[allow(dead_code)]
-> +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
-> +        // SAFETY: The safety requirements of this function satisfy those of the callee.
-> +        Self(unsafe { RawFormatter::from_buffer(buf, len) })
-> +    }
-> +}
-> +
-> +impl Deref for Formatter {
-> +    type Target = RawFormatter;
-> +
-> +    fn deref(&self) -> &Self::Target {
-> +        &self.0
-> +    }
-> +}
-> +
-> +impl fmt::Write for Formatter {
-> +    fn write_str(&mut self, s: &str) -> fmt::Result {
-> +        self.0.write_str(s)?;
-> +
-> +        // Fail the request if we go past the end of the buffer.
+On Sun, 4 Dec 2022 at 15:41, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+>
+> * ojeda@kernel.org (ojeda@kernel.org) wrote:
+> > From: Wedson Almeida Filho <wedsonaf@gmail.com>
+> >
+> > Add the `Formatter` type, which leverages `RawFormatter`,
+> > but fails if callers attempt to write more than will fit
+> > in the buffer.
+> >
+> > In order to so, implement the `RawFormatter::from_buffer()`
+> > constructor as well.
+> >
+> > Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> > Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> > Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+> > Reviewed-by: Gary Guo <gary@garyguo.net>
+> > [Reworded, adapted for upstream and applied latest changes]
+> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> > ---
+> >  rust/kernel/str.rs | 57 ++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 57 insertions(+)
+> >
+> > diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+> > index a995db36486f..ce207d1b3d2a 100644
+> > --- a/rust/kernel/str.rs
+> > +++ b/rust/kernel/str.rs
+> > @@ -406,6 +406,23 @@ impl RawFormatter {
+> >          }
+> >      }
+> >
+> > +    /// Creates a new instance of [`RawFormatter`] with the given buffer.
+> > +    ///
+> > +    /// # Safety
+> > +    ///
+> > +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
+> > +    /// for the lifetime of the returned [`RawFormatter`].
+> > +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
+> > +        let pos = buf as usize;
+> > +        // INVARIANT: We ensure that `end` is never less then `buf`, and the safety requirements
+> > +        // guarantees that the memory region is valid for writes.
+> > +        Self {
+> > +            pos,
+> > +            beg: pos,
+> > +            end: pos.saturating_add(len),
+> > +        }
+> > +    }
+> > +
+> >      /// Returns the current insert position.
+> >      ///
+> >      /// N.B. It may point to invalid memory.
+> > @@ -439,3 +456,43 @@ impl fmt::Write for RawFormatter {
+> >          Ok(())
+> >      }
+> >  }
+> > +
+> > +/// Allows formatting of [`fmt::Arguments`] into a raw buffer.
+> > +///
+> > +/// Fails if callers attempt to write more than will fit in the buffer.
+> > +pub(crate) struct Formatter(RawFormatter);
 
-Reading this for the first time, I'm surprised by this, perhaps a
-bit more comment is needed?  I was expecting that nothing would
-let pos pass end.
+Here we mention that `Formatter` fails if callers attempt to write
+more than will fit in the buffer.
 
-Dave
+This is in contrast with `RawFormatter`, which doesn't fail in such
+cases. There's also a comment there explaining it (not visible in this
+patch because it's already there), but I reproduce below:
 
-> +        if self.0.pos > self.0.end {
-> +            Err(fmt::Error)
-> +        } else {
-> +            Ok(())
-> +        }
-> +    }
-> +}
-> -- 
-> 2.38.1
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+/// Allows formatting of [`fmt::Arguments`] into a raw buffer.
+///
+/// It does not fail if callers write past the end of the buffer so
+that they can calculate the
+/// size required to fit everything.
+///
+/// # Invariants
+///
+/// The memory region between `pos` (inclusive) and `end` (exclusive)
+is valid for writes if `pos`
+/// is less than `end`.
+pub(crate) struct RawFormatter {
+
+`RawFormatter` is used to implement the "%pA" printf specifier, which
+requires this behaviour.
+
+> > +
+> > +impl Formatter {
+> > +    /// Creates a new instance of [`Formatter`] with the given buffer.
+> > +    ///
+> > +    /// # Safety
+> > +    ///
+> > +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
+> > +    /// for the lifetime of the returned [`Formatter`].
+> > +    #[allow(dead_code)]
+> > +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
+> > +        // SAFETY: The safety requirements of this function satisfy those of the callee.
+> > +        Self(unsafe { RawFormatter::from_buffer(buf, len) })
+> > +    }
+> > +}
+> > +
+> > +impl Deref for Formatter {
+> > +    type Target = RawFormatter;
+> > +
+> > +    fn deref(&self) -> &Self::Target {
+> > +        &self.0
+> > +    }
+> > +}
+> > +
+> > +impl fmt::Write for Formatter {
+> > +    fn write_str(&mut self, s: &str) -> fmt::Result {
+> > +        self.0.write_str(s)?;
+> > +
+> > +        // Fail the request if we go past the end of the buffer.
+>
+> Reading this for the first time, I'm surprised by this, perhaps a
+> bit more comment is needed?  I was expecting that nothing would
+> let pos pass end.
+
+Given the comments I highlight above, do you think we still need more?
+
+(My impression is that you're reading this without the context I tried
+to explain above, and this context may perhaps be sufficient.)
+
+Thanks,
+-Wedson
