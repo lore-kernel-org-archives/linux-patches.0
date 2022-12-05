@@ -1,72 +1,127 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827CC7C
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 13:54:05 +0000 (UTC)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-3bf4ade3364so118466727b3.3
-        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 05:54:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bc4/MjN/YjTPQ9EZGEra+4fgjSY8zygUtk0AgsersU0=;
-        b=XuY48gARX1ENE547OqGANQPwOeRc2gRM3s9AirKaB5f7QPn2LgH6QY+/p5iN7FiaDR
-         3CGX4FGzaQtIrLyvdndr7xdF/D9mtI9guwQWgJ7AS9Z0fnEYwZi4oCG9mtxDGGH40+vT
-         R8ez7KsxFQtLHrKvTvhJZpskWdlNPMQFy0T5umLohosgOqmBqcHW7gkoRQBnv48EFiks
-         OjzPsJWCMH/PoOktEwc9W5U4Ez6iElLwZTDVmFv8FV7MwlnXHv+h/Dze/3utINPe4Hoo
-         6F7BeH/uSy/1K7myyxp7xfBcKLLyBOWpPBrMr7Gv3VgPkHR+Kg9eJImc6UHoB6fjru2U
-         xCLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bc4/MjN/YjTPQ9EZGEra+4fgjSY8zygUtk0AgsersU0=;
-        b=3Db8lcAC7F/C3V5TGoU87xD1WeLEv2iDHCK+8oSzQkFjQ50MUBp9KMir+/UHfpWWsw
-         5fQV7/N9g7Y5LlHLc1jrL9nipkAtaImlmSFySCCVUC63CE7YKpHac4iHXcFTeQ7CfCY7
-         ThU5woqnxZlhNPsjpehUSpjSctooiwudiHn8/6ENqxR0gIVRSX565jgZ7wroPEhVHFiH
-         NEULW97Jd+TdeQDlcSXpQl8FsA/Myi44WTCIbVEV1gfz0Ab/zMSeik96u1UOzaF+pG89
-         jc7ZVc7NZsXBjpov0RgeBy5exUnnkQYrAwQay2OMuF18qKw9GGJBm4S6OJ9dXecKuU/m
-         T5ZQ==
-X-Gm-Message-State: ANoB5pnCHOJmEdJXi4HlZv3ZEkVlnHW9KOqBAUVLzo4Lrwz7fbcVaGmp
-	cehqSoFY254oKXIrblNAHvJH98gHRhZYL8VAqhI=
-X-Google-Smtp-Source: AA0mqf57yGmLoBnvvhGrWpWKkOSHlBQkM4Cadv4sz/Tocdkosl6Gp2yYDACuYMlP/LhWj7GpigOHueOZififfQBdTYE=
-X-Received: by 2002:a05:690c:c9a:b0:3ed:90d2:2ab8 with SMTP id
- cm26-20020a05690c0c9a00b003ed90d22ab8mr3864513ywb.67.1670248444418; Mon, 05
- Dec 2022 05:54:04 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B8D848A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 18:34:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1670265290;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WSqj19ShjO/7vxtuZI+dUviEQUmeLdI4Lm1aF+a+dOQ=;
+	b=RH+YZJ3iKWvy2TfYOXR2yVATrbct0Gjq957EVhXOeg7zIPtwWmMR5iCSWbE6aPy+qLtpp5
+	1dMCbh+dPS1SeSWlZpVl3f00qer3r2pahGDbUQWG5Xh3ZgTgEabS6rleQ2P1mFWN7VTG5u
+	j52b6J0zV8dGsgQrajf0S9IPcd40EfQ=
+Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
+ [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-343-Ema1oqdPPVeJJZtUykzAeQ-1; Mon, 05 Dec 2022 13:34:46 -0500
+X-MC-Unique: Ema1oqdPPVeJJZtUykzAeQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com [10.11.54.5])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A8FF3C38FE4;
+	Mon,  5 Dec 2022 18:34:46 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.84])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 560C39E70;
+	Mon,  5 Dec 2022 18:34:43 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,
+  linux-api@vger.kernel.org,  x86@kernel.org,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>,
+  Arnd Bergmann <arnd@arndb.de>,  Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v11 1/4] random: add vgetrandom_alloc() syscall
+References: <20221205020046.1876356-1-Jason@zx2c4.com>
+	<20221205020046.1876356-2-Jason@zx2c4.com>
+Date: Mon, 05 Dec 2022 19:34:39 +0100
+In-Reply-To: <20221205020046.1876356-2-Jason@zx2c4.com> (Jason A. Donenfeld's
+	message of "Mon, 5 Dec 2022 03:00:43 +0100")
+Message-ID: <87cz8xr96o.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221202161502.385525-1-ojeda@kernel.org> <20221202161502.385525-28-ojeda@kernel.org>
- <Y4qNR+Nn9utDftHq@localhost> <20221204103153.117675b1@GaryWorkstation> <CANeycqpNW0E5fQqD1Qzqr0p-3cgs5k5KgLusragaSWbrmcx2Nw@mail.gmail.com>
-In-Reply-To: <CANeycqpNW0E5fQqD1Qzqr0p-3cgs5k5KgLusragaSWbrmcx2Nw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 5 Dec 2022 14:53:53 +0100
-Message-ID: <CANiq72ns7U3mWxt=gZVPTHB49as5gaY7=kR5TmxGAoMQx3qgbA@mail.gmail.com>
-Subject: Re: [PATCH v2 27/28] rust: types: add `Either` type
-To: Wedson Almeida Filho <wedsonaf@gmail.com>
-Cc: Gary Guo <gary@garyguo.net>, Josh Triplett <josh@joshtriplett.org>, ojeda@kernel.org, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Wei Liu <wei.liu@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.5
 
-On Sun, Dec 4, 2022 at 6:36 PM Wedson Almeida Filho <wedsonaf@gmail.com> wrote:
->
-> It's also implemented in `std`, which the kernel doesn't include.
-> (Which is actually good for us, since we can't really use it.)
+* Jason A. Donenfeld:
 
-We have it around in the kernel (the `std` one is a re-export), so one
-"could" replace the `Either` with `Cow` in the case of the commit
-message via ignoring the to-owned side of it (but I assume Josh didn't
-mean to suggest that).
+> +/********************************************************************
+> + *
+> + * vDSO support helpers.
+> + *
+> + * The actual vDSO function is defined over in lib/vdso/getrandom.c,
+> + * but this section contains the kernel-mode helpers to support that.
+> + *
+> + ********************************************************************/
+> +
+> +#ifdef CONFIG_VDSO_GETRANDOM
+> +/**
+> + * sys_vgetrandom_alloc - Allocate opaque states for use with vDSO getra=
+ndom().
+> + *
+> + * @num:	   On input, a pointer to a suggested hint of how many states to
+> + * 		   allocate, and on return the number of states actually allocated.
+> + *
+> + * @size_per_each: On input, must be zero. On return, the size of each s=
+tate allocated,
+> + * 		   so that the caller can split up the returned allocation into
+> + * 		   individual states.
+> + *
+> + * @addr:	   Reserved, must be zero.
+> + *
+> + * @flags:	   Reserved, must be zero.
+> + *
+> + * The getrandom() vDSO function in userspace requires an opaque state, =
+which
+> + * this function allocates by mapping a certain number of special pages =
+into
+> + * the calling process. It takes a hint as to the number of opaque states
+> + * desired, and provides the caller with the number of opaque states act=
+ually
+> + * allocated, the size of each one in bytes, and the address of the first
+> + * state, which may be split up into @num states of @size_per_each bytes=
+ each,
+> + * by adding @size_per_each to the returned first state @num times.
+> + *
+> + * Returns the address of the first state in the allocation on success, =
+or a
+> + * negative error value on failure.
+> + *
+> + * The returned address of the first state may be passed to munmap(2) wi=
+th a
+> + * length of `(size_t)num * (size_t)size_per_each`, in order to dealloca=
+te the
+> + * memory, after which it is invalid to pass it to vDSO getrandom().
+> + *
+> + * States allocated by this function must not be dereferenced, written, =
+read,
+> + * or otherwise manipulated. The *only* supported operations are:
+> + *   - Splitting up the states in intervals of @size_per_each, no more t=
+han
+> + *     @num times from the first state.
+> + *   - Passing a state to the getrandom() vDSO function's @opaque_state
+> + *     parameter, but not passing the same state at the same time to two=
+ such
+> + *     calls.
+> + *   - Passing the first state to munmap(2), as described above.
+> + * All other uses are undefined behavior, which is subject to change or =
+removal
 
-Anyway, it can be easily configured out from our `alloc`, so I will
-send the patch.
+Suggest: =E2=80=9CPassing the first state *and total length* to munmap(2)=
+=E2=80=9D
 
-Cheers,
-Miguel
+Rest of the documentation looks good to me.  It addresses my concerns
+about future evolution of this interface.
+
+Thanks,
+Florian
+
