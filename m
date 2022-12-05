@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA21215C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20AF8C433C1;
-	Mon,  5 Dec 2022 19:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E9415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC14AC433C1;
+	Mon,  5 Dec 2022 19:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268976;
-	bh=apM78VqMfjVil3PXuFvJM6AE0MPUExIeLXC8KxUYvLo=;
+	s=korg; t=1670268979;
+	bh=L3kgdZOQ5pvywc5QKsjq99jdefEUXM25NwWiInQeUOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3yhKrX587tDLsSYPgBmYQiO50Cb5a69jjREAY2R8oZfM75cRJ1bAfrOYTtSP8QiP
-	 DjHEdpoQ4uROOtuTFssvWkoyDaxXKC5r+8EytUv6CX5Hy9vvOWCOn2eEKBIkEJowNa
-	 ReNMEgngkQLZ10mxr7PZ2NpMo0FVRb0PX6a5bMp4=
+	b=BWiErch9IW146gEent94Hj3FKL5ii87hpU6a2oJTfwZ13yQ/2aMd0Qo//PiCalhB+
+	 aNoFdLkYFv3Gxp4Gy/1v5/oWO1q6u/E38a+vi6OQzvQO5hBgyKLTxG0toxHUqHRhgH
+	 LLYs/8W8T8pkTEy/9SoeImDTyutuaVMteYQF9ifc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/120] qlcnic: fix sleep-in-atomic-context bugs caused by msleep
-Date: Mon,  5 Dec 2022 20:09:43 +0100
-Message-Id: <20221205190807.835180386@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 074/120] v4l2: dont fall back to follow_pfn() if pin_user_pages_fast() fails
+Date: Mon,  5 Dec 2022 20:10:14 +0100
+Message-Id: <20221205190808.838567743@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,70 +38,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 8dbd6e4ce1b9c527921643d9e34f188a10d4e893 ]
+commit 6647e76ab623b2b3fb2efe03a86e9c9046c52c33 upstream.
 
-The watchdog timer is used to monitor whether the process
-of transmitting data is timeout. If we use qlcnic driver,
-the dev_watchdog() that is the timer handler of watchdog
-timer will call qlcnic_tx_timeout() to process the timeout.
-But the qlcnic_tx_timeout() calls msleep(), as a result,
-the sleep-in-atomic-context bugs will happen. The processes
-are shown below:
+The V4L2_MEMORY_USERPTR interface is long deprecated and shouldn't be
+used (and is discouraged for any modern v4l drivers).  And Seth Jenkins
+points out that the fallback to VM_PFNMAP/VM_IO is fundamentally racy
+and dangerous.
 
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        msleep
+Note that it's not even a case that should trigger, since any normal
+user pointer logic ends up just using the pin_user_pages_fast() call
+that does the proper page reference counting.  That's not the problem
+case, only if you try to use special device mappings do you have any
+issues.
 
----------------------------
+Normally I'd just remove this during the merge window, but since Seth
+pointed out the problem cases, we really want to know as soon as
+possible if there are actually any users of this odd special case of a
+legacy interface.  Neither Hans nor Mauro seem to think that such
+mis-uses of the old legacy interface should exist.  As Mauro says:
 
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        qlcnic_83xx_recover_driver_lock
-          msleep
+ "See, V4L2 has actually 4 streaming APIs:
+        - Kernel-allocated mmap (usually referred simply as just mmap);
+        - USERPTR mmap;
+        - read();
+        - dmabuf;
 
-Fix by changing msleep() to mdelay(), the mdelay() is
-busy-waiting and the bugs could be mitigated.
+  The USERPTR is one of the oldest way to use it, coming from V4L
+  version 1 times, and by far the least used one"
 
-Fixes: 629263acaea3 ("qlcnic: 83xx CNA inter driver communication mechanism")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+And Hans chimed in on the USERPTR interface:
+
+ "To be honest, I wouldn't mind if it goes away completely, but that's a
+  bit of a pipe dream right now"
+
+but while removing this legacy interface entirely may be a pipe dream we
+can at least try to remove the unlikely (and actively broken) case of
+using special device mappings for USERPTR accesses.
+
+This replaces it with a WARN_ONCE() that we can remove once we've
+hopefully confirmed that no actual users exist.
+
+NOTE! Longer term, this means that a 'struct frame_vector' only ever
+contains proper page pointers, and all the games we have with converting
+them to pages can go away (grep for 'frame_vector_to_pages()' and the
+uses of 'vec->is_pfns').  But this is just the first step, to verify
+that this code really is all dead, and do so as quickly as possible.
+
+Reported-by: Seth Jenkins <sethjenkins@google.com>
+Acked-by: Hans Verkuil <hverkuil@xs4all.nl>
+Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/common/videobuf2/frame_vector.c |   55 +++++---------------------
+ 1 file changed, 12 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-index bd0607680329..2fd5c6fdb500 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-@@ -2991,7 +2991,7 @@ static void qlcnic_83xx_recover_driver_lock(struct qlcnic_adapter *adapter)
- 		QLCWRX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK, val);
- 		dev_info(&adapter->pdev->dev,
- 			 "%s: lock recovery initiated\n", __func__);
--		msleep(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
- 		val = QLCRDX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK);
- 		id = ((val >> 2) & 0xF);
- 		if (id == adapter->portnum) {
-@@ -3027,7 +3027,7 @@ int qlcnic_83xx_lock_driver(struct qlcnic_adapter *adapter)
- 		if (status)
- 			break;
+--- a/drivers/media/common/videobuf2/frame_vector.c
++++ b/drivers/media/common/videobuf2/frame_vector.c
+@@ -35,10 +35,7 @@
+ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
+ 		     struct frame_vector *vec)
+ {
+-	struct mm_struct *mm = current->mm;
+-	struct vm_area_struct *vma;
+-	int ret = 0;
+-	int err;
++	int ret;
  
--		msleep(QLC_83XX_DRV_LOCK_WAIT_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_WAIT_DELAY);
- 		i++;
+ 	if (nr_frames == 0)
+ 		return 0;
+@@ -51,45 +48,17 @@ int get_vaddr_frames(unsigned long start
+ 	ret = pin_user_pages_fast(start, nr_frames,
+ 				  FOLL_FORCE | FOLL_WRITE | FOLL_LONGTERM,
+ 				  (struct page **)(vec->ptrs));
+-	if (ret > 0) {
+-		vec->got_ref = true;
+-		vec->is_pfns = false;
+-		goto out_unlocked;
+-	}
+-
+-	mmap_read_lock(mm);
+-	vec->got_ref = false;
+-	vec->is_pfns = true;
+-	ret = 0;
+-	do {
+-		unsigned long *nums = frame_vector_pfns(vec);
+-
+-		vma = vma_lookup(mm, start);
+-		if (!vma)
+-			break;
+-
+-		while (ret < nr_frames && start + PAGE_SIZE <= vma->vm_end) {
+-			err = follow_pfn(vma, start, &nums[ret]);
+-			if (err) {
+-				if (ret == 0)
+-					ret = err;
+-				goto out;
+-			}
+-			start += PAGE_SIZE;
+-			ret++;
+-		}
+-		/* Bail out if VMA doesn't completely cover the tail page. */
+-		if (start < vma->vm_end)
+-			break;
+-	} while (ret < nr_frames);
+-out:
+-	mmap_read_unlock(mm);
+-out_unlocked:
+-	if (!ret)
+-		ret = -EFAULT;
+-	if (ret > 0)
+-		vec->nr_frames = ret;
+-	return ret;
++	vec->got_ref = true;
++	vec->is_pfns = false;
++	vec->nr_frames = ret;
++
++	if (likely(ret > 0))
++		return ret;
++
++	/* This used to (racily) return non-refcounted pfns. Let people know */
++	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
++	vec->nr_frames = 0;
++	return ret ? ret : -EFAULT;
+ }
+ EXPORT_SYMBOL(get_vaddr_frames);
  
- 		if (i == 1)
--- 
-2.35.1
-
 
 
