@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126FE15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:37:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC25C433D6;
-	Mon,  5 Dec 2022 19:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795B315C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BF1C433D6;
+	Mon,  5 Dec 2022 19:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269077;
-	bh=VN8BFLJRkxdNyEhcK/0Wv80q087djHD9wNBnqBF+wZY=;
+	s=korg; t=1670269081;
+	bh=zophd0bTMsSAIMQt/BrSTBOx4zjU3W7E2m5L0J60ZxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1m2gPngP4L0uUuHgdotz/6qgaNW79LdPIA+QI5rT5Szd5LNmDYy5CjJoKyU/bLeUr
-	 T4nO6VIW0vlKB1NSsf1Sut7f4NiZNcBMDAhSOOpTziwl8qvKqHzX9hcKrPwkkNy4D1
-	 lSyeDS/pjqOQ+ts1ar1Tswn1f4+5wrmtmyGU90+8=
+	b=xfzsCPR4UtWlL/EIbbAzv18wtbKHJllOeb9Vtj9LQjCUcgi3G2crByy2Lg83ntFgg
+	 ghTnllBNWFdLTq64nQAI6DwLaxK1DLZMEqyUkkLiIJBTd6YqgE8MamWO87BocKBf6U
+	 MBLRG+rpmqAkWq+ILheXqAvcoV6VPO5MJS/Qu0LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Chris Piper <chris.d.piper@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Samuel Holland <samuel@sholland.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/120] ACPI: HMAT: Fix initiator registration for single-initiator systems
-Date: Mon,  5 Dec 2022 20:10:57 +0100
-Message-Id: <20221205190810.034448438@linuxfoundation.org>
+Subject: [PATCH 5.15 118/120] Revert "clocksource/drivers/riscv: Events are stopped during CPU suspend"
+Date: Mon,  5 Dec 2022 20:10:58 +0100
+Message-Id: <20221205190810.060614280@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -40,109 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Verma <vishal.l.verma@intel.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 48d4180939e12c4bd2846f984436d895bb9699ed ]
+[ Upstream commit d9f15a9de44affe733e34f93bc184945ba277e6d ]
 
-In a system with a single initiator node, and one or more memory-only
-'target' nodes, the memory-only node(s) would fail to register their
-initiator node correctly. i.e. in sysfs:
+This reverts commit 232ccac1bd9b5bfe73895f527c08623e7fa0752d.
 
-  # ls /sys/devices/system/node/node0/access0/targets/
-  node0
+On the subject of suspend, the RISC-V SBI spec states:
 
-Where as the correct behavior should be:
+  This does not cover whether any given events actually reach the hart or
+  not, just what the hart will do if it receives an event. On PolarFire
+  SoC, and potentially other SiFive based implementations, events from the
+  RISC-V timer do reach a hart during suspend. This is not the case for the
+  implementation on the Allwinner D1 - there timer events are not received
+  during suspend.
 
-  # ls /sys/devices/system/node/node0/access0/targets/
-  node0 node1
+To fix this, the CLOCK_EVT_FEAT_C3STOP (mis)feature was enabled for the
+timer driver - but this has broken both RCU stall detection and timers
+generally on PolarFire SoC and potentially other SiFive based
+implementations.
 
-This happened because hmat_register_target_initiators() uses list_sort()
-to sort the initiator list, but the sort comparision function
-(initiator_cmp()) is overloaded to also set the node mask's bits.
+If an AXI read to the PCIe controller on PolarFire SoC times out, the
+system will stall, however, with CLOCK_EVT_FEAT_C3STOP active, the system
+just locks up without RCU stalling:
 
-In a system with a single initiator, the list is singular, and list_sort
-elides the comparision helper call. Thus the node mask never gets set,
-and the subsequent search for the best initiator comes up empty.
+	io scheduler mq-deadline registered
+	io scheduler kyber registered
+	microchip-pcie 2000000000.pcie: host bridge /soc/pcie@2000000000 ranges:
+	microchip-pcie 2000000000.pcie:      MEM 0x2008000000..0x2087ffffff -> 0x0008000000
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: axi read request error
+	microchip-pcie 2000000000.pcie: axi read timeout
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	Freeing initrd memory: 7332K
 
-Add a new helper to consume the sorted initiator list, and generate the
-nodemask, decoupling it from the overloaded initiator_cmp() comparision
-callback. This prevents the singular list corner case naturally, and
-makes the code easier to follow as well.
+Similarly issues were reported with clock_nanosleep() - with a test app
+that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250 & the blamed
+commit in place, the sleep times are rounded up to the next jiffy:
 
-Cc: <stable@vger.kernel.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Liu Shixin <liushixin2@huawei.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reported-by: Chris Piper <chris.d.piper@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20221116-acpi_hmat_fix-v2-2-3712569be691@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
+Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
+Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
+Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
+Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
+Samples: 521      Samples: 521      Samples: 521      Samples: 521
+
+Fortunately, the D1 has a second timer, which is "currently used in
+preference to the RISC-V/SBI timer driver" so a revert here does not
+hurt operation of D1 in its current form.
+
+Ultimately, a DeviceTree property (or node) will be added to encode the
+behaviour of the timers, but until then revert the addition of
+CLOCK_EVT_FEAT_C3STOP.
+
+Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
+Link: https://github.com/riscv-non-isa/riscv-sbi-doc/issues/98/
+Link: https://lore.kernel.org/linux-riscv/bf6d3b1f-f703-4a25-833e-972a44a04114@sholland.org/
+Link: https://lore.kernel.org/r/20221122121620.3522431-1-conor.dooley@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/clocksource/timer-riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index fca69a726360..b42653707fdc 100644
---- a/drivers/acpi/numa/hmat.c
-+++ b/drivers/acpi/numa/hmat.c
-@@ -563,17 +563,26 @@ static int initiator_cmp(void *priv, const struct list_head *a,
- {
- 	struct memory_initiator *ia;
- 	struct memory_initiator *ib;
--	unsigned long *p_nodes = priv;
- 
- 	ia = list_entry(a, struct memory_initiator, node);
- 	ib = list_entry(b, struct memory_initiator, node);
- 
--	set_bit(ia->processor_pxm, p_nodes);
--	set_bit(ib->processor_pxm, p_nodes);
--
- 	return ia->processor_pxm - ib->processor_pxm;
- }
- 
-+static int initiators_to_nodemask(unsigned long *p_nodes)
-+{
-+	struct memory_initiator *initiator;
-+
-+	if (list_empty(&initiators))
-+		return -ENXIO;
-+
-+	list_for_each_entry(initiator, &initiators, node)
-+		set_bit(initiator->processor_pxm, p_nodes);
-+
-+	return 0;
-+}
-+
- static void hmat_register_target_initiators(struct memory_target *target)
- {
- 	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
-@@ -610,7 +619,10 @@ static void hmat_register_target_initiators(struct memory_target *target)
- 	 * initiators.
- 	 */
- 	bitmap_zero(p_nodes, MAX_NUMNODES);
--	list_sort(p_nodes, &initiators, initiator_cmp);
-+	list_sort(NULL, &initiators, initiator_cmp);
-+	if (initiators_to_nodemask(p_nodes) < 0)
-+		return;
-+
- 	if (!access0done) {
- 		for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
- 			loc = localities_types[i];
-@@ -644,7 +656,9 @@ static void hmat_register_target_initiators(struct memory_target *target)
- 
- 	/* Access 1 ignores Generic Initiators */
- 	bitmap_zero(p_nodes, MAX_NUMNODES);
--	list_sort(p_nodes, &initiators, initiator_cmp);
-+	if (initiators_to_nodemask(p_nodes) < 0)
-+		return;
-+
- 	for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
- 		loc = localities_types[i];
- 		if (!loc)
+diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
+index 0e7748df4be3..c51c5ed15aa7 100644
+--- a/drivers/clocksource/timer-riscv.c
++++ b/drivers/clocksource/timer-riscv.c
+@@ -32,7 +32,7 @@ static int riscv_clock_next_event(unsigned long delta,
+ static unsigned int riscv_clock_event_irq;
+ static DEFINE_PER_CPU(struct clock_event_device, riscv_clock_event) = {
+ 	.name			= "riscv_timer_clockevent",
+-	.features		= CLOCK_EVT_FEAT_ONESHOT | CLOCK_EVT_FEAT_C3STOP,
++	.features		= CLOCK_EVT_FEAT_ONESHOT,
+ 	.rating			= 100,
+ 	.set_next_event		= riscv_clock_next_event,
+ };
 -- 
 2.35.1
 
