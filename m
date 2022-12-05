@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A585315C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277F5C433C1;
-	Mon,  5 Dec 2022 19:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E92D15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6B4C433C1;
+	Mon,  5 Dec 2022 19:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268301;
-	bh=p9D+IZ3KuMyeZ0hnvSGoRuz8lzbAeFcSkLvjGsGgCpE=;
+	s=korg; t=1670268304;
+	bh=yIRFU4Q0MBGczT1UZZGafbdVAwuOzVMDt2J2nDpPLoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyhDK4bDumIcGi+gpFmrjJ6oK5y+K55Qx+1NWhoNFM14/pzz8UzmwvWglGFKGpHwg
-	 exdxUBSRcUuBYe1hBcgquhhUKNCsr6OzCyqdKVStVDmqRLBijCNhKcIhg6jhOwLD6L
-	 UJ0yntU/KsfIAhVycUWV/9RwYO18VsgHTzEOWqPQ=
+	b=v7Ipp10D4czq/Q3FkzjPHJ5Zana+CQ+vRns1qObQTMNuIUUziDFkgVy9NgIBfajfw
+	 BhlrDqIFqxyR8Gv39/cvL8lhX96fRgfq/8fXxjFoAKUpGi3FruVrV77JPvav/wjlmz
+	 qcwP84lMwnOixPmWIQoaXA2YDlHu7NAtNZbxDBwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Yuan Can <yuancan@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 051/124] net: ethernet: ti: am65-cpsw: fix error handling in am65_cpsw_nuss_probe()
-Date: Mon,  5 Dec 2022 20:09:17 +0100
-Message-Id: <20221205190809.884798880@linuxfoundation.org>
+Subject: [PATCH 6.0 052/124] net: net_netdev: Fix error handling in ntb_netdev_init_module()
+Date: Mon,  5 Dec 2022 20:09:18 +0100
+Message-Id: <20221205190809.912648308@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,39 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 46fb6512538d201d9a5b2bd7138b6751c37fdf0b ]
+[ Upstream commit b8f79dccd38edf7db4911c353d9cd792ab13a327 ]
 
-The am65_cpsw_nuss_cleanup_ndev() function calls unregister_netdev()
-even if register_netdev() fails, which triggers WARN_ON(1) in
-unregister_netdevice_many(). To fix it, make sure that
-unregister_netdev() is called only on registered netdev.
+The ntb_netdev_init_module() returns the ntb_transport_register_client()
+directly without checking its return value, if
+ntb_transport_register_client() failed, the NTB client device is not
+unregistered.
 
-Compile tested only.
+Fix by unregister NTB client device when ntb_transport_register_client()
+failed.
 
-Fixes: 84b4aa493249 ("net: ethernet: ti: am65-cpsw: add multi port support in mac-only mode")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 348201e10d49..95baacd6c761 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2061,7 +2061,7 @@ static void am65_cpsw_nuss_cleanup_ndev(struct am65_cpsw_common *common)
- 
- 	for (i = 0; i < common->port_num; i++) {
- 		port = &common->ports[i];
--		if (port->ndev)
-+		if (port->ndev && port->ndev->reg_state == NETREG_REGISTERED)
- 			unregister_netdev(port->ndev);
- 	}
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index 80bdc07f2cd3..dd7e273c90cb 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -484,7 +484,14 @@ static int __init ntb_netdev_init_module(void)
+ 	rc = ntb_transport_register_client_dev(KBUILD_MODNAME);
+ 	if (rc)
+ 		return rc;
+-	return ntb_transport_register_client(&ntb_netdev_client);
++
++	rc = ntb_transport_register_client(&ntb_netdev_client);
++	if (rc) {
++		ntb_transport_unregister_client_dev(KBUILD_MODNAME);
++		return rc;
++	}
++
++	return 0;
  }
+ module_init(ntb_netdev_init_module);
+ 
 -- 
 2.35.1
 
