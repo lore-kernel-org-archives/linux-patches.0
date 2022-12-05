@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0055B15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79673C433D6;
-	Mon,  5 Dec 2022 19:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD88A15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7CCC433C1;
+	Mon,  5 Dec 2022 19:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268696;
-	bh=VZ7rMu+RtBzUwvYO1Cnz/dwiBVMrP/hQtuyT1JFB1to=;
+	s=korg; t=1670268699;
+	bh=Lw2UK/IUoWjTRvEJRSWmV9lN3Nr6oEjtCff6xbdjbZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcAcdq5A5i3Od0JqKsI8qQd2gafgIfSQqv+TSKF3iXPeBjKMXa/kKY/5AsEdOGmVE
-	 yfO0EtQ0JcE5Cu68oMx70P8QbxS4TU70uDJG8oaxnh1FVafqH+v15V/zp4ET6iRa1+
-	 yk7sc8AwqnBNhWPUYrF3eTV4buF2Qp/JiNOWimMA=
+	b=1y+JGVSpkOdKAMPqzkzF90ZcmYvVPUjMC4uWfp1iUBsFlHGdkeEvKNMeADUuBJEsh
+	 6Nf85/q+1JstdLG7qdDQtRhw/pfDJt3FI94nGJ8Y4KEAuRjLirNCWS8wlkW+edfRpw
+	 dEBzOJ76u4nmtVz1lg3NQCNqBv2Ld79YFSpxDseM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	YueHaibing <yuehaibing@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 44/92] tipc: re-fetch skb cb after tipc_msg_validate
-Date: Mon,  5 Dec 2022 20:09:57 +0100
-Message-Id: <20221205190804.943861121@linuxfoundation.org>
+Subject: [PATCH 5.10 45/92] net: hsr: Fix potential use-after-free
+Date: Mon,  5 Dec 2022 20:09:58 +0100
+Message-Id: <20221205190804.980130079@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,63 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 3067bc61fcfe3081bf4807ce65560f499e895e77 ]
+[ Upstream commit 7e177d32442b7ed08a9fa61b61724abc548cb248 ]
 
-As the call trace shows, the original skb was freed in tipc_msg_validate(),
-and dereferencing the old skb cb would cause an use-after-free crash.
+The skb is delivered to netif_rx() which may free it, after calling this,
+dereferencing skb may trigger use-after-free.
 
-  BUG: KASAN: use-after-free in tipc_crypto_rcv_complete+0x1835/0x2240 [tipc]
-  Call Trace:
-   <IRQ>
-   tipc_crypto_rcv_complete+0x1835/0x2240 [tipc]
-   tipc_crypto_rcv+0xd32/0x1ec0 [tipc]
-   tipc_rcv+0x744/0x1150 [tipc]
-  ...
-  Allocated by task 47078:
-   kmem_cache_alloc_node+0x158/0x4d0
-   __alloc_skb+0x1c1/0x270
-   tipc_buf_acquire+0x1e/0xe0 [tipc]
-   tipc_msg_create+0x33/0x1c0 [tipc]
-   tipc_link_build_proto_msg+0x38a/0x2100 [tipc]
-   tipc_link_timeout+0x8b8/0xef0 [tipc]
-   tipc_node_timeout+0x2a1/0x960 [tipc]
-   call_timer_fn+0x2d/0x1c0
-  ...
-  Freed by task 47078:
-   tipc_msg_validate+0x7b/0x440 [tipc]
-   tipc_crypto_rcv_complete+0x4b5/0x2240 [tipc]
-   tipc_crypto_rcv+0xd32/0x1ec0 [tipc]
-   tipc_rcv+0x744/0x1150 [tipc]
-
-This patch fixes it by re-fetching the skb cb from the new allocated skb
-after calling tipc_msg_validate().
-
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/1b1cdba762915325bd8ef9a98d0276eb673df2a5.1669398403.git.lucien.xin@gmail.com
+Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20221125075724.27912-1-yuehaibing@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/hsr/hsr_forward.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 6f91b9a306dc..de63d6d41645 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1975,6 +1975,9 @@ static void tipc_crypto_rcv_complete(struct net *net, struct tipc_aead *aead,
- 	/* Ok, everything's fine, try to synch own keys according to peers' */
- 	tipc_crypto_key_synch(rx, *skb);
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 908324b46328..cb9b54a7abd2 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -303,17 +303,18 @@ static void hsr_deliver_master(struct sk_buff *skb, struct net_device *dev,
+ 			       struct hsr_node *node_src)
+ {
+ 	bool was_multicast_frame;
+-	int res;
++	int res, recv_len;
  
-+	/* Re-fetch skb cb as skb might be changed in tipc_msg_validate */
-+	skb_cb = TIPC_SKB_CB(*skb);
-+
- 	/* Mark skb decrypted */
- 	skb_cb->decrypted = 1;
- 
+ 	was_multicast_frame = (skb->pkt_type == PACKET_MULTICAST);
+ 	hsr_addr_subst_source(node_src, skb);
+ 	skb_pull(skb, ETH_HLEN);
++	recv_len = skb->len;
+ 	res = netif_rx(skb);
+ 	if (res == NET_RX_DROP) {
+ 		dev->stats.rx_dropped++;
+ 	} else {
+ 		dev->stats.rx_packets++;
+-		dev->stats.rx_bytes += skb->len;
++		dev->stats.rx_bytes += recv_len;
+ 		if (was_multicast_frame)
+ 			dev->stats.multicast++;
+ 	}
 -- 
 2.35.1
 
