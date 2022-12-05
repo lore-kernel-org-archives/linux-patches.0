@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFC115C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B86BC433C1;
-	Mon,  5 Dec 2022 19:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5985115C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27E6C433D6;
+	Mon,  5 Dec 2022 19:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267698;
-	bh=EsZgUXgm/Uz+tvsXpxGJmErMUTJL+fxhfFvzjTpnjIM=;
+	s=korg; t=1670267701;
+	bh=5JAYxFTZ/FIBz2NYZ8nI9VhhIJWlyK3LTDwkKAq0XRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2/VC5XcScrqRjfOhSsFt8E4H41fwL87j/iwjpivYe5g5Mvob4YIouV0TO0Db8XzE
-	 5RCZfY9bPRSSa6t4xoMYWmi5CmaFTRtfuj8iwuhUpFGa6uVZuRbmTQwShUDbK3ioKF
-	 m0sURgPJ7MDwp6wwphkXSCuyghSKlCqMQPi0kvak=
+	b=v0a5QmYKzGTmrqV0PrI5+MefH2+sxg0fvhXE3WN1S8OkTYi0TyjOlpSQd2RzPta32
+	 YnWs15PMUXIUsqLTMcx9G0w9RlkbjkkVZFYQ6A7r1ZraMeILkSVPrTtynFcoqNHkRe
+	 0Wi5olgbx9XEwrKQtkozHvPNPi6mOioxMx9kCs1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/77] net: pch_gbe: fix potential memleak in pch_gbe_tx_queue()
-Date: Mon,  5 Dec 2022 20:09:02 +0100
-Message-Id: <20221205190801.268442703@linuxfoundation.org>
+Subject: [PATCH 4.14 20/77] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
+Date: Mon,  5 Dec 2022 20:09:11 +0100
+Message-Id: <20221205190801.591692450@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,36 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit 2360f9b8c4e81d242d4cbf99d630a2fffa681fab ]
+[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
 
-In pch_gbe_xmit_frame(), NETDEV_TX_OK will be returned whether
-pch_gbe_tx_queue() sends data successfully or not, so pch_gbe_tx_queue()
-needs to free skb before returning. But pch_gbe_tx_queue() returns without
-freeing skb in case of dma_map_single() fails. Add dev_kfree_skb_any()
-to fix it.
+The first validation check for EVT_TRANSACTION has two different checks
+tied together with logical AND. One is a check for minimum packet length,
+and the other is for a valid aid_tag. If either condition is true (fails),
+then an error should be triggered. The fix is to change && to ||.
 
-Fixes: 77555ee72282 ("net: Add Gigabit Ethernet driver of Topcliff PCH")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nfc/st-nci/se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-index 22e63ae80a10..119220c79226 100644
---- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-+++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-@@ -1221,6 +1221,7 @@ static void pch_gbe_tx_queue(struct pch_gbe_adapter *adapter,
- 		buffer_info->dma = 0;
- 		buffer_info->time_stamp = 0;
- 		tx_ring->next_to_use = ring_num;
-+		dev_kfree_skb_any(skb);
- 		return;
- 	}
- 	buffer_info->mapped = true;
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index 85df2e009310..e75929ff330e 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -338,7 +338,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+ 		 * AID          81      5 to 16
+ 		 * PARAMETERS   82      0 to 255
+ 		 */
+-		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
++		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
+ 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
+ 			return -EPROTO;
+ 
 -- 
 2.35.1
 
