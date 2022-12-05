@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E717415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE4CC433D6;
-	Mon,  5 Dec 2022 19:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A951915C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D136C433C1;
+	Mon,  5 Dec 2022 19:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268054;
-	bh=jwU1wlp1DuoIWIr0iwZCZhzH8TLCOyt8NfliukWhgM8=;
+	s=korg; t=1670268057;
+	bh=TR10X2vgxLSZCE1V8mzaojC1XcDEkgzoW7WDwwoERIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrqSYzOEh8ATJye2vrp0abhAaMFHdwV4agyS8Ppe9bihKvFXi3C83ntCG5vkVuEat
-	 VRx630HxPrnFKN6G7PaDnZ37trl3uS7XCT69ukBxH2d1M9Sf04+XzfYNcXiaX6GLQt
-	 kMjOwv1Ro/ImZrvH4CQDzYgq9clUQhZia7ZwBdEs=
+	b=OicJHuNBhVqV3ANc2lScMF4A1mM/qKqxezsOkDw3sCtfDPkoEt2NcXP1Tr1USbhWN
+	 hyT3ny+hlerGy8pn2Zvxt5uT2k+Istd7i72yS5eQy/6vkzkK2WxcytXREw3xPJcHhr
+	 fbcJoAYs7947IphR8wpvYZoa21xKP+B6Yz4yfITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 070/105] can: cc770: cc770_isa_probe(): add missing free_cc770dev()
-Date: Mon,  5 Dec 2022 20:09:42 +0100
-Message-Id: <20221205190805.541895407@linuxfoundation.org>
+Subject: [PATCH 4.19 071/105] qlcnic: fix sleep-in-atomic-context bugs caused by msleep
+Date: Mon,  5 Dec 2022 20:09:43 +0100
+Message-Id: <20221205190805.574517751@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,57 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 62ec89e74099a3d6995988ed9f2f996b368417ec ]
+[ Upstream commit 8dbd6e4ce1b9c527921643d9e34f188a10d4e893 ]
 
-Add the missing free_cc770dev() before return from cc770_isa_probe()
-in the register_cc770dev() error handling case.
+The watchdog timer is used to monitor whether the process
+of transmitting data is timeout. If we use qlcnic driver,
+the dev_watchdog() that is the timer handler of watchdog
+timer will call qlcnic_tx_timeout() to process the timeout.
+But the qlcnic_tx_timeout() calls msleep(), as a result,
+the sleep-in-atomic-context bugs will happen. The processes
+are shown below:
 
-In addition, remove blanks before goto labels.
+   (atomic context)
+dev_watchdog
+  qlcnic_tx_timeout
+    qlcnic_83xx_idc_request_reset
+      qlcnic_83xx_lock_driver
+        msleep
 
-Fixes: 7e02e5433e00 ("can: cc770: legacy CC770 ISA bus driver")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/all/1668168557-6024-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+---------------------------
+
+   (atomic context)
+dev_watchdog
+  qlcnic_tx_timeout
+    qlcnic_83xx_idc_request_reset
+      qlcnic_83xx_lock_driver
+        qlcnic_83xx_recover_driver_lock
+          msleep
+
+Fix by changing msleep() to mdelay(), the mdelay() is
+busy-waiting and the bugs could be mitigated.
+
+Fixes: 629263acaea3 ("qlcnic: 83xx CNA inter driver communication mechanism")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/cc770/cc770_isa.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/cc770/cc770_isa.c b/drivers/net/can/cc770/cc770_isa.c
-index fcd34698074f..9f2bc66572e4 100644
---- a/drivers/net/can/cc770/cc770_isa.c
-+++ b/drivers/net/can/cc770/cc770_isa.c
-@@ -272,22 +272,24 @@ static int cc770_isa_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"couldn't register device (err=%d)\n", err);
--		goto exit_unmap;
-+		goto exit_free;
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+index d857d44547a5..b3f1f1bd52a8 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+@@ -2993,7 +2993,7 @@ static void qlcnic_83xx_recover_driver_lock(struct qlcnic_adapter *adapter)
+ 		QLCWRX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK, val);
+ 		dev_info(&adapter->pdev->dev,
+ 			 "%s: lock recovery initiated\n", __func__);
+-		msleep(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
++		mdelay(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
+ 		val = QLCRDX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK);
+ 		id = ((val >> 2) & 0xF);
+ 		if (id == adapter->portnum) {
+@@ -3029,7 +3029,7 @@ int qlcnic_83xx_lock_driver(struct qlcnic_adapter *adapter)
+ 		if (status)
+ 			break;
  
- 	dev_info(&pdev->dev, "device registered (reg_base=0x%p, irq=%d)\n",
- 		 priv->reg_base, dev->irq);
- 	return 0;
+-		msleep(QLC_83XX_DRV_LOCK_WAIT_DELAY);
++		mdelay(QLC_83XX_DRV_LOCK_WAIT_DELAY);
+ 		i++;
  
-- exit_unmap:
-+exit_free:
-+	free_cc770dev(dev);
-+exit_unmap:
- 	if (mem[idx])
- 		iounmap(base);
-- exit_release:
-+exit_release:
- 	if (mem[idx])
- 		release_mem_region(mem[idx], iosize);
- 	else
- 		release_region(port[idx], iosize);
-- exit:
-+exit:
- 	return err;
- }
- 
+ 		if (i == 1)
 -- 
 2.35.1
 
