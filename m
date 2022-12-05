@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC2915C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DFEC433D6;
-	Mon,  5 Dec 2022 19:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2F415C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D775C433D6;
+	Mon,  5 Dec 2022 19:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269349;
-	bh=b1CbOiWRUw/e80CJapgJt3Jhdul/Ig9uRW3+UhFwcjA=;
+	s=korg; t=1670269351;
+	bh=TXFnCbDX1xHBD63dPf0QW78+w6cYSCVOzD29BOhUh8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEBr3y11OzPYKPEDreQ2Z98UcaY6mvzKxaHsng4Ee1ksmNLlQ/iYrfmrru3hA4TEs
-	 90R6bSObR2fihFtkMhOxmFcESljnsxkMPcZJVYrTgT9LcnK7C2uTXznhI5tpAlhD81
-	 R8XI5mHY/lgrC4j830Mp3Jx6qzVlK7kM0Avlv3SM=
+	b=ZGBcov81Ny2HUi0qpbAdYtJ7T3yBUwdwIYb+BUbJZWVKgDcqKwjzO4iGum/TqUePk
+	 Fev+RmwtxbSzbQ8gyk8kuaA27cQ4UR1eQIcdcmTMlYave3mCHAUeFgigqB041awvix
+	 bMhboIAIqYPaeWLELPtdA5hQRtzmy3Em7me+Mu0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/153] hwmon: (ibmpex) Fix possible UAF when ibmpex_register_bmc() fails
-Date: Mon,  5 Dec 2022 20:10:19 +0100
-Message-Id: <20221205190811.465818039@linuxfoundation.org>
+Subject: [PATCH 5.4 096/153] of: property: decrement node refcount in of_fwnode_get_reference_args()
+Date: Mon,  5 Dec 2022 20:10:20 +0100
+Message-Id: <20221205190811.496963476@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,42 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e2a87785aab0dac190ac89be6a9ba955e2c634f2 ]
+[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
 
-Smatch report warning as follows:
+In of_fwnode_get_reference_args(), the refcount of of_args.np has
+been incremented in the case of successful return from
+of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
 
-drivers/hwmon/ibmpex.c:509 ibmpex_register_bmc() warn:
-  '&data->list' not removed from list
+Decrement the refcount if of_args is not returned to the caller of
+of_fwnode_get_reference_args().
 
-If ibmpex_find_sensors() fails in ibmpex_register_bmc(), data will
-be freed, but data->list will not be removed from driver_data.bmc_data,
-then list traversal may cause UAF.
-
-Fix by removeing it from driver_data.bmc_data before free().
-
-Fixes: 57c7c3a0fdea ("hwmon: IBM power meter driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221117034423.2935739-1-cuigaosheng1@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Frank Rowand <frowand.list@gmail.com>
+Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ibmpex.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/of/property.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
-index b2ab83c9fd9a..fe90f0536d76 100644
---- a/drivers/hwmon/ibmpex.c
-+++ b/drivers/hwmon/ibmpex.c
-@@ -502,6 +502,7 @@ static void ibmpex_register_bmc(int iface, struct device *dev)
- 	return;
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index d7fa75e31f22..f6010ec0f67b 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -918,8 +918,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
+ 						       nargs, index, &of_args);
+ 	if (ret < 0)
+ 		return ret;
+-	if (!args)
++	if (!args) {
++		of_node_put(of_args.np);
+ 		return 0;
++	}
  
- out_register:
-+	list_del(&data->list);
- 	hwmon_device_unregister(data->hwmon_dev);
- out_user:
- 	ipmi_destroy_user(data->user);
+ 	args->nargs = of_args.args_count;
+ 	args->fwnode = of_fwnode_handle(of_args.np);
 -- 
 2.35.1
 
