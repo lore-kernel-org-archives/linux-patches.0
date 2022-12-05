@@ -1,125 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0F15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D56C433D6;
-	Mon,  5 Dec 2022 19:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268919;
-	bh=WfymIi/l/K11D/YFO0RbUiHW1d9I+QF0Gmcvgv5cphg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJV1oZs4klVTSHWT0cK4CXr366ggqB4sQ/z0zYmZ3NI15nQEP1FwQ1Kyqcn17Fllc
-	 zvC8wtZs+I93QRVOSkH7lURiwYyXT0/p2B64h2LOtko64TQ4I+wAHnkOW9d73GcG6U
-	 lU/5ZCQW3+V4MNlKqH/z+eZCNtVfRnipbiPTG5R0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/120] net: tun: Fix use-after-free in tun_detach()
-Date: Mon,  5 Dec 2022 20:10:00 +0100
-Message-Id: <20221205190808.424344272@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
-References: <20221205190806.528972574@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77D715C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1670268919;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6ymx9vYbfvPSu1FyTD+EP2FA1MzxLKdOD5sbRdjsyNg=;
+	b=DVlt8rNC4yAMwNluAQ8e8KFVxvuQBxnRU5FCnrimlPfg11jZQhwSXPJsFG7ZrLIlIcE1Ja
+	uumnwxasS1CYufMZ4SPoduKD+0RvzFcdbHa36ORdoyUGi6qVDOk+V4lAztdB8cibNkse22
+	D4WOBQ/BLKBCuicdlaxmqoaKk0PUT5Q=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-554-W0bjpuIXO4eRhW0NUmBusQ-1; Mon, 05 Dec 2022 14:35:16 -0500
+X-MC-Unique: W0bjpuIXO4eRhW0NUmBusQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com [10.11.54.1])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9EA69811E67;
+	Mon,  5 Dec 2022 19:35:15 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.84])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 2731B40C846B;
+	Mon,  5 Dec 2022 19:35:12 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,
+  linux-api@vger.kernel.org,  x86@kernel.org,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>,
+  Arnd Bergmann <arnd@arndb.de>,  Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v11 3/4] random: introduce generic vDSO getrandom()
+ implementation
+References: <20221205020046.1876356-1-Jason@zx2c4.com>
+	<20221205020046.1876356-4-Jason@zx2c4.com>
+	<878rjlr85s.fsf@oldenburg.str.redhat.com> <Y45Ar3mwRBSr+X7F@zx2c4.com>
+Date: Mon, 05 Dec 2022 20:35:09 +0100
+In-Reply-To: <Y45Ar3mwRBSr+X7F@zx2c4.com> (Jason A. Donenfeld's message of
+	"Mon, 5 Dec 2022 20:04:15 +0100")
+Message-ID: <87wn75prte.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.1
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+* Jason A. Donenfeld:
 
-[ Upstream commit 5daadc86f27ea4d691e2131c04310d0418c6cd12 ]
+> Hi Florian,
+>
+> On Mon, Dec 05, 2022 at 07:56:47PM +0100, Florian Weimer wrote:
+>> * Jason A. Donenfeld:
+>>=20
+>> > +retry_generation:
+>> > +	/*
+>> > +	 * @rng_info->generation must always be read here, as it serializes =
+@state->key with the
+>> > +	 * kernel's RNG reseeding schedule.
+>> > +	 */
+>> > +	current_generation =3D READ_ONCE(rng_info->generation);
+>>=20
+>> > +		if (unlikely(READ_ONCE(state->generation) !=3D READ_ONCE(rng_info-
+>>=20
+>> I'm pretty sure you need some sort of barrier here.  We have a similar
+>> TM-lite construct in glibc ld.so for locating link maps by address, and
+>> there the compiler performed reordering.
+>>=20
+>>   _dl_find_object miscompilation on powerpc64le
+>>   <https://sourceware.org/bugzilla/show_bug.cgi?id=3D28745>
+>>=20
+>> I'm not familiar with READ_ONCE, but Documentation/atomic_t.txt suggests
+>> it's a =E2=80=9Cregular LOAD=E2=80=9D, and include/asm-generic/rwonce.h =
+concurs.
+>
+> Do you mean compiler barriers or SMP barriers?
 
-syzbot reported use-after-free in tun_detach() [1].  This causes call
-trace like below:
+Compiler barrier.
 
-==================================================================
-BUG: KASAN: use-after-free in notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
-Read of size 8 at addr ffff88807324e2a8 by task syz-executor.0/3673
+>> Likewise, the signal safety mechanism needs compiler barriers (signal
+>> fences).
+>
+> READ_ONCE() should prevent the compiler from reordering the read.
 
-CPU: 0 PID: 3673 Comm: syz-executor.0 Not tainted 6.1.0-rc5-syzkaller-00044-gcc675d22e422 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x15e/0x461 mm/kasan/report.c:395
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:495
- notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
- call_netdevice_notifiers_info+0x86/0x130 net/core/dev.c:1942
- call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
- call_netdevice_notifiers net/core/dev.c:1997 [inline]
- netdev_wait_allrefs_any net/core/dev.c:10237 [inline]
- netdev_run_todo+0xbc6/0x1100 net/core/dev.c:10351
- tun_detach drivers/net/tun.c:704 [inline]
- tun_chr_close+0xe4/0x190 drivers/net/tun.c:3467
- __fput+0x27c/0xa90 fs/file_table.c:320
- task_work_run+0x16f/0x270 kernel/task_work.c:179
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0xb3d/0x2a30 kernel/exit.c:820
- do_group_exit+0xd4/0x2a0 kernel/exit.c:950
- get_signal+0x21b1/0x2440 kernel/signal.c:2858
- arch_do_signal_or_restart+0x86/0x2300 arch/x86/kernel/signal.c:869
- exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
- exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
- __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
- syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
- do_syscall_64+0x46/0xb0 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+READ_ONCE looks just like a volatile read.  Other reads can be ordered
+around it.
 
-The cause of the issue is that sock_put() from __tun_detach() drops
-last reference count for struct net, and then notifier_call_chain()
-from netdev_state_change() accesses that struct net.
+For example, this:
 
-This patch fixes the issue by calling sock_put() from tun_detach()
-after all necessary accesses for the struct net has done.
+void f1 (int, int, int);
 
-Fixes: 83c1f36f9880 ("tun: send netlink notification when the device is modified")
-Reported-by: syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=96eb7f1ce75ef933697f24eeab928c4a716edefe [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20221124175134.1589053-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+extern int a;
+extern int b;
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 575077998d8a..a1dda57c812d 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -687,7 +687,6 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
- 		if (tun)
- 			xdp_rxq_info_unreg(&tfile->xdp_rxq);
- 		ptr_ring_cleanup(&tfile->tx_ring, tun_ptr_free);
--		sock_put(&tfile->sk);
- 	}
- }
- 
-@@ -703,6 +702,9 @@ static void tun_detach(struct tun_file *tfile, bool clean)
- 	if (dev)
- 		netdev_state_change(dev);
- 	rtnl_unlock();
-+
-+	if (clean)
-+		sock_put(&tfile->sk);
- }
- 
- static void tun_detach_all(struct net_device *dev)
--- 
-2.35.1
+void
+f2 (volatile int *p)
+{
+  int a1 =3D a;
+  int p1 =3D *p;
+  int b1 =3D b;
+  return f1 (a1, p1, b1);
+}
 
+Turns into:
 
+	.globl	f2
+	.type	f2, @function
+f2:
+	movl	(%rdi), %esi
+	movl	b(%rip), %edx
+	movl	a(%rip), %edi
+	jmp	f1
+
+Looks like compiler reodering to me.
+
+>> I'm also not sure how READ_ONCE realizes atomic 64-bit reads on 32-bit
+>> platforms.  i386 can do them in user space via the FPU worst-case (if
+>> the control word hasn't been corrupted).  CMPXCHG8B is not applicable
+>> here because it's a read-only mapping.  Maybe add a comment at least
+>> about that =E2=80=9Cstrong prevailing wind=E2=80=9D?
+>
+> There's read tearing in that case, which isn't super, but perhaps not
+> all together harmful.
+
+Maybe add a comment that it was considered?
+
+Thanks,
+Florian
 
