@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4190B15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7768C433C1;
-	Mon,  5 Dec 2022 19:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC2715C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84173C433D7;
+	Mon,  5 Dec 2022 19:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268724;
-	bh=nmX6x9u8KISZTz9ZBxiztHuYhI4a9H5iaVOC44rtD5E=;
+	s=korg; t=1670268726;
+	bh=bM1m3vmojJ4/C6InrM1pwjuawdVqf1YGtQkiVlvT5v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Au0Go2pQr/ZCxdhpnQ1cgLqpvQXcWUDqL7Yg5sj+d2KeqDWMQWIqgnwkhUNyQ0Vz2
-	 6+j64QbP/KR4TpXYxA/WTIAo+mrefYGdAsPkWCMQQPW2KIRBfut3JVkQDsjDVDGvPW
-	 Iy6+HbR/yqkKSfSSYHTSgBhyFEeAnIrHJnE6cRXE=
+	b=sd01RJwuSvzw/+eRrB5nESKKyTjumo75aU2+h8Vet2RzpKGUc+ACYo15h1hxUo4dk
+	 yGxQRmUD6aiMndcYIP5K408jmAVjKehAv1pKYsjeLgTg0cuf5CEtr9XOx9+m+SZNVF
+	 GlngADNzJletbjTz/IWKVMwqXlK26gQh0SgQqfhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 5.10 82/92] Revert "tty: n_gsm: avoid call of sleeping functions from atomic context"
-Date: Mon,  5 Dec 2022 20:10:35 +0100
-Message-Id: <20221205190806.179857803@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 83/92] x86/tsx: Add a feature bit for TSX control MSR support
+Date: Mon,  5 Dec 2022 20:10:36 +0100
+Message-Id: <20221205190806.215858524@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,198 +37,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit acdab4cb4ba7e5f94d2b422ebd7bf4bf68178fb2 upstream.
+commit aaa65d17eec372c6a9756833f3964ba05b05ea14 upstream.
 
-This reverts commit 902e02ea9385373ce4b142576eef41c642703955.
+Support for the TSX control MSR is enumerated in MSR_IA32_ARCH_CAPABILITIES.
+This is different from how other CPU features are enumerated i.e. via
+CPUID. Currently, a call to tsx_ctrl_is_supported() is required for
+enumerating the feature. In the absence of a feature bit for TSX control,
+any code that relies on checking feature bits directly will not work.
 
-The above commit is reverted as the usage of tx_mutex seems not to solve
-the problem described in 902e02ea9385 ("tty: n_gsm: avoid call of sleeping
-functions from atomic context") and just moves the bug to another place.
+In preparation for adding a feature bit check in MSR save/restore
+during suspend/resume, set a new feature bit X86_FEATURE_TSX_CTRL when
+MSR_IA32_TSX_CTRL is present.
 
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Reviewed-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20221008110221.13645-2-pchelkin@ispras.ru
+  [ bp: Remove tsx_ctrl_is_supported()]
+
+  [Pawan: Resolved conflicts in backport; Removed parts of commit message
+          referring to removed function tsx_ctrl_is_supported()]
+
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/de619764e1d98afbb7a5fa58424f1278ede37b45.1668539735.git.pawan.kumar.gupta@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/tsx.c          |   33 ++++++++++++++-------------------
+ 2 files changed, 15 insertions(+), 19 deletions(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -235,7 +235,7 @@ struct gsm_mux {
- 	int old_c_iflag;		/* termios c_iflag value before attach */
- 	bool constipated;		/* Asked by remote to shut up */
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -300,6 +300,7 @@
+ #define X86_FEATURE_UNRET		(11*32+15) /* "" AMD BTB untrain return */
+ #define X86_FEATURE_USE_IBPB_FW		(11*32+16) /* "" Use IBPB during runtime firmware calls */
+ #define X86_FEATURE_RSB_VMEXIT_LITE	(11*32+17) /* "" Fill RSB on VM exit when EIBRS is enabled */
++#define X86_FEATURE_MSR_TSX_CTRL	(11*32+18) /* "" MSR IA32_TSX_CTRL (Intel) implemented */
  
--	struct mutex tx_mutex;
-+	spinlock_t tx_lock;
- 	unsigned int tx_bytes;		/* TX data outstanding */
- #define TX_THRESH_HI		8192
- #define TX_THRESH_LO		2048
-@@ -820,14 +820,15 @@ static void __gsm_data_queue(struct gsm_
-  *
-  *	Add data to the transmit queue and try and get stuff moving
-  *	out of the mux tty if not already doing so. Take the
-- *	the gsm tx mutex and dlci lock.
-+ *	the gsm tx lock and dlci lock.
-  */
- 
- static void gsm_data_queue(struct gsm_dlci *dlci, struct gsm_msg *msg)
- {
--	mutex_lock(&dlci->gsm->tx_mutex);
-+	unsigned long flags;
-+	spin_lock_irqsave(&dlci->gsm->tx_lock, flags);
- 	__gsm_data_queue(dlci, msg);
--	mutex_unlock(&dlci->gsm->tx_mutex);
-+	spin_unlock_irqrestore(&dlci->gsm->tx_lock, flags);
+ /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX), word 12 */
+ #define X86_FEATURE_AVX512_BF16		(12*32+ 5) /* AVX512 BFLOAT16 instructions */
+--- a/arch/x86/kernel/cpu/tsx.c
++++ b/arch/x86/kernel/cpu/tsx.c
+@@ -58,24 +58,6 @@ void tsx_enable(void)
+ 	wrmsrl(MSR_IA32_TSX_CTRL, tsx);
  }
  
- /**
-@@ -839,7 +840,7 @@ static void gsm_data_queue(struct gsm_dl
-  *	is data. Keep to the MRU of the mux. This path handles the usual tty
-  *	interface which is a byte stream with optional modem data.
-  *
-- *	Caller must hold the tx_mutex of the mux.
-+ *	Caller must hold the tx_lock of the mux.
-  */
- 
- static int gsm_dlci_data_output(struct gsm_mux *gsm, struct gsm_dlci *dlci)
-@@ -902,7 +903,7 @@ static int gsm_dlci_data_output(struct g
-  *	is data. Keep to the MRU of the mux. This path handles framed data
-  *	queued as skbuffs to the DLCI.
-  *
-- *	Caller must hold the tx_mutex of the mux.
-+ *	Caller must hold the tx_lock of the mux.
-  */
- 
- static int gsm_dlci_data_output_framed(struct gsm_mux *gsm,
-@@ -918,7 +919,7 @@ static int gsm_dlci_data_output_framed(s
- 	if (dlci->adaption == 4)
- 		overhead = 1;
- 
--	/* dlci->skb is locked by tx_mutex */
-+	/* dlci->skb is locked by tx_lock */
- 	if (dlci->skb == NULL) {
- 		dlci->skb = skb_dequeue_tail(&dlci->skb_list);
- 		if (dlci->skb == NULL)
-@@ -1018,12 +1019,13 @@ static void gsm_dlci_data_sweep(struct g
- 
- static void gsm_dlci_data_kick(struct gsm_dlci *dlci)
+-static bool __init tsx_ctrl_is_supported(void)
+-{
+-	u64 ia32_cap = x86_read_arch_cap_msr();
+-
+-	/*
+-	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
+-	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
+-	 *
+-	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
+-	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
+-	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
+-	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
+-	 * tsx= cmdline requests will do nothing on CPUs without
+-	 * MSR_IA32_TSX_CTRL support.
+-	 */
+-	return !!(ia32_cap & ARCH_CAP_TSX_CTRL_MSR);
+-}
+-
+ static enum tsx_ctrl_states x86_get_tsx_auto_mode(void)
  {
-+	unsigned long flags;
- 	int sweep;
- 
- 	if (dlci->constipated)
- 		return;
- 
--	mutex_lock(&dlci->gsm->tx_mutex);
-+	spin_lock_irqsave(&dlci->gsm->tx_lock, flags);
- 	/* If we have nothing running then we need to fire up */
- 	sweep = (dlci->gsm->tx_bytes < TX_THRESH_LO);
- 	if (dlci->gsm->tx_bytes == 0) {
-@@ -1034,7 +1036,7 @@ static void gsm_dlci_data_kick(struct gs
- 	}
- 	if (sweep)
- 		gsm_dlci_data_sweep(dlci->gsm);
--	mutex_unlock(&dlci->gsm->tx_mutex);
-+	spin_unlock_irqrestore(&dlci->gsm->tx_lock, flags);
- }
- 
- /*
-@@ -1256,6 +1258,7 @@ static void gsm_control_message(struct g
- 						const u8 *data, int clen)
- {
- 	u8 buf[1];
-+	unsigned long flags;
- 
- 	switch (command) {
- 	case CMD_CLD: {
-@@ -1277,9 +1280,9 @@ static void gsm_control_message(struct g
- 		gsm->constipated = false;
- 		gsm_control_reply(gsm, CMD_FCON, NULL, 0);
- 		/* Kick the link in case it is idling */
--		mutex_lock(&gsm->tx_mutex);
-+		spin_lock_irqsave(&gsm->tx_lock, flags);
- 		gsm_data_kick(gsm, NULL);
--		mutex_unlock(&gsm->tx_mutex);
-+		spin_unlock_irqrestore(&gsm->tx_lock, flags);
- 		break;
- 	case CMD_FCOFF:
- 		/* Modem wants us to STFU */
-@@ -2225,7 +2228,6 @@ static void gsm_free_mux(struct gsm_mux
- 			break;
- 		}
- 	}
--	mutex_destroy(&gsm->tx_mutex);
- 	mutex_destroy(&gsm->mutex);
- 	kfree(gsm->txframe);
- 	kfree(gsm->buf);
-@@ -2297,12 +2299,12 @@ static struct gsm_mux *gsm_alloc_mux(voi
- 	}
- 	spin_lock_init(&gsm->lock);
- 	mutex_init(&gsm->mutex);
--	mutex_init(&gsm->tx_mutex);
- 	kref_init(&gsm->ref);
- 	INIT_LIST_HEAD(&gsm->tx_list);
- 	timer_setup(&gsm->t2_timer, gsm_control_retransmit, 0);
- 	init_waitqueue_head(&gsm->event);
- 	spin_lock_init(&gsm->control_lock);
-+	spin_lock_init(&gsm->tx_lock);
- 
- 	gsm->t1 = T1;
- 	gsm->t2 = T2;
-@@ -2327,7 +2329,6 @@ static struct gsm_mux *gsm_alloc_mux(voi
- 	}
- 	spin_unlock(&gsm_mux_lock);
- 	if (i == MAX_MUX) {
--		mutex_destroy(&gsm->tx_mutex);
- 		mutex_destroy(&gsm->mutex);
- 		kfree(gsm->txframe);
- 		kfree(gsm->buf);
-@@ -2652,15 +2653,16 @@ static int gsmld_open(struct tty_struct
- static void gsmld_write_wakeup(struct tty_struct *tty)
- {
- 	struct gsm_mux *gsm = tty->disc_data;
-+	unsigned long flags;
- 
- 	/* Queue poll */
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
--	mutex_lock(&gsm->tx_mutex);
-+	spin_lock_irqsave(&gsm->tx_lock, flags);
- 	gsm_data_kick(gsm, NULL);
- 	if (gsm->tx_bytes < TX_THRESH_LO) {
- 		gsm_dlci_data_sweep(gsm);
- 	}
--	mutex_unlock(&gsm->tx_mutex);
-+	spin_unlock_irqrestore(&gsm->tx_lock, flags);
- }
- 
- /**
-@@ -2703,6 +2705,7 @@ static ssize_t gsmld_write(struct tty_st
- 			   const unsigned char *buf, size_t nr)
- {
- 	struct gsm_mux *gsm = tty->disc_data;
-+	unsigned long flags;
- 	int space;
+ 	if (boot_cpu_has_bug(X86_BUG_TAA))
+@@ -89,9 +71,22 @@ void __init tsx_init(void)
+ 	char arg[5] = {};
  	int ret;
  
-@@ -2710,13 +2713,13 @@ static ssize_t gsmld_write(struct tty_st
- 		return -ENODEV;
+-	if (!tsx_ctrl_is_supported())
++	/*
++	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
++	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
++	 *
++	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
++	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
++	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
++	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
++	 * tsx= cmdline requests will do nothing on CPUs without
++	 * MSR_IA32_TSX_CTRL support.
++	 */
++	if (!(x86_read_arch_cap_msr() & ARCH_CAP_TSX_CTRL_MSR))
+ 		return;
  
- 	ret = -ENOBUFS;
--	mutex_lock(&gsm->tx_mutex);
-+	spin_lock_irqsave(&gsm->tx_lock, flags);
- 	space = tty_write_room(tty);
- 	if (space >= nr)
- 		ret = tty->ops->write(tty, buf, nr);
- 	else
- 		set_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
--	mutex_unlock(&gsm->tx_mutex);
-+	spin_unlock_irqrestore(&gsm->tx_lock, flags);
- 
- 	return ret;
- }
++	setup_force_cpu_cap(X86_FEATURE_MSR_TSX_CTRL);
++
+ 	ret = cmdline_find_option(boot_command_line, "tsx", arg, sizeof(arg));
+ 	if (ret >= 0) {
+ 		if (!strcmp(arg, "on")) {
 
 
