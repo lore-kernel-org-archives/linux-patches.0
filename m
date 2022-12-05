@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179A15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74942C433C1;
-	Mon,  5 Dec 2022 19:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A264D15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274CFC433C1;
+	Mon,  5 Dec 2022 19:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267622;
-	bh=TP0ljK11fAW1enTHNvLLprTPXgc/IcGOq7HXLotMFnA=;
+	s=korg; t=1670267625;
+	bh=ddOUfnrqpkL//QGOgwQwgPE2qRjog9BeZZWlOrVj6NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uph+SDCo7hteTDu/TDdcz+ZAvaUE42DajilSiV7Ux2hk0+Pav/qxIauQ+Lzp9YGVW
-	 4rtEDJKlgryZguD/Ozv0ODBhbFhnKkCfnW4dG3AN4gYw8TBSUKrdlZisOAqfyTWBvc
-	 CYyXGGIgbi/ZmLwFtAyQYGjJEB7xOPYB6FJssjzk=
+	b=oiLSWZXDvF9M2IHA31P0jCYvTcwo3RqvH5oDIAJ5XtdCRESGKusNjl8hABOGCLkTh
+	 3dTRzwYCEv+/Ygd9AV8pgz2v3bV0RRQXHbEzPSMfc3rranavM/0bIH7qaSIqo6PMC3
+	 MKwkcGKLRfW/qcfd6O+ZuS+bqDUfl8eFVIhK4YjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 54/62] iommu/vt-d: Fix PCI device refcount leak in dmar_dev_scope_init()
-Date: Mon,  5 Dec 2022 20:09:51 +0100
-Message-Id: <20221205190800.118972532@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 4.9 55/62] tcp/udp: Fix memory leak in ipv6_renew_options().
+Date: Mon,  5 Dec 2022 20:09:52 +0100
+Message-Id: <20221205190800.156807515@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,43 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 4bedbbd782ebbe7287231fea862c158d4f08a9e3 ]
+commit 3c52c6bb831f6335c176a0fc7214e26f43adbd11 upstream.
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+syzbot reported a memory leak [0] related to IPV6_ADDRFORM.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() for the error path to avoid reference count leak.
+The scenario is that while one thread is converting an IPv6 socket into
+IPv4 with IPV6_ADDRFORM, another thread calls do_ipv6_setsockopt() and
+allocates memory to inet6_sk(sk)->XXX after conversion.
 
-Fixes: 2e4552893038 ("iommu/vt-d: Unify the way to process DMAR device scope array")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221121113649.190393-3-wangxiongfeng2@huawei.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Then, the converted sk with (tcp|udp)_prot never frees the IPv6 resources,
+which inet6_destroy_sock() should have cleaned up.
+
+setsockopt(IPV6_ADDRFORM)                 setsockopt(IPV6_DSTOPTS)
++-----------------------+                 +----------------------+
+- do_ipv6_setsockopt(sk, ...)
+  - sockopt_lock_sock(sk)                 - do_ipv6_setsockopt(sk, ...)
+    - lock_sock(sk)                         ^._ called via tcpv6_prot
+  - WRITE_ONCE(sk->sk_prot, &tcp_prot)          before WRITE_ONCE()
+  - xchg(&np->opt, NULL)
+  - txopt_put(opt)
+  - sockopt_release_sock(sk)
+    - release_sock(sk)                      - sockopt_lock_sock(sk)
+                                              - lock_sock(sk)
+                                            - ipv6_set_opt_hdr(sk, ...)
+                                              - ipv6_update_options(sk, opt)
+                                                - xchg(&inet6_sk(sk)->opt, opt)
+                                                  ^._ opt is never freed.
+
+                                            - sockopt_release_sock(sk)
+                                              - release_sock(sk)
+
+Since IPV6_DSTOPTS allocates options under lock_sock(), we can avoid this
+memory leak by testing whether sk_family is changed by IPV6_ADDRFORM after
+acquiring the lock.
+
+This issue exists from the initial commit between IPV6_ADDRFORM and
+IPV6_PKTOPTIONS.
+
+[0]:
+BUG: memory leak
+unreferenced object 0xffff888009ab9f80 (size 96):
+  comm "syz-executor583", pid 328, jiffies 4294916198 (age 13.034s)
+  hex dump (first 32 bytes):
+    01 00 00 00 48 00 00 00 08 00 00 00 00 00 00 00  ....H...........
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000002ee98ae1>] kmalloc include/linux/slab.h:605 [inline]
+    [<000000002ee98ae1>] sock_kmalloc+0xb3/0x100 net/core/sock.c:2566
+    [<0000000065d7b698>] ipv6_renew_options+0x21e/0x10b0 net/ipv6/exthdrs.c:1318
+    [<00000000a8c756d7>] ipv6_set_opt_hdr net/ipv6/ipv6_sockglue.c:354 [inline]
+    [<00000000a8c756d7>] do_ipv6_setsockopt.constprop.0+0x28b7/0x4350 net/ipv6/ipv6_sockglue.c:668
+    [<000000002854d204>] ipv6_setsockopt+0xdf/0x190 net/ipv6/ipv6_sockglue.c:1021
+    [<00000000e69fdcf8>] tcp_setsockopt+0x13b/0x2620 net/ipv4/tcp.c:3789
+    [<0000000090da4b9b>] __sys_setsockopt+0x239/0x620 net/socket.c:2252
+    [<00000000b10d192f>] __do_sys_setsockopt net/socket.c:2263 [inline]
+    [<00000000b10d192f>] __se_sys_setsockopt net/socket.c:2260 [inline]
+    [<00000000b10d192f>] __x64_sys_setsockopt+0xbe/0x160 net/socket.c:2260
+    [<000000000a80d7aa>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<000000000a80d7aa>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+    [<000000004562b5c6>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/dmar.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/ipv6_sockglue.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/iommu/dmar.c b/drivers/iommu/dmar.c
-index d8b8cf36de31..fb03616f9ade 100644
---- a/drivers/iommu/dmar.c
-+++ b/drivers/iommu/dmar.c
-@@ -803,6 +803,7 @@ int __init dmar_dev_scope_init(void)
- 			info = dmar_alloc_pci_notify_info(dev,
- 					BUS_NOTIFY_ADD_DEVICE);
- 			if (!info) {
-+				pci_dev_put(dev);
- 				return dmar_dev_scope_status;
- 			} else {
- 				dmar_pci_bus_add_dev(info);
--- 
-2.35.1
-
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -165,6 +165,12 @@ static int do_ipv6_setsockopt(struct soc
+ 		rtnl_lock();
+ 	lock_sock(sk);
+ 
++	/* Another thread has converted the socket into IPv4 with
++	 * IPV6_ADDRFORM concurrently.
++	 */
++	if (unlikely(sk->sk_family != AF_INET6))
++		goto unlock;
++
+ 	switch (optname) {
+ 
+ 	case IPV6_ADDRFORM:
+@@ -897,6 +903,7 @@ pref_skip_coa:
+ 		break;
+ 	}
+ 
++unlock:
+ 	release_sock(sk);
+ 	if (needs_rtnl)
+ 		rtnl_unlock();
 
 
