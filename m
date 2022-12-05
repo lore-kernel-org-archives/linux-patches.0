@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0660315C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D33BC433C1;
-	Mon,  5 Dec 2022 19:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB8815C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2858EC433C1;
+	Mon,  5 Dec 2022 19:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268878;
-	bh=LNwKC9H6fFmnsHVuI5+dKR/faf6ur31AcxhBeRPaJiI=;
+	s=korg; t=1670268881;
+	bh=+WFqcAr1g/NY+Mqs7VndDxG92ngCZI81Fyv1D9QeYoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOHydUX8AvmyjoKs6QGctD6DQxEPa260BUvdCRXRo63BUYTAm5/DB8NhpUrBXDhKK
-	 riFRQVbAUtAxk1Ue9LDo+iwJXA+IGGNwlQ13EyKUnJb/kPWpdmX/ADQJ8eqEhZ4xGJ
-	 IQaYgf9pomthWGlHzUUnheNOyVlAGKAIyw6jXlBg=
+	b=WgUnO82QB11V1n9WawWyssRhHQ10m8jYWEAglGYbKZQPx26ek0PynNRc2WFzzLIEO
+	 U1moSUCAMGSg3ObchSm9g1816G+tizAYaB7DJyOyZfkuaopuOy06QNKZKFGdGA58Vc
+	 hY/9SaRp5TLJuSYTjN6uOT1Xyg+EHXjoWCbMP5Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/120] bpf, perf: Use subprog name when reporting subprog ksymbol
-Date: Mon,  5 Dec 2022 20:09:17 +0100
-Message-Id: <20221205190807.096590249@linuxfoundation.org>
+Subject: [PATCH 5.15 018/120] scripts/faddr2line: Fix regression in name resolution on ppc64le
+Date: Mon,  5 Dec 2022 20:09:18 +0100
+Message-Id: <20221205190807.124076949@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,55 +38,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
 
-[ Upstream commit 47df8a2f78bc34ff170d147d05b121f84e252b85 ]
+[ Upstream commit 2d77de1581bb5b470486edaf17a7d70151131afd ]
 
-Since commit bfea9a8574f3 ("bpf: Add name to struct bpf_ksym"), when
-reporting subprog ksymbol to perf, prog name instead of subprog name is
-used. The backtrace of bpf program with subprogs will be incorrect as
-shown below:
+Commit 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section
+failures") can cause faddr2line to fail on ppc64le on some
+distributions, while it works fine on other distributions. The failure
+can be attributed to differences in the readelf output.
 
-  ffffffffc02deace bpf_prog_e44a3057dcb151f8_overwrite+0x66
-  ffffffffc02de9f7 bpf_prog_e44a3057dcb151f8_overwrite+0x9f
-  ffffffffa71d8d4e trace_call_bpf+0xce
-  ffffffffa71c2938 perf_call_bpf_enter.isra.0+0x48
+  $ ./scripts/faddr2line vmlinux find_busiest_group+0x00
+  no match for find_busiest_group+0x00
 
-overwrite is the entry program and it invokes the overwrite_htab subprog
-through bpf_loop, but in above backtrace, overwrite program just jumps
-inside itself.
+On ppc64le, readelf adds the localentry tag before the symbol name on
+some distributions, and adds the localentry tag after the symbol name on
+other distributions. This problem has been discussed previously:
 
-Fixing it by using subprog name when reporting subprog ksymbol. After
-the fix, the output of perf script will be correct as shown below:
+  https://lore.kernel.org/bpf/20191211160133.GB4580@calabresa/
 
-  ffffffffc031aad2 bpf_prog_37c0bec7d7c764a4_overwrite_htab+0x66
-  ffffffffc031a9e7 bpf_prog_c7eb827ef4f23e71_overwrite+0x9f
-  ffffffffa3dd8d4e trace_call_bpf+0xce
-  ffffffffa3dc2938 perf_call_bpf_enter.isra.0+0x48
+This problem can be overcome by filtering out the localentry tags in the
+readelf output. Similar fixes are already present in the kernel by way
+of the following commits:
 
-Fixes: bfea9a8574f3 ("bpf: Add name to struct bpf_ksym")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20221114095733.158588-1-houtao@huaweicloud.com
+  1fd6cee127e2 ("libbpf: Fix VERSIONED_SYM_COUNT number parsing")
+  aa915931ac3e ("libbpf: Fix readelf output parsing for Fedora")
+
+[jpoimboe: rework commit log]
+
+Fixes: 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section failures")
+Signed-off-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
+Acked-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Link: https://lore.kernel.org/r/20220927075211.897152-1-srikar@linux.vnet.ibm.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/faddr2line | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 60cb300fa0d0..44f982b73640 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9077,7 +9077,7 @@ static void perf_event_bpf_emit_ksymbols(struct bpf_prog *prog,
- 				PERF_RECORD_KSYMBOL_TYPE_BPF,
- 				(u64)(unsigned long)subprog->bpf_func,
- 				subprog->jited_len, unregister,
--				prog->aux->ksym.name);
-+				subprog->aux->ksym.name);
- 		}
- 	}
+diff --git a/scripts/faddr2line b/scripts/faddr2line
+index 57099687e5e1..9e730b805e87 100755
+--- a/scripts/faddr2line
++++ b/scripts/faddr2line
+@@ -73,7 +73,8 @@ command -v ${ADDR2LINE} >/dev/null 2>&1 || die "${ADDR2LINE} isn't installed"
+ find_dir_prefix() {
+ 	local objfile=$1
+ 
+-	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | ${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
++	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' |
++		${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
+ 	[[ -z $start_kernel_addr ]] && return
+ 
+ 	local file_line=$(${ADDR2LINE} -e $objfile $start_kernel_addr)
+@@ -177,7 +178,7 @@ __faddr2line() {
+ 				found=2
+ 				break
+ 			fi
+-		done < <(${READELF} --symbols --wide $objfile | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
++		done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
+ 
+ 		if [[ $found = 0 ]]; then
+ 			warn "can't find symbol: sym_name: $sym_name sym_sec: $sym_sec sym_addr: $sym_addr sym_elf_size: $sym_elf_size"
+@@ -258,7 +259,7 @@ __faddr2line() {
+ 
+ 		DONE=1
+ 
+-	done < <(${READELF} --symbols --wide $objfile | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
++	done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
  }
+ 
+ [[ $# -lt 2 ]] && usage
 -- 
 2.35.1
 
