@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B77415C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3811C433C1;
-	Mon,  5 Dec 2022 19:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142A115C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A346C433C1;
+	Mon,  5 Dec 2022 19:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269240;
-	bh=273o+0zNsWLkRViHXtdCrz0CLk8WkOC8lE6pgoZ4+QM=;
+	s=korg; t=1670269242;
+	bh=T9bSYkZ+amxtMrzcKBgwPR3EGbvabPVWNmiw2eC8kjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrBy6slmsh1ns72AyjLme2biorOK0PJPfoBMV9oPtvqADY7wDcngVr7ppw0cdpKO9
-	 07DqPFHpii3pPGDqhu422qd4ljj2h2PbtDl8iK3TuELt93xZoO/vHk9eIgpTCaCFqs
-	 vADb0KyKpx12Ao/mzFItHi+FrFyXAYH9V31P56nw=
+	b=0A6GYRrseQJnQDFnqgvJY4BQekQgO29QPGn4h8mMd59JqszOVBLJ3/x8vRCQNA+rn
+	 KxaWpLgAq9N8Yl0y37dbtKuSzLhk5qioQ7QO/UfiGhYyejc6t+vGrmCUVqT0R56A77
+	 K3WSND+4WoMIUc1s+rgFf70iCbA3m0yWBS2Sfc7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jaco Coetzee <jaco.coetzee@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/153] net: pch_gbe: fix pci device refcount leak while module exiting
-Date: Mon,  5 Dec 2022 20:09:10 +0100
-Message-Id: <20221205190809.490591701@linuxfoundation.org>
+Subject: [PATCH 5.4 027/153] nfp: add port from netdev validation for EEPROM access
+Date: Mon,  5 Dec 2022 20:09:11 +0100
+Message-Id: <20221205190809.516889238@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,58 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jaco Coetzee <jaco.coetzee@corigine.com>
 
-[ Upstream commit 5619537284f1017e9f6c7500b02b859b3830a06d ]
+[ Upstream commit 0873016d46f6dfafd1bdf4d9b935b3331b226f7c ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put().
+Setting of the port flag `NFP_PORT_CHANGED`, introduced
+to ensure the correct reading of EEPROM data, causes a
+fatal kernel NULL pointer dereference in cases where
+the target netdev type cannot be determined.
 
-In pch_gbe_probe(), pci_get_domain_bus_and_slot() is called,
-so in error path in probe() and remove() function, pci_dev_put()
-should be called to avoid refcount leak. Compile tested only.
+Add validation of port struct pointer before attempting
+to set the `NFP_PORT_CHANGED` flag. Return that operation
+is not supported if the netdev type cannot be determined.
 
-Fixes: 1a0bdadb4e36 ("net/pch_gbe: supports eg20t ptp clock")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221117135148.301014-1-yangyingliang@huawei.com
+Fixes: 4ae97cae07e1 ("nfp: ethtool: fix the display error of `ethtool -m DEVNAME`")
+Signed-off-by: Jaco Coetzee <jaco.coetzee@corigine.com>
+Reviewed-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-index cc442cd775ff..45b7f0f419c9 100644
---- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-+++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-@@ -2481,6 +2481,7 @@ static void pch_gbe_remove(struct pci_dev *pdev)
- 	unregister_netdev(netdev);
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+index 46d6988829ff..ff8810357181 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
++++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
+@@ -1127,6 +1127,9 @@ nfp_port_get_module_info(struct net_device *netdev,
+ 	u8 data;
  
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+	pci_dev_put(adapter->ptp_pdev);
- 
- 	free_netdev(netdev);
- }
-@@ -2562,7 +2563,7 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 	/* setup the private structure */
- 	ret = pch_gbe_sw_init(adapter);
- 	if (ret)
--		goto err_free_netdev;
-+		goto err_put_dev;
- 
- 	/* Initialize PHY */
- 	ret = pch_gbe_init_phy(adapter);
-@@ -2620,6 +2621,8 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 
- err_free_adapter:
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+err_put_dev:
-+	pci_dev_put(adapter->ptp_pdev);
- err_free_netdev:
- 	free_netdev(netdev);
- 	return ret;
+ 	port = nfp_port_from_netdev(netdev);
++	if (!port)
++		return -EOPNOTSUPP;
++
+ 	/* update port state to get latest interface */
+ 	set_bit(NFP_PORT_CHANGED, &port->flags);
+ 	eth_port = nfp_port_get_eth_port(port);
 -- 
 2.35.1
 
