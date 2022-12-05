@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2864215C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F110C433C1;
-	Mon,  5 Dec 2022 19:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D150015C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F9AC433B5;
+	Mon,  5 Dec 2022 19:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269180;
-	bh=Lig3E6wMBEtV4OeE4yo+tqLPK2yCj11/52hSl1WASjI=;
+	s=korg; t=1670269182;
+	bh=68iC2reItIPN/C9Tph0+kDNZHHGfW5/bahkEUGI+ecM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXcmTXqEQD9ghlhfSu6MqQBajNYmsk9pS08XkGvvz95PD8Q8cONVgHT8AsKVTvguy
-	 HAE7Oa0xJG4dXaGgT7OI/jL3q8SI2O/HdmivtYadJkQ1Iazma1KHG+Qnrg1ARUCdWX
-	 lvsukCX6M3MiI7L2mb/X9DDgN7Fjh4yFgrt+XJsQ=
+	b=dzG4ViYgi8o4BuD9ufcL2MH2mGK07T+4cR1ZbrRG/hnJcI1OMe07BV+RLslg40GVB
+	 Xezy2zS50jMhVglRgcil2WQIoLvvXc+mZllXW4LGgD6A4AgtP8RFeWOE3Ks0LBEF6J
+	 yYoZv4wglpiB4L0ymxt8NcQtPjJ/z4zxLFWQQrg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 033/153] tipc: check skb_linearize() return value in tipc_disc_rcv()
-Date: Mon,  5 Dec 2022 20:09:17 +0100
-Message-Id: <20221205190809.681986754@linuxfoundation.org>
+Subject: [PATCH 5.4 034/153] xfrm: Fix ignored return value in xfrm6_init()
+Date: Mon,  5 Dec 2022 20:09:18 +0100
+Message-Id: <20221205190809.709347122@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,39 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit cd0f6421162201e4b22ce757a1966729323185eb ]
+[ Upstream commit 40781bfb836eda57d19c0baa37c7e72590e05fdc ]
 
-If skb_linearize() fails in tipc_disc_rcv(), we need to free the skb instead of
-handle it.
+When IPv6 module initializing in xfrm6_init(), register_pernet_subsys()
+is possible to fail but its return value is ignored.
 
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Link: https://lore.kernel.org/r/20221119072832.7896-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If IPv6 initialization fails later and xfrm6_fini() is called,
+removing uninitialized list in xfrm6_net_ops will cause null-ptr-deref:
+
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 PID: 330 Comm: insmod
+RIP: 0010:unregister_pernet_operations+0xc9/0x450
+Call Trace:
+ <TASK>
+ unregister_pernet_subsys+0x31/0x3e
+ xfrm6_fini+0x16/0x30 [ipv6]
+ ip6_route_init+0xcd/0x128 [ipv6]
+ inet6_init+0x29c/0x602 [ipv6]
+ ...
+
+Fix it by catching the error return value of register_pernet_subsys().
+
+Fixes: 8d068875caca ("xfrm: make gc_thresh configurable in all namespaces")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/discover.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv6/xfrm6_policy.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index 0006c9f87199..0436c8f2967d 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -208,7 +208,10 @@ void tipc_disc_rcv(struct net *net, struct sk_buff *skb,
- 	u32 self;
- 	int err;
+diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
+index af7a4b8b1e9c..247296e3294b 100644
+--- a/net/ipv6/xfrm6_policy.c
++++ b/net/ipv6/xfrm6_policy.c
+@@ -289,9 +289,13 @@ int __init xfrm6_init(void)
+ 	if (ret)
+ 		goto out_state;
  
--	skb_linearize(skb);
-+	if (skb_linearize(skb)) {
-+		kfree_skb(skb);
-+		return;
-+	}
- 	hdr = buf_msg(skb);
- 
- 	if (caps & TIPC_NODE_ID128)
+-	register_pernet_subsys(&xfrm6_net_ops);
++	ret = register_pernet_subsys(&xfrm6_net_ops);
++	if (ret)
++		goto out_protocol;
+ out:
+ 	return ret;
++out_protocol:
++	xfrm6_protocol_fini();
+ out_state:
+ 	xfrm6_state_fini();
+ out_policy:
 -- 
 2.35.1
 
