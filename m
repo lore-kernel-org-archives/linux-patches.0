@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A531A15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257F4C433D7;
-	Mon,  5 Dec 2022 19:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B43E15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D350EC433D6;
+	Mon,  5 Dec 2022 19:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269264;
-	bh=vKYQw42CFpz/RvkLUd52+u3Vh5r/LBEDHNEGHQonPeQ=;
+	s=korg; t=1670269267;
+	bh=9e1bDwrzC8xjHeM+GlfAFgxwD1ki7khbQsbjjYy1rAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bi5Om6B951PFvnZZpsXCBE6KJWAVB/Zar111qmli0c6L0g7ouhuc6bAVhnhbeptxF
-	 In6eCY94ciM+wOQBXdPytfNleDKBE3k/custnXH4ax6EeZt5TKnU5Q7e7kUhD67oqK
-	 pJ7121WbFcSsr0MSkJUZDNf0/m2BNENJ517dU5FE=
+	b=hWIQQj/KiFd/GqnHJ7Yul4w2+Kqq37L3B6LA+7r9S3GiDhRRYnaUcgoYab6gCVCt7
+	 O6bFquJefrlpjDEThz6fjBnoCLdem2EceepWCYXQSLbPS4xKvr5QOakD3m8fCl07l1
+	 KnW3rFODS5hsOepncWFG6WPxntIPzTkorPshPcE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudolf Polzer <rpolzer@google.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/153] platform/x86: acer-wmi: Enable SW_TABLET_MODE on Switch V 10 (SW5-017)
-Date: Mon,  5 Dec 2022 20:09:48 +0100
-Message-Id: <20221205190810.562346808@linuxfoundation.org>
+Subject: [PATCH 5.4 065/153] platform/x86: hp-wmi: Ignore Smart Experience App event
+Date: Mon,  5 Dec 2022 20:09:49 +0100
+Message-Id: <20221205190810.588364070@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,45 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-[ Upstream commit 1e817b889c7d8c14e7005258e15fec62edafe03c ]
+[ Upstream commit 8b9b6a044b408283b086702b1d9e3cf4ba45b426 ]
 
-Like the Acer Switch 10 (SW5-012) and Acer Switch 10 (S1003) models
-the Acer Switch V 10 (SW5-017) supports reporting SW_TABLET_MODE
-through acer-wmi.
+Sometimes hp-wmi driver complains on system resume:
+[ 483.116451] hp_wmi: Unknown event_id - 33 - 0x0
 
-Add a DMI quirk for the SW5-017 setting force_caps to ACER_CAP_KBD_DOCK
-(these devices have no other acer-wmi based functionality).
+According to HP it's a feature called "HP Smart Experience App" and it's
+safe to be ignored.
 
-Cc: Rudolf Polzer <rpolzer@google.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Link: https://lore.kernel.org/r/20221114073842.205392-1-kai.heng.feng@canonical.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221111111639.35730-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/x86/hp-wmi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index e88bd54ff8bd..d6c4cd4262df 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -536,6 +536,15 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
- 		},
- 		.driver_data = (void *)ACER_CAP_KBD_DOCK,
- 	},
-+	{
-+		.callback = set_force_caps,
-+		.ident = "Acer Aspire Switch V 10 SW5-017",
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "SW5-017"),
-+		},
-+		.driver_data = (void *)ACER_CAP_KBD_DOCK,
-+	},
- 	{
- 		.callback = set_force_caps,
- 		.ident = "Acer One 10 (S1003)",
+diff --git a/drivers/platform/x86/hp-wmi.c b/drivers/platform/x86/hp-wmi.c
+index a67773eca3ac..d3a329b201b1 100644
+--- a/drivers/platform/x86/hp-wmi.c
++++ b/drivers/platform/x86/hp-wmi.c
+@@ -63,6 +63,7 @@ enum hp_wmi_event_ids {
+ 	HPWMI_PEAKSHIFT_PERIOD		= 0x0F,
+ 	HPWMI_BATTERY_CHARGE_PERIOD	= 0x10,
+ 	HPWMI_SANITIZATION_MODE		= 0x17,
++	HPWMI_SMART_EXPERIENCE_APP	= 0x21,
+ };
+ 
+ struct bios_args {
+@@ -632,6 +633,8 @@ static void hp_wmi_notify(u32 value, void *context)
+ 		break;
+ 	case HPWMI_SANITIZATION_MODE:
+ 		break;
++	case HPWMI_SMART_EXPERIENCE_APP:
++		break;
+ 	default:
+ 		pr_info("Unknown event_id - %d - 0x%x\n", event_id, event_data);
+ 		break;
 -- 
 2.35.1
 
