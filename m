@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABA915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2975C433C1;
-	Mon,  5 Dec 2022 19:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F3E15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D951C433C1;
+	Mon,  5 Dec 2022 19:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268043;
-	bh=XuyQpxrer/vdOQG04Abrb68X+A5RtuQdM2/BD4+AKts=;
+	s=korg; t=1670268046;
+	bh=K9TJDVY2HuVHNp/cMDY5hM0816oJm+Bagu2l78lwMiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi1beMifkC2gTS0XauX+iMGbI2OLEXihJZCVyNfGpWgnf9912/1lRXmnWpKqrJ0Ns
-	 3pG2Ege7YVzUX8A6mhGnnxaf0Ry2Nq00atHkF5VjDKHhVyjvw1AdzSVESQrvVVeVLR
-	 NzY3DseI3BhAtGxKxZDoDGMoK1EhN84mZLC5UM8o=
+	b=WigJyQJfs81wGCV13n8H9x0nLSfCaaCDUxLbCeQh1eT3WZQ7fBHXd9yEurw5Q2O9w
+	 kO9xEiErLNG8I7voEPInnbXzU+khvf0Pg4GyjxZnBBxFKafsS0Rlp6fwyu6ghCgwFR
+	 0c9bMbnBJ4unpj+CyCbt1wns3FsNDKoj7Wqzn1r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 037/105] iio: core: Fix entry not deleted when iio_register_sw_trigger_type() fails
-Date: Mon,  5 Dec 2022 20:09:09 +0100
-Message-Id: <20221205190804.388474130@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 038/105] nios2: add FORCE for vmlinuz.gz
+Date: Mon,  5 Dec 2022 20:09:10 +0100
+Message-Id: <20221205190804.421243740@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,52 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 4ad09d956f8eacff61e67e5b13ba8ebec3232f76 upstream.
+[ Upstream commit 869e4ae4cd2a23d625aaa14ae62dbebf768cb77d ]
 
-In iio_register_sw_trigger_type(), configfs_register_default_group() is
-possible to fail, but the entry add to iio_trigger_types_list is not
-deleted.
+Add FORCE to placate a warning from make:
 
-This leaves wild in iio_trigger_types_list, which can cause page fault
-when module is loading again. So fix this by list_del(&t->list) in error
-path.
+arch/nios2/boot/Makefile:24: FORCE prerequisite is missing
 
-BUG: unable to handle page fault for address: fffffbfff81d7400
-Call Trace:
-<TASK>
- iio_register_sw_trigger_type
- do_one_initcall
- do_init_module
- load_module
- ...
-
-Fixes: b662f809d410 ("iio: core: Introduce IIO software triggers")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221108032802.168623-1-chenzhongjin@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-sw-trigger.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/nios2/boot/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-sw-trigger.c
-+++ b/drivers/iio/industrialio-sw-trigger.c
-@@ -61,8 +61,12 @@ int iio_register_sw_trigger_type(struct
+diff --git a/arch/nios2/boot/Makefile b/arch/nios2/boot/Makefile
+index 2ba23a679732..70139de9a0df 100644
+--- a/arch/nios2/boot/Makefile
++++ b/arch/nios2/boot/Makefile
+@@ -20,7 +20,7 @@ $(obj)/vmlinux.bin: vmlinux FORCE
+ $(obj)/vmlinux.gz: $(obj)/vmlinux.bin FORCE
+ 	$(call if_changed,gzip)
  
- 	t->group = configfs_register_default_group(iio_triggers_group, t->name,
- 						&iio_trigger_type_group_type);
--	if (IS_ERR(t->group))
-+	if (IS_ERR(t->group)) {
-+		mutex_lock(&iio_trigger_types_lock);
-+		list_del(&t->list);
-+		mutex_unlock(&iio_trigger_types_lock);
- 		ret = PTR_ERR(t->group);
-+	}
+-$(obj)/vmImage: $(obj)/vmlinux.gz
++$(obj)/vmImage: $(obj)/vmlinux.gz FORCE
+ 	$(call if_changed,uimage)
+ 	@$(kecho) 'Kernel: $@ is ready'
  
- 	return ret;
- }
+-- 
+2.35.1
+
 
 
