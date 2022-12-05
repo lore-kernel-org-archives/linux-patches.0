@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2F315C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E472BC433D6;
-	Mon,  5 Dec 2022 19:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256C715C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94936C433C1;
+	Mon,  5 Dec 2022 19:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267644;
-	bh=1swj+Eavi1wJ2en7P6+ncsy2bOdhhjFxSt5Md9VhLfU=;
+	s=korg; t=1670267646;
+	bh=HIpm+cFt8RabJ7f65n6L4CaCXn1+9k52bADMy2Ve66A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqb8Q4slTgJwNuHB8Wg4fRwp71729Ur9W00xqblXosWCatQjyG+yQTHP+G/l64ICS
-	 B9Ez1/5paP7q/kI1qlQQ75+EPvPsc/TkrUzvy/ESA/3MShDLst+SleSzBI5LYVw/OO
-	 NLeD03l1GGPEIobug6zTNyGs/Tu5JFBbO3Mu5Kmo=
+	b=IX1f00HxOgusLw6iTANfagl3v0zgNrYcVcyQODFAiDQRceWQjYBthggbiLkc4O9hg
+	 Y2YRKhKzyDymi6Xi4VSSDVJILPxydoCILgDIXlcCGsxLvBXQhqYFsca5Hnoj8McqFW
+	 lgbpDT9g5iQvpsDx0/dWIwA95QOj8xyDGE0TE/rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.9 62/62] mmc: sdhci: Fix voltage switch delay
-Date: Mon,  5 Dec 2022 20:09:59 +0100
-Message-Id: <20221205190800.423013556@linuxfoundation.org>
+	Phil Auld <pauld@redhat.com>,
+	linux-hwmon@vger.kernel.org,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 45/62] hwmon: (coretemp) Check for null before removing sysfs attrs
+Date: Mon,  5 Dec 2022 20:09:42 +0100
+Message-Id: <20221205190759.804334208@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -34,181 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Phil Auld <pauld@redhat.com>
 
-commit c981cdfb9925f64a364f13c2b4f98f877308a408 upstream.
+[ Upstream commit a89ff5f5cc64b9fe7a992cf56988fd36f56ca82a ]
 
-Commit 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-removed voltage switch delays from sdhci because mmc core had been
-enhanced to support them. However that assumed that sdhci_set_ios()
-did a single clock change, which it did not, and so the delays in mmc
-core, which should have come after the first clock change, were not
-effective.
+If coretemp_add_core() gets an error then pdata->core_data[indx]
+is already NULL and has been kfreed. Don't pass that to
+sysfs_remove_group() as that will crash in sysfs_remove_group().
 
-Fix by avoiding re-configuring UHS and preset settings when the clock
-is turning on and the settings have not changed. That then also avoids
-the associated clock changes, so that then sdhci_set_ios() does a single
-clock change when voltage switching, and the mmc core delays become
-effective.
+[Shortened for readability]
+[91854.020159] sysfs: cannot create duplicate filename '/devices/platform/coretemp.0/hwmon/hwmon2/temp20_label'
+<cpu offline>
+[91855.126115] BUG: kernel NULL pointer dereference, address: 0000000000000188
+[91855.165103] #PF: supervisor read access in kernel mode
+[91855.194506] #PF: error_code(0x0000) - not-present page
+[91855.224445] PGD 0 P4D 0
+[91855.238508] Oops: 0000 [#1] PREEMPT SMP PTI
+...
+[91855.342716] RIP: 0010:sysfs_remove_group+0xc/0x80
+...
+[91855.796571] Call Trace:
+[91855.810524]  coretemp_cpu_offline+0x12b/0x1dd [coretemp]
+[91855.841738]  ? coretemp_cpu_online+0x180/0x180 [coretemp]
+[91855.871107]  cpuhp_invoke_callback+0x105/0x4b0
+[91855.893432]  cpuhp_thread_fun+0x8e/0x150
+...
 
-To do that has meant keeping track of driver strength (host->drv_type),
-and cases of reinitialization (host->reinit_uhs).
+Fix this by checking for NULL first.
 
-Note also, the 'turning_on_clk' restriction should not be necessary
-but is done to minimize the impact of the change on stable kernels.
-
-Fixes: 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20221128133259.38305-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Phil Auld <pauld@redhat.com>
+Cc: linux-hwmon@vger.kernel.org
+Cc: Fenghua Yu <fenghua.yu@intel.com>
+Cc: Jean Delvare <jdelvare@suse.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221117162313.3164803-1-pauld@redhat.com
+Fixes: 199e0de7f5df3 ("hwmon: (coretemp) Merge pkgtemp with coretemp")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |   61 +++++++++++++++++++++++++++++++++++++++++------
- drivers/mmc/host/sdhci.h |    2 +
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ drivers/hwmon/coretemp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -240,6 +240,7 @@ static void sdhci_init(struct sdhci_host
- 	if (soft) {
- 		/* force clock reconfiguration */
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	}
- }
-@@ -1580,12 +1581,47 @@ void sdhci_set_uhs_signaling(struct sdhc
- }
- EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
- 
-+static bool sdhci_timing_has_preset(unsigned char timing)
-+{
-+	switch (timing) {
-+	case MMC_TIMING_UHS_SDR12:
-+	case MMC_TIMING_UHS_SDR25:
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+	case MMC_TIMING_UHS_DDR50:
-+	case MMC_TIMING_MMC_DDR52:
-+		return true;
-+	};
-+	return false;
-+}
-+
-+static bool sdhci_preset_needed(struct sdhci_host *host, unsigned char timing)
-+{
-+	return !(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
-+	       sdhci_timing_has_preset(timing);
-+}
-+
-+static bool sdhci_presetable_values_change(struct sdhci_host *host, struct mmc_ios *ios)
-+{
-+	/*
-+	 * Preset Values are: Driver Strength, Clock Generator and SDCLK/RCLK
-+	 * Frequency. Check if preset values need to be enabled, or the Driver
-+	 * Strength needs updating. Note, clock changes are handled separately.
-+	 */
-+	return !host->preset_enabled &&
-+	       (sdhci_preset_needed(host, ios->timing) || host->drv_type != ios->drv_type);
-+}
-+
- static void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index be1e380fa1c3..9e81842cff7d 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -557,6 +557,10 @@ static void coretemp_remove_core(struct platform_data *pdata,
  {
- 	struct sdhci_host *host = mmc_priv(mmc);
-+	bool reinit_uhs = host->reinit_uhs;
-+	bool turning_on_clk = false;
- 	unsigned long flags;
- 	u8 ctrl;
+ 	struct temp_data *tdata = pdata->core_data[indx];
  
-+	host->reinit_uhs = false;
-+
- 	spin_lock_irqsave(&host->lock, flags);
- 
- 	if (host->flags & SDHCI_DEVICE_DEAD) {
-@@ -1611,6 +1647,8 @@ static void sdhci_set_ios(struct mmc_hos
- 		sdhci_enable_preset_value(host, false);
- 
- 	if (!ios->clock || ios->clock != host->clock) {
-+		turning_on_clk = ios->clock && !host->clock;
-+
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-@@ -1637,6 +1675,17 @@ static void sdhci_set_ios(struct mmc_hos
- 
- 	host->ops->set_bus_width(host, ios->bus_width);
- 
-+	/*
-+	 * Special case to avoid multiple clock changes during voltage
-+	 * switching.
-+	 */
-+	if (!reinit_uhs &&
-+	    turning_on_clk &&
-+	    host->timing == ios->timing &&
-+	    host->version >= SDHCI_SPEC_300 &&
-+	    !sdhci_presetable_values_change(host, ios))
++	/* if we errored on add then this is already gone */
++	if (!tdata)
 +		return;
 +
- 	ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
+ 	/* Remove the sysfs attributes */
+ 	sysfs_remove_group(&pdata->hwmon_dev->kobj, &tdata->attr_group);
  
- 	if ((ios->timing == MMC_TIMING_SD_HS ||
-@@ -1682,6 +1731,7 @@ static void sdhci_set_ios(struct mmc_hos
- 			}
- 
- 			sdhci_writew(host, ctrl_2, SDHCI_HOST_CONTROL2);
-+			host->drv_type = ios->drv_type;
- 		} else {
- 			/*
- 			 * According to SDHC Spec v3.00, if the Preset Value
-@@ -1709,19 +1759,14 @@ static void sdhci_set_ios(struct mmc_hos
- 		host->ops->set_uhs_signaling(host, ios->timing);
- 		host->timing = ios->timing;
- 
--		if (!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
--				((ios->timing == MMC_TIMING_UHS_SDR12) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR25) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR50) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR104) ||
--				 (ios->timing == MMC_TIMING_UHS_DDR50) ||
--				 (ios->timing == MMC_TIMING_MMC_DDR52))) {
-+		if (sdhci_preset_needed(host, ios->timing)) {
- 			u16 preset;
- 
- 			sdhci_enable_preset_value(host, true);
- 			preset = sdhci_get_preset_value(host);
- 			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
- 						  preset);
-+			host->drv_type = ios->drv_type;
- 		}
- 
- 		/* Re-enable SD Clock */
-@@ -2882,6 +2927,7 @@ int sdhci_resume_host(struct sdhci_host
- 		sdhci_init(host, 0);
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (host->mmc->pm_flags & MMC_PM_KEEP_POWER));
-@@ -2946,6 +2992,7 @@ int sdhci_runtime_resume_host(struct sdh
- 	/* Force clock and power re-program */
- 	host->pwr = 0;
- 	host->clock = 0;
-+	host->reinit_uhs = true;
- 	mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 	mmc->ops->set_ios(mmc, &mmc->ios);
- 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -466,6 +466,8 @@ struct sdhci_host {
- 
- 	unsigned int clock;	/* Current clock (MHz) */
- 	u8 pwr;			/* Current voltage */
-+	u8 drv_type;		/* Current UHS-I driver type */
-+	bool reinit_uhs;	/* Force UHS-related re-initialization */
- 
- 	bool runtime_suspended;	/* Host is runtime suspended */
- 	bool bus_on;		/* Bus power prevents runtime suspend */
+-- 
+2.35.1
+
 
 
