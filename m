@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D6515C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F00C433C1;
-	Mon,  5 Dec 2022 19:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E8915C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ABEC433C1;
+	Mon,  5 Dec 2022 19:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267779;
-	bh=sg5HHIKNNo6ORzPd5iL/qOGTp9eN7Ld3/znCI3ZZACM=;
+	s=korg; t=1670267782;
+	bh=4O6PVXTK/Z/K92hrS/HGd+50Eib4yQ4ny1kXlFrXtGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1wc98AkuHPNFfJcpDynFlDoR1N+CKjEFah+BCfMtm0EDM/UqnXjSgRhUhliZpKZ9
-	 /PN1+LNPrSDd+aKEbSOeCuG+ClgtdGKiadXPRv3/VcrI+hV4neTnPvQ/jast+S4oEH
-	 FToeFg5Frdo7n53E4c0OJnNnA2xzpnnCLLoZxhc8=
+	b=EQ+40WQ3cqRl7zGfoGjqi4SExOQsTw3zz8fs4w3+IH5d9nToQBYCNKiLHtLCkW1hs
+	 rmvzxjQ8mtd6qniRKrgNqGhSGg9xJ/A8ulwRlxsf7N+MVI7zSsfhCsjYK/AeU7sKnz
+	 K6nGUO4aAUJN5zh0AGUKMyWoDyIWH54f+7EZy558=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com,
-	Lin Ma <linma@zju.edu.cn>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 10/77] nfc/nci: fix race with opening and closing
-Date: Mon,  5 Dec 2022 20:09:01 +0100
-Message-Id: <20221205190801.232776174@linuxfoundation.org>
+Subject: [PATCH 4.14 42/77] hwmon: (i5500_temp) fix missing pci_disable_device()
+Date: Mon,  5 Dec 2022 20:09:33 +0100
+Message-Id: <20221205190802.369610447@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,40 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0ad6bded175e829c2ca261529c9dce39a32a042d ]
+[ Upstream commit 3b7f98f237528c496ea0b689bace0e35eec3e060 ]
 
-Previously we leverage NCI_UNREG and the lock inside nci_close_device to
-prevent the race condition between opening a device and closing a
-device. However, it still has problem because a failed opening command
-will erase the NCI_UNREG flag and allow another opening command to
-bypass the status checking.
+pci_disable_device() need be called while module exiting, switch to use
+pcim_enable(), pci_disable_device() will be called in pcim_release().
 
-This fix corrects that by making sure the NCI_UNREG is held.
-
-Reported-by: syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com
-Fixes: 48b71a9e66c2 ("NFC: add NCI_UNREG flag to eliminate the race")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ada072816be1 ("hwmon: (i5500_temp) New driver for the Intel 5500/5520/X58 chipsets")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112125606.3751430-1-yangyingliang@huawei.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 2 +-
+ drivers/hwmon/i5500_temp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 99f4573fd917..216228c39acb 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -542,7 +542,7 @@ static int nci_open_device(struct nci_dev *ndev)
- 		skb_queue_purge(&ndev->tx_q);
+diff --git a/drivers/hwmon/i5500_temp.c b/drivers/hwmon/i5500_temp.c
+index 400e0675a90b..03fa12c78109 100644
+--- a/drivers/hwmon/i5500_temp.c
++++ b/drivers/hwmon/i5500_temp.c
+@@ -117,7 +117,7 @@ static int i5500_temp_probe(struct pci_dev *pdev,
+ 	u32 tstimer;
+ 	s8 tsfsc;
  
- 		ndev->ops->close(ndev);
--		ndev->flags = 0;
-+		ndev->flags &= BIT(NCI_UNREG);
- 	}
- 
- done:
+-	err = pci_enable_device(pdev);
++	err = pcim_enable_device(pdev);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to enable device\n");
+ 		return err;
 -- 
 2.35.1
 
