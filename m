@@ -1,114 +1,146 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0765D15C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 20:06:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1670270777;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=J5OTqoTXPXM33Uzjd4PZuIqIzOIq6qcNx83qgoRc9Nk=;
-	b=cc+p94Dihy7lMKEceyywftMEtZLTccUv0ui70NNshm9ot8S1NSHgoi3RtTG3GgJDlCMESz
-	cc1h/wVIUPGVMvJew6IrEqRu+QpKMUPCrv0Ik2CTv+2jbGMit3zVMtlmwIfgxEsG1hT+Db
-	xQLzDGuH6DRrARH+WEskvFirVsHOAvU=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-618-v7mHkac9NfG-LNeQV8n2hg-1; Mon, 05 Dec 2022 15:06:13 -0500
-X-MC-Unique: v7mHkac9NfG-LNeQV8n2hg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com [10.11.54.3])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DEAF23810784;
-	Mon,  5 Dec 2022 20:06:12 +0000 (UTC)
-Received: from oldenburg.str.redhat.com (unknown [10.2.16.84])
-	by smtp.corp.redhat.com (Postfix) with ESMTPS id 93A6D112132D;
-	Mon,  5 Dec 2022 20:06:10 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Jann Horn <jannh@google.com>,  linux-kernel@vger.kernel.org,
-  patches@lists.linux.dev,  tglx@linutronix.de,
-  linux-crypto@vger.kernel.org,  linux-api@vger.kernel.org,
-  x86@kernel.org,  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-  Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,  Carlos
- O'Donell <carlos@redhat.com>,  Arnd Bergmann <arnd@arndb.de>,  Christian
- Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v11 1/4] random: add vgetrandom_alloc() syscall
-References: <20221205020046.1876356-1-Jason@zx2c4.com>
-	<20221205020046.1876356-2-Jason@zx2c4.com>
-	<CAG48ez2R=Ov2Z9zn_W9+C3gHqOkPdQKAY=4SMWDUG=NfP=3eJw@mail.gmail.com>
-	<Y45OWhyN+U975vIN@zx2c4.com>
-Date: Mon, 05 Dec 2022 21:06:06 +0100
-In-Reply-To: <Y45OWhyN+U975vIN@zx2c4.com> (Jason A. Donenfeld's message of
-	"Mon, 5 Dec 2022 21:02:34 +0100")
-Message-ID: <87bkohpqdt.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A917C
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 20:36:49 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3E8535C01D4;
+	Mon,  5 Dec 2022 15:36:48 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Mon, 05 Dec 2022 15:36:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1670272608; x=1670359008; bh=AR3KlDoBcI
+	VyuBEUEFyxxsbbBAfGvBk7uczmbc+6RoU=; b=rNZFyehtlA9O7wED4hjwZ3yL8V
+	yNLbEfvjiA7iC3UxaILI6EgB/fPl+edvdn+QYFc4NEdDkTdhO7SxwcCr2N6u9P2j
+	kVUNggAyLavTQ0dhA1jdkfe2hLwQA1Rhnp4zTY0Kqd2CDuFDW7Ik3PgsvUboTuMa
+	KAAgZODfg89j9IcyZgLpwDpauPockCj2le43+rpncsZkxNM8p7y7jczvjoHoPI9j
+	XMf0lIYPc0uZeyoyjRM8BZstYvfh4E8sK6OptG6RKOFM5eKbv6NflkPmSW/3OD6l
+	bv7AoJbNGUGYH1yGJeHNoSmOzRbRNgrnGP0WtfVESqkSclg8Av8S2Ap32zAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1670272608; x=1670359008; bh=AR3KlDoBcIVyuBEUEFyxxsbbBAfG
+	vBk7uczmbc+6RoU=; b=Q7tWuABfK0W347C3JeaYWRUEm0kz6f7g+9m1i9OH3RIZ
+	cd+/nrCnZI532QtEMSXRoo1H09AV/yY2X9oNKblHX3fU4Y9/+MDrJ0L3Zdzkjvjn
+	DL6ttO68ia3jHfvVGPWF2kh4jEzPVI++olCmIke3H2D+Mp27bb+oxvK+RrRPnlPU
+	2fS/YSM30tvcamtyN1edSR89AXtNZ4qZEQtWvDhp6zaFJQF6jrek/My8DeS8/2Ku
+	Byaxf0SoOn8AwKPdnwYTCgRIgqA1RP2kJZMdakReVedRSljQ6VPmADocmfhLQqVX
+	mKp/OJFFC9hWTLMVT9P71eskEvn28w5C6HOavQ1rUw==
+X-ME-Sender: <xms:X1aOY898LBU4HYijddReu34kEdUAn_gDL51upSN_76YJ-Rpx7TXdow>
+    <xme:X1aOY0s63dRJkUubUktrVLIybhwmGHEJqjncY62MuLjy9j-sc50PQ9tAws7gLGevT
+    uYEg4mmH3Ae8rL8MM4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeggddugedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:X1aOYyCMFSN2BS-11M_4rJPNO9_TNM4pQ6xp3Dsaq51hW5IvC1J1_Q>
+    <xmx:X1aOY8fVdH787q8KB8nzV2SZxJCwhe7lx-foGPJBXt8t4I8nXG0yoA>
+    <xmx:X1aOYxOUh7E42k66ZtC2F_StrBCfp24rwzASg6miQFJxseIl-9uIiw>
+    <xmx:YFaOY00MLmdU1HOh_0C4GbLI0I5jnkJnfBj8FgvNuzCJ2qpKsFo08w>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id C2A9CB60086; Mon,  5 Dec 2022 15:36:47 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Message-Id: <c86881a8-61b4-46ad-a02a-5252a38a9ad5@app.fastmail.com>
+In-Reply-To: <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
+References: <20221205190803.124472741@linuxfoundation.org>
+ <20221205190806.296201818@linuxfoundation.org>
+ <dfa8305f-f52f-4322-a22e-9a1e90fcfad4@app.fastmail.com>
+ <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
+Date: Mon, 05 Dec 2022 21:36:27 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Helge Deller" <deller@gmx.de>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, "Abd-Alrhman Masalkhi" <abd.masalkhi@gmail.com>,
+ "Christoph Hellwig" <hch@infradead.org>, "Sasha Levin" <sashal@kernel.org>,
+ "John David Anglin" <dave.anglin@bell.net>
+Subject: Re: [PATCH 4.19 094/105] parisc: Increase size of gcc stack frame check
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.3
 
-* Jason A. Donenfeld:
-
-> Hi Jann,
+On Mon, Dec 5, 2022, at 20:58, Helge Deller wrote:
+> On 12/5/22 20:27, Arnd Bergmann wrote:
+>> On Mon, Dec 5, 2022, at 20:10, Greg Kroah-Hartman wrote:
+>>> From: Helge Deller <deller@gmx.de>
+>>>
+>>> [ Upstream commit 55b70eed81cba1331773d4aaf5cba2bb07475cd8 ]
+>>>
+>>> parisc uses much bigger frames than other architectures, so increase the
+>>> stack frame check value to avoid compiler warnings.
+>>
+>> I had not seen this one originally, commenting on it now:
 >
-> On Mon, Dec 05, 2022 at 08:13:36PM +0100, Jann Horn wrote:
->> On Mon, Dec 5, 2022 at 3:01 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->> > +       mm->def_flags |=
->> > +               /*
->> > +                * Don't allow state to be written to swap, to preserve forward secrecy.
->> > +                * This works in conjunction with MAP_LOCKED in do_mmap(), below, which
->> > +                * actually does the locking (and associated permission check and accounting).
->> > +                * Here, VM_LOCKONFAULT together with VM_NORESERVE simply make the mlocking
->> > +                * happen the first time it's actually used, the same as when calling
->> > +                * mlock2(MLOCK_ONFAULT) from userspace.
->> > +                */
->> > +               VM_LOCKONFAULT | VM_NORESERVE |
->> 
->> Have you checked the interaction with this line in dup_mmap()?
->> "tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);"
->> 
->> As the mlock.2 manpage says, "Memory locks are not inherited by a
->> child created via fork(2)". I think the intention here is that the VMA
->> should stay unswappable after fork(), right?
->> 
->> Of course, trying to reserve more mlocked memory in fork() would also
->> be problematic...
->
-> Thanks for pointing that out! Indeed that seems problematic.
-> Fortunately, the use of WIPEONFORK at the same time as LOCKONFAULT means
-> that memory doesn't actually need to be reserved in fork() itself. So
-> something like the below seems correct and doable.
->
-> Jason
->
-> diff --git a/kernel/fork.c b/kernel/fork.c
-> index ec57cae58ff1..cd53ffff615d 100644
-> --- a/kernel/fork.c
-> +++ b/kernel/fork.c
-> @@ -656,7 +656,9 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
->  			tmp->anon_vma = NULL;
->  		} else if (anon_vma_fork(tmp, mpnt))
->  			goto fail_nomem_anon_vma_fork;
-> -		tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
-> +		if ((tmp->vm_flags & (VM_LOCKONFAULT | VM_WIPEONFORK)) !=
-> +		    (VM_LOCKONFAULT | VM_WIPEONFORK))
-> +			tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
->  		file = tmp->vm_file;
->  		if (file) {
->  			struct address_space *mapping = file->f_mapping;
+> Hi Arnd,
+> Thanks for commenting!
+> By the way, those patches went in for 5.16 kernel, so I nearly forgot
+> about them in the meantime and wonder why they pop up now... (they weren't
+> tagged for stable, but I think it's ok to push them backwards).
 
-Still it's a bit concerning that calling getrandom (the libc function)
-now apparently can kill the process if the system is under severe memory
-pressure.  In many cases, that's okay, but we wouldn't want that for
-PID 1, for example.  vm.overcommit_memory=2 mode is supposed to prevent
-such crashes, and I think NORESERVE (not shown here) sidesteps that.
+Ok, got it, I misread this as being a result of the recent
+patch that increased the limit for KASAN.
 
-Thanks,
-Florian
+>> My understanding of the parisc overhead was that this
+>> was just based on a few bytes per function call,
+>
+> What exactly do you mean by a few bytes?
+> On parisc the frame size is a multiple of 64-bytes (on 32-bit)
+> and 128 bytes (on 64bit).
+> For function calls with more than 5 (need to check exact number)
+> parameters those will be put on the stack as well.
 
+If the frame size gets rounded up to a multiple of 64 bytes, that
+would add 32 bytes (i.e. a few) on average, but it should not
+double the stack usage. Similarly limit of five register arguments
+is just one less than the typical six, so that only explains
+a few bytes of extra stack usage, but not the huge increase you
+see.
+
+>> not something that makes everything bigger. We have a few functions
+>> that get close to the normal 1024 byte limit, everything else should
+>> be no more than a few hundred bytes on any architecture.
+>
+> Sadly not on parisc.
+> Again, see commit message of 8d192bec534b, which mentions
+> compile warnings from the kernel test robot for lib/xxhash.c.
+
+lib/xxhash.c is similar to some other ones that we've seen
+grow too much on some architecture/toolchain combinations,
+as compilers tend to struggle with register allocation for
+crypto code that looks like the compiler should be able
+to unroll it all into a simpler operation, but then ends up
+spilling registers to the stack, which is of course both
+slow and wasteful to the stack size.
+
+>> If this happens for normal parisc builds without any
+>> special compilation options, that would indicate that the
+>> compiler is very broken.
+>
+> No, it does a good job. It's the ABI which requires so big stacks.
+> I see problems with some userspace apps as well which configure too
+> small stacks.
+>
+> By the way, since those patches are in I don't see any stack
+> overflows any longer. Those happened rarely in the past though.
+
+It certainly helps that you also have twice the THREAD_SIZE of
+most other architectures.
+
+On a related note, we recently enabled CONFIG_VMAP_STACK on
+32-bit arm, and this has already caught some stack overflows
+that would have otherwise resulted in silent data corruption.
+
+     Arnd
