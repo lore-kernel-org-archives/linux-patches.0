@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820D015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C4FC433D6;
-	Mon,  5 Dec 2022 19:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A7415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF707C433D7;
+	Mon,  5 Dec 2022 19:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268603;
-	bh=I1QGuDm862j4cra1z8D3IlGkDL3VtMzSF7tKom610I4=;
+	s=korg; t=1670268606;
+	bh=hMzoLuMMJx3+y2WDRW16NrwjG+DbrgJ5+S4mjHWiMYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQhXrx8kptDJFFu4uWvy/VKcKga9jwlzhYiV0DTe5Wriv5HSF6Qwkb6P4JLco+ymx
-	 smpHeEoyMhQGhqlVozzq6/5sh6gTbDYkRdBB/AHJTQBWa7uA/4F5Flb8Ya691PEylL
-	 44S5aEuB54z3LXIsfCW3YQ17j+4MnKUiG3c3xH/c=
+	b=SZUzA+cC8XsuPdQdfF8cFskQHIUbkxHymQZsWS4JvGQcxM53pQbkNz1obLi+06Wdt
+	 CWPcf1BAttda/M2DCsWSh/ArUlg+3SSlGepA8g20Ko8QmbC+wKMsTad0ai4R2LoUTe
+	 kMeSxh6bw5LQPHLaACCaI1wmPo9LYkB2YBro3kW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Davis <afd@ti.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 10/92] iio: health: afe4403: Fix oob read in afe4403_read_raw
-Date: Mon,  5 Dec 2022 20:09:23 +0100
-Message-Id: <20221205190803.822606147@linuxfoundation.org>
+Subject: [PATCH 5.10 11/92] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
+Date: Mon,  5 Dec 2022 20:09:24 +0100
+Message-Id: <20221205190803.861796432@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -38,68 +38,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 58143c1ed5882c138a3cd2251a336fc8755f23d9 ]
+[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
 
 KASAN report out-of-bounds read as follows:
 
-BUG: KASAN: global-out-of-bounds in afe4403_read_raw+0x42e/0x4c0
-Read of size 4 at addr ffffffffc02ac638 by task cat/279
+BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
+Read of size 4 at addr ffffffffc00e4658 by task cat/278
 
 Call Trace:
- afe4403_read_raw
+ afe4404_read_raw
  iio_read_channel_info
  dev_attr_show
 
 The buggy address belongs to the variable:
- afe4403_channel_leds+0x18/0xffffffffffffe9e0
+ afe4404_channel_leds+0x18/0xffffffffffffe9c0
 
-This issue can be reproduced by singe command:
+This issue can be reproduce by singe command:
 
- $ cat /sys/bus/spi/devices/spi0.0/iio\:device0/in_intensity6_raw
+ $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
 
-The array size of afe4403_channel_leds is less than channels, so access
-with chan->address cause OOB read in afe4403_read_raw. Fix it by moving
-access before use it.
+The array size of afe4404_channel_leds and afe4404_channel_offdacs
+are less than channels, so access with chan->address cause OOB read
+in afe4404_[read|write]_raw. Fix it by moving access before use them.
 
 Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
 Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20221107151946.89260-1-weiyongjun@huaweicloud.com
+Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/afe4403.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/health/afe4404.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/health/afe4403.c b/drivers/iio/health/afe4403.c
-index 38734e4ce360..82d01ac36128 100644
---- a/drivers/iio/health/afe4403.c
-+++ b/drivers/iio/health/afe4403.c
-@@ -245,14 +245,14 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
+index 61fe4932d81d..0eaa34da59a8 100644
+--- a/drivers/iio/health/afe4404.c
++++ b/drivers/iio/health/afe4404.c
+@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
  			    int *val, int *val2, long mask)
  {
- 	struct afe4403_data *afe = iio_priv(indio_dev);
--	unsigned int reg = afe4403_channel_values[chan->address];
--	unsigned int field = afe4403_channel_leds[chan->address];
-+	unsigned int reg, field;
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int value_reg = afe4404_channel_values[chan->address];
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int value_reg, led_field, offdac_field;
  	int ret;
  
  	switch (chan->type) {
  	case IIO_INTENSITY:
  		switch (mask) {
  		case IIO_CHAN_INFO_RAW:
-+			reg = afe4403_channel_values[chan->address];
- 			ret = afe4403_read(afe, reg, val);
++			value_reg = afe4404_channel_values[chan->address];
+ 			ret = regmap_read(afe->regmap, value_reg, val);
  			if (ret)
  				return ret;
-@@ -262,6 +262,7 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 			return IIO_VAL_INT;
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			ret = regmap_field_read(afe->fields[offdac_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
  	case IIO_CURRENT:
  		switch (mask) {
  		case IIO_CHAN_INFO_RAW:
-+			field = afe4403_channel_leds[chan->address];
- 			ret = regmap_field_read(afe->fields[field], val);
++			led_field = afe4404_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[led_field], val);
  			if (ret)
  				return ret;
+@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int led_field, offdac_field;
+ 
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			return regmap_field_write(afe->fields[offdac_field], val);
+ 		}
+ 		break;
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			return regmap_field_write(afe->fields[led_field], val);
+ 		}
+ 		break;
 -- 
 2.35.1
 
