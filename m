@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F4915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEA5C433C1;
-	Mon,  5 Dec 2022 19:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136DB15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE54C433C1;
+	Mon,  5 Dec 2022 19:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267601;
-	bh=CWscD7228YsuNvHqmQGJTiR6MW1wdYW95lo7ElswyI0=;
+	s=korg; t=1670267603;
+	bh=H5lwGCl2MVA5wbnPwGJBimamV4vQ9Ws6fJy7LW9PYZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4eBZ72KqoJleZtI1NCiFgsQmMu12Bg4N2EP5GAbp+Xa8yssjbmj2tr0/6qkLZXv4
-	 veaWalfJApTjyxlmvsB1aHGcQXDqr5q0fVpNK0dn0sfLT4XJCHHo3uwuKETdE8Yr3s
-	 qRbkgTPTueZwyVXjPIxrpchlMgIieYMFvYCpUTaU=
+	b=03aLJkA9AMXmHrMkNtMTN2jSS01Q6CzgvmwaEnn9xLAZHtHVgk4MZS45o9NgB4SML
+	 JXR98ZB9vLJh6JM8jhYS0ovT9zKbhraKkxmuT8i0CIQcKSowHRpig84Dpz270e3DAk
+	 cW8HF+7ADY5ixtwok8r6T+jNkSYMqoDxyai4Cvcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 18/62] net: thunderx: Fix the ACPI memory leak
-Date: Mon,  5 Dec 2022 20:09:15 +0100
-Message-Id: <20221205190758.785930793@linuxfoundation.org>
+Subject: [PATCH 4.9 19/62] s390/crashdump: fix TOD programmable field size
+Date: Mon,  5 Dec 2022 20:09:16 +0100
+Message-Id: <20221205190758.825724096@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,41 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Liao <liaoyu15@huawei.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 661e5ebbafd26d9d2e3c749f5cf591e55c7364f5 ]
+[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
 
-The ACPI buffer memory (string.pointer) should be freed as the buffer is
-not used after returning from bgx_acpi_match_id(), free it to prevent
-memory leak.
+The size of the TOD programmable field was incorrectly increased from
+four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
+save area handling").
+This leads to an elf notes section NT_S390_TODPREG which has a size of
+eight instead of four bytes in case of kdump, however even worse is
+that the contents is incorrect: it is supposed to contain only the
+contents of the TOD programmable field, but in fact contains a mix of
+the TOD programmable field (32 bit upper bits) and parts of the CPU
+timer register (lower 32 bits).
 
-Fixes: 46b903a01c05 ("net, thunder, bgx: Add support to get MAC address from ACPI.")
-Signed-off-by: Yu Liao <liaoyu15@huawei.com>
-Link: https://lore.kernel.org/r/20221123082237.1220521-1-liaoyu15@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by simply changing the size of the todpreg field within the
+save area structure. This will implicitly also fix the size of the
+corresponding elf notes sections.
+
+This also gets rid of this compile time warning:
+
+in function ‘fortify_memcpy_chk’,
+    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
+./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
+   declared with attribute warning: detected read beyond size of field
+   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  413 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/crash_dump.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-index e858b1af788d..0a58e55f8613 100644
---- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-+++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-@@ -1183,8 +1183,10 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
- 		return AE_OK;
- 	}
- 
--	if (strncmp(string.pointer, bgx_sel, 4))
-+	if (strncmp(string.pointer, bgx_sel, 4)) {
-+		kfree(string.pointer);
- 		return AE_OK;
-+	}
- 
- 	acpi_walk_namespace(ACPI_TYPE_DEVICE, handle, 1,
- 			    bgx_acpi_register_phy, NULL, bgx, NULL);
--- 
-2.35.1
-
+--- a/arch/s390/kernel/crash_dump.c
++++ b/arch/s390/kernel/crash_dump.c
+@@ -42,7 +42,7 @@ struct save_area {
+ 	u64 fprs[16];
+ 	u32 fpc;
+ 	u32 prefix;
+-	u64 todpreg;
++	u32 todpreg;
+ 	u64 timer;
+ 	u64 todcmp;
+ 	u64 vxrs_low[16];
 
 
