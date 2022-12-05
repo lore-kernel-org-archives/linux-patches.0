@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C375215C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CE3C43470;
-	Mon,  5 Dec 2022 19:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F60215C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:15:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E1FC433D6;
+	Mon,  5 Dec 2022 19:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267725;
-	bh=IujyxWxKrFtKjPTVw/6DEKMPkl1/h2lXQc0CO1TROmk=;
+	s=korg; t=1670267728;
+	bh=I0OscOKUvcVgnV1Fv4fJqNb+TlAJW3uon1dj8OesW84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQtge4wBTJXKKeRqAz+SuKb/mjd/EUvKBv5uJqBndPhBtrMgS8sjJqd8sYrnIWcER
-	 2V1oUC4EiCMKIFWOjXKELl8viADKxMR9ryFM33T5Pa/3pawCvFVP9vqtE137bGuV4H
-	 50xH57XUHc8PxvhLHryIufesLqnuWVSNM/q4TvSs=
+	b=uNdrfAq9XEkDHiss+HJnMK/VGICiQ0e6BQbyYxKxi7m7QBoeGdcPvr9xESgAqLXkC
+	 QR4fP1rX50J2dmgtkbFsmMRT51lrf63SHn8vrrPjVvK6XbFuqNDBhoZ/JbWcpUzOBL
+	 F88Mq7rf8L5tl/wCyu6+4rWNEa+shSpCEQ9AfM6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	syzbot+77e4f0...@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 29/77] nilfs2: fix nilfs_sufile_mark_dirty() not set segment usage as dirty
-Date: Mon,  5 Dec 2022 20:09:20 +0100
-Message-Id: <20221205190801.903250944@linuxfoundation.org>
+	syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 12/77] 9p/fd: fix issue of list_del corruption in p9_fd_cancel()
+Date: Mon,  5 Dec 2022 20:09:03 +0100
+Message-Id: <20221205190801.305247991@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -37,77 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 512c5ca01a3610ab14ff6309db363de51f1c13a6 upstream.
+[ Upstream commit 11c10956515b8ec44cf4f2a7b9d8bf8b9dc05ec4 ]
 
-When extending segments, nilfs_sufile_alloc() is called to get an
-unassigned segment, then mark it as dirty to avoid accidentally allocating
-the same segment in the future.
+Syz reported the following issue:
+kernel BUG at lib/list_debug.c:53!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+RIP: 0010:__list_del_entry_valid.cold+0x5c/0x72
+Call Trace:
+<TASK>
+p9_fd_cancel+0xb1/0x270
+p9_client_rpc+0x8ea/0xba0
+p9_client_create+0x9c0/0xed0
+v9fs_session_init+0x1e0/0x1620
+v9fs_mount+0xba/0xb80
+legacy_get_tree+0x103/0x200
+vfs_get_tree+0x89/0x2d0
+path_mount+0x4c0/0x1ac0
+__x64_sys_mount+0x33b/0x430
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+</TASK>
 
-But for some special cases such as a corrupted image it can be unreliable.
-If such corruption of the dirty state of the segment occurs, nilfs2 may
-reallocate a segment that is in use and pick the same segment for writing
-twice at the same time.
+The process is as follows:
+Thread A:                       Thread B:
+p9_poll_workfn()                p9_client_create()
+...                                 ...
+    p9_conn_cancel()                p9_fd_cancel()
+        list_del()                      ...
+        ...                             list_del()  //list_del
+                                                      corruption
+There is no lock protection when deleting list in p9_conn_cancel(). After
+deleting list in Thread A, thread B will delete the same list again. It
+will cause issue of list_del corruption.
 
-This will cause the problem reported by syzkaller:
-https://syzkaller.appspot.com/bug?id=c7c4748e11ffcc367cef04f76e02e931833cbd24
+Setting req->status to REQ_STATUS_ERROR under lock prevents other
+cleanup paths from trying to manipulate req_list.
+The other thread can safely check req->status because it still holds a
+reference to req at this point.
 
-This case started with segbuf1.segnum = 3, nextnum = 4 when constructed.
-It supposed segment 4 has already been allocated and marked as dirty.
-
-However the dirty state was corrupted and segment 4 usage was not dirty.
-For the first time nilfs_segctor_extend_segments() segment 4 was allocated
-again, which made segbuf2 and next segbuf3 had same segment 4.
-
-sb_getblk() will get same bh for segbuf2 and segbuf3, and this bh is added
-to both buffer lists of two segbuf.  It makes the lists broken which
-causes NULL pointer dereference.
-
-Fix the problem by setting usage as dirty every time in
-nilfs_sufile_mark_dirty(), which is called during constructing current
-segment to be written out and before allocating next segment.
-
-[chenzhongjin@huawei.com: add lock protection per Ryusuke]
-  Link: https://lkml.kernel.org/r/20221121091141.214703-1-chenzhongjin@huawei.com
-Link: https://lkml.kernel.org/r/20221118063304.140187-1-chenzhongjin@huawei.com
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reported-by: <syzbot+77e4f0...@syzkaller.appspotmail.com>
-Reported-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20221110122606.383352-1-shaozhengchao@huawei.com
+Fixes: 52f1c45dde91 ("9p: trans_fd/p9_conn_cancel: drop client lock earlier")
+Reported-by: syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+[Dominique: add description of the fix in commit message]
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/sufile.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/9p/trans_fd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -507,14 +507,22 @@ void nilfs_sufile_do_free(struct inode *
- int nilfs_sufile_mark_dirty(struct inode *sufile, __u64 segnum)
- {
- 	struct buffer_head *bh;
-+	void *kaddr;
-+	struct nilfs_segment_usage *su;
- 	int ret;
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index 9b23bf0e278c..da7fcf9d14a9 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -214,9 +214,11 @@ static void p9_conn_cancel(struct p9_conn *m, int err)
  
-+	down_write(&NILFS_MDT(sufile)->mi_sem);
- 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
- 	if (!ret) {
- 		mark_buffer_dirty(bh);
- 		nilfs_mdt_mark_dirty(sufile);
-+		kaddr = kmap_atomic(bh->b_page);
-+		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
-+		nilfs_segment_usage_set_dirty(su);
-+		kunmap_atomic(kaddr);
- 		brelse(bh);
+ 	list_for_each_entry_safe(req, rtmp, &m->req_list, req_list) {
+ 		list_move(&req->req_list, &cancel_list);
++		req->status = REQ_STATUS_ERROR;
  	}
-+	up_write(&NILFS_MDT(sufile)->mi_sem);
- 	return ret;
- }
+ 	list_for_each_entry_safe(req, rtmp, &m->unsent_req_list, req_list) {
+ 		list_move(&req->req_list, &cancel_list);
++		req->status = REQ_STATUS_ERROR;
+ 	}
  
+ 	spin_unlock(&m->client->lock);
+-- 
+2.35.1
+
 
 
