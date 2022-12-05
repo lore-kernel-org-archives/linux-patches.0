@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA5815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39196C433D7;
-	Mon,  5 Dec 2022 19:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F9115C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8542C433D6;
+	Mon,  5 Dec 2022 19:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267508;
-	bh=AbukNit9jrGYedSRVJ73HZEQC0VkQCOluTF7P4Lp7TA=;
+	s=korg; t=1670267511;
+	bh=ZPFpSGAUpCDifML/rOSuKUEhAL9wU3icO/OLBtp5L8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvTiIZu14Fe3jKclWbO6tCtr6+oozKWIBqtSWj0V0uGySpdTM5J7hFB96r8fQClSq
-	 c9c2eMsnW2uEnF3FDq097ROyLVKmDF9r7wNIhqVFwncyE5eDTFmMSXtCV2+INmk6yf
-	 MUcRW7GufQVO86lDRz2yktIbPlgvScl//p7y8NxM=
+	b=Nk/AeV2nHXRYjlidAHI7tKQcUsqZdHCh/QAc9dN29iRWhYy3VlSAkgkd2eKHY0mpN
+	 WtmSWUOFxdnL72tOep+3cuVviYFlEKIpOEz1oLH2K+98GEAPi5HKfGxZ4gfHcrMWik
+	 K1KKgYPfI4a0LX8Rp+rL7UTN124izwXL0FOPns6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Peter Kosyh <pkosyh@yandex.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 12/62] net/mlx4: Check retval of mlx4_bitmap_init
-Date: Mon,  5 Dec 2022 20:09:09 +0100
-Message-Id: <20221205190758.555662803@linuxfoundation.org>
+Subject: [PATCH 4.9 02/62] audit: fix undefined behavior in bit shift for AUDIT_BIT
+Date: Mon,  5 Dec 2022 20:08:59 +0100
+Message-Id: <20221205190758.161969653@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,41 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Kosyh <pkosyh@yandex.ru>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 594c61ffc77de0a197934aa0f1df9285c68801c6 ]
+[ Upstream commit 986d93f55bdeab1cac858d1e47b41fac10b2d7f6 ]
 
-If mlx4_bitmap_init fails, mlx4_bitmap_alloc_range will dereference
-the NULL pointer (bitmap->table).
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-Make sure, that mlx4_bitmap_alloc_range called in no error case.
+UBSAN: shift-out-of-bounds in kernel/auditfilter.c:179:23
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ audit_register_class+0x9d/0x137
+ audit_classes_init+0x4d/0xb8
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d57febe1a478 ("net/mlx4: Add A0 hybrid steering")
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Peter Kosyh <pkosyh@yandex.ru>
-Link: https://lore.kernel.org/r/20221117152806.278072-1-pkosyh@yandex.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+[PM: remove bad 'Fixes' tag as issue predates git, added in v2.6.6-rc1]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/qp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/uapi/linux/audit.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/qp.c b/drivers/net/ethernet/mellanox/mlx4/qp.c
-index 71578d48efbc..54026043b5e2 100644
---- a/drivers/net/ethernet/mellanox/mlx4/qp.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/qp.c
-@@ -696,7 +696,8 @@ static int mlx4_create_zones(struct mlx4_dev *dev,
- 			err = mlx4_bitmap_init(*bitmap + k, 1,
- 					       MLX4_QP_TABLE_RAW_ETH_SIZE - 1, 0,
- 					       0);
--			mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
-+			if (!err)
-+				mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
- 		}
+diff --git a/include/uapi/linux/audit.h b/include/uapi/linux/audit.h
+index 208df7b44e90..d7ac6b9be18e 100644
+--- a/include/uapi/linux/audit.h
++++ b/include/uapi/linux/audit.h
+@@ -170,7 +170,7 @@
+ #define AUDIT_MAX_KEY_LEN  256
+ #define AUDIT_BITMASK_SIZE 64
+ #define AUDIT_WORD(nr) ((__u32)((nr)/32))
+-#define AUDIT_BIT(nr)  (1 << ((nr) - AUDIT_WORD(nr)*32))
++#define AUDIT_BIT(nr)  (1U << ((nr) - AUDIT_WORD(nr)*32))
  
- 		if (err)
+ #define AUDIT_SYSCALL_CLASSES 16
+ #define AUDIT_CLASS_DIR_WRITE 0
 -- 
 2.35.1
 
