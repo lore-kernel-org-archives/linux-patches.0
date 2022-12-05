@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCA115C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA58C433D6;
-	Mon,  5 Dec 2022 19:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70F15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F599C433D6;
+	Mon,  5 Dec 2022 19:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269160;
-	bh=eTIar0q5yTH0PjFlwz1Yo2cBoRr9/VhWQ+C9Y1j1S2Y=;
+	s=korg; t=1670269163;
+	bh=CQytZuh4lAVbWMGShkYSAQPXRU25fdzUw6prq3XT1/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRQwm0vjMllRrmwqPdk1ohVRlfyF3id5uT3djuxIWwL9WusQ+hr98j/VjbF+yfsz6
-	 5qNPEYGnmp5Q8ip63ceHeOU67huKVlS/VbDjcIiyE09RsasFSSSZFrhp5iac2TRP+o
-	 jo535/rABZ9HvR0qsAlnf65OB2U+xlNtHnwzhVW0=
+	b=tRGm4HYwPN/g5lYC3XPP3pWClAy6ZNc3W0XvL8n1oOEMIrbPb7A3lRlAdOhpz9jHK
+	 zeTPOaVhMnVWn7e1Dp1g0l306FVFbsVUEuRlpAwde9EIqu7JwMJJhyP8ghkhT8vGgZ
+	 sPW4ElRIvrn/sTXYSnv27IDi557dqXVCcnWbDJyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 008/153] arm64/syscall: Include asm/ptrace.h in syscall_wrapper header.
-Date: Mon,  5 Dec 2022 20:08:52 +0100
-Message-Id: <20221205190808.999588008@linuxfoundation.org>
+Subject: [PATCH 5.4 009/153] RISC-V: vdso: Do not add missing symbols to version section in linker script
+Date: Mon,  5 Dec 2022 20:08:53 +0100
+Message-Id: <20221205190809.025931553@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,49 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit acfc35cfcee5df419391671ef1a631f43feee4e3 ]
+[ Upstream commit fcae44fd36d052e956e69a64642fc03820968d78 ]
 
-Add the same change for ARM64 as done in the commit 9440c4294160
-("x86/syscall: Include asm/ptrace.h in syscall_wrapper header") to
-make sure all syscalls see 'struct pt_regs' definition and resulted
-BTF for '__arm64_sys_*(struct pt_regs *regs)' functions point to
-actual struct.
+Recently, ld.lld moved from '--undefined-version' to
+'--no-undefined-version' as the default, which breaks the compat vDSO
+build:
 
-Without this patch, the BPF verifier refuses to load a tracing prog
-which accesses pt_regs.
+  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_gettimeofday' failed: symbol not defined
+  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_gettime' failed: symbol not defined
+  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_getres' failed: symbol not defined
 
-  bpf(BPF_PROG_LOAD, {prog_type=0x1a, ...}, 128) = -1 EACCES
+These symbols are not present in the compat vDSO or the regular vDSO for
+32-bit but they are unconditionally included in the version section of
+the linker script, which is prohibited with '--no-undefined-version'.
 
-With this patch, we can see the correct error, which saves us time
-in debugging the prog.
+Fix this issue by only including the symbols that are actually exported
+in the version section of the linker script.
 
-  bpf(BPF_PROG_LOAD, {prog_type=0x1a, ...}, 128) = 4
-  bpf(BPF_RAW_TRACEPOINT_OPEN, {raw_tracepoint={name=NULL, prog_fd=4}}, 128) = -1 ENOTSUPP
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221031215728.50389-1-kuniyu@amazon.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1756
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20221108171324.3377226-1-nathan@kernel.org/
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/syscall_wrapper.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/vdso/Makefile   | 3 +++
+ arch/riscv/kernel/vdso/vdso.lds.S | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/arch/arm64/include/asm/syscall_wrapper.h b/arch/arm64/include/asm/syscall_wrapper.h
-index 06d880b3526c..43a20888bf19 100644
---- a/arch/arm64/include/asm/syscall_wrapper.h
-+++ b/arch/arm64/include/asm/syscall_wrapper.h
-@@ -8,7 +8,7 @@
- #ifndef __ASM_SYSCALL_WRAPPER_H
- #define __ASM_SYSCALL_WRAPPER_H
+diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
+index a4ee3a0e7d20..c533ac869aa2 100644
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -20,6 +20,9 @@ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
  
--struct pt_regs;
-+#include <asm/ptrace.h>
+ obj-y += vdso.o vdso-syms.o
+ CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
++ifneq ($(filter vgettimeofday, $(vdso-syms)),)
++CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
++endif
  
- #define SC_ARM64_REGS_TO_ARGS(x, ...)				\
- 	__MAP(x,__SC_ARGS					\
+ # Disable gcov profiling for VDSO code
+ GCOV_PROFILE := n
+diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
+index f66a091cb890..4c45adf23259 100644
+--- a/arch/riscv/kernel/vdso/vdso.lds.S
++++ b/arch/riscv/kernel/vdso/vdso.lds.S
+@@ -62,9 +62,11 @@ VERSION
+ 	LINUX_4.15 {
+ 	global:
+ 		__vdso_rt_sigreturn;
++#ifdef HAS_VGETTIMEOFDAY
+ 		__vdso_gettimeofday;
+ 		__vdso_clock_gettime;
+ 		__vdso_clock_getres;
++#endif
+ 		__vdso_getcpu;
+ 		__vdso_flush_icache;
+ 	local: *;
 -- 
 2.35.1
 
