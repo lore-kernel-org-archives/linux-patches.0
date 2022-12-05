@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1AE15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AB0C433C1;
-	Mon,  5 Dec 2022 19:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002A315C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79293C433D6;
+	Mon,  5 Dec 2022 19:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267666;
-	bh=NSsEic6aRvSnBjUPRvE9nxR/IvJN9h8aQ8XkbEDyRkw=;
+	s=korg; t=1670267668;
+	bh=HxsHSIYrZb8/haEq9f42ResPliigrQGOpXBHsDJWV2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0vPe359dL8bwtxzYzUGZSX8/CE0ffc73Fawh6cfiEQY2Rp8FIY8IDmCy36fPkzjw
-	 xdiHPo/N7ylEk7oGpnplrH0cH9Vxg+kQpfRUrGyLDDg4Uc2VYatV2HhLDE46tI4nM9
-	 wPfL94nmvZ6LS1qgduB82kY6UlSxkqHuYAyd0ERE=
+	b=DweM8RKkt09mYy5oe4DlIfK5VX2oiYysuxkMTfGF7LY+r72x9vnT1SHVkrkCqgKHA
+	 Wph2hKdU5qJctW5w8fiPuOpeK6f4x0LmHtpjW05PEkbo55yRfwt6M2knbcnWuvg7Kp
+	 7GgNRRE5gac4hw4L5CdzgnIAV2HZtUF+crIDuSRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 52/62] ASoC: ops: Fix bounds check for _sx controls
-Date: Mon,  5 Dec 2022 20:09:49 +0100
-Message-Id: <20221205190800.050279118@linuxfoundation.org>
+Subject: [PATCH 4.9 43/62] packet: do not set TP_STATUS_CSUM_VALID on CHECKSUM_COMPLETE
+Date: Mon,  5 Dec 2022 20:09:40 +0100
+Message-Id: <20221205190759.731121710@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -34,37 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 698813ba8c580efb356ace8dbf55f61dac6063a8 ]
+[ Upstream commit b85f628aa158a653c006e9c1405a117baef8c868 ]
 
-For _sx controls the semantics of the max field is not the usual one, max
-is the number of steps rather than the maximum value. This means that our
-check in snd_soc_put_volsw_sx() needs to just check against the maximum
-value.
+CHECKSUM_COMPLETE signals that skb->csum stores the sum over the
+entire packet. It does not imply that an embedded l4 checksum
+field has been validated.
 
-Fixes: 4f1e50d6a9cf9c1b ("ASoC: ops: Reject out of bounds values in snd_soc_put_volsw_sx()")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20220511134137.169575-1-broonie@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 682f048bd494 ("af_packet: pass checksum validation status to the user")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20221128161812.640098-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 4fda8c24be29..5479927391d4 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -450,7 +450,7 @@ int snd_soc_put_volsw_sx(struct snd_kcontrol *kcontrol,
- 	val = ucontrol->value.integer.value[0];
- 	if (mc->platform_max && val > mc->platform_max)
- 		return -EINVAL;
--	if (val > max - min)
-+	if (val > max)
- 		return -EINVAL;
- 	if (val < 0)
- 		return -EINVAL;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 2ae2801dd7be..c43a4f9404fe 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2207,8 +2207,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 		status |= TP_STATUS_CSUMNOTREADY;
+ 	else if (skb->pkt_type != PACKET_OUTGOING &&
+-		 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-		  skb_csum_unnecessary(skb)))
++		 skb_csum_unnecessary(skb))
+ 		status |= TP_STATUS_CSUM_VALID;
+ 
+ 	if (snaplen > res)
+@@ -3468,8 +3467,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 			aux.tp_status |= TP_STATUS_CSUMNOTREADY;
+ 		else if (skb->pkt_type != PACKET_OUTGOING &&
+-			 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-			  skb_csum_unnecessary(skb)))
++			 skb_csum_unnecessary(skb))
+ 			aux.tp_status |= TP_STATUS_CSUM_VALID;
+ 
+ 		aux.tp_len = origlen;
 -- 
 2.35.1
 
