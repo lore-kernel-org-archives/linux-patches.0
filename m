@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EE915C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD00C433C1;
-	Mon,  5 Dec 2022 19:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8E15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:37:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2CDC433B5;
+	Mon,  5 Dec 2022 19:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269060;
-	bh=6KHX93NsxOJc1GLQB89XPX9yd9l8NIXkkQY3XOaFqYk=;
+	s=korg; t=1670269064;
+	bh=CjqNs4n+v77KlAeOp2MB+XgdRy8QykPCntYTDV0+TBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IgGBqk1Dp8t/ONLFkOrtAA+/4m5EJiQ0VMekiDbseYyNVCa/p4azrvk/Ju8c+MrvR
-	 hkvP1T0wZVTrM+tJLnH0RNRIo2kAwJJBNAKx2ySF93btjZaPo1vILY5vXFQqOFkoX0
-	 SKagHcKFnuSoDhEGV7XNn0CS5uIo3SOF99jMC04M=
+	b=epi7IUGwHs5bwG6qzppAxMsu3q//ZO6ydbVeg5T4ksrXBSDHmTCxd5oEFF0AMb7jp
+	 3n6YDFOLpWIiD2wdNekbKsJYJkYIO9eCbveBlxnbqQZW7JvPjx3u+WPnRLnYVyapsh
+	 RZlGjiSubv5He3ovCMbrNf1E+r5MvCOO+4CSWm4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-serial@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	David Rientjes <rientjes@google.com>,
-	Alex Shi <alexs@kernel.org>,
-	Alexander Duyck <alexander.duyck@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Erwan Le Ray <erwan.leray@foss.st.com>,
+	Jean Philippe Romain <jean-philippe.romain@foss.st.com>,
+	Valentin Caron <valentin.caron@foss.st.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/120] mm: __isolate_lru_page_prepare() in isolate_migratepages_block()
-Date: Mon,  5 Dec 2022 20:10:43 +0100
-Message-Id: <20221205190809.644443420@linuxfoundation.org>
+Subject: [PATCH 5.15 112/120] serial: stm32: Use TC interrupt to deassert GPIO RTS in RS485 mode
+Date: Mon,  5 Dec 2022 20:10:52 +0100
+Message-Id: <20221205190809.893879992@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -39,316 +41,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hugh Dickins <hughd@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 89f6c88a6ab4a11deb14c270f7f1454cda4f73d6 ]
+[ Upstream commit d7c76716169ddc37cf6316ff381d34ea807fbfd7 ]
 
-__isolate_lru_page_prepare() conflates two unrelated functions, with the
-flags to one disjoint from the flags to the other; and hides some of the
-important checks outside of isolate_migratepages_block(), where the
-sequence is better to be visible.  It comes from the days of lumpy
-reclaim, before compaction, when the combination made more sense.
+In case the RS485 mode is emulated using GPIO RTS, use the TC interrupt
+to deassert the GPIO RTS, otherwise the GPIO RTS stays asserted after a
+transmission ended and the RS485 cannot work.
 
-Move what's needed by mm/compaction.c isolate_migratepages_block() inline
-there, and what's needed by mm/vmscan.c isolate_lru_pages() inline there.
-
-Shorten "isolate_mode" to "mode", so the sequence of conditions is easier
-to read.  Declare a "mapping" variable, to save one call to page_mapping()
-(but not another: calling again after page is locked is necessary).
-Simplify isolate_lru_pages() with a "move_to" list pointer.
-
-Link: https://lkml.kernel.org/r/879d62a8-91cc-d3c6-fb3b-69768236df68@google.com
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Reviewed-by: Alex Shi <alexs@kernel.org>
-Cc: Alexander Duyck <alexander.duyck@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 829ae0f81ce0 ("mm: migrate: fix THP's mapcount on isolation")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Erwan Le Ray <erwan.leray@foss.st.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jean Philippe Romain <jean-philippe.romain@foss.st.com>
+Cc: Valentin Caron <valentin.caron@foss.st.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-stm32@st-md-mailman.stormreply.com
+To: linux-serial@vger.kernel.org
+Link: https://lore.kernel.org/r/20220430162845.244655-2-marex@denx.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/swap.h |   1 -
- mm/compaction.c      |  51 +++++++++++++++++++---
- mm/vmscan.c          | 101 ++++++++-----------------------------------
- 3 files changed, 62 insertions(+), 91 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 42 ++++++++++++++++++++++++++++++--
+ drivers/tty/serial/stm32-usart.h |  1 +
+ 2 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/swap.h b/include/linux/swap.h
-index ba52f3a3478e..4efd267e2937 100644
---- a/include/linux/swap.h
-+++ b/include/linux/swap.h
-@@ -378,7 +378,6 @@ extern void lru_cache_add_inactive_or_unevictable(struct page *page,
- extern unsigned long zone_reclaimable_pages(struct zone *zone);
- extern unsigned long try_to_free_pages(struct zonelist *zonelist, int order,
- 					gfp_t gfp_mask, nodemask_t *mask);
--extern bool __isolate_lru_page_prepare(struct page *page, isolate_mode_t mode);
- extern unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
- 						  unsigned long nr_pages,
- 						  gfp_t gfp_mask,
-diff --git a/mm/compaction.c b/mm/compaction.c
-index 48a2111ce437..b6bd745a2f7f 100644
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -779,7 +779,7 @@ static bool too_many_isolated(pg_data_t *pgdat)
-  * @cc:		Compaction control structure.
-  * @low_pfn:	The first PFN to isolate
-  * @end_pfn:	The one-past-the-last PFN to isolate, within same pageblock
-- * @isolate_mode: Isolation mode to be used.
-+ * @mode:	Isolation mode to be used.
-  *
-  * Isolate all pages that can be migrated from the range specified by
-  * [low_pfn, end_pfn). The range is expected to be within same pageblock.
-@@ -792,7 +792,7 @@ static bool too_many_isolated(pg_data_t *pgdat)
-  */
- static int
- isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
--			unsigned long end_pfn, isolate_mode_t isolate_mode)
-+			unsigned long end_pfn, isolate_mode_t mode)
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index f2cef5f7ae5a..86f044a96de1 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -314,6 +314,14 @@ static void stm32_usart_tx_interrupt_enable(struct uart_port *port)
+ 		stm32_usart_set_bits(port, ofs->cr1, USART_CR1_TXEIE);
+ }
+ 
++static void stm32_usart_tc_interrupt_enable(struct uart_port *port)
++{
++	struct stm32_port *stm32_port = to_stm32_port(port);
++	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
++
++	stm32_usart_set_bits(port, ofs->cr1, USART_CR1_TCIE);
++}
++
+ static void stm32_usart_tx_interrupt_disable(struct uart_port *port)
  {
- 	pg_data_t *pgdat = cc->zone->zone_pgdat;
- 	unsigned long nr_scanned = 0, nr_isolated = 0;
-@@ -800,6 +800,7 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
- 	unsigned long flags = 0;
- 	struct lruvec *locked = NULL;
- 	struct page *page = NULL, *valid_page = NULL;
-+	struct address_space *mapping;
- 	unsigned long start_pfn = low_pfn;
- 	bool skip_on_failure = false;
- 	unsigned long next_skip_pfn = 0;
-@@ -984,7 +985,7 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
- 					locked = NULL;
- 				}
+ 	struct stm32_port *stm32_port = to_stm32_port(port);
+@@ -325,6 +333,14 @@ static void stm32_usart_tx_interrupt_disable(struct uart_port *port)
+ 		stm32_usart_clr_bits(port, ofs->cr1, USART_CR1_TXEIE);
+ }
  
--				if (!isolate_movable_page(page, isolate_mode))
-+				if (!isolate_movable_page(page, mode))
- 					goto isolate_success;
- 			}
- 
-@@ -996,15 +997,15 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
- 		 * so avoid taking lru_lock and isolating it unnecessarily in an
- 		 * admittedly racy check.
- 		 */
--		if (!page_mapping(page) &&
--		    page_count(page) > page_mapcount(page))
-+		mapping = page_mapping(page);
-+		if (!mapping && page_count(page) > page_mapcount(page))
- 			goto isolate_fail;
- 
- 		/*
- 		 * Only allow to migrate anonymous pages in GFP_NOFS context
- 		 * because those do not depend on fs locks.
- 		 */
--		if (!(cc->gfp_mask & __GFP_FS) && page_mapping(page))
-+		if (!(cc->gfp_mask & __GFP_FS) && mapping)
- 			goto isolate_fail;
- 
- 		/*
-@@ -1015,9 +1016,45 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
- 		if (unlikely(!get_page_unless_zero(page)))
- 			goto isolate_fail;
- 
--		if (!__isolate_lru_page_prepare(page, isolate_mode))
-+		/* Only take pages on LRU: a check now makes later tests safe */
-+		if (!PageLRU(page))
-+			goto isolate_fail_put;
++static void stm32_usart_tc_interrupt_disable(struct uart_port *port)
++{
++	struct stm32_port *stm32_port = to_stm32_port(port);
++	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
 +
-+		/* Compaction might skip unevictable pages but CMA takes them */
-+		if (!(mode & ISOLATE_UNEVICTABLE) && PageUnevictable(page))
-+			goto isolate_fail_put;
++	stm32_usart_clr_bits(port, ofs->cr1, USART_CR1_TCIE);
++}
 +
-+		/*
-+		 * To minimise LRU disruption, the caller can indicate with
-+		 * ISOLATE_ASYNC_MIGRATE that it only wants to isolate pages
-+		 * it will be able to migrate without blocking - clean pages
-+		 * for the most part.  PageWriteback would require blocking.
-+		 */
-+		if ((mode & ISOLATE_ASYNC_MIGRATE) && PageWriteback(page))
- 			goto isolate_fail_put;
+ static void stm32_usart_rs485_rts_enable(struct uart_port *port)
+ {
+ 	struct stm32_port *stm32_port = to_stm32_port(port);
+@@ -462,6 +478,13 @@ static void stm32_usart_transmit_chars(struct uart_port *port)
+ 	u32 isr;
+ 	int ret;
  
-+		if ((mode & ISOLATE_ASYNC_MIGRATE) && PageDirty(page)) {
-+			bool migrate_dirty;
++	if (!stm32_port->hw_flow_control &&
++	    port->rs485.flags & SER_RS485_ENABLED) {
++		stm32_port->txdone = false;
++		stm32_usart_tc_interrupt_disable(port);
++		stm32_usart_rs485_rts_enable(port);
++	}
 +
-+			/*
-+			 * Only pages without mappings or that have a
-+			 * ->migratepage callback are possible to migrate
-+			 * without blocking. However, we can be racing with
-+			 * truncation so it's necessary to lock the page
-+			 * to stabilise the mapping as truncation holds
-+			 * the page lock until after the page is removed
-+			 * from the page cache.
-+			 */
-+			if (!trylock_page(page))
-+				goto isolate_fail_put;
-+
-+			mapping = page_mapping(page);
-+			migrate_dirty = !mapping || mapping->a_ops->migratepage;
-+			unlock_page(page);
-+			if (!migrate_dirty)
-+				goto isolate_fail_put;
+ 	if (port->x_char) {
+ 		if (stm32_port->tx_dma_busy)
+ 			stm32_usart_clr_bits(port, ofs->cr3, USART_CR3_DMAT);
+@@ -501,8 +524,14 @@ static void stm32_usart_transmit_chars(struct uart_port *port)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
+ 
+-	if (uart_circ_empty(xmit))
++	if (uart_circ_empty(xmit)) {
+ 		stm32_usart_tx_interrupt_disable(port);
++		if (!stm32_port->hw_flow_control &&
++		    port->rs485.flags & SER_RS485_ENABLED) {
++			stm32_port->txdone = true;
++			stm32_usart_tc_interrupt_enable(port);
 +		}
-+
- 		/* Try isolate the page */
- 		if (!TestClearPageLRU(page))
- 			goto isolate_fail_put;
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 1b63d6155416..201acea81804 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1865,69 +1865,6 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- 	return nr_reclaimed;
++	}
  }
  
--/*
-- * Attempt to remove the specified page from its LRU.  Only take this page
-- * if it is of the appropriate PageActive status.  Pages which are being
-- * freed elsewhere are also ignored.
-- *
-- * page:	page to consider
-- * mode:	one of the LRU isolation modes defined above
-- *
-- * returns true on success, false on failure.
-- */
--bool __isolate_lru_page_prepare(struct page *page, isolate_mode_t mode)
--{
--	/* Only take pages on the LRU. */
--	if (!PageLRU(page))
--		return false;
--
--	/* Compaction should not handle unevictable pages but CMA can do so */
--	if (PageUnevictable(page) && !(mode & ISOLATE_UNEVICTABLE))
--		return false;
--
--	/*
--	 * To minimise LRU disruption, the caller can indicate that it only
--	 * wants to isolate pages it will be able to operate on without
--	 * blocking - clean pages for the most part.
--	 *
--	 * ISOLATE_ASYNC_MIGRATE is used to indicate that it only wants to pages
--	 * that it is possible to migrate without blocking
--	 */
--	if (mode & ISOLATE_ASYNC_MIGRATE) {
--		/* All the caller can do on PageWriteback is block */
--		if (PageWriteback(page))
--			return false;
--
--		if (PageDirty(page)) {
--			struct address_space *mapping;
--			bool migrate_dirty;
--
--			/*
--			 * Only pages without mappings or that have a
--			 * ->migratepage callback are possible to migrate
--			 * without blocking. However, we can be racing with
--			 * truncation so it's necessary to lock the page
--			 * to stabilise the mapping as truncation holds
--			 * the page lock until after the page is removed
--			 * from the page cache.
--			 */
--			if (!trylock_page(page))
--				return false;
--
--			mapping = page_mapping(page);
--			migrate_dirty = !mapping || mapping->a_ops->migratepage;
--			unlock_page(page);
--			if (!migrate_dirty)
--				return false;
--		}
--	}
--
--	if ((mode & ISOLATE_UNMAPPED) && page_mapped(page))
--		return false;
--
--	return true;
--}
--
- /*
-  * Update LRU sizes after isolating pages. The LRU size updates must
-  * be complete before mem_cgroup_update_lru_size due to a sanity check.
-@@ -1979,11 +1916,11 @@ static unsigned long isolate_lru_pages(unsigned long nr_to_scan,
- 	unsigned long skipped = 0;
- 	unsigned long scan, total_scan, nr_pages;
- 	LIST_HEAD(pages_skipped);
--	isolate_mode_t mode = (sc->may_unmap ? 0 : ISOLATE_UNMAPPED);
+ static irqreturn_t stm32_usart_interrupt(int irq, void *ptr)
+@@ -515,6 +544,13 @@ static irqreturn_t stm32_usart_interrupt(int irq, void *ptr)
  
- 	total_scan = 0;
- 	scan = 0;
- 	while (scan < nr_to_scan && !list_empty(src)) {
-+		struct list_head *move_to = src;
- 		struct page *page;
+ 	sr = readl_relaxed(port->membase + ofs->isr);
  
- 		page = lru_to_page(src);
-@@ -1993,9 +1930,9 @@ static unsigned long isolate_lru_pages(unsigned long nr_to_scan,
- 		total_scan += nr_pages;
- 
- 		if (page_zonenum(page) > sc->reclaim_idx) {
--			list_move(&page->lru, &pages_skipped);
- 			nr_skipped[page_zonenum(page)] += nr_pages;
--			continue;
-+			move_to = &pages_skipped;
-+			goto move;
- 		}
- 
- 		/*
-@@ -2003,37 +1940,34 @@ static unsigned long isolate_lru_pages(unsigned long nr_to_scan,
- 		 * return with no isolated pages if the LRU mostly contains
- 		 * ineligible pages.  This causes the VM to not reclaim any
- 		 * pages, triggering a premature OOM.
--		 *
--		 * Account all tail pages of THP.  This would not cause
--		 * premature OOM since __isolate_lru_page() returns -EBUSY
--		 * only when the page is being freed somewhere else.
-+		 * Account all tail pages of THP.
- 		 */
- 		scan += nr_pages;
--		if (!__isolate_lru_page_prepare(page, mode)) {
--			/* It is being freed elsewhere */
--			list_move(&page->lru, src);
--			continue;
--		}
++	if (!stm32_port->hw_flow_control &&
++	    port->rs485.flags & SER_RS485_ENABLED &&
++	    (sr & USART_SR_TC)) {
++		stm32_usart_tc_interrupt_disable(port);
++		stm32_usart_rs485_rts_disable(port);
++	}
 +
-+		if (!PageLRU(page))
-+			goto move;
-+		if (!sc->may_unmap && page_mapped(page))
-+			goto move;
-+
- 		/*
- 		 * Be careful not to clear PageLRU until after we're
- 		 * sure the page is not being freed elsewhere -- the
- 		 * page release code relies on it.
- 		 */
--		if (unlikely(!get_page_unless_zero(page))) {
--			list_move(&page->lru, src);
--			continue;
--		}
-+		if (unlikely(!get_page_unless_zero(page)))
-+			goto move;
+ 	if ((sr & USART_SR_RTOF) && ofs->icr != UNDEF_REG)
+ 		writel_relaxed(USART_ICR_RTOCF,
+ 			       port->membase + ofs->icr);
+@@ -612,8 +648,10 @@ static void stm32_usart_start_tx(struct uart_port *port)
+ {
+ 	struct circ_buf *xmit = &port->state->xmit;
  
- 		if (!TestClearPageLRU(page)) {
- 			/* Another thread is already isolating this page */
- 			put_page(page);
--			list_move(&page->lru, src);
--			continue;
-+			goto move;
- 		}
+-	if (uart_circ_empty(xmit) && !port->x_char)
++	if (uart_circ_empty(xmit) && !port->x_char) {
++		stm32_usart_rs485_rts_disable(port);
+ 		return;
++	}
  
- 		nr_taken += nr_pages;
- 		nr_zone_taken[page_zonenum(page)] += nr_pages;
--		list_move(&page->lru, dst);
-+		move_to = dst;
-+move:
-+		list_move(&page->lru, move_to);
- 	}
+ 	stm32_usart_rs485_rts_enable(port);
  
- 	/*
-@@ -2057,7 +1991,8 @@ static unsigned long isolate_lru_pages(unsigned long nr_to_scan,
- 	}
- 	*nr_scanned = total_scan;
- 	trace_mm_vmscan_lru_isolate(sc->reclaim_idx, sc->order, nr_to_scan,
--				    total_scan, skipped, nr_taken, mode, lru);
-+				    total_scan, skipped, nr_taken,
-+				    sc->may_unmap ? 0 : ISOLATE_UNMAPPED, lru);
- 	update_lru_sizes(lruvec, lru, nr_zone_taken);
- 	return nr_taken;
- }
+diff --git a/drivers/tty/serial/stm32-usart.h b/drivers/tty/serial/stm32-usart.h
+index 07ac291328cd..ad6335155de2 100644
+--- a/drivers/tty/serial/stm32-usart.h
++++ b/drivers/tty/serial/stm32-usart.h
+@@ -267,6 +267,7 @@ struct stm32_port {
+ 	bool hw_flow_control;
+ 	bool swap;		 /* swap RX & TX pins */
+ 	bool fifoen;
++	bool txdone;
+ 	int rxftcfg;		/* RX FIFO threshold CFG      */
+ 	int txftcfg;		/* TX FIFO threshold CFG      */
+ 	bool wakeup_src;
 -- 
 2.35.1
 
