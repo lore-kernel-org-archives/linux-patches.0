@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD8115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C163C433C1;
-	Mon,  5 Dec 2022 19:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BE015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAF4C433D6;
+	Mon,  5 Dec 2022 19:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268224;
-	bh=qR3ecGN+bDM1sfIz4tYuS3CGvoUE56QXFPrnFibYKE8=;
+	s=korg; t=1670268227;
+	bh=7byHlP5ufhy761TVqmwuLgFBxPP3Cgr0AZESwIy16cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEDCntJM51ZEanVtQxXOI70HOFHG2NHOhu0fnkqXHAA45Djc1WGNaZwMmimTRGTyF
-	 GZ9mn5iFo25NPmUszt6cmtAggnt6tlyhAHESAmbke0M+sXTIPyfCVIAMAmxEIkWGIw
-	 5df87/NftZu3+N5QSi0T4HPYU8KFJQjHVfu7uMsE=
+	b=CJvLkVKZe34ExJWnZABX/LdThFGdRGgF6S4Bp/v5Kf9sfakxo3qdXu7wpUbGBOq08
+	 2wJj74Fouzj4MIZ8si8qQIFACwOkl3CiN4AA3DyWeM8W0JbOdwNYBl/vhRAKkXuT/y
+	 wAr3JOwXnmLZt3nswU8EqdqE6y9hOhACr2Nr/6iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 025/124] bpf: Do not copy spin lock field from user in bpf_selem_alloc
-Date: Mon,  5 Dec 2022 20:08:51 +0100
-Message-Id: <20221205190809.166658253@linuxfoundation.org>
+Subject: [PATCH 6.0 026/124] nvmem: rmem: Fix return value check in rmem_read()
+Date: Mon,  5 Dec 2022 20:08:52 +0100
+Message-Id: <20221205190809.194305629@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -35,40 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 836e49e103dfeeff670c934b7d563cbd982fce87 ]
+[ Upstream commit 58e92c4a496b27156020a59a98c7f4a92c2b1533 ]
 
-bpf_selem_alloc function is used by inode_storage, sk_storage and
-task_storage maps to set map value, for these map types, there may
-be a spin lock in the map value, so if we use memcpy to copy the whole
-map value from user, the spin lock field may be initialized incorrectly.
+In case of error, the function memremap() returns NULL pointer
+not ERR_PTR(). The IS_ERR() test in the return value check
+should be replaced with NULL test.
 
-Since the spin lock field is zeroed by kzalloc, call copy_map_value
-instead of memcpy to skip copying the spin lock field to fix it.
-
-Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20221114134720.1057939-2-xukuohai@huawei.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 5a3fa75a4d9c ("nvmem: Add driver to expose reserved memory as nvmem")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20221118063840.6357-3-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/rmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index d13ffb00e981..cbe918ba9035 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -74,7 +74,7 @@ bpf_selem_alloc(struct bpf_local_storage_map *smap, void *owner,
- 				gfp_flags | __GFP_NOWARN);
- 	if (selem) {
- 		if (value)
--			memcpy(SDATA(selem)->data, value, smap->map.value_size);
-+			copy_map_value(&smap->map, SDATA(selem)->data, value);
- 		return selem;
+diff --git a/drivers/nvmem/rmem.c b/drivers/nvmem/rmem.c
+index b11c3c974b3d..80cb187f1481 100644
+--- a/drivers/nvmem/rmem.c
++++ b/drivers/nvmem/rmem.c
+@@ -37,9 +37,9 @@ static int rmem_read(void *context, unsigned int offset,
+ 	 * but as of Dec 2020 this isn't possible on arm64.
+ 	 */
+ 	addr = memremap(priv->mem->base, available, MEMREMAP_WB);
+-	if (IS_ERR(addr)) {
++	if (!addr) {
+ 		dev_err(priv->dev, "Failed to remap memory region\n");
+-		return PTR_ERR(addr);
++		return -ENOMEM;
  	}
  
+ 	count = memory_read_from_buffer(val, bytes, &off, addr, available);
 -- 
 2.35.1
 
