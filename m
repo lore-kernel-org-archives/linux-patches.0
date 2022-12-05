@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F1615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6B2C433D6;
-	Mon,  5 Dec 2022 19:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28BD15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425B3C433D6;
+	Mon,  5 Dec 2022 19:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268641;
-	bh=03wiSt1qizDetDxIrMbc/4AFaE+kfNAo9DLs091B+ag=;
+	s=korg; t=1670268644;
+	bh=rQWusIHDkKz2sJaXe2wEgKSE/0CKqG0l5WsPyk7drnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mg40t1kslJeoKv6ZIdXMiYydjNQWjebBckrsAIb5ezGxEXooFpSPXENyYJFWuIlLS
-	 B5TiL+AifKcA+xP5CYF7egt56lbyuXTQyQsT37k21mkKuAJbj5xtk2SE4/7kR+QcvI
-	 gZZwN8+Wis4+9bGxRt4LU1YIwBdVWjXZqDS7o3tY=
+	b=dShPkAhjqooehKY+WbXHCNwXzXpA2qV2pn3AGiHpD3zj+6WsOlszjVMt9CuXZqAvB
+	 AElSQyE8ol1uYikgXRvyhwqALI9VsD0tyWUT+cwvXq305KrUXy/ZBFpmIhsYpt0pH7
+	 flKLW6CZH4d0rv/KoHNKff5yGnQjgoIEA6KDFVUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 52/92] hwmon: (coretemp) fix pci device refcount leak in nv1a_ram_new()
-Date: Mon,  5 Dec 2022 20:10:05 +0100
-Message-Id: <20221205190805.215627515@linuxfoundation.org>
+Subject: [PATCH 5.10 53/92] net/mlx5: DR, Fix uninitialized var warning
+Date: Mon,  5 Dec 2022 20:10:06 +0100
+Message-Id: <20221205190805.261040479@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,43 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 7dec14537c5906b8bf40fd6fd6d9c3850f8df11d ]
+[ Upstream commit 52f7cf70eb8fac6111786c59ae9dfc5cf2bee710 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it after using to avoid refcount leak.
+Smatch warns this:
 
-Fixes: 14513ee696a0 ("hwmon: (coretemp) Use PCI host bridge ID to identify CPU if necessary")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093303.214163-1-yangyingliang@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c:81
+ mlx5dr_table_set_miss_action() error: uninitialized symbol 'ret'.
+
+Initializing ret with -EOPNOTSUPP and fix missing action case.
+
+Fixes: 7838e1725394 ("net/mlx5: DR, Expose steering table functionality")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 5 ++++-
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 9b49bfc63ffc..42b84ebff057 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -242,10 +242,13 @@ static int adjust_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
- 	 */
- 	if (host_bridge && host_bridge->vendor == PCI_VENDOR_ID_INTEL) {
- 		for (i = 0; i < ARRAY_SIZE(tjmax_pci_table); i++) {
--			if (host_bridge->device == tjmax_pci_table[i].device)
-+			if (host_bridge->device == tjmax_pci_table[i].device) {
-+				pci_dev_put(host_bridge);
- 				return tjmax_pci_table[i].tjmax;
-+			}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
+index b599b6beb5b9..6a4b997c258a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
+@@ -9,7 +9,7 @@ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
+ 	struct mlx5dr_matcher *last_matcher = NULL;
+ 	struct mlx5dr_htbl_connect_info info;
+ 	struct mlx5dr_ste_htbl *last_htbl;
+-	int ret;
++	int ret = -EOPNOTSUPP;
+ 
+ 	if (action && action->action_type != DR_ACTION_TYP_FT)
+ 		return -EOPNOTSUPP;
+@@ -68,6 +68,9 @@ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
  		}
  	}
-+	pci_dev_put(host_bridge);
  
- 	for (i = 0; i < ARRAY_SIZE(tjmax_table); i++) {
- 		if (strstr(c->x86_model_id, tjmax_table[i].id))
++	if (ret)
++		goto out;
++
+ 	/* Release old action */
+ 	if (tbl->miss_action)
+ 		refcount_dec(&tbl->miss_action->refcount);
 -- 
 2.35.1
 
