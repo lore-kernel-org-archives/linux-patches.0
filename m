@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AD215C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48949C433D6;
-	Mon,  5 Dec 2022 19:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61C615C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D94C433D6;
+	Mon,  5 Dec 2022 19:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269223;
-	bh=nUZmhGt3oAptX1QO4ocpry3wQOSVe5Q+F1aUzH4oK2g=;
+	s=korg; t=1670269226;
+	bh=zNvQiTB2qhMLDHtbRd8iYKCnDHUOF+a0dCMB9SRmMGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqcPmFqB+vCMGsuW/VXt0EPtBuFS4e2FzFTgNtfuqoWjCbUBd4S5jT6E7xxib/Ur7
-	 0AL6MffLJXZ8XWTPd4jwXkdu5YKuvx3o34ta2By+GEwSwRTOe3b1vLtAQI5C1IPHUs
-	 Je0StbgEUcVV0yxqzVWUZjgUdL5Bi1ZW/5CU27Qw=
+	b=UNYDadiRD0KKq62tnrtuR2uUccVUEWvzL6puBj8SIMoB2nbCLg9YNpavLM23SelCh
+	 NQTZ82N9SbB79L9N2L5bOcm8Gcy3W/Ga5+wfy8mND0ZgD+oGyigrnhyOQwI3GHhcVE
+	 N5w+SpqzLRujavK9EKB9vICuy6bUmyxBYL0diUaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 048/153] iio: core: Fix entry not deleted when iio_register_sw_trigger_type() fails
-Date: Mon,  5 Dec 2022 20:09:32 +0100
-Message-Id: <20221205190810.099772049@linuxfoundation.org>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 049/153] init/Kconfig: fix CC_HAS_ASM_GOTO_TIED_OUTPUT test with dash
+Date: Mon,  5 Dec 2022 20:09:33 +0100
+Message-Id: <20221205190810.127327331@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,52 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-commit 4ad09d956f8eacff61e67e5b13ba8ebec3232f76 upstream.
+[ Upstream commit 534bd70374d646f17e2cebe0e6e4cdd478ce4f0c ]
 
-In iio_register_sw_trigger_type(), configfs_register_default_group() is
-possible to fail, but the entry add to iio_trigger_types_list is not
-deleted.
+When using dash as /bin/sh, the CC_HAS_ASM_GOTO_TIED_OUTPUT test fails
+with a syntax error which is not the one we are looking for:
 
-This leaves wild in iio_trigger_types_list, which can cause page fault
-when module is loading again. So fix this by list_del(&t->list) in error
-path.
+<stdin>: In function ‘foo’:
+<stdin>:1:29: warning: missing terminating " character
+<stdin>:1:29: error: missing terminating " character
+<stdin>:2:5: error: expected ‘:’ before ‘+’ token
+<stdin>:2:7: warning: missing terminating " character
+<stdin>:2:7: error: missing terminating " character
+<stdin>:2:5: error: expected declaration or statement at end of input
 
-BUG: unable to handle page fault for address: fffffbfff81d7400
-Call Trace:
-<TASK>
- iio_register_sw_trigger_type
- do_one_initcall
- do_init_module
- load_module
- ...
+Removing '\n' solves this.
 
-Fixes: b662f809d410 ("iio: core: Introduce IIO software triggers")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221108032802.168623-1-chenzhongjin@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1aa0e8b144b6 ("Kconfig: Add option for asm goto w/ tied outputs to workaround clang-13 bug")
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-sw-trigger.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ init/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-sw-trigger.c
-+++ b/drivers/iio/industrialio-sw-trigger.c
-@@ -58,8 +58,12 @@ int iio_register_sw_trigger_type(struct
+diff --git a/init/Kconfig b/init/Kconfig
+index 74f44b753d61..f641518f4ac5 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -36,7 +36,7 @@ config CC_HAS_ASM_GOTO
+ config CC_HAS_ASM_GOTO_TIED_OUTPUT
+ 	depends on CC_HAS_ASM_GOTO_OUTPUT
+ 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
+-	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .\n": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
++	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
  
- 	t->group = configfs_register_default_group(iio_triggers_group, t->name,
- 						&iio_trigger_type_group_type);
--	if (IS_ERR(t->group))
-+	if (IS_ERR(t->group)) {
-+		mutex_lock(&iio_trigger_types_lock);
-+		list_del(&t->list);
-+		mutex_unlock(&iio_trigger_types_lock);
- 		ret = PTR_ERR(t->group);
-+	}
- 
- 	return ret;
- }
+ config CC_HAS_ASM_GOTO_OUTPUT
+ 	depends on CC_HAS_ASM_GOTO
+-- 
+2.35.1
+
 
 
