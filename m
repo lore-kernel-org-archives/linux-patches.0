@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F0415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E870BC433D7;
-	Mon,  5 Dec 2022 19:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2CC15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24E2C433D7;
+	Mon,  5 Dec 2022 19:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268383;
-	bh=jes/b9baVpTtzoU4BvzHzrA7wgmkJdGgbrzBpkt2NAY=;
+	s=korg; t=1670268386;
+	bh=PG5M9zw4PMRqwKyoAGeRoWBeEUEj6vRAkV8I3RTMkZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFEmfD+S3bP0jDMtnhEXLWBv1G/qDep6ht550U4j2zavudDis1ZuwwJcm26/5YSWV
-	 4IwmhNmU8Kx4Y/CNXXXMfrx8ZxLxn8hD2I+PyziuSTYYnD31582vg97QINaciLYNN2
-	 s2XSz5OrUxg8ge5aCojFbCOjwQXaZQ40HTUtxv/M=
+	b=ccjGwhmhABvVolwknfOViwPGdpVMy4W/+IOJanm5DqsW0db/Bjyi8zA3gXJIPQEQt
+	 lof5fwygYd4cUn+FKBuJLN+bnK4fHc7BZCUsThi7gnDfTETLhV85AHzkR9TtN3ZLAh
+	 6CpXnnTfGz3fCNJccCAZ/Luk8I9q3xOT+nlc5vVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 081/124] nilfs2: fix NULL pointer dereference in nilfs_palloc_commit_free_entry()
-Date: Mon,  5 Dec 2022 20:09:47 +0100
-Message-Id: <20221205190810.716537629@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.0 082/124] x86/bugs: Make sure MSR_SPEC_CTRL is updated properly upon resume from S3
+Date: Mon,  5 Dec 2022 20:09:48 +0100
+Message-Id: <20221205190810.745650186@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,107 +37,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit f0a0ccda18d6fd826d7c7e7ad48a6ed61c20f8b4 upstream.
+commit 66065157420c5b9b3f078f43d313c153e1ff7f83 upstream.
 
-Syzbot reported a null-ptr-deref bug:
+The "force" argument to write_spec_ctrl_current() is currently ambiguous
+as it does not guarantee the MSR write. This is due to the optimization
+that writes to the MSR happen only when the new value differs from the
+cached value.
 
- NILFS (loop0): segctord starting. Construction interval = 5 seconds, CP
- frequency < 30 seconds
- general protection fault, probably for non-canonical address
- 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- CPU: 1 PID: 3603 Comm: segctord Not tainted
- 6.1.0-rc2-syzkaller-00105-gb229b6ca5abb #0
- Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google
- 10/11/2022
- RIP: 0010:nilfs_palloc_commit_free_entry+0xe5/0x6b0
- fs/nilfs2/alloc.c:608
- Code: 00 00 00 00 fc ff df 80 3c 02 00 0f 85 cd 05 00 00 48 b8 00 00 00
- 00 00 fc ff df 4c 8b 73 08 49 8d 7e 10 48 89 fa 48 c1 ea 03 <80> 3c 02
- 00 0f 85 26 05 00 00 49 8b 46 10 be a6 00 00 00 48 c7 c7
- RSP: 0018:ffffc90003dff830 EFLAGS: 00010212
- RAX: dffffc0000000000 RBX: ffff88802594e218 RCX: 000000000000000d
- RDX: 0000000000000002 RSI: 0000000000002000 RDI: 0000000000000010
- RBP: ffff888071880222 R08: 0000000000000005 R09: 000000000000003f
- R10: 000000000000000d R11: 0000000000000000 R12: ffff888071880158
- R13: ffff88802594e220 R14: 0000000000000000 R15: 0000000000000004
- FS:  0000000000000000(0000) GS:ffff8880b9b00000(0000)
- knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fb1c08316a8 CR3: 0000000018560000 CR4: 0000000000350ee0
- Call Trace:
-  <TASK>
-  nilfs_dat_commit_free fs/nilfs2/dat.c:114 [inline]
-  nilfs_dat_commit_end+0x464/0x5f0 fs/nilfs2/dat.c:193
-  nilfs_dat_commit_update+0x26/0x40 fs/nilfs2/dat.c:236
-  nilfs_btree_commit_update_v+0x87/0x4a0 fs/nilfs2/btree.c:1940
-  nilfs_btree_commit_propagate_v fs/nilfs2/btree.c:2016 [inline]
-  nilfs_btree_propagate_v fs/nilfs2/btree.c:2046 [inline]
-  nilfs_btree_propagate+0xa00/0xd60 fs/nilfs2/btree.c:2088
-  nilfs_bmap_propagate+0x73/0x170 fs/nilfs2/bmap.c:337
-  nilfs_collect_file_data+0x45/0xd0 fs/nilfs2/segment.c:568
-  nilfs_segctor_apply_buffers+0x14a/0x470 fs/nilfs2/segment.c:1018
-  nilfs_segctor_scan_file+0x3f4/0x6f0 fs/nilfs2/segment.c:1067
-  nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1197 [inline]
-  nilfs_segctor_collect fs/nilfs2/segment.c:1503 [inline]
-  nilfs_segctor_do_construct+0x12fc/0x6af0 fs/nilfs2/segment.c:2045
-  nilfs_segctor_construct+0x8e3/0xb30 fs/nilfs2/segment.c:2379
-  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2487 [inline]
-  nilfs_segctor_thread+0x3c3/0xf30 fs/nilfs2/segment.c:2570
-  kthread+0x2e4/0x3a0 kernel/kthread.c:376
-  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-  </TASK>
- ...
+This is fine in most cases, but breaks for S3 resume when the cached MSR
+value gets out of sync with the hardware MSR value due to S3 resetting
+it.
 
-If DAT metadata file is corrupted on disk, there is a case where
-req->pr_desc_bh is NULL and blocknr is 0 at nilfs_dat_commit_end() during
-a b-tree operation that cascadingly updates ancestor nodes of the b-tree,
-because nilfs_dat_commit_alloc() for a lower level block can initialize
-the blocknr on the same DAT entry between nilfs_dat_prepare_end() and
-nilfs_dat_commit_end().
+When x86_spec_ctrl_current is same as x86_spec_ctrl_base, the MSR write
+is skipped. Which results in SPEC_CTRL mitigations not getting restored.
 
-If this happens, nilfs_dat_commit_end() calls nilfs_dat_commit_free()
-without valid buffer heads in req->pr_desc_bh and req->pr_bitmap_bh, and
-causes the NULL pointer dereference above in
-nilfs_palloc_commit_free_entry() function, which leads to a crash.
+Move the MSR write from write_spec_ctrl_current() to a new function that
+unconditionally writes to the MSR. Update the callers accordingly and
+rename functions.
 
-Fix this by adding a NULL check on req->pr_desc_bh and req->pr_bitmap_bh
-before nilfs_palloc_commit_free_entry() in nilfs_dat_commit_free().
+  [ bp: Rework a bit. ]
 
-This also calls nilfs_error() in that case to notify that there is a fatal
-flaw in the filesystem metadata and prevent further operations.
-
-Link: https://lkml.kernel.org/r/00000000000097c20205ebaea3d6@google.com
-Link: https://lkml.kernel.org/r/20221114040441.1649940-1-zhangpeng362@huawei.com
-Link: https://lkml.kernel.org/r/20221119120542.17204-1-konishi.ryusuke@gmail.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: caa0ff24d5d0 ("x86/bugs: Keep a per-CPU IA32_SPEC_CTRL value")
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/806d39b0bfec2fe8f50dc5446dff20f5bb24a959.1669821572.git.pawan.kumar.gupta@linux.intel.com
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dat.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/include/asm/nospec-branch.h |    2 +-
+ arch/x86/kernel/cpu/bugs.c           |   21 ++++++++++++++-------
+ arch/x86/kernel/process.c            |    2 +-
+ 3 files changed, 16 insertions(+), 9 deletions(-)
 
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -111,6 +111,13 @@ static void nilfs_dat_commit_free(struct
- 	kunmap_atomic(kaddr);
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -321,7 +321,7 @@ static inline void indirect_branch_predi
+ /* The Intel SPEC CTRL MSR base value cache */
+ extern u64 x86_spec_ctrl_base;
+ DECLARE_PER_CPU(u64, x86_spec_ctrl_current);
+-extern void write_spec_ctrl_current(u64 val, bool force);
++extern void update_spec_ctrl_cond(u64 val);
+ extern u64 spec_ctrl_current(void);
  
- 	nilfs_dat_commit_entry(dat, req);
+ /*
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -60,11 +60,18 @@ EXPORT_SYMBOL_GPL(x86_spec_ctrl_current)
+ 
+ static DEFINE_MUTEX(spec_ctrl_mutex);
+ 
++/* Update SPEC_CTRL MSR and its cached copy unconditionally */
++static void update_spec_ctrl(u64 val)
++{
++	this_cpu_write(x86_spec_ctrl_current, val);
++	wrmsrl(MSR_IA32_SPEC_CTRL, val);
++}
 +
-+	if (unlikely(req->pr_desc_bh == NULL || req->pr_bitmap_bh == NULL)) {
-+		nilfs_error(dat->i_sb,
-+			    "state inconsistency probably due to duplicate use of vblocknr = %llu",
-+			    (unsigned long long)req->pr_entry_nr);
-+		return;
-+	}
- 	nilfs_palloc_commit_free_entry(dat, req);
+ /*
+  * Keep track of the SPEC_CTRL MSR value for the current task, which may differ
+  * from x86_spec_ctrl_base due to STIBP/SSB in __speculation_ctrl_update().
+  */
+-void write_spec_ctrl_current(u64 val, bool force)
++void update_spec_ctrl_cond(u64 val)
+ {
+ 	if (this_cpu_read(x86_spec_ctrl_current) == val)
+ 		return;
+@@ -75,7 +82,7 @@ void write_spec_ctrl_current(u64 val, bo
+ 	 * When KERNEL_IBRS this MSR is written on return-to-user, unless
+ 	 * forced the update can be delayed until that time.
+ 	 */
+-	if (force || !cpu_feature_enabled(X86_FEATURE_KERNEL_IBRS))
++	if (!cpu_feature_enabled(X86_FEATURE_KERNEL_IBRS))
+ 		wrmsrl(MSR_IA32_SPEC_CTRL, val);
  }
  
+@@ -1328,7 +1335,7 @@ static void __init spec_ctrl_disable_ker
+ 
+ 	if (ia32_cap & ARCH_CAP_RRSBA) {
+ 		x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
+-		write_spec_ctrl_current(x86_spec_ctrl_base, true);
++		update_spec_ctrl(x86_spec_ctrl_base);
+ 	}
+ }
+ 
+@@ -1450,7 +1457,7 @@ static void __init spectre_v2_select_mit
+ 
+ 	if (spectre_v2_in_ibrs_mode(mode)) {
+ 		x86_spec_ctrl_base |= SPEC_CTRL_IBRS;
+-		write_spec_ctrl_current(x86_spec_ctrl_base, true);
++		update_spec_ctrl(x86_spec_ctrl_base);
+ 	}
+ 
+ 	switch (mode) {
+@@ -1564,7 +1571,7 @@ static void __init spectre_v2_select_mit
+ static void update_stibp_msr(void * __unused)
+ {
+ 	u64 val = spec_ctrl_current() | (x86_spec_ctrl_base & SPEC_CTRL_STIBP);
+-	write_spec_ctrl_current(val, true);
++	update_spec_ctrl(val);
+ }
+ 
+ /* Update x86_spec_ctrl_base in case SMT state changed. */
+@@ -1797,7 +1804,7 @@ static enum ssb_mitigation __init __ssb_
+ 			x86_amd_ssb_disable();
+ 		} else {
+ 			x86_spec_ctrl_base |= SPEC_CTRL_SSBD;
+-			write_spec_ctrl_current(x86_spec_ctrl_base, true);
++			update_spec_ctrl(x86_spec_ctrl_base);
+ 		}
+ 	}
+ 
+@@ -2048,7 +2055,7 @@ int arch_prctl_spec_ctrl_get(struct task
+ void x86_spec_ctrl_setup_ap(void)
+ {
+ 	if (boot_cpu_has(X86_FEATURE_MSR_SPEC_CTRL))
+-		write_spec_ctrl_current(x86_spec_ctrl_base, true);
++		update_spec_ctrl(x86_spec_ctrl_base);
+ 
+ 	if (ssb_mode == SPEC_STORE_BYPASS_DISABLE)
+ 		x86_amd_ssb_disable();
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -600,7 +600,7 @@ static __always_inline void __speculatio
+ 	}
+ 
+ 	if (updmsr)
+-		write_spec_ctrl_current(msr, false);
++		update_spec_ctrl_cond(msr);
+ }
+ 
+ static unsigned long speculation_ctrl_update_tif(struct task_struct *tsk)
 
 
