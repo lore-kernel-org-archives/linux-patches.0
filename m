@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0EC15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C4AC433D6;
-	Mon,  5 Dec 2022 19:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A21715C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05874C433D6;
+	Mon,  5 Dec 2022 19:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268415;
-	bh=JC3Hsc7+NjF1BcH1R2ZcWzdaSZ2BWLDZUc7AeUi2HMY=;
+	s=korg; t=1670268418;
+	bh=y4KLJomoHTT8cA5/NKCnpPzh7+wVYDc6gBSNuyodz30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5hIl85KRZCz14+YgLQvMnqgGjO7WOaSEBEorOC16t8z3fFxMsHHPfPQKFoxnca1+
-	 7dSOblIzLM0KOSVG6yxwwxIdF7zc5EqNYxotx/p3ZVe1mH4LveyjjCwc8409E72qmT
-	 PGt5TjJFAA464nw/Hv8uHoyBGVNc9prgj85Jlbfo=
+	b=thNAouAnN4KFTs1BJJ1zsvJdB5Y4ww1Lt8ohLW7XWSixj+X62tGldv4D528JMNRRx
+	 KVCjZw2BKCBaDqLrNaqumPyopGWnYRlVG7tJg1IjU/QMk9OT297vhmYv15Rb6EdP+6
+	 tVhLXcBIU5rXIrKTR4jUy77PKylUpil/rS8q6OHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 066/124] net: tun: Fix use-after-free in tun_detach()
-Date: Mon,  5 Dec 2022 20:09:32 +0100
-Message-Id: <20221205190810.294359743@linuxfoundation.org>
+Subject: [PATCH 6.0 067/124] net/mlx5: Lag, Fix for loop when checking lag
+Date: Mon,  5 Dec 2022 20:09:33 +0100
+Message-Id: <20221205190810.322623995@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,88 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit 5daadc86f27ea4d691e2131c04310d0418c6cd12 ]
+[ Upstream commit 0e682f04b4b59eac0b0a030251513589c4607458 ]
 
-syzbot reported use-after-free in tun_detach() [1].  This causes call
-trace like below:
+The cited commit adds a for loop to check if each port supports lag
+or not. But dev is not initialized correctly. Fix it by initializing
+dev for each iteration.
 
-==================================================================
-BUG: KASAN: use-after-free in notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
-Read of size 8 at addr ffff88807324e2a8 by task syz-executor.0/3673
-
-CPU: 0 PID: 3673 Comm: syz-executor.0 Not tainted 6.1.0-rc5-syzkaller-00044-gcc675d22e422 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x15e/0x461 mm/kasan/report.c:395
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:495
- notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
- call_netdevice_notifiers_info+0x86/0x130 net/core/dev.c:1942
- call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
- call_netdevice_notifiers net/core/dev.c:1997 [inline]
- netdev_wait_allrefs_any net/core/dev.c:10237 [inline]
- netdev_run_todo+0xbc6/0x1100 net/core/dev.c:10351
- tun_detach drivers/net/tun.c:704 [inline]
- tun_chr_close+0xe4/0x190 drivers/net/tun.c:3467
- __fput+0x27c/0xa90 fs/file_table.c:320
- task_work_run+0x16f/0x270 kernel/task_work.c:179
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0xb3d/0x2a30 kernel/exit.c:820
- do_group_exit+0xd4/0x2a0 kernel/exit.c:950
- get_signal+0x21b1/0x2440 kernel/signal.c:2858
- arch_do_signal_or_restart+0x86/0x2300 arch/x86/kernel/signal.c:869
- exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
- exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
- __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
- syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
- do_syscall_64+0x46/0xb0 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The cause of the issue is that sock_put() from __tun_detach() drops
-last reference count for struct net, and then notifier_call_chain()
-from netdev_state_change() accesses that struct net.
-
-This patch fixes the issue by calling sock_put() from tun_detach()
-after all necessary accesses for the struct net has done.
-
-Fixes: 83c1f36f9880 ("tun: send netlink notification when the device is modified")
-Reported-by: syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=96eb7f1ce75ef933697f24eeab928c4a716edefe [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20221124175134.1589053-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e87c6a832f88 ("net/mlx5: E-switch, Fix duplicate lag creation")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Reported-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20221129093006.378840-2-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 3387074a2bdb..167e6a3784ca 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -686,7 +686,6 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
- 		if (tun)
- 			xdp_rxq_info_unreg(&tfile->xdp_rxq);
- 		ptr_ring_cleanup(&tfile->tx_ring, tun_ptr_free);
--		sock_put(&tfile->sk);
- 	}
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index a879e0b0f702..48f86e12f5c0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -648,11 +648,13 @@ static bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ 			return false;
  
-@@ -702,6 +701,9 @@ static void tun_detach(struct tun_file *tfile, bool clean)
- 	if (dev)
- 		netdev_state_change(dev);
- 	rtnl_unlock();
-+
-+	if (clean)
-+		sock_put(&tfile->sk);
- }
+ #ifdef CONFIG_MLX5_ESWITCH
+-	dev = ldev->pf[MLX5_LAG_P1].dev;
+-	for (i = 0; i  < ldev->ports; i++)
++	for (i = 0; i < ldev->ports; i++) {
++		dev = ldev->pf[i].dev;
+ 		if (mlx5_eswitch_num_vfs(dev->priv.eswitch) && !is_mdev_switchdev_mode(dev))
+ 			return false;
++	}
  
- static void tun_detach_all(struct net_device *dev)
++	dev = ldev->pf[MLX5_LAG_P1].dev;
+ 	mode = mlx5_eswitch_mode(dev);
+ 	for (i = 0; i < ldev->ports; i++)
+ 		if (mlx5_eswitch_mode(ldev->pf[i].dev) != mode)
 -- 
 2.35.1
 
