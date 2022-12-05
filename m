@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EB915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B63BC433C1;
-	Mon,  5 Dec 2022 19:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8792A15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BA6C433D6;
+	Mon,  5 Dec 2022 19:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267872;
-	bh=Df8Wvmm20UopVljTeVtROBqkVB3SJn3WkDQYT8uRcGk=;
+	s=korg; t=1670267875;
+	bh=Pa/7jVZ1yCqQZMWIyNBPutPFDwHtnIbdmeh6Kc6uFT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaHhfueUT6AePwJQYrQmdol27SvAKxiZHey4obep8rv/zAL7UQLAW+jcFmXDkMqPO
-	 PxAlBZi1Mwfb5NLmRDK0vQn2PNKE0vc/sK15NW8cIg8vIvq4pB9Fbh+PVjSoDG+LjS
-	 GDFdi4uS71mVI0UdxbJ7Xj9NKU+e1RJ3ilDLaMMU=
+	b=Przy20MdrIx8FpFv7lZ3kO6tg0JWl3l10eFRAQh0lMguakn8/+m3658MOfd7Z00S+
+	 7Qhh6bxEAxkNapca9kpaIB3nuCxNKfrca4GSxQtJWAO+RzzUjQZbaIiCaOdL4cW+ip
+	 B+4+i+ljpg0ANdXViwNnTH5pwlj4VNFKfD5SQd04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Borislav Petkov <bp@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 75/77] x86/ioremap: Fix page aligned size calculation in __ioremap_caller()
-Date: Mon,  5 Dec 2022 20:10:06 +0100
-Message-Id: <20221205190803.509129144@linuxfoundation.org>
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.14 76/77] mmc: sdhci: use FIELD_GET for preset value bit masks
+Date: Mon,  5 Dec 2022 20:10:07 +0100
+Message-Id: <20221205190803.543050134@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -37,54 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-[ Upstream commit 4dbd6a3e90e03130973688fd79e19425f720d999 ]
+commit fa0910107a9fea170b817f31da2a65463e00e80e upstream.
 
-Current code re-calculates the size after aligning the starting and
-ending physical addresses on a page boundary. But the re-calculation
-also embeds the masking of high order bits that exceed the size of
-the physical address space (via PHYSICAL_PAGE_MASK). If the masking
-removes any high order bits, the size calculation results in a huge
-value that is likely to immediately fail.
+Use the FIELD_GET macro to get access to the register fields.
+Delete the shift macros.
 
-Fix this by re-calculating the page-aligned size first. Then mask any
-high order bits using PHYSICAL_PAGE_MASK.
-
-Fixes: ffa71f33a820 ("x86, ioremap: Fix incorrect physical address handling in PAE mode")
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/1668624097-14884-2-git-send-email-mikelley@microsoft.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Link: https://lore.kernel.org/r/20200312110050.21732-1-yamada.masahiro@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ioremap.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci.c |   10 +++++-----
+ drivers/mmc/host/sdhci.h |   10 ++++------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/mm/ioremap.c b/arch/x86/mm/ioremap.c
-index 3faf9667cc40..13ac4bc1a2dc 100644
---- a/arch/x86/mm/ioremap.c
-+++ b/arch/x86/mm/ioremap.c
-@@ -124,9 +124,15 @@ static void __iomem *__ioremap_caller(resource_size_t phys_addr,
- 	 * Mappings have to be page-aligned
- 	 */
- 	offset = phys_addr & ~PAGE_MASK;
--	phys_addr &= PHYSICAL_PAGE_MASK;
-+	phys_addr &= PAGE_MASK;
- 	size = PAGE_ALIGN(last_addr+1) - phys_addr;
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -13,6 +13,7 @@
+  *     - JMicron (hardware and technical support)
+  */
  
-+	/*
-+	 * Mask out any bits not part of the actual physical
-+	 * address, like memory encryption bits.
-+	 */
-+	phys_addr &= PHYSICAL_PAGE_MASK;
-+
- 	retval = reserve_memtype(phys_addr, (u64)phys_addr + size,
- 						pcm, &new_pcm);
- 	if (retval) {
--- 
-2.35.1
-
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <linux/ktime.h>
+ #include <linux/highmem.h>
+@@ -1340,10 +1341,9 @@ u16 sdhci_calc_clk(struct sdhci_host *ho
+ 
+ 			clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+ 			pre_val = sdhci_get_preset_value(host);
+-			div = (pre_val & SDHCI_PRESET_SDCLK_FREQ_MASK)
+-				>> SDHCI_PRESET_SDCLK_FREQ_SHIFT;
++			div = FIELD_GET(SDHCI_PRESET_SDCLK_FREQ_MASK, pre_val);
+ 			if (host->clk_mul &&
+-				(pre_val & SDHCI_PRESET_CLKGEN_SEL_MASK)) {
++				(pre_val & SDHCI_PRESET_CLKGEN_SEL)) {
+ 				clk = SDHCI_PROG_CLOCK_MODE;
+ 				real_div = div + 1;
+ 				clk_mul = host->clk_mul;
+@@ -1795,8 +1795,8 @@ void sdhci_set_ios(struct mmc_host *mmc,
+ 
+ 			sdhci_enable_preset_value(host, true);
+ 			preset = sdhci_get_preset_value(host);
+-			ios->drv_type = (preset & SDHCI_PRESET_DRV_MASK)
+-				>> SDHCI_PRESET_DRV_SHIFT;
++			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
++						  preset);
+ 		}
+ 
+ 		/* Re-enable SD Clock */
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -13,6 +13,7 @@
+ #ifndef __SDHCI_HW_H
+ #define __SDHCI_HW_H
+ 
++#include <linux/bits.h>
+ #include <linux/scatterlist.h>
+ #include <linux/compiler.h>
+ #include <linux/types.h>
+@@ -259,12 +260,9 @@
+ #define SDHCI_PRESET_FOR_SDR104        0x6C
+ #define SDHCI_PRESET_FOR_DDR50 0x6E
+ #define SDHCI_PRESET_FOR_HS400 0x74 /* Non-standard */
+-#define SDHCI_PRESET_DRV_MASK  0xC000
+-#define SDHCI_PRESET_DRV_SHIFT  14
+-#define SDHCI_PRESET_CLKGEN_SEL_MASK   0x400
+-#define SDHCI_PRESET_CLKGEN_SEL_SHIFT	10
+-#define SDHCI_PRESET_SDCLK_FREQ_MASK   0x3FF
+-#define SDHCI_PRESET_SDCLK_FREQ_SHIFT	0
++#define SDHCI_PRESET_DRV_MASK		GENMASK(15, 14)
++#define SDHCI_PRESET_CLKGEN_SEL		BIT(10)
++#define SDHCI_PRESET_SDCLK_FREQ_MASK	GENMASK(9, 0)
+ 
+ #define SDHCI_SLOT_INT_STATUS	0xFC
+ 
 
 
