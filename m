@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4140C15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB992C433D6;
-	Mon,  5 Dec 2022 19:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD44115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63836C433D7;
+	Mon,  5 Dec 2022 19:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268944;
-	bh=zQRGm13V8YYZl7qcM1GYzlR/IIB9RxM5A8n9PAU8z38=;
+	s=korg; t=1670268946;
+	bh=JvmiSyaxlLqnmxUfrXlgh44m+y2++kkJohwZzrE+Cvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inl+p9LoqLS2Ja1ga4z31MfajEE8L8a6f7d/MCios04tbr1Ce4Dr0deIhKqNcKT7s
-	 6LWc3xUuYPKRXsLQsqI4OCzfs4mRi9OaA4CsQ45N7cO+s/Tzhrou7wOcv3GdVDcxxW
-	 jKe6tAa0WhozhA0eG+piZvCboNlpfbRHCaQ1X8j4=
+	b=qGx9qpMBmfIKzalxx00RICC4b0NKZuGYwCpCD5DAZO+OqEVjdHsGU6yrWfyleoPuX
+	 d9vIZLG8pqyTVhoEONWZiwFmYzUsluEdvnV2ulctKO6LiFpi2748WDmEeXb+u/e/KU
+	 hWHmWWMCPjrqP5/x1dkib00uvRHtIEBab7H/YVaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 068/120] ALSA: dice: fix regression for Lexicon I-ONIX FW810S
-Date: Mon,  5 Dec 2022 20:10:08 +0100
-Message-Id: <20221205190808.672087547@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 069/120] error-injection: Add prompt for function error injection
+Date: Mon,  5 Dec 2022 20:10:09 +0100
+Message-Id: <20221205190808.698949739@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -34,67 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 9b84f0f74d0d716e3fd18dc428ac111266ef5844 upstream.
+commit a4412fdd49dc011bcc2c0d81ac4cab7457092650 upstream.
 
-For Lexicon I-ONIX FW810S, the call of ioctl(2) with
-SNDRV_PCM_IOCTL_HW_PARAMS can returns -ETIMEDOUT. This is a regression due
-to the commit 41319eb56e19 ("ALSA: dice: wait just for
-NOTIFY_CLOCK_ACCEPTED after GLOBAL_CLOCK_SELECT operation"). The device
-does not emit NOTIFY_CLOCK_ACCEPTED notification when accepting
-GLOBAL_CLOCK_SELECT operation with the same parameters as current ones.
+The config to be able to inject error codes into any function annotated
+with ALLOW_ERROR_INJECTION() is enabled when FUNCTION_ERROR_INJECTION is
+enabled.  But unfortunately, this is always enabled on x86 when KPROBES
+is enabled, and there's no way to turn it off.
 
-This commit fixes the regression. When receiving no notification, return
--ETIMEDOUT as long as operating for any change.
+As kprobes is useful for observability of the kernel, it is useful to
+have it enabled in production environments.  But error injection should
+be avoided.  Add a prompt to the config to allow it to be disabled even
+when kprobes is enabled, and get rid of the "def_bool y".
 
-Fixes: 41319eb56e19 ("ALSA: dice: wait just for NOTIFY_CLOCK_ACCEPTED after GLOBAL_CLOCK_SELECT operation")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20221130130604.29774-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This is a kernel debug feature (it's in Kconfig.debug), and should have
+never been something enabled by default.
+
+Cc: stable@vger.kernel.org
+Fixes: 540adea3809f6 ("error-injection: Separate error-injection from kprobe")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/dice/dice-stream.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ lib/Kconfig.debug |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/firewire/dice/dice-stream.c b/sound/firewire/dice/dice-stream.c
-index f99e00083141..4c677c8546c7 100644
---- a/sound/firewire/dice/dice-stream.c
-+++ b/sound/firewire/dice/dice-stream.c
-@@ -59,7 +59,7 @@ int snd_dice_stream_get_rate_mode(struct snd_dice *dice, unsigned int rate,
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -1872,8 +1872,14 @@ config NETDEV_NOTIFIER_ERROR_INJECT
+ 	  If unsure, say N.
  
- static int select_clock(struct snd_dice *dice, unsigned int rate)
- {
--	__be32 reg;
-+	__be32 reg, new;
- 	u32 data;
- 	int i;
- 	int err;
-@@ -83,15 +83,17 @@ static int select_clock(struct snd_dice *dice, unsigned int rate)
- 	if (completion_done(&dice->clock_accepted))
- 		reinit_completion(&dice->clock_accepted);
+ config FUNCTION_ERROR_INJECTION
+-	def_bool y
++	bool "Fault-injections of functions"
+ 	depends on HAVE_FUNCTION_ERROR_INJECTION && KPROBES
++	help
++	  Add fault injections into various functions that are annotated with
++	  ALLOW_ERROR_INJECTION() in the kernel. BPF may also modify the return
++	  value of theses functions. This is useful to test error paths of code.
++
++	  If unsure, say N
  
--	reg = cpu_to_be32(data);
-+	new = cpu_to_be32(data);
- 	err = snd_dice_transaction_write_global(dice, GLOBAL_CLOCK_SELECT,
--						&reg, sizeof(reg));
-+						&new, sizeof(new));
- 	if (err < 0)
- 		return err;
- 
- 	if (wait_for_completion_timeout(&dice->clock_accepted,
--			msecs_to_jiffies(NOTIFICATION_TIMEOUT_MS)) == 0)
--		return -ETIMEDOUT;
-+			msecs_to_jiffies(NOTIFICATION_TIMEOUT_MS)) == 0) {
-+		if (reg != new)
-+			return -ETIMEDOUT;
-+	}
- 
- 	return 0;
- }
--- 
-2.38.1
-
+ config FAULT_INJECTION
+ 	bool "Fault-injection framework"
 
 
