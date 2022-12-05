@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7E415C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:18:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E35DC433C1;
-	Mon,  5 Dec 2022 19:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B416015C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:18:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E64C433C1;
+	Mon,  5 Dec 2022 19:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267910;
-	bh=xAJRaEVarOU7U8U3bCwgsDouRRQjZqWUlhBUKZApvb0=;
+	s=korg; t=1670267913;
+	bh=mba1F/j+7n5C0gfxfn5N40P/edJxLx43upNjOueW8XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPcMC6+V+p9heg8JJ+pk4YBhGwA1YlHJamp1QHDNdLmfidwdRqjlBMT6ZwoUi7cRs
-	 cXvXYycBkpDmJDSpW66PuZ1BcwNyf2n3UH9aILg1pXH9cXK14iHa8vfihzcilrUDTB
-	 KcD9oiys2OOU8m0uLCSUTbdiBClo7FsLA98H9mto=
+	b=QDs/w9zhFjwdf/mNuete+gIrOo7J7i/zKXA9CwJrNLvP5uo2rQmCRq0+jfyfNIhBC
+	 3+7ySwOnZx3ZJzohSzzGUJUaT5zGlc3mb54ftrE8GcOWljEGBzw5+w0dDb+FdJmoSI
+	 M7lnNLmt01DjrLxzjm5L203crAIuhJ8F9CQtRrwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/105] net: pch_gbe: fix pci device refcount leak while module exiting
-Date: Mon,  5 Dec 2022 20:08:51 +0100
-Message-Id: <20221205190803.798127953@linuxfoundation.org>
+Subject: [PATCH 4.19 002/105] audit: fix undefined behavior in bit shift for AUDIT_BIT
+Date: Mon,  5 Dec 2022 20:08:34 +0100
+Message-Id: <20221205190803.210021155@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,58 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 5619537284f1017e9f6c7500b02b859b3830a06d ]
+[ Upstream commit 986d93f55bdeab1cac858d1e47b41fac10b2d7f6 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put().
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-In pch_gbe_probe(), pci_get_domain_bus_and_slot() is called,
-so in error path in probe() and remove() function, pci_dev_put()
-should be called to avoid refcount leak. Compile tested only.
+UBSAN: shift-out-of-bounds in kernel/auditfilter.c:179:23
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ audit_register_class+0x9d/0x137
+ audit_classes_init+0x4d/0xb8
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-Fixes: 1a0bdadb4e36 ("net/pch_gbe: supports eg20t ptp clock")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221117135148.301014-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+[PM: remove bad 'Fixes' tag as issue predates git, added in v2.6.6-rc1]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/uapi/linux/audit.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-index 9cbed8fa505a..d85d51201e36 100644
---- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-+++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
-@@ -2492,6 +2492,7 @@ static void pch_gbe_remove(struct pci_dev *pdev)
- 	unregister_netdev(netdev);
+diff --git a/include/uapi/linux/audit.h b/include/uapi/linux/audit.h
+index 818ae690ab79..b163911b1d39 100644
+--- a/include/uapi/linux/audit.h
++++ b/include/uapi/linux/audit.h
+@@ -177,7 +177,7 @@
+ #define AUDIT_MAX_KEY_LEN  256
+ #define AUDIT_BITMASK_SIZE 64
+ #define AUDIT_WORD(nr) ((__u32)((nr)/32))
+-#define AUDIT_BIT(nr)  (1 << ((nr) - AUDIT_WORD(nr)*32))
++#define AUDIT_BIT(nr)  (1U << ((nr) - AUDIT_WORD(nr)*32))
  
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+	pci_dev_put(adapter->ptp_pdev);
- 
- 	free_netdev(netdev);
- }
-@@ -2573,7 +2574,7 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 	/* setup the private structure */
- 	ret = pch_gbe_sw_init(adapter);
- 	if (ret)
--		goto err_free_netdev;
-+		goto err_put_dev;
- 
- 	/* Initialize PHY */
- 	ret = pch_gbe_init_phy(adapter);
-@@ -2631,6 +2632,8 @@ static int pch_gbe_probe(struct pci_dev *pdev,
- 
- err_free_adapter:
- 	pch_gbe_phy_hw_reset(&adapter->hw);
-+err_put_dev:
-+	pci_dev_put(adapter->ptp_pdev);
- err_free_netdev:
- 	free_netdev(netdev);
- 	return ret;
+ #define AUDIT_SYSCALL_CLASSES 16
+ #define AUDIT_CLASS_DIR_WRITE 0
 -- 
 2.35.1
 
