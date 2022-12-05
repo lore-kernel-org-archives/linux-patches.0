@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A442115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EDFC433D7;
-	Mon,  5 Dec 2022 19:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5A015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C766AC433C1;
+	Mon,  5 Dec 2022 19:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268784;
-	bh=vHGdx5u+prV/YuuMvsrRi6p2qPvbRRYlc+L28ESICNQ=;
+	s=korg; t=1670268787;
+	bh=oPB8cfvm0zekwid4shCEaL5jUMGEwSNdKxqFp2zKF04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIgV56WY226Buh37m6lShXWDx4S6uJ8HgDlu+6yEH29RzaZQ0Dv/3WwW2ZBKFu4Sf
-	 fseaaxGW0EpjPRLkpzd9984eX9YiRWmKfdhOA6iLprTiolq3x31491cReyWPij5wgD
-	 fipQ+OGMmMn3ldvHMb8ArIt4uph2rdbEKynXCxqE=
+	b=WIgQyYANg6locOOsZKuPIcg9ljS9zQxO/bULrH+uYzGy5TFjyNU+SbeoTu7cf+NaB
+	 +wNXNHLa+xo1p4vYe7jVjfc9A9K0KGNg3q8Fc5jv9kHxZkTurdp6ZGwxLVn0HPi1xv
+	 On4jfJsmqIwoUt3F+kecT/zp7IuT//2TTsKiNRy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Claudio Suarez <cssk@net-c.es>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/120] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
-Date: Mon,  5 Dec 2022 20:09:11 +0100
-Message-Id: <20221205190806.919105502@linuxfoundation.org>
+Subject: [PATCH 5.15 012/120] drm/amdgpu: update drm_display_info correctly when the edid is read
+Date: Mon,  5 Dec 2022 20:09:12 +0100
+Message-Id: <20221205190806.949353530@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,47 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam James <sam@gentoo.org>
+From: Claudio Suarez <cssk@net-c.es>
 
-[ Upstream commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 ]
+[ Upstream commit 20543be93ca45968f344261c1a997177e51bd7e1 ]
 
-Add missing <linux/string.h> include for strcmp.
+drm_display_info is updated by drm_get_edid() or
+drm_connector_update_edid_property(). In the amdgpu driver it is almost
+always updated when the edid is read in amdgpu_connector_get_edid(),
+but not always.  Change amdgpu_connector_get_edid() and
+amdgpu_connector_free_edid() to keep drm_display_info updated.
 
-Clang 16 makes -Wimplicit-function-declaration an error by default.
-Unfortunately, out of tree modules may use this in configure scripts,
-which means failure might cause silent miscompilation or misconfiguration.
-
-For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
-or the (new) c-std-porting mailing list [3].
-
-[0] https://lwn.net/Articles/913505/
-[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
-[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
-[3] hosted at lists.linux.dev.
-
-[akpm@linux-foundation.org: remember "linux/"]
-Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
-Signed-off-by: Sam James <sam@gentoo.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Claudio Suarez <cssk@net-c.es>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 602ad43c3cd8 ("drm/amdgpu: Partially revert "drm/amdgpu: update drm_display_info correctly when the edid is read"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/license.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c    | 5 ++++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 +--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/license.h b/include/linux/license.h
-index 7cce390f120b..ad937f57f2cb 100644
---- a/include/linux/license.h
-+++ b/include/linux/license.h
-@@ -2,6 +2,8 @@
- #ifndef __LICENSE_H
- #define __LICENSE_H
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+index 4b1d62ebf8dd..34f217544c36 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -315,8 +315,10 @@ static void amdgpu_connector_get_edid(struct drm_connector *connector)
+ 	if (!amdgpu_connector->edid) {
+ 		/* some laptops provide a hardcoded edid in rom for LCDs */
+ 		if (((connector->connector_type == DRM_MODE_CONNECTOR_LVDS) ||
+-		     (connector->connector_type == DRM_MODE_CONNECTOR_eDP)))
++		     (connector->connector_type == DRM_MODE_CONNECTOR_eDP))) {
+ 			amdgpu_connector->edid = amdgpu_connector_get_hardcoded_edid(adev);
++			drm_connector_update_edid_property(connector, amdgpu_connector->edid);
++		}
+ 	}
+ }
  
-+#include <linux/string.h>
-+
- static inline int license_is_gpl_compatible(const char *license)
- {
- 	return (strcmp(license, "GPL") == 0
+@@ -326,6 +328,7 @@ static void amdgpu_connector_free_edid(struct drm_connector *connector)
+ 
+ 	kfree(amdgpu_connector->edid);
+ 	amdgpu_connector->edid = NULL;
++	drm_connector_update_edid_property(connector, NULL);
+ }
+ 
+ static int amdgpu_connector_ddc_get_modes(struct drm_connector *connector)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 72e9b9b80c22..0ebabcc8827b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2997,13 +2997,12 @@ void amdgpu_dm_update_connector_after_detect(
+ 			aconnector->edid =
+ 				(struct edid *)sink->dc_edid.raw_edid;
+ 
+-			drm_connector_update_edid_property(connector,
+-							   aconnector->edid);
+ 			if (aconnector->dc_link->aux_mode)
+ 				drm_dp_cec_set_edid(&aconnector->dm_dp_aux.aux,
+ 						    aconnector->edid);
+ 		}
+ 
++		drm_connector_update_edid_property(connector, aconnector->edid);
+ 		amdgpu_dm_update_freesync_caps(connector, aconnector->edid);
+ 		update_connector_ext_caps(aconnector);
+ 	} else {
 -- 
 2.35.1
 
