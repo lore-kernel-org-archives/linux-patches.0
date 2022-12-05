@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF315C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:19:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B50C433D6;
-	Mon,  5 Dec 2022 19:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B1B15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:19:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589CCC433C1;
+	Mon,  5 Dec 2022 19:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267954;
-	bh=m6tHUFLLVGdeTZJ41sgTVPRrebEIFFmczQhEY7MnA2c=;
+	s=korg; t=1670267956;
+	bh=fnsxHxIIsY0+x5eodmWF8fyX0v1jGu2jQT0brXaeNlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXQRrovMNTld/+s2Pzn4j9g8uT4uJ4PsAwkx6A6/Pz177fNAC+XnXkz+S/TOGfniu
-	 CmB6pgz/eoZpAfZY+HNtXZu2Rxb+/SMO7KrKZVMcR2sh/ESz1J15z02xgXmpFtOofc
-	 b8X3RVc5KUeHbjAIS2/EuzzAFJss7VpMGxtmmYdc=
+	b=dxeAnZkpsZ0uJxrwCak/oFQmzJZcY227Ho7U/ShpJz6/HJfVFXqjT1W0DczO0Q+Kv
+	 carVDUarc+L9R5GXZrl7AqlitLbBsq61I9G7pGqtVFhBw0ziJ1QGVjPnjzND7A/oYS
+	 Z7EDOWibjCrjo2AoSjv5A0kkUEWXcutngp1Hk2aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 007/105] MIPS: pic32: treat port as signed integer
-Date: Mon,  5 Dec 2022 20:08:39 +0100
-Message-Id: <20221205190803.356444828@linuxfoundation.org>
+Subject: [PATCH 4.19 008/105] af_key: Fix send_acquire race with pfkey_register
+Date: Mon,  5 Dec 2022 20:08:40 +0100
+Message-Id: <20221205190803.387074568@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,103 +38,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 648060902aa302331b5d6e4f26d8ee0761d239ab ]
+[ Upstream commit 7f57f8165cb6d2c206e2b9ada53b9e2d6d8af42f ]
 
-get_port_from_cmdline() returns an int, yet is assigned to a char, which
-is wrong in its own right, but also, with char becoming unsigned, this
-poses problems, because -1 is used as an error value. Further
-complicating things, fw_init_early_console() is only ever called with a
--1 argument. Fix this up by removing the unused argument from
-fw_init_early_console() and treating port as a proper signed integer.
+The function pfkey_send_acquire may race with pfkey_register
+(which could even be in a different name space).  This may result
+in a buffer overrun.
 
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Allocating the maximum amount of memory that could be used prevents
+this.
+
+Reported-by: syzbot+1e9af9185d8850e2c2fa@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/fw/fw.h             |  2 +-
- arch/mips/pic32/pic32mzda/early_console.c | 13 ++++++-------
- arch/mips/pic32/pic32mzda/init.c          |  2 +-
- 3 files changed, 8 insertions(+), 9 deletions(-)
+ net/key/af_key.c | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/arch/mips/include/asm/fw/fw.h b/arch/mips/include/asm/fw/fw.h
-index d0ef8b4892bb..d0494ce4b337 100644
---- a/arch/mips/include/asm/fw/fw.h
-+++ b/arch/mips/include/asm/fw/fw.h
-@@ -26,6 +26,6 @@ extern char *fw_getcmdline(void);
- extern void fw_meminit(void);
- extern char *fw_getenv(char *name);
- extern unsigned long fw_getenvl(char *name);
--extern void fw_init_early_console(char port);
-+extern void fw_init_early_console(void);
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 337c6bc8211e..976b67089ac1 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -2915,7 +2915,7 @@ static int count_ah_combs(const struct xfrm_tmpl *t)
+ 			break;
+ 		if (!aalg->pfkey_supported)
+ 			continue;
+-		if (aalg_tmpl_set(t, aalg) && aalg->available)
++		if (aalg_tmpl_set(t, aalg))
+ 			sz += sizeof(struct sadb_comb);
+ 	}
+ 	return sz + sizeof(struct sadb_prop);
+@@ -2933,7 +2933,7 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
+ 		if (!ealg->pfkey_supported)
+ 			continue;
  
- #endif /* __ASM_FW_H_ */
-diff --git a/arch/mips/pic32/pic32mzda/early_console.c b/arch/mips/pic32/pic32mzda/early_console.c
-index 8ed4961b1271..c00c6149ee30 100644
---- a/arch/mips/pic32/pic32mzda/early_console.c
-+++ b/arch/mips/pic32/pic32mzda/early_console.c
-@@ -35,7 +35,7 @@
- #define U_BRG(x)	(UART_BASE(x) + 0x40)
+-		if (!(ealg_tmpl_set(t, ealg) && ealg->available))
++		if (!(ealg_tmpl_set(t, ealg)))
+ 			continue;
  
- static void __iomem *uart_base;
--static char console_port = -1;
-+static int console_port = -1;
+ 		for (k = 1; ; k++) {
+@@ -2944,16 +2944,17 @@ static int count_esp_combs(const struct xfrm_tmpl *t)
+ 			if (!aalg->pfkey_supported)
+ 				continue;
  
- static int __init configure_uart_pins(int port)
- {
-@@ -55,7 +55,7 @@ static int __init configure_uart_pins(int port)
- 	return 0;
+-			if (aalg_tmpl_set(t, aalg) && aalg->available)
++			if (aalg_tmpl_set(t, aalg))
+ 				sz += sizeof(struct sadb_comb);
+ 		}
+ 	}
+ 	return sz + sizeof(struct sadb_prop);
  }
  
--static void __init configure_uart(char port, int baud)
-+static void __init configure_uart(int port, int baud)
+-static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
++static int dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
  {
- 	u32 pbclk;
+ 	struct sadb_prop *p;
++	int sz = 0;
+ 	int i;
  
-@@ -68,7 +68,7 @@ static void __init configure_uart(char port, int baud)
- 		     uart_base + PIC32_SET(U_STA(port)));
+ 	p = skb_put(skb, sizeof(struct sadb_prop));
+@@ -2981,13 +2982,17 @@ static void dump_ah_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
+ 			c->sadb_comb_soft_addtime = 20*60*60;
+ 			c->sadb_comb_hard_usetime = 8*60*60;
+ 			c->sadb_comb_soft_usetime = 7*60*60;
++			sz += sizeof(*c);
+ 		}
+ 	}
++
++	return sz + sizeof(*p);
  }
  
--static void __init setup_early_console(char port, int baud)
-+static void __init setup_early_console(int port, int baud)
+-static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
++static int dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
  {
- 	if (configure_uart_pins(port))
- 		return;
-@@ -138,16 +138,15 @@ static int __init get_baud_from_cmdline(char *arch_cmdline)
- 	return baud;
+ 	struct sadb_prop *p;
++	int sz = 0;
+ 	int i, k;
+ 
+ 	p = skb_put(skb, sizeof(struct sadb_prop));
+@@ -3029,8 +3034,11 @@ static void dump_esp_combs(struct sk_buff *skb, const struct xfrm_tmpl *t)
+ 			c->sadb_comb_soft_addtime = 20*60*60;
+ 			c->sadb_comb_hard_usetime = 8*60*60;
+ 			c->sadb_comb_soft_usetime = 7*60*60;
++			sz += sizeof(*c);
+ 		}
+ 	}
++
++	return sz + sizeof(*p);
  }
  
--void __init fw_init_early_console(char port)
-+void __init fw_init_early_console(void)
- {
- 	char *arch_cmdline = pic32_getcmdline();
--	int baud = -1;
-+	int baud, port;
+ static int key_notify_policy_expire(struct xfrm_policy *xp, const struct km_event *c)
+@@ -3160,6 +3168,7 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	struct sadb_x_sec_ctx *sec_ctx;
+ 	struct xfrm_sec_ctx *xfrm_ctx;
+ 	int ctx_size = 0;
++	int alg_size = 0;
  
- 	uart_base = ioremap_nocache(PIC32_BASE_UART, 0xc00);
+ 	sockaddr_size = pfkey_sockaddr_size(x->props.family);
+ 	if (!sockaddr_size)
+@@ -3171,16 +3180,16 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 		sizeof(struct sadb_x_policy);
  
- 	baud = get_baud_from_cmdline(arch_cmdline);
--	if (port == -1)
--		port = get_port_from_cmdline(arch_cmdline);
-+	port = get_port_from_cmdline(arch_cmdline);
+ 	if (x->id.proto == IPPROTO_AH)
+-		size += count_ah_combs(t);
++		alg_size = count_ah_combs(t);
+ 	else if (x->id.proto == IPPROTO_ESP)
+-		size += count_esp_combs(t);
++		alg_size = count_esp_combs(t);
  
- 	if (port == -1)
- 		port = EARLY_CONSOLE_PORT;
-diff --git a/arch/mips/pic32/pic32mzda/init.c b/arch/mips/pic32/pic32mzda/init.c
-index 406c6c5cec29..cf2625551b45 100644
---- a/arch/mips/pic32/pic32mzda/init.c
-+++ b/arch/mips/pic32/pic32mzda/init.c
-@@ -68,7 +68,7 @@ void __init plat_mem_setup(void)
- 		strlcpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);
+ 	if ((xfrm_ctx = x->security)) {
+ 		ctx_size = PFKEY_ALIGN8(xfrm_ctx->ctx_len);
+ 		size +=  sizeof(struct sadb_x_sec_ctx) + ctx_size;
+ 	}
  
- #ifdef CONFIG_EARLY_PRINTK
--	fw_init_early_console(-1);
-+	fw_init_early_console();
- #endif
- 	pic32_config_init();
- }
+-	skb =  alloc_skb(size + 16, GFP_ATOMIC);
++	skb =  alloc_skb(size + alg_size + 16, GFP_ATOMIC);
+ 	if (skb == NULL)
+ 		return -ENOMEM;
+ 
+@@ -3234,10 +3243,13 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	pol->sadb_x_policy_priority = xp->priority;
+ 
+ 	/* Set sadb_comb's. */
++	alg_size = 0;
+ 	if (x->id.proto == IPPROTO_AH)
+-		dump_ah_combs(skb, t);
++		alg_size = dump_ah_combs(skb, t);
+ 	else if (x->id.proto == IPPROTO_ESP)
+-		dump_esp_combs(skb, t);
++		alg_size = dump_esp_combs(skb, t);
++
++	hdr->sadb_msg_len += alg_size / 8;
+ 
+ 	/* security context */
+ 	if (xfrm_ctx) {
 -- 
 2.35.1
 
