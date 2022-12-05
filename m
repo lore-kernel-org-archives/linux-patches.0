@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2467715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCDCC433D6;
-	Mon,  5 Dec 2022 19:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC8A15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB2FC433C1;
+	Mon,  5 Dec 2022 19:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268936;
-	bh=03wiSt1qizDetDxIrMbc/4AFaE+kfNAo9DLs091B+ag=;
+	s=korg; t=1670268938;
+	bh=HOVv4pLwTNJJu8TLRCYMflyBjWrNteM0Yu3djjxzXwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZ2kYh/UH8WvDmjwq/ceAFBW+nlTWHoogMqJ1ukEtdV9RGSvPYXS9Tunu+hxuNRsd
-	 CrDbpK/Y0d904mRyoG6E1yj0dzbntM78Hu6uuesuB1ylYoQj2VILhf2Qn84yLMmIJT
-	 cJfBICOvDxRiXznLxDb4UQ+05BdklNRFOI5Snrms=
+	b=HhoMzRBO1xbYmD7gQ+p/hDLcp/TsZE4u7DTmQrQrHPuC8idm+MpZ0M919NOeDhRRt
+	 IhuKZvVSgIJq3odrjgT2QDMZczPoRlftJ6sKx58nembI4m7EhsqwrtuaeMWkUiTx1M
+	 6sAiTfZtQj4VN3ZKvG6YNxYWkhBxtqCI02RpIVZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/120] hwmon: (coretemp) fix pci device refcount leak in nv1a_ram_new()
-Date: Mon,  5 Dec 2022 20:10:05 +0100
-Message-Id: <20221205190808.587189324@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 066/120] riscv: vdso: fix section overlapping under some conditions
+Date: Mon,  5 Dec 2022 20:10:06 +0100
+Message-Id: <20221205190808.614762214@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,45 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 7dec14537c5906b8bf40fd6fd6d9c3850f8df11d ]
+commit 74f6bb55c834da6d4bac24f44868202743189b2b upstream.
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it after using to avoid refcount leak.
+lkp reported a build error, I tried the config and can reproduce
+build error as below:
 
-Fixes: 14513ee696a0 ("hwmon: (coretemp) Use PCI host bridge ID to identify CPU if necessary")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093303.214163-1-yangyingliang@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  VDSOLD  arch/riscv/kernel/vdso/vdso.so.dbg
+ld.lld: error: section .note file range overlaps with .text
+>>> .note range is [0x7C8, 0x803]
+>>> .text range is [0x800, 0x1993]
+
+ld.lld: error: section .text file range overlaps with .dynamic
+>>> .text range is [0x800, 0x1993]
+>>> .dynamic range is [0x808, 0x937]
+
+ld.lld: error: section .note virtual address range overlaps with .text
+>>> .note range is [0x7C8, 0x803]
+>>> .text range is [0x800, 0x1993]
+
+Fix it by setting DISABLE_BRANCH_PROFILING which will disable branch
+tracing for vdso, thus avoid useless _ftrace_annotated_branch section
+and _ftrace_branch section. Although we can also fix it by removing
+the hardcoded .text begin address, but I think that's another story
+and should be put into another patch.
+
+Link: https://lore.kernel.org/lkml/202210122123.Cc4FPShJ-lkp@intel.com/#r
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://lore.kernel.org/r/20221102170254.1925-1-jszhang@kernel.org
+Fixes: ad5d1122b82f ("riscv: use vDSO common flow to reduce the latency of the time-related functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/coretemp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/vdso/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 9b49bfc63ffc..42b84ebff057 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -242,10 +242,13 @@ static int adjust_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
- 	 */
- 	if (host_bridge && host_bridge->vendor == PCI_VENDOR_ID_INTEL) {
- 		for (i = 0; i < ARRAY_SIZE(tjmax_pci_table); i++) {
--			if (host_bridge->device == tjmax_pci_table[i].device)
-+			if (host_bridge->device == tjmax_pci_table[i].device) {
-+				pci_dev_put(host_bridge);
- 				return tjmax_pci_table[i].tjmax;
-+			}
- 		}
- 	}
-+	pci_dev_put(host_bridge);
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -17,6 +17,7 @@ vdso-syms += flush_icache
+ obj-vdso = $(patsubst %, %.o, $(vdso-syms)) note.o
  
- 	for (i = 0; i < ARRAY_SIZE(tjmax_table); i++) {
- 		if (strstr(c->x86_model_id, tjmax_table[i].id))
--- 
-2.35.1
-
+ ccflags-y := -fno-stack-protector
++ccflags-y += -DDISABLE_BRANCH_PROFILING
+ 
+ ifneq ($(c-gettimeofday-y),)
+   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
 
 
