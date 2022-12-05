@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F0015C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06746C433D6;
-	Mon,  5 Dec 2022 19:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E8B15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBB0C433C1;
+	Mon,  5 Dec 2022 19:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268079;
-	bh=NZhukwqmEYGZ98x4wA6xs3CPUjVU19bC2V823JnRVq8=;
+	s=korg; t=1670268082;
+	bh=TbB/IY1k5ZosCF5Gq7xlbYa3AFbUVXrFjwmUBt2hJh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXi976pNM0GlUVpaTBbEXJfiNThb9YU9XIEg7mGlPSQx6rfd8ajkfvXn6OdA1xiXu
-	 z/QEyh+oZ3OtDL5GxQ1YsIpg2qOJyTFRr3vM04C5cbwy4BvUvERcW3X0UmOlvb2H82
-	 hB3FsUhoRCvNOBvwrxMASzYKLvqKAiVVmAUI/f80=
+	b=g5UzdrKsRZyeOZv8T9eJ/zHG82ZwoJppDGsvM3/nsNK3zhmYZEyVuyRDRw30+KPWL
+	 0IBgk8F0sr4VP2vdDSP+PDr7Py3Q5EYDrewOZsM11fuFvjryowjajDke5CncbK+tSr
+	 mKWIJFWP3YFMUjkZ6Sw4ohOVgm5BktB4XF3weki8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tho Vu <tho.vu.wh@renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 079/105] net: ethernet: renesas: ravb: Fix promiscuous mode after system resumed
-Date: Mon,  5 Dec 2022 20:09:51 +0100
-Message-Id: <20221205190805.834024548@linuxfoundation.org>
+Subject: [PATCH 4.19 062/105] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
+Date: Mon,  5 Dec 2022 20:09:34 +0100
+Message-Id: <20221205190805.259360960@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -38,38 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit d66233a312ec9013af3e37e4030b479a20811ec3 ]
+[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
 
-After system resumed on some environment board, the promiscuous mode
-is disabled because the SoC turned off. So, call ravb_set_rx_mode() in
-the ravb_resume() to fix the issue.
+KASAN report out-of-bounds read as follows:
 
-Reported-by: Tho Vu <tho.vu.wh@renesas.com>
-Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20221128065604.1864391-1-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
+Read of size 4 at addr ffffffffc00e4658 by task cat/278
+
+Call Trace:
+ afe4404_read_raw
+ iio_read_channel_info
+ dev_attr_show
+
+The buggy address belongs to the variable:
+ afe4404_channel_leds+0x18/0xffffffffffffe9c0
+
+This issue can be reproduce by singe command:
+
+ $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
+
+The array size of afe4404_channel_leds and afe4404_channel_offdacs
+are less than channels, so access with chan->address cause OOB read
+in afe4404_[read|write]_raw. Fix it by moving access before use them.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/health/afe4404.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index c24b7ea37e39..9077014f6f40 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2310,6 +2310,7 @@ static int __maybe_unused ravb_resume(struct device *dev)
- 		ret = ravb_open(ndev);
- 		if (ret < 0)
- 			return ret;
-+		ravb_set_rx_mode(ndev);
- 		netif_device_attach(ndev);
- 	}
+diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
+index 23e1ac6501a1..a081cdfd7071 100644
+--- a/drivers/iio/health/afe4404.c
++++ b/drivers/iio/health/afe4404.c
+@@ -258,20 +258,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int value_reg = afe4404_channel_values[chan->address];
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int value_reg, led_field, offdac_field;
+ 	int ret;
  
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			value_reg = afe4404_channel_values[chan->address];
+ 			ret = regmap_read(afe->regmap, value_reg, val);
+ 			if (ret)
+ 				return ret;
+ 			return IIO_VAL_INT;
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			ret = regmap_field_read(afe->fields[offdac_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -281,6 +281,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[led_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -303,19 +304,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int led_field, offdac_field;
+ 
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			return regmap_field_write(afe->fields[offdac_field], val);
+ 		}
+ 		break;
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			return regmap_field_write(afe->fields[led_field], val);
+ 		}
+ 		break;
 -- 
 2.35.1
 
