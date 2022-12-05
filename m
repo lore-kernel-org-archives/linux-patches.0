@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6327E15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1ED8C433D7;
-	Mon,  5 Dec 2022 19:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120FD15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A234C433D6;
+	Mon,  5 Dec 2022 19:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269007;
-	bh=3i6zjMD7NFls4XmsmtAG04Gkllhd7DDOhsyKi9CoT2I=;
+	s=korg; t=1670269009;
+	bh=Enxqx8+ccmEv18hAD0KdaAuJunF98ysrY9pe8XuVPCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGAs/cQxTwvg2kY4hVVID/hp9bItkjhY+/ju/nGSg6H2jxgjkxrAhOcXCKbEbOlde
-	 zntwF4Lz4O58RTdQ23eCNrvni0/mpM2k95mbaVQPVbfv9+degZ1/SM+M+jPXNQyKvT
-	 NQXInwuLkZvMJ5Q8YJBkSMc01+xVZFDkfZqxX55U=
+	b=K9L5uYHseKh3ELJLJ/cDV4zDrEkBAr0MvjABUzb9rDoqJ/5Yiv5IQdZbwff3r7GQ2
+	 MzijEYr8cZfqCoI+thMsU2qRRGPMp/mYt7qxXRzjWX67Xgmxw3OXw3t4VM8HCrCr/U
+	 CzG8k6lrFiqcvtFDDRwxKTTwaVqIjlERvjJ7ihts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 092/120] io_uring/poll: fix poll_refs race with cancelation
-Date: Mon,  5 Dec 2022 20:10:32 +0100
-Message-Id: <20221205190809.338219043@linuxfoundation.org>
+	"Goh, Wei Sheng" <wei.sheng.goh@intel.com>,
+	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Goh
+Subject: [PATCH 5.15 075/120] net: stmmac: Set MACs flow control register to reflect current settings
+Date: Mon,  5 Dec 2022 20:10:15 +0100
+Message-Id: <20221205190808.867755796@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,150 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Goh, Wei Sheng <wei.sheng.goh@intel.com>
 
-[ upstream commit 12ad3d2d6c5b0131a6052de91360849e3e154846 ]
+commit cc3d2b5fc0d6f8ad8a52da5ea679e5c2ec2adbd4 upstream.
 
-There is an interesting race condition of poll_refs which could result
-in a NULL pointer dereference. The crash trace is like:
+Currently, pause frame register GMAC_RX_FLOW_CTRL_RFE is not updated
+correctly when 'ethtool -A <IFACE> autoneg off rx off tx off' command
+is issued. This fix ensures the flow control change is reflected directly
+in the GMAC_RX_FLOW_CTRL_RFE register.
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 PID: 30781 Comm: syz-executor.2 Not tainted 6.0.0-g493ffd6605b2 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:io_poll_remove_entry io_uring/poll.c:154 [inline]
-RIP: 0010:io_poll_remove_entries+0x171/0x5b4 io_uring/poll.c:190
-Code: ...
-RSP: 0018:ffff88810dfefba0 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: 0000000000000000 RCX: 0000000000040000
-RDX: ffffc900030c4000 RSI: 000000000003ffff RDI: 0000000000040000
-RBP: 0000000000000008 R08: ffffffff9764d3dd R09: fffffbfff3836781
-R10: fffffbfff3836781 R11: 0000000000000000 R12: 1ffff11003422d60
-R13: ffff88801a116b04 R14: ffff88801a116ac0 R15: dffffc0000000000
-FS:  00007f9c07497700(0000) GS:ffff88811a600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffb5c00ea98 CR3: 0000000105680005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- io_apoll_task_func+0x3f/0xa0 io_uring/poll.c:299
- handle_tw_list io_uring/io_uring.c:1037 [inline]
- tctx_task_work+0x37e/0x4f0 io_uring/io_uring.c:1090
- task_work_run+0x13a/0x1b0 kernel/task_work.c:177
- get_signal+0x2402/0x25a0 kernel/signal.c:2635
- arch_do_signal_or_restart+0x3b/0x660 arch/x86/kernel/signal.c:869
- exit_to_user_mode_loop kernel/entry/common.c:166 [inline]
- exit_to_user_mode_prepare+0xc2/0x160 kernel/entry/common.c:201
- __syscall_exit_to_user_mode_work kernel/entry/common.c:283 [inline]
- syscall_exit_to_user_mode+0x58/0x160 kernel/entry/common.c:294
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The root cause for this is a tiny overlooking in
-io_poll_check_events() when cocurrently run with poll cancel routine
-io_poll_cancel_req().
-
-The interleaving to trigger use-after-free:
-
-CPU0                                       |  CPU1
-                                           |
-io_apoll_task_func()                       |  io_poll_cancel_req()
- io_poll_check_events()                    |
-  // do while first loop                   |
-  v = atomic_read(...)                     |
-  // v = poll_refs = 1                     |
-  ...                                      |  io_poll_mark_cancelled()
-                                           |   atomic_or()
-                                           |   // poll_refs =
-IO_POLL_CANCEL_FLAG | 1
-                                           |
-  atomic_sub_return(...)                   |
-  // poll_refs = IO_POLL_CANCEL_FLAG       |
-  // loop continue                         |
-                                           |
-                                           |  io_poll_execute()
-                                           |   io_poll_get_ownership()
-                                           |   // poll_refs =
-IO_POLL_CANCEL_FLAG | 1
-                                           |   // gets the ownership
-  v = atomic_read(...)                     |
-  // poll_refs not change                  |
-                                           |
-  if (v & IO_POLL_CANCEL_FLAG)             |
-   return -ECANCELED;                      |
-  // io_poll_check_events return           |
-  // will go into                          |
-  // io_req_complete_failed() free req     |
-                                           |
-                                           |  io_apoll_task_func()
-                                           |  // also go into
-io_req_complete_failed()
-
-And the interleaving to trigger the kernel WARNING:
-
-CPU0                                       |  CPU1
-                                           |
-io_apoll_task_func()                       |  io_poll_cancel_req()
- io_poll_check_events()                    |
-  // do while first loop                   |
-  v = atomic_read(...)                     |
-  // v = poll_refs = 1                     |
-  ...                                      |  io_poll_mark_cancelled()
-                                           |   atomic_or()
-                                           |   // poll_refs =
-IO_POLL_CANCEL_FLAG | 1
-                                           |
-  atomic_sub_return(...)                   |
-  // poll_refs = IO_POLL_CANCEL_FLAG       |
-  // loop continue                         |
-                                           |
-  v = atomic_read(...)                     |
-  // v = IO_POLL_CANCEL_FLAG               |
-                                           |  io_poll_execute()
-                                           |   io_poll_get_ownership()
-                                           |   // poll_refs =
-IO_POLL_CANCEL_FLAG | 1
-                                           |   // gets the ownership
-                                           |
-  WARN_ON_ONCE(!(v & IO_POLL_REF_MASK)))   |
-  // v & IO_POLL_REF_MASK = 0 WARN         |
-                                           |
-                                           |  io_apoll_task_func()
-                                           |  // also go into
-io_req_complete_failed()
-
-By looking up the source code and communicating with Pavel, the
-implementation of this atomic poll refs should continue the loop of
-io_poll_check_events() just to avoid somewhere else to grab the
-ownership. Therefore, this patch simply adds another AND operation to
-make sure the loop will stop if it finds the poll_refs is exactly equal
-to IO_POLL_CANCEL_FLAG. Since io_poll_cancel_req() grabs ownership and
-will finally make its way to io_req_complete_failed(), the req will
-be reclaimed as expected.
-
-Fixes: aa43477b0402 ("io_uring: poll rework")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-[axboe: tweak description and code style]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Fixes: 46f69ded988d ("net: stmmac: Use resolved link config in mac_link_up()")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Goh, Wei Sheng <wei.sheng.goh@intel.com>
+Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/io_uring.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c |    2 ++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   12 ++++++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/io_uring.c
-+++ b/fs/io_uring.c
-@@ -5512,7 +5512,8 @@ static int io_poll_check_events(struct i
- 		 * Release all references, retry if someone tried to restart
- 		 * task_work while we were executing it.
- 		 */
--	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs));
-+	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
-+					IO_POLL_REF_MASK);
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -745,6 +745,8 @@ static void dwmac4_flow_ctrl(struct mac_
+ 	if (fc & FLOW_RX) {
+ 		pr_debug("\tReceive Flow-Control ON\n");
+ 		flow |= GMAC_RX_FLOW_CTRL_RFE;
++	} else {
++		pr_debug("\tReceive Flow-Control OFF\n");
+ 	}
+ 	writel(flow, ioaddr + GMAC_RX_FLOW_CTRL);
  
- 	return 1;
- }
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1158,8 +1158,16 @@ static void stmmac_mac_link_up(struct ph
+ 		ctrl |= priv->hw->link.duplex;
+ 
+ 	/* Flow Control operation */
+-	if (tx_pause && rx_pause)
+-		stmmac_mac_flow_ctrl(priv, duplex);
++	if (rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_AUTO;
++	else if (rx_pause && !tx_pause)
++		priv->flow_ctrl = FLOW_RX;
++	else if (!rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_TX;
++	else
++		priv->flow_ctrl = FLOW_OFF;
++
++	stmmac_mac_flow_ctrl(priv, duplex);
+ 
+ 	if (ctrl != old_ctrl)
+ 		writel(ctrl, priv->ioaddr + MAC_CTRL_REG);
 
 
