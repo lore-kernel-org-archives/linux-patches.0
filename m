@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD25115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C5DC433D6;
-	Mon,  5 Dec 2022 19:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB3515C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C93AC433C1;
+	Mon,  5 Dec 2022 19:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268464;
-	bh=g15NscczAD7M+9XhXJ0KZwLF916KQu4jvupeOxM9gH8=;
+	s=korg; t=1670268467;
+	bh=XVO6Fo/wT0d/0BEsEhL9syvO5CTF3jOkJ0Wa5SWsUa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpviPTfAoPIiRxH6iVuseq77xV0C4BAuAZ/pRTrzUEOaHeCLXumeOwQmou+PtMyzo
-	 Q46Y8DTbDwMPByCY5hy6Yg7xBBFqeUjKEVg5wB+bq4533ws5TiUb5RdZU0W+11MLrB
-	 L1gxjQf7RZ1sU67M0TEouB8Zmm2BF2BjpwGviJd0=
+	b=x6pGT/iTiAQeBU8dqW7FnMT0RzPqxmrtoK5lge2rXrBOmeZu1M1MgFjAX7/dZibko
+	 Fo7CmSLLN4AV34TUf3cBUzo2UbRZxRNPex54yiNrAbpzG/pntl4kp15BJJbIYxDZI/
+	 KxVnuLDIFWUhY8C7jNTN/BCFNQwemjqZvCivYVDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwangun Jung <exsociety@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 111/124] ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference
-Date: Mon,  5 Dec 2022 20:10:17 +0100
-Message-Id: <20221205190811.594623147@linuxfoundation.org>
+Subject: [PATCH 6.0 112/124] ipv4: Fix route deletion when nexthop info is not specified
+Date: Mon,  5 Dec 2022 20:10:18 +0100
+Message-Id: <20221205190811.624100729@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -37,69 +38,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Ahern <dsahern@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 61b91eb33a69c3be11b259c5ea484505cd79f883 ]
+[ Upstream commit d5082d386eee7e8ec46fa8581932c81a4961dcef ]
 
-Gwangun Jung reported a slab-out-of-bounds access in fib_nh_match:
-    fib_nh_match+0xf98/0x1130 linux-6.0-rc7/net/ipv4/fib_semantics.c:961
-    fib_table_delete+0x5f3/0xa40 linux-6.0-rc7/net/ipv4/fib_trie.c:1753
-    inet_rtm_delroute+0x2b3/0x380 linux-6.0-rc7/net/ipv4/fib_frontend.c:874
+When the kernel receives a route deletion request from user space it
+tries to delete a route that matches the route attributes specified in
+the request.
 
-Separate nexthop objects are mutually exclusive with the legacy
-multipath spec. Fix fib_nh_match to return if the config for the
-to be deleted route contains a multipath spec while the fib_info
-is using a nexthop object.
+If only prefix information is specified in the request, the kernel
+should delete the first matching FIB alias regardless of its associated
+FIB info. However, an error is currently returned when the FIB info is
+backed by a nexthop object:
 
+ # ip nexthop add id 1 via 192.0.2.2 dev dummy10
+ # ip route add 198.51.100.0/24 nhid 1
+ # ip route del 198.51.100.0/24
+ RTNETLINK answers: No such process
+
+Fix by matching on such a FIB info when legacy nexthop attributes are
+not specified in the request. An earlier check already covers the case
+where a nexthop ID is specified in the request.
+
+Add tests that cover these flows. Before the fix:
+
+ # ./fib_nexthops.sh -t ipv4_fcnal
+ ...
+ TEST: Delete route when not specifying nexthop attributes           [FAIL]
+
+ Tests passed:  11
+ Tests failed:   1
+
+After the fix:
+
+ # ./fib_nexthops.sh -t ipv4_fcnal
+ ...
+ TEST: Delete route when not specifying nexthop attributes           [ OK ]
+
+ Tests passed:  12
+ Tests failed:   0
+
+No regressions in other tests:
+
+ # ./fib_nexthops.sh
+ ...
+ Tests passed: 228
+ Tests failed:   0
+
+ # ./fib_tests.sh
+ ...
+ Tests passed: 186
+ Tests failed:   0
+
+Cc: stable@vger.kernel.org
+Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Jonas Gorski <jonas.gorski@gmail.com>
 Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
 Fixes: 6bf92d70e690 ("net: ipv4: fix route with nexthop object delete warning")
-Reported-by: Gwangun Jung <exsociety@gmail.com>
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: d5082d386eee ("ipv4: Fix route deletion when nexthop info is not specified")
+Fixes: 61b91eb33a69 ("ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20221124210932.2470010-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c                    | 8 ++++----
- tools/testing/selftests/net/fib_nexthops.sh | 5 +++++
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ net/ipv4/fib_semantics.c                    |  8 +++++---
+ tools/testing/selftests/net/fib_nexthops.sh | 11 +++++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 2dc97583d279..e9a7f70a54df 100644
+index e9a7f70a54df..cb24260692e1 100644
 --- a/net/ipv4/fib_semantics.c
 +++ b/net/ipv4/fib_semantics.c
-@@ -888,13 +888,13 @@ int fib_nh_match(struct net *net, struct fib_config *cfg, struct fib_info *fi,
+@@ -888,9 +888,11 @@ int fib_nh_match(struct net *net, struct fib_config *cfg, struct fib_info *fi,
  		return 1;
  	}
  
-+	/* cannot match on nexthop object attributes */
-+	if (fi->nh)
-+		return 1;
-+
+-	/* cannot match on nexthop object attributes */
+-	if (fi->nh)
+-		return 1;
++	if (fi->nh) {
++		if (cfg->fc_oif || cfg->fc_gw_family || cfg->fc_mp)
++			return 1;
++		return 0;
++	}
+ 
  	if (cfg->fc_oif || cfg->fc_gw_family) {
  		struct fib_nh *nh;
- 
--		/* cannot match on nexthop object attributes */
--		if (fi->nh)
--			return 1;
--
- 		nh = fib_info_nh(fi, 0);
- 		if (cfg->fc_encap) {
- 			if (fib_encap_match(net, cfg->fc_encap_type,
 diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index d5a0dd548989..ee5e98204d3d 100755
+index ee5e98204d3d..a47b26ab48f2 100755
 --- a/tools/testing/selftests/net/fib_nexthops.sh
 +++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -1223,6 +1223,11 @@ ipv4_fcnal()
- 	log_test $rc 0 "Delete nexthop route warning"
- 	run_cmd "$IP route delete 172.16.101.1/32 nhid 12"
- 	run_cmd "$IP nexthop del id 12"
+@@ -1228,6 +1228,17 @@ ipv4_fcnal()
+ 	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
+ 	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
+ 	log_test $? 2 "Delete multipath route with only nh id based entry"
 +
-+	run_cmd "$IP nexthop add id 21 via 172.16.1.6 dev veth1"
-+	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
-+	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
-+	log_test $? 2 "Delete multipath route with only nh id based entry"
++	run_cmd "$IP nexthop add id 22 via 172.16.1.6 dev veth1"
++	run_cmd "$IP ro add 172.16.102.0/24 nhid 22"
++	run_cmd "$IP ro del 172.16.102.0/24 dev veth1"
++	log_test $? 2 "Delete route when specifying only nexthop device"
++
++	run_cmd "$IP ro del 172.16.102.0/24 via 172.16.1.6"
++	log_test $? 2 "Delete route when specifying only gateway"
++
++	run_cmd "$IP ro del 172.16.102.0/24"
++	log_test $? 0 "Delete route when not specifying nexthop attributes"
  }
  
  ipv4_grp_fcnal()
