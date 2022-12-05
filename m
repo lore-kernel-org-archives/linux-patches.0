@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FED815C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97B4C433D6;
-	Mon,  5 Dec 2022 19:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149DB15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8CEC433D7;
+	Mon,  5 Dec 2022 19:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268402;
-	bh=7cFMZPfc+s0l26yFGgGL849IE2C638W8nzRrpxIyCjU=;
+	s=korg; t=1670268404;
+	bh=rFGEtCVS/LQTexZNB+ul0q2QkPV5NYH2AGRZbINoV84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XX+KBvLJ0XScuEiKFlwvVuMQpsiIYmZXc1kYai423HS9guSMUDaiUxylrwLJgmJ1h
-	 nvCzs43PsZIZHXFjt+RMFpLHIoqJXqvWhRyE1D76bSDMX+dI7I92sxAQUeDUfDHoCV
-	 5Swdz3ix/YZyy+lfBpbm0rnBNqqurgTt67s/kzu4=
+	b=rpVcIWVmcxFehLEisaohrNepMFiG6pXrmDjEH30+kWtHNbncVt/obQTsMUsSKcHV6
+	 dhtHNgoyTivH84NsyrMytsYtg8oSiMNpSUsNOeLWRYtKdnxfY3iHm0BF63K3AnTygs
+	 5O2/lWLCTtLqAibcVApGP3cRtqjm3W6ywa9WAZas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 088/124] mmc: mtk-sd: Fix missing clk_disable_unprepare in msdc_of_clock_parse()
-Date: Mon,  5 Dec 2022 20:09:54 +0100
-Message-Id: <20221205190810.918734228@linuxfoundation.org>
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 062/124] tipc: re-fetch skb cb after tipc_msg_validate
+Date: Mon,  5 Dec 2022 20:09:28 +0100
+Message-Id: <20221205190810.182667063@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -34,41 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-commit c61bfb1cb63ddab52b31cf5f1924688917e61fad upstream.
+[ Upstream commit 3067bc61fcfe3081bf4807ce65560f499e895e77 ]
 
-The clk_disable_unprepare() should be called in the error handling
-of devm_clk_bulk_get_optional, fix it by replacing devm_clk_get_optional
-and clk_prepare_enable by devm_clk_get_optional_enabled.
+As the call trace shows, the original skb was freed in tipc_msg_validate(),
+and dereferencing the old skb cb would cause an use-after-free crash.
 
-Fixes: f5eccd94b63f ("mmc: mediatek: Add subsys clock control for MT8192 msdc")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221125090141.3626747-1-cuigaosheng1@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: KASAN: use-after-free in tipc_crypto_rcv_complete+0x1835/0x2240 [tipc]
+  Call Trace:
+   <IRQ>
+   tipc_crypto_rcv_complete+0x1835/0x2240 [tipc]
+   tipc_crypto_rcv+0xd32/0x1ec0 [tipc]
+   tipc_rcv+0x744/0x1150 [tipc]
+  ...
+  Allocated by task 47078:
+   kmem_cache_alloc_node+0x158/0x4d0
+   __alloc_skb+0x1c1/0x270
+   tipc_buf_acquire+0x1e/0xe0 [tipc]
+   tipc_msg_create+0x33/0x1c0 [tipc]
+   tipc_link_build_proto_msg+0x38a/0x2100 [tipc]
+   tipc_link_timeout+0x8b8/0xef0 [tipc]
+   tipc_node_timeout+0x2a1/0x960 [tipc]
+   call_timer_fn+0x2d/0x1c0
+  ...
+  Freed by task 47078:
+   tipc_msg_validate+0x7b/0x440 [tipc]
+   tipc_crypto_rcv_complete+0x4b5/0x2240 [tipc]
+   tipc_crypto_rcv+0xd32/0x1ec0 [tipc]
+   tipc_rcv+0x744/0x1150 [tipc]
+
+This patch fixes it by re-fetching the skb cb from the new allocated skb
+after calling tipc_msg_validate().
+
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/1b1cdba762915325bd8ef9a98d0276eb673df2a5.1669398403.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/tipc/crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2573,13 +2573,11 @@ static int msdc_of_clock_parse(struct pl
- 			return PTR_ERR(host->src_clk_cg);
- 	}
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index f09316a9035f..d67440de011e 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -1971,6 +1971,9 @@ static void tipc_crypto_rcv_complete(struct net *net, struct tipc_aead *aead,
+ 	/* Ok, everything's fine, try to synch own keys according to peers' */
+ 	tipc_crypto_key_synch(rx, *skb);
  
--	host->sys_clk_cg = devm_clk_get_optional(&pdev->dev, "sys_cg");
-+	/* If present, always enable for this clock gate */
-+	host->sys_clk_cg = devm_clk_get_optional_enabled(&pdev->dev, "sys_cg");
- 	if (IS_ERR(host->sys_clk_cg))
- 		host->sys_clk_cg = NULL;
++	/* Re-fetch skb cb as skb might be changed in tipc_msg_validate */
++	skb_cb = TIPC_SKB_CB(*skb);
++
+ 	/* Mark skb decrypted */
+ 	skb_cb->decrypted = 1;
  
--	/* If present, always enable for this clock gate */
--	clk_prepare_enable(host->sys_clk_cg);
--
- 	host->bulk_clks[0].id = "pclk_cg";
- 	host->bulk_clks[1].id = "axi_cg";
- 	host->bulk_clks[2].id = "ahb_cg";
+-- 
+2.35.1
+
 
 
