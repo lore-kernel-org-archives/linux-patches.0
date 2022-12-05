@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E9415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC14AC433C1;
-	Mon,  5 Dec 2022 19:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4C15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EB1C433D7;
+	Mon,  5 Dec 2022 19:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268979;
-	bh=L3kgdZOQ5pvywc5QKsjq99jdefEUXM25NwWiInQeUOw=;
+	s=korg; t=1670268981;
+	bh=BdjOTldohBvTZY4JVOEt+AEvpAULx76lOKL2SAdMeqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWiErch9IW146gEent94Hj3FKL5ii87hpU6a2oJTfwZ13yQ/2aMd0Qo//PiCalhB+
-	 aNoFdLkYFv3Gxp4Gy/1v5/oWO1q6u/E38a+vi6OQzvQO5hBgyKLTxG0toxHUqHRhgH
-	 LLYs/8W8T8pkTEy/9SoeImDTyutuaVMteYQF9ifc=
+	b=lz4hO6pPZ7fq12qoBSXw1AMA0S8tNRk/xif/hIqKSW0sYEf8I/7PphHsJWGYSpYu9
+	 BNwFHhVVsAlVA2xle7fbVglV+HZ3ixsbged6jonvtrwSysTzSxuYnhUWRI9y10lAKF
+	 EUtk/uasvClK+bz7vljJJQppqp3EQWZslcCiOZ3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Jenkins <sethjenkins@google.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 074/120] v4l2: dont fall back to follow_pfn() if pin_user_pages_fast() fails
-Date: Mon,  5 Dec 2022 20:10:14 +0100
-Message-Id: <20221205190808.838567743@linuxfoundation.org>
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 5.15 083/120] drm/i915: Fix negative value passed as remaining time
+Date: Mon,  5 Dec 2022 20:10:23 +0100
+Message-Id: <20221205190809.089476777@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -38,135 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit 6647e76ab623b2b3fb2efe03a86e9c9046c52c33 upstream.
+commit a8899b8728013c7b2456f0bfa20e5fea85ee0fd1 upstream.
 
-The V4L2_MEMORY_USERPTR interface is long deprecated and shouldn't be
-used (and is discouraged for any modern v4l drivers).  And Seth Jenkins
-points out that the fallback to VM_PFNMAP/VM_IO is fundamentally racy
-and dangerous.
+Commit b97060a99b01 ("drm/i915/guc: Update intel_gt_wait_for_idle to work
+with GuC") extended the API of intel_gt_retire_requests_timeout() with an
+extra argument 'remaining_timeout', intended for passing back unconsumed
+portion of requested timeout when 0 (success) is returned.  However, when
+request retirement happens to succeed despite an error returned by a call
+to dma_fence_wait_timeout(), that error code (a negative value) is passed
+back instead of remaining time.  If we then pass that negative value
+forward as requested timeout to intel_uc_wait_for_idle(), an explicit BUG
+will be triggered.
 
-Note that it's not even a case that should trigger, since any normal
-user pointer logic ends up just using the pin_user_pages_fast() call
-that does the proper page reference counting.  That's not the problem
-case, only if you try to use special device mappings do you have any
-issues.
+If request retirement succeeds but an error code is passed back via
+remaininig_timeout, we may have no clue on how much of the initial timeout
+might have been left for spending it on waiting for GuC to become idle.
+OTOH, since all pending requests have been successfully retired, that
+error code has been already ignored by intel_gt_retire_requests_timeout(),
+then we shouldn't fail.
 
-Normally I'd just remove this during the merge window, but since Seth
-pointed out the problem cases, we really want to know as soon as
-possible if there are actually any users of this odd special case of a
-legacy interface.  Neither Hans nor Mauro seem to think that such
-mis-uses of the old legacy interface should exist.  As Mauro says:
+Assume no more time has been left on error and pass 0 timeout value to
+intel_uc_wait_for_idle() to give it a chance to return success if GuC is
+already idle.
 
- "See, V4L2 has actually 4 streaming APIs:
-        - Kernel-allocated mmap (usually referred simply as just mmap);
-        - USERPTR mmap;
-        - read();
-        - dmabuf;
+v3: Don't fail on any error passed back via remaining_timeout.
 
-  The USERPTR is one of the oldest way to use it, coming from V4L
-  version 1 times, and by far the least used one"
+v2: Fix the issue on the caller side, not the provider.
 
-And Hans chimed in on the USERPTR interface:
-
- "To be honest, I wouldn't mind if it goes away completely, but that's a
-  bit of a pipe dream right now"
-
-but while removing this legacy interface entirely may be a pipe dream we
-can at least try to remove the unlikely (and actively broken) case of
-using special device mappings for USERPTR accesses.
-
-This replaces it with a WARN_ONCE() that we can remove once we've
-hopefully confirmed that no actual users exist.
-
-NOTE! Longer term, this means that a 'struct frame_vector' only ever
-contains proper page pointers, and all the games we have with converting
-them to pages can go away (grep for 'frame_vector_to_pages()' and the
-uses of 'vec->is_pfns').  But this is just the first step, to verify
-that this code really is all dead, and do so as quickly as possible.
-
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Acked-by: Hans Verkuil <hverkuil@xs4all.nl>
-Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: b97060a99b01 ("drm/i915/guc: Update intel_gt_wait_for_idle to work with GuC")
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.15+
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221121145655.75141-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit f235dbd5b768e238d365fd05d92de5a32abc1c1f)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/frame_vector.c |   55 +++++---------------------
- 1 file changed, 12 insertions(+), 43 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/common/videobuf2/frame_vector.c
-+++ b/drivers/media/common/videobuf2/frame_vector.c
-@@ -35,10 +35,7 @@
- int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
- 		     struct frame_vector *vec)
- {
--	struct mm_struct *mm = current->mm;
--	struct vm_area_struct *vma;
--	int ret = 0;
--	int err;
-+	int ret;
+--- a/drivers/gpu/drm/i915/gt/intel_gt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt.c
+@@ -650,8 +650,13 @@ int intel_gt_wait_for_idle(struct intel_
+ 			return -EINTR;
+ 	}
  
- 	if (nr_frames == 0)
- 		return 0;
-@@ -51,45 +48,17 @@ int get_vaddr_frames(unsigned long start
- 	ret = pin_user_pages_fast(start, nr_frames,
- 				  FOLL_FORCE | FOLL_WRITE | FOLL_LONGTERM,
- 				  (struct page **)(vec->ptrs));
--	if (ret > 0) {
--		vec->got_ref = true;
--		vec->is_pfns = false;
--		goto out_unlocked;
--	}
--
--	mmap_read_lock(mm);
--	vec->got_ref = false;
--	vec->is_pfns = true;
--	ret = 0;
--	do {
--		unsigned long *nums = frame_vector_pfns(vec);
--
--		vma = vma_lookup(mm, start);
--		if (!vma)
--			break;
--
--		while (ret < nr_frames && start + PAGE_SIZE <= vma->vm_end) {
--			err = follow_pfn(vma, start, &nums[ret]);
--			if (err) {
--				if (ret == 0)
--					ret = err;
--				goto out;
--			}
--			start += PAGE_SIZE;
--			ret++;
--		}
--		/* Bail out if VMA doesn't completely cover the tail page. */
--		if (start < vma->vm_end)
--			break;
--	} while (ret < nr_frames);
--out:
--	mmap_read_unlock(mm);
--out_unlocked:
--	if (!ret)
--		ret = -EFAULT;
--	if (ret > 0)
--		vec->nr_frames = ret;
--	return ret;
-+	vec->got_ref = true;
-+	vec->is_pfns = false;
-+	vec->nr_frames = ret;
+-	return timeout ? timeout : intel_uc_wait_for_idle(&gt->uc,
+-							  remaining_timeout);
++	if (timeout)
++		return timeout;
 +
-+	if (likely(ret > 0))
-+		return ret;
++	if (remaining_timeout < 0)
++		remaining_timeout = 0;
 +
-+	/* This used to (racily) return non-refcounted pfns. Let people know */
-+	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
-+	vec->nr_frames = 0;
-+	return ret ? ret : -EFAULT;
++	return intel_uc_wait_for_idle(&gt->uc, remaining_timeout);
  }
- EXPORT_SYMBOL(get_vaddr_frames);
  
+ int intel_gt_init(struct intel_gt *gt)
 
 
