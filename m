@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8405515C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09212C433D6;
-	Mon,  5 Dec 2022 19:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F815C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC231C433D6;
+	Mon,  5 Dec 2022 19:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268573;
-	bh=7kQo18oB//e3qiksCGrQ+SBHe/l0OeMg1JZYyheIKIA=;
+	s=korg; t=1670268576;
+	bh=fCz6r6V0Ga7+zKhQP+JTmIe4DwewrAM/M3GmUEnctMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7mhnzBYQSLizEPiRyUVl5h41L7lXI+ADFiaftkDIT1YagY+9f42k5pXjIs0ltlBK
-	 rDyO0ye7PcCcHSBeXxqR3KiyeZJd4dGVdA7bI26YE8aT32mgv/+Fa13lZJfg/JepJ1
-	 nqNdzZAM1Pf24jvkYdl/R91cD0qv3E7GPimOLIE0=
+	b=yt5WvqTo+qgf6XxwUrwbBGAQQ3Dy+XRZ3m/c5Wq6Tp+0MofHJ0WlfIIgsjz33lvV3
+	 epJumBvcJ6McWJelbHrwUvd8Lm1urnMYa0XDkTDG3lI86dHhWbOHAiRVgwA7zIqY7i
+	 CuRqkzuwlFH0dLZOXYSjk2QyUKYvAStnqBYplsoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
-	David Sterba <dsterba@suse.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/92] btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()
-Date: Mon,  5 Dec 2022 20:09:22 +0100
-Message-Id: <20221205190803.785116595@linuxfoundation.org>
+Subject: [PATCH 5.10 27/92] iavf: Fix error handling in iavf_init_module()
+Date: Mon,  5 Dec 2022 20:09:40 +0100
+Message-Id: <20221205190804.362934244@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,62 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong2@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit f7e942b5bb35d8e3af54053d19a6bf04143a3955 ]
+[ Upstream commit 227d8d2f7f2278b8468c5531b0cd0f2a905b4486 ]
 
-Syzkaller reported BUG as follows:
+The iavf_init_module() won't destroy workqueue when pci_register_driver()
+failed. Call destroy_workqueue() when pci_register_driver() failed to
+prevent the resource leak.
 
-  BUG: sleeping function called from invalid context at
-       include/linux/sched/mm.h:274
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xcd/0x134
-   __might_resched.cold+0x222/0x26b
-   kmem_cache_alloc+0x2e7/0x3c0
-   update_qgroup_limit_item+0xe1/0x390
-   btrfs_qgroup_inherit+0x147b/0x1ee0
-   create_subvol+0x4eb/0x1710
-   btrfs_mksubvol+0xfe5/0x13f0
-   __btrfs_ioctl_snap_create+0x2b0/0x430
-   btrfs_ioctl_snap_create_v2+0x25a/0x520
-   btrfs_ioctl+0x2a1c/0x5ce0
-   __x64_sys_ioctl+0x193/0x200
-   do_syscall_64+0x35/0x80
+Similar to the handling of u132_hcd_init in commit f276e002793c
+("usb: u132-hcd: fix resource leak")
 
-Fix this by calling qgroup_dirty() on @dstqgroup, and update limit item in
-btrfs_run_qgroups() later outside of the spinlock context.
-
-CC: stable@vger.kernel.org # 4.9+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 2803b16c10ea ("i40e/i40evf: Use private workqueue")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 81bbb7532eb9..74cbbb5d8897 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -2913,14 +2913,7 @@ int btrfs_qgroup_inherit(struct btrfs_trans_handle *trans, u64 srcid,
- 		dstgroup->rsv_rfer = inherit->lim.rsv_rfer;
- 		dstgroup->rsv_excl = inherit->lim.rsv_excl;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index af515c3ccd5c..ae96b552a3bb 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -4026,6 +4026,8 @@ static struct pci_driver iavf_driver = {
+  **/
+ static int __init iavf_init_module(void)
+ {
++	int ret;
++
+ 	pr_info("iavf: %s\n", iavf_driver_string);
  
--		ret = update_qgroup_limit_item(trans, dstgroup);
--		if (ret) {
--			fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
--			btrfs_info(fs_info,
--				   "unable to update quota limit for %llu",
--				   dstgroup->qgroupid);
--			goto unlock;
--		}
-+		qgroup_dirty(fs_info, dstgroup);
+ 	pr_info("%s\n", iavf_copyright);
+@@ -4036,7 +4038,12 @@ static int __init iavf_init_module(void)
+ 		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
+ 		return -ENOMEM;
  	}
+-	return pci_register_driver(&iavf_driver);
++
++	ret = pci_register_driver(&iavf_driver);
++	if (ret)
++		destroy_workqueue(iavf_wq);
++
++	return ret;
+ }
  
- 	if (srcid) {
+ module_init(iavf_init_module);
 -- 
 2.35.1
 
