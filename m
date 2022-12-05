@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BF615C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9155EC433C1;
-	Mon,  5 Dec 2022 19:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C522F15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B67EC433D6;
+	Mon,  5 Dec 2022 19:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267657;
-	bh=3yQsfh6+Oj9ny6imetoWkcKFmnGIguwoWR5t4eQ0hM4=;
+	s=korg; t=1670267660;
+	bh=9/YeW1M3Q1KVzHCG6uEr+NrRO16JaPU9xBO6DzX+7qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCk9oZDBo62xaARunjeeqj+B/s3mhH3oagtmXwvlDtdjPbxtvFbeoKjip+Ym36myV
-	 Q9znVJ461ZQeZvGgvtVG43tNp2GCMG7RozY3IyZrXCVE3JUk2GuTkQoPhVsfoHVD2J
-	 RTl+Ben+jN37AkDKWuDBw47IhcbZSq2vH7MxtwKo=
+	b=A+GcskPN1LQCq49uyUlnUbcABL9tee0rzKFYNv9b0uZ5IRLE2TFkpfa+F9Pm+u/7B
+	 XfYDD4I/52GOc/jxKlZj1lOdObKjW4UZ8VqpuxkFwwZVwvAt3GU/OK6V3SeIn92YMF
+	 wotBlmISNPFczxuzGFJ99gzUsBk7Pd/udn4JPIlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 49/62] nilfs2: fix NULL pointer dereference in nilfs_palloc_commit_free_entry()
-Date: Mon,  5 Dec 2022 20:09:46 +0100
-Message-Id: <20221205190759.950057541@linuxfoundation.org>
+	Sami Lee <sami.lee@mediatek.com>,
+	James Morse <james.morse@arm.com>
+Subject: [PATCH 4.9 50/62] arm64: Fix panic() when Spectre-v2 causes Spectre-BHB to re-allocate KVM vectors
+Date: Mon,  5 Dec 2022 20:09:47 +0100
+Message-Id: <20221205190759.982922343@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,107 +34,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: James Morse <james.morse@arm.com>
 
-commit f0a0ccda18d6fd826d7c7e7ad48a6ed61c20f8b4 upstream.
+Sami reports that linux panic()s when resuming from suspend to RAM. This
+is because when CPUs are brought back online, they re-enable any
+necessary mitigations.
 
-Syzbot reported a null-ptr-deref bug:
+The Spectre-v2 and Spectre-BHB mitigations interact as both need to
+done by KVM when exiting a guest. Slots KVM can use as vectors are
+allocated, and templates for the mitigation are patched into the vector.
 
- NILFS (loop0): segctord starting. Construction interval = 5 seconds, CP
- frequency < 30 seconds
- general protection fault, probably for non-canonical address
- 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- CPU: 1 PID: 3603 Comm: segctord Not tainted
- 6.1.0-rc2-syzkaller-00105-gb229b6ca5abb #0
- Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google
- 10/11/2022
- RIP: 0010:nilfs_palloc_commit_free_entry+0xe5/0x6b0
- fs/nilfs2/alloc.c:608
- Code: 00 00 00 00 fc ff df 80 3c 02 00 0f 85 cd 05 00 00 48 b8 00 00 00
- 00 00 fc ff df 4c 8b 73 08 49 8d 7e 10 48 89 fa 48 c1 ea 03 <80> 3c 02
- 00 0f 85 26 05 00 00 49 8b 46 10 be a6 00 00 00 48 c7 c7
- RSP: 0018:ffffc90003dff830 EFLAGS: 00010212
- RAX: dffffc0000000000 RBX: ffff88802594e218 RCX: 000000000000000d
- RDX: 0000000000000002 RSI: 0000000000002000 RDI: 0000000000000010
- RBP: ffff888071880222 R08: 0000000000000005 R09: 000000000000003f
- R10: 000000000000000d R11: 0000000000000000 R12: ffff888071880158
- R13: ffff88802594e220 R14: 0000000000000000 R15: 0000000000000004
- FS:  0000000000000000(0000) GS:ffff8880b9b00000(0000)
- knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fb1c08316a8 CR3: 0000000018560000 CR4: 0000000000350ee0
- Call Trace:
-  <TASK>
-  nilfs_dat_commit_free fs/nilfs2/dat.c:114 [inline]
-  nilfs_dat_commit_end+0x464/0x5f0 fs/nilfs2/dat.c:193
-  nilfs_dat_commit_update+0x26/0x40 fs/nilfs2/dat.c:236
-  nilfs_btree_commit_update_v+0x87/0x4a0 fs/nilfs2/btree.c:1940
-  nilfs_btree_commit_propagate_v fs/nilfs2/btree.c:2016 [inline]
-  nilfs_btree_propagate_v fs/nilfs2/btree.c:2046 [inline]
-  nilfs_btree_propagate+0xa00/0xd60 fs/nilfs2/btree.c:2088
-  nilfs_bmap_propagate+0x73/0x170 fs/nilfs2/bmap.c:337
-  nilfs_collect_file_data+0x45/0xd0 fs/nilfs2/segment.c:568
-  nilfs_segctor_apply_buffers+0x14a/0x470 fs/nilfs2/segment.c:1018
-  nilfs_segctor_scan_file+0x3f4/0x6f0 fs/nilfs2/segment.c:1067
-  nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1197 [inline]
-  nilfs_segctor_collect fs/nilfs2/segment.c:1503 [inline]
-  nilfs_segctor_do_construct+0x12fc/0x6af0 fs/nilfs2/segment.c:2045
-  nilfs_segctor_construct+0x8e3/0xb30 fs/nilfs2/segment.c:2379
-  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2487 [inline]
-  nilfs_segctor_thread+0x3c3/0xf30 fs/nilfs2/segment.c:2570
-  kthread+0x2e4/0x3a0 kernel/kthread.c:376
-  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-  </TASK>
- ...
+This fails if a new slot needs to be allocated once the kernel has finished
+booting as it is no-longer possible to modify KVM's vectors:
+| root@adam:/sys/devices/system/cpu/cpu1# echo 1 > online
+| Unable to handle kernel write to read-only memory at virtual add>
+| Mem abort info:
+|   ESR = 0x9600004e
+|   Exception class = DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+| Data abort info:
+|   ISV = 0, ISS = 0x0000004e
+|   CM = 0, WnR = 1
+| swapper pgtable: 4k pages, 48-bit VAs, pgdp = 000000000f07a71c
+| [ffff800000b4b800] pgd=00000009ffff8803, pud=00000009ffff7803, p>
+| Internal error: Oops: 9600004e [#1] PREEMPT SMP
+| Modules linked in:
+| Process swapper/1 (pid: 0, stack limit = 0x0000000063153c53)
+| CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.19.252-dirty #14
+| Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno De>
+| pstate: 000001c5 (nzcv dAIF -PAN -UAO)
+| pc : __memcpy+0x48/0x180
+| lr : __copy_hyp_vect_bpi+0x64/0x90
 
-If DAT metadata file is corrupted on disk, there is a case where
-req->pr_desc_bh is NULL and blocknr is 0 at nilfs_dat_commit_end() during
-a b-tree operation that cascadingly updates ancestor nodes of the b-tree,
-because nilfs_dat_commit_alloc() for a lower level block can initialize
-the blocknr on the same DAT entry between nilfs_dat_prepare_end() and
-nilfs_dat_commit_end().
+| Call trace:
+|  __memcpy+0x48/0x180
+|  kvm_setup_bhb_slot+0x204/0x2a8
+|  spectre_bhb_enable_mitigation+0x1b8/0x1d0
+|  __verify_local_cpu_caps+0x54/0xf0
+|  check_local_cpu_capabilities+0xc4/0x184
+|  secondary_start_kernel+0xb0/0x170
+| Code: b8404423 b80044c3 36180064 f8408423 (f80084c3)
+| ---[ end trace 859bcacb09555348 ]---
+| Kernel panic - not syncing: Attempted to kill the idle task!
+| SMP: stopping secondary CPUs
+| Kernel Offset: disabled
+| CPU features: 0x10,25806086
+| Memory Limit: none
+| ---[ end Kernel panic - not syncing: Attempted to kill the idle ]
 
-If this happens, nilfs_dat_commit_end() calls nilfs_dat_commit_free()
-without valid buffer heads in req->pr_desc_bh and req->pr_bitmap_bh, and
-causes the NULL pointer dereference above in
-nilfs_palloc_commit_free_entry() function, which leads to a crash.
+This is only a problem on platforms where there is only one CPU that is
+vulnerable to both Spectre-v2 and Spectre-BHB.
 
-Fix this by adding a NULL check on req->pr_desc_bh and req->pr_bitmap_bh
-before nilfs_palloc_commit_free_entry() in nilfs_dat_commit_free().
+The Spectre-v2 mitigation identifies the slot it can re-use by the CPU's
+'fn'. It unconditionally writes the slot number and 'template_start'
+pointer. The Spectre-BHB mitigation identifies slots it can re-use by
+the CPU's template_start pointer, which was previously clobbered by the
+Spectre-v2 mitigation.
 
-This also calls nilfs_error() in that case to notify that there is a fatal
-flaw in the filesystem metadata and prevent further operations.
+When there is only one CPU that is vulnerable to both issues, this causes
+Spectre-v2 to try to allocate a new slot, which fails.
 
-Link: https://lkml.kernel.org/r/00000000000097c20205ebaea3d6@google.com
-Link: https://lkml.kernel.org/r/20221114040441.1649940-1-zhangpeng362@huawei.com
-Link: https://lkml.kernel.org/r/20221119120542.17204-1-konishi.ryusuke@gmail.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Change both mitigations to check whether they are changing the slot this
+CPU uses before writing the percpu variables again.
+
+This issue only exists in the stable backports for Spectre-BHB which have
+to use totally different infrastructure to mainline.
+
+Reported-by: Sami Lee <sami.lee@mediatek.com>
+Fixes: 4dd8aae585a5 ("arm64: Mitigate spectre style branch history side channels")
+Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dat.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/kernel/cpu_errata.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -120,6 +120,13 @@ static void nilfs_dat_commit_free(struct
- 	kunmap_atomic(kaddr);
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -125,10 +125,12 @@ static void __install_bp_hardening_cb(bp
+ 		__copy_hyp_vect_bpi(slot, hyp_vecs_start, hyp_vecs_end);
+ 	}
  
- 	nilfs_dat_commit_entry(dat, req);
-+
-+	if (unlikely(req->pr_desc_bh == NULL || req->pr_bitmap_bh == NULL)) {
-+		nilfs_error(dat->i_sb,
-+			    "state inconsistency probably due to duplicate use of vblocknr = %llu",
-+			    (unsigned long long)req->pr_entry_nr);
-+		return;
+-	__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
+-	__this_cpu_write(bp_hardening_data.fn, fn);
+-	__this_cpu_write(bp_hardening_data.template_start, hyp_vecs_start);
+-	__hardenbp_enab = true;
++	if (fn != __this_cpu_read(bp_hardening_data.fn)) {
++		__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
++		__this_cpu_write(bp_hardening_data.fn, fn);
++		__this_cpu_write(bp_hardening_data.template_start, hyp_vecs_start);
++		__hardenbp_enab = true;
 +	}
- 	nilfs_palloc_commit_free_entry(dat, req);
+ 	spin_unlock(&bp_lock);
  }
+ #else
+@@ -828,8 +830,11 @@ static void kvm_setup_bhb_slot(const cha
+ 		__copy_hyp_vect_bpi(slot, hyp_vecs_start, hyp_vecs_end);
+ 	}
  
+-	__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
+-	__this_cpu_write(bp_hardening_data.template_start, hyp_vecs_start);
++	if (hyp_vecs_start != __this_cpu_read(bp_hardening_data.template_start)) {
++		__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
++		__this_cpu_write(bp_hardening_data.template_start,
++				 hyp_vecs_start);
++	}
+ 	spin_unlock(&bp_lock);
+ }
+ #else
 
 
