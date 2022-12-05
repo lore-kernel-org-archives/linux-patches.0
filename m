@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D2B15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F1CC433C1;
-	Mon,  5 Dec 2022 19:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E7015C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA54EC433C1;
+	Mon,  5 Dec 2022 19:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268126;
-	bh=2mUxD8qeq97aRPeJbMuT8Zvqaw9f07LCPRMdsEK6qWE=;
+	s=korg; t=1670268129;
+	bh=46skbSa+7rG/lqdP1S+ZyNrotGj0z0NSQwqZByyyN8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpz5dtPh2w6QQfttx1lvH2Jr5/kt6HvnYcA6Dsw7udU4M61aE3Y/FioeCZFddxuTd
-	 CdD2VQdlwYWr/YoRYW7U0OA58uqb4K91Zk6n8XXCV7jXQvLc6j3loAap1Q+JkTx+UC
-	 TXMmtaDVH8EvwRom/WFVuhQf+q2eRrF3b2c4ikso=
+	b=rmeiEcLGNTtIxjGjUcMk19YKHVsnnDhziNwmeDhes3dZ3YokL0uSN6MrE+b/JHDSM
+	 lSWkJk9XRUcXKuLlDAhZKK2X3mH/31Qz3eOEA2obeseKjQbs/oC/JFE/Ta9Yq436h+
+	 6POw23m5LbIGdRNCyfEhrcdcXEjcXaLaBoIcsoHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/105] net/mlx5: Fix uninitialized variable bug in outlen_write()
-Date: Mon,  5 Dec 2022 20:09:40 +0100
-Message-Id: <20221205190805.479590710@linuxfoundation.org>
+Subject: [PATCH 4.19 069/105] can: sja1000_isa: sja1000_isa_probe(): add missing free_sja1000dev()
+Date: Mon,  5 Dec 2022 20:09:41 +0100
+Message-Id: <20221205190805.509576139@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -36,37 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 3f5769a074c13d8f08455e40586600419e02a880 ]
+[ Upstream commit 92dfd9310a71d28cefe6a2d5174d43fab240e631 ]
 
-If sscanf() return 0, outlen is uninitialized and used in kzalloc(),
-this is unexpected. We should return -EINVAL if the string is invalid.
+Add the missing free_sja1000dev() before return from
+sja1000_isa_probe() in the register_sja1000dev() error handling case.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+In addition, remove blanks before goto labels.
+
+Fixes: 2a6ba39ad6a2 ("can: sja1000: legacy SJA1000 ISA bus driver")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Link: https://lore.kernel.org/all/1668168521-5540-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/sja1000/sja1000_isa.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index a686082762df..14cdac980520 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1324,8 +1324,8 @@ static ssize_t outlen_write(struct file *filp, const char __user *buf,
- 		return -EFAULT;
+diff --git a/drivers/net/can/sja1000/sja1000_isa.c b/drivers/net/can/sja1000/sja1000_isa.c
+index 1a2ae6ce8d87..b11f3431fd85 100644
+--- a/drivers/net/can/sja1000/sja1000_isa.c
++++ b/drivers/net/can/sja1000/sja1000_isa.c
+@@ -213,22 +213,24 @@ static int sja1000_isa_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
+ 			DRV_NAME, err);
+-		goto exit_unmap;
++		goto exit_free;
+ 	}
  
- 	err = sscanf(outlen_str, "%d", &outlen);
--	if (err < 0)
--		return err;
-+	if (err != 1)
-+		return -EINVAL;
+ 	dev_info(&pdev->dev, "%s device registered (reg_base=0x%p, irq=%d)\n",
+ 		 DRV_NAME, priv->reg_base, dev->irq);
+ 	return 0;
  
- 	ptr = kzalloc(outlen, GFP_KERNEL);
- 	if (!ptr)
+- exit_unmap:
++exit_free:
++	free_sja1000dev(dev);
++exit_unmap:
+ 	if (mem[idx])
+ 		iounmap(base);
+- exit_release:
++exit_release:
+ 	if (mem[idx])
+ 		release_mem_region(mem[idx], iosize);
+ 	else
+ 		release_region(port[idx], iosize);
+- exit:
++exit:
+ 	return err;
+ }
+ 
 -- 
 2.35.1
 
