@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6B615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6F8C433D7;
-	Mon,  5 Dec 2022 19:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DC215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903A5C433C1;
+	Mon,  5 Dec 2022 19:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268231;
-	bh=R6T1HikAAeYSv7LBvZFiTMQo06xlSarkLpelg8PygGE=;
+	s=korg; t=1670268235;
+	bh=zEstJ4RD3LA/wAK1L4TIOeczKHSxlhfLt/s8d+/GUB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANPZGIc81cJsUQqpGEaQFgI8pC7f4HsjaMIrlqvoK2aCEKsxdZm3KwmzrqaMu+EK/
-	 /V5YaGbD1dLagnNOo64F32mc6pxmxPWzilHdOshTA3w77fbYkn3i1LcLcoZs/e078x
-	 LeMHTqBYz7Qd0VKt/i1ceR+y+gfUd6dJQ2FAT4U8=
+	b=G5KZPietVINAF6f3Kh1eqEcdjFrQCjMIkk2XXVUlztAgcd5S0QP3GGQAPlnX4wBpi
+	 /0UEwiAjSTY+vwysChAGEtCz8s/4t4hg2xCx4SUYjy4wrlq0mZsJp+es7/F+qzK5fZ
+	 g+IYGUT2b7Lz7v5DHYDPCn6rrYsMSAhGMPs6kuO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Rob Herring <robh@kernel.org>,
+	Shazad Hussain <quic_shazhuss@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 027/124] of: property: decrement node refcount in of_fwnode_get_reference_args()
-Date: Mon,  5 Dec 2022 20:08:53 +0100
-Message-Id: <20221205190809.221333749@linuxfoundation.org>
+Subject: [PATCH 6.0 028/124] clk: qcom: gcc-sc8280xp: add cxo as parent for three ufs ref clks
+Date: Mon,  5 Dec 2022 20:08:54 +0100
+Message-Id: <20221205190809.248635634@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -37,44 +39,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Shazad Hussain <quic_shazhuss@quicinc.com>
 
-[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
+[ Upstream commit f6abcc21d94393801937aed808b8f055ffec8579 ]
 
-In of_fwnode_get_reference_args(), the refcount of of_args.np has
-been incremented in the case of successful return from
-of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
+The three UFS reference clocks, gcc_ufs_ref_clkref_clk for external
+UFS devices, gcc_ufs_card_clkref_clk and gcc_ufs_1_card_clkref_clk for
+two PHYs are all sourced from CXO.
 
-Decrement the refcount if of_args is not returned to the caller of
-of_fwnode_get_reference_args().
+Added parent_data for all three reference clocks described above to
+reflect that all three clocks are sourced from CXO to have valid
+frequency for the ref clock needed by UFS controller driver.
 
-Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Frank Rowand <frowand.list@gmail.com>
-Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
+Link: https://lore.kernel.org/lkml/Y2Tber39cHuOSR%2FW@hovoldconsulting.com/
+Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/r/20221115152956.21677-1-quic_shazhuss@quicinc.com
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sc8280xp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 967f79b59016..134cfc980b70 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -993,8 +993,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
- 						       nargs, index, &of_args);
- 	if (ret < 0)
- 		return ret;
--	if (!args)
-+	if (!args) {
-+		of_node_put(of_args.np);
- 		return 0;
-+	}
- 
- 	args->nargs = of_args.args_count;
- 	args->fwnode = of_fwnode_handle(of_args.np);
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index a2f3ffcc5849..fd332383527f 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -5364,6 +5364,8 @@ static struct clk_branch gcc_ufs_1_card_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_1_card_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5432,6 +5434,8 @@ static struct clk_branch gcc_ufs_card_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_card_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5848,6 +5852,8 @@ static struct clk_branch gcc_ufs_ref_clkref_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_ref_clkref_clk",
++			.parent_data = &gcc_parent_data_tcxo,
++			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 -- 
 2.35.1
 
