@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F55E15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47CAC433C1;
-	Mon,  5 Dec 2022 19:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D41C15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2820C433C1;
+	Mon,  5 Dec 2022 19:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269335;
-	bh=S+mJVPtqd+RyWTkOJN/UoNmh4qeQeVppC5hhqKOW9AY=;
+	s=korg; t=1670269338;
+	bh=pnLD36LgPaTX6gwXApiXcFNXgKgGfmNLV5G0s5ID3cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOTkWC7+iULq43KxBNXm4mnE8SVTOLd9iMRMLFwCWsIFZIKFrd5R+L3mQyx/ap/T6
-	 bXkuZvwNj2o9qYIO3uUvwuhG6P+M2PiVC9ghvIFaNS/L3KlEVCM6D6CNm9kaqaO9kV
-	 /v4nwFvUcEprAvL620KOKSvZY9JFbBwy5W7wJuqo=
+	b=WnGQUK/bX7ZetqdwDebjvLkpnye/RKiwt39W0jY0xLVU4loFjAjDI6U704QFexA1Z
+	 6CuCnH2yGRH4xzJ2FrI5zWBDW5zZpDoanQQ0/zUdEDAKi+Sj3XTosUHIBg+Q6mKQsQ
+	 bqLiNqMoOHXrKoW91j83eFYh9uWXJlvGDmCoKmDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	syzbot+462da39f0667b357c4b6@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 082/153] fuse: lock inode unconditionally in fuse_fallocate()
-Date: Mon,  5 Dec 2022 20:10:06 +0100
-Message-Id: <20221205190811.076299662@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 091/153] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
+Date: Mon,  5 Dec 2022 20:10:15 +0100
+Message-Id: <20221205190811.345990475@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,69 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-commit 44361e8cf9ddb23f17bdcc40ca944abf32e83e79 upstream.
+[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
 
-file_modified() must be called with inode lock held.  fuse_fallocate()
-didn't lock the inode in case of just FALLOC_KEEP_SIZE flags value, which
-resulted in a kernel Warning in notify_change().
+KASAN report out-of-bounds read as follows:
 
-Lock the inode unconditionally, like all other fallocate implementations
-do.
+BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
+Read of size 4 at addr ffffffffc00e4658 by task cat/278
 
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Reported-and-tested-by: syzbot+462da39f0667b357c4b6@syzkaller.appspotmail.com
-Fixes: 4a6f278d4827 ("fuse: add file_modified() to fallocate")
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Call Trace:
+ afe4404_read_raw
+ iio_read_channel_info
+ dev_attr_show
+
+The buggy address belongs to the variable:
+ afe4404_channel_leds+0x18/0xffffffffffffe9c0
+
+This issue can be reproduce by singe command:
+
+ $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
+
+The array size of afe4404_channel_leds and afe4404_channel_offdacs
+are less than channels, so access with chan->address cause OOB read
+in afe4404_[read|write]_raw. Fix it by moving access before use them.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c |   22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/iio/health/afe4404.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3212,24 +3212,19 @@ static long fuse_file_fallocate(struct f
- 		.mode = mode
- 	};
- 	int err;
--	bool lock_inode = !(mode & FALLOC_FL_KEEP_SIZE) ||
--			   (mode & FALLOC_FL_PUNCH_HOLE);
--
- 	if (mode & ~(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
- 		return -EOPNOTSUPP;
+diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
+index cebb1fd4d0b1..7780e9b312b3 100644
+--- a/drivers/iio/health/afe4404.c
++++ b/drivers/iio/health/afe4404.c
+@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int value_reg = afe4404_channel_values[chan->address];
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int value_reg, led_field, offdac_field;
+ 	int ret;
  
- 	if (fc->no_fallocate)
- 		return -EOPNOTSUPP;
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			value_reg = afe4404_channel_values[chan->address];
+ 			ret = regmap_read(afe->regmap, value_reg, val);
+ 			if (ret)
+ 				return ret;
+ 			return IIO_VAL_INT;
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			ret = regmap_field_read(afe->fields[offdac_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[led_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int led_field, offdac_field;
  
--	if (lock_inode) {
--		inode_lock(inode);
--		if (mode & FALLOC_FL_PUNCH_HOLE) {
--			loff_t endbyte = offset + length - 1;
--
--			err = fuse_writeback_range(inode, offset, endbyte);
--			if (err)
--				goto out;
--		}
-+	inode_lock(inode);
-+	if (mode & FALLOC_FL_PUNCH_HOLE) {
-+		loff_t endbyte = offset + length - 1;
-+
-+		err = fuse_writeback_range(inode, offset, endbyte);
-+		if (err)
-+			goto out;
- 	}
- 
- 	if (!(mode & FALLOC_FL_KEEP_SIZE) &&
-@@ -3276,8 +3271,7 @@ out:
- 	if (!(mode & FALLOC_FL_KEEP_SIZE))
- 		clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
- 
--	if (lock_inode)
--		inode_unlock(inode);
-+	inode_unlock(inode);
- 
- 	return err;
- }
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			return regmap_field_write(afe->fields[offdac_field], val);
+ 		}
+ 		break;
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			return regmap_field_write(afe->fields[led_field], val);
+ 		}
+ 		break;
+-- 
+2.35.1
+
 
 
