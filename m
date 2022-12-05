@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120FD15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A234C433D6;
-	Mon,  5 Dec 2022 19:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36E415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48309C433C1;
+	Mon,  5 Dec 2022 19:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269009;
-	bh=Enxqx8+ccmEv18hAD0KdaAuJunF98ysrY9pe8XuVPCg=;
+	s=korg; t=1670269012;
+	bh=HVkUZ2rzMh5VWpmjVtcJU2bR6kgvZg2agUNk+Nzz+HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9L5uYHseKh3ELJLJ/cDV4zDrEkBAr0MvjABUzb9rDoqJ/5Yiv5IQdZbwff3r7GQ2
-	 MzijEYr8cZfqCoI+thMsU2qRRGPMp/mYt7qxXRzjWX67Xgmxw3OXw3t4VM8HCrCr/U
-	 CzG8k6lrFiqcvtFDDRwxKTTwaVqIjlERvjJ7ihts=
+	b=zzAptOXy4nJ6wO0gAlhvA8Q3DL+ccA3dIzeFaIyVohKcK/NI2BWaiU5asFlOZD+WB
+	 WsskOCXPJNKxzerSBaKmtCMldgAG84/kiSjKK9X67vIYPx0NqB2BSpaPEALL1N8/uU
+	 V3PrrRfQMgRiGuOVk6nvjkpGddnf1Wy2X6YLa9Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Goh, Wei Sheng" <wei.sheng.goh@intel.com>,
-	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Goh
-Subject: [PATCH 5.15 075/120] net: stmmac: Set MACs flow control register to reflect current settings
-Date: Mon,  5 Dec 2022 20:10:15 +0100
-Message-Id: <20221205190808.867755796@linuxfoundation.org>
+	Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 093/120] KVM: x86/mmu: Fix race condition in direct_page_fault
+Date: Mon,  5 Dec 2022 20:10:33 +0100
+Message-Id: <20221205190809.364947544@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,57 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Goh, Wei Sheng <wei.sheng.goh@intel.com>
+From: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
 
-commit cc3d2b5fc0d6f8ad8a52da5ea679e5c2ec2adbd4 upstream.
+commit 47b0c2e4c220f2251fd8dcfbb44479819c715e15 upstream.
 
-Currently, pause frame register GMAC_RX_FLOW_CTRL_RFE is not updated
-correctly when 'ethtool -A <IFACE> autoneg off rx off tx off' command
-is issued. This fix ensures the flow control change is reflected directly
-in the GMAC_RX_FLOW_CTRL_RFE register.
+make_mmu_pages_available() must be called with mmu_lock held for write.
+However, if the TDP MMU is used, it will be called with mmu_lock held for
+read.
+This function does nothing unless shadow pages are used, so there is no
+race unless nested TDP is used.
+Since nested TDP uses shadow pages, old shadow pages may be zapped by this
+function even when the TDP MMU is enabled.
+Since shadow pages are never allocated by kvm_tdp_mmu_map(), a race
+condition can be avoided by not calling make_mmu_pages_available() if the
+TDP MMU is currently in use.
 
-Fixes: 46f69ded988d ("net: stmmac: Use resolved link config in mac_link_up()")
-Cc: <stable@vger.kernel.org> # 5.10.x
-Signed-off-by: Goh, Wei Sheng <wei.sheng.goh@intel.com>
-Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+I encountered this when repeatedly starting and stopping nested VM.
+It can be artificially caused by allocating a large number of nested TDP
+SPTEs.
+
+For example, the following BUG and general protection fault are caused in
+the host kernel.
+
+pte_list_remove: 00000000cd54fc10 many->many
+------------[ cut here ]------------
+kernel BUG at arch/x86/kvm/mmu/mmu.c:963!
+invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+RIP: 0010:pte_list_remove.cold+0x16/0x48 [kvm]
+Call Trace:
+ <TASK>
+ drop_spte+0xe0/0x180 [kvm]
+ mmu_page_zap_pte+0x4f/0x140 [kvm]
+ __kvm_mmu_prepare_zap_page+0x62/0x3e0 [kvm]
+ kvm_mmu_zap_oldest_mmu_pages+0x7d/0xf0 [kvm]
+ direct_page_fault+0x3cb/0x9b0 [kvm]
+ kvm_tdp_page_fault+0x2c/0xa0 [kvm]
+ kvm_mmu_page_fault+0x207/0x930 [kvm]
+ npf_interception+0x47/0xb0 [kvm_amd]
+ svm_invoke_exit_handler+0x13c/0x1a0 [kvm_amd]
+ svm_handle_exit+0xfc/0x2c0 [kvm_amd]
+ kvm_arch_vcpu_ioctl_run+0xa79/0x1780 [kvm]
+ kvm_vcpu_ioctl+0x29b/0x6f0 [kvm]
+ __x64_sys_ioctl+0x95/0xd0
+ do_syscall_64+0x5c/0x90
+
+general protection fault, probably for non-canonical address
+0xdead000000000122: 0000 [#1] PREEMPT SMP NOPTI
+RIP: 0010:kvm_mmu_commit_zap_page.part.0+0x4b/0xe0 [kvm]
+Call Trace:
+ <TASK>
+ kvm_mmu_zap_oldest_mmu_pages+0xae/0xf0 [kvm]
+ direct_page_fault+0x3cb/0x9b0 [kvm]
+ kvm_tdp_page_fault+0x2c/0xa0 [kvm]
+ kvm_mmu_page_fault+0x207/0x930 [kvm]
+ npf_interception+0x47/0xb0 [kvm_amd]
+
+CVE: CVE-2022-45869
+Fixes: a2855afc7ee8 ("KVM: x86/mmu: Allow parallel page faults for the TDP MMU")
+Signed-off-by: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c |    2 ++
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   12 ++++++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -745,6 +745,8 @@ static void dwmac4_flow_ctrl(struct mac_
- 	if (fc & FLOW_RX) {
- 		pr_debug("\tReceive Flow-Control ON\n");
- 		flow |= GMAC_RX_FLOW_CTRL_RFE;
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2357,6 +2357,7 @@ static bool __kvm_mmu_prepare_zap_page(s
+ {
+ 	bool list_unstable;
+ 
++	lockdep_assert_held_write(&kvm->mmu_lock);
+ 	trace_kvm_mmu_prepare_zap_page(sp);
+ 	++kvm->stat.mmu_shadow_zapped;
+ 	*nr_zapped = mmu_zap_unsync_children(kvm, sp, invalid_list);
+@@ -4007,16 +4008,17 @@ static int direct_page_fault(struct kvm_
+ 
+ 	if (!is_noslot_pfn(pfn) && mmu_notifier_retry_hva(vcpu->kvm, mmu_seq, hva))
+ 		goto out_unlock;
+-	r = make_mmu_pages_available(vcpu);
+-	if (r)
+-		goto out_unlock;
+ 
+-	if (is_tdp_mmu_fault)
++	if (is_tdp_mmu_fault) {
+ 		r = kvm_tdp_mmu_map(vcpu, gpa, error_code, map_writable, max_level,
+ 				    pfn, prefault);
+-	else
 +	} else {
-+		pr_debug("\tReceive Flow-Control OFF\n");
- 	}
- 	writel(flow, ioaddr + GMAC_RX_FLOW_CTRL);
++		r = make_mmu_pages_available(vcpu);
++		if (r)
++			goto out_unlock;
+ 		r = __direct_map(vcpu, gpa, error_code, map_writable, max_level, pfn,
+ 				 prefault, is_tdp);
++	}
  
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1158,8 +1158,16 @@ static void stmmac_mac_link_up(struct ph
- 		ctrl |= priv->hw->link.duplex;
- 
- 	/* Flow Control operation */
--	if (tx_pause && rx_pause)
--		stmmac_mac_flow_ctrl(priv, duplex);
-+	if (rx_pause && tx_pause)
-+		priv->flow_ctrl = FLOW_AUTO;
-+	else if (rx_pause && !tx_pause)
-+		priv->flow_ctrl = FLOW_RX;
-+	else if (!rx_pause && tx_pause)
-+		priv->flow_ctrl = FLOW_TX;
-+	else
-+		priv->flow_ctrl = FLOW_OFF;
-+
-+	stmmac_mac_flow_ctrl(priv, duplex);
- 
- 	if (ctrl != old_ctrl)
- 		writel(ctrl, priv->ioaddr + MAC_CTRL_REG);
+ out_unlock:
+ 	if (is_tdp_mmu_fault)
 
 
