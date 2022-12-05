@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5592015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC9CC433C1;
-	Mon,  5 Dec 2022 19:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD3515C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9825EC433D6;
+	Mon,  5 Dec 2022 19:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268987;
-	bh=5KgF5ZkHir4Trjt/hHV4rvsUTQBlf/ow/p9nBkSFD+0=;
+	s=korg; t=1670268990;
+	bh=hgrZDtS3QhWKMovbiQrIW4HIkXBb5Ac0lJmXD/Ko2Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/wTOKldL969MYdK81ucZwAtiiV+egjCJS/VaK1S/wEn8Tkd9Qpy9j6Ggxjmky+sf
-	 +TwhPbBgFnBxWYzU+0CyE4IX2rHh8g/tMyTZX76DIpQMoUNJpX+HFgtHNtTVlmpzwB
-	 bsINrusiteYktqyUxzXi9cJn3RnVDTRHsc6yJFwA=
+	b=yNjZ6er6GiOYqP1SlPWQMfRSSsMs76LDOJtaXShH7l3Yc6hRZ+Z2OwI15mM9itKos
+	 UIx237F+hZwkyJ3t7Ldmo7i1xErjRp4bzytgXnZkAqRWhGmNgnp6SJN5ZlzgkAxRt+
+	 eV504GbGAk2cBzfVhSqPTRer1dJF/pynC/H1FtYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 5.15 085/120] tracing/osnoise: Fix duration type
-Date: Mon,  5 Dec 2022 20:10:25 +0100
-Message-Id: <20221205190809.146573093@linuxfoundation.org>
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 086/120] tracing: Fix race where histograms can be called before the event
+Date: Mon,  5 Dec 2022 20:10:26 +0100
+Message-Id: <20221205190809.172783167@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,59 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 022632f6c43a86f2135642dccd5686de318e861d upstream.
+commit ef38c79a522b660f7f71d45dad2d6244bc741841 upstream.
 
-The duration type is a 64 long value, not an int. This was
-causing some long noise to report wrong values.
+commit 94eedf3dded5 ("tracing: Fix race where eprobes can be called before
+the event") fixed an issue where if an event is soft disabled, and the
+trigger is being added, there's a small window where the event sees that
+there's a trigger but does not see that it requires reading the event yet,
+and then calls the trigger with the record == NULL.
 
-Change the duration to a 64 bits value.
+This could be solved with adding memory barriers in the hot path, or to
+make sure that all the triggers requiring a record check for NULL. The
+latter was chosen.
 
-Link: https://lkml.kernel.org/r/a93d8a8378c7973e9c609de05826533c9e977939.1668692096.git.bristot@kernel.org
+Commit 94eedf3dded5 set the eprobe trigger handle to check for NULL, but
+the same needs to be done with histograms.
 
+Link: https://lore.kernel.org/linux-trace-kernel/20221118211809.701d40c0f8a757b0df3c025a@kernel.org/
+Link: https://lore.kernel.org/linux-trace-kernel/20221123164323.03450c3a@gandalf.local.home
+
+Cc: Tom Zanussi <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Daniel Bristot de Oliveira <bristot@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Fixes: bce29ac9ce0b ("trace: Add osnoise tracer")
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
+Reported-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -730,7 +730,7 @@ void osnoise_trace_irq_entry(int id)
- void osnoise_trace_irq_exit(int id, const char *desc)
- {
- 	struct osnoise_variables *osn_var = this_cpu_osn_var();
--	int duration;
-+	s64 duration;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -4677,6 +4677,9 @@ static void event_hist_trigger(struct ev
+ 	void *key = NULL;
+ 	unsigned int i;
  
- 	if (!osn_var->sampling)
- 		return;
-@@ -861,7 +861,7 @@ static void trace_softirq_entry_callback
- static void trace_softirq_exit_callback(void *data, unsigned int vec_nr)
- {
- 	struct osnoise_variables *osn_var = this_cpu_osn_var();
--	int duration;
-+	s64 duration;
++	if (unlikely(!rbe))
++		return;
++
+ 	memset(compound_key, 0, hist_data->key_size);
  
- 	if (!osn_var->sampling)
- 		return;
-@@ -969,7 +969,7 @@ thread_entry(struct osnoise_variables *o
- static void
- thread_exit(struct osnoise_variables *osn_var, struct task_struct *t)
- {
--	int duration;
-+	s64 duration;
- 
- 	if (!osn_var->sampling)
- 		return;
+ 	for_each_hist_key_field(i, hist_data) {
 
 
