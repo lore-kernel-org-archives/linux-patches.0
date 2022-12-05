@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0813215C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D434C433D6;
-	Mon,  5 Dec 2022 19:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7A915C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B36FC433C1;
+	Mon,  5 Dec 2022 19:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269529;
-	bh=LioLeyqKzIfvIhUx8yGPqh6BQhHGXqTg0yQCOdPx074=;
+	s=korg; t=1670269532;
+	bh=nlls+mMrGod18/annYo2/2Pvmx0nt3SzhU3hi2vvX+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0WFB+R1tEE2OUoZqtBxyN8P9dLpU/5kDBfXa18XTxRyHzuEoZZgOvEbAfaKYGOHnU
-	 nQV7KV7oxy9K+s8DakkzNDn5X7kDo9LME+VUStPMPE/VLlc4DSmmHFfVAx0SD/fj92
-	 qhAiSAPxvHTa4jH6jFwvRrhK0ZDGof87Nm6/jUs0=
+	b=K+EcMIXBR+X1DIDnUZYShPRFVQmu/F5dpPS7mzdVzNP0F6gg3+h1E2BdUvuFQzQjL
+	 31OiMaDPP42yHjR5KhPbC3kzBpvu+g7Hu+uqnkhTuw7JjYz8z/Qeb7+qkvoCjPWmfF
+	 xU+f9XiV/M0qtBYxMV7+db8FIOd+j5d5Eekm+VaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 150/153] Revert "clocksource/drivers/riscv: Events are stopped during CPU suspend"
-Date: Mon,  5 Dec 2022 20:11:14 +0100
-Message-Id: <20221205190812.885643390@linuxfoundation.org>
+	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Primiano Tucci <primiano@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 141/153] tracing/ring-buffer: Have polling block on watermark
+Date: Mon,  5 Dec 2022 20:11:05 +0100
+Message-Id: <20221205190812.669520495@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,95 +37,186 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit d9f15a9de44affe733e34f93bc184945ba277e6d ]
+commit 42fb0a1e84ff525ebe560e2baf9451ab69127e2b upstream.
 
-This reverts commit 232ccac1bd9b5bfe73895f527c08623e7fa0752d.
+Currently the way polling works on the ring buffer is broken. It will
+return immediately if there's any data in the ring buffer whereas a read
+will block until the watermark (defined by the tracefs buffer_percent file)
+is hit.
 
-On the subject of suspend, the RISC-V SBI spec states:
+That is, a select() or poll() will return as if there's data available,
+but then the following read will block. This is broken for the way
+select()s and poll()s are supposed to work.
 
-  This does not cover whether any given events actually reach the hart or
-  not, just what the hart will do if it receives an event. On PolarFire
-  SoC, and potentially other SiFive based implementations, events from the
-  RISC-V timer do reach a hart during suspend. This is not the case for the
-  implementation on the Allwinner D1 - there timer events are not received
-  during suspend.
+Have the polling on the ring buffer also block the same way reads and
+splice does on the ring buffer.
 
-To fix this, the CLOCK_EVT_FEAT_C3STOP (mis)feature was enabled for the
-timer driver - but this has broken both RCU stall detection and timers
-generally on PolarFire SoC and potentially other SiFive based
-implementations.
+Link: https://lkml.kernel.org/r/20221020231427.41be3f26@gandalf.local.home
 
-If an AXI read to the PCIe controller on PolarFire SoC times out, the
-system will stall, however, with CLOCK_EVT_FEAT_C3STOP active, the system
-just locks up without RCU stalling:
-
-	io scheduler mq-deadline registered
-	io scheduler kyber registered
-	microchip-pcie 2000000000.pcie: host bridge /soc/pcie@2000000000 ranges:
-	microchip-pcie 2000000000.pcie:      MEM 0x2008000000..0x2087ffffff -> 0x0008000000
-	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: axi read request error
-	microchip-pcie 2000000000.pcie: axi read timeout
-	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
-	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
-	Freeing initrd memory: 7332K
-
-Similarly issues were reported with clock_nanosleep() - with a test app
-that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250 & the blamed
-commit in place, the sleep times are rounded up to the next jiffy:
-
-== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
-Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
-Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
-Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
-Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
-Samples: 521      Samples: 521      Samples: 521      Samples: 521
-
-Fortunately, the D1 has a second timer, which is "currently used in
-preference to the RISC-V/SBI timer driver" so a revert here does not
-hurt operation of D1 in its current form.
-
-Ultimately, a DeviceTree property (or node) will be added to encode the
-behaviour of the timers, but until then revert the addition of
-CLOCK_EVT_FEAT_C3STOP.
-
-Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Samuel Holland <samuel@sholland.org>
-Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
-Link: https://github.com/riscv-non-isa/riscv-sbi-doc/issues/98/
-Link: https://lore.kernel.org/linux-riscv/bf6d3b1f-f703-4a25-833e-972a44a04114@sholland.org/
-Link: https://lore.kernel.org/r/20221122121620.3522431-1-conor.dooley@microchip.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Primiano Tucci <primiano@google.com>
+Cc: stable@vger.kernel.org
+Fixes: 1e0d6714aceb7 ("ring-buffer: Do not wake up a splice waiter when page is not full")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-riscv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ring_buffer.h |    2 -
+ kernel/trace/ring_buffer.c  |   54 ++++++++++++++++++++++++++++----------------
+ kernel/trace/trace.c        |    2 -
+ 3 files changed, 37 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
-index e3be5c2f57b8..4b04ffbe5e7e 100644
---- a/drivers/clocksource/timer-riscv.c
-+++ b/drivers/clocksource/timer-riscv.c
-@@ -26,7 +26,7 @@ static int riscv_clock_next_event(unsigned long delta,
+--- a/include/linux/ring_buffer.h
++++ b/include/linux/ring_buffer.h
+@@ -99,7 +99,7 @@ __ring_buffer_alloc(unsigned long size,
  
- static DEFINE_PER_CPU(struct clock_event_device, riscv_clock_event) = {
- 	.name			= "riscv_timer_clockevent",
--	.features		= CLOCK_EVT_FEAT_ONESHOT | CLOCK_EVT_FEAT_C3STOP,
-+	.features		= CLOCK_EVT_FEAT_ONESHOT,
- 	.rating			= 100,
- 	.set_next_event		= riscv_clock_next_event,
- };
--- 
-2.35.1
-
+ int ring_buffer_wait(struct ring_buffer *buffer, int cpu, int full);
+ __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
+-			  struct file *filp, poll_table *poll_table);
++			  struct file *filp, poll_table *poll_table, int full);
+ 
+ 
+ #define RING_BUFFER_ALL_CPUS -1
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -566,6 +566,21 @@ size_t ring_buffer_nr_dirty_pages(struct
+ 	return cnt - read;
+ }
+ 
++static __always_inline bool full_hit(struct ring_buffer *buffer, int cpu, int full)
++{
++	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
++	size_t nr_pages;
++	size_t dirty;
++
++	nr_pages = cpu_buffer->nr_pages;
++	if (!nr_pages || !full)
++		return true;
++
++	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
++
++	return (dirty * 100) > (full * nr_pages);
++}
++
+ /*
+  * rb_wake_up_waiters - wake up tasks waiting for ring buffer input
+  *
+@@ -661,22 +676,20 @@ int ring_buffer_wait(struct ring_buffer
+ 		    !ring_buffer_empty_cpu(buffer, cpu)) {
+ 			unsigned long flags;
+ 			bool pagebusy;
+-			size_t nr_pages;
+-			size_t dirty;
++			bool done;
+ 
+ 			if (!full)
+ 				break;
+ 
+ 			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+ 			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
+-			nr_pages = cpu_buffer->nr_pages;
+-			dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
++			done = !pagebusy && full_hit(buffer, cpu, full);
++
+ 			if (!cpu_buffer->shortest_full ||
+ 			    cpu_buffer->shortest_full > full)
+ 				cpu_buffer->shortest_full = full;
+ 			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+-			if (!pagebusy &&
+-			    (!nr_pages || (dirty * 100) > full * nr_pages))
++			if (done)
+ 				break;
+ 		}
+ 
+@@ -697,6 +710,7 @@ int ring_buffer_wait(struct ring_buffer
+  * @cpu: the cpu buffer to wait on
+  * @filp: the file descriptor
+  * @poll_table: The poll descriptor
++ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
+  *
+  * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
+  * as data is added to any of the @buffer's cpu buffers. Otherwise
+@@ -706,14 +720,14 @@ int ring_buffer_wait(struct ring_buffer
+  * zero otherwise.
+  */
+ __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
+-			  struct file *filp, poll_table *poll_table)
++			  struct file *filp, poll_table *poll_table, int full)
+ {
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct rb_irq_work *work;
+ 
+-	if (cpu == RING_BUFFER_ALL_CPUS)
++	if (cpu == RING_BUFFER_ALL_CPUS) {
+ 		work = &buffer->irq_work;
+-	else {
++	} else {
+ 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 			return -EINVAL;
+ 
+@@ -721,8 +735,14 @@ __poll_t ring_buffer_poll_wait(struct ri
+ 		work = &cpu_buffer->irq_work;
+ 	}
+ 
+-	poll_wait(filp, &work->waiters, poll_table);
+-	work->waiters_pending = true;
++	if (full) {
++		poll_wait(filp, &work->full_waiters, poll_table);
++		work->full_waiters_pending = true;
++	} else {
++		poll_wait(filp, &work->waiters, poll_table);
++		work->waiters_pending = true;
++	}
++
+ 	/*
+ 	 * There's a tight race between setting the waiters_pending and
+ 	 * checking if the ring buffer is empty.  Once the waiters_pending bit
+@@ -738,6 +758,9 @@ __poll_t ring_buffer_poll_wait(struct ri
+ 	 */
+ 	smp_mb();
+ 
++	if (full)
++		return full_hit(buffer, cpu, full) ? EPOLLIN | EPOLLRDNORM : 0;
++
+ 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
+ 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
+ 		return EPOLLIN | EPOLLRDNORM;
+@@ -2640,10 +2663,6 @@ static void rb_commit(struct ring_buffer
+ static __always_inline void
+ rb_wakeups(struct ring_buffer *buffer, struct ring_buffer_per_cpu *cpu_buffer)
+ {
+-	size_t nr_pages;
+-	size_t dirty;
+-	size_t full;
+-
+ 	if (buffer->irq_work.waiters_pending) {
+ 		buffer->irq_work.waiters_pending = false;
+ 		/* irq_work_queue() supplies it's own memory barriers */
+@@ -2667,10 +2686,7 @@ rb_wakeups(struct ring_buffer *buffer, s
+ 
+ 	cpu_buffer->last_pages_touch = local_read(&cpu_buffer->pages_touched);
+ 
+-	full = cpu_buffer->shortest_full;
+-	nr_pages = cpu_buffer->nr_pages;
+-	dirty = ring_buffer_nr_dirty_pages(buffer, cpu_buffer->cpu);
+-	if (full && nr_pages && (dirty * 100) <= full * nr_pages)
++	if (!full_hit(buffer, cpu_buffer->cpu, cpu_buffer->shortest_full))
+ 		return;
+ 
+ 	cpu_buffer->irq_work.wakeup_full = true;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5993,7 +5993,7 @@ trace_poll(struct trace_iterator *iter,
+ 		return EPOLLIN | EPOLLRDNORM;
+ 	else
+ 		return ring_buffer_poll_wait(iter->trace_buffer->buffer, iter->cpu_file,
+-					     filp, poll_table);
++					     filp, poll_table, iter->tr->buffer_percent);
+ }
+ 
+ static __poll_t
 
 
