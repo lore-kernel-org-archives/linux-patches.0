@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775E415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5561C433C1;
-	Mon,  5 Dec 2022 19:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3793015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE943C433D6;
+	Mon,  5 Dec 2022 19:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269108;
-	bh=l9MW/Gc9+ArnRwl2DRT7IsjnbxX0PY11C3AcQhaRJJc=;
+	s=korg; t=1670269111;
+	bh=3NZEkU0notptiz0ioGUAGgeZybSJG80riUxZSavH21g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vweAv1uhlzM2P3xqlbOC7I8Z6fcLw0m/LcWnSkTVRsh1RtRwYMjJrhWBFx+gLKc91
-	 A2R67vF0ejSDxWilzb37I6IKNV+NsDgurK1SJ3E1KelTzDq7MwTmMF2VPg1p+qxYTK
-	 OQMzNP32vLNs04VDhOyKWASharm+zUsjqDRA/OKk=
+	b=BEsWEoAJ6WeKMuAc3v+nfSF2o807IKdbhwBbJwMhudgYtpavBsre/n7rAlIzSCmdD
+	 5cD24F81+gcBZxZwBW+GLa9IX30QENNNea+8TeblfNyQciuc+WkN3Jb2tyxXApK4/T
+	 kd5YuUbbqySCJLuNGL2hQnxXm7W4ASVtX+AOoOyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-serial@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Erwan Le Ray <erwan.leray@foss.st.com>,
-	Jean Philippe Romain <jean-philippe.romain@foss.st.com>,
-	Valentin Caron <valentin.caron@foss.st.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/120] serial: stm32: Factor out GPIO RTS toggling into separate function
-Date: Mon,  5 Dec 2022 20:10:51 +0100
-Message-Id: <20221205190809.866241880@linuxfoundation.org>
+Subject: [PATCH 5.15 102/120] iommu/vt-d: Fix PCI device refcount leak in dmar_dev_scope_init()
+Date: Mon,  5 Dec 2022 20:10:42 +0100
+Message-Id: <20221205190809.616107105@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -41,120 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 3bcea529b295a993b1b05db63f245ae8030c5acf ]
+[ Upstream commit 4bedbbd782ebbe7287231fea862c158d4f08a9e3 ]
 
-Pull out the GPIO RTS enable and disable handling into separate function.
-Limit the scope of GPIO RTS toggling only to GPIO emulated RS485 too.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Erwan Le Ray <erwan.leray@foss.st.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jean Philippe Romain <jean-philippe.romain@foss.st.com>
-Cc: Valentin Caron <valentin.caron@foss.st.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-stm32@st-md-mailman.stormreply.com
-To: linux-serial@vger.kernel.org
-Link: https://lore.kernel.org/r/20220430162845.244655-1-marex@denx.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. Add the missing
+pci_dev_put() for the error path to avoid reference count leak.
+
+Fixes: 2e4552893038 ("iommu/vt-d: Unify the way to process DMAR device scope array")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221121113649.190393-3-wangxiongfeng2@huawei.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/stm32-usart.c | 61 ++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 23 deletions(-)
+ drivers/iommu/intel/dmar.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
-index fc166cc2c856..f2cef5f7ae5a 100644
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -325,6 +325,42 @@ static void stm32_usart_tx_interrupt_disable(struct uart_port *port)
- 		stm32_usart_clr_bits(port, ofs->cr1, USART_CR1_TXEIE);
- }
- 
-+static void stm32_usart_rs485_rts_enable(struct uart_port *port)
-+{
-+	struct stm32_port *stm32_port = to_stm32_port(port);
-+	struct serial_rs485 *rs485conf = &port->rs485;
-+
-+	if (stm32_port->hw_flow_control ||
-+	    !(rs485conf->flags & SER_RS485_ENABLED))
-+		return;
-+
-+	if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
-+		mctrl_gpio_set(stm32_port->gpios,
-+			       stm32_port->port.mctrl | TIOCM_RTS);
-+	} else {
-+		mctrl_gpio_set(stm32_port->gpios,
-+			       stm32_port->port.mctrl & ~TIOCM_RTS);
-+	}
-+}
-+
-+static void stm32_usart_rs485_rts_disable(struct uart_port *port)
-+{
-+	struct stm32_port *stm32_port = to_stm32_port(port);
-+	struct serial_rs485 *rs485conf = &port->rs485;
-+
-+	if (stm32_port->hw_flow_control ||
-+	    !(rs485conf->flags & SER_RS485_ENABLED))
-+		return;
-+
-+	if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
-+		mctrl_gpio_set(stm32_port->gpios,
-+			       stm32_port->port.mctrl & ~TIOCM_RTS);
-+	} else {
-+		mctrl_gpio_set(stm32_port->gpios,
-+			       stm32_port->port.mctrl | TIOCM_RTS);
-+	}
-+}
-+
- static void stm32_usart_transmit_chars_pio(struct uart_port *port)
- {
- 	struct stm32_port *stm32_port = to_stm32_port(port);
-@@ -566,41 +602,20 @@ static void stm32_usart_disable_ms(struct uart_port *port)
- /* Transmit stop */
- static void stm32_usart_stop_tx(struct uart_port *port)
- {
--	struct stm32_port *stm32_port = to_stm32_port(port);
--	struct serial_rs485 *rs485conf = &port->rs485;
--
- 	stm32_usart_tx_interrupt_disable(port);
- 
--	if (rs485conf->flags & SER_RS485_ENABLED) {
--		if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
--			mctrl_gpio_set(stm32_port->gpios,
--					stm32_port->port.mctrl & ~TIOCM_RTS);
--		} else {
--			mctrl_gpio_set(stm32_port->gpios,
--					stm32_port->port.mctrl | TIOCM_RTS);
--		}
--	}
-+	stm32_usart_rs485_rts_disable(port);
- }
- 
- /* There are probably characters waiting to be transmitted. */
- static void stm32_usart_start_tx(struct uart_port *port)
- {
--	struct stm32_port *stm32_port = to_stm32_port(port);
--	struct serial_rs485 *rs485conf = &port->rs485;
- 	struct circ_buf *xmit = &port->state->xmit;
- 
- 	if (uart_circ_empty(xmit) && !port->x_char)
- 		return;
- 
--	if (rs485conf->flags & SER_RS485_ENABLED) {
--		if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
--			mctrl_gpio_set(stm32_port->gpios,
--					stm32_port->port.mctrl | TIOCM_RTS);
--		} else {
--			mctrl_gpio_set(stm32_port->gpios,
--					stm32_port->port.mctrl & ~TIOCM_RTS);
--		}
--	}
-+	stm32_usart_rs485_rts_enable(port);
- 
- 	stm32_usart_transmit_chars(port);
- }
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index f026bd269cb0..bff2420fc3e1 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -822,6 +822,7 @@ int __init dmar_dev_scope_init(void)
+ 			info = dmar_alloc_pci_notify_info(dev,
+ 					BUS_NOTIFY_ADD_DEVICE);
+ 			if (!info) {
++				pci_dev_put(dev);
+ 				return dmar_dev_scope_status;
+ 			} else {
+ 				dmar_pci_bus_add_dev(info);
 -- 
 2.35.1
 
