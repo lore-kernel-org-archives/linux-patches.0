@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B2A15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE928C433C1;
-	Mon,  5 Dec 2022 19:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F2715C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8227BC433D6;
+	Mon,  5 Dec 2022 19:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268035;
-	bh=DxJwb42Bw47wORMQSI0BhmFy88Xyi8Sv4ee+/mqon+0=;
+	s=korg; t=1670268037;
+	bh=KX13tLEhoTROJ3VvFrKR4hH96s7o7aBWs7Ww5QE7dao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=narVhLl1Wol8/8B0iNVDvaMYQm/Mzpgj/0S/waNdmidClaZbbXhblZQKfB/7w6PaW
-	 cgoUOer9l+MlWQWghmk7Fpm9AOHzVKYQl8rx8z9KGhUzgsM/R69sVjNelE+spoE8fp
-	 Q7UtQRvd3ifN5B6MICVxNewRt1HHVsEH7pPblOxQ=
+	b=SmHGRskKQBPZRb38n6D0S+4i0KDGOKsVM0LVSJYKwO8u+LKmUmyVpLryN89rQNbhY
+	 8WVNd0k0Gvm/hMIZ5oQAU5O49XHlI4IawyjVv+dbcK/XLmFViL/Vs5uDJbnM0L09OV
+	 vDrheng53llSUlTIwMU6WK9ymKk++7xhWgP8x9gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 034/105] s390/crashdump: fix TOD programmable field size
-Date: Mon,  5 Dec 2022 20:09:06 +0100
-Message-Id: <20221205190804.290796242@linuxfoundation.org>
+	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 4.19 035/105] arm64: dts: rockchip: lower rk3399-puma-haikou SD controller clock frequency
+Date: Mon,  5 Dec 2022 20:09:07 +0100
+Message-Id: <20221205190804.327832365@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -36,58 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
 
-[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
+commit 91e8b74fe6381e083f8aa55217bb0562785ab398 upstream.
 
-The size of the TOD programmable field was incorrectly increased from
-four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
-save area handling").
-This leads to an elf notes section NT_S390_TODPREG which has a size of
-eight instead of four bytes in case of kdump, however even worse is
-that the contents is incorrect: it is supposed to contain only the
-contents of the TOD programmable field, but in fact contains a mix of
-the TOD programmable field (32 bit upper bits) and parts of the CPU
-timer register (lower 32 bits).
+CRC errors (code -84 EILSEQ) have been observed for some SanDisk
+Ultra A1 cards when running at 50MHz.
 
-Fix this by simply changing the size of the todpreg field within the
-save area structure. This will implicitly also fix the size of the
-corresponding elf notes sections.
+Waveform analysis suggest that the level shifters that are used on the
+RK3399-Q7 module for voltage translation between 3.0 and 3.3V don't
+handle clock rates at or above 48MHz properly. Back off to 40MHz for
+some safety margin.
 
-This also gets rid of this compile time warning:
-
-in function ‘fortify_memcpy_chk’,
-    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
-./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
-   declared with attribute warning: detected read beyond size of field
-   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
+Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/crash_dump.c | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/crash_dump.c b/arch/s390/kernel/crash_dump.c
-index 376f6b6dfb3c..7fb7d4dc18dc 100644
---- a/arch/s390/kernel/crash_dump.c
-+++ b/arch/s390/kernel/crash_dump.c
-@@ -45,7 +45,7 @@ struct save_area {
- 	u64 fprs[16];
- 	u32 fpc;
- 	u32 prefix;
--	u64 todpreg;
-+	u32 todpreg;
- 	u64 timer;
- 	u64 todcmp;
- 	u64 vxrs_low[16];
--- 
-2.35.1
-
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+@@ -203,7 +203,7 @@
+ 	cap-sd-highspeed;
+ 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+-	max-frequency = <150000000>;
++	max-frequency = <40000000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
+ 	vmmc-supply = <&vcc3v3_baseboard>;
 
 
