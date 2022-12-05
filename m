@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9A615C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB99C433C1;
-	Mon,  5 Dec 2022 19:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D2B15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F1CC433C1;
+	Mon,  5 Dec 2022 19:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268123;
-	bh=e5Pk0psqIbOg8G6cAhXz2Mp5l/2k90g0fjqDo36b8FA=;
+	s=korg; t=1670268126;
+	bh=2mUxD8qeq97aRPeJbMuT8Zvqaw9f07LCPRMdsEK6qWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zp8XGgfM3T0cugZMKbNgT1UokJ8yJBrQRdPCZHbsl8ZiG0KNBGLZ5OoazDfXVl4Y3
-	 Qn9iPBt435xgzhccODYPMQR50n9Yg7tYA7MgMtLirJ0iYRIGCDxdcos/ZPxs9lWNkv
-	 TnJMCp06wXV+5+TBk+AhJnRO95kmKbSKroepcO4Q=
+	b=fpz5dtPh2w6QQfttx1lvH2Jr5/kt6HvnYcA6Dsw7udU4M61aE3Y/FioeCZFddxuTd
+	 CdD2VQdlwYWr/YoRYW7U0OA58uqb4K91Zk6n8XXCV7jXQvLc6j3loAap1Q+JkTx+UC
+	 TXMmtaDVH8EvwRom/WFVuhQf+q2eRrF3b2c4ikso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Rob Herring <robh@kernel.org>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 067/105] of: property: decrement node refcount in of_fwnode_get_reference_args()
-Date: Mon,  5 Dec 2022 20:09:39 +0100
-Message-Id: <20221205190805.443346940@linuxfoundation.org>
+Subject: [PATCH 4.19 068/105] net/mlx5: Fix uninitialized variable bug in outlen_write()
+Date: Mon,  5 Dec 2022 20:09:40 +0100
+Message-Id: <20221205190805.479590710@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -37,44 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
+[ Upstream commit 3f5769a074c13d8f08455e40586600419e02a880 ]
 
-In of_fwnode_get_reference_args(), the refcount of of_args.np has
-been incremented in the case of successful return from
-of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
+If sscanf() return 0, outlen is uninitialized and used in kzalloc(),
+this is unexpected. We should return -EINVAL if the string is invalid.
 
-Decrement the refcount if of_args is not returned to the caller of
-of_fwnode_get_reference_args().
-
-Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Frank Rowand <frowand.list@gmail.com>
-Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 43720c2de138..13c7e55f5cba 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -918,8 +918,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
- 						       nargs, index, &of_args);
- 	if (ret < 0)
- 		return ret;
--	if (!args)
-+	if (!args) {
-+		of_node_put(of_args.np);
- 		return 0;
-+	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index a686082762df..14cdac980520 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1324,8 +1324,8 @@ static ssize_t outlen_write(struct file *filp, const char __user *buf,
+ 		return -EFAULT;
  
- 	args->nargs = of_args.args_count;
- 	args->fwnode = of_fwnode_handle(of_args.np);
+ 	err = sscanf(outlen_str, "%d", &outlen);
+-	if (err < 0)
+-		return err;
++	if (err != 1)
++		return -EINVAL;
+ 
+ 	ptr = kzalloc(outlen, GFP_KERNEL);
+ 	if (!ptr)
 -- 
 2.35.1
 
