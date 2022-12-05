@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5272B15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6604AC433D6;
-	Mon,  5 Dec 2022 19:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147A615C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850FAC433C1;
+	Mon,  5 Dec 2022 19:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267802;
-	bh=VGliu1t+sj6nVrxzZEQ3a4X17XIuDJR0Nbqhul+clVA=;
+	s=korg; t=1670267804;
+	bh=uAcEGX2MGTC75WWplc3SUbyyqcxOA4T4is2zGQzMNB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZY9KcM5R5O3bpOxoeFq0pYotVd3va2TCtbeUfZ4DK3ru46RU4u6zT7amgJAirw7w6
-	 NugBHquk/bcF/vB5cZ35miHlzYP9aFx1H2Q8I/romDth80aV63bDarfXdOa8363P/4
-	 Z9EHIfLuScONFN0uS/WoEo6jeayt2ohT9FxFpq0A=
+	b=Itj28WE7H0NNnzRlnqmhYbSijPpFICsSwJwZ3SEBkFq293tzjPNsjX6mD9Xs5F8Jl
+	 +l+mBYrijl2aPyqT4xn9emtt4h3rREWdk1wFmX17C4iLBLMBmEijF9Q8OVJpxShYKv
+	 bnIDMO0kuRXr4/iSwsPfJyjTUwBwompdKGo5c2io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sam James <sam@gentoo.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 57/77] hwmon: (coretemp) fix pci device refcount leak in nv1a_ram_new()
-Date: Mon,  5 Dec 2022 20:09:48 +0100
-Message-Id: <20221205190802.882740990@linuxfoundation.org>
+Subject: [PATCH 4.14 58/77] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
+Date: Mon,  5 Dec 2022 20:09:49 +0100
+Message-Id: <20221205190802.915063252@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Sam James <sam@gentoo.org>
 
-[ Upstream commit 7dec14537c5906b8bf40fd6fd6d9c3850f8df11d ]
+[ Upstream commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it after using to avoid refcount leak.
+Add missing <linux/string.h> include for strcmp.
 
-Fixes: 14513ee696a0 ("hwmon: (coretemp) Use PCI host bridge ID to identify CPU if necessary")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093303.214163-1-yangyingliang@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Clang 16 makes -Wimplicit-function-declaration an error by default.
+Unfortunately, out of tree modules may use this in configure scripts,
+which means failure might cause silent miscompilation or misconfiguration.
+
+For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
+or the (new) c-std-porting mailing list [3].
+
+[0] https://lwn.net/Articles/913505/
+[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
+[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
+[3] hosted at lists.linux.dev.
+
+[akpm@linux-foundation.org: remember "linux/"]
+Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/license.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index ee35bbc1714a..770bf76a5348 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -255,10 +255,13 @@ static int adjust_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
- 	 */
- 	if (host_bridge && host_bridge->vendor == PCI_VENDOR_ID_INTEL) {
- 		for (i = 0; i < ARRAY_SIZE(tjmax_pci_table); i++) {
--			if (host_bridge->device == tjmax_pci_table[i].device)
-+			if (host_bridge->device == tjmax_pci_table[i].device) {
-+				pci_dev_put(host_bridge);
- 				return tjmax_pci_table[i].tjmax;
-+			}
- 		}
- 	}
-+	pci_dev_put(host_bridge);
+diff --git a/include/linux/license.h b/include/linux/license.h
+index decdbf43cb5c..87a21d5d6758 100644
+--- a/include/linux/license.h
++++ b/include/linux/license.h
+@@ -1,6 +1,8 @@
+ #ifndef __LICENSE_H
+ #define __LICENSE_H
  
- 	for (i = 0; i < ARRAY_SIZE(tjmax_table); i++) {
- 		if (strstr(c->x86_model_id, tjmax_table[i].id))
++#include <linux/string.h>
++
+ static inline int license_is_gpl_compatible(const char *license)
+ {
+ 	return (strcmp(license, "GPL") == 0
 -- 
 2.35.1
 
