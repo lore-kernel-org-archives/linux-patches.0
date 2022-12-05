@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC73415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A64C433C1;
-	Mon,  5 Dec 2022 19:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F0215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15FDC433C1;
+	Mon,  5 Dec 2022 19:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268674;
-	bh=ztr5ollkKy/uztw1KIE/w6OhLWXxYAm0pmsrgoRwljU=;
+	s=korg; t=1670268677;
+	bh=YPrkSZcHmssOwqYPWtHg0dZ5FWUmJQNDA2byJRLUxIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmSqlVOUO5HJfWgM7iPOnfNxACLH2iwHZP+ukiqZYPei9XB/y9KJs1QAY9V/5YudR
-	 iwk7Via64Sxf6zATuD9A8UX1ObIenxckgIjeYJZ2MLRsCDYmuDmEbNLnilLbifqUfl
-	 dxTNPp96mtlAsEHCQX4NDwKKvbAyc8+MAv9yp5WI=
+	b=GrWm2xeB46GARtXh5pyxCDY2Y4thBuvLtJbX8ZnJnsMzjlFyYklq98IfdtIRyp3TH
+	 wSSVgAe/ep57ZXmmLRO5Xj0bz3plRdnDxwKgK98J/sCFaX5JGofVcB6i2fmJsKN9Oy
+	 m3u+6JnJO8UfL5dGjHaadL4d34+7NS+1odDI2mZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Falbesoner <sebastian.falbesoner@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Wenchao Chen <wenchao.chen@unisoc.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 63/92] mmc: sdhci-esdhc-imx: correct CQHCI exit halt state check
-Date: Mon,  5 Dec 2022 20:10:16 +0100
-Message-Id: <20221205190805.598259388@linuxfoundation.org>
+Subject: [PATCH 5.10 64/92] mmc: sdhci-sprd: Fix no reset data and command after voltage switch
+Date: Mon,  5 Dec 2022 20:10:17 +0100
+Message-Id: <20221205190805.634164594@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Falbesoner <sebastian.falbesoner@gmail.com>
+From: Wenchao Chen <wenchao.chen@unisoc.com>
 
-commit a3cab1d2132474969871b5d7f915c5c0167b48b0 upstream.
+commit dd30dcfa7a74a06f8dcdab260d8d5adf32f17333 upstream.
 
-With the current logic the "failed to exit halt state" error would be
-shown even if any other bit than CQHCI_HALT was set in the CQHCI_CTL
-register, since the right hand side is always true. Fix this by using
-the correct operator (bit-wise instead of logical AND) to only check for
-the halt bit flag, which was obviously intended here.
+After switching the voltage, no reset data and command will cause
+CMD2 timeout.
 
-Fixes: 85236d2be844 ("mmc: sdhci-esdhc-imx: clear the HALT bit when enable CQE")
-Signed-off-by: Sebastian Falbesoner <sebastian.falbesoner@gmail.com>
-Acked-by: Haibo Chen <haibo.chen@nxp.com>
+Fixes: 29ca763fc26f ("mmc: sdhci-sprd: Add pin control support for voltage switch")
+Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221121105721.1903878-1-sebastian.falbesoner@gmail.com
+Link: https://lore.kernel.org/r/20221130121328.25553-1-wenchao.chen@unisoc.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-sprd.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1449,7 +1449,7 @@ static void esdhc_cqe_enable(struct mmc_
- 	 * system resume back.
- 	 */
- 	cqhci_writel(cq_host, 0, CQHCI_CTL);
--	if (cqhci_readl(cq_host, CQHCI_CTL) && CQHCI_HALT)
-+	if (cqhci_readl(cq_host, CQHCI_CTL) & CQHCI_HALT)
- 		dev_err(mmc_dev(host->mmc),
- 			"failed to exit halt state when enable CQE\n");
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -457,7 +457,7 @@ static int sdhci_sprd_voltage_switch(str
+ 	}
  
+ 	if (IS_ERR(sprd_host->pinctrl))
+-		return 0;
++		goto reset;
+ 
+ 	switch (ios->signal_voltage) {
+ 	case MMC_SIGNAL_VOLTAGE_180:
+@@ -485,6 +485,8 @@ static int sdhci_sprd_voltage_switch(str
+ 
+ 	/* Wait for 300 ~ 500 us for pin state stable */
+ 	usleep_range(300, 500);
++
++reset:
+ 	sdhci_reset(host, SDHCI_RESET_CMD | SDHCI_RESET_DATA);
+ 
+ 	return 0;
 
 
