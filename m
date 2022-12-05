@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4E315C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A00AC433D6;
-	Mon,  5 Dec 2022 19:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF6115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400C0C433D6;
+	Mon,  5 Dec 2022 19:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269121;
-	bh=dotnt64t1jrpeZQmQvRV67SapMIHnKYV4ETNYXapGYk=;
+	s=korg; t=1670269124;
+	bh=ur6q0l5dvAsHUZABramdioS2JWxZhxVY3ysfT1RnnGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoS2qh0audhlHDa+h6NGSMDnnb2ywjDyss7FGYjaWBqbV4TCDPL0HkTvzHYPMNgWo
-	 ePdouRPlN1Flf1U7rS/FPIUsyY7mLKVP5vcDC3DnKE6e3SyHFtfDe19f/V74okde6/
-	 EUcfz7mCuOsAyck4C1ag1KwogiN+rS3GxqiTk6DU=
+	b=m50DkGIY7/v4b4pz9ax4ldbHcUyv7ktzc7cOTG+RsvXrNHJ9xZ8sWZ5IGC0llc7kY
+	 g/PilX3RdUuu1I6yrqXRLhZ6GUWCurSIssXy3wPEMMNIL6wbKUmiE4q8uUO9fOL/iM
+	 fdE+PkJhqh5Xf8dhs3h2mvt70l0KrsqS1UM/tSSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Haller <d.haller@phytec.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 012/153] ARM: dts: am335x-pcm-953: Define fixed regulators in root node
-Date: Mon,  5 Dec 2022 20:08:56 +0100
-Message-Id: <20221205190809.107402949@linuxfoundation.org>
+Subject: [PATCH 5.4 013/153] ASoC: sgtl5000: Reset the CHIP_CLK_CTRL reg on remove
+Date: Mon,  5 Dec 2022 20:08:57 +0100
+Message-Id: <20221205190809.133599901@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,64 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Haller <d.haller@phytec.de>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 8950f345a67d8046d2472dd6ea81fa18ef5b4844 ]
+[ Upstream commit 0bb8e9b36b5b7f2e77892981ff6c27ee831d8026 ]
 
-Remove the regulators node and define fixed regulators in the root node.
-Prevents the sdhci-omap driver from waiting in probe deferral forever
-because of the missing vmmc-supply and keeps am335x-pcm-953 consistent with
-the other Phytec AM335 boards.
+Since commit bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove"),
+the device power control registers are reset when the driver is
+removed/shutdown.
 
-Fixes: bb07a829ec38 ("ARM: dts: Add support for phyCORE-AM335x PCM-953 carrier board")
-Signed-off-by: Dominik Haller <d.haller@phytec.de>
-Message-Id: <20221011143115.248003-1-d.haller@phytec.de>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+This is an issue when the device is configured to use the PLL clock. The
+device will stop responding if it is still configured to use the PLL
+clock but the PLL clock is powered down.
+
+When rebooting linux, the probe function will show:
+sgtl5000 0-000a: Error reading chip id -11
+
+Make sure that the CHIP_CLK_CTRL is reset to its default value before
+powering down the device.
+
+Fixes: bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20221110190612.1341469-1-detlev.casanova@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am335x-pcm-953.dtsi | 28 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ sound/soc/codecs/sgtl5000.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/am335x-pcm-953.dtsi b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-index 9bfa032bcada..f2d9145b3c6a 100644
---- a/arch/arm/boot/dts/am335x-pcm-953.dtsi
-+++ b/arch/arm/boot/dts/am335x-pcm-953.dtsi
-@@ -12,22 +12,20 @@ / {
- 	compatible = "phytec,am335x-pcm-953", "phytec,am335x-phycore-som", "ti,am33xx";
+diff --git a/sound/soc/codecs/sgtl5000.c b/sound/soc/codecs/sgtl5000.c
+index 76d3c0681f37..d2dfc53e30ff 100644
+--- a/sound/soc/codecs/sgtl5000.c
++++ b/sound/soc/codecs/sgtl5000.c
+@@ -1788,6 +1788,7 @@ static int sgtl5000_i2c_remove(struct i2c_client *client)
+ {
+ 	struct sgtl5000_priv *sgtl5000 = i2c_get_clientdata(client);
  
- 	/* Power */
--	regulators {
--		vcc3v3: fixedregulator@1 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc3v3";
--			regulator-min-microvolt = <3300000>;
--			regulator-max-microvolt = <3300000>;
--			regulator-boot-on;
--		};
-+	vcc3v3: fixedregulator1 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc3v3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-boot-on;
-+	};
++	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_CLK_CTRL, SGTL5000_CHIP_CLK_CTRL_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_DIG_POWER, SGTL5000_DIG_POWER_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_ANA_POWER, SGTL5000_ANA_POWER_DEFAULT);
  
--		vcc1v8: fixedregulator@2 {
--			compatible = "regulator-fixed";
--			regulator-name = "vcc1v8";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
--			regulator-boot-on;
--		};
-+	vcc1v8: fixedregulator2 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc1v8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-boot-on;
- 	};
- 
- 	/* User IO */
 -- 
 2.35.1
 
