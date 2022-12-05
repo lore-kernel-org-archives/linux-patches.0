@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9486D15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15340C433C1;
-	Mon,  5 Dec 2022 19:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A9B15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65E3C433C1;
+	Mon,  5 Dec 2022 19:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268172;
-	bh=LyMXvAbYuYMYC3Oo/cQWcOcEi2Vdvp+mqF8hNX9AJEo=;
+	s=korg; t=1670268175;
+	bh=W6zTtECllZh/sYXkgkxHGkDu710QDASBhdWH1js7TC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6a+O+/0HRjmopCkTHMrqDE8k9+bxElrRAoq5yxUfi9swDdYiyp8QKtyb3CPUvgvB
-	 QxNjdLORuYWsJr/cgroBcrZX7ZCtfEp+fmJ2CJF6Yn7dctH2v9HFd/0VhexD2n54/n
-	 Cvivc0gnvjNWo2xs7uCOeI1EFQrJfglcxAAXe/qw=
+	b=ytxoFDoIE/gBJW0w/Ql9UnlEkdcdx+gPQu+HWJ/imV6YOxsrDRf7AlZ0XWl5G1oiO
+	 SNEezvEHKYql6g04QXydd8AaJs+SeKRKRazAcxNULW+oxIriIvv4qnoz2ukTJEODN7
+	 l4R0Bhqx+JkO+cT89xYJh2tl9Gk9aH78G7qlJN3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 4.19 099/105] nvme: restrict management ioctls to admin
-Date: Mon,  5 Dec 2022 20:10:11 +0100
-Message-Id: <20221205190806.456959866@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Hugh Dickins <hughd@google.com>
+Subject: [PATCH 4.19 090/105] mm: Fix .data.once orphan section warning
+Date: Mon,  5 Dec 2022 20:10:02 +0100
+Message-Id: <20221205190806.171660460@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,41 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 23e085b2dead13b51fe86d27069895b740f749c0 upstream.
+Portions of upstream commit a4055888629b ("mm/memcg: warning on !memcg
+after readahead page charged") were backported as commit cfe575954ddd
+("mm: add VM_WARN_ON_ONCE_PAGE() macro"). Unfortunately, the backport
+did not account for the lack of commit 33def8498fdd ("treewide: Convert
+macro and uses of __section(foo) to __section("foo")") in kernels prior
+to 5.10, resulting in the following orphan section warnings on PowerPC
+clang builds with CONFIG_DEBUG_VM=y:
 
-The passthrough commands already have this restriction, but the other
-operations do not. Require the same capabilities for all users as all of
-these operations, which include resets and rescans, can be disruptive.
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+This is a difference between how clang and gcc handle macro
+stringification, which was resolved for the kernel by not stringifying
+the argument to the __section() macro. Since that change was deemed not
+suitable for the stable kernels by commit 59f89518f510 ("once: fix
+section mismatch on clang builds"), do that same thing as that change
+and remove the quotes from the argument to __section().
+
+Fixes: cfe575954ddd ("mm: add VM_WARN_ON_ONCE_PAGE() macro")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 ---
- drivers/nvme/host/core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/mmdebug.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2675,11 +2675,17 @@ static long nvme_dev_ioctl(struct file *
- 	case NVME_IOCTL_IO_CMD:
- 		return nvme_dev_user_cmd(ctrl, argp);
- 	case NVME_IOCTL_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		dev_warn(ctrl->device, "resetting controller\n");
- 		return nvme_reset_ctrl_sync(ctrl);
- 	case NVME_IOCTL_SUBSYS_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		return nvme_reset_subsystem(ctrl);
- 	case NVME_IOCTL_RESCAN:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		nvme_queue_scan(ctrl);
- 		return 0;
- 	default:
+--- a/include/linux/mmdebug.h
++++ b/include/linux/mmdebug.h
+@@ -38,7 +38,7 @@ void dump_mm(const struct mm_struct *mm)
+ 		}							\
+ 	} while (0)
+ #define VM_WARN_ON_ONCE_PAGE(cond, page)	({			\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(.data.once) __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(__ret_warn_once && !__warned)) {			\
 
 
