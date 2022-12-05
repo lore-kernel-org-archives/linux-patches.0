@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CAB15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D183DC433D6;
-	Mon,  5 Dec 2022 19:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA1E15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9306EC433D7;
+	Mon,  5 Dec 2022 19:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268865;
-	bh=sgXKMCAZawMW6mWoddJ0hSZ5YRzISGdLE6c+B47mhHI=;
+	s=korg; t=1670268867;
+	bh=IKj9oZyBIQ+gE8fFqabqJatJq3XBcem+fVn5hWJfEhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTucmme+9tW4RFw6f72TV1GO+Y+vsftmBkegGY9Jods1o/H4JCz3LrIbrIOnS0BTZ
-	 zhPKUK7G/gXBkjCLSJ98SxZj35yBpzA5T0/T8uzb09pNR3fTTLU5B654Bf5KIkyt/T
-	 LricmWBJBCS8QELM+6NQ6+Z0+SY0PTlp7l9D3Bhw=
+	b=H92bLGvEhgW/YuklWhHTh3d7L1BqGlHVOq7Hgxz1xEJVIeH8lXb5WvPVXXdbGMA2a
+	 k7KQehuEx+S7sxseGvFjlrKlISmDV1wiCM6yjCpgBD9WteKGhqASOMKTj1E5ativbj
+	 5+333ivHp7CB/I6dOnltmV5WsFym6lrLICwrkzF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Arunachalam Santhanam <Arunachalam.Santhanam@in.bosch.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/120] can: cc770: cc770_isa_probe(): add missing free_cc770dev()
-Date: Mon,  5 Dec 2022 20:09:39 +0100
-Message-Id: <20221205190807.717837106@linuxfoundation.org>
+Subject: [PATCH 5.15 040/120] can: etas_es58x: es58x_init_netdev(): free netdev when register_candev()
+Date: Mon,  5 Dec 2022 20:09:40 +0100
+Message-Id: <20221205190807.746566071@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -37,55 +39,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 62ec89e74099a3d6995988ed9f2f996b368417ec ]
+[ Upstream commit 709cb2f9ed2006eb1dc4b36b99d601cd24889ec4 ]
 
-Add the missing free_cc770dev() before return from cc770_isa_probe()
-in the register_cc770dev() error handling case.
+In case of register_candev() fails, clear
+es58x_dev->netdev[channel_idx] and add free_candev(). Otherwise
+es58x_free_netdevs() will unregister the netdev that has never been
+registered.
 
-In addition, remove blanks before goto labels.
-
-Fixes: 7e02e5433e00 ("can: cc770: legacy CC770 ISA bus driver")
+Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
 Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/all/1668168557-6024-1-git-send-email-zhangchangzhong@huawei.com
+Acked-by: Arunachalam Santhanam <Arunachalam.Santhanam@in.bosch.com>
+Acked-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/1668413685-23354-1-git-send-email-zhangchangzhong@huawei.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/cc770/cc770_isa.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/can/usb/etas_es58x/es58x_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/cc770/cc770_isa.c b/drivers/net/can/cc770/cc770_isa.c
-index 194c86e0f340..8f6dccd5a587 100644
---- a/drivers/net/can/cc770/cc770_isa.c
-+++ b/drivers/net/can/cc770/cc770_isa.c
-@@ -264,22 +264,24 @@ static int cc770_isa_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"couldn't register device (err=%d)\n", err);
--		goto exit_unmap;
-+		goto exit_free;
- 	}
+diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
+index cd4e7f356e48..0e6faf962ebb 100644
+--- a/drivers/net/can/usb/etas_es58x/es58x_core.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
+@@ -2098,8 +2098,11 @@ static int es58x_init_netdev(struct es58x_device *es58x_dev, int channel_idx)
+ 	netdev->flags |= IFF_ECHO;	/* We support local echo */
  
- 	dev_info(&pdev->dev, "device registered (reg_base=0x%p, irq=%d)\n",
- 		 priv->reg_base, dev->irq);
- 	return 0;
+ 	ret = register_candev(netdev);
+-	if (ret)
++	if (ret) {
++		es58x_dev->netdev[channel_idx] = NULL;
++		free_candev(netdev);
+ 		return ret;
++	}
  
-- exit_unmap:
-+exit_free:
-+	free_cc770dev(dev);
-+exit_unmap:
- 	if (mem[idx])
- 		iounmap(base);
-- exit_release:
-+exit_release:
- 	if (mem[idx])
- 		release_mem_region(mem[idx], iosize);
- 	else
- 		release_region(port[idx], iosize);
-- exit:
-+exit:
- 	return err;
- }
- 
+ 	netdev_queue_set_dql_min_limit(netdev_get_tx_queue(netdev, 0),
+ 				       es58x_dev->param->dql_min_limit);
 -- 
 2.35.1
 
