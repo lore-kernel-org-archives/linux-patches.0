@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFF715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9200DC433C1;
-	Mon,  5 Dec 2022 19:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD25115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C5DC433D6;
+	Mon,  5 Dec 2022 19:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268461;
-	bh=zutUAQHf8fvt55OJ0dbySAta+ws84O2600lIULFr86s=;
+	s=korg; t=1670268464;
+	bh=g15NscczAD7M+9XhXJ0KZwLF916KQu4jvupeOxM9gH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMmq4ty1NkR2w+R/xNYB9VEsupMrhhQmmQmvq8xnmN5dN+gkeSVaJrL6OpG6zidUB
-	 aVKbFMH3GbkWjqXaThdfgBma8WaHDVstshLZOa5O2uUNOnl1tFTNLoyFfWSpCtydLb
-	 Oh5HLhn1thcgSoWRvtCKiMO2OWmQ0ZuoZNM+ojbo=
+	b=xpviPTfAoPIiRxH6iVuseq77xV0C4BAuAZ/pRTrzUEOaHeCLXumeOwQmou+PtMyzo
+	 Q46Y8DTbDwMPByCY5hy6Yg7xBBFqeUjKEVg5wB+bq4533ws5TiUb5RdZU0W+11MLrB
+	 L1gxjQf7RZ1sU67M0TEouB8Zmm2BF2BjpwGviJd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Gwangun Jung <exsociety@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 110/124] iommu/vt-d: Fix PCI device refcount leak in dmar_dev_scope_init()
-Date: Mon,  5 Dec 2022 20:10:16 +0100
-Message-Id: <20221205190811.567462843@linuxfoundation.org>
+Subject: [PATCH 6.0 111/124] ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference
+Date: Mon,  5 Dec 2022 20:10:17 +0100
+Message-Id: <20221205190811.594623147@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,41 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit 4bedbbd782ebbe7287231fea862c158d4f08a9e3 ]
+[ Upstream commit 61b91eb33a69c3be11b259c5ea484505cd79f883 ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+Gwangun Jung reported a slab-out-of-bounds access in fib_nh_match:
+    fib_nh_match+0xf98/0x1130 linux-6.0-rc7/net/ipv4/fib_semantics.c:961
+    fib_table_delete+0x5f3/0xa40 linux-6.0-rc7/net/ipv4/fib_trie.c:1753
+    inet_rtm_delroute+0x2b3/0x380 linux-6.0-rc7/net/ipv4/fib_frontend.c:874
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() for the error path to avoid reference count leak.
+Separate nexthop objects are mutually exclusive with the legacy
+multipath spec. Fix fib_nh_match to return if the config for the
+to be deleted route contains a multipath spec while the fib_info
+is using a nexthop object.
 
-Fixes: 2e4552893038 ("iommu/vt-d: Unify the way to process DMAR device scope array")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221121113649.190393-3-wangxiongfeng2@huawei.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
+Fixes: 6bf92d70e690 ("net: ipv4: fix route with nexthop object delete warning")
+Reported-by: Gwangun Jung <exsociety@gmail.com>
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d5082d386eee ("ipv4: Fix route deletion when nexthop info is not specified")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/fib_semantics.c                    | 8 ++++----
+ tools/testing/selftests/net/fib_nexthops.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 5a8f780e7ffd..bc94059a5b87 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -820,6 +820,7 @@ int __init dmar_dev_scope_init(void)
- 			info = dmar_alloc_pci_notify_info(dev,
- 					BUS_NOTIFY_ADD_DEVICE);
- 			if (!info) {
-+				pci_dev_put(dev);
- 				return dmar_dev_scope_status;
- 			} else {
- 				dmar_pci_bus_add_dev(info);
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index 2dc97583d279..e9a7f70a54df 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -888,13 +888,13 @@ int fib_nh_match(struct net *net, struct fib_config *cfg, struct fib_info *fi,
+ 		return 1;
+ 	}
+ 
++	/* cannot match on nexthop object attributes */
++	if (fi->nh)
++		return 1;
++
+ 	if (cfg->fc_oif || cfg->fc_gw_family) {
+ 		struct fib_nh *nh;
+ 
+-		/* cannot match on nexthop object attributes */
+-		if (fi->nh)
+-			return 1;
+-
+ 		nh = fib_info_nh(fi, 0);
+ 		if (cfg->fc_encap) {
+ 			if (fib_encap_match(net, cfg->fc_encap_type,
+diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
+index d5a0dd548989..ee5e98204d3d 100755
+--- a/tools/testing/selftests/net/fib_nexthops.sh
++++ b/tools/testing/selftests/net/fib_nexthops.sh
+@@ -1223,6 +1223,11 @@ ipv4_fcnal()
+ 	log_test $rc 0 "Delete nexthop route warning"
+ 	run_cmd "$IP route delete 172.16.101.1/32 nhid 12"
+ 	run_cmd "$IP nexthop del id 12"
++
++	run_cmd "$IP nexthop add id 21 via 172.16.1.6 dev veth1"
++	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
++	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
++	log_test $? 2 "Delete multipath route with only nh id based entry"
+ }
+ 
+ ipv4_grp_fcnal()
 -- 
 2.35.1
 
