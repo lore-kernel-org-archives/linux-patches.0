@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74EF15C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66730C433D7;
-	Mon,  5 Dec 2022 19:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EA515C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD20C433D7;
+	Mon,  5 Dec 2022 19:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269193;
-	bh=nZa/HDA9ubZrjSqkNuCVIawzzFHXP7yEZaunCeUHQmU=;
+	s=korg; t=1670269196;
+	bh=dxU7GQ6y7EbjdtJ2vHoHYTRsyqJyR1aM76v0IhwAXpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JKicW9CjVI+spNjTu5bQ4mZKN3lqBgIxb+7+69bTrpW6tzvkm1VRejuC36aej+wPz
-	 nZ0pUBMIPYobdJMNmK/WXvPnKP+20e5L/ZQPZ5ZO0IB3ja9ZhlaKBUBHtTNqU8dIFD
-	 b6AYeIqWFgyL3m+xJHm9uJNhEt/GNK5NvH1t3Qbk=
+	b=vMzpcubagCd03r3MI+yTJV2X+qjT8ApRL+MnfYzRQ9rIZvFSaNHKyLQHDFQGHqxcJ
+	 Mn9e+8kohhJNE26ySerd/zBSWDlN7WkoIX6K3cbqmvkV9ZiB/ibYQnIc8tUaMcOUMb
+	 zcIkH5Ecav46ALpu+chVso/XtPTrAPtwzXJZ/uAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 038/153] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
-Date: Mon,  5 Dec 2022 20:09:22 +0100
-Message-Id: <20221205190809.819217181@linuxfoundation.org>
+Subject: [PATCH 5.4 039/153] s390/dasd: fix no record found for raw_track_access
+Date: Mon,  5 Dec 2022 20:09:23 +0100
+Message-Id: <20221205190809.846182239@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,111 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
+[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
 
-When connect() is called on a socket bound to the wildcard address,
-we change the socket's saddr to a local address.  If the socket
-fails to connect() to the destination, we have to reset the saddr.
+For DASD devices in raw_track_access mode only full track images are
+read and written.
+For this purpose it is not necessary to do search operation in the
+locate record extended function. The documentation even states that
+this might fail if the searched record is not found on a track.
 
-However, when an error occurs after inet_hash6?_connect() in
-(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
-the socket bound to the address.
+Currently the driver sets a value of 1 in the search field for the first
+record after record zero. This is the default for disks not in
+raw_track_access mode but record 1 might be missing on a completely
+empty track.
 
->From the user's point of view, whether saddr is reset or not varies
-with errno.  Let's fix this inconsistent behaviour.
+There has not been any problem with this on IBM storage servers but it
+might lead to errors with DASD devices on other vendors storage servers.
 
-Note that after this patch, the repro [0] will trigger the WARN_ON()
-in inet_csk_get_port() again, but this patch is not buggy and rather
-fixes a bug papering over the bhash2's bug for which we need another
-fix.
+Fix this by setting the search field to 0. Record zero is always available
+even on a completely empty track.
 
-For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
-by this sequence:
-
-  s1 = socket()
-  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-  s1.bind(('127.0.0.1', 10000))
-  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
-  # or s1.connect(('127.0.0.1', 10000))
-
-  s2 = socket()
-  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-  s2.bind(('0.0.0.0', 10000))
-  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
-
-  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
-
-[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
-
-Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv4.c     | 2 ++
- net/dccp/ipv6.c     | 2 ++
- net/ipv4/tcp_ipv4.c | 2 ++
- net/ipv6/tcp_ipv6.c | 2 ++
- 4 files changed, 8 insertions(+)
+ drivers/s390/block/dasd_eckd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index 7cf903f9e29a..cd59a669b8a7 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -130,6 +130,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	 * This unhashes the socket and releases the local port, if necessary.
- 	 */
- 	dccp_set_state(sk, DCCP_CLOSED);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	ip_rt_put(rt);
- 	sk->sk_route_caps = 0;
- 	inet->inet_dport = 0;
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 7c24927e9c2c..1bf267d36a9c 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -957,6 +957,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
+diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
+index 7749deb614d7..53d22975a32f 100644
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -4627,7 +4627,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	struct dasd_device *basedev;
+ 	struct req_iterator iter;
+ 	struct dasd_ccw_req *cqr;
+-	unsigned int first_offs;
+ 	unsigned int trkcount;
+ 	unsigned long *idaws;
+ 	unsigned int size;
+@@ -4661,7 +4660,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
+ 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
+ 		DASD_RAW_SECTORS_PER_TRACK;
+ 	trkcount = last_trk - first_trk + 1;
+-	first_offs = 0;
  
- late_failure:
- 	dccp_set_state(sk, DCCP_CLOSED);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	__sk_dst_reset(sk);
- failure:
- 	inet->inet_dport = 0;
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index eb9c05acf77e..a54505c29a5c 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -323,6 +323,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	 * if necessary.
- 	 */
- 	tcp_set_state(sk, TCP_CLOSE);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	ip_rt_put(rt);
- 	sk->sk_route_caps = 0;
- 	inet->inet_dport = 0;
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 831f779aba7b..e84b79357b2f 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -334,6 +334,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
+ 	if (rq_data_dir(req) == READ)
+ 		cmd = DASD_ECKD_CCW_READ_TRACK;
+@@ -4705,13 +4703,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
  
- late_failure:
- 	tcp_set_state(sk, TCP_CLOSE);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- failure:
- 	inet->inet_dport = 0;
- 	sk->sk_route_caps = 0;
+ 	if (use_prefix) {
+ 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
+-			   startdev, 1, first_offs + 1, trkcount, 0, 0);
++			   startdev, 1, 0, trkcount, 0, 0);
+ 	} else {
+ 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
+ 		ccw[-1].flags |= CCW_FLAG_CC;
+ 
+ 		data += sizeof(struct DE_eckd_data);
+-		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
++		locate_record_ext(ccw++, data, first_trk, 0,
+ 				  trkcount, cmd, basedev, 0, 0);
+ 	}
+ 
 -- 
 2.35.1
 
