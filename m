@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39D715C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52680C433D6;
-	Mon,  5 Dec 2022 19:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F0015C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06746C433D6;
+	Mon,  5 Dec 2022 19:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268076;
-	bh=nTutBIEMzOjwQcxDbdlMOGqKFZMRKo/+wcUMKI+DhMo=;
+	s=korg; t=1670268079;
+	bh=NZhukwqmEYGZ98x4wA6xs3CPUjVU19bC2V823JnRVq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N3S1BcUe6DUNhSaM1V8eg/zNvcpghZCSD/6f2VfAJhUOjp2nWVbyEgfFb3zGsilaS
-	 pxF6yNZ4RmFrO9ZTYTwANuGM2M++jZw37RHL8w3vq1suJkldYT2zbjvQdOyYndQVNd
-	 4kEF7ir1CK3LnILLpM/Sojm+yhucQ5xW0eWLv5Ms=
+	b=cXi976pNM0GlUVpaTBbEXJfiNThb9YU9XIEg7mGlPSQx6rfd8ajkfvXn6OdA1xiXu
+	 z/QEyh+oZ3OtDL5GxQ1YsIpg2qOJyTFRr3vM04C5cbwy4BvUvERcW3X0UmOlvb2H82
+	 hB3FsUhoRCvNOBvwrxMASzYKLvqKAiVVmAUI/f80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
+	Tho Vu <tho.vu.wh@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 078/105] packet: do not set TP_STATUS_CSUM_VALID on CHECKSUM_COMPLETE
-Date: Mon,  5 Dec 2022 20:09:50 +0100
-Message-Id: <20221205190805.795143138@linuxfoundation.org>
+Subject: [PATCH 4.19 079/105] net: ethernet: renesas: ravb: Fix promiscuous mode after system resumed
+Date: Mon,  5 Dec 2022 20:09:51 +0100
+Message-Id: <20221205190805.834024548@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,47 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Willem de Bruijn <willemb@google.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit b85f628aa158a653c006e9c1405a117baef8c868 ]
+[ Upstream commit d66233a312ec9013af3e37e4030b479a20811ec3 ]
 
-CHECKSUM_COMPLETE signals that skb->csum stores the sum over the
-entire packet. It does not imply that an embedded l4 checksum
-field has been validated.
+After system resumed on some environment board, the promiscuous mode
+is disabled because the SoC turned off. So, call ravb_set_rx_mode() in
+the ravb_resume() to fix the issue.
 
-Fixes: 682f048bd494 ("af_packet: pass checksum validation status to the user")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20221128161812.640098-1-willemdebruijn.kernel@gmail.com
+Reported-by: Tho Vu <tho.vu.wh@renesas.com>
+Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20221128065604.1864391-1-yoshihiro.shimoda.uh@renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index f654f79e3310..6fa0a9a453a8 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2209,8 +2209,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 	if (skb->ip_summed == CHECKSUM_PARTIAL)
- 		status |= TP_STATUS_CSUMNOTREADY;
- 	else if (skb->pkt_type != PACKET_OUTGOING &&
--		 (skb->ip_summed == CHECKSUM_COMPLETE ||
--		  skb_csum_unnecessary(skb)))
-+		 skb_csum_unnecessary(skb))
- 		status |= TP_STATUS_CSUM_VALID;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index c24b7ea37e39..9077014f6f40 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2310,6 +2310,7 @@ static int __maybe_unused ravb_resume(struct device *dev)
+ 		ret = ravb_open(ndev);
+ 		if (ret < 0)
+ 			return ret;
++		ravb_set_rx_mode(ndev);
+ 		netif_device_attach(ndev);
+ 	}
  
- 	if (snaplen > res)
-@@ -3452,8 +3451,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		if (skb->ip_summed == CHECKSUM_PARTIAL)
- 			aux.tp_status |= TP_STATUS_CSUMNOTREADY;
- 		else if (skb->pkt_type != PACKET_OUTGOING &&
--			 (skb->ip_summed == CHECKSUM_COMPLETE ||
--			  skb_csum_unnecessary(skb)))
-+			 skb_csum_unnecessary(skb))
- 			aux.tp_status |= TP_STATUS_CSUM_VALID;
- 
- 		aux.tp_len = origlen;
 -- 
 2.35.1
 
