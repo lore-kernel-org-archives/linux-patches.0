@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724BC15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC636C433D6;
-	Mon,  5 Dec 2022 19:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319BE15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E86DC433C1;
+	Mon,  5 Dec 2022 19:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268702;
-	bh=jCEbXdqFgLF0bEvMYdFL3egx7y6jDk7vxXNc6UDPry0=;
+	s=korg; t=1670268705;
+	bh=VLuRiyZC1rvMXRyIT/fnf8lLB/uEzuwa94MNE+ira3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZmVriOkbM/iwUJcX9e0kfNLbp/Qma1cexD2xw6KAa/Iq2v9Y+JYBzMaN4DhmRMgp
-	 JcJM2BSSdUONM8j9gQ1cjdludX9k4GOYuo7f8KG2WOvg0cer+3KRcM/5Eji5Q3f7Kv
-	 lbXNtXlJF3fSJEpP053SGTgaW9AauBqoJ+vZoCOE=
+	b=2FG0H8h9W3U2CeiIHPbYs1fnNG//EGBJs03NSLLf7rx9Hr/6MhNX6cUnCN2YtvpCq
+	 XXqv0djPzv2vIY5sZeCo013ZGyeUEz9UiESE5UUi3SPjlrfxtuE/Fdr7dFOC75vKWz
+	 f6oaPGKeqBivKl6RMZdMhnc9NBcbGgOblQcVI2Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/92] afs: Fix fileserver probe RTT handling
-Date: Mon,  5 Dec 2022 20:09:59 +0100
-Message-Id: <20221205190805.013091158@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
+Subject: [PATCH 5.10 37/92] wifi: cfg80211: dont allow multi-BSSID in S1G
+Date: Mon,  5 Dec 2022 20:09:50 +0100
+Message-Id: <20221205190804.693386612@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -37,48 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ca57f02295f188d6c65ec02202402979880fa6d8 ]
+[ Upstream commit acd3c92acc7aaec50a94d0a7faf7ccd74e952493 ]
 
-The fileserver probing code attempts to work out the best fileserver to
-use for a volume by retrieving the RTT calculated by AF_RXRPC for the
-probe call sent to each server and comparing them.  Sometimes, however,
-no RTT estimate is available and rxrpc_kernel_get_srtt() returns false,
-leading good fileservers to be given an RTT of UINT_MAX and thus causing
-the rotation algorithm to ignore them.
+In S1G beacon frames there shouldn't be multi-BSSID elements
+since that's not supported, remove that to avoid a potential
+integer underflow and/or misparsing the frames due to the
+different length of the fixed part of the frame.
 
-Fix afs_select_fileserver() to ignore rxrpc_kernel_get_srtt()'s return
-value and just take the estimated RTT it provides - which will be capped
-at 1 second.
+While at it, initialize non_tx_data so we don't send garbage
+values to the user (even if it doesn't seem to matter now.)
 
-Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-Tested-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/166965503999.3392585.13954054113218099395.stgit@warthog.procyon.org.uk/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
+Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/fs_probe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/scan.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
-index e7e98ad63a91..04d42e49fc59 100644
---- a/fs/afs/fs_probe.c
-+++ b/fs/afs/fs_probe.c
-@@ -161,8 +161,8 @@ void afs_fileserver_probe_result(struct afs_call *call)
- 		}
- 	}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 8102ee7b2047..d09dabae5627 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2467,10 +2467,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
+ 	const struct cfg80211_bss_ies *ies1, *ies2;
+ 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
+ 				      u.probe_resp.variable);
+-	struct cfg80211_non_tx_bss non_tx_data;
++	struct cfg80211_non_tx_bss non_tx_data = {};
  
--	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
--	    rtt_us < server->probe.rtt) {
-+	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
-+	if (rtt_us < server->probe.rtt) {
- 		server->probe.rtt = rtt_us;
- 		server->rtt = rtt_us;
- 		alist->preferred = index;
+ 	res = cfg80211_inform_single_bss_frame_data(wiphy, data, mgmt,
+ 						    len, gfp);
++
++	/* don't do any further MBSSID handling for S1G */
++	if (ieee80211_is_s1g_beacon(mgmt->frame_control))
++		return res;
++
+ 	if (!res || !wiphy->support_mbssid ||
+ 	    !cfg80211_find_ie(WLAN_EID_MULTIPLE_BSSID, ie, ielen))
+ 		return res;
 -- 
 2.35.1
 
