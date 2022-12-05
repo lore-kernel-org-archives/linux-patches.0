@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0B915C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B54AC43470;
-	Mon,  5 Dec 2022 19:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B9B15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789E6C433D7;
+	Mon,  5 Dec 2022 19:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269127;
-	bh=EocvsbAXXfxhbL+5OrFe8As7jUzsBFywCp7AgiZvN40=;
+	s=korg; t=1670269130;
+	bh=uOjaAgiCgqNlN9hYuR9I4LI1Zx3/S/moZUug4sWsxKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZwppIB0rP8X3WVLCESio3G21xjf9PiDxFlt93Xh4N+EAS5jE6aPWQVmk0mlKMvLo
-	 OT+VGPjhKOAOcJz2cnpldllRhPKI8w7+8X5GxqO4r95B5IwHWGcErman8588T1Vj8d
-	 rODh8fSaAJcdvPP8xutbM1aphxgS0q2fF6SQPz7M=
+	b=0topRgeVwOn86kLwbLy4wWg1E2l1FMaSPBtPBpW/Gm2zG5JtrCfe0wdAVIjCH8Pxb
+	 QSi5YOfA4hhyihuJUOKNemEzFt5j2eNzxpSoGduugU0nupqze10V8YH99fZdRtj9yU
+	 LtVL0mPIJTWjY40hwgZsTtCiunRaUnzuuyLZE8Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 014/153] regulator: core: fix kobject release warning and memory leak in regulator_register()
-Date: Mon,  5 Dec 2022 20:08:58 +0100
-Message-Id: <20221205190809.159933979@linuxfoundation.org>
+Subject: [PATCH 5.4 015/153] regulator: core: fix UAF in destroy_regulator()
+Date: Mon,  5 Dec 2022 20:08:59 +0100
+Message-Id: <20221205190809.188282376@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,72 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5f4b204b6b8153923d5be8002c5f7082985d153f ]
+[ Upstream commit 1f386d6894d0f1b7de8ef640c41622ddd698e7ab ]
 
-Here is a warning report about lack of registered release()
-from kobject lib:
+I got a UAF report as following:
 
-Device '(null)' does not have a release() function, it is broken and must be fixed.
-WARNING: CPU: 0 PID: 48430 at drivers/base/core.c:2332 device_release+0x104/0x120
+==================================================================
+BUG: KASAN: use-after-free in __lock_acquire+0x935/0x2060
+Read of size 8 at addr ffff88810e838220 by task python3/268
 Call Trace:
- kobject_put+0xdc/0x180
- put_device+0x1b/0x30
- regulator_register+0x651/0x1170
- devm_regulator_register+0x4f/0xb0
+ <TASK>
+ dump_stack_lvl+0x67/0x83
+ print_report+0x178/0x4b0
+ kasan_report+0x90/0x190
+ __lock_acquire+0x935/0x2060
+ lock_acquire+0x156/0x400
+ _raw_spin_lock+0x2a/0x40
+ lockref_get+0x11/0x30
+ simple_recursive_removal+0x41/0x440
+ debugfs_remove.part.12+0x32/0x50
+ debugfs_remove+0x29/0x30
+ _regulator_put.cold.54+0x3e/0x27f
+ regulator_put+0x1f/0x30
+ release_nodes+0x6a/0xa0
+ devres_release_all+0xf8/0x150
 
-When regulator_register() returns fail and directly goto `clean` symbol,
-rdev->dev has not registered release() function yet (which is registered
-by regulator_class in the following), so rdev needs to be freed manually.
-If rdev->dev.of_node is not NULL, which means the of_node has gotten by
-regulator_of_get_init_data(), it needs to call of_node_put() to avoid
-refcount leak.
+Allocated by task 37:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_slab_alloc+0x5d/0x70
+ slab_post_alloc_hook+0x62/0x510
+ kmem_cache_alloc_lru+0x222/0x5a0
+ __d_alloc+0x31/0x440
+ d_alloc+0x30/0xf0
+ d_alloc_parallel+0xc4/0xd20
+ __lookup_slow+0x15e/0x2f0
+ lookup_one_len+0x13a/0x150
+ start_creating+0xea/0x190
+ debugfs_create_dir+0x1e/0x210
+ create_regulator+0x254/0x4e0
+ _regulator_get+0x2a1/0x467
+ _devm_regulator_get+0x5a/0xb0
+ regulator_virtual_probe+0xb9/0x1a0
 
-Otherwise, only calling put_device() would lead memory leak of rdev
-in further:
+Freed by task 30:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x2a/0x50
+ __kasan_slab_free+0x102/0x190
+ kmem_cache_free+0xf6/0x600
+ rcu_core+0x54c/0x12b0
+ __do_softirq+0xf2/0x5e3
 
-unreferenced object 0xffff88810d0b1000 (size 2048):
-  comm "107-i2c-rtq6752", pid 48430, jiffies 4342258431 (age 1341.780s)
-  backtrace:
-    kmalloc_trace+0x22/0x110
-    regulator_register+0x184/0x1170
-    devm_regulator_register+0x4f/0xb0
+Last potentially related work creation:
+ kasan_save_stack+0x1c/0x40
+ __kasan_record_aux_stack+0x98/0xb0
+ call_rcu+0x42/0x700
+ dentry_free+0x6c/0xd0
+ __dentry_kill+0x23b/0x2d0
+ dput.part.31+0x431/0x780
+ simple_recursive_removal+0xa9/0x440
+ debugfs_remove.part.12+0x32/0x50
+ debugfs_remove+0x29/0x30
+ regulator_unregister+0xe3/0x230
+ release_nodes+0x6a/0xa0
 
-When regulator_register() returns fail and goto `wash` symbol,
-rdev->dev has registered release() function, so directly call
-put_device() to cleanup everything.
+==================================================================
 
-Fixes: d3c731564e09 ("regulator: plug of_node leak in regulator_register()'s error path")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221116074339.1024240-1-zengheng4@huawei.com
+Here is how happened:
+
+processor A					processor B
+regulator_register()
+  rdev_init_debugfs()
+    rdev->debugfs = debugfs_create_dir()
+						devm_regulator_get()
+						  rdev = regulator_dev_lookup()
+						  create_regulator(rdev)
+						    // using rdev->debugfs as parent
+						    debugfs_create_dir(rdev->debugfs)
+
+mfd_remove_devices_fn()
+  release_nodes()
+    regulator_unregister()
+      // free rdev->debugfs
+      debugfs_remove_recursive(rdev->debugfs)
+						release_nodes()
+						  destroy_regulator()
+						    debugfs_remove_recursive() <- causes UAF
+
+In devm_regulator_get(), after getting rdev, the refcount
+is get, so fix this by moving debugfs_remove_recursive()
+to regulator_dev_release(), then it can be proctected by
+the refcount, the 'rdev->debugfs' can not be freed until
+the refcount is 0.
+
+Fixes: 5de705194e98 ("regulator: Add basic per consumer debugfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221116033706.3595812-1-yangyingliang@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 6ba3f6e7ea4f..173798c0fbcd 100644
+index 173798c0fbcd..7d15312d6792 100644
 --- a/drivers/regulator/core.c
 +++ b/drivers/regulator/core.c
-@@ -5269,11 +5269,15 @@ regulator_register(const struct regulator_desc *regulator_desc,
+@@ -4802,6 +4802,7 @@ static void regulator_dev_release(struct device *dev)
+ {
+ 	struct regulator_dev *rdev = dev_get_drvdata(dev);
+ 
++	debugfs_remove_recursive(rdev->debugfs);
+ 	kfree(rdev->constraints);
+ 	of_node_put(rdev->dev.of_node);
+ 	kfree(rdev);
+@@ -5306,7 +5307,6 @@ void regulator_unregister(struct regulator_dev *rdev)
+ 
  	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
- 	mutex_unlock(&regulator_list_mutex);
-+	put_device(&rdev->dev);
-+	rdev = NULL;
- clean:
- 	if (dangling_of_gpiod)
- 		gpiod_put(config->ena_gpiod);
-+	if (rdev && rdev->dev.of_node)
-+		of_node_put(rdev->dev.of_node);
-+	kfree(rdev);
- 	kfree(config);
--	put_device(&rdev->dev);
- rinse:
- 	if (dangling_cfg_gpiod)
- 		gpiod_put(cfg->ena_gpiod);
+ 
+-	debugfs_remove_recursive(rdev->debugfs);
+ 	WARN_ON(rdev->open_count);
+ 	regulator_remove_coupling(rdev);
+ 	unset_regulator_supplies(rdev);
 -- 
 2.35.1
 
