@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F9D15C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A271C433C1;
-	Mon,  5 Dec 2022 19:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD1715C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B8AC433C1;
+	Mon,  5 Dec 2022 19:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269507;
-	bh=qUisg/O95gez66h+6ITkId1URxFOPnxws1xVlCXqU1Q=;
+	s=korg; t=1670269510;
+	bh=BrYTrlNDPn3umQ3A3/PjFGXyZBcAAe/WxcxfFzvrk1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+ZsBcwMe4236KWd6VkQSaQMZdou/ms4JHXjO/MI6hAuhJTIMlhpi0U8nGrd24K08
-	 UYFG6ba+WW228fBb6CwQLPrNAEVbjnWMGcIZdEkhMmg6g9DOdFKP6K4FFJJbmwKUQg
-	 +Geo8BcHMvtQS4RhhFlQZdmkh44K2G65Bc1V/EhI=
+	b=zx7RHaPHgojP8JmhmWloabi9mdZKshSYak4YRiVp/mknhOE6++TI/KrVXynzMprTj
+	 Ifxg0pak+ROnV6olzSmG2gMYiMTmVGrFsnwrLAidbh/5Z8KSluf3juFpzWjJEQ2354
+	 0qAdYrZCQe0k3iJ13F5DRSPiL7gKVsTjJ569ZxqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 153/153] mmc: sdhci: Fix voltage switch delay
-Date: Mon,  5 Dec 2022 20:11:17 +0100
-Message-Id: <20221205190812.960710653@linuxfoundation.org>
+	Soheil Hassas Yeganeh <soheil@google.com>,
+	Guantao Liu <guantaol@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Khazhismel Kumykov <khazhy@google.com>,
+	Davidlohr Bueso <dbueso@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
+	Rishabh Bhatnagar <risbhat@amazon.com>
+Subject: [PATCH 5.4 143/153] epoll: check for events when removing a timed out thread from the wait queue
+Date: Mon,  5 Dec 2022 20:11:07 +0100
+Message-Id: <20221205190812.717209660@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -34,180 +42,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Soheil Hassas Yeganeh <soheil@google.com>
 
-commit c981cdfb9925f64a364f13c2b4f98f877308a408 upstream.
+commit 289caf5d8f6c61c6d2b7fd752a7f483cd153f182 upstream.
 
-Commit 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-removed voltage switch delays from sdhci because mmc core had been
-enhanced to support them. However that assumed that sdhci_set_ios()
-did a single clock change, which it did not, and so the delays in mmc
-core, which should have come after the first clock change, were not
-effective.
+Patch series "simplify ep_poll".
 
-Fix by avoiding re-configuring UHS and preset settings when the clock
-is turning on and the settings have not changed. That then also avoids
-the associated clock changes, so that then sdhci_set_ios() does a single
-clock change when voltage switching, and the mmc core delays become
-effective.
+This patch series is a followup based on the suggestions and feedback by
+Linus:
+https://lkml.kernel.org/r/CAHk-=wizk=OxUyQPbO8MS41w2Pag1kniUV5WdD5qWL-gq1kjDA@mail.gmail.com
 
-To do that has meant keeping track of driver strength (host->drv_type),
-and cases of reinitialization (host->reinit_uhs).
+The first patch in the series is a fix for the epoll race in presence of
+timeouts, so that it can be cleanly backported to all affected stable
+kernels.
 
-Note also, the 'turning_on_clk' restriction should not be necessary
-but is done to minimize the impact of the change on stable kernels.
+The rest of the patch series simplify the ep_poll() implementation.  Some
+of these simplifications result in minor performance enhancements as well.
+We have kept these changes under self tests and internal benchmarks for a
+few days, and there are minor (1-2%) performance enhancements as a result.
 
-Fixes: 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20221128133259.38305-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+This patch (of 8):
+
+After abc610e01c66 ("fs/epoll: avoid barrier after an epoll_wait(2)
+timeout"), we break out of the ep_poll loop upon timeout, without checking
+whether there is any new events available.  Prior to that patch-series we
+always called ep_events_available() after exiting the loop.
+
+This can cause races and missed wakeups.  For example, consider the
+following scenario reported by Guantao Liu:
+
+Suppose we have an eventfd added using EPOLLET to an epollfd.
+
+Thread 1: Sleeps for just below 5ms and then writes to an eventfd.
+Thread 2: Calls epoll_wait with a timeout of 5 ms. If it sees an
+          event of the eventfd, it will write back on that fd.
+Thread 3: Calls epoll_wait with a negative timeout.
+
+Prior to abc610e01c66, it is guaranteed that Thread 3 will wake up either
+by Thread 1 or Thread 2.  After abc610e01c66, Thread 3 can be blocked
+indefinitely if Thread 2 sees a timeout right before the write to the
+eventfd by Thread 1.  Thread 2 will be woken up from
+schedule_hrtimeout_range and, with evail 0, it will not call
+ep_send_events().
+
+To fix this issue:
+1) Simplify the timed_out case as suggested by Linus.
+2) while holding the lock, recheck whether the thread was woken up
+   after its time out has reached.
+
+Note that (2) is different from Linus' original suggestion: It do not set
+"eavail = ep_events_available(ep)" to avoid unnecessary contention (when
+there are too many timed-out threads and a small number of events), as
+well as races mentioned in the discussion thread.
+
+This is the first patch in the series so that the backport to stable
+releases is straightforward.
+
+Link: https://lkml.kernel.org/r/20201106231635.3528496-1-soheil.kdev@gmail.com
+Link: https://lkml.kernel.org/r/CAHk-=wizk=OxUyQPbO8MS41w2Pag1kniUV5WdD5qWL-gq1kjDA@mail.gmail.com
+Link: https://lkml.kernel.org/r/20201106231635.3528496-2-soheil.kdev@gmail.com
+Fixes: abc610e01c66 ("fs/epoll: avoid barrier after an epoll_wait(2) timeout")
+Signed-off-by: Soheil Hassas Yeganeh <soheil@google.com>
+Tested-by: Guantao Liu <guantaol@google.com>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Guantao Liu <guantaol@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Khazhismel Kumykov <khazhy@google.com>
+Reviewed-by: Davidlohr Bueso <dbueso@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Acked-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |   61 +++++++++++++++++++++++++++++++++++++++++------
- drivers/mmc/host/sdhci.h |    2 +
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ fs/eventpoll.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -332,6 +332,7 @@ static void sdhci_init(struct sdhci_host
- 	if (soft) {
- 		/* force clock reconfiguration */
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	}
- }
-@@ -1911,11 +1912,46 @@ void sdhci_set_uhs_signaling(struct sdhc
- }
- EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
- 
-+static bool sdhci_timing_has_preset(unsigned char timing)
-+{
-+	switch (timing) {
-+	case MMC_TIMING_UHS_SDR12:
-+	case MMC_TIMING_UHS_SDR25:
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+	case MMC_TIMING_UHS_DDR50:
-+	case MMC_TIMING_MMC_DDR52:
-+		return true;
-+	};
-+	return false;
-+}
-+
-+static bool sdhci_preset_needed(struct sdhci_host *host, unsigned char timing)
-+{
-+	return !(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
-+	       sdhci_timing_has_preset(timing);
-+}
-+
-+static bool sdhci_presetable_values_change(struct sdhci_host *host, struct mmc_ios *ios)
-+{
-+	/*
-+	 * Preset Values are: Driver Strength, Clock Generator and SDCLK/RCLK
-+	 * Frequency. Check if preset values need to be enabled, or the Driver
-+	 * Strength needs updating. Note, clock changes are handled separately.
-+	 */
-+	return !host->preset_enabled &&
-+	       (sdhci_preset_needed(host, ios->timing) || host->drv_type != ios->drv_type);
-+}
-+
- void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-+	bool reinit_uhs = host->reinit_uhs;
-+	bool turning_on_clk = false;
- 	u8 ctrl;
- 
-+	host->reinit_uhs = false;
-+
- 	if (ios->power_mode == MMC_POWER_UNDEFINED)
- 		return;
- 
-@@ -1941,6 +1977,8 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		sdhci_enable_preset_value(host, false);
- 
- 	if (!ios->clock || ios->clock != host->clock) {
-+		turning_on_clk = ios->clock && !host->clock;
-+
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-@@ -1967,6 +2005,17 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 
- 	host->ops->set_bus_width(host, ios->bus_width);
- 
-+	/*
-+	 * Special case to avoid multiple clock changes during voltage
-+	 * switching.
-+	 */
-+	if (!reinit_uhs &&
-+	    turning_on_clk &&
-+	    host->timing == ios->timing &&
-+	    host->version >= SDHCI_SPEC_300 &&
-+	    !sdhci_presetable_values_change(host, ios))
-+		return;
-+
- 	ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
- 
- 	if (!(host->quirks & SDHCI_QUIRK_NO_HISPD_BIT)) {
-@@ -2010,6 +2059,7 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 			}
- 
- 			sdhci_writew(host, ctrl_2, SDHCI_HOST_CONTROL2);
-+			host->drv_type = ios->drv_type;
- 		} else {
- 			/*
- 			 * According to SDHC Spec v3.00, if the Preset Value
-@@ -2037,19 +2087,14 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		host->ops->set_uhs_signaling(host, ios->timing);
- 		host->timing = ios->timing;
- 
--		if (!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
--				((ios->timing == MMC_TIMING_UHS_SDR12) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR25) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR50) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR104) ||
--				 (ios->timing == MMC_TIMING_UHS_DDR50) ||
--				 (ios->timing == MMC_TIMING_MMC_DDR52))) {
-+		if (sdhci_preset_needed(host, ios->timing)) {
- 			u16 preset;
- 
- 			sdhci_enable_preset_value(host, true);
- 			preset = sdhci_get_preset_value(host);
- 			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
- 						  preset);
-+			host->drv_type = ios->drv_type;
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1928,23 +1928,30 @@ fetch_events:
  		}
+ 		write_unlock_irq(&ep->lock);
  
- 		/* Re-enable SD Clock */
-@@ -3327,6 +3372,7 @@ int sdhci_resume_host(struct sdhci_host
- 		sdhci_init(host, 0);
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (host->mmc->pm_flags & MMC_PM_KEEP_POWER));
-@@ -3389,6 +3435,7 @@ int sdhci_runtime_resume_host(struct sdh
- 		/* Force clock and power re-program */
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 		mmc->ops->set_ios(mmc, &mmc->ios);
+-		if (eavail || res)
+-			break;
+-
+-		if (!schedule_hrtimeout_range(to, slack, HRTIMER_MODE_ABS)) {
+-			timed_out = 1;
+-			break;
+-		}
+-
+-		/* We were woken up, thus go and try to harvest some events */
++		if (!eavail && !res)
++			timed_out = !schedule_hrtimeout_range(to, slack,
++							      HRTIMER_MODE_ABS);
++
++		/*
++		 * We were woken up, thus go and try to harvest some events.
++		 * If timed out and still on the wait queue, recheck eavail
++		 * carefully under lock, below.
++		 */
+ 		eavail = 1;
+-
+ 	} while (0);
  
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -528,6 +528,8 @@ struct sdhci_host {
+ 	__set_current_state(TASK_RUNNING);
  
- 	unsigned int clock;	/* Current clock (MHz) */
- 	u8 pwr;			/* Current voltage */
-+	u8 drv_type;		/* Current UHS-I driver type */
-+	bool reinit_uhs;	/* Force UHS-related re-initialization */
- 
- 	bool runtime_suspended;	/* Host is runtime suspended */
- 	bool bus_on;		/* Bus power prevents runtime suspend */
+ 	if (!list_empty_careful(&wait.entry)) {
+ 		write_lock_irq(&ep->lock);
++		/*
++		 * If the thread timed out and is not on the wait queue, it
++		 * means that the thread was woken up after its timeout expired
++		 * before it could reacquire the lock. Thus, when wait.entry is
++		 * empty, it needs to harvest events.
++		 */
++		if (timed_out)
++			eavail = list_empty(&wait.entry);
+ 		__remove_wait_queue(&ep->wq, &wait);
+ 		write_unlock_irq(&ep->lock);
+ 	}
 
 
