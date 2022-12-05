@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9E015C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42C7C433D6;
-	Mon,  5 Dec 2022 19:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEF115C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD45C433D6;
+	Mon,  5 Dec 2022 19:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269259;
-	bh=qpcj/yxIVHVz+BB0iIupUGngTEfyrKmT7QUW4WDi3IE=;
+	s=korg; t=1670269261;
+	bh=8swr8CfddCFTAboE4vugiKz92MYY3iQlueWo9Yg8+F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H92PI1d1xIk2HcFMJUmDUolbrCU51yaIj0tboGB89HEdMwaNymvVeHKDTgVCXO0Td
-	 AwPXKvDIdpIj8LDQWCd+jozriOjc8v9b7gKPCqBb+wWQoaSbUyeVAITzyFNNtYVfmz
-	 Ah45+fJe1W6Gtc4VMMTfsZkN+dn969OVFwjRZWvc=
+	b=enrzDjqSErOOvLFPz3ZM/zMfxGq5znnXpf2TvV7go8nfUWWOGYKbVVrAG8z6m2oMq
+	 6LsoTwXHFDaGhVii+Fh3TaBIxUksww32jWA8j7O066x5jmXyZZDDuIhXZl4UIEtYJ6
+	 jPTyzEtiSF/JAcYHJsd79QO2LMV/8T/cAye1dzGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Juergen Gross <jgross@suse.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 062/153] xen/platform-pci: add missing free_irq() in error path
-Date: Mon,  5 Dec 2022 20:09:46 +0100
-Message-Id: <20221205190810.509380945@linuxfoundation.org>
+Subject: [PATCH 5.4 063/153] platform/x86: asus-wmi: add missing pci_dev_put() in asus_wmi_set_xusb2pr()
+Date: Mon,  5 Dec 2022 20:09:47 +0100
+Message-Id: <20221205190810.536040094@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,52 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit c53717e1e3f0d0f9129b2e0dbc6dcc5e0a8132e9 ]
+[ Upstream commit d0cdd85046b15089df71a50548617ac1025300d0 ]
 
-free_irq() is missing in case of error in platform_pci_probe(), fix that.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before asus_wmi_set_xusb2pr() returns.
 
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Link: https://lore.kernel.org/r/20221114112124.1965611-1-ruanjinjie@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221111100752.134311-1-wangxiongfeng2@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/platform-pci.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/xen/platform-pci.c b/drivers/xen/platform-pci.c
-index c45646450135..e1cb277a9e16 100644
---- a/drivers/xen/platform-pci.c
-+++ b/drivers/xen/platform-pci.c
-@@ -137,7 +137,7 @@ static int platform_pci_probe(struct pci_dev *pdev,
- 		if (ret) {
- 			dev_warn(&pdev->dev, "Unable to set the evtchn callback "
- 					 "err=%d\n", ret);
--			goto out;
-+			goto irq_out;
- 		}
- 	}
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index ed83fb135bab..761cab698c75 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -1195,6 +1195,8 @@ static void asus_wmi_set_xusb2pr(struct asus_wmi *asus)
+ 	pci_write_config_dword(xhci_pdev, USB_INTEL_XUSB2PR,
+ 				cpu_to_le32(ports_available));
  
-@@ -145,13 +145,16 @@ static int platform_pci_probe(struct pci_dev *pdev,
- 	grant_frames = alloc_xen_mmio(PAGE_SIZE * max_nr_gframes);
- 	ret = gnttab_setup_auto_xlat_frames(grant_frames);
- 	if (ret)
--		goto out;
-+		goto irq_out;
- 	ret = gnttab_init();
- 	if (ret)
- 		goto grant_out;
- 	return 0;
- grant_out:
- 	gnttab_free_auto_xlat_frames();
-+irq_out:
-+	if (!xen_have_vector_callback)
-+		free_irq(pdev->irq, pdev);
- out:
- 	pci_release_region(pdev, 0);
- mem_out:
++	pci_dev_put(xhci_pdev);
++
+ 	pr_info("set USB_INTEL_XUSB2PR old: 0x%04x, new: 0x%04x\n",
+ 			orig_ports_available, ports_available);
+ }
 -- 
 2.35.1
 
