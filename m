@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA3715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015B2C433D6;
-	Mon,  5 Dec 2022 19:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2803615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F08C433C1;
+	Mon,  5 Dec 2022 19:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268410;
-	bh=pjNLh3f1VP7Fs969IUVqk9j1c1zKBwjtdeu6cGqdHyU=;
+	s=korg; t=1670268413;
+	bh=nYxaMz/dhDEP2WkEiYUY/5yXD7vBj78uKEjWJ9+IS8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk2YOMrPMsWIdsl+QU/qAZoGZg6vh6Fkr7+RuCacWJ3PqACpusBczcdw3E1xqTp1R
-	 ufGidKX8jJ+fftFIwxrwukJM6JMNK2TYGtdqqxrmvA7gfTW/0QfRhGPELqDEI9joMA
-	 HVD0RbXBYJ1VNQIROTryapZqmippYVCGWA9qzWpA=
+	b=12Wdg1IZc7Jl01XD/aLv2+dUvK3mfk7VvZS0W1VlMQOHNd0Qn5QlXD3ruMmEFQQpo
+	 KB52p2WD0eoVDMdWX85k8/UX3KanuyQT93HWe+rB9/oBHXANEtn9aTyih5C6BBD/GY
+	 alVjeP6x+lvdApz/6dRu/1TyRLmb4VUoiD76HqHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 064/124] net: mdiobus: fix unbalanced node reference count
-Date: Mon,  5 Dec 2022 20:09:30 +0100
-Message-Id: <20221205190810.240758152@linuxfoundation.org>
+Subject: [PATCH 6.0 065/124] afs: Fix fileserver probe RTT handling
+Date: Mon,  5 Dec 2022 20:09:31 +0100
+Message-Id: <20221205190810.267184589@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,62 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit cdde1560118f82498fc9e9a7c1ef7f0ef7755891 ]
+[ Upstream commit ca57f02295f188d6c65ec02202402979880fa6d8 ]
 
-I got the following report while doing device(mscc-miim) load test
-with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
+The fileserver probing code attempts to work out the best fileserver to
+use for a volume by retrieving the RTT calculated by AF_RXRPC for the
+probe call sent to each server and comparing them.  Sometimes, however,
+no RTT estimate is available and rxrpc_kernel_get_srtt() returns false,
+leading good fileservers to be given an RTT of UINT_MAX and thus causing
+the rotation algorithm to ignore them.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /spi/soc@0/mdio@7107009c/ethernet-phy@0
+Fix afs_select_fileserver() to ignore rxrpc_kernel_get_srtt()'s return
+value and just take the estimated RTT it provides - which will be capped
+at 1 second.
 
-If the 'fwnode' is not an acpi node, the refcount is get in
-fwnode_mdiobus_phy_device_register(), but it has never been
-put when the device is freed in the normal path. So call
-fwnode_handle_put() in phy_device_release() to avoid leak.
-
-If it's an acpi node, it has never been get, but it's put
-in the error path, so call fwnode_handle_get() before
-phy_device_register() to keep get/put operation balanced.
-
-Fixes: bc1bee3b87ee ("net: mdiobus: Introduce fwnode_mdiobus_register_phy()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221124150130.609420-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/166965503999.3392585.13954054113218099395.stgit@warthog.procyon.org.uk/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/fwnode_mdio.c | 2 +-
- drivers/net/phy/phy_device.c   | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ fs/afs/fs_probe.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mdio/fwnode_mdio.c b/drivers/net/mdio/fwnode_mdio.c
-index 1c1584fca632..40e745a1d185 100644
---- a/drivers/net/mdio/fwnode_mdio.c
-+++ b/drivers/net/mdio/fwnode_mdio.c
-@@ -120,7 +120,7 @@ int fwnode_mdiobus_register_phy(struct mii_bus *bus,
- 		/* Associate the fwnode with the device structure so it
- 		 * can be looked up later.
- 		 */
--		phy->mdio.dev.fwnode = child;
-+		phy->mdio.dev.fwnode = fwnode_handle_get(child);
+diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
+index c0031a3ab42f..3ac5fcf98d0d 100644
+--- a/fs/afs/fs_probe.c
++++ b/fs/afs/fs_probe.c
+@@ -167,8 +167,8 @@ void afs_fileserver_probe_result(struct afs_call *call)
+ 			clear_bit(AFS_SERVER_FL_HAS_FS64, &server->flags);
+ 	}
  
- 		/* All data is now stored in the phy struct, so register it */
- 		rc = phy_device_register(phy);
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 70c4d48f32c6..3607077cf86f 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -216,6 +216,7 @@ static void phy_mdio_device_free(struct mdio_device *mdiodev)
- 
- static void phy_device_release(struct device *dev)
- {
-+	fwnode_handle_put(dev->fwnode);
- 	kfree(to_phy_device(dev));
- }
- 
+-	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
+-	    rtt_us < server->probe.rtt) {
++	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
++	if (rtt_us < server->probe.rtt) {
+ 		server->probe.rtt = rtt_us;
+ 		server->rtt = rtt_us;
+ 		alist->preferred = index;
 -- 
 2.35.1
 
