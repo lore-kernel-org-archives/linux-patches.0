@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27A615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1129EC433C1;
-	Mon,  5 Dec 2022 19:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7312B15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29B5C433C1;
+	Mon,  5 Dec 2022 19:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268543;
-	bh=eI4my7pf2pzrQm2ov5/hRsLJkQqVL98ibDBldG0/jHU=;
+	s=korg; t=1670268546;
+	bh=fnhSODLAcno3KqncfRPfQJNekfLDBy7vnQmC5+sxIUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Meftw4HsEjVQJkEIa/7pfts4F92YhVDUP/6CjGeqL1H4Eh5fIyvt4oOfXNWAW7Nhj
-	 n94rmeXxckOfDu5wTXJOSpx6YPBERv61VwFduvwoy17pRLCMysRyoOd6SU4mHyv6sP
-	 NcxB32McANQykYTXFx0VMHiQEjDOCiT/yARsWglY=
+	b=yEEisgOi4znevPanBZ1C9uAbuQ3GQ+yfiqOKE5PokQLjteUjCEpPAekFXt6Jf+1/n
+	 O+T/RS9qAUiv5Y6cBt0exr8y8CblxMXvU/xPZ/CCGVp4oFAp3YEfOG5+a5j2FCx+qT
+	 BrdQUtTGG0fhKDeMfsHmh5DQGwKhg1vWlEhXWnsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Suarez <cssk@net-c.es>,
-	Luben Tuikov <luben.tuikov@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Derek Nguyen <derek.nguyen@collins.com>,
+	Brandon Maier <brandon.maier@collins.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/92] drm/amdgpu: Partially revert "drm/amdgpu: update drm_display_info correctly when the edid is read"
-Date: Mon,  5 Dec 2022 20:09:21 +0100
-Message-Id: <20221205190803.754427166@linuxfoundation.org>
+Subject: [PATCH 5.10 17/92] hwmon: (ltc2947) fix temperature scaling
+Date: Mon,  5 Dec 2022 20:09:30 +0100
+Message-Id: <20221205190804.060855108@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,39 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Derek Nguyen <derek.nguyen@collins.com>
 
-[ Upstream commit 602ad43c3cd8f15cbb25ce9bb494129edb2024ed ]
+[ Upstream commit 07e06193ead86d4812f431b4d87bbd4161222e3f ]
 
-This partially reverts 20543be93ca45968f344261c1a997177e51bd7e1.
+The LTC2947 datasheet (Rev. B) calls out in the section "Register
+Description: Non-Accumulated Result Registers" (pg. 30) that "To
+calculate temperature, multiply the TEMP register value by 0.204°C
+and add 5.5°C". Fix to add 5.5C and not 0.55C.
 
-Calling drm_connector_update_edid_property() in
-amdgpu_connector_free_edid() causes a noticeable pause in
-the system every 10 seconds on polled outputs so revert this
-part of the change.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2257
-Cc: Claudio Suarez <cssk@net-c.es>
-Acked-by: Luben Tuikov <luben.tuikov@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: 9f90fd652bed ("hwmon: Add support for ltc2947")
+Signed-off-by: Derek Nguyen <derek.nguyen@collins.com>
+Signed-off-by: Brandon Maier <brandon.maier@collins.com>
+Link: https://lore.kernel.org/r/20221110192108.20624-1-brandon.maier@collins.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/hwmon/ltc2947-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-index b352c4eb5bbd..aabfe5705bb8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-@@ -328,7 +328,6 @@ static void amdgpu_connector_free_edid(struct drm_connector *connector)
+diff --git a/drivers/hwmon/ltc2947-core.c b/drivers/hwmon/ltc2947-core.c
+index 5423466de697..e918490f3ff7 100644
+--- a/drivers/hwmon/ltc2947-core.c
++++ b/drivers/hwmon/ltc2947-core.c
+@@ -396,7 +396,7 @@ static int ltc2947_read_temp(struct device *dev, const u32 attr, long *val,
+ 		return ret;
  
- 	kfree(amdgpu_connector->edid);
- 	amdgpu_connector->edid = NULL;
--	drm_connector_update_edid_property(connector, NULL);
+ 	/* in milidegrees celcius, temp is given by: */
+-	*val = (__val * 204) + 550;
++	*val = (__val * 204) + 5500;
+ 
+ 	return 0;
  }
- 
- static int amdgpu_connector_ddc_get_modes(struct drm_connector *connector)
 -- 
 2.35.1
 
