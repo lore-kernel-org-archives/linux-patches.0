@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1792015C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC39C433C1;
-	Mon,  5 Dec 2022 19:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE1A15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EBCC433D7;
+	Mon,  5 Dec 2022 19:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267790;
-	bh=G2uRRcro1qgz8hUm6Yt8P22bVtPB3nqqlqN1Ae4smrA=;
+	s=korg; t=1670267793;
+	bh=FCW2VatGbSHdymSxJgiAs32uem4+W7Lh72B1bQ9sstM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fe4dfYodlPMmKs4uf8KLWSNVyxRUfUZnetqHijiXbUWcQ1Mx0v3Cv7o2maolvvYGo
-	 +Bb3z5LidqNLbM63TbNsaT8KXUXjo3Oaxv5taZO5ZdJoI9Gc34tUBJ9D0AQSy9DhBn
-	 jp+WY0JSejdzkf8FP53dBJ1mIJrqCWMd6GWragYU=
+	b=2LlnG04qK9XMcKozNh0msc0g+oPL/xopV9KN3TQryc1O+ZfVbNXqy3JuKh0eLfdoi
+	 1lGNSPkbKJa9slGWHpHML8ZVQ/DN7O7VndyKrcf0XGlp7FJgNgNxapvuNLl2w7I9eV
+	 dt1mw37qGjKsuZzNNlXByGkO5L2lDjY2pfZKBXm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 53/77] net: hsr: Fix potential use-after-free
-Date: Mon,  5 Dec 2022 20:09:44 +0100
-Message-Id: <20221205190802.744089130@linuxfoundation.org>
+Subject: [PATCH 4.14 54/77] packet: do not set TP_STATUS_CSUM_VALID on CHECKSUM_COMPLETE
+Date: Mon,  5 Dec 2022 20:09:45 +0100
+Message-Id: <20221205190802.780399569@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,47 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 7e177d32442b7ed08a9fa61b61724abc548cb248 ]
+[ Upstream commit b85f628aa158a653c006e9c1405a117baef8c868 ]
 
-The skb is delivered to netif_rx() which may free it, after calling this,
-dereferencing skb may trigger use-after-free.
+CHECKSUM_COMPLETE signals that skb->csum stores the sum over the
+entire packet. It does not imply that an embedded l4 checksum
+field has been validated.
 
-Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221125075724.27912-1-yuehaibing@huawei.com
+Fixes: 682f048bd494 ("af_packet: pass checksum validation status to the user")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20221128161812.640098-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 04b5450c5a55..adfb49760678 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -207,17 +207,18 @@ static void hsr_deliver_master(struct sk_buff *skb, struct net_device *dev,
- 			       struct hsr_node *node_src)
- {
- 	bool was_multicast_frame;
--	int res;
-+	int res, recv_len;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 61093ce76b61..1be5fb6af017 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2248,8 +2248,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 		status |= TP_STATUS_CSUMNOTREADY;
+ 	else if (skb->pkt_type != PACKET_OUTGOING &&
+-		 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-		  skb_csum_unnecessary(skb)))
++		 skb_csum_unnecessary(skb))
+ 		status |= TP_STATUS_CSUM_VALID;
  
- 	was_multicast_frame = (skb->pkt_type == PACKET_MULTICAST);
- 	hsr_addr_subst_source(node_src, skb);
- 	skb_pull(skb, ETH_HLEN);
-+	recv_len = skb->len;
- 	res = netif_rx(skb);
- 	if (res == NET_RX_DROP) {
- 		dev->stats.rx_dropped++;
- 	} else {
- 		dev->stats.rx_packets++;
--		dev->stats.rx_bytes += skb->len;
-+		dev->stats.rx_bytes += recv_len;
- 		if (was_multicast_frame)
- 			dev->stats.multicast++;
- 	}
+ 	if (snaplen > res)
+@@ -3488,8 +3487,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 			aux.tp_status |= TP_STATUS_CSUMNOTREADY;
+ 		else if (skb->pkt_type != PACKET_OUTGOING &&
+-			 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-			  skb_csum_unnecessary(skb)))
++			 skb_csum_unnecessary(skb))
+ 			aux.tp_status |= TP_STATUS_CSUM_VALID;
+ 
+ 		aux.tp_len = origlen;
 -- 
 2.35.1
 
