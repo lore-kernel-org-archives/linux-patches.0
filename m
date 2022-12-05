@@ -1,31 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2CA15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D82C433D6;
-	Mon,  5 Dec 2022 19:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B715C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD14C433D6;
+	Mon,  5 Dec 2022 19:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268489;
-	bh=eG8l/H9zG21o0NuEO148rWHPBEPp8617FyC5yK/UEoM=;
+	s=korg; t=1670268491;
+	bh=H2WXo92YaJbHDZHNIJ48LwEDU/O0D4WeZZdANL0uvJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ByfPwZ5k1yws2CBEQCw9xG0AATyyGdf22YjC/0/YP4qccLQohHaL5VeaQtLj1aIF
-	 WMYyVc17UPDqVR+sduqyrPgNPQN2ijbAjGCaqkjqqipWSkx5gWTIu84VmbcTE615Pr
-	 4YUabPikdHZt3dn2Xi3cbqZBY3bnAqFNlmBhYE7Y=
+	b=AWJ+3o4l1hHlmCffOKxwJ5F0AyclclXKhM1KLNHXVJ2xewLLs/oeMr89vBU9n8bys
+	 Rmeck2CQTCfXKr/xCpYZWa0pcwNbhGKDrmjvu76HFtT8OVIlI7hAhkRnC24j98O25X
+	 EPGZHVSRJclv2vRljYWN16pN/TPyJKc3LLv35b10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Liu Shixin <liushixin2@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 119/124] ACPI: HMAT: remove unnecessary variable initialization
-Date: Mon,  5 Dec 2022 20:10:25 +0100
-Message-Id: <20221205190811.831801569@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 093/124] Kconfig.debug: provide a little extra FRAME_WARN leeway when KASAN is enabled
+Date: Mon,  5 Dec 2022 20:09:59 +0100
+Message-Id: <20221205190811.059105188@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -39,42 +49,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Verma <vishal.l.verma@intel.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 14f16d47561ba9249efc6c2db9d47ed56841f070 ]
+commit 152fe65f300e1819d59b80477d3e0999b4d5d7d2 upstream.
 
-In hmat_register_target_initiators(), the variable 'best' gets
-initialized in the outer per-locality-type for loop. The initialization
-just before setting up 'Access 1' targets was unnecessary. Remove it.
+When enabled, KASAN enlarges function's stack-frames.  Pushing quite a few
+over the current threshold.  This can mainly be seen on 32-bit
+architectures where the present limit (when !GCC) is a lowly 1024-Bytes.
 
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Liu Shixin <liushixin2@huawei.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/20221116-acpi_hmat_fix-v2-1-3712569be691@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 48d4180939e1 ("ACPI: HMAT: Fix initiator registration for single-initiator systems")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20221125120750.3537134-3-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Tom Rix <trix@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/numa/hmat.c | 1 -
- 1 file changed, 1 deletion(-)
+ lib/Kconfig.debug |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index c3d783aca196..fca69a726360 100644
---- a/drivers/acpi/numa/hmat.c
-+++ b/drivers/acpi/numa/hmat.c
-@@ -645,7 +645,6 @@ static void hmat_register_target_initiators(struct memory_target *target)
- 	/* Access 1 ignores Generic Initiators */
- 	bitmap_zero(p_nodes, MAX_NUMNODES);
- 	list_sort(p_nodes, &initiators, initiator_cmp);
--	best = 0;
- 	for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
- 		loc = localities_types[i];
- 		if (!loc)
--- 
-2.35.1
-
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -398,6 +398,7 @@ config FRAME_WARN
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+ 	default 2048 if PARISC
+ 	default 1536 if (!64BIT && XTENSA)
++	default 1280 if KASAN && !64BIT
+ 	default 1024 if !64BIT
+ 	default 2048 if 64BIT
+ 	help
 
 
