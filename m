@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FCB15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B15CC433D6;
-	Mon,  5 Dec 2022 19:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0E15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB982C433C1;
+	Mon,  5 Dec 2022 19:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269417;
-	bh=/ebkBUpHScbiM20q5rncr/fzuebmjuUv7WTX4X3/UQk=;
+	s=korg; t=1670269420;
+	bh=XFa7YaLyHzjNAtOYfHFj+j54gtSLk75+bhmS55tUiFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSFV0tz0hRke7e2b6PYH7IWUMJK5jYW1Oy74QCxFEsv2zKknyrBamH7llRbAxJcUf
-	 k5yCUpqpYge8EXaE4RgsmIcZGIWDRvvQRSMlkfToOULoA1V4Y/x9VGj6GyirLoPd8M
-	 YoBbR6K70WCC4rovYdnXBTwYdGgTL/2LamyCZ4wk=
+	b=x8q32SPLFoIGZmyLVBjY6SHxuGNd4LmkiaqC/iOnJdhrMwRtB6r3GEnu4PGg7NspQ
+	 VBAq0c+zMCKgJaKz5qA8uuOvAsnAfLokr+IbkuLr9spvweeUXW2EBBOs4OE/4ucGnj
+	 MOyBksnXBv34mnp6XeAb25hGHHimT4r0l3z8OPW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+29c402e56c4760763cc0@syzkaller.appspotmail.com,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 112/153] sctp: fix memory leak in sctp_stream_outq_migrate()
-Date: Mon,  5 Dec 2022 20:10:36 +0100
-Message-Id: <20221205190811.945050452@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Dale Smith <dalepsmith@gmail.com>,
+	John Harris <jmharris@gmail.com>
+Subject: [PATCH 5.4 121/153] pinctrl: intel: Save and restore pins in "direct IRQ" mode
+Date: Mon,  5 Dec 2022 20:10:45 +0100
+Message-Id: <20221205190812.176867466@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,202 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9ed7bfc79542119ac0a9e1ce8a2a5285e43433e9 ]
+commit 6989ea4881c8944fbf04378418bb1af63d875ef8 upstream.
 
-When sctp_stream_outq_migrate() is called to release stream out resources,
-the memory pointed to by prio_head in stream out is not released.
+The firmware on some systems may configure GPIO pins to be
+an interrupt source in so called "direct IRQ" mode. In such
+cases the GPIO controller driver has no idea if those pins
+are being used or not. At the same time, there is a known bug
+in the firmwares that don't restore the pin settings correctly
+after suspend, i.e. by an unknown reason the Rx value becomes
+inverted.
 
-The memory leak information is as follows:
- unreferenced object 0xffff88801fe79f80 (size 64):
-   comm "sctp_repo", pid 7957, jiffies 4294951704 (age 36.480s)
-   hex dump (first 32 bytes):
-     80 9f e7 1f 80 88 ff ff 80 9f e7 1f 80 88 ff ff  ................
-     90 9f e7 1f 80 88 ff ff 90 9f e7 1f 80 88 ff ff  ................
-   backtrace:
-     [<ffffffff81b215c6>] kmalloc_trace+0x26/0x60
-     [<ffffffff88ae517c>] sctp_sched_prio_set+0x4cc/0x770
-     [<ffffffff88ad64f2>] sctp_stream_init_ext+0xd2/0x1b0
-     [<ffffffff88aa2604>] sctp_sendmsg_to_asoc+0x1614/0x1a30
-     [<ffffffff88ab7ff1>] sctp_sendmsg+0xda1/0x1ef0
-     [<ffffffff87f765ed>] inet_sendmsg+0x9d/0xe0
-     [<ffffffff8754b5b3>] sock_sendmsg+0xd3/0x120
-     [<ffffffff8755446a>] __sys_sendto+0x23a/0x340
-     [<ffffffff87554651>] __x64_sys_sendto+0xe1/0x1b0
-     [<ffffffff89978b49>] do_syscall_64+0x39/0xb0
-     [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Hence, let's save and restore the pins that are configured
+as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
 
-Link: https://syzkaller.appspot.com/bug?exrid=29c402e56c4760763cc0
-Fixes: 637784ade221 ("sctp: introduce priority based stream scheduler")
-Reported-by: syzbot+29c402e56c4760763cc0@syzkaller.appspotmail.com
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20221126031720.378562-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-and-tested-by: Dale Smith <dalepsmith@gmail.com>
+Reported-and-tested-by: John Harris <jmharris@gmail.com>
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214749
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20221124222926.72326-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sctp/stream_sched.h |  2 ++
- net/sctp/stream.c               | 25 ++++++++++++++++++-------
- net/sctp/stream_sched.c         |  5 +++++
- net/sctp/stream_sched_prio.c    | 19 +++++++++++++++++++
- net/sctp/stream_sched_rr.c      |  5 +++++
- 5 files changed, 49 insertions(+), 7 deletions(-)
+ drivers/pinctrl/intel/pinctrl-intel.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/sctp/stream_sched.h b/include/net/sctp/stream_sched.h
-index 01a70b27e026..65058faea4db 100644
---- a/include/net/sctp/stream_sched.h
-+++ b/include/net/sctp/stream_sched.h
-@@ -26,6 +26,8 @@ struct sctp_sched_ops {
- 	int (*init)(struct sctp_stream *stream);
- 	/* Init a stream */
- 	int (*init_sid)(struct sctp_stream *stream, __u16 sid, gfp_t gfp);
-+	/* free a stream */
-+	void (*free_sid)(struct sctp_stream *stream, __u16 sid);
- 	/* Frees the entire thing */
- 	void (*free)(struct sctp_stream *stream);
- 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index 56762745d6e4..ca8fdc9abca5 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -52,6 +52,19 @@ static void sctp_stream_shrink_out(struct sctp_stream *stream, __u16 outcnt)
- 	}
+--- a/drivers/pinctrl/intel/pinctrl-intel.c
++++ b/drivers/pinctrl/intel/pinctrl-intel.c
+@@ -459,9 +459,14 @@ static void __intel_gpio_set_direction(v
+ 	writel(value, padcfg0);
  }
  
-+static void sctp_stream_free_ext(struct sctp_stream *stream, __u16 sid)
++static int __intel_gpio_get_gpio_mode(u32 value)
 +{
-+	struct sctp_sched_ops *sched;
-+
-+	if (!SCTP_SO(stream, sid)->ext)
-+		return;
-+
-+	sched = sctp_sched_ops_from_stream(stream);
-+	sched->free_sid(stream, sid);
-+	kfree(SCTP_SO(stream, sid)->ext);
-+	SCTP_SO(stream, sid)->ext = NULL;
++	return (value & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
 +}
 +
- /* Migrates chunks from stream queues to new stream queues if needed,
-  * but not across associations. Also, removes those chunks to streams
-  * higher than the new max.
-@@ -70,16 +83,14 @@ static void sctp_stream_outq_migrate(struct sctp_stream *stream,
- 		 * sctp_stream_update will swap ->out pointers.
- 		 */
- 		for (i = 0; i < outcnt; i++) {
--			kfree(SCTP_SO(new, i)->ext);
-+			sctp_stream_free_ext(new, i);
- 			SCTP_SO(new, i)->ext = SCTP_SO(stream, i)->ext;
- 			SCTP_SO(stream, i)->ext = NULL;
- 		}
- 	}
- 
--	for (i = outcnt; i < stream->outcnt; i++) {
--		kfree(SCTP_SO(stream, i)->ext);
--		SCTP_SO(stream, i)->ext = NULL;
--	}
-+	for (i = outcnt; i < stream->outcnt; i++)
-+		sctp_stream_free_ext(stream, i);
- }
- 
- static int sctp_stream_alloc_out(struct sctp_stream *stream, __u16 outcnt,
-@@ -174,9 +185,9 @@ void sctp_stream_free(struct sctp_stream *stream)
- 	struct sctp_sched_ops *sched = sctp_sched_ops_from_stream(stream);
- 	int i;
- 
--	sched->free(stream);
-+	sched->unsched_all(stream);
- 	for (i = 0; i < stream->outcnt; i++)
--		kfree(SCTP_SO(stream, i)->ext);
-+		sctp_stream_free_ext(stream, i);
- 	genradix_free(&stream->out);
- 	genradix_free(&stream->in);
- }
-diff --git a/net/sctp/stream_sched.c b/net/sctp/stream_sched.c
-index a2e1d34f52c5..33c2630c2496 100644
---- a/net/sctp/stream_sched.c
-+++ b/net/sctp/stream_sched.c
-@@ -46,6 +46,10 @@ static int sctp_sched_fcfs_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return 0;
- }
- 
-+static void sctp_sched_fcfs_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+}
-+
- static void sctp_sched_fcfs_free(struct sctp_stream *stream)
+ static int intel_gpio_get_gpio_mode(void __iomem *padcfg0)
  {
- }
-@@ -96,6 +100,7 @@ static struct sctp_sched_ops sctp_sched_fcfs = {
- 	.get = sctp_sched_fcfs_get,
- 	.init = sctp_sched_fcfs_init,
- 	.init_sid = sctp_sched_fcfs_init_sid,
-+	.free_sid = sctp_sched_fcfs_free_sid,
- 	.free = sctp_sched_fcfs_free,
- 	.enqueue = sctp_sched_fcfs_enqueue,
- 	.dequeue = sctp_sched_fcfs_dequeue,
-diff --git a/net/sctp/stream_sched_prio.c b/net/sctp/stream_sched_prio.c
-index 80b5a2c4cbc7..4fc9f2923ed1 100644
---- a/net/sctp/stream_sched_prio.c
-+++ b/net/sctp/stream_sched_prio.c
-@@ -204,6 +204,24 @@ static int sctp_sched_prio_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return sctp_sched_prio_set(stream, sid, 0, gfp);
+-	return (readl(padcfg0) & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
++	return __intel_gpio_get_gpio_mode(readl(padcfg0));
  }
  
-+static void sctp_sched_prio_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+	struct sctp_stream_priorities *prio = SCTP_SO(stream, sid)->ext->prio_head;
-+	int i;
-+
-+	if (!prio)
-+		return;
-+
-+	SCTP_SO(stream, sid)->ext->prio_head = NULL;
-+	for (i = 0; i < stream->outcnt; i++) {
-+		if (SCTP_SO(stream, i)->ext &&
-+		    SCTP_SO(stream, i)->ext->prio_head == prio)
-+			return;
-+	}
-+
-+	kfree(prio);
-+}
-+
- static void sctp_sched_prio_free(struct sctp_stream *stream)
+ static void intel_gpio_set_gpio_mode(void __iomem *padcfg0)
+@@ -1508,6 +1513,7 @@ EXPORT_SYMBOL_GPL(intel_pinctrl_probe_by
+ static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
  {
- 	struct sctp_stream_priorities *prio, *n;
-@@ -323,6 +341,7 @@ static struct sctp_sched_ops sctp_sched_prio = {
- 	.get = sctp_sched_prio_get,
- 	.init = sctp_sched_prio_init,
- 	.init_sid = sctp_sched_prio_init_sid,
-+	.free_sid = sctp_sched_prio_free_sid,
- 	.free = sctp_sched_prio_free,
- 	.enqueue = sctp_sched_prio_enqueue,
- 	.dequeue = sctp_sched_prio_dequeue,
-diff --git a/net/sctp/stream_sched_rr.c b/net/sctp/stream_sched_rr.c
-index ff425aed62c7..cc444fe0d67c 100644
---- a/net/sctp/stream_sched_rr.c
-+++ b/net/sctp/stream_sched_rr.c
-@@ -90,6 +90,10 @@ static int sctp_sched_rr_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return 0;
+ 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
++	u32 value;
+ 
+ 	if (!pd || !intel_pad_usable(pctrl, pin))
+ 		return false;
+@@ -1522,6 +1528,25 @@ static bool intel_pinctrl_should_save(st
+ 	    gpiochip_line_is_irq(&pctrl->chip, intel_pin_to_gpio(pctrl, pin)))
+ 		return true;
+ 
++	/*
++	 * The firmware on some systems may configure GPIO pins to be
++	 * an interrupt source in so called "direct IRQ" mode. In such
++	 * cases the GPIO controller driver has no idea if those pins
++	 * are being used or not. At the same time, there is a known bug
++	 * in the firmwares that don't restore the pin settings correctly
++	 * after suspend, i.e. by an unknown reason the Rx value becomes
++	 * inverted.
++	 *
++	 * Hence, let's save and restore the pins that are configured
++	 * as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
++	 *
++	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
++	 */
++	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
++	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
++	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
++		return true;
++
+ 	return false;
  }
  
-+static void sctp_sched_rr_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+}
-+
- static void sctp_sched_rr_free(struct sctp_stream *stream)
- {
- 	sctp_sched_rr_unsched_all(stream);
-@@ -177,6 +181,7 @@ static struct sctp_sched_ops sctp_sched_rr = {
- 	.get = sctp_sched_rr_get,
- 	.init = sctp_sched_rr_init,
- 	.init_sid = sctp_sched_rr_init_sid,
-+	.free_sid = sctp_sched_rr_free_sid,
- 	.free = sctp_sched_rr_free,
- 	.enqueue = sctp_sched_rr_enqueue,
- 	.dequeue = sctp_sched_rr_dequeue,
--- 
-2.35.1
-
 
 
