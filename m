@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355A115C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEB9C433C1;
-	Mon,  5 Dec 2022 19:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AA515C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E85C433D6;
+	Mon,  5 Dec 2022 19:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268019;
-	bh=T9ynzCXTsLSmG4Z/kTq7+pAV1JIgQxyd68KLrKmhY1w=;
+	s=korg; t=1670268021;
+	bh=O9t46A/rkyKamLeQMM5Nul2Q31JsuRC9lN3kg2St/tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgMcn/pI1Rhe2u/6RVUTqlQrZ0h4GnXhuhHJUGIY95atH+O1hA+Ll6KlUq7t7t/46
-	 FbrVIwz5KnRjK7OqQmeR5l/Z9kdSDnVLUVMw9sk9P53xsaaT5lqgqlBErMv2hNCNcD
-	 1fMlaNJc9OdVvQu5BxyLwmk81Ur/nvBmTA9d+/j0=
+	b=KzVLQ3C2Vuz/jEBJTteU/v2r+UbNnJwa6O7m2nVFtNz093G/EnwoVNTTqYHer4Zk3
+	 rkcF8knvsGxu2XsmvhpxAaOPiEgcSXMQKREKp0HFxXjDZn16g7ELdchvVijfbZIYlS
+	 PXt8x5r7LwCabMdZ/fGHOiwNXSD9A6mPiiio8ris=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 4.19 056/105] drm/amd/dc/dce120: Fix audio register mapping, stop triggering KASAN
-Date: Mon,  5 Dec 2022 20:09:28 +0100
-Message-Id: <20221205190805.047771623@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>
+Subject: [PATCH 4.19 057/105] drm/amdgpu: always register an MMU notifier for userptr
+Date: Mon,  5 Dec 2022 20:09:29 +0100
+Message-Id: <20221205190805.079672301@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -34,43 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lyude Paul <lyude@redhat.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 44035ec2fde1114254ee465f9ba3bb246b0b6283 upstream.
+commit b39df63b16b64a3af42695acb9bc567aad144776 upstream.
 
-There's been a very long running bug that seems to have been neglected for
-a while, where amdgpu consistently triggers a KASAN error at start:
+Since switching to HMM we always need that because we no longer grab
+references to the pages.
 
-  BUG: KASAN: global-out-of-bounds in read_indirect_azalia_reg+0x1d4/0x2a0 [amdgpu]
-  Read of size 4 at addr ffffffffc2274b28 by task modprobe/1889
-
-After digging through amd's rather creative method for accessing registers,
-I eventually discovered the problem likely has to do with the fact that on
-my dce120 GPU there are supposedly 7 sets of audio registers. But we only
-define a register mapping for 6 sets.
-
-So, fix this and fix the KASAN warning finally.
-
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
+CC: stable@vger.kernel.org
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce120/dce120_resource.c
-@@ -324,7 +324,8 @@ static const struct dce_audio_registers
- 	audio_regs(2),
- 	audio_regs(3),
- 	audio_regs(4),
--	audio_regs(5)
-+	audio_regs(5),
-+	audio_regs(6),
- };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -328,11 +328,9 @@ int amdgpu_gem_userptr_ioctl(struct drm_
+ 	if (r)
+ 		goto release_object;
  
- #define DCE120_AUD_COMMON_MASK_SH_LIST(mask_sh)\
+-	if (args->flags & AMDGPU_GEM_USERPTR_REGISTER) {
+-		r = amdgpu_mn_register(bo, args->addr);
+-		if (r)
+-			goto release_object;
+-	}
++	r = amdgpu_mn_register(bo, args->addr);
++	if (r)
++		goto release_object;
+ 
+ 	if (args->flags & AMDGPU_GEM_USERPTR_VALIDATE) {
+ 		r = amdgpu_ttm_tt_get_user_pages(bo->tbo.ttm,
 
 
