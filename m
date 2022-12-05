@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC8A15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB2FC433C1;
-	Mon,  5 Dec 2022 19:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965EC15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181B4C433C1;
+	Mon,  5 Dec 2022 19:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268938;
-	bh=HOVv4pLwTNJJu8TLRCYMflyBjWrNteM0Yu3djjxzXwY=;
+	s=korg; t=1670268941;
+	bh=4vzBZ3rGMgQOS8003rQa4mmwbDvny3cwszOfEmgzzcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhoMzRBO1xbYmD7gQ+p/hDLcp/TsZE4u7DTmQrQrHPuC8idm+MpZ0M919NOeDhRRt
-	 IhuKZvVSgIJq3odrjgT2QDMZczPoRlftJ6sKx58nembI4m7EhsqwrtuaeMWkUiTx1M
-	 6sAiTfZtQj4VN3ZKvG6YNxYWkhBxtqCI02RpIVZQ=
+	b=UYwcgjOwwLR4npoet8Bm7IWMjfzZoFLR1QPu9Ex50OZNqYchSKIUczjmfKA8/3G3b
+	 MnAH2+NjmQRZtMEgqW3SgzD6YTUAihHQHTpRjuy5+w4ciJ5S7JHKSHXlAUubpPXCTG
+	 oGXOcZnqPEJVrCbSYeFiOHCQi/yd473X2azV/pYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 066/120] riscv: vdso: fix section overlapping under some conditions
-Date: Mon,  5 Dec 2022 20:10:06 +0100
-Message-Id: <20221205190808.614762214@linuxfoundation.org>
+Subject: [PATCH 5.15 067/120] riscv: mm: Proper page permissions after initmem free
+Date: Mon,  5 Dec 2022 20:10:07 +0100
+Message-Id: <20221205190808.645050815@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,53 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-commit 74f6bb55c834da6d4bac24f44868202743189b2b upstream.
+commit 6fdd5d2f8c2f54b7fad4ff4df2a19542aeaf6102 upstream.
 
-lkp reported a build error, I tried the config and can reproduce
-build error as below:
+64-bit RISC-V kernels have the kernel image mapped separately to alias
+the linear map. The linear map and the kernel image map are documented
+as "direct mapping" and "kernel" respectively in [1].
 
-  VDSOLD  arch/riscv/kernel/vdso/vdso.so.dbg
-ld.lld: error: section .note file range overlaps with .text
->>> .note range is [0x7C8, 0x803]
->>> .text range is [0x800, 0x1993]
+At image load time, the linear map corresponding to the kernel image
+is set to PAGE_READ permission, and the kernel image map is set to
+PAGE_READ|PAGE_EXEC.
 
-ld.lld: error: section .text file range overlaps with .dynamic
->>> .text range is [0x800, 0x1993]
->>> .dynamic range is [0x808, 0x937]
+When the initmem is freed, the pages in the linear map should be
+restored to PAGE_READ|PAGE_WRITE, whereas the corresponding pages in
+the kernel image map should be restored to PAGE_READ, by removing the
+PAGE_EXEC permission.
 
-ld.lld: error: section .note virtual address range overlaps with .text
->>> .note range is [0x7C8, 0x803]
->>> .text range is [0x800, 0x1993]
+This is not the case. For 64-bit kernels, only the linear map is
+restored to its proper page permissions at initmem free, and not the
+kernel image map.
 
-Fix it by setting DISABLE_BRANCH_PROFILING which will disable branch
-tracing for vdso, thus avoid useless _ftrace_annotated_branch section
-and _ftrace_branch section. Although we can also fix it by removing
-the hardcoded .text begin address, but I think that's another story
-and should be put into another patch.
+In practise this results in that the kernel can potentially jump to
+dead __init code, and start executing invalid instructions, without
+getting an exception.
 
-Link: https://lore.kernel.org/lkml/202210122123.Cc4FPShJ-lkp@intel.com/#r
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://lore.kernel.org/r/20221102170254.1925-1-jszhang@kernel.org
-Fixes: ad5d1122b82f ("riscv: use vDSO common flow to reduce the latency of the time-related functions")
+Restore the freed initmem properly, by setting both the kernel image
+map to the correct permissions.
+
+[1] Documentation/riscv/vm-layout.rst
+
+Fixes: e5c35fa04019 ("riscv: Map the kernel with correct permissions the first time")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alex@ghiti.fr>
+Tested-by: Alexandre Ghiti <alex@ghiti.fr>
+Link: https://lore.kernel.org/r/20221115090641.258476-1-bjorn@kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/vdso/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/setup.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -17,6 +17,7 @@ vdso-syms += flush_icache
- obj-vdso = $(patsubst %, %.o, $(vdso-syms)) note.o
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -331,10 +331,11 @@ subsys_initcall(topology_init);
  
- ccflags-y := -fno-stack-protector
-+ccflags-y += -DDISABLE_BRANCH_PROFILING
+ void free_initmem(void)
+ {
+-	if (IS_ENABLED(CONFIG_STRICT_KERNEL_RWX))
+-		set_kernel_memory(lm_alias(__init_begin), lm_alias(__init_end),
+-				  IS_ENABLED(CONFIG_64BIT) ?
+-					set_memory_rw : set_memory_rw_nx);
++	if (IS_ENABLED(CONFIG_STRICT_KERNEL_RWX)) {
++		set_kernel_memory(lm_alias(__init_begin), lm_alias(__init_end), set_memory_rw_nx);
++		if (IS_ENABLED(CONFIG_64BIT))
++			set_kernel_memory(__init_begin, __init_end, set_memory_nx);
++	}
  
- ifneq ($(c-gettimeofday-y),)
-   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
+ 	free_initmem_default(POISON_FREE_INITMEM);
+ }
 
 
