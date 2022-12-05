@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4680515C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAECDC433D7;
-	Mon,  5 Dec 2022 19:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC77615C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C88C433D7;
+	Mon,  5 Dec 2022 19:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269368;
-	bh=nyWMZuj0gmPuyBNN8X3UIlBJtMBIVJEiiiBXNlcvk1A=;
+	s=korg; t=1670269370;
+	bh=7jTvEunt8PptdwuI4plQsJaLOoD4bOnyTQc9dU+sQXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GI273PI/OKcG6mCbKUzKoj4ixFiSRJVC2cphRYG7oztgXzxT9vw1/3qM8nY+t5SND
-	 DpwBYCqBgnHmyvrIQe589tFA+Dk7HAz39Wz5QNfehEb1IzAwC4rEntVBfYQZDkgM1a
-	 hEt3YMMMlh8cqu0vMpssdaPVAYZJsHSWUTMh97Lw=
+	b=zcD4XSqyZAjQ8EWni2pHlIyE0IeveeYX+wOcs8vPkygEb5cqP1qLj4OVCdOk2sCsd
+	 Ju6MGE95D/SVfVUXwCUK7Syxbe5ZiFlp1Ycj67ZosyR/csYYvgAD5Qyi+2kVxP0iiB
+	 aR0Mf0Zbj0hUcP8B6g4GZJJGo15VFHnC+GPJxIoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/153] qlcnic: fix sleep-in-atomic-context bugs caused by msleep
-Date: Mon,  5 Dec 2022 20:10:25 +0100
-Message-Id: <20221205190811.643873480@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
+Subject: [PATCH 5.4 102/153] wifi: cfg80211: fix buffer overflow in elem comparison
+Date: Mon,  5 Dec 2022 20:10:26 +0100
+Message-Id: <20221205190811.673072723@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,68 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8dbd6e4ce1b9c527921643d9e34f188a10d4e893 ]
+[ Upstream commit 9f16b5c82a025cd4c864737409234ddc44fb166a ]
 
-The watchdog timer is used to monitor whether the process
-of transmitting data is timeout. If we use qlcnic driver,
-the dev_watchdog() that is the timer handler of watchdog
-timer will call qlcnic_tx_timeout() to process the timeout.
-But the qlcnic_tx_timeout() calls msleep(), as a result,
-the sleep-in-atomic-context bugs will happen. The processes
-are shown below:
+For vendor elements, the code here assumes that 5 octets
+are present without checking. Since the element itself is
+already checked to fit, we only need to check the length.
 
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        msleep
-
----------------------------
-
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        qlcnic_83xx_recover_driver_lock
-          msleep
-
-Fix by changing msleep() to mdelay(), the mdelay() is
-busy-waiting and the bugs could be mitigated.
-
-Fixes: 629263acaea3 ("qlcnic: 83xx CNA inter driver communication mechanism")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
+Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/scan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-index df43d364e6a4..e6538f38b056 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-@@ -2993,7 +2993,7 @@ static void qlcnic_83xx_recover_driver_lock(struct qlcnic_adapter *adapter)
- 		QLCWRX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK, val);
- 		dev_info(&adapter->pdev->dev,
- 			 "%s: lock recovery initiated\n", __func__);
--		msleep(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
- 		val = QLCRDX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK);
- 		id = ((val >> 2) & 0xF);
- 		if (id == adapter->portnum) {
-@@ -3029,7 +3029,7 @@ int qlcnic_83xx_lock_driver(struct qlcnic_adapter *adapter)
- 		if (status)
- 			break;
- 
--		msleep(QLC_83XX_DRV_LOCK_WAIT_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_WAIT_DELAY);
- 		i++;
- 
- 		if (i == 1)
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 630c64520516..c4c124cb5332 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -291,7 +291,8 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
+ 			 * determine if they are the same ie.
+ 			 */
+ 			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
+-				if (!memcmp(tmp_old + 2, tmp + 2, 5)) {
++				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
++				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
+ 					/* same vendor ie, copy from
+ 					 * subelement
+ 					 */
 -- 
 2.35.1
 
