@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A2D15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378ECC433C1;
-	Mon,  5 Dec 2022 19:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775E415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5561C433C1;
+	Mon,  5 Dec 2022 19:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269105;
-	bh=3gapXH4BAxW1FQUr9sWxQsiDN2ZuD4x1NMH+cHmxRso=;
+	s=korg; t=1670269108;
+	bh=l9MW/Gc9+ArnRwl2DRT7IsjnbxX0PY11C3AcQhaRJJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MITjHSpT2mVrpxzEXKNGlXOOu9kKEdD/UcGvHKC0m6h710QG42MXznArZ2wFdBQmM
-	 CrCoruQeQetSc20tJ1bI9SQISe23YRtgqvq2YXZmxg+rdnfze3yu2YPFb2EfKVef1j
-	 9we/fl1FPCQkOUetfKshPe0Py1YeoqgWGENU09mM=
+	b=vweAv1uhlzM2P3xqlbOC7I8Z6fcLw0m/LcWnSkTVRsh1RtRwYMjJrhWBFx+gLKc91
+	 A2R67vF0ejSDxWilzb37I6IKNV+NsDgurK1SJ3E1KelTzDq7MwTmMF2VPg1p+qxYTK
+	 OQMzNP32vLNs04VDhOyKWASharm+zUsjqDRA/OKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-serial@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Erwan Le Ray <erwan.leray@foss.st.com>,
+	Jean Philippe Romain <jean-philippe.romain@foss.st.com>,
+	Valentin Caron <valentin.caron@foss.st.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/120] ipv4: Fix route deletion when nexthop info is not specified
-Date: Mon,  5 Dec 2022 20:10:50 +0100
-Message-Id: <20221205190809.840158312@linuxfoundation.org>
+Subject: [PATCH 5.15 111/120] serial: stm32: Factor out GPIO RTS toggling into separate function
+Date: Mon,  5 Dec 2022 20:10:51 +0100
+Message-Id: <20221205190809.866241880@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -38,116 +41,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit d5082d386eee7e8ec46fa8581932c81a4961dcef ]
+[ Upstream commit 3bcea529b295a993b1b05db63f245ae8030c5acf ]
 
-When the kernel receives a route deletion request from user space it
-tries to delete a route that matches the route attributes specified in
-the request.
+Pull out the GPIO RTS enable and disable handling into separate function.
+Limit the scope of GPIO RTS toggling only to GPIO emulated RS485 too.
 
-If only prefix information is specified in the request, the kernel
-should delete the first matching FIB alias regardless of its associated
-FIB info. However, an error is currently returned when the FIB info is
-backed by a nexthop object:
-
- # ip nexthop add id 1 via 192.0.2.2 dev dummy10
- # ip route add 198.51.100.0/24 nhid 1
- # ip route del 198.51.100.0/24
- RTNETLINK answers: No such process
-
-Fix by matching on such a FIB info when legacy nexthop attributes are
-not specified in the request. An earlier check already covers the case
-where a nexthop ID is specified in the request.
-
-Add tests that cover these flows. Before the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [FAIL]
-
- Tests passed:  11
- Tests failed:   1
-
-After the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [ OK ]
-
- Tests passed:  12
- Tests failed:   0
-
-No regressions in other tests:
-
- # ./fib_nexthops.sh
- ...
- Tests passed: 228
- Tests failed:   0
-
- # ./fib_tests.sh
- ...
- Tests passed: 186
- Tests failed:   0
-
-Cc: stable@vger.kernel.org
-Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
-Tested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Fixes: 6bf92d70e690 ("net: ipv4: fix route with nexthop object delete warning")
-Fixes: 61b91eb33a69 ("ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221124210932.2470010-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Erwan Le Ray <erwan.leray@foss.st.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jean Philippe Romain <jean-philippe.romain@foss.st.com>
+Cc: Valentin Caron <valentin.caron@foss.st.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-stm32@st-md-mailman.stormreply.com
+To: linux-serial@vger.kernel.org
+Link: https://lore.kernel.org/r/20220430162845.244655-1-marex@denx.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c                    |  8 +++++---
- tools/testing/selftests/net/fib_nexthops.sh | 11 +++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 61 ++++++++++++++++++++------------
+ 1 file changed, 38 insertions(+), 23 deletions(-)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index c35afa20f6d0..af64ae689b13 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -886,9 +886,11 @@ int fib_nh_match(struct net *net, struct fib_config *cfg, struct fib_info *fi,
- 		return 1;
- 	}
- 
--	/* cannot match on nexthop object attributes */
--	if (fi->nh)
--		return 1;
-+	if (fi->nh) {
-+		if (cfg->fc_oif || cfg->fc_gw_family || cfg->fc_mp)
-+			return 1;
-+		return 0;
-+	}
- 
- 	if (cfg->fc_oif || cfg->fc_gw_family) {
- 		struct fib_nh *nh;
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index 4280c9b6ee2d..0c066ba579d4 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -1164,6 +1164,17 @@ ipv4_fcnal()
- 	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
- 	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
- 	log_test $? 2 "Delete multipath route with only nh id based entry"
-+
-+	run_cmd "$IP nexthop add id 22 via 172.16.1.6 dev veth1"
-+	run_cmd "$IP ro add 172.16.102.0/24 nhid 22"
-+	run_cmd "$IP ro del 172.16.102.0/24 dev veth1"
-+	log_test $? 2 "Delete route when specifying only nexthop device"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24 via 172.16.1.6"
-+	log_test $? 2 "Delete route when specifying only gateway"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24"
-+	log_test $? 0 "Delete route when not specifying nexthop attributes"
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index fc166cc2c856..f2cef5f7ae5a 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -325,6 +325,42 @@ static void stm32_usart_tx_interrupt_disable(struct uart_port *port)
+ 		stm32_usart_clr_bits(port, ofs->cr1, USART_CR1_TXEIE);
  }
  
- ipv4_grp_fcnal()
++static void stm32_usart_rs485_rts_enable(struct uart_port *port)
++{
++	struct stm32_port *stm32_port = to_stm32_port(port);
++	struct serial_rs485 *rs485conf = &port->rs485;
++
++	if (stm32_port->hw_flow_control ||
++	    !(rs485conf->flags & SER_RS485_ENABLED))
++		return;
++
++	if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
++		mctrl_gpio_set(stm32_port->gpios,
++			       stm32_port->port.mctrl | TIOCM_RTS);
++	} else {
++		mctrl_gpio_set(stm32_port->gpios,
++			       stm32_port->port.mctrl & ~TIOCM_RTS);
++	}
++}
++
++static void stm32_usart_rs485_rts_disable(struct uart_port *port)
++{
++	struct stm32_port *stm32_port = to_stm32_port(port);
++	struct serial_rs485 *rs485conf = &port->rs485;
++
++	if (stm32_port->hw_flow_control ||
++	    !(rs485conf->flags & SER_RS485_ENABLED))
++		return;
++
++	if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
++		mctrl_gpio_set(stm32_port->gpios,
++			       stm32_port->port.mctrl & ~TIOCM_RTS);
++	} else {
++		mctrl_gpio_set(stm32_port->gpios,
++			       stm32_port->port.mctrl | TIOCM_RTS);
++	}
++}
++
+ static void stm32_usart_transmit_chars_pio(struct uart_port *port)
+ {
+ 	struct stm32_port *stm32_port = to_stm32_port(port);
+@@ -566,41 +602,20 @@ static void stm32_usart_disable_ms(struct uart_port *port)
+ /* Transmit stop */
+ static void stm32_usart_stop_tx(struct uart_port *port)
+ {
+-	struct stm32_port *stm32_port = to_stm32_port(port);
+-	struct serial_rs485 *rs485conf = &port->rs485;
+-
+ 	stm32_usart_tx_interrupt_disable(port);
+ 
+-	if (rs485conf->flags & SER_RS485_ENABLED) {
+-		if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
+-			mctrl_gpio_set(stm32_port->gpios,
+-					stm32_port->port.mctrl & ~TIOCM_RTS);
+-		} else {
+-			mctrl_gpio_set(stm32_port->gpios,
+-					stm32_port->port.mctrl | TIOCM_RTS);
+-		}
+-	}
++	stm32_usart_rs485_rts_disable(port);
+ }
+ 
+ /* There are probably characters waiting to be transmitted. */
+ static void stm32_usart_start_tx(struct uart_port *port)
+ {
+-	struct stm32_port *stm32_port = to_stm32_port(port);
+-	struct serial_rs485 *rs485conf = &port->rs485;
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 
+ 	if (uart_circ_empty(xmit) && !port->x_char)
+ 		return;
+ 
+-	if (rs485conf->flags & SER_RS485_ENABLED) {
+-		if (rs485conf->flags & SER_RS485_RTS_ON_SEND) {
+-			mctrl_gpio_set(stm32_port->gpios,
+-					stm32_port->port.mctrl | TIOCM_RTS);
+-		} else {
+-			mctrl_gpio_set(stm32_port->gpios,
+-					stm32_port->port.mctrl & ~TIOCM_RTS);
+-		}
+-	}
++	stm32_usart_rs485_rts_enable(port);
+ 
+ 	stm32_usart_transmit_chars(port);
+ }
 -- 
 2.35.1
 
