@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F9115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD6EC433C1;
-	Mon,  5 Dec 2022 19:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC8615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59771C433C1;
+	Mon,  5 Dec 2022 19:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268559;
-	bh=NTGIZ2TDK2u0cfzkY8FhegAMHBM9HpjDeQk31nZt8o4=;
+	s=korg; t=1670268562;
+	bh=TxSQg9dZ/hkP3ZVSZjni7T4thNORjhW6Qpw/YCeKvzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZgQgbj1D7sTnnLCKo8206QEUTFSm7oKN7jYlE1DB9K3HD1JqSPg+y+9qngZ/D+fV
-	 VbYLKW9ZQgleBfNhJaL97D5eNhiqb4iG7YsOKo8X4RmVOlC4w4o80rqk9n7O17EV61
-	 Wt34+YnonldWdDrpC0LnYBbRT3kHVv8/ZqwbLxhA=
+	b=p5o69lOHV0448EM9BHj0IWn9XX1yHLDJjbHjlEKIolipeODdz+Hv/nyGAIK8e6JLc
+	 qNtU/48/pG4lMDa+5h75s17kcaZ8Wfq4nhLa3p3p4i2/LkP4wB1kxtREuWMjeIQ34g
+	 gwHfaILrMxt24E5fk/VHmYWpct0GVIAR1x1gwAo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Rob Herring <robh@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Saeed Mahameed <saeed@kernel.org>,
+	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/92] of: property: decrement node refcount in of_fwnode_get_reference_args()
-Date: Mon,  5 Dec 2022 20:09:35 +0100
-Message-Id: <20221205190804.208287197@linuxfoundation.org>
+Subject: [PATCH 5.10 23/92] ixgbevf: Fix resource leak in ixgbevf_init_module()
+Date: Mon,  5 Dec 2022 20:09:36 +0100
+Message-Id: <20221205190804.238334208@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -37,44 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
+[ Upstream commit 8cfa238a48f34038464b99d0b4825238c2687181 ]
 
-In of_fwnode_get_reference_args(), the refcount of of_args.np has
-been incremented in the case of successful return from
-of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
+ixgbevf_init_module() won't destroy the workqueue created by
+create_singlethread_workqueue() when pci_register_driver() failed. Add
+destroy_workqueue() in fail path to prevent the resource leak.
 
-Decrement the refcount if of_args is not returned to the caller of
-of_fwnode_get_reference_args().
+Similar to the handling of u132_hcd_init in commit f276e002793c
+("usb: u132-hcd: fix resource leak")
 
-Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Frank Rowand <frowand.list@gmail.com>
-Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 40a13e2493c9 ("ixgbevf: Use a private workqueue to avoid certain possible hangs")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
+Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 1d7d24e7094b..8f998351bf4f 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -956,8 +956,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
- 						       nargs, index, &of_args);
- 	if (ret < 0)
- 		return ret;
--	if (!args)
-+	if (!args) {
-+		of_node_put(of_args.np);
- 		return 0;
-+	}
+diff --git a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
+index 2d6ac61d7a3e..4510a84514fa 100644
+--- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
++++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
+@@ -4878,6 +4878,8 @@ static struct pci_driver ixgbevf_driver = {
+  **/
+ static int __init ixgbevf_init_module(void)
+ {
++	int err;
++
+ 	pr_info("%s\n", ixgbevf_driver_string);
+ 	pr_info("%s\n", ixgbevf_copyright);
+ 	ixgbevf_wq = create_singlethread_workqueue(ixgbevf_driver_name);
+@@ -4886,7 +4888,13 @@ static int __init ixgbevf_init_module(void)
+ 		return -ENOMEM;
+ 	}
  
- 	args->nargs = of_args.args_count;
- 	args->fwnode = of_fwnode_handle(of_args.np);
+-	return pci_register_driver(&ixgbevf_driver);
++	err = pci_register_driver(&ixgbevf_driver);
++	if (err) {
++		destroy_workqueue(ixgbevf_wq);
++		return err;
++	}
++
++	return 0;
+ }
+ 
+ module_init(ixgbevf_init_module);
 -- 
 2.35.1
 
