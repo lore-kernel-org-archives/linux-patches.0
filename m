@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59D315C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33064C433D6;
-	Mon,  5 Dec 2022 19:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B93415C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F5AC433D6;
+	Mon,  5 Dec 2022 19:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267807;
-	bh=+hMuTk58TiXrV3C2zCt/3t7SPsVhb5d1obzQSw/eGsw=;
+	s=korg; t=1670267810;
+	bh=frqHTGXnKsHMOqjTTWdC0RKszXPOGEkoQMaXSUrzAWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEimsSngk7fK89Pk8tlO3j54EJ0H5MG5mrQ/ZIpoNuynIApM1PD8y86J9+uvA5fQj
-	 b5rLyfY66vqVVOavF0HkCoKaTpqFNJ4n4ekFShfVuuclCTkjJSE2mEu5FsDmVX3tD6
-	 okGMWSc+pPekv3J2j9j5tEWevEbPOoqYRivMsp3o=
+	b=nwW9727ryGC1gV4xPN+x1JzyWaWKebiO68z5tdGjblNn55guQO1TomZv0SjZx6FcW
+	 eBPK0bsCXl8SNzfgMx3j+HRoRfrVm27SQHKOzAoU18e8BKT0r/hZfj4yJC1cvGhJVI
+	 M8XqJWWTMwTcLJ5mJyE73e2GcMi2+0ECtRz7DW6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Qu Wenruo <wqu@suse.com>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 59/77] perf: Add sample_flags to indicate the PMU-filled sample data
-Date: Mon,  5 Dec 2022 20:09:50 +0100
-Message-Id: <20221205190802.951152249@linuxfoundation.org>
+Subject: [PATCH 4.14 60/77] btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()
+Date: Mon,  5 Dec 2022 20:09:51 +0100
+Message-Id: <20221205190802.985899006@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,119 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit 3aac580d5cc3001ca1627725b3b61edb529f341d ]
+[ Upstream commit f7e942b5bb35d8e3af54053d19a6bf04143a3955 ]
 
-On some platforms, some data e.g., timestamps, can be retrieved from
-the PMU driver. Usually, the data from the PMU driver is more accurate.
-The current perf kernel should output the PMU-filled sample data if
-it's available.
+Syzkaller reported BUG as follows:
 
-To check the availability of the PMU-filled sample data, the current
-perf kernel initializes the related fields in the
-perf_sample_data_init(). When outputting a sample, the perf checks
-whether the field is updated by the PMU driver. If yes, the updated
-value will be output. If not, the perf uses an SW way to calculate the
-value or just outputs the initialized value if an SW way is unavailable
-either.
+  BUG: sleeping function called from invalid context at
+       include/linux/sched/mm.h:274
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xcd/0x134
+   __might_resched.cold+0x222/0x26b
+   kmem_cache_alloc+0x2e7/0x3c0
+   update_qgroup_limit_item+0xe1/0x390
+   btrfs_qgroup_inherit+0x147b/0x1ee0
+   create_subvol+0x4eb/0x1710
+   btrfs_mksubvol+0xfe5/0x13f0
+   __btrfs_ioctl_snap_create+0x2b0/0x430
+   btrfs_ioctl_snap_create_v2+0x25a/0x520
+   btrfs_ioctl+0x2a1c/0x5ce0
+   __x64_sys_ioctl+0x193/0x200
+   do_syscall_64+0x35/0x80
 
-With more and more data being provided by the PMU driver, more fields
-has to be initialized in the perf_sample_data_init(). That will
-increase the number of cache lines touched in perf_sample_data_init()
-and be harmful to the performance.
+Fix this by calling qgroup_dirty() on @dstqgroup, and update limit item in
+btrfs_run_qgroups() later outside of the spinlock context.
 
-Add new "sample_flags" to indicate the PMU-filled sample data. The PMU
-driver should set the corresponding PERF_SAMPLE_ flag when the field is
-updated. The initialization of the corresponding field is not required
-anymore. The following patches will make use of it and remove the
-corresponding fields from the perf_sample_data_init(), which will
-further minimize the number of cache lines touched.
-
-Only clear the sample flags that have already been done by the PMU
-driver in the perf_prepare_sample() for the PERF_RECORD_SAMPLE. For the
-other PERF_RECORD_ event type, the sample data is not available.
-
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220901130959.1285717-2-kan.liang@linux.intel.com
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/perf_event.h |  2 ++
- kernel/events/core.c       | 17 +++++++++++------
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ fs/btrfs/qgroup.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index 41a3307a971c..5efd8109ad0a 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -899,6 +899,7 @@ struct perf_sample_data {
- 	 * Fields set by perf_sample_data_init(), group so as to
- 	 * minimize the cachelines touched.
- 	 */
-+	u64				sample_flags;
- 	u64				addr;
- 	struct perf_raw_record		*raw;
- 	struct perf_branch_stack	*br_stack;
-@@ -950,6 +951,7 @@ static inline void perf_sample_data_init(struct perf_sample_data *data,
- 					 u64 addr, u64 period)
- {
- 	/* remaining struct members initialized in perf_prepare_sample() */
-+	data->sample_flags = 0;
- 	data->addr = addr;
- 	data->raw  = NULL;
- 	data->br_stack = NULL;
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 2ad8acff03db..7ad142a5327e 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5767,11 +5767,10 @@ perf_output_sample_ustack(struct perf_output_handle *handle, u64 dump_size,
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 47c28983fd01..4ad588ed5813 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -2239,14 +2239,7 @@ int btrfs_qgroup_inherit(struct btrfs_trans_handle *trans,
+ 		dstgroup->rsv_rfer = inherit->lim.rsv_rfer;
+ 		dstgroup->rsv_excl = inherit->lim.rsv_excl;
  
- static void __perf_event_header__init_id(struct perf_event_header *header,
- 					 struct perf_sample_data *data,
--					 struct perf_event *event)
-+					 struct perf_event *event,
-+					 u64 sample_type)
- {
--	u64 sample_type = event->attr.sample_type;
--
--	data->type = sample_type;
-+	data->type = event->attr.sample_type;
- 	header->size += event->id_header_size;
+-		ret = update_qgroup_limit_item(trans, quota_root, dstgroup);
+-		if (ret) {
+-			fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+-			btrfs_info(fs_info,
+-				   "unable to update quota limit for %llu",
+-				   dstgroup->qgroupid);
+-			goto unlock;
+-		}
++		qgroup_dirty(fs_info, dstgroup);
+ 	}
  
- 	if (sample_type & PERF_SAMPLE_TID) {
-@@ -5800,7 +5799,7 @@ void perf_event_header__init_id(struct perf_event_header *header,
- 				struct perf_event *event)
- {
- 	if (event->attr.sample_id_all)
--		__perf_event_header__init_id(header, data, event);
-+		__perf_event_header__init_id(header, data, event, event->attr.sample_type);
- }
- 
- static void __perf_event__output_id_sample(struct perf_output_handle *handle,
-@@ -6148,6 +6147,7 @@ void perf_prepare_sample(struct perf_event_header *header,
- 			 struct pt_regs *regs)
- {
- 	u64 sample_type = event->attr.sample_type;
-+	u64 filtered_sample_type;
- 
- 	header->type = PERF_RECORD_SAMPLE;
- 	header->size = sizeof(*header) + event->header_size;
-@@ -6155,7 +6155,12 @@ void perf_prepare_sample(struct perf_event_header *header,
- 	header->misc = 0;
- 	header->misc |= perf_misc_flags(regs);
- 
--	__perf_event_header__init_id(header, data, event);
-+	/*
-+	 * Clear the sample flags that have already been done by the
-+	 * PMU driver.
-+	 */
-+	filtered_sample_type = sample_type & ~data->sample_flags;
-+	__perf_event_header__init_id(header, data, event, filtered_sample_type);
- 
- 	if (sample_type & PERF_SAMPLE_IP)
- 		data->ip = perf_instruction_pointer(regs);
+ 	if (srcid) {
 -- 
 2.35.1
 
