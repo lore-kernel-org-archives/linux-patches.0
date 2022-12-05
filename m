@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0157B15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B27C433D6;
-	Mon,  5 Dec 2022 19:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE9015C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31641C433C1;
+	Mon,  5 Dec 2022 19:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267630;
-	bh=QYNSZJr5ccCmocK+vVCY3qmJx8zETPYiFFbz/h9pVE0=;
+	s=korg; t=1670267633;
+	bh=+UbCanSGFmg4aNgaGFPNabzJ/igfMlOd2siXUA34X04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8lZbrbZG45mz8LjKQ54BlC+kJnhe/bISt1Kfiy+dIHkK6eWLq7qbf+KFwcsjiWQ6
-	 2hG0S77iWrWIJHOG9CH72WCPkc8CqETpGz4UxPC/TDJzj0qmE8TL3Pexz7+t271ex2
-	 bRaH0KFTUvjHdQ1vzt2YDWHWT8v6HX3tD+9hCd4A=
+	b=UN+7zET9rsMZOhLcz/CyfzwNNnzVSLn2oT8d50H3aqPg11BcSet5XSf85KouCXJ5a
+	 Q/1BpLfY6c3XD38iqFVXRJufHDf2FdhO9QkEsSvvlYyVT9JWZ0OPwBCe+amNOUDYSn
+	 Aba80C69uLtIv3wLZ8bU60gUkgHnrj2brTs78/7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Borislav Petkov <bp@suse.de>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	stable@kernel.org
-Subject: [PATCH 4.9 57/62] x86/tsx: Add a feature bit for TSX control MSR support
-Date: Mon,  5 Dec 2022 20:09:54 +0100
-Message-Id: <20221205190800.230395881@linuxfoundation.org>
+Subject: [PATCH 4.9 58/62] x86/pm: Add enumeration check before spec MSRs save/restore setup
+Date: Mon,  5 Dec 2022 20:09:55 +0100
+Message-Id: <20221205190800.270829404@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -39,95 +40,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit aaa65d17eec372c6a9756833f3964ba05b05ea14 upstream.
+commit 50bcceb7724e471d9b591803889df45dcbb584bc upstream.
 
-Support for the TSX control MSR is enumerated in MSR_IA32_ARCH_CAPABILITIES.
-This is different from how other CPU features are enumerated i.e. via
-CPUID. Currently, a call to tsx_ctrl_is_supported() is required for
-enumerating the feature. In the absence of a feature bit for TSX control,
-any code that relies on checking feature bits directly will not work.
+pm_save_spec_msr() keeps a list of all the MSRs which _might_ need
+to be saved and restored at hibernate and resume. However, it has
+zero awareness of CPU support for these MSRs. It mostly works by
+unconditionally attempting to manipulate these MSRs and relying on
+rdmsrl_safe() being able to handle a #GP on CPUs where the support is
+unavailable.
 
-In preparation for adding a feature bit check in MSR save/restore
-during suspend/resume, set a new feature bit X86_FEATURE_TSX_CTRL when
-MSR_IA32_TSX_CTRL is present.
+However, it's possible for reads (RDMSR) to be supported for a given MSR
+while writes (WRMSR) are not. In this case, msr_build_context() sees
+a successful read (RDMSR) and marks the MSR as valid. Then, later, a
+write (WRMSR) fails, producing a nasty (but harmless) error message.
+This causes restore_processor_state() to try and restore it, but writing
+this MSR is not allowed on the Intel Atom N2600 leading to:
 
-  [ bp: Remove tsx_ctrl_is_supported()]
+  unchecked MSR access error: WRMSR to 0x122 (tried to write 0x0000000000000002) \
+     at rIP: 0xffffffff8b07a574 (native_write_msr+0x4/0x20)
+  Call Trace:
+   <TASK>
+   restore_processor_state
+   x86_acpi_suspend_lowlevel
+   acpi_suspend_enter
+   suspend_devices_and_enter
+   pm_suspend.cold
+   state_store
+   kernfs_fop_write_iter
+   vfs_write
+   ksys_write
+   do_syscall_64
+   ? do_syscall_64
+   ? up_read
+   ? lock_is_held_type
+   ? asm_exc_page_fault
+   ? lockdep_hardirqs_on
+   entry_SYSCALL_64_after_hwframe
 
-  [Pawan: Resolved conflicts in backport; Removed parts of commit message
-          referring to removed function tsx_ctrl_is_supported()]
+To fix this, add the corresponding X86_FEATURE bit for each MSR.  Avoid
+trying to manipulate the MSR when the feature bit is clear. This
+required adding a X86_FEATURE bit for MSRs that do not have one already,
+but it's a small price to pay.
 
-Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+  [ bp: Move struct msr_enumeration inside the only function that uses it. ]
+  [Pawan: Resolve build issue in backport]
+
+Fixes: 73924ec4d560 ("x86/pm: Save the MSR validity status at context setup")
+Reported-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Borislav Petkov <bp@suse.de>
 Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/de619764e1d98afbb7a5fa58424f1278ede37b45.1668539735.git.pawan.kumar.gupta@linux.intel.com
+Link: https://lore.kernel.org/r/c24db75d69df6e66c0465e13676ad3f2837a2ed8.1668539735.git.pawan.kumar.gupta@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    1 +
- arch/x86/kernel/cpu/tsx.c          |   33 ++++++++++++++-------------------
- 2 files changed, 15 insertions(+), 19 deletions(-)
+ arch/x86/power/cpu.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -196,6 +196,7 @@
- #define X86_FEATURE_FENCE_SWAPGS_KERNEL	( 7*32+11) /* "" LFENCE in kernel entry SWAPGS path */
- #define X86_FEATURE_RETPOLINE	( 7*32+12) /* "" Generic Retpoline mitigation for Spectre variant 2 */
- #define X86_FEATURE_RETPOLINE_LFENCE	( 7*32+13) /* "" Use LFENCE for Spectre variant 2 */
-+#define X86_FEATURE_MSR_TSX_CTRL	( 7*32+14) /* "" MSR IA32_TSX_CTRL (Intel) implemented */
+--- a/arch/x86/power/cpu.c
++++ b/arch/x86/power/cpu.c
+@@ -520,16 +520,23 @@ static int pm_cpu_check(const struct x86
  
- #define X86_FEATURE_MSR_SPEC_CTRL ( 7*32+16) /* "" MSR SPEC_CTRL is implemented */
- #define X86_FEATURE_SSBD	( 7*32+17) /* Speculative Store Bypass Disable */
---- a/arch/x86/kernel/cpu/tsx.c
-+++ b/arch/x86/kernel/cpu/tsx.c
-@@ -55,24 +55,6 @@ void tsx_enable(void)
- 	wrmsrl(MSR_IA32_TSX_CTRL, tsx);
+ static void pm_save_spec_msr(void)
+ {
+-	u32 spec_msr_id[] = {
+-		MSR_IA32_SPEC_CTRL,
+-		MSR_IA32_TSX_CTRL,
+-		MSR_TSX_FORCE_ABORT,
+-		MSR_IA32_MCU_OPT_CTRL,
+-		MSR_AMD64_LS_CFG,
+-		MSR_AMD64_DE_CFG,
++	struct msr_enumeration {
++		u32 msr_no;
++		u32 feature;
++	} msr_enum[] = {
++		{ MSR_IA32_SPEC_CTRL,	 X86_FEATURE_MSR_SPEC_CTRL },
++		{ MSR_IA32_TSX_CTRL,	 X86_FEATURE_MSR_TSX_CTRL },
++		{ MSR_TSX_FORCE_ABORT,	 X86_FEATURE_TSX_FORCE_ABORT },
++		{ MSR_IA32_MCU_OPT_CTRL, X86_FEATURE_SRBDS_CTRL },
++		{ MSR_AMD64_LS_CFG,	 X86_FEATURE_LS_CFG_SSBD },
++		{ MSR_AMD64_DE_CFG,	 X86_FEATURE_LFENCE_RDTSC },
+ 	};
++	int i;
+ 
+-	msr_build_context(spec_msr_id, ARRAY_SIZE(spec_msr_id));
++	for (i = 0; i < ARRAY_SIZE(msr_enum); i++) {
++		if (boot_cpu_has(msr_enum[i].feature))
++			msr_build_context(&msr_enum[i].msr_no, 1);
++	}
  }
  
--static bool __init tsx_ctrl_is_supported(void)
--{
--	u64 ia32_cap = x86_read_arch_cap_msr();
--
--	/*
--	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
--	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
--	 *
--	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
--	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
--	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
--	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
--	 * tsx= cmdline requests will do nothing on CPUs without
--	 * MSR_IA32_TSX_CTRL support.
--	 */
--	return !!(ia32_cap & ARCH_CAP_TSX_CTRL_MSR);
--}
--
- static enum tsx_ctrl_states x86_get_tsx_auto_mode(void)
- {
- 	if (boot_cpu_has_bug(X86_BUG_TAA))
-@@ -86,9 +68,22 @@ void __init tsx_init(void)
- 	char arg[5] = {};
- 	int ret;
- 
--	if (!tsx_ctrl_is_supported())
-+	/*
-+	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
-+	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
-+	 *
-+	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
-+	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
-+	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
-+	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
-+	 * tsx= cmdline requests will do nothing on CPUs without
-+	 * MSR_IA32_TSX_CTRL support.
-+	 */
-+	if (!(x86_read_arch_cap_msr() & ARCH_CAP_TSX_CTRL_MSR))
- 		return;
- 
-+	setup_force_cpu_cap(X86_FEATURE_MSR_TSX_CTRL);
-+
- 	ret = cmdline_find_option(boot_command_line, "tsx", arg, sizeof(arg));
- 	if (ret >= 0) {
- 		if (!strcmp(arg, "on")) {
+ static int pm_check_save_msr(void)
 
 
