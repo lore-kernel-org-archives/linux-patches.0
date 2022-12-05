@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F46C15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97603C433D6;
-	Mon,  5 Dec 2022 19:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59B615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2FFC433D7;
+	Mon,  5 Dec 2022 19:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268895;
-	bh=50QhdGtJhKGuCGi6h+XHanbpEno0vLlMeY3iuEc5VGM=;
+	s=korg; t=1670268897;
+	bh=7WvN6O3B3NrszyhvuFlHQJwIGzSuZZXHFehhCxmMAxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYUJXdOG3O576RkU94Av/3tJdL5E1TObxOlD8c550OVGUJE7KPXJM8RB9SY2/cvaj
-	 bKp9RT8siW3h0tEiFCrQTLbdZmzVSTwMiZbqlGZ2T3XKn01Q/euv8bWWOE7kJKyg4C
-	 /aFNFg0G46PdX5HuUlZCseHsxk9Qai9RkIvHmVJc=
+	b=WQo2iLfu3Mdy2ZUVNufNdPNbX09tnruPFTkc1kHIJ7d1Gje2QxZbpzK4XqbHmrsBV
+	 zVn0d03pdQODUpyt6deN+Wj+82we60n21fFwTSnHTYvxwtfOqopmlJBadhPl4EFlXp
+	 J2RKh5RIW8ig7T1ivG8MxS7wxGnO833Zx4x7N8d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Suarez <cssk@net-c.es>,
-	Luben Tuikov <luben.tuikov@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Izabela Bakollari <ibakolla@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/120] drm/amdgpu: Partially revert "drm/amdgpu: update drm_display_info correctly when the edid is read"
-Date: Mon,  5 Dec 2022 20:09:13 +0100
-Message-Id: <20221205190806.976645539@linuxfoundation.org>
+Subject: [PATCH 5.15 044/120] aquantia: Do not purge addresses when setting the number of rings
+Date: Mon,  5 Dec 2022 20:09:44 +0100
+Message-Id: <20221205190807.871853296@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,39 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Izabela Bakollari <ibakolla@redhat.com>
 
-[ Upstream commit 602ad43c3cd8f15cbb25ce9bb494129edb2024ed ]
+[ Upstream commit 2a83891130512dafb321418a8e7c9c09268d8c59 ]
 
-This partially reverts 20543be93ca45968f344261c1a997177e51bd7e1.
+IPV6 addresses are purged when setting the number of rx/tx
+rings using ethtool -G. The function aq_set_ringparam
+calls dev_close, which removes the addresses. As a solution,
+call an internal function (aq_ndev_close).
 
-Calling drm_connector_update_edid_property() in
-amdgpu_connector_free_edid() causes a noticeable pause in
-the system every 10 seconds on polled outputs so revert this
-part of the change.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2257
-Cc: Claudio Suarez <cssk@net-c.es>
-Acked-by: Luben Tuikov <luben.tuikov@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: c1af5427954b ("net: aquantia: Ethtool based ring size configuration")
+Signed-off-by: Izabela Bakollari <ibakolla@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c | 5 +++--
+ drivers/net/ethernet/aquantia/atlantic/aq_main.c    | 4 ++--
+ drivers/net/ethernet/aquantia/atlantic/aq_main.h    | 2 ++
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-index 34f217544c36..c777aff164b7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-@@ -328,7 +328,6 @@ static void amdgpu_connector_free_edid(struct drm_connector *connector)
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c b/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
+index a9ef0544e30f..715859cb6560 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
+@@ -13,6 +13,7 @@
+ #include "aq_ptp.h"
+ #include "aq_filters.h"
+ #include "aq_macsec.h"
++#include "aq_main.h"
  
- 	kfree(amdgpu_connector->edid);
- 	amdgpu_connector->edid = NULL;
--	drm_connector_update_edid_property(connector, NULL);
+ #include <linux/ptp_clock_kernel.h>
+ 
+@@ -845,7 +846,7 @@ static int aq_set_ringparam(struct net_device *ndev,
+ 
+ 	if (netif_running(ndev)) {
+ 		ndev_running = true;
+-		dev_close(ndev);
++		aq_ndev_close(ndev);
+ 	}
+ 
+ 	cfg->rxds = max(ring->rx_pending, hw_caps->rxds_min);
+@@ -861,7 +862,7 @@ static int aq_set_ringparam(struct net_device *ndev,
+ 		goto err_exit;
+ 
+ 	if (ndev_running)
+-		err = dev_open(ndev, NULL);
++		err = aq_ndev_open(ndev);
+ 
+ err_exit:
+ 	return err;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_main.c b/drivers/net/ethernet/aquantia/atlantic/aq_main.c
+index f069312463fb..45ed097bfe49 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_main.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_main.c
+@@ -53,7 +53,7 @@ struct net_device *aq_ndev_alloc(void)
+ 	return ndev;
  }
  
- static int amdgpu_connector_ddc_get_modes(struct drm_connector *connector)
+-static int aq_ndev_open(struct net_device *ndev)
++int aq_ndev_open(struct net_device *ndev)
+ {
+ 	struct aq_nic_s *aq_nic = netdev_priv(ndev);
+ 	int err = 0;
+@@ -83,7 +83,7 @@ static int aq_ndev_open(struct net_device *ndev)
+ 	return err;
+ }
+ 
+-static int aq_ndev_close(struct net_device *ndev)
++int aq_ndev_close(struct net_device *ndev)
+ {
+ 	struct aq_nic_s *aq_nic = netdev_priv(ndev);
+ 	int err = 0;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_main.h b/drivers/net/ethernet/aquantia/atlantic/aq_main.h
+index a5a624b9ce73..2a562ab7a5af 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_main.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_main.h
+@@ -14,5 +14,7 @@
+ 
+ void aq_ndev_schedule_work(struct work_struct *work);
+ struct net_device *aq_ndev_alloc(void);
++int aq_ndev_open(struct net_device *ndev);
++int aq_ndev_close(struct net_device *ndev);
+ 
+ #endif /* AQ_MAIN_H */
 -- 
 2.35.1
 
