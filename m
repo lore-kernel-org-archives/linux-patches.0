@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B4C15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFB8C433D6;
-	Mon,  5 Dec 2022 19:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278A115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F202C433C1;
+	Mon,  5 Dec 2022 19:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268478;
-	bh=pFQZTQp8IPievGOgbdheo1gVh0JnyrCO3FHOlMye/sw=;
+	s=korg; t=1670268481;
+	bh=KI//VNrvY18blvo63HE7FRgt4waLWxECGwe22pKqrSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAPk2uHuFf0Vh0E3pq5QetHt5FCcu8I9PqZnnAFiZvVeiip419l/beLS4/h/Pf2me
-	 Bs2ABCZmkE1NN/obZGUtooEZTk8YU4kDVnq1aVLPTLFY820hdDfzOnLCMCmuYEWpOY
-	 QWjIvvSJHK82orx+UNG165S2vWNCxp0wbEhLJptE=
+	b=m1RoqEhAxDThbjYJ4MVsNwlmf5UBn1kRsF1kegcaH489OUl9t5qyZRahT06ioIzdU
+	 RTDhQVhHPa+u5OzYntRJh7UzSJji5KpJ8KRDz6jZ9cRk3YwG3QyQee7VIVUeVxmKHD
+	 9Iyu+U7+8TFxtXqY8gZBn+ntY9CFpRgotBLjYHSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Tali Perry <tali.perry@nuvoton.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Tommaso Merciai <tommaso.merciai@amarulasoluitons.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 116/124] i2c: npcm7xx: Fix error handling in npcm_i2c_init()
-Date: Mon,  5 Dec 2022 20:10:22 +0100
-Message-Id: <20221205190811.741049900@linuxfoundation.org>
+Subject: [PATCH 6.0 117/124] i2c: qcom-geni: fix error return code in geni_i2c_gpi_xfer
+Date: Mon,  5 Dec 2022 20:10:23 +0100
+Message-Id: <20221205190811.771676048@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,62 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 145900cf91c4b32ac05dbc8675a0c7f4a278749d ]
+[ Upstream commit 7d8ccf4f117d082156e842d959f634efcf203cef ]
 
-A problem about i2c-npcm7xx create debugfs failed is triggered with the
-following log given:
+Fix to return a negative error code from the gi2c->err instead of
+0.
 
- [  173.827310] debugfs: Directory 'npcm_i2c' with parent '/' already present!
-
-The reason is that npcm_i2c_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of npcm_i2c can never be created later.
-
- npcm_i2c_init()
-   debugfs_create_dir() # create debugfs directory
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when platform_driver_register() returns error.
-
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Tali Perry <tali.perry@nuvoton.com>
+Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasoluitons.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 0c365b57d957..83457359ec45 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2393,8 +2393,17 @@ static struct platform_driver npcm_i2c_bus_driver = {
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 84a77512614d..8fce98bb77ff 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -626,7 +626,6 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
+ 				gi2c->cur->flags, gi2c->cur->addr);
+ 			gi2c->err = -ETIMEDOUT;
+-			goto err;
+ 		}
  
- static int __init npcm_i2c_init(void)
- {
-+	int ret;
-+
- 	npcm_i2c_debugfs_dir = debugfs_create_dir("npcm_i2c", NULL);
--	return platform_driver_register(&npcm_i2c_bus_driver);
-+
-+	ret = platform_driver_register(&npcm_i2c_bus_driver);
-+	if (ret) {
-+		debugfs_remove_recursive(npcm_i2c_debugfs_dir);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(npcm_i2c_init);
- 
+ 		if (gi2c->err) {
 -- 
 2.35.1
 
