@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34F515C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E46C433D7;
-	Mon,  5 Dec 2022 19:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E74315C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0E4C433D6;
+	Mon,  5 Dec 2022 19:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268652;
-	bh=eAoZsK6o2Bju5VPk+vZi3Pt0Dbmb6vr4pL0fqPCuKrA=;
+	s=korg; t=1670268655;
+	bh=SdJQWARgQaB28Ti5xKgTmEcBs+Mz6G6T2u42RJZ1dsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUJuoHVSLyqsIRm8RFkzf2srx2Lk5CokVazhNv70VTzip+y8XCQiCiP82WPccQ7v8
-	 9IwHdblQaI29IDMd5W4jyKFqpVTgHi5bupDvsNZH7xyIDA2HK8x0Zqh4ltcb39AqZQ
-	 l+X8XM/wQez4Ke143Y2qmb0bKBmyA9RjhnE4WH1c=
+	b=R/vWPO+S2f09LbLz2RlqM6VX1JbcmBx1gwAXJbA1uvO9jdItiefvL2o3PeBhfQ5kO
+	 T4FAOgs9L3rDPGYaJHTxeJJSdfXO8tvW/xAL/XL5J+wfaPBdo86kRnKg0paxswdI1c
+	 yV0HB6Zx40ppHQ4+lIZxBp4RoDdsMcR9/s6ntxxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 56/92] tools/vm/slabinfo-gnuplot: use "grep -E" instead of "egrep"
-Date: Mon,  5 Dec 2022 20:10:09 +0100
-Message-Id: <20221205190805.369726289@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 39/92] net: phy: fix null-ptr-deref while probe() failed
+Date: Mon,  5 Dec 2022 20:09:52 +0100
+Message-Id: <20221205190804.757159978@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,57 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit a435874bf626f55d7147026b059008c8de89fbb8 upstream.
+[ Upstream commit 369eb2c9f1f72adbe91e0ea8efb130f0a2ba11a6 ]
 
-The latest version of grep claims the egrep is now obsolete so the build
-now contains warnings that look like:
+I got a null-ptr-deref report as following when doing fault injection test:
 
-	egrep: warning: egrep is obsolescent; using grep -E
+BUG: kernel NULL pointer dereference, address: 0000000000000058
+Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 PID: 253 Comm: 507-spi-dm9051 Tainted: G    B            N 6.1.0-rc3+
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:klist_put+0x2d/0xd0
+Call Trace:
+ <TASK>
+ klist_remove+0xf1/0x1c0
+ device_release_driver_internal+0x23e/0x2d0
+ bus_remove_device+0x1bd/0x240
+ device_del+0x357/0x770
+ phy_device_remove+0x11/0x30
+ mdiobus_unregister+0xa5/0x140
+ release_nodes+0x6a/0xa0
+ devres_release_all+0xf8/0x150
+ device_unbind_cleanup+0x19/0xd0
 
-fix this up by moving the related file to use "grep -E" instead.
+//probe path:
+phy_device_register()
+  device_add()
 
-  sed -i "s/egrep/grep -E/g" `grep egrep -rwl tools/vm`
+phy_connect
+  phy_attach_direct() //set device driver
+    probe() //it's failed, driver is not bound
+    device_bind_driver() // probe failed, it's not called
 
-Here are the steps to install the latest grep:
+//remove path:
+phy_device_remove()
+  device_del()
+    device_release_driver_internal()
+      __device_release_driver() //dev->drv is not NULL
+        klist_remove() <- knode_driver is not added yet, cause null-ptr-deref
 
-  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
-  tar xf grep-3.8.tar.gz
-  cd grep-3.8 && ./configure && make
-  sudo make install
-  export PATH=/usr/local/bin:$PATH
+In phy_attach_direct(), after setting the 'dev->driver', probe() fails,
+device_bind_driver() is not called, so the knode_driver->n_klist is not
+set, then it causes null-ptr-deref in __device_release_driver() while
+deleting device. Fix this by setting dev->driver to NULL in the error
+path in phy_attach_direct().
 
-Link: https://lkml.kernel.org/r/1668825419-30584-1-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e13934563db0 ("[PATCH] PHY Layer fixup")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/vm/slabinfo-gnuplot.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/phy_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/vm/slabinfo-gnuplot.sh
-+++ b/tools/vm/slabinfo-gnuplot.sh
-@@ -150,7 +150,7 @@ do_preprocess()
- 	let lines=3
- 	out=`basename "$in"`"-slabs-by-loss"
- 	`cat "$in" | grep -A "$lines" 'Slabs sorted by loss' |\
--		egrep -iv '\-\-|Name|Slabs'\
-+		grep -E -iv '\-\-|Name|Slabs'\
- 		| awk '{print $1" "$4+$2*$3" "$4}' > "$out"`
- 	if [ $? -eq 0 ]; then
- 		do_slabs_plotting "$out"
-@@ -159,7 +159,7 @@ do_preprocess()
- 	let lines=3
- 	out=`basename "$in"`"-slabs-by-size"
- 	`cat "$in" | grep -A "$lines" 'Slabs sorted by size' |\
--		egrep -iv '\-\-|Name|Slabs'\
-+		grep -E -iv '\-\-|Name|Slabs'\
- 		| awk '{print $1" "$4" "$4-$2*$3}' > "$out"`
- 	if [ $? -eq 0 ]; then
- 		do_slabs_plotting "$out"
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index d2f6d8107595..3ef5aa6b72a7 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1423,6 +1423,7 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+ 
+ error_module_put:
+ 	module_put(d->driver->owner);
++	d->driver = NULL;
+ error_put_device:
+ 	put_device(d);
+ 	if (ndev_owner != bus->owner)
+-- 
+2.35.1
+
 
 
