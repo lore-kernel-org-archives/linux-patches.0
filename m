@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF8515C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCFAC433C1;
-	Mon,  5 Dec 2022 19:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C06C15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C762AC433C1;
+	Mon,  5 Dec 2022 19:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267571;
-	bh=SXl83Tl+ZfQb49rJvCWP/bddbC7DFcfN+Sdd1MRNw4U=;
+	s=korg; t=1670267574;
+	bh=ZIOfvnklcHz3rCTLu0MLevAzydXBF5ZZaZ4ry8rfBz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5BSvxOgmj2NThDCiFInblnAbjQbor/khPzxJZ5dyOI4ZRJLn0ypRILqQ9jPZQMae
-	 tzWpME0X+wOpTlYShg0DXAxOL/XZfeJZDHZuoHoJPgWDKa5vgFCNvPM/76K219dpUB
-	 8huOyLmz2oFjs0Gs5LIqKPpjxgzHbIwtajbuHShg=
+	b=1uFCsg3hTQiy71/Wxl41/uDs9jrjFst6cS8a1QFtCJgynHnrZS+KhUBaptco1+hcZ
+	 5p0SfNVXqg1zGpI56f1d/vTXlRpwp4WjSYN2CQ191TsavATbjlgEDdgvkQDYO+742F
+	 SSIfYGTmqA0eFGel7p+1Q2SMBt2NHDIx/8S5vc9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 34/62] hwmon: (ibmpex) Fix possible UAF when ibmpex_register_bmc() fails
-Date: Mon,  5 Dec 2022 20:09:31 +0100
-Message-Id: <20221205190759.373265653@linuxfoundation.org>
+Subject: [PATCH 4.9 35/62] net/mlx5: Fix uninitialized variable bug in outlen_write()
+Date: Mon,  5 Dec 2022 20:09:32 +0100
+Message-Id: <20221205190759.409837142@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,42 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit e2a87785aab0dac190ac89be6a9ba955e2c634f2 ]
+[ Upstream commit 3f5769a074c13d8f08455e40586600419e02a880 ]
 
-Smatch report warning as follows:
+If sscanf() return 0, outlen is uninitialized and used in kzalloc(),
+this is unexpected. We should return -EINVAL if the string is invalid.
 
-drivers/hwmon/ibmpex.c:509 ibmpex_register_bmc() warn:
-  '&data->list' not removed from list
-
-If ibmpex_find_sensors() fails in ibmpex_register_bmc(), data will
-be freed, but data->list will not be removed from driver_data.bmc_data,
-then list traversal may cause UAF.
-
-Fix by removeing it from driver_data.bmc_data before free().
-
-Fixes: 57c7c3a0fdea ("hwmon: IBM power meter driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221117034423.2935739-1-cuigaosheng1@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ibmpex.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/ibmpex.c b/drivers/hwmon/ibmpex.c
-index 21b9c72f16bd..26a898781371 100644
---- a/drivers/hwmon/ibmpex.c
-+++ b/drivers/hwmon/ibmpex.c
-@@ -517,6 +517,7 @@ static void ibmpex_register_bmc(int iface, struct device *dev)
- 	return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index b6113620cb1a..043eec677b2c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1293,8 +1293,8 @@ static ssize_t outlen_write(struct file *filp, const char __user *buf,
+ 		return -EFAULT;
  
- out_register:
-+	list_del(&data->list);
- 	hwmon_device_unregister(data->hwmon_dev);
- out_user:
- 	ipmi_destroy_user(data->user);
+ 	err = sscanf(outlen_str, "%d", &outlen);
+-	if (err < 0)
+-		return err;
++	if (err != 1)
++		return -EINVAL;
+ 
+ 	ptr = kzalloc(outlen, GFP_KERNEL);
+ 	if (!ptr)
 -- 
 2.35.1
 
