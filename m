@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E54F15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4382C433D6;
-	Mon,  5 Dec 2022 19:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2224B15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976B3C433C1;
+	Mon,  5 Dec 2022 19:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268323;
-	bh=LXKzYJ7Jr8pppxHfgLFiEJ5vM0Y1HSKQ+cdDykRvyLY=;
+	s=korg; t=1670268326;
+	bh=/0U5v69+AfI76KNgSSgDmyGhOzuSRTqXmWjoBfRquWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCMAjIzAxxb+Zy8MdEIRPV0u1PZH65EQm/2dMNDp57+AxxHCOAgj7XbOpFpXeMQFe
-	 5uKqr0owgrvXNF7vqA3g1LGZ1I6u2n0bMnSEsTtiKcXvdKjIKmgnrTClM462dh+nMf
-	 8xDhBsL6FpZALdJgMeniJB1kP0Po+3QfPDPpIHps=
+	b=eQpLbOgMXToFZEtR+C9r3LKmORbjPeVWnM0/cWyre+zWfVkAvh/7HHf0kUKoh0jYo
+	 Du39/JBysCstg3/Z3z3cPLxrJCvOKq50APIn9Fqg6MhdTAfT9KpjlAV/6/2h3Xh+Sl
+	 UrQmcpso1PtLX+Oj6H/1UqDwu273hFneTjaaAmgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 032/124] iavf: Fix error handling in iavf_init_module()
-Date: Mon,  5 Dec 2022 20:08:58 +0100
-Message-Id: <20221205190809.356967552@linuxfoundation.org>
+Subject: [PATCH 6.0 033/124] e100: Fix possible use after free in e100_xmit_prepare
+Date: Mon,  5 Dec 2022 20:08:59 +0100
+Message-Id: <20221205190809.385020547@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,53 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 227d8d2f7f2278b8468c5531b0cd0f2a905b4486 ]
+[ Upstream commit 45605c75c52c7ae7bfe902214343aabcfe5ba0ff ]
 
-The iavf_init_module() won't destroy workqueue when pci_register_driver()
-failed. Call destroy_workqueue() when pci_register_driver() failed to
-prevent the resource leak.
+In e100_xmit_prepare(), if we can't map the skb, then return -ENOMEM, so
+e100_xmit_frame() will return NETDEV_TX_BUSY and the upper layer will
+resend the skb. But the skb is already freed, which will cause UAF bug
+when the upper layer resends the skb.
 
-Similar to the handling of u132_hcd_init in commit f276e002793c
-("usb: u132-hcd: fix resource leak")
+Remove the harmful free.
 
-Fixes: 2803b16c10ea ("i40e/i40evf: Use private workqueue")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Fixes: 5e5d49422dfb ("e100: Release skb when DMA mapping is failed in e100_xmit_prepare")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/e100.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index cff03723f4f9..4e03712726f2 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -5196,6 +5196,8 @@ static struct pci_driver iavf_driver = {
-  **/
- static int __init iavf_init_module(void)
- {
-+	int ret;
-+
- 	pr_info("iavf: %s\n", iavf_driver_string);
- 
- 	pr_info("%s\n", iavf_copyright);
-@@ -5206,7 +5208,12 @@ static int __init iavf_init_module(void)
- 		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
+diff --git a/drivers/net/ethernet/intel/e100.c b/drivers/net/ethernet/intel/e100.c
+index 11a884aa5082..90a2ba20e902 100644
+--- a/drivers/net/ethernet/intel/e100.c
++++ b/drivers/net/ethernet/intel/e100.c
+@@ -1741,11 +1741,8 @@ static int e100_xmit_prepare(struct nic *nic, struct cb *cb,
+ 	dma_addr = dma_map_single(&nic->pdev->dev, skb->data, skb->len,
+ 				  DMA_TO_DEVICE);
+ 	/* If we can't map the skb, have the upper layer try later */
+-	if (dma_mapping_error(&nic->pdev->dev, dma_addr)) {
+-		dev_kfree_skb_any(skb);
+-		skb = NULL;
++	if (dma_mapping_error(&nic->pdev->dev, dma_addr))
  		return -ENOMEM;
- 	}
--	return pci_register_driver(&iavf_driver);
-+
-+	ret = pci_register_driver(&iavf_driver);
-+	if (ret)
-+		destroy_workqueue(iavf_wq);
-+
-+	return ret;
- }
+-	}
  
- module_init(iavf_init_module);
+ 	/*
+ 	 * Use the last 4 bytes of the SKB payload packet as the CRC, used for
 -- 
 2.35.1
 
