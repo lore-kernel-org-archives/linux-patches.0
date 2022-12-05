@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB2015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376E9C433C1;
-	Mon,  5 Dec 2022 19:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B4215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10E6C433C1;
+	Mon,  5 Dec 2022 19:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268532;
-	bh=q/AV4J9UVOPtgfg6bk3xjNC4CZOsAUFIzz/mosao1hE=;
+	s=korg; t=1670268535;
+	bh=uRiz/7ZR84PYbS5hlv7q4zz95OQcM1eDd4FDAbcQ+BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5bp/K5dl4NPJdQpfHs4F4J8nBsl/S8GpnsONG/vT6HJs7ZVRcrr52poInEzccyrc
-	 IcxBuHB0ckpyErNSkmUF+IM9HDZC4w9rmjDCWd/7CZ6C8934SRrSllS/atZBR3D1zx
-	 jisKg/iZ1SEYtSnycd6c9oqTxmLykB4+myRmaWaQ=
+	b=GIqxfsCu3eUHhPIwmFsADVB8MaPfkC5xRXiBSH6Z5udjObpq3KIFTwOXbPoFhZDcl
+	 JMzjzzPha/nITOdwvti6z03ENBy8rtK0SoqdGbTaq5okD3EwoabKCxOVH1258QTKc/
+	 6gg79qGmnIHXKUY7M1J5ixWW7nhrlMhBvTf0dqkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nborisov@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/92] btrfs: move QUOTA_ENABLED check to rescan_should_stop from btrfs_qgroup_rescan_worker
-Date: Mon,  5 Dec 2022 20:09:17 +0100
-Message-Id: <20221205190803.616552660@linuxfoundation.org>
+Subject: [PATCH 5.10 05/92] drm/display/dp_mst: Fix drm_dp_mst_add_affected_dsc_crtcs() return code
+Date: Mon,  5 Dec 2022 20:09:18 +0100
+Message-Id: <20221205190803.649979530@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,63 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikolay Borisov <nborisov@suse.com>
+From: Lyude Paul <lyude@redhat.com>
 
-[ Upstream commit db5df254120004471e1c957957ab2f1e612dcbd6 ]
+[ Upstream commit 2f3a1273862cb82cca227630cc7f04ce0c94b6bb ]
 
-Instead of having 2 places that short circuit the qgroup leaf scan have
-everything in the qgroup_rescan_leaf function. In addition to that, also
-ensure that the inconsistent qgroup flag is set when rescan_should_stop
-returns true. This both retains the old behavior when -EINTR was set in
-the body of the loop and at the same time also extends this behavior
-when scanning is interrupted due to remount or unmount operations.
+Looks like that we're accidentally dropping a pretty important return code
+here. For some reason, we just return -EINVAL if we fail to get the MST
+topology state. This is wrong: error codes are important and should never
+be squashed without being handled, which here seems to have the potential
+to cause a deadlock.
 
-Signed-off-by: Nikolay Borisov <nborisov@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: f7e942b5bb35 ("btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()")
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Fixes: 8ec046716ca8 ("drm/dp_mst: Add helper to trigger modeset on affected DSC MST CRTCs")
+Cc: <stable@vger.kernel.org> # v5.6+
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 36da77534076..81bbb7532eb9 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3290,7 +3290,8 @@ static int qgroup_rescan_leaf(struct btrfs_trans_handle *trans,
- static bool rescan_should_stop(struct btrfs_fs_info *fs_info)
- {
- 	return btrfs_fs_closing(fs_info) ||
--		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state);
-+		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state) ||
-+		!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags);
- }
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index 4272cd3622f8..0feeac52e4eb 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -5238,7 +5238,7 @@ int drm_dp_mst_add_affected_dsc_crtcs(struct drm_atomic_state *state, struct drm
+ 	mst_state = drm_atomic_get_mst_topology_state(state, mgr);
  
- static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
-@@ -3320,11 +3321,9 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
- 			err = PTR_ERR(trans);
- 			break;
- 		}
--		if (!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags)) {
--			err = -EINTR;
--		} else {
--			err = qgroup_rescan_leaf(trans, path);
--		}
-+
-+		err = qgroup_rescan_leaf(trans, path);
-+
- 		if (err > 0)
- 			btrfs_commit_transaction(trans);
- 		else
-@@ -3338,7 +3337,7 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
- 	if (err > 0 &&
- 	    fs_info->qgroup_flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT) {
- 		fs_info->qgroup_flags &= ~BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
--	} else if (err < 0) {
-+	} else if (err < 0 || stopped) {
- 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
- 	}
- 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ 	if (IS_ERR(mst_state))
+-		return -EINVAL;
++		return PTR_ERR(mst_state);
+ 
+ 	list_for_each_entry(pos, &mst_state->vcpis, next) {
+ 
 -- 
 2.35.1
 
