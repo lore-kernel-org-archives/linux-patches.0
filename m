@@ -1,90 +1,148 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F3D2F3A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 23:01:12 +0000 (UTC)
-Received: by mail-pg1-f181.google.com with SMTP id q1so11781068pgl.11
-        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 15:01:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AE315CAE
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 23:31:39 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id k79so12933275pfd.7
+        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 15:31:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NRfbi/7mK0992Ud9pUnMAZNOCs3Qjj5lk/O/IQ8DmTg=;
-        b=OJFopkK4vdpDj5kA1KrDG8LWycERHKy0KH9cz8AbsCOtyGKt81ko1B/LZJYHhY7mRa
-         F2bgA61LK3+SPChVepJmGUPDRr1H9o1IfF8LfbFwuy4ozZi9mb9Aud8YWrepRgvrX+YE
-         LZCiZupBHjcNdlPfGhY6qKAPUcttkzeJ7AbKHyAisUhd3VdzW5MxdYo1bGCsF1A6kErx
-         5QFKpVjI5JmgJ5po8yeUQNYSrPyLbjw4ecjhzcUpKj/Eha6LY3IH7C1/EYwDVTUPOW9v
-         1gBYZfgUuh7RGc2TJgdENDkJ2nA+KEyQALiN510CnO7PCjhwWKkSNq1HY3r7YDZsNclx
-         vAJA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8PGxZk7EEUvOnO5sx9rLILLBhk3hndjY3IkHigHnSNk=;
+        b=VM9pcVhYNAPJGZ3AgbVI68+hqY5fuov7xv6MTKm+IbaqxEGKCAMYynql8YsNxhN5ll
+         AKh8+YHGuNtYR6TquFYAn/Nq3PCKhNizj+V0PKc1kDQ6cr9QUExm1x/MLBu3ZDNeHww6
+         97oahN/0ax9u8B79bZbZM0oroWFY1LlTi5IiM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NRfbi/7mK0992Ud9pUnMAZNOCs3Qjj5lk/O/IQ8DmTg=;
-        b=EjqpOy4N1kqPNmjGlbSiW0NDM7+EBaeASSTpxTqOCdzy0g0KJqyvRSnslUniQ2fo0w
-         jahqzBvop/oNv52/ktnO9MBl8qqkxqNu2263xvscVrt81ai2/0LPA0qM4ps4/PyhQCj9
-         YAqKGenzLuSPZk5ny0WoR2bGL9w4zDxRKB2+wpkDvqMmM+4uXFAIY1lSBuHeK8zTfPin
-         7b16U96ZdPFCVcuH497f9YVsQuyPpd2fUCReFpEKo+CtnVfAD0ylHD3oXvA/AFdAV2jx
-         eUIAyf0BL1iiL34/dYypnJl8LzskEqMyYsFS4IrXJYq6I+CXi5ELMWb0b1PXJt9O1ZZ3
-         wxNA==
-X-Gm-Message-State: ANoB5pmr4+rWMdaGVWkP91bDMgR2U2MgMpLy0hgiv5NwJ7cfysdCHvs5
-	VyamZ0vVrYeBpeTXj4i1XsFcYs1zpx5LEA==
-X-Google-Smtp-Source: AA0mqf6an23h6z5qDBR5RyQpqy8s40D5A5vlI1NjTnQaCsuOpdGbRYVMdr4Pwmjnm8LCVVUm4XZMTg==
-X-Received: by 2002:a62:820b:0:b0:576:a748:8fa3 with SMTP id w11-20020a62820b000000b00576a7488fa3mr11629502pfd.37.1670281271795;
-        Mon, 05 Dec 2022 15:01:11 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id q15-20020a170902a3cf00b00188ea79fae0sm11211276plb.48.2022.12.05.15.01.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 15:01:11 -0800 (PST)
-Message-ID: <f849932f-0a9e-9a41-1663-d3e8e47ea5d2@gmail.com>
-Date: Mon, 5 Dec 2022 15:01:09 -0800
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8PGxZk7EEUvOnO5sx9rLILLBhk3hndjY3IkHigHnSNk=;
+        b=tzqrZvNazaa8zV79LoizN5DBNJ5v074Bse/5yfiMTZtIggsNJMAsEvaqQjsVrPWNmR
+         nDRfdvpU8R8bXpAopFUdfu5qYWyAeGOgRyHf5PBVfQcqo3loq53brbBPkKCCkPpbxcIw
+         X5Fhjabc+JK43Ng3LEPB8JLy5OXtNzWPEDKxHjiXKgk/P/2tNzsN1zHwFMKNJsdDAzCn
+         Sqxpw/mPptFK9jjtQNDcGF3yAT/vK7U7WPOzrMBLz37A7Zrt8mp5Tl93+WivjY9HXkTK
+         Kr37qR25Xd3Py/HVitve08L8LaA6w/jtGSWoU26+vJRRUvFIWzk+HgYsJuKwUT9omc5u
+         iHHA==
+X-Gm-Message-State: ANoB5pk8xzUg0pbUKAh/iMRb2JfBfGmSwcDUcWu+gsB8ANB1ahClYq5F
+	GFGOiVc3th0iZSKwt6oRNzwc9A==
+X-Google-Smtp-Source: AA0mqf6+ELziPed8juoC6rlcujfAK7ChfnChJFMKw4zNC96g+vRUSY17tgqUG4y2gleflRL8tX+xgg==
+X-Received: by 2002:a63:5d63:0:b0:462:85d6:6276 with SMTP id o35-20020a635d63000000b0046285d66276mr59370450pgm.293.1670283098959;
+        Mon, 05 Dec 2022 15:31:38 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:306e:2b04:2f47:46cc])
+        by smtp.gmail.com with ESMTPSA id q15-20020a170902a3cf00b00188ea79fae0sm11232250plb.48.2022.12.05.15.31.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 15:31:38 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-mm@kvack.org,
+	Brian Geffon <bgeffon@google.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
+Date: Mon,  5 Dec 2022 15:31:36 -0800
+Message-Id: <20221205233136.3420802-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.39.0.rc0.267.gcb52ba06e7-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.4 000/153] 5.4.226-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221205190808.733996403@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12/5/22 11:08, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.226 release.
-> There are 153 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 07 Dec 2022 19:07:46 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.226-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+An oops can be induced by running 'cat /proc/kcore > /dev/null' on
+devices using pstore with the ram backend because kmap_atomic() assumes
+lowmem pages are accessible with __va().
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+ Unable to handle kernel paging request at virtual address ffffff807ff2b000
+ Mem abort info:
+ ESR = 0x96000006
+ EC = 0x25: DABT (current EL), IL = 32 bits
+ SET = 0, FnV = 0
+ EA = 0, S1PTW = 0
+ FSC = 0x06: level 2 translation fault
+ Data abort info:
+ ISV = 0, ISS = 0x00000006
+ CM = 0, WnR = 0
+ swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
+ [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
+ Internal error: Oops: 96000006 [#1] PREEMPT SMP
+ Modules linked in: dm_integrity
+ CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
+ Hardware name: Google Lazor (rev3 - 8) (DT)
+ pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __memcpy+0x110/0x260
+ lr : vread+0x194/0x294
+ sp : ffffffc013ee39d0
+ x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
+ x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
+ x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
+ x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
+ x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
+ x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
+ x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
+ x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
+ x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
+ x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
+ Call trace:
+ __memcpy+0x110/0x260
+ read_kcore+0x584/0x778
+ proc_reg_read+0xb4/0xe4
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+During early boot, memblock reserves the pages for the ramoops reserved
+memory node in DT that would otherwise be part of the direct lowmem
+mapping. Pstore's ram backend reuses those reserved pages to change the
+memory type (writeback or non-cached) by passing the pages to vmap()
+(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
+specific flags. When read_kcore() starts iterating over the vmalloc
+region, it runs over the virtual address that vmap() returned for
+ramoops. In aligned_vread() the virtual address is passed to
+vmalloc_to_page() which returns the page struct for the reserved lowmem
+area. That lowmem page is passed to kmap_atomic(), which effectively
+calls page_to_virt() that assumes a lowmem page struct must be directly
+accessible with __va() and friends. These pages are mapped via vmap()
+though, and the lowmem mapping was never made, so accessing them via the
+lowmem virtual address oopses like above.
+
+Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
+tell vread() to not include the ramoops region in the kcore. Instead the
+area will look like a bunch of zeros. The alternative is to teach kmap()
+about vmalloc areas that intersect with lowmem. Presumably such a change
+isn't a one-liner, and there isn't much interest in inspecting the
+ramoops region in kcore files anyway, so the most expedient route is
+taken for now.
+
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ fs/pstore/ram_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index a89e33719fcf..3a2a041b023d 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -439,7 +439,7 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
+ 		phys_addr_t addr = page_start + i * PAGE_SIZE;
+ 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
+ 	}
+-	vaddr = vmap(pages, page_count, VM_MAP, prot);
++	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
+ 	kfree(pages);
+ 
+ 	/*
+
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
-Florian
+https://chromeos.dev
 
