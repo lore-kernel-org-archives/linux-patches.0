@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CAA15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFE1C433C1;
-	Mon,  5 Dec 2022 19:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6D615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1146C433C1;
+	Mon,  5 Dec 2022 19:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268843;
-	bh=hSDrkl+XLwQQ5B1pfpYrbsz68KDUoBdhbEokbrcKx7Y=;
+	s=korg; t=1670268846;
+	bh=MNz/7UDp6ZSHAUrazs/BHFlPtScNFmNKIkJjSe4JswY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIZLka5h2MRL2DVF58wnRCt0PjQRJsGENdylC/VMw1/Fa8R3R35BIlJCnjYRYkAU5
-	 96Ritt1j7dk5jS5Ir9wXLddR/SEGL5+wWMhwYeTtrergVvM8FmdTK6BUA+qqhOMw4x
-	 FpNVJ4kpRZj9YN09rDCAhPoGY08XAZvBP0PGlRh0=
+	b=LNBWjHThaySn/Zz/cLiUfb/Yh5JvBD1QoJnnO/Ho7skEa3BGsfkHKXELGaidIVFZP
+	 ytAsap0hmIsrQK8YN7DhkzfOQAjTFGqn+pxejknGYdbIBHG19HWAkw+3/U8GvDPgNC
+	 8zbvTXgxLCQrmho64A1NrLItM9qblGwGvTcIHQhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/120] iavf: Fix error handling in iavf_init_module()
-Date: Mon,  5 Dec 2022 20:09:32 +0100
-Message-Id: <20221205190807.524414125@linuxfoundation.org>
+Subject: [PATCH 5.15 015/120] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
+Date: Mon,  5 Dec 2022 20:09:15 +0100
+Message-Id: <20221205190807.038479732@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,53 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 227d8d2f7f2278b8468c5531b0cd0f2a905b4486 ]
+[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
 
-The iavf_init_module() won't destroy workqueue when pci_register_driver()
-failed. Call destroy_workqueue() when pci_register_driver() failed to
-prevent the resource leak.
+KASAN report out-of-bounds read as follows:
 
-Similar to the handling of u132_hcd_init in commit f276e002793c
-("usb: u132-hcd: fix resource leak")
+BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
+Read of size 4 at addr ffffffffc00e4658 by task cat/278
 
-Fixes: 2803b16c10ea ("i40e/i40evf: Use private workqueue")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Call Trace:
+ afe4404_read_raw
+ iio_read_channel_info
+ dev_attr_show
+
+The buggy address belongs to the variable:
+ afe4404_channel_leds+0x18/0xffffffffffffe9c0
+
+This issue can be reproduce by singe command:
+
+ $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
+
+The array size of afe4404_channel_leds and afe4404_channel_offdacs
+are less than channels, so access with chan->address cause OOB read
+in afe4404_[read|write]_raw. Fix it by moving access before use them.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/health/afe4404.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index f2f8f2a43a34..82c4f1190e41 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -4341,6 +4341,8 @@ static struct pci_driver iavf_driver = {
-  **/
- static int __init iavf_init_module(void)
+diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
+index d8a27dfe074a..70f0f6f6351c 100644
+--- a/drivers/iio/health/afe4404.c
++++ b/drivers/iio/health/afe4404.c
+@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
  {
-+	int ret;
-+
- 	pr_info("iavf: %s\n", iavf_driver_string);
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int value_reg = afe4404_channel_values[chan->address];
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int value_reg, led_field, offdac_field;
+ 	int ret;
  
- 	pr_info("%s\n", iavf_copyright);
-@@ -4351,7 +4353,12 @@ static int __init iavf_init_module(void)
- 		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
- 		return -ENOMEM;
- 	}
--	return pci_register_driver(&iavf_driver);
-+
-+	ret = pci_register_driver(&iavf_driver);
-+	if (ret)
-+		destroy_workqueue(iavf_wq);
-+
-+	return ret;
- }
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			value_reg = afe4404_channel_values[chan->address];
+ 			ret = regmap_read(afe->regmap, value_reg, val);
+ 			if (ret)
+ 				return ret;
+ 			return IIO_VAL_INT;
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			ret = regmap_field_read(afe->fields[offdac_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[led_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int led_field, offdac_field;
  
- module_init(iavf_init_module);
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			return regmap_field_write(afe->fields[offdac_field], val);
+ 		}
+ 		break;
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			return regmap_field_write(afe->fields[led_field], val);
+ 		}
+ 		break;
 -- 
 2.35.1
 
