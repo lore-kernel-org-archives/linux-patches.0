@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC7515C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66BFC433C1;
-	Mon,  5 Dec 2022 19:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206DF15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A0AC433C1;
+	Mon,  5 Dec 2022 19:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267609;
-	bh=XuyQpxrer/vdOQG04Abrb68X+A5RtuQdM2/BD4+AKts=;
+	s=korg; t=1670267612;
+	bh=OiVCMzxBpokfiKyR4FCXyHYoK3kAfy7xcqYDUZ0rJEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+a2zJvWK9AP86AFGCU1b2P5F5/Uznxp1p/oG1KZGbcaEEeBmuz3d6kBk5G7G/+rb
-	 cbmhaVJ1RyUAjUJEBPjW8FiySuZ/hR7f82OhAM7ckv2fbTDcxopy9TJJfEDcwYu+lp
-	 4lc9B8xlpa3DTTbccHOHHVmtGQaPGBdeq+ehyTUI=
+	b=zatDNY1RNHSBoscYzdk6wa+NZZoVpWMxe220LE+zQjuSRSeyky8EZZV7emNQ+FPwA
+	 0qS/JmU3yvzXptb0jU+505mQu0420mx52XPZvC9R9hbrJm2Fa6yGvc3O6Gg+Pt9z2z
+	 4yq7JCfreOBF14EyAQ96073Z8DcJePE9R8tiVynk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.9 21/62] iio: core: Fix entry not deleted when iio_register_sw_trigger_type() fails
-Date: Mon,  5 Dec 2022 20:09:18 +0100
-Message-Id: <20221205190758.893528132@linuxfoundation.org>
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	"Luis R. Rodriguez" <mcgrof@kernel.org>,
+	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
+Subject: [PATCH 4.9 22/62] kconfig: display recursive dependency resolution hint just once
+Date: Mon,  5 Dec 2022 20:09:19 +0100
+Message-Id: <20221205190758.936336320@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,52 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-commit 4ad09d956f8eacff61e67e5b13ba8ebec3232f76 upstream.
+commit e3b03bf29d6b99fab7001fb20c33fe54928c157a upstream.
 
-In iio_register_sw_trigger_type(), configfs_register_default_group() is
-possible to fail, but the entry add to iio_trigger_types_list is not
-deleted.
+Commit 1c199f2878f6 ("kbuild: document recursive dependency limitation
+/ resolution") probably intended to show a hint along with "recursive
+dependency detected!" error, but it missed to add {...} guard, and the
+hint is displayed in every loop of the dep_stack traverse, annoyingly.
 
-This leaves wild in iio_trigger_types_list, which can cause page fault
-when module is loading again. So fix this by list_del(&t->list) in error
-path.
+This error was detected by GCC's -Wmisleading-indentation when switching
+to build-time generation of lexer/parser.
 
-BUG: unable to handle page fault for address: fffffbfff81d7400
-Call Trace:
-<TASK>
- iio_register_sw_trigger_type
- do_one_initcall
- do_init_module
- load_module
- ...
+scripts/kconfig/symbol.c: In function ‘sym_check_print_recursive’:
+scripts/kconfig/symbol.c:1150:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   if (stack->sym == last_sym)
+   ^~
+scripts/kconfig/symbol.c:1153:4: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+    fprintf(stderr, "For a resolution refer to Documentation/kbuild/kconfig-language.txt\n");
+    ^~~~~~~
 
-Fixes: b662f809d410 ("iio: core: Introduce IIO software triggers")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221108032802.168623-1-chenzhongjin@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+I could simply add {...} to surround the three fprintf(), but I rather
+chose to move the hint after the loop to make the whole message readable.
+
+Fixes: 1c199f2878f6 ("kbuild: document recursive dependency limitation / resolution"
+Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Acked-by: Luis R. Rodriguez <mcgrof@kernel.org>
+Cc: Daniel Díaz <daniel.diaz@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-sw-trigger.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ scripts/kconfig/symbol.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/industrialio-sw-trigger.c
-+++ b/drivers/iio/industrialio-sw-trigger.c
-@@ -61,8 +61,12 @@ int iio_register_sw_trigger_type(struct
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -1130,8 +1130,7 @@ static void sym_check_print_recursive(st
+ 		if (stack->sym == last_sym)
+ 			fprintf(stderr, "%s:%d:error: recursive dependency detected!\n",
+ 				prop->file->name, prop->lineno);
+-			fprintf(stderr, "For a resolution refer to Documentation/kbuild/kconfig-language.txt\n");
+-			fprintf(stderr, "subsection \"Kconfig recursive dependency limitations\"\n");
++
+ 		if (stack->expr) {
+ 			fprintf(stderr, "%s:%d:\tsymbol %s %s value contains %s\n",
+ 				prop->file->name, prop->lineno,
+@@ -1161,6 +1160,11 @@ static void sym_check_print_recursive(st
+ 		}
+ 	}
  
- 	t->group = configfs_register_default_group(iio_triggers_group, t->name,
- 						&iio_trigger_type_group_type);
--	if (IS_ERR(t->group))
-+	if (IS_ERR(t->group)) {
-+		mutex_lock(&iio_trigger_types_lock);
-+		list_del(&t->list);
-+		mutex_unlock(&iio_trigger_types_lock);
- 		ret = PTR_ERR(t->group);
-+	}
- 
- 	return ret;
++	fprintf(stderr,
++		"For a resolution refer to Documentation/kbuild/kconfig-language.txt\n"
++		"subsection \"Kconfig recursive dependency limitations\"\n"
++		"\n");
++
+ 	if (check_top == &cv_stack)
+ 		dep_stack_remove();
  }
 
 
