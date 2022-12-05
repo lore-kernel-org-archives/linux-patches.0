@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5B715C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6B4C433D6;
-	Mon,  5 Dec 2022 19:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5371115C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBBCC433D6;
+	Mon,  5 Dec 2022 19:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269483;
-	bh=z1s9yHn+Awsj/UN8hvBUd0/pUXJJbr1Lny7UPO/GVcM=;
+	s=korg; t=1670269486;
+	bh=97zCjMVNzmdlmIskIidDpK7Lzxmc3JquiqnkwFgwY1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7YiwGs74mNX1FRstLS3R8Bq1gNXHxfUUFzVqQnK4vyLhaMJa6c5ftbsMUZxabeAF
-	 aiBOmNQgoUcVyiSv1kqlFbJhjxQ66FSLFwVnoGw+7Vo6O316ZM8qmI3sNCgHUawa62
-	 TxBq+ShY0mxMyejAyEwrjiQCsMmH4TvRTdIn6msM=
+	b=PNxangmcYYr3Rvbxtpsm4wfHg/cDbGAtsN7BZCQWzbF/rSjt1YEhQsNNNFcM994uy
+	 d4QHRINtMdFiF5TCP0OejER2atAqxcYD3HomncEMsXeJupN74rfz/s0QveYt2YDEvg
+	 xHdLEY22CO2qSCuPO6g5tEWaW8gxG4YNzNZfKPpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 116/153] net/mlx5: DR, Fix uninitialized var warning
-Date: Mon,  5 Dec 2022 20:10:40 +0100
-Message-Id: <20221205190812.047434167@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 117/153] error-injection: Add prompt for function error injection
+Date: Mon,  5 Dec 2022 20:10:41 +0100
+Message-Id: <20221205190812.073047229@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,51 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 52f7cf70eb8fac6111786c59ae9dfc5cf2bee710 ]
+commit a4412fdd49dc011bcc2c0d81ac4cab7457092650 upstream.
 
-Smatch warns this:
+The config to be able to inject error codes into any function annotated
+with ALLOW_ERROR_INJECTION() is enabled when FUNCTION_ERROR_INJECTION is
+enabled.  But unfortunately, this is always enabled on x86 when KPROBES
+is enabled, and there's no way to turn it off.
 
-drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c:81
- mlx5dr_table_set_miss_action() error: uninitialized symbol 'ret'.
+As kprobes is useful for observability of the kernel, it is useful to
+have it enabled in production environments.  But error injection should
+be avoided.  Add a prompt to the config to allow it to be disabled even
+when kprobes is enabled, and get rid of the "def_bool y".
 
-Initializing ret with -EOPNOTSUPP and fix missing action case.
+This is a kernel debug feature (it's in Kconfig.debug), and should have
+never been something enabled by default.
 
-Fixes: 7838e1725394 ("net/mlx5: DR, Expose steering table functionality")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 540adea3809f6 ("error-injection: Separate error-injection from kprobe")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ lib/Kconfig.debug |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
-index e178d8d3dbc9..077b4bec1b13 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
-@@ -9,7 +9,7 @@ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
- 	struct mlx5dr_matcher *last_matcher = NULL;
- 	struct mlx5dr_htbl_connect_info info;
- 	struct mlx5dr_ste_htbl *last_htbl;
--	int ret;
-+	int ret = -EOPNOTSUPP;
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -1525,8 +1525,14 @@ config NETDEV_NOTIFIER_ERROR_INJECT
+ 	  If unsure, say N.
  
- 	if (action && action->action_type != DR_ACTION_TYP_FT)
- 		return -EOPNOTSUPP;
-@@ -68,6 +68,9 @@ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
- 		}
- 	}
- 
-+	if (ret)
-+		goto out;
+ config FUNCTION_ERROR_INJECTION
+-	def_bool y
++	bool "Fault-injections of functions"
+ 	depends on HAVE_FUNCTION_ERROR_INJECTION && KPROBES
++	help
++	  Add fault injections into various functions that are annotated with
++	  ALLOW_ERROR_INJECTION() in the kernel. BPF may also modify the return
++	  value of theses functions. This is useful to test error paths of code.
 +
- 	/* Release old action */
- 	if (tbl->miss_action)
- 		refcount_dec(&tbl->miss_action->refcount);
--- 
-2.35.1
-
++	  If unsure, say N
+ 
+ config FAULT_INJECTION
+ 	bool "Fault-injection framework"
 
 
