@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD5215C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC9BC433C1;
-	Mon,  5 Dec 2022 19:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E64915C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84346C433C1;
+	Mon,  5 Dec 2022 19:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267582;
-	bh=qlrwr620+OLzx9epwKnoqGjJdwPoZuwyjf6x6cd4CPk=;
+	s=korg; t=1670267584;
+	bh=eE+JGMuTnsfYpCT+Bc6nZRq0mbcsYG7c2CkVCgz3nM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqFoC7QxCoBnZ19Ecdox43wquXg2bvVYvpockOpwqFDh9R7CkCdIthT83xDYpuXn1
-	 A/sAKRuQLg+mc57MS7rdBRA0NwMEodAFi33jffTgZtVNyrb3t2xwUW2N2V5vsPJR0s
-	 aJtrZfndj7cZBpXXKVI8LXCDZRzXgVjno94P6b8Q=
+	b=L8A5LWrDUjCkyFjkiNsMfhytMqNMld2nPUKm3om7tGnboQ4HppRpCRy6G1APvfYpe
+	 m5fbn+xwXmqgzBMphWX1aP0f8Z56RfUIdLfAktZZ3rYnPc2VulrFJmgu0HccTz2sEb
+	 VYlt0pgVtMdbQxptPlV7jvk2/vLuOsqIXax/0rMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 38/62] qlcnic: fix sleep-in-atomic-context bugs caused by msleep
-Date: Mon,  5 Dec 2022 20:09:35 +0100
-Message-Id: <20221205190759.531467030@linuxfoundation.org>
+Subject: [PATCH 4.9 39/62] net: phy: fix null-ptr-deref while probe() failed
+Date: Mon,  5 Dec 2022 20:09:36 +0100
+Message-Id: <20221205190759.569905994@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,68 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8dbd6e4ce1b9c527921643d9e34f188a10d4e893 ]
+[ Upstream commit 369eb2c9f1f72adbe91e0ea8efb130f0a2ba11a6 ]
 
-The watchdog timer is used to monitor whether the process
-of transmitting data is timeout. If we use qlcnic driver,
-the dev_watchdog() that is the timer handler of watchdog
-timer will call qlcnic_tx_timeout() to process the timeout.
-But the qlcnic_tx_timeout() calls msleep(), as a result,
-the sleep-in-atomic-context bugs will happen. The processes
-are shown below:
+I got a null-ptr-deref report as following when doing fault injection test:
 
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        msleep
+BUG: kernel NULL pointer dereference, address: 0000000000000058
+Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 PID: 253 Comm: 507-spi-dm9051 Tainted: G    B            N 6.1.0-rc3+
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:klist_put+0x2d/0xd0
+Call Trace:
+ <TASK>
+ klist_remove+0xf1/0x1c0
+ device_release_driver_internal+0x23e/0x2d0
+ bus_remove_device+0x1bd/0x240
+ device_del+0x357/0x770
+ phy_device_remove+0x11/0x30
+ mdiobus_unregister+0xa5/0x140
+ release_nodes+0x6a/0xa0
+ devres_release_all+0xf8/0x150
+ device_unbind_cleanup+0x19/0xd0
 
----------------------------
+//probe path:
+phy_device_register()
+  device_add()
 
-   (atomic context)
-dev_watchdog
-  qlcnic_tx_timeout
-    qlcnic_83xx_idc_request_reset
-      qlcnic_83xx_lock_driver
-        qlcnic_83xx_recover_driver_lock
-          msleep
+phy_connect
+  phy_attach_direct() //set device driver
+    probe() //it's failed, driver is not bound
+    device_bind_driver() // probe failed, it's not called
 
-Fix by changing msleep() to mdelay(), the mdelay() is
-busy-waiting and the bugs could be mitigated.
+//remove path:
+phy_device_remove()
+  device_del()
+    device_release_driver_internal()
+      __device_release_driver() //dev->drv is not NULL
+        klist_remove() <- knode_driver is not added yet, cause null-ptr-deref
 
-Fixes: 629263acaea3 ("qlcnic: 83xx CNA inter driver communication mechanism")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+In phy_attach_direct(), after setting the 'dev->driver', probe() fails,
+device_bind_driver() is not called, so the knode_driver->n_klist is not
+set, then it causes null-ptr-deref in __device_release_driver() while
+deleting device. Fix this by setting dev->driver to NULL in the error
+path in phy_attach_direct().
+
+Fixes: e13934563db0 ("[PATCH] PHY Layer fixup")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/phy_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-index 59b77bb89147..1134060b6962 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
-@@ -2992,7 +2992,7 @@ static void qlcnic_83xx_recover_driver_lock(struct qlcnic_adapter *adapter)
- 		QLCWRX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK, val);
- 		dev_info(&adapter->pdev->dev,
- 			 "%s: lock recovery initiated\n", __func__);
--		msleep(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
- 		val = QLCRDX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK);
- 		id = ((val >> 2) & 0xF);
- 		if (id == adapter->portnum) {
-@@ -3028,7 +3028,7 @@ int qlcnic_83xx_lock_driver(struct qlcnic_adapter *adapter)
- 		if (status)
- 			break;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index a3ba95e96695..90dbf1b2a33a 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -948,6 +948,7 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
  
--		msleep(QLC_83XX_DRV_LOCK_WAIT_DELAY);
-+		mdelay(QLC_83XX_DRV_LOCK_WAIT_DELAY);
- 		i++;
- 
- 		if (i == 1)
+ error_module_put:
+ 	module_put(d->driver->owner);
++	d->driver = NULL;
+ error_put_device:
+ 	put_device(d);
+ 	if (ndev_owner != bus->owner)
 -- 
 2.35.1
 
