@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2029E15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A8FC433D6;
-	Mon,  5 Dec 2022 19:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9C315C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E23BC433D7;
+	Mon,  5 Dec 2022 19:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267761;
-	bh=Xv4QjT9MH+Sq6klSePxCtil5JaqXZBzxKRl43ee0kA0=;
+	s=korg; t=1670267763;
+	bh=GtfTyHdcittGw9lGVq1IOEmuHA7BQ1gOHosRYrrsR/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k977WGTQdTQXWldPI1FjpWzcVWxVYx9O4k1FhUq0RpZEml8nyqyAfWZKdTh1s+WK
-	 tuE25gI1y2eKXTR0TXF1d+ftCsGqvVefHdzPwz4zrl+0d5Vtzq3U9latV/GSujmCyh
-	 +CbS7i4hIrkyS1ioS1zbdVW8wQDcAcRdqxPyJZYE=
+	b=oolY0cvhwmH5QwB3EzEzmEbWSLSCZehXiKCbn5SSG7127kMURzLWCy8n0CiNFR02S
+	 aEQK3c1BK0G7JjV9e0s2Tbf93qlzcZHWpsatARbw/XNDnar0iHc1m1fqI1Nd8CRDmT
+	 MFGpWWL0Nj4CDzasASfT/0Px3hAp1tbwr4uOjCYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Andrew Davis <afd@ti.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Peter Kosyh <pkosyh@yandex.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 40/77] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
-Date: Mon,  5 Dec 2022 20:09:31 +0100
-Message-Id: <20221205190802.294743875@linuxfoundation.org>
+Subject: [PATCH 4.14 14/77] net/mlx4: Check retval of mlx4_bitmap_init
+Date: Mon,  5 Dec 2022 20:09:05 +0100
+Message-Id: <20221205190801.373491809@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,100 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Peter Kosyh <pkosyh@yandex.ru>
 
-[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
+[ Upstream commit 594c61ffc77de0a197934aa0f1df9285c68801c6 ]
 
-KASAN report out-of-bounds read as follows:
+If mlx4_bitmap_init fails, mlx4_bitmap_alloc_range will dereference
+the NULL pointer (bitmap->table).
 
-BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
-Read of size 4 at addr ffffffffc00e4658 by task cat/278
+Make sure, that mlx4_bitmap_alloc_range called in no error case.
 
-Call Trace:
- afe4404_read_raw
- iio_read_channel_info
- dev_attr_show
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-The buggy address belongs to the variable:
- afe4404_channel_leds+0x18/0xffffffffffffe9c0
-
-This issue can be reproduce by singe command:
-
- $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
-
-The array size of afe4404_channel_leds and afe4404_channel_offdacs
-are less than channels, so access with chan->address cause OOB read
-in afe4404_[read|write]_raw. Fix it by moving access before use them.
-
-Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: d57febe1a478 ("net/mlx4: Add A0 hybrid steering")
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Peter Kosyh <pkosyh@yandex.ru>
+Link: https://lore.kernel.org/r/20221117152806.278072-1-pkosyh@yandex.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/afe4404.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/qp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
-index 5e256b11ac87..29a906411bd8 100644
---- a/drivers/iio/health/afe4404.c
-+++ b/drivers/iio/health/afe4404.c
-@@ -258,20 +258,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 			    int *val, int *val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int value_reg = afe4404_channel_values[chan->address];
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int value_reg, led_field, offdac_field;
- 	int ret;
- 
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			value_reg = afe4404_channel_values[chan->address];
- 			ret = regmap_read(afe->regmap, value_reg, val);
- 			if (ret)
- 				return ret;
- 			return IIO_VAL_INT;
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			ret = regmap_field_read(afe->fields[offdac_field], val);
- 			if (ret)
- 				return ret;
-@@ -281,6 +281,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			ret = regmap_field_read(afe->fields[led_field], val);
- 			if (ret)
- 				return ret;
-@@ -303,19 +304,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int led_field, offdac_field;
- 
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			return regmap_field_write(afe->fields[offdac_field], val);
+diff --git a/drivers/net/ethernet/mellanox/mlx4/qp.c b/drivers/net/ethernet/mellanox/mlx4/qp.c
+index 73419224367a..6fbc19b143f8 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/qp.c
++++ b/drivers/net/ethernet/mellanox/mlx4/qp.c
+@@ -697,7 +697,8 @@ static int mlx4_create_zones(struct mlx4_dev *dev,
+ 			err = mlx4_bitmap_init(*bitmap + k, 1,
+ 					       MLX4_QP_TABLE_RAW_ETH_SIZE - 1, 0,
+ 					       0);
+-			mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
++			if (!err)
++				mlx4_bitmap_alloc_range(*bitmap + k, 1, 1, 0);
  		}
- 		break;
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			return regmap_field_write(afe->fields[led_field], val);
- 		}
- 		break;
+ 
+ 		if (err)
 -- 
 2.35.1
 
