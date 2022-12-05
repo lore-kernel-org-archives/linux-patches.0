@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A8415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F18C433D6;
-	Mon,  5 Dec 2022 19:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D50415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB38C433C1;
+	Mon,  5 Dec 2022 19:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268748;
-	bh=6USEt5q+PYRxMT7sL9GpHFmTqM97lOjmpeoCAbl/kUI=;
+	s=korg; t=1670268751;
+	bh=McP0+briOGhVaJpmew8bbbCbyWwbRHYWfCG/WRYegB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvtKPV1oZ59FhpqILq6yekRjmuL8xvjG+dR0psXqqoZhRNOhxPTESdufll1uZ6gFj
-	 j60CfuYHpGOT73nCr/TaTCykSz68u4xyMUqKMDKTGAgmYV0R12fbHL59E9ktzGR8UA
-	 V0ZctEq+pZtMnyDze9E+zZ3uona4LeZczw3tpum8=
+	b=cpa0KAd9TvLJaH7JLlHVQfCq6N8j25Pvs6CcS/fEgsqT1jGPEtvXJUvKz3W0yEp3m
+	 1qm4ShQocS6HUlivZda9c8NWdq2TyivAxUEdUlRKjbzf8lLNDK1GuqK9H/2IsnZ8eY
+	 OmbyDTYqdCxpqsMavc+KCehX+hHX+1ZIokqlqOW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Dabros <jsd@semihalf.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 90/92] char: tpm: Protect tpm_pm_suspend with locks
-Date: Mon,  5 Dec 2022 20:10:43 +0100
-Message-Id: <20221205190806.436874947@linuxfoundation.org>
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 91/92] Input: raydium_ts_i2c - fix memory leak in raydium_i2c_send()
+Date: Mon,  5 Dec 2022 20:10:44 +0100
+Message-Id: <20221205190806.464625503@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -37,69 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Dabros <jsd@semihalf.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 23393c6461422df5bf8084a086ada9a7e17dc2ba upstream.
+commit 8c9a59939deb4bfafdc451100c03d1e848b4169b upstream.
 
-Currently tpm transactions are executed unconditionally in
-tpm_pm_suspend() function, which may lead to races with other tpm
-accessors in the system.
+There is a kmemleak when test the raydium_i2c_ts with bpf mock device:
 
-Specifically, the hw_random tpm driver makes use of tpm_get_random(),
-and this function is called in a loop from a kthread, which means it's
-not frozen alongside userspace, and so can race with the work done
-during system suspend:
+  unreferenced object 0xffff88812d3675a0 (size 8):
+    comm "python3", pid 349, jiffies 4294741067 (age 95.695s)
+    hex dump (first 8 bytes):
+      11 0e 10 c0 01 00 04 00                          ........
+    backtrace:
+      [<0000000068427125>] __kmalloc+0x46/0x1b0
+      [<0000000090180f91>] raydium_i2c_send+0xd4/0x2bf [raydium_i2c_ts]
+      [<000000006e631aee>] raydium_i2c_initialize.cold+0xbc/0x3e4 [raydium_i2c_ts]
+      [<00000000dc6fcf38>] raydium_i2c_probe+0x3cd/0x6bc [raydium_i2c_ts]
+      [<00000000a310de16>] i2c_device_probe+0x651/0x680
+      [<00000000f5a96bf3>] really_probe+0x17c/0x3f0
+      [<00000000096ba499>] __driver_probe_device+0xe3/0x170
+      [<00000000c5acb4d9>] driver_probe_device+0x49/0x120
+      [<00000000264fe082>] __device_attach_driver+0xf7/0x150
+      [<00000000f919423c>] bus_for_each_drv+0x114/0x180
+      [<00000000e067feca>] __device_attach+0x1e5/0x2d0
+      [<0000000054301fc2>] bus_probe_device+0x126/0x140
+      [<00000000aad93b22>] device_add+0x810/0x1130
+      [<00000000c086a53f>] i2c_new_client_device+0x352/0x4e0
+      [<000000003c2c248c>] of_i2c_register_device+0xf1/0x110
+      [<00000000ffec4177>] of_i2c_notify+0x100/0x160
+  unreferenced object 0xffff88812d3675c8 (size 8):
+    comm "python3", pid 349, jiffies 4294741070 (age 95.692s)
+    hex dump (first 8 bytes):
+      22 00 36 2d 81 88 ff ff                          ".6-....
+    backtrace:
+      [<0000000068427125>] __kmalloc+0x46/0x1b0
+      [<0000000090180f91>] raydium_i2c_send+0xd4/0x2bf [raydium_i2c_ts]
+      [<000000001d5c9620>] raydium_i2c_initialize.cold+0x223/0x3e4 [raydium_i2c_ts]
+      [<00000000dc6fcf38>] raydium_i2c_probe+0x3cd/0x6bc [raydium_i2c_ts]
+      [<00000000a310de16>] i2c_device_probe+0x651/0x680
+      [<00000000f5a96bf3>] really_probe+0x17c/0x3f0
+      [<00000000096ba499>] __driver_probe_device+0xe3/0x170
+      [<00000000c5acb4d9>] driver_probe_device+0x49/0x120
+      [<00000000264fe082>] __device_attach_driver+0xf7/0x150
+      [<00000000f919423c>] bus_for_each_drv+0x114/0x180
+      [<00000000e067feca>] __device_attach+0x1e5/0x2d0
+      [<0000000054301fc2>] bus_probe_device+0x126/0x140
+      [<00000000aad93b22>] device_add+0x810/0x1130
+      [<00000000c086a53f>] i2c_new_client_device+0x352/0x4e0
+      [<000000003c2c248c>] of_i2c_register_device+0xf1/0x110
+      [<00000000ffec4177>] of_i2c_notify+0x100/0x160
 
-  tpm tpm0: tpm_transmit: tpm_recv: error -52
-  tpm tpm0: invalid TPM_STS.x 0xff, dumping stack for forensics
-  CPU: 0 PID: 1 Comm: init Not tainted 6.1.0-rc5+ #135
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
-  Call Trace:
-   tpm_tis_status.cold+0x19/0x20
-   tpm_transmit+0x13b/0x390
-   tpm_transmit_cmd+0x20/0x80
-   tpm1_pm_suspend+0xa6/0x110
-   tpm_pm_suspend+0x53/0x80
-   __pnp_bus_suspend+0x35/0xe0
-   __device_suspend+0x10f/0x350
+After BANK_SWITCH command from i2c BUS, no matter success or error
+happened, the tx_buf should be freed.
 
-Fix this by calling tpm_try_get_ops(), which itself is a wrapper around
-tpm_chip_start(), but takes the appropriate mutex.
-
-Signed-off-by: Jan Dabros <jsd@semihalf.com>
-Reported-by: Vlastimil Babka <vbabka@suse.cz>
-Tested-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Tested-by: Vlastimil Babka <vbabka@suse.cz>
-Link: https://lore.kernel.org/all/c5ba47ef-393f-1fba-30bd-1230d1b4b592@suse.cz/
+Fixes: 3b384bd6c3f2 ("Input: raydium_ts_i2c - do not split tx transactions")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Link: https://lore.kernel.org/r/20221202103412.2120169-1-zhangxiaoxu5@huawei.com
 Cc: stable@vger.kernel.org
-Fixes: e891db1a18bf ("tpm: turn on TPM on suspend for TPM 1.x")
-[Jason: reworked commit message, added metadata]
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-interface.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/input/touchscreen/raydium_i2c_ts.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -401,13 +401,14 @@ int tpm_pm_suspend(struct device *dev)
- 	    !pm_suspend_via_firmware())
- 		goto suspended;
+--- a/drivers/input/touchscreen/raydium_i2c_ts.c
++++ b/drivers/input/touchscreen/raydium_i2c_ts.c
+@@ -210,12 +210,14 @@ static int raydium_i2c_send(struct i2c_c
  
--	if (!tpm_chip_start(chip)) {
-+	rc = tpm_try_get_ops(chip);
-+	if (!rc) {
- 		if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 			tpm2_shutdown(chip, TPM2_SU_STATE);
- 		else
- 			rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
+ 		error = raydium_i2c_xfer(client, addr, xfer, ARRAY_SIZE(xfer));
+ 		if (likely(!error))
+-			return 0;
++			goto out;
  
--		tpm_chip_stop(chip);
-+		tpm_put_ops(chip);
- 	}
+ 		msleep(RM_RETRY_DELAY_MS);
+ 	} while (++tries < RM_MAX_RETRIES);
  
- suspended:
+ 	dev_err(&client->dev, "%s failed: %d\n", __func__, error);
++out:
++	kfree(tx_buf);
+ 	return error;
+ }
+ 
 
 
