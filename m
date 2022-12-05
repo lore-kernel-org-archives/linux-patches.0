@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6D415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04564C433C1;
-	Mon,  5 Dec 2022 19:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E54F15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4382C433D6;
+	Mon,  5 Dec 2022 19:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268320;
-	bh=/6DMGXY9EomA1dt5qHgxcdohcaUpMHPAa2tJlcMoShk=;
+	s=korg; t=1670268323;
+	bh=LXKzYJ7Jr8pppxHfgLFiEJ5vM0Y1HSKQ+cdDykRvyLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfLncwAGrf7VJKdM6ndAhwGEag0m5++VA38NxR6poacjFEtgj3CriN8MpW0ys1ZZc
-	 1OAnlrs7LSFt/L+Mi7Lv8TbufRTl+2NDw6uhB8kscbqMaOYatrt0/fvP0JAcOrFgOj
-	 068DYqmVvpc3XvKv0HWDzK6gIEJL1W2bA4BPFyiM=
+	b=QCMAjIzAxxb+Zy8MdEIRPV0u1PZH65EQm/2dMNDp57+AxxHCOAgj7XbOpFpXeMQFe
+	 5uKqr0owgrvXNF7vqA3g1LGZ1I6u2n0bMnSEsTtiKcXvdKjIKmgnrTClM462dh+nMf
+	 8xDhBsL6FpZALdJgMeniJB1kP0Po+3QfPDPpIHps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yuan Can <yuancan@huawei.com>,
+	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 058/124] net: wwan: iosm: fix incorrect skb length
-Date: Mon,  5 Dec 2022 20:09:24 +0100
-Message-Id: <20221205190810.070735927@linuxfoundation.org>
+Subject: [PATCH 6.0 032/124] iavf: Fix error handling in iavf_init_module()
+Date: Mon,  5 Dec 2022 20:08:58 +0100
+Message-Id: <20221205190809.356967552@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -35,99 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit c34ca4f32c24bf748493b49085e43cd714cf8357 ]
+[ Upstream commit 227d8d2f7f2278b8468c5531b0cd0f2a905b4486 ]
 
-skb passed to network layer contains incorrect length.
+The iavf_init_module() won't destroy workqueue when pci_register_driver()
+failed. Call destroy_workqueue() when pci_register_driver() failed to
+prevent the resource leak.
 
-In mux aggregation protocol, the datagram block received
-from device contains block signature, packet & datagram
-header. The right skb len to be calculated by subracting
-datagram pad len from datagram length.
+Similar to the handling of u132_hcd_init in commit f276e002793c
+("usb: u132-hcd: fix resource leak")
 
-Whereas in mux lite protocol, the skb contains single
-datagram so skb len is calculated by subtracting the
-packet offset from datagram header.
-
-Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
-Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2803b16c10ea ("i40e/i40evf: Use private workqueue")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_mux_codec.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c b/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
-index 738420bd14af..d6b166fc5c0e 100644
---- a/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
-@@ -365,7 +365,8 @@ static void ipc_mux_dl_cmd_decode(struct iosm_mux *ipc_mux, struct sk_buff *skb)
- /* Pass the DL packet to the netif layer. */
- static int ipc_mux_net_receive(struct iosm_mux *ipc_mux, int if_id,
- 			       struct iosm_wwan *wwan, u32 offset,
--			       u8 service_class, struct sk_buff *skb)
-+			       u8 service_class, struct sk_buff *skb,
-+			       u32 pkt_len)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index cff03723f4f9..4e03712726f2 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -5196,6 +5196,8 @@ static struct pci_driver iavf_driver = {
+  **/
+ static int __init iavf_init_module(void)
  {
- 	struct sk_buff *dest_skb = skb_clone(skb, GFP_ATOMIC);
++	int ret;
++
+ 	pr_info("iavf: %s\n", iavf_driver_string);
  
-@@ -373,7 +374,7 @@ static int ipc_mux_net_receive(struct iosm_mux *ipc_mux, int if_id,
+ 	pr_info("%s\n", iavf_copyright);
+@@ -5206,7 +5208,12 @@ static int __init iavf_init_module(void)
+ 		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
  		return -ENOMEM;
+ 	}
+-	return pci_register_driver(&iavf_driver);
++
++	ret = pci_register_driver(&iavf_driver);
++	if (ret)
++		destroy_workqueue(iavf_wq);
++
++	return ret;
+ }
  
- 	skb_pull(dest_skb, offset);
--	skb_set_tail_pointer(dest_skb, dest_skb->len);
-+	skb_trim(dest_skb, pkt_len);
- 	/* Pass the packet to the netif layer. */
- 	dest_skb->priority = service_class;
- 
-@@ -429,7 +430,7 @@ static void ipc_mux_dl_fcth_decode(struct iosm_mux *ipc_mux,
- static void ipc_mux_dl_adgh_decode(struct iosm_mux *ipc_mux,
- 				   struct sk_buff *skb)
- {
--	u32 pad_len, packet_offset;
-+	u32 pad_len, packet_offset, adgh_len;
- 	struct iosm_wwan *wwan;
- 	struct mux_adgh *adgh;
- 	u8 *block = skb->data;
-@@ -470,10 +471,12 @@ static void ipc_mux_dl_adgh_decode(struct iosm_mux *ipc_mux,
- 	packet_offset = sizeof(*adgh) + pad_len;
- 
- 	if_id += ipc_mux->wwan_q_offset;
-+	adgh_len = le16_to_cpu(adgh->length);
- 
- 	/* Pass the packet to the netif layer */
- 	rc = ipc_mux_net_receive(ipc_mux, if_id, wwan, packet_offset,
--				 adgh->service_class, skb);
-+				 adgh->service_class, skb,
-+				 adgh_len - packet_offset);
- 	if (rc) {
- 		dev_err(ipc_mux->dev, "mux adgh decoding error");
- 		return;
-@@ -547,7 +550,7 @@ static int mux_dl_process_dg(struct iosm_mux *ipc_mux, struct mux_adbh *adbh,
- 			     int if_id, int nr_of_dg)
- {
- 	u32 dl_head_pad_len = ipc_mux->session[if_id].dl_head_pad_len;
--	u32 packet_offset, i, rc;
-+	u32 packet_offset, i, rc, dg_len;
- 
- 	for (i = 0; i < nr_of_dg; i++, dg++) {
- 		if (le32_to_cpu(dg->datagram_index)
-@@ -562,11 +565,12 @@ static int mux_dl_process_dg(struct iosm_mux *ipc_mux, struct mux_adbh *adbh,
- 			packet_offset =
- 				le32_to_cpu(dg->datagram_index) +
- 				dl_head_pad_len;
-+			dg_len = le16_to_cpu(dg->datagram_length);
- 			/* Pass the packet to the netif layer. */
- 			rc = ipc_mux_net_receive(ipc_mux, if_id, ipc_mux->wwan,
- 						 packet_offset,
--						 dg->service_class,
--						 skb);
-+						 dg->service_class, skb,
-+						 dg_len - dl_head_pad_len);
- 			if (rc)
- 				goto dg_error;
- 		}
+ module_init(iavf_init_module);
 -- 
 2.35.1
 
