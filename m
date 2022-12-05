@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE62915C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609BEC433D6;
-	Mon,  5 Dec 2022 19:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7C615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143C9C433C1;
+	Mon,  5 Dec 2022 19:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268633;
-	bh=xcCMToOjpI2y+if9KDd+nbgje9d4OZrS/sDs4ogx62s=;
+	s=korg; t=1670268636;
+	bh=3nqWMvNrybhqd1/ZT/1pPraz7foUQ9vI1qB5affJDcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1se3xKsI/BMyZoW3dNbqxcMsDQq+BgeK3YElu5pHSK3j4ciKzHtYW9ieCtl5aIZ3
-	 HWlaTIAAwpNHsNN6sPOU75JMJovP7xE9XpxkY0YsyK66ab6nchytptAURN+QKT23Bk
-	 gd5WDI5UCGbsr9D3smNbbm3umhFVC9T9V5S0+a3o=
+	b=yQiYu6NT1oC/BVyTWQCHyIwlSzMuXX2r4XH3Cl+nH5x5OIDFmx/SAc59lZ0oqftgB
+	 zyE15B8AOU1PGGQo6YP0yI7BSvHJFMjHE1/XtvZzGYRz77ncG9Qk7gsCjtka1n3Csf
+	 sQZR+rhisR+/zs4BJYAKMHn1yH8E9vwLQfKxGi/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+29c402e56c4760763cc0@syzkaller.appspotmail.com,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Tho Vu <tho.vu.wh@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 49/92] sctp: fix memory leak in sctp_stream_outq_migrate()
-Date: Mon,  5 Dec 2022 20:10:02 +0100
-Message-Id: <20221205190805.109273856@linuxfoundation.org>
+Subject: [PATCH 5.10 50/92] net: ethernet: renesas: ravb: Fix promiscuous mode after system resumed
+Date: Mon,  5 Dec 2022 20:10:03 +0100
+Message-Id: <20221205190805.146883961@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -37,200 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 9ed7bfc79542119ac0a9e1ce8a2a5285e43433e9 ]
+[ Upstream commit d66233a312ec9013af3e37e4030b479a20811ec3 ]
 
-When sctp_stream_outq_migrate() is called to release stream out resources,
-the memory pointed to by prio_head in stream out is not released.
+After system resumed on some environment board, the promiscuous mode
+is disabled because the SoC turned off. So, call ravb_set_rx_mode() in
+the ravb_resume() to fix the issue.
 
-The memory leak information is as follows:
- unreferenced object 0xffff88801fe79f80 (size 64):
-   comm "sctp_repo", pid 7957, jiffies 4294951704 (age 36.480s)
-   hex dump (first 32 bytes):
-     80 9f e7 1f 80 88 ff ff 80 9f e7 1f 80 88 ff ff  ................
-     90 9f e7 1f 80 88 ff ff 90 9f e7 1f 80 88 ff ff  ................
-   backtrace:
-     [<ffffffff81b215c6>] kmalloc_trace+0x26/0x60
-     [<ffffffff88ae517c>] sctp_sched_prio_set+0x4cc/0x770
-     [<ffffffff88ad64f2>] sctp_stream_init_ext+0xd2/0x1b0
-     [<ffffffff88aa2604>] sctp_sendmsg_to_asoc+0x1614/0x1a30
-     [<ffffffff88ab7ff1>] sctp_sendmsg+0xda1/0x1ef0
-     [<ffffffff87f765ed>] inet_sendmsg+0x9d/0xe0
-     [<ffffffff8754b5b3>] sock_sendmsg+0xd3/0x120
-     [<ffffffff8755446a>] __sys_sendto+0x23a/0x340
-     [<ffffffff87554651>] __x64_sys_sendto+0xe1/0x1b0
-     [<ffffffff89978b49>] do_syscall_64+0x39/0xb0
-     [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Link: https://syzkaller.appspot.com/bug?exrid=29c402e56c4760763cc0
-Fixes: 637784ade221 ("sctp: introduce priority based stream scheduler")
-Reported-by: syzbot+29c402e56c4760763cc0@syzkaller.appspotmail.com
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20221126031720.378562-1-shaozhengchao@huawei.com
+Reported-by: Tho Vu <tho.vu.wh@renesas.com>
+Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20221128065604.1864391-1-yoshihiro.shimoda.uh@renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sctp/stream_sched.h |  2 ++
- net/sctp/stream.c               | 25 ++++++++++++++++++-------
- net/sctp/stream_sched.c         |  5 +++++
- net/sctp/stream_sched_prio.c    | 19 +++++++++++++++++++
- net/sctp/stream_sched_rr.c      |  5 +++++
- 5 files changed, 49 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/sctp/stream_sched.h b/include/net/sctp/stream_sched.h
-index 01a70b27e026..65058faea4db 100644
---- a/include/net/sctp/stream_sched.h
-+++ b/include/net/sctp/stream_sched.h
-@@ -26,6 +26,8 @@ struct sctp_sched_ops {
- 	int (*init)(struct sctp_stream *stream);
- 	/* Init a stream */
- 	int (*init_sid)(struct sctp_stream *stream, __u16 sid, gfp_t gfp);
-+	/* free a stream */
-+	void (*free_sid)(struct sctp_stream *stream, __u16 sid);
- 	/* Frees the entire thing */
- 	void (*free)(struct sctp_stream *stream);
- 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index ef9fceadef8d..ee6514af830f 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -52,6 +52,19 @@ static void sctp_stream_shrink_out(struct sctp_stream *stream, __u16 outcnt)
- 	}
- }
- 
-+static void sctp_stream_free_ext(struct sctp_stream *stream, __u16 sid)
-+{
-+	struct sctp_sched_ops *sched;
-+
-+	if (!SCTP_SO(stream, sid)->ext)
-+		return;
-+
-+	sched = sctp_sched_ops_from_stream(stream);
-+	sched->free_sid(stream, sid);
-+	kfree(SCTP_SO(stream, sid)->ext);
-+	SCTP_SO(stream, sid)->ext = NULL;
-+}
-+
- /* Migrates chunks from stream queues to new stream queues if needed,
-  * but not across associations. Also, removes those chunks to streams
-  * higher than the new max.
-@@ -70,16 +83,14 @@ static void sctp_stream_outq_migrate(struct sctp_stream *stream,
- 		 * sctp_stream_update will swap ->out pointers.
- 		 */
- 		for (i = 0; i < outcnt; i++) {
--			kfree(SCTP_SO(new, i)->ext);
-+			sctp_stream_free_ext(new, i);
- 			SCTP_SO(new, i)->ext = SCTP_SO(stream, i)->ext;
- 			SCTP_SO(stream, i)->ext = NULL;
- 		}
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index f96eed67e1a2..9e7b85e178fd 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2364,6 +2364,7 @@ static int __maybe_unused ravb_resume(struct device *dev)
+ 		ret = ravb_open(ndev);
+ 		if (ret < 0)
+ 			return ret;
++		ravb_set_rx_mode(ndev);
+ 		netif_device_attach(ndev);
  	}
  
--	for (i = outcnt; i < stream->outcnt; i++) {
--		kfree(SCTP_SO(stream, i)->ext);
--		SCTP_SO(stream, i)->ext = NULL;
--	}
-+	for (i = outcnt; i < stream->outcnt; i++)
-+		sctp_stream_free_ext(stream, i);
- }
- 
- static int sctp_stream_alloc_out(struct sctp_stream *stream, __u16 outcnt,
-@@ -174,9 +185,9 @@ void sctp_stream_free(struct sctp_stream *stream)
- 	struct sctp_sched_ops *sched = sctp_sched_ops_from_stream(stream);
- 	int i;
- 
--	sched->free(stream);
-+	sched->unsched_all(stream);
- 	for (i = 0; i < stream->outcnt; i++)
--		kfree(SCTP_SO(stream, i)->ext);
-+		sctp_stream_free_ext(stream, i);
- 	genradix_free(&stream->out);
- 	genradix_free(&stream->in);
- }
-diff --git a/net/sctp/stream_sched.c b/net/sctp/stream_sched.c
-index a2e1d34f52c5..33c2630c2496 100644
---- a/net/sctp/stream_sched.c
-+++ b/net/sctp/stream_sched.c
-@@ -46,6 +46,10 @@ static int sctp_sched_fcfs_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return 0;
- }
- 
-+static void sctp_sched_fcfs_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+}
-+
- static void sctp_sched_fcfs_free(struct sctp_stream *stream)
- {
- }
-@@ -96,6 +100,7 @@ static struct sctp_sched_ops sctp_sched_fcfs = {
- 	.get = sctp_sched_fcfs_get,
- 	.init = sctp_sched_fcfs_init,
- 	.init_sid = sctp_sched_fcfs_init_sid,
-+	.free_sid = sctp_sched_fcfs_free_sid,
- 	.free = sctp_sched_fcfs_free,
- 	.enqueue = sctp_sched_fcfs_enqueue,
- 	.dequeue = sctp_sched_fcfs_dequeue,
-diff --git a/net/sctp/stream_sched_prio.c b/net/sctp/stream_sched_prio.c
-index 80b5a2c4cbc7..4fc9f2923ed1 100644
---- a/net/sctp/stream_sched_prio.c
-+++ b/net/sctp/stream_sched_prio.c
-@@ -204,6 +204,24 @@ static int sctp_sched_prio_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return sctp_sched_prio_set(stream, sid, 0, gfp);
- }
- 
-+static void sctp_sched_prio_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+	struct sctp_stream_priorities *prio = SCTP_SO(stream, sid)->ext->prio_head;
-+	int i;
-+
-+	if (!prio)
-+		return;
-+
-+	SCTP_SO(stream, sid)->ext->prio_head = NULL;
-+	for (i = 0; i < stream->outcnt; i++) {
-+		if (SCTP_SO(stream, i)->ext &&
-+		    SCTP_SO(stream, i)->ext->prio_head == prio)
-+			return;
-+	}
-+
-+	kfree(prio);
-+}
-+
- static void sctp_sched_prio_free(struct sctp_stream *stream)
- {
- 	struct sctp_stream_priorities *prio, *n;
-@@ -323,6 +341,7 @@ static struct sctp_sched_ops sctp_sched_prio = {
- 	.get = sctp_sched_prio_get,
- 	.init = sctp_sched_prio_init,
- 	.init_sid = sctp_sched_prio_init_sid,
-+	.free_sid = sctp_sched_prio_free_sid,
- 	.free = sctp_sched_prio_free,
- 	.enqueue = sctp_sched_prio_enqueue,
- 	.dequeue = sctp_sched_prio_dequeue,
-diff --git a/net/sctp/stream_sched_rr.c b/net/sctp/stream_sched_rr.c
-index ff425aed62c7..cc444fe0d67c 100644
---- a/net/sctp/stream_sched_rr.c
-+++ b/net/sctp/stream_sched_rr.c
-@@ -90,6 +90,10 @@ static int sctp_sched_rr_init_sid(struct sctp_stream *stream, __u16 sid,
- 	return 0;
- }
- 
-+static void sctp_sched_rr_free_sid(struct sctp_stream *stream, __u16 sid)
-+{
-+}
-+
- static void sctp_sched_rr_free(struct sctp_stream *stream)
- {
- 	sctp_sched_rr_unsched_all(stream);
-@@ -177,6 +181,7 @@ static struct sctp_sched_ops sctp_sched_rr = {
- 	.get = sctp_sched_rr_get,
- 	.init = sctp_sched_rr_init,
- 	.init_sid = sctp_sched_rr_init_sid,
-+	.free_sid = sctp_sched_rr_free_sid,
- 	.free = sctp_sched_rr_free,
- 	.enqueue = sctp_sched_rr_enqueue,
- 	.dequeue = sctp_sched_rr_dequeue,
 -- 
 2.35.1
 
