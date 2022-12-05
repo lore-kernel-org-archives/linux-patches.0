@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D43E15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EBAC433D7;
-	Mon,  5 Dec 2022 19:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B61315C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92794C433C1;
+	Mon,  5 Dec 2022 19:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267821;
-	bh=FOvcc1pLq4Xt3xXYdoz5oFraN6fYSCmL3vVLtcdfbFo=;
+	s=korg; t=1670267823;
+	bh=dIQOBKTdiCa8LA6uxbtuDAOUpEkv2q4+ZPBM6p8X+Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKdxRk/SklwIm21jkErKq/vmrgegI+PDAnis/TCVsg8INpiTZAewe523c/ftI3XP2
-	 E6XLoafdosO4Ag4g0AIIXuIxm/On6k2lI7b1cI9bMP1l9kWdbFGy+wBs2IKRM9LGXN
-	 sLJJpr5oayHxDnh4JTFHUoHh1RRe/LReOza67GlY=
+	b=Dnq6P3PlExalOyYugqu51VAFkOvgGwBs752xP9shD2G32gJzXPuurQNVWhq7joPNC
+	 En0vQiRcE+VQRGw5VC9L6MOrFxda99+dApL//krRmbzaaCPPWhIqIu9HpuGy0ZbDD7
+	 UXFH7clvbUUY6hCCb/l5cFkqDsGrTePKqyaVWisg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.14 63/77] x86/bugs: Make sure MSR_SPEC_CTRL is updated properly upon resume from S3
-Date: Mon,  5 Dec 2022 20:09:54 +0100
-Message-Id: <20221205190803.085670355@linuxfoundation.org>
+	Sami Lee <sami.lee@mediatek.com>,
+	James Morse <james.morse@arm.com>
+Subject: [PATCH 4.14 64/77] arm64: Fix panic() when Spectre-v2 causes Spectre-BHB to re-allocate KVM vectors
+Date: Mon,  5 Dec 2022 20:09:55 +0100
+Message-Id: <20221205190803.119599081@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -37,140 +34,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: James Morse <james.morse@arm.com>
 
-commit 66065157420c5b9b3f078f43d313c153e1ff7f83 upstream.
+Sami reports that linux panic()s when resuming from suspend to RAM. This
+is because when CPUs are brought back online, they re-enable any
+necessary mitigations.
 
-The "force" argument to write_spec_ctrl_current() is currently ambiguous
-as it does not guarantee the MSR write. This is due to the optimization
-that writes to the MSR happen only when the new value differs from the
-cached value.
+The Spectre-v2 and Spectre-BHB mitigations interact as both need to
+done by KVM when exiting a guest. Slots KVM can use as vectors are
+allocated, and templates for the mitigation are patched into the vector.
 
-This is fine in most cases, but breaks for S3 resume when the cached MSR
-value gets out of sync with the hardware MSR value due to S3 resetting
-it.
+This fails if a new slot needs to be allocated once the kernel has finished
+booting as it is no-longer possible to modify KVM's vectors:
+| root@adam:/sys/devices/system/cpu/cpu1# echo 1 > online
+| Unable to handle kernel write to read-only memory at virtual add>
+| Mem abort info:
+|   ESR = 0x9600004e
+|   Exception class = DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+| Data abort info:
+|   ISV = 0, ISS = 0x0000004e
+|   CM = 0, WnR = 1
+| swapper pgtable: 4k pages, 48-bit VAs, pgdp = 000000000f07a71c
+| [ffff800000b4b800] pgd=00000009ffff8803, pud=00000009ffff7803, p>
+| Internal error: Oops: 9600004e [#1] PREEMPT SMP
+| Modules linked in:
+| Process swapper/1 (pid: 0, stack limit = 0x0000000063153c53)
+| CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.19.252-dirty #14
+| Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno De>
+| pstate: 000001c5 (nzcv dAIF -PAN -UAO)
+| pc : __memcpy+0x48/0x180
+| lr : __copy_hyp_vect_bpi+0x64/0x90
 
-When x86_spec_ctrl_current is same as x86_spec_ctrl_base, the MSR write
-is skipped. Which results in SPEC_CTRL mitigations not getting restored.
+| Call trace:
+|  __memcpy+0x48/0x180
+|  kvm_setup_bhb_slot+0x204/0x2a8
+|  spectre_bhb_enable_mitigation+0x1b8/0x1d0
+|  __verify_local_cpu_caps+0x54/0xf0
+|  check_local_cpu_capabilities+0xc4/0x184
+|  secondary_start_kernel+0xb0/0x170
+| Code: b8404423 b80044c3 36180064 f8408423 (f80084c3)
+| ---[ end trace 859bcacb09555348 ]---
+| Kernel panic - not syncing: Attempted to kill the idle task!
+| SMP: stopping secondary CPUs
+| Kernel Offset: disabled
+| CPU features: 0x10,25806086
+| Memory Limit: none
+| ---[ end Kernel panic - not syncing: Attempted to kill the idle ]
 
-Move the MSR write from write_spec_ctrl_current() to a new function that
-unconditionally writes to the MSR. Update the callers accordingly and
-rename functions.
+This is only a problem on platforms where there is only one CPU that is
+vulnerable to both Spectre-v2 and Spectre-BHB.
 
-  [ bp: Rework a bit. ]
+The Spectre-v2 mitigation identifies the slot it can re-use by the CPU's
+'fn'. It unconditionally writes the slot number and 'template_start'
+pointer. The Spectre-BHB mitigation identifies slots it can re-use by
+the CPU's template_start pointer, which was previously clobbered by the
+Spectre-v2 mitigation.
 
-Fixes: caa0ff24d5d0 ("x86/bugs: Keep a per-CPU IA32_SPEC_CTRL value")
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/806d39b0bfec2fe8f50dc5446dff20f5bb24a959.1669821572.git.pawan.kumar.gupta@linux.intel.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+When there is only one CPU that is vulnerable to both issues, this causes
+Spectre-v2 to try to allocate a new slot, which fails.
+
+Change both mitigations to check whether they are changing the slot this
+CPU uses before writing the percpu variables again.
+
+This issue only exists in the stable backports for Spectre-BHB which have
+to use totally different infrastructure to mainline.
+
+Reported-by: Sami Lee <sami.lee@mediatek.com>
+Fixes: 3e3904125fcc ("arm64: Mitigate spectre style branch history side channels")
+Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    2 +-
- arch/x86/kernel/cpu/bugs.c           |   21 ++++++++++++++-------
- arch/x86/kernel/process.c            |    2 +-
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ arch/arm64/kernel/cpu_errata.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -301,7 +301,7 @@ static inline void indirect_branch_predi
- /* The Intel SPEC CTRL MSR base value cache */
- extern u64 x86_spec_ctrl_base;
- DECLARE_PER_CPU(u64, x86_spec_ctrl_current);
--extern void write_spec_ctrl_current(u64 val, bool force);
-+extern void update_spec_ctrl_cond(u64 val);
- extern u64 spec_ctrl_current(void);
- 
- /*
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -58,11 +58,18 @@ EXPORT_SYMBOL_GPL(x86_spec_ctrl_current)
- 
- static DEFINE_MUTEX(spec_ctrl_mutex);
- 
-+/* Update SPEC_CTRL MSR and its cached copy unconditionally */
-+static void update_spec_ctrl(u64 val)
-+{
-+	this_cpu_write(x86_spec_ctrl_current, val);
-+	wrmsrl(MSR_IA32_SPEC_CTRL, val);
-+}
-+
- /*
-  * Keep track of the SPEC_CTRL MSR value for the current task, which may differ
-  * from x86_spec_ctrl_base due to STIBP/SSB in __speculation_ctrl_update().
-  */
--void write_spec_ctrl_current(u64 val, bool force)
-+void update_spec_ctrl_cond(u64 val)
- {
- 	if (this_cpu_read(x86_spec_ctrl_current) == val)
- 		return;
-@@ -73,7 +80,7 @@ void write_spec_ctrl_current(u64 val, bo
- 	 * When KERNEL_IBRS this MSR is written on return-to-user, unless
- 	 * forced the update can be delayed until that time.
- 	 */
--	if (force || !cpu_feature_enabled(X86_FEATURE_KERNEL_IBRS))
-+	if (!cpu_feature_enabled(X86_FEATURE_KERNEL_IBRS))
- 		wrmsrl(MSR_IA32_SPEC_CTRL, val);
- }
- 
-@@ -1192,7 +1199,7 @@ static void __init spec_ctrl_disable_ker
- 
- 	if (ia32_cap & ARCH_CAP_RRSBA) {
- 		x86_spec_ctrl_base |= SPEC_CTRL_RRSBA_DIS_S;
--		write_spec_ctrl_current(x86_spec_ctrl_base, true);
-+		update_spec_ctrl(x86_spec_ctrl_base);
- 	}
- }
- 
-@@ -1314,7 +1321,7 @@ static void __init spectre_v2_select_mit
- 
- 	if (spectre_v2_in_ibrs_mode(mode)) {
- 		x86_spec_ctrl_base |= SPEC_CTRL_IBRS;
--		write_spec_ctrl_current(x86_spec_ctrl_base, true);
-+		update_spec_ctrl(x86_spec_ctrl_base);
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -135,9 +135,12 @@ static void install_bp_hardening_cb(bp_h
+ 		__copy_hyp_vect_bpi(slot, hyp_vecs_start, hyp_vecs_end);
  	}
  
- 	switch (mode) {
-@@ -1418,7 +1425,7 @@ static void __init spectre_v2_select_mit
- static void update_stibp_msr(void * __unused)
- {
- 	u64 val = spec_ctrl_current() | (x86_spec_ctrl_base & SPEC_CTRL_STIBP);
--	write_spec_ctrl_current(val, true);
-+	update_spec_ctrl(val);
+-	__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
+-	__this_cpu_write(bp_hardening_data.fn, fn);
+-	__this_cpu_write(bp_hardening_data.template_start, hyp_vecs_start);
++	if (fn != __this_cpu_read(bp_hardening_data.fn)) {
++		__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
++		__this_cpu_write(bp_hardening_data.fn, fn);
++		__this_cpu_write(bp_hardening_data.template_start,
++				 hyp_vecs_start);
++	}
+ 	spin_unlock(&bp_lock);
  }
- 
- /* Update x86_spec_ctrl_base in case SMT state changed. */
-@@ -1651,7 +1658,7 @@ static enum ssb_mitigation __init __ssb_
- 			x86_amd_ssb_disable();
- 		} else {
- 			x86_spec_ctrl_base |= SPEC_CTRL_SSBD;
--			write_spec_ctrl_current(x86_spec_ctrl_base, true);
-+			update_spec_ctrl(x86_spec_ctrl_base);
- 		}
+ #else
+@@ -1061,8 +1064,11 @@ static void kvm_setup_bhb_slot(const cha
+ 		__copy_hyp_vect_bpi(slot, hyp_vecs_start, hyp_vecs_end);
  	}
  
-@@ -1856,7 +1863,7 @@ int arch_prctl_spec_ctrl_get(struct task
- void x86_spec_ctrl_setup_ap(void)
- {
- 	if (boot_cpu_has(X86_FEATURE_MSR_SPEC_CTRL))
--		write_spec_ctrl_current(x86_spec_ctrl_base, true);
-+		update_spec_ctrl(x86_spec_ctrl_base);
- 
- 	if (ssb_mode == SPEC_STORE_BYPASS_DISABLE)
- 		x86_amd_ssb_disable();
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -435,7 +435,7 @@ static __always_inline void __speculatio
- 	}
- 
- 	if (updmsr)
--		write_spec_ctrl_current(msr, false);
-+		update_spec_ctrl_cond(msr);
+-	__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
+-	__this_cpu_write(bp_hardening_data.template_start, hyp_vecs_start);
++	if (hyp_vecs_start != __this_cpu_read(bp_hardening_data.template_start)) {
++		__this_cpu_write(bp_hardening_data.hyp_vectors_slot, slot);
++		__this_cpu_write(bp_hardening_data.template_start,
++				 hyp_vecs_start);
++	}
+ 	spin_unlock(&bp_lock);
  }
- 
- static unsigned long speculation_ctrl_update_tif(struct task_struct *tsk)
+ #else
 
 
