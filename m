@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17FE15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43501C433D6;
-	Mon,  5 Dec 2022 19:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A2115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB37C433C1;
+	Mon,  5 Dec 2022 19:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268210;
-	bh=fnhSODLAcno3KqncfRPfQJNekfLDBy7vnQmC5+sxIUk=;
+	s=korg; t=1670268213;
+	bh=b1OAmXDQ+8qv84YF61emyBCmbR0Vn+MoF3AZTJHg08k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PM9F/YROLwIBnSCwzpjMhbHA+rlWOM00MhfxHjo4UAOQMhkiF4sBGpT0uwIKGwHeO
-	 Ig8hggvwPeDAqjSHrCjt9PPoZQFR2WdGqST28RCCVo/ZOhlCdRcr5oweVGprAbbc4v
-	 FaUDOaoMIm09bB11A7IivIHmcXvx/1jDZZu27vc0=
+	b=RCsEMvGDF9kQn2DNwWqIrShYfIt7F9xIr2llKcMhE/fUuHHn70EnbaefvZr4qY+rv
+	 1SSpB4GyRlCfpIRRkmsYRuPXjo1bVMfNw81x0aU5TikyCVYKaEhhIN3i/le6whRVqZ
+	 AN9TQxAAtctZFhDip79b5C/S9D8UAhUIav4AAlxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Nguyen <derek.nguyen@collins.com>,
-	Brandon Maier <brandon.maier@collins.com>,
+	Ninad Malwade <nmalwade@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 020/124] hwmon: (ltc2947) fix temperature scaling
-Date: Mon,  5 Dec 2022 20:08:46 +0100
-Message-Id: <20221205190809.025437319@linuxfoundation.org>
+Subject: [PATCH 6.0 021/124] hwmon: (ina3221) Fix shunt sum critical calculation
+Date: Mon,  5 Dec 2022 20:08:47 +0100
+Message-Id: <20221205190809.055724621@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,38 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Derek Nguyen <derek.nguyen@collins.com>
+From: Ninad Malwade <nmalwade@nvidia.com>
 
-[ Upstream commit 07e06193ead86d4812f431b4d87bbd4161222e3f ]
+[ Upstream commit b8d27d2ce8dfc207e4b67b929a86f2be76fbc6ef ]
 
-The LTC2947 datasheet (Rev. B) calls out in the section "Register
-Description: Non-Accumulated Result Registers" (pg. 30) that "To
-calculate temperature, multiply the TEMP register value by 0.204°C
-and add 5.5°C". Fix to add 5.5C and not 0.55C.
+The shunt sum critical limit register value should be left shifted
+by one bit as its LSB-0 is a reserved bit.
 
-Fixes: 9f90fd652bed ("hwmon: Add support for ltc2947")
-Signed-off-by: Derek Nguyen <derek.nguyen@collins.com>
-Signed-off-by: Brandon Maier <brandon.maier@collins.com>
-Link: https://lore.kernel.org/r/20221110192108.20624-1-brandon.maier@collins.com
+Fixes: 2057bdfb7184 ("hwmon: (ina3221) Add summation feature support")
+Signed-off-by: Ninad Malwade <nmalwade@nvidia.com>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20221108044508.23463-1-nmalwade@nvidia.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc2947-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/ina3221.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/ltc2947-core.c b/drivers/hwmon/ltc2947-core.c
-index 5423466de697..e918490f3ff7 100644
---- a/drivers/hwmon/ltc2947-core.c
-+++ b/drivers/hwmon/ltc2947-core.c
-@@ -396,7 +396,7 @@ static int ltc2947_read_temp(struct device *dev, const u32 attr, long *val,
- 		return ret;
- 
- 	/* in milidegrees celcius, temp is given by: */
--	*val = (__val * 204) + 550;
-+	*val = (__val * 204) + 5500;
- 
- 	return 0;
- }
+diff --git a/drivers/hwmon/ina3221.c b/drivers/hwmon/ina3221.c
+index 58d3828e2ec0..14586b2fb17d 100644
+--- a/drivers/hwmon/ina3221.c
++++ b/drivers/hwmon/ina3221.c
+@@ -228,7 +228,7 @@ static int ina3221_read_value(struct ina3221_data *ina, unsigned int reg,
+ 	 * Shunt Voltage Sum register has 14-bit value with 1-bit shift
+ 	 * Other Shunt Voltage registers have 12 bits with 3-bit shift
+ 	 */
+-	if (reg == INA3221_SHUNT_SUM)
++	if (reg == INA3221_SHUNT_SUM || reg == INA3221_CRIT_SUM)
+ 		*val = sign_extend32(regval >> 1, 14);
+ 	else
+ 		*val = sign_extend32(regval >> 3, 12);
+@@ -465,7 +465,7 @@ static int ina3221_write_curr(struct device *dev, u32 attr,
+ 	 *     SHUNT_SUM: (1 / 40uV) << 1 = 1 / 20uV
+ 	 *     SHUNT[1-3]: (1 / 40uV) << 3 = 1 / 5uV
+ 	 */
+-	if (reg == INA3221_SHUNT_SUM)
++	if (reg == INA3221_SHUNT_SUM || reg == INA3221_CRIT_SUM)
+ 		regval = DIV_ROUND_CLOSEST(voltage_uv, 20) & 0xfffe;
+ 	else
+ 		regval = DIV_ROUND_CLOSEST(voltage_uv, 5) & 0xfff8;
 -- 
 2.35.1
 
