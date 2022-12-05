@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0E15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB982C433C1;
-	Mon,  5 Dec 2022 19:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5D915C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7225EC433D6;
+	Mon,  5 Dec 2022 19:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269420;
-	bh=XFa7YaLyHzjNAtOYfHFj+j54gtSLk75+bhmS55tUiFY=;
+	s=korg; t=1670269422;
+	bh=Ze4TB5bhEUsJNgG/N8V+A9my32TLXgUh5CvfMc9erSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8q32SPLFoIGZmyLVBjY6SHxuGNd4LmkiaqC/iOnJdhrMwRtB6r3GEnu4PGg7NspQ
-	 VBAq0c+zMCKgJaKz5qA8uuOvAsnAfLokr+IbkuLr9spvweeUXW2EBBOs4OE/4ucGnj
-	 MOyBksnXBv34mnp6XeAb25hGHHimT4r0l3z8OPW4=
+	b=weuJ78jaIGQTin31wmcHhevI+OJDsVGSLLtJBI0uwwfjSYYwkxW1410eE7G5iE5Bv
+	 Uf90yP7OptvQUNekmrkBkpzhRR0HoAWOSOcS10y7n/7N/NAhbkmipukjIQ1A8S3E+a
+	 2E6ZPzsCpoxtJudE8VxWYyo1zhdZKQHhFceJ6JtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dale Smith <dalepsmith@gmail.com>,
-	John Harris <jmharris@gmail.com>
-Subject: [PATCH 5.4 121/153] pinctrl: intel: Save and restore pins in "direct IRQ" mode
-Date: Mon,  5 Dec 2022 20:10:45 +0100
-Message-Id: <20221205190812.176867466@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 122/153] mmc: mmc_test: Fix removal of debugfs file
+Date: Mon,  5 Dec 2022 20:10:46 +0100
+Message-Id: <20221205190812.206402104@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,85 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 6989ea4881c8944fbf04378418bb1af63d875ef8 upstream.
+commit f4307b4df1c28842bb1950ff0e1b97e17031b17f upstream.
 
-The firmware on some systems may configure GPIO pins to be
-an interrupt source in so called "direct IRQ" mode. In such
-cases the GPIO controller driver has no idea if those pins
-are being used or not. At the same time, there is a known bug
-in the firmwares that don't restore the pin settings correctly
-after suspend, i.e. by an unknown reason the Rx value becomes
-inverted.
+In __mmc_test_register_dbgfs_file(), we need to assign 'file', as it's
+being used when removing the debugfs files when the mmc_test module is
+removed.
 
-Hence, let's save and restore the pins that are configured
-as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
-
+Fixes: a04c50aaa916 ("mmc: core: no need to check return value of debugfs_create functions")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: Dale Smith <dalepsmith@gmail.com>
-Reported-and-tested-by: John Harris <jmharris@gmail.com>
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214749
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221124222926.72326-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+[Ulf: Re-wrote the commit msg]
+Link: https://lore.kernel.org/r/20221123095506.1965691-1-yebin@huaweicloud.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/mmc/core/mmc_test.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -459,9 +459,14 @@ static void __intel_gpio_set_direction(v
- 	writel(value, padcfg0);
- }
+--- a/drivers/mmc/core/mmc_test.c
++++ b/drivers/mmc/core/mmc_test.c
+@@ -3167,7 +3167,8 @@ static int __mmc_test_register_dbgfs_fil
+ 	struct mmc_test_dbgfs_file *df;
  
-+static int __intel_gpio_get_gpio_mode(u32 value)
-+{
-+	return (value & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+}
-+
- static int intel_gpio_get_gpio_mode(void __iomem *padcfg0)
- {
--	return (readl(padcfg0) & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+	return __intel_gpio_get_gpio_mode(readl(padcfg0));
- }
+ 	if (card->debugfs_root)
+-		debugfs_create_file(name, mode, card->debugfs_root, card, fops);
++		file = debugfs_create_file(name, mode, card->debugfs_root,
++					   card, fops);
  
- static void intel_gpio_set_gpio_mode(void __iomem *padcfg0)
-@@ -1508,6 +1513,7 @@ EXPORT_SYMBOL_GPL(intel_pinctrl_probe_by
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
- {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-+	u32 value;
- 
- 	if (!pd || !intel_pad_usable(pctrl, pin))
- 		return false;
-@@ -1522,6 +1528,25 @@ static bool intel_pinctrl_should_save(st
- 	    gpiochip_line_is_irq(&pctrl->chip, intel_pin_to_gpio(pctrl, pin)))
- 		return true;
- 
-+	/*
-+	 * The firmware on some systems may configure GPIO pins to be
-+	 * an interrupt source in so called "direct IRQ" mode. In such
-+	 * cases the GPIO controller driver has no idea if those pins
-+	 * are being used or not. At the same time, there is a known bug
-+	 * in the firmwares that don't restore the pin settings correctly
-+	 * after suspend, i.e. by an unknown reason the Rx value becomes
-+	 * inverted.
-+	 *
-+	 * Hence, let's save and restore the pins that are configured
-+	 * as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
-+	 *
-+	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
-+	 */
-+	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
-+	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+		return true;
-+
- 	return false;
- }
- 
+ 	df = kmalloc(sizeof(*df), GFP_KERNEL);
+ 	if (!df) {
 
 
