@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5009715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC15C433C1;
-	Mon,  5 Dec 2022 19:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1911815C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:37:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBFCC433C1;
+	Mon,  5 Dec 2022 19:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269018;
-	bh=ezQ1w8VhFxZoJVkalxYi7GExAh+jS4LqhPW29x9ez6g=;
+	s=korg; t=1670269021;
+	bh=oVOrNB0wgxy9UYvG+J/oOixjmfaLKXTPTti5nfZlH3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERUBk5UYgxxxrPBBnzR5cGXelh1c4SdnMpDlunjG41MhkQ3FSIX36b9pXwyiBceIJ
-	 vcFO15Nd+ZCDTh50LZxEppxOcZRpYoLIxTGw3OxbVytzrFYNbNXMT/+Xf25MXo78oc
-	 YvNpGINHklV5Fy8sOLpr/ER6ccbQ7qFGHKEX16g8=
+	b=d1LPYTdyl6nGo+dMRdIBSQMEo+K3RsbQJiWXgNNSSKF96BfIHtI9Ix9KcXRWydPjm
+	 YW8VMRI2zN4OihTJCpNZ9Rkmf52tGlcTboOAkC245sFB8HsQI90AYwEQTfCFLWsYc+
+	 DSeR7WHJnZdSCTeKh4cXVArH9KSJEujKzKcHax6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/120] pinctrl: single: Fix potential division by zero
-Date: Mon,  5 Dec 2022 20:10:35 +0100
-Message-Id: <20221205190809.420933702@linuxfoundation.org>
+Subject: [PATCH 5.15 096/120] riscv: Sync efi page tables kernel mappings before switching
+Date: Mon,  5 Dec 2022 20:10:36 +0100
+Message-Id: <20221205190809.448815773@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,41 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 64c150339e7f6c5cbbe8c17a56ef2b3902612798 ]
+[ Upstream commit 3f105a742725a1b78766a55169f1d827732e62b8 ]
 
-There is a possibility of dividing by zero due to the pcs->bits_per_pin
-if pcs->fmask() also has a value of zero and called fls
-from asm-generic/bitops/builtin-fls.h or arch/x86/include/asm/bitops.h.
-The function pcs_probe() has the branch that assigned to fmask 0 before
-pcs_allocate_pin_table() was called
+The EFI page table is initially created as a copy of the kernel page table.
+With VMAP_STACK enabled, kernel stacks are allocated in the vmalloc area:
+if the stack is allocated in a new PGD (one that was not present at the
+moment of the efi page table creation or not synced in a previous vmalloc
+fault), the kernel will take a trap when switching to the efi page table
+when the vmalloc kernel stack is accessed, resulting in a kernel panic.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix that by updating the efi kernel mappings before switching to the efi
+page table.
 
-Fixes: 4e7e8017a80e ("pinctrl: pinctrl-single: enhance to configure multiple pins of different modules")
-Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221117123034.27383-1-korotkov.maxim.s@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Fixes: b91540d52a08 ("RISC-V: Add EFI runtime services")
+Tested-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20221121133303.1782246-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/efi.h     |  6 +++++-
+ arch/riscv/include/asm/pgalloc.h | 11 ++++++++---
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 67bec7ea0f8b..414ee6bb8ac9 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -727,7 +727,7 @@ static int pcs_allocate_pin_table(struct pcs_device *pcs)
+diff --git a/arch/riscv/include/asm/efi.h b/arch/riscv/include/asm/efi.h
+index cc4f6787f937..1bb8662875dd 100644
+--- a/arch/riscv/include/asm/efi.h
++++ b/arch/riscv/include/asm/efi.h
+@@ -10,6 +10,7 @@
+ #include <asm/mmu_context.h>
+ #include <asm/ptrace.h>
+ #include <asm/tlbflush.h>
++#include <asm/pgalloc.h>
  
- 	mux_bytes = pcs->width / BITS_PER_BYTE;
+ #ifdef CONFIG_EFI
+ extern void efi_init(void);
+@@ -20,7 +21,10 @@ extern void efi_init(void);
+ int efi_create_mapping(struct mm_struct *mm, efi_memory_desc_t *md);
+ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
  
--	if (pcs->bits_per_mux) {
-+	if (pcs->bits_per_mux && pcs->fmask) {
- 		pcs->bits_per_pin = fls(pcs->fmask);
- 		nr_pins = (pcs->size * BITS_PER_BYTE) / pcs->bits_per_pin;
- 	} else {
+-#define arch_efi_call_virt_setup()      efi_virtmap_load()
++#define arch_efi_call_virt_setup()      ({		\
++		sync_kernel_mappings(efi_mm.pgd);	\
++		efi_virtmap_load();			\
++	})
+ #define arch_efi_call_virt_teardown()   efi_virtmap_unload()
+ 
+ #define arch_efi_call_virt(p, f, args...) p->f(args)
+diff --git a/arch/riscv/include/asm/pgalloc.h b/arch/riscv/include/asm/pgalloc.h
+index 0af6933a7100..98e040332482 100644
+--- a/arch/riscv/include/asm/pgalloc.h
++++ b/arch/riscv/include/asm/pgalloc.h
+@@ -38,6 +38,13 @@ static inline void pud_populate(struct mm_struct *mm, pud_t *pud, pmd_t *pmd)
+ }
+ #endif /* __PAGETABLE_PMD_FOLDED */
+ 
++static inline void sync_kernel_mappings(pgd_t *pgd)
++{
++	memcpy(pgd + USER_PTRS_PER_PGD,
++	       init_mm.pgd + USER_PTRS_PER_PGD,
++	       (PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
++}
++
+ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
+ {
+ 	pgd_t *pgd;
+@@ -46,9 +53,7 @@ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
+ 	if (likely(pgd != NULL)) {
+ 		memset(pgd, 0, USER_PTRS_PER_PGD * sizeof(pgd_t));
+ 		/* Copy kernel mappings */
+-		memcpy(pgd + USER_PTRS_PER_PGD,
+-			init_mm.pgd + USER_PTRS_PER_PGD,
+-			(PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
++		sync_kernel_mappings(pgd);
+ 	}
+ 	return pgd;
+ }
 -- 
 2.35.1
 
