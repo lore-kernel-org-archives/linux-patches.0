@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7EA15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A605AC433C1;
-	Mon,  5 Dec 2022 19:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8EA15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F07FC433C1;
+	Mon,  5 Dec 2022 19:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268110;
-	bh=iCR9tVPFb3GyNrpEFTYZErPW4yeXucjC05FSy3ScDew=;
+	s=korg; t=1670268112;
+	bh=xWBH+rj+UlzdVHuvJaGumSdIcpOkso0C+5ZUmEncoPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZ/tmAhDkHfTE8UVBTZs9r6F78L5chCeh226hpj24q0Yvt3tlxLAKCggu4OEFk2Ae
-	 OxhZb1Q0T7208DXXHAdvd1g4o1lg7t/8AJJvlHMZpMx/d2TX3J2PyjKEqZilDBVRnB
-	 XMInCkRFh5+mFSQwHwLj2gtK9UjwzpQUWo6oCHwo=
+	b=WAsu8XmODuts9YTF50x6SMtBVwgLMyZRhR4MSucARsUxZswch6LnNWHVv5O7P/oXx
+	 XyEC2iOhsGfkcc1g6NoIWY7/PzWuf4DVV1ANu9csKSK2x+pmcf/xQArVAvj4YqF12V
+	 nI2le2mkgNUaNikaUJ+Tjl+eZAjNSua8AoCCnC6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>
-Subject: [PATCH 4.19 089/105] arm64: errata: Fix KVM Spectre-v2 mitigation selection for Cortex-A57/A72
-Date: Mon,  5 Dec 2022 20:10:01 +0100
-Message-Id: <20221205190806.142991249@linuxfoundation.org>
+	Paul Gazzillo <paul@pgazz.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 063/105] iio: light: rpr0521: add missing Kconfig dependencies
+Date: Mon,  5 Dec 2022 20:09:35 +0100
+Message-Id: <20221205190805.296779789@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -33,47 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Morse <james.morse@arm.com>
+From: Paul Gazzillo <paul@pgazz.com>
 
-Both the Spectre-v2 and Spectre-BHB mitigations involve running a sequence
-immediately after exiting a guest, before any branches. In the stable
-kernels these sequences are built by copying templates into an empty vector
-slot.
+[ Upstream commit 6ac12303572ef9ace5603c2c07f5f1b00a33f580 ]
 
-For Spectre-BHB, Cortex-A57 and A72 require the branchy loop with k=8.
-If Spectre-v2 needs mitigating at the same time, a firmware call to EL3 is
-needed. The work EL3 does at this point is also enough to mitigate
-Spectre-BHB.
+Fix an implicit declaration of function error for rpr0521 under some configs
 
-When enabling the Spectre-BHB mitigation, spectre_bhb_enable_mitigation()
-should check if a slot has already been allocated for Spectre-v2, meaning
-no work is needed for Spectre-BHB.
+When CONFIG_RPR0521 is enabled without CONFIG_IIO_TRIGGERED_BUFFER,
+the build results in "implicit declaration of function" errors, e.g.,
+  drivers/iio/light/rpr0521.c:434:3: error: implicit declaration of function
+           'iio_trigger_poll_chained' [-Werror=implicit-function-declaration]
+    434 |   iio_trigger_poll_chained(data->drdy_trigger0);
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~
 
-This check was missed in the earlier backport, add it.
+This fix adds select dependencies to RPR0521's configuration declaration.
 
-Fixes: c20d55174479 ("arm64: Mitigate spectre style branch history side channels")
-Signed-off-by: James Morse <james.morse@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e12ffd241c00 ("iio: light: rpr0521 triggered buffer")
+Signed-off-by: Paul Gazzillo <paul@pgazz.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216678
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110214729.ls5ixav5kxpeftk7@device
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cpu_errata.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/iio/light/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -1246,7 +1246,13 @@ void spectre_bhb_enable_mitigation(const
- 	} else if (spectre_bhb_loop_affected(SCOPE_LOCAL_CPU)) {
- 		switch (spectre_bhb_loop_affected(SCOPE_SYSTEM)) {
- 		case 8:
--			kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
-+			/*
-+			 * A57/A72-r0 will already have selected the
-+			 * spectre-indirect vector, which is sufficient
-+			 * for BHB too.
-+			 */
-+			if (!__this_cpu_read(bp_hardening_data.fn))
-+				kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
- 			break;
- 		case 24:
- 			kvm_setup_bhb_slot(__spectre_bhb_loop_k24_start);
+diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
+index d66ea754ffff..485362f0a213 100644
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -238,6 +238,8 @@ config RPR0521
+ 	tristate "ROHM RPR0521 ALS and proximity sensor driver"
+ 	depends on I2C
+ 	select REGMAP_I2C
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	 Say Y here if you want to build support for ROHM's RPR0521
+ 	 ambient light and proximity sensor device.
+-- 
+2.35.1
+
 
 
