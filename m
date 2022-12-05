@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1937F15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C3BC433C1;
-	Mon,  5 Dec 2022 19:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92AF15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D108C433D6;
+	Mon,  5 Dec 2022 19:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269299;
-	bh=aFZrbf0TAI8by0xBY145sEZEAbFStJod3NDE0zkM5XI=;
+	s=korg; t=1670269302;
+	bh=oih++l+q2/nAYqIvClf3BALvjC51Aulfi4fPs65ZRq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boWRuzjnTC9JyWsCcmrNCcWg73rsHR+IaN+5lUPomPWoh3EbV2C81SbUrR2zkAvmB
-	 9Iws+PWzZHJ9rGzylwKo9fvmxxuAVj9KA6CG5+hGREJ3n0RkbZCa17mHxYo9rFIfiT
-	 BJA5wYMyzD4xwLXlMB+yUcIe+RA6r0zpy5x345o8=
+	b=H5BiErypsX11zT245jMzaJUnd3WMXY5NfRYmatLPdguea+k0RBlI5IBtrHgyWcwr7
+	 bvbkiZ0EEhAWJ8PJGDZv30nVbtymipLpv4JXvwKzA5J85N0jrtaGjM5N6xmGhGqW9L
+	 FNyuVdkArf/UsPEfVPtxhz2flUV7AOKzTtlcF2gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 076/153] btrfs: free btrfs_path before copying fspath to userspace
-Date: Mon,  5 Dec 2022 20:10:00 +0100
-Message-Id: <20221205190810.906179960@linuxfoundation.org>
+Subject: [PATCH 5.4 077/153] btrfs: free btrfs_path before copying subvol info to userspace
+Date: Mon,  5 Dec 2022 20:10:01 +0100
+Message-Id: <20221205190810.934115217@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,11 +36,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Anand Jain <anand.jain@oracle.com>
 
-commit 8cf96b409d9b3946ece58ced13f92d0f775b0442 upstream.
+commit 013c1c5585ebcfb19c88efe79063d0463b1b6159 upstream.
 
-btrfs_ioctl_ino_to_path() frees the search path after the userspace copy
-from the temp buffer @ipath->fspath. Which potentially can lead to a lock
-splat warning.
+btrfs_ioctl_get_subvol_info() frees the search path after the userspace
+copy from the temp buffer @subvol_info. This can lead to a lock splat
+warning.
 
 Fix this by freeing the path before we copy it to userspace.
 
@@ -55,14 +55,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/btrfs/ioctl.c
 +++ b/fs/btrfs/ioctl.c
-@@ -4516,6 +4516,8 @@ static long btrfs_ioctl_ino_to_path(stru
- 		ipath->fspath->val[i] = rel_ptr;
+@@ -2824,6 +2824,8 @@ static int btrfs_ioctl_get_subvol_info(s
+ 		}
  	}
  
 +	btrfs_free_path(path);
 +	path = NULL;
- 	ret = copy_to_user((void __user *)(unsigned long)ipa->fspath,
- 			   ipath->fspath, size);
- 	if (ret) {
+ 	if (copy_to_user(argp, subvol_info, sizeof(*subvol_info)))
+ 		ret = -EFAULT;
+ 
 
 
