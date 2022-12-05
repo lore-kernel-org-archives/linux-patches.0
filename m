@@ -1,26 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA5215C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87FAC433C1;
-	Mon,  5 Dec 2022 19:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAAF15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46641C433D6;
+	Mon,  5 Dec 2022 19:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268680;
-	bh=nPKf5WVyDPOLSuntn1adYa4hojbDzJTh1eZ1vcpn668=;
+	s=korg; t=1670268682;
+	bh=22sV16iO9OXMHqC4fxl0K5hJrO0PQhkdL3lQVMmLX60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuZ2lcVmnMwPJuWW0hYBt/yWr5/2MDvll373Fv3iMO2icseZv1ivpV86KgqdspJPT
-	 YshzjYojFYjJsZD1j2K8RJi6bFb6U2nkxA10bEs2Wy2hVCfND9FCj57MZ22wzicjzS
-	 zawWhMhEYWg99spZAbZ3Sw90nKTV/3AKJQVC36uM=
+	b=Vc/L9xryCugC3T16TtRmyYEIMvS6IXzW9htS54Tb9nvW0PsZq6VPI2omviqfjmXte
+	 8JK5TJmFxI5/uoXymyhns5gqUzH4DskSwvOGQpVB8fchwLAu6Dbi2iG3rw2C3StxjU
+	 TZrABeSDcwQnsWqHzbmntV/bhAf7LQq7NuT6LEq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 65/92] mmc: sdhci: Fix voltage switch delay
-Date: Mon,  5 Dec 2022 20:10:18 +0100
-Message-Id: <20221205190805.664222394@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 66/92] drm/amdgpu: temporarily disable broken Clang builds due to blown stack-frame
+Date: Mon,  5 Dec 2022 20:10:19 +0100
+Message-Id: <20221205190805.695561613@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -34,180 +49,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Lee Jones <lee@kernel.org>
 
-commit c981cdfb9925f64a364f13c2b4f98f877308a408 upstream.
+commit 6f6cb1714365a07dbc66851879538df9f6969288 upstream.
 
-Commit 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-removed voltage switch delays from sdhci because mmc core had been
-enhanced to support them. However that assumed that sdhci_set_ios()
-did a single clock change, which it did not, and so the delays in mmc
-core, which should have come after the first clock change, were not
-effective.
+Patch series "Fix a bunch of allmodconfig errors", v2.
 
-Fix by avoiding re-configuring UHS and preset settings when the clock
-is turning on and the settings have not changed. That then also avoids
-the associated clock changes, so that then sdhci_set_ios() does a single
-clock change when voltage switching, and the mmc core delays become
-effective.
+Since b339ec9c229aa ("kbuild: Only default to -Werror if COMPILE_TEST")
+WERROR now defaults to COMPILE_TEST meaning that it's enabled for
+allmodconfig builds.  This leads to some interesting build failures when
+using Clang, each resolved in this set.
 
-To do that has meant keeping track of driver strength (host->drv_type),
-and cases of reinitialization (host->reinit_uhs).
+With this set applied, I am able to obtain a successful allmodconfig Arm
+build.
 
-Note also, the 'turning_on_clk' restriction should not be necessary
-but is done to minimize the impact of the change on stable kernels.
 
-Fixes: 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20221128133259.38305-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+This patch (of 2):
+
+calculate_bandwidth() is presently broken on all !(X86_64 || SPARC64 ||
+ARM64) architectures built with Clang (all released versions), whereby the
+stack frame gets blown up to well over 5k.  This would cause an immediate
+kernel panic on most architectures.  We'll revert this when the following
+bug report has been resolved:
+https://github.com/llvm/llvm-project/issues/41896.
+
+Link: https://lkml.kernel.org/r/20221125120750.3537134-1-lee@kernel.org
+Link: https://lkml.kernel.org/r/20221125120750.3537134-2-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Tom Rix <trix@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |   61 +++++++++++++++++++++++++++++++++++++++++------
- drivers/mmc/host/sdhci.h |    2 +
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/Kconfig |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -339,6 +339,7 @@ static void sdhci_init(struct sdhci_host
- 	if (soft) {
- 		/* force clock reconfiguration */
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	}
- }
-@@ -2258,11 +2259,46 @@ void sdhci_set_uhs_signaling(struct sdhc
- }
- EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
+--- a/drivers/gpu/drm/amd/display/Kconfig
++++ b/drivers/gpu/drm/amd/display/Kconfig
+@@ -5,6 +5,7 @@ menu "Display Engine Configuration"
+ config DRM_AMD_DC
+ 	bool "AMD DC - Enable new display engine"
+ 	default y
++	depends on BROKEN || !CC_IS_CLANG || X86_64 || SPARC64 || ARM64
+ 	select SND_HDA_COMPONENT if SND_HDA_CORE
+ 	select DRM_AMD_DC_DCN if (X86 || PPC64) && !(KCOV_INSTRUMENT_ALL && KCOV_ENABLE_COMPARISONS)
+ 	help
+@@ -12,6 +13,12 @@ config DRM_AMD_DC
+ 	  support for AMDGPU. This adds required support for Vega and
+ 	  Raven ASICs.
  
-+static bool sdhci_timing_has_preset(unsigned char timing)
-+{
-+	switch (timing) {
-+	case MMC_TIMING_UHS_SDR12:
-+	case MMC_TIMING_UHS_SDR25:
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+	case MMC_TIMING_UHS_DDR50:
-+	case MMC_TIMING_MMC_DDR52:
-+		return true;
-+	};
-+	return false;
-+}
++	  calculate_bandwidth() is presently broken on all !(X86_64 || SPARC64 || ARM64)
++	  architectures built with Clang (all released versions), whereby the stack
++	  frame gets blown up to well over 5k.  This would cause an immediate kernel
++	  panic on most architectures.  We'll revert this when the following bug report
++	  has been resolved: https://github.com/llvm/llvm-project/issues/41896.
 +
-+static bool sdhci_preset_needed(struct sdhci_host *host, unsigned char timing)
-+{
-+	return !(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
-+	       sdhci_timing_has_preset(timing);
-+}
-+
-+static bool sdhci_presetable_values_change(struct sdhci_host *host, struct mmc_ios *ios)
-+{
-+	/*
-+	 * Preset Values are: Driver Strength, Clock Generator and SDCLK/RCLK
-+	 * Frequency. Check if preset values need to be enabled, or the Driver
-+	 * Strength needs updating. Note, clock changes are handled separately.
-+	 */
-+	return !host->preset_enabled &&
-+	       (sdhci_preset_needed(host, ios->timing) || host->drv_type != ios->drv_type);
-+}
-+
- void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-+	bool reinit_uhs = host->reinit_uhs;
-+	bool turning_on_clk = false;
- 	u8 ctrl;
- 
-+	host->reinit_uhs = false;
-+
- 	if (ios->power_mode == MMC_POWER_UNDEFINED)
- 		return;
- 
-@@ -2288,6 +2324,8 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		sdhci_enable_preset_value(host, false);
- 
- 	if (!ios->clock || ios->clock != host->clock) {
-+		turning_on_clk = ios->clock && !host->clock;
-+
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-@@ -2314,6 +2352,17 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 
- 	host->ops->set_bus_width(host, ios->bus_width);
- 
-+	/*
-+	 * Special case to avoid multiple clock changes during voltage
-+	 * switching.
-+	 */
-+	if (!reinit_uhs &&
-+	    turning_on_clk &&
-+	    host->timing == ios->timing &&
-+	    host->version >= SDHCI_SPEC_300 &&
-+	    !sdhci_presetable_values_change(host, ios))
-+		return;
-+
- 	ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
- 
- 	if (!(host->quirks & SDHCI_QUIRK_NO_HISPD_BIT)) {
-@@ -2357,6 +2406,7 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 			}
- 
- 			sdhci_writew(host, ctrl_2, SDHCI_HOST_CONTROL2);
-+			host->drv_type = ios->drv_type;
- 		} else {
- 			/*
- 			 * According to SDHC Spec v3.00, if the Preset Value
-@@ -2384,19 +2434,14 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		host->ops->set_uhs_signaling(host, ios->timing);
- 		host->timing = ios->timing;
- 
--		if (!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
--				((ios->timing == MMC_TIMING_UHS_SDR12) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR25) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR50) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR104) ||
--				 (ios->timing == MMC_TIMING_UHS_DDR50) ||
--				 (ios->timing == MMC_TIMING_MMC_DDR52))) {
-+		if (sdhci_preset_needed(host, ios->timing)) {
- 			u16 preset;
- 
- 			sdhci_enable_preset_value(host, true);
- 			preset = sdhci_get_preset_value(host);
- 			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
- 						  preset);
-+			host->drv_type = ios->drv_type;
- 		}
- 
- 		/* Re-enable SD Clock */
-@@ -3707,6 +3752,7 @@ int sdhci_resume_host(struct sdhci_host
- 		sdhci_init(host, 0);
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (host->mmc->pm_flags & MMC_PM_KEEP_POWER));
-@@ -3769,6 +3815,7 @@ int sdhci_runtime_resume_host(struct sdh
- 		/* Force clock and power re-program */
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -520,6 +520,8 @@ struct sdhci_host {
- 
- 	unsigned int clock;	/* Current clock (MHz) */
- 	u8 pwr;			/* Current voltage */
-+	u8 drv_type;		/* Current UHS-I driver type */
-+	bool reinit_uhs;	/* Force UHS-related re-initialization */
- 
- 	bool runtime_suspended;	/* Host is runtime suspended */
- 	bool bus_on;		/* Bus power prevents runtime suspend */
+ config DRM_AMD_DC_DCN
+ 	def_bool n
+ 	help
 
 
