@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4815C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76A3C433C1;
-	Mon,  5 Dec 2022 19:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E51815C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A828C433C1;
+	Mon,  5 Dec 2022 19:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269199;
-	bh=hxTjkYnk9p962QRlugseK4F40rhS7ZJoMj2Di6pg2CQ=;
+	s=korg; t=1670269201;
+	bh=4RdZk0Hp+hv423qFCqowbEDXoDRduCPob01/jzZO3kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReWiibgI8Jp6xZxsZbPhjS2X1tI/vmdDU/6BcNwfEMdwdDz4L2wOXedRMqQ+0jltx
-	 Sn6oHczKE7K/UGoX4cBhIikO2g4vdg1Ii+ffA40rXwlBp32KDEVC82ENEDnqq/O74f
-	 EUwC1JJoyqRsyZB7H/4kXar9uJ9PuCmb01LoWfyw=
+	b=fFQ7nDJTXDGI0KTRFkGbqZX2Z41/nEy4RL+2/6NUC429EAqAtXyV2gxbVmtnkEXJp
+	 SYcWoqzrn+oKazEZTsa2P6evY8j5nJhr75tq0ixTuh4TJJoos5zhwarZIW/NBJBEE/
+	 PZ0ZSJoc/ywxCF2Hutm+g0pas+7o/G7WPqoLuZOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 022/153] 9p/fd: fix issue of list_del corruption in p9_fd_cancel()
-Date: Mon,  5 Dec 2022 20:09:06 +0100
-Message-Id: <20221205190809.376170061@linuxfoundation.org>
+Subject: [PATCH 5.4 040/153] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
+Date: Mon,  5 Dec 2022 20:09:24 +0100
+Message-Id: <20221205190809.872586789@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,73 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit 11c10956515b8ec44cf4f2a7b9d8bf8b9dc05ec4 ]
+[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
 
-Syz reported the following issue:
-kernel BUG at lib/list_debug.c:53!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-RIP: 0010:__list_del_entry_valid.cold+0x5c/0x72
-Call Trace:
-<TASK>
-p9_fd_cancel+0xb1/0x270
-p9_client_rpc+0x8ea/0xba0
-p9_client_create+0x9c0/0xed0
-v9fs_session_init+0x1e0/0x1620
-v9fs_mount+0xba/0xb80
-legacy_get_tree+0x103/0x200
-vfs_get_tree+0x89/0x2d0
-path_mount+0x4c0/0x1ac0
-__x64_sys_mount+0x33b/0x430
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-</TASK>
+The first validation check for EVT_TRANSACTION has two different checks
+tied together with logical AND. One is a check for minimum packet length,
+and the other is for a valid aid_tag. If either condition is true (fails),
+then an error should be triggered. The fix is to change && to ||.
 
-The process is as follows:
-Thread A:                       Thread B:
-p9_poll_workfn()                p9_client_create()
-...                                 ...
-    p9_conn_cancel()                p9_fd_cancel()
-        list_del()                      ...
-        ...                             list_del()  //list_del
-                                                      corruption
-There is no lock protection when deleting list in p9_conn_cancel(). After
-deleting list in Thread A, thread B will delete the same list again. It
-will cause issue of list_del corruption.
-
-Setting req->status to REQ_STATUS_ERROR under lock prevents other
-cleanup paths from trying to manipulate req_list.
-The other thread can safely check req->status because it still holds a
-reference to req at this point.
-
-Link: https://lkml.kernel.org/r/20221110122606.383352-1-shaozhengchao@huawei.com
-Fixes: 52f1c45dde91 ("9p: trans_fd/p9_conn_cancel: drop client lock earlier")
-Reported-by: syzbot+9b69b8d10ab4a7d88056@syzkaller.appspotmail.com
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-[Dominique: add description of the fix in commit message]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nfc/st-nci/se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index b691871d9a02..5d6284adbac0 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -200,9 +200,11 @@ static void p9_conn_cancel(struct p9_conn *m, int err)
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index f25f1ec5f9e9..75f9a754b7eb 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -327,7 +327,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+ 		 * AID          81      5 to 16
+ 		 * PARAMETERS   82      0 to 255
+ 		 */
+-		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
++		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
+ 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
+ 			return -EPROTO;
  
- 	list_for_each_entry_safe(req, rtmp, &m->req_list, req_list) {
- 		list_move(&req->req_list, &cancel_list);
-+		req->status = REQ_STATUS_ERROR;
- 	}
- 	list_for_each_entry_safe(req, rtmp, &m->unsent_req_list, req_list) {
- 		list_move(&req->req_list, &cancel_list);
-+		req->status = REQ_STATUS_ERROR;
- 	}
- 
- 	spin_unlock(&m->client->lock);
 -- 
 2.35.1
 
