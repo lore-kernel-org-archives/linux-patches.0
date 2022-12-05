@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFDF15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C252FC433D7;
-	Mon,  5 Dec 2022 19:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F215815C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73114C433D6;
+	Mon,  5 Dec 2022 19:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268838;
-	bh=SwWNltb6kmGF7VfiN+QYinvTyyxJexJad0yCYOiAJrA=;
+	s=korg; t=1670268840;
+	bh=d6J9L0KYWOJMB99XrD+G6xqyaC+KHdgDiN2dQaf86oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODRE520IWfq2k0jwI9bfrhdZCPoYYV8V0/Bx9TyKrwuQbouh3iTzkm9aTW99M5j5X
-	 LtlIYqrSYnjuBSQkBG73AfGf/pPNG0ywn241K4Wn2xMQ4CF8KmuhBYI5GctfamR1cC
-	 3BFYBOEWXXskg7qYGvq0R/keqX0vIcaZOt6FqJYw=
+	b=FL+WQNKWRA21ZWua5bWITX0D8ZgQ0zBQkZ0Gu2tHrIkzr9bd6zrsDYz+0GGhFmENh
+	 wlJd1R+CIZBjJBK0azehtbZ+A35ZDvdrKS7FI83f6IxU4gC4VrX8yJTBZJeX4AU5Vu
+	 icJPraAvcfvKdzoR1sxPAp7cRkH1GGEVHcS2w/HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Zeal Robot <zealci@zte.com.cn>,
+	Minghao Chi <chi.minghao@zte.com.cn>,
+	CGEL ZTE <cgel.zte@gmail.com>,
+	Konrad Jankowski <konrad0.jankowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/120] fm10k: Fix error handling in fm10k_init_module()
-Date: Mon,  5 Dec 2022 20:09:30 +0100
-Message-Id: <20221205190807.464652332@linuxfoundation.org>
+Subject: [PATCH 5.15 031/120] iavf: remove redundant ret variable
+Date: Mon,  5 Dec 2022 20:09:31 +0100
+Message-Id: <20221205190807.495015753@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,74 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Minghao Chi <chi.minghao@zte.com.cn>
 
-[ Upstream commit 771a794c0a3c3e7f0d86cc34be4f9537e8c0a20c ]
+[ Upstream commit c3fec56e12678c3ad68084048a73818a7968d6b8 ]
 
-A problem about modprobe fm10k failed is triggered with the following log
-given:
+Return value directly instead of taking this in another redundant
+variable.
 
- Intel(R) Ethernet Switch Host Interface Driver
- Copyright(c) 2013 - 2019 Intel Corporation.
- debugfs: Directory 'fm10k' with parent '/' already present!
-
-The reason is that fm10k_init_module() returns fm10k_register_pci_driver()
-directly without checking its return value, if fm10k_register_pci_driver()
-failed, it returns without removing debugfs and destroy workqueue,
-resulting the debugfs of fm10k can never be created later and leaks the
-workqueue.
-
- fm10k_init_module()
-   alloc_workqueue()
-   fm10k_dbg_init() # create debugfs
-   fm10k_register_pci_driver()
-     pci_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without remove debugfs and destroy workqueue
-
-Fix by remove debugfs and destroy workqueue when
-fm10k_register_pci_driver() returns error.
-
-Fixes: 7461fd913afe ("fm10k: Add support for debugfs")
-Fixes: b382bb1b3e2d ("fm10k: use separate workqueue for fm10k driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
+Signed-off-by: CGEL ZTE <cgel.zte@gmail.com>
+Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 227d8d2f7f22 ("iavf: Fix error handling in iavf_init_module()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k_main.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_main.c b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-index 3362f26d7f99..1b273446621c 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-@@ -32,6 +32,8 @@ struct workqueue_struct *fm10k_workqueue;
-  **/
- static int __init fm10k_init_module(void)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 4b2e99be7ef5..f2f8f2a43a34 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1448,7 +1448,6 @@ static void iavf_fill_rss_lut(struct iavf_adapter *adapter)
+ static int iavf_init_rss(struct iavf_adapter *adapter)
  {
-+	int ret;
-+
- 	pr_info("%s\n", fm10k_driver_string);
- 	pr_info("%s\n", fm10k_copyright);
+ 	struct iavf_hw *hw = &adapter->hw;
+-	int ret;
  
-@@ -43,7 +45,13 @@ static int __init fm10k_init_module(void)
+ 	if (!RSS_PF(adapter)) {
+ 		/* Enable PCTYPES for RSS, TCP/UDP with IPv4/IPv6 */
+@@ -1464,9 +1463,8 @@ static int iavf_init_rss(struct iavf_adapter *adapter)
  
- 	fm10k_dbg_init();
+ 	iavf_fill_rss_lut(adapter);
+ 	netdev_rss_key_fill((void *)adapter->rss_key, adapter->rss_key_size);
+-	ret = iavf_config_rss(adapter);
  
--	return fm10k_register_pci_driver();
-+	ret = fm10k_register_pci_driver();
-+	if (ret) {
-+		fm10k_dbg_exit();
-+		destroy_workqueue(fm10k_workqueue);
-+	}
-+
-+	return ret;
+-	return ret;
++	return iavf_config_rss(adapter);
  }
- module_init(fm10k_init_module);
  
+ /**
+@@ -4343,8 +4341,6 @@ static struct pci_driver iavf_driver = {
+  **/
+ static int __init iavf_init_module(void)
+ {
+-	int ret;
+-
+ 	pr_info("iavf: %s\n", iavf_driver_string);
+ 
+ 	pr_info("%s\n", iavf_copyright);
+@@ -4355,8 +4351,7 @@ static int __init iavf_init_module(void)
+ 		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
+ 		return -ENOMEM;
+ 	}
+-	ret = pci_register_driver(&iavf_driver);
+-	return ret;
++	return pci_register_driver(&iavf_driver);
+ }
+ 
+ module_init(iavf_init_module);
 -- 
 2.35.1
 
