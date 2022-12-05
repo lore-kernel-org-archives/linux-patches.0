@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5371115C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBBCC433D6;
-	Mon,  5 Dec 2022 19:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CBB15C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB3EC433D6;
+	Mon,  5 Dec 2022 19:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269486;
-	bh=97zCjMVNzmdlmIskIidDpK7Lzxmc3JquiqnkwFgwY1g=;
+	s=korg; t=1670269488;
+	bh=eAoZsK6o2Bju5VPk+vZi3Pt0Dbmb6vr4pL0fqPCuKrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNxangmcYYr3Rvbxtpsm4wfHg/cDbGAtsN7BZCQWzbF/rSjt1YEhQsNNNFcM994uy
-	 d4QHRINtMdFiF5TCP0OejER2atAqxcYD3HomncEMsXeJupN74rfz/s0QveYt2YDEvg
-	 xHdLEY22CO2qSCuPO6g5tEWaW8gxG4YNzNZfKPpA=
+	b=D2f+5nx1Rh2IfCxM2pS1rIyQ3Nm+JwTST3Bzt5H/88xTuUuEdk58ppSXjA7t3E9CZ
+	 YX1wpADWrx+44NKnbqqdLTECaITsoguahb0jg1ihMpdzSUUuVn9EXESaa5wzCdFsfq
+	 jGywaCAGbDWw/KxKdf808JZIkx6KwdQSPaV40eJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 117/153] error-injection: Add prompt for function error injection
-Date: Mon,  5 Dec 2022 20:10:41 +0100
-Message-Id: <20221205190812.073047229@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 118/153] tools/vm/slabinfo-gnuplot: use "grep -E" instead of "egrep"
+Date: Mon,  5 Dec 2022 20:10:42 +0100
+Message-Id: <20221205190812.097610988@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -34,49 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit a4412fdd49dc011bcc2c0d81ac4cab7457092650 upstream.
+commit a435874bf626f55d7147026b059008c8de89fbb8 upstream.
 
-The config to be able to inject error codes into any function annotated
-with ALLOW_ERROR_INJECTION() is enabled when FUNCTION_ERROR_INJECTION is
-enabled.  But unfortunately, this is always enabled on x86 when KPROBES
-is enabled, and there's no way to turn it off.
+The latest version of grep claims the egrep is now obsolete so the build
+now contains warnings that look like:
 
-As kprobes is useful for observability of the kernel, it is useful to
-have it enabled in production environments.  But error injection should
-be avoided.  Add a prompt to the config to allow it to be disabled even
-when kprobes is enabled, and get rid of the "def_bool y".
+	egrep: warning: egrep is obsolescent; using grep -E
 
-This is a kernel debug feature (it's in Kconfig.debug), and should have
-never been something enabled by default.
+fix this up by moving the related file to use "grep -E" instead.
 
-Cc: stable@vger.kernel.org
-Fixes: 540adea3809f6 ("error-injection: Separate error-injection from kprobe")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+  sed -i "s/egrep/grep -E/g" `grep egrep -rwl tools/vm`
+
+Here are the steps to install the latest grep:
+
+  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
+  tar xf grep-3.8.tar.gz
+  cd grep-3.8 && ./configure && make
+  sudo make install
+  export PATH=/usr/local/bin:$PATH
+
+Link: https://lkml.kernel.org/r/1668825419-30584-1-git-send-email-yangtiezhu@loongson.cn
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/Kconfig.debug |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/vm/slabinfo-gnuplot.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -1525,8 +1525,14 @@ config NETDEV_NOTIFIER_ERROR_INJECT
- 	  If unsure, say N.
- 
- config FUNCTION_ERROR_INJECTION
--	def_bool y
-+	bool "Fault-injections of functions"
- 	depends on HAVE_FUNCTION_ERROR_INJECTION && KPROBES
-+	help
-+	  Add fault injections into various functions that are annotated with
-+	  ALLOW_ERROR_INJECTION() in the kernel. BPF may also modify the return
-+	  value of theses functions. This is useful to test error paths of code.
-+
-+	  If unsure, say N
- 
- config FAULT_INJECTION
- 	bool "Fault-injection framework"
+--- a/tools/vm/slabinfo-gnuplot.sh
++++ b/tools/vm/slabinfo-gnuplot.sh
+@@ -150,7 +150,7 @@ do_preprocess()
+ 	let lines=3
+ 	out=`basename "$in"`"-slabs-by-loss"
+ 	`cat "$in" | grep -A "$lines" 'Slabs sorted by loss' |\
+-		egrep -iv '\-\-|Name|Slabs'\
++		grep -E -iv '\-\-|Name|Slabs'\
+ 		| awk '{print $1" "$4+$2*$3" "$4}' > "$out"`
+ 	if [ $? -eq 0 ]; then
+ 		do_slabs_plotting "$out"
+@@ -159,7 +159,7 @@ do_preprocess()
+ 	let lines=3
+ 	out=`basename "$in"`"-slabs-by-size"
+ 	`cat "$in" | grep -A "$lines" 'Slabs sorted by size' |\
+-		egrep -iv '\-\-|Name|Slabs'\
++		grep -E -iv '\-\-|Name|Slabs'\
+ 		| awk '{print $1" "$4" "$4-$2*$3}' > "$out"`
+ 	if [ $? -eq 0 ]; then
+ 		do_slabs_plotting "$out"
 
 
