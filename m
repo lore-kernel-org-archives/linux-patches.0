@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7BC15C91
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40BBC433C1;
-	Mon,  5 Dec 2022 19:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74EF15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66730C433D7;
+	Mon,  5 Dec 2022 19:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269191;
-	bh=WtjVht1LCaMZXuTJpBuOfwzhLSdg72qo4DUoF+asnZU=;
+	s=korg; t=1670269193;
+	bh=nZa/HDA9ubZrjSqkNuCVIawzzFHXP7yEZaunCeUHQmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNQ9lOBlBJijuEswad1UzUcvwWDjCZo7qFs3qKGsg0da5XEIgtnmFfPkjra0KiYpZ
-	 ZyEeI34Bz/OyrBf5Ef/qGekKLmcSRybEaRLW6oOoIJRUQAg1ia6GYBlb0ltX3393fI
-	 SwZu/yo1ls55Y7h5GVmKMc6sXRpYmM3qILVGj8pY=
+	b=JKicW9CjVI+spNjTu5bQ4mZKN3lqBgIxb+7+69bTrpW6tzvkm1VRejuC36aej+wPz
+	 nZ0pUBMIPYobdJMNmK/WXvPnKP+20e5L/ZQPZ5ZO0IB3ja9ZhlaKBUBHtTNqU8dIFD
+	 b6AYeIqWFgyL3m+xJHm9uJNhEt/GNK5NvH1t3Qbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/153] bnx2x: fix pci device refcount leak in bnx2x_vf_is_pcie_pending()
-Date: Mon,  5 Dec 2022 20:09:21 +0100
-Message-Id: <20221205190809.792315834@linuxfoundation.org>
+Subject: [PATCH 5.4 038/153] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
+Date: Mon,  5 Dec 2022 20:09:22 +0100
+Message-Id: <20221205190809.819217181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,56 +37,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 3637a29ccbb6461b7268c5c5db525935d510afc6 ]
+[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). Call pci_dev_put() before returning from
-bnx2x_vf_is_pcie_pending() to avoid refcount leak.
+When connect() is called on a socket bound to the wildcard address,
+we change the socket's saddr to a local address.  If the socket
+fails to connect() to the destination, we have to reset the saddr.
 
-Fixes: b56e9670ffa4 ("bnx2x: Prepare device and initialize VF database")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221119070202.1407648-1-yangyingliang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, when an error occurs after inet_hash6?_connect() in
+(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
+the socket bound to the address.
+
+>From the user's point of view, whether saddr is reset or not varies
+with errno.  Let's fix this inconsistent behaviour.
+
+Note that after this patch, the repro [0] will trigger the WARN_ON()
+in inet_csk_get_port() again, but this patch is not buggy and rather
+fixes a bug papering over the bhash2's bug for which we need another
+fix.
+
+For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
+by this sequence:
+
+  s1 = socket()
+  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s1.bind(('127.0.0.1', 10000))
+  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
+  # or s1.connect(('127.0.0.1', 10000))
+
+  s2 = socket()
+  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s2.bind(('0.0.0.0', 10000))
+  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
+
+  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
+
+[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
+
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/dccp/ipv4.c     | 2 ++
+ net/dccp/ipv6.c     | 2 ++
+ net/ipv4/tcp_ipv4.c | 2 ++
+ net/ipv6/tcp_ipv6.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-index 4630998d47fd..d920bb8dae77 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c
-@@ -807,16 +807,20 @@ static void bnx2x_vf_enable_traffic(struct bnx2x *bp, struct bnx2x_virtf *vf)
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 7cf903f9e29a..cd59a669b8a7 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -130,6 +130,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * This unhashes the socket and releases the local port, if necessary.
+ 	 */
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 7c24927e9c2c..1bf267d36a9c 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -957,6 +957,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
- static u8 bnx2x_vf_is_pcie_pending(struct bnx2x *bp, u8 abs_vfid)
- {
--	struct pci_dev *dev;
- 	struct bnx2x_virtf *vf = bnx2x_vf_by_abs_fid(bp, abs_vfid);
-+	struct pci_dev *dev;
-+	bool pending;
+ late_failure:
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	__sk_dst_reset(sk);
+ failure:
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index eb9c05acf77e..a54505c29a5c 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -323,6 +323,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * if necessary.
+ 	 */
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 831f779aba7b..e84b79357b2f 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -334,6 +334,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
- 	if (!vf)
- 		return false;
- 
- 	dev = pci_get_domain_bus_and_slot(vf->domain, vf->bus, vf->devfn);
--	if (dev)
--		return bnx2x_is_pcie_pending(dev);
--	return false;
-+	if (!dev)
-+		return false;
-+	pending = bnx2x_is_pcie_pending(dev);
-+	pci_dev_put(dev);
-+
-+	return pending;
- }
- 
- int bnx2x_vf_flr_clnup_epilog(struct bnx2x *bp, u8 abs_vfid)
+ late_failure:
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ failure:
+ 	inet->inet_dport = 0;
+ 	sk->sk_route_caps = 0;
 -- 
 2.35.1
 
