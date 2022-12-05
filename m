@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B3115C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBA4C433C1;
-	Mon,  5 Dec 2022 19:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD5615C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0B4C433C1;
+	Mon,  5 Dec 2022 19:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269439;
-	bh=NGHpLucI3LhIGxGrhJC3yvdfOHhhxLgBHKQFkKkKpXQ=;
+	s=korg; t=1670269441;
+	bh=W6zTtECllZh/sYXkgkxHGkDu710QDASBhdWH1js7TC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjSHKk9K1kyAsMBfWG6LX6JuxlhS6peWGoibIzC0R60j6m+8pTi+omzkSED6ZVyk2
-	 MENnlmWcEeJpbieUg9mv5EhmOCN8p/sOv0Zi2GbBFFW7qyyaN1vyrYd/LLjNkGJh7h
-	 PZS+gr+XZZ8tPTFbHn6uv8p8bgcJAjP2Wssx17OM=
+	b=frGaFtTsaHG2xqgU9UdTSvC4u7YYoblHxJYZ+xOXEh5d4BT3++Z8okMP9Gj5e9qSO
+	 YDA2a3ZN/hBJoZLZgn3eTb/k0iZ3houuowg4ZqBDhwjbXwqJVo+xyl8VdojRcuV1em
+	 sRv460TOfSEZorA0Ko5X8daJxKTm2GlxFKH9MXhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>
-Subject: [PATCH 5.4 128/153] arm64: errata: Fix KVM Spectre-v2 mitigation selection  for Cortex-A57/A72
-Date: Mon,  5 Dec 2022 20:10:52 +0100
-Message-Id: <20221205190812.365328608@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Hugh Dickins <hughd@google.com>
+Subject: [PATCH 5.4 129/153] mm: Fix .data.once orphan section warning
+Date: Mon,  5 Dec 2022 20:10:53 +0100
+Message-Id: <20221205190812.388964827@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -33,47 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Morse <james.morse@arm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-Both the Spectre-v2 and Spectre-BHB mitigations involve running a sequence
-immediately after exiting a guest, before any branches. In the stable
-kernels these sequences are built by copying templates into an empty vector
-slot.
+Portions of upstream commit a4055888629b ("mm/memcg: warning on !memcg
+after readahead page charged") were backported as commit cfe575954ddd
+("mm: add VM_WARN_ON_ONCE_PAGE() macro"). Unfortunately, the backport
+did not account for the lack of commit 33def8498fdd ("treewide: Convert
+macro and uses of __section(foo) to __section("foo")") in kernels prior
+to 5.10, resulting in the following orphan section warnings on PowerPC
+clang builds with CONFIG_DEBUG_VM=y:
 
-For Spectre-BHB, Cortex-A57 and A72 require the branchy loop with k=8.
-If Spectre-v2 needs mitigating at the same time, a firmware call to EL3 is
-needed. The work EL3 does at this point is also enough to mitigate
-Spectre-BHB.
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
+  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
 
-When enabling the Spectre-BHB mitigation, spectre_bhb_enable_mitigation()
-should check if a slot has already been allocated for Spectre-v2, meaning
-no work is needed for Spectre-BHB.
+This is a difference between how clang and gcc handle macro
+stringification, which was resolved for the kernel by not stringifying
+the argument to the __section() macro. Since that change was deemed not
+suitable for the stable kernels by commit 59f89518f510 ("once: fix
+section mismatch on clang builds"), do that same thing as that change
+and remove the quotes from the argument to __section().
 
-This check was missed in the earlier backport, add it.
-
-Fixes: 9013fd4bc958 ("arm64: Mitigate spectre style branch history side channels")
-Signed-off-by: James Morse <james.morse@arm.com>
+Fixes: cfe575954ddd ("mm: add VM_WARN_ON_ONCE_PAGE() macro")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/cpu_errata.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/linux/mmdebug.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -1363,7 +1363,13 @@ void spectre_bhb_enable_mitigation(const
- 	} else if (spectre_bhb_loop_affected(SCOPE_LOCAL_CPU)) {
- 		switch (spectre_bhb_loop_affected(SCOPE_SYSTEM)) {
- 		case 8:
--			kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
-+			/*
-+			 * A57/A72-r0 will already have selected the
-+			 * spectre-indirect vector, which is sufficient
-+			 * for BHB too.
-+			 */
-+			if (!__this_cpu_read(bp_hardening_data.fn))
-+				kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
- 			break;
- 		case 24:
- 			kvm_setup_bhb_slot(__spectre_bhb_loop_k24_start);
+--- a/include/linux/mmdebug.h
++++ b/include/linux/mmdebug.h
+@@ -38,7 +38,7 @@ void dump_mm(const struct mm_struct *mm)
+ 		}							\
+ 	} while (0)
+ #define VM_WARN_ON_ONCE_PAGE(cond, page)	({			\
+-	static bool __section(".data.once") __warned;			\
++	static bool __section(.data.once) __warned;			\
+ 	int __ret_warn_once = !!(cond);					\
+ 									\
+ 	if (unlikely(__ret_warn_once && !__warned)) {			\
 
 
