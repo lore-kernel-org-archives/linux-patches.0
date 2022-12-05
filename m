@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9275815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:18:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1927CC433C1;
-	Mon,  5 Dec 2022 19:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4222A15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85C6C433C1;
+	Mon,  5 Dec 2022 19:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267883;
-	bh=0AWotSKh2jBL7wHgXlfttMCy9zVCTd4JAZaDlVw30xk=;
+	s=korg; t=1670267886;
+	bh=n6hc3GN4E1tvdhOT9Tnw+176VZ0vpY/6d6SsjsG7pH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWTqmSDmq8cZCAMxpBUd5RNWshlhIR2+KEuZ9idvWdmdi3eCSs6yjKuSX6j7+1CLm
-	 ojuL9PU+bUKBQnA/foMywIfli+0BGx00UYK3AkqXBwgUoc57OQx+T5sOn75cxxxODz
-	 hn33fYqxtKg4XjAXLoTtBcT6FBF1e0E/EDKE54Rs=
+	b=SK2GmE3QmNkbsXiicRJG/eBA3d9wYB2If01px0pS40gTSUhdWb7r0bFuQdFnIFD5v
+	 l5lR82ek9UVtYdvXPAoYLynM6SrJ6zlCGTGg8j+pf7YMbbqcv074P+gfeJbm99WK9U
+	 bxd7sun3K3qabuzp7zW0RhUQ7DVTzSwQ2xy/9iL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 001/105] wifi: mac80211_hwsim: fix debugfs attribute ps with rc table support
-Date: Mon,  5 Dec 2022 20:08:33 +0100
-Message-Id: <20221205190803.176568910@linuxfoundation.org>
+Subject: [PATCH 4.19 010/105] ASoC: sgtl5000: Reset the CHIP_CLK_CTRL reg on remove
+Date: Mon,  5 Dec 2022 20:08:42 +0100
+Message-Id: <20221205190803.466275943@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,55 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 69188df5f6e4cecc6b76b958979ba363cd5240e8 ]
+[ Upstream commit 0bb8e9b36b5b7f2e77892981ff6c27ee831d8026 ]
 
-Fixes a warning that occurs when rc table support is enabled
-(IEEE80211_HW_SUPPORTS_RC_TABLE) in mac80211_hwsim and the PS mode
-is changed via the exported debugfs attribute.
+Since commit bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove"),
+the device power control registers are reset when the driver is
+removed/shutdown.
 
-When the PS mode is changed, a packet is broadcasted via
-hwsim_send_nullfunc by creating and transmitting a plain skb with only
-header initialized. The ieee80211 rate array in the control buffer is
-zero-initialized. When ratetbl support is enabled, ieee80211_get_tx_rates
-is called for the skb with sta parameter set to NULL and thus no
-ratetbl can be used. The final rate array then looks like
-[-1,0; 0,0; 0,0; 0,0] which causes the warning in ieee80211_get_tx_rate.
+This is an issue when the device is configured to use the PLL clock. The
+device will stop responding if it is still configured to use the PLL
+clock but the PLL clock is powered down.
 
-The issue is fixed by setting the count of the first rate with idx '0'
-to 1 and hence ieee80211_get_tx_rates won't overwrite it with idx '-1'.
+When rebooting linux, the probe function will show:
+sgtl5000 0-000a: Error reading chip id -11
 
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Make sure that the CHIP_CLK_CTRL is reset to its default value before
+powering down the device.
+
+Fixes: bf2aebccddef ("ASoC: sgtl5000: Fix noise on shutdown/remove")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20221110190612.1341469-1-detlev.casanova@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mac80211_hwsim.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/codecs/sgtl5000.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index c52802adb5b2..22738ba7d65b 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -686,6 +686,7 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
- 	struct hwsim_vif_priv *vp = (void *)vif->drv_priv;
- 	struct sk_buff *skb;
- 	struct ieee80211_hdr *hdr;
-+	struct ieee80211_tx_info *cb;
+diff --git a/sound/soc/codecs/sgtl5000.c b/sound/soc/codecs/sgtl5000.c
+index 13e752f8b3f7..0708b5019910 100644
+--- a/sound/soc/codecs/sgtl5000.c
++++ b/sound/soc/codecs/sgtl5000.c
+@@ -1769,6 +1769,7 @@ static int sgtl5000_i2c_remove(struct i2c_client *client)
+ {
+ 	struct sgtl5000_priv *sgtl5000 = i2c_get_clientdata(client);
  
- 	if (!vp->assoc)
- 		return;
-@@ -707,6 +708,10 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
- 	memcpy(hdr->addr2, mac, ETH_ALEN);
- 	memcpy(hdr->addr3, vp->bssid, ETH_ALEN);
++	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_CLK_CTRL, SGTL5000_CHIP_CLK_CTRL_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_DIG_POWER, SGTL5000_DIG_POWER_DEFAULT);
+ 	regmap_write(sgtl5000->regmap, SGTL5000_CHIP_ANA_POWER, SGTL5000_ANA_POWER_DEFAULT);
  
-+	cb = IEEE80211_SKB_CB(skb);
-+	cb->control.rates[0].count = 1;
-+	cb->control.rates[1].idx = -1;
-+
- 	rcu_read_lock();
- 	mac80211_hwsim_tx_frame(data->hw, skb,
- 				rcu_dereference(vif->chanctx_conf)->def.chan);
 -- 
 2.35.1
 
