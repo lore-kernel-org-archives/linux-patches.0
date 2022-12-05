@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25AF15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741E8C433D6;
-	Mon,  5 Dec 2022 19:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFBD15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C693C433C1;
+	Mon,  5 Dec 2022 19:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268526;
-	bh=mFULumBgTen07k9DKx2T9jsGHOdizah80fXtX7N7jYE=;
+	s=korg; t=1670268529;
+	bh=+y5nYlXgfT0HVHkH6Yj3VS48ANj8YiM06sfjBHQuKak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBRG6h+0Qtq5Klj4Qqcm2HlAaLzOS6XZ2bRlk4xSGoU0uR2AVhc8LD/7r1QtA6Euk
-	 Lpy/A0nGwO2VQmyF/RSrZeW8yz5n54rPjCXIfjhEJRGzRWCpF94vCf+paU1NwHWS7V
-	 ThUpPB0UYC4TCUsZao1Y+3/mZYls1SRk5oLla2iE=
+	b=MkgAKdv4p0tJl7ssb0sVjAXS7u9CA26b5Gr/fcX2xnD+S5CRCkXI7Vy/PUghdZIZP
+	 AbxUnNuHRjVtINVTin1M/5my7297SzAp413wz5MGdFIuiZ+Jh1HkxLp6loa+/4hcbK
+	 qGYqwIs5600X9fY50L6FGCbKX2tWDnfOyh4ojDFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	David Jander <david@protonic.nl>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/92] btrfs: free btrfs_path before copying inodes to userspace
-Date: Mon,  5 Dec 2022 20:09:15 +0100
-Message-Id: <20221205190803.547708759@linuxfoundation.org>
+Subject: [PATCH 5.10 03/92] spi: spi-imx: Fix spi_bus_clk if requested clock is higher than input clock
+Date: Mon,  5 Dec 2022 20:09:16 +0100
+Message-Id: <20221205190803.583170218@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,66 +39,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 418ffb9e3cf6c4e2574d3a732b724916684bd133 ]
+[ Upstream commit db2d2dc9a0b58c6faefb6b002fdbed4f0362d1a4 ]
 
-btrfs_ioctl_logical_to_ino() frees the search path after the userspace
-copy from the temp buffer @inodes. Which potentially can lead to a lock
-splat.
+In case the requested bus clock is higher than the input clock, the correct
+dividers (pre = 0, post = 0) are returned from mx51_ecspi_clkdiv(), but
+*fres is left uninitialized and therefore contains an arbitrary value.
 
-Fix this by freeing the path before we copy @inodes to userspace.
+This causes trouble for the recently introduced PIO polling feature as the
+value in spi_imx->spi_bus_clk is used there to calculate for which
+transfers to enable PIO polling.
 
-CC: stable@vger.kernel.org # 4.19+
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this by setting *fres even if no clock dividers are in use.
+
+This issue was observed on Kontron BL i.MX8MM with an SPI peripheral clock set
+to 50 MHz by default and a requested SPI bus clock of 80 MHz for the SPI NOR
+flash.
+
+With the fix applied the debug message from mx51_ecspi_clkdiv() now prints the
+following:
+
+spi_imx 30820000.spi: mx51_ecspi_clkdiv: fin: 50000000, fspi: 50000000,
+post: 0, pre: 0
+
+Fixes: 6fd8b8503a0d ("spi: spi-imx: Fix out-of-order CS/SCLK operation at low speeds")
+Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: David Jander <david@protonic.nl>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Marek Vasut <marex@denx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Fabio Estevam <festevam@gmail.com>
+Acked-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20221115181002.2068270-1-frieder@fris.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/spi/spi-imx.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 58fe58b929d2..a17076a05c4d 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3933,21 +3933,20 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
- 		size = min_t(u32, loi->size, SZ_16M);
- 	}
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 0e3bc0b0a526..74b3b6ca15ef 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -434,8 +434,7 @@ static unsigned int mx51_ecspi_clkdiv(struct spi_imx_data *spi_imx,
+ 	unsigned int pre, post;
+ 	unsigned int fin = spi_imx->spi_clk;
  
--	path = btrfs_alloc_path();
--	if (!path) {
--		ret = -ENOMEM;
--		goto out;
--	}
--
- 	inodes = init_data_container(size);
- 	if (IS_ERR(inodes)) {
- 		ret = PTR_ERR(inodes);
--		inodes = NULL;
--		goto out;
-+		goto out_loi;
- 	}
+-	if (unlikely(fspi > fin))
+-		return 0;
++	fspi = min(fspi, fin);
  
-+	path = btrfs_alloc_path();
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
- 	ret = iterate_inodes_from_logical(loi->logical, fs_info, path,
- 					  inodes, ignore_offset);
-+	btrfs_free_path(path);
- 	if (ret == -EINVAL)
- 		ret = -ENOENT;
- 	if (ret < 0)
-@@ -3959,7 +3958,6 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
- 		ret = -EFAULT;
- 
- out:
--	btrfs_free_path(path);
- 	kvfree(inodes);
- out_loi:
- 	kfree(loi);
+ 	post = fls(fin) - fls(fspi);
+ 	if (fin > fspi << post)
 -- 
 2.35.1
 
