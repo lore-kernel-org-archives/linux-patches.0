@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E74315C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0E4C433D6;
-	Mon,  5 Dec 2022 19:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3C015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8364C433D7;
+	Mon,  5 Dec 2022 19:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268655;
-	bh=SdJQWARgQaB28Ti5xKgTmEcBs+Mz6G6T2u42RJZ1dsU=;
+	s=korg; t=1670268658;
+	bh=jes/b9baVpTtzoU4BvzHzrA7wgmkJdGgbrzBpkt2NAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/vWPO+S2f09LbLz2RlqM6VX1JbcmBx1gwAXJbA1uvO9jdItiefvL2o3PeBhfQ5kO
-	 T4FAOgs9L3rDPGYaJHTxeJJSdfXO8tvW/xAL/XL5J+wfaPBdo86kRnKg0paxswdI1c
-	 yV0HB6Zx40ppHQ4+lIZxBp4RoDdsMcR9/s6ntxxM=
+	b=yZaS1Af4S4qvp97uAPbnlqa0NZ3Nt7DP1pcVv779VXGfkUiaHBZOSuoKZ9ox4yV15
+	 cJnfPeLiUr+Nqxu8S4FUFjeGyiT+DalWj++MFitb0Eo6zZ/7poveVaSN34pnwuvLMt
+	 4IdFkwzXE1wO2klyDalIEvkVgKmGnnoF6i9tfahI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 39/92] net: phy: fix null-ptr-deref while probe() failed
-Date: Mon,  5 Dec 2022 20:09:52 +0100
-Message-Id: <20221205190804.757159978@linuxfoundation.org>
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 57/92] nilfs2: fix NULL pointer dereference in nilfs_palloc_commit_free_entry()
+Date: Mon,  5 Dec 2022 20:10:10 +0100
+Message-Id: <20221205190805.408137972@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,73 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 369eb2c9f1f72adbe91e0ea8efb130f0a2ba11a6 ]
+commit f0a0ccda18d6fd826d7c7e7ad48a6ed61c20f8b4 upstream.
 
-I got a null-ptr-deref report as following when doing fault injection test:
+Syzbot reported a null-ptr-deref bug:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000058
-Oops: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 1 PID: 253 Comm: 507-spi-dm9051 Tainted: G    B            N 6.1.0-rc3+
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:klist_put+0x2d/0xd0
-Call Trace:
- <TASK>
- klist_remove+0xf1/0x1c0
- device_release_driver_internal+0x23e/0x2d0
- bus_remove_device+0x1bd/0x240
- device_del+0x357/0x770
- phy_device_remove+0x11/0x30
- mdiobus_unregister+0xa5/0x140
- release_nodes+0x6a/0xa0
- devres_release_all+0xf8/0x150
- device_unbind_cleanup+0x19/0xd0
+ NILFS (loop0): segctord starting. Construction interval = 5 seconds, CP
+ frequency < 30 seconds
+ general protection fault, probably for non-canonical address
+ 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN
+ KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+ CPU: 1 PID: 3603 Comm: segctord Not tainted
+ 6.1.0-rc2-syzkaller-00105-gb229b6ca5abb #0
+ Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google
+ 10/11/2022
+ RIP: 0010:nilfs_palloc_commit_free_entry+0xe5/0x6b0
+ fs/nilfs2/alloc.c:608
+ Code: 00 00 00 00 fc ff df 80 3c 02 00 0f 85 cd 05 00 00 48 b8 00 00 00
+ 00 00 fc ff df 4c 8b 73 08 49 8d 7e 10 48 89 fa 48 c1 ea 03 <80> 3c 02
+ 00 0f 85 26 05 00 00 49 8b 46 10 be a6 00 00 00 48 c7 c7
+ RSP: 0018:ffffc90003dff830 EFLAGS: 00010212
+ RAX: dffffc0000000000 RBX: ffff88802594e218 RCX: 000000000000000d
+ RDX: 0000000000000002 RSI: 0000000000002000 RDI: 0000000000000010
+ RBP: ffff888071880222 R08: 0000000000000005 R09: 000000000000003f
+ R10: 000000000000000d R11: 0000000000000000 R12: ffff888071880158
+ R13: ffff88802594e220 R14: 0000000000000000 R15: 0000000000000004
+ FS:  0000000000000000(0000) GS:ffff8880b9b00000(0000)
+ knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fb1c08316a8 CR3: 0000000018560000 CR4: 0000000000350ee0
+ Call Trace:
+  <TASK>
+  nilfs_dat_commit_free fs/nilfs2/dat.c:114 [inline]
+  nilfs_dat_commit_end+0x464/0x5f0 fs/nilfs2/dat.c:193
+  nilfs_dat_commit_update+0x26/0x40 fs/nilfs2/dat.c:236
+  nilfs_btree_commit_update_v+0x87/0x4a0 fs/nilfs2/btree.c:1940
+  nilfs_btree_commit_propagate_v fs/nilfs2/btree.c:2016 [inline]
+  nilfs_btree_propagate_v fs/nilfs2/btree.c:2046 [inline]
+  nilfs_btree_propagate+0xa00/0xd60 fs/nilfs2/btree.c:2088
+  nilfs_bmap_propagate+0x73/0x170 fs/nilfs2/bmap.c:337
+  nilfs_collect_file_data+0x45/0xd0 fs/nilfs2/segment.c:568
+  nilfs_segctor_apply_buffers+0x14a/0x470 fs/nilfs2/segment.c:1018
+  nilfs_segctor_scan_file+0x3f4/0x6f0 fs/nilfs2/segment.c:1067
+  nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1197 [inline]
+  nilfs_segctor_collect fs/nilfs2/segment.c:1503 [inline]
+  nilfs_segctor_do_construct+0x12fc/0x6af0 fs/nilfs2/segment.c:2045
+  nilfs_segctor_construct+0x8e3/0xb30 fs/nilfs2/segment.c:2379
+  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2487 [inline]
+  nilfs_segctor_thread+0x3c3/0xf30 fs/nilfs2/segment.c:2570
+  kthread+0x2e4/0x3a0 kernel/kthread.c:376
+  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+  </TASK>
+ ...
 
-//probe path:
-phy_device_register()
-  device_add()
+If DAT metadata file is corrupted on disk, there is a case where
+req->pr_desc_bh is NULL and blocknr is 0 at nilfs_dat_commit_end() during
+a b-tree operation that cascadingly updates ancestor nodes of the b-tree,
+because nilfs_dat_commit_alloc() for a lower level block can initialize
+the blocknr on the same DAT entry between nilfs_dat_prepare_end() and
+nilfs_dat_commit_end().
 
-phy_connect
-  phy_attach_direct() //set device driver
-    probe() //it's failed, driver is not bound
-    device_bind_driver() // probe failed, it's not called
+If this happens, nilfs_dat_commit_end() calls nilfs_dat_commit_free()
+without valid buffer heads in req->pr_desc_bh and req->pr_bitmap_bh, and
+causes the NULL pointer dereference above in
+nilfs_palloc_commit_free_entry() function, which leads to a crash.
 
-//remove path:
-phy_device_remove()
-  device_del()
-    device_release_driver_internal()
-      __device_release_driver() //dev->drv is not NULL
-        klist_remove() <- knode_driver is not added yet, cause null-ptr-deref
+Fix this by adding a NULL check on req->pr_desc_bh and req->pr_bitmap_bh
+before nilfs_palloc_commit_free_entry() in nilfs_dat_commit_free().
 
-In phy_attach_direct(), after setting the 'dev->driver', probe() fails,
-device_bind_driver() is not called, so the knode_driver->n_klist is not
-set, then it causes null-ptr-deref in __device_release_driver() while
-deleting device. Fix this by setting dev->driver to NULL in the error
-path in phy_attach_direct().
+This also calls nilfs_error() in that case to notify that there is a fatal
+flaw in the filesystem metadata and prevent further operations.
 
-Fixes: e13934563db0 ("[PATCH] PHY Layer fixup")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/00000000000097c20205ebaea3d6@google.com
+Link: https://lkml.kernel.org/r/20221114040441.1649940-1-zhangpeng362@huawei.com
+Link: https://lkml.kernel.org/r/20221119120542.17204-1-konishi.ryusuke@gmail.com
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+ebe05ee8e98f755f61d0@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/dat.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index d2f6d8107595..3ef5aa6b72a7 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1423,6 +1423,7 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -111,6 +111,13 @@ static void nilfs_dat_commit_free(struct
+ 	kunmap_atomic(kaddr);
  
- error_module_put:
- 	module_put(d->driver->owner);
-+	d->driver = NULL;
- error_put_device:
- 	put_device(d);
- 	if (ndev_owner != bus->owner)
--- 
-2.35.1
-
+ 	nilfs_dat_commit_entry(dat, req);
++
++	if (unlikely(req->pr_desc_bh == NULL || req->pr_bitmap_bh == NULL)) {
++		nilfs_error(dat->i_sb,
++			    "state inconsistency probably due to duplicate use of vblocknr = %llu",
++			    (unsigned long long)req->pr_entry_nr);
++		return;
++	}
+ 	nilfs_palloc_commit_free_entry(dat, req);
+ }
+ 
 
 
