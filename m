@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E3F15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA63AC433D6;
-	Mon,  5 Dec 2022 19:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAFF15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CA2C433D6;
+	Mon,  5 Dec 2022 19:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267528;
-	bh=m3blkZfIlV19WWktm5S1BtsbwHtaZcWkg4RJbZUAObo=;
+	s=korg; t=1670267530;
+	bh=ptVPmjv2AlYDA9dpfOju/q2qRz35tyVyFz4kiRvp3VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIyyx9/n3JMWQrWBEcH3c91GvojLbPGlLY38Dxa+nF93eLGuSw99KD0FhHr+XNCXB
-	 5i4h9JvutmF23pP2QiaMeiTfDL5mLVbR4MzeoSd9pnvHbdA6EYwFy13klfcs4AB15d
-	 MNsEM9n6oggqRFgb8iyv22UZ2sgQvFwsU6xYpVMg=
+	b=otHqR4SeFu7ye5TcKaO5tY/o+0cHbVhnhxqPLkCcRHuhtRvbB2We/LVeg1GXoyIC7
+	 0apxfZp01dcV1cRLHr5O3wB4Wl1RWpXFIzG+iBv7AGg8q5IODnDDAeMMT1jOPDOCYC
+	 Hlfmyy2jb30Np1pYbHlZ42vHzrT854J1/3v6sFKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com,
-	Lin Ma <linma@zju.edu.cn>,
+	Wang Hai <wanghai38@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 08/62] nfc/nci: fix race with opening and closing
-Date: Mon,  5 Dec 2022 20:09:05 +0100
-Message-Id: <20221205190758.400564527@linuxfoundation.org>
+Subject: [PATCH 4.9 09/62] net: pch_gbe: fix potential memleak in pch_gbe_tx_queue()
+Date: Mon,  5 Dec 2022 20:09:06 +0100
+Message-Id: <20221205190758.436315706@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,40 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 0ad6bded175e829c2ca261529c9dce39a32a042d ]
+[ Upstream commit 2360f9b8c4e81d242d4cbf99d630a2fffa681fab ]
 
-Previously we leverage NCI_UNREG and the lock inside nci_close_device to
-prevent the race condition between opening a device and closing a
-device. However, it still has problem because a failed opening command
-will erase the NCI_UNREG flag and allow another opening command to
-bypass the status checking.
+In pch_gbe_xmit_frame(), NETDEV_TX_OK will be returned whether
+pch_gbe_tx_queue() sends data successfully or not, so pch_gbe_tx_queue()
+needs to free skb before returning. But pch_gbe_tx_queue() returns without
+freeing skb in case of dma_map_single() fails. Add dev_kfree_skb_any()
+to fix it.
 
-This fix corrects that by making sure the NCI_UNREG is held.
-
-Reported-by: syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com
-Fixes: 48b71a9e66c2 ("NFC: add NCI_UNREG flag to eliminate the race")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Fixes: 77555ee72282 ("net: Add Gigabit Ethernet driver of Topcliff PCH")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index df90872fcf90..e7701c36f36c 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -543,7 +543,7 @@ static int nci_open_device(struct nci_dev *ndev)
- 		skb_queue_purge(&ndev->tx_q);
- 
- 		ndev->ops->close(ndev);
--		ndev->flags = 0;
-+		ndev->flags &= BIT(NCI_UNREG);
+diff --git a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
+index cd59577a0c92..ca6c4e7254cd 100644
+--- a/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
++++ b/drivers/net/ethernet/oki-semi/pch_gbe/pch_gbe_main.c
+@@ -1221,6 +1221,7 @@ static void pch_gbe_tx_queue(struct pch_gbe_adapter *adapter,
+ 		buffer_info->dma = 0;
+ 		buffer_info->time_stamp = 0;
+ 		tx_ring->next_to_use = ring_num;
++		dev_kfree_skb_any(skb);
+ 		return;
  	}
- 
- done:
+ 	buffer_info->mapped = true;
 -- 
 2.35.1
 
