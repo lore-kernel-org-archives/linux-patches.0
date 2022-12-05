@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D537815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598FBC433C1;
-	Mon,  5 Dec 2022 19:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E2715C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492AAC433C1;
+	Mon,  5 Dec 2022 19:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268048;
-	bh=Y+4xl1S/Avm7ArvBM3OMahKepe8+qINUtjbIuBjOSZU=;
+	s=korg; t=1670268051;
+	bh=BmlZnEvcCZ0/8Flk7cVxiuigu/V1EeM835B1K3XeIlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyfBASsAVFXD+Gnn9EVpJg/MRgJbRNwzcu6WEaVmIL44jfKskLmfz1U2p1Q23n73z
-	 mxTTcwbe2r6k7cUnDagc1QbzILftwmpmWoIRsUCS3nR9CSzeXRxfvV3/YR67r3pgos
-	 GCoApfh9CxK8c+5ffbewmrU/yGmoP+jY2i/+JwiM=
+	b=hD4acXX4H+WsJNZQNvAaFn1J14dcUmk1mHhMGRsKNw9dMkn+bOEvgUiu4LjELJ+M3
+	 v2arJ5JffMjuwYlEZkXBkA+t72152iUSFK7nCNSqcDFr9wluRMrXoCF9xLQuL3Qoiu
+	 SGcB9nqoUjU/kAgQq8s29rySCaBHuvI4h22/456A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/105] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
-Date: Mon,  5 Dec 2022 20:09:01 +0100
-Message-Id: <20221205190804.130005429@linuxfoundation.org>
+Subject: [PATCH 4.19 061/105] iio: health: afe4403: Fix oob read in afe4403_read_raw
+Date: Mon,  5 Dec 2022 20:09:33 +0100
+Message-Id: <20221205190805.225499394@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -37,111 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
+[ Upstream commit 58143c1ed5882c138a3cd2251a336fc8755f23d9 ]
 
-When connect() is called on a socket bound to the wildcard address,
-we change the socket's saddr to a local address.  If the socket
-fails to connect() to the destination, we have to reset the saddr.
+KASAN report out-of-bounds read as follows:
 
-However, when an error occurs after inet_hash6?_connect() in
-(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
-the socket bound to the address.
+BUG: KASAN: global-out-of-bounds in afe4403_read_raw+0x42e/0x4c0
+Read of size 4 at addr ffffffffc02ac638 by task cat/279
 
->From the user's point of view, whether saddr is reset or not varies
-with errno.  Let's fix this inconsistent behaviour.
+Call Trace:
+ afe4403_read_raw
+ iio_read_channel_info
+ dev_attr_show
 
-Note that after this patch, the repro [0] will trigger the WARN_ON()
-in inet_csk_get_port() again, but this patch is not buggy and rather
-fixes a bug papering over the bhash2's bug for which we need another
-fix.
+The buggy address belongs to the variable:
+ afe4403_channel_leds+0x18/0xffffffffffffe9e0
 
-For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
-by this sequence:
+This issue can be reproduced by singe command:
 
-  s1 = socket()
-  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-  s1.bind(('127.0.0.1', 10000))
-  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
-  # or s1.connect(('127.0.0.1', 10000))
+ $ cat /sys/bus/spi/devices/spi0.0/iio\:device0/in_intensity6_raw
 
-  s2 = socket()
-  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-  s2.bind(('0.0.0.0', 10000))
-  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
+The array size of afe4403_channel_leds is less than channels, so access
+with chan->address cause OOB read in afe4403_read_raw. Fix it by moving
+access before use it.
 
-  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
-
-[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
-
-Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
-Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107151946.89260-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv4.c     | 2 ++
- net/dccp/ipv6.c     | 2 ++
- net/ipv4/tcp_ipv4.c | 2 ++
- net/ipv6/tcp_ipv6.c | 2 ++
- 4 files changed, 8 insertions(+)
+ drivers/iio/health/afe4403.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index 7e93087d1366..c021d5dde8f7 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -134,6 +134,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	 * This unhashes the socket and releases the local port, if necessary.
- 	 */
- 	dccp_set_state(sk, DCCP_CLOSED);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	ip_rt_put(rt);
- 	sk->sk_route_caps = 0;
- 	inet->inet_dport = 0;
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index ae4851fdbe9e..72803e1ea10a 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -957,6 +957,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
+diff --git a/drivers/iio/health/afe4403.c b/drivers/iio/health/afe4403.c
+index 63210a3b1b87..ae5682101181 100644
+--- a/drivers/iio/health/afe4403.c
++++ b/drivers/iio/health/afe4403.c
+@@ -253,14 +253,14 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4403_data *afe = iio_priv(indio_dev);
+-	unsigned int reg = afe4403_channel_values[chan->address];
+-	unsigned int field = afe4403_channel_leds[chan->address];
++	unsigned int reg, field;
+ 	int ret;
  
- late_failure:
- 	dccp_set_state(sk, DCCP_CLOSED);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	__sk_dst_reset(sk);
- failure:
- 	inet->inet_dport = 0;
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 6549e07ce19c..bd374eac9a75 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -328,6 +328,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	 * if necessary.
- 	 */
- 	tcp_set_state(sk, TCP_CLOSE);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- 	ip_rt_put(rt);
- 	sk->sk_route_caps = 0;
- 	inet->inet_dport = 0;
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 7a5a7a4265cf..babf69b2403b 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -327,6 +327,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 
- late_failure:
- 	tcp_set_state(sk, TCP_CLOSE);
-+	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
-+		inet_reset_saddr(sk);
- failure:
- 	inet->inet_dport = 0;
- 	sk->sk_route_caps = 0;
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			reg = afe4403_channel_values[chan->address];
+ 			ret = afe4403_read(afe, reg, val);
+ 			if (ret)
+ 				return ret;
+@@ -270,6 +270,7 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			field = afe4403_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[field], val);
+ 			if (ret)
+ 				return ret;
 -- 
 2.35.1
 
