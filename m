@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CBB15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5802FC433C1;
-	Mon,  5 Dec 2022 19:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D08315C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF0EC433D6;
+	Mon,  5 Dec 2022 19:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267845;
-	bh=h9ByPv8yTIR4od6BtGJV39eTZNV8GGXjRCT2UB4n4kw=;
+	s=korg; t=1670267848;
+	bh=A0mTjZgAIAuVDaSpeCslUl3AzQPNMVnJjEua1GXLDmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYjWyEcUzLPxIRegWtR7dWaBavTHf1A/maIPX9KjPL76ocAqqbMoCQA6E8XF3H4KT
-	 D/1o9H63ye9CxqSj+duetB46B8SaLB+SSgX+pIfs/wXdUMdUoQtnwAMu2HCD9fDYDD
-	 Gjedc2H6PBqY/JvikLsD8NYBwWOq+IS6wdXokG58=
+	b=DNkGg9NOOWqrXj1uE99qCtEVL1rtaRc3xK/V7E3fqtWrZEA64Y4R1WcUMY0ZOnH/g
+	 loVwA720mG6HGTscRqb0FnS4j2Go4VHkUv3XtULnSCmhtzz7gYoNuiOi6uwtkyN9wt
+	 xEcTSw4YqUZ4hRITO5eGjhHOmojIQYv/9HQJpJ4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 4.14 71/77] nvme: restrict management ioctls to admin
-Date: Mon,  5 Dec 2022 20:10:02 +0100
-Message-Id: <20221205190803.366445791@linuxfoundation.org>
+	YueHaibing <yuehaibing@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 45/77] net/mlx5: Fix uninitialized variable bug in outlen_write()
+Date: Mon,  5 Dec 2022 20:09:36 +0100
+Message-Id: <20221205190802.477347792@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,41 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: YueHaibing <yuehaibing@huawei.com>
 
-commit 23e085b2dead13b51fe86d27069895b740f749c0 upstream.
+[ Upstream commit 3f5769a074c13d8f08455e40586600419e02a880 ]
 
-The passthrough commands already have this restriction, but the other
-operations do not. Require the same capabilities for all users as all of
-these operations, which include resets and rescans, can be disruptive.
+If sscanf() return 0, outlen is uninitialized and used in kzalloc(),
+this is unexpected. We should return -EINVAL if the string is invalid.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2022,11 +2022,17 @@ static long nvme_dev_ioctl(struct file *
- 	case NVME_IOCTL_IO_CMD:
- 		return nvme_dev_user_cmd(ctrl, argp);
- 	case NVME_IOCTL_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		dev_warn(ctrl->device, "resetting controller\n");
- 		return nvme_reset_ctrl_sync(ctrl);
- 	case NVME_IOCTL_SUBSYS_RESET:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		return nvme_reset_subsystem(ctrl);
- 	case NVME_IOCTL_RESCAN:
-+		if (!capable(CAP_SYS_ADMIN))
-+			return -EACCES;
- 		nvme_queue_scan(ctrl);
- 		return 0;
- 	default:
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index 6ae9a1987371..ad8be0a81546 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1309,8 +1309,8 @@ static ssize_t outlen_write(struct file *filp, const char __user *buf,
+ 		return -EFAULT;
+ 
+ 	err = sscanf(outlen_str, "%d", &outlen);
+-	if (err < 0)
+-		return err;
++	if (err != 1)
++		return -EINVAL;
+ 
+ 	ptr = kzalloc(outlen, GFP_KERNEL);
+ 	if (!ptr)
+-- 
+2.35.1
+
 
 
