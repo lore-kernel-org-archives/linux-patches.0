@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D0A15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0CDC433D6;
-	Mon,  5 Dec 2022 19:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA77B15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9BEC433D6;
+	Mon,  5 Dec 2022 19:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269319;
-	bh=+XoFpkx1MttVDjMQ3bUvZHRD1ZI5mWwy8CBP29cZ8t4=;
+	s=korg; t=1670269321;
+	bh=g8uYIus9qKi5I35Ww61Bg1ywyVt/MUdQUomG3tZKDbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQMBZuPQLrmNZWErxieD0RgoVphBl42EFJAqLn4b4VLrakiN9TBrmyvh3yUoIwjKB
-	 G/FOknjRUQ7WGwEp5RxuQSEcwAVsx46qPJRX2+d8gx5Y2YNTb27ki3Ocl+bIKYHftb
-	 IhBpReW+omErtATtGmjVB7EEORvBRUwhIOQaiZGw=
+	b=2X0JAgE8Z65Bk+0NbG//2l+AMHGbHp2Bqnm7midi9RxmKJfJ8JzvnCDgmnFIo8cDa
+	 tGXgEG4g0C0iDzBbYRZCZBQpzIQpGXf/qbSNUW/mhi7OWy4kfcUoHSFReqGwklFgq+
+	 fDGxqhVO8HWaWbQyXPM8ovqDmvVuS7fhZSgE+UDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/153] firmware: coreboot: Register bus in module init
-Date: Mon,  5 Dec 2022 20:09:40 +0100
-Message-Id: <20221205190810.330227444@linuxfoundation.org>
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	syzbot+77e4f0...@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 057/153] nilfs2: fix nilfs_sufile_mark_dirty() not set segment usage as dirty
+Date: Mon,  5 Dec 2022 20:09:41 +0100
+Message-Id: <20221205190810.358719585@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,133 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 65946690ed8d972fdb91a74ee75ac0f0f0d68321 ]
+commit 512c5ca01a3610ab14ff6309db363de51f1c13a6 upstream.
 
-The coreboot_table driver registers a coreboot bus while probing a
-"coreboot_table" device representing the coreboot table memory region.
-Probing this device (i.e., registering the bus) is a dependency for the
-module_init() functions of any driver for this bus (e.g.,
-memconsole-coreboot.c / memconsole_driver_init()).
+When extending segments, nilfs_sufile_alloc() is called to get an
+unassigned segment, then mark it as dirty to avoid accidentally allocating
+the same segment in the future.
 
-With synchronous probe, this dependency works OK, as the link order in
-the Makefile ensures coreboot_table_driver_init() (and thus,
-coreboot_table_probe()) completes before a coreboot device driver tries
-to add itself to the bus.
+But for some special cases such as a corrupted image it can be unreliable.
+If such corruption of the dirty state of the segment occurs, nilfs2 may
+reallocate a segment that is in use and pick the same segment for writing
+twice at the same time.
 
-With asynchronous probe, however, coreboot_table_probe() may race with
-memconsole_driver_init(), and so we're liable to hit one of these two:
+This will cause the problem reported by syzkaller:
+https://syzkaller.appspot.com/bug?id=c7c4748e11ffcc367cef04f76e02e931833cbd24
 
-1. coreboot_driver_register() eventually hits "[...] the bus was not
-   initialized.", and the memconsole driver fails to register; or
-2. coreboot_driver_register() gets past #1, but still races with
-   bus_register() and hits some other undefined/crashing behavior (e.g.,
-   in driver_find() [1])
+This case started with segbuf1.segnum = 3, nextnum = 4 when constructed.
+It supposed segment 4 has already been allocated and marked as dirty.
 
-We can resolve this by registering the bus in our initcall, and only
-deferring "device" work (scanning the coreboot memory region and
-creating sub-devices) to probe().
+However the dirty state was corrupted and segment 4 usage was not dirty.
+For the first time nilfs_segctor_extend_segments() segment 4 was allocated
+again, which made segbuf2 and next segbuf3 had same segment 4.
 
-[1] Example failure, using 'driver_async_probe=*' kernel command line:
+sb_getblk() will get same bh for segbuf2 and segbuf3, and this bh is added
+to both buffer lists of two segbuf.  It makes the lists broken which
+causes NULL pointer dereference.
 
-[    0.114217] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-...
-[    0.114307] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.1.0-rc1 #63
-[    0.114316] Hardware name: Google Scarlet (DT)
-...
-[    0.114488] Call trace:
-[    0.114494]  _raw_spin_lock+0x34/0x60
-[    0.114502]  kset_find_obj+0x28/0x84
-[    0.114511]  driver_find+0x30/0x50
-[    0.114520]  driver_register+0x64/0x10c
-[    0.114528]  coreboot_driver_register+0x30/0x3c
-[    0.114540]  memconsole_driver_init+0x24/0x30
-[    0.114550]  do_one_initcall+0x154/0x2e0
-[    0.114560]  do_initcall_level+0x134/0x160
-[    0.114571]  do_initcalls+0x60/0xa0
-[    0.114579]  do_basic_setup+0x28/0x34
-[    0.114588]  kernel_init_freeable+0xf8/0x150
-[    0.114596]  kernel_init+0x2c/0x12c
-[    0.114607]  ret_from_fork+0x10/0x20
-[    0.114624] Code: 5280002b 1100054a b900092a f9800011 (885ffc01)
-[    0.114631] ---[ end trace 0000000000000000 ]---
+Fix the problem by setting usage as dirty every time in
+nilfs_sufile_mark_dirty(), which is called during constructing current
+segment to be written out and before allocating next segment.
 
-Fixes: b81e3140e412 ("firmware: coreboot: Make bus registration symmetric")
+[chenzhongjin@huawei.com: add lock protection per Ryusuke]
+  Link: https://lkml.kernel.org/r/20221121091141.214703-1-chenzhongjin@huawei.com
+Link: https://lkml.kernel.org/r/20221118063304.140187-1-chenzhongjin@huawei.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reported-by: <syzbot+77e4f0...@syzkaller.appspotmail.com>
+Reported-by: Liu Shixin <liushixin2@huawei.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20221019180934.1.If29e167d8a4771b0bf4a39c89c6946ed764817b9@changeid
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 37 +++++++++++++++++++-----
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ fs/nilfs2/sufile.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index 0205987a4fd4..568074148f62 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -152,12 +152,8 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!ptr)
- 		return -ENOMEM;
- 
--	ret = bus_register(&coreboot_bus_type);
--	if (!ret) {
--		ret = coreboot_table_populate(dev, ptr);
--		if (ret)
--			bus_unregister(&coreboot_bus_type);
--	}
-+	ret = coreboot_table_populate(dev, ptr);
-+
- 	memunmap(ptr);
- 
- 	return ret;
-@@ -172,7 +168,6 @@ static int __cb_dev_unregister(struct device *dev, void *dummy)
- static int coreboot_table_remove(struct platform_device *pdev)
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -498,14 +498,22 @@ void nilfs_sufile_do_free(struct inode *
+ int nilfs_sufile_mark_dirty(struct inode *sufile, __u64 segnum)
  {
- 	bus_for_each_dev(&coreboot_bus_type, NULL, NULL, __cb_dev_unregister);
--	bus_unregister(&coreboot_bus_type);
- 	return 0;
+ 	struct buffer_head *bh;
++	void *kaddr;
++	struct nilfs_segment_usage *su;
+ 	int ret;
+ 
++	down_write(&NILFS_MDT(sufile)->mi_sem);
+ 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
+ 	if (!ret) {
+ 		mark_buffer_dirty(bh);
+ 		nilfs_mdt_mark_dirty(sufile);
++		kaddr = kmap_atomic(bh->b_page);
++		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
++		nilfs_segment_usage_set_dirty(su);
++		kunmap_atomic(kaddr);
+ 		brelse(bh);
+ 	}
++	up_write(&NILFS_MDT(sufile)->mi_sem);
+ 	return ret;
  }
  
-@@ -202,6 +197,32 @@ static struct platform_driver coreboot_table_driver = {
- 		.of_match_table = of_match_ptr(coreboot_of_match),
- 	},
- };
--module_platform_driver(coreboot_table_driver);
-+
-+static int __init coreboot_table_driver_init(void)
-+{
-+	int ret;
-+
-+	ret = bus_register(&coreboot_bus_type);
-+	if (ret)
-+		return ret;
-+
-+	ret = platform_driver_register(&coreboot_table_driver);
-+	if (ret) {
-+		bus_unregister(&coreboot_bus_type);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void __exit coreboot_table_driver_exit(void)
-+{
-+	platform_driver_unregister(&coreboot_table_driver);
-+	bus_unregister(&coreboot_bus_type);
-+}
-+
-+module_init(coreboot_table_driver_init);
-+module_exit(coreboot_table_driver_exit);
-+
- MODULE_AUTHOR("Google, Inc.");
- MODULE_LICENSE("GPL");
--- 
-2.35.1
-
 
 
