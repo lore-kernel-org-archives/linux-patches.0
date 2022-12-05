@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1209415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81544C433D6;
-	Mon,  5 Dec 2022 19:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EE115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA04C433D7;
+	Mon,  5 Dec 2022 19:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268859;
-	bh=2dBe2TeArxWYPIgUREUaY4xvRopIreNYXbAQ/G6JD5I=;
+	s=korg; t=1670268862;
+	bh=bx2QDi+70ZC7WKXvJ5K7xand1bn0lSxKl62Tv4c0qWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1K6zvPLR7zBHwjRkre3HcE/94660qKvO5e+/TGTT/7KaOz5AUIAg/fQBiiT0MhSP
-	 AJ2Mlk4bX/lOER5fkjrmOo+iwrEgltg8Mr0PyUqI0gC8EFsFpQusjMoBfdcJ80FxSk
-	 d4GkuvmkOahFeY422hQlC4pP1XcPpgRFEKa8TZhk=
+	b=VWAFHybaatuVAqYL5PX+YT0UszVP3wzGU02urOWBnUOormG9HkPTxfy/F7DtuYiDc
+	 g8m58vbdVH7dneADuuDJqU6fqLsNwmi9clu24wRq6xD5p2kJR+uvZ8lQlZ6igsGfbX
+	 /YdV1dWRxiTaiJICv60G18LTAtx14C22nnA9yQ4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roi Dayan <roid@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/120] net/mlx5e: Fix use-after-free when reverting termination table
-Date: Mon,  5 Dec 2022 20:09:37 +0100
-Message-Id: <20221205190807.662764489@linuxfoundation.org>
+Subject: [PATCH 5.15 038/120] can: sja1000_isa: sja1000_isa_probe(): add missing free_sja1000dev()
+Date: Mon,  5 Dec 2022 20:09:38 +0100
+Message-Id: <20221205190807.689768324@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,38 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roi Dayan <roid@nvidia.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 52c795af04441d76f565c4634f893e5b553df2ae ]
+[ Upstream commit 92dfd9310a71d28cefe6a2d5174d43fab240e631 ]
 
-When having multiple dests with termination tables and second one
-or afterwards fails the driver reverts usage of term tables but
-doesn't reset the assignment in attr->dests[num_vport_dests].termtbl
-which case a use-after-free when releasing the rule.
-Fix by resetting the assignment of termtbl to null.
+Add the missing free_sja1000dev() before return from
+sja1000_isa_probe() in the register_sja1000dev() error handling case.
 
-Fixes: 10caabdaad5a ("net/mlx5e: Use termination table for VLAN push actions")
-Signed-off-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+In addition, remove blanks before goto labels.
+
+Fixes: 2a6ba39ad6a2 ("can: sja1000: legacy SJA1000 ISA bus driver")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Link: https://lore.kernel.org/all/1668168521-5540-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c  | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/sja1000/sja1000_isa.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-index 8f86b62e49e3..1b417b1d1cf8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-@@ -309,6 +309,8 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
- 	for (curr_dest = 0; curr_dest < num_vport_dests; curr_dest++) {
- 		struct mlx5_termtbl_handle *tt = attr->dests[curr_dest].termtbl;
+diff --git a/drivers/net/can/sja1000/sja1000_isa.c b/drivers/net/can/sja1000/sja1000_isa.c
+index d513fac50718..db3e767d5320 100644
+--- a/drivers/net/can/sja1000/sja1000_isa.c
++++ b/drivers/net/can/sja1000/sja1000_isa.c
+@@ -202,22 +202,24 @@ static int sja1000_isa_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
+ 			DRV_NAME, err);
+-		goto exit_unmap;
++		goto exit_free;
+ 	}
  
-+		attr->dests[curr_dest].termtbl = NULL;
-+
- 		/* search for the destination associated with the
- 		 * current term table
- 		 */
+ 	dev_info(&pdev->dev, "%s device registered (reg_base=0x%p, irq=%d)\n",
+ 		 DRV_NAME, priv->reg_base, dev->irq);
+ 	return 0;
+ 
+- exit_unmap:
++exit_free:
++	free_sja1000dev(dev);
++exit_unmap:
+ 	if (mem[idx])
+ 		iounmap(base);
+- exit_release:
++exit_release:
+ 	if (mem[idx])
+ 		release_mem_region(mem[idx], iosize);
+ 	else
+ 		release_region(port[idx], iosize);
+- exit:
++exit:
+ 	return err;
+ }
+ 
 -- 
 2.35.1
 
