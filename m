@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E64915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84346C433C1;
-	Mon,  5 Dec 2022 19:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C7E15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49618C433D6;
+	Mon,  5 Dec 2022 19:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267584;
-	bh=eE+JGMuTnsfYpCT+Bc6nZRq0mbcsYG7c2CkVCgz3nM4=;
+	s=korg; t=1670267587;
+	bh=xo8Q5+IqRAbz82d1GVz+6bXlH287+XTrajv2kUnSSkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8A5LWrDUjCkyFjkiNsMfhytMqNMld2nPUKm3om7tGnboQ4HppRpCRy6G1APvfYpe
-	 m5fbn+xwXmqgzBMphWX1aP0f8Z56RfUIdLfAktZZ3rYnPc2VulrFJmgu0HccTz2sEb
-	 VYlt0pgVtMdbQxptPlV7jvk2/vLuOsqIXax/0rMg=
+	b=wetcPbvzlS5HofHbqtcw1211qlRTuR/2axFLwujSpxSFGbe1dsC90Y1TeDZBMD90O
+	 RxUbhl42ezkzfA4UkgADnk0dmpvU5iT7QgDd08CyA2C1pFMVOFYiUG2pkr9ofOT2Mm
+	 YyeUZh/ub7XbR7qyjrNc29kg08st3pBuZ1Dng0Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 39/62] net: phy: fix null-ptr-deref while probe() failed
-Date: Mon,  5 Dec 2022 20:09:36 +0100
-Message-Id: <20221205190759.569905994@linuxfoundation.org>
+Subject: [PATCH 4.9 40/62] net: net_netdev: Fix error handling in ntb_netdev_init_module()
+Date: Mon,  5 Dec 2022 20:09:37 +0100
+Message-Id: <20221205190759.607989842@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,71 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 369eb2c9f1f72adbe91e0ea8efb130f0a2ba11a6 ]
+[ Upstream commit b8f79dccd38edf7db4911c353d9cd792ab13a327 ]
 
-I got a null-ptr-deref report as following when doing fault injection test:
+The ntb_netdev_init_module() returns the ntb_transport_register_client()
+directly without checking its return value, if
+ntb_transport_register_client() failed, the NTB client device is not
+unregistered.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000058
-Oops: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 1 PID: 253 Comm: 507-spi-dm9051 Tainted: G    B            N 6.1.0-rc3+
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:klist_put+0x2d/0xd0
-Call Trace:
- <TASK>
- klist_remove+0xf1/0x1c0
- device_release_driver_internal+0x23e/0x2d0
- bus_remove_device+0x1bd/0x240
- device_del+0x357/0x770
- phy_device_remove+0x11/0x30
- mdiobus_unregister+0xa5/0x140
- release_nodes+0x6a/0xa0
- devres_release_all+0xf8/0x150
- device_unbind_cleanup+0x19/0xd0
+Fix by unregister NTB client device when ntb_transport_register_client()
+failed.
 
-//probe path:
-phy_device_register()
-  device_add()
-
-phy_connect
-  phy_attach_direct() //set device driver
-    probe() //it's failed, driver is not bound
-    device_bind_driver() // probe failed, it's not called
-
-//remove path:
-phy_device_remove()
-  device_del()
-    device_release_driver_internal()
-      __device_release_driver() //dev->drv is not NULL
-        klist_remove() <- knode_driver is not added yet, cause null-ptr-deref
-
-In phy_attach_direct(), after setting the 'dev->driver', probe() fails,
-device_bind_driver() is not called, so the knode_driver->n_klist is not
-set, then it causes null-ptr-deref in __device_release_driver() while
-deleting device. Fix this by setting dev->driver to NULL in the error
-path in phy_attach_direct().
-
-Fixes: e13934563db0 ("[PATCH] PHY Layer fixup")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ntb_netdev.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index a3ba95e96695..90dbf1b2a33a 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -948,6 +948,7 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index 03009f1becdd..bd6c19ceab30 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -500,7 +500,14 @@ static int __init ntb_netdev_init_module(void)
+ 	rc = ntb_transport_register_client_dev(KBUILD_MODNAME);
+ 	if (rc)
+ 		return rc;
+-	return ntb_transport_register_client(&ntb_netdev_client);
++
++	rc = ntb_transport_register_client(&ntb_netdev_client);
++	if (rc) {
++		ntb_transport_unregister_client_dev(KBUILD_MODNAME);
++		return rc;
++	}
++
++	return 0;
+ }
+ module_init(ntb_netdev_init_module);
  
- error_module_put:
- 	module_put(d->driver->owner);
-+	d->driver = NULL;
- error_put_device:
- 	put_device(d);
- 	if (ndev_owner != bus->owner)
 -- 
 2.35.1
 
