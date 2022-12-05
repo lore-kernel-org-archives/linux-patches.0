@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CD115C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89AFC433D6;
-	Mon,  5 Dec 2022 19:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CDD15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D61C433C1;
+	Mon,  5 Dec 2022 19:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267536;
-	bh=wUWmXyoUSaJCRzk3Nvoo5pVWvhizsP9JT7vqByj+ISQ=;
+	s=korg; t=1670267539;
+	bh=pNPdTM4ERY1IHA7FdDfBcNHZ/D0GoK8zFMc2qs9ZYGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDzM/FzqQUs5o3edBnFL1azb1CXV/L/Ar+hoVlq/vHNXjNCOZzxLrGCgwrVcssXZC
-	 TGI4xTgmRTqOji2G3jjPQ4hbtMnbnbOvCA0cHUg6te0nRK24pTrHhAlnd7d793a9Dw
-	 CcyeXKYTaGHImNiWgMSv81lFzow9w8liEMfAEf9A=
+	b=FHYYSBHGrVJxSusF49FTAtnykuznReN4uTqICZXDZ80iCs5d4xmoCkqQbNAITCGfD
+	 FgtFLvARItffUzFdJKF75eRXO1pSAgaLE7E3sRQGo8tL2TNiCr4LnluCN6Tsl0jdYk
+	 OLtE6rJvlb488YUKe3fnn73t57x2NYbEMpc9tRNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 14/62] xfrm: Fix ignored return value in xfrm6_init()
-Date: Mon,  5 Dec 2022 20:09:11 +0100
-Message-Id: <20221205190758.629862451@linuxfoundation.org>
+Subject: [PATCH 4.9 23/62] nios2: add FORCE for vmlinuz.gz
+Date: Mon,  5 Dec 2022 20:09:20 +0100
+Message-Id: <20221205190758.974671361@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,57 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 40781bfb836eda57d19c0baa37c7e72590e05fdc ]
+[ Upstream commit 869e4ae4cd2a23d625aaa14ae62dbebf768cb77d ]
 
-When IPv6 module initializing in xfrm6_init(), register_pernet_subsys()
-is possible to fail but its return value is ignored.
+Add FORCE to placate a warning from make:
 
-If IPv6 initialization fails later and xfrm6_fini() is called,
-removing uninitialized list in xfrm6_net_ops will cause null-ptr-deref:
+arch/nios2/boot/Makefile:24: FORCE prerequisite is missing
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 330 Comm: insmod
-RIP: 0010:unregister_pernet_operations+0xc9/0x450
-Call Trace:
- <TASK>
- unregister_pernet_subsys+0x31/0x3e
- xfrm6_fini+0x16/0x30 [ipv6]
- ip6_route_init+0xcd/0x128 [ipv6]
- inet6_init+0x29c/0x602 [ipv6]
- ...
-
-Fix it by catching the error return value of register_pernet_subsys().
-
-Fixes: 8d068875caca ("xfrm: make gc_thresh configurable in all namespaces")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/nios2/boot/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index 0c7f27a1725f..6887922ea828 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -419,9 +419,13 @@ int __init xfrm6_init(void)
- 	if (ret)
- 		goto out_state;
+diff --git a/arch/nios2/boot/Makefile b/arch/nios2/boot/Makefile
+index c899876320df..76dce0a438a6 100644
+--- a/arch/nios2/boot/Makefile
++++ b/arch/nios2/boot/Makefile
+@@ -20,7 +20,7 @@ $(obj)/vmlinux.bin: vmlinux FORCE
+ $(obj)/vmlinux.gz: $(obj)/vmlinux.bin FORCE
+ 	$(call if_changed,gzip)
  
--	register_pernet_subsys(&xfrm6_net_ops);
-+	ret = register_pernet_subsys(&xfrm6_net_ops);
-+	if (ret)
-+		goto out_protocol;
- out:
- 	return ret;
-+out_protocol:
-+	xfrm6_protocol_fini();
- out_state:
- 	xfrm6_state_fini();
- out_policy:
+-$(obj)/vmImage: $(obj)/vmlinux.gz
++$(obj)/vmImage: $(obj)/vmlinux.gz FORCE
+ 	$(call if_changed,uimage)
+ 	@$(kecho) 'Kernel: $@ is ready'
+ 
 -- 
 2.35.1
 
