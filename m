@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A9B15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65E3C433C1;
-	Mon,  5 Dec 2022 19:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAA615C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E01DC433D6;
+	Mon,  5 Dec 2022 19:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268175;
-	bh=W6zTtECllZh/sYXkgkxHGkDu710QDASBhdWH1js7TC0=;
+	s=korg; t=1670268178;
+	bh=0uYOHwXnTJPccihUCvPAO+AhZsHtO0bEYYlM0VCPfWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytxoFDoIE/gBJW0w/Ql9UnlEkdcdx+gPQu+HWJ/imV6YOxsrDRf7AlZ0XWl5G1oiO
-	 SNEezvEHKYql6g04QXydd8AaJs+SeKRKRazAcxNULW+oxIriIvv4qnoz2ukTJEODN7
-	 l4R0Bhqx+JkO+cT89xYJh2tl9Gk9aH78G7qlJN3g=
+	b=i0LVLkr9SfMAcqD2MtFSVOGKvSAmakegMhEJ9nGJyPTlKeeZd15Jmh2pB4HLa7LOK
+	 4pf/UPf5Fe6uYSHlhSc6+QN6AYkzdHUk42uwOX5oAvEifn7A0Ia2LuZz1LNrT1xQIo
+	 3hQ7eJc7Je3oF9bNI/6TnAbJDnBPWdfD/ap8pV0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Hugh Dickins <hughd@google.com>
-Subject: [PATCH 4.19 090/105] mm: Fix .data.once orphan section warning
-Date: Mon,  5 Dec 2022 20:10:02 +0100
-Message-Id: <20221205190806.171660460@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 001/124] btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()
+Date: Mon,  5 Dec 2022 20:08:27 +0100
+Message-Id: <20221205190808.467668475@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
-References: <20221205190803.124472741@linuxfoundation.org>
+In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
+References: <20221205190808.422385173@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,45 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-Portions of upstream commit a4055888629b ("mm/memcg: warning on !memcg
-after readahead page charged") were backported as commit cfe575954ddd
-("mm: add VM_WARN_ON_ONCE_PAGE() macro"). Unfortunately, the backport
-did not account for the lack of commit 33def8498fdd ("treewide: Convert
-macro and uses of __section(foo) to __section("foo")") in kernels prior
-to 5.10, resulting in the following orphan section warnings on PowerPC
-clang builds with CONFIG_DEBUG_VM=y:
+[ Upstream commit f7e942b5bb35d8e3af54053d19a6bf04143a3955 ]
 
-  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
-  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
-  powerpc64le-linux-gnu-ld: warning: orphan section `".data.once"' from `mm/huge_memory.o' being placed in section `".data.once"'
+Syzkaller reported BUG as follows:
 
-This is a difference between how clang and gcc handle macro
-stringification, which was resolved for the kernel by not stringifying
-the argument to the __section() macro. Since that change was deemed not
-suitable for the stable kernels by commit 59f89518f510 ("once: fix
-section mismatch on clang builds"), do that same thing as that change
-and remove the quotes from the argument to __section().
+  BUG: sleeping function called from invalid context at
+       include/linux/sched/mm.h:274
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xcd/0x134
+   __might_resched.cold+0x222/0x26b
+   kmem_cache_alloc+0x2e7/0x3c0
+   update_qgroup_limit_item+0xe1/0x390
+   btrfs_qgroup_inherit+0x147b/0x1ee0
+   create_subvol+0x4eb/0x1710
+   btrfs_mksubvol+0xfe5/0x13f0
+   __btrfs_ioctl_snap_create+0x2b0/0x430
+   btrfs_ioctl_snap_create_v2+0x25a/0x520
+   btrfs_ioctl+0x2a1c/0x5ce0
+   __x64_sys_ioctl+0x193/0x200
+   do_syscall_64+0x35/0x80
 
-Fixes: cfe575954ddd ("mm: add VM_WARN_ON_ONCE_PAGE() macro")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by calling qgroup_dirty() on @dstqgroup, and update limit item in
+btrfs_run_qgroups() later outside of the spinlock context.
+
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mmdebug.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/qgroup.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/include/linux/mmdebug.h
-+++ b/include/linux/mmdebug.h
-@@ -38,7 +38,7 @@ void dump_mm(const struct mm_struct *mm)
- 		}							\
- 	} while (0)
- #define VM_WARN_ON_ONCE_PAGE(cond, page)	({			\
--	static bool __section(".data.once") __warned;			\
-+	static bool __section(.data.once) __warned;			\
- 	int __ret_warn_once = !!(cond);					\
- 									\
- 	if (unlikely(__ret_warn_once && !__warned)) {			\
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index ba323dcb0a0b..db56e0c0e9ac 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -2920,14 +2920,7 @@ int btrfs_qgroup_inherit(struct btrfs_trans_handle *trans, u64 srcid,
+ 		dstgroup->rsv_rfer = inherit->lim.rsv_rfer;
+ 		dstgroup->rsv_excl = inherit->lim.rsv_excl;
+ 
+-		ret = update_qgroup_limit_item(trans, dstgroup);
+-		if (ret) {
+-			fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+-			btrfs_info(fs_info,
+-				   "unable to update quota limit for %llu",
+-				   dstgroup->qgroupid);
+-			goto unlock;
+-		}
++		qgroup_dirty(fs_info, dstgroup);
+ 	}
+ 
+ 	if (srcid) {
+-- 
+2.35.1
+
 
 
