@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B698415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9D1C433D6;
-	Mon,  5 Dec 2022 19:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BB015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADCBC433C1;
+	Mon,  5 Dec 2022 19:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268289;
-	bh=vyB7Dr5dTwIjfelJfSs8bEcds1DIZm/W1E+vdpUOGpY=;
+	s=korg; t=1670268292;
+	bh=SwWNltb6kmGF7VfiN+QYinvTyyxJexJad0yCYOiAJrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvxP4f14Pa0hFsYKMrLb/n9jgiFdXE+X6VXQa6eVAYJSFt81IyLszEI8XOzOIPNkO
-	 SkJm8oxbj0pKBqDfXS2IbLqGogM/af4P9htQojpQ6i+sVNFhTu6IGgVgKU5CqRDHTe
-	 DbZu7+xaObzgWV/3E/3BL/7ZIt1ikGQTtjhf4zII=
+	b=UUSkk4B6oIo6vkf0m/EruOt0E4uScpGl9iqD4dTkDiz5SxQg8RJwPlZABGl85oN11
+	 5lWeQlAOBvFYhu5iPJroupdKHhXZ9qM9radQKsJZ+pRcon+b6kU8TG2YV4ZVgZhSV+
+	 7sWGjvw2KlffKD25gK6JYXz8xcoUCbreDhdlZaFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
-Subject: [PATCH 6.0 048/124] wifi: cfg80211: dont allow multi-BSSID in S1G
-Date: Mon,  5 Dec 2022 20:09:14 +0100
-Message-Id: <20221205190809.802211838@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 031/124] fm10k: Fix error handling in fm10k_init_module()
+Date: Mon,  5 Dec 2022 20:08:57 +0100
+Message-Id: <20221205190809.330691578@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -35,47 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit acd3c92acc7aaec50a94d0a7faf7ccd74e952493 ]
+[ Upstream commit 771a794c0a3c3e7f0d86cc34be4f9537e8c0a20c ]
 
-In S1G beacon frames there shouldn't be multi-BSSID elements
-since that's not supported, remove that to avoid a potential
-integer underflow and/or misparsing the frames due to the
-different length of the fixed part of the frame.
+A problem about modprobe fm10k failed is triggered with the following log
+given:
 
-While at it, initialize non_tx_data so we don't send garbage
-values to the user (even if it doesn't seem to matter now.)
+ Intel(R) Ethernet Switch Host Interface Driver
+ Copyright(c) 2013 - 2019 Intel Corporation.
+ debugfs: Directory 'fm10k' with parent '/' already present!
 
-Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
-Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The reason is that fm10k_init_module() returns fm10k_register_pci_driver()
+directly without checking its return value, if fm10k_register_pci_driver()
+failed, it returns without removing debugfs and destroy workqueue,
+resulting the debugfs of fm10k can never be created later and leaks the
+workqueue.
+
+ fm10k_init_module()
+   alloc_workqueue()
+   fm10k_dbg_init() # create debugfs
+   fm10k_register_pci_driver()
+     pci_register_driver()
+       driver_register()
+         bus_add_driver()
+           priv = kzalloc(...) # OOM happened
+   # return without remove debugfs and destroy workqueue
+
+Fix by remove debugfs and destroy workqueue when
+fm10k_register_pci_driver() returns error.
+
+Fixes: 7461fd913afe ("fm10k: Add support for debugfs")
+Fixes: b382bb1b3e2d ("fm10k: use separate workqueue for fm10k driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/fm10k/fm10k_main.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 56db0f12ca7c..b4d788572992 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2527,10 +2527,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 	const struct cfg80211_bss_ies *ies1, *ies2;
- 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
- 				      u.probe_resp.variable);
--	struct cfg80211_non_tx_bss non_tx_data;
-+	struct cfg80211_non_tx_bss non_tx_data = {};
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_main.c b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
+index 3362f26d7f99..1b273446621c 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_main.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
+@@ -32,6 +32,8 @@ struct workqueue_struct *fm10k_workqueue;
+  **/
+ static int __init fm10k_init_module(void)
+ {
++	int ret;
++
+ 	pr_info("%s\n", fm10k_driver_string);
+ 	pr_info("%s\n", fm10k_copyright);
  
- 	res = cfg80211_inform_single_bss_frame_data(wiphy, data, mgmt,
- 						    len, gfp);
+@@ -43,7 +45,13 @@ static int __init fm10k_init_module(void)
+ 
+ 	fm10k_dbg_init();
+ 
+-	return fm10k_register_pci_driver();
++	ret = fm10k_register_pci_driver();
++	if (ret) {
++		fm10k_dbg_exit();
++		destroy_workqueue(fm10k_workqueue);
++	}
 +
-+	/* don't do any further MBSSID handling for S1G */
-+	if (ieee80211_is_s1g_beacon(mgmt->frame_control))
-+		return res;
-+
- 	if (!res || !wiphy->support_mbssid ||
- 	    !cfg80211_find_elem(WLAN_EID_MULTIPLE_BSSID, ie, ielen))
- 		return res;
++	return ret;
+ }
+ module_init(fm10k_init_module);
+ 
 -- 
 2.35.1
 
