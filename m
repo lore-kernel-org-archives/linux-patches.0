@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB8815C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2858EC433C1;
-	Mon,  5 Dec 2022 19:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDB915C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC751C433D6;
+	Mon,  5 Dec 2022 19:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268881;
-	bh=+WFqcAr1g/NY+Mqs7VndDxG92ngCZI81Fyv1D9QeYoo=;
+	s=korg; t=1670268884;
+	bh=tGe3E7rsjegcxXYBvUN+80kpXgkL52+FhXRG7Djf2Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgUnO82QB11V1n9WawWyssRhHQ10m8jYWEAglGYbKZQPx26ek0PynNRc2WFzzLIEO
-	 U1moSUCAMGSg3ObchSm9g1816G+tizAYaB7DJyOyZfkuaopuOy06QNKZKFGdGA58Vc
-	 hY/9SaRp5TLJuSYTjN6uOT1Xyg+EHXjoWCbMP5Ik=
+	b=seGSCrwifJfBiOOGf+Tl8yrjXIKoyV0gfbprDr75YnIFFIYduu4xChIJNItsx9W9q
+	 xTNQuhLP+0doO3/kuyK+AQZk+xLdQf6US8mrO960EQ4bZ6258IAiiwGED33y56gCxx
+	 Hw3PehVSlA1RedEkf4xv5WidjInDD6CgjGnVjNuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	nicolas.ferre@microchip.com,
+	ludovic.desroches@microchip.com,
+	alexandre.belloni@bootlin.com,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	claudiu.beznea@microchip.com,
+	linux-clk@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	kernel@pengutronix.de,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/120] scripts/faddr2line: Fix regression in name resolution on ppc64le
-Date: Mon,  5 Dec 2022 20:09:18 +0100
-Message-Id: <20221205190807.124076949@linuxfoundation.org>
+Subject: [PATCH 5.15 019/120] ARM: at91: rm9200: fix usb device clock id
+Date: Mon,  5 Dec 2022 20:09:19 +0100
+Message-Id: <20221205190807.152315013@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -38,77 +43,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit 2d77de1581bb5b470486edaf17a7d70151131afd ]
+[ Upstream commit 57976762428675f259339385d3324d28ee53ec02 ]
 
-Commit 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section
-failures") can cause faddr2line to fail on ppc64le on some
-distributions, while it works fine on other distributions. The failure
-can be attributed to differences in the readelf output.
+Referring to the datasheet the index 2 is the MCKUDP. When enabled, it
+"Enables the automatic disable of the Master Clock of the USB Device
+Port when a suspend condition occurs". We fix the index to the real UDP
+id which "Enables the 48 MHz clock of the USB Device Port".
 
-  $ ./scripts/faddr2line vmlinux find_busiest_group+0x00
-  no match for find_busiest_group+0x00
-
-On ppc64le, readelf adds the localentry tag before the symbol name on
-some distributions, and adds the localentry tag after the symbol name on
-other distributions. This problem has been discussed previously:
-
-  https://lore.kernel.org/bpf/20191211160133.GB4580@calabresa/
-
-This problem can be overcome by filtering out the localentry tags in the
-readelf output. Similar fixes are already present in the kernel by way
-of the following commits:
-
-  1fd6cee127e2 ("libbpf: Fix VERSIONED_SYM_COUNT number parsing")
-  aa915931ac3e ("libbpf: Fix readelf output parsing for Fedora")
-
-[jpoimboe: rework commit log]
-
-Fixes: 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section failures")
-Signed-off-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Acked-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Link: https://lore.kernel.org/r/20220927075211.897152-1-srikar@linux.vnet.ibm.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Cc: nicolas.ferre@microchip.com
+Cc: ludovic.desroches@microchip.com
+Cc: alexandre.belloni@bootlin.com
+Cc: mturquette@baylibre.com
+Cc: sboyd@kernel.org
+Cc: claudiu.beznea@microchip.com
+Cc: linux-clk@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: kernel@pengutronix.de
+Fixes: 02ff48e4d7f7 ("clk: at91: add at91rm9200 pmc driver")
+Fixes: 0e0e528d8260 ("ARM: dts: at91: rm9200: switch to new clock bindings")
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20221114185923.1023249-2-m.grzeschik@pengutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/faddr2line | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/at91rm9200.dtsi | 2 +-
+ drivers/clk/at91/at91rm9200.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/faddr2line b/scripts/faddr2line
-index 57099687e5e1..9e730b805e87 100755
---- a/scripts/faddr2line
-+++ b/scripts/faddr2line
-@@ -73,7 +73,8 @@ command -v ${ADDR2LINE} >/dev/null 2>&1 || die "${ADDR2LINE} isn't installed"
- find_dir_prefix() {
- 	local objfile=$1
+diff --git a/arch/arm/boot/dts/at91rm9200.dtsi b/arch/arm/boot/dts/at91rm9200.dtsi
+index d1181ead18e5..21344fbc89e5 100644
+--- a/arch/arm/boot/dts/at91rm9200.dtsi
++++ b/arch/arm/boot/dts/at91rm9200.dtsi
+@@ -660,7 +660,7 @@ usb1: gadget@fffb0000 {
+ 				compatible = "atmel,at91rm9200-udc";
+ 				reg = <0xfffb0000 0x4000>;
+ 				interrupts = <11 IRQ_TYPE_LEVEL_HIGH 2>;
+-				clocks = <&pmc PMC_TYPE_PERIPHERAL 11>, <&pmc PMC_TYPE_SYSTEM 2>;
++				clocks = <&pmc PMC_TYPE_PERIPHERAL 11>, <&pmc PMC_TYPE_SYSTEM 1>;
+ 				clock-names = "pclk", "hclk";
+ 				status = "disabled";
+ 			};
+diff --git a/drivers/clk/at91/at91rm9200.c b/drivers/clk/at91/at91rm9200.c
+index 428a6f4b9ebc..8d36e615cd9d 100644
+--- a/drivers/clk/at91/at91rm9200.c
++++ b/drivers/clk/at91/at91rm9200.c
+@@ -40,7 +40,7 @@ static const struct clk_pll_characteristics rm9200_pll_characteristics = {
+ };
  
--	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | ${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
-+	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' |
-+		${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
- 	[[ -z $start_kernel_addr ]] && return
- 
- 	local file_line=$(${ADDR2LINE} -e $objfile $start_kernel_addr)
-@@ -177,7 +178,7 @@ __faddr2line() {
- 				found=2
- 				break
- 			fi
--		done < <(${READELF} --symbols --wide $objfile | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
-+		done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
- 
- 		if [[ $found = 0 ]]; then
- 			warn "can't find symbol: sym_name: $sym_name sym_sec: $sym_sec sym_addr: $sym_addr sym_elf_size: $sym_elf_size"
-@@ -258,7 +259,7 @@ __faddr2line() {
- 
- 		DONE=1
- 
--	done < <(${READELF} --symbols --wide $objfile | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
-+	done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
- }
- 
- [[ $# -lt 2 ]] && usage
+ static const struct sck at91rm9200_systemck[] = {
+-	{ .n = "udpck", .p = "usbck",    .id = 2 },
++	{ .n = "udpck", .p = "usbck",    .id = 1 },
+ 	{ .n = "uhpck", .p = "usbck",    .id = 4 },
+ 	{ .n = "pck0",  .p = "prog0",    .id = 8 },
+ 	{ .n = "pck1",  .p = "prog1",    .id = 9 },
 -- 
 2.35.1
 
