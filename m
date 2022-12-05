@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C1A15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3239DC433D6;
-	Mon,  5 Dec 2022 19:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A84D15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6F1C433D7;
+	Mon,  5 Dec 2022 19:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268087;
-	bh=6I5CMeNdEHAuanP4/Mpo5jutVAWJdHSdEK64wyihe4M=;
+	s=korg; t=1670268090;
+	bh=ov4NGHJmAeTvdup+m3YR9A8GTVisvlM6KfVW7wbuM/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AsEoQRlAwrG8Pzilkh4QDMolgdKW+nC9zve7WxWqkkktTd6CQ7qTU88QbEiylnJIC
-	 f2RYzQuYFDDAs2Kfn/6dAAyAGYy0bsJnTYOxUU1R/I9qBQWSPa0uRjaiYU3KgYBYk4
-	 CziSFoV3dh6no8i3SBbcXvAHAZlAecb4iGVELfeY=
+	b=Gf5WiiMblZn1OPoF7D7TTOKZRAAVU3CMmDgTZvWrtAV0MIlPSkz1EUIP64POji48V
+	 MLY3SY2PFgvGqYB4wtGaLIvp/UAA0hb03fERBJnkPcBRfwknJwIrTegBV7UQFFiHlE
+	 sJlalbU0m5kUMNbEnaxGNvfWq+Tfo/sEN3h8NZrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Qu Wenruo <wqu@suse.com>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 081/105] hwmon: (coretemp) fix pci device refcount leak in nv1a_ram_new()
-Date: Mon,  5 Dec 2022 20:09:53 +0100
-Message-Id: <20221205190805.892898146@linuxfoundation.org>
+Subject: [PATCH 4.19 082/105] btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()
+Date: Mon,  5 Dec 2022 20:09:54 +0100
+Message-Id: <20221205190805.923674575@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -35,43 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit 7dec14537c5906b8bf40fd6fd6d9c3850f8df11d ]
+[ Upstream commit f7e942b5bb35d8e3af54053d19a6bf04143a3955 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it after using to avoid refcount leak.
+Syzkaller reported BUG as follows:
 
-Fixes: 14513ee696a0 ("hwmon: (coretemp) Use PCI host bridge ID to identify CPU if necessary")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093303.214163-1-yangyingliang@huawei.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  BUG: sleeping function called from invalid context at
+       include/linux/sched/mm.h:274
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xcd/0x134
+   __might_resched.cold+0x222/0x26b
+   kmem_cache_alloc+0x2e7/0x3c0
+   update_qgroup_limit_item+0xe1/0x390
+   btrfs_qgroup_inherit+0x147b/0x1ee0
+   create_subvol+0x4eb/0x1710
+   btrfs_mksubvol+0xfe5/0x13f0
+   __btrfs_ioctl_snap_create+0x2b0/0x430
+   btrfs_ioctl_snap_create_v2+0x25a/0x520
+   btrfs_ioctl+0x2a1c/0x5ce0
+   __x64_sys_ioctl+0x193/0x200
+   do_syscall_64+0x35/0x80
+
+Fix this by calling qgroup_dirty() on @dstqgroup, and update limit item in
+btrfs_run_qgroups() later outside of the spinlock context.
+
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/qgroup.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 02711014aee7..1b2f750577da 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -255,10 +255,13 @@ static int adjust_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
- 	 */
- 	if (host_bridge && host_bridge->vendor == PCI_VENDOR_ID_INTEL) {
- 		for (i = 0; i < ARRAY_SIZE(tjmax_pci_table); i++) {
--			if (host_bridge->device == tjmax_pci_table[i].device)
-+			if (host_bridge->device == tjmax_pci_table[i].device) {
-+				pci_dev_put(host_bridge);
- 				return tjmax_pci_table[i].tjmax;
-+			}
- 		}
- 	}
-+	pci_dev_put(host_bridge);
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 886ab4beb579..69b43df186a8 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -2368,14 +2368,7 @@ int btrfs_qgroup_inherit(struct btrfs_trans_handle *trans, u64 srcid,
+ 		dstgroup->rsv_rfer = inherit->lim.rsv_rfer;
+ 		dstgroup->rsv_excl = inherit->lim.rsv_excl;
  
- 	for (i = 0; i < ARRAY_SIZE(tjmax_table); i++) {
- 		if (strstr(c->x86_model_id, tjmax_table[i].id))
+-		ret = update_qgroup_limit_item(trans, dstgroup);
+-		if (ret) {
+-			fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+-			btrfs_info(fs_info,
+-				   "unable to update quota limit for %llu",
+-				   dstgroup->qgroupid);
+-			goto unlock;
+-		}
++		qgroup_dirty(fs_info, dstgroup);
+ 	}
+ 
+ 	if (srcid) {
 -- 
 2.35.1
 
