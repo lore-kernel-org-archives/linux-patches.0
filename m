@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0F815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809DBC433D7;
-	Mon,  5 Dec 2022 19:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FB915C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3184BC433D6;
+	Mon,  5 Dec 2022 19:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267576;
-	bh=Q5SFnxgkZo2nLvhkNswS5raho+M6CLw0oQxMUoEXl90=;
+	s=korg; t=1670267579;
+	bh=PLLXZ7ysdojzjIwos1PDKEBcZRV/PCDG/A9mngxQGgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raiYQP5dlprE524jvXv/AuuKi2HF9rwEBbtlLh3VRPA9TqMYdQi7ZHZNUpSxZ1Tqf
-	 HlSNyNBmE8K2rMyiYDBEDwOCLRksEgaNI5FIv/asyB7NQ69U8kKCHzZFpdM1FFerl+
-	 czDuLgM2tQC+sSh1Q7Whc1BcHXyrdM7oBDmSQfxw=
+	b=z7jTp6OAhuanhjTYyhWmA4vOBoRyTaqHTwoRuVQ8TSSVkSgJL+iV5SFjBKs3hqGkl
+	 UKjvVsMLBi4Xcq+PNMnEPsCARsFkouYb96qgtm2xu81bXLk3VdpIjHwJnCe2e3rLGM
+	 khKrjARo8reNDdaXnt5/c68TcYqCc7/7yum486sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Changzhong <zhangchangzhong@huawei.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 36/62] can: sja1000_isa: sja1000_isa_probe(): add missing free_sja1000dev()
-Date: Mon,  5 Dec 2022 20:09:33 +0100
-Message-Id: <20221205190759.456086108@linuxfoundation.org>
+Subject: [PATCH 4.9 37/62] can: cc770: cc770_isa_probe(): add missing free_cc770dev()
+Date: Mon,  5 Dec 2022 20:09:34 +0100
+Message-Id: <20221205190759.494895246@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -37,41 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 92dfd9310a71d28cefe6a2d5174d43fab240e631 ]
+[ Upstream commit 62ec89e74099a3d6995988ed9f2f996b368417ec ]
 
-Add the missing free_sja1000dev() before return from
-sja1000_isa_probe() in the register_sja1000dev() error handling case.
+Add the missing free_cc770dev() before return from cc770_isa_probe()
+in the register_cc770dev() error handling case.
 
 In addition, remove blanks before goto labels.
 
-Fixes: 2a6ba39ad6a2 ("can: sja1000: legacy SJA1000 ISA bus driver")
+Fixes: 7e02e5433e00 ("can: cc770: legacy CC770 ISA bus driver")
 Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/all/1668168521-5540-1-git-send-email-zhangchangzhong@huawei.com
+Link: https://lore.kernel.org/all/1668168557-6024-1-git-send-email-zhangchangzhong@huawei.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/sja1000/sja1000_isa.c | 10 ++++++----
+ drivers/net/can/cc770/cc770_isa.c | 10 ++++++----
  1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/sja1000/sja1000_isa.c b/drivers/net/can/sja1000/sja1000_isa.c
-index e97e6d35b300..5187fdabdca9 100644
---- a/drivers/net/can/sja1000/sja1000_isa.c
-+++ b/drivers/net/can/sja1000/sja1000_isa.c
-@@ -213,22 +213,24 @@ static int sja1000_isa_probe(struct platform_device *pdev)
+diff --git a/drivers/net/can/cc770/cc770_isa.c b/drivers/net/can/cc770/cc770_isa.c
+index e0d15711e9ac..8df613bc3be3 100644
+--- a/drivers/net/can/cc770/cc770_isa.c
++++ b/drivers/net/can/cc770/cc770_isa.c
+@@ -272,22 +272,24 @@ static int cc770_isa_probe(struct platform_device *pdev)
  	if (err) {
- 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
- 			DRV_NAME, err);
+ 		dev_err(&pdev->dev,
+ 			"couldn't register device (err=%d)\n", err);
 -		goto exit_unmap;
 +		goto exit_free;
  	}
  
- 	dev_info(&pdev->dev, "%s device registered (reg_base=0x%p, irq=%d)\n",
- 		 DRV_NAME, priv->reg_base, dev->irq);
+ 	dev_info(&pdev->dev, "device registered (reg_base=0x%p, irq=%d)\n",
+ 		 priv->reg_base, dev->irq);
  	return 0;
  
 - exit_unmap:
 +exit_free:
-+	free_sja1000dev(dev);
++	free_cc770dev(dev);
 +exit_unmap:
  	if (mem[idx])
  		iounmap(base);
