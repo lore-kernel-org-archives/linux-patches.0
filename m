@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286C115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9785DC433D7;
-	Mon,  5 Dec 2022 19:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C75A15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943FDC433C1;
+	Mon,  5 Dec 2022 19:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268609;
-	bh=fikWHTejil3pXHr0mPdz6jYf7Q8BwEXd4iM7yIb2Yig=;
+	s=korg; t=1670268611;
+	bh=Kh01NS1R61ihkdJ/apa4Yuj6Q6emMMif66drvmpnWH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njHAKgCRdvfMarBTR9K9hzTJJQHEGt3qldHTnkJf1+7opWolXJld1hhd5EjDQi8ry
-	 Nk0CQuJ2uHZu0VCFrFkQ1Ns7UfkIssg5qRmZXNXDhjag9YEa0dKQRF9OCUAMLSQVV0
-	 eOCK2aa/bEiNTik2O86F0qVfKfwevmMq3wn/1TPI=
+	b=tisTEYXsvZZBZJOhJi3fvX2FBeANvIxK+i6ad6Dq7JD8kQjfJWuQxckyaRyDAxdEg
+	 aMx/3i1lr3vOiSsRkojLJJqOKJAzz/4y7DPmNzwcePvItJBB69gBIvGDlCtwSU2HRU
+	 EQw6enAcO1/Zfyzj92b+p+iTgA5SJE0uTyoM5E98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gazzillo <paul@pgazz.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 12/92] iio: light: rpr0521: add missing Kconfig dependencies
-Date: Mon,  5 Dec 2022 20:09:25 +0100
-Message-Id: <20221205190803.899611132@linuxfoundation.org>
+Subject: [PATCH 5.10 13/92] bpf, perf: Use subprog name when reporting subprog ksymbol
+Date: Mon,  5 Dec 2022 20:09:26 +0100
+Message-Id: <20221205190803.936802443@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,45 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Gazzillo <paul@pgazz.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 6ac12303572ef9ace5603c2c07f5f1b00a33f580 ]
+[ Upstream commit 47df8a2f78bc34ff170d147d05b121f84e252b85 ]
 
-Fix an implicit declaration of function error for rpr0521 under some configs
+Since commit bfea9a8574f3 ("bpf: Add name to struct bpf_ksym"), when
+reporting subprog ksymbol to perf, prog name instead of subprog name is
+used. The backtrace of bpf program with subprogs will be incorrect as
+shown below:
 
-When CONFIG_RPR0521 is enabled without CONFIG_IIO_TRIGGERED_BUFFER,
-the build results in "implicit declaration of function" errors, e.g.,
-  drivers/iio/light/rpr0521.c:434:3: error: implicit declaration of function
-           'iio_trigger_poll_chained' [-Werror=implicit-function-declaration]
-    434 |   iio_trigger_poll_chained(data->drdy_trigger0);
-        |   ^~~~~~~~~~~~~~~~~~~~~~~~
+  ffffffffc02deace bpf_prog_e44a3057dcb151f8_overwrite+0x66
+  ffffffffc02de9f7 bpf_prog_e44a3057dcb151f8_overwrite+0x9f
+  ffffffffa71d8d4e trace_call_bpf+0xce
+  ffffffffa71c2938 perf_call_bpf_enter.isra.0+0x48
 
-This fix adds select dependencies to RPR0521's configuration declaration.
+overwrite is the entry program and it invokes the overwrite_htab subprog
+through bpf_loop, but in above backtrace, overwrite program just jumps
+inside itself.
 
-Fixes: e12ffd241c00 ("iio: light: rpr0521 triggered buffer")
-Signed-off-by: Paul Gazzillo <paul@pgazz.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216678
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110214729.ls5ixav5kxpeftk7@device
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixing it by using subprog name when reporting subprog ksymbol. After
+the fix, the output of perf script will be correct as shown below:
+
+  ffffffffc031aad2 bpf_prog_37c0bec7d7c764a4_overwrite_htab+0x66
+  ffffffffc031a9e7 bpf_prog_c7eb827ef4f23e71_overwrite+0x9f
+  ffffffffa3dd8d4e trace_call_bpf+0xce
+  ffffffffa3dc2938 perf_call_bpf_enter.isra.0+0x48
+
+Fixes: bfea9a8574f3 ("bpf: Add name to struct bpf_ksym")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20221114095733.158588-1-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
-index 917f9becf9c7..dd52eff9ba2a 100644
---- a/drivers/iio/light/Kconfig
-+++ b/drivers/iio/light/Kconfig
-@@ -294,6 +294,8 @@ config RPR0521
- 	tristate "ROHM RPR0521 ALS and proximity sensor driver"
- 	depends on I2C
- 	select REGMAP_I2C
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	help
- 	  Say Y here if you want to build support for ROHM's RPR0521
- 	  ambient light and proximity sensor device.
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 0e01216f4e5a..e9b354d521a3 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -8740,7 +8740,7 @@ static void perf_event_bpf_emit_ksymbols(struct bpf_prog *prog,
+ 				PERF_RECORD_KSYMBOL_TYPE_BPF,
+ 				(u64)(unsigned long)subprog->bpf_func,
+ 				subprog->jited_len, unregister,
+-				prog->aux->ksym.name);
++				subprog->aux->ksym.name);
+ 		}
+ 	}
+ }
 -- 
 2.35.1
 
