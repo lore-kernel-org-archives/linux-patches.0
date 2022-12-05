@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319BE15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E86DC433C1;
-	Mon,  5 Dec 2022 19:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D943B15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF5DC433C1;
+	Mon,  5 Dec 2022 19:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268705;
-	bh=VLuRiyZC1rvMXRyIT/fnf8lLB/uEzuwa94MNE+ira3U=;
+	s=korg; t=1670268707;
+	bh=mraM3Xucu5VedG4ky4uU3pLpiE4kd7FNgPSkuPeAjvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FG0H8h9W3U2CeiIHPbYs1fnNG//EGBJs03NSLLf7rx9Hr/6MhNX6cUnCN2YtvpCq
-	 XXqv0djPzv2vIY5sZeCo013ZGyeUEz9UiESE5UUi3SPjlrfxtuE/Fdr7dFOC75vKWz
-	 f6oaPGKeqBivKl6RMZdMhnc9NBcbGgOblQcVI2Jg=
+	b=UL7KGuelUr5Sz40VNtplkbMiruFqBC4pt8eMgxQz4r4ZD2boE5gt1kF1jm2qkH7eX
+	 83gmZI6cVK22YbAKOMo4/d15tFWObtv1OG6ApufzJgH3MsDw2NigL2c044DEU5b0Sa
+	 J622lEmsvpg1IPbZP/AlI+XrEqIfVzUBuxGgQejU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
-Subject: [PATCH 5.10 37/92] wifi: cfg80211: dont allow multi-BSSID in S1G
-Date: Mon,  5 Dec 2022 20:09:50 +0100
-Message-Id: <20221205190804.693386612@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Yujie Liu <yujie.liu@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 68/92] tracing: Free buffers when a used dynamic event is removed
+Date: Mon,  5 Dec 2022 20:10:21 +0100
+Message-Id: <20221205190805.757441996@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,49 +37,201 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit acd3c92acc7aaec50a94d0a7faf7ccd74e952493 ]
+commit 4313e5a613049dfc1819a6dfb5f94cf2caff9452 upstream.
 
-In S1G beacon frames there shouldn't be multi-BSSID elements
-since that's not supported, remove that to avoid a potential
-integer underflow and/or misparsing the frames due to the
-different length of the fixed part of the frame.
+After 65536 dynamic events have been added and removed, the "type" field
+of the event then uses the first type number that is available (not
+currently used by other events). A type number is the identifier of the
+binary blobs in the tracing ring buffer (known as events) to map them to
+logic that can parse the binary blob.
 
-While at it, initialize non_tx_data so we don't send garbage
-values to the user (even if it doesn't seem to matter now.)
+The issue is that if a dynamic event (like a kprobe event) is traced and
+is in the ring buffer, and then that event is removed (because it is
+dynamic, which means it can be created and destroyed), if another dynamic
+event is created that has the same number that new event's logic on
+parsing the binary blob will be used.
 
-Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
-Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To show how this can be an issue, the following can crash the kernel:
+
+ # cd /sys/kernel/tracing
+ # for i in `seq 65536`; do
+     echo 'p:kprobes/foo do_sys_openat2 $arg1:u32' > kprobe_events
+ # done
+
+For every iteration of the above, the writing to the kprobe_events will
+remove the old event and create a new one (with the same format) and
+increase the type number to the next available on until the type number
+reaches over 65535 which is the max number for the 16 bit type. After it
+reaches that number, the logic to allocate a new number simply looks for
+the next available number. When an dynamic event is removed, that number
+is then available to be reused by the next dynamic event created. That is,
+once the above reaches the max number, the number assigned to the event in
+that loop will remain the same.
+
+Now that means deleting one dynamic event and created another will reuse
+the previous events type number. This is where bad things can happen.
+After the above loop finishes, the kprobes/foo event which reads the
+do_sys_openat2 function call's first parameter as an integer.
+
+ # echo 1 > kprobes/foo/enable
+ # cat /etc/passwd > /dev/null
+ # cat trace
+             cat-2211    [005] ....  2007.849603: foo: (do_sys_openat2+0x0/0x130) arg1=4294967196
+             cat-2211    [005] ....  2007.849620: foo: (do_sys_openat2+0x0/0x130) arg1=4294967196
+             cat-2211    [005] ....  2007.849838: foo: (do_sys_openat2+0x0/0x130) arg1=4294967196
+             cat-2211    [005] ....  2007.849880: foo: (do_sys_openat2+0x0/0x130) arg1=4294967196
+ # echo 0 > kprobes/foo/enable
+
+Now if we delete the kprobe and create a new one that reads a string:
+
+ # echo 'p:kprobes/foo do_sys_openat2 +0($arg2):string' > kprobe_events
+
+And now we can the trace:
+
+ # cat trace
+        sendmail-1942    [002] .....   530.136320: foo: (do_sys_openat2+0x0/0x240) arg1=             cat-2046    [004] .....   530.930817: foo: (do_sys_openat2+0x0/0x240) arg1="������������������������������������������������������������������������������������������������"
+             cat-2046    [004] .....   530.930961: foo: (do_sys_openat2+0x0/0x240) arg1="������������������������������������������������������������������������������������������������"
+             cat-2046    [004] .....   530.934278: foo: (do_sys_openat2+0x0/0x240) arg1="������������������������������������������������������������������������������������������������"
+             cat-2046    [004] .....   530.934563: foo: (do_sys_openat2+0x0/0x240) arg1="������������������������������������������������������������������������������������������������"
+            bash-1515    [007] .....   534.299093: foo: (do_sys_openat2+0x0/0x240) arg1="kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk���������@��4Z����;Y�����U
+
+And dmesg has:
+
+==================================================================
+BUG: KASAN: use-after-free in string+0xd4/0x1c0
+Read of size 1 at addr ffff88805fdbbfa0 by task cat/2049
+
+ CPU: 0 PID: 2049 Comm: cat Not tainted 6.1.0-rc6-test+ #641
+ Hardware name: Hewlett-Packard HP Compaq Pro 6300 SFF/339A, BIOS K01 v03.03 07/14/2016
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5b/0x77
+  print_report+0x17f/0x47b
+  kasan_report+0xad/0x130
+  string+0xd4/0x1c0
+  vsnprintf+0x500/0x840
+  seq_buf_vprintf+0x62/0xc0
+  trace_seq_printf+0x10e/0x1e0
+  print_type_string+0x90/0xa0
+  print_kprobe_event+0x16b/0x290
+  print_trace_line+0x451/0x8e0
+  s_show+0x72/0x1f0
+  seq_read_iter+0x58e/0x750
+  seq_read+0x115/0x160
+  vfs_read+0x11d/0x460
+  ksys_read+0xa9/0x130
+  do_syscall_64+0x3a/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x7fc2e972ade2
+ Code: c0 e9 b2 fe ff ff 50 48 8d 3d b2 3f 0a 00 e8 05 f0 01 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+ RSP: 002b:00007ffc64e687c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+ RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fc2e972ade2
+ RDX: 0000000000020000 RSI: 00007fc2e980d000 RDI: 0000000000000003
+ RBP: 00007fc2e980d000 R08: 00007fc2e980c010 R09: 0000000000000000
+ R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000020f00
+ R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+  </TASK>
+
+ The buggy address belongs to the physical page:
+ page:ffffea00017f6ec0 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x5fdbb
+ flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
+ raw: 000fffffc0000000 0000000000000000 ffffea00017f6ec8 0000000000000000
+ raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+ page dumped because: kasan: bad access detected
+
+ Memory state around the buggy address:
+  ffff88805fdbbe80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff88805fdbbf00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ >ffff88805fdbbf80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                ^
+  ffff88805fdbc000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff88805fdbc080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ==================================================================
+
+This was found when Zheng Yejian sent a patch to convert the event type
+number assignment to use IDA, which gives the next available number, and
+this bug showed up in the fuzz testing by Yujie Liu and the kernel test
+robot. But after further analysis, I found that this behavior is the same
+as when the event type numbers go past the 16bit max (and the above shows
+that).
+
+As modules have a similar issue, but is dealt with by setting a
+"WAS_ENABLED" flag when a module event is enabled, and when the module is
+freed, if any of its events were enabled, the ring buffer that holds that
+event is also cleared, to prevent reading stale events. The same can be
+done for dynamic events.
+
+If any dynamic event that is being removed was enabled, then make sure the
+buffers they were enabled in are now cleared.
+
+Link: https://lkml.kernel.org/r/20221123171434.545706e3@gandalf.local.home
+Link: https://lore.kernel.org/all/20221110020319.1259291-1-zhengyejian1@huawei.com/
+
+Cc: stable@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Depends-on: e18eb8783ec49 ("tracing: Add tracing_reset_all_online_cpus_unlocked() function")
+Depends-on: 5448d44c38557 ("tracing: Add unified dynamic event framework")
+Depends-on: 6212dd29683ee ("tracing/kprobes: Use dyn_event framework for kprobe events")
+Depends-on: 065e63f951432 ("tracing: Only have rmmod clear buffers that its events were active in")
+Depends-on: 575380da8b469 ("tracing: Only clear trace buffer on module unload if event was traced")
+Fixes: 77b44d1b7c283 ("tracing/kprobes: Rename Kprobe-tracer to kprobe-event")
+Reported-by: Zheng Yejian <zhengyejian1@huawei.com>
+Reported-by: Yujie Liu <yujie.liu@intel.com>
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/trace/trace_dynevent.c |    2 ++
+ kernel/trace/trace_events.c   |   11 ++++++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 8102ee7b2047..d09dabae5627 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2467,10 +2467,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 	const struct cfg80211_bss_ies *ies1, *ies2;
- 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
- 				      u.probe_resp.variable);
--	struct cfg80211_non_tx_bss non_tx_data;
-+	struct cfg80211_non_tx_bss non_tx_data = {};
+--- a/kernel/trace/trace_dynevent.c
++++ b/kernel/trace/trace_dynevent.c
+@@ -70,6 +70,7 @@ int dyn_event_release(int argc, char **a
+ 		if (ret)
+ 			break;
+ 	}
++	tracing_reset_all_online_cpus();
+ 	mutex_unlock(&event_mutex);
  
- 	res = cfg80211_inform_single_bss_frame_data(wiphy, data, mgmt,
- 						    len, gfp);
+ 	return ret;
+@@ -165,6 +166,7 @@ int dyn_events_release_all(struct dyn_ev
+ 			break;
+ 	}
+ out:
++	tracing_reset_all_online_cpus();
+ 	mutex_unlock(&event_mutex);
+ 
+ 	return ret;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2572,7 +2572,10 @@ static int probe_remove_event_call(struc
+ 		 * TRACE_REG_UNREGISTER.
+ 		 */
+ 		if (file->flags & EVENT_FILE_FL_ENABLED)
+-			return -EBUSY;
++			goto busy;
 +
-+	/* don't do any further MBSSID handling for S1G */
-+	if (ieee80211_is_s1g_beacon(mgmt->frame_control))
-+		return res;
-+
- 	if (!res || !wiphy->support_mbssid ||
- 	    !cfg80211_find_ie(WLAN_EID_MULTIPLE_BSSID, ie, ielen))
- 		return res;
--- 
-2.35.1
-
++		if (file->flags & EVENT_FILE_FL_WAS_ENABLED)
++			tr->clear_trace = true;
+ 		/*
+ 		 * The do_for_each_event_file_safe() is
+ 		 * a double loop. After finding the call for this
+@@ -2585,6 +2588,12 @@ static int probe_remove_event_call(struc
+ 	__trace_remove_event_call(call);
+ 
+ 	return 0;
++ busy:
++	/* No need to clear the trace now */
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		tr->clear_trace = false;
++	}
++	return -EBUSY;
+ }
+ 
+ /* Remove an event_call */
 
 
