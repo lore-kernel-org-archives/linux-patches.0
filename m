@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C4415C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E2C433D6;
-	Mon,  5 Dec 2022 19:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E0B15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC6EC433C1;
+	Mon,  5 Dec 2022 19:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269141;
-	bh=m739i/q8Ilp/MO+HOiX5PFkVDNJRNjsBlEdAW5n7L7A=;
+	s=korg; t=1670269144;
+	bh=YdOd16i8larOJiF6IQ6t9W+csn8yjRr238dJY+8X0wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrgvubYS16hqxxxuXaflKpyZ67lJtNmPbVpTbWLb9j5FvtJ8WVbW51pt/Y6nbtlIg
-	 /unS7eKTlGjSFGw8j4fA/mZqhH+uZuZa5c/bTDkdi7/ekQzUFjXWgA+xAHmJosNNh9
-	 4tCiBG1VHHIQzQoN3qKBYzaG7NO24qnjUZE/p/Ow=
+	b=pqgctn01tAGg+6iNJ41dWwAmkuRTn+A8kJzo0PyEjrkLZVJYzK1mnqo4spOp35XOP
+	 A0lUKjvfYIhaxPTgeDWLjPobVyFAe44dHRXtJkUEo2WEuQht0ir8rMo+kSHIA+LiGX
+	 X50d2vXbXr5uxMRtnj/t9s0rKwxW7XtuyeUxRW9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Saeed Mahameed <saeed@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/153] net: liquidio: simplify if expression
-Date: Mon,  5 Dec 2022 20:09:03 +0100
-Message-Id: <20221205190809.297452275@linuxfoundation.org>
+Subject: [PATCH 5.4 002/153] wifi: mac80211_hwsim: fix debugfs attribute ps with rc table support
+Date: Mon,  5 Dec 2022 20:08:46 +0100
+Message-Id: <20221205190808.814933369@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -37,48 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-[ Upstream commit 733d4bbf9514890eb53ebe75827bf1fb4fd25ebe ]
+[ Upstream commit 69188df5f6e4cecc6b76b958979ba363cd5240e8 ]
 
-Fix the warning reported by kbuild:
+Fixes a warning that occurs when rc table support is enabled
+(IEEE80211_HW_SUPPORTS_RC_TABLE) in mac80211_hwsim and the PS mode
+is changed via the exported debugfs attribute.
 
-cocci warnings: (new ones prefixed by >>)
->> drivers/net/ethernet/cavium/liquidio/lio_main.c:1797:54-56: WARNING !A || A && B is equivalent to !A || B
-   drivers/net/ethernet/cavium/liquidio/lio_main.c:1827:54-56: WARNING !A || A && B is equivalent to !A || B
+When the PS mode is changed, a packet is broadcasted via
+hwsim_send_nullfunc by creating and transmitting a plain skb with only
+header initialized. The ieee80211 rate array in the control buffer is
+zero-initialized. When ratetbl support is enabled, ieee80211_get_tx_rates
+is called for the skb with sta parameter set to NULL and thus no
+ratetbl can be used. The final rate array then looks like
+[-1,0; 0,0; 0,0; 0,0] which causes the warning in ieee80211_get_tx_rate.
 
-Fixes: 8979f428a4af ("net: liquidio: release resources when liquidio driver open failed")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The issue is fixed by setting the count of the first rate with idx '0'
+to 1 and hence ieee80211_get_tx_rates won't overwrite it with idx '-1'.
+
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mac80211_hwsim.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index 69878589213a..ab86240e4532 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -1836,7 +1836,7 @@ static int liquidio_open(struct net_device *netdev)
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index 3a3a5a570694..f80b1d57d6c3 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -663,6 +663,7 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
+ 	struct hwsim_vif_priv *vp = (void *)vif->drv_priv;
+ 	struct sk_buff *skb;
+ 	struct ieee80211_hdr *hdr;
++	struct ieee80211_tx_info *cb;
  
- 	ifstate_set(lio, LIO_IFSTATE_RUNNING);
+ 	if (!vp->assoc)
+ 		return;
+@@ -684,6 +685,10 @@ static void hwsim_send_nullfunc(struct mac80211_hwsim_data *data, u8 *mac,
+ 	memcpy(hdr->addr2, mac, ETH_ALEN);
+ 	memcpy(hdr->addr3, vp->bssid, ETH_ALEN);
  
--	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on)) {
-+	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on) {
- 		ret = setup_tx_poll_fn(netdev);
- 		if (ret)
- 			goto err_poll;
-@@ -1866,7 +1866,7 @@ static int liquidio_open(struct net_device *netdev)
- 	return 0;
- 
- err_rx_ctrl:
--	if (!OCTEON_CN23XX_PF(oct) || (OCTEON_CN23XX_PF(oct) && !oct->msix_on))
-+	if (!OCTEON_CN23XX_PF(oct) || !oct->msix_on)
- 		cleanup_tx_poll_fn(netdev);
- err_poll:
- 	if (lio->ptp_clock) {
++	cb = IEEE80211_SKB_CB(skb);
++	cb->control.rates[0].count = 1;
++	cb->control.rates[1].idx = -1;
++
+ 	rcu_read_lock();
+ 	mac80211_hwsim_tx_frame(data->hw, skb,
+ 				rcu_dereference(vif->chanctx_conf)->def.chan);
 -- 
 2.35.1
 
