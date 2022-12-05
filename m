@@ -1,27 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8D715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA303C433C1;
-	Mon,  5 Dec 2022 19:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D216115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC70C433D6;
+	Mon,  5 Dec 2022 19:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269092;
-	bh=Ogndp6nQiho47cNepyN4MEXpBoNwyEqQj1W99YIIH5g=;
+	s=korg; t=1670269094;
+	bh=0Ny/4dzeP670hxsZcSqkSQeDvT0iENprUMPxKn3XOO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovRHOWTbCUyGhq+Wu5n+FRQDHKhetKss0nnWaBVqtXiJ/mSs/n9RJOYV3RrH3q+w1
-	 Ku4g4B7sD1J6B5wbnuv9eHA5UflBLFBTnFo6KrKOF82lk9innGwMMiNQbZKLloaaN5
-	 5oPlYcKK8yMWFFg2TuXDoTpx9zsVxAH5L/aF66No=
+	b=unuFZHiWPsIzzBCqdUdJ0aSAPQ2cHrJOWu1yFyVVT87+arh0CVTkieWw9yEMu8zDX
+	 wudDINgn9hJ0LtUUcWpBdljGdU4wOkazgUzANSSab3lfAiavdqQXqiDDCZGPimsvHe
+	 RM6VjDVDLHuMtiRTG+RiRpWFgbLfRjrAG6HZVPco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Helge Deller <deller@gmx.de>,
+	Lee Jones <lee@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/120] parisc: Increase FRAME_WARN to 2048 bytes on parisc
-Date: Mon,  5 Dec 2022 20:10:45 +0100
-Message-Id: <20221205190809.699223225@linuxfoundation.org>
+Subject: [PATCH 5.15 106/120] Kconfig.debug: provide a little extra FRAME_WARN leeway when KASAN is enabled
+Date: Mon,  5 Dec 2022 20:10:46 +0100
+Message-Id: <20221205190809.727163931@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,38 +50,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 8d192bec534bd5b778135769a12e5f04580771f7 ]
+[ Upstream commit 152fe65f300e1819d59b80477d3e0999b4d5d7d2 ]
 
-PA-RISC uses a much bigger frame size for functions than other
-architectures. So increase it to 2048 for 32- and 64-bit kernels.
-This fixes e.g. a warning in lib/xxhash.c.
+When enabled, KASAN enlarges function's stack-frames.  Pushing quite a few
+over the current threshold.  This can mainly be seen on 32-bit
+architectures where the present limit (when !GCC) is a lowly 1024-Bytes.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: 152fe65f300e ("Kconfig.debug: provide a little extra FRAME_WARN leeway when KASAN is enabled")
+Link: https://lkml.kernel.org/r/20221125120750.3537134-3-lee@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Tom Rix <trix@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.debug | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/Kconfig.debug | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 027ab190796f..23b7b1fccc54 100644
+index 23b7b1fccc54..f71db0cc3bf1 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -352,8 +352,9 @@ config FRAME_WARN
- 	int "Warn for stack frames larger than"
- 	range 0 8192
+@@ -354,6 +354,7 @@ config FRAME_WARN
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
--	default 1536 if (!64BIT && (PARISC || XTENSA))
--	default 1024 if (!64BIT && !PARISC)
-+	default 2048 if PARISC
-+	default 1536 if (!64BIT && XTENSA)
-+	default 1024 if !64BIT
+ 	default 2048 if PARISC
+ 	default 1536 if (!64BIT && XTENSA)
++	default 1280 if KASAN && !64BIT
+ 	default 1024 if !64BIT
  	default 2048 if 64BIT
  	help
- 	  Tell gcc to warn at build time for stack frames larger than this.
 -- 
 2.35.1
 
