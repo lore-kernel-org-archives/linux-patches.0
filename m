@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21D715C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339D3C433B5;
-	Mon,  5 Dec 2022 19:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6628715C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A1EC433D6;
+	Mon,  5 Dec 2022 19:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267590;
-	bh=HR9ThG2rHLHc6JV1l1KcLUxKX9fVsctANgy8HrOzd6U=;
+	s=korg; t=1670267593;
+	bh=G2uRRcro1qgz8hUm6Yt8P22bVtPB3nqqlqN1Ae4smrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGQp+ElptQBU143pB9yWlQtvxqqBXA7PbQ/FxTIeTPra5AICxlamrru2ldxA8wcZB
-	 h+6q6fJtwNSbWipnhfU8tCWihuejaJ51Ii+qRKhXPpUDYtFNMO2fhYVQNv9d8+De+t
-	 /6wwTb3pyxHcuDX+PzIbuO3fv63QzKxErxk3WcMI=
+	b=yJYAXvZ0AHtzhyNgcfkpWolXP3pBQm/dQCRWPsM2KdmqXZCG/ILS0LiGBhiNMCWyi
+	 hP59OC66/Lhk8L9YZXP1hgjD/ZEcfPr7gFIDFvHQ+yzxqz0lGP03ghw2f2W7vfuHiR
+	 iUItC/Jvr6Q3PbSYOcwzQ/y5L8QSoGt1E7sN0HVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 41/62] net/9p: Fix a potential socket leak in p9_socket_open
-Date: Mon,  5 Dec 2022 20:09:38 +0100
-Message-Id: <20221205190759.645291647@linuxfoundation.org>
+Subject: [PATCH 4.9 42/62] net: hsr: Fix potential use-after-free
+Date: Mon,  5 Dec 2022 20:09:39 +0100
+Message-Id: <20221205190759.693487791@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Hai <wanghai38@huawei.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit dcc14cfd7debe11b825cb077e75d91d2575b4cb8 ]
+[ Upstream commit 7e177d32442b7ed08a9fa61b61724abc548cb248 ]
 
-Both p9_fd_create_tcp() and p9_fd_create_unix() will call
-p9_socket_open(). If the creation of p9_trans_fd fails,
-p9_fd_create_tcp() and p9_fd_create_unix() will return an
-error directly instead of releasing the cscoket, which will
-result in a socket leak.
+The skb is delivered to netif_rx() which may free it, after calling this,
+dereferencing skb may trigger use-after-free.
 
-This patch adds sock_release() to fix the leak issue.
-
-Fixes: 6b18662e239a ("9p connect fixes")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-ACKed-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20221125075724.27912-1-yuehaibing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/hsr/hsr_forward.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index e70e843ee48f..7e484f5b140c 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -851,8 +851,10 @@ static int p9_socket_open(struct p9_client *client, struct socket *csocket)
- 	struct file *file;
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 04b5450c5a55..adfb49760678 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -207,17 +207,18 @@ static void hsr_deliver_master(struct sk_buff *skb, struct net_device *dev,
+ 			       struct hsr_node *node_src)
+ {
+ 	bool was_multicast_frame;
+-	int res;
++	int res, recv_len;
  
- 	p = kzalloc(sizeof(struct p9_trans_fd), GFP_KERNEL);
--	if (!p)
-+	if (!p) {
-+		sock_release(csocket);
- 		return -ENOMEM;
-+	}
- 
- 	csocket->sk->sk_allocation = GFP_NOIO;
- 	file = sock_alloc_file(csocket, 0, NULL);
+ 	was_multicast_frame = (skb->pkt_type == PACKET_MULTICAST);
+ 	hsr_addr_subst_source(node_src, skb);
+ 	skb_pull(skb, ETH_HLEN);
++	recv_len = skb->len;
+ 	res = netif_rx(skb);
+ 	if (res == NET_RX_DROP) {
+ 		dev->stats.rx_dropped++;
+ 	} else {
+ 		dev->stats.rx_packets++;
+-		dev->stats.rx_bytes += skb->len;
++		dev->stats.rx_bytes += recv_len;
+ 		if (was_multicast_frame)
+ 			dev->stats.multicast++;
+ 	}
 -- 
 2.35.1
 
