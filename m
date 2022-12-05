@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7732615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1340C433D6;
-	Mon,  5 Dec 2022 19:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275C215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9B8C433D7;
+	Mon,  5 Dec 2022 19:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268647;
-	bh=7gv1xfDN5Bt5AFxAltxGTnGqlfzFNIi27KSRVfTryN0=;
+	s=korg; t=1670268650;
+	bh=HYYj7R+g9Rr+JE+q8CsL4XZOt3TzagA13sj+0FZvd6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+x2yaUX1Mrx8A+fYXYfCb+wgbbvPBE2dl5uQRCgwn0uMjRDiuSaemKOUpyLGMgKK
-	 7AT6fUjtdz0DXLB6a1HFGfYEiAZNU6Df5kCtWFiDDgrltBnEcfWFqUr0f9UHKqaqs4
-	 9gfplrBCSIxrqrepG/lSuymghYfjK9ib1KIbq5vA=
+	b=c2UNM4WX4sDlIr58QqaN3lx5i1gIvTbc65v0VRL8darOoj3K2HvV6aQ/Q9lf70c3n
+	 Qqr6t4+sxJdw581Me99D9GBWcqt75cKghiw18001xmjyfddPh/1i9LnB6tkV+OwMWH
+	 aYmXWt5DHiuN/+aPsoXP4Db66whGA2M6gtbcqITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 54/92] riscv: vdso: fix section overlapping under some conditions
-Date: Mon,  5 Dec 2022 20:10:07 +0100
-Message-Id: <20221205190805.303179359@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 55/92] error-injection: Add prompt for function error injection
+Date: Mon,  5 Dec 2022 20:10:08 +0100
+Message-Id: <20221205190805.333088072@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,58 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 74f6bb55c834da6d4bac24f44868202743189b2b upstream.
+commit a4412fdd49dc011bcc2c0d81ac4cab7457092650 upstream.
 
-lkp reported a build error, I tried the config and can reproduce
-build error as below:
+The config to be able to inject error codes into any function annotated
+with ALLOW_ERROR_INJECTION() is enabled when FUNCTION_ERROR_INJECTION is
+enabled.  But unfortunately, this is always enabled on x86 when KPROBES
+is enabled, and there's no way to turn it off.
 
-  VDSOLD  arch/riscv/kernel/vdso/vdso.so.dbg
-ld.lld: error: section .note file range overlaps with .text
->>> .note range is [0x7C8, 0x803]
->>> .text range is [0x800, 0x1993]
+As kprobes is useful for observability of the kernel, it is useful to
+have it enabled in production environments.  But error injection should
+be avoided.  Add a prompt to the config to allow it to be disabled even
+when kprobes is enabled, and get rid of the "def_bool y".
 
-ld.lld: error: section .text file range overlaps with .dynamic
->>> .text range is [0x800, 0x1993]
->>> .dynamic range is [0x808, 0x937]
+This is a kernel debug feature (it's in Kconfig.debug), and should have
+never been something enabled by default.
 
-ld.lld: error: section .note virtual address range overlaps with .text
->>> .note range is [0x7C8, 0x803]
->>> .text range is [0x800, 0x1993]
-
-Fix it by setting DISABLE_BRANCH_PROFILING which will disable branch
-tracing for vdso, thus avoid useless _ftrace_annotated_branch section
-and _ftrace_branch section. Although we can also fix it by removing
-the hardcoded .text begin address, but I think that's another story
-and should be put into another patch.
-
-Link: https://lore.kernel.org/lkml/202210122123.Cc4FPShJ-lkp@intel.com/#r
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://lore.kernel.org/r/20221102170254.1925-1-jszhang@kernel.org
-Fixes: ad5d1122b82f ("riscv: use vDSO common flow to reduce the latency of the time-related functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 540adea3809f6 ("error-injection: Separate error-injection from kprobe")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/vdso/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ lib/Kconfig.debug |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index db6548509bb3..06e6b27f3bcc 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -17,6 +17,7 @@ vdso-syms += flush_icache
- obj-vdso = $(patsubst %, %.o, $(vdso-syms)) note.o
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -1801,8 +1801,14 @@ config NETDEV_NOTIFIER_ERROR_INJECT
+ 	  If unsure, say N.
  
- ccflags-y := -fno-stack-protector
-+ccflags-y += -DDISABLE_BRANCH_PROFILING
+ config FUNCTION_ERROR_INJECTION
+-	def_bool y
++	bool "Fault-injections of functions"
+ 	depends on HAVE_FUNCTION_ERROR_INJECTION && KPROBES
++	help
++	  Add fault injections into various functions that are annotated with
++	  ALLOW_ERROR_INJECTION() in the kernel. BPF may also modify the return
++	  value of theses functions. This is useful to test error paths of code.
++
++	  If unsure, say N
  
- ifneq ($(c-gettimeofday-y),)
-   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
--- 
-2.38.1
-
+ config FAULT_INJECTION
+ 	bool "Fault-injection framework"
 
 
