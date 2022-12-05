@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D3C15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D38C433D7;
-	Mon,  5 Dec 2022 19:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946EC15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18948C433D6;
+	Mon,  5 Dec 2022 19:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267771;
-	bh=+6AwVFpJ3IrcMwPMn8PQ1Uc+3EOdScRD7/5USYoD4C0=;
+	s=korg; t=1670267774;
+	bh=OlArM1d7UXtpG9CCUqmXJOeoS3dDyMcfcseX59obKfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e09UAekBYbJ5AybnLOayPtYeyXKxN7P0lKFcuZYEgTCi19Cbm4SkiXLVJMucNHeSW
-	 1qnUfPbaYpRObGpiKhQoZm19oCxj8DOhPya4P+L1g6Gfprv0pW1m6ZXYs7DNDTbAt6
-	 UPf/EeGw3novI4nzOwyUlvXlUY3OLD1aA2pFbBow=
+	b=uOZ8EeMdFlepjgplJx/y2DCBmI+VuUFPGA2ijnI5UGEyVRxZx9CE2XbyvUfD65hb1
+	 LtNiTTu77x/IGj/SDJHq+dsXNcIrmCKs1cHjqBDbzDVbKsfRM+uOdu3xc+yJQ4Q2nf
+	 rNki0jJv3FVyWnB/SAHSZ+VtjJJfISHwWtA/E/j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cdb9a427d1bc08815104@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 17/77] NFC: nci: fix memory leak in nci_rx_data_packet()
-Date: Mon,  5 Dec 2022 20:09:08 +0100
-Message-Id: <20221205190801.483422707@linuxfoundation.org>
+Subject: [PATCH 4.14 18/77] dccp/tcp: Reset saddr on failure after inet6?_hash_connect().
+Date: Mon,  5 Dec 2022 20:09:09 +0100
+Message-Id: <20221205190801.520024053@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,59 +37,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 53270fb0fd77fe786d8c07a0793981d797836b93 ]
+[ Upstream commit 77934dc6db0d2b111a8f2759e9ad2fb67f5cffa5 ]
 
-Syzbot reported a memory leak about skb:
+When connect() is called on a socket bound to the wildcard address,
+we change the socket's saddr to a local address.  If the socket
+fails to connect() to the destination, we have to reset the saddr.
 
-unreferenced object 0xffff88810e144e00 (size 240):
-  comm "syz-executor284", pid 3701, jiffies 4294952403 (age 12.620s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff83ab79a9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:497
-    [<ffffffff82a5cf64>] alloc_skb include/linux/skbuff.h:1267 [inline]
-    [<ffffffff82a5cf64>] virtual_ncidev_write+0x24/0xe0 drivers/nfc/virtual_ncidev.c:116
-    [<ffffffff815f6503>] do_loop_readv_writev fs/read_write.c:759 [inline]
-    [<ffffffff815f6503>] do_loop_readv_writev fs/read_write.c:743 [inline]
-    [<ffffffff815f6503>] do_iter_write+0x253/0x300 fs/read_write.c:863
-    [<ffffffff815f66ed>] vfs_writev+0xdd/0x240 fs/read_write.c:934
-    [<ffffffff815f68f6>] do_writev+0xa6/0x1c0 fs/read_write.c:977
-    [<ffffffff848802d5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff848802d5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84a00087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+However, when an error occurs after inet_hash6?_connect() in
+(dccp|tcp)_v[46]_conect(), we forget to reset saddr and leave
+the socket bound to the address.
 
-In nci_rx_data_packet(), if we don't get a valid conn_info, we will return
-directly but forget to release the skb.
+>From the user's point of view, whether saddr is reset or not varies
+with errno.  Let's fix this inconsistent behaviour.
 
-Reported-by: syzbot+cdb9a427d1bc08815104@syzkaller.appspotmail.com
-Fixes: 4aeee6871e8c ("NFC: nci: Add dynamic logical connections support")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Link: https://lore.kernel.org/r/20221118082419.239475-1-liushixin2@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Note that after this patch, the repro [0] will trigger the WARN_ON()
+in inet_csk_get_port() again, but this patch is not buggy and rather
+fixes a bug papering over the bhash2's bug for which we need another
+fix.
+
+For the record, the repro causes -EADDRNOTAVAIL in inet_hash6_connect()
+by this sequence:
+
+  s1 = socket()
+  s1.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s1.bind(('127.0.0.1', 10000))
+  s1.sendto(b'hello', MSG_FASTOPEN, (('127.0.0.1', 10000)))
+  # or s1.connect(('127.0.0.1', 10000))
+
+  s2 = socket()
+  s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+  s2.bind(('0.0.0.0', 10000))
+  s2.connect(('127.0.0.1', 10000))  # -EADDRNOTAVAIL
+
+  s2.listen(32)  # WARN_ON(inet_csk(sk)->icsk_bind2_hash != tb2);
+
+[0]: https://syzkaller.appspot.com/bug?extid=015d756bbd1f8b5c8f09
+
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 7c657876b63c ("[DCCP]: Initial implementation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/data.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/dccp/ipv4.c     | 2 ++
+ net/dccp/ipv6.c     | 2 ++
+ net/ipv4/tcp_ipv4.c | 2 ++
+ net/ipv6/tcp_ipv6.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
-index 9e3f9460f14f..5d46d8dfad72 100644
---- a/net/nfc/nci/data.c
-+++ b/net/nfc/nci/data.c
-@@ -291,8 +291,10 @@ void nci_rx_data_packet(struct nci_dev *ndev, struct sk_buff *skb)
- 		 nci_plen(skb->data));
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 7e93087d1366..c021d5dde8f7 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -134,6 +134,8 @@ int dccp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * This unhashes the socket and releases the local port, if necessary.
+ 	 */
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index ae4851fdbe9e..72803e1ea10a 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -957,6 +957,8 @@ static int dccp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
- 	conn_info = nci_get_conn_info_by_conn_id(ndev, nci_conn_id(skb->data));
--	if (!conn_info)
-+	if (!conn_info) {
-+		kfree_skb(skb);
- 		return;
-+	}
+ late_failure:
+ 	dccp_set_state(sk, DCCP_CLOSED);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	__sk_dst_reset(sk);
+ failure:
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 9d8c64b92011..8bbdd8e36618 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -265,6 +265,8 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * if necessary.
+ 	 */
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ 	ip_rt_put(rt);
+ 	sk->sk_route_caps = 0;
+ 	inet->inet_dport = 0;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 4ef55062d37c..c639431d848c 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -310,6 +310,8 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
  
- 	/* strip the nci data header */
- 	skb_pull(skb, NCI_DATA_HDR_SIZE);
+ late_failure:
+ 	tcp_set_state(sk, TCP_CLOSE);
++	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
++		inet_reset_saddr(sk);
+ failure:
+ 	inet->inet_dport = 0;
+ 	sk->sk_route_caps = 0;
 -- 
 2.35.1
 
