@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F6215C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7717BC433D6;
-	Mon,  5 Dec 2022 19:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D10A15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228F7C433D6;
+	Mon,  5 Dec 2022 19:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269253;
-	bh=dMWyn7/7Idu2B8dNE8WJPCqIWmWA4e1XTU7f95VKj1M=;
+	s=korg; t=1670269256;
+	bh=yFRaeCfxMVwVo2xlNiylzF7EomyknCO3jZdjXVzkwgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNUMKxegC9rmwxrpt8OKYVsqA90UCpwAe01++sG+WCSeyJRKKO8fGu3zyPmtf5uTD
-	 vhT/QvbVT7NeIwTC9uGVKIqiSJpkEDhib86Ag1I52CL/T24ZoVKeygcf4T/uxSB2U+
-	 CyUAl1ynDJpl1fXBPYZxnDVY//JBzJpZYZhNia2M=
+	b=vyvH5xn3SxkYvkqzedUg8pW7PbdeWw20PCalkTPSSc44rvpKzT6w0lgnK8qOkyCwg
+	 VH3pmoicKdiSOVS68f0iAHmamigYbDHsmlOAyJ50CXwzG3uIRDCHU+kpv4RxY02lJl
+	 VuXSL498VmMy7wT6dNPDSBtfS53iMFWtcUlfCS0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitja Spes <mitja@lxnav.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Su Bao Cheng <baocheng.su@siemens.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/153] iio: pressure: ms5611: fixed value compensation bug
-Date: Mon,  5 Dec 2022 20:09:36 +0100
-Message-Id: <20221205190810.217437752@linuxfoundation.org>
+Subject: [PATCH 5.4 061/153] serial: 8250: 8250_omap: Avoid RS485 RTS glitch on ->set_termios()
+Date: Mon,  5 Dec 2022 20:09:45 +0100
+Message-Id: <20221205190810.479916566@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,171 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mitja Spes <mitja@lxnav.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 17f442e7e47579d3881fc4d47354eaef09302e6f ]
+[ Upstream commit 038ee49fef18710bedd38b531d173ccd746b2d8d ]
 
-When using multiple instances of this driver the compensation PROM was
-overwritten by the last initialized sensor. Now each sensor has own PROM
-storage.
+RS485-enabled UART ports on TI Sitara SoCs with active-low polarity
+exhibit a Transmit Enable glitch on ->set_termios():
 
-Signed-off-by: Mitja Spes <mitja@lxnav.com>
-Fixes: 9690d81a02dc ("iio: pressure: ms5611: add support for MS5607 temperature and pressure sensor")
-Link: https://lore.kernel.org/r/20221021135827.1444793-2-mitja@lxnav.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+omap8250_restore_regs(), which is called from omap_8250_set_termios(),
+sets the TCRTLR bit in the MCR register and clears all other bits,
+including RTS.  If RTS uses active-low polarity, it is now asserted
+for no reason.
+
+The TCRTLR bit is subsequently cleared by writing up->mcr to the MCR
+register.  That variable is always zero, so the RTS bit is still cleared
+(incorrectly so if RTS is active-high).
+
+(up->mcr is not, as one might think, a cache of the MCR register's
+current value.  Rather, it only caches a single bit of that register,
+the AFE bit.  And it only does so if the UART supports the AFE bit,
+which OMAP does not.  For details see serial8250_do_set_termios() and
+serial8250_do_set_mctrl().)
+
+Finally at the end of omap8250_restore_regs(), the MCR register is
+restored (and RTS deasserted) by a call to up->port.ops->set_mctrl()
+(which equals serial8250_set_mctrl()) and serial8250_em485_stop_tx().
+
+So there's an RTS glitch between setting TCRTLR and calling
+serial8250_em485_stop_tx().  Avoid by using a read-modify-write
+when setting TCRTLR.
+
+While at it, drop a redundant initialization of up->mcr.  As explained
+above, the variable isn't used by the driver and it is already
+initialized to zero because it is part of the static struct
+serial8250_ports[] declared in 8250_core.c.  (Static structs are
+initialized to zero per section 6.7.8 nr. 10 of the C99 standard.)
+
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Su Bao Cheng <baocheng.su@siemens.com>
+Tested-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/6554b0241a2c7fd50f32576fdbafed96709e11e8.1664278942.git.lukas@wunner.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/ms5611.h      | 12 +++----
- drivers/iio/pressure/ms5611_core.c | 51 ++++++++++++++++--------------
- 2 files changed, 31 insertions(+), 32 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/pressure/ms5611.h b/drivers/iio/pressure/ms5611.h
-index 345f3902e3e3..5e2d2d4d87b5 100644
---- a/drivers/iio/pressure/ms5611.h
-+++ b/drivers/iio/pressure/ms5611.h
-@@ -25,13 +25,6 @@ enum {
- 	MS5607,
- };
- 
--struct ms5611_chip_info {
--	u16 prom[MS5611_PROM_WORDS_NB];
--
--	int (*temp_and_pressure_compensate)(struct ms5611_chip_info *chip_info,
--					    s32 *temp, s32 *pressure);
--};
--
- /*
-  * OverSampling Rate descriptor.
-  * Warning: cmd MUST be kept aligned on a word boundary (see
-@@ -50,12 +43,15 @@ struct ms5611_state {
- 	const struct ms5611_osr *pressure_osr;
- 	const struct ms5611_osr *temp_osr;
- 
-+	u16 prom[MS5611_PROM_WORDS_NB];
-+
- 	int (*reset)(struct ms5611_state *st);
- 	int (*read_prom_word)(struct ms5611_state *st, int index, u16 *word);
- 	int (*read_adc_temp_and_pressure)(struct ms5611_state *st,
- 					  s32 *temp, s32 *pressure);
- 
--	struct ms5611_chip_info *chip_info;
-+	int (*compensate_temp_and_pressure)(struct ms5611_state *st, s32 *temp,
-+					  s32 *pressure);
- 	struct regulator *vdd;
- };
- 
-diff --git a/drivers/iio/pressure/ms5611_core.c b/drivers/iio/pressure/ms5611_core.c
-index 29dd648a308c..511ebdeafbe4 100644
---- a/drivers/iio/pressure/ms5611_core.c
-+++ b/drivers/iio/pressure/ms5611_core.c
-@@ -85,7 +85,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
- 	struct ms5611_state *st = iio_priv(indio_dev);
- 
- 	for (i = 0; i < MS5611_PROM_WORDS_NB; i++) {
--		ret = st->read_prom_word(st, i, &st->chip_info->prom[i]);
-+		ret = st->read_prom_word(st, i, &st->prom[i]);
- 		if (ret < 0) {
- 			dev_err(&indio_dev->dev,
- 				"failed to read prom at %d\n", i);
-@@ -93,7 +93,7 @@ static int ms5611_read_prom(struct iio_dev *indio_dev)
- 		}
- 	}
- 
--	if (!ms5611_prom_is_valid(st->chip_info->prom, MS5611_PROM_WORDS_NB)) {
-+	if (!ms5611_prom_is_valid(st->prom, MS5611_PROM_WORDS_NB)) {
- 		dev_err(&indio_dev->dev, "PROM integrity check failed\n");
- 		return -ENODEV;
- 	}
-@@ -114,21 +114,20 @@ static int ms5611_read_temp_and_pressure(struct iio_dev *indio_dev,
- 		return ret;
- 	}
- 
--	return st->chip_info->temp_and_pressure_compensate(st->chip_info,
--							   temp, pressure);
-+	return st->compensate_temp_and_pressure(st, temp, pressure);
- }
- 
--static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
-+static int ms5611_temp_and_pressure_compensate(struct ms5611_state *st,
- 					       s32 *temp, s32 *pressure)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 3d6a159c87f4..928b35b87dcf 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -251,6 +251,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
  {
- 	s32 t = *temp, p = *pressure;
- 	s64 off, sens, dt;
+ 	struct omap8250_priv *priv = up->port.private_data;
+ 	struct uart_8250_dma	*dma = up->dma;
++	u8 mcr = serial8250_in_MCR(up);
  
--	dt = t - (chip_info->prom[5] << 8);
--	off = ((s64)chip_info->prom[2] << 16) + ((chip_info->prom[4] * dt) >> 7);
--	sens = ((s64)chip_info->prom[1] << 15) + ((chip_info->prom[3] * dt) >> 8);
-+	dt = t - (st->prom[5] << 8);
-+	off = ((s64)st->prom[2] << 16) + ((st->prom[4] * dt) >> 7);
-+	sens = ((s64)st->prom[1] << 15) + ((st->prom[3] * dt) >> 8);
+ 	if (dma && dma->tx_running) {
+ 		/*
+@@ -267,7 +268,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
+ 	serial_out(up, UART_EFR, UART_EFR_ECB);
  
--	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
-+	t = 2000 + ((st->prom[6] * dt) >> 23);
- 	if (t < 2000) {
- 		s64 off2, sens2, t2;
+ 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_A);
+-	serial8250_out_MCR(up, UART_MCR_TCRTLR);
++	serial8250_out_MCR(up, mcr | UART_MCR_TCRTLR);
+ 	serial_out(up, UART_FCR, up->fcr);
  
-@@ -154,17 +153,17 @@ static int ms5611_temp_and_pressure_compensate(struct ms5611_chip_info *chip_inf
- 	return 0;
- }
+ 	omap8250_update_scr(up, priv);
+@@ -283,7 +284,8 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
+ 	serial_out(up, UART_LCR, 0);
  
--static int ms5607_temp_and_pressure_compensate(struct ms5611_chip_info *chip_info,
-+static int ms5607_temp_and_pressure_compensate(struct ms5611_state *st,
- 					       s32 *temp, s32 *pressure)
- {
- 	s32 t = *temp, p = *pressure;
- 	s64 off, sens, dt;
- 
--	dt = t - (chip_info->prom[5] << 8);
--	off = ((s64)chip_info->prom[2] << 17) + ((chip_info->prom[4] * dt) >> 6);
--	sens = ((s64)chip_info->prom[1] << 16) + ((chip_info->prom[3] * dt) >> 7);
-+	dt = t - (st->prom[5] << 8);
-+	off = ((s64)st->prom[2] << 17) + ((st->prom[4] * dt) >> 6);
-+	sens = ((s64)st->prom[1] << 16) + ((st->prom[3] * dt) >> 7);
- 
--	t = 2000 + ((chip_info->prom[6] * dt) >> 23);
-+	t = 2000 + ((st->prom[6] * dt) >> 23);
- 	if (t < 2000) {
- 		s64 off2, sens2, t2, tmp;
- 
-@@ -342,15 +341,6 @@ static int ms5611_write_raw(struct iio_dev *indio_dev,
- 
- static const unsigned long ms5611_scan_masks[] = {0x3, 0};
- 
--static struct ms5611_chip_info chip_info_tbl[] = {
--	[MS5611] = {
--		.temp_and_pressure_compensate = ms5611_temp_and_pressure_compensate,
--	},
--	[MS5607] = {
--		.temp_and_pressure_compensate = ms5607_temp_and_pressure_compensate,
--	}
--};
--
- static const struct iio_chan_spec ms5611_channels[] = {
- 	{
- 		.type = IIO_PRESSURE,
-@@ -433,7 +423,20 @@ int ms5611_probe(struct iio_dev *indio_dev, struct device *dev,
- 	struct ms5611_state *st = iio_priv(indio_dev);
- 
- 	mutex_init(&st->lock);
--	st->chip_info = &chip_info_tbl[type];
+ 	/* drop TCR + TLR access, we setup XON/XOFF later */
+-	serial8250_out_MCR(up, up->mcr);
++	serial8250_out_MCR(up, mcr);
 +
-+	switch (type) {
-+	case MS5611:
-+		st->compensate_temp_and_pressure =
-+			ms5611_temp_and_pressure_compensate;
-+		break;
-+	case MS5607:
-+		st->compensate_temp_and_pressure =
-+			ms5607_temp_and_pressure_compensate;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
- 	st->temp_osr =
- 		&ms5611_avail_temp_osr[ARRAY_SIZE(ms5611_avail_temp_osr) - 1];
- 	st->pressure_osr =
+ 	serial_out(up, UART_IER, up->ier);
+ 
+ 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
+@@ -594,7 +596,6 @@ static int omap_8250_startup(struct uart_port *port)
+ 
+ 	pm_runtime_get_sync(port->dev);
+ 
+-	up->mcr = 0;
+ 	serial_out(up, UART_FCR, UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
+ 
+ 	serial_out(up, UART_LCR, UART_LCR_WLEN8);
 -- 
 2.35.1
 
