@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F215815C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73114C433D6;
-	Mon,  5 Dec 2022 19:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CAA15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFE1C433C1;
+	Mon,  5 Dec 2022 19:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268840;
-	bh=d6J9L0KYWOJMB99XrD+G6xqyaC+KHdgDiN2dQaf86oI=;
+	s=korg; t=1670268843;
+	bh=hSDrkl+XLwQQ5B1pfpYrbsz68KDUoBdhbEokbrcKx7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FL+WQNKWRA21ZWua5bWITX0D8ZgQ0zBQkZ0Gu2tHrIkzr9bd6zrsDYz+0GGhFmENh
-	 wlJd1R+CIZBjJBK0azehtbZ+A35ZDvdrKS7FI83f6IxU4gC4VrX8yJTBZJeX4AU5Vu
-	 icJPraAvcfvKdzoR1sxPAp7cRkH1GGEVHcS2w/HA=
+	b=aIZLka5h2MRL2DVF58wnRCt0PjQRJsGENdylC/VMw1/Fa8R3R35BIlJCnjYRYkAU5
+	 96Ritt1j7dk5jS5Ir9wXLddR/SEGL5+wWMhwYeTtrergVvM8FmdTK6BUA+qqhOMw4x
+	 FpNVJ4kpRZj9YN09rDCAhPoGY08XAZvBP0PGlRh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeal Robot <zealci@zte.com.cn>,
-	Minghao Chi <chi.minghao@zte.com.cn>,
-	CGEL ZTE <cgel.zte@gmail.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Konrad Jankowski <konrad0.jankowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/120] iavf: remove redundant ret variable
-Date: Mon,  5 Dec 2022 20:09:31 +0100
-Message-Id: <20221205190807.495015753@linuxfoundation.org>
+Subject: [PATCH 5.15 032/120] iavf: Fix error handling in iavf_init_module()
+Date: Mon,  5 Dec 2022 20:09:32 +0100
+Message-Id: <20221205190807.524414125@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -38,63 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minghao Chi <chi.minghao@zte.com.cn>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit c3fec56e12678c3ad68084048a73818a7968d6b8 ]
+[ Upstream commit 227d8d2f7f2278b8468c5531b0cd0f2a905b4486 ]
 
-Return value directly instead of taking this in another redundant
-variable.
+The iavf_init_module() won't destroy workqueue when pci_register_driver()
+failed. Call destroy_workqueue() when pci_register_driver() failed to
+prevent the resource leak.
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
-Signed-off-by: CGEL ZTE <cgel.zte@gmail.com>
+Similar to the handling of u132_hcd_init in commit f276e002793c
+("usb: u132-hcd: fix resource leak")
+
+Fixes: 2803b16c10ea ("i40e/i40evf: Use private workqueue")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
 Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 227d8d2f7f22 ("iavf: Fix error handling in iavf_init_module()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 4b2e99be7ef5..f2f8f2a43a34 100644
+index f2f8f2a43a34..82c4f1190e41 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1448,7 +1448,6 @@ static void iavf_fill_rss_lut(struct iavf_adapter *adapter)
- static int iavf_init_rss(struct iavf_adapter *adapter)
- {
- 	struct iavf_hw *hw = &adapter->hw;
--	int ret;
- 
- 	if (!RSS_PF(adapter)) {
- 		/* Enable PCTYPES for RSS, TCP/UDP with IPv4/IPv6 */
-@@ -1464,9 +1463,8 @@ static int iavf_init_rss(struct iavf_adapter *adapter)
- 
- 	iavf_fill_rss_lut(adapter);
- 	netdev_rss_key_fill((void *)adapter->rss_key, adapter->rss_key_size);
--	ret = iavf_config_rss(adapter);
- 
--	return ret;
-+	return iavf_config_rss(adapter);
- }
- 
- /**
-@@ -4343,8 +4341,6 @@ static struct pci_driver iavf_driver = {
+@@ -4341,6 +4341,8 @@ static struct pci_driver iavf_driver = {
   **/
  static int __init iavf_init_module(void)
  {
--	int ret;
--
++	int ret;
++
  	pr_info("iavf: %s\n", iavf_driver_string);
  
  	pr_info("%s\n", iavf_copyright);
-@@ -4355,8 +4351,7 @@ static int __init iavf_init_module(void)
+@@ -4351,7 +4353,12 @@ static int __init iavf_init_module(void)
  		pr_err("%s: Failed to create workqueue\n", iavf_driver_name);
  		return -ENOMEM;
  	}
--	ret = pci_register_driver(&iavf_driver);
--	return ret;
-+	return pci_register_driver(&iavf_driver);
+-	return pci_register_driver(&iavf_driver);
++
++	ret = pci_register_driver(&iavf_driver);
++	if (ret)
++		destroy_workqueue(iavf_wq);
++
++	return ret;
  }
  
  module_init(iavf_init_module);
