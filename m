@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C2215C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E32C433D7;
-	Mon,  5 Dec 2022 19:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C2915C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C2CC433C1;
+	Mon,  5 Dec 2022 19:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269280;
-	bh=f+A6j1WLvSzvMjEehbbS6kxkW600T5vMR2nvkJDlZZA=;
+	s=korg; t=1670269283;
+	bh=JDHc1vzQ+4HlJU9L1ivdr2mWyPY2RaGxKiuNKEDhF+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0ixp68K84gNjzhfncDQZXIp72xUSpvyC/MOqJNgdKaSHbQdNxe/oG0Qgb04i1Zxh
-	 WuX1EeJTE+IbWJI62xXzkEfWyJUVb8vhLudYNIyazCh/ZM6vn4nYwmD6yznA2qM/7H
-	 AzFrEoncNd6HtlMuPp1tbzc+ELi6OMq2MSdHh8HQ=
+	b=VN/uz2fWdJZtjqaiBMm6h8r4uXGBt8KN0W2G1RjHwyOoofqj0FTL5A7VixS8fQFst
+	 2uEhS8z5gjra/0CeHeTS7RyHQHPLtqpZwmC6PEX9yp91vYpaIhr1uNXCgsGJNS7QNO
+	 YjnjiXTlS2/gtINMQBJznA/22HcDKi0beKQADsc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Coenen <maco@android.com>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Todd Kjos <tkjos@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.4 070/153] binder: read pre-translated fds from sender buffer
-Date: Mon,  5 Dec 2022 20:09:54 +0100
-Message-Id: <20221205190810.729778484@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 053/153] ceph: do not update snapshot context when there is no new snapshot
+Date: Mon,  5 Dec 2022 20:09:37 +0100
+Message-Id: <20221205190810.243993591@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,117 +36,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Todd Kjos <tkjos@google.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 656e01f3ab54afe71bed066996fc2640881e1220 upstream.
+[ Upstream commit 2e586641c950e7f3e7e008404bd783a466b9b590 ]
 
-This patch is to prepare for an up coming patch where we read
-pre-translated fds from the sender buffer and translate them before
-copying them to the target.  It does not change run time.
+We will only track the uppest parent snapshot realm from which we
+need to rebuild the snapshot contexts _downward_ in hierarchy. For
+all the others having no new snapshot we will do nothing.
 
-The patch adds two new parameters to binder_translate_fd_array() to
-hold the sender buffer and sender buffer parent.  These parameters let
-us call copy_from_user() directly from the sender instead of using
-binder_alloc_copy_from_buffer() to copy from the target.  Also the patch
-adds some new alignment checks.  Previously the alignment checks would
-have been done in a different place, but this lets us print more
-useful error messages.
+This fix will avoid calling ceph_queue_cap_snap() on some inodes
+inappropriately. For example, with the code in mainline, suppose there
+are 2 directory hierarchies (with 6 directories total), like this:
 
-Reviewed-by: Martijn Coenen <maco@android.com>
-Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20211130185152.437403-4-tkjos@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+/dir_X1/dir_X2/dir_X3/
+/dir_Y1/dir_Y2/dir_Y3/
+
+Firstly, make a snapshot under /dir_X1/dir_X2/.snap/snap_X2, then make a
+root snapshot under /.snap/root_snap. Every time we make snapshots under
+/dir_Y1/..., the kclient will always try to rebuild the snap context for
+snap_X2 realm and finally will always try to queue cap snaps for dir_Y2
+and dir_Y3, which makes no sense.
+
+That's because the snap_X2's seq is 2 and root_snap's seq is 3. So when
+creating a new snapshot under /dir_Y1/... the new seq will be 4, and
+the mds will send the kclient a snapshot backtrace in _downward_
+order: seqs 4, 3.
+
+When ceph_update_snap_trace() is called, it will always rebuild the from
+the last realm, that's the root_snap. So later when rebuilding the snap
+context, the current logic will always cause it to rebuild the snap_X2
+realm and then try to queue cap snaps for all the inodes related in that
+realm, even though it's not necessary.
+
+This is accompanied by a lot of these sorts of dout messages:
+
+    "ceph:  queue_cap_snap 00000000a42b796b nothing dirty|writing"
+
+Fix the logic to avoid this situation.
+
+Also, the 'invalidate' word is not precise here. In actuality, it will
+cause a rebuild of the existing snapshot contexts or just build
+non-existent ones. Rename it to 'rebuild_snapcs'.
+
+URL: https://tracker.ceph.com/issues/44100
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 51884d153f7e ("ceph: avoid putting the realm twice when decoding snaps fails")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c |   39 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
+ fs/ceph/snap.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -2637,15 +2637,17 @@ err_fd_not_accepted:
- }
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index e1b9b224fcb2..f2731f9efc31 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -696,7 +696,8 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	__le64 *prior_parent_snaps;        /* encoded */
+ 	struct ceph_snap_realm *realm = NULL;
+ 	struct ceph_snap_realm *first_realm = NULL;
+-	int invalidate = 0;
++	struct ceph_snap_realm *realm_to_rebuild = NULL;
++	int rebuild_snapcs;
+ 	int err = -ENOMEM;
+ 	LIST_HEAD(dirty_realms);
  
- static int binder_translate_fd_array(struct binder_fd_array_object *fda,
-+				     const void __user *sender_ubuffer,
- 				     struct binder_buffer_object *parent,
-+				     struct binder_buffer_object *sender_uparent,
- 				     struct binder_transaction *t,
- 				     struct binder_thread *thread,
- 				     struct binder_transaction *in_reply_to)
- {
- 	binder_size_t fdi, fd_buf_size;
- 	binder_size_t fda_offset;
-+	const void __user *sender_ufda_base;
- 	struct binder_proc *proc = thread->proc;
--	struct binder_proc *target_proc = t->to_proc;
+@@ -704,6 +705,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
  
- 	fd_buf_size = sizeof(u32) * fda->num_fds;
- 	if (fda->num_fds >= SIZE_MAX / sizeof(u32)) {
-@@ -2669,7 +2671,10 @@ static int binder_translate_fd_array(str
- 	 */
- 	fda_offset = (parent->buffer - (uintptr_t)t->buffer->user_data) +
- 		fda->parent_offset;
--	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32))) {
-+	sender_ufda_base = (void __user *)sender_uparent->buffer + fda->parent_offset;
+ 	dout("update_snap_trace deletion=%d\n", deletion);
+ more:
++	rebuild_snapcs = 0;
+ 	ceph_decode_need(&p, e, sizeof(*ri), bad);
+ 	ri = p;
+ 	p += sizeof(*ri);
+@@ -727,7 +729,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	err = adjust_snap_realm_parent(mdsc, realm, le64_to_cpu(ri->parent));
+ 	if (err < 0)
+ 		goto fail;
+-	invalidate += err;
++	rebuild_snapcs += err;
+ 
+ 	if (le64_to_cpu(ri->seq) > realm->seq) {
+ 		dout("update_snap_trace updating %llx %p %lld -> %lld\n",
+@@ -752,22 +754,30 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 		if (realm->seq > mdsc->last_snap_seq)
+ 			mdsc->last_snap_seq = realm->seq;
+ 
+-		invalidate = 1;
++		rebuild_snapcs = 1;
+ 	} else if (!realm->cached_context) {
+ 		dout("update_snap_trace %llx %p seq %lld new\n",
+ 		     realm->ino, realm, realm->seq);
+-		invalidate = 1;
++		rebuild_snapcs = 1;
+ 	} else {
+ 		dout("update_snap_trace %llx %p seq %lld unchanged\n",
+ 		     realm->ino, realm, realm->seq);
+ 	}
+ 
+-	dout("done with %llx %p, invalidated=%d, %p %p\n", realm->ino,
+-	     realm, invalidate, p, e);
++	dout("done with %llx %p, rebuild_snapcs=%d, %p %p\n", realm->ino,
++	     realm, rebuild_snapcs, p, e);
+ 
+-	/* invalidate when we reach the _end_ (root) of the trace */
+-	if (invalidate && p >= e)
+-		rebuild_snap_realms(realm, &dirty_realms);
++	/*
++	 * this will always track the uppest parent realm from which
++	 * we need to rebuild the snapshot contexts _downward_ in
++	 * hierarchy.
++	 */
++	if (rebuild_snapcs)
++		realm_to_rebuild = realm;
 +
-+	if (!IS_ALIGNED((unsigned long)fda_offset, sizeof(u32)) ||
-+	    !IS_ALIGNED((unsigned long)sender_ufda_base, sizeof(u32))) {
- 		binder_user_error("%d:%d parent offset not aligned correctly.\n",
- 				  proc->pid, thread->pid);
- 		return -EINVAL;
-@@ -2678,10 +2683,9 @@ static int binder_translate_fd_array(str
- 		u32 fd;
- 		int ret;
- 		binder_size_t offset = fda_offset + fdi * sizeof(fd);
-+		binder_size_t sender_uoffset = fdi * sizeof(fd);
++	/* rebuild_snapcs when we reach the _end_ (root) of the trace */
++	if (realm_to_rebuild && p >= e)
++		rebuild_snap_realms(realm_to_rebuild, &dirty_realms);
  
--		ret = binder_alloc_copy_from_buffer(&target_proc->alloc,
--						    &fd, t->buffer,
--						    offset, sizeof(fd));
-+		ret = copy_from_user(&fd, sender_ufda_base + sender_uoffset, sizeof(fd));
- 		if (!ret)
- 			ret = binder_translate_fd(fd, offset, t, thread,
- 						  in_reply_to);
-@@ -3348,6 +3352,8 @@ static void binder_transaction(struct bi
- 		case BINDER_TYPE_FDA: {
- 			struct binder_object ptr_object;
- 			binder_size_t parent_offset;
-+			struct binder_object user_object;
-+			size_t user_parent_size;
- 			struct binder_fd_array_object *fda =
- 				to_binder_fd_array_object(hdr);
- 			size_t num_valid = (buffer_offset - off_start_offset) /
-@@ -3379,8 +3385,27 @@ static void binder_transaction(struct bi
- 				return_error_line = __LINE__;
- 				goto err_bad_parent;
- 			}
--			ret = binder_translate_fd_array(fda, parent, t, thread,
--							in_reply_to);
-+			/*
-+			 * We need to read the user version of the parent
-+			 * object to get the original user offset
-+			 */
-+			user_parent_size =
-+				binder_get_object(proc, user_buffer, t->buffer,
-+						  parent_offset, &user_object);
-+			if (user_parent_size != sizeof(user_object.bbo)) {
-+				binder_user_error("%d:%d invalid ptr object size: %zd vs %zd\n",
-+						  proc->pid, thread->pid,
-+						  user_parent_size,
-+						  sizeof(user_object.bbo));
-+				return_error = BR_FAILED_REPLY;
-+				return_error_param = -EINVAL;
-+				return_error_line = __LINE__;
-+				goto err_bad_parent;
-+			}
-+			ret = binder_translate_fd_array(fda, user_buffer,
-+							parent,
-+							&user_object.bbo, t,
-+							thread, in_reply_to);
- 			if (!ret)
- 				ret = binder_alloc_copy_to_buffer(&target_proc->alloc,
- 								  t->buffer,
+ 	if (!first_realm)
+ 		first_realm = realm;
+-- 
+2.35.1
+
 
 
