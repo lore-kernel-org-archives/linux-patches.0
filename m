@@ -1,190 +1,318 @@
-Received: from mx.treblig.org (mx.treblig.org [46.43.15.161])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7012F3C3F
-	for <patches@lists.linux.dev>; Sun,  4 Dec 2022 18:05:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID
-	:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID
-	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
-	Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
-	:List-Post:List-Owner:List-Archive;
-	bh=y7n0hCnLGy1zh+SrdpqxlWp8vDHcKpVOgMWTyUVHEaQ=; b=A0wRDCpBFBt2mvSCaPYoSuQcDN
-	f4aaXk7mu1f+GHWPClZ9jdgaDwmwCuXkI1ApIeFXaEbPbPK/GZZLJ/Y5BOqixCD5OtV3pk4wM1WbN
-	MjLtH98IEOFFlw43yueO0Df4gFwGrQ1PmS2tBNobhLGAiwNViNJqKptN1OWXiwoFI+sk97L681aP9
-	lUEaQ9RyUF1mulgo3Mcmip8YPYu4jC7Irq/q/QTbIn9i7rb6hFueWUZpUv4aDn5GMxaKV55QWgS5X
-	WhvGUoE9ktjMC5IENU0wefbFz5v9pM1jXBjUWukP+gzsHtKY5wkJ3PAtzg9K2WYjNmK42mgwGBn47
-	KPOxGklg==;
-Received: from dg by mx.treblig.org with local (Exim 4.94.2)
-	(envelope-from <dg@treblig.org>)
-	id 1p1tMf-00534x-B2; Sun, 04 Dec 2022 18:05:21 +0000
-Date: Sun, 4 Dec 2022 18:05:21 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Wedson Almeida Filho <wedsonaf@gmail.com>
-Cc: ojeda@kernel.org, Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>
-Subject: Re: [PATCH v2 20/28] rust: str: add `Formatter` type
-Message-ID: <Y4zhYWNIaGtOH5u6@gallifrey>
-References: <20221202161502.385525-1-ojeda@kernel.org>
- <20221202161502.385525-21-ojeda@kernel.org>
- <Y4y/ovfF3len/22J@gallifrey>
- <CANeycqrT69HJWEBZwbuhTehSy1qFF7A4q38cb5TqU1yf=nMLOQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCCC7C
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 02:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B79C433B5;
+	Mon,  5 Dec 2022 02:01:03 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ng1SOcsj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1670205660;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=y039S5PSKwnF+15QEQ9xdpGKr1s+Su7mXWxHMfByAw4=;
+	b=Ng1SOcsjGQsnhBFCY8qvkAn8yjGQBe6CxzCaeHRIoFQg4DJCzp9p9eAP48W5XI7UqHTvEi
+	2XkMKhP27XQopvxeHn31oxLJ8pWfFSVH/QV4TDJ3mRq+t1JoQtV0Ml/1sceOrM1gCZtWyX
+	VPuqthEdyUnzpzeTPCaDHMTqYxuxcxg=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d4239dd3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Dec 2022 02:01:00 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	tglx@linutronix.de
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org,
+	x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH v11 0/4] implement getrandom() in vDSO
+Date: Mon,  5 Dec 2022 03:00:42 +0100
+Message-Id: <20221205020046.1876356-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <CANeycqrT69HJWEBZwbuhTehSy1qFF7A4q38cb5TqU1yf=nMLOQ@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/5.10.0-12-amd64 (x86_64)
-X-Uptime: 17:58:55 up 268 days,  4:24,  1 user,  load average: 0.18, 0.09,
- 0.03
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 
-* Wedson Almeida Filho (wedsonaf@gmail.com) wrote:
-> On Sun, 4 Dec 2022 at 15:41, Dr. David Alan Gilbert <dave@treblig.org> wrote:
-> >
-> > * ojeda@kernel.org (ojeda@kernel.org) wrote:
-> > > From: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > >
-> > > Add the `Formatter` type, which leverages `RawFormatter`,
-> > > but fails if callers attempt to write more than will fit
-> > > in the buffer.
-> > >
-> > > In order to so, implement the `RawFormatter::from_buffer()`
-> > > constructor as well.
-> > >
-> > > Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> > > Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> > > Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > > Reviewed-by: Gary Guo <gary@garyguo.net>
-> > > [Reworded, adapted for upstream and applied latest changes]
-> > > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > > ---
-> > >  rust/kernel/str.rs | 57 ++++++++++++++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 57 insertions(+)
-> > >
-> > > diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
-> > > index a995db36486f..ce207d1b3d2a 100644
-> > > --- a/rust/kernel/str.rs
-> > > +++ b/rust/kernel/str.rs
-> > > @@ -406,6 +406,23 @@ impl RawFormatter {
-> > >          }
-> > >      }
-> > >
-> > > +    /// Creates a new instance of [`RawFormatter`] with the given buffer.
-> > > +    ///
-> > > +    /// # Safety
-> > > +    ///
-> > > +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
-> > > +    /// for the lifetime of the returned [`RawFormatter`].
-> > > +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
-> > > +        let pos = buf as usize;
-> > > +        // INVARIANT: We ensure that `end` is never less then `buf`, and the safety requirements
-> > > +        // guarantees that the memory region is valid for writes.
-> > > +        Self {
-> > > +            pos,
-> > > +            beg: pos,
-> > > +            end: pos.saturating_add(len),
-> > > +        }
-> > > +    }
-> > > +
-> > >      /// Returns the current insert position.
-> > >      ///
-> > >      /// N.B. It may point to invalid memory.
-> > > @@ -439,3 +456,43 @@ impl fmt::Write for RawFormatter {
-> > >          Ok(())
-> > >      }
-> > >  }
-> > > +
-> > > +/// Allows formatting of [`fmt::Arguments`] into a raw buffer.
-> > > +///
-> > > +/// Fails if callers attempt to write more than will fit in the buffer.
-> > > +pub(crate) struct Formatter(RawFormatter);
-> 
-> Here we mention that `Formatter` fails if callers attempt to write
-> more than will fit in the buffer.
-> 
-> This is in contrast with `RawFormatter`, which doesn't fail in such
-> cases. There's also a comment there explaining it (not visible in this
-> patch because it's already there), but I reproduce below:
-> 
-> /// Allows formatting of [`fmt::Arguments`] into a raw buffer.
-> ///
-> /// It does not fail if callers write past the end of the buffer so
-> that they can calculate the
-> /// size required to fit everything.
-> ///
-> /// # Invariants
-> ///
-> /// The memory region between `pos` (inclusive) and `end` (exclusive)
-> is valid for writes if `pos`
-> /// is less than `end`.
-> pub(crate) struct RawFormatter {
-> 
-> `RawFormatter` is used to implement the "%pA" printf specifier, which
-> requires this behaviour.
-> 
-> > > +
-> > > +impl Formatter {
-> > > +    /// Creates a new instance of [`Formatter`] with the given buffer.
-> > > +    ///
-> > > +    /// # Safety
-> > > +    ///
-> > > +    /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
-> > > +    /// for the lifetime of the returned [`Formatter`].
-> > > +    #[allow(dead_code)]
-> > > +    pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
-> > > +        // SAFETY: The safety requirements of this function satisfy those of the callee.
-> > > +        Self(unsafe { RawFormatter::from_buffer(buf, len) })
-> > > +    }
-> > > +}
-> > > +
-> > > +impl Deref for Formatter {
-> > > +    type Target = RawFormatter;
-> > > +
-> > > +    fn deref(&self) -> &Self::Target {
-> > > +        &self.0
-> > > +    }
-> > > +}
-> > > +
-> > > +impl fmt::Write for Formatter {
-> > > +    fn write_str(&mut self, s: &str) -> fmt::Result {
-> > > +        self.0.write_str(s)?;
-> > > +
-> > > +        // Fail the request if we go past the end of the buffer.
-> >
-> > Reading this for the first time, I'm surprised by this, perhaps a
-> > bit more comment is needed?  I was expecting that nothing would
-> > let pos pass end.
-> 
-> Given the comments I highlight above, do you think we still need more?
-> 
-> (My impression is that you're reading this without the context I tried
-> to explain above, and this context may perhaps be sufficient.)
+Changes v10->v11:
+-----------------
+- Adhemerval's latest glibc patch currently lives here:
+  https://github.com/zatrazz/glibc/commits/azanella/getrandom-vdso
+  It's still in flux (he hasn't posted it to glibc-alpha yet), but that
+  should still give some idea.
 
-Thanks for the pointer; I guess I find it trickier when I can't see the
-type in self.0 to immediately see it's RawFormatter, and 'Raw' is
-abstract enough to need to go hunt to see it's behaviour.
+- Substantially increase documentation detail throughout.
 
-With that context, I wouldn't object to what's there, but how about
-something like:
+- Numerous fixes to style and clarity.
 
-      // RawFormatter (self.0) still updates pos if the buffer
-      // is too small, but doesn't fail - we want to fail the request.
+- Add two kselftests - one for the chacha20 assembly implementation, which
+  compares its output to that of libsodium, and one for the actual vDSO
+  function and vgetrandom_alloc() syscall, which also has some built-in quick &
+  dirty benchmarking functionality.
 
-Dave
+- Add reserved `unsigned long addr` argument to syscall, for future use.
 
-> Thanks,
-> -Wedson
+- Enforce that `flags`, `addr`, and `*size_per_each` are all zero on input, so
+  that they can actually be used in the future.
+
+- Use VM_LOCKONFAULT|VM_NORESERVE so that memory isn't wasted until it's used.
+
+- Set VM_DONTDUMP to prevent state from being written out to core dumps.
+
+- Do mapping and flag setting all in one operation, so that it's not racy, and
+  so that dropping the mm lock between operations isn't required.
+
+- Due to the above, there's no longer any purpose in selecting
+  VGETRANDOM_ALLOC_SYSCALL, so remove that.
+
+- Don't update *num or *size_per_each until the mapping has succeeded.
+
+- Introduce vdso_kernel_ulong type for representing the long type that
+  the kernel uses, even when in 32-bit compat code on a 64-bit kernel.
+
+- Don't use 'bool' type in the vDSO page, in case of compiler quirks resulting
+  in a different interpretation of the type in different compilation contexts.
+
+--------------
+
+Two statements:
+
+  1) Userspace wants faster cryptographically secure random numbers of
+     arbitrary size, big or small.
+
+  2) Userspace is currently unable to safely roll its own RNG with the
+     same security profile as getrandom().
+
+Statement (1) has been debated for years, with arguments ranging from
+"we need faster cryptographically secure card shuffling!" to "the only
+things that actually need good randomness are keys, which are few and
+far between" to "actually, TLS CBC nonces are frequent" and so on. I
+don't intend to wade into that debate substantially, except to note that
+recently glibc added arc4random(), whose goal is to return a
+cryptographically secure uint32_t, and there are real user reports of it
+being too slow. So here we are.
+
+Statement (2) is more interesting. The kernel is the nexus of all
+entropic inputs that influence the RNG. It is in the best position, and
+probably the only position, to decide anything at all about the current
+state of the RNG and of its entropy. One of the things it uniquely knows
+about is when reseeding is necessary.
+
+For example, when a virtual machine is forked, restored, or duplicated,
+it's imparative that the RNG doesn't generate the same outputs. For this
+reason, there's a small protocol between hypervisors and the kernel that
+indicates this has happened, alongside some ID, which the RNG uses to
+immediately reseed, so as not to return the same numbers. Were userspace
+to expand a getrandom() seed from time T1 for the next hour, and at some
+point T2 < hour, the virtual machine forked, userspace would continue to
+provide the same numbers to two (or more) different virtual machines,
+resulting in potential cryptographic catastrophe. Something similar
+happens on resuming from hibernation (or even suspend), with various
+compromise scenarios there in mind.
+
+There's a more general reason why userspace rolling its own RNG from a
+getrandom() seed is fraught. There's a lot of attention paid to this
+particular Linuxism we have of the RNG being initialized and thus
+non-blocking or uninitialized and thus blocking until it is initialized.
+These are our Two Big States that many hold to be the holy
+differentiating factor between safe and not safe, between
+cryptographically secure and garbage. The fact is, however, that the
+distinction between these two states is a hand-wavy wishy-washy inexact
+approximation. Outside of a few exceptional cases (e.g. a HW RNG is
+available), we actually don't really ever know with any rigor at all
+when the RNG is safe and ready (nor when it's compromised). We do the
+best we can to "estimate" it, but entropy estimation is fundamentally
+impossible in the general case. So really, we're just doing guess work,
+and hoping it's good and conservative enough. Let's then assume that
+there's always some potential error involved in this differentiator.
+
+In fact, under the surface, the RNG is engineered around a different
+principal, and that is trying to *use* new entropic inputs regularly and
+at the right specific moments in time. For example, close to boot time,
+the RNG reseeds itself more often than later. At certain events, like VM
+fork, the RNG reseeds itself immediately. The various heuristics for
+when the RNG will use new entropy and how often is really a core aspect
+of what the RNG has some potential to do decently enough (and something
+that will probably continue to improve in the future from random.c's
+present set of algorithms). So in your mind, put away the metal
+attachment to the Two Big States, which represent an approximation with
+a potential margin of error. Instead keep in mind that the RNG's primary
+operating heuristic is how often and exactly when it's going to reseed.
+
+So, if userspace takes a seed from getrandom() at point T1, and uses it
+for the next hour (or N megabytes or some other meaningless metric),
+during that time, potential errors in the Two Big States approximation
+are amplified. During that time potential reseeds are being lost,
+forgotten, not reflected in the output stream. That's not good.
+
+The simplest statement you could make is that userspace RNGs that expand
+a getrandom() seed at some point T1 are nearly always *worse*, in some
+way, than just calling getrandom() every time a random number is
+desired.
+
+For those reasons, after some discussion on libc-alpha, glibc's
+arc4random() now just calls getrandom() on each invocation. That's
+trivially safe, and gives us latitude to then make the safe thing faster
+without becoming unsafe at our leasure. Card shuffling isn't
+particularly fast, however.
+
+How do we rectify this? By putting a safe implementation of getrandom()
+in the vDSO, which has access to whatever information a
+particular iteration of random.c is using to make its decisions. I use
+that careful language of "particular iteration of random.c", because the
+set of things that a vDSO getrandom() implementation might need for making
+decisions as good as the kernel's will likely change over time. This
+isn't just a matter of exporting certain *data* to userspace. We're not
+going to commit to a "data API" where the various heuristics used are
+exposed, locking in how the kernel works for decades to come, and then
+leave it to various userspaces to roll something on top and shoot
+themselves in the foot and have all sorts of complexity disasters.
+Rather, vDSO getrandom() is supposed to be the *same exact algorithm*
+that runs in the kernel, except it's been hoisted into userspace as
+much as possible. And so vDSO getrandom() and kernel getrandom() will
+always mirror each other hermetically.
+
+API-wise, the vDSO gains this function:
+
+  ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state);
+
+The return value and the first 3 arguments are the same as ordinary
+getrandom(), while the last argument is a pointer to some state
+allocated with vgetrandom_alloc(), explained below. Were all four
+arguments passed to the getrandom syscall, nothing different would
+happen, and the functions would have the exact same behavior.
+
+Then, we introduce a new syscall:
+
+  void *vgetrandom_alloc(unsigned int *num, unsigned int *size_per_each,
+                         unsigned long addr, unsigned int flags);
+
+This takes a hinted number of opaque states in `num`, and returns a
+pointer to an array of opaque states, the number actually allocated back
+in `num`, and the size in bytes of each one in `size_per_each`, enabling
+a libc to slice up the returned array into a state per each thread. (The
+`flags` and `addr` arguments, as well as the `*size_per_each` input
+value, are reserved for the future and are forced to be zero for now.)
+
+Libc is expected to allocate a chunk of these on first use, and then
+dole them out to threads as they're created, allocating more when
+needed. The returned address of the first state may be passed to
+munmap(2) with a length of `num * size_per_each`, in order to deallocate
+the memory.
+
+We very intentionally do *not* leave state allocation up to the caller
+of vgetrandom, but provide vgetrandom_alloc for that allocation. There
+are too many weird things that can go wrong, and it's important that
+vDSO does not provide too generic of a mechanism. It's not going to
+store its state in just any old memory address. It'll do it only in ones
+it allocates.
+
+Right now this means it's a mlock'd page with WIPEONFORK set. In the
+future maybe there will be other interesting page flags or
+anti-heartbleed measures, or other platform-specific kernel-specific
+things that can be set from the syscall. Again, it's important that the
+kernel has a say in how this works rather than agreeing to operate on
+any old address; memory isn't neutral.
+
+The interesting meat of the implementation is in lib/vdso/getrandom.c,
+as generic C code, and it aims to mainly follow random.c's buffered fast
+key erasure logic. Before the RNG is initialized, it falls back to the
+syscall. Right now it uses a simple generation counter to make its decisions
+on reseeding (though this could be made more extensive over time).
+
+The actual place that has the most work to do is in all of the other
+files. Most of the vDSO shared page infrastructure is centered around
+gettimeofday, and so the main structs are all in arrays for different
+timestamp types, and attached to time namespaces, and so forth. I've
+done the best I could to add onto this in an unintrusive way.
+
+In my test results, performance is pretty stellar (around 15x for uint32_t
+generation), and it seems to be working. There's an extended example in the
+second commit of this series, showing how the syscall and the vDSO function
+are meant to be used together.
+
+Cc: linux-crypto@vger.kernel.org
+Cc: linux-api@vger.kernel.org
+Cc: x86@kernel.org
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>
+Cc: Carlos O'Donell <carlos@redhat.com>
+Cc: Florian Weimer <fweimer@redhat.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christian Brauner <brauner@kernel.org>  
+
+Jason A. Donenfeld (4):
+  random: add vgetrandom_alloc() syscall
+  arch: allocate vgetrandom_alloc() syscall number
+  random: introduce generic vDSO getrandom() implementation
+  x86: vdso: Wire up getrandom() vDSO implementation
+
+ MAINTAINERS                                   |   2 +
+ arch/alpha/kernel/syscalls/syscall.tbl        |   1 +
+ arch/arm/tools/syscall.tbl                    |   1 +
+ arch/arm64/include/asm/unistd.h               |   2 +-
+ arch/arm64/include/asm/unistd32.h             |   2 +
+ arch/ia64/kernel/syscalls/syscall.tbl         |   1 +
+ arch/m68k/kernel/syscalls/syscall.tbl         |   1 +
+ arch/microblaze/kernel/syscalls/syscall.tbl   |   1 +
+ arch/mips/kernel/syscalls/syscall_n32.tbl     |   1 +
+ arch/mips/kernel/syscalls/syscall_n64.tbl     |   1 +
+ arch/mips/kernel/syscalls/syscall_o32.tbl     |   1 +
+ arch/parisc/kernel/syscalls/syscall.tbl       |   1 +
+ arch/powerpc/kernel/syscalls/syscall.tbl      |   1 +
+ arch/s390/kernel/syscalls/syscall.tbl         |   1 +
+ arch/sh/kernel/syscalls/syscall.tbl           |   1 +
+ arch/sparc/kernel/syscalls/syscall.tbl        |   1 +
+ arch/x86/Kconfig                              |   1 +
+ arch/x86/entry/syscalls/syscall_32.tbl        |   1 +
+ arch/x86/entry/syscalls/syscall_64.tbl        |   1 +
+ arch/x86/entry/vdso/Makefile                  |   3 +-
+ arch/x86/entry/vdso/vdso.lds.S                |   2 +
+ arch/x86/entry/vdso/vgetrandom-chacha.S       | 177 +++++++++++
+ arch/x86/entry/vdso/vgetrandom.c              |  17 ++
+ arch/x86/include/asm/vdso/getrandom.h         |  55 ++++
+ arch/x86/include/asm/vdso/vsyscall.h          |   2 +
+ arch/x86/include/asm/vvar.h                   |  16 +
+ arch/xtensa/kernel/syscalls/syscall.tbl       |   1 +
+ drivers/char/random.c                         | 137 +++++++++
+ include/linux/syscalls.h                      |   3 +
+ include/uapi/asm-generic/unistd.h             |   5 +-
+ include/vdso/datapage.h                       |  12 +
+ include/vdso/getrandom.h                      |  44 +++
+ include/vdso/types.h                          |  35 +++
+ kernel/sys_ni.c                               |   3 +
+ lib/vdso/Kconfig                              |   5 +
+ lib/vdso/getrandom.c                          | 205 +++++++++++++
+ tools/include/uapi/asm-generic/unistd.h       |   5 +-
+ .../arch/mips/entry/syscalls/syscall_n64.tbl  |   1 +
+ .../arch/powerpc/entry/syscalls/syscall.tbl   |   1 +
+ .../perf/arch/s390/entry/syscalls/syscall.tbl |   1 +
+ .../arch/x86/entry/syscalls/syscall_64.tbl    |   1 +
+ tools/testing/selftests/vDSO/.gitignore       |   2 +
+ tools/testing/selftests/vDSO/Makefile         |  11 +
+ .../testing/selftests/vDSO/vdso_test_chacha.c |  43 +++
+ .../selftests/vDSO/vdso_test_getrandom.c      | 279 ++++++++++++++++++
+ 45 files changed, 1084 insertions(+), 4 deletions(-)
+ create mode 100644 arch/x86/entry/vdso/vgetrandom-chacha.S
+ create mode 100644 arch/x86/entry/vdso/vgetrandom.c
+ create mode 100644 arch/x86/include/asm/vdso/getrandom.h
+ create mode 100644 include/vdso/getrandom.h
+ create mode 100644 include/vdso/types.h
+ create mode 100644 lib/vdso/getrandom.c
+ create mode 100644 tools/testing/selftests/vDSO/vdso_test_chacha.c
+ create mode 100644 tools/testing/selftests/vDSO/vdso_test_getrandom.c
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.38.1
+
