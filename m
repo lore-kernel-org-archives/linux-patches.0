@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A78E15C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B41C433C1;
-	Mon,  5 Dec 2022 19:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1209415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81544C433D6;
+	Mon,  5 Dec 2022 19:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268857;
-	bh=svRKqdA5jRuHBR5+VR59aG6XCBCDktDLJE+6kNWs2SA=;
+	s=korg; t=1670268859;
+	bh=2dBe2TeArxWYPIgUREUaY4xvRopIreNYXbAQ/G6JD5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9o5zEWPGmoxkAIPwtXiqHcD2xkRu8awl0D64JPbz9cgGssZdQ8OzaXrjH03jxsJl
-	 w+kqMq8JbCUxfFciT1/IDFPHlbNTQ1mDhqfVeF2FvswsJSAoCIcW8KXgqk5STwi0Xx
-	 o9g1V2IuLXVDc7u4uSUKtmtCMZ9MQpqH4JlrzbMQ=
+	b=t1K6zvPLR7zBHwjRkre3HcE/94660qKvO5e+/TGTT/7KaOz5AUIAg/fQBiiT0MhSP
+	 AJ2Mlk4bX/lOER5fkjrmOo+iwrEgltg8Mr0PyUqI0gC8EFsFpQusjMoBfdcJ80FxSk
+	 d4GkuvmkOahFeY422hQlC4pP1XcPpgRFEKa8TZhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/120] net/mlx5: Fix uninitialized variable bug in outlen_write()
-Date: Mon,  5 Dec 2022 20:09:36 +0100
-Message-Id: <20221205190807.631832383@linuxfoundation.org>
+Subject: [PATCH 5.15 037/120] net/mlx5e: Fix use-after-free when reverting termination table
+Date: Mon,  5 Dec 2022 20:09:37 +0100
+Message-Id: <20221205190807.662764489@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,37 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit 3f5769a074c13d8f08455e40586600419e02a880 ]
+[ Upstream commit 52c795af04441d76f565c4634f893e5b553df2ae ]
 
-If sscanf() return 0, outlen is uninitialized and used in kzalloc(),
-this is unexpected. We should return -EINVAL if the string is invalid.
+When having multiple dests with termination tables and second one
+or afterwards fails the driver reverts usage of term tables but
+doesn't reset the assignment in attr->dests[num_vport_dests].termtbl
+which case a use-after-free when releasing the rule.
+Fix by resetting the assignment of termtbl to null.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 10caabdaad5a ("net/mlx5e: Use termination table for VLAN push actions")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c  | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 85190f2f4d50..41c15a65fb45 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1434,8 +1434,8 @@ static ssize_t outlen_write(struct file *filp, const char __user *buf,
- 		return -EFAULT;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+index 8f86b62e49e3..1b417b1d1cf8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+@@ -309,6 +309,8 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
+ 	for (curr_dest = 0; curr_dest < num_vport_dests; curr_dest++) {
+ 		struct mlx5_termtbl_handle *tt = attr->dests[curr_dest].termtbl;
  
- 	err = sscanf(outlen_str, "%d", &outlen);
--	if (err < 0)
--		return err;
-+	if (err != 1)
-+		return -EINVAL;
- 
- 	ptr = kzalloc(outlen, GFP_KERNEL);
- 	if (!ptr)
++		attr->dests[curr_dest].termtbl = NULL;
++
+ 		/* search for the destination associated with the
+ 		 * current term table
+ 		 */
 -- 
 2.35.1
 
