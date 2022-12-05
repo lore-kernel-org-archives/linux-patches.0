@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A5A15C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F66C433C1;
-	Mon,  5 Dec 2022 19:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F5D15C8D
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04970C433D6;
+	Mon,  5 Dec 2022 19:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269458;
-	bh=+273FMoA2A3cnFUJPZN9nHqfDczJFAX8TsvDawqFNzU=;
+	s=korg; t=1670269461;
+	bh=mdrr/4Kk9yMjkMwHYbYbdgAouBMiCdLP7fBBM/NUt2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OE6hKk/QLQ7Nv8ikvfR6U4BjzQMl0678uLpKpn/bMyfu6IEHMFdK1vOgeaWNsuU6T
-	 6k1ju/Ho4RpkecFRkJdve2tRdVLVK/5DmUSU/boz9jSbOOA3Gf3BUK0POXl9JgznGm
-	 kY2hKUxOMVD0FVFziLWZCAxzr7bcoq5NXDctP6gM=
+	b=yI8Djz+qCBSSBzZVU1wP0YFGQr+v4Wc+UJnMNch0iIKqqCGA8gZ+J3fMRnvpPeRld
+	 A0eglJzJhV7bKZ9I8xXyLRWJFqd+1a91wK/7iaxAXEBs4y1yvYEWO+OArkZVJYD2P8
+	 +NnkN4Q4gzFasufn53CugZXd/vJFK9paAyvmyurQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Chris Zankel <chris@zankel.net>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 134/153] xtensa: increase size of gcc stack frame check
-Date: Mon,  5 Dec 2022 20:10:58 +0100
-Message-Id: <20221205190812.507148215@linuxfoundation.org>
+Subject: [PATCH 5.4 135/153] parisc: Increase FRAME_WARN to 2048 bytes on parisc
+Date: Mon,  5 Dec 2022 20:10:59 +0100
+Message-Id: <20221205190812.530679366@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -40,44 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 867050247e295cf20fce046a92a7e6491fcfe066 ]
+[ Upstream commit 8d192bec534bd5b778135769a12e5f04580771f7 ]
 
-xtensa frame size is larger than the frame size for almost all other
-architectures.  This results in more than 50 "the frame size of <n> is
-larger than 1024 bytes" errors when trying to build xtensa:allmodconfig.
+PA-RISC uses a much bigger frame size for functions than other
+architectures. So increase it to 2048 for 32- and 64-bit kernels.
+This fixes e.g. a warning in lib/xxhash.c.
 
-Increase frame size for xtensa to 1536 bytes to avoid compile errors due
-to frame size limits.
-
-Link: https://lkml.kernel.org/r/20210912025235.3514761-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
-Cc: Chris Zankel <chris@zankel.net>
-Cc: David Laight <David.Laight@ACULAB.COM>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Stable-dep-of: 152fe65f300e ("Kconfig.debug: provide a little extra FRAME_WARN leeway when KASAN is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.debug | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/Kconfig.debug | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index f610b47b74cc..42b6fff962b7 100644
+index 42b6fff962b7..3ab05ca63c6e 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
-@@ -253,7 +253,7 @@ config FRAME_WARN
+@@ -253,8 +253,9 @@ config FRAME_WARN
  	int "Warn for stack frames larger than (needs gcc 4.4)"
  	range 0 8192
  	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
--	default 1536 if (!64BIT && PARISC)
-+	default 1536 if (!64BIT && (PARISC || XTENSA))
- 	default 1024 if (!64BIT && !PARISC)
+-	default 1536 if (!64BIT && (PARISC || XTENSA))
+-	default 1024 if (!64BIT && !PARISC)
++	default 2048 if PARISC
++	default 1536 if (!64BIT && XTENSA)
++	default 1024 if !64BIT
  	default 2048 if 64BIT
  	help
+ 	  Tell gcc to warn at build time for stack frames larger than this.
 -- 
 2.35.1
 
