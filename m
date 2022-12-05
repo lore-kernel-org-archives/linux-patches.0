@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58B115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7FC433D6;
-	Mon,  5 Dec 2022 19:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B52915C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4A3C433C1;
+	Mon,  5 Dec 2022 19:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268388;
-	bh=vJfa94WZcGh1yqsGxkG4X2rytt3GHc4tOhLI+V5I0ho=;
+	s=korg; t=1670268391;
+	bh=4JnpkyKNGE7/PaXvHRIhmipq9yeFEnLI46R50CznMBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuJSXuQvViBsrnxz/PHx9HpJhMa+CgNlphKsWrilsHLaL9peSNqomJ+auI1a25cGT
-	 8qwzrixmn2e62podHRtwSzaun4zcbrn7PC0t1lPG1+e1EqVQMiFLxur+I4OfE42ODc
-	 q4xfJ8xJJlpKCyHmI6Cnk8jbfCLlmfzRhPqqAUoI=
+	b=USV4Aw9welHqkqN8cNLN0WJVzU/ZgZxgf7TyLrYctttxPYEIByGqIgU2udc9/NRs/
+	 PDaLW4ilm/pGmMdP9dQcOp+9g59aw28xiRv5EZ2wTmDoanLbNTSk62yJedN26JaXaT
+	 yRf6hS0bB10IckUOTGlb8ZfIsb+vV7E25iNNl62M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dale Smith <dalepsmith@gmail.com>,
-	John Harris <jmharris@gmail.com>
-Subject: [PATCH 6.0 083/124] pinctrl: intel: Save and restore pins in "direct IRQ" mode
-Date: Mon,  5 Dec 2022 20:09:49 +0100
-Message-Id: <20221205190810.776626311@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.0 084/124] v4l2: dont fall back to follow_pfn() if pin_user_pages_fast() fails
+Date: Mon,  5 Dec 2022 20:09:50 +0100
+Message-Id: <20221205190810.804311274@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -37,85 +38,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 6989ea4881c8944fbf04378418bb1af63d875ef8 upstream.
+commit 6647e76ab623b2b3fb2efe03a86e9c9046c52c33 upstream.
 
-The firmware on some systems may configure GPIO pins to be
-an interrupt source in so called "direct IRQ" mode. In such
-cases the GPIO controller driver has no idea if those pins
-are being used or not. At the same time, there is a known bug
-in the firmwares that don't restore the pin settings correctly
-after suspend, i.e. by an unknown reason the Rx value becomes
-inverted.
+The V4L2_MEMORY_USERPTR interface is long deprecated and shouldn't be
+used (and is discouraged for any modern v4l drivers).  And Seth Jenkins
+points out that the fallback to VM_PFNMAP/VM_IO is fundamentally racy
+and dangerous.
 
-Hence, let's save and restore the pins that are configured
-as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
+Note that it's not even a case that should trigger, since any normal
+user pointer logic ends up just using the pin_user_pages_fast() call
+that does the proper page reference counting.  That's not the problem
+case, only if you try to use special device mappings do you have any
+issues.
 
-Cc: stable@vger.kernel.org
-Reported-and-tested-by: Dale Smith <dalepsmith@gmail.com>
-Reported-and-tested-by: John Harris <jmharris@gmail.com>
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214749
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221124222926.72326-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Normally I'd just remove this during the merge window, but since Seth
+pointed out the problem cases, we really want to know as soon as
+possible if there are actually any users of this odd special case of a
+legacy interface.  Neither Hans nor Mauro seem to think that such
+mis-uses of the old legacy interface should exist.  As Mauro says:
+
+ "See, V4L2 has actually 4 streaming APIs:
+        - Kernel-allocated mmap (usually referred simply as just mmap);
+        - USERPTR mmap;
+        - read();
+        - dmabuf;
+
+  The USERPTR is one of the oldest way to use it, coming from V4L
+  version 1 times, and by far the least used one"
+
+And Hans chimed in on the USERPTR interface:
+
+ "To be honest, I wouldn't mind if it goes away completely, but that's a
+  bit of a pipe dream right now"
+
+but while removing this legacy interface entirely may be a pipe dream we
+can at least try to remove the unlikely (and actively broken) case of
+using special device mappings for USERPTR accesses.
+
+This replaces it with a WARN_ONCE() that we can remove once we've
+hopefully confirmed that no actual users exist.
+
+NOTE! Longer term, this means that a 'struct frame_vector' only ever
+contains proper page pointers, and all the games we have with converting
+them to pages can go away (grep for 'frame_vector_to_pages()' and the
+uses of 'vec->is_pfns').  But this is just the first step, to verify
+that this code really is all dead, and do so as quickly as possible.
+
+Reported-by: Seth Jenkins <sethjenkins@google.com>
+Acked-by: Hans Verkuil <hverkuil@xs4all.nl>
+Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/media/common/videobuf2/frame_vector.c |   68 ++++----------------------
+ 1 file changed, 12 insertions(+), 56 deletions(-)
 
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -436,9 +436,14 @@ static void __intel_gpio_set_direction(v
- 	writel(value, padcfg0);
- }
- 
-+static int __intel_gpio_get_gpio_mode(u32 value)
-+{
-+	return (value & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+}
-+
- static int intel_gpio_get_gpio_mode(void __iomem *padcfg0)
+--- a/drivers/media/common/videobuf2/frame_vector.c
++++ b/drivers/media/common/videobuf2/frame_vector.c
+@@ -35,11 +35,7 @@
+ int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
+ 		     struct frame_vector *vec)
  {
--	return (readl(padcfg0) & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+	return __intel_gpio_get_gpio_mode(readl(padcfg0));
- }
+-	struct mm_struct *mm = current->mm;
+-	struct vm_area_struct *vma;
+-	int ret_pin_user_pages_fast = 0;
+-	int ret = 0;
+-	int err;
++	int ret;
  
- static void intel_gpio_set_gpio_mode(void __iomem *padcfg0)
-@@ -1674,6 +1679,7 @@ EXPORT_SYMBOL_GPL(intel_pinctrl_get_soc_
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
- {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-+	u32 value;
- 
- 	if (!pd || !intel_pad_usable(pctrl, pin))
- 		return false;
-@@ -1688,6 +1694,25 @@ static bool intel_pinctrl_should_save(st
- 	    gpiochip_line_is_irq(&pctrl->chip, intel_pin_to_gpio(pctrl, pin)))
- 		return true;
- 
-+	/*
-+	 * The firmware on some systems may configure GPIO pins to be
-+	 * an interrupt source in so called "direct IRQ" mode. In such
-+	 * cases the GPIO controller driver has no idea if those pins
-+	 * are being used or not. At the same time, there is a known bug
-+	 * in the firmwares that don't restore the pin settings correctly
-+	 * after suspend, i.e. by an unknown reason the Rx value becomes
-+	 * inverted.
-+	 *
-+	 * Hence, let's save and restore the pins that are configured
-+	 * as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
-+	 *
-+	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
-+	 */
-+	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
-+	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+		return true;
+ 	if (nr_frames == 0)
+ 		return 0;
+@@ -52,57 +48,17 @@ int get_vaddr_frames(unsigned long start
+ 	ret = pin_user_pages_fast(start, nr_frames,
+ 				  FOLL_FORCE | FOLL_WRITE | FOLL_LONGTERM,
+ 				  (struct page **)(vec->ptrs));
+-	if (ret > 0) {
+-		vec->got_ref = true;
+-		vec->is_pfns = false;
+-		goto out_unlocked;
+-	}
+-	ret_pin_user_pages_fast = ret;
+-
+-	mmap_read_lock(mm);
+-	vec->got_ref = false;
+-	vec->is_pfns = true;
+-	ret = 0;
+-	do {
+-		unsigned long *nums = frame_vector_pfns(vec);
+-
+-		vma = vma_lookup(mm, start);
+-		if (!vma)
+-			break;
+-
+-		while (ret < nr_frames && start + PAGE_SIZE <= vma->vm_end) {
+-			err = follow_pfn(vma, start, &nums[ret]);
+-			if (err) {
+-				if (ret)
+-					goto out;
+-				// If follow_pfn() returns -EINVAL, then this
+-				// is not an IO mapping or a raw PFN mapping.
+-				// In that case, return the original error from
+-				// pin_user_pages_fast(). Otherwise this
+-				// function would return -EINVAL when
+-				// pin_user_pages_fast() returned -ENOMEM,
+-				// which makes debugging hard.
+-				if (err == -EINVAL && ret_pin_user_pages_fast)
+-					ret = ret_pin_user_pages_fast;
+-				else
+-					ret = err;
+-				goto out;
+-			}
+-			start += PAGE_SIZE;
+-			ret++;
+-		}
+-		/* Bail out if VMA doesn't completely cover the tail page. */
+-		if (start < vma->vm_end)
+-			break;
+-	} while (ret < nr_frames);
+-out:
+-	mmap_read_unlock(mm);
+-out_unlocked:
+-	if (!ret)
+-		ret = -EFAULT;
+-	if (ret > 0)
+-		vec->nr_frames = ret;
+-	return ret;
++	vec->got_ref = true;
++	vec->is_pfns = false;
++	vec->nr_frames = ret;
 +
- 	return false;
++	if (likely(ret > 0))
++		return ret;
++
++	/* This used to (racily) return non-refcounted pfns. Let people know */
++	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
++	vec->nr_frames = 0;
++	return ret ? ret : -EFAULT;
  }
+ EXPORT_SYMBOL(get_vaddr_frames);
  
 
 
