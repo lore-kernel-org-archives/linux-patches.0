@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB3515C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C93AC433C1;
-	Mon,  5 Dec 2022 19:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C1315C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C7BC433C1;
+	Mon,  5 Dec 2022 19:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268467;
-	bh=XVO6Fo/wT0d/0BEsEhL9syvO5CTF3jOkJ0Wa5SWsUa8=;
+	s=korg; t=1670268470;
+	bh=L6k0pltso8soKewPLu2bVZpvObt8QesgeXion2DXBak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6pGT/iTiAQeBU8dqW7FnMT0RzPqxmrtoK5lge2rXrBOmeZu1M1MgFjAX7/dZibko
-	 Fo7CmSLLN4AV34TUf3cBUzo2UbRZxRNPex54yiNrAbpzG/pntl4kp15BJJbIYxDZI/
-	 KxVnuLDIFWUhY8C7jNTN/BCFNQwemjqZvCivYVDQ=
+	b=SchIOkYjgQ/GbDCdvWIiGetT0xzf23fLy/hFWmDErh1zpCSVo+85sNP0S4o6UAhzu
+	 TP8cgwYIFLcycwVJGgYUMGvHTU4ayTH8TP4VVJ0/uHHZZT+CN4WSH55fPf9l4EgZ2/
+	 0V3jZjNNrmJ7mKAMcNNvSqO6fINVK6XHKoeSgJ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 112/124] ipv4: Fix route deletion when nexthop info is not specified
-Date: Mon,  5 Dec 2022 20:10:18 +0100
-Message-Id: <20221205190811.624100729@linuxfoundation.org>
+Subject: [PATCH 6.0 113/124] mm/damon: introduce struct damos_access_pattern
+Date: Mon,  5 Dec 2022 20:10:19 +0100
+Message-Id: <20221205190811.654728108@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -38,116 +36,407 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit d5082d386eee7e8ec46fa8581932c81a4961dcef ]
+[ Upstream commit f5a79d7c0c87c8d88bb5e3f3c898258fdf1b3b05 ]
 
-When the kernel receives a route deletion request from user space it
-tries to delete a route that matches the route attributes specified in
-the request.
+damon_new_scheme() has too many parameters, so introduce struct
+damos_access_pattern to simplify it.
 
-If only prefix information is specified in the request, the kernel
-should delete the first matching FIB alias regardless of its associated
-FIB info. However, an error is currently returned when the FIB info is
-backed by a nexthop object:
+In additon, we can't use a bpf trace kprobe that has more than 5
+parameters.
 
- # ip nexthop add id 1 via 192.0.2.2 dev dummy10
- # ip route add 198.51.100.0/24 nhid 1
- # ip route del 198.51.100.0/24
- RTNETLINK answers: No such process
-
-Fix by matching on such a FIB info when legacy nexthop attributes are
-not specified in the request. An earlier check already covers the case
-where a nexthop ID is specified in the request.
-
-Add tests that cover these flows. Before the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [FAIL]
-
- Tests passed:  11
- Tests failed:   1
-
-After the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [ OK ]
-
- Tests passed:  12
- Tests failed:   0
-
-No regressions in other tests:
-
- # ./fib_nexthops.sh
- ...
- Tests passed: 228
- Tests failed:   0
-
- # ./fib_tests.sh
- ...
- Tests passed: 186
- Tests failed:   0
-
-Cc: stable@vger.kernel.org
-Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
-Tested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Fixes: 6bf92d70e690 ("net: ipv4: fix route with nexthop object delete warning")
-Fixes: 61b91eb33a69 ("ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221124210932.2470010-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20220908191443.129534-1-sj@kernel.org
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 95bc35f9bee5 ("mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c                    |  8 +++++---
- tools/testing/selftests/net/fib_nexthops.sh | 11 +++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ include/linux/damon.h | 37 ++++++++++++++++++----------------
+ mm/damon/core.c       | 31 ++++++++++++++---------------
+ mm/damon/dbgfs.c      | 27 +++++++++++++++----------
+ mm/damon/lru_sort.c   | 46 ++++++++++++++++++++++++++-----------------
+ mm/damon/reclaim.c    | 23 +++++++++++++---------
+ mm/damon/sysfs.c      | 17 +++++++++++-----
+ 6 files changed, 106 insertions(+), 75 deletions(-)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index e9a7f70a54df..cb24260692e1 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -888,9 +888,11 @@ int fib_nh_match(struct net *net, struct fib_config *cfg, struct fib_info *fi,
- 		return 1;
- 	}
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 7b1f4a488230..98e622c34d44 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -216,13 +216,26 @@ struct damos_stat {
+ };
  
--	/* cannot match on nexthop object attributes */
--	if (fi->nh)
--		return 1;
-+	if (fi->nh) {
-+		if (cfg->fc_oif || cfg->fc_gw_family || cfg->fc_mp)
-+			return 1;
-+		return 0;
-+	}
+ /**
+- * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
++ * struct damos_access_pattern - Target access pattern of the given scheme.
+  * @min_sz_region:	Minimum size of target regions.
+  * @max_sz_region:	Maximum size of target regions.
+  * @min_nr_accesses:	Minimum ``->nr_accesses`` of target regions.
+  * @max_nr_accesses:	Maximum ``->nr_accesses`` of target regions.
+  * @min_age_region:	Minimum age of target regions.
+  * @max_age_region:	Maximum age of target regions.
++ */
++struct damos_access_pattern {
++	unsigned long min_sz_region;
++	unsigned long max_sz_region;
++	unsigned int min_nr_accesses;
++	unsigned int max_nr_accesses;
++	unsigned int min_age_region;
++	unsigned int max_age_region;
++};
++
++/**
++ * struct damos - Represents a Data Access Monitoring-based Operation Scheme.
++ * @pattern:		Access pattern of target regions.
+  * @action:		&damo_action to be applied to the target regions.
+  * @quota:		Control the aggressiveness of this scheme.
+  * @wmarks:		Watermarks for automated (in)activation of this scheme.
+@@ -230,10 +243,8 @@ struct damos_stat {
+  * @list:		List head for siblings.
+  *
+  * For each aggregation interval, DAMON finds regions which fit in the
+- * condition (&min_sz_region, &max_sz_region, &min_nr_accesses,
+- * &max_nr_accesses, &min_age_region, &max_age_region) and applies &action to
+- * those.  To avoid consuming too much CPU time or IO resources for the
+- * &action, &quota is used.
++ * &pattern and applies &action to those. To avoid consuming too much
++ * CPU time or IO resources for the &action, &quota is used.
+  *
+  * To do the work only when needed, schemes can be activated for specific
+  * system situations using &wmarks.  If all schemes that registered to the
+@@ -248,12 +259,7 @@ struct damos_stat {
+  * &action is applied.
+  */
+ struct damos {
+-	unsigned long min_sz_region;
+-	unsigned long max_sz_region;
+-	unsigned int min_nr_accesses;
+-	unsigned int max_nr_accesses;
+-	unsigned int min_age_region;
+-	unsigned int max_age_region;
++	struct damos_access_pattern pattern;
+ 	enum damos_action action;
+ 	struct damos_quota quota;
+ 	struct damos_watermarks wmarks;
+@@ -501,12 +507,9 @@ void damon_destroy_region(struct damon_region *r, struct damon_target *t);
+ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 		unsigned int nr_ranges);
  
- 	if (cfg->fc_oif || cfg->fc_gw_family) {
- 		struct fib_nh *nh;
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index ee5e98204d3d..a47b26ab48f2 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -1228,6 +1228,17 @@ ipv4_fcnal()
- 	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
- 	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
- 	log_test $? 2 "Delete multipath route with only nh id based entry"
-+
-+	run_cmd "$IP nexthop add id 22 via 172.16.1.6 dev veth1"
-+	run_cmd "$IP ro add 172.16.102.0/24 nhid 22"
-+	run_cmd "$IP ro del 172.16.102.0/24 dev veth1"
-+	log_test $? 2 "Delete route when specifying only nexthop device"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24 via 172.16.1.6"
-+	log_test $? 2 "Delete route when specifying only gateway"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24"
-+	log_test $? 0 "Delete route when not specifying nexthop attributes"
+-struct damos *damon_new_scheme(
+-		unsigned long min_sz_region, unsigned long max_sz_region,
+-		unsigned int min_nr_accesses, unsigned int max_nr_accesses,
+-		unsigned int min_age_region, unsigned int max_age_region,
+-		enum damos_action action, struct damos_quota *quota,
+-		struct damos_watermarks *wmarks);
++struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
++			enum damos_action action, struct damos_quota *quota,
++			struct damos_watermarks *wmarks);
+ void damon_add_scheme(struct damon_ctx *ctx, struct damos *s);
+ void damon_destroy_scheme(struct damos *s);
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7d25dc582fe3..7d5a9ae6f4ac 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -230,24 +230,21 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	return 0;
  }
  
- ipv4_grp_fcnal()
+-struct damos *damon_new_scheme(
+-		unsigned long min_sz_region, unsigned long max_sz_region,
+-		unsigned int min_nr_accesses, unsigned int max_nr_accesses,
+-		unsigned int min_age_region, unsigned int max_age_region,
+-		enum damos_action action, struct damos_quota *quota,
+-		struct damos_watermarks *wmarks)
++struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
++			enum damos_action action, struct damos_quota *quota,
++			struct damos_watermarks *wmarks)
+ {
+ 	struct damos *scheme;
+ 
+ 	scheme = kmalloc(sizeof(*scheme), GFP_KERNEL);
+ 	if (!scheme)
+ 		return NULL;
+-	scheme->min_sz_region = min_sz_region;
+-	scheme->max_sz_region = max_sz_region;
+-	scheme->min_nr_accesses = min_nr_accesses;
+-	scheme->max_nr_accesses = max_nr_accesses;
+-	scheme->min_age_region = min_age_region;
+-	scheme->max_age_region = max_age_region;
++	scheme->pattern.min_sz_region = pattern->min_sz_region;
++	scheme->pattern.max_sz_region = pattern->max_sz_region;
++	scheme->pattern.min_nr_accesses = pattern->min_nr_accesses;
++	scheme->pattern.max_nr_accesses = pattern->max_nr_accesses;
++	scheme->pattern.min_age_region = pattern->min_age_region;
++	scheme->pattern.max_age_region = pattern->max_age_region;
+ 	scheme->action = action;
+ 	scheme->stat = (struct damos_stat){};
+ 	INIT_LIST_HEAD(&scheme->list);
+@@ -667,10 +664,12 @@ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+ 	unsigned long sz;
+ 
+ 	sz = r->ar.end - r->ar.start;
+-	return s->min_sz_region <= sz && sz <= s->max_sz_region &&
+-		s->min_nr_accesses <= r->nr_accesses &&
+-		r->nr_accesses <= s->max_nr_accesses &&
+-		s->min_age_region <= r->age && r->age <= s->max_age_region;
++	return s->pattern.min_sz_region <= sz &&
++		sz <= s->pattern.max_sz_region &&
++		s->pattern.min_nr_accesses <= r->nr_accesses &&
++		r->nr_accesses <= s->pattern.max_nr_accesses &&
++		s->pattern.min_age_region <= r->age &&
++		r->age <= s->pattern.max_age_region;
+ }
+ 
+ static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+diff --git a/mm/damon/dbgfs.c b/mm/damon/dbgfs.c
+index dafe7e71329b..61214cb9a5d3 100644
+--- a/mm/damon/dbgfs.c
++++ b/mm/damon/dbgfs.c
+@@ -131,9 +131,12 @@ static ssize_t sprint_schemes(struct damon_ctx *c, char *buf, ssize_t len)
+ 	damon_for_each_scheme(s, c) {
+ 		rc = scnprintf(&buf[written], len - written,
+ 				"%lu %lu %u %u %u %u %d %lu %lu %lu %u %u %u %d %lu %lu %lu %lu %lu %lu %lu %lu %lu\n",
+-				s->min_sz_region, s->max_sz_region,
+-				s->min_nr_accesses, s->max_nr_accesses,
+-				s->min_age_region, s->max_age_region,
++				s->pattern.min_sz_region,
++				s->pattern.max_sz_region,
++				s->pattern.min_nr_accesses,
++				s->pattern.max_nr_accesses,
++				s->pattern.min_age_region,
++				s->pattern.max_age_region,
+ 				damos_action_to_dbgfs_scheme_action(s->action),
+ 				s->quota.ms, s->quota.sz,
+ 				s->quota.reset_interval,
+@@ -221,8 +224,6 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 	struct damos *scheme, **schemes;
+ 	const int max_nr_schemes = 256;
+ 	int pos = 0, parsed, ret;
+-	unsigned long min_sz, max_sz;
+-	unsigned int min_nr_a, max_nr_a, min_age, max_age;
+ 	unsigned int action_input;
+ 	enum damos_action action;
+ 
+@@ -233,13 +234,18 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 
+ 	*nr_schemes = 0;
+ 	while (pos < len && *nr_schemes < max_nr_schemes) {
++		struct damos_access_pattern pattern = {};
+ 		struct damos_quota quota = {};
+ 		struct damos_watermarks wmarks;
+ 
+ 		ret = sscanf(&str[pos],
+ 				"%lu %lu %u %u %u %u %u %lu %lu %lu %u %u %u %u %lu %lu %lu %lu%n",
+-				&min_sz, &max_sz, &min_nr_a, &max_nr_a,
+-				&min_age, &max_age, &action_input, &quota.ms,
++				&pattern.min_sz_region, &pattern.max_sz_region,
++				&pattern.min_nr_accesses,
++				&pattern.max_nr_accesses,
++				&pattern.min_age_region,
++				&pattern.max_age_region,
++				&action_input, &quota.ms,
+ 				&quota.sz, &quota.reset_interval,
+ 				&quota.weight_sz, &quota.weight_nr_accesses,
+ 				&quota.weight_age, &wmarks.metric,
+@@ -251,7 +257,9 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 		if ((int)action < 0)
+ 			goto fail;
+ 
+-		if (min_sz > max_sz || min_nr_a > max_nr_a || min_age > max_age)
++		if (pattern.min_sz_region > pattern.max_sz_region ||
++		    pattern.min_nr_accesses > pattern.max_nr_accesses ||
++		    pattern.min_age_region > pattern.max_age_region)
+ 			goto fail;
+ 
+ 		if (wmarks.high < wmarks.mid || wmarks.high < wmarks.low ||
+@@ -259,8 +267,7 @@ static struct damos **str_to_schemes(const char *str, ssize_t len,
+ 			goto fail;
+ 
+ 		pos += parsed;
+-		scheme = damon_new_scheme(min_sz, max_sz, min_nr_a, max_nr_a,
+-				min_age, max_age, action, &quota, &wmarks);
++		scheme = damon_new_scheme(&pattern, action, &quota, &wmarks);
+ 		if (!scheme)
+ 			goto fail;
+ 
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 9de6f00a71c5..0184ed4828b7 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -293,6 +293,17 @@ static bool get_monitoring_region(unsigned long *start, unsigned long *end)
+ /* Create a DAMON-based operation scheme for hot memory regions */
+ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and accessed for more than the threshold */
++		.min_nr_accesses = hot_thres,
++		.max_nr_accesses = UINT_MAX,
++		/* no matter its age */
++		.min_age_region = 0,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -313,26 +324,31 @@ static struct damos *damon_lru_sort_new_hot_scheme(unsigned int hot_thres)
+ 		.weight_nr_accesses = 1,
+ 		.weight_age = 0,
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and accessed for more than the threshold */
+-			hot_thres, UINT_MAX,
+-			/* no matter its age */
+-			0, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* prioritize those on LRU lists, as soon as found */
+ 			DAMOS_LRU_PRIO,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ /* Create a DAMON-based operation scheme for cold memory regions */
+ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and not accessed at all */
++		.min_nr_accesses = 0,
++		.max_nr_accesses = 0,
++		/* for min_age or more micro-seconds */
++		.min_age_region = cold_thres,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -354,21 +370,15 @@ static struct damos *damon_lru_sort_new_cold_scheme(unsigned int cold_thres)
+ 		.weight_nr_accesses = 0,
+ 		.weight_age = 1,
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and not accessed at all */
+-			0, 0,
+-			/* for cold_thres or more micro-seconds, and */
+-			cold_thres, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* mark those as not accessed, as soon as found */
+ 			DAMOS_LRU_DEPRIO,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ static int damon_lru_sort_apply_parameters(void)
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index a7faf51b4bd4..5aeca0b9e88e 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -264,6 +264,17 @@ static bool get_monitoring_region(unsigned long *start, unsigned long *end)
+ 
+ static struct damos *damon_reclaim_new_scheme(void)
+ {
++	struct damos_access_pattern pattern = {
++		/* Find regions having PAGE_SIZE or larger size */
++		.min_sz_region = PAGE_SIZE,
++		.max_sz_region = ULONG_MAX,
++		/* and not accessed at all */
++		.min_nr_accesses = 0,
++		.max_nr_accesses = 0,
++		/* for min_age or more micro-seconds */
++		.min_age_region = min_age / aggr_interval,
++		.max_age_region = UINT_MAX,
++	};
+ 	struct damos_watermarks wmarks = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.interval = wmarks_interval,
+@@ -284,21 +295,15 @@ static struct damos *damon_reclaim_new_scheme(void)
+ 		.weight_nr_accesses = 0,
+ 		.weight_age = 1
+ 	};
+-	struct damos *scheme = damon_new_scheme(
+-			/* Find regions having PAGE_SIZE or larger size */
+-			PAGE_SIZE, ULONG_MAX,
+-			/* and not accessed at all */
+-			0, 0,
+-			/* for min_age or more micro-seconds, and */
+-			min_age / aggr_interval, UINT_MAX,
++
++	return damon_new_scheme(
++			&pattern,
+ 			/* page out those, as soon as found */
+ 			DAMOS_PAGEOUT,
+ 			/* under the quota. */
+ 			&quota,
+ 			/* (De)activate this according to the watermarks. */
+ 			&wmarks);
+-
+-	return scheme;
+ }
+ 
+ static int damon_reclaim_apply_parameters(void)
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index b4b9614eecbe..ec88644c51df 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2259,11 +2259,20 @@ static int damon_sysfs_set_targets(struct damon_ctx *ctx,
+ static struct damos *damon_sysfs_mk_scheme(
+ 		struct damon_sysfs_scheme *sysfs_scheme)
+ {
+-	struct damon_sysfs_access_pattern *pattern =
++	struct damon_sysfs_access_pattern *access_pattern =
+ 		sysfs_scheme->access_pattern;
+ 	struct damon_sysfs_quotas *sysfs_quotas = sysfs_scheme->quotas;
+ 	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
+ 	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
++
++	struct damos_access_pattern pattern = {
++		.min_sz_region = access_pattern->sz->min,
++		.max_sz_region = access_pattern->sz->max,
++		.min_nr_accesses = access_pattern->nr_accesses->min,
++		.max_nr_accesses = access_pattern->nr_accesses->max,
++		.min_age_region = access_pattern->age->min,
++		.max_age_region = access_pattern->age->max,
++	};
+ 	struct damos_quota quota = {
+ 		.ms = sysfs_quotas->ms,
+ 		.sz = sysfs_quotas->sz,
+@@ -2280,10 +2289,8 @@ static struct damos *damon_sysfs_mk_scheme(
+ 		.low = sysfs_wmarks->low,
+ 	};
+ 
+-	return damon_new_scheme(pattern->sz->min, pattern->sz->max,
+-			pattern->nr_accesses->min, pattern->nr_accesses->max,
+-			pattern->age->min, pattern->age->max,
+-			sysfs_scheme->action, &quota, &wmarks);
++	return damon_new_scheme(&pattern, sysfs_scheme->action, &quota,
++			&wmarks);
+ }
+ 
+ static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
 -- 
 2.35.1
 
