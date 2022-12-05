@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0882B15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E559C433D6;
-	Mon,  5 Dec 2022 19:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D2015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32207C433D6;
+	Mon,  5 Dec 2022 19:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268886;
-	bh=pqjXRLDeDU42CC6W+w4CM5n80Y/ZLSl8ZW5c/RyXzPM=;
+	s=korg; t=1670268889;
+	bh=fnhSODLAcno3KqncfRPfQJNekfLDBy7vnQmC5+sxIUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sw+96KDfIc0l6KxM4HXCcyNcwGI9rXe82s0QS2ELjC276IsZoR/2lwlPa3emw7jCJ
-	 HF6UNwktf8fTyX717hUeqlzEvC0ahhp32ExCsNqWNNjKD92hz4+id1Tny+pL4bqwp5
-	 vLYE/rAV9WTvPzOck30/03ZcPAIFiyw6tAX2Mp8g=
+	b=JTsx/lWDr7LxTfKPk2WN2fO9JCVHKN/69rnCxafGqcib3SsTU2DWbds53nntE9ywJ
+	 r1QnEeShRs6uWXtOuMn/S4taEbLiwDsocL8mjfqdhlxy66ftA4k63RIbwTXBIJPEfh
+	 5dU63ogRdo0YCZVHMczufmgj2NLpsi8Z1drjwtSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Derek Nguyen <derek.nguyen@collins.com>,
+	Brandon Maier <brandon.maier@collins.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/120] libbpf: Handle size overflow for ringbuf mmap
-Date: Mon,  5 Dec 2022 20:09:20 +0100
-Message-Id: <20221205190807.180998122@linuxfoundation.org>
+Subject: [PATCH 5.15 021/120] hwmon: (ltc2947) fix temperature scaling
+Date: Mon,  5 Dec 2022 20:09:21 +0100
+Message-Id: <20221205190807.209965534@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,65 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: Derek Nguyen <derek.nguyen@collins.com>
 
-[ Upstream commit 927cbb478adf917e0a142b94baa37f06279cc466 ]
+[ Upstream commit 07e06193ead86d4812f431b4d87bbd4161222e3f ]
 
-The maximum size of ringbuf is 2GB on x86-64 host, so 2 * max_entries
-will overflow u32 when mapping producer page and data pages. Only
-casting max_entries to size_t is not enough, because for 32-bits
-application on 64-bits kernel the size of read-only mmap region
-also could overflow size_t.
+The LTC2947 datasheet (Rev. B) calls out in the section "Register
+Description: Non-Accumulated Result Registers" (pg. 30) that "To
+calculate temperature, multiply the TEMP register value by 0.204°C
+and add 5.5°C". Fix to add 5.5C and not 0.55C.
 
-So fixing it by casting the size of read-only mmap region into a __u64
-and checking whether or not there will be overflow during mmap.
-
-Fixes: bf99c936f947 ("libbpf: Add BPF ring buffer support")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20221116072351.1168938-3-houtao@huaweicloud.com
+Fixes: 9f90fd652bed ("hwmon: Add support for ltc2947")
+Signed-off-by: Derek Nguyen <derek.nguyen@collins.com>
+Signed-off-by: Brandon Maier <brandon.maier@collins.com>
+Link: https://lore.kernel.org/r/20221110192108.20624-1-brandon.maier@collins.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/ringbuf.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/hwmon/ltc2947-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index 8bc117bcc7bc..c42ba9358d8c 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -59,6 +59,7 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
- 	__u32 len = sizeof(info);
- 	struct epoll_event *e;
- 	struct ring *r;
-+	__u64 mmap_sz;
- 	void *tmp;
- 	int err;
+diff --git a/drivers/hwmon/ltc2947-core.c b/drivers/hwmon/ltc2947-core.c
+index 5423466de697..e918490f3ff7 100644
+--- a/drivers/hwmon/ltc2947-core.c
++++ b/drivers/hwmon/ltc2947-core.c
+@@ -396,7 +396,7 @@ static int ltc2947_read_temp(struct device *dev, const u32 attr, long *val,
+ 		return ret;
  
-@@ -97,8 +98,7 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
- 	r->mask = info.max_entries - 1;
+ 	/* in milidegrees celcius, temp is given by: */
+-	*val = (__val * 204) + 550;
++	*val = (__val * 204) + 5500;
  
- 	/* Map writable consumer page */
--	tmp = mmap(NULL, rb->page_size, PROT_READ | PROT_WRITE, MAP_SHARED,
--		   map_fd, 0);
-+	tmp = mmap(NULL, rb->page_size, PROT_READ | PROT_WRITE, MAP_SHARED, map_fd, 0);
- 	if (tmp == MAP_FAILED) {
- 		err = -errno;
- 		pr_warn("ringbuf: failed to mmap consumer page for map fd=%d: %d\n",
-@@ -111,8 +111,12 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
- 	 * data size to allow simple reading of samples that wrap around the
- 	 * end of a ring buffer. See kernel implementation for details.
- 	 * */
--	tmp = mmap(NULL, rb->page_size + 2 * info.max_entries, PROT_READ,
--		   MAP_SHARED, map_fd, rb->page_size);
-+	mmap_sz = rb->page_size + 2 * (__u64)info.max_entries;
-+	if (mmap_sz != (__u64)(size_t)mmap_sz) {
-+		pr_warn("ringbuf: ring buffer size (%u) is too big\n", info.max_entries);
-+		return libbpf_err(-E2BIG);
-+	}
-+	tmp = mmap(NULL, (size_t)mmap_sz, PROT_READ, MAP_SHARED, map_fd, rb->page_size);
- 	if (tmp == MAP_FAILED) {
- 		err = -errno;
- 		ringbuf_unmap_ring(rb, r);
+ 	return 0;
+ }
 -- 
 2.35.1
 
