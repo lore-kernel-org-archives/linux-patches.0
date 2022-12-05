@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BDD15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE42C433C1;
-	Mon,  5 Dec 2022 19:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C08015C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00830C433C1;
+	Mon,  5 Dec 2022 19:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269362;
-	bh=NvfDMxx2d7R8BROHEfvBBMdHuyp1ZZaSUHN1dkXnrNc=;
+	s=korg; t=1670269365;
+	bh=M1Xf3r5qs9UnU+7hqatPN52PTyjk/F0vzhh9s9Pce4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b14VCvVa63xPROiaflEBRVpvI7HJpkHeamOZvT+23yj4KxcYcRtKyKwe22CaeZr8e
-	 GwiRVDQUEBciM3jTnIPjFv5EDoPQt8IWhDB1XihzXD/YqGpt/D5vLjkZg0HIF3/C/H
-	 RjEIRRdfSqD+WKDMCmxYgnDC/U2Cn+fl02wlUtRQ=
+	b=KhBTE0DbYfdv0TWO99/iakkXTRtsGf9pRa82xcprN6JTxa0ofHOJPzJilLFTj3t/U
+	 Q+ZCtrINBOGmpvxDJXr8tRLtMxbbbF0qRRk8nTnu0W16A/iJTKzbEIC1Ybkh5b1uUw
+	 tIHf3s3zvuirMHdTnojGxWRlVMRBuucKqKhdpkFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/153] can: cc770: cc770_isa_probe(): add missing free_cc770dev()
-Date: Mon,  5 Dec 2022 20:10:24 +0100
-Message-Id: <20221205190811.615280613@linuxfoundation.org>
+Subject: [PATCH 5.4 083/153] btrfs: free btrfs_path before copying inodes to userspace
+Date: Mon,  5 Dec 2022 20:10:07 +0100
+Message-Id: <20221205190811.103120186@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,57 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-[ Upstream commit 62ec89e74099a3d6995988ed9f2f996b368417ec ]
+[ Upstream commit 418ffb9e3cf6c4e2574d3a732b724916684bd133 ]
 
-Add the missing free_cc770dev() before return from cc770_isa_probe()
-in the register_cc770dev() error handling case.
+btrfs_ioctl_logical_to_ino() frees the search path after the userspace
+copy from the temp buffer @inodes. Which potentially can lead to a lock
+splat.
 
-In addition, remove blanks before goto labels.
+Fix this by freeing the path before we copy @inodes to userspace.
 
-Fixes: 7e02e5433e00 ("can: cc770: legacy CC770 ISA bus driver")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Link: https://lore.kernel.org/all/1668168557-6024-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+CC: stable@vger.kernel.org # 4.19+
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/cc770/cc770_isa.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/btrfs/ioctl.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/can/cc770/cc770_isa.c b/drivers/net/can/cc770/cc770_isa.c
-index b9047d8110d5..910e8c309a67 100644
---- a/drivers/net/can/cc770/cc770_isa.c
-+++ b/drivers/net/can/cc770/cc770_isa.c
-@@ -264,22 +264,24 @@ static int cc770_isa_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"couldn't register device (err=%d)\n", err);
--		goto exit_unmap;
-+		goto exit_free;
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index fb0c13b2bc6a..8553bd4361dd 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4590,21 +4590,20 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
+ 		size = min_t(u32, loi->size, SZ_16M);
  	}
  
- 	dev_info(&pdev->dev, "device registered (reg_base=0x%p, irq=%d)\n",
- 		 priv->reg_base, dev->irq);
- 	return 0;
+-	path = btrfs_alloc_path();
+-	if (!path) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	inodes = init_data_container(size);
+ 	if (IS_ERR(inodes)) {
+ 		ret = PTR_ERR(inodes);
+-		inodes = NULL;
+-		goto out;
++		goto out_loi;
+ 	}
  
-- exit_unmap:
-+exit_free:
-+	free_cc770dev(dev);
-+exit_unmap:
- 	if (mem[idx])
- 		iounmap(base);
-- exit_release:
-+exit_release:
- 	if (mem[idx])
- 		release_mem_region(mem[idx], iosize);
- 	else
- 		release_region(port[idx], iosize);
-- exit:
-+exit:
- 	return err;
- }
++	path = btrfs_alloc_path();
++	if (!path) {
++		ret = -ENOMEM;
++		goto out;
++	}
+ 	ret = iterate_inodes_from_logical(loi->logical, fs_info, path,
+ 					  build_ino_list, inodes, ignore_offset);
++	btrfs_free_path(path);
+ 	if (ret == -EINVAL)
+ 		ret = -ENOENT;
+ 	if (ret < 0)
+@@ -4616,7 +4615,6 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
+ 		ret = -EFAULT;
  
+ out:
+-	btrfs_free_path(path);
+ 	kvfree(inodes);
+ out_loi:
+ 	kfree(loi);
 -- 
 2.35.1
 
