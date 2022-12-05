@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA6715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B32C433B5;
-	Mon,  5 Dec 2022 19:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B3215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F52C433C1;
+	Mon,  5 Dec 2022 19:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268445;
-	bh=KPk661TDVRpFiA14+3hXATK/m2skzTBFCRc80xTmTf4=;
+	s=korg; t=1670268448;
+	bh=rXNK/ejhukvAjml9AyCedwlO2C0Xuvdrufw1DJyA3qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFPB527PtjykolIk6iAuGJ7l/NXJAYpj7vDwvm/c91f1F1CFgk+xdzgmIBYiUHiUH
-	 g1/Co14RS5QoKIleIoODIssvOfN33Y19D8U5JBFfi82n5P1KapvaZNTUhKqiYGbvKL
-	 tozM1seFmtIpwKT1XpNQxlrXADpbzVzrdSdObIOQ=
+	b=hF3npqzBC9PLryzzVJakVsTaiJRzQ/c3CteP+a77AV04IeVSTD/xTyRZusaqXWKfA
+	 Z9zsnOA5Lcjf0v4sDw8NqvJ0W7ZwXspjTBFMim66MePxnl9AeaV+5EXXDjWzYKi3Lq
+	 MX2S9o0z+sC7dXavH0qMB6Lqqa5ijcmcceRMQkqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
+	Guo Ren <guoren@linux.alibaba.com>,
 	Guo Ren <guoren@kernel.org>,
+	Xianting Tian <xianting.tian@linux.alibaba.com>,
+	Nick Kossifidis <mick@ics.forth.gr>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 105/124] riscv: fix race when vmap stack overflow
-Date: Mon,  5 Dec 2022 20:10:11 +0100
-Message-Id: <20221205190811.413940702@linuxfoundation.org>
+Subject: [PATCH 6.0 106/124] riscv: kexec: Fixup irq controller broken in kexec crash path
+Date: Mon,  5 Dec 2022 20:10:12 +0100
+Message-Id: <20221205190811.445754968@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,105 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-[ Upstream commit 7e1864332fbc1b993659eab7974da9fe8bf8c128 ]
+[ Upstream commit b17d19a5314a37f7197afd1a0200affd21a7227d ]
 
-Currently, when detecting vmap stack overflow, riscv firstly switches
-to the so called shadow stack, then use this shadow stack to call the
-get_overflow_stack() to get the overflow stack. However, there's
-a race here if two or more harts use the same shadow stack at the same
-time.
+If a crash happens on cpu3 and all interrupts are binding on cpu0, the
+bad irq routing will cause a crash kernel which can't receive any irq.
+Because crash kernel won't clean up all harts' PLIC enable bits in
+enable registers. This patch is similar to 9141a003a491 ("ARM: 7316/1:
+kexec: EOI active and mask all interrupts in kexec crash path") and
+78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()"), and
+PowerPC also has the same mechanism.
 
-To solve this race, we introduce spin_shadow_stack atomic var, which
-will be swap between its own address and 0 in atomic way, when the
-var is set, it means the shadow_stack is being used; when the var
-is cleared, it means the shadow_stack isn't being used.
-
-Fixes: 31da94c25aea ("riscv: add VMAP_STACK overflow detection")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Suggested-by: Guo Ren <guoren@kernel.org>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20221030124517.2370-1-jszhang@kernel.org
-[Palmer: Add AQ to the swap, and also some comments.]
+Fixes: fba8a8674f68 ("RISC-V: Add kexec support")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Xianting Tian <xianting.tian@linux.alibaba.com>
+Cc: Nick Kossifidis <mick@ics.forth.gr>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20221020141603.2856206-2-guoren@kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/asm.h |  1 +
- arch/riscv/kernel/entry.S    | 13 +++++++++++++
- arch/riscv/kernel/traps.c    | 18 ++++++++++++++++++
- 3 files changed, 32 insertions(+)
+ arch/riscv/kernel/machine_kexec.c | 35 +++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/arch/riscv/include/asm/asm.h b/arch/riscv/include/asm/asm.h
-index 1b471ff73178..816e753de636 100644
---- a/arch/riscv/include/asm/asm.h
-+++ b/arch/riscv/include/asm/asm.h
-@@ -23,6 +23,7 @@
- #define REG_L		__REG_SEL(ld, lw)
- #define REG_S		__REG_SEL(sd, sw)
- #define REG_SC		__REG_SEL(sc.d, sc.w)
-+#define REG_AMOSWAP_AQ	__REG_SEL(amoswap.d.aq, amoswap.w.aq)
- #define REG_ASM		__REG_SEL(.dword, .word)
- #define SZREG		__REG_SEL(8, 4)
- #define LGREG		__REG_SEL(3, 2)
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index b9eda3fcbd6d..186abd146eaf 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -404,6 +404,19 @@ handle_syscall_trace_exit:
+diff --git a/arch/riscv/kernel/machine_kexec.c b/arch/riscv/kernel/machine_kexec.c
+index ee79e6839b86..db41c676e5a2 100644
+--- a/arch/riscv/kernel/machine_kexec.c
++++ b/arch/riscv/kernel/machine_kexec.c
+@@ -15,6 +15,8 @@
+ #include <linux/compiler.h>	/* For unreachable() */
+ #include <linux/cpu.h>		/* For cpu_down() */
+ #include <linux/reboot.h>
++#include <linux/interrupt.h>
++#include <linux/irq.h>
  
- #ifdef CONFIG_VMAP_STACK
- handle_kernel_stack_overflow:
-+	/*
-+	 * Takes the psuedo-spinlock for the shadow stack, in case multiple
-+	 * harts are concurrently overflowing their kernel stacks.  We could
-+	 * store any value here, but since we're overflowing the kernel stack
-+	 * already we only have SP to use as a scratch register.  So we just
-+	 * swap in the address of the spinlock, as that's definately non-zero.
-+	 *
-+	 * Pairs with a store_release in handle_bad_stack().
-+	 */
-+1:	la sp, spin_shadow_stack
-+	REG_AMOSWAP_AQ sp, sp, (sp)
-+	bnez sp, 1b
-+
- 	la sp, shadow_stack
- 	addi sp, sp, SHADOW_OVERFLOW_STACK_SIZE
- 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 635e6ec26938..6e8822446069 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -218,11 +218,29 @@ asmlinkage unsigned long get_overflow_stack(void)
- 		OVERFLOW_STACK_SIZE;
+ /*
+  * kexec_image_info - Print received image details
+@@ -154,6 +156,37 @@ void crash_smp_send_stop(void)
+ 	cpus_stopped = 1;
  }
  
-+/*
-+ * A pseudo spinlock to protect the shadow stack from being used by multiple
-+ * harts concurrently.  This isn't a real spinlock because the lock side must
-+ * be taken without a valid stack and only a single register, it's only taken
-+ * while in the process of panicing anyway so the performance and error
-+ * checking a proper spinlock gives us doesn't matter.
-+ */
-+unsigned long spin_shadow_stack;
++static void machine_kexec_mask_interrupts(void)
++{
++	unsigned int i;
++	struct irq_desc *desc;
 +
- asmlinkage void handle_bad_stack(struct pt_regs *regs)
- {
- 	unsigned long tsk_stk = (unsigned long)current->stack;
- 	unsigned long ovf_stk = (unsigned long)this_cpu_ptr(overflow_stack);
- 
-+	/*
-+	 * We're done with the shadow stack by this point, as we're on the
-+	 * overflow stack.  Tell any other concurrent overflowing harts that
-+	 * they can proceed with panicing by releasing the pseudo-spinlock.
-+	 *
-+	 * This pairs with an amoswap.aq in handle_kernel_stack_overflow.
-+	 */
-+	smp_store_release(&spin_shadow_stack, 0);
++	for_each_irq_desc(i, desc) {
++		struct irq_chip *chip;
++		int ret;
 +
- 	console_verbose();
++		chip = irq_desc_get_chip(desc);
++		if (!chip)
++			continue;
++
++		/*
++		 * First try to remove the active state. If this
++		 * fails, try to EOI the interrupt.
++		 */
++		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
++
++		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
++		    chip->irq_eoi)
++			chip->irq_eoi(&desc->irq_data);
++
++		if (chip->irq_mask)
++			chip->irq_mask(&desc->irq_data);
++
++		if (chip->irq_disable && !irqd_irq_disabled(&desc->irq_data))
++			chip->irq_disable(&desc->irq_data);
++	}
++}
++
+ /*
+  * machine_crash_shutdown - Prepare to kexec after a kernel crash
+  *
+@@ -169,6 +202,8 @@ machine_crash_shutdown(struct pt_regs *regs)
+ 	crash_smp_send_stop();
  
- 	pr_emerg("Insufficient stack space to handle exception!\n");
+ 	crash_save_cpu(regs, smp_processor_id());
++	machine_kexec_mask_interrupts();
++
+ 	pr_info("Starting crashdump kernel...\n");
+ }
+ 
 -- 
 2.35.1
 
