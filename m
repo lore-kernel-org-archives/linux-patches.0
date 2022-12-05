@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8778015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C02C433C1;
-	Mon,  5 Dec 2022 19:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8D715C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:38:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA303C433C1;
+	Mon,  5 Dec 2022 19:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269089;
-	bh=hG11q96aRZEImcSJ0UcROZs37Cgdg3L5QVlfwbJmtIk=;
+	s=korg; t=1670269092;
+	bh=Ogndp6nQiho47cNepyN4MEXpBoNwyEqQj1W99YIIH5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhQOGDXGd/rqd1M0L1Uz4M4VgI/0HHJRbnDFlngnKmgj7z6W6NRBa/mMGk3gdYQJk
-	 wap/WZv1BECZsp9LSvuJ8qwebssI3GL0HhGF+EZM7JALFWfjWC2g92o47h94DP5lJp
-	 hKi9BGQS4i3a7o/RVXTN9atODYNU9QpNRwg/2qtI=
+	b=ovRHOWTbCUyGhq+Wu5n+FRQDHKhetKss0nnWaBVqtXiJ/mSs/n9RJOYV3RrH3q+w1
+	 Ku4g4B7sD1J6B5wbnuv9eHA5UflBLFBTnFo6KrKOF82lk9innGwMMiNQbZKLloaaN5
+	 5oPlYcKK8yMWFFg2TuXDoTpx9zsVxAH5L/aF66No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Zhenyu Zhang <zhenyzha@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/120] mm: migrate: fix THPs mapcount on isolation
-Date: Mon,  5 Dec 2022 20:10:44 +0100
-Message-Id: <20221205190809.671638253@linuxfoundation.org>
+Subject: [PATCH 5.15 105/120] parisc: Increase FRAME_WARN to 2048 bytes on parisc
+Date: Mon,  5 Dec 2022 20:10:45 +0100
+Message-Id: <20221205190809.699223225@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -43,87 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavin Shan <gshan@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 829ae0f81ce093d674ff2256f66a714753e9ce32 ]
+[ Upstream commit 8d192bec534bd5b778135769a12e5f04580771f7 ]
 
-The issue is reported when removing memory through virtio_mem device.  The
-transparent huge page, experienced copy-on-write fault, is wrongly
-regarded as pinned.  The transparent huge page is escaped from being
-isolated in isolate_migratepages_block().  The transparent huge page can't
-be migrated and the corresponding memory block can't be put into offline
-state.
+PA-RISC uses a much bigger frame size for functions than other
+architectures. So increase it to 2048 for 32- and 64-bit kernels.
+This fixes e.g. a warning in lib/xxhash.c.
 
-Fix it by replacing page_mapcount() with total_mapcount().  With this, the
-transparent huge page can be isolated and migrated, and the memory block
-can be put into offline state.  Besides, The page's refcount is increased
-a bit earlier to avoid the page is released when the check is executed.
-
-Link: https://lkml.kernel.org/r/20221124095523.31061-1-gshan@redhat.com
-Fixes: 1da2f328fa64 ("mm,thp,compaction,cma: allow THP migration for CMA allocations")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Reported-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>	[5.7+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 152fe65f300e ("Kconfig.debug: provide a little extra FRAME_WARN leeway when KASAN is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/compaction.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ lib/Kconfig.debug | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/mm/compaction.c b/mm/compaction.c
-index b6bd745a2f7f..e8fcf0e0c1ca 100644
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -992,29 +992,29 @@ isolate_migratepages_block(struct compact_control *cc, unsigned long low_pfn,
- 			goto isolate_fail;
- 		}
- 
-+		/*
-+		 * Be careful not to clear PageLRU until after we're
-+		 * sure the page is not being freed elsewhere -- the
-+		 * page release code relies on it.
-+		 */
-+		if (unlikely(!get_page_unless_zero(page)))
-+			goto isolate_fail;
-+
- 		/*
- 		 * Migration will fail if an anonymous page is pinned in memory,
- 		 * so avoid taking lru_lock and isolating it unnecessarily in an
- 		 * admittedly racy check.
- 		 */
- 		mapping = page_mapping(page);
--		if (!mapping && page_count(page) > page_mapcount(page))
--			goto isolate_fail;
-+		if (!mapping && (page_count(page) - 1) > total_mapcount(page))
-+			goto isolate_fail_put;
- 
- 		/*
- 		 * Only allow to migrate anonymous pages in GFP_NOFS context
- 		 * because those do not depend on fs locks.
- 		 */
- 		if (!(cc->gfp_mask & __GFP_FS) && mapping)
--			goto isolate_fail;
--
--		/*
--		 * Be careful not to clear PageLRU until after we're
--		 * sure the page is not being freed elsewhere -- the
--		 * page release code relies on it.
--		 */
--		if (unlikely(!get_page_unless_zero(page)))
--			goto isolate_fail;
-+			goto isolate_fail_put;
- 
- 		/* Only take pages on LRU: a check now makes later tests safe */
- 		if (!PageLRU(page))
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 027ab190796f..23b7b1fccc54 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -352,8 +352,9 @@ config FRAME_WARN
+ 	int "Warn for stack frames larger than"
+ 	range 0 8192
+ 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+-	default 1536 if (!64BIT && (PARISC || XTENSA))
+-	default 1024 if (!64BIT && !PARISC)
++	default 2048 if PARISC
++	default 1536 if (!64BIT && XTENSA)
++	default 1024 if !64BIT
+ 	default 2048 if 64BIT
+ 	help
+ 	  Tell gcc to warn at build time for stack frames larger than this.
 -- 
 2.35.1
 
