@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2224B15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976B3C433C1;
-	Mon,  5 Dec 2022 19:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F9115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585B3C433D6;
+	Mon,  5 Dec 2022 19:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268326;
-	bh=/0U5v69+AfI76KNgSSgDmyGhOzuSRTqXmWjoBfRquWE=;
+	s=korg; t=1670268328;
+	bh=1V9y3eQGPqosHHCZ6qMxnjxfGFSip1lh/vt3p0y6i+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQpLbOgMXToFZEtR+C9r3LKmORbjPeVWnM0/cWyre+zWfVkAvh/7HHf0kUKoh0jYo
-	 Du39/JBysCstg3/Z3z3cPLxrJCvOKq50APIn9Fqg6MhdTAfT9KpjlAV/6/2h3Xh+Sl
-	 UrQmcpso1PtLX+Oj6H/1UqDwu273hFneTjaaAmgU=
+	b=ybCblZ2urtToNEmRy7+K79pbVs83pKR9lSlRbC9a4HaXL9VKmJhfK5Z4SqaJkwRlr
+	 lpPxYvzzn4g1uvKDauITLKThz0AL1L06W/bSbLMkJ0HP0xKhmCuEj+SmqELDOOWW7O
+	 Efwtyt0OdRdduIYdniqxktUiFCJ0x3J+5r3yKEo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 033/124] e100: Fix possible use after free in e100_xmit_prepare
-Date: Mon,  5 Dec 2022 20:08:59 +0100
-Message-Id: <20221205190809.385020547@linuxfoundation.org>
+Subject: [PATCH 6.0 034/124] net/mlx5: DR, Fix uninitialized var warning
+Date: Mon,  5 Dec 2022 20:09:00 +0100
+Message-Id: <20221205190809.416821411@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,43 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Hai <wanghai38@huawei.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 45605c75c52c7ae7bfe902214343aabcfe5ba0ff ]
+[ Upstream commit 52f7cf70eb8fac6111786c59ae9dfc5cf2bee710 ]
 
-In e100_xmit_prepare(), if we can't map the skb, then return -ENOMEM, so
-e100_xmit_frame() will return NETDEV_TX_BUSY and the upper layer will
-resend the skb. But the skb is already freed, which will cause UAF bug
-when the upper layer resends the skb.
+Smatch warns this:
 
-Remove the harmful free.
+drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c:81
+ mlx5dr_table_set_miss_action() error: uninitialized symbol 'ret'.
 
-Fixes: 5e5d49422dfb ("e100: Release skb when DMA mapping is failed in e100_xmit_prepare")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Initializing ret with -EOPNOTSUPP and fix missing action case.
+
+Fixes: 7838e1725394 ("net/mlx5: DR, Expose steering table functionality")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e100.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e100.c b/drivers/net/ethernet/intel/e100.c
-index 11a884aa5082..90a2ba20e902 100644
---- a/drivers/net/ethernet/intel/e100.c
-+++ b/drivers/net/ethernet/intel/e100.c
-@@ -1741,11 +1741,8 @@ static int e100_xmit_prepare(struct nic *nic, struct cb *cb,
- 	dma_addr = dma_map_single(&nic->pdev->dev, skb->data, skb->len,
- 				  DMA_TO_DEVICE);
- 	/* If we can't map the skb, have the upper layer try later */
--	if (dma_mapping_error(&nic->pdev->dev, dma_addr)) {
--		dev_kfree_skb_any(skb);
--		skb = NULL;
-+	if (dma_mapping_error(&nic->pdev->dev, dma_addr))
- 		return -ENOMEM;
--	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
+index 31d443dd8386..f68461b13391 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_table.c
+@@ -46,7 +46,7 @@ static int dr_table_set_miss_action_nic(struct mlx5dr_domain *dmn,
+ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
+ 				 struct mlx5dr_action *action)
+ {
+-	int ret;
++	int ret = -EOPNOTSUPP;
  
- 	/*
- 	 * Use the last 4 bytes of the SKB payload packet as the CRC, used for
+ 	if (action && action->action_type != DR_ACTION_TYP_FT)
+ 		return -EOPNOTSUPP;
+@@ -67,6 +67,9 @@ int mlx5dr_table_set_miss_action(struct mlx5dr_table *tbl,
+ 			goto out;
+ 	}
+ 
++	if (ret)
++		goto out;
++
+ 	/* Release old action */
+ 	if (tbl->miss_action)
+ 		refcount_dec(&tbl->miss_action->refcount);
 -- 
 2.35.1
 
