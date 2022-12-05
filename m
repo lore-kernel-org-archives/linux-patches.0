@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD8715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83638C433D6;
-	Mon,  5 Dec 2022 19:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C920315C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350E6C433D7;
+	Mon,  5 Dec 2022 19:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268472;
-	bh=A8JQCtPJ3+jGJOtGS97HCVJLClB7cJX+gYo1fOk63pI=;
+	s=korg; t=1670268475;
+	bh=aCpv6ulFaYcW/SrEuC1B+4ly59I71Dxxt5XiIsDywIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU+zRTfKz7SCJK7scypzNF2zYwgl/FHVjQZwmaP914iMwxUVZCaEpK/xUJaRu0wqy
-	 8FzykMd1ZrGIRZCHbr59ije87aRM8dvOc8mTAiHVoDXDHD0V3B5GEBLtXgp1BO5s4W
-	 zmxrfBgJzYXZLnRu/JuP5h1Nx5joRNe0wMPOUKWI=
+	b=HZfFAHOZGJ68AHfMowy0Q2P+LgxcpehtwL68EWSuLjOJRM3EVIfo+5PPESKUenzgP
+	 chQu+FCZxKv25RZJlQNUB6X4V9HKgVlFvz36qeGl6bUN0ctZ/mglwRoAwVpnpcS7a8
+	 BJc/IB1T3Aqd20t05c8I1ZDdZATQddk9hnav3sZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/124] mm/damon/sysfs: fix wrong empty schemes assumption under online tuning in damon_sysfs_set_schemes()
-Date: Mon,  5 Dec 2022 20:10:20 +0100
-Message-Id: <20221205190811.686158294@linuxfoundation.org>
+	Hidenori Kobayashi <hidenorik@chromium.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.0 115/124] i2c: Restore initial power state if probe fails
+Date: Mon,  5 Dec 2022 20:10:21 +0100
+Message-Id: <20221205190811.713856574@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -35,96 +38,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: SeongJae Park <sj@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 95bc35f9bee5220dad4e8567654ab3288a181639 ]
+commit 79ece9b292af6b0edcfb4d67a00711d25507640b upstream.
 
-Commit da87878010e5 ("mm/damon/sysfs: support online inputs update") made
-'damon_sysfs_set_schemes()' to be called for running DAMON context, which
-could have schemes.  In the case, DAMON sysfs interface is supposed to
-update, remove, or add schemes to reflect the sysfs files.  However, the
-code is assuming the DAMON context wouldn't have schemes at all, and
-therefore creates and adds new schemes.  As a result, the code doesn't
-work as intended for online schemes tuning and could have more than
-expected memory footprint.  The schemes are all in the DAMON context, so
-it doesn't leak the memory, though.
+A driver that supports I2C_DRV_ACPI_WAIVE_D0_PROBE is not expected to
+power off a device that it has not powered on previously.
 
-Remove the wrong asssumption (the DAMON context wouldn't have schemes) in
-'damon_sysfs_set_schemes()' to fix the bug.
+For devices operating in "full_power" mode, the first call to
+`i2c_acpi_waive_d0_probe` will return 0, which means that the device
+will be turned on with `dev_pm_domain_attach`.
 
-Link: https://lkml.kernel.org/r/20221122194831.3472-1-sj@kernel.org
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.19+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If probe fails the second call to `i2c_acpi_waive_d0_probe` will
+return 1, which means that the device will not be turned off.
+This is, it will be left in a different power state. Lets fix it.
+
+Reviewed-by: Hidenori Kobayashi <hidenorik@chromium.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: b18c1ad685d9 ("i2c: Allow an ACPI driver to manage the device's power state during probe")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core-base.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index ec88644c51df..1b782ca41396 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -2293,12 +2293,54 @@ static struct damos *damon_sysfs_mk_scheme(
- 			&wmarks);
- }
- 
-+static void damon_sysfs_update_scheme(struct damos *scheme,
-+		struct damon_sysfs_scheme *sysfs_scheme)
-+{
-+	struct damon_sysfs_access_pattern *access_pattern =
-+		sysfs_scheme->access_pattern;
-+	struct damon_sysfs_quotas *sysfs_quotas = sysfs_scheme->quotas;
-+	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
-+	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
-+
-+	scheme->pattern.min_sz_region = access_pattern->sz->min;
-+	scheme->pattern.max_sz_region = access_pattern->sz->max;
-+	scheme->pattern.min_nr_accesses = access_pattern->nr_accesses->min;
-+	scheme->pattern.max_nr_accesses = access_pattern->nr_accesses->max;
-+	scheme->pattern.min_age_region = access_pattern->age->min;
-+	scheme->pattern.max_age_region = access_pattern->age->max;
-+
-+	scheme->action = sysfs_scheme->action;
-+
-+	scheme->quota.ms = sysfs_quotas->ms;
-+	scheme->quota.sz = sysfs_quotas->sz;
-+	scheme->quota.reset_interval = sysfs_quotas->reset_interval_ms;
-+	scheme->quota.weight_sz = sysfs_weights->sz;
-+	scheme->quota.weight_nr_accesses = sysfs_weights->nr_accesses;
-+	scheme->quota.weight_age = sysfs_weights->age;
-+
-+	scheme->wmarks.metric = sysfs_wmarks->metric;
-+	scheme->wmarks.interval = sysfs_wmarks->interval_us;
-+	scheme->wmarks.high = sysfs_wmarks->high;
-+	scheme->wmarks.mid = sysfs_wmarks->mid;
-+	scheme->wmarks.low = sysfs_wmarks->low;
-+}
-+
- static int damon_sysfs_set_schemes(struct damon_ctx *ctx,
- 		struct damon_sysfs_schemes *sysfs_schemes)
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -467,6 +467,7 @@ static int i2c_device_probe(struct devic
  {
--	int i;
-+	struct damos *scheme, *next;
-+	int i = 0;
-+
-+	damon_for_each_scheme_safe(scheme, next, ctx) {
-+		if (i < sysfs_schemes->nr)
-+			damon_sysfs_update_scheme(scheme,
-+					sysfs_schemes->schemes_arr[i]);
-+		else
-+			damon_destroy_scheme(scheme);
-+		i++;
-+	}
+ 	struct i2c_client	*client = i2c_verify_client(dev);
+ 	struct i2c_driver	*driver;
++	bool do_power_on;
+ 	int status;
  
--	for (i = 0; i < sysfs_schemes->nr; i++) {
-+	for (; i < sysfs_schemes->nr; i++) {
- 		struct damos *scheme, *next;
+ 	if (!client)
+@@ -541,8 +542,8 @@ static int i2c_device_probe(struct devic
+ 	if (status < 0)
+ 		goto err_clear_wakeup_irq;
  
- 		scheme = damon_sysfs_mk_scheme(sysfs_schemes->schemes_arr[i]);
--- 
-2.35.1
-
+-	status = dev_pm_domain_attach(&client->dev,
+-				      !i2c_acpi_waive_d0_probe(dev));
++	do_power_on = !i2c_acpi_waive_d0_probe(dev);
++	status = dev_pm_domain_attach(&client->dev, do_power_on);
+ 	if (status)
+ 		goto err_clear_wakeup_irq;
+ 
+@@ -581,7 +582,7 @@ static int i2c_device_probe(struct devic
+ err_release_driver_resources:
+ 	devres_release_group(&client->dev, client->devres_group_id);
+ err_detach_pm_domain:
+-	dev_pm_domain_detach(&client->dev, !i2c_acpi_waive_d0_probe(dev));
++	dev_pm_domain_detach(&client->dev, do_power_on);
+ err_clear_wakeup_irq:
+ 	dev_pm_clear_wake_irq(&client->dev);
+ 	device_init_wakeup(&client->dev, false);
+@@ -610,7 +611,7 @@ static void i2c_device_remove(struct dev
+ 
+ 	devres_release_group(&client->dev, client->devres_group_id);
+ 
+-	dev_pm_domain_detach(&client->dev, !i2c_acpi_waive_d0_probe(dev));
++	dev_pm_domain_detach(&client->dev, true);
+ 
+ 	dev_pm_clear_wake_irq(&client->dev);
+ 	device_init_wakeup(&client->dev, false);
 
 
