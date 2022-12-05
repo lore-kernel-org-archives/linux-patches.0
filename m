@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DBD15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDD8C433C1;
-	Mon,  5 Dec 2022 19:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A98115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2DBC433C1;
+	Mon,  5 Dec 2022 19:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268832;
-	bh=il9aaumLBYP1oJ76vUIm++U3YPX9dQjSXBs/a+25uos=;
+	s=korg; t=1670268835;
+	bh=Fwi2YXBugSN0yQrhdu7jP8are5yMR8Go6boMuRGYaiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UldexKAxHVYHn4w4p9PHf7xRh2xpCidm3PJqhCHP+f5YsiEDg2SbQOf9cvhzs/JYB
-	 oj7ZDBMkWizfaczxocdFjh6LHCsvgslqIoXEXT6QcZ0Po0buay2f1FLESLveAkSqDL
-	 q2EkvO4N4ekAa9pYubUD0o8uvM1A4iSigyebnaWA=
+	b=k6Wmhvflw/+hh/opwuFKrP7RXkpOx2q+rf/WFDUL6nDktwcpBZ8sUAyy2BFrV0tHH
+	 KLicTK5N9i+YFWc2a1j19EOO/BWJhk83h5br6I/odJqZMwxegwoca/0IWI5NTfPNNE
+	 4/NK2R7VfWBSQFBKvxA/9qIkIDNNPRGSauz+ljX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Saeed Mahameed <saeed@kernel.org>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/120] ixgbevf: Fix resource leak in ixgbevf_init_module()
-Date: Mon,  5 Dec 2022 20:09:28 +0100
-Message-Id: <20221205190807.410915891@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 5.15 029/120] i40e: Fix error handling in i40e_init_module()
+Date: Mon,  5 Dec 2022 20:09:29 +0100
+Message-Id: <20221205190807.436981050@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -39,53 +39,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 8cfa238a48f34038464b99d0b4825238c2687181 ]
+[ Upstream commit 479dd06149425b9e00477f52200872587af76a48 ]
 
-ixgbevf_init_module() won't destroy the workqueue created by
-create_singlethread_workqueue() when pci_register_driver() failed. Add
-destroy_workqueue() in fail path to prevent the resource leak.
+i40e_init_module() won't free the debugfs directory created by
+i40e_dbg_init() when pci_register_driver() failed. Add fail path to
+call i40e_dbg_exit() to remove the debugfs entries to prevent the bug.
 
-Similar to the handling of u132_hcd_init in commit f276e002793c
-("usb: u132-hcd: fix resource leak")
+i40e: Intel(R) Ethernet Connection XL710 Network Driver
+i40e: Copyright (c) 2013 - 2019 Intel Corporation.
+debugfs: Directory 'i40e' with parent '/' already present!
 
-Fixes: 40a13e2493c9 ("ixgbevf: Use a private workqueue to avoid certain possible hangs")
+Fixes: 41c445ff0f48 ("i40e: main driver core")
 Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.org>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-index 7ef2e1241a76..0e7ff15af968 100644
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -4859,6 +4859,8 @@ static struct pci_driver ixgbevf_driver = {
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index ad6f6fe25057..19b5c5677584 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -16494,6 +16494,8 @@ static struct pci_driver i40e_driver = {
   **/
- static int __init ixgbevf_init_module(void)
+ static int __init i40e_init_module(void)
  {
 +	int err;
 +
- 	pr_info("%s\n", ixgbevf_driver_string);
- 	pr_info("%s\n", ixgbevf_copyright);
- 	ixgbevf_wq = create_singlethread_workqueue(ixgbevf_driver_name);
-@@ -4867,7 +4869,13 @@ static int __init ixgbevf_init_module(void)
- 		return -ENOMEM;
+ 	pr_info("%s: %s\n", i40e_driver_name, i40e_driver_string);
+ 	pr_info("%s: %s\n", i40e_driver_name, i40e_copyright);
+ 
+@@ -16511,7 +16513,14 @@ static int __init i40e_init_module(void)
  	}
  
--	return pci_register_driver(&ixgbevf_driver);
-+	err = pci_register_driver(&ixgbevf_driver);
+ 	i40e_dbg_init();
+-	return pci_register_driver(&i40e_driver);
++	err = pci_register_driver(&i40e_driver);
 +	if (err) {
-+		destroy_workqueue(ixgbevf_wq);
++		destroy_workqueue(i40e_wq);
++		i40e_dbg_exit();
 +		return err;
 +	}
 +
 +	return 0;
  }
+ module_init(i40e_init_module);
  
- module_init(ixgbevf_init_module);
 -- 
 2.35.1
 
