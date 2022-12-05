@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59B615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2FFC433D7;
-	Mon,  5 Dec 2022 19:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517FF15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC633C433D6;
+	Mon,  5 Dec 2022 19:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268897;
-	bh=7WvN6O3B3NrszyhvuFlHQJwIGzSuZZXHFehhCxmMAxc=;
+	s=korg; t=1670268903;
+	bh=xS6rCsevKMFtKWavKlC0g5Qa/TkfSEgsZvtvjRvm8vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQo2iLfu3Mdy2ZUVNufNdPNbX09tnruPFTkc1kHIJ7d1Gje2QxZbpzK4XqbHmrsBV
-	 zVn0d03pdQODUpyt6deN+Wj+82we60n21fFwTSnHTYvxwtfOqopmlJBadhPl4EFlXp
-	 J2RKh5RIW8ig7T1ivG8MxS7wxGnO833Zx4x7N8d8=
+	b=q1ItmfGuivLj3L5Y1P2YxBCYu928+0L1emRxp82DxWDIbb/s9mCCT8Li1FGJ9ZR/l
+	 Hf73BSIbI1e4p01uEWE/A+3XLZ8Bhfmc0OWfn4pmK6LR+zRLXhOnvfgyxihNVoyMV2
+	 BmEE2NZ828+pg5vjYD6dwEvERGzUl6/OArOZjHJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Izabela Bakollari <ibakolla@redhat.com>,
+	Bonaccorso Salvatore <carnil@debian.org>,
+	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/120] aquantia: Do not purge addresses when setting the number of rings
-Date: Mon,  5 Dec 2022 20:09:44 +0100
-Message-Id: <20221205190807.871853296@linuxfoundation.org>
+Subject: [PATCH 5.15 054/120] net: wwan: iosm: fix dma_alloc_coherent incompatible pointer type
+Date: Mon,  5 Dec 2022 20:09:54 +0100
+Message-Id: <20221205190808.241618764@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -35,89 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Izabela Bakollari <ibakolla@redhat.com>
+From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
 
-[ Upstream commit 2a83891130512dafb321418a8e7c9c09268d8c59 ]
+[ Upstream commit 4a99e3c8ed888577b947cbed97d88c9706896105 ]
 
-IPV6 addresses are purged when setting the number of rx/tx
-rings using ethtool -G. The function aq_set_ringparam
-calls dev_close, which removes the addresses. As a solution,
-call an internal function (aq_ndev_close).
+Fix build error reported on armhf while preparing 6.1-rc5
+for Debian.
 
-Fixes: c1af5427954b ("net: aquantia: Ethtool based ring size configuration")
-Signed-off-by: Izabela Bakollari <ibakolla@redhat.com>
+iosm_ipc_protocol.c:244:36: error: passing argument 3 of
+'dma_alloc_coherent' from incompatible pointer type.
+
+Change phy_ap_shm type from phys_addr_t to dma_addr_t.
+
+Fixes: faed4c6f6f48 ("net: iosm: shared memory protocol")
+Reported-by: Bonaccorso Salvatore <carnil@debian.org>
+Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c | 5 +++--
- drivers/net/ethernet/aquantia/atlantic/aq_main.c    | 4 ++--
- drivers/net/ethernet/aquantia/atlantic/aq_main.h    | 2 ++
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/wwan/iosm/iosm_ipc_protocol.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c b/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
-index a9ef0544e30f..715859cb6560 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ethtool.c
-@@ -13,6 +13,7 @@
- #include "aq_ptp.h"
- #include "aq_filters.h"
- #include "aq_macsec.h"
-+#include "aq_main.h"
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_protocol.h b/drivers/net/wwan/iosm/iosm_ipc_protocol.h
+index 9b3a6d86ece7..289397c4ea6c 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_protocol.h
++++ b/drivers/net/wwan/iosm/iosm_ipc_protocol.h
+@@ -122,7 +122,7 @@ struct iosm_protocol {
+ 	struct iosm_imem *imem;
+ 	struct ipc_rsp *rsp_ring[IPC_MEM_MSG_ENTRIES];
+ 	struct device *dev;
+-	phys_addr_t phy_ap_shm;
++	dma_addr_t phy_ap_shm;
+ 	u32 old_msg_tail;
+ };
  
- #include <linux/ptp_clock_kernel.h>
- 
-@@ -845,7 +846,7 @@ static int aq_set_ringparam(struct net_device *ndev,
- 
- 	if (netif_running(ndev)) {
- 		ndev_running = true;
--		dev_close(ndev);
-+		aq_ndev_close(ndev);
- 	}
- 
- 	cfg->rxds = max(ring->rx_pending, hw_caps->rxds_min);
-@@ -861,7 +862,7 @@ static int aq_set_ringparam(struct net_device *ndev,
- 		goto err_exit;
- 
- 	if (ndev_running)
--		err = dev_open(ndev, NULL);
-+		err = aq_ndev_open(ndev);
- 
- err_exit:
- 	return err;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_main.c b/drivers/net/ethernet/aquantia/atlantic/aq_main.c
-index f069312463fb..45ed097bfe49 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_main.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_main.c
-@@ -53,7 +53,7 @@ struct net_device *aq_ndev_alloc(void)
- 	return ndev;
- }
- 
--static int aq_ndev_open(struct net_device *ndev)
-+int aq_ndev_open(struct net_device *ndev)
- {
- 	struct aq_nic_s *aq_nic = netdev_priv(ndev);
- 	int err = 0;
-@@ -83,7 +83,7 @@ static int aq_ndev_open(struct net_device *ndev)
- 	return err;
- }
- 
--static int aq_ndev_close(struct net_device *ndev)
-+int aq_ndev_close(struct net_device *ndev)
- {
- 	struct aq_nic_s *aq_nic = netdev_priv(ndev);
- 	int err = 0;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_main.h b/drivers/net/ethernet/aquantia/atlantic/aq_main.h
-index a5a624b9ce73..2a562ab7a5af 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_main.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_main.h
-@@ -14,5 +14,7 @@
- 
- void aq_ndev_schedule_work(struct work_struct *work);
- struct net_device *aq_ndev_alloc(void);
-+int aq_ndev_open(struct net_device *ndev);
-+int aq_ndev_close(struct net_device *ndev);
- 
- #endif /* AQ_MAIN_H */
 -- 
 2.35.1
 
