@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEE7C433D6;
-	Mon,  5 Dec 2022 19:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D3C15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D38C433D7;
+	Mon,  5 Dec 2022 19:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267769;
-	bh=/QZGNDSOC/V0dtZvjhbBYW6P0wDe4KA8DR3cWse3xHg=;
+	s=korg; t=1670267771;
+	bh=+6AwVFpJ3IrcMwPMn8PQ1Uc+3EOdScRD7/5USYoD4C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a42+gWua5I5asFg/qwq/DNDVYnsAxtcjM8gy7knYKlVLSau33wSmnElkKoAsdaYyB
-	 EFHCWVVDM7EihVdCbS0AwhLpa9OZ+Bx15MNC+pWiP8W/+lZthMpL4wZ31uHSoltrpL
-	 Vx2Vigtn16/LFpbbGBjNbfNZB36rlACIL9y9ECC8=
+	b=e09UAekBYbJ5AybnLOayPtYeyXKxN7P0lKFcuZYEgTCi19Cbm4SkiXLVJMucNHeSW
+	 1qnUfPbaYpRObGpiKhQoZm19oCxj8DOhPya4P+L1g6Gfprv0pW1m6ZXYs7DNDTbAt6
+	 UPf/EeGw3novI4nzOwyUlvXlUY3OLD1aA2pFbBow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	syzbot+cdb9a427d1bc08815104@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 16/77] xfrm: Fix ignored return value in xfrm6_init()
-Date: Mon,  5 Dec 2022 20:09:07 +0100
-Message-Id: <20221205190801.448876256@linuxfoundation.org>
+Subject: [PATCH 4.14 17/77] NFC: nci: fix memory leak in nci_rx_data_packet()
+Date: Mon,  5 Dec 2022 20:09:08 +0100
+Message-Id: <20221205190801.483422707@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,57 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 40781bfb836eda57d19c0baa37c7e72590e05fdc ]
+[ Upstream commit 53270fb0fd77fe786d8c07a0793981d797836b93 ]
 
-When IPv6 module initializing in xfrm6_init(), register_pernet_subsys()
-is possible to fail but its return value is ignored.
+Syzbot reported a memory leak about skb:
 
-If IPv6 initialization fails later and xfrm6_fini() is called,
-removing uninitialized list in xfrm6_net_ops will cause null-ptr-deref:
+unreferenced object 0xffff88810e144e00 (size 240):
+  comm "syz-executor284", pid 3701, jiffies 4294952403 (age 12.620s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff83ab79a9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:497
+    [<ffffffff82a5cf64>] alloc_skb include/linux/skbuff.h:1267 [inline]
+    [<ffffffff82a5cf64>] virtual_ncidev_write+0x24/0xe0 drivers/nfc/virtual_ncidev.c:116
+    [<ffffffff815f6503>] do_loop_readv_writev fs/read_write.c:759 [inline]
+    [<ffffffff815f6503>] do_loop_readv_writev fs/read_write.c:743 [inline]
+    [<ffffffff815f6503>] do_iter_write+0x253/0x300 fs/read_write.c:863
+    [<ffffffff815f66ed>] vfs_writev+0xdd/0x240 fs/read_write.c:934
+    [<ffffffff815f68f6>] do_writev+0xa6/0x1c0 fs/read_write.c:977
+    [<ffffffff848802d5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff848802d5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84a00087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 330 Comm: insmod
-RIP: 0010:unregister_pernet_operations+0xc9/0x450
-Call Trace:
- <TASK>
- unregister_pernet_subsys+0x31/0x3e
- xfrm6_fini+0x16/0x30 [ipv6]
- ip6_route_init+0xcd/0x128 [ipv6]
- inet6_init+0x29c/0x602 [ipv6]
- ...
+In nci_rx_data_packet(), if we don't get a valid conn_info, we will return
+directly but forget to release the skb.
 
-Fix it by catching the error return value of register_pernet_subsys().
-
-Fixes: 8d068875caca ("xfrm: make gc_thresh configurable in all namespaces")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: syzbot+cdb9a427d1bc08815104@syzkaller.appspotmail.com
+Fixes: 4aeee6871e8c ("NFC: nci: Add dynamic logical connections support")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Link: https://lore.kernel.org/r/20221118082419.239475-1-liushixin2@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/nfc/nci/data.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index b0d80cef7c2b..44d616d0bd00 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -412,9 +412,13 @@ int __init xfrm6_init(void)
- 	if (ret)
- 		goto out_state;
+diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
+index 9e3f9460f14f..5d46d8dfad72 100644
+--- a/net/nfc/nci/data.c
++++ b/net/nfc/nci/data.c
+@@ -291,8 +291,10 @@ void nci_rx_data_packet(struct nci_dev *ndev, struct sk_buff *skb)
+ 		 nci_plen(skb->data));
  
--	register_pernet_subsys(&xfrm6_net_ops);
-+	ret = register_pernet_subsys(&xfrm6_net_ops);
-+	if (ret)
-+		goto out_protocol;
- out:
- 	return ret;
-+out_protocol:
-+	xfrm6_protocol_fini();
- out_state:
- 	xfrm6_state_fini();
- out_policy:
+ 	conn_info = nci_get_conn_info_by_conn_id(ndev, nci_conn_id(skb->data));
+-	if (!conn_info)
++	if (!conn_info) {
++		kfree_skb(skb);
+ 		return;
++	}
+ 
+ 	/* strip the nci data header */
+ 	skb_pull(skb, NCI_DATA_HDR_SIZE);
 -- 
 2.35.1
 
