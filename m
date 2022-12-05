@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D851815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE68C433C1;
-	Mon,  5 Dec 2022 19:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7340F15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCDDC433D6;
+	Mon,  5 Dec 2022 19:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267826;
-	bh=20gz2zbssPx3qCRshRvUNl8OWi6q0UMNmaa8g2SpoR4=;
+	s=korg; t=1670267829;
+	bh=WAxraTpmsL1Q0ikHoa4tAU5Pl7RfxGgKHD8w32vFFS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AYtIPgJv7unCyeFTBFb3ar6+5bXSJ6GjF4JrF6u+8Y1tGS46ldiiuPxBmqIoeGj/P
-	 sh1q5Ptkt+m+qiTTNmVr6pme1dW0giG8R/muF9ajCBxakqx0bcX8wPrBaCuoh1Pr6P
-	 Ylb08b1GJyCDgfxvZ4Lyb893J72TmseQpUqcsQmM=
+	b=K2IgcPGX6kINKexyU2vBL+ulJdMkjace0Af777xNs6vAr7pde/uWS/lYAtuscpO83
+	 BgU1sAV7a2sM9gxbMCYhT1NPXxvv3MoeZXUx6YtlI/f8ldWgWSSst4DvqrZGerAaVJ
+	 oq7bIUvBXaPV7d4l3q63VSenxU0jF8CydTU4bhSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>
-Subject: [PATCH 4.14 65/77] arm64: errata: Fix KVM Spectre-v2 mitigation selection for Cortex-A57/A72
-Date: Mon,  5 Dec 2022 20:09:56 +0100
-Message-Id: <20221205190803.154641906@linuxfoundation.org>
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 4.14 66/77] efi: random: Properly limit the size of the random seed
+Date: Mon,  5 Dec 2022 20:09:57 +0100
+Message-Id: <20221205190803.196418876@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -33,47 +33,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Morse <james.morse@arm.com>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-Both the Spectre-v2 and Spectre-BHB mitigations involve running a sequence
-immediately after exiting a guest, before any branches. In the stable
-kernels these sequences are built by copying templates into an empty vector
-slot.
+Commit be36f9e7517e ("efi: READ_ONCE rng seed size before munmap")
+added a READ_ONCE() and also changed the call to
+add_bootloader_randomness() to use the local size variable.  Neither
+of these changes was actually needed and this was not backported to
+the 4.14 stable branch.
 
-For Spectre-BHB, Cortex-A57 and A72 require the branchy loop with k=8.
-If Spectre-v2 needs mitigating at the same time, a firmware call to EL3 is
-needed. The work EL3 does at this point is also enough to mitigate
-Spectre-BHB.
+Commit 161a438d730d ("efi: random: reduce seed size to 32 bytes")
+reverted the addition of READ_ONCE() and added a limit to the value of
+size.  This depends on the earlier commit, because size can now differ
+from seed->size, but it was wrongly backported to the 4.14 stable
+branch by itself.
 
-When enabling the Spectre-BHB mitigation, spectre_bhb_enable_mitigation()
-should check if a slot has already been allocated for Spectre-v2, meaning
-no work is needed for Spectre-BHB.
+Apply the missing change to the add_bootloader_randomness() parameter
+(except that here we are still using add_device_randomness()).
 
-This check was missed in the earlier backport, add it.
-
-Fixes: 3e3904125fcc ("arm64: Mitigate spectre style branch history side channels")
-Signed-off-by: James Morse <james.morse@arm.com>
+Fixes: 700485f70e50 ("efi: random: reduce seed size to 32 bytes")
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/cpu_errata.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/efi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -1104,7 +1104,13 @@ void spectre_bhb_enable_mitigation(const
- 	} else if (spectre_bhb_loop_affected(SCOPE_LOCAL_CPU)) {
- 		switch (spectre_bhb_loop_affected(SCOPE_SYSTEM)) {
- 		case 8:
--			kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
-+			/*
-+			 * A57/A72-r0 will already have selected the
-+			 * spectre-indirect vector, which is sufficient
-+			 * for BHB too.
-+			 */
-+			if (!__this_cpu_read(bp_hardening_data.fn))
-+				kvm_setup_bhb_slot(__spectre_bhb_loop_k8_start);
- 			break;
- 		case 24:
- 			kvm_setup_bhb_slot(__spectre_bhb_loop_k24_start);
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -541,7 +541,7 @@ int __init efi_config_parse_tables(void
+ 			seed = early_memremap(efi.rng_seed,
+ 					      sizeof(*seed) + size);
+ 			if (seed != NULL) {
+-				add_device_randomness(seed->bits, seed->size);
++				add_device_randomness(seed->bits, size);
+ 				early_memunmap(seed, sizeof(*seed) + size);
+ 				pr_notice("seeding entropy pool\n");
+ 			} else {
 
 
