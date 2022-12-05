@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC0515C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D08FC433C1;
-	Mon,  5 Dec 2022 19:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B48D15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF500C433D6;
+	Mon,  5 Dec 2022 19:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268740;
-	bh=2ZBM5bbmiVnc/4uUacqA1Sp4IFcHk4hcdP9ds5k5tEw=;
+	s=korg; t=1670268743;
+	bh=Idq5ss8F/qUiszwjiPKjBldqBzZB20tvAvS3w0PgrFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4u8x8vzjdiWAn0wPRofEqJ7gqs9VeND3rRbPGt+y0EDn2JBdMNGMfjFny1OpNh9t
-	 QPJOfqDY0JMFE2LzZRgdsbvUEhaletVOI+u94tbVXkvfHE5YiMgVrzb4VY8t5pBdnn
-	 RiCW1OfpN6AQYsGGZF3n0HB2eSmFt4FpXcKAphLU=
+	b=imRIo0lWmnZOYs56Kvfn2JPTpjeyozyyZWCE8CYUc1wicawVT8AIQp8wlbd4bO7rO
+	 UpMbHWvfJ5wYUkJgw6TJ3rsByAtUGBRCwR1JA31UqO4c6cDXDwEpWbOPVG6v1wXaSF
+	 /P7yV58dRFLQkmnCq6a09EklF+77PL7FUXjNJNxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,12 +20,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liu Shixin <liushixin2@huawei.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chris Piper <chris.d.piper@intel.com>,
 	Vishal Verma <vishal.l.verma@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 87/92] ACPI: HMAT: remove unnecessary variable initialization
-Date: Mon,  5 Dec 2022 20:10:40 +0100
-Message-Id: <20221205190806.344792874@linuxfoundation.org>
+Subject: [PATCH 5.10 88/92] ACPI: HMAT: Fix initiator registration for single-initiator systems
+Date: Mon,  5 Dec 2022 20:10:41 +0100
+Message-Id: <20221205190806.372746560@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -41,35 +42,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Vishal Verma <vishal.l.verma@intel.com>
 
-[ Upstream commit 14f16d47561ba9249efc6c2db9d47ed56841f070 ]
+[ Upstream commit 48d4180939e12c4bd2846f984436d895bb9699ed ]
 
-In hmat_register_target_initiators(), the variable 'best' gets
-initialized in the outer per-locality-type for loop. The initialization
-just before setting up 'Access 1' targets was unnecessary. Remove it.
+In a system with a single initiator node, and one or more memory-only
+'target' nodes, the memory-only node(s) would fail to register their
+initiator node correctly. i.e. in sysfs:
 
+  # ls /sys/devices/system/node/node0/access0/targets/
+  node0
+
+Where as the correct behavior should be:
+
+  # ls /sys/devices/system/node/node0/access0/targets/
+  node0 node1
+
+This happened because hmat_register_target_initiators() uses list_sort()
+to sort the initiator list, but the sort comparision function
+(initiator_cmp()) is overloaded to also set the node mask's bits.
+
+In a system with a single initiator, the list is singular, and list_sort
+elides the comparision helper call. Thus the node mask never gets set,
+and the subsequent search for the best initiator comes up empty.
+
+Add a new helper to consume the sorted initiator list, and generate the
+nodemask, decoupling it from the overloaded initiator_cmp() comparision
+callback. This prevents the singular list corner case naturally, and
+makes the code easier to follow as well.
+
+Cc: <stable@vger.kernel.org>
 Cc: Rafael J. Wysocki <rafael@kernel.org>
 Cc: Liu Shixin <liushixin2@huawei.com>
 Cc: Dan Williams <dan.j.williams@intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reported-by: Chris Piper <chris.d.piper@intel.com>
 Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/20221116-acpi_hmat_fix-v2-1-3712569be691@intel.com
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Link: https://lore.kernel.org/r/20221116-acpi_hmat_fix-v2-2-3712569be691@intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 48d4180939e1 ("ACPI: HMAT: Fix initiator registration for single-initiator systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/acpi/numa/hmat.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 137a5dd880c2..fd202689dcda 100644
+index fd202689dcda..26453a945da4 100644
 --- a/drivers/acpi/numa/hmat.c
 +++ b/drivers/acpi/numa/hmat.c
-@@ -645,7 +645,6 @@ static void hmat_register_target_initiators(struct memory_target *target)
+@@ -563,17 +563,26 @@ static int initiator_cmp(void *priv, const struct list_head *a,
+ {
+ 	struct memory_initiator *ia;
+ 	struct memory_initiator *ib;
+-	unsigned long *p_nodes = priv;
+ 
+ 	ia = list_entry(a, struct memory_initiator, node);
+ 	ib = list_entry(b, struct memory_initiator, node);
+ 
+-	set_bit(ia->processor_pxm, p_nodes);
+-	set_bit(ib->processor_pxm, p_nodes);
+-
+ 	return ia->processor_pxm - ib->processor_pxm;
+ }
+ 
++static int initiators_to_nodemask(unsigned long *p_nodes)
++{
++	struct memory_initiator *initiator;
++
++	if (list_empty(&initiators))
++		return -ENXIO;
++
++	list_for_each_entry(initiator, &initiators, node)
++		set_bit(initiator->processor_pxm, p_nodes);
++
++	return 0;
++}
++
+ static void hmat_register_target_initiators(struct memory_target *target)
+ {
+ 	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
+@@ -610,7 +619,10 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 	 * initiators.
+ 	 */
+ 	bitmap_zero(p_nodes, MAX_NUMNODES);
+-	list_sort(p_nodes, &initiators, initiator_cmp);
++	list_sort(NULL, &initiators, initiator_cmp);
++	if (initiators_to_nodemask(p_nodes) < 0)
++		return;
++
+ 	if (!access0done) {
+ 		for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
+ 			loc = localities_types[i];
+@@ -644,7 +656,9 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 
  	/* Access 1 ignores Generic Initiators */
  	bitmap_zero(p_nodes, MAX_NUMNODES);
- 	list_sort(p_nodes, &initiators, initiator_cmp);
--	best = 0;
+-	list_sort(p_nodes, &initiators, initiator_cmp);
++	if (initiators_to_nodemask(p_nodes) < 0)
++		return;
++
  	for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
  		loc = localities_types[i];
  		if (!loc)
