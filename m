@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5810115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB8AC433C1;
-	Mon,  5 Dec 2022 19:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B4F15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A54C433D6;
+	Mon,  5 Dec 2022 19:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268394;
-	bh=zGxXD27XeAphn3rLRUFYy+4QC/WBxcqqp6dqm1tIm6Q=;
+	s=korg; t=1670268396;
+	bh=clZKKTGggwTEc4vqixsznUbxJmesubFaoeMVOleeTio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f80qXL3hk9uGR66Uy1FWpakJWeMSLwlAYaQFU/mI0pSXykZoup/PLYOplHxFON02s
-	 2ODHYC/9VlU6tLdPadno4ahzi30TcCyQVWM6RhIvmCJ5b/O4xvDUATrrwuEobYpU0P
-	 ed+Umg/nzsp0C0xVjSCIK26TU0zChj6fx9HSRNYI=
+	b=abnM8ae09LKVM8twj0ftz3jNpLZlulZruUHV72cxEg19okfkNQmORmnjlEoxctS+I
+	 hhJx6/rZNMMKgZ08ccSMAuoZ7L9JQ0brInpldb6cB90RzJQCKC3we22JQrDFQHlDXG
+	 WDYNvLnefh3jDqQIF6hmYRAnG/3M5lErD0KPPvdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Zhenyu Zhang <zhenyzha@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 085/124] mm: migrate: fix THPs mapcount on isolation
-Date: Mon,  5 Dec 2022 20:09:51 +0100
-Message-Id: <20221205190810.832681913@linuxfoundation.org>
+	"Goh, Wei Sheng" <wei.sheng.goh@intel.com>,
+	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Goh
+Subject: [PATCH 6.0 086/124] net: stmmac: Set MACs flow control register to reflect current settings
+Date: Mon,  5 Dec 2022 20:09:52 +0100
+Message-Id: <20221205190810.862023518@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -42,83 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavin Shan <gshan@redhat.com>
+From: Goh, Wei Sheng <wei.sheng.goh@intel.com>
 
-commit 829ae0f81ce093d674ff2256f66a714753e9ce32 upstream.
+commit cc3d2b5fc0d6f8ad8a52da5ea679e5c2ec2adbd4 upstream.
 
-The issue is reported when removing memory through virtio_mem device.  The
-transparent huge page, experienced copy-on-write fault, is wrongly
-regarded as pinned.  The transparent huge page is escaped from being
-isolated in isolate_migratepages_block().  The transparent huge page can't
-be migrated and the corresponding memory block can't be put into offline
-state.
+Currently, pause frame register GMAC_RX_FLOW_CTRL_RFE is not updated
+correctly when 'ethtool -A <IFACE> autoneg off rx off tx off' command
+is issued. This fix ensures the flow control change is reflected directly
+in the GMAC_RX_FLOW_CTRL_RFE register.
 
-Fix it by replacing page_mapcount() with total_mapcount().  With this, the
-transparent huge page can be isolated and migrated, and the memory block
-can be put into offline state.  Besides, The page's refcount is increased
-a bit earlier to avoid the page is released when the check is executed.
-
-Link: https://lkml.kernel.org/r/20221124095523.31061-1-gshan@redhat.com
-Fixes: 1da2f328fa64 ("mm,thp,compaction,cma: allow THP migration for CMA allocations")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Reported-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>	[5.7+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 46f69ded988d ("net: stmmac: Use resolved link config in mac_link_up()")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Goh, Wei Sheng <wei.sheng.goh@intel.com>
+Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/compaction.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c |    2 ++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   12 ++++++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -987,28 +987,28 @@ isolate_migratepages_block(struct compac
- 		}
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -749,6 +749,8 @@ static void dwmac4_flow_ctrl(struct mac_
+ 	if (fc & FLOW_RX) {
+ 		pr_debug("\tReceive Flow-Control ON\n");
+ 		flow |= GMAC_RX_FLOW_CTRL_RFE;
++	} else {
++		pr_debug("\tReceive Flow-Control OFF\n");
+ 	}
+ 	writel(flow, ioaddr + GMAC_RX_FLOW_CTRL);
  
- 		/*
-+		 * Be careful not to clear PageLRU until after we're
-+		 * sure the page is not being freed elsewhere -- the
-+		 * page release code relies on it.
-+		 */
-+		if (unlikely(!get_page_unless_zero(page)))
-+			goto isolate_fail;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1061,8 +1061,16 @@ static void stmmac_mac_link_up(struct ph
+ 		ctrl |= priv->hw->link.duplex;
+ 
+ 	/* Flow Control operation */
+-	if (tx_pause && rx_pause)
+-		stmmac_mac_flow_ctrl(priv, duplex);
++	if (rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_AUTO;
++	else if (rx_pause && !tx_pause)
++		priv->flow_ctrl = FLOW_RX;
++	else if (!rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_TX;
++	else
++		priv->flow_ctrl = FLOW_OFF;
 +
-+		/*
- 		 * Migration will fail if an anonymous page is pinned in memory,
- 		 * so avoid taking lru_lock and isolating it unnecessarily in an
- 		 * admittedly racy check.
- 		 */
- 		mapping = page_mapping(page);
--		if (!mapping && page_count(page) > page_mapcount(page))
--			goto isolate_fail;
-+		if (!mapping && (page_count(page) - 1) > total_mapcount(page))
-+			goto isolate_fail_put;
++	stmmac_mac_flow_ctrl(priv, duplex);
  
- 		/*
- 		 * Only allow to migrate anonymous pages in GFP_NOFS context
- 		 * because those do not depend on fs locks.
- 		 */
- 		if (!(cc->gfp_mask & __GFP_FS) && mapping)
--			goto isolate_fail;
--
--		/*
--		 * Be careful not to clear PageLRU until after we're
--		 * sure the page is not being freed elsewhere -- the
--		 * page release code relies on it.
--		 */
--		if (unlikely(!get_page_unless_zero(page)))
--			goto isolate_fail;
-+			goto isolate_fail_put;
- 
- 		/* Only take pages on LRU: a check now makes later tests safe */
- 		if (!PageLRU(page))
+ 	if (ctrl != old_ctrl)
+ 		writel(ctrl, priv->ioaddr + MAC_CTRL_REG);
 
 
