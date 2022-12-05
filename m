@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449DD15C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA9DC433D6;
-	Mon,  5 Dec 2022 19:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49F715C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:39:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E93C433C1;
+	Mon,  5 Dec 2022 19:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269147;
-	bh=AFX8tgM8frLGf+WFAgsTzXemiXR/KqnskXOiEvFImL4=;
+	s=korg; t=1670269149;
+	bh=dJ/I0wKawby+oC2z/HqjAP/uGjoC/977JpNtRPYryaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eurx/DqwM6tf10tu7PMB28A7g0MdZRdUqoLUmgZ3Z6xdavDuuOgJgMkRVCYs/7Xc0
-	 VkfNvJW1S3ti2JBCs1wO3fcUwfYFk1C81MM7Z8XAy2uqgwYKAPO3V1aw9jxQOoprQr
-	 UmStMtnJRVxKw2jJOKLSClr1WZMfMySVzfOGhSmA=
+	b=wkfPdO+iPjq0RA6JzQZFm5DIGOsBVnbWM8sab/M/h8H33YuYOJ9DswbOnLLHJ1hJ5
+	 EIo4CgbCOOHI0nknGZlL7Oeydm9Kqu/t2kWi9OHCX/NJ8QfjXZoHE7XpgeJpFCz4xn
+	 otNJrSvGitf2iQBNI/jmeOqf7QVCwbgnUSpQcMag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/153] audit: fix undefined behavior in bit shift for AUDIT_BIT
-Date: Mon,  5 Dec 2022 20:08:47 +0100
-Message-Id: <20221205190808.847713516@linuxfoundation.org>
+Subject: [PATCH 5.4 004/153] wifi: mac80211: Fix ack frame idr leak when mesh has no route
+Date: Mon,  5 Dec 2022 20:08:48 +0100
+Message-Id: <20221205190808.875291738@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,50 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit 986d93f55bdeab1cac858d1e47b41fac10b2d7f6 ]
+[ Upstream commit 39e7b5de9853bd92ddbfa4b14165babacd7da0ba ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+When trying to transmit an data frame with tx_status to a destination
+that have no route in the mesh, then it is dropped without recrediting
+the ack_status_frames idr.
 
-UBSAN: shift-out-of-bounds in kernel/auditfilter.c:179:23
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- audit_register_class+0x9d/0x137
- audit_classes_init+0x4d/0xb8
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
+Once it is exhausted, wpa_supplicant starts failing to do SAE with
+NL80211_CMD_FRAME and logs "nl80211: Frame command failed".
 
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-[PM: remove bad 'Fixes' tag as issue predates git, added in v2.6.6-rc1]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Use ieee80211_free_txskb() instead of kfree_skb() to fix it.
+
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Link: https://lore.kernel.org/r/20221027140133.1504-1-nicolas.cavallari@green-communications.fr
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/audit.h | 2 +-
+ net/mac80211/mesh_pathtbl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/audit.h b/include/uapi/linux/audit.h
-index c89c6495983d..a79f8c285a10 100644
---- a/include/uapi/linux/audit.h
-+++ b/include/uapi/linux/audit.h
-@@ -179,7 +179,7 @@
- #define AUDIT_MAX_KEY_LEN  256
- #define AUDIT_BITMASK_SIZE 64
- #define AUDIT_WORD(nr) ((__u32)((nr)/32))
--#define AUDIT_BIT(nr)  (1 << ((nr) - AUDIT_WORD(nr)*32))
-+#define AUDIT_BIT(nr)  (1U << ((nr) - AUDIT_WORD(nr)*32))
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index d7ae7415d54d..80a83d0d9550 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -720,7 +720,7 @@ int mesh_path_send_to_gates(struct mesh_path *mpath)
+ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+ 			     struct sk_buff *skb)
+ {
+-	kfree_skb(skb);
++	ieee80211_free_txskb(&sdata->local->hw, skb);
+ 	sdata->u.mesh.mshstats.dropped_frames_no_route++;
+ }
  
- #define AUDIT_SYSCALL_CLASSES 16
- #define AUDIT_CLASS_DIR_WRITE 0
 -- 
 2.35.1
 
