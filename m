@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BB015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADCBC433C1;
-	Mon,  5 Dec 2022 19:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065FF15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CD8C433D6;
+	Mon,  5 Dec 2022 19:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268292;
-	bh=SwWNltb6kmGF7VfiN+QYinvTyyxJexJad0yCYOiAJrA=;
+	s=korg; t=1670268295;
+	bh=BVHtn1wPVp9DBdlMTfxYEKyHN/whf7zvRWWYZ3Dl3Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUSkk4B6oIo6vkf0m/EruOt0E4uScpGl9iqD4dTkDiz5SxQg8RJwPlZABGl85oN11
-	 5lWeQlAOBvFYhu5iPJroupdKHhXZ9qM9radQKsJZ+pRcon+b6kU8TG2YV4ZVgZhSV+
-	 7sWGjvw2KlffKD25gK6JYXz8xcoUCbreDhdlZaFc=
+	b=2vng2CYctEUwx0dLMZe76kO+M61ZCciR8utBWTuMIk4/AkfWRhsFPciyFxSz37iZc
+	 rmUjOq5rp9/2RT+hmR9U86RV3uV4BCJ5aHDyJCfFKwDkXqbobeWmA2c8xcC7GHfi3Q
+	 u5Dl0UAhJX7P17kc9ENitzdsa/TqseUFLUyzTRm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 031/124] fm10k: Fix error handling in fm10k_init_module()
-Date: Mon,  5 Dec 2022 20:08:57 +0100
-Message-Id: <20221205190809.330691578@linuxfoundation.org>
+Subject: [PATCH 6.0 049/124] wifi: mac8021: fix possible oob access in ieee80211_get_rate_duration
+Date: Mon,  5 Dec 2022 20:09:15 +0100
+Message-Id: <20221205190809.829201639@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,74 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 771a794c0a3c3e7f0d86cc34be4f9537e8c0a20c ]
+[ Upstream commit 3e8f7abcc3473bc9603323803aeaed4ffcc3a2ab ]
 
-A problem about modprobe fm10k failed is triggered with the following log
-given:
+Fix possible out-of-bound access in ieee80211_get_rate_duration routine
+as reported by the following UBSAN report:
 
- Intel(R) Ethernet Switch Host Interface Driver
- Copyright(c) 2013 - 2019 Intel Corporation.
- debugfs: Directory 'fm10k' with parent '/' already present!
+UBSAN: array-index-out-of-bounds in net/mac80211/airtime.c:455:47
+index 15 is out of range for type 'u16 [12]'
+CPU: 2 PID: 217 Comm: kworker/u32:10 Not tainted 6.1.0-060100rc3-generic
+Hardware name: Acer Aspire TC-281/Aspire TC-281, BIOS R01-A2 07/18/2017
+Workqueue: mt76 mt76u_tx_status_data [mt76_usb]
+Call Trace:
+ <TASK>
+ show_stack+0x4e/0x61
+ dump_stack_lvl+0x4a/0x6f
+ dump_stack+0x10/0x18
+ ubsan_epilogue+0x9/0x43
+ __ubsan_handle_out_of_bounds.cold+0x42/0x47
+ieee80211_get_rate_duration.constprop.0+0x22f/0x2a0 [mac80211]
+ ? ieee80211_tx_status_ext+0x32e/0x640 [mac80211]
+ ieee80211_calc_rx_airtime+0xda/0x120 [mac80211]
+ ieee80211_calc_tx_airtime+0xb4/0x100 [mac80211]
+ mt76x02_send_tx_status+0x266/0x480 [mt76x02_lib]
+ mt76x02_tx_status_data+0x52/0x80 [mt76x02_lib]
+ mt76u_tx_status_data+0x67/0xd0 [mt76_usb]
+ process_one_work+0x225/0x400
+ worker_thread+0x50/0x3e0
+ ? process_one_work+0x400/0x400
+ kthread+0xe9/0x110
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x22/0x30
 
-The reason is that fm10k_init_module() returns fm10k_register_pci_driver()
-directly without checking its return value, if fm10k_register_pci_driver()
-failed, it returns without removing debugfs and destroy workqueue,
-resulting the debugfs of fm10k can never be created later and leaks the
-workqueue.
-
- fm10k_init_module()
-   alloc_workqueue()
-   fm10k_dbg_init() # create debugfs
-   fm10k_register_pci_driver()
-     pci_register_driver()
-       driver_register()
-         bus_add_driver()
-           priv = kzalloc(...) # OOM happened
-   # return without remove debugfs and destroy workqueue
-
-Fix by remove debugfs and destroy workqueue when
-fm10k_register_pci_driver() returns error.
-
-Fixes: 7461fd913afe ("fm10k: Add support for debugfs")
-Fixes: b382bb1b3e2d ("fm10k: use separate workqueue for fm10k driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: db3e1c40cf2f ("mac80211: Import airtime calculation code from mt76")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k_main.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/mac80211/airtime.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_main.c b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-index 3362f26d7f99..1b273446621c 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_main.c
-@@ -32,6 +32,8 @@ struct workqueue_struct *fm10k_workqueue;
-  **/
- static int __init fm10k_init_module(void)
- {
-+	int ret;
+diff --git a/net/mac80211/airtime.c b/net/mac80211/airtime.c
+index 2e66598fac79..e8ebd343e2bf 100644
+--- a/net/mac80211/airtime.c
++++ b/net/mac80211/airtime.c
+@@ -452,6 +452,9 @@ static u32 ieee80211_get_rate_duration(struct ieee80211_hw *hw,
+ 			 (status->encoding == RX_ENC_HE && streams > 8)))
+ 		return 0;
+ 
++	if (idx >= MCS_GROUP_RATES)
++		return 0;
 +
- 	pr_info("%s\n", fm10k_driver_string);
- 	pr_info("%s\n", fm10k_copyright);
- 
-@@ -43,7 +45,13 @@ static int __init fm10k_init_module(void)
- 
- 	fm10k_dbg_init();
- 
--	return fm10k_register_pci_driver();
-+	ret = fm10k_register_pci_driver();
-+	if (ret) {
-+		fm10k_dbg_exit();
-+		destroy_workqueue(fm10k_workqueue);
-+	}
-+
-+	return ret;
- }
- module_init(fm10k_init_module);
- 
+ 	duration = airtime_mcs_groups[group].duration[idx];
+ 	duration <<= airtime_mcs_groups[group].shift;
+ 	*overhead = 36 + (streams << 2);
 -- 
 2.35.1
 
