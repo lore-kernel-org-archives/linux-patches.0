@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAB515C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E740EC433D6;
-	Mon,  5 Dec 2022 19:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679F15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECE8C433D6;
+	Mon,  5 Dec 2022 19:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268353;
-	bh=uGmvIs16xQjjxsbrDA/CCWLXtt539onbBbl9Qrc/2d8=;
+	s=korg; t=1670268356;
+	bh=H9DQtSj8UGik2MVrk4VzBLqAhkEYy0Fz+u+b+ef1PbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyDy2cWcOqJA0ZrmDJ9jfWc5ZIc5DyTkr8UenfhvTqeyozO+fUfugr9kfA8x5G7c0
-	 AB8v6jJV0k33t7UQ/SBTJmF2BRX8Ld0Ra+0+OnUh4XsNlUMOpKshnBMV4lhSGYQQ4q
-	 655AFNyY5PjD32P9gaLxY2e6z6icYSD7yNdOHcUw=
+	b=a80pEIlMELwncOau+39DsZ8qF5LU9Vmr/gYOSPkEYCkfmJGPso7D6GivIAZeO7gWZ
+	 D2bOqJlGF0Ihb1JLHI32f9z5p05mmMHUNogtHWYvMRFHu4HCdXCsHAEbKTAWPmA74h
+	 PUtvkzZ5gThg54suObnrTKvnKfUC/AQ8+MHSu79k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Phil Auld <pauld@redhat.com>,
+	linux-hwmon@vger.kernel.org,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 071/124] afs: Fix server->active leak in afs_put_server
-Date: Mon,  5 Dec 2022 20:09:37 +0100
-Message-Id: <20221205190810.440842142@linuxfoundation.org>
+Subject: [PATCH 6.0 072/124] hwmon: (coretemp) Check for null before removing sysfs attrs
+Date: Mon,  5 Dec 2022 20:09:38 +0100
+Message-Id: <20221205190810.471812692@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,39 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Phil Auld <pauld@redhat.com>
 
-[ Upstream commit ef4d3ea40565a781c25847e9cb96c1bd9f462bc6 ]
+[ Upstream commit a89ff5f5cc64b9fe7a992cf56988fd36f56ca82a ]
 
-The atomic_read was accidentally replaced with atomic_inc_return,
-which prevents the server from getting cleaned up and causes rmmod
-to hang with a warning:
+If coretemp_add_core() gets an error then pdata->core_data[indx]
+is already NULL and has been kfreed. Don't pass that to
+sysfs_remove_group() as that will crash in sysfs_remove_group().
 
-    Can't purge s=00000001
+[Shortened for readability]
+[91854.020159] sysfs: cannot create duplicate filename '/devices/platform/coretemp.0/hwmon/hwmon2/temp20_label'
+<cpu offline>
+[91855.126115] BUG: kernel NULL pointer dereference, address: 0000000000000188
+[91855.165103] #PF: supervisor read access in kernel mode
+[91855.194506] #PF: error_code(0x0000) - not-present page
+[91855.224445] PGD 0 P4D 0
+[91855.238508] Oops: 0000 [#1] PREEMPT SMP PTI
+...
+[91855.342716] RIP: 0010:sysfs_remove_group+0xc/0x80
+...
+[91855.796571] Call Trace:
+[91855.810524]  coretemp_cpu_offline+0x12b/0x1dd [coretemp]
+[91855.841738]  ? coretemp_cpu_online+0x180/0x180 [coretemp]
+[91855.871107]  cpuhp_invoke_callback+0x105/0x4b0
+[91855.893432]  cpuhp_thread_fun+0x8e/0x150
+...
 
-Fixes: 2757a4dc1849 ("afs: Fix access after dec in put functions")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20221130174053.2665818-1-marc.dionne@auristor.com/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fix this by checking for NULL first.
+
+Signed-off-by: Phil Auld <pauld@redhat.com>
+Cc: linux-hwmon@vger.kernel.org
+Cc: Fenghua Yu <fenghua.yu@intel.com>
+Cc: Jean Delvare <jdelvare@suse.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221117162313.3164803-1-pauld@redhat.com
+Fixes: 199e0de7f5df3 ("hwmon: (coretemp) Merge pkgtemp with coretemp")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/server.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/coretemp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index 4981baf97835..b5237206eac3 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -406,7 +406,7 @@ void afs_put_server(struct afs_net *net, struct afs_server *server,
- 	if (!server)
- 		return;
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index 8bf32c6c85d9..30a19d711f89 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -533,6 +533,10 @@ static void coretemp_remove_core(struct platform_data *pdata, int indx)
+ {
+ 	struct temp_data *tdata = pdata->core_data[indx];
  
--	a = atomic_inc_return(&server->active);
-+	a = atomic_read(&server->active);
- 	zero = __refcount_dec_and_test(&server->ref, &r);
- 	trace_afs_server(debug_id, r - 1, a, reason);
- 	if (unlikely(zero))
++	/* if we errored on add then this is already gone */
++	if (!tdata)
++		return;
++
+ 	/* Remove the sysfs attributes */
+ 	sysfs_remove_group(&pdata->hwmon_dev->kobj, &tdata->attr_group);
+ 
 -- 
 2.35.1
 
