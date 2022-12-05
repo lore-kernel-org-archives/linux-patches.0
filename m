@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D3E15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B0AC433D6;
-	Mon,  5 Dec 2022 19:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E32E15C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:41:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FADC433D6;
+	Mon,  5 Dec 2022 19:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269272;
-	bh=ferL4fhdoP/toBE1TG+pzfCG4drM9L6b8kRwlhb+SHM=;
+	s=korg; t=1670269275;
+	bh=bBcAYnFC/b4pNuchDFIiFO0aYnfmlcw1WQHF7wPfl9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xp5ZgoeSfqYT46TzlprS6npa7AdjMflJopAj/LgKP2ABTE+jVcBgreAeTaACbyWyC
-	 SAN5PJqCjyV757N6pmJoq4M9RvUbplLvYBkZGtwr0i0MTKLXWJgOfnvA9FKkeGd2A9
-	 Ix/r991SlWnb8Hga5xqsNxYAsB92drrRrsAHOCMQ=
+	b=eNSXtygOuHImDUBH8qsK8m7/XVHx7xoM7kPCX4BYxjLYeR5XkG2nOT1g/XRKiNreK
+	 ow9rbygrV0c90egckOW0DIdu6GMQdejj5wBHr2MS/nYh5hdB1dvcIomSGO+KWC2qxJ
+	 qmEQ9N4os8y5pzlJzqWAS5VnVbkGIKmT5N08KP+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Sau <enrico.sau@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/153] net: usb: qmi_wwan: add Telit 0x103a composition
-Date: Mon,  5 Dec 2022 20:09:51 +0100
-Message-Id: <20221205190810.646203904@linuxfoundation.org>
+Subject: [PATCH 5.4 068/153] dm integrity: flush the journal on suspend
+Date: Mon,  5 Dec 2022 20:09:52 +0100
+Message-Id: <20221205190810.673193233@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,35 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrico Sau <enrico.sau@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit e103ba33998d0f25653cc8ebe745b68d1ee10cda ]
+[ Upstream commit 5e5dab5ec763d600fe0a67837dd9155bdc42f961 ]
 
-Add the following Telit LE910C4-WWX composition:
+This commit flushes the journal on suspend. It is prerequisite for the
+next commit that enables activating dm integrity devices in read-only mode.
 
-0x103a: rmnet
+Note that we deliberately didn't flush the journal on suspend, so that the
+journal replay code would be tested. However, the dm-integrity code is 5
+years old now, so that journal replay is well-tested, and we can make this
+change now.
 
-Signed-off-by: Enrico Sau <enrico.sau@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20221115105859.14324-1-enrico.sau@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-integrity.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 6f82436ff72f..7f0e3b09f776 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1314,6 +1314,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
- 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x103a, 0)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1040, 2)},	/* Telit LE922A */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1060, 2)},	/* Telit LN920 */
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index acbda91e7643..32f36810c3c9 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -2346,10 +2346,6 @@ static void integrity_writer(struct work_struct *w)
+ 
+ 	unsigned prev_free_sectors;
+ 
+-	/* the following test is not needed, but it tests the replay code */
+-	if (unlikely(dm_post_suspending(ic->ti)) && !ic->meta_dev)
+-		return;
+-
+ 	spin_lock_irq(&ic->endio_wait.lock);
+ 	write_start = ic->committed_section;
+ 	write_sections = ic->n_committed_sections;
+@@ -2858,8 +2854,7 @@ static void dm_integrity_postsuspend(struct dm_target *ti)
+ 	drain_workqueue(ic->commit_wq);
+ 
+ 	if (ic->mode == 'J') {
+-		if (ic->meta_dev)
+-			queue_work(ic->writer_wq, &ic->writer_work);
++		queue_work(ic->writer_wq, &ic->writer_work);
+ 		drain_workqueue(ic->writer_wq);
+ 		dm_integrity_flush_buffers(ic, true);
+ 	}
 -- 
 2.35.1
 
