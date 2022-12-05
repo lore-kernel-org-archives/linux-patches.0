@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79B715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388D6C433C1;
-	Mon,  5 Dec 2022 19:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B7815C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DDFC433C1;
+	Mon,  5 Dec 2022 19:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268625;
-	bh=pGqEl1ICnamFC3P4nkHXzCfJhi4auGeH6yBPGtFKePY=;
+	s=korg; t=1670268628;
+	bh=H19qATRFNiFOgXI74tCf3AV3rorrYSCDRyFrdv1boDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJL/9nn4aQkBzPtoyn8vecUPNocWfh9+qF6+D16xCopF7pxV9gKNIumhTR4PeZukb
-	 pIb3y4anlCykTnMPYZ/JxuLEwPgcQMZyYlp0mX7SNmczwOmq+Zn8wpbtGcIgDMJ1GQ
-	 s74a6ZZ6u+PHKVStwYIGE4ilaT4+bSXt64ibSNXw=
+	b=z3OSOqmb2g2PQJucloVKXNDieI5AJfpr1SwrltgW/CQIzZUZhGi/q0Rj6D8OkHNlT
+	 tbRDYilDg4MjBGohTA7TaaUNg8poU09rBu+o9z8YNpdGwmqdxkt0KfB1Jw6ridk50x
+	 uU3kAVPECE1RsUi8hoXDcdjfYXxjZFJh4LuZatyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 38/92] wifi: mac8021: fix possible oob access in ieee80211_get_rate_duration
-Date: Mon,  5 Dec 2022 20:09:51 +0100
-Message-Id: <20221205190804.725759503@linuxfoundation.org>
+Subject: [PATCH 5.10 47/92] net: tun: Fix use-after-free in tun_detach()
+Date: Mon,  5 Dec 2022 20:10:00 +0100
+Message-Id: <20221205190805.042829722@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,62 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 3e8f7abcc3473bc9603323803aeaed4ffcc3a2ab ]
+[ Upstream commit 5daadc86f27ea4d691e2131c04310d0418c6cd12 ]
 
-Fix possible out-of-bound access in ieee80211_get_rate_duration routine
-as reported by the following UBSAN report:
+syzbot reported use-after-free in tun_detach() [1].  This causes call
+trace like below:
 
-UBSAN: array-index-out-of-bounds in net/mac80211/airtime.c:455:47
-index 15 is out of range for type 'u16 [12]'
-CPU: 2 PID: 217 Comm: kworker/u32:10 Not tainted 6.1.0-060100rc3-generic
-Hardware name: Acer Aspire TC-281/Aspire TC-281, BIOS R01-A2 07/18/2017
-Workqueue: mt76 mt76u_tx_status_data [mt76_usb]
+==================================================================
+BUG: KASAN: use-after-free in notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
+Read of size 8 at addr ffff88807324e2a8 by task syz-executor.0/3673
+
+CPU: 0 PID: 3673 Comm: syz-executor.0 Not tainted 6.1.0-rc5-syzkaller-00044-gcc675d22e422 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
 Call Trace:
  <TASK>
- show_stack+0x4e/0x61
- dump_stack_lvl+0x4a/0x6f
- dump_stack+0x10/0x18
- ubsan_epilogue+0x9/0x43
- __ubsan_handle_out_of_bounds.cold+0x42/0x47
-ieee80211_get_rate_duration.constprop.0+0x22f/0x2a0 [mac80211]
- ? ieee80211_tx_status_ext+0x32e/0x640 [mac80211]
- ieee80211_calc_rx_airtime+0xda/0x120 [mac80211]
- ieee80211_calc_tx_airtime+0xb4/0x100 [mac80211]
- mt76x02_send_tx_status+0x266/0x480 [mt76x02_lib]
- mt76x02_tx_status_data+0x52/0x80 [mt76x02_lib]
- mt76u_tx_status_data+0x67/0xd0 [mt76_usb]
- process_one_work+0x225/0x400
- worker_thread+0x50/0x3e0
- ? process_one_work+0x400/0x400
- kthread+0xe9/0x110
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x22/0x30
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:284 [inline]
+ print_report+0x15e/0x461 mm/kasan/report.c:395
+ kasan_report+0xbf/0x1f0 mm/kasan/report.c:495
+ notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
+ call_netdevice_notifiers_info+0x86/0x130 net/core/dev.c:1942
+ call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
+ call_netdevice_notifiers net/core/dev.c:1997 [inline]
+ netdev_wait_allrefs_any net/core/dev.c:10237 [inline]
+ netdev_run_todo+0xbc6/0x1100 net/core/dev.c:10351
+ tun_detach drivers/net/tun.c:704 [inline]
+ tun_chr_close+0xe4/0x190 drivers/net/tun.c:3467
+ __fput+0x27c/0xa90 fs/file_table.c:320
+ task_work_run+0x16f/0x270 kernel/task_work.c:179
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0xb3d/0x2a30 kernel/exit.c:820
+ do_group_exit+0xd4/0x2a0 kernel/exit.c:950
+ get_signal+0x21b1/0x2440 kernel/signal.c:2858
+ arch_do_signal_or_restart+0x86/0x2300 arch/x86/kernel/signal.c:869
+ exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
+ exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+ syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
+ do_syscall_64+0x46/0xb0 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: db3e1c40cf2f ("mac80211: Import airtime calculation code from mt76")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The cause of the issue is that sock_put() from __tun_detach() drops
+last reference count for struct net, and then notifier_call_chain()
+from netdev_state_change() accesses that struct net.
+
+This patch fixes the issue by calling sock_put() from tun_detach()
+after all necessary accesses for the struct net has done.
+
+Fixes: 83c1f36f9880 ("tun: send netlink notification when the device is modified")
+Reported-by: syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=96eb7f1ce75ef933697f24eeab928c4a716edefe [1]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://lore.kernel.org/r/20221124175134.1589053-1-syoshida@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/airtime.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/tun.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/airtime.c b/net/mac80211/airtime.c
-index 26d2f8ba7029..758ef63669e7 100644
---- a/net/mac80211/airtime.c
-+++ b/net/mac80211/airtime.c
-@@ -457,6 +457,9 @@ static u32 ieee80211_get_rate_duration(struct ieee80211_hw *hw,
- 			 (status->encoding == RX_ENC_HE && streams > 8)))
- 		return 0;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index cb42fdbfeb32..67ce7b779af6 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -698,7 +698,6 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
+ 		if (tun)
+ 			xdp_rxq_info_unreg(&tfile->xdp_rxq);
+ 		ptr_ring_cleanup(&tfile->tx_ring, tun_ptr_free);
+-		sock_put(&tfile->sk);
+ 	}
+ }
  
-+	if (idx >= MCS_GROUP_RATES)
-+		return 0;
+@@ -714,6 +713,9 @@ static void tun_detach(struct tun_file *tfile, bool clean)
+ 	if (dev)
+ 		netdev_state_change(dev);
+ 	rtnl_unlock();
 +
- 	duration = airtime_mcs_groups[group].duration[idx];
- 	duration <<= airtime_mcs_groups[group].shift;
- 	*overhead = 36 + (streams << 2);
++	if (clean)
++		sock_put(&tfile->sk);
+ }
+ 
+ static void tun_detach_all(struct net_device *dev)
 -- 
 2.35.1
 
