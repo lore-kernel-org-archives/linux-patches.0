@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6700415C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EBCC433D6;
-	Mon,  5 Dec 2022 19:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D8615C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B81C433D6;
+	Mon,  5 Dec 2022 19:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267840;
-	bh=Q6cyF+6gQhaFIAYoJeQQo9oWI72sEIOGzxW83rqL4Eg=;
+	s=korg; t=1670267843;
+	bh=sTrhUg/jjmnp9IXgZiphojMaqmaWo/rJG10o05pRJws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOh68v7VqUxIJpAluX3Z33FL/N1FTF6shSErSPaMQfTBgYUf+NHC+fgp8D39+/U9j
-	 6XlTKaidJB1FGZK3zCVBdye2pWWTpQpif2kiWNfuCf1r74uJp8kUWTOP2LwuaPk97/
-	 VAbIIJvpCfg/ApEjLfxuuvZm5fBKGJC04HV6eFJM=
+	b=d4MaujYLAcw3AUgNVE9SxDVWiJI3MEkZyPUK6s4lAVhGXaef6PeAtUT/SHHltPWom
+	 vM/V/kD/tR8Mxo+pO+BX+WbCre3lKgx3nEXITqME6xUfN3xFYyWsexfElXdrG9y3Vx
+	 d9XIHMxUoUoRJDpbagh8Otyi7Uk2sTICgoICTJZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 4.14 70/77] tcp/udp: Fix memory leak in ipv6_renew_options().
-Date: Mon,  5 Dec 2022 20:10:01 +0100
-Message-Id: <20221205190803.331106091@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 44/77] of: property: decrement node refcount in of_fwnode_get_reference_args()
+Date: Mon,  5 Dec 2022 20:09:35 +0100
+Message-Id: <20221205190802.446591451@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,100 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 3c52c6bb831f6335c176a0fc7214e26f43adbd11 upstream.
+[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
 
-syzbot reported a memory leak [0] related to IPV6_ADDRFORM.
+In of_fwnode_get_reference_args(), the refcount of of_args.np has
+been incremented in the case of successful return from
+of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
 
-The scenario is that while one thread is converting an IPv6 socket into
-IPv4 with IPV6_ADDRFORM, another thread calls do_ipv6_setsockopt() and
-allocates memory to inet6_sk(sk)->XXX after conversion.
+Decrement the refcount if of_args is not returned to the caller of
+of_fwnode_get_reference_args().
 
-Then, the converted sk with (tcp|udp)_prot never frees the IPv6 resources,
-which inet6_destroy_sock() should have cleaned up.
-
-setsockopt(IPV6_ADDRFORM)                 setsockopt(IPV6_DSTOPTS)
-+-----------------------+                 +----------------------+
-- do_ipv6_setsockopt(sk, ...)
-  - sockopt_lock_sock(sk)                 - do_ipv6_setsockopt(sk, ...)
-    - lock_sock(sk)                         ^._ called via tcpv6_prot
-  - WRITE_ONCE(sk->sk_prot, &tcp_prot)          before WRITE_ONCE()
-  - xchg(&np->opt, NULL)
-  - txopt_put(opt)
-  - sockopt_release_sock(sk)
-    - release_sock(sk)                      - sockopt_lock_sock(sk)
-                                              - lock_sock(sk)
-                                            - ipv6_set_opt_hdr(sk, ...)
-                                              - ipv6_update_options(sk, opt)
-                                                - xchg(&inet6_sk(sk)->opt, opt)
-                                                  ^._ opt is never freed.
-
-                                            - sockopt_release_sock(sk)
-                                              - release_sock(sk)
-
-Since IPV6_DSTOPTS allocates options under lock_sock(), we can avoid this
-memory leak by testing whether sk_family is changed by IPV6_ADDRFORM after
-acquiring the lock.
-
-This issue exists from the initial commit between IPV6_ADDRFORM and
-IPV6_PKTOPTIONS.
-
-[0]:
-BUG: memory leak
-unreferenced object 0xffff888009ab9f80 (size 96):
-  comm "syz-executor583", pid 328, jiffies 4294916198 (age 13.034s)
-  hex dump (first 32 bytes):
-    01 00 00 00 48 00 00 00 08 00 00 00 00 00 00 00  ....H...........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000002ee98ae1>] kmalloc include/linux/slab.h:605 [inline]
-    [<000000002ee98ae1>] sock_kmalloc+0xb3/0x100 net/core/sock.c:2566
-    [<0000000065d7b698>] ipv6_renew_options+0x21e/0x10b0 net/ipv6/exthdrs.c:1318
-    [<00000000a8c756d7>] ipv6_set_opt_hdr net/ipv6/ipv6_sockglue.c:354 [inline]
-    [<00000000a8c756d7>] do_ipv6_setsockopt.constprop.0+0x28b7/0x4350 net/ipv6/ipv6_sockglue.c:668
-    [<000000002854d204>] ipv6_setsockopt+0xdf/0x190 net/ipv6/ipv6_sockglue.c:1021
-    [<00000000e69fdcf8>] tcp_setsockopt+0x13b/0x2620 net/ipv4/tcp.c:3789
-    [<0000000090da4b9b>] __sys_setsockopt+0x239/0x620 net/socket.c:2252
-    [<00000000b10d192f>] __do_sys_setsockopt net/socket.c:2263 [inline]
-    [<00000000b10d192f>] __se_sys_setsockopt net/socket.c:2260 [inline]
-    [<00000000b10d192f>] __x64_sys_setsockopt+0xbe/0x160 net/socket.c:2260
-    [<000000000a80d7aa>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<000000000a80d7aa>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
-    [<000000004562b5c6>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Frank Rowand <frowand.list@gmail.com>
+Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ipv6_sockglue.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/of/property.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -166,6 +166,12 @@ static int do_ipv6_setsockopt(struct soc
- 		rtnl_lock();
- 	lock_sock(sk);
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index fd9b734fff33..c017b11b00cb 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -922,8 +922,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
+ 						       nargs, index, &of_args);
+ 	if (ret < 0)
+ 		return ret;
+-	if (!args)
++	if (!args) {
++		of_node_put(of_args.np);
+ 		return 0;
++	}
  
-+	/* Another thread has converted the socket into IPv4 with
-+	 * IPV6_ADDRFORM concurrently.
-+	 */
-+	if (unlikely(sk->sk_family != AF_INET6))
-+		goto unlock;
-+
- 	switch (optname) {
- 
- 	case IPV6_ADDRFORM:
-@@ -905,6 +911,7 @@ pref_skip_coa:
- 		break;
- 	}
- 
-+unlock:
- 	release_sock(sk);
- 	if (needs_rtnl)
- 		rtnl_unlock();
+ 	args->nargs = of_args.args_count;
+ 	args->fwnode = of_fwnode_handle(of_args.np);
+-- 
+2.35.1
+
 
 
