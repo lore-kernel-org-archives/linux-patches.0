@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A088915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26056C433C1;
-	Mon,  5 Dec 2022 19:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BAD15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:14:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF552C433D6;
+	Mon,  5 Dec 2022 19:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267679;
-	bh=azR+UGpNMZu1AePQRPQhuVshd/dae+Vk3Ued6p+RAhE=;
+	s=korg; t=1670267682;
+	bh=1X6gJXTtxjw7b7FHfMdIgWQ1gqKh95GYIm9/vt5aQ8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyfP9zNvbu644OnhE7xreAzdUn/7wKvUZFbslgUMP37anhjEYFls9OTelcNVPqYnJ
-	 ezxdTcq4Tbr7oK/vcZ8OAwICAtl9um/k1QyhVcbjZYmQiJLaZ8XG+GCzV9gAdEmUOP
-	 SvWQ8seJeIJKeC4FcG5XZMMVmRn40Au+/CEqtgLY=
+	b=IwHFSEmG6zPQ1XQAPgsHXe/AbX4Z+26Gam8VRB/OtLOC7Tr8a9jqUOuUSG52AjEYC
+	 n6WIJXcBv4AMFcYqqK1dl7u7KLURa8O+Irsa70dCNvZ9vsyJmMB8t9sN2DHq4apDe7
+	 Y+WXoaDoKkLXV4zIoSo9uTogM7tu3ZIv227dvA4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/77] spi: stm32: fix stm32_spi_prepare_mbr() that halves spi clk for every run
-Date: Mon,  5 Dec 2022 20:08:55 +0100
-Message-Id: <20221205190801.022993920@linuxfoundation.org>
+Subject: [PATCH 4.14 05/77] MIPS: pic32: treat port as signed integer
+Date: Mon,  5 Dec 2022 20:08:56 +0100
+Message-Id: <20221205190801.056710587@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,48 +35,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit 62aa1a344b0904549f6de7af958e8a1136fd5228 ]
+[ Upstream commit 648060902aa302331b5d6e4f26d8ee0761d239ab ]
 
-When this driver is used with a driver that uses preallocated spi_transfer
-structs. The speed_hz is halved by every run. This results in:
+get_port_from_cmdline() returns an int, yet is assigned to a char, which
+is wrong in its own right, but also, with char becoming unsigned, this
+poses problems, because -1 is used as an error value. Further
+complicating things, fw_init_early_console() is only ever called with a
+-1 argument. Fix this up by removing the unused argument from
+fw_init_early_console() and treating port as a proper signed integer.
 
-spi_stm32 44004000.spi: SPI transfer setup failed
-ads7846 spi0.0: SPI transfer failed: -22
-
-Example when running with DIV_ROUND_UP():
-- First run; speed_hz = 1000000, spi->clk_rate 125000000
-  div 125 -> mbrdiv = 7, cur_speed = 976562
-- Second run; speed_hz = 976562
-  div 128,00007 (roundup to 129) -> mbrdiv = 8, cur_speed = 488281
-- Third run; speed_hz = 488281
-  div 256,000131072067109 (roundup to 257) and then -EINVAL is returned.
-
-Use DIV_ROUND_CLOSEST to allow to round down and allow us to keep the
-set speed.
-
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://lore.kernel.org/r/20221103080043.3033414-1-sean@geanix.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/include/asm/fw/fw.h             |  2 +-
+ arch/mips/pic32/pic32mzda/early_console.c | 13 ++++++-------
+ arch/mips/pic32/pic32mzda/init.c          |  2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index c8e546439fff..87502f39bc4f 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -255,7 +255,7 @@ static int stm32_spi_prepare_mbr(struct stm32_spi *spi, u32 speed_hz)
- 	u32 div, mbrdiv;
+diff --git a/arch/mips/include/asm/fw/fw.h b/arch/mips/include/asm/fw/fw.h
+index d0ef8b4892bb..d0494ce4b337 100644
+--- a/arch/mips/include/asm/fw/fw.h
++++ b/arch/mips/include/asm/fw/fw.h
+@@ -26,6 +26,6 @@ extern char *fw_getcmdline(void);
+ extern void fw_meminit(void);
+ extern char *fw_getenv(char *name);
+ extern unsigned long fw_getenvl(char *name);
+-extern void fw_init_early_console(char port);
++extern void fw_init_early_console(void);
  
- 	/* Ensure spi->clk_rate is even */
--	div = DIV_ROUND_UP(spi->clk_rate & ~0x1, speed_hz);
-+	div = DIV_ROUND_CLOSEST(spi->clk_rate & ~0x1, speed_hz);
+ #endif /* __ASM_FW_H_ */
+diff --git a/arch/mips/pic32/pic32mzda/early_console.c b/arch/mips/pic32/pic32mzda/early_console.c
+index d7b783463fac..4933c5337059 100644
+--- a/arch/mips/pic32/pic32mzda/early_console.c
++++ b/arch/mips/pic32/pic32mzda/early_console.c
+@@ -34,7 +34,7 @@
+ #define U_BRG(x)	(UART_BASE(x) + 0x40)
  
- 	/*
- 	 * SPI framework set xfer->speed_hz to master->max_speed_hz if
+ static void __iomem *uart_base;
+-static char console_port = -1;
++static int console_port = -1;
+ 
+ static int __init configure_uart_pins(int port)
+ {
+@@ -54,7 +54,7 @@ static int __init configure_uart_pins(int port)
+ 	return 0;
+ }
+ 
+-static void __init configure_uart(char port, int baud)
++static void __init configure_uart(int port, int baud)
+ {
+ 	u32 pbclk;
+ 
+@@ -67,7 +67,7 @@ static void __init configure_uart(char port, int baud)
+ 		     uart_base + PIC32_SET(U_STA(port)));
+ }
+ 
+-static void __init setup_early_console(char port, int baud)
++static void __init setup_early_console(int port, int baud)
+ {
+ 	if (configure_uart_pins(port))
+ 		return;
+@@ -137,16 +137,15 @@ static int __init get_baud_from_cmdline(char *arch_cmdline)
+ 	return baud;
+ }
+ 
+-void __init fw_init_early_console(char port)
++void __init fw_init_early_console(void)
+ {
+ 	char *arch_cmdline = pic32_getcmdline();
+-	int baud = -1;
++	int baud, port;
+ 
+ 	uart_base = ioremap_nocache(PIC32_BASE_UART, 0xc00);
+ 
+ 	baud = get_baud_from_cmdline(arch_cmdline);
+-	if (port == -1)
+-		port = get_port_from_cmdline(arch_cmdline);
++	port = get_port_from_cmdline(arch_cmdline);
+ 
+ 	if (port == -1)
+ 		port = EARLY_CONSOLE_PORT;
+diff --git a/arch/mips/pic32/pic32mzda/init.c b/arch/mips/pic32/pic32mzda/init.c
+index 406c6c5cec29..cf2625551b45 100644
+--- a/arch/mips/pic32/pic32mzda/init.c
++++ b/arch/mips/pic32/pic32mzda/init.c
+@@ -68,7 +68,7 @@ void __init plat_mem_setup(void)
+ 		strlcpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);
+ 
+ #ifdef CONFIG_EARLY_PRINTK
+-	fw_init_early_console(-1);
++	fw_init_early_console();
+ #endif
+ 	pic32_config_init();
+ }
 -- 
 2.35.1
 
