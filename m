@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D915C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82917C433D6;
-	Mon,  5 Dec 2022 19:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B385815C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BB7C433D6;
+	Mon,  5 Dec 2022 19:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267861;
-	bh=kcqMb6L245pKTIu/OtCIuEL0b5dsWKF4Xk4s8SHO4X8=;
+	s=korg; t=1670267864;
+	bh=JNbBR9TbNTyNLhN3lNv/n5ubonlD3iXy0XFRkO3t1aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YidTnAgIdPWxcO2hk46Ob8UtnNEDP2UTC7oGCWFLqxKeJhX67eXRpaSsQyGd9poiC
-	 LGKjkoq+Yi9azjaHFyxwQumd59dHR2QmcokXJJkSHQreyJqHSA9Gw9xQZLor5TLdGe
-	 GUqZfmO5OzouDvWYpehEPfVFC70KiiADhLdyfB7c=
+	b=A8pCe5bBzOwnmA+lxvzPcvqzIwFQyghpss0gZXZmJAskoNyvJewDKo3cor+XlSZ97
+	 a/KHlNcMgyT2pcVbVYMI5VQKpT/+69yaU89VO5XJX7YjlKe3z6KKhKwsWu8p1PqkbC
+	 n3FQMn+vnPq6z6FJejTXOujex8YRnKfXI+uYdEtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paul Gazzillo <paul@pgazz.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 50/77] net: net_netdev: Fix error handling in ntb_netdev_init_module()
-Date: Mon,  5 Dec 2022 20:09:41 +0100
-Message-Id: <20221205190802.646880295@linuxfoundation.org>
+Subject: [PATCH 4.14 41/77] iio: light: rpr0521: add missing Kconfig dependencies
+Date: Mon,  5 Dec 2022 20:09:32 +0100
+Message-Id: <20221205190802.331209407@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -35,46 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Paul Gazzillo <paul@pgazz.com>
 
-[ Upstream commit b8f79dccd38edf7db4911c353d9cd792ab13a327 ]
+[ Upstream commit 6ac12303572ef9ace5603c2c07f5f1b00a33f580 ]
 
-The ntb_netdev_init_module() returns the ntb_transport_register_client()
-directly without checking its return value, if
-ntb_transport_register_client() failed, the NTB client device is not
-unregistered.
+Fix an implicit declaration of function error for rpr0521 under some configs
 
-Fix by unregister NTB client device when ntb_transport_register_client()
-failed.
+When CONFIG_RPR0521 is enabled without CONFIG_IIO_TRIGGERED_BUFFER,
+the build results in "implicit declaration of function" errors, e.g.,
+  drivers/iio/light/rpr0521.c:434:3: error: implicit declaration of function
+           'iio_trigger_poll_chained' [-Werror=implicit-function-declaration]
+    434 |   iio_trigger_poll_chained(data->drdy_trigger0);
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This fix adds select dependencies to RPR0521's configuration declaration.
+
+Fixes: e12ffd241c00 ("iio: light: rpr0521 triggered buffer")
+Signed-off-by: Paul Gazzillo <paul@pgazz.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216678
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110214729.ls5ixav5kxpeftk7@device
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/light/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index 97bf49ad81a6..5f941e20f199 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -506,7 +506,14 @@ static int __init ntb_netdev_init_module(void)
- 	rc = ntb_transport_register_client_dev(KBUILD_MODNAME);
- 	if (rc)
- 		return rc;
--	return ntb_transport_register_client(&ntb_netdev_client);
-+
-+	rc = ntb_transport_register_client(&ntb_netdev_client);
-+	if (rc) {
-+		ntb_transport_unregister_client_dev(KBUILD_MODNAME);
-+		return rc;
-+	}
-+
-+	return 0;
- }
- module_init(ntb_netdev_init_module);
- 
+diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
+index 2356ed9285df..67eda9643df5 100644
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -237,6 +237,8 @@ config RPR0521
+ 	tristate "ROHM RPR0521 ALS and proximity sensor driver"
+ 	depends on I2C
+ 	select REGMAP_I2C
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	 Say Y here if you want to build support for ROHM's RPR0521
+ 	 ambient light and proximity sensor device.
 -- 
 2.35.1
 
