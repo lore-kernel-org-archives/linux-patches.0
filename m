@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9ED15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70718C433D6;
-	Mon,  5 Dec 2022 19:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2915C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A45C433D6;
+	Mon,  5 Dec 2022 19:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268426;
-	bh=t0sh537lY/tynIianXOW8nlBPLeTqnOdZGJftal9+jU=;
+	s=korg; t=1670268429;
+	bh=2qrNcdi3q9e7wrhLinHLfNcp86c0LHO60Bv0vmkR1RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dg1PjV2TKKC1/I6ikTBlV5UTgqTccjQQp2PB5TgjJygH+y4Eq0mG7B5VRkZsfBUtX
-	 Zs1MiduHmyqmVvYBrWix8uCzu5UohiJj0ex/0iYLuLdzj/BvJEZ52XJ/yodidbDjme
-	 l2w3b2XG7EITFiTA2z58F2xSAktXKVb4GbDH5mfA=
+	b=KRU6q2eXKcB9XoxEgzsUGg4TEZ7AHy7mWCfdDI845OK4teX37ZQjlY87AR90/2Uvj
+	 nC5B4H39d7do9exyXQW2+LRFFD5+w0lfPfFEhw+xsYMz6hl9yrIrF5sk3hLyGSUY41
+	 hH/bIcVbHB+ctf0qrBZV3otHNyBIHyrblmRF+qVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Falbesoner <sebastian.falbesoner@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 090/124] mmc: sdhci-esdhc-imx: correct CQHCI exit halt state check
-Date: Mon,  5 Dec 2022 20:09:56 +0100
-Message-Id: <20221205190810.972682049@linuxfoundation.org>
+	Tom Zanussi <zanussi@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 099/124] tracing: Fix race where histograms can be called before the event
+Date: Mon,  5 Dec 2022 20:10:05 +0100
+Message-Id: <20221205190811.227075300@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,38 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Falbesoner <sebastian.falbesoner@gmail.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit a3cab1d2132474969871b5d7f915c5c0167b48b0 upstream.
+commit ef38c79a522b660f7f71d45dad2d6244bc741841 upstream.
 
-With the current logic the "failed to exit halt state" error would be
-shown even if any other bit than CQHCI_HALT was set in the CQHCI_CTL
-register, since the right hand side is always true. Fix this by using
-the correct operator (bit-wise instead of logical AND) to only check for
-the halt bit flag, which was obviously intended here.
+commit 94eedf3dded5 ("tracing: Fix race where eprobes can be called before
+the event") fixed an issue where if an event is soft disabled, and the
+trigger is being added, there's a small window where the event sees that
+there's a trigger but does not see that it requires reading the event yet,
+and then calls the trigger with the record == NULL.
 
-Fixes: 85236d2be844 ("mmc: sdhci-esdhc-imx: clear the HALT bit when enable CQE")
-Signed-off-by: Sebastian Falbesoner <sebastian.falbesoner@gmail.com>
-Acked-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+This could be solved with adding memory barriers in the hot path, or to
+make sure that all the triggers requiring a record check for NULL. The
+latter was chosen.
+
+Commit 94eedf3dded5 set the eprobe trigger handle to check for NULL, but
+the same needs to be done with histograms.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20221118211809.701d40c0f8a757b0df3c025a@kernel.org/
+Link: https://lore.kernel.org/linux-trace-kernel/20221123164323.03450c3a@gandalf.local.home
+
+Cc: Tom Zanussi <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221121105721.1903878-1-sebastian.falbesoner@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
+Reported-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_hist.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1512,7 +1512,7 @@ static void esdhc_cqe_enable(struct mmc_
- 	 * system resume back.
- 	 */
- 	cqhci_writel(cq_host, 0, CQHCI_CTL);
--	if (cqhci_readl(cq_host, CQHCI_CTL) && CQHCI_HALT)
-+	if (cqhci_readl(cq_host, CQHCI_CTL) & CQHCI_HALT)
- 		dev_err(mmc_dev(host->mmc),
- 			"failed to exit halt state when enable CQE\n");
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5051,6 +5051,9 @@ static void event_hist_trigger(struct ev
+ 	void *key = NULL;
+ 	unsigned int i;
  
++	if (unlikely(!rbe))
++		return;
++
+ 	memset(compound_key, 0, hist_data->key_size);
+ 
+ 	for_each_hist_key_field(i, hist_data) {
 
 
