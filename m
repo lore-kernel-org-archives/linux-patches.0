@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B52915C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4A3C433C1;
-	Mon,  5 Dec 2022 19:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5810115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:26:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB8AC433C1;
+	Mon,  5 Dec 2022 19:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268391;
-	bh=4JnpkyKNGE7/PaXvHRIhmipq9yeFEnLI46R50CznMBI=;
+	s=korg; t=1670268394;
+	bh=zGxXD27XeAphn3rLRUFYy+4QC/WBxcqqp6dqm1tIm6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USV4Aw9welHqkqN8cNLN0WJVzU/ZgZxgf7TyLrYctttxPYEIByGqIgU2udc9/NRs/
-	 PDaLW4ilm/pGmMdP9dQcOp+9g59aw28xiRv5EZ2wTmDoanLbNTSk62yJedN26JaXaT
-	 yRf6hS0bB10IckUOTGlb8ZfIsb+vV7E25iNNl62M=
+	b=f80qXL3hk9uGR66Uy1FWpakJWeMSLwlAYaQFU/mI0pSXykZoup/PLYOplHxFON02s
+	 2ODHYC/9VlU6tLdPadno4ahzi30TcCyQVWM6RhIvmCJ5b/O4xvDUATrrwuEobYpU0P
+	 ed+Umg/nzsp0C0xVjSCIK26TU0zChj6fx9HSRNYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Jenkins <sethjenkins@google.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Gavin Shan <gshan@redhat.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
 	David Hildenbrand <david@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.0 084/124] v4l2: dont fall back to follow_pfn() if pin_user_pages_fast() fails
-Date: Mon,  5 Dec 2022 20:09:50 +0100
-Message-Id: <20221205190810.804311274@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 085/124] mm: migrate: fix THPs mapcount on isolation
+Date: Mon,  5 Dec 2022 20:09:51 +0100
+Message-Id: <20221205190810.832681913@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -38,148 +42,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Gavin Shan <gshan@redhat.com>
 
-commit 6647e76ab623b2b3fb2efe03a86e9c9046c52c33 upstream.
+commit 829ae0f81ce093d674ff2256f66a714753e9ce32 upstream.
 
-The V4L2_MEMORY_USERPTR interface is long deprecated and shouldn't be
-used (and is discouraged for any modern v4l drivers).  And Seth Jenkins
-points out that the fallback to VM_PFNMAP/VM_IO is fundamentally racy
-and dangerous.
+The issue is reported when removing memory through virtio_mem device.  The
+transparent huge page, experienced copy-on-write fault, is wrongly
+regarded as pinned.  The transparent huge page is escaped from being
+isolated in isolate_migratepages_block().  The transparent huge page can't
+be migrated and the corresponding memory block can't be put into offline
+state.
 
-Note that it's not even a case that should trigger, since any normal
-user pointer logic ends up just using the pin_user_pages_fast() call
-that does the proper page reference counting.  That's not the problem
-case, only if you try to use special device mappings do you have any
-issues.
+Fix it by replacing page_mapcount() with total_mapcount().  With this, the
+transparent huge page can be isolated and migrated, and the memory block
+can be put into offline state.  Besides, The page's refcount is increased
+a bit earlier to avoid the page is released when the check is executed.
 
-Normally I'd just remove this during the merge window, but since Seth
-pointed out the problem cases, we really want to know as soon as
-possible if there are actually any users of this odd special case of a
-legacy interface.  Neither Hans nor Mauro seem to think that such
-mis-uses of the old legacy interface should exist.  As Mauro says:
-
- "See, V4L2 has actually 4 streaming APIs:
-        - Kernel-allocated mmap (usually referred simply as just mmap);
-        - USERPTR mmap;
-        - read();
-        - dmabuf;
-
-  The USERPTR is one of the oldest way to use it, coming from V4L
-  version 1 times, and by far the least used one"
-
-And Hans chimed in on the USERPTR interface:
-
- "To be honest, I wouldn't mind if it goes away completely, but that's a
-  bit of a pipe dream right now"
-
-but while removing this legacy interface entirely may be a pipe dream we
-can at least try to remove the unlikely (and actively broken) case of
-using special device mappings for USERPTR accesses.
-
-This replaces it with a WARN_ONCE() that we can remove once we've
-hopefully confirmed that no actual users exist.
-
-NOTE! Longer term, this means that a 'struct frame_vector' only ever
-contains proper page pointers, and all the games we have with converting
-them to pages can go away (grep for 'frame_vector_to_pages()' and the
-uses of 'vec->is_pfns').  But this is just the first step, to verify
-that this code really is all dead, and do so as quickly as possible.
-
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Acked-by: Hans Verkuil <hverkuil@xs4all.nl>
-Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lkml.kernel.org/r/20221124095523.31061-1-gshan@redhat.com
+Fixes: 1da2f328fa64 ("mm,thp,compaction,cma: allow THP migration for CMA allocations")
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Reported-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>	[5.7+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/frame_vector.c |   68 ++++----------------------
- 1 file changed, 12 insertions(+), 56 deletions(-)
+ mm/compaction.c |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/media/common/videobuf2/frame_vector.c
-+++ b/drivers/media/common/videobuf2/frame_vector.c
-@@ -35,11 +35,7 @@
- int get_vaddr_frames(unsigned long start, unsigned int nr_frames,
- 		     struct frame_vector *vec)
- {
--	struct mm_struct *mm = current->mm;
--	struct vm_area_struct *vma;
--	int ret_pin_user_pages_fast = 0;
--	int ret = 0;
--	int err;
-+	int ret;
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -987,28 +987,28 @@ isolate_migratepages_block(struct compac
+ 		}
  
- 	if (nr_frames == 0)
- 		return 0;
-@@ -52,57 +48,17 @@ int get_vaddr_frames(unsigned long start
- 	ret = pin_user_pages_fast(start, nr_frames,
- 				  FOLL_FORCE | FOLL_WRITE | FOLL_LONGTERM,
- 				  (struct page **)(vec->ptrs));
--	if (ret > 0) {
--		vec->got_ref = true;
--		vec->is_pfns = false;
--		goto out_unlocked;
--	}
--	ret_pin_user_pages_fast = ret;
--
--	mmap_read_lock(mm);
--	vec->got_ref = false;
--	vec->is_pfns = true;
--	ret = 0;
--	do {
--		unsigned long *nums = frame_vector_pfns(vec);
--
--		vma = vma_lookup(mm, start);
--		if (!vma)
--			break;
--
--		while (ret < nr_frames && start + PAGE_SIZE <= vma->vm_end) {
--			err = follow_pfn(vma, start, &nums[ret]);
--			if (err) {
--				if (ret)
--					goto out;
--				// If follow_pfn() returns -EINVAL, then this
--				// is not an IO mapping or a raw PFN mapping.
--				// In that case, return the original error from
--				// pin_user_pages_fast(). Otherwise this
--				// function would return -EINVAL when
--				// pin_user_pages_fast() returned -ENOMEM,
--				// which makes debugging hard.
--				if (err == -EINVAL && ret_pin_user_pages_fast)
--					ret = ret_pin_user_pages_fast;
--				else
--					ret = err;
--				goto out;
--			}
--			start += PAGE_SIZE;
--			ret++;
--		}
--		/* Bail out if VMA doesn't completely cover the tail page. */
--		if (start < vma->vm_end)
--			break;
--	} while (ret < nr_frames);
--out:
--	mmap_read_unlock(mm);
--out_unlocked:
--	if (!ret)
--		ret = -EFAULT;
--	if (ret > 0)
--		vec->nr_frames = ret;
--	return ret;
-+	vec->got_ref = true;
-+	vec->is_pfns = false;
-+	vec->nr_frames = ret;
+ 		/*
++		 * Be careful not to clear PageLRU until after we're
++		 * sure the page is not being freed elsewhere -- the
++		 * page release code relies on it.
++		 */
++		if (unlikely(!get_page_unless_zero(page)))
++			goto isolate_fail;
 +
-+	if (likely(ret > 0))
-+		return ret;
-+
-+	/* This used to (racily) return non-refcounted pfns. Let people know */
-+	WARN_ONCE(1, "get_vaddr_frames() cannot follow VM_IO mapping");
-+	vec->nr_frames = 0;
-+	return ret ? ret : -EFAULT;
- }
- EXPORT_SYMBOL(get_vaddr_frames);
++		/*
+ 		 * Migration will fail if an anonymous page is pinned in memory,
+ 		 * so avoid taking lru_lock and isolating it unnecessarily in an
+ 		 * admittedly racy check.
+ 		 */
+ 		mapping = page_mapping(page);
+-		if (!mapping && page_count(page) > page_mapcount(page))
+-			goto isolate_fail;
++		if (!mapping && (page_count(page) - 1) > total_mapcount(page))
++			goto isolate_fail_put;
  
+ 		/*
+ 		 * Only allow to migrate anonymous pages in GFP_NOFS context
+ 		 * because those do not depend on fs locks.
+ 		 */
+ 		if (!(cc->gfp_mask & __GFP_FS) && mapping)
+-			goto isolate_fail;
+-
+-		/*
+-		 * Be careful not to clear PageLRU until after we're
+-		 * sure the page is not being freed elsewhere -- the
+-		 * page release code relies on it.
+-		 */
+-		if (unlikely(!get_page_unless_zero(page)))
+-			goto isolate_fail;
++			goto isolate_fail_put;
+ 
+ 		/* Only take pages on LRU: a check now makes later tests safe */
+ 		if (!PageLRU(page))
 
 
