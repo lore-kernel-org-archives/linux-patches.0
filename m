@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3C215C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E506C433C1;
-	Mon,  5 Dec 2022 19:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C68D15C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D82C433C1;
+	Mon,  5 Dec 2022 19:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269475;
-	bh=er4GKzqFGZjIbcn7JeO62oNLtsL20kJueG00tEX+8zk=;
+	s=korg; t=1670269478;
+	bh=aBXti4EF3GBx1TWbwGEgNQ7KMgvLAPbY1whfbPALMD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gut3shZEBKtoOGjjvWFGTZFWDai4jLM263NpL8KrgjCAEeJRVC5hBn36x9vPF9cre
-	 GTTCqURgqHKwj8orLYimNK2v9w9EFlUHQDL0I/r4f0hwFXDMaUWg3X0CLR0c81X8al
-	 vXVpgyqn+VPo9xux1ZWnjF2sBufFKLh/DPv2b0jc=
+	b=vvCMfo+c0ZsQhugIqGPJrwkHseQH+UY41KLaY9YwRDpPBSYTl+Pn1hg/on4cb6VpH
+	 N3p2wYzi6Zd8wnlZO2VHxdJpA6iQUYbRM5fs/dCTrVkcyUHfY6CZDqipOLYkSjlQv6
+	 BgJyjBPH6PhoNuMLlZw3/fohnu9vQtrd8nuXRA/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Phil Auld <pauld@redhat.com>,
+	linux-hwmon@vger.kernel.org,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 140/153] ipv4: Fix route deletion when nexthop info is not specified
-Date: Mon,  5 Dec 2022 20:11:04 +0100
-Message-Id: <20221205190812.646864982@linuxfoundation.org>
+Subject: [PATCH 5.4 114/153] hwmon: (coretemp) Check for null before removing sysfs attrs
+Date: Mon,  5 Dec 2022 20:10:38 +0100
+Message-Id: <20221205190811.995803124@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -38,116 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Phil Auld <pauld@redhat.com>
 
-[ Upstream commit d5082d386eee7e8ec46fa8581932c81a4961dcef ]
+[ Upstream commit a89ff5f5cc64b9fe7a992cf56988fd36f56ca82a ]
 
-When the kernel receives a route deletion request from user space it
-tries to delete a route that matches the route attributes specified in
-the request.
+If coretemp_add_core() gets an error then pdata->core_data[indx]
+is already NULL and has been kfreed. Don't pass that to
+sysfs_remove_group() as that will crash in sysfs_remove_group().
 
-If only prefix information is specified in the request, the kernel
-should delete the first matching FIB alias regardless of its associated
-FIB info. However, an error is currently returned when the FIB info is
-backed by a nexthop object:
+[Shortened for readability]
+[91854.020159] sysfs: cannot create duplicate filename '/devices/platform/coretemp.0/hwmon/hwmon2/temp20_label'
+<cpu offline>
+[91855.126115] BUG: kernel NULL pointer dereference, address: 0000000000000188
+[91855.165103] #PF: supervisor read access in kernel mode
+[91855.194506] #PF: error_code(0x0000) - not-present page
+[91855.224445] PGD 0 P4D 0
+[91855.238508] Oops: 0000 [#1] PREEMPT SMP PTI
+...
+[91855.342716] RIP: 0010:sysfs_remove_group+0xc/0x80
+...
+[91855.796571] Call Trace:
+[91855.810524]  coretemp_cpu_offline+0x12b/0x1dd [coretemp]
+[91855.841738]  ? coretemp_cpu_online+0x180/0x180 [coretemp]
+[91855.871107]  cpuhp_invoke_callback+0x105/0x4b0
+[91855.893432]  cpuhp_thread_fun+0x8e/0x150
+...
 
- # ip nexthop add id 1 via 192.0.2.2 dev dummy10
- # ip route add 198.51.100.0/24 nhid 1
- # ip route del 198.51.100.0/24
- RTNETLINK answers: No such process
+Fix this by checking for NULL first.
 
-Fix by matching on such a FIB info when legacy nexthop attributes are
-not specified in the request. An earlier check already covers the case
-where a nexthop ID is specified in the request.
-
-Add tests that cover these flows. Before the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [FAIL]
-
- Tests passed:  11
- Tests failed:   1
-
-After the fix:
-
- # ./fib_nexthops.sh -t ipv4_fcnal
- ...
- TEST: Delete route when not specifying nexthop attributes           [ OK ]
-
- Tests passed:  12
- Tests failed:   0
-
-No regressions in other tests:
-
- # ./fib_nexthops.sh
- ...
- Tests passed: 228
- Tests failed:   0
-
- # ./fib_tests.sh
- ...
- Tests passed: 186
- Tests failed:   0
-
-Cc: stable@vger.kernel.org
-Reported-by: Jonas Gorski <jonas.gorski@gmail.com>
-Tested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Fixes: 6bf92d70e690 ("net: ipv4: fix route with nexthop object delete warning")
-Fixes: 61b91eb33a69 ("ipv4: Handle attempt to delete multipath route when fib_info contains an nh reference")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221124210932.2470010-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Phil Auld <pauld@redhat.com>
+Cc: linux-hwmon@vger.kernel.org
+Cc: Fenghua Yu <fenghua.yu@intel.com>
+Cc: Jean Delvare <jdelvare@suse.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221117162313.3164803-1-pauld@redhat.com
+Fixes: 199e0de7f5df3 ("hwmon: (coretemp) Merge pkgtemp with coretemp")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c                    |  8 +++++---
- tools/testing/selftests/net/fib_nexthops.sh | 11 +++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/hwmon/coretemp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 31424172ff18..908913d75847 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -875,9 +875,11 @@ int fib_nh_match(struct fib_config *cfg, struct fib_info *fi,
- 		return 1;
- 	}
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index d2530f581186..65e06e18b8f0 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -533,6 +533,10 @@ static void coretemp_remove_core(struct platform_data *pdata, int indx)
+ {
+ 	struct temp_data *tdata = pdata->core_data[indx];
  
--	/* cannot match on nexthop object attributes */
--	if (fi->nh)
--		return 1;
-+	if (fi->nh) {
-+		if (cfg->fc_oif || cfg->fc_gw_family || cfg->fc_mp)
-+			return 1;
-+		return 0;
-+	}
++	/* if we errored on add then this is already gone */
++	if (!tdata)
++		return;
++
+ 	/* Remove the sysfs attributes */
+ 	sysfs_remove_group(&pdata->hwmon_dev->kobj, &tdata->attr_group);
  
- 	if (cfg->fc_oif || cfg->fc_gw_family) {
- 		struct fib_nh *nh;
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index 28f5121fac44..0bdca3a2e673 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -602,6 +602,17 @@ ipv4_fcnal()
- 	run_cmd "$IP ro add 172.16.101.0/24 nhid 21"
- 	run_cmd "$IP ro del 172.16.101.0/24 nexthop via 172.16.1.7 dev veth1 nexthop via 172.16.1.8 dev veth1"
- 	log_test $? 2 "Delete multipath route with only nh id based entry"
-+
-+	run_cmd "$IP nexthop add id 22 via 172.16.1.6 dev veth1"
-+	run_cmd "$IP ro add 172.16.102.0/24 nhid 22"
-+	run_cmd "$IP ro del 172.16.102.0/24 dev veth1"
-+	log_test $? 2 "Delete route when specifying only nexthop device"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24 via 172.16.1.6"
-+	log_test $? 2 "Delete route when specifying only gateway"
-+
-+	run_cmd "$IP ro del 172.16.102.0/24"
-+	log_test $? 0 "Delete route when not specifying nexthop attributes"
- }
- 
- ipv4_grp_fcnal()
 -- 
 2.35.1
 
