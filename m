@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2E515C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FA5C433C1;
-	Mon,  5 Dec 2022 19:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ED915C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883C4C433D6;
+	Mon,  5 Dec 2022 19:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269327;
-	bh=cYb27BGY8SejQ3AIoV3asHQMvxsSPUbpmRYdgDbOY+I=;
+	s=korg; t=1670269329;
+	bh=bmkuTam4/eCjQTwar69n3SQbEsGd/IeoaR1YFjfpgrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUaHODXld/eWwJ2Qye26ePHpo9q7XdCeNquBldlro3tt8v5v0rKv2dTlTR1+J77YD
-	 Ws5KvLggIq1Ux3JM+/my5xgR3drvaMvUmp4lAG8hf6/isgXkdb+w77YOdx4f06cnix
-	 VYXdIOgsN3FqR3XqKDp5bO+6TkL3W7I8pD2oVF2s=
+	b=WkPBpzwwpiP8rhR7vllx1kwGOh7rWwXP82OJMVnYDufgI1QFREVDP57HL2pUNDg+J
+	 rmH7qVPkkkMkSVJvVxqEU/gPSHEaSXscH8hcTpgATUIQQtBgOy1bXixtI/9Le0cT/M
+	 LfhX0w2hm6wHGhSavGeAnpHjZPMn2KSXd/idM950=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aman Dhoot <amandhoot12@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/153] Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode
-Date: Mon,  5 Dec 2022 20:09:43 +0100
-Message-Id: <20221205190810.419081803@linuxfoundation.org>
+Subject: [PATCH 5.4 060/153] ASoC: Intel: bytcht_es8316: Add quirk for the Nanote UMPC-01
+Date: Mon,  5 Dec 2022 20:09:44 +0100
+Message-Id: <20221205190810.446891604@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,32 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aman Dhoot <amandhoot12@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 ]
+[ Upstream commit 8bb0ac0e6f64ebdf15d963c26b028de391c9bcf9 ]
 
-The device works fine in native RMI mode, there is no reason to use legacy
-PS/2 mode with it.
+The Nanote UMPC-01 mini laptop has stereo speakers, while the default
+bytcht_es8316 settings assume a mono speaker setup. Add a quirk for this.
 
-Signed-off-by: Aman Dhoot <amandhoot12@gmail.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221025140942.509066-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/intel/boards/bytcht_es8316.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
-index 4b81b2d0fe06..05b007d0a89b 100644
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -189,6 +189,7 @@ static const char * const smbus_pnp_ids[] = {
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
-+	"SYN3286", /* HP Laptop 15-da3001TU */
- 	NULL
- };
- 
+diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
+index ed332177b0f9..57d6d0b48068 100644
+--- a/sound/soc/intel/boards/bytcht_es8316.c
++++ b/sound/soc/intel/boards/bytcht_es8316.c
+@@ -446,6 +446,13 @@ static const struct dmi_system_id byt_cht_es8316_quirk_table[] = {
+ 					| BYT_CHT_ES8316_INTMIC_IN2_MAP
+ 					| BYT_CHT_ES8316_JD_INVERTED),
+ 	},
++	{	/* Nanote UMPC-01 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "RWC CO.,LTD"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "UMPC-01"),
++		},
++		.driver_data = (void *)BYT_CHT_ES8316_INTMIC_IN1_MAP,
++	},
+ 	{	/* Teclast X98 Plus II */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "TECLAST"),
 -- 
 2.35.1
 
