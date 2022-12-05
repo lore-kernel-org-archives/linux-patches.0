@@ -1,131 +1,119 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6A52F3A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 22:48:08 +0000 (UTC)
-Received: by mail-pl1-f179.google.com with SMTP id 4so12260020pli.0
-        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 14:48:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FIM8cOZnFf+hJ/RzssfzC4c3e6l34LrRCuOKeBtFZkw=;
-        b=Uy3vLli75PvUovwv3R6LxBei9NdEpaSxYl0ovO9Si0tXUgAvolVy6v0AHA6gcaXEGe
-         SRc5mROuDqeN/io4TtI2jn9JiS16HLdfoCIysIB8RunhhKSOQLvO3OB7xAM5SdiKXYOk
-         npQhkIKbKT2AHFIFewvc74aSLPdBLMC5B0Cy9iFxg63hPfFB3b2h9YRwkcaB1N/Q8eNB
-         UkC/60IJH3svb64yV1WlhXTT5yz/7pNlADVF95oMtBXiF9n7dxcurBoSpC9UxW4c+F1J
-         QfIIcsKex4Hgxr0AgGYu/tV0PGEPSujao98o6gioSm02HZZ1tJUOb6/FRwCJm7GhxGdp
-         MtYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FIM8cOZnFf+hJ/RzssfzC4c3e6l34LrRCuOKeBtFZkw=;
-        b=upYzAdMBeUJOMAsf/aC2BuiSJF9rkvTVEzH1T4RSWrpGjJGPcKKKpYSBLvRbNOwT1E
-         XRSB6oyb1R5M/G+Yx4GZhqL+SXR/qML/dyPTF+a6CzTgeN8zdav8XrpwGmP0QsdCITbr
-         SbYxlffXPy1E6p7hDu2C4AUWn8/LGe/fOFMxraZjaO3dgrSl9BD9z5bLg/ZRO1W8BQTW
-         b0jM6o9X5wwUgaFZA2LFBLEnGqhnVTmcIeeoiAPwV4nACYzCut3oJNNgXm3l1jPFhrpd
-         ihr+8w3sEIa/Yu61WAyd7gquhRdATMGFev5uIKciSI9Arc60D26ou6EOUmIHWyct6xLX
-         Repg==
-X-Gm-Message-State: ANoB5pmwLDKTkaTKdLrkN3BfEx3G09FGwYYGoVoJq5y2LmC8ud/dEVY5
-	aCuXoN8fV/R62FKPLG1ZiSU=
-X-Google-Smtp-Source: AA0mqf414ZUiW8PrWeib6fKdHGgyKZi5tmPVx/zBfMsY62OY/7jl9MeCItNH0XOcxs9Aouhu7tMaug==
-X-Received: by 2002:a17:90b:108:b0:219:36d3:678d with SMTP id p8-20020a17090b010800b0021936d3678dmr41751133pjz.187.1670280487958;
-        Mon, 05 Dec 2022 14:48:07 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id a3-20020a170902710300b0018963b8e131sm1814407pll.290.2022.12.05.14.48.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 14:48:07 -0800 (PST)
-Message-ID: <2bb37989-7c22-ae06-6568-8419ce57e44b@gmail.com>
-Date: Mon, 5 Dec 2022 14:48:05 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892092F3A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 23:00:08 +0000 (UTC)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 950E85C0284;
+	Mon,  5 Dec 2022 18:00:07 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 05 Dec 2022 18:00:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	joshtriplett.org; h=cc:cc:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm3; t=1670281207; x=
+	1670367607; bh=w+IeYZdl/jBckc+B8Ef5+2fkoYurFniYzp8I2WfjJAg=; b=v
+	73bsI1Zzl+PrRrnFAe74z/P5X5Ye8j8fquNTyUc1qVnyF7vUs4SaArQhkKa6/u40
+	gl3I2Oe2ZjAXjRPYigkM/gAutmcG/OkgrSq0BbQDxL0TF5ud1noUKQGJ2/UQrAUN
+	G7/4aH3MHiGIYZ1XicYxUE1FKLGMX0F731YzNqw+2SgvQo8OftwhnPN6uGEw58QQ
+	kKuXdsuCnziT1QqDvfyS9YCvHWTcmJgcVzANF4hwzSxvJn3dkKXDUhVsH37V1ZxM
+	R0kZYKZCWuUVSp6XZ6cpgqr85LDVo4oAh9gR2C5TWr2THP0MktzjX2eB+9OzdOQD
+	Ad+6Ix8I7wAzUum7qf6kA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1670281207; x=1670367607; bh=w+IeYZdl/jBckc+B8Ef5+2fkoYur
+	FniYzp8I2WfjJAg=; b=E5jxSz6Mp7sHvXcwPtIZK90qQ/rR9TrWy5GoZL9q2tWn
+	7M4PgrompkamBn8jUN0SEkyzp6cMUG7Q/qtEkO/O8O2ZsIiaPiocQXb/3fBYWKa/
+	cdHMOAPgLFoUJ/Q2aHNnxSYGiXLqdGn2xHd18oMnVDR7OFtoqrkUsk32RAehRh+6
+	kcM8Gzkxwe8Cax6J5MfF+8LH3vWz5Om6dsMjVl2RtnBjNhCB2blH78wBuIbo0Dd8
+	vhH1LbPi1AkaTLAurbqaEXwJMFxgA5JAIMCpzfzysnwJgPV47o2ytUJ7ZatEXm4C
+	S3fHTC7TJHVHB6w9OZQSHNTsC81UPptci5aqY14u5A==
+X-ME-Sender: <xms:93eOY-XgHEH4OStt78DU6LtncQW-6XDp4dcS5-6VaXqitUP_B9g_8Q>
+    <xme:93eOY6mba9x_zsOjqtL_YqNxgiDfLvKNdP40pSb9t0_CsQu9QEgPZV3UXpslQB_76
+    pBUW5vx4CcvTn6WDtg>
+X-ME-Received: <xmr:93eOYyZ114zmunMSvngDoZYf4axMPpk0EhoAhdTKPCq6Aoe---1gUAveRYs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudehgddtgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflohhshhcu
+    vfhrihhplhgvthhtuceojhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgheqnecugg
+    ftrfgrthhtvghrnhepudeigeehieejuedvtedufeevtdejfeegueefgffhkefgleefteet
+    ledvtdfftefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepjhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgh
+X-ME-Proxy: <xmx:93eOY1Vx6MJGs8q8uEe49JfbFJ1flIIDKAPYgX_utf-_Cn3SQ7aIhA>
+    <xmx:93eOY4ljaj-S5NWUuQTAOcIu9UDuU5sfQMgt618e06i_uBxt2Smelw>
+    <xmx:93eOY6cT7KZhohQWLedDqhrmSJe6D0R6sjD-jC7ZG83fGk_gwJKjzw>
+    <xmx:93eOYy7zhf6SFvROxdpaocRF1JPAsEMnaTsdu2PhxPbtwkPIMRtIEw>
+Feedback-ID: i83e94755:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Dec 2022 18:00:06 -0500 (EST)
+Date: Mon, 5 Dec 2022 15:00:05 -0800
+From: Josh Triplett <josh@joshtriplett.org>
+To: Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Gary Guo <gary@garyguo.net>, ojeda@kernel.org,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH v2 27/28] rust: types: add `Either` type
+Message-ID: <Y4539anPZXLqekVb@localhost>
+References: <20221202161502.385525-1-ojeda@kernel.org>
+ <20221202161502.385525-28-ojeda@kernel.org>
+ <Y4qNR+Nn9utDftHq@localhost>
+ <20221204103153.117675b1@GaryWorkstation>
+ <CANeycqpNW0E5fQqD1Qzqr0p-3cgs5k5KgLusragaSWbrmcx2Nw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 4.9 00/62] 4.9.335-rc1 review
-Content-Language: en-US
-To: Jon Hunter <jonathanh@nvidia.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- Adrian Hunter <adrian.hunter@intel.com>, Kamal Dasu <kdasu.kdev@gmail.com>
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221205190758.073114639@linuxfoundation.org>
- <80305ea1-4d52-b1d3-e078-3c1084d96cc7@nvidia.com>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <80305ea1-4d52-b1d3-e078-3c1084d96cc7@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANeycqpNW0E5fQqD1Qzqr0p-3cgs5k5KgLusragaSWbrmcx2Nw@mail.gmail.com>
 
-On 12/5/22 14:28, Jon Hunter wrote:
-> Hi Greg,
+On Sun, Dec 04, 2022 at 05:36:08PM +0000, Wedson Almeida Filho wrote:
+> On Sun, 4 Dec 2022 at 10:31, Gary Guo <gary@garyguo.net> wrote:
+> >
+> > On Fri, 2 Dec 2022 15:41:59 -0800
+> > Josh Triplett <josh@joshtriplett.org> wrote:
+> >
+> > > On Fri, Dec 02, 2022 at 05:14:58PM +0100, ojeda@kernel.org wrote:
+> > > > From: Wedson Almeida Filho <wedsonaf@gmail.com>
+> > > >
+> > > > Introduce the new `types` module of the `kernel` crate with
+> > > > `Either` as its first type.
+> > > >
+> > > > `Either<L, R>` is a sum type that always holds either a value
+> > > > of type `L` (`Left` variant) or `R` (`Right` variant).
+> > > >
+> > > > For instance:
+> > > >
+> > > >     struct Executor {
+> > > >         queue: Either<BoxedQueue, &'static Queue>,
+> > > >     }
+> > >
+> > > This specific example seems like it would be better served by the
+> > > existing `Cow` type.
+> >
+> > We use `no_global_oom_handling`, which gates most `ToOwned`
+> > implementations (e.g. `str` cannot implement `to_owned()` because it
+> > cannot guarantee allocation success).
+> >
+> > So the Rust `Cow` is pretty much useless in the kernel.
 > 
-> On 05/12/2022 19:08, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 4.9.335 release.
->> There are 62 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Wed, 07 Dec 2022 19:07:46 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.9.335-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.9.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
->>
->> -------------
->> Pseudo-Shortlog of commits:
->>
->> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>      Linux 4.9.335-rc1
->>
->> Adrian Hunter <adrian.hunter@intel.com>
->>      mmc: sdhci: Fix voltage switch delay
+> It's also implemented in `std`, which the kernel doesn't include.
+> (Which is actually good for us, since we can't really use it.)
 > 
-> 
-> I am seeing a boot regression on a couple boards and bisect is pointing 
-> to the above commit.
+> Josh, how do you feel about adding a `TryToOwned` trait to
+> `core::borrow`? This would be similar to the precedent of `TryFrom` in
+> addition to `From` for the fallible case, and would be usable by the
+> kernel.
 
-Same thing here, getting a hard lock for our devices with the SDHCI 
-controller enabled, sometimes we are lucky to see the following:
-
-[    4.790367] mmc0: SDHCI controller on 84b0000.sdhci [84b0000.sdhci] 
-using ADMA 64-bit
-[   25.802351] INFO: rcu_sched detected stalls on CPUs/tasks:
-[   25.807871]  1-...: (1 GPs behind) idle=561/140000000000000/0 
-softirq=728/728 fqs=5252
-[   25.815892]  (detected by 0, t=21017 jiffies, g=61, c=60, q=55)
-[   25.821834] Task dump for CPU 1:
-[   25.825069] kworker/1:1     R  running task        0   509      2 
-0x00000002
-[   25.832164] Workqueue: events_freezable mmc_rescan
-[   25.836974] Backtrace:
-[   25.839440] [<ce32fea4>] (0xce32fea4) from [<ce32fed4>] (0xce32fed4)
-[   25.845803] Backtrace aborted due to bad frame pointer <cd2f0a54>
-
-Also confirmed that reverting that change ("mmc: sdhci: Fix voltage 
-switch delay") allows devices to boot properly.
-
-Had not a chance to test the change when submitted for mainline despite 
-being copied, sorry about that.
-
-Since that specific commit is also included in the other stable trees 
-(5.4, 5.10, 5.15 and 6.0) I will let you know whether the same issue is 
-present in those trees shortly thereafter.
--- 
-Florian
-
+I'd expect it to be in alloc rather than core (though I suppose it
+doesn't *fundamentally* depend on an allocator itself), but I'd be happy
+to see a fallible version proposed, yeah.
