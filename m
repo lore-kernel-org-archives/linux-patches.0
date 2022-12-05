@@ -1,138 +1,83 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77D715C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1670268919;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6ymx9vYbfvPSu1FyTD+EP2FA1MzxLKdOD5sbRdjsyNg=;
-	b=DVlt8rNC4yAMwNluAQ8e8KFVxvuQBxnRU5FCnrimlPfg11jZQhwSXPJsFG7ZrLIlIcE1Ja
-	uumnwxasS1CYufMZ4SPoduKD+0RvzFcdbHa36ORdoyUGi6qVDOk+V4lAztdB8cibNkse22
-	D4WOBQ/BLKBCuicdlaxmqoaKk0PUT5Q=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-554-W0bjpuIXO4eRhW0NUmBusQ-1; Mon, 05 Dec 2022 14:35:16 -0500
-X-MC-Unique: W0bjpuIXO4eRhW0NUmBusQ-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com [10.11.54.1])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9EA69811E67;
-	Mon,  5 Dec 2022 19:35:15 +0000 (UTC)
-Received: from oldenburg.str.redhat.com (unknown [10.2.16.84])
-	by smtp.corp.redhat.com (Postfix) with ESMTPS id 2731B40C846B;
-	Mon,  5 Dec 2022 19:35:12 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
-  tglx@linutronix.de,  linux-crypto@vger.kernel.org,
-  linux-api@vger.kernel.org,  x86@kernel.org,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
- <adhemerval.zanella@linaro.org>,  Carlos O'Donell <carlos@redhat.com>,
-  Arnd Bergmann <arnd@arndb.de>,  Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v11 3/4] random: introduce generic vDSO getrandom()
- implementation
-References: <20221205020046.1876356-1-Jason@zx2c4.com>
-	<20221205020046.1876356-4-Jason@zx2c4.com>
-	<878rjlr85s.fsf@oldenburg.str.redhat.com> <Y45Ar3mwRBSr+X7F@zx2c4.com>
-Date: Mon, 05 Dec 2022 20:35:09 +0100
-In-Reply-To: <Y45Ar3mwRBSr+X7F@zx2c4.com> (Jason A. Donenfeld's message of
-	"Mon, 5 Dec 2022 20:04:15 +0100")
-Message-ID: <87wn75prte.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8570B15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:35:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA6FC433D6;
+	Mon,  5 Dec 2022 19:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670268922;
+	bh=F7kDeoHbhizPKAofIQETZ/eM+BksCXjQ/2DfLuNhlug=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DNwJPQ+XOsX5YFzenxFDj6M0vBAcnYLvaEpKc02FZw5JYwhT0v5d9phF1UTYUBnT0
+	 pPHAxnMzuBKzD2LCgacW0h/Pm+ssePqgNQ/9F8eVzHbW3Cu8EYajd212bgpGcXPnIx
+	 Bo/KVn5VA3Ex20WJi9iBrYlDeNaDoyT8e3ziLYZo=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 061/120] packet: do not set TP_STATUS_CSUM_VALID on CHECKSUM_COMPLETE
+Date: Mon,  5 Dec 2022 20:10:01 +0100
+Message-Id: <20221205190808.459380339@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
+References: <20221205190806.528972574@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-* Jason A. Donenfeld:
+From: Willem de Bruijn <willemb@google.com>
 
-> Hi Florian,
->
-> On Mon, Dec 05, 2022 at 07:56:47PM +0100, Florian Weimer wrote:
->> * Jason A. Donenfeld:
->>=20
->> > +retry_generation:
->> > +	/*
->> > +	 * @rng_info->generation must always be read here, as it serializes =
-@state->key with the
->> > +	 * kernel's RNG reseeding schedule.
->> > +	 */
->> > +	current_generation =3D READ_ONCE(rng_info->generation);
->>=20
->> > +		if (unlikely(READ_ONCE(state->generation) !=3D READ_ONCE(rng_info-
->>=20
->> I'm pretty sure you need some sort of barrier here.  We have a similar
->> TM-lite construct in glibc ld.so for locating link maps by address, and
->> there the compiler performed reordering.
->>=20
->>   _dl_find_object miscompilation on powerpc64le
->>   <https://sourceware.org/bugzilla/show_bug.cgi?id=3D28745>
->>=20
->> I'm not familiar with READ_ONCE, but Documentation/atomic_t.txt suggests
->> it's a =E2=80=9Cregular LOAD=E2=80=9D, and include/asm-generic/rwonce.h =
-concurs.
->
-> Do you mean compiler barriers or SMP barriers?
+[ Upstream commit b85f628aa158a653c006e9c1405a117baef8c868 ]
 
-Compiler barrier.
+CHECKSUM_COMPLETE signals that skb->csum stores the sum over the
+entire packet. It does not imply that an embedded l4 checksum
+field has been validated.
 
->> Likewise, the signal safety mechanism needs compiler barriers (signal
->> fences).
->
-> READ_ONCE() should prevent the compiler from reordering the read.
+Fixes: 682f048bd494 ("af_packet: pass checksum validation status to the user")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20221128161812.640098-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/packet/af_packet.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-READ_ONCE looks just like a volatile read.  Other reads can be ordered
-around it.
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 968dac3fcf58..ceca0d6c41b5 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2246,8 +2246,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 		status |= TP_STATUS_CSUMNOTREADY;
+ 	else if (skb->pkt_type != PACKET_OUTGOING &&
+-		 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-		  skb_csum_unnecessary(skb)))
++		 skb_csum_unnecessary(skb))
+ 		status |= TP_STATUS_CSUM_VALID;
+ 
+ 	if (snaplen > res)
+@@ -3480,8 +3479,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		if (skb->ip_summed == CHECKSUM_PARTIAL)
+ 			aux.tp_status |= TP_STATUS_CSUMNOTREADY;
+ 		else if (skb->pkt_type != PACKET_OUTGOING &&
+-			 (skb->ip_summed == CHECKSUM_COMPLETE ||
+-			  skb_csum_unnecessary(skb)))
++			 skb_csum_unnecessary(skb))
+ 			aux.tp_status |= TP_STATUS_CSUM_VALID;
+ 
+ 		aux.tp_len = origlen;
+-- 
+2.35.1
 
-For example, this:
 
-void f1 (int, int, int);
-
-extern int a;
-extern int b;
-
-void
-f2 (volatile int *p)
-{
-  int a1 =3D a;
-  int p1 =3D *p;
-  int b1 =3D b;
-  return f1 (a1, p1, b1);
-}
-
-Turns into:
-
-	.globl	f2
-	.type	f2, @function
-f2:
-	movl	(%rdi), %esi
-	movl	b(%rip), %edx
-	movl	a(%rip), %edi
-	jmp	f1
-
-Looks like compiler reodering to me.
-
->> I'm also not sure how READ_ONCE realizes atomic 64-bit reads on 32-bit
->> platforms.  i386 can do them in user space via the FPU worst-case (if
->> the control word hasn't been corrupted).  CMPXCHG8B is not applicable
->> here because it's a read-only mapping.  Maybe add a comment at least
->> about that =E2=80=9Cstrong prevailing wind=E2=80=9D?
->
-> There's read tearing in that case, which isn't super, but perhaps not
-> all together harmful.
-
-Maybe add a comment that it was considered?
-
-Thanks,
-Florian
 
