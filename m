@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861A015C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3C6C433D6;
-	Mon,  5 Dec 2022 19:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2CA15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D82C433D6;
+	Mon,  5 Dec 2022 19:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268486;
-	bh=/GSSkyLoRn5sZqbs7jV5te26M+edlcVaG8Xo6UzZJHA=;
+	s=korg; t=1670268489;
+	bh=eG8l/H9zG21o0NuEO148rWHPBEPp8617FyC5yK/UEoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZeNANgcQ4T8zEzueJpud5umgwx0CaOqrPudvArsgqqx6r8Kk4WNz7EeNQ5YSBHmh1
-	 vYpX5F3oZT/89adMu0WuS8gkQPkwWeL3WiTwoy39bS17JmqGqgj3KzCRXLCx06gCIx
-	 3rbSpgfH0+Gihifae4oS+r43JkG9TE9eJOKfAzXM=
+	b=0ByfPwZ5k1yws2CBEQCw9xG0AATyyGdf22YjC/0/YP4qccLQohHaL5VeaQtLj1aIF
+	 WMYyVc17UPDqVR+sduqyrPgNPQN2ijbAjGCaqkjqqipWSkx5gWTIu84VmbcTE615Pr
+	 4YUabPikdHZt3dn2Xi3cbqZBY3bnAqFNlmBhYE7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 092/124] mmc: sdhci: Fix voltage switch delay
-Date: Mon,  5 Dec 2022 20:09:58 +0100
-Message-Id: <20221205190811.032620049@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 119/124] ACPI: HMAT: remove unnecessary variable initialization
+Date: Mon,  5 Dec 2022 20:10:25 +0100
+Message-Id: <20221205190811.831801569@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -34,180 +39,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-commit c981cdfb9925f64a364f13c2b4f98f877308a408 upstream.
+[ Upstream commit 14f16d47561ba9249efc6c2db9d47ed56841f070 ]
 
-Commit 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-removed voltage switch delays from sdhci because mmc core had been
-enhanced to support them. However that assumed that sdhci_set_ios()
-did a single clock change, which it did not, and so the delays in mmc
-core, which should have come after the first clock change, were not
-effective.
+In hmat_register_target_initiators(), the variable 'best' gets
+initialized in the outer per-locality-type for loop. The initialization
+just before setting up 'Access 1' targets was unnecessary. Remove it.
 
-Fix by avoiding re-configuring UHS and preset settings when the clock
-is turning on and the settings have not changed. That then also avoids
-the associated clock changes, so that then sdhci_set_ios() does a single
-clock change when voltage switching, and the mmc core delays become
-effective.
-
-To do that has meant keeping track of driver strength (host->drv_type),
-and cases of reinitialization (host->reinit_uhs).
-
-Note also, the 'turning_on_clk' restriction should not be necessary
-but is done to minimize the impact of the change on stable kernels.
-
-Fixes: 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20221128133259.38305-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/r/20221116-acpi_hmat_fix-v2-1-3712569be691@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 48d4180939e1 ("ACPI: HMAT: Fix initiator registration for single-initiator systems")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |   61 +++++++++++++++++++++++++++++++++++++++++------
- drivers/mmc/host/sdhci.h |    2 +
- 2 files changed, 56 insertions(+), 7 deletions(-)
+ drivers/acpi/numa/hmat.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -339,6 +339,7 @@ static void sdhci_init(struct sdhci_host
- 	if (soft) {
- 		/* force clock reconfiguration */
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	}
- }
-@@ -2258,11 +2259,46 @@ void sdhci_set_uhs_signaling(struct sdhc
- }
- EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
- 
-+static bool sdhci_timing_has_preset(unsigned char timing)
-+{
-+	switch (timing) {
-+	case MMC_TIMING_UHS_SDR12:
-+	case MMC_TIMING_UHS_SDR25:
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+	case MMC_TIMING_UHS_DDR50:
-+	case MMC_TIMING_MMC_DDR52:
-+		return true;
-+	};
-+	return false;
-+}
-+
-+static bool sdhci_preset_needed(struct sdhci_host *host, unsigned char timing)
-+{
-+	return !(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
-+	       sdhci_timing_has_preset(timing);
-+}
-+
-+static bool sdhci_presetable_values_change(struct sdhci_host *host, struct mmc_ios *ios)
-+{
-+	/*
-+	 * Preset Values are: Driver Strength, Clock Generator and SDCLK/RCLK
-+	 * Frequency. Check if preset values need to be enabled, or the Driver
-+	 * Strength needs updating. Note, clock changes are handled separately.
-+	 */
-+	return !host->preset_enabled &&
-+	       (sdhci_preset_needed(host, ios->timing) || host->drv_type != ios->drv_type);
-+}
-+
- void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-+	bool reinit_uhs = host->reinit_uhs;
-+	bool turning_on_clk = false;
- 	u8 ctrl;
- 
-+	host->reinit_uhs = false;
-+
- 	if (ios->power_mode == MMC_POWER_UNDEFINED)
- 		return;
- 
-@@ -2288,6 +2324,8 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		sdhci_enable_preset_value(host, false);
- 
- 	if (!ios->clock || ios->clock != host->clock) {
-+		turning_on_clk = ios->clock && !host->clock;
-+
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-@@ -2314,6 +2352,17 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 
- 	host->ops->set_bus_width(host, ios->bus_width);
- 
-+	/*
-+	 * Special case to avoid multiple clock changes during voltage
-+	 * switching.
-+	 */
-+	if (!reinit_uhs &&
-+	    turning_on_clk &&
-+	    host->timing == ios->timing &&
-+	    host->version >= SDHCI_SPEC_300 &&
-+	    !sdhci_presetable_values_change(host, ios))
-+		return;
-+
- 	ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
- 
- 	if (!(host->quirks & SDHCI_QUIRK_NO_HISPD_BIT)) {
-@@ -2357,6 +2406,7 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 			}
- 
- 			sdhci_writew(host, ctrl_2, SDHCI_HOST_CONTROL2);
-+			host->drv_type = ios->drv_type;
- 		} else {
- 			/*
- 			 * According to SDHC Spec v3.00, if the Preset Value
-@@ -2384,19 +2434,14 @@ void sdhci_set_ios(struct mmc_host *mmc,
- 		host->ops->set_uhs_signaling(host, ios->timing);
- 		host->timing = ios->timing;
- 
--		if (!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
--				((ios->timing == MMC_TIMING_UHS_SDR12) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR25) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR50) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR104) ||
--				 (ios->timing == MMC_TIMING_UHS_DDR50) ||
--				 (ios->timing == MMC_TIMING_MMC_DDR52))) {
-+		if (sdhci_preset_needed(host, ios->timing)) {
- 			u16 preset;
- 
- 			sdhci_enable_preset_value(host, true);
- 			preset = sdhci_get_preset_value(host);
- 			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
- 						  preset);
-+			host->drv_type = ios->drv_type;
- 		}
- 
- 		/* Re-enable SD Clock */
-@@ -3748,6 +3793,7 @@ int sdhci_resume_host(struct sdhci_host
- 		sdhci_init(host, 0);
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (mmc->pm_flags & MMC_PM_KEEP_POWER));
-@@ -3810,6 +3856,7 @@ int sdhci_runtime_resume_host(struct sdh
- 		/* Force clock and power re-program */
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -526,6 +526,8 @@ struct sdhci_host {
- 
- 	unsigned int clock;	/* Current clock (MHz) */
- 	u8 pwr;			/* Current voltage */
-+	u8 drv_type;		/* Current UHS-I driver type */
-+	bool reinit_uhs;	/* Force UHS-related re-initialization */
- 
- 	bool runtime_suspended;	/* Host is runtime suspended */
- 	bool bus_on;		/* Bus power prevents runtime suspend */
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index c3d783aca196..fca69a726360 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -645,7 +645,6 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 	/* Access 1 ignores Generic Initiators */
+ 	bitmap_zero(p_nodes, MAX_NUMNODES);
+ 	list_sort(p_nodes, &initiators, initiator_cmp);
+-	best = 0;
+ 	for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
+ 		loc = localities_types[i];
+ 		if (!loc)
+-- 
+2.35.1
+
 
 
