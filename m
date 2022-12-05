@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7001C15C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5243C433D6;
-	Mon,  5 Dec 2022 19:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FA15C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E5AC433D6;
+	Mon,  5 Dec 2022 19:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269215;
-	bh=0UE29nwUynVKzO0dAM11rnMEA4+fasz6dd8cQikoU7k=;
+	s=korg; t=1670269218;
+	bh=KX13tLEhoTROJ3VvFrKR4hH96s7o7aBWs7Ww5QE7dao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBo7R2Tip87DDKxz0MJFocNymA5JF62etCKnUDOuruQmlxhTL96B5uhCMBEceluQE
-	 +wfrr1rKAPSwBqpwC54jf4cL7itKj3XJKIWnX13d/HAMk473Qmdx7oFcheoVH60Pvr
-	 svMnt4oONpUjyEUft6Q705XTdnWrfYWaYX/mgG3Y=
+	b=Okg2614fgRPzvxXWg06tpwxZ9LKlN9jd6EGuLTNF6kv1i1IkKt5HXTb7ctEm3k0jk
+	 AGG1sjlp9/zdybzyCBT47ukqsC4pMVxLq23K1a3JMQskD3Q+ZDD3FS26aPtnoapCSa
+	 iXOKrGkIVKsEk40YufRreVSdrji7XhYAAgNjOzOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sam Protsenko <semen.protsenko@linaro.org>
-Subject: [PATCH 5.4 045/153] usb: dwc3: exynos: Fix remove() function
-Date: Mon,  5 Dec 2022 20:09:29 +0100
-Message-Id: <20221205190810.011218401@linuxfoundation.org>
+	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.4 046/153] arm64: dts: rockchip: lower rk3399-puma-haikou SD controller clock frequency
+Date: Mon,  5 Dec 2022 20:09:30 +0100
+Message-Id: <20221205190810.038934989@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,51 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
 
-commit e0481e5b3cc12ea7ccf4552d41518c89d3509004 upstream.
+commit 91e8b74fe6381e083f8aa55217bb0562785ab398 upstream.
 
-The core DWC3 device node was not properly removed by the custom
-dwc3_exynos_remove_child() function. Replace it with generic
-of_platform_depopulate() which does that job right.
+CRC errors (code -84 EILSEQ) have been observed for some SanDisk
+Ultra A1 cards when running at 50MHz.
 
-Fixes: adcf20dcd262 ("usb: dwc3: exynos: Use of_platform API to create dwc3 core pdev")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Waveform analysis suggest that the level shifters that are used on the
+RK3399-Q7 module for voltage translation between 3.0 and 3.3V don't
+handle clock rates at or above 48MHz properly. Back off to 40MHz for
+some safety margin.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Link: https://lore.kernel.org/r/20221110154131.2577-1-m.szyprowski@samsung.com
+Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
+Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-exynos.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-exynos.c
-+++ b/drivers/usb/dwc3/dwc3-exynos.c
-@@ -37,15 +37,6 @@ struct dwc3_exynos {
- 	struct regulator	*vdd10;
- };
- 
--static int dwc3_exynos_remove_child(struct device *dev, void *unused)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--
--	platform_device_unregister(pdev);
--
--	return 0;
--}
--
- static int dwc3_exynos_probe(struct platform_device *pdev)
- {
- 	struct dwc3_exynos	*exynos;
-@@ -142,7 +133,7 @@ static int dwc3_exynos_remove(struct pla
- 	struct dwc3_exynos	*exynos = platform_get_drvdata(pdev);
- 	int i;
- 
--	device_for_each_child(&pdev->dev, NULL, dwc3_exynos_remove_child);
-+	of_platform_depopulate(&pdev->dev);
- 
- 	for (i = exynos->num_clks - 1; i >= 0; i--)
- 		clk_disable_unprepare(exynos->clks[i]);
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
+@@ -203,7 +203,7 @@
+ 	cap-sd-highspeed;
+ 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+-	max-frequency = <150000000>;
++	max-frequency = <40000000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
+ 	vmmc-supply = <&vcc3v3_baseboard>;
 
 
