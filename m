@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1C815C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52ADC433C1;
-	Mon,  5 Dec 2022 19:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB915C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C558C433C1;
+	Mon,  5 Dec 2022 19:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269409;
-	bh=c1aruCilANSmZBTT6pwjvXfGcHHfsZ8xiKGVDA4ZAVY=;
+	s=korg; t=1670269412;
+	bh=ptpptAr43wclbTesGN6Gpy4TDE9/dPdDOPMgc1I/QH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hefEvAmk2M16/kjmhEGxt8+z+v4YjNQR9M2F2smUS7/YwHvlJlSQFRMo5XRq348vZ
-	 pYa0IbW7wOih+OcgixCbhtQW3/akuIwgLDpKRjOCFxH8Zx1qJgW6qXP3I2R9dByYYM
-	 +Q5FO6y+j0FgbDgBUvCjF4kSSBgqog4YqjKUNEBI=
+	b=TcGbHMAq5D0XwCttnxQflBkdW2j6eJYytwVMwNHQ1cNgz6OFB7TH1wJVjyXl6fPWD
+	 B5Of7+0HVmTh2rEeJyiZs9sxQGgdAIBIOwp8DUFVkNkvjoOa57yiiZUZ9wYXFK94tz
+	 EQotJ1/dwbT4V4Z8Or5YHT49CxDasU4AjBG0SSPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
-	David Sterba <dsterba@suse.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/153] btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()
-Date: Mon,  5 Dec 2022 20:10:13 +0100
-Message-Id: <20221205190811.276066890@linuxfoundation.org>
+Subject: [PATCH 5.4 090/153] iio: health: afe4403: Fix oob read in afe4403_read_raw
+Date: Mon,  5 Dec 2022 20:10:14 +0100
+Message-Id: <20221205190811.308896184@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,62 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong2@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit f7e942b5bb35d8e3af54053d19a6bf04143a3955 ]
+[ Upstream commit 58143c1ed5882c138a3cd2251a336fc8755f23d9 ]
 
-Syzkaller reported BUG as follows:
+KASAN report out-of-bounds read as follows:
 
-  BUG: sleeping function called from invalid context at
-       include/linux/sched/mm.h:274
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xcd/0x134
-   __might_resched.cold+0x222/0x26b
-   kmem_cache_alloc+0x2e7/0x3c0
-   update_qgroup_limit_item+0xe1/0x390
-   btrfs_qgroup_inherit+0x147b/0x1ee0
-   create_subvol+0x4eb/0x1710
-   btrfs_mksubvol+0xfe5/0x13f0
-   __btrfs_ioctl_snap_create+0x2b0/0x430
-   btrfs_ioctl_snap_create_v2+0x25a/0x520
-   btrfs_ioctl+0x2a1c/0x5ce0
-   __x64_sys_ioctl+0x193/0x200
-   do_syscall_64+0x35/0x80
+BUG: KASAN: global-out-of-bounds in afe4403_read_raw+0x42e/0x4c0
+Read of size 4 at addr ffffffffc02ac638 by task cat/279
 
-Fix this by calling qgroup_dirty() on @dstqgroup, and update limit item in
-btrfs_run_qgroups() later outside of the spinlock context.
+Call Trace:
+ afe4403_read_raw
+ iio_read_channel_info
+ dev_attr_show
 
-CC: stable@vger.kernel.org # 4.9+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The buggy address belongs to the variable:
+ afe4403_channel_leds+0x18/0xffffffffffffe9e0
+
+This issue can be reproduced by singe command:
+
+ $ cat /sys/bus/spi/devices/spi0.0/iio\:device0/in_intensity6_raw
+
+The array size of afe4403_channel_leds is less than channels, so access
+with chan->address cause OOB read in afe4403_read_raw. Fix it by moving
+access before use it.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107151946.89260-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/iio/health/afe4403.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 8658bac7c6e4..5c8507e74bc1 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -2824,14 +2824,7 @@ int btrfs_qgroup_inherit(struct btrfs_trans_handle *trans, u64 srcid,
- 		dstgroup->rsv_rfer = inherit->lim.rsv_rfer;
- 		dstgroup->rsv_excl = inherit->lim.rsv_excl;
+diff --git a/drivers/iio/health/afe4403.c b/drivers/iio/health/afe4403.c
+index 29104656a537..3fdaf3104cce 100644
+--- a/drivers/iio/health/afe4403.c
++++ b/drivers/iio/health/afe4403.c
+@@ -245,14 +245,14 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4403_data *afe = iio_priv(indio_dev);
+-	unsigned int reg = afe4403_channel_values[chan->address];
+-	unsigned int field = afe4403_channel_leds[chan->address];
++	unsigned int reg, field;
+ 	int ret;
  
--		ret = update_qgroup_limit_item(trans, dstgroup);
--		if (ret) {
--			fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
--			btrfs_info(fs_info,
--				   "unable to update quota limit for %llu",
--				   dstgroup->qgroupid);
--			goto unlock;
--		}
-+		qgroup_dirty(fs_info, dstgroup);
- 	}
- 
- 	if (srcid) {
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			reg = afe4403_channel_values[chan->address];
+ 			ret = afe4403_read(afe, reg, val);
+ 			if (ret)
+ 				return ret;
+@@ -262,6 +262,7 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			field = afe4403_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[field], val);
+ 			if (ret)
+ 				return ret;
 -- 
 2.35.1
 
