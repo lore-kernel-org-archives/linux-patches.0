@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F82F15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84E3C433D7;
-	Mon,  5 Dec 2022 19:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0157B15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B27C433D6;
+	Mon,  5 Dec 2022 19:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267628;
-	bh=RaN0rz4QkZYvnSrfkoyhWbOXmcWVT/v6ZH0psLftSJI=;
+	s=korg; t=1670267630;
+	bh=QYNSZJr5ccCmocK+vVCY3qmJx8zETPYiFFbz/h9pVE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5+mfDazqZkmfYa1yocuHVg4wGPWY5/9Y3rogJkCx3qmoImJf/Mkvtr0UQifrNKWw
-	 iJUf6tEtutJFLfVg/c88i07cMBTh3+zX/nQp+5OdZU+X/4s5ceZyuaDL+sG2tEVWBn
-	 O9lrz4uj3tRbRiLfM6CF6yvZG1bpqSnb/JpNBP0s=
+	b=T8lZbrbZG45mz8LjKQ54BlC+kJnhe/bISt1Kfiy+dIHkK6eWLq7qbf+KFwcsjiWQ6
+	 2hG0S77iWrWIJHOG9CH72WCPkc8CqETpGz4UxPC/TDJzj0qmE8TL3Pexz7+t271ex2
+	 bRaH0KFTUvjHdQ1vzt2YDWHWT8v6HX3tD+9hCd4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Hecht <uli+cip@fpond.eu>
-Subject: [PATCH 4.9 56/62] Revert "fbdev: fb_pm2fb: Avoid potential divide by zero error"
-Date: Mon,  5 Dec 2022 20:09:53 +0100
-Message-Id: <20221205190800.194717678@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 4.9 57/62] x86/tsx: Add a feature bit for TSX control MSR support
+Date: Mon,  5 Dec 2022 20:09:54 +0100
+Message-Id: <20221205190800.230395881@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -33,31 +37,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulrich Hecht <uli+cip@fpond.eu>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-This reverts commit 6577e903a9e193ad70f2db92eba57c4f335afd1a. It's a
-duplicate of a commit that is already in this tree
-(0f1174f4972ea9fad6becf8881d71adca8e9ca91).
+commit aaa65d17eec372c6a9756833f3964ba05b05ea14 upstream.
 
-Signed-off-by: Ulrich Hecht <uli+cip@fpond.eu>
+Support for the TSX control MSR is enumerated in MSR_IA32_ARCH_CAPABILITIES.
+This is different from how other CPU features are enumerated i.e. via
+CPUID. Currently, a call to tsx_ctrl_is_supported() is required for
+enumerating the feature. In the absence of a feature bit for TSX control,
+any code that relies on checking feature bits directly will not work.
+
+In preparation for adding a feature bit check in MSR save/restore
+during suspend/resume, set a new feature bit X86_FEATURE_TSX_CTRL when
+MSR_IA32_TSX_CTRL is present.
+
+  [ bp: Remove tsx_ctrl_is_supported()]
+
+  [Pawan: Resolved conflicts in backport; Removed parts of commit message
+          referring to removed function tsx_ctrl_is_supported()]
+
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/de619764e1d98afbb7a5fa58424f1278ede37b45.1668539735.git.pawan.kumar.gupta@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/pm2fb.c |    5 -----
- 1 file changed, 5 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/tsx.c          |   33 ++++++++++++++-------------------
+ 2 files changed, 15 insertions(+), 19 deletions(-)
 
---- a/drivers/video/fbdev/pm2fb.c
-+++ b/drivers/video/fbdev/pm2fb.c
-@@ -619,11 +619,6 @@ static int pm2fb_check_var(struct fb_var
- 		return -EINVAL;
- 	}
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -196,6 +196,7 @@
+ #define X86_FEATURE_FENCE_SWAPGS_KERNEL	( 7*32+11) /* "" LFENCE in kernel entry SWAPGS path */
+ #define X86_FEATURE_RETPOLINE	( 7*32+12) /* "" Generic Retpoline mitigation for Spectre variant 2 */
+ #define X86_FEATURE_RETPOLINE_LFENCE	( 7*32+13) /* "" Use LFENCE for Spectre variant 2 */
++#define X86_FEATURE_MSR_TSX_CTRL	( 7*32+14) /* "" MSR IA32_TSX_CTRL (Intel) implemented */
  
--	if (!var->pixclock) {
--		DPRINTK("pixclock is zero\n");
--		return -EINVAL;
--	}
+ #define X86_FEATURE_MSR_SPEC_CTRL ( 7*32+16) /* "" MSR SPEC_CTRL is implemented */
+ #define X86_FEATURE_SSBD	( 7*32+17) /* Speculative Store Bypass Disable */
+--- a/arch/x86/kernel/cpu/tsx.c
++++ b/arch/x86/kernel/cpu/tsx.c
+@@ -55,24 +55,6 @@ void tsx_enable(void)
+ 	wrmsrl(MSR_IA32_TSX_CTRL, tsx);
+ }
+ 
+-static bool __init tsx_ctrl_is_supported(void)
+-{
+-	u64 ia32_cap = x86_read_arch_cap_msr();
 -
- 	if (PICOS2KHZ(var->pixclock) > PM2_MAX_PIXCLOCK) {
- 		DPRINTK("pixclock too high (%ldKHz)\n",
- 			PICOS2KHZ(var->pixclock));
+-	/*
+-	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
+-	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
+-	 *
+-	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
+-	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
+-	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
+-	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
+-	 * tsx= cmdline requests will do nothing on CPUs without
+-	 * MSR_IA32_TSX_CTRL support.
+-	 */
+-	return !!(ia32_cap & ARCH_CAP_TSX_CTRL_MSR);
+-}
+-
+ static enum tsx_ctrl_states x86_get_tsx_auto_mode(void)
+ {
+ 	if (boot_cpu_has_bug(X86_BUG_TAA))
+@@ -86,9 +68,22 @@ void __init tsx_init(void)
+ 	char arg[5] = {};
+ 	int ret;
+ 
+-	if (!tsx_ctrl_is_supported())
++	/*
++	 * TSX is controlled via MSR_IA32_TSX_CTRL.  However, support for this
++	 * MSR is enumerated by ARCH_CAP_TSX_MSR bit in MSR_IA32_ARCH_CAPABILITIES.
++	 *
++	 * TSX control (aka MSR_IA32_TSX_CTRL) is only available after a
++	 * microcode update on CPUs that have their MSR_IA32_ARCH_CAPABILITIES
++	 * bit MDS_NO=1. CPUs with MDS_NO=0 are not planned to get
++	 * MSR_IA32_TSX_CTRL support even after a microcode update. Thus,
++	 * tsx= cmdline requests will do nothing on CPUs without
++	 * MSR_IA32_TSX_CTRL support.
++	 */
++	if (!(x86_read_arch_cap_msr() & ARCH_CAP_TSX_CTRL_MSR))
+ 		return;
+ 
++	setup_force_cpu_cap(X86_FEATURE_MSR_TSX_CTRL);
++
+ 	ret = cmdline_find_option(boot_command_line, "tsx", arg, sizeof(arg));
+ 	if (ret >= 0) {
+ 		if (!strcmp(arg, "on")) {
 
 
