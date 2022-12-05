@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136DB15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE54C433C1;
-	Mon,  5 Dec 2022 19:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B805E15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE39C433C1;
+	Mon,  5 Dec 2022 19:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267603;
-	bh=H5lwGCl2MVA5wbnPwGJBimamV4vQ9Ws6fJy7LW9PYZw=;
+	s=korg; t=1670267606;
+	bh=GeM8jSPV90yRYvFiROibduVggR0yqmfhtrDGGGfEjug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03aLJkA9AMXmHrMkNtMTN2jSS01Q6CzgvmwaEnn9xLAZHtHVgk4MZS45o9NgB4SML
-	 JXR98ZB9vLJh6JM8jhYS0ovT9zKbhraKkxmuT8i0CIQcKSowHRpig84Dpz270e3DAk
-	 cW8HF+7ADY5ixtwok8r6T+jNkSYMqoDxyai4Cvcw=
+	b=G6JPJHYW70AQ7JJuAD/bmoE3KIAwoG3frJy1kIcEaRcfUmLzWzoE70f/+btYayIwy
+	 f8mYJRmwmo9mMcZq2T0dEuLdIq552warQXZSMomYYJW12eD61DeY3G80BCSDUMZp6d
+	 GmeMc7hS/qhQn3Fq1Q+fAjllMCEDEhTkv5taOXQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 19/62] s390/crashdump: fix TOD programmable field size
-Date: Mon,  5 Dec 2022 20:09:16 +0100
-Message-Id: <20221205190758.825724096@linuxfoundation.org>
+	Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>,
+	Matt Ranostay <matt.ranostay@konsulko.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 4.9 20/62] iio: light: apds9960: fix wrong register for gesture gain
+Date: Mon,  5 Dec 2022 20:09:17 +0100
+Message-Id: <20221205190758.863226384@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -36,53 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Alejandro Concepción Rodríguez <asconcepcion@acoro.eu>
 
-[ Upstream commit f44e07a8afdd713ddc1a8832c39372fe5dd86895 ]
+commit 0aa60ff5d996d4ecdd4a62699c01f6d00f798d59 upstream.
 
-The size of the TOD programmable field was incorrectly increased from
-four to eight bytes with commit 1a2c5840acf9 ("s390/dump: cleanup CPU
-save area handling").
-This leads to an elf notes section NT_S390_TODPREG which has a size of
-eight instead of four bytes in case of kdump, however even worse is
-that the contents is incorrect: it is supposed to contain only the
-contents of the TOD programmable field, but in fact contains a mix of
-the TOD programmable field (32 bit upper bits) and parts of the CPU
-timer register (lower 32 bits).
+Gesture Gain Control is in REG_GCONF_2 (0xa3), not in REG_CONFIG_2 (0x90).
 
-Fix this by simply changing the size of the todpreg field within the
-save area structure. This will implicitly also fix the size of the
-corresponding elf notes sections.
-
-This also gets rid of this compile time warning:
-
-in function ‘fortify_memcpy_chk’,
-    inlined from ‘save_area_add_regs’ at arch/s390/kernel/crash_dump.c:99:2:
-./include/linux/fortify-string.h:413:25: error: call to ‘__read_overflow2_field’
-   declared with attribute warning: detected read beyond size of field
-   (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  413 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 1a2c5840acf9 ("s390/dump: cleanup CPU save area handling")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aff268cd532e ("iio: light: add APDS9960 ALS + promixity driver")
+Signed-off-by: Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>
+Acked-by: Matt Ranostay <matt.ranostay@konsulko.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/EaT-NKC-H4DNX5z4Lg9B6IWPD5TrTrYBr5DYB784wfDKQkTmzPXkoYqyUOrOgJH-xvTsEkFLcVkeAPZRUODEFI5dGziaWXwjpfBNLeNGfNc=@acoro.eu
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/crash_dump.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/apds9960.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/s390/kernel/crash_dump.c
-+++ b/arch/s390/kernel/crash_dump.c
-@@ -42,7 +42,7 @@ struct save_area {
- 	u64 fprs[16];
- 	u32 fpc;
- 	u32 prefix;
--	u64 todpreg;
-+	u32 todpreg;
- 	u64 timer;
- 	u64 todcmp;
- 	u64 vxrs_low[16];
+--- a/drivers/iio/light/apds9960.c
++++ b/drivers/iio/light/apds9960.c
+@@ -63,9 +63,6 @@
+ #define APDS9960_REG_CONTROL_PGAIN_MASK_SHIFT	2
+ 
+ #define APDS9960_REG_CONFIG_2	0x90
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK	0x60
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT	5
+-
+ #define APDS9960_REG_ID		0x92
+ 
+ #define APDS9960_REG_STATUS	0x93
+@@ -86,6 +83,9 @@
+ #define APDS9960_REG_GCONF_1_GFIFO_THRES_MASK_SHIFT	6
+ 
+ #define APDS9960_REG_GCONF_2	0xa3
++#define APDS9960_REG_GCONF_2_GGAIN_MASK			0x60
++#define APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT		5
++
+ #define APDS9960_REG_GOFFSET_U	0xa4
+ #define APDS9960_REG_GOFFSET_D	0xa5
+ #define APDS9960_REG_GPULSE	0xa6
+@@ -404,9 +404,9 @@ static int apds9960_set_pxs_gain(struct
+ 			}
+ 
+ 			ret = regmap_update_bits(data->regmap,
+-				APDS9960_REG_CONFIG_2,
+-				APDS9960_REG_CONFIG_2_GGAIN_MASK,
+-				idx << APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT);
++				APDS9960_REG_GCONF_2,
++				APDS9960_REG_GCONF_2_GGAIN_MASK,
++				idx << APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT);
+ 			if (!ret)
+ 				data->pxs_gain = idx;
+ 			mutex_unlock(&data->lock);
 
 
