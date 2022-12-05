@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A7415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF707C433D7;
-	Mon,  5 Dec 2022 19:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286C115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9785DC433D7;
+	Mon,  5 Dec 2022 19:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268606;
-	bh=hMzoLuMMJx3+y2WDRW16NrwjG+DbrgJ5+S4mjHWiMYg=;
+	s=korg; t=1670268609;
+	bh=fikWHTejil3pXHr0mPdz6jYf7Q8BwEXd4iM7yIb2Yig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZUzA+cC8XsuPdQdfF8cFskQHIUbkxHymQZsWS4JvGQcxM53pQbkNz1obLi+06Wdt
-	 CWPcf1BAttda/M2DCsWSh/ArUlg+3SSlGepA8g20Ko8QmbC+wKMsTad0ai4R2LoUTe
-	 kMeSxh6bw5LQPHLaACCaI1wmPo9LYkB2YBro3kW0=
+	b=njHAKgCRdvfMarBTR9K9hzTJJQHEGt3qldHTnkJf1+7opWolXJld1hhd5EjDQi8ry
+	 Nk0CQuJ2uHZu0VCFrFkQ1Ns7UfkIssg5qRmZXNXDhjag9YEa0dKQRF9OCUAMLSQVV0
+	 eOCK2aa/bEiNTik2O86F0qVfKfwevmMq3wn/1TPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Andrew Davis <afd@ti.com>,
+	Paul Gazzillo <paul@pgazz.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/92] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
-Date: Mon,  5 Dec 2022 20:09:24 +0100
-Message-Id: <20221205190803.861796432@linuxfoundation.org>
+Subject: [PATCH 5.10 12/92] iio: light: rpr0521: add missing Kconfig dependencies
+Date: Mon,  5 Dec 2022 20:09:25 +0100
+Message-Id: <20221205190803.899611132@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,100 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Paul Gazzillo <paul@pgazz.com>
 
-[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
+[ Upstream commit 6ac12303572ef9ace5603c2c07f5f1b00a33f580 ]
 
-KASAN report out-of-bounds read as follows:
+Fix an implicit declaration of function error for rpr0521 under some configs
 
-BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
-Read of size 4 at addr ffffffffc00e4658 by task cat/278
+When CONFIG_RPR0521 is enabled without CONFIG_IIO_TRIGGERED_BUFFER,
+the build results in "implicit declaration of function" errors, e.g.,
+  drivers/iio/light/rpr0521.c:434:3: error: implicit declaration of function
+           'iio_trigger_poll_chained' [-Werror=implicit-function-declaration]
+    434 |   iio_trigger_poll_chained(data->drdy_trigger0);
+        |   ^~~~~~~~~~~~~~~~~~~~~~~~
 
-Call Trace:
- afe4404_read_raw
- iio_read_channel_info
- dev_attr_show
+This fix adds select dependencies to RPR0521's configuration declaration.
 
-The buggy address belongs to the variable:
- afe4404_channel_leds+0x18/0xffffffffffffe9c0
-
-This issue can be reproduce by singe command:
-
- $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
-
-The array size of afe4404_channel_leds and afe4404_channel_offdacs
-are less than channels, so access with chan->address cause OOB read
-in afe4404_[read|write]_raw. Fix it by moving access before use them.
-
-Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
+Fixes: e12ffd241c00 ("iio: light: rpr0521 triggered buffer")
+Signed-off-by: Paul Gazzillo <paul@pgazz.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216678
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110214729.ls5ixav5kxpeftk7@device
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/afe4404.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/iio/light/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
-index 61fe4932d81d..0eaa34da59a8 100644
---- a/drivers/iio/health/afe4404.c
-+++ b/drivers/iio/health/afe4404.c
-@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 			    int *val, int *val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int value_reg = afe4404_channel_values[chan->address];
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int value_reg, led_field, offdac_field;
- 	int ret;
- 
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			value_reg = afe4404_channel_values[chan->address];
- 			ret = regmap_read(afe->regmap, value_reg, val);
- 			if (ret)
- 				return ret;
- 			return IIO_VAL_INT;
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			ret = regmap_field_read(afe->fields[offdac_field], val);
- 			if (ret)
- 				return ret;
-@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			ret = regmap_field_read(afe->fields[led_field], val);
- 			if (ret)
- 				return ret;
-@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int led_field, offdac_field;
- 
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			return regmap_field_write(afe->fields[offdac_field], val);
- 		}
- 		break;
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			return regmap_field_write(afe->fields[led_field], val);
- 		}
- 		break;
+diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
+index 917f9becf9c7..dd52eff9ba2a 100644
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -294,6 +294,8 @@ config RPR0521
+ 	tristate "ROHM RPR0521 ALS and proximity sensor driver"
+ 	depends on I2C
+ 	select REGMAP_I2C
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	  Say Y here if you want to build support for ROHM's RPR0521
+ 	  ambient light and proximity sensor device.
 -- 
 2.35.1
 
