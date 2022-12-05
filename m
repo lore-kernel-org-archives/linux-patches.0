@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFB315C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B35C433D6;
-	Mon,  5 Dec 2022 19:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F40F15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7063C433C1;
+	Mon,  5 Dec 2022 19:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268202;
-	bh=VWRmsTnTxteKlKEnDmKZBH56uXr4D90INbfFJKThrTo=;
+	s=korg; t=1670268205;
+	bh=pqjXRLDeDU42CC6W+w4CM5n80Y/ZLSl8ZW5c/RyXzPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JE0qWa9g8cZZpitvF3hTeXwr1iFXs2PNVvldn5BrJpYaWdjepO4EkRPgFRbc4jm1A
-	 Q/EObBxPdulzxKJu5OrtiSuzW5K3hy0AiTTHmPbNBWVfzxfDrLTpxsylLxN+zA2JTT
-	 pPUB6W6RJLdvlxRfMd8FMd+KFfnLPAPNtCSVsX/M=
+	b=sd1FyklmKQdAcJidAcp5kGbhxZAuSSGmDDoJI7pDRcKwSJjApjMlLIdFs9ZP1Lxna
+	 c8t8Z4UQPJ6+oFXTeWbD407DC+A4+ZF7guzjvmLbunMQfwlCDbxjCS5kIXdmJ/6Xgs
+	 gwAYZNvt4z6R4Lu+w1prYq1hndWwHevI9VF2m+YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nicolas.ferre@microchip.com,
-	ludovic.desroches@microchip.com,
-	alexandre.belloni@bootlin.com,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	claudiu.beznea@microchip.com,
-	linux-clk@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@pengutronix.de,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 018/124] ARM: at91: rm9200: fix usb device clock id
-Date: Mon,  5 Dec 2022 20:08:44 +0100
-Message-Id: <20221205190808.967261689@linuxfoundation.org>
+Subject: [PATCH 6.0 019/124] libbpf: Handle size overflow for ringbuf mmap
+Date: Mon,  5 Dec 2022 20:08:45 +0100
+Message-Id: <20221205190808.998804607@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -43,62 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 57976762428675f259339385d3324d28ee53ec02 ]
+[ Upstream commit 927cbb478adf917e0a142b94baa37f06279cc466 ]
 
-Referring to the datasheet the index 2 is the MCKUDP. When enabled, it
-"Enables the automatic disable of the Master Clock of the USB Device
-Port when a suspend condition occurs". We fix the index to the real UDP
-id which "Enables the 48 MHz clock of the USB Device Port".
+The maximum size of ringbuf is 2GB on x86-64 host, so 2 * max_entries
+will overflow u32 when mapping producer page and data pages. Only
+casting max_entries to size_t is not enough, because for 32-bits
+application on 64-bits kernel the size of read-only mmap region
+also could overflow size_t.
 
-Cc: nicolas.ferre@microchip.com
-Cc: ludovic.desroches@microchip.com
-Cc: alexandre.belloni@bootlin.com
-Cc: mturquette@baylibre.com
-Cc: sboyd@kernel.org
-Cc: claudiu.beznea@microchip.com
-Cc: linux-clk@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: kernel@pengutronix.de
-Fixes: 02ff48e4d7f7 ("clk: at91: add at91rm9200 pmc driver")
-Fixes: 0e0e528d8260 ("ARM: dts: at91: rm9200: switch to new clock bindings")
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221114185923.1023249-2-m.grzeschik@pengutronix.de
+So fixing it by casting the size of read-only mmap region into a __u64
+and checking whether or not there will be overflow during mmap.
+
+Fixes: bf99c936f947 ("libbpf: Add BPF ring buffer support")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221116072351.1168938-3-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91rm9200.dtsi | 2 +-
- drivers/clk/at91/at91rm9200.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/lib/bpf/ringbuf.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/at91rm9200.dtsi b/arch/arm/boot/dts/at91rm9200.dtsi
-index d1181ead18e5..21344fbc89e5 100644
---- a/arch/arm/boot/dts/at91rm9200.dtsi
-+++ b/arch/arm/boot/dts/at91rm9200.dtsi
-@@ -660,7 +660,7 @@ usb1: gadget@fffb0000 {
- 				compatible = "atmel,at91rm9200-udc";
- 				reg = <0xfffb0000 0x4000>;
- 				interrupts = <11 IRQ_TYPE_LEVEL_HIGH 2>;
--				clocks = <&pmc PMC_TYPE_PERIPHERAL 11>, <&pmc PMC_TYPE_SYSTEM 2>;
-+				clocks = <&pmc PMC_TYPE_PERIPHERAL 11>, <&pmc PMC_TYPE_SYSTEM 1>;
- 				clock-names = "pclk", "hclk";
- 				status = "disabled";
- 			};
-diff --git a/drivers/clk/at91/at91rm9200.c b/drivers/clk/at91/at91rm9200.c
-index b174f727a8ef..16870943a13e 100644
---- a/drivers/clk/at91/at91rm9200.c
-+++ b/drivers/clk/at91/at91rm9200.c
-@@ -40,7 +40,7 @@ static const struct clk_pll_characteristics rm9200_pll_characteristics = {
- };
+diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
+index 8bc117bcc7bc..c42ba9358d8c 100644
+--- a/tools/lib/bpf/ringbuf.c
++++ b/tools/lib/bpf/ringbuf.c
+@@ -59,6 +59,7 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
+ 	__u32 len = sizeof(info);
+ 	struct epoll_event *e;
+ 	struct ring *r;
++	__u64 mmap_sz;
+ 	void *tmp;
+ 	int err;
  
- static const struct sck at91rm9200_systemck[] = {
--	{ .n = "udpck", .p = "usbck",    .id = 2 },
-+	{ .n = "udpck", .p = "usbck",    .id = 1 },
- 	{ .n = "uhpck", .p = "usbck",    .id = 4 },
- 	{ .n = "pck0",  .p = "prog0",    .id = 8 },
- 	{ .n = "pck1",  .p = "prog1",    .id = 9 },
+@@ -97,8 +98,7 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
+ 	r->mask = info.max_entries - 1;
+ 
+ 	/* Map writable consumer page */
+-	tmp = mmap(NULL, rb->page_size, PROT_READ | PROT_WRITE, MAP_SHARED,
+-		   map_fd, 0);
++	tmp = mmap(NULL, rb->page_size, PROT_READ | PROT_WRITE, MAP_SHARED, map_fd, 0);
+ 	if (tmp == MAP_FAILED) {
+ 		err = -errno;
+ 		pr_warn("ringbuf: failed to mmap consumer page for map fd=%d: %d\n",
+@@ -111,8 +111,12 @@ int ring_buffer__add(struct ring_buffer *rb, int map_fd,
+ 	 * data size to allow simple reading of samples that wrap around the
+ 	 * end of a ring buffer. See kernel implementation for details.
+ 	 * */
+-	tmp = mmap(NULL, rb->page_size + 2 * info.max_entries, PROT_READ,
+-		   MAP_SHARED, map_fd, rb->page_size);
++	mmap_sz = rb->page_size + 2 * (__u64)info.max_entries;
++	if (mmap_sz != (__u64)(size_t)mmap_sz) {
++		pr_warn("ringbuf: ring buffer size (%u) is too big\n", info.max_entries);
++		return libbpf_err(-E2BIG);
++	}
++	tmp = mmap(NULL, (size_t)mmap_sz, PROT_READ, MAP_SHARED, map_fd, rb->page_size);
+ 	if (tmp == MAP_FAILED) {
+ 		err = -errno;
+ 		ringbuf_unmap_ring(rb, r);
 -- 
 2.35.1
 
