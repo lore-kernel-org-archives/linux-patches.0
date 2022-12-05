@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CACF15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60BEC433C1;
-	Mon,  5 Dec 2022 19:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D6515C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F00C433C1;
+	Mon,  5 Dec 2022 19:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267777;
-	bh=zqKORShKm9JzpiovP2ayEHYboDEP9i9z6dwT2RMQQFE=;
+	s=korg; t=1670267779;
+	bh=sg5HHIKNNo6ORzPd5iL/qOGTp9eN7Ld3/znCI3ZZACM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ov/hYm5JjOMJ9WvpPpi45Pf8JZYh9N1F6vQG3fEqhsFdSpXzvwxo8k0AL8LNLnzOk
-	 S1aUUsnnc8e8SFQSfvKcjPfOjE0t8ibU6qK7zEG/INO2OHyZZv/TPvXl5bjg9Uh276
-	 I4AESNvmpMZthziG1XtgS61n6s/f0xS8/GahhSgk=
+	b=F1wc98AkuHPNFfJcpDynFlDoR1N+CKjEFah+BCfMtm0EDM/UqnXjSgRhUhliZpKZ9
+	 /PN1+LNPrSDd+aKEbSOeCuG+ClgtdGKiadXPRv3/VcrI+hV4neTnPvQ/jast+S4oEH
+	 FToeFg5Frdo7n53E4c0OJnNnA2xzpnnCLLoZxhc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com,
+	Lin Ma <linma@zju.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 19/77] s390/dasd: fix no record found for raw_track_access
-Date: Mon,  5 Dec 2022 20:09:10 +0100
-Message-Id: <20221205190801.557862098@linuxfoundation.org>
+Subject: [PATCH 4.14 10/77] nfc/nci: fix race with opening and closing
+Date: Mon,  5 Dec 2022 20:09:01 +0100
+Message-Id: <20221205190801.232776174@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,73 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 590ce6d96d6a224b470a3862c33a483d5022bfdb ]
+[ Upstream commit 0ad6bded175e829c2ca261529c9dce39a32a042d ]
 
-For DASD devices in raw_track_access mode only full track images are
-read and written.
-For this purpose it is not necessary to do search operation in the
-locate record extended function. The documentation even states that
-this might fail if the searched record is not found on a track.
+Previously we leverage NCI_UNREG and the lock inside nci_close_device to
+prevent the race condition between opening a device and closing a
+device. However, it still has problem because a failed opening command
+will erase the NCI_UNREG flag and allow another opening command to
+bypass the status checking.
 
-Currently the driver sets a value of 1 in the search field for the first
-record after record zero. This is the default for disks not in
-raw_track_access mode but record 1 might be missing on a completely
-empty track.
+This fix corrects that by making sure the NCI_UNREG is held.
 
-There has not been any problem with this on IBM storage servers but it
-might lead to errors with DASD devices on other vendors storage servers.
-
-Fix this by setting the search field to 0. Record zero is always available
-even on a completely empty track.
-
-Fixes: e4dbb0f2b5dd ("[S390] dasd: Add support for raw ECKD access.")
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221123160719.3002694-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: syzbot+43475bf3cfbd6e41f5b7@syzkaller.appspotmail.com
+Fixes: 48b71a9e66c2 ("NFC: add NCI_UNREG flag to eliminate the race")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_eckd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/nfc/nci/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/block/dasd_eckd.c b/drivers/s390/block/dasd_eckd.c
-index aa651403546f..ab20730865e8 100644
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -3783,7 +3783,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	struct dasd_device *basedev;
- 	struct req_iterator iter;
- 	struct dasd_ccw_req *cqr;
--	unsigned int first_offs;
- 	unsigned int trkcount;
- 	unsigned long *idaws;
- 	unsigned int size;
-@@ -3817,7 +3816,6 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 	last_trk = (blk_rq_pos(req) + blk_rq_sectors(req) - 1) /
- 		DASD_RAW_SECTORS_PER_TRACK;
- 	trkcount = last_trk - first_trk + 1;
--	first_offs = 0;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 99f4573fd917..216228c39acb 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -542,7 +542,7 @@ static int nci_open_device(struct nci_dev *ndev)
+ 		skb_queue_purge(&ndev->tx_q);
  
- 	if (rq_data_dir(req) == READ)
- 		cmd = DASD_ECKD_CCW_READ_TRACK;
-@@ -3861,13 +3859,13 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
- 
- 	if (use_prefix) {
- 		prefix_LRE(ccw++, data, first_trk, last_trk, cmd, basedev,
--			   startdev, 1, first_offs + 1, trkcount, 0, 0);
-+			   startdev, 1, 0, trkcount, 0, 0);
- 	} else {
- 		define_extent(ccw++, data, first_trk, last_trk, cmd, basedev, 0);
- 		ccw[-1].flags |= CCW_FLAG_CC;
- 
- 		data += sizeof(struct DE_eckd_data);
--		locate_record_ext(ccw++, data, first_trk, first_offs + 1,
-+		locate_record_ext(ccw++, data, first_trk, 0,
- 				  trkcount, cmd, basedev, 0, 0);
+ 		ndev->ops->close(ndev);
+-		ndev->flags = 0;
++		ndev->flags &= BIT(NCI_UNREG);
  	}
  
+ done:
 -- 
 2.35.1
 
