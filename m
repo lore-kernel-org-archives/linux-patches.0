@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CF915C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D47C433D6;
-	Mon,  5 Dec 2022 19:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B0615C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB427C433D6;
+	Mon,  5 Dec 2022 19:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268729;
-	bh=UeM+yc1D1U3ZHWqlPiY5bQAu7FO5N2DktXa2jEegwHU=;
+	s=korg; t=1670268732;
+	bh=rUYk3I9KVuVYEYyMZEggKJWyVee62u67LLJ10gBBILE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USbKTKbzAbj7QIo0jGEz3GlaSoJepT4sbLQGUg6FqW5slGclMpSFDw2LaN42WzGyw
-	 9WPRfeUDVw9WJfhmiocGV7zdkQZUOKOwIg5SLpHKUTCtdPFC2fnTW4wJrfCFXIFshH
-	 I8GQAh3nFxjHKjIaivfKKgzpDqr2vQh5O9sqyWO0=
+	b=EnNdPUGcWPYdaWpRI0SiHCv5b3StGgZSfBT91SB8YHuOwUMoTWmEGil9jUP4QIiCy
+	 pS9Bk59N/ncsOd1cLu6VoDa1BZEn19zEzeIMx/2TdKyxlJW67fvVXS7E68NE9PyfTG
+	 kcNzIbZRZCOnsd1dhbsY7wIHPB7xKHe4X2lvEbRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Borislav Petkov <bp@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 84/92] x86/pm: Add enumeration check before spec MSRs save/restore setup
-Date: Mon,  5 Dec 2022 20:10:37 +0100
-Message-Id: <20221205190806.245955283@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Tali Perry <tali.perry@nuvoton.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 85/92] i2c: npcm7xx: Fix error handling in npcm_i2c_init()
+Date: Mon,  5 Dec 2022 20:10:38 +0100
+Message-Id: <20221205190806.279191756@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -38,99 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 50bcceb7724e471d9b591803889df45dcbb584bc upstream.
+[ Upstream commit 145900cf91c4b32ac05dbc8675a0c7f4a278749d ]
 
-pm_save_spec_msr() keeps a list of all the MSRs which _might_ need
-to be saved and restored at hibernate and resume. However, it has
-zero awareness of CPU support for these MSRs. It mostly works by
-unconditionally attempting to manipulate these MSRs and relying on
-rdmsrl_safe() being able to handle a #GP on CPUs where the support is
-unavailable.
+A problem about i2c-npcm7xx create debugfs failed is triggered with the
+following log given:
 
-However, it's possible for reads (RDMSR) to be supported for a given MSR
-while writes (WRMSR) are not. In this case, msr_build_context() sees
-a successful read (RDMSR) and marks the MSR as valid. Then, later, a
-write (WRMSR) fails, producing a nasty (but harmless) error message.
-This causes restore_processor_state() to try and restore it, but writing
-this MSR is not allowed on the Intel Atom N2600 leading to:
+ [  173.827310] debugfs: Directory 'npcm_i2c' with parent '/' already present!
 
-  unchecked MSR access error: WRMSR to 0x122 (tried to write 0x0000000000000002) \
-     at rIP: 0xffffffff8b07a574 (native_write_msr+0x4/0x20)
-  Call Trace:
-   <TASK>
-   restore_processor_state
-   x86_acpi_suspend_lowlevel
-   acpi_suspend_enter
-   suspend_devices_and_enter
-   pm_suspend.cold
-   state_store
-   kernfs_fop_write_iter
-   vfs_write
-   ksys_write
-   do_syscall_64
-   ? do_syscall_64
-   ? up_read
-   ? lock_is_held_type
-   ? asm_exc_page_fault
-   ? lockdep_hardirqs_on
-   entry_SYSCALL_64_after_hwframe
+The reason is that npcm_i2c_init() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+failed, it returns without destroy the newly created debugfs, resulting
+the debugfs of npcm_i2c can never be created later.
 
-To fix this, add the corresponding X86_FEATURE bit for each MSR.  Avoid
-trying to manipulate the MSR when the feature bit is clear. This
-required adding a X86_FEATURE bit for MSRs that do not have one already,
-but it's a small price to pay.
+ npcm_i2c_init()
+   debugfs_create_dir() # create debugfs directory
+   platform_driver_register()
+     driver_register()
+       bus_add_driver()
+         priv = kzalloc(...) # OOM happened
+   # return without destroy debugfs directory
 
-  [ bp: Move struct msr_enumeration inside the only function that uses it. ]
-  [Pawan: Resolve build issue in backport]
+Fix by removing debugfs when platform_driver_register() returns error.
 
-Fixes: 73924ec4d560 ("x86/pm: Save the MSR validity status at context setup")
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/c24db75d69df6e66c0465e13676ad3f2837a2ed8.1668539735.git.pawan.kumar.gupta@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Tali Perry <tali.perry@nuvoton.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/power/cpu.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/arch/x86/power/cpu.c
-+++ b/arch/x86/power/cpu.c
-@@ -516,16 +516,23 @@ static int pm_cpu_check(const struct x86
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 31e3d2c9d6bc..c1b679737240 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -2362,8 +2362,17 @@ static struct platform_driver npcm_i2c_bus_driver = {
  
- static void pm_save_spec_msr(void)
+ static int __init npcm_i2c_init(void)
  {
--	u32 spec_msr_id[] = {
--		MSR_IA32_SPEC_CTRL,
--		MSR_IA32_TSX_CTRL,
--		MSR_TSX_FORCE_ABORT,
--		MSR_IA32_MCU_OPT_CTRL,
--		MSR_AMD64_LS_CFG,
--		MSR_AMD64_DE_CFG,
-+	struct msr_enumeration {
-+		u32 msr_no;
-+		u32 feature;
-+	} msr_enum[] = {
-+		{ MSR_IA32_SPEC_CTRL,	 X86_FEATURE_MSR_SPEC_CTRL },
-+		{ MSR_IA32_TSX_CTRL,	 X86_FEATURE_MSR_TSX_CTRL },
-+		{ MSR_TSX_FORCE_ABORT,	 X86_FEATURE_TSX_FORCE_ABORT },
-+		{ MSR_IA32_MCU_OPT_CTRL, X86_FEATURE_SRBDS_CTRL },
-+		{ MSR_AMD64_LS_CFG,	 X86_FEATURE_LS_CFG_SSBD },
-+		{ MSR_AMD64_DE_CFG,	 X86_FEATURE_LFENCE_RDTSC },
- 	};
-+	int i;
- 
--	msr_build_context(spec_msr_id, ARRAY_SIZE(spec_msr_id));
-+	for (i = 0; i < ARRAY_SIZE(msr_enum); i++) {
-+		if (boot_cpu_has(msr_enum[i].feature))
-+			msr_build_context(&msr_enum[i].msr_no, 1);
++	int ret;
++
+ 	npcm_i2c_debugfs_dir = debugfs_create_dir("npcm_i2c", NULL);
+-	return platform_driver_register(&npcm_i2c_bus_driver);
++
++	ret = platform_driver_register(&npcm_i2c_bus_driver);
++	if (ret) {
++		debugfs_remove_recursive(npcm_i2c_debugfs_dir);
++		return ret;
 +	}
++
++	return 0;
  }
+ module_init(npcm_i2c_init);
  
- static int pm_check_save_msr(void)
+-- 
+2.35.1
+
 
 
