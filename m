@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B560115C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F88C433D7;
-	Mon,  5 Dec 2022 19:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB215C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0286C433D6;
+	Mon,  5 Dec 2022 19:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269343;
-	bh=+WFqcAr1g/NY+Mqs7VndDxG92ngCZI81Fyv1D9QeYoo=;
+	s=korg; t=1670269346;
+	bh=l4hRGP9qF5Z8s2JuGgAM+kA6Ts73sYSxI2trf5o3kSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlsMiRY9c5Wn5Ngth8n9qsD85FKeZThRfgNQ8lOsv8MmRXGU2CwOT9JSF5AOcKwCl
-	 4IWtgFGTbOpVsc2Agzq7JiJ/phMA5i6LK2UqSpqTvOvwq6yJtEhruCdz+NU0H9twRf
-	 AiKtXZ9GE/IoXiiIbZSjJ+rDAZy7mBw3IRzfIkL4=
+	b=uyYaB+YLUaeUL1Cegv8Uc3IQME1zieoQdFxGWuwxq2PT9kr07lxu6/JSOiys99ZUI
+	 YiGZOAdzocZB36gy8/0AKCCW2s/yBR4hXGlgGTQ36nye9RmVEdt07Cd6h+ds69quEG
+	 alm4G6X00GTXP1Wq2pLtXCJLEgXyjTCV1Ose52HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
-	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/153] scripts/faddr2line: Fix regression in name resolution on ppc64le
-Date: Mon,  5 Dec 2022 20:10:17 +0100
-Message-Id: <20221205190811.404573748@linuxfoundation.org>
+Subject: [PATCH 5.4 094/153] hwmon: (i5500_temp) fix missing pci_disable_device()
+Date: Mon,  5 Dec 2022 20:10:18 +0100
+Message-Id: <20221205190811.435137401@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -38,77 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 2d77de1581bb5b470486edaf17a7d70151131afd ]
+[ Upstream commit 3b7f98f237528c496ea0b689bace0e35eec3e060 ]
 
-Commit 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section
-failures") can cause faddr2line to fail on ppc64le on some
-distributions, while it works fine on other distributions. The failure
-can be attributed to differences in the readelf output.
+pci_disable_device() need be called while module exiting, switch to use
+pcim_enable(), pci_disable_device() will be called in pcim_release().
 
-  $ ./scripts/faddr2line vmlinux find_busiest_group+0x00
-  no match for find_busiest_group+0x00
-
-On ppc64le, readelf adds the localentry tag before the symbol name on
-some distributions, and adds the localentry tag after the symbol name on
-other distributions. This problem has been discussed previously:
-
-  https://lore.kernel.org/bpf/20191211160133.GB4580@calabresa/
-
-This problem can be overcome by filtering out the localentry tags in the
-readelf output. Similar fixes are already present in the kernel by way
-of the following commits:
-
-  1fd6cee127e2 ("libbpf: Fix VERSIONED_SYM_COUNT number parsing")
-  aa915931ac3e ("libbpf: Fix readelf output parsing for Fedora")
-
-[jpoimboe: rework commit log]
-
-Fixes: 1d1a0e7c5100 ("scripts/faddr2line: Fix overlapping text section failures")
-Signed-off-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
-Acked-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Link: https://lore.kernel.org/r/20220927075211.897152-1-srikar@linux.vnet.ibm.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Fixes: ada072816be1 ("hwmon: (i5500_temp) New driver for the Intel 5500/5520/X58 chipsets")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112125606.3751430-1-yangyingliang@huawei.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/faddr2line | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwmon/i5500_temp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/faddr2line b/scripts/faddr2line
-index 57099687e5e1..9e730b805e87 100755
---- a/scripts/faddr2line
-+++ b/scripts/faddr2line
-@@ -73,7 +73,8 @@ command -v ${ADDR2LINE} >/dev/null 2>&1 || die "${ADDR2LINE} isn't installed"
- find_dir_prefix() {
- 	local objfile=$1
+diff --git a/drivers/hwmon/i5500_temp.c b/drivers/hwmon/i5500_temp.c
+index 360f5aee1394..d4be03f43fb4 100644
+--- a/drivers/hwmon/i5500_temp.c
++++ b/drivers/hwmon/i5500_temp.c
+@@ -108,7 +108,7 @@ static int i5500_temp_probe(struct pci_dev *pdev,
+ 	u32 tstimer;
+ 	s8 tsfsc;
  
--	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | ${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
-+	local start_kernel_addr=$(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' |
-+		${AWK} '$8 == "start_kernel" {printf "0x%s", $2}')
- 	[[ -z $start_kernel_addr ]] && return
- 
- 	local file_line=$(${ADDR2LINE} -e $objfile $start_kernel_addr)
-@@ -177,7 +178,7 @@ __faddr2line() {
- 				found=2
- 				break
- 			fi
--		done < <(${READELF} --symbols --wide $objfile | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
-+		done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v sec=$sym_sec '$7 == sec' | sort --key=2)
- 
- 		if [[ $found = 0 ]]; then
- 			warn "can't find symbol: sym_name: $sym_name sym_sec: $sym_sec sym_addr: $sym_addr sym_elf_size: $sym_elf_size"
-@@ -258,7 +259,7 @@ __faddr2line() {
- 
- 		DONE=1
- 
--	done < <(${READELF} --symbols --wide $objfile | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
-+	done < <(${READELF} --symbols --wide $objfile | sed 's/\[.*\]//' | ${AWK} -v fn=$sym_name '$4 == "FUNC" && $8 == fn')
- }
- 
- [[ $# -lt 2 ]] && usage
+-	err = pci_enable_device(pdev);
++	err = pcim_enable_device(pdev);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to enable device\n");
+ 		return err;
 -- 
 2.35.1
 
