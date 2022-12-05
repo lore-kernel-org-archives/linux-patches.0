@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7591915C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA9CC43470;
-	Mon,  5 Dec 2022 19:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2029E15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A8FC433D6;
+	Mon,  5 Dec 2022 19:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267758;
-	bh=IUazWeTxobJECcYh3z89Bl/jOzcwT+93aRzEwi95fyQ=;
+	s=korg; t=1670267761;
+	bh=Xv4QjT9MH+Sq6klSePxCtil5JaqXZBzxKRl43ee0kA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KX45o4a2Y0VbcdBTNW4W81JGOeyu5E/oK/a7Or4x2h5dnPLeg7JiQl4ZfRU0nWvzZ
-	 1eGSpYTX9ABzrKyzXmFd+alDKoRztAHdvXkP0iWsGQNzd+ed99L9qimIIM6Kezowr2
-	 I8MazlLogDyp9sfK714BpJhqcxHF+FeqLaPqhVPY=
+	b=0k977WGTQdTQXWldPI1FjpWzcVWxVYx9O4k1FhUq0RpZEml8nyqyAfWZKdTh1s+WK
+	 tuE25gI1y2eKXTR0TXF1d+ftCsGqvVefHdzPwz4zrl+0d5Vtzq3U9latV/GSujmCyh
+	 +CbS7i4hIrkyS1ioS1zbdVW8wQDcAcRdqxPyJZYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 13/77] ARM: mxs: fix memory leak in mxs_machine_init()
-Date: Mon,  5 Dec 2022 20:09:04 +0100
-Message-Id: <20221205190801.334306536@linuxfoundation.org>
+Subject: [PATCH 4.14 40/77] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
+Date: Mon,  5 Dec 2022 20:09:31 +0100
+Message-Id: <20221205190802.294743875@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,38 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit f31e3c204d1844b8680a442a48868af5ac3d5481 ]
+[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
 
-If of_property_read_string() failed, 'soc_dev_attr' should be
-freed before return. Otherwise there is a memory leak.
+KASAN report out-of-bounds read as follows:
 
-Fixes: 2046338dcbc6 ("ARM: mxs: Use soc bus infrastructure")
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
+Read of size 4 at addr ffffffffc00e4658 by task cat/278
+
+Call Trace:
+ afe4404_read_raw
+ iio_read_channel_info
+ dev_attr_show
+
+The buggy address belongs to the variable:
+ afe4404_channel_leds+0x18/0xffffffffffffe9c0
+
+This issue can be reproduce by singe command:
+
+ $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
+
+The array size of afe4404_channel_leds and afe4404_channel_offdacs
+are less than channels, so access with chan->address cause OOB read
+in afe4404_[read|write]_raw. Fix it by moving access before use them.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mxs/mach-mxs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/health/afe4404.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/mach-mxs/mach-mxs.c b/arch/arm/mach-mxs/mach-mxs.c
-index 1c6062d240c8..4063fc1f435b 100644
---- a/arch/arm/mach-mxs/mach-mxs.c
-+++ b/arch/arm/mach-mxs/mach-mxs.c
-@@ -393,8 +393,10 @@ static void __init mxs_machine_init(void)
+diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
+index 5e256b11ac87..29a906411bd8 100644
+--- a/drivers/iio/health/afe4404.c
++++ b/drivers/iio/health/afe4404.c
+@@ -258,20 +258,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int value_reg = afe4404_channel_values[chan->address];
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int value_reg, led_field, offdac_field;
+ 	int ret;
  
- 	root = of_find_node_by_path("/");
- 	ret = of_property_read_string(root, "model", &soc_dev_attr->machine);
--	if (ret)
-+	if (ret) {
-+		kfree(soc_dev_attr);
- 		return;
-+	}
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			value_reg = afe4404_channel_values[chan->address];
+ 			ret = regmap_read(afe->regmap, value_reg, val);
+ 			if (ret)
+ 				return ret;
+ 			return IIO_VAL_INT;
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			ret = regmap_field_read(afe->fields[offdac_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -281,6 +281,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[led_field], val);
+ 			if (ret)
+ 				return ret;
+@@ -303,19 +304,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
+ 			     int val, int val2, long mask)
+ {
+ 	struct afe4404_data *afe = iio_priv(indio_dev);
+-	unsigned int led_field = afe4404_channel_leds[chan->address];
+-	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
++	unsigned int led_field, offdac_field;
  
- 	soc_dev_attr->family = "Freescale MXS Family";
- 	soc_dev_attr->soc_id = mxs_get_soc_id();
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_OFFSET:
++			offdac_field = afe4404_channel_offdacs[chan->address];
+ 			return regmap_field_write(afe->fields[offdac_field], val);
+ 		}
+ 		break;
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			led_field = afe4404_channel_leds[chan->address];
+ 			return regmap_field_write(afe->fields[led_field], val);
+ 		}
+ 		break;
 -- 
 2.35.1
 
