@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4633215C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB64C433C1;
-	Mon,  5 Dec 2022 19:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25AF15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741E8C433D6;
+	Mon,  5 Dec 2022 19:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268524;
-	bh=OpiqznKZ+clLNqugfoVhacYpA6n+7mu45qFFxkOpnKw=;
+	s=korg; t=1670268526;
+	bh=mFULumBgTen07k9DKx2T9jsGHOdizah80fXtX7N7jYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VlvfrwzfnX1TQX4AJbDN448t7OMjIDVwfAxOEzOEMOQmR2EwVCO99ROmFd+BRVsWG
-	 8ioZ/6HUSbOPsOEMZaRFDUBjJ0PwhX+TCChn2JVf7kakpzipz3aJCAcN6YgPH3w3Qd
-	 3iNq5KC0g/K7gqDJgvFiVEon+NGHIvNmwAW8lTh4=
+	b=FBRG6h+0Qtq5Klj4Qqcm2HlAaLzOS6XZ2bRlk4xSGoU0uR2AVhc8LD/7r1QtA6Euk
+	 Lpy/A0nGwO2VQmyF/RSrZeW8yz5n54rPjCXIfjhEJRGzRWCpF94vCf+paU1NwHWS7V
+	 ThUpPB0UYC4TCUsZao1Y+3/mZYls1SRk5oLla2iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/92] btrfs: sink iterator parameter to btrfs_ioctl_logical_to_ino
-Date: Mon,  5 Dec 2022 20:09:14 +0100
-Message-Id: <20221205190803.512235803@linuxfoundation.org>
+Subject: [PATCH 5.10 02/92] btrfs: free btrfs_path before copying inodes to userspace
+Date: Mon,  5 Dec 2022 20:09:15 +0100
+Message-Id: <20221205190803.547708759@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,122 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-[ Upstream commit e3059ec06b9f1a96826cc2bb6ed131aac0942446 ]
+[ Upstream commit 418ffb9e3cf6c4e2574d3a732b724916684bd133 ]
 
-There's only one function we pass to iterate_inodes_from_logical as
-iterator, so we can drop the indirection and call it directly, after
-moving the function to backref.c
+btrfs_ioctl_logical_to_ino() frees the search path after the userspace
+copy from the temp buffer @inodes. Which potentially can lead to a lock
+splat.
 
+Fix this by freeing the path before we copy @inodes to userspace.
+
+CC: stable@vger.kernel.org # 4.19+
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 418ffb9e3cf6 ("btrfs: free btrfs_path before copying inodes to userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c | 25 ++++++++++++++++++++++---
- fs/btrfs/backref.h |  3 +--
- fs/btrfs/ioctl.c   | 22 +---------------------
- 3 files changed, 24 insertions(+), 26 deletions(-)
+ fs/btrfs/ioctl.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index 6942707f8b03..7208ba22e734 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -2060,10 +2060,29 @@ int iterate_extent_inodes(struct btrfs_fs_info *fs_info,
- 	return ret;
- }
- 
-+static int build_ino_list(u64 inum, u64 offset, u64 root, void *ctx)
-+{
-+	struct btrfs_data_container *inodes = ctx;
-+	const size_t c = 3 * sizeof(u64);
-+
-+	if (inodes->bytes_left >= c) {
-+		inodes->bytes_left -= c;
-+		inodes->val[inodes->elem_cnt] = inum;
-+		inodes->val[inodes->elem_cnt + 1] = offset;
-+		inodes->val[inodes->elem_cnt + 2] = root;
-+		inodes->elem_cnt += 3;
-+	} else {
-+		inodes->bytes_missing += c - inodes->bytes_left;
-+		inodes->bytes_left = 0;
-+		inodes->elem_missed += 3;
-+	}
-+
-+	return 0;
-+}
-+
- int iterate_inodes_from_logical(u64 logical, struct btrfs_fs_info *fs_info,
- 				struct btrfs_path *path,
--				iterate_extent_inodes_t *iterate, void *ctx,
--				bool ignore_offset)
-+				void *ctx, bool ignore_offset)
- {
- 	int ret;
- 	u64 extent_item_pos;
-@@ -2081,7 +2100,7 @@ int iterate_inodes_from_logical(u64 logical, struct btrfs_fs_info *fs_info,
- 	extent_item_pos = logical - found_key.objectid;
- 	ret = iterate_extent_inodes(fs_info, found_key.objectid,
- 					extent_item_pos, search_commit_root,
--					iterate, ctx, ignore_offset);
-+					build_ino_list, ctx, ignore_offset);
- 
- 	return ret;
- }
-diff --git a/fs/btrfs/backref.h b/fs/btrfs/backref.h
-index 17abde7f794c..6ed18b807b64 100644
---- a/fs/btrfs/backref.h
-+++ b/fs/btrfs/backref.h
-@@ -35,8 +35,7 @@ int iterate_extent_inodes(struct btrfs_fs_info *fs_info,
- 				bool ignore_offset);
- 
- int iterate_inodes_from_logical(u64 logical, struct btrfs_fs_info *fs_info,
--				struct btrfs_path *path,
--				iterate_extent_inodes_t *iterate, void *ctx,
-+				struct btrfs_path *path, void *ctx,
- 				bool ignore_offset);
- 
- int paths_from_inode(u64 inum, struct inode_fs_paths *ipath);
 diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index d0c31651ec80..58fe58b929d2 100644
+index 58fe58b929d2..a17076a05c4d 100644
 --- a/fs/btrfs/ioctl.c
 +++ b/fs/btrfs/ioctl.c
-@@ -3898,26 +3898,6 @@ static long btrfs_ioctl_ino_to_path(struct btrfs_root *root, void __user *arg)
- 	return ret;
- }
- 
--static int build_ino_list(u64 inum, u64 offset, u64 root, void *ctx)
--{
--	struct btrfs_data_container *inodes = ctx;
--	const size_t c = 3 * sizeof(u64);
--
--	if (inodes->bytes_left >= c) {
--		inodes->bytes_left -= c;
--		inodes->val[inodes->elem_cnt] = inum;
--		inodes->val[inodes->elem_cnt + 1] = offset;
--		inodes->val[inodes->elem_cnt + 2] = root;
--		inodes->elem_cnt += 3;
--	} else {
--		inodes->bytes_missing += c - inodes->bytes_left;
--		inodes->bytes_left = 0;
--		inodes->elem_missed += 3;
--	}
--
--	return 0;
--}
--
- static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
- 					void __user *arg, int version)
- {
-@@ -3967,7 +3947,7 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
+@@ -3933,21 +3933,20 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
+ 		size = min_t(u32, loi->size, SZ_16M);
  	}
  
+-	path = btrfs_alloc_path();
+-	if (!path) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	inodes = init_data_container(size);
+ 	if (IS_ERR(inodes)) {
+ 		ret = PTR_ERR(inodes);
+-		inodes = NULL;
+-		goto out;
++		goto out_loi;
+ 	}
+ 
++	path = btrfs_alloc_path();
++	if (!path) {
++		ret = -ENOMEM;
++		goto out;
++	}
  	ret = iterate_inodes_from_logical(loi->logical, fs_info, path,
--					  build_ino_list, inodes, ignore_offset);
-+					  inodes, ignore_offset);
+ 					  inodes, ignore_offset);
++	btrfs_free_path(path);
  	if (ret == -EINVAL)
  		ret = -ENOENT;
  	if (ret < 0)
+@@ -3959,7 +3958,6 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
+ 		ret = -EFAULT;
+ 
+ out:
+-	btrfs_free_path(path);
+ 	kvfree(inodes);
+ out_loi:
+ 	kfree(loi);
 -- 
 2.35.1
 
