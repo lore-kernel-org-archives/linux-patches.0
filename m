@@ -1,222 +1,133 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7A915C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B36FC433C1;
-	Mon,  5 Dec 2022 19:45:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269532;
-	bh=nlls+mMrGod18/annYo2/2Pvmx0nt3SzhU3hi2vvX+k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+EcMIXBR+X1DIDnUZYShPRFVQmu/F5dpPS7mzdVzNP0F6gg3+h1E2BdUvuFQzQjL
-	 31OiMaDPP42yHjR5KhPbC3kzBpvu+g7Hu+uqnkhTuw7JjYz8z/Qeb7+qkvoCjPWmfF
-	 xU+f9XiV/M0qtBYxMV7+db8FIOd+j5d5Eekm+VaA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Primiano Tucci <primiano@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 141/153] tracing/ring-buffer: Have polling block on watermark
-Date: Mon,  5 Dec 2022 20:11:05 +0100
-Message-Id: <20221205190812.669520495@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
-References: <20221205190808.733996403@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1376915C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:58:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1670270288; bh=2gFYzCTJIOULN9LJknChVckVSBJGN1eSRMJYrB2BzR0=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=tydd0lQsH8wCWtzK6uNrq9/RmlKi2uisIFf2aaqCpD3O4CxoAOSVnPHZ4cC1h6v0H
+	 9SZI2NfeBbG41Dc1OwoxJzzbFkDzB7aw4apxzSVhm+xWceFpFZ4GIukK4VA7U1pJ48
+	 HQ3Mivs+btbeSyZtjZu+/iavM2ZvZZBgfBHT3QkXVmkgiUMZglitXvrScJwHjpEHFi
+	 nZHJ4mI/q/fd7sBi6IyT3EEkcApWFwJN8YP7uwnd0LyQZ7v00bRj1Itowoi7buSG1v
+	 g9BEUdJnajJrBFfUZtHH9sxBgrvLSlLzwiLccgi3i8aPV5FSJVi+4+0J/hP3Fsr0bQ
+	 WVJXiG9losy3Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.60] ([92.116.161.205]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5wPh-1p4DXf0sDT-007Y7s; Mon, 05
+ Dec 2022 20:58:08 +0100
+Message-ID: <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
+Date: Mon, 5 Dec 2022 20:58:06 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH 4.19 094/105] parisc: Increase size of gcc stack frame
+ check
+Content-Language: en-US
+To: Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+ Christoph Hellwig <hch@infradead.org>, Sasha Levin <sashal@kernel.org>,
+ John David Anglin <dave.anglin@bell.net>
+References: <20221205190803.124472741@linuxfoundation.org>
+ <20221205190806.296201818@linuxfoundation.org>
+ <dfa8305f-f52f-4322-a22e-9a1e90fcfad4@app.fastmail.com>
+From: Helge Deller <deller@gmx.de>
+In-Reply-To: <dfa8305f-f52f-4322-a22e-9a1e90fcfad4@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:dOAkOnQa3QmOZPQkvX1e1bF9W53Gu4PO76EgjfY0+b7wcv1qfU9
+ nHFnYcSjYimpBkA+yTlubQyUXvNRBjLl4sqOLWBZSCTDvMFjPDMRR3+yhuVuGLdSsrvVvqm
+ G5vkJlnfcyUwUK2xAS6RPpOs8ntoXShrjVXRMZnq3r0Kaqg+A65mfnqiPkVdUPlQPcb/C1t
+ JjO1AV+oqxnOrfxIL5syw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:WAJw04KI6j8=;vxI7oixbqXmY0RGjQ9Z+xd2aKdJ
+ mxjU8SAWaTUDVhz4uNRODHbav/+XdQhfjNS9iaBPvmJP/Hv/MuAUS4sK4WNszzSSDLignfJMM
+ JGkhSYbe+/NEuTR6VXS9owjnDWezyLbUTaLRORBiryhFsgtgQ5bf7K+KY31N6+5usfuat8XE5
+ ZNwGNWyOON2xGfd4gwMa8Hj8BO6wQhptYT9VEZUU9YTF4q3qAkMQuU5IafazAEiER+ZLhjfsj
+ xhTYZKzYRBEYF6DPW7Q06S1sX1O1A6pRQ8Yh6M0+ulo7bk3T9XU6Ig4bCN1isNyGummeVzmUy
+ /ndrjwEyswlPml4FsZ1e1E5RR8f5Qh4RdwxAS3bwPd8L4byZxyVHzrNek0VKDuUZ/zKMhPO5a
+ UN4JCvLXXYLbA+z1jj73dn3ZcgXJWMgEF+CXevco0E5GSzh+UWk7KvhBBQwtAbs9uPpOB99kK
+ PhhRV/bjNLYO6z3DaOt3CjblAPOESmgfKQ9KKyyWUFiM6knxFBrjbqdK8DcMf7CgSyp20hfpg
+ QiAlWxTXl3fAsfb4IlM3LCI5yzwwWsvXy7yeWVnXRz52sd1harfwsua/bUNPkR0tLkrvI3Lk2
+ dH9WNoU3I0NMXF4aWdmM92rLKH1pMDNqqnh4MLCx7GF/YTatCmsW5fYCPSD+UJ6Kzoj6HGe2H
+ PJ1B3cyNZQMVeW4u03lKc1URd8YfztgyJmFzHpt7XNaC0C74P27tnsH1FyBHyPNQtg2j5zWkY
+ upEYf1POJlHngebLHILni/ZhZVezSRqLzcKDlACAIwaZJdadPgX/DJ2tWUVudVyW+eHtLx/8m
+ CsgdP9ORqiYGbDCCcf09ZkxqCFcP2bNrQKr6bMwmX7O6y1RP07OZbnlEs5hTIekjkC7KC5//l
+ s/9trVHH3uqBcxTWbwiGTOZSRHKr+/zFjsOtw/4oMRFYmr9hSmWRAOiFvb6441YirDcyNuSBX
+ DX9/kg==
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+On 12/5/22 20:27, Arnd Bergmann wrote:
+> On Mon, Dec 5, 2022, at 20:10, Greg Kroah-Hartman wrote:
+>> From: Helge Deller <deller@gmx.de>
+>>
+>> [ Upstream commit 55b70eed81cba1331773d4aaf5cba2bb07475cd8 ]
+>>
+>> parisc uses much bigger frames than other architectures, so increase th=
+e
+>> stack frame check value to avoid compiler warnings.
+>
+> I had not seen this one originally, commenting on it now:
 
-commit 42fb0a1e84ff525ebe560e2baf9451ab69127e2b upstream.
+Hi Arnd,
+Thanks for commenting!
+By the way, those patches went in for 5.16 kernel, so I nearly forgot
+about them in the meantime and wonder why they pop up now... (they weren't
+tagged for stable, but I think it's ok to push them backwards).
 
-Currently the way polling works on the ring buffer is broken. It will
-return immediately if there's any data in the ring buffer whereas a read
-will block until the watermark (defined by the tracefs buffer_percent file)
-is hit.
+>> index 9ded3c1f68eb..556aae95d69b 100644
+>> --- a/lib/Kconfig.debug
+>> +++ b/lib/Kconfig.debug
+>> @@ -224,7 +224,7 @@ config FRAME_WARN
+>>   	range 0 8192
+>>   	default 3072 if KASAN_EXTRA
+>>   	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
+>> -	default 1280 if (!64BIT && PARISC)
+>> +	default 1536 if (!64BIT && PARISC)
+>>   	default 1024 if (!64BIT && !PARISC)
+>
+> 1536 is a /lot/ when we're dealing with 32-bit platforms.
 
-That is, a select() or poll() will return as if there's data available,
-but then the following read will block. This is broken for the way
-select()s and poll()s are supposed to work.
+True.
+It's actually 2048 bytes in the meantime, see commit
+8d192bec534bd5b778135769a12e5f04580771f7
 
-Have the polling on the ring buffer also block the same way reads and
-splice does on the ring buffer.
+> My understanding of the parisc overhead was that this
+> was just based on a few bytes per function call,
 
-Link: https://lkml.kernel.org/r/20221020231427.41be3f26@gandalf.local.home
+What exactly do you mean by a few bytes?
+On parisc the frame size is a multiple of 64-bytes (on 32-bit)
+and 128 bytes (on 64bit).
+For function calls with more than 5 (need to check exact number)
+parameters those will be put on the stack as well.
 
-Cc: Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Primiano Tucci <primiano@google.com>
-Cc: stable@vger.kernel.org
-Fixes: 1e0d6714aceb7 ("ring-buffer: Do not wake up a splice waiter when page is not full")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/ring_buffer.h |    2 -
- kernel/trace/ring_buffer.c  |   54 ++++++++++++++++++++++++++++----------------
- kernel/trace/trace.c        |    2 -
- 3 files changed, 37 insertions(+), 21 deletions(-)
+> not something that makes everything bigger. We have a few functions
+> that get close to the normal 1024 byte limit, everything else should
+> be no more than a few hundred bytes on any architecture.
 
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -99,7 +99,7 @@ __ring_buffer_alloc(unsigned long size,
- 
- int ring_buffer_wait(struct ring_buffer *buffer, int cpu, int full);
- __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table);
-+			  struct file *filp, poll_table *poll_table, int full);
- 
- 
- #define RING_BUFFER_ALL_CPUS -1
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -566,6 +566,21 @@ size_t ring_buffer_nr_dirty_pages(struct
- 	return cnt - read;
- }
- 
-+static __always_inline bool full_hit(struct ring_buffer *buffer, int cpu, int full)
-+{
-+	struct ring_buffer_per_cpu *cpu_buffer = buffer->buffers[cpu];
-+	size_t nr_pages;
-+	size_t dirty;
-+
-+	nr_pages = cpu_buffer->nr_pages;
-+	if (!nr_pages || !full)
-+		return true;
-+
-+	dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+
-+	return (dirty * 100) > (full * nr_pages);
-+}
-+
- /*
-  * rb_wake_up_waiters - wake up tasks waiting for ring buffer input
-  *
-@@ -661,22 +676,20 @@ int ring_buffer_wait(struct ring_buffer
- 		    !ring_buffer_empty_cpu(buffer, cpu)) {
- 			unsigned long flags;
- 			bool pagebusy;
--			size_t nr_pages;
--			size_t dirty;
-+			bool done;
- 
- 			if (!full)
- 				break;
- 
- 			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
- 			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
--			nr_pages = cpu_buffer->nr_pages;
--			dirty = ring_buffer_nr_dirty_pages(buffer, cpu);
-+			done = !pagebusy && full_hit(buffer, cpu, full);
-+
- 			if (!cpu_buffer->shortest_full ||
- 			    cpu_buffer->shortest_full > full)
- 				cpu_buffer->shortest_full = full;
- 			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
--			if (!pagebusy &&
--			    (!nr_pages || (dirty * 100) > full * nr_pages))
-+			if (done)
- 				break;
- 		}
- 
-@@ -697,6 +710,7 @@ int ring_buffer_wait(struct ring_buffer
-  * @cpu: the cpu buffer to wait on
-  * @filp: the file descriptor
-  * @poll_table: The poll descriptor
-+ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-  *
-  * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-  * as data is added to any of the @buffer's cpu buffers. Otherwise
-@@ -706,14 +720,14 @@ int ring_buffer_wait(struct ring_buffer
-  * zero otherwise.
-  */
- __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
--			  struct file *filp, poll_table *poll_table)
-+			  struct file *filp, poll_table *poll_table, int full)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
- 	struct rb_irq_work *work;
- 
--	if (cpu == RING_BUFFER_ALL_CPUS)
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
- 		work = &buffer->irq_work;
--	else {
-+	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 			return -EINVAL;
- 
-@@ -721,8 +735,14 @@ __poll_t ring_buffer_poll_wait(struct ri
- 		work = &cpu_buffer->irq_work;
- 	}
- 
--	poll_wait(filp, &work->waiters, poll_table);
--	work->waiters_pending = true;
-+	if (full) {
-+		poll_wait(filp, &work->full_waiters, poll_table);
-+		work->full_waiters_pending = true;
-+	} else {
-+		poll_wait(filp, &work->waiters, poll_table);
-+		work->waiters_pending = true;
-+	}
-+
- 	/*
- 	 * There's a tight race between setting the waiters_pending and
- 	 * checking if the ring buffer is empty.  Once the waiters_pending bit
-@@ -738,6 +758,9 @@ __poll_t ring_buffer_poll_wait(struct ri
- 	 */
- 	smp_mb();
- 
-+	if (full)
-+		return full_hit(buffer, cpu, full) ? EPOLLIN | EPOLLRDNORM : 0;
-+
- 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
- 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
- 		return EPOLLIN | EPOLLRDNORM;
-@@ -2640,10 +2663,6 @@ static void rb_commit(struct ring_buffer
- static __always_inline void
- rb_wakeups(struct ring_buffer *buffer, struct ring_buffer_per_cpu *cpu_buffer)
- {
--	size_t nr_pages;
--	size_t dirty;
--	size_t full;
--
- 	if (buffer->irq_work.waiters_pending) {
- 		buffer->irq_work.waiters_pending = false;
- 		/* irq_work_queue() supplies it's own memory barriers */
-@@ -2667,10 +2686,7 @@ rb_wakeups(struct ring_buffer *buffer, s
- 
- 	cpu_buffer->last_pages_touch = local_read(&cpu_buffer->pages_touched);
- 
--	full = cpu_buffer->shortest_full;
--	nr_pages = cpu_buffer->nr_pages;
--	dirty = ring_buffer_nr_dirty_pages(buffer, cpu_buffer->cpu);
--	if (full && nr_pages && (dirty * 100) <= full * nr_pages)
-+	if (!full_hit(buffer, cpu_buffer->cpu, cpu_buffer->shortest_full))
- 		return;
- 
- 	cpu_buffer->irq_work.wakeup_full = true;
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5993,7 +5993,7 @@ trace_poll(struct trace_iterator *iter,
- 		return EPOLLIN | EPOLLRDNORM;
- 	else
- 		return ring_buffer_poll_wait(iter->trace_buffer->buffer, iter->cpu_file,
--					     filp, poll_table);
-+					     filp, poll_table, iter->tr->buffer_percent);
- }
- 
- static __poll_t
+Sadly not on parisc.
+Again, see commit message of 8d192bec534b, which mentions
+compile warnings from the kernel test robot for lib/xxhash.c.
 
+> Could it be that this only happens when KASAN or some
+> other feature is enabled?
 
+No, it happens even without KASAN or such.
+
+> If this happens for normal parisc builds without any
+> special compilation options, that would indicate that the
+> compiler is very broken.
+
+No, it does a good job. It's the ABI which requires so big stacks.
+I see problems with some userspace apps as well which configure too
+small stacks.
+
+By the way, since those patches are in I don't see any stack
+overflows any longer. Those happened rarely in the past though.
+
+Helge
