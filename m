@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE1515C8B
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:44:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4708BC433D6;
-	Mon,  5 Dec 2022 19:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F4B15C8B
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:45:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A94AC433D6;
+	Mon,  5 Dec 2022 19:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269499;
-	bh=Rx2GmuUzDJD6XPZYdKsG6ioRe9cBY+L9Fi8T8pksxpc=;
+	s=korg; t=1670269502;
+	bh=acOeIJakjV3fDmSr1elGB1et3lDvJ1yPX9hj1052JRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSx6skyQUpWJCvJ2Zm8WZ6WA5AStGxvMpwYOZsFI7pAQ2PmLBIvwwR2xCZ9o6FEp2
-	 Mo48ivxTa1cbHlBjZ2jhtjy9WuOyi9NfjmcfIx2HpQa//M00xmfArBPd6kHFo5SNp8
-	 VVrs67cynmDDJ9DMmgbT8huFEmdE18b70YxC7Lns=
+	b=CyCqzLc+izx81r7rUKdSIk7KVOG3LNZ/AeKaD867kWJVTlWloPyZjvMAzZFEFufVD
+	 8IQYdFGUXgaZP+dteDnkvorzcV1R8THDHoGzTQkQZ99IHq6jSr5jtso37JrcHMosA3
+	 nRzY6/gH4A17CK2Em/siDBq8o+XaqYCYHpiKENZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Baron <jbaron@akamai.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Roman Penyaev <rpenyaev@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Khazhismel Kumykov <khazhy@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Rishabh Bhatnagar <risbhat@amazon.com>
-Subject: [PATCH 5.4 142/153] epoll: call final ep_events_available() check under the lock
-Date: Mon,  5 Dec 2022 20:11:06 +0100
-Message-Id: <20221205190812.693368567@linuxfoundation.org>
+	Jan Dabros <jsd@semihalf.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 151/153] char: tpm: Protect tpm_pm_suspend with locks
+Date: Mon,  5 Dec 2022 20:11:15 +0100
+Message-Id: <20221205190812.910038994@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -41,124 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roman Penyaev <rpenyaev@suse.de>
+From: Jan Dabros <jsd@semihalf.com>
 
-commit 65759097d804d2a9ad2b687db436319704ba7019 upstream.
+commit 23393c6461422df5bf8084a086ada9a7e17dc2ba upstream.
 
-There is a possible race when ep_scan_ready_list() leaves ->rdllist and
-->obflist empty for a short period of time although some events are
-pending.  It is quite likely that ep_events_available() observes empty
-lists and goes to sleep.
+Currently tpm transactions are executed unconditionally in
+tpm_pm_suspend() function, which may lead to races with other tpm
+accessors in the system.
 
-Since commit 339ddb53d373 ("fs/epoll: remove unnecessary wakeups of
-nested epoll") we are conservative in wakeups (there is only one place
-for wakeup and this is ep_poll_callback()), thus ep_events_available()
-must always observe correct state of two lists.
+Specifically, the hw_random tpm driver makes use of tpm_get_random(),
+and this function is called in a loop from a kthread, which means it's
+not frozen alongside userspace, and so can race with the work done
+during system suspend:
 
-The easiest and correct way is to do the final check under the lock.
-This does not impact the performance, since lock is taken anyway for
-adding a wait entry to the wait queue.
+  tpm tpm0: tpm_transmit: tpm_recv: error -52
+  tpm tpm0: invalid TPM_STS.x 0xff, dumping stack for forensics
+  CPU: 0 PID: 1 Comm: init Not tainted 6.1.0-rc5+ #135
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
+  Call Trace:
+   tpm_tis_status.cold+0x19/0x20
+   tpm_transmit+0x13b/0x390
+   tpm_transmit_cmd+0x20/0x80
+   tpm1_pm_suspend+0xa6/0x110
+   tpm_pm_suspend+0x53/0x80
+   __pnp_bus_suspend+0x35/0xe0
+   __device_suspend+0x10f/0x350
 
-The discussion of the problem can be found here:
+Fix this by calling tpm_try_get_ops(), which itself is a wrapper around
+tpm_chip_start(), but takes the appropriate mutex.
 
-   https://lore.kernel.org/linux-fsdevel/a2f22c3c-c25a-4bda-8339-a7bdaf17849e@akamai.com/
-
-In this patch barrierless __set_current_state() is used.  This is safe
-since waitqueue_active() is called under the same lock on wakeup side.
-
-Short-circuit for fatal signals (i.e.  fatal_signal_pending() check) is
-moved to the line just before actual events harvesting routine.  This is
-fully compliant to what is said in the comment of the patch where the
-actual fatal_signal_pending() check was added: c257a340ede0 ("fs, epoll:
-short circuit fetching events if thread has been killed").
-
-Fixes: 339ddb53d373 ("fs/epoll: remove unnecessary wakeups of nested epoll")
-Reported-by: Jason Baron <jbaron@akamai.com>
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Roman Penyaev <rpenyaev@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Jason Baron <jbaron@akamai.com>
-Cc: Khazhismel Kumykov <khazhy@google.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: <stable@vger.kernel.org>
-Link: http://lkml.kernel.org/r/20200505145609.1865152-1-rpenyaev@suse.de
+Signed-off-by: Jan Dabros <jsd@semihalf.com>
+Reported-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Tested-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lore.kernel.org/all/c5ba47ef-393f-1fba-30bd-1230d1b4b592@suse.cz/
+Cc: stable@vger.kernel.org
+Fixes: e891db1a18bf ("tpm: turn on TPM on suspend for TPM 1.x")
+[Jason: reworked commit message, added metadata]
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Acked-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   47 +++++++++++++++++++++++++++--------------------
- 1 file changed, 27 insertions(+), 20 deletions(-)
+ drivers/char/tpm/tpm-interface.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1905,33 +1905,31 @@ fetch_events:
- 		init_wait(&wait);
- 		wait.func = ep_autoremove_wake_function;
- 		write_lock_irq(&ep->lock);
--		__add_wait_queue_exclusive(&ep->wq, &wait);
--		write_unlock_irq(&ep->lock);
--
- 		/*
--		 * We don't want to sleep if the ep_poll_callback() sends us
--		 * a wakeup in between. That's why we set the task state
--		 * to TASK_INTERRUPTIBLE before doing the checks.
-+		 * Barrierless variant, waitqueue_active() is called under
-+		 * the same lock on wakeup ep_poll_callback() side, so it
-+		 * is safe to avoid an explicit barrier.
- 		 */
--		set_current_state(TASK_INTERRUPTIBLE);
-+		__set_current_state(TASK_INTERRUPTIBLE);
-+
- 		/*
--		 * Always short-circuit for fatal signals to allow
--		 * threads to make a timely exit without the chance of
--		 * finding more events available and fetching
--		 * repeatedly.
-+		 * Do the final check under the lock. ep_scan_ready_list()
-+		 * plays with two lists (->rdllist and ->ovflist) and there
-+		 * is always a race when both lists are empty for short
-+		 * period of time although events are pending, so lock is
-+		 * important.
- 		 */
--		if (fatal_signal_pending(current)) {
--			res = -EINTR;
--			break;
-+		eavail = ep_events_available(ep);
-+		if (!eavail) {
-+			if (signal_pending(current))
-+				res = -EINTR;
-+			else
-+				__add_wait_queue_exclusive(&ep->wq, &wait);
- 		}
-+		write_unlock_irq(&ep->lock);
+--- a/drivers/char/tpm/tpm-interface.c
++++ b/drivers/char/tpm/tpm-interface.c
+@@ -396,13 +396,14 @@ int tpm_pm_suspend(struct device *dev)
+ 	if (chip->flags & TPM_CHIP_FLAG_ALWAYS_POWERED)
+ 		return 0;
  
--		eavail = ep_events_available(ep);
--		if (eavail)
--			break;
--		if (signal_pending(current)) {
--			res = -EINTR;
-+		if (eavail || res)
- 			break;
--		}
+-	if (!tpm_chip_start(chip)) {
++	rc = tpm_try_get_ops(chip);
++	if (!rc) {
+ 		if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 			tpm2_shutdown(chip, TPM2_SU_STATE);
+ 		else
+ 			rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
  
- 		if (!schedule_hrtimeout_range(to, slack, HRTIMER_MODE_ABS)) {
- 			timed_out = 1;
-@@ -1952,6 +1950,15 @@ fetch_events:
+-		tpm_chip_stop(chip);
++		tpm_put_ops(chip);
  	}
  
- send_events:
-+	if (fatal_signal_pending(current)) {
-+		/*
-+		 * Always short-circuit for fatal signals to allow
-+		 * threads to make a timely exit without the chance of
-+		 * finding more events available and fetching
-+		 * repeatedly.
-+		 */
-+		res = -EINTR;
-+	}
- 	/*
- 	 * Try to transfer events to user space. In case we get 0 events and
- 	 * there's still timeout left over, we go trying again in search of
+ 	return rc;
 
 
