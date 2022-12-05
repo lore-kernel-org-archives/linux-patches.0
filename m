@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05EF15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51072C433D6;
-	Mon,  5 Dec 2022 19:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D8115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08096C433C1;
+	Mon,  5 Dec 2022 19:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268804;
-	bh=pRIzh0xicM6N4APG5UznWWjYs37wpiQ3/4+1fQtmEIk=;
+	s=korg; t=1670268807;
+	bh=yD4KWUQ3KdvD52boQDxFCJXWgEQ2eX2LaHIdjB+ceKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHgeLvwx802EMqQCdTgBASI39/6i3So1a441qK5EZ4b4s8yS0lWWWRwyfKTVJvepC
-	 KbVsAE7N2GRq1Kd2F5i0lhnwalhsiaVFJ46If0A3ro2/WpbR7iNHcx2VqkSB4yqHPQ
-	 qPCjgFcPPhi2URY0BwnVk3Tp/gku6Io7ECv9GuwE=
+	b=jFvZBpFU/u0PMWZpARuYzwwg+V32t7AtdwF5t4lKz9cnryN4x1KkE4HG52zC7C3Ao
+	 iCPIbCAoc87qnWjTO4fednANFX3A+ol9H6C6p/ELOTGjYcD34dBpLgrRifp+b0JVk9
+	 PQUTKCGzsMEKMlLA4CKscC6IJDnUmQkqb8TCAaNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	David Jander <david@protonic.nl>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Marek Vasut <marex@denx.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Nikolay Borisov <nborisov@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/120] spi: spi-imx: Fix spi_bus_clk if requested clock is higher than input clock
-Date: Mon,  5 Dec 2022 20:09:07 +0100
-Message-Id: <20221205190806.781789968@linuxfoundation.org>
+Subject: [PATCH 5.15 008/120] btrfs: move QUOTA_ENABLED check to rescan_should_stop from btrfs_qgroup_rescan_worker
+Date: Mon,  5 Dec 2022 20:09:08 +0100
+Message-Id: <20221205190806.811796189@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -39,62 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Nikolay Borisov <nborisov@suse.com>
 
-[ Upstream commit db2d2dc9a0b58c6faefb6b002fdbed4f0362d1a4 ]
+[ Upstream commit db5df254120004471e1c957957ab2f1e612dcbd6 ]
 
-In case the requested bus clock is higher than the input clock, the correct
-dividers (pre = 0, post = 0) are returned from mx51_ecspi_clkdiv(), but
-*fres is left uninitialized and therefore contains an arbitrary value.
+Instead of having 2 places that short circuit the qgroup leaf scan have
+everything in the qgroup_rescan_leaf function. In addition to that, also
+ensure that the inconsistent qgroup flag is set when rescan_should_stop
+returns true. This both retains the old behavior when -EINTR was set in
+the body of the loop and at the same time also extends this behavior
+when scanning is interrupted due to remount or unmount operations.
 
-This causes trouble for the recently introduced PIO polling feature as the
-value in spi_imx->spi_bus_clk is used there to calculate for which
-transfers to enable PIO polling.
-
-Fix this by setting *fres even if no clock dividers are in use.
-
-This issue was observed on Kontron BL i.MX8MM with an SPI peripheral clock set
-to 50 MHz by default and a requested SPI bus clock of 80 MHz for the SPI NOR
-flash.
-
-With the fix applied the debug message from mx51_ecspi_clkdiv() now prints the
-following:
-
-spi_imx 30820000.spi: mx51_ecspi_clkdiv: fin: 50000000, fspi: 50000000,
-post: 0, pre: 0
-
-Fixes: 6fd8b8503a0d ("spi: spi-imx: Fix out-of-order CS/SCLK operation at low speeds")
-Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: David Jander <david@protonic.nl>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Marek Vasut <marex@denx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Acked-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20221115181002.2068270-1-frieder@fris.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: f7e942b5bb35 ("btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/qgroup.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index b2dd0a4d2446..890b2cf02149 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -439,8 +439,7 @@ static unsigned int mx51_ecspi_clkdiv(struct spi_imx_data *spi_imx,
- 	unsigned int pre, post;
- 	unsigned int fin = spi_imx->spi_clk;
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index e01065696e9c..b9db096c5286 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3280,7 +3280,8 @@ static int qgroup_rescan_leaf(struct btrfs_trans_handle *trans,
+ static bool rescan_should_stop(struct btrfs_fs_info *fs_info)
+ {
+ 	return btrfs_fs_closing(fs_info) ||
+-		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state);
++		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state) ||
++		!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags);
+ }
  
--	if (unlikely(fspi > fin))
--		return 0;
-+	fspi = min(fspi, fin);
- 
- 	post = fls(fin) - fls(fspi);
- 	if (fin > fspi << post)
+ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
+@@ -3310,11 +3311,9 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
+ 			err = PTR_ERR(trans);
+ 			break;
+ 		}
+-		if (!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags)) {
+-			err = -EINTR;
+-		} else {
+-			err = qgroup_rescan_leaf(trans, path);
+-		}
++
++		err = qgroup_rescan_leaf(trans, path);
++
+ 		if (err > 0)
+ 			btrfs_commit_transaction(trans);
+ 		else
+@@ -3328,7 +3327,7 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
+ 	if (err > 0 &&
+ 	    fs_info->qgroup_flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT) {
+ 		fs_info->qgroup_flags &= ~BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+-	} else if (err < 0) {
++	} else if (err < 0 || stopped) {
+ 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+ 	}
+ 	mutex_unlock(&fs_info->qgroup_rescan_lock);
 -- 
 2.35.1
 
