@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC215C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F83C433D6;
-	Mon,  5 Dec 2022 19:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0699115C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7884FC433C1;
+	Mon,  5 Dec 2022 19:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269387;
-	bh=r8iJWmkEuaDE2zYjqQuDzh8HowzR+SQcc6iSuDwdcGg=;
+	s=korg; t=1670269389;
+	bh=bRqdeSdg0UopUKDXfEBckA2rb76aku/3pYWAqfRWkNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctwAfdUUeT6XXVniDqxVyIRvNjipHB73y8VO5Bv70J5NmugJQeZDAVHGulKCHqlUt
-	 ptT2yjzzlbNs+/lUqpAJj5Gm/JX52k3bTY7sdP+0c0GR1kHOmlxO3sZE1CmQqRX6aN
-	 QB0kzqeYdzjaHFMjfLMYFtw0OiZAL+W7shjkkBaE=
+	b=VyaRaq21MLYS07U8qHRbepTfW2UqKomooab2AmJ3PVz3LK75Y2nVz9WSxdljkhUkC
+	 dUEfPsq+nM17YiEFcsw7n8KtOnJ3P0gDhm+IrzOJSq4UaXL1da2JfF/LMbvwJnAbS/
+	 zRNBbLMRAowgtJdqFNkxKBetLb6YdnyQJ1nZQnDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 108/153] net: hsr: Fix potential use-after-free
-Date: Mon,  5 Dec 2022 20:10:32 +0100
-Message-Id: <20221205190811.843548663@linuxfoundation.org>
+Subject: [PATCH 5.4 109/153] afs: Fix fileserver probe RTT handling
+Date: Mon,  5 Dec 2022 20:10:33 +0100
+Message-Id: <20221205190811.869569102@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,47 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 7e177d32442b7ed08a9fa61b61724abc548cb248 ]
+[ Upstream commit ca57f02295f188d6c65ec02202402979880fa6d8 ]
 
-The skb is delivered to netif_rx() which may free it, after calling this,
-dereferencing skb may trigger use-after-free.
+The fileserver probing code attempts to work out the best fileserver to
+use for a volume by retrieving the RTT calculated by AF_RXRPC for the
+probe call sent to each server and comparing them.  Sometimes, however,
+no RTT estimate is available and rxrpc_kernel_get_srtt() returns false,
+leading good fileservers to be given an RTT of UINT_MAX and thus causing
+the rotation algorithm to ignore them.
 
-Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221125075724.27912-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix afs_select_fileserver() to ignore rxrpc_kernel_get_srtt()'s return
+value and just take the estimated RTT it provides - which will be capped
+at 1 second.
+
+Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/166965503999.3392585.13954054113218099395.stgit@warthog.procyon.org.uk/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/afs/fs_probe.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index bf3ecf792688..7073724fdfa6 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -198,17 +198,18 @@ static void hsr_deliver_master(struct sk_buff *skb, struct net_device *dev,
- 			       struct hsr_node *node_src)
- {
- 	bool was_multicast_frame;
--	int res;
-+	int res, recv_len;
- 
- 	was_multicast_frame = (skb->pkt_type == PACKET_MULTICAST);
- 	hsr_addr_subst_source(node_src, skb);
- 	skb_pull(skb, ETH_HLEN);
-+	recv_len = skb->len;
- 	res = netif_rx(skb);
- 	if (res == NET_RX_DROP) {
- 		dev->stats.rx_dropped++;
- 	} else {
- 		dev->stats.rx_packets++;
--		dev->stats.rx_bytes += skb->len;
-+		dev->stats.rx_bytes += recv_len;
- 		if (was_multicast_frame)
- 			dev->stats.multicast++;
+diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
+index 51ee3dd79700..e9282e025912 100644
+--- a/fs/afs/fs_probe.c
++++ b/fs/afs/fs_probe.c
+@@ -92,8 +92,8 @@ void afs_fileserver_probe_result(struct afs_call *call)
+ 		}
  	}
+ 
+-	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
+-	    rtt_us < server->probe.rtt) {
++	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
++	if (rtt_us < server->probe.rtt) {
+ 		server->probe.rtt = rtt_us;
+ 		alist->preferred = index;
+ 		have_result = true;
 -- 
 2.35.1
 
