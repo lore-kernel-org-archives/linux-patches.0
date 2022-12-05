@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAF015C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA3EC433C1;
-	Mon,  5 Dec 2022 19:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888B315C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F41C433D6;
+	Mon,  5 Dec 2022 19:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269392;
-	bh=AoyooGK2OqjvUyoLh3U08wChm/lnycL2KAnRQhbOlDg=;
+	s=korg; t=1670269395;
+	bh=N4b/vmLf8naYDX43okpivh1iq+6hPNM6JuGzybvtOIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUjCegkuOsXwmOuV9+Irp78AnrXKck7N0RNFq8GsYogL3w3+Og4ACKGXcETp46mXt
-	 RsuWUudrykiDo9HJvM/PFdrWQJ0s3thfGlv+R5DQ3Kx3l6J0IVO/5MEftV3aORsMM8
-	 SgkOjrMjJceNLQZ5lW4+GWL2d2hFd4jhv9r441iI=
+	b=yETmGZvz7zf+m/3xPJE4IIKwO9JWr4ER2R2EdNZJJsta4hv6Q1nskr62OCbIDg+F1
+	 w4zLDZiiqWcNFiH4EHhaT8m0SgTwe69u7Y2Kc9k08EdkoUyXyh1MYk/kWeFaUCVRSg
+	 EAC35U3LoczVWbY1ygoCZyqDZrmAppk1NACO7C10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	David Jander <david@protonic.nl>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/153] net: tun: Fix use-after-free in tun_detach()
-Date: Mon,  5 Dec 2022 20:10:34 +0100
-Message-Id: <20221205190811.895501310@linuxfoundation.org>
+Subject: [PATCH 5.4 084/153] spi: spi-imx: Fix spi_bus_clk if requested clock is higher than input clock
+Date: Mon,  5 Dec 2022 20:10:08 +0100
+Message-Id: <20221205190811.131159786@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -36,88 +39,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 5daadc86f27ea4d691e2131c04310d0418c6cd12 ]
+[ Upstream commit db2d2dc9a0b58c6faefb6b002fdbed4f0362d1a4 ]
 
-syzbot reported use-after-free in tun_detach() [1].  This causes call
-trace like below:
+In case the requested bus clock is higher than the input clock, the correct
+dividers (pre = 0, post = 0) are returned from mx51_ecspi_clkdiv(), but
+*fres is left uninitialized and therefore contains an arbitrary value.
 
-==================================================================
-BUG: KASAN: use-after-free in notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
-Read of size 8 at addr ffff88807324e2a8 by task syz-executor.0/3673
+This causes trouble for the recently introduced PIO polling feature as the
+value in spi_imx->spi_bus_clk is used there to calculate for which
+transfers to enable PIO polling.
 
-CPU: 0 PID: 3673 Comm: syz-executor.0 Not tainted 6.1.0-rc5-syzkaller-00044-gcc675d22e422 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x15e/0x461 mm/kasan/report.c:395
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:495
- notifier_call_chain+0x1ee/0x200 kernel/notifier.c:75
- call_netdevice_notifiers_info+0x86/0x130 net/core/dev.c:1942
- call_netdevice_notifiers_extack net/core/dev.c:1983 [inline]
- call_netdevice_notifiers net/core/dev.c:1997 [inline]
- netdev_wait_allrefs_any net/core/dev.c:10237 [inline]
- netdev_run_todo+0xbc6/0x1100 net/core/dev.c:10351
- tun_detach drivers/net/tun.c:704 [inline]
- tun_chr_close+0xe4/0x190 drivers/net/tun.c:3467
- __fput+0x27c/0xa90 fs/file_table.c:320
- task_work_run+0x16f/0x270 kernel/task_work.c:179
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0xb3d/0x2a30 kernel/exit.c:820
- do_group_exit+0xd4/0x2a0 kernel/exit.c:950
- get_signal+0x21b1/0x2440 kernel/signal.c:2858
- arch_do_signal_or_restart+0x86/0x2300 arch/x86/kernel/signal.c:869
- exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
- exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
- __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
- syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
- do_syscall_64+0x46/0xb0 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Fix this by setting *fres even if no clock dividers are in use.
 
-The cause of the issue is that sock_put() from __tun_detach() drops
-last reference count for struct net, and then notifier_call_chain()
-from netdev_state_change() accesses that struct net.
+This issue was observed on Kontron BL i.MX8MM with an SPI peripheral clock set
+to 50 MHz by default and a requested SPI bus clock of 80 MHz for the SPI NOR
+flash.
 
-This patch fixes the issue by calling sock_put() from tun_detach()
-after all necessary accesses for the struct net has done.
+With the fix applied the debug message from mx51_ecspi_clkdiv() now prints the
+following:
 
-Fixes: 83c1f36f9880 ("tun: send netlink notification when the device is modified")
-Reported-by: syzbot+106f9b687cd64ee70cd1@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=96eb7f1ce75ef933697f24eeab928c4a716edefe [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Link: https://lore.kernel.org/r/20221124175134.1589053-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+spi_imx 30820000.spi: mx51_ecspi_clkdiv: fin: 50000000, fspi: 50000000,
+post: 0, pre: 0
+
+Fixes: 6fd8b8503a0d ("spi: spi-imx: Fix out-of-order CS/SCLK operation at low speeds")
+Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: David Jander <david@protonic.nl>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Marek Vasut <marex@denx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Fabio Estevam <festevam@gmail.com>
+Acked-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20221115181002.2068270-1-frieder@fris.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index f01db73dab05..957e6051c535 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -742,7 +742,6 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
- 		if (tun)
- 			xdp_rxq_info_unreg(&tfile->xdp_rxq);
- 		ptr_ring_cleanup(&tfile->tx_ring, tun_ptr_free);
--		sock_put(&tfile->sk);
- 	}
- }
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 474d5a7fa95e..9d593675257e 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -431,8 +431,7 @@ static unsigned int mx51_ecspi_clkdiv(struct spi_imx_data *spi_imx,
+ 	unsigned int pre, post;
+ 	unsigned int fin = spi_imx->spi_clk;
  
-@@ -758,6 +757,9 @@ static void tun_detach(struct tun_file *tfile, bool clean)
- 	if (dev)
- 		netdev_state_change(dev);
- 	rtnl_unlock();
-+
-+	if (clean)
-+		sock_put(&tfile->sk);
- }
+-	if (unlikely(fspi > fin))
+-		return 0;
++	fspi = min(fspi, fin);
  
- static void tun_detach_all(struct net_device *dev)
+ 	post = fls(fin) - fls(fspi);
+ 	if (fin > fspi << post)
 -- 
 2.35.1
 
