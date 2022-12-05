@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFCD15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC2AC433C1;
-	Mon,  5 Dec 2022 19:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C04015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:33:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39E7C433C1;
+	Mon,  5 Dec 2022 19:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268826;
-	bh=7byHlP5ufhy761TVqmwuLgFBxPP3Cgr0AZESwIy16cc=;
+	s=korg; t=1670268830;
+	bh=4eLQxE83CtURY/G7mZF4SO5aD6esafo3fV7kTn+p2eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNh+xQTDYDUYDV9eB0JhpESScdBmTK9BeVUI1PicOwcl2cX6vW+He2sNX1TktXE7o
-	 AYtzLFPPnDzaqqrjfQBeNGfkkft4Jk/Uzsf4qbU6F6ccpKQ8YHyhCVwZBLNHHKkVEj
-	 J6flWdXy/8IFVdLOjXYi9nVq6V0s0LM3Y6SN8HTs=
+	b=Vpbg9HMN272PCunB8BUMs6kCxt3C1naxCccg7nYCCFDfzyR8tiFzbIBXaKzweFzUu
+	 1OqEQhrNXwBjGkvpjKSIUgMxK9HE5d6ZRynYDd/ceZcFmgwVBHhfQNiDg4Ez2lhDfl
+	 3vCilaRdZCi7Gv2Uei6uN7DPnqLGE7SY9f9YhQmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Nicolas Saenz Julienne <nsaenzjulienne@suse.de>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
 	Yang Yingliang <yangyingliang@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/120] nvmem: rmem: Fix return value check in rmem_read()
-Date: Mon,  5 Dec 2022 20:09:26 +0100
-Message-Id: <20221205190807.355487488@linuxfoundation.org>
+Subject: [PATCH 5.15 027/120] of: property: decrement node refcount in of_fwnode_get_reference_args()
+Date: Mon,  5 Dec 2022 20:09:27 +0100
+Message-Id: <20221205190807.385120803@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -37,44 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 58e92c4a496b27156020a59a98c7f4a92c2b1533 ]
+[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
 
-In case of error, the function memremap() returns NULL pointer
-not ERR_PTR(). The IS_ERR() test in the return value check
-should be replaced with NULL test.
+In of_fwnode_get_reference_args(), the refcount of of_args.np has
+been incremented in the case of successful return from
+of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
 
-Fixes: 5a3fa75a4d9c ("nvmem: Add driver to expose reserved memory as nvmem")
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Nicolas Saenz Julienne <nsaenzjulienne@suse.de>
+Decrement the refcount if of_args is not returned to the caller of
+of_fwnode_get_reference_args().
+
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20221118063840.6357-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Frank Rowand <frowand.list@gmail.com>
+Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/of/property.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvmem/rmem.c b/drivers/nvmem/rmem.c
-index b11c3c974b3d..80cb187f1481 100644
---- a/drivers/nvmem/rmem.c
-+++ b/drivers/nvmem/rmem.c
-@@ -37,9 +37,9 @@ static int rmem_read(void *context, unsigned int offset,
- 	 * but as of Dec 2020 this isn't possible on arm64.
- 	 */
- 	addr = memremap(priv->mem->base, available, MEMREMAP_WB);
--	if (IS_ERR(addr)) {
-+	if (!addr) {
- 		dev_err(priv->dev, "Failed to remap memory region\n");
--		return PTR_ERR(addr);
-+		return -ENOMEM;
- 	}
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index a3483484a5a2..acf0d3110357 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -975,8 +975,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
+ 						       nargs, index, &of_args);
+ 	if (ret < 0)
+ 		return ret;
+-	if (!args)
++	if (!args) {
++		of_node_put(of_args.np);
+ 		return 0;
++	}
  
- 	count = memory_read_from_buffer(val, bytes, &off, addr, available);
+ 	args->nargs = of_args.args_count;
+ 	args->fwnode = of_fwnode_handle(of_args.np);
 -- 
 2.35.1
 
