@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B385815C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BB7C433D6;
-	Mon,  5 Dec 2022 19:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ACF15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:17:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75A0C433C1;
+	Mon,  5 Dec 2022 19:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267864;
-	bh=JNbBR9TbNTyNLhN3lNv/n5ubonlD3iXy0XFRkO3t1aU=;
+	s=korg; t=1670267867;
+	bh=OF8pEkNBk/d0/mphGpsXEJKiV3JYU/7sqhO2Gw+GlDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8pCe5bBzOwnmA+lxvzPcvqzIwFQyghpss0gZXZmJAskoNyvJewDKo3cor+XlSZ97
-	 a/KHlNcMgyT2pcVbVYMI5VQKpT/+69yaU89VO5XJX7YjlKe3z6KKhKwsWu8p1PqkbC
-	 n3FQMn+vnPq6z6FJejTXOujex8YRnKfXI+uYdEtg=
+	b=Edxv1YTdwDVKnObIj3c3kosk8Lccdq8EUTWJ5qdeSpT8hTl2AZfbtB5VSm9OEVonV
+	 D7qqphcKfQdOPKNQgN5d2I+FONVcCJRKYguktTfcFhmfn8Rbl2VdONNYlWsxHIXMIL
+	 Gb8rJKY1hSPB25uErNG0pOGJ6gWMYsbhNpi19o3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gazzillo <paul@pgazz.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 41/77] iio: light: rpr0521: add missing Kconfig dependencies
-Date: Mon,  5 Dec 2022 20:09:32 +0100
-Message-Id: <20221205190802.331209407@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	stable@kernel.org
+Subject: [PATCH 4.14 73/77] x86/pm: Add enumeration check before spec MSRs save/restore setup
+Date: Mon,  5 Dec 2022 20:10:04 +0100
+Message-Id: <20221205190803.435193109@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190800.868551051@linuxfoundation.org>
 References: <20221205190800.868551051@linuxfoundation.org>
@@ -36,47 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Gazzillo <paul@pgazz.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 6ac12303572ef9ace5603c2c07f5f1b00a33f580 ]
+commit 50bcceb7724e471d9b591803889df45dcbb584bc upstream.
 
-Fix an implicit declaration of function error for rpr0521 under some configs
+pm_save_spec_msr() keeps a list of all the MSRs which _might_ need
+to be saved and restored at hibernate and resume. However, it has
+zero awareness of CPU support for these MSRs. It mostly works by
+unconditionally attempting to manipulate these MSRs and relying on
+rdmsrl_safe() being able to handle a #GP on CPUs where the support is
+unavailable.
 
-When CONFIG_RPR0521 is enabled without CONFIG_IIO_TRIGGERED_BUFFER,
-the build results in "implicit declaration of function" errors, e.g.,
-  drivers/iio/light/rpr0521.c:434:3: error: implicit declaration of function
-           'iio_trigger_poll_chained' [-Werror=implicit-function-declaration]
-    434 |   iio_trigger_poll_chained(data->drdy_trigger0);
-        |   ^~~~~~~~~~~~~~~~~~~~~~~~
+However, it's possible for reads (RDMSR) to be supported for a given MSR
+while writes (WRMSR) are not. In this case, msr_build_context() sees
+a successful read (RDMSR) and marks the MSR as valid. Then, later, a
+write (WRMSR) fails, producing a nasty (but harmless) error message.
+This causes restore_processor_state() to try and restore it, but writing
+this MSR is not allowed on the Intel Atom N2600 leading to:
 
-This fix adds select dependencies to RPR0521's configuration declaration.
+  unchecked MSR access error: WRMSR to 0x122 (tried to write 0x0000000000000002) \
+     at rIP: 0xffffffff8b07a574 (native_write_msr+0x4/0x20)
+  Call Trace:
+   <TASK>
+   restore_processor_state
+   x86_acpi_suspend_lowlevel
+   acpi_suspend_enter
+   suspend_devices_and_enter
+   pm_suspend.cold
+   state_store
+   kernfs_fop_write_iter
+   vfs_write
+   ksys_write
+   do_syscall_64
+   ? do_syscall_64
+   ? up_read
+   ? lock_is_held_type
+   ? asm_exc_page_fault
+   ? lockdep_hardirqs_on
+   entry_SYSCALL_64_after_hwframe
 
-Fixes: e12ffd241c00 ("iio: light: rpr0521 triggered buffer")
-Signed-off-by: Paul Gazzillo <paul@pgazz.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216678
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110214729.ls5ixav5kxpeftk7@device
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix this, add the corresponding X86_FEATURE bit for each MSR.  Avoid
+trying to manipulate the MSR when the feature bit is clear. This
+required adding a X86_FEATURE bit for MSRs that do not have one already,
+but it's a small price to pay.
+
+  [ bp: Move struct msr_enumeration inside the only function that uses it. ]
+  [Pawan: Resolve build issue in backport]
+
+Fixes: 73924ec4d560 ("x86/pm: Save the MSR validity status at context setup")
+Reported-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/c24db75d69df6e66c0465e13676ad3f2837a2ed8.1668539735.git.pawan.kumar.gupta@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/power/cpu.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
-index 2356ed9285df..67eda9643df5 100644
---- a/drivers/iio/light/Kconfig
-+++ b/drivers/iio/light/Kconfig
-@@ -237,6 +237,8 @@ config RPR0521
- 	tristate "ROHM RPR0521 ALS and proximity sensor driver"
- 	depends on I2C
- 	select REGMAP_I2C
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	help
- 	 Say Y here if you want to build support for ROHM's RPR0521
- 	 ambient light and proximity sensor device.
--- 
-2.35.1
-
+--- a/arch/x86/power/cpu.c
++++ b/arch/x86/power/cpu.c
+@@ -527,16 +527,23 @@ static int pm_cpu_check(const struct x86
+ 
+ static void pm_save_spec_msr(void)
+ {
+-	u32 spec_msr_id[] = {
+-		MSR_IA32_SPEC_CTRL,
+-		MSR_IA32_TSX_CTRL,
+-		MSR_TSX_FORCE_ABORT,
+-		MSR_IA32_MCU_OPT_CTRL,
+-		MSR_AMD64_LS_CFG,
+-		MSR_AMD64_DE_CFG,
++	struct msr_enumeration {
++		u32 msr_no;
++		u32 feature;
++	} msr_enum[] = {
++		{ MSR_IA32_SPEC_CTRL,	 X86_FEATURE_MSR_SPEC_CTRL },
++		{ MSR_IA32_TSX_CTRL,	 X86_FEATURE_MSR_TSX_CTRL },
++		{ MSR_TSX_FORCE_ABORT,	 X86_FEATURE_TSX_FORCE_ABORT },
++		{ MSR_IA32_MCU_OPT_CTRL, X86_FEATURE_SRBDS_CTRL },
++		{ MSR_AMD64_LS_CFG,	 X86_FEATURE_LS_CFG_SSBD },
++		{ MSR_AMD64_DE_CFG,	 X86_FEATURE_LFENCE_RDTSC },
+ 	};
++	int i;
+ 
+-	msr_build_context(spec_msr_id, ARRAY_SIZE(spec_msr_id));
++	for (i = 0; i < ARRAY_SIZE(msr_enum); i++) {
++		if (boot_cpu_has(msr_enum[i].feature))
++			msr_build_context(&msr_enum[i].msr_no, 1);
++	}
+ }
+ 
+ static int pm_check_save_msr(void)
 
 
