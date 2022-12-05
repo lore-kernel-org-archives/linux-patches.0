@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36E415C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48309C433C1;
-	Mon,  5 Dec 2022 19:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD9115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57BDC433C1;
+	Mon,  5 Dec 2022 19:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269012;
-	bh=HVkUZ2rzMh5VWpmjVtcJU2bR6kgvZg2agUNk+Nzz+HE=;
+	s=korg; t=1670269015;
+	bh=AfwohD0yn4JhvDaH2uE5ds3GZRuSAy+ceGJrej3V7YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzAptOXy4nJ6wO0gAlhvA8Q3DL+ccA3dIzeFaIyVohKcK/NI2BWaiU5asFlOZD+WB
-	 WsskOCXPJNKxzerSBaKmtCMldgAG84/kiSjKK9X67vIYPx0NqB2BSpaPEALL1N8/uU
-	 V3PrrRfQMgRiGuOVk6nvjkpGddnf1Wy2X6YLa9Cw=
+	b=BKFFvZnO22ndLODfZsFzVL3eKujaEDcd5I8o0KSZsJPtM3lTlzkoKk4HkjSVPh2ZR
+	 /lxZ6pL0ptd6Q1Ik4QUJDiBwSrJAXeMT1Naj0H/Aa0BktRS0Ua8O2f45+srdDaR6od
+	 3lui/R0DNJ2yFIOO94gWMjjAEeoNHBspSScnFnOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 093/120] KVM: x86/mmu: Fix race condition in direct_page_fault
-Date: Mon,  5 Dec 2022 20:10:33 +0100
-Message-Id: <20221205190809.364947544@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 094/120] ASoC: ops: Fix bounds check for _sx controls
+Date: Mon,  5 Dec 2022 20:10:34 +0100
+Message-Id: <20221205190809.394924883@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -34,103 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 47b0c2e4c220f2251fd8dcfbb44479819c715e15 upstream.
+[ Upstream commit 698813ba8c580efb356ace8dbf55f61dac6063a8 ]
 
-make_mmu_pages_available() must be called with mmu_lock held for write.
-However, if the TDP MMU is used, it will be called with mmu_lock held for
-read.
-This function does nothing unless shadow pages are used, so there is no
-race unless nested TDP is used.
-Since nested TDP uses shadow pages, old shadow pages may be zapped by this
-function even when the TDP MMU is enabled.
-Since shadow pages are never allocated by kvm_tdp_mmu_map(), a race
-condition can be avoided by not calling make_mmu_pages_available() if the
-TDP MMU is currently in use.
+For _sx controls the semantics of the max field is not the usual one, max
+is the number of steps rather than the maximum value. This means that our
+check in snd_soc_put_volsw_sx() needs to just check against the maximum
+value.
 
-I encountered this when repeatedly starting and stopping nested VM.
-It can be artificially caused by allocating a large number of nested TDP
-SPTEs.
-
-For example, the following BUG and general protection fault are caused in
-the host kernel.
-
-pte_list_remove: 00000000cd54fc10 many->many
-------------[ cut here ]------------
-kernel BUG at arch/x86/kvm/mmu/mmu.c:963!
-invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:pte_list_remove.cold+0x16/0x48 [kvm]
-Call Trace:
- <TASK>
- drop_spte+0xe0/0x180 [kvm]
- mmu_page_zap_pte+0x4f/0x140 [kvm]
- __kvm_mmu_prepare_zap_page+0x62/0x3e0 [kvm]
- kvm_mmu_zap_oldest_mmu_pages+0x7d/0xf0 [kvm]
- direct_page_fault+0x3cb/0x9b0 [kvm]
- kvm_tdp_page_fault+0x2c/0xa0 [kvm]
- kvm_mmu_page_fault+0x207/0x930 [kvm]
- npf_interception+0x47/0xb0 [kvm_amd]
- svm_invoke_exit_handler+0x13c/0x1a0 [kvm_amd]
- svm_handle_exit+0xfc/0x2c0 [kvm_amd]
- kvm_arch_vcpu_ioctl_run+0xa79/0x1780 [kvm]
- kvm_vcpu_ioctl+0x29b/0x6f0 [kvm]
- __x64_sys_ioctl+0x95/0xd0
- do_syscall_64+0x5c/0x90
-
-general protection fault, probably for non-canonical address
-0xdead000000000122: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:kvm_mmu_commit_zap_page.part.0+0x4b/0xe0 [kvm]
-Call Trace:
- <TASK>
- kvm_mmu_zap_oldest_mmu_pages+0xae/0xf0 [kvm]
- direct_page_fault+0x3cb/0x9b0 [kvm]
- kvm_tdp_page_fault+0x2c/0xa0 [kvm]
- kvm_mmu_page_fault+0x207/0x930 [kvm]
- npf_interception+0x47/0xb0 [kvm_amd]
-
-CVE: CVE-2022-45869
-Fixes: a2855afc7ee8 ("KVM: x86/mmu: Allow parallel page faults for the TDP MMU")
-Signed-off-by: Kazuki Takiguchi <takiguchi.kazuki171@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4f1e50d6a9cf9c1b ("ASoC: ops: Reject out of bounds values in snd_soc_put_volsw_sx()")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20220511134137.169575-1-broonie@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ sound/soc/soc-ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2357,6 +2357,7 @@ static bool __kvm_mmu_prepare_zap_page(s
- {
- 	bool list_unstable;
- 
-+	lockdep_assert_held_write(&kvm->mmu_lock);
- 	trace_kvm_mmu_prepare_zap_page(sp);
- 	++kvm->stat.mmu_shadow_zapped;
- 	*nr_zapped = mmu_zap_unsync_children(kvm, sp, invalid_list);
-@@ -4007,16 +4008,17 @@ static int direct_page_fault(struct kvm_
- 
- 	if (!is_noslot_pfn(pfn) && mmu_notifier_retry_hva(vcpu->kvm, mmu_seq, hva))
- 		goto out_unlock;
--	r = make_mmu_pages_available(vcpu);
--	if (r)
--		goto out_unlock;
- 
--	if (is_tdp_mmu_fault)
-+	if (is_tdp_mmu_fault) {
- 		r = kvm_tdp_mmu_map(vcpu, gpa, error_code, map_writable, max_level,
- 				    pfn, prefault);
--	else
-+	} else {
-+		r = make_mmu_pages_available(vcpu);
-+		if (r)
-+			goto out_unlock;
- 		r = __direct_map(vcpu, gpa, error_code, map_writable, max_level, pfn,
- 				 prefault, is_tdp);
-+	}
- 
- out_unlock:
- 	if (is_tdp_mmu_fault)
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index e73360e9de8f..b8a169d3b830 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -433,7 +433,7 @@ int snd_soc_put_volsw_sx(struct snd_kcontrol *kcontrol,
+ 	val = ucontrol->value.integer.value[0];
+ 	if (mc->platform_max && val > mc->platform_max)
+ 		return -EINVAL;
+-	if (val > max - min)
++	if (val > max)
+ 		return -EINVAL;
+ 	if (val < 0)
+ 		return -EINVAL;
+-- 
+2.35.1
+
 
 
