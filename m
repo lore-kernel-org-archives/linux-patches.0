@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6628715C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A1EC433D6;
-	Mon,  5 Dec 2022 19:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1472E15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:13:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C335C433D6;
+	Mon,  5 Dec 2022 19:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267593;
-	bh=G2uRRcro1qgz8hUm6Yt8P22bVtPB3nqqlqN1Ae4smrA=;
+	s=korg; t=1670267595;
+	bh=5JAYxFTZ/FIBz2NYZ8nI9VhhIJWlyK3LTDwkKAq0XRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJYAXvZ0AHtzhyNgcfkpWolXP3pBQm/dQCRWPsM2KdmqXZCG/ILS0LiGBhiNMCWyi
-	 hP59OC66/Lhk8L9YZXP1hgjD/ZEcfPr7gFIDFvHQ+yzxqz0lGP03ghw2f2W7vfuHiR
-	 iUItC/Jvr6Q3PbSYOcwzQ/y5L8QSoGt1E7sN0HVg=
+	b=NbjH0l/TI9B+mgAqq/vwhitqokRgAD+3WPPgeAMcq+zp+XddkMaffunEYW28xQR3F
+	 gpALZ0S1jMpw3q2DGgMnhm7Js6eDjY6AeRdUtqZoxIyhWrN10qoTFSTeBB/DNaYCzj
+	 rxrhq3wqYOawpuWHRPOpOuVgz9XRkZfXyJTz+Lyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
+	Denis Efremov <denis.e.efremov@oracle.com>,
+	Guenter Roeck <groeck@google.com>,
+	Martin Faltesek <mfaltesek@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 42/62] net: hsr: Fix potential use-after-free
-Date: Mon,  5 Dec 2022 20:09:39 +0100
-Message-Id: <20221205190759.693487791@linuxfoundation.org>
+Subject: [PATCH 4.9 16/62] nfc: st-nci: fix incorrect validating logic in EVT_TRANSACTION
+Date: Mon,  5 Dec 2022 20:09:13 +0100
+Message-Id: <20221205190758.706338676@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -35,47 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Martin Faltesek <mfaltesek@google.com>
 
-[ Upstream commit 7e177d32442b7ed08a9fa61b61724abc548cb248 ]
+[ Upstream commit c60c152230828825c06e62a8f1ce956d4b659266 ]
 
-The skb is delivered to netif_rx() which may free it, after calling this,
-dereferencing skb may trigger use-after-free.
+The first validation check for EVT_TRANSACTION has two different checks
+tied together with logical AND. One is a check for minimum packet length,
+and the other is for a valid aid_tag. If either condition is true (fails),
+then an error should be triggered. The fix is to change && to ||.
 
-Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221125075724.27912-1-yuehaibing@huawei.com
+Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
+Reviewed-by: Guenter Roeck <groeck@google.com>
+Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
+Signed-off-by: Martin Faltesek <mfaltesek@google.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nfc/st-nci/se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 04b5450c5a55..adfb49760678 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -207,17 +207,18 @@ static void hsr_deliver_master(struct sk_buff *skb, struct net_device *dev,
- 			       struct hsr_node *node_src)
- {
- 	bool was_multicast_frame;
--	int res;
-+	int res, recv_len;
+diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
+index 85df2e009310..e75929ff330e 100644
+--- a/drivers/nfc/st-nci/se.c
++++ b/drivers/nfc/st-nci/se.c
+@@ -338,7 +338,7 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+ 		 * AID          81      5 to 16
+ 		 * PARAMETERS   82      0 to 255
+ 		 */
+-		if (skb->len < NFC_MIN_AID_LENGTH + 2 &&
++		if (skb->len < NFC_MIN_AID_LENGTH + 2 ||
+ 		    skb->data[0] != NFC_EVT_TRANSACTION_AID_TAG)
+ 			return -EPROTO;
  
- 	was_multicast_frame = (skb->pkt_type == PACKET_MULTICAST);
- 	hsr_addr_subst_source(node_src, skb);
- 	skb_pull(skb, ETH_HLEN);
-+	recv_len = skb->len;
- 	res = netif_rx(skb);
- 	if (res == NET_RX_DROP) {
- 		dev->stats.rx_dropped++;
- 	} else {
- 		dev->stats.rx_packets++;
--		dev->stats.rx_bytes += skb->len;
-+		dev->stats.rx_bytes += recv_len;
- 		if (was_multicast_frame)
- 			dev->stats.multicast++;
- 	}
 -- 
 2.35.1
 
