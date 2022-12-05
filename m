@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E7715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E66C433D6;
-	Mon,  5 Dec 2022 19:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C996D15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA59C433D6;
+	Mon,  5 Dec 2022 19:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268508;
-	bh=kIpJMLM/LrtdW5yBBs5gPuNoUEjjCs/wUBL/+h258fo=;
+	s=korg; t=1670268510;
+	bh=ipSJSQkL1kzU648WQdGvF8202dy1RqdSgpRc+thfUTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUNjjMYUnSSsO2sEI44IsvRubNNoxB0+cqOz8enZa/xwNcvrw3BTgZR/SKJwMzzI+
-	 j/24V/7PtaqubeNPUw2zSQQdhVOxe27SxJyhX9IU4PERwtCReRYsog0Jix3JskwDoa
-	 IPglkroF0oqnz4Vkh3gI4yqR0Y04wv5C2S35SuHw=
+	b=qjW/Zv51zbaVmFmklMd/TPy+qbLdTxJT2sUXkAGVkS6lGdpMsuclV8cMPFSsEwkMS
+	 ZZv7icHm7E/1J+OTcmaHncHRb0KsGm1ck4DPaqqk1I10tcYVjkU4Z6AZEuWcxoBLd4
+	 OW0uz01aw0DTp09d1kGaA2z9YPaX8wWKku5SK6CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <cloehle@hyperstone.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 089/124] mmc: core: Fix ambiguous TRIM and DISCARD arg
-Date: Mon,  5 Dec 2022 20:09:55 +0100
-Message-Id: <20221205190810.945728840@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 121/124] Revert "clocksource/drivers/riscv: Events are stopped during CPU suspend"
+Date: Mon,  5 Dec 2022 20:10:27 +0100
+Message-Id: <20221205190811.886494481@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -35,68 +37,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Löhle <CLoehle@hyperstone.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit 489d144563f23911262a652234b80c70c89c978b upstream.
+[ Upstream commit d9f15a9de44affe733e34f93bc184945ba277e6d ]
 
-Clean up the MMC_TRIM_ARGS define that became ambiguous with DISCARD
-introduction.  While at it, let's fix one usage where MMC_TRIM_ARGS falsely
-included DISCARD too.
+This reverts commit 232ccac1bd9b5bfe73895f527c08623e7fa0752d.
 
-Fixes: b3bf915308ca ("mmc: core: new discard feature support at eMMC v4.5")
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/11376b5714964345908f3990f17e0701@hyperstone.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On the subject of suspend, the RISC-V SBI spec states:
+
+  This does not cover whether any given events actually reach the hart or
+  not, just what the hart will do if it receives an event. On PolarFire
+  SoC, and potentially other SiFive based implementations, events from the
+  RISC-V timer do reach a hart during suspend. This is not the case for the
+  implementation on the Allwinner D1 - there timer events are not received
+  during suspend.
+
+To fix this, the CLOCK_EVT_FEAT_C3STOP (mis)feature was enabled for the
+timer driver - but this has broken both RCU stall detection and timers
+generally on PolarFire SoC and potentially other SiFive based
+implementations.
+
+If an AXI read to the PCIe controller on PolarFire SoC times out, the
+system will stall, however, with CLOCK_EVT_FEAT_C3STOP active, the system
+just locks up without RCU stalling:
+
+	io scheduler mq-deadline registered
+	io scheduler kyber registered
+	microchip-pcie 2000000000.pcie: host bridge /soc/pcie@2000000000 ranges:
+	microchip-pcie 2000000000.pcie:      MEM 0x2008000000..0x2087ffffff -> 0x0008000000
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: axi read request error
+	microchip-pcie 2000000000.pcie: axi read timeout
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: sec error in pcie2axi buffer
+	microchip-pcie 2000000000.pcie: ded error in pcie2axi buffer
+	Freeing initrd memory: 7332K
+
+Similarly issues were reported with clock_nanosleep() - with a test app
+that sleeps each cpu for 6, 5, 4, 3 ms respectively, HZ=250 & the blamed
+commit in place, the sleep times are rounded up to the next jiffy:
+
+== CPU: 1 ==      == CPU: 2 ==      == CPU: 3 ==      == CPU: 4 ==
+Mean: 7.974992    Mean: 7.976534    Mean: 7.962591    Mean: 3.952179
+Std Dev: 0.154374 Std Dev: 0.156082 Std Dev: 0.171018 Std Dev: 0.076193
+Hi: 9.472000      Hi: 10.495000     Hi: 8.864000      Hi: 4.736000
+Lo: 6.087000      Lo: 6.380000      Lo: 4.872000      Lo: 3.403000
+Samples: 521      Samples: 521      Samples: 521      Samples: 521
+
+Fortunately, the D1 has a second timer, which is "currently used in
+preference to the RISC-V/SBI timer driver" so a revert here does not
+hurt operation of D1 in its current form.
+
+Ultimately, a DeviceTree property (or node) will be added to encode the
+behaviour of the timers, but until then revert the addition of
+CLOCK_EVT_FEAT_C3STOP.
+
+Fixes: 232ccac1bd9b ("clocksource/drivers/riscv: Events are stopped during CPU suspend")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/linux-riscv/YzYTNQRxLr7Q9JR0@spud/
+Link: https://github.com/riscv-non-isa/riscv-sbi-doc/issues/98/
+Link: https://lore.kernel.org/linux-riscv/bf6d3b1f-f703-4a25-833e-972a44a04114@sholland.org/
+Link: https://lore.kernel.org/r/20221122121620.3522431-1-conor.dooley@microchip.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/core.c |    9 +++++++--
- include/linux/mmc/mmc.h |    2 +-
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/clocksource/timer-riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -1484,6 +1484,11 @@ void mmc_init_erase(struct mmc_card *car
- 		card->pref_erase = 0;
- }
- 
-+static bool is_trim_arg(unsigned int arg)
-+{
-+	return (arg & MMC_TRIM_OR_DISCARD_ARGS) && arg != MMC_DISCARD_ARG;
-+}
-+
- static unsigned int mmc_mmc_erase_timeout(struct mmc_card *card,
- 				          unsigned int arg, unsigned int qty)
- {
-@@ -1766,7 +1771,7 @@ int mmc_erase(struct mmc_card *card, uns
- 	    !(card->ext_csd.sec_feature_support & EXT_CSD_SEC_ER_EN))
- 		return -EOPNOTSUPP;
- 
--	if (mmc_card_mmc(card) && (arg & MMC_TRIM_ARGS) &&
-+	if (mmc_card_mmc(card) && is_trim_arg(arg) &&
- 	    !(card->ext_csd.sec_feature_support & EXT_CSD_SEC_GB_CL_EN))
- 		return -EOPNOTSUPP;
- 
-@@ -1796,7 +1801,7 @@ int mmc_erase(struct mmc_card *card, uns
- 	 * identified by the card->eg_boundary flag.
- 	 */
- 	rem = card->erase_size - (from % card->erase_size);
--	if ((arg & MMC_TRIM_ARGS) && (card->eg_boundary) && (nr > rem)) {
-+	if ((arg & MMC_TRIM_OR_DISCARD_ARGS) && card->eg_boundary && nr > rem) {
- 		err = mmc_do_erase(card, from, from + rem - 1, arg);
- 		from += rem;
- 		if ((err) || (to <= from))
---- a/include/linux/mmc/mmc.h
-+++ b/include/linux/mmc/mmc.h
-@@ -451,7 +451,7 @@ static inline bool mmc_ready_for_data(u3
- #define MMC_SECURE_TRIM1_ARG		0x80000001
- #define MMC_SECURE_TRIM2_ARG		0x80008000
- #define MMC_SECURE_ARGS			0x80000000
--#define MMC_TRIM_ARGS			0x00008001
-+#define MMC_TRIM_OR_DISCARD_ARGS	0x00008003
- 
- #define mmc_driver_type_mask(n)		(1 << (n))
- 
+diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
+index 969a552da8d2..a0d66fabf073 100644
+--- a/drivers/clocksource/timer-riscv.c
++++ b/drivers/clocksource/timer-riscv.c
+@@ -51,7 +51,7 @@ static int riscv_clock_next_event(unsigned long delta,
+ static unsigned int riscv_clock_event_irq;
+ static DEFINE_PER_CPU(struct clock_event_device, riscv_clock_event) = {
+ 	.name			= "riscv_timer_clockevent",
+-	.features		= CLOCK_EVT_FEAT_ONESHOT | CLOCK_EVT_FEAT_C3STOP,
++	.features		= CLOCK_EVT_FEAT_ONESHOT,
+ 	.rating			= 100,
+ 	.set_next_event		= riscv_clock_next_event,
+ };
+-- 
+2.35.1
+
 
 
