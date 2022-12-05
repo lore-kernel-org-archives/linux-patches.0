@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CEC15C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9A2C433C1;
-	Mon,  5 Dec 2022 19:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820D015C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C4FC433D6;
+	Mon,  5 Dec 2022 19:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268600;
-	bh=dWgjHwVtLWfUTHhENSWV7MwI89aTYakMCqRYgn6doXo=;
+	s=korg; t=1670268603;
+	bh=I1QGuDm862j4cra1z8D3IlGkDL3VtMzSF7tKom610I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TA+BlrGojUalIiEalOcFDYZy556vYLTpoJHFtLwBFvI5hRoPOpoxWet6LX2LASwRa
-	 FFMRkC8m/i5FcfoCU0v6d9c7XOtj7EMaonANOH8a4XxAvknOScPA/TtA8yi0KhelKJ
-	 ceJgHkkzzRMHeOC6OtoQ2TFrUYFA0x2gpUIzik4A=
+	b=rQhXrx8kptDJFFu4uWvy/VKcKga9jwlzhYiV0DTe5Wriv5HSF6Qwkb6P4JLco+ymx
+	 smpHeEoyMhQGhqlVozzq6/5sh6gTbDYkRdBB/AHJTQBWa7uA/4F5Flb8Ya691PEylL
+	 44S5aEuB54z3LXIsfCW3YQ17j+4MnKUiG3c3xH/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
-Subject: [PATCH 5.10 36/92] wifi: cfg80211: fix buffer overflow in elem comparison
-Date: Mon,  5 Dec 2022 20:09:49 +0100
-Message-Id: <20221205190804.657087074@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Andrew Davis <afd@ti.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 10/92] iio: health: afe4403: Fix oob read in afe4403_read_raw
+Date: Mon,  5 Dec 2022 20:09:23 +0100
+Message-Id: <20221205190803.822606147@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,36 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 9f16b5c82a025cd4c864737409234ddc44fb166a ]
+[ Upstream commit 58143c1ed5882c138a3cd2251a336fc8755f23d9 ]
 
-For vendor elements, the code here assumes that 5 octets
-are present without checking. Since the element itself is
-already checked to fit, we only need to check the length.
+KASAN report out-of-bounds read as follows:
 
-Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
-Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+BUG: KASAN: global-out-of-bounds in afe4403_read_raw+0x42e/0x4c0
+Read of size 4 at addr ffffffffc02ac638 by task cat/279
+
+Call Trace:
+ afe4403_read_raw
+ iio_read_channel_info
+ dev_attr_show
+
+The buggy address belongs to the variable:
+ afe4403_channel_leds+0x18/0xffffffffffffe9e0
+
+This issue can be reproduced by singe command:
+
+ $ cat /sys/bus/spi/devices/spi0.0/iio\:device0/in_intensity6_raw
+
+The array size of afe4403_channel_leds is less than channels, so access
+with chan->address cause OOB read in afe4403_read_raw. Fix it by moving
+access before use it.
+
+Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20221107151946.89260-1-weiyongjun@huaweicloud.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/health/afe4403.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 15119c49c093..8102ee7b2047 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -330,7 +330,8 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
- 			 * determine if they are the same ie.
- 			 */
- 			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
--				if (!memcmp(tmp_old + 2, tmp + 2, 5)) {
-+				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
-+				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
- 					/* same vendor ie, copy from
- 					 * subelement
- 					 */
+diff --git a/drivers/iio/health/afe4403.c b/drivers/iio/health/afe4403.c
+index 38734e4ce360..82d01ac36128 100644
+--- a/drivers/iio/health/afe4403.c
++++ b/drivers/iio/health/afe4403.c
+@@ -245,14 +245,14 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 			    int *val, int *val2, long mask)
+ {
+ 	struct afe4403_data *afe = iio_priv(indio_dev);
+-	unsigned int reg = afe4403_channel_values[chan->address];
+-	unsigned int field = afe4403_channel_leds[chan->address];
++	unsigned int reg, field;
+ 	int ret;
+ 
+ 	switch (chan->type) {
+ 	case IIO_INTENSITY:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			reg = afe4403_channel_values[chan->address];
+ 			ret = afe4403_read(afe, reg, val);
+ 			if (ret)
+ 				return ret;
+@@ -262,6 +262,7 @@ static int afe4403_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CURRENT:
+ 		switch (mask) {
+ 		case IIO_CHAN_INFO_RAW:
++			field = afe4403_channel_leds[chan->address];
+ 			ret = regmap_field_read(afe->fields[field], val);
+ 			if (ret)
+ 				return ret;
 -- 
 2.35.1
 
