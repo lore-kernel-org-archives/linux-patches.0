@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFEE15C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629A0C433C1;
-	Mon,  5 Dec 2022 19:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87915C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EEEC433D6;
+	Mon,  5 Dec 2022 19:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267541;
-	bh=IujyxWxKrFtKjPTVw/6DEKMPkl1/h2lXQc0CO1TROmk=;
+	s=korg; t=1670267544;
+	bh=CmaQ+XemFDcRWW+AsvxWL6/iIP7hOak1pHqnum1gQPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2AqNX7NruoW7X6dIiNVmEDKOIlVn6mIedDTnnt1tlIvRa/Ik0sPZIA97FmLelOZ8
-	 f4MJs7WjRmsWgClWqcg/8iFaHoHEI2znAtqUL+c0v6wl0Hp21b8qK7o+3ZLWdbdZhp
-	 rujd4ovs8RmsM8jEjx4xYc5WE16Dcuj8Nn5Zo4Is=
+	b=OKeaaFgdYI+N4XWUEvq75ckYSNTODw9h+z/Med0ecLRtD4wTi4l3Jkr+KE71Hr1sN
+	 U/kmrOJyGzg50t/3fukS0SGeXcUEDQNXhRcjV5JfKGdxh/TGkp7MJ55u8OUj/o5MjE
+	 SW2MiJAGMtrnLdvG7NLswr6uoobwgNeEfMu4925Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	syzbot+77e4f0...@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 24/62] nilfs2: fix nilfs_sufile_mark_dirty() not set segment usage as dirty
-Date: Mon,  5 Dec 2022 20:09:21 +0100
-Message-Id: <20221205190759.010603342@linuxfoundation.org>
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Su Bao Cheng <baocheng.su@siemens.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 25/62] serial: 8250: 8250_omap: Avoid RS485 RTS glitch on ->set_termios()
+Date: Mon,  5 Dec 2022 20:09:22 +0100
+Message-Id: <20221205190759.046900279@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190758.073114639@linuxfoundation.org>
 References: <20221205190758.073114639@linuxfoundation.org>
@@ -37,77 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 512c5ca01a3610ab14ff6309db363de51f1c13a6 upstream.
+[ Upstream commit 038ee49fef18710bedd38b531d173ccd746b2d8d ]
 
-When extending segments, nilfs_sufile_alloc() is called to get an
-unassigned segment, then mark it as dirty to avoid accidentally allocating
-the same segment in the future.
+RS485-enabled UART ports on TI Sitara SoCs with active-low polarity
+exhibit a Transmit Enable glitch on ->set_termios():
 
-But for some special cases such as a corrupted image it can be unreliable.
-If such corruption of the dirty state of the segment occurs, nilfs2 may
-reallocate a segment that is in use and pick the same segment for writing
-twice at the same time.
+omap8250_restore_regs(), which is called from omap_8250_set_termios(),
+sets the TCRTLR bit in the MCR register and clears all other bits,
+including RTS.  If RTS uses active-low polarity, it is now asserted
+for no reason.
 
-This will cause the problem reported by syzkaller:
-https://syzkaller.appspot.com/bug?id=c7c4748e11ffcc367cef04f76e02e931833cbd24
+The TCRTLR bit is subsequently cleared by writing up->mcr to the MCR
+register.  That variable is always zero, so the RTS bit is still cleared
+(incorrectly so if RTS is active-high).
 
-This case started with segbuf1.segnum = 3, nextnum = 4 when constructed.
-It supposed segment 4 has already been allocated and marked as dirty.
+(up->mcr is not, as one might think, a cache of the MCR register's
+current value.  Rather, it only caches a single bit of that register,
+the AFE bit.  And it only does so if the UART supports the AFE bit,
+which OMAP does not.  For details see serial8250_do_set_termios() and
+serial8250_do_set_mctrl().)
 
-However the dirty state was corrupted and segment 4 usage was not dirty.
-For the first time nilfs_segctor_extend_segments() segment 4 was allocated
-again, which made segbuf2 and next segbuf3 had same segment 4.
+Finally at the end of omap8250_restore_regs(), the MCR register is
+restored (and RTS deasserted) by a call to up->port.ops->set_mctrl()
+(which equals serial8250_set_mctrl()) and serial8250_em485_stop_tx().
 
-sb_getblk() will get same bh for segbuf2 and segbuf3, and this bh is added
-to both buffer lists of two segbuf.  It makes the lists broken which
-causes NULL pointer dereference.
+So there's an RTS glitch between setting TCRTLR and calling
+serial8250_em485_stop_tx().  Avoid by using a read-modify-write
+when setting TCRTLR.
 
-Fix the problem by setting usage as dirty every time in
-nilfs_sufile_mark_dirty(), which is called during constructing current
-segment to be written out and before allocating next segment.
+While at it, drop a redundant initialization of up->mcr.  As explained
+above, the variable isn't used by the driver and it is already
+initialized to zero because it is part of the static struct
+serial8250_ports[] declared in 8250_core.c.  (Static structs are
+initialized to zero per section 6.7.8 nr. 10 of the C99 standard.)
 
-[chenzhongjin@huawei.com: add lock protection per Ryusuke]
-  Link: https://lkml.kernel.org/r/20221121091141.214703-1-chenzhongjin@huawei.com
-Link: https://lkml.kernel.org/r/20221118063304.140187-1-chenzhongjin@huawei.com
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reported-by: <syzbot+77e4f0...@syzkaller.appspotmail.com>
-Reported-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Su Bao Cheng <baocheng.su@siemens.com>
+Tested-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/6554b0241a2c7fd50f32576fdbafed96709e11e8.1664278942.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/sufile.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/8250/8250_omap.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -507,14 +507,22 @@ void nilfs_sufile_do_free(struct inode *
- int nilfs_sufile_mark_dirty(struct inode *sufile, __u64 segnum)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index d5962162c590..b37e6619af9c 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -242,6 +242,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
  {
- 	struct buffer_head *bh;
-+	void *kaddr;
-+	struct nilfs_segment_usage *su;
- 	int ret;
+ 	struct omap8250_priv *priv = up->port.private_data;
+ 	struct uart_8250_dma	*dma = up->dma;
++	u8 mcr = serial8250_in_MCR(up);
  
-+	down_write(&NILFS_MDT(sufile)->mi_sem);
- 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
- 	if (!ret) {
- 		mark_buffer_dirty(bh);
- 		nilfs_mdt_mark_dirty(sufile);
-+		kaddr = kmap_atomic(bh->b_page);
-+		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
-+		nilfs_segment_usage_set_dirty(su);
-+		kunmap_atomic(kaddr);
- 		brelse(bh);
- 	}
-+	up_write(&NILFS_MDT(sufile)->mi_sem);
- 	return ret;
- }
+ 	if (dma && dma->tx_running) {
+ 		/*
+@@ -258,7 +259,7 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
+ 	serial_out(up, UART_EFR, UART_EFR_ECB);
  
+ 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_A);
+-	serial8250_out_MCR(up, UART_MCR_TCRTLR);
++	serial8250_out_MCR(up, mcr | UART_MCR_TCRTLR);
+ 	serial_out(up, UART_FCR, up->fcr);
+ 
+ 	omap8250_update_scr(up, priv);
+@@ -274,7 +275,8 @@ static void omap8250_restore_regs(struct uart_8250_port *up)
+ 	serial_out(up, UART_LCR, 0);
+ 
+ 	/* drop TCR + TLR access, we setup XON/XOFF later */
+-	serial8250_out_MCR(up, up->mcr);
++	serial8250_out_MCR(up, mcr);
++
+ 	serial_out(up, UART_IER, up->ier);
+ 
+ 	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
+@@ -583,7 +585,6 @@ static int omap_8250_startup(struct uart_port *port)
+ 
+ 	pm_runtime_get_sync(port->dev);
+ 
+-	up->mcr = 0;
+ 	serial_out(up, UART_FCR, UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
+ 
+ 	serial_out(up, UART_LCR, UART_LCR_WLEN8);
+-- 
+2.35.1
+
 
 
