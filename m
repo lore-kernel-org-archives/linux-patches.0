@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B314515C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCC1C433C1;
-	Mon,  5 Dec 2022 19:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B58915C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D76C433C1;
+	Mon,  5 Dec 2022 19:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269204;
-	bh=WkzsVDakf+ceKLtHj1lKScTc59qjA0Fj/LAdq+YV294=;
+	s=korg; t=1670269207;
+	bh=8wfRChrTQwzgxhI7pfWZUMcVW6opy72oA2rrv+A24OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnOdIXbhrmFiWJUiqDHOhQigwtkpy063V55vaeQUZTIIfP+dqF5u2qQbXPXskFynv
-	 UGRG1D/2ZfqpT+N5OSVZUKP2Iu/PaSDy2wK2N3KrCW5umyiiOVDbyTmG2PaJditgEL
-	 ln/hsMB2u9MaqlDxUCj7SHf7ndIVfcZ6lfZuDxx0=
+	b=UcB0yeTWhzWzfMjxxgU7kKHvtbBDv/M7oimVqUKX7xZnaYedPPXpSKM+u5FyInGjV
+	 onXrwcXHqBseYD6hw016U+sODIxdppu7OPChLZHOC1SW2rqe0ite3/L9+cpBtUNlNL
+	 qkwCkmDXnQyazWqfoDh4Bm1l7RQl6AWPzBti/pL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Efremov <denis.e.efremov@oracle.com>,
-	Guenter Roeck <groeck@google.com>,
-	Martin Faltesek <mfaltesek@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/153] nfc: st-nci: fix memory leaks in EVT_TRANSACTION
-Date: Mon,  5 Dec 2022 20:09:25 +0100
-Message-Id: <20221205190809.898475748@linuxfoundation.org>
+Subject: [PATCH 5.4 042/153] net: thunderx: Fix the ACPI memory leak
+Date: Mon,  5 Dec 2022 20:09:26 +0100
+Message-Id: <20221205190809.929253793@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -38,40 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Faltesek <mfaltesek@google.com>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit 440f2ae9c9f06e26f5dcea697a53717fc61a318c ]
+[ Upstream commit 661e5ebbafd26d9d2e3c749f5cf591e55c7364f5 ]
 
-Error path does not free previously allocated memory. Add devm_kfree() to
-the failure path.
+The ACPI buffer memory (string.pointer) should be freed as the buffer is
+not used after returning from bgx_acpi_match_id(), free it to prevent
+memory leak.
 
-Reported-by: Denis Efremov <denis.e.efremov@oracle.com>
-Reviewed-by: Guenter Roeck <groeck@google.com>
-Fixes: 5d1ceb7f5e56 ("NFC: st21nfcb: Add HCI transaction event support")
-Signed-off-by: Martin Faltesek <mfaltesek@google.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 46b903a01c05 ("net, thunder, bgx: Add support to get MAC address from ACPI.")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Link: https://lore.kernel.org/r/20221123082237.1220521-1-liaoyu15@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/st-nci/se.c | 4 +++-
+ drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/st-nci/se.c b/drivers/nfc/st-nci/se.c
-index 75f9a754b7eb..0cd70cd680dc 100644
---- a/drivers/nfc/st-nci/se.c
-+++ b/drivers/nfc/st-nci/se.c
-@@ -341,8 +341,10 @@ static int st_nci_hci_connectivity_event_received(struct nci_dev *ndev,
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index 76ff42ec3ae5..a34c33e8a8ad 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1438,8 +1438,10 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
+ 		return AE_OK;
+ 	}
  
- 		/* Check next byte is PARAMETERS tag (82) */
- 		if (skb->data[transaction->aid_len + 2] !=
--		    NFC_EVT_TRANSACTION_PARAMS_TAG)
-+		    NFC_EVT_TRANSACTION_PARAMS_TAG) {
-+			devm_kfree(dev, transaction);
- 			return -EPROTO;
-+		}
+-	if (strncmp(string.pointer, bgx_sel, 4))
++	if (strncmp(string.pointer, bgx_sel, 4)) {
++		kfree(string.pointer);
+ 		return AE_OK;
++	}
  
- 		transaction->params_len = skb->data[transaction->aid_len + 3];
- 		memcpy(transaction->params, skb->data +
+ 	acpi_walk_namespace(ACPI_TYPE_DEVICE, handle, 1,
+ 			    bgx_acpi_register_phy, NULL, bgx, NULL);
 -- 
 2.35.1
 
