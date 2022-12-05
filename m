@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE08715C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403D3C433D7;
-	Mon,  5 Dec 2022 19:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771D415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2E3C433C1;
+	Mon,  5 Dec 2022 19:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268262;
-	bh=ej+v5aqHDtEuMwUrK7dcJ8XNPjBxut/nU5tAETQ4ghk=;
+	s=korg; t=1670268265;
+	bh=bx2QDi+70ZC7WKXvJ5K7xand1bn0lSxKl62Tv4c0qWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUG2XRBRZ0nCdscq2yWUp9CYCdeZyJM7+AIqyZpRKyK4wbDjjADKVrNggA+9II0Ju
-	 de/xFfoMHV0FqJDBoNb9agv/yGYUWI8ROpHhelGpvpTCrtFz2mGhD1eI3O8iSjopJA
-	 Vi4BYxeNaNriLVSBVfgYWbvgATZHC8w8KJzU1CS4=
+	b=FtVZVD56EQTdT30Ic7oyb1g8aOH+YUPjx6NzKrRwDjKZN2kRP12bxE3IIWwf6WAn6
+	 JuXboJiN+sHqjbu4TCCwFWUaKUBYtQ0FxKonGcACQLiKwHguQk4pnMIAW9Pd8UbHoj
+	 fPz9FTEWydNXI+oB9tnZnmLKglRiwFWWSxxQ4tUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.0 030/124] i40e: Fix error handling in i40e_init_module()
-Date: Mon,  5 Dec 2022 20:08:56 +0100
-Message-Id: <20221205190809.302950985@linuxfoundation.org>
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 039/124] can: sja1000_isa: sja1000_isa_probe(): add missing free_sja1000dev()
+Date: Mon,  5 Dec 2022 20:09:05 +0100
+Message-Id: <20221205190809.556468038@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -37,56 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 479dd06149425b9e00477f52200872587af76a48 ]
+[ Upstream commit 92dfd9310a71d28cefe6a2d5174d43fab240e631 ]
 
-i40e_init_module() won't free the debugfs directory created by
-i40e_dbg_init() when pci_register_driver() failed. Add fail path to
-call i40e_dbg_exit() to remove the debugfs entries to prevent the bug.
+Add the missing free_sja1000dev() before return from
+sja1000_isa_probe() in the register_sja1000dev() error handling case.
 
-i40e: Intel(R) Ethernet Connection XL710 Network Driver
-i40e: Copyright (c) 2013 - 2019 Intel Corporation.
-debugfs: Directory 'i40e' with parent '/' already present!
+In addition, remove blanks before goto labels.
 
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 2a6ba39ad6a2 ("can: sja1000: legacy SJA1000 ISA bus driver")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Link: https://lore.kernel.org/all/1668168521-5540-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/can/sja1000/sja1000_isa.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index b3336d31f8a9..023685cca2c1 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16652,6 +16652,8 @@ static struct pci_driver i40e_driver = {
-  **/
- static int __init i40e_init_module(void)
- {
-+	int err;
-+
- 	pr_info("%s: %s\n", i40e_driver_name, i40e_driver_string);
- 	pr_info("%s: %s\n", i40e_driver_name, i40e_copyright);
- 
-@@ -16669,7 +16671,14 @@ static int __init i40e_init_module(void)
+diff --git a/drivers/net/can/sja1000/sja1000_isa.c b/drivers/net/can/sja1000/sja1000_isa.c
+index d513fac50718..db3e767d5320 100644
+--- a/drivers/net/can/sja1000/sja1000_isa.c
++++ b/drivers/net/can/sja1000/sja1000_isa.c
+@@ -202,22 +202,24 @@ static int sja1000_isa_probe(struct platform_device *pdev)
+ 	if (err) {
+ 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
+ 			DRV_NAME, err);
+-		goto exit_unmap;
++		goto exit_free;
  	}
  
- 	i40e_dbg_init();
--	return pci_register_driver(&i40e_driver);
-+	err = pci_register_driver(&i40e_driver);
-+	if (err) {
-+		destroy_workqueue(i40e_wq);
-+		i40e_dbg_exit();
-+		return err;
-+	}
-+
-+	return 0;
+ 	dev_info(&pdev->dev, "%s device registered (reg_base=0x%p, irq=%d)\n",
+ 		 DRV_NAME, priv->reg_base, dev->irq);
+ 	return 0;
+ 
+- exit_unmap:
++exit_free:
++	free_sja1000dev(dev);
++exit_unmap:
+ 	if (mem[idx])
+ 		iounmap(base);
+- exit_release:
++exit_release:
+ 	if (mem[idx])
+ 		release_mem_region(mem[idx], iosize);
+ 	else
+ 		release_region(port[idx], iosize);
+- exit:
++exit:
+ 	return err;
  }
- module_init(i40e_init_module);
  
 -- 
 2.35.1
