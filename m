@@ -1,146 +1,62 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from cmx-mtlrgo002.bell.net (mta-mtl-001.bell.net [209.71.208.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A917C
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 20:36:49 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3E8535C01D4;
-	Mon,  5 Dec 2022 15:36:48 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Mon, 05 Dec 2022 15:36:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1670272608; x=1670359008; bh=AR3KlDoBcI
-	VyuBEUEFyxxsbbBAfGvBk7uczmbc+6RoU=; b=rNZFyehtlA9O7wED4hjwZ3yL8V
-	yNLbEfvjiA7iC3UxaILI6EgB/fPl+edvdn+QYFc4NEdDkTdhO7SxwcCr2N6u9P2j
-	kVUNggAyLavTQ0dhA1jdkfe2hLwQA1Rhnp4zTY0Kqd2CDuFDW7Ik3PgsvUboTuMa
-	KAAgZODfg89j9IcyZgLpwDpauPockCj2le43+rpncsZkxNM8p7y7jczvjoHoPI9j
-	XMf0lIYPc0uZeyoyjRM8BZstYvfh4E8sK6OptG6RKOFM5eKbv6NflkPmSW/3OD6l
-	bv7AoJbNGUGYH1yGJeHNoSmOzRbRNgrnGP0WtfVESqkSclg8Av8S2Ap32zAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1670272608; x=1670359008; bh=AR3KlDoBcIVyuBEUEFyxxsbbBAfG
-	vBk7uczmbc+6RoU=; b=Q7tWuABfK0W347C3JeaYWRUEm0kz6f7g+9m1i9OH3RIZ
-	cd+/nrCnZI532QtEMSXRoo1H09AV/yY2X9oNKblHX3fU4Y9/+MDrJ0L3Zdzkjvjn
-	DL6ttO68ia3jHfvVGPWF2kh4jEzPVI++olCmIke3H2D+Mp27bb+oxvK+RrRPnlPU
-	2fS/YSM30tvcamtyN1edSR89AXtNZ4qZEQtWvDhp6zaFJQF6jrek/My8DeS8/2Ku
-	Byaxf0SoOn8AwKPdnwYTCgRIgqA1RP2kJZMdakReVedRSljQ6VPmADocmfhLQqVX
-	mKp/OJFFC9hWTLMVT9P71eskEvn28w5C6HOavQ1rUw==
-X-ME-Sender: <xms:X1aOY898LBU4HYijddReu34kEdUAn_gDL51upSN_76YJ-Rpx7TXdow>
-    <xme:X1aOY0s63dRJkUubUktrVLIybhwmGHEJqjncY62MuLjy9j-sc50PQ9tAws7gLGevT
-    uYEg4mmH3Ae8rL8MM4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeggddugedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:X1aOYyCMFSN2BS-11M_4rJPNO9_TNM4pQ6xp3Dsaq51hW5IvC1J1_Q>
-    <xmx:X1aOY8fVdH787q8KB8nzV2SZxJCwhe7lx-foGPJBXt8t4I8nXG0yoA>
-    <xmx:X1aOYxOUh7E42k66ZtC2F_StrBCfp24rwzASg6miQFJxseIl-9uIiw>
-    <xmx:YFaOY00MLmdU1HOh_0C4GbLI0I5jnkJnfBj8FgvNuzCJ2qpKsFo08w>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id C2A9CB60086; Mon,  5 Dec 2022 15:36:47 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C927C
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 20:56:31 +0000 (UTC)
+X-RG-CM-BuS: 0
+X-RG-CM-SC: 0
+X-RG-CM: Clean
+X-Originating-IP: [174.95.50.166]
+X-RG-Env-Sender: dave.anglin@bell.net
+X-RG-Rigid: 637E567F025B31A4
+X-CM-Envelope: MS4xfHWLsyQnvV+6wW7Y13BGOKSxPgedrECV41AJlFvaH8ie8l9s3Mc0YfG+IQQUPiWP3+3tDh5hjUaFHmA6Ug+ATliWmb7hK6IJ4WpIkyY0or12KkGHOJB3
+ pZ1idXT1LfGvYlTHm7ETCxx6+o5DeGHuWjMIxXCxsMZ36amqDM+qxZ/jEBje4IRk2wJ/OiEyr/1dFJer1amtGRUuhvQ6ri56n5Wdwy/omj/cBrmxMAM2XorF
+ niVc2FoOaC/iYwazbWf1nWe2a4byfS0ARb+7t8IIcPRR6jeHwHfr5jNl36BL1TKiFU/JVAZ4/+7ulNuh/0cwk0rrUJhaComME1iH60Z6ZWASp/ocRnnZ0nQO
+ XOrkK7YcPDZDBatE0Vwgqk0VbJBj29iCl0u2gymwntTY4Px+QIwbCc8wGvtYjTYMR5aWSG4CPZ3S903whWXpvDAL9+UtfoULeD8Eo+BB32YRDcZ2cJA=
+X-CM-Analysis: v=2.4 cv=d6kzizvE c=1 sm=1 tr=0 ts=638e5a1e
+ a=DujhYzqEYufUJi90e8Godg==:117 a=DujhYzqEYufUJi90e8Godg==:17
+ a=IkcTkHD0fZMA:10 a=FBHGMhGWAAAA:8 a=cWDybZAjoRrfc75ItIkA:9 a=QEXdDO2ut3YA:10
+ a=9gvnlMMaQFpL9xblJ6ne:22
+Received: from [192.168.2.49] (174.95.50.166) by cmx-mtlrgo002.bell.net (5.8.807) (authenticated as dave.anglin@bell.net)
+        id 637E567F025B31A4; Mon, 5 Dec 2022 15:52:46 -0500
+Message-ID: <6d2d24fa-28ac-581c-1ea6-a16bbd37b916@bell.net>
+Date: Mon, 5 Dec 2022 15:52:47 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <c86881a8-61b4-46ad-a02a-5252a38a9ad5@app.fastmail.com>
-In-Reply-To: <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 4.19 094/105] parisc: Increase size of gcc stack frame
+ check
+Content-Language: en-US
+To: Helge Deller <deller@gmx.de>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+ Christoph Hellwig <hch@infradead.org>, Sasha Levin <sashal@kernel.org>
 References: <20221205190803.124472741@linuxfoundation.org>
  <20221205190806.296201818@linuxfoundation.org>
  <dfa8305f-f52f-4322-a22e-9a1e90fcfad4@app.fastmail.com>
  <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
-Date: Mon, 05 Dec 2022 21:36:27 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Helge Deller" <deller@gmx.de>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, "Abd-Alrhman Masalkhi" <abd.masalkhi@gmail.com>,
- "Christoph Hellwig" <hch@infradead.org>, "Sasha Levin" <sashal@kernel.org>,
- "John David Anglin" <dave.anglin@bell.net>
-Subject: Re: [PATCH 4.19 094/105] parisc: Increase size of gcc stack frame check
-Content-Type: text/plain
+From: John David Anglin <dave.anglin@bell.net>
+In-Reply-To: <4676311f-1c08-a611-a3be-48e841093e45@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 5, 2022, at 20:58, Helge Deller wrote:
-> On 12/5/22 20:27, Arnd Bergmann wrote:
->> On Mon, Dec 5, 2022, at 20:10, Greg Kroah-Hartman wrote:
->>> From: Helge Deller <deller@gmx.de>
->>>
->>> [ Upstream commit 55b70eed81cba1331773d4aaf5cba2bb07475cd8 ]
->>>
->>> parisc uses much bigger frames than other architectures, so increase the
->>> stack frame check value to avoid compiler warnings.
->>
->> I had not seen this one originally, commenting on it now:
+On 2022-12-05 2:58 p.m., Helge Deller wrote:
+>> My understanding of the parisc overhead was that this
+>> was just based on a few bytes per function call,
 >
-> Hi Arnd,
-> Thanks for commenting!
-> By the way, those patches went in for 5.16 kernel, so I nearly forgot
-> about them in the meantime and wonder why they pop up now... (they weren't
-> tagged for stable, but I think it's ok to push them backwards).
+> What exactly do you mean by a few bytes?
+> On parisc the frame size is a multiple of 64-bytes (on 32-bit)
+> and 128 bytes (on 64bit).
+On 64bit, the frame size alignment is actually 16 bytes.  The minimum frame size is 80 bytes.
+That's 16 bytes for the frame marker and 64 bytes for the register save area.
 
-Ok, got it, I misread this as being a result of the recent
-patch that increased the limit for KASAN.
+Dave
 
->> My understanding of the parisc overhead was that this
->> was just based on a few bytes per function call,
->
-> What exactly do you mean by a few bytes?
-> On parisc the frame size is a multiple of 64-bytes (on 32-bit)
-> and 128 bytes (on 64bit).
-> For function calls with more than 5 (need to check exact number)
-> parameters those will be put on the stack as well.
+-- 
+John David Anglin  dave.anglin@bell.net
 
-If the frame size gets rounded up to a multiple of 64 bytes, that
-would add 32 bytes (i.e. a few) on average, but it should not
-double the stack usage. Similarly limit of five register arguments
-is just one less than the typical six, so that only explains
-a few bytes of extra stack usage, but not the huge increase you
-see.
-
->> not something that makes everything bigger. We have a few functions
->> that get close to the normal 1024 byte limit, everything else should
->> be no more than a few hundred bytes on any architecture.
->
-> Sadly not on parisc.
-> Again, see commit message of 8d192bec534b, which mentions
-> compile warnings from the kernel test robot for lib/xxhash.c.
-
-lib/xxhash.c is similar to some other ones that we've seen
-grow too much on some architecture/toolchain combinations,
-as compilers tend to struggle with register allocation for
-crypto code that looks like the compiler should be able
-to unroll it all into a simpler operation, but then ends up
-spilling registers to the stack, which is of course both
-slow and wasteful to the stack size.
-
->> If this happens for normal parisc builds without any
->> special compilation options, that would indicate that the
->> compiler is very broken.
->
-> No, it does a good job. It's the ABI which requires so big stacks.
-> I see problems with some userspace apps as well which configure too
-> small stacks.
->
-> By the way, since those patches are in I don't see any stack
-> overflows any longer. Those happened rarely in the past though.
-
-It certainly helps that you also have twice the THREAD_SIZE of
-most other architectures.
-
-On a related note, we recently enabled CONFIG_VMAP_STACK on
-32-bit arm, and this has already caught some stack overflows
-that would have otherwise resulted in silent data corruption.
-
-     Arnd
