@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5460115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E12C433C1;
-	Mon,  5 Dec 2022 19:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F9115C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:29:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD6EC433C1;
+	Mon,  5 Dec 2022 19:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268557;
-	bh=NUFv0DyH18mwJW/mEY+OBgsT0PSVlZJOKqeBg1PceQo=;
+	s=korg; t=1670268559;
+	bh=NTGIZ2TDK2u0cfzkY8FhegAMHBM9HpjDeQk31nZt8o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrUuVztqDjRa6G92H/CbsEGBNSzLgzuIO69TwzZ1nc7taSbjZDqmkYfPKZ5eWSuXy
-	 dO1P42LTkYbqAEfKojTRRFUFPaU0b4Iu0amrZJqsC3MVKqmcjb1fX7ogyPCEWVZs3V
-	 nt5ryMTxJmON3GCp+F7/jxK9iGwQpym+S+4eu0T8=
+	b=DZgQgbj1D7sTnnLCKo8206QEUTFSm7oKN7jYlE1DB9K3HD1JqSPg+y+9qngZ/D+fV
+	 VbYLKW9ZQgleBfNhJaL97D5eNhiqb4iG7YsOKo8X4RmVOlC4w4o80rqk9n7O17EV61
+	 Wt34+YnonldWdDrpC0LnYBbRT3kHVv8/ZqwbLxhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/92] bpf: Do not copy spin lock field from user in bpf_selem_alloc
-Date: Mon,  5 Dec 2022 20:09:34 +0100
-Message-Id: <20221205190804.180781359@linuxfoundation.org>
+Subject: [PATCH 5.10 22/92] of: property: decrement node refcount in of_fwnode_get_reference_args()
+Date: Mon,  5 Dec 2022 20:09:35 +0100
+Message-Id: <20221205190804.208287197@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -35,40 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 836e49e103dfeeff670c934b7d563cbd982fce87 ]
+[ Upstream commit 60d865bd5a9b15a3961eb1c08bd4155682a3c81e ]
 
-bpf_selem_alloc function is used by inode_storage, sk_storage and
-task_storage maps to set map value, for these map types, there may
-be a spin lock in the map value, so if we use memcpy to copy the whole
-map value from user, the spin lock field may be initialized incorrectly.
+In of_fwnode_get_reference_args(), the refcount of of_args.np has
+been incremented in the case of successful return from
+of_parse_phandle_with_args() or of_parse_phandle_with_fixed_args().
 
-Since the spin lock field is zeroed by kzalloc, call copy_map_value
-instead of memcpy to skip copying the spin lock field to fix it.
+Decrement the refcount if of_args is not returned to the caller of
+of_fwnode_get_reference_args().
 
-Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20221114134720.1057939-2-xukuohai@huawei.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Frank Rowand <frowand.list@gmail.com>
+Link: https://lore.kernel.org/r/20221121023209.3909759-1-yangyingliang@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/property.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 5d3a7af9ba9b..8aaaaef99f09 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -70,7 +70,7 @@ bpf_selem_alloc(struct bpf_local_storage_map *smap, void *owner,
- 	selem = kzalloc(smap->elem_size, GFP_ATOMIC | __GFP_NOWARN);
- 	if (selem) {
- 		if (value)
--			memcpy(SDATA(selem)->data, value, smap->map.value_size);
-+			copy_map_value(&smap->map, SDATA(selem)->data, value);
- 		return selem;
- 	}
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index 1d7d24e7094b..8f998351bf4f 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -956,8 +956,10 @@ of_fwnode_get_reference_args(const struct fwnode_handle *fwnode,
+ 						       nargs, index, &of_args);
+ 	if (ret < 0)
+ 		return ret;
+-	if (!args)
++	if (!args) {
++		of_node_put(of_args.np);
+ 		return 0;
++	}
  
+ 	args->nargs = of_args.args_count;
+ 	args->fwnode = of_fwnode_handle(of_args.np);
 -- 
 2.35.1
 
