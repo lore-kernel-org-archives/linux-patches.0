@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9639615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A055C433D6;
-	Mon,  5 Dec 2022 19:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4CD15C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:25:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC39C433D6;
+	Mon,  5 Dec 2022 19:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268342;
-	bh=VUpda2/UOND1w5WsvGZGgarHVEYAkd1QBMjxTGTH7xk=;
+	s=korg; t=1670268345;
+	bh=3HOKe+n12DoekL2M18ICWUFn4x7R34TS3xfuo0y6Ons=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjzHX0vYnZIX9L7nQ5B4tHixvHw9Uavu+eSGF1BoeiAWn7oLItvAMt8GTsjqJps81
-	 aQix/nbuJNTKaW6DE2FP/St9Ak9F8bdl6lxhOfL1DkGOg02QU+kt8asSesBdVQfqHc
-	 EhNqFKK3KsDtmmIL84/EX68f9LmcAACCbYuudvMg=
+	b=OJecxm9/CqDtkUUE4try/zj03LElzC5J2Q6q3m01lLB5zAQBWxOZ9k+/HvQEbvJ8p
+	 tJyx8YzDMQHhKqNy++QAIGhI8etxmIO21MseauQCuDXDBSYOvTAIunvW2xfv4Zkwy2
+	 AuUwO4Ot+FQGmqABKflDzgtqXUxbkIO0fcsYMKJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Saeed Mahameed <saeed@kernel.org>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Biao Jiang <benbjiang@tencent.com>,
+	Mengen Sun <mengensun@tencent.com>,
+	Menglong Dong <imagedong@tencent.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 029/124] ixgbevf: Fix resource leak in ixgbevf_init_module()
-Date: Mon,  5 Dec 2022 20:08:55 +0100
-Message-Id: <20221205190809.275836373@linuxfoundation.org>
+Subject: [PATCH 6.0 060/124] mptcp: dont orphan ssk in mptcp_close()
+Date: Mon,  5 Dec 2022 20:09:26 +0100
+Message-Id: <20221205190810.124510274@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -37,55 +39,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Menglong Dong <imagedong@tencent.com>
 
-[ Upstream commit 8cfa238a48f34038464b99d0b4825238c2687181 ]
+[ Upstream commit fe94800184f22d4778628f1321dce5acb7513d84 ]
 
-ixgbevf_init_module() won't destroy the workqueue created by
-create_singlethread_workqueue() when pci_register_driver() failed. Add
-destroy_workqueue() in fail path to prevent the resource leak.
+All of the subflows of a msk will be orphaned in mptcp_close(), which
+means the subflows are in DEAD state. After then, DATA_FIN will be sent,
+and the other side will response with a DATA_ACK for this DATA_FIN.
 
-Similar to the handling of u132_hcd_init in commit f276e002793c
-("usb: u132-hcd: fix resource leak")
+However, if the other side still has pending data, the data that received
+on these subflows will not be passed to the msk, as they are DEAD and
+subflow_data_ready() will not be called in tcp_data_ready(). Therefore,
+these data can't be acked, and they will be retransmitted again and again,
+until timeout.
 
-Fixes: 40a13e2493c9 ("ixgbevf: Use a private workqueue to avoid certain possible hangs")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.org>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix this by setting ssk->sk_socket and ssk->sk_wq to 'NULL', instead of
+orphaning the subflows in __mptcp_close(), as Paolo suggested.
+
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
+Reviewed-by: Biao Jiang <benbjiang@tencent.com>
+Reviewed-by: Mengen Sun <mengensun@tencent.com>
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Reviewed-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-index 2f12fbe229c1..624b8aa4508c 100644
---- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
-@@ -4869,6 +4869,8 @@ static struct pci_driver ixgbevf_driver = {
-  **/
- static int __init ixgbevf_init_module(void)
- {
-+	int err;
-+
- 	pr_info("%s\n", ixgbevf_driver_string);
- 	pr_info("%s\n", ixgbevf_copyright);
- 	ixgbevf_wq = create_singlethread_workqueue(ixgbevf_driver_name);
-@@ -4877,7 +4879,13 @@ static int __init ixgbevf_init_module(void)
- 		return -ENOMEM;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index b568f55998f3..42d5e0a7952a 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2297,12 +2297,7 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		goto out;
  	}
  
--	return pci_register_driver(&ixgbevf_driver);
-+	err = pci_register_driver(&ixgbevf_driver);
-+	if (err) {
-+		destroy_workqueue(ixgbevf_wq);
-+		return err;
-+	}
-+
-+	return 0;
- }
+-	/* if we are invoked by the msk cleanup code, the subflow is
+-	 * already orphaned
+-	 */
+-	if (ssk->sk_socket)
+-		sock_orphan(ssk);
+-
++	sock_orphan(ssk);
+ 	subflow->disposable = 1;
  
- module_init(ixgbevf_init_module);
+ 	/* if ssk hit tcp_done(), tcp_cleanup_ulp() cleared the related ops
+@@ -2833,7 +2828,11 @@ bool __mptcp_close(struct sock *sk, long timeout)
+ 		if (ssk == msk->first)
+ 			subflow->fail_tout = 0;
+ 
+-		sock_orphan(ssk);
++		/* detach from the parent socket, but allow data_ready to
++		 * push incoming data into the mptcp stack, to properly ack it
++		 */
++		ssk->sk_socket = NULL;
++		ssk->sk_wq = NULL;
+ 		unlock_sock_fast(ssk, slow);
+ 	}
+ 	sock_orphan(sk);
 -- 
 2.35.1
 
