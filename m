@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED65715C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A3DC433C1;
-	Mon,  5 Dec 2022 19:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE83815C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301D7C433D6;
+	Mon,  5 Dec 2022 19:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268029;
-	bh=kk6JqSZ7Jvef5DBu4Pn0Mx1/AWSSLnXb+Zel310PvZw=;
+	s=korg; t=1670268032;
+	bh=534c8bjAzEJ5BXzmcRCxuJ8Z/e8WaA3l5cy410r9NC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKk5EPnqN01gCcXJoxeI4gW9VuAaIPxrkTq2UDAGXlaRfItMF6TSIJ4wyRrdzdWpw
-	 gNNN5460b/M9svu6tU36uYEu/gzPRq3KzMXTHdHzg2xjqecpa7W9DIzMpjWSKMAsGU
-	 iGUdI+WqwGos1NkI94vXQpad0Syi3wdJF7cfg8t8=
+	b=CCxCgzeW+T29qshrY4ND3R3UhmHYj3MFOGPH8NNgZMz23NpUvCkD99SPGI2JWtT3r
+	 NbD52xpd2KzwxjaraH79OkGdxC2EYVuBnCgGQwZbW9QpKTxmXfkEwwJgf/RpqFp1lx
+	 VhBKOoUkP+RTVi1E1LmLFWQ71uUld8GlF3Amw7Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	David Jander <david@protonic.nl>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Marek Vasut <marex@denx.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 059/105] spi: spi-imx: Fix spi_bus_clk if requested clock is higher than input clock
-Date: Mon,  5 Dec 2022 20:09:31 +0100
-Message-Id: <20221205190805.152953670@linuxfoundation.org>
+Subject: [PATCH 4.19 033/105] net: thunderx: Fix the ACPI memory leak
+Date: Mon,  5 Dec 2022 20:09:05 +0100
+Message-Id: <20221205190804.260925904@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -39,62 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit db2d2dc9a0b58c6faefb6b002fdbed4f0362d1a4 ]
+[ Upstream commit 661e5ebbafd26d9d2e3c749f5cf591e55c7364f5 ]
 
-In case the requested bus clock is higher than the input clock, the correct
-dividers (pre = 0, post = 0) are returned from mx51_ecspi_clkdiv(), but
-*fres is left uninitialized and therefore contains an arbitrary value.
+The ACPI buffer memory (string.pointer) should be freed as the buffer is
+not used after returning from bgx_acpi_match_id(), free it to prevent
+memory leak.
 
-This causes trouble for the recently introduced PIO polling feature as the
-value in spi_imx->spi_bus_clk is used there to calculate for which
-transfers to enable PIO polling.
-
-Fix this by setting *fres even if no clock dividers are in use.
-
-This issue was observed on Kontron BL i.MX8MM with an SPI peripheral clock set
-to 50 MHz by default and a requested SPI bus clock of 80 MHz for the SPI NOR
-flash.
-
-With the fix applied the debug message from mx51_ecspi_clkdiv() now prints the
-following:
-
-spi_imx 30820000.spi: mx51_ecspi_clkdiv: fin: 50000000, fspi: 50000000,
-post: 0, pre: 0
-
-Fixes: 6fd8b8503a0d ("spi: spi-imx: Fix out-of-order CS/SCLK operation at low speeds")
-Fixes: 07e759387788 ("spi: spi-imx: add PIO polling support")
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: David Jander <david@protonic.nl>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Marek Vasut <marex@denx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Acked-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20221115181002.2068270-1-frieder@fris.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 46b903a01c05 ("net, thunder, bgx: Add support to get MAC address from ACPI.")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Link: https://lore.kernel.org/r/20221123082237.1220521-1-liaoyu15@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 5b6f3655c366..ec2296a4c44d 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -429,8 +429,7 @@ static unsigned int mx51_ecspi_clkdiv(struct spi_imx_data *spi_imx,
- 	unsigned int pre, post;
- 	unsigned int fin = spi_imx->spi_clk;
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index e5fc89813852..3cde9a2a0ab7 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1447,8 +1447,10 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
+ 		return AE_OK;
+ 	}
  
--	if (unlikely(fspi > fin))
--		return 0;
-+	fspi = min(fspi, fin);
+-	if (strncmp(string.pointer, bgx_sel, 4))
++	if (strncmp(string.pointer, bgx_sel, 4)) {
++		kfree(string.pointer);
+ 		return AE_OK;
++	}
  
- 	post = fls(fin) - fls(fspi);
- 	if (fin > fspi << post)
+ 	acpi_walk_namespace(ACPI_TYPE_DEVICE, handle, 1,
+ 			    bgx_acpi_register_phy, NULL, bgx, NULL);
 -- 
 2.35.1
 
