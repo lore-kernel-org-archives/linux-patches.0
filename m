@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C853115C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BB7C433C1;
-	Mon,  5 Dec 2022 19:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9653415C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EA5C433D7;
+	Mon,  5 Dec 2022 19:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268663;
-	bh=72QWlh/ywBxcttKhziILkGnOUblGZnMtqbNXIgB1pN0=;
+	s=korg; t=1670268666;
+	bh=yuHS2+oIPB3cLGkjRdmIXy31i8F7l/7KNmWVZWe+WbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDfZGBEt3DyIkkc7gaBnV63ll+LlReHPV2uiZDE6SmHFJvFk5ebLu8SqVN6RH6PA7
-	 QGa0QbDFDm10xXaj3VGayZxCstGsjZ5gZ0kM2fcP36z/AE7aN1HQXUD7AXaWHf8fZm
-	 Z3veleYUw2+7h2GdaoOayklDNNoo2iKwCDL8lTzs=
+	b=1/Z09PfG/0TVMjD/wNGpkvh/WL/rV4ietlWKbIz3d8mjMXANm4UJICACYtAOZhAIR
+	 a6lesHtqG+5oYXD4EPcPH3XoJQCXnp//9OeXUmrv0NpBaUK84faWj0A4jkbmUdIgYm
+	 Lgk+Ipz98wm000qJ3Q8zIMgGSLfE5Ypr0oWeZI30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dale Smith <dalepsmith@gmail.com>,
-	John Harris <jmharris@gmail.com>
-Subject: [PATCH 5.10 59/92] pinctrl: intel: Save and restore pins in "direct IRQ" mode
-Date: Mon,  5 Dec 2022 20:10:12 +0100
-Message-Id: <20221205190805.477835237@linuxfoundation.org>
+	"Goh, Wei Sheng" <wei.sheng.goh@intel.com>,
+	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Goh
+Subject: [PATCH 5.10 60/92] net: stmmac: Set MACs flow control register to reflect current settings
+Date: Mon,  5 Dec 2022 20:10:13 +0100
+Message-Id: <20221205190805.506280858@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -37,85 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Goh, Wei Sheng <wei.sheng.goh@intel.com>
 
-commit 6989ea4881c8944fbf04378418bb1af63d875ef8 upstream.
+commit cc3d2b5fc0d6f8ad8a52da5ea679e5c2ec2adbd4 upstream.
 
-The firmware on some systems may configure GPIO pins to be
-an interrupt source in so called "direct IRQ" mode. In such
-cases the GPIO controller driver has no idea if those pins
-are being used or not. At the same time, there is a known bug
-in the firmwares that don't restore the pin settings correctly
-after suspend, i.e. by an unknown reason the Rx value becomes
-inverted.
+Currently, pause frame register GMAC_RX_FLOW_CTRL_RFE is not updated
+correctly when 'ethtool -A <IFACE> autoneg off rx off tx off' command
+is issued. This fix ensures the flow control change is reflected directly
+in the GMAC_RX_FLOW_CTRL_RFE register.
 
-Hence, let's save and restore the pins that are configured
-as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
-
-Cc: stable@vger.kernel.org
-Reported-and-tested-by: Dale Smith <dalepsmith@gmail.com>
-Reported-and-tested-by: John Harris <jmharris@gmail.com>
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214749
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221124222926.72326-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 46f69ded988d ("net: stmmac: Use resolved link config in mac_link_up()")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Goh, Wei Sheng <wei.sheng.goh@intel.com>
+Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c |    2 ++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   12 ++++++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -426,9 +426,14 @@ static void __intel_gpio_set_direction(v
- 	writel(value, padcfg0);
- }
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -720,6 +720,8 @@ static void dwmac4_flow_ctrl(struct mac_
+ 	if (fc & FLOW_RX) {
+ 		pr_debug("\tReceive Flow-Control ON\n");
+ 		flow |= GMAC_RX_FLOW_CTRL_RFE;
++	} else {
++		pr_debug("\tReceive Flow-Control OFF\n");
+ 	}
+ 	writel(flow, ioaddr + GMAC_RX_FLOW_CTRL);
  
-+static int __intel_gpio_get_gpio_mode(u32 value)
-+{
-+	return (value & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+}
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1043,8 +1043,16 @@ static void stmmac_mac_link_up(struct ph
+ 		ctrl |= priv->hw->link.duplex;
+ 
+ 	/* Flow Control operation */
+-	if (tx_pause && rx_pause)
+-		stmmac_mac_flow_ctrl(priv, duplex);
++	if (rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_AUTO;
++	else if (rx_pause && !tx_pause)
++		priv->flow_ctrl = FLOW_RX;
++	else if (!rx_pause && tx_pause)
++		priv->flow_ctrl = FLOW_TX;
++	else
++		priv->flow_ctrl = FLOW_OFF;
 +
- static int intel_gpio_get_gpio_mode(void __iomem *padcfg0)
- {
--	return (readl(padcfg0) & PADCFG0_PMODE_MASK) >> PADCFG0_PMODE_SHIFT;
-+	return __intel_gpio_get_gpio_mode(readl(padcfg0));
- }
++	stmmac_mac_flow_ctrl(priv, duplex);
  
- static void intel_gpio_set_gpio_mode(void __iomem *padcfg0)
-@@ -1604,6 +1609,7 @@ EXPORT_SYMBOL_GPL(intel_pinctrl_get_soc_
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
- {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-+	u32 value;
- 
- 	if (!pd || !intel_pad_usable(pctrl, pin))
- 		return false;
-@@ -1618,6 +1624,25 @@ static bool intel_pinctrl_should_save(st
- 	    gpiochip_line_is_irq(&pctrl->chip, intel_pin_to_gpio(pctrl, pin)))
- 		return true;
- 
-+	/*
-+	 * The firmware on some systems may configure GPIO pins to be
-+	 * an interrupt source in so called "direct IRQ" mode. In such
-+	 * cases the GPIO controller driver has no idea if those pins
-+	 * are being used or not. At the same time, there is a known bug
-+	 * in the firmwares that don't restore the pin settings correctly
-+	 * after suspend, i.e. by an unknown reason the Rx value becomes
-+	 * inverted.
-+	 *
-+	 * Hence, let's save and restore the pins that are configured
-+	 * as GPIOs in the input mode with GPIROUTIOXAPIC bit set.
-+	 *
-+	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
-+	 */
-+	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
-+	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+		return true;
-+
- 	return false;
- }
+ 	writel(ctrl, priv->ioaddr + MAC_CTRL_REG);
  
 
 
