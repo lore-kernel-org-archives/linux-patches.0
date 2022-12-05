@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A07315C82
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF894C433D6;
-	Mon,  5 Dec 2022 19:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF315C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B50C433D6;
+	Mon,  5 Dec 2022 19:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670267951;
-	bh=EvpqbbdWIVH0UKqd9qoZTrteR9XJoF2FBQM3I4Pa6bg=;
+	s=korg; t=1670267954;
+	bh=m6tHUFLLVGdeTZJ41sgTVPRrebEIFFmczQhEY7MnA2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JK6F6TC/QcJ7JGZVCXM5GwTCP79aRfASa7TtLMm1iJsR9F7NSDzjDjYl1xr8Wwhe
-	 2dORNcAv3o4LYCP6VwIWPbv7C0qz86x/s1aG84LKy6dxfRrU0y0iKaaXX6VgSf4TP8
-	 QFRPnQdj0661uLEdEjBxggr8Yu8C+x7s6I130z+o=
+	b=aXQRrovMNTld/+s2Pzn4j9g8uT4uJ4PsAwkx6A6/Pz177fNAC+XnXkz+S/TOGfniu
+	 CmB6pgz/eoZpAfZY+HNtXZu2Rxb+/SMO7KrKZVMcR2sh/ESz1J15z02xgXmpFtOofc
+	 b8X3RVc5KUeHbjAIS2/EuzzAFJss7VpMGxtmmYdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 006/105] RISC-V: vdso: Do not add missing symbols to version section in linker script
-Date: Mon,  5 Dec 2022 20:08:38 +0100
-Message-Id: <20221205190803.329477837@linuxfoundation.org>
+Subject: [PATCH 4.19 007/105] MIPS: pic32: treat port as signed integer
+Date: Mon,  5 Dec 2022 20:08:39 +0100
+Message-Id: <20221205190803.356444828@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
 References: <20221205190803.124472741@linuxfoundation.org>
@@ -36,66 +35,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit fcae44fd36d052e956e69a64642fc03820968d78 ]
+[ Upstream commit 648060902aa302331b5d6e4f26d8ee0761d239ab ]
 
-Recently, ld.lld moved from '--undefined-version' to
-'--no-undefined-version' as the default, which breaks the compat vDSO
-build:
+get_port_from_cmdline() returns an int, yet is assigned to a char, which
+is wrong in its own right, but also, with char becoming unsigned, this
+poses problems, because -1 is used as an error value. Further
+complicating things, fw_init_early_console() is only ever called with a
+-1 argument. Fix this up by removing the unused argument from
+fw_init_early_console() and treating port as a proper signed integer.
 
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_gettimeofday' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_gettime' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_getres' failed: symbol not defined
-
-These symbols are not present in the compat vDSO or the regular vDSO for
-32-bit but they are unconditionally included in the version section of
-the linker script, which is prohibited with '--no-undefined-version'.
-
-Fix this issue by only including the symbols that are actually exported
-in the version section of the linker script.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1756
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221108171324.3377226-1-nathan@kernel.org/
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile   | 3 +++
- arch/riscv/kernel/vdso/vdso.lds.S | 2 ++
- 2 files changed, 5 insertions(+)
+ arch/mips/include/asm/fw/fw.h             |  2 +-
+ arch/mips/pic32/pic32mzda/early_console.c | 13 ++++++-------
+ arch/mips/pic32/pic32mzda/init.c          |  2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 1dd134fc0d84..ba833b79051f 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -17,6 +17,9 @@ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
+diff --git a/arch/mips/include/asm/fw/fw.h b/arch/mips/include/asm/fw/fw.h
+index d0ef8b4892bb..d0494ce4b337 100644
+--- a/arch/mips/include/asm/fw/fw.h
++++ b/arch/mips/include/asm/fw/fw.h
+@@ -26,6 +26,6 @@ extern char *fw_getcmdline(void);
+ extern void fw_meminit(void);
+ extern char *fw_getenv(char *name);
+ extern unsigned long fw_getenvl(char *name);
+-extern void fw_init_early_console(char port);
++extern void fw_init_early_console(void);
  
- obj-y += vdso.o vdso-syms.o
- CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
-+ifneq ($(filter vgettimeofday, $(vdso-syms)),)
-+CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
-+endif
+ #endif /* __ASM_FW_H_ */
+diff --git a/arch/mips/pic32/pic32mzda/early_console.c b/arch/mips/pic32/pic32mzda/early_console.c
+index 8ed4961b1271..c00c6149ee30 100644
+--- a/arch/mips/pic32/pic32mzda/early_console.c
++++ b/arch/mips/pic32/pic32mzda/early_console.c
+@@ -35,7 +35,7 @@
+ #define U_BRG(x)	(UART_BASE(x) + 0x40)
  
- # Disable gcov profiling for VDSO code
- GCOV_PROFILE := n
-diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
-index cd1d47e0724b..8910712f6fb2 100644
---- a/arch/riscv/kernel/vdso/vdso.lds.S
-+++ b/arch/riscv/kernel/vdso/vdso.lds.S
-@@ -70,9 +70,11 @@ VERSION
- 	LINUX_4.15 {
- 	global:
- 		__vdso_rt_sigreturn;
-+#ifdef HAS_VGETTIMEOFDAY
- 		__vdso_gettimeofday;
- 		__vdso_clock_gettime;
- 		__vdso_clock_getres;
-+#endif
- 		__vdso_getcpu;
- 		__vdso_flush_icache;
- 	local: *;
+ static void __iomem *uart_base;
+-static char console_port = -1;
++static int console_port = -1;
+ 
+ static int __init configure_uart_pins(int port)
+ {
+@@ -55,7 +55,7 @@ static int __init configure_uart_pins(int port)
+ 	return 0;
+ }
+ 
+-static void __init configure_uart(char port, int baud)
++static void __init configure_uart(int port, int baud)
+ {
+ 	u32 pbclk;
+ 
+@@ -68,7 +68,7 @@ static void __init configure_uart(char port, int baud)
+ 		     uart_base + PIC32_SET(U_STA(port)));
+ }
+ 
+-static void __init setup_early_console(char port, int baud)
++static void __init setup_early_console(int port, int baud)
+ {
+ 	if (configure_uart_pins(port))
+ 		return;
+@@ -138,16 +138,15 @@ static int __init get_baud_from_cmdline(char *arch_cmdline)
+ 	return baud;
+ }
+ 
+-void __init fw_init_early_console(char port)
++void __init fw_init_early_console(void)
+ {
+ 	char *arch_cmdline = pic32_getcmdline();
+-	int baud = -1;
++	int baud, port;
+ 
+ 	uart_base = ioremap_nocache(PIC32_BASE_UART, 0xc00);
+ 
+ 	baud = get_baud_from_cmdline(arch_cmdline);
+-	if (port == -1)
+-		port = get_port_from_cmdline(arch_cmdline);
++	port = get_port_from_cmdline(arch_cmdline);
+ 
+ 	if (port == -1)
+ 		port = EARLY_CONSOLE_PORT;
+diff --git a/arch/mips/pic32/pic32mzda/init.c b/arch/mips/pic32/pic32mzda/init.c
+index 406c6c5cec29..cf2625551b45 100644
+--- a/arch/mips/pic32/pic32mzda/init.c
++++ b/arch/mips/pic32/pic32mzda/init.c
+@@ -68,7 +68,7 @@ void __init plat_mem_setup(void)
+ 		strlcpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);
+ 
+ #ifdef CONFIG_EARLY_PRINTK
+-	fw_init_early_console(-1);
++	fw_init_early_console();
+ #endif
+ 	pic32_config_init();
+ }
 -- 
 2.35.1
 
