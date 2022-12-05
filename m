@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC77615C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C88C433D7;
-	Mon,  5 Dec 2022 19:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AC415C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2291AC433D7;
+	Mon,  5 Dec 2022 19:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269370;
-	bh=7jTvEunt8PptdwuI4plQsJaLOoD4bOnyTQc9dU+sQXo=;
+	s=korg; t=1670269373;
+	bh=RI0QCr/eAHID6w6t/fCHV5QzcPVi2V2e+E0VFvpTmP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcD4XSqyZAjQ8EWni2pHlIyE0IeveeYX+wOcs8vPkygEb5cqP1qLj4OVCdOk2sCsd
-	 Ju6MGE95D/SVfVUXwCUK7Syxbe5ZiFlp1Ycj67ZosyR/csYYvgAD5Qyi+2kVxP0iiB
-	 aR0Mf0Zbj0hUcP8B6g4GZJJGo15VFHnC+GPJxIoQ=
+	b=Xj0JO+QXIUHhEyKR7uhccNLyybz6H/gK0N9tqBuQkmqYRxNBfyW4duC+bEwMwAdP2
+	 nXFQtoLJt+wdhVRs32QgP6YJ+QvJhOKoSt/Fx18EUwkE2GvGQLqXJ1DahtAYQXKSl/
+	 ztbWpRrNn0/LXN5OU5UKPo2M61K1hEXmzqurR6J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?S=C3=B6nke=20Huster?= <shuster@seemoo.tu-darmstadt.de>
-Subject: [PATCH 5.4 102/153] wifi: cfg80211: fix buffer overflow in elem comparison
-Date: Mon,  5 Dec 2022 20:10:26 +0100
-Message-Id: <20221205190811.673072723@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 103/153] net: phy: fix null-ptr-deref while probe() failed
+Date: Mon,  5 Dec 2022 20:10:27 +0100
+Message-Id: <20221205190811.702024930@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,36 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 9f16b5c82a025cd4c864737409234ddc44fb166a ]
+[ Upstream commit 369eb2c9f1f72adbe91e0ea8efb130f0a2ba11a6 ]
 
-For vendor elements, the code here assumes that 5 octets
-are present without checking. Since the element itself is
-already checked to fit, we only need to check the length.
+I got a null-ptr-deref report as following when doing fault injection test:
 
-Reported-and-tested-by: Sönke Huster <shuster@seemoo.tu-darmstadt.de>
-Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+BUG: kernel NULL pointer dereference, address: 0000000000000058
+Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 PID: 253 Comm: 507-spi-dm9051 Tainted: G    B            N 6.1.0-rc3+
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:klist_put+0x2d/0xd0
+Call Trace:
+ <TASK>
+ klist_remove+0xf1/0x1c0
+ device_release_driver_internal+0x23e/0x2d0
+ bus_remove_device+0x1bd/0x240
+ device_del+0x357/0x770
+ phy_device_remove+0x11/0x30
+ mdiobus_unregister+0xa5/0x140
+ release_nodes+0x6a/0xa0
+ devres_release_all+0xf8/0x150
+ device_unbind_cleanup+0x19/0xd0
+
+//probe path:
+phy_device_register()
+  device_add()
+
+phy_connect
+  phy_attach_direct() //set device driver
+    probe() //it's failed, driver is not bound
+    device_bind_driver() // probe failed, it's not called
+
+//remove path:
+phy_device_remove()
+  device_del()
+    device_release_driver_internal()
+      __device_release_driver() //dev->drv is not NULL
+        klist_remove() <- knode_driver is not added yet, cause null-ptr-deref
+
+In phy_attach_direct(), after setting the 'dev->driver', probe() fails,
+device_bind_driver() is not called, so the knode_driver->n_klist is not
+set, then it causes null-ptr-deref in __device_release_driver() while
+deleting device. Fix this by setting dev->driver to NULL in the error
+path in phy_attach_direct().
+
+Fixes: e13934563db0 ("[PATCH] PHY Layer fixup")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/phy_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 630c64520516..c4c124cb5332 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -291,7 +291,8 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
- 			 * determine if they are the same ie.
- 			 */
- 			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
--				if (!memcmp(tmp_old + 2, tmp + 2, 5)) {
-+				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
-+				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
- 					/* same vendor ie, copy from
- 					 * subelement
- 					 */
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 78b918dcd547..388799985720 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1312,6 +1312,7 @@ int phy_attach_direct(struct net_device *dev, struct phy_device *phydev,
+ 
+ error_module_put:
+ 	module_put(d->driver->owner);
++	d->driver = NULL;
+ error_put_device:
+ 	put_device(d);
+ 	if (ndev_owner != bus->owner)
 -- 
 2.35.1
 
