@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2022415C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955FBC433C1;
-	Mon,  5 Dec 2022 19:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A794A15C82
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:23:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFBFC433C1;
+	Mon,  5 Dec 2022 19:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268189;
-	bh=jaHl98ojRkhY1GwHfn9eItCPVLIiwDtxwWU6rroi8jQ=;
+	s=korg; t=1670268194;
+	bh=PBF8roq2s4eVgfA4poNqbM0zOD4uvA+mV6O7Vz9eV0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1t49Hh28JX/ChjP9ayk9g1FYu5QXbfURFUIFJbYKBynOb2Y73WwljVenGB0Ar7zdX
-	 SUAlzJ4byLen5lHFRgqpXDrHpfcU1EMhxCInxeOZ3CSougVxmyp/qWOCSmbRSHoSua
-	 50dJHMx4c7fkQBPC7vcKXpTeSEYieqlVxNegqUME=
+	b=BGOO14L5OLZzjw5fOqss27G5Sjqkrh+C/Y8+q4wezlyrQoDQzqIiV5619PcioTRUN
+	 Ni3InlYqooFAB8tASs5Ep1hk8N91aLDQ8qX4+NJ3w6AueAsFMKhoQAhhCH1sZesA+E
+	 LJ2iQ/PhaPLB1S679U1L8jYIix0V5hfeZQJym7Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Andrew Davis <afd@ti.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 013/124] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
-Date: Mon,  5 Dec 2022 20:08:39 +0100
-Message-Id: <20221205190808.819183791@linuxfoundation.org>
+Subject: [PATCH 6.0 015/124] libbpf: Use correct return pointer in attach_raw_tp
+Date: Mon,  5 Dec 2022 20:08:41 +0100
+Message-Id: <20221205190808.880271477@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.422385173@linuxfoundation.org>
 References: <20221205190808.422385173@linuxfoundation.org>
@@ -36,100 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
+[ Upstream commit 5fd2a60aecf3a42b14fa371c55b3dbb18b229230 ]
 
-KASAN report out-of-bounds read as follows:
+We need to pass '*link' to final libbpf_get_error,
+because that one holds the return value, not 'link'.
 
-BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
-Read of size 4 at addr ffffffffc00e4658 by task cat/278
-
-Call Trace:
- afe4404_read_raw
- iio_read_channel_info
- dev_attr_show
-
-The buggy address belongs to the variable:
- afe4404_channel_leds+0x18/0xffffffffffffe9c0
-
-This issue can be reproduce by singe command:
-
- $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
-
-The array size of afe4404_channel_leds and afe4404_channel_offdacs
-are less than channels, so access with chan->address cause OOB read
-in afe4404_[read|write]_raw. Fix it by moving access before use them.
-
-Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 4fa5bcfe07f7 ("libbpf: Allow BPF program auto-attach handlers to bail out")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221114145257.882322-1-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/afe4404.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ tools/lib/bpf/libbpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
-index dd7800159051..f03c466c9385 100644
---- a/drivers/iio/health/afe4404.c
-+++ b/drivers/iio/health/afe4404.c
-@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 			    int *val, int *val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int value_reg = afe4404_channel_values[chan->address];
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int value_reg, led_field, offdac_field;
- 	int ret;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index e36c44090720..79ea83be21ce 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -11143,7 +11143,7 @@ static int attach_raw_tp(const struct bpf_program *prog, long cookie, struct bpf
+ 	}
  
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			value_reg = afe4404_channel_values[chan->address];
- 			ret = regmap_read(afe->regmap, value_reg, val);
- 			if (ret)
- 				return ret;
- 			return IIO_VAL_INT;
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			ret = regmap_field_read(afe->fields[offdac_field], val);
- 			if (ret)
- 				return ret;
-@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			ret = regmap_field_read(afe->fields[led_field], val);
- 			if (ret)
- 				return ret;
-@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int led_field, offdac_field;
+ 	*link = bpf_program__attach_raw_tracepoint(prog, tp_name);
+-	return libbpf_get_error(link);
++	return libbpf_get_error(*link);
+ }
  
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			return regmap_field_write(afe->fields[offdac_field], val);
- 		}
- 		break;
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			return regmap_field_write(afe->fields[led_field], val);
- 		}
- 		break;
+ /* Common logic for all BPF program types that attach to a btf_id */
 -- 
 2.35.1
 
