@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3AE15C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E90C433C1;
-	Mon,  5 Dec 2022 19:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7B115C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:43:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F991C433D7;
+	Mon,  5 Dec 2022 19:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269398;
-	bh=f5qkM3y31z6r8ynuDLlMBWovAKm+ecqW9o440aqelbU=;
+	s=korg; t=1670269400;
+	bh=uAcEGX2MGTC75WWplc3SUbyyqcxOA4T4is2zGQzMNB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmBb3qQ5djHE10JYmSpBQS1aATksLUOP7zg8EVqjNlfjesdclGNph6n6M9iKM2BtF
-	 gNGZHFHntIPwYHw7Y6QGYJZxo7/M8fsfaSzZyoIxwziFSGul3X7Sbx0dFMeUiLfexX
-	 qSHsRPC03KlO6HCefmbghGAnIohFX4B+dB+drNWQ=
+	b=ER/DKwUF//Nvf/1AF5PYVZNkpbRkBtlErzGtpN40CpnNSPJredVZmpfpLDX9SqAIO
+	 ZPAk7wEHFloK0Obv7rVaXCkWIP9DY1Cmk5+Eu109+3WSPMSxXUgpud42HZy6HRHr2e
+	 sYTmfY2DtKfoRDFzu4EN1fBpj9hxDpBT4rHojNlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nborisov@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Sam James <sam@gentoo.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 085/153] btrfs: move QUOTA_ENABLED check to rescan_should_stop from btrfs_qgroup_rescan_worker
-Date: Mon,  5 Dec 2022 20:10:09 +0100
-Message-Id: <20221205190811.158940944@linuxfoundation.org>
+Subject: [PATCH 5.4 086/153] kbuild: fix -Wimplicit-function-declaration in license_is_gpl_compatible
+Date: Mon,  5 Dec 2022 20:10:10 +0100
+Message-Id: <20221205190811.188760824@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,63 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikolay Borisov <nborisov@suse.com>
+From: Sam James <sam@gentoo.org>
 
-[ Upstream commit db5df254120004471e1c957957ab2f1e612dcbd6 ]
+[ Upstream commit 50c697215a8cc22f0e58c88f06f2716c05a26e85 ]
 
-Instead of having 2 places that short circuit the qgroup leaf scan have
-everything in the qgroup_rescan_leaf function. In addition to that, also
-ensure that the inconsistent qgroup flag is set when rescan_should_stop
-returns true. This both retains the old behavior when -EINTR was set in
-the body of the loop and at the same time also extends this behavior
-when scanning is interrupted due to remount or unmount operations.
+Add missing <linux/string.h> include for strcmp.
 
-Signed-off-by: Nikolay Borisov <nborisov@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: f7e942b5bb35 ("btrfs: qgroup: fix sleep from invalid context bug in btrfs_qgroup_inherit()")
+Clang 16 makes -Wimplicit-function-declaration an error by default.
+Unfortunately, out of tree modules may use this in configure scripts,
+which means failure might cause silent miscompilation or misconfiguration.
+
+For more information, see LWN.net [0] or LLVM's Discourse [1], gentoo-dev@ [2],
+or the (new) c-std-porting mailing list [3].
+
+[0] https://lwn.net/Articles/913505/
+[1] https://discourse.llvm.org/t/configure-script-breakage-with-the-new-werror-implicit-function-declaration/65213
+[2] https://archives.gentoo.org/gentoo-dev/message/dd9f2d3082b8b6f8dfbccb0639e6e240
+[3] hosted at lists.linux.dev.
+
+[akpm@linux-foundation.org: remember "linux/"]
+Link: https://lkml.kernel.org/r/20221116182634.2823136-1-sam@gentoo.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ include/linux/license.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 84a102347490..8658bac7c6e4 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3203,7 +3203,8 @@ static int qgroup_rescan_leaf(struct btrfs_trans_handle *trans,
- static bool rescan_should_stop(struct btrfs_fs_info *fs_info)
- {
- 	return btrfs_fs_closing(fs_info) ||
--		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state);
-+		test_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state) ||
-+		!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags);
- }
+diff --git a/include/linux/license.h b/include/linux/license.h
+index decdbf43cb5c..87a21d5d6758 100644
+--- a/include/linux/license.h
++++ b/include/linux/license.h
+@@ -1,6 +1,8 @@
+ #ifndef __LICENSE_H
+ #define __LICENSE_H
  
- static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
-@@ -3233,11 +3234,9 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
- 			err = PTR_ERR(trans);
- 			break;
- 		}
--		if (!test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags)) {
--			err = -EINTR;
--		} else {
--			err = qgroup_rescan_leaf(trans, path);
--		}
++#include <linux/string.h>
 +
-+		err = qgroup_rescan_leaf(trans, path);
-+
- 		if (err > 0)
- 			btrfs_commit_transaction(trans);
- 		else
-@@ -3251,7 +3250,7 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
- 	if (err > 0 &&
- 	    fs_info->qgroup_flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT) {
- 		fs_info->qgroup_flags &= ~BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
--	} else if (err < 0) {
-+	} else if (err < 0 || stopped) {
- 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
- 	}
- 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ static inline int license_is_gpl_compatible(const char *license)
+ {
+ 	return (strcmp(license, "GPL") == 0
 -- 
 2.35.1
 
