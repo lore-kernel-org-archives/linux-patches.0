@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C08015C8A
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00830C433C1;
-	Mon,  5 Dec 2022 19:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4680515C8A
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAECDC433D7;
+	Mon,  5 Dec 2022 19:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269365;
-	bh=M1Xf3r5qs9UnU+7hqatPN52PTyjk/F0vzhh9s9Pce4A=;
+	s=korg; t=1670269368;
+	bh=nyWMZuj0gmPuyBNN8X3UIlBJtMBIVJEiiiBXNlcvk1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhBTE0DbYfdv0TWO99/iakkXTRtsGf9pRa82xcprN6JTxa0ofHOJPzJilLFTj3t/U
-	 Q+ZCtrINBOGmpvxDJXr8tRLtMxbbbF0qRRk8nTnu0W16A/iJTKzbEIC1Ybkh5b1uUw
-	 tIHf3s3zvuirMHdTnojGxWRlVMRBuucKqKhdpkFw=
+	b=GI273PI/OKcG6mCbKUzKoj4ixFiSRJVC2cphRYG7oztgXzxT9vw1/3qM8nY+t5SND
+	 DpwBYCqBgnHmyvrIQe589tFA+Dk7HAz39Wz5QNfehEb1IzAwC4rEntVBfYQZDkgM1a
+	 hEt3YMMMlh8cqu0vMpssdaPVAYZJsHSWUTMh97Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 083/153] btrfs: free btrfs_path before copying inodes to userspace
-Date: Mon,  5 Dec 2022 20:10:07 +0100
-Message-Id: <20221205190811.103120186@linuxfoundation.org>
+Subject: [PATCH 5.4 101/153] qlcnic: fix sleep-in-atomic-context bugs caused by msleep
+Date: Mon,  5 Dec 2022 20:10:25 +0100
+Message-Id: <20221205190811.643873480@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,66 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 418ffb9e3cf6c4e2574d3a732b724916684bd133 ]
+[ Upstream commit 8dbd6e4ce1b9c527921643d9e34f188a10d4e893 ]
 
-btrfs_ioctl_logical_to_ino() frees the search path after the userspace
-copy from the temp buffer @inodes. Which potentially can lead to a lock
-splat.
+The watchdog timer is used to monitor whether the process
+of transmitting data is timeout. If we use qlcnic driver,
+the dev_watchdog() that is the timer handler of watchdog
+timer will call qlcnic_tx_timeout() to process the timeout.
+But the qlcnic_tx_timeout() calls msleep(), as a result,
+the sleep-in-atomic-context bugs will happen. The processes
+are shown below:
 
-Fix this by freeing the path before we copy @inodes to userspace.
+   (atomic context)
+dev_watchdog
+  qlcnic_tx_timeout
+    qlcnic_83xx_idc_request_reset
+      qlcnic_83xx_lock_driver
+        msleep
 
-CC: stable@vger.kernel.org # 4.19+
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+---------------------------
+
+   (atomic context)
+dev_watchdog
+  qlcnic_tx_timeout
+    qlcnic_83xx_idc_request_reset
+      qlcnic_83xx_lock_driver
+        qlcnic_83xx_recover_driver_lock
+          msleep
+
+Fix by changing msleep() to mdelay(), the mdelay() is
+busy-waiting and the bugs could be mitigated.
+
+Fixes: 629263acaea3 ("qlcnic: 83xx CNA inter driver communication mechanism")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index fb0c13b2bc6a..8553bd4361dd 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4590,21 +4590,20 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
- 		size = min_t(u32, loi->size, SZ_16M);
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+index df43d364e6a4..e6538f38b056 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+@@ -2993,7 +2993,7 @@ static void qlcnic_83xx_recover_driver_lock(struct qlcnic_adapter *adapter)
+ 		QLCWRX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK, val);
+ 		dev_info(&adapter->pdev->dev,
+ 			 "%s: lock recovery initiated\n", __func__);
+-		msleep(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
++		mdelay(QLC_83XX_DRV_LOCK_RECOVERY_DELAY);
+ 		val = QLCRDX(adapter->ahw, QLC_83XX_RECOVER_DRV_LOCK);
+ 		id = ((val >> 2) & 0xF);
+ 		if (id == adapter->portnum) {
+@@ -3029,7 +3029,7 @@ int qlcnic_83xx_lock_driver(struct qlcnic_adapter *adapter)
+ 		if (status)
+ 			break;
  
--	path = btrfs_alloc_path();
--	if (!path) {
--		ret = -ENOMEM;
--		goto out;
--	}
--
- 	inodes = init_data_container(size);
- 	if (IS_ERR(inodes)) {
- 		ret = PTR_ERR(inodes);
--		inodes = NULL;
--		goto out;
-+		goto out_loi;
- 	}
+-		msleep(QLC_83XX_DRV_LOCK_WAIT_DELAY);
++		mdelay(QLC_83XX_DRV_LOCK_WAIT_DELAY);
+ 		i++;
  
-+	path = btrfs_alloc_path();
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
- 	ret = iterate_inodes_from_logical(loi->logical, fs_info, path,
- 					  build_ino_list, inodes, ignore_offset);
-+	btrfs_free_path(path);
- 	if (ret == -EINVAL)
- 		ret = -ENOENT;
- 	if (ret < 0)
-@@ -4616,7 +4615,6 @@ static long btrfs_ioctl_logical_to_ino(struct btrfs_fs_info *fs_info,
- 		ret = -EFAULT;
- 
- out:
--	btrfs_free_path(path);
- 	kvfree(inodes);
- out_loi:
- 	kfree(loi);
+ 		if (i == 1)
 -- 
 2.35.1
 
