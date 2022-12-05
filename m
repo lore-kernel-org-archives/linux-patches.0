@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FA15C85
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E5AC433D6;
-	Mon,  5 Dec 2022 19:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BE615C85
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BACC433D6;
+	Mon,  5 Dec 2022 19:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670269218;
-	bh=KX13tLEhoTROJ3VvFrKR4hH96s7o7aBWs7Ww5QE7dao=;
+	s=korg; t=1670269220;
+	bh=fQ6eI7xw2EUNTkxfcdMzwYF2JjqrTI0RoHRul1j8BIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Okg2614fgRPzvxXWg06tpwxZ9LKlN9jd6EGuLTNF6kv1i1IkKt5HXTb7ctEm3k0jk
-	 AGG1sjlp9/zdybzyCBT47ukqsC4pMVxLq23K1a3JMQskD3Q+ZDD3FS26aPtnoapCSa
-	 iXOKrGkIVKsEk40YufRreVSdrji7XhYAAgNjOzOY=
+	b=mZk207GBUYb7E52VkIG0wRPw92+Xds+a4nDW5C+2OdzKuI0WvvbbgDza439VV3/mG
+	 e0+ssrzZOFlyuaNsHhwPHj0hY3iM3JVt+888iKVIo6hs9uE2HRDYbCA4v6sc5INKBI
+	 qXzOYqEj6vg0S9roVxUM3LmGjnURlPl7MosFVe7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.4 046/153] arm64: dts: rockchip: lower rk3399-puma-haikou SD controller clock frequency
-Date: Mon,  5 Dec 2022 20:09:30 +0100
-Message-Id: <20221205190810.038934989@linuxfoundation.org>
+	Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>,
+	Matt Ranostay <matt.ranostay@konsulko.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 047/153] iio: light: apds9960: fix wrong register for gesture gain
+Date: Mon,  5 Dec 2022 20:09:31 +0100
+Message-Id: <20221205190810.067373943@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
 References: <20221205190808.733996403@linuxfoundation.org>
@@ -35,39 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+From: Alejandro Concepción Rodríguez <asconcepcion@acoro.eu>
 
-commit 91e8b74fe6381e083f8aa55217bb0562785ab398 upstream.
+commit 0aa60ff5d996d4ecdd4a62699c01f6d00f798d59 upstream.
 
-CRC errors (code -84 EILSEQ) have been observed for some SanDisk
-Ultra A1 cards when running at 50MHz.
+Gesture Gain Control is in REG_GCONF_2 (0xa3), not in REG_CONFIG_2 (0x90).
 
-Waveform analysis suggest that the level shifters that are used on the
-RK3399-Q7 module for voltage translation between 3.0 and 3.3V don't
-handle clock rates at or above 48MHz properly. Back off to 40MHz for
-some safety margin.
-
-Cc: stable@vger.kernel.org
-Fixes: 60fd9f72ce8a ("arm64: dts: rockchip: add Haikou baseboard with RK3399-Q7 SoM")
-Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20221019-upstream-puma-sd-40mhz-v1-0-754a76421518@theobroma-systems.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: aff268cd532e ("iio: light: add APDS9960 ALS + promixity driver")
+Signed-off-by: Alejandro Concepcion-Rodriguez <asconcepcion@acoro.eu>
+Acked-by: Matt Ranostay <matt.ranostay@konsulko.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/EaT-NKC-H4DNX5z4Lg9B6IWPD5TrTrYBr5DYB784wfDKQkTmzPXkoYqyUOrOgJH-xvTsEkFLcVkeAPZRUODEFI5dGziaWXwjpfBNLeNGfNc=@acoro.eu
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/apds9960.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma-haikou.dts
-@@ -203,7 +203,7 @@
- 	cap-sd-highspeed;
- 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
- 	disable-wp;
--	max-frequency = <150000000>;
-+	max-frequency = <40000000>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
- 	vmmc-supply = <&vcc3v3_baseboard>;
+--- a/drivers/iio/light/apds9960.c
++++ b/drivers/iio/light/apds9960.c
+@@ -55,9 +55,6 @@
+ #define APDS9960_REG_CONTROL_PGAIN_MASK_SHIFT	2
+ 
+ #define APDS9960_REG_CONFIG_2	0x90
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK	0x60
+-#define APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT	5
+-
+ #define APDS9960_REG_ID		0x92
+ 
+ #define APDS9960_REG_STATUS	0x93
+@@ -78,6 +75,9 @@
+ #define APDS9960_REG_GCONF_1_GFIFO_THRES_MASK_SHIFT	6
+ 
+ #define APDS9960_REG_GCONF_2	0xa3
++#define APDS9960_REG_GCONF_2_GGAIN_MASK			0x60
++#define APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT		5
++
+ #define APDS9960_REG_GOFFSET_U	0xa4
+ #define APDS9960_REG_GOFFSET_D	0xa5
+ #define APDS9960_REG_GPULSE	0xa6
+@@ -397,9 +397,9 @@ static int apds9960_set_pxs_gain(struct
+ 			}
+ 
+ 			ret = regmap_update_bits(data->regmap,
+-				APDS9960_REG_CONFIG_2,
+-				APDS9960_REG_CONFIG_2_GGAIN_MASK,
+-				idx << APDS9960_REG_CONFIG_2_GGAIN_MASK_SHIFT);
++				APDS9960_REG_GCONF_2,
++				APDS9960_REG_GCONF_2_GGAIN_MASK,
++				idx << APDS9960_REG_GCONF_2_GGAIN_MASK_SHIFT);
+ 			if (!ret)
+ 				data->pxs_gain = idx;
+ 			mutex_unlock(&data->lock);
 
 
