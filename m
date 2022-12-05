@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6D615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1146C433C1;
-	Mon,  5 Dec 2022 19:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6C215C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:34:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FBCC433D6;
+	Mon,  5 Dec 2022 19:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268846;
-	bh=MNz/7UDp6ZSHAUrazs/BHFlPtScNFmNKIkJjSe4JswY=;
+	s=korg; t=1670268849;
+	bh=FttUDdiinSf5/OuIkZN/rZpMtFE63mHX2IIIS6UKBqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNBWjHThaySn/Zz/cLiUfb/Yh5JvBD1QoJnnO/Ho7skEa3BGsfkHKXELGaidIVFZP
-	 ytAsap0hmIsrQK8YN7DhkzfOQAjTFGqn+pxejknGYdbIBHG19HWAkw+3/U8GvDPgNC
-	 8zbvTXgxLCQrmho64A1NrLItM9qblGwGvTcIHQhg=
+	b=WiMiVzh2J41Hkg2ebKL8XqDwCq9iIdZZtGwCejulqXjI6vuWXuHY5/h9xdsod6Rn6
+	 lSmmS8A2/PIbx2C+tnTiAhkPhY0L+gmWIPVBZD3+4qTXajRoWmGDMd0xOg7H99gCbi
+	 CL0kq8n56PED/7GkGx0z4YdnBRw5ZitVi9stTzZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Andrew Davis <afd@ti.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/120] iio: health: afe4404: Fix oob read in afe4404_[read|write]_raw
-Date: Mon,  5 Dec 2022 20:09:15 +0100
-Message-Id: <20221205190807.038479732@linuxfoundation.org>
+Subject: [PATCH 5.15 033/120] e100: Fix possible use after free in e100_xmit_prepare
+Date: Mon,  5 Dec 2022 20:09:33 +0100
+Message-Id: <20221205190807.550822752@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
 References: <20221205190806.528972574@linuxfoundation.org>
@@ -36,100 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit fc92d9e3de0b2d30a3ccc08048a5fad533e4672b ]
+[ Upstream commit 45605c75c52c7ae7bfe902214343aabcfe5ba0ff ]
 
-KASAN report out-of-bounds read as follows:
+In e100_xmit_prepare(), if we can't map the skb, then return -ENOMEM, so
+e100_xmit_frame() will return NETDEV_TX_BUSY and the upper layer will
+resend the skb. But the skb is already freed, which will cause UAF bug
+when the upper layer resends the skb.
 
-BUG: KASAN: global-out-of-bounds in afe4404_read_raw+0x2ce/0x380
-Read of size 4 at addr ffffffffc00e4658 by task cat/278
+Remove the harmful free.
 
-Call Trace:
- afe4404_read_raw
- iio_read_channel_info
- dev_attr_show
-
-The buggy address belongs to the variable:
- afe4404_channel_leds+0x18/0xffffffffffffe9c0
-
-This issue can be reproduce by singe command:
-
- $ cat /sys/bus/i2c/devices/0-0058/iio\:device0/in_intensity6_raw
-
-The array size of afe4404_channel_leds and afe4404_channel_offdacs
-are less than channels, so access with chan->address cause OOB read
-in afe4404_[read|write]_raw. Fix it by moving access before use them.
-
-Fixes: b36e8257641a ("iio: health/afe440x: Use regmap fields")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20221107152010.95937-1-weiyongjun@huaweicloud.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 5e5d49422dfb ("e100: Release skb when DMA mapping is failed in e100_xmit_prepare")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/health/afe4404.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/e100.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/iio/health/afe4404.c b/drivers/iio/health/afe4404.c
-index d8a27dfe074a..70f0f6f6351c 100644
---- a/drivers/iio/health/afe4404.c
-+++ b/drivers/iio/health/afe4404.c
-@@ -250,20 +250,20 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 			    int *val, int *val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int value_reg = afe4404_channel_values[chan->address];
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int value_reg, led_field, offdac_field;
- 	int ret;
+diff --git a/drivers/net/ethernet/intel/e100.c b/drivers/net/ethernet/intel/e100.c
+index 36d52246bdc6..8cd371437c99 100644
+--- a/drivers/net/ethernet/intel/e100.c
++++ b/drivers/net/ethernet/intel/e100.c
+@@ -1742,11 +1742,8 @@ static int e100_xmit_prepare(struct nic *nic, struct cb *cb,
+ 	dma_addr = dma_map_single(&nic->pdev->dev, skb->data, skb->len,
+ 				  DMA_TO_DEVICE);
+ 	/* If we can't map the skb, have the upper layer try later */
+-	if (dma_mapping_error(&nic->pdev->dev, dma_addr)) {
+-		dev_kfree_skb_any(skb);
+-		skb = NULL;
++	if (dma_mapping_error(&nic->pdev->dev, dma_addr))
+ 		return -ENOMEM;
+-	}
  
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			value_reg = afe4404_channel_values[chan->address];
- 			ret = regmap_read(afe->regmap, value_reg, val);
- 			if (ret)
- 				return ret;
- 			return IIO_VAL_INT;
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			ret = regmap_field_read(afe->fields[offdac_field], val);
- 			if (ret)
- 				return ret;
-@@ -273,6 +273,7 @@ static int afe4404_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			ret = regmap_field_read(afe->fields[led_field], val);
- 			if (ret)
- 				return ret;
-@@ -295,19 +296,20 @@ static int afe4404_write_raw(struct iio_dev *indio_dev,
- 			     int val, int val2, long mask)
- {
- 	struct afe4404_data *afe = iio_priv(indio_dev);
--	unsigned int led_field = afe4404_channel_leds[chan->address];
--	unsigned int offdac_field = afe4404_channel_offdacs[chan->address];
-+	unsigned int led_field, offdac_field;
- 
- 	switch (chan->type) {
- 	case IIO_INTENSITY:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_OFFSET:
-+			offdac_field = afe4404_channel_offdacs[chan->address];
- 			return regmap_field_write(afe->fields[offdac_field], val);
- 		}
- 		break;
- 	case IIO_CURRENT:
- 		switch (mask) {
- 		case IIO_CHAN_INFO_RAW:
-+			led_field = afe4404_channel_leds[chan->address];
- 			return regmap_field_write(afe->fields[led_field], val);
- 		}
- 		break;
+ 	/*
+ 	 * Use the last 4 bytes of the SKB payload packet as the CRC, used for
 -- 
 2.35.1
 
