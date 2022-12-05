@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B0615C83
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB427C433D6;
-	Mon,  5 Dec 2022 19:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB715C83
+	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 19:32:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C31C433C1;
+	Mon,  5 Dec 2022 19:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670268732;
-	bh=rUYk3I9KVuVYEYyMZEggKJWyVee62u67LLJ10gBBILE=;
+	s=korg; t=1670268735;
+	bh=/J4320ADL9+PPb4mF2E+xlxphr2JxVCx2tUhoUiGXH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnNdPUGcWPYdaWpRI0SiHCv5b3StGgZSfBT91SB8YHuOwUMoTWmEGil9jUP4QIiCy
-	 pS9Bk59N/ncsOd1cLu6VoDa1BZEn19zEzeIMx/2TdKyxlJW67fvVXS7E68NE9PyfTG
-	 kcNzIbZRZCOnsd1dhbsY7wIHPB7xKHe4X2lvEbRU=
+	b=lv5mp1Fxh6xBXKwhIIABnlkZJNPeBJMnCpdMnOaEcgrcgu5FpigXcsaQzdkDNgbz7
+	 Mof/xGWb4h+CHK6lL0AFX9Fch0V1Rp4GHUF3PnebNJ+yMfrz34GTgPJlwwBELiieU2
+	 3DOq6J9w5kKtJTfpYvdZSKY4v/IwHqA4qf9eIH6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Tali Perry <tali.perry@nuvoton.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 85/92] i2c: npcm7xx: Fix error handling in npcm_i2c_init()
-Date: Mon,  5 Dec 2022 20:10:38 +0100
-Message-Id: <20221205190806.279191756@linuxfoundation.org>
+Subject: [PATCH 5.10 86/92] i2c: imx: Only DMA messages with I2C_M_DMA_SAFE flag set
+Date: Mon,  5 Dec 2022 20:10:39 +0100
+Message-Id: <20221205190806.307863541@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221205190803.464934752@linuxfoundation.org>
 References: <20221205190803.464934752@linuxfoundation.org>
@@ -36,62 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit 145900cf91c4b32ac05dbc8675a0c7f4a278749d ]
+[ Upstream commit d36678f7905cbd1dc55a8a96e066dafd749d4600 ]
 
-A problem about i2c-npcm7xx create debugfs failed is triggered with the
-following log given:
+Recent changes to the DMA code has resulting in the IMX driver failing
+I2C transfers when the buffer has been vmalloc. Only perform DMA
+transfers if the message has the I2C_M_DMA_SAFE flag set, indicating
+the client is providing a buffer which is DMA safe.
 
- [  173.827310] debugfs: Directory 'npcm_i2c' with parent '/' already present!
+This is a minimal fix for stable. The I2C core provides helpers to
+allocate a bounce buffer. For a fuller fix the master should make use
+of these helpers.
 
-The reason is that npcm_i2c_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of npcm_i2c can never be created later.
-
- npcm_i2c_init()
-   debugfs_create_dir() # create debugfs directory
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when platform_driver_register() returns error.
-
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Tali Perry <tali.perry@nuvoton.com>
+Fixes: 4544b9f25e70 ("dma-mapping: Add vmap checks to dma_map_single()")
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-imx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 31e3d2c9d6bc..c1b679737240 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2362,8 +2362,17 @@ static struct platform_driver npcm_i2c_bus_driver = {
+diff --git a/drivers/i2c/busses/i2c-imx.c b/drivers/i2c/busses/i2c-imx.c
+index be4ad516293b..b4fb4336b4e8 100644
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -843,7 +843,8 @@ static int i2c_imx_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+ 	int i, result;
+ 	unsigned int temp;
+ 	int block_data = msgs->flags & I2C_M_RECV_LEN;
+-	int use_dma = i2c_imx->dma && msgs->len >= DMA_THRESHOLD && !block_data;
++	int use_dma = i2c_imx->dma && msgs->flags & I2C_M_DMA_SAFE &&
++		msgs->len >= DMA_THRESHOLD && !block_data;
  
- static int __init npcm_i2c_init(void)
- {
-+	int ret;
-+
- 	npcm_i2c_debugfs_dir = debugfs_create_dir("npcm_i2c", NULL);
--	return platform_driver_register(&npcm_i2c_bus_driver);
-+
-+	ret = platform_driver_register(&npcm_i2c_bus_driver);
-+	if (ret) {
-+		debugfs_remove_recursive(npcm_i2c_debugfs_dir);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(npcm_i2c_init);
- 
+ 	dev_dbg(&i2c_imx->adapter.dev,
+ 		"<%s> write slave address: addr=0x%x\n",
+@@ -1011,7 +1012,8 @@ static int i2c_imx_xfer_common(struct i2c_adapter *adapter,
+ 			result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, atomic);
+ 		} else {
+ 			if (!atomic &&
+-			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD)
++			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
++				msgs[i].flags & I2C_M_DMA_SAFE)
+ 				result = i2c_imx_dma_write(i2c_imx, &msgs[i]);
+ 			else
+ 				result = i2c_imx_write(i2c_imx, &msgs[i], atomic);
 -- 
 2.35.1
 
