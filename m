@@ -1,223 +1,113 @@
-Received: from mout-b-203.mailbox.org (mout-b-203.mailbox.org [195.10.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6B76AB3
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 13:03:28 +0000 (UTC)
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-b-203.mailbox.org (Postfix) with ESMTPS id 4NRL4y2jrpz9tK5;
-	Tue,  6 Dec 2022 13:56:02 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
-	t=1670331362;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=B36lQzGmc6BirP+Aeg4Xr0DaY4W4N99CzPG3/BD5qhQ=;
-	b=J1qhPzQIXfZuykmFyrDwkLOaP/fmRoxe6VH2lc7U1Xp00zV4CgZ1Oz1Eovof+apvXVR5+/
-	/4G31hK5ivNOG6P5fO3P2cNXB2glL6rgcrd+y3GIbqKtT7iVrOak9XebSdXylkR/pGIWPq
-	PPuPEq0OtSUZO1VLZ3Y1YzkMDGEg2kgbs2tM1AnK/CjAAd1mY+HyCVTDoYUrm12b16g7Lr
-	b7hKYhpBtN3/qjmmDg6w05xOHCAfQ+M+LU9kqP1f5il51eUqgLNHKDwfxUZe8YOiIMYu70
-	CqGtfR7lxElyNdV3FD0jZcNwyjA06b0dIXJjwbNeoqNv9Qz3YQN0HXDz3G9O+A==
-From: Finn Behrens <fin@nyantec.com>
-To: ojeda@kernel.org
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH v2 13/28] rust: alloc: add
- `Vec::try_with_capacity{,_in}()` constructors
-Date: Tue, 06 Dec 2022 13:55:56 +0100
-Message-ID: <F461629C-97D4-4A49-885E-BEE4AEB5C4FB@nyantec.com>
-In-Reply-To: <20221202161502.385525-14-ojeda@kernel.org>
-References: <20221202161502.385525-1-ojeda@kernel.org>
- <20221202161502.385525-14-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0F48BEB
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 15:11:42 +0000 (UTC)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-144b21f5e5fso5776126fac.12
+        for <patches@lists.linux.dev>; Tue, 06 Dec 2022 07:11:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U2aqfWiC18IWaJPfen75guUebWdcC57mYfUOjSginJ8=;
+        b=X7P/ipumWPrS53pnFJPhLt9S4ZXC7xstFKw+LYRBYGoL8V0635Ef1gkYhcHKzrb5f+
+         MnlhsS3zuxOw6FgQJzYWNFVPlP72Fxi3cjXv0Mn02oa0Kpc0I7OoLMMnHcbfzjJjWoBD
+         FCxxZhOh322UZ9AEOQpL5Bj3+/3JUvzcZ9/g/bM9Azk0VvxCsY3epXqZT6C9GI1dg2jh
+         B+4hTmqjjLQkq4dd/+Bycm6d0CWrvTterUKqz1nvNKCBibmHtLrpHgNQHwpFts0k1/EO
+         1ZdnlgJs/mT8Id2NlA0DXnbbio5r/chWWGhX3/lmUpe2WPR2x/nkGEQQbXnqLEStA55o
+         MH8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U2aqfWiC18IWaJPfen75guUebWdcC57mYfUOjSginJ8=;
+        b=SWnq/LnLsOUiVrGMewal5y49c3zwhCO1gMFCRy9lp2FZgVaH2jEIC/m9m41D55XPiB
+         ZS6wRkKg7BBSf/4qerxxywtrtuQi39yo481Hc4/tclLxr9wiLb9FmWvfmQOMYGWiRt2f
+         fy2TqSBNuRuIqkB5TLe7jXE4tRZnw2lAGLZBV4V2R8JfVt/77Q3zivoHjbKvRi/xzV7Z
+         HfjPEx8OXWEW6kUvOMPO4iTIm5hPiHLgCMdGHU9r66a0cVZWsvk4sTpzxiKvTrip4CA9
+         /YUvhJF6eIL6M+NFQ/kY4WjQx2VARqc6tcV2UkqP8wE5tvLG/hcX7yTtOek17LhNDl10
+         UiQw==
+X-Gm-Message-State: ANoB5pmORZn1+A/H5O9zt8h5Q21CM4VqjSl648o4uQN8831u6/yX2PKl
+	eiyqPZ0xNujC/lbh2ZI10Lk=
+X-Google-Smtp-Source: AA0mqf5k6TyODTmFnas1gSjxxVcp5bgqj2cC6uaE41NtITw/OPvmc0Mnf/joQBZzQK8uqXxfMoApAg==
+X-Received: by 2002:a05:6870:9d95:b0:13b:a163:ca6 with SMTP id pv21-20020a0568709d9500b0013ba1630ca6mr53683510oab.125.1670339501593;
+        Tue, 06 Dec 2022 07:11:41 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id ce11-20020a056830628b00b00670461b8be4sm2200619otb.33.2022.12.06.07.11.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Dec 2022 07:11:41 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <792a6fba-aa15-2e2a-7527-99ab1116a01d@roeck-us.net>
+Date: Tue, 6 Dec 2022 07:11:39 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221206124052.595650754@linuxfoundation.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 5.15 000/123] 5.15.82-rc2 review
+In-Reply-To: <20221206124052.595650754@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 12/6/22 04:42, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.82 release.
+> There are 123 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 08 Dec 2022 12:40:31 +0000.
+> Anything received after that time might be too late.
+> 
 
+arch/riscv/kernel/smp.c: In function 'handle_IPI':
+arch/riscv/kernel/smp.c:195:44: error: 'cpu' undeclared (first use in this function)
+   195 |                         ipi_cpu_crash_stop(cpu, get_irq_regs());
+       |                                            ^~~
+arch/riscv/kernel/smp.c:195:44: note: each undeclared identifier is reported only once for each function it appears in
+arch/riscv/kernel/smp.c:217:22: error: 'old_regs' undeclared (first use in this function)
+   217 |         set_irq_regs(old_regs);
+       |                      ^~~~~~~~
 
-On 2 Dec 2022, at 17:14, ojeda@kernel.org wrote:
+This is with v5.15.81-124-g9269e46bc838.
 
-> From: Miguel Ojeda <ojeda@kernel.org>
->
-> Add `Vec::try_with_capacity()` and `Vec::try_with_capacity_in()` as
-> the fallible versions of `Vec::with_capacity()` and
-> `Vec::with_capacity_in()`, respectively.
->
-> The implementations follow the originals and use the previously
-> added `RawVec::try_with_capacity_in()`.
->
-> In turn, `Vec::try_with_capacity()` will be used to implement
-> the `CString` type (which wraps a `Vec<u8>`) in a later patch.
->
-> Reviewed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Finn Behrens <fin@nyantec.com>
+The backport of commit 9b932aadfc47d seems wrong. The original version introduces
+the cpu variable in handle_IPI(). The backport doesn't, and removes old_regs
+instead.
 
-Regards,
-Finn
+Backport:
 
-> ---
->  rust/alloc/raw_vec.rs |  1 -
->  rust/alloc/vec/mod.rs | 89 +++++++++++++++++++++++++++++++++++++++++++=
+  void handle_IPI(struct pt_regs *regs)
+  {
+-       struct pt_regs *old_regs = set_irq_regs(regs);
+         unsigned long *pending_ipis = &ipi_data[smp_processor_id()].bits;
+         unsigned long *stats = ipi_data[smp_processor_id()].stats;
 
->  2 files changed, 89 insertions(+), 1 deletion(-)
->
-> diff --git a/rust/alloc/raw_vec.rs b/rust/alloc/raw_vec.rs
-> index c342f3843972..eb77db5def55 100644
-> --- a/rust/alloc/raw_vec.rs
-> +++ b/rust/alloc/raw_vec.rs
-> @@ -135,7 +135,6 @@ impl<T, A: Allocator> RawVec<T, A> {
->
->      /// Like `try_with_capacity`, but parameterized over the choice of=
+Original:
 
->      /// allocator for the returned `RawVec`.
-> -    #[allow(dead_code)]
->      #[inline]
->      pub fn try_with_capacity_in(capacity: usize, alloc: A) -> Result<S=
-elf, TryReserveError> {
->          Self::try_allocate_in(capacity, AllocInit::Uninitialized, allo=
-c)
-> diff --git a/rust/alloc/vec/mod.rs b/rust/alloc/vec/mod.rs
-> index 540787804cc2..8ac6c1e3b2a8 100644
-> --- a/rust/alloc/vec/mod.rs
-> +++ b/rust/alloc/vec/mod.rs
-> @@ -472,6 +472,48 @@ impl<T> Vec<T> {
->          Self::with_capacity_in(capacity, Global)
->      }
->
-> +    /// Tries to construct a new, empty `Vec<T>` with the specified ca=
-pacity.
-> +    ///
-> +    /// The vector will be able to hold exactly `capacity` elements wi=
-thout
-> +    /// reallocating. If `capacity` is 0, the vector will not allocate=
-=2E
-> +    ///
-> +    /// It is important to note that although the returned vector has =
-the
-> +    /// *capacity* specified, the vector will have a zero *length*. Fo=
-r an
-> +    /// explanation of the difference between length and capacity, see=
+void handle_IPI(struct pt_regs *regs)
+  {
+-       unsigned long *pending_ipis = &ipi_data[smp_processor_id()].bits;
+-       unsigned long *stats = ipi_data[smp_processor_id()].stats;
++       unsigned int cpu = smp_processor_id();
++       unsigned long *pending_ipis = &ipi_data[cpu].bits;
++       unsigned long *stats = ipi_data[cpu].stats;
 
-> +    /// *[Capacity and reallocation]*.
-> +    ///
-> +    /// [Capacity and reallocation]: #capacity-and-reallocation
-> +    ///
-> +    /// # Examples
-> +    ///
-> +    /// ```
-> +    /// let mut vec =3D Vec::try_with_capacity(10).unwrap();
-> +    ///
-> +    /// // The vector contains no items, even though it has capacity f=
-or more
-> +    /// assert_eq!(vec.len(), 0);
-> +    /// assert_eq!(vec.capacity(), 10);
-> +    ///
-> +    /// // These are all done without reallocating...
-> +    /// for i in 0..10 {
-> +    ///     vec.push(i);
-> +    /// }
-> +    /// assert_eq!(vec.len(), 10);
-> +    /// assert_eq!(vec.capacity(), 10);
-> +    ///
-> +    /// // ...but this may make the vector reallocate
-> +    /// vec.push(11);
-> +    /// assert_eq!(vec.len(), 11);
-> +    /// assert!(vec.capacity() >=3D 11);
-> +    ///
-> +    /// let mut result =3D Vec::try_with_capacity(usize::MAX);
-> +    /// assert!(result.is_err());
-> +    /// ```
-> +    #[inline]
-> +    #[stable(feature =3D "kernel", since =3D "1.0.0")]
-> +    pub fn try_with_capacity(capacity: usize) -> Result<Self, TryReser=
-veError> {
-> +        Self::try_with_capacity_in(capacity, Global)
-> +    }
-> +
->      /// Creates a `Vec<T>` directly from the raw components of another=
- vector.
->      ///
->      /// # Safety
-> @@ -617,6 +659,53 @@ impl<T, A: Allocator> Vec<T, A> {
->          Vec { buf: RawVec::with_capacity_in(capacity, alloc), len: 0 }=
+Upstream includes commit 7ecbc648102f which removes the old_regs variable.
+That doesn't mean it can be removed in the backport.
 
->      }
->
-> +    /// Tries to construct a new, empty `Vec<T, A>` with the specified=
- capacity
-> +    /// with the provided allocator.
-> +    ///
-> +    /// The vector will be able to hold exactly `capacity` elements wi=
-thout
-> +    /// reallocating. If `capacity` is 0, the vector will not allocate=
-=2E
-> +    ///
-> +    /// It is important to note that although the returned vector has =
-the
-> +    /// *capacity* specified, the vector will have a zero *length*. Fo=
-r an
-> +    /// explanation of the difference between length and capacity, see=
+Guenter
 
-> +    /// *[Capacity and reallocation]*.
-> +    ///
-> +    /// [Capacity and reallocation]: #capacity-and-reallocation
-> +    ///
-> +    /// # Examples
-> +    ///
-> +    /// ```
-> +    /// #![feature(allocator_api)]
-> +    ///
-> +    /// use std::alloc::System;
-> +    ///
-> +    /// let mut vec =3D Vec::try_with_capacity_in(10, System).unwrap()=
-;
-> +    ///
-> +    /// // The vector contains no items, even though it has capacity f=
-or more
-> +    /// assert_eq!(vec.len(), 0);
-> +    /// assert_eq!(vec.capacity(), 10);
-> +    ///
-> +    /// // These are all done without reallocating...
-> +    /// for i in 0..10 {
-> +    ///     vec.push(i);
-> +    /// }
-> +    /// assert_eq!(vec.len(), 10);
-> +    /// assert_eq!(vec.capacity(), 10);
-> +    ///
-> +    /// // ...but this may make the vector reallocate
-> +    /// vec.push(11);
-> +    /// assert_eq!(vec.len(), 11);
-> +    /// assert!(vec.capacity() >=3D 11);
-> +    ///
-> +    /// let mut result =3D Vec::try_with_capacity_in(usize::MAX, Syste=
-m);
-> +    /// assert!(result.is_err());
-> +    /// ```
-> +    #[inline]
-> +    #[stable(feature =3D "kernel", since =3D "1.0.0")]
-> +    pub fn try_with_capacity_in(capacity: usize, alloc: A) -> Result<S=
-elf, TryReserveError> {
-> +        Ok(Vec { buf: RawVec::try_with_capacity_in(capacity, alloc)?, =
-len: 0 })
-> +    }
-> +
->      /// Creates a `Vec<T, A>` directly from the raw components of anot=
-her vector.
->      ///
->      /// # Safety
-> -- =
-
-> 2.38.1
