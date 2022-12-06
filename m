@@ -1,74 +1,83 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914D527713
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 17:22:50 +0000 (UTC)
-Received: by mail-wr1-f42.google.com with SMTP id f18so24477948wrj.5
-        for <patches@lists.linux.dev>; Tue, 06 Dec 2022 09:22:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B83327722
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 18:07:11 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id w23so14690995ply.12
+        for <patches@lists.linux.dev>; Tue, 06 Dec 2022 10:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2YtxpTRBMkQrFKVlk2fLe5SF6BAZI+FTZ8g6kFOfOAk=;
+        b=Hx3c1iTrsaQWgVMlJZ/AjAREoRG8YNOURxidP0YjgaPt69QiceSsgqs8rPspgjy9sJ
+         e2ln0P7ZY4MUFKGepPn58S0wFlfdL+SnHC3BSEpBtxu100X2aJXMtGXF8AxjpZfHTO95
+         8FDMGGvH4gQ0+BoupBaV1tghVUhrxWsq7GH60tm/Z6/Htn03oF1RuEzQx1LMyQmdrag6
+         8Y9DteQwk9FnQz84C2VPMymjsjHWjvQg9RVaIOkNtE9rrVovUy1jku8IO5Dk9+gytqSo
+         2AGIFvoN+HlitDp1f1HRp+Ai3QiYaEGx63L13+nCDb9CiSQH/9JPAopgxu+KZCL3svTO
+         9/KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h458RF1zVZ1EV5DsW5Ozll8gVo7xVTHiPN8UW60GA68=;
-        b=SajPDwNbq6K1JolpTf4tw52g3G61m/8P7DsmmTeywGkD5szzeNfTUr0OGRpJc510CF
-         z/3YOjLD0NcopLrxwiSNjfvPWZS6XenOH50cS4LPNCrjiGoaO5362Qhim9ch6tHTwJEI
-         XwAE3FFdrWWEqtZWIn5U/82DE5WAosXQejYEEqgzWKzMBRvA2FMO7NdYGnI9sypfLLsm
-         BqLQEZuO4Uu7GmGLhdRYpVbscHJPQ6kywqSxdCTWgIjOUPYdbFK0rvZFG/fs2Ivwnnil
-         slkBCodpHRZKCPpbJq/FJyNX4R5OHFTx41iqC1QtvLflskKEibR+PVWf6jGEar0cyS7h
-         cJwQ==
-X-Gm-Message-State: ANoB5pkChNBKj0gGMS6GPRsSmLxw22xWut6DtxFU0nkjYrUPZDJ/Ee5r
-	BCEVLdR3AEJVX4UQZmNQLlA=
-X-Google-Smtp-Source: AA0mqf69t2edOthKa9N0tlXb6In5lgsG6vbYRgykNTLjMAQGRTNDzlhy0o7aKePbqfG0Z7vVISKD6Q==
-X-Received: by 2002:adf:f94f:0:b0:241:f467:f885 with SMTP id q15-20020adff94f000000b00241f467f885mr37985303wrr.482.1670347368751;
-        Tue, 06 Dec 2022 09:22:48 -0800 (PST)
-Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id e14-20020adff34e000000b0024228b0b932sm21286544wrp.27.2022.12.06.09.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 09:22:48 -0800 (PST)
-Date: Tue, 6 Dec 2022 17:22:46 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: ojeda@kernel.org
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Josh Triplett <josh@joshtriplett.org>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v1] rust: alloc: remove the `borrow` module (`ToOwned`,
- `Cow`)
-Message-ID: <Y496ZhJF2ND+ND3L@liuwe-devbox-debian-v2>
-References: <20221206010519.39075-1-ojeda@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2YtxpTRBMkQrFKVlk2fLe5SF6BAZI+FTZ8g6kFOfOAk=;
+        b=HESXbKnr9hXJXacMcVGvW8xobM+1vKHx9leDU1bBkB7+EHY+KVvdtliXq8eQahhKGM
+         2aoWoIq8JlgqALsAZaxSKpdN47ASvGJmyQ5cnITP6/wx77TpSSZ/K5cUi/FV/h45mDa6
+         4T/HOxgd4ASCQjiKMDjdddNjjWsa4m+yPgHfh7A5eYmRRDgDm7EpqQcOURoY1Z+noZhO
+         bHZxM5Xd2V4HicCeY0u7pqVGWcNsE/kCFtyMAJLfwIh+65l/FrTgSY0ZP5McyWpPN4lz
+         Mwm0H9iBjnQdm+I/yNFdVqyWcAnRJzcRh1Ccb5P8Giyue/hLejtRxHXnT3Qa3GJGEflV
+         IUoA==
+X-Gm-Message-State: ANoB5pmtbgzz2S+/VhDga0jCZCj9i0I6HOpKAmoFl6hLwv3pcXC0acrH
+	n4t6eiayh2RvGvs1nm1zU96ATenqsG4/snM3bWY=
+X-Google-Smtp-Source: AA0mqf4KfDHXmkm1COm0QbVzaO0KO9OVT7vFeFskzI57ZSVymhCP/xzXMl8NoNFPgEEzzOGSFYnKLtDdfC70gazcOL4=
+X-Received: by 2002:a17:90b:194e:b0:219:64e2:7570 with SMTP id
+ nk14-20020a17090b194e00b0021964e27570mr33838030pjb.213.1670350030909; Tue, 06
+ Dec 2022 10:07:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221206010519.39075-1-ojeda@kernel.org>
+References: <20221205190808.733996403@linuxfoundation.org>
+In-Reply-To: <20221205190808.733996403@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Tue, 6 Dec 2022 10:07:00 -0800
+Message-ID: <CAJq+SaCmmB_NgM2fHi0NYGOqSuio8WMATGVFwfh1vzzCwsG7SQ@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/153] 5.4.226-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 06, 2022 at 02:05:19AM +0100, ojeda@kernel.org wrote:
-> From: Miguel Ojeda <ojeda@kernel.org>
-> 
-> The `Cow` type [1] requires that its generic parameter type implements
-> the `ToOwned` trait [2], which provides a method to create owned data
-> from borrowed data, usually by cloning.
-> 
-> However, it is infallible, and thus in most cases it is not useful for
-> the kernel. [3]
-> 
-> Therefore, introduce `cfg(no_borrow)` to remove the `borrow` module
-> (which contains `ToOwned` and `Cow`) from `alloc`.
-> 
-> Link: https://doc.rust-lang.org/alloc/borrow/enum.Cow.html [1]
-> Link: https://doc.rust-lang.org/alloc/borrow/trait.ToOwned.html [2]
-> Link: https://lore.kernel.org/rust-for-linux/20221204103153.117675b1@GaryWorkstation/ [3]
-> Cc: Gary Guo <gary@garyguo.net>
-> Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Cc: Josh Triplett <josh@joshtriplett.org>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+>
+> This is the start of the stable review cycle for the 5.4.226 release.
+> There are 153 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 07 Dec 2022 19:07:46 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.226-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
+
+Tested-by: Allen Pais <apais@linux.microsoft.com>
+
+Thanks.
