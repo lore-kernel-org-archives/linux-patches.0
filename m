@@ -1,26 +1,26 @@
-Received: from mout-b-110.mailbox.org (mout-b-110.mailbox.org [195.10.208.55])
+Received: from mout-b-203.mailbox.org (mout-b-203.mailbox.org [195.10.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106E96AB3
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 12:59:15 +0000 (UTC)
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6B76AB3
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 13:03:28 +0000 (UTC)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-b-110.mailbox.org (Postfix) with ESMTPS id 4NRL0Z5J26z9tBp;
-	Tue,  6 Dec 2022 13:52:14 +0100 (CET)
+	by mout-b-203.mailbox.org (Postfix) with ESMTPS id 4NRL4y2jrpz9tK5;
+	Tue,  6 Dec 2022 13:56:02 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
-	t=1670331134;
+	t=1670331362;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=IRHVWafY0jHFpHspwEKtI6JUKd/uH2AFkVef11b8k6E=;
-	b=N1xBqdYrP8dXmghzKaLbcLdLpkNG0cHbYgPfiCrvtwz9ibdMcruKlyZtBPyty5mVKHwcqy
-	pfJsynIP4ubyQGY4nqSPTJkyzhkAhscw1SRYmyIdc7oRGIk5fjr44FjSrWCgY1dgYHb1xH
-	gcumJmjWkTPCn46i3XoJNrELOf+f/152w49VMwTXUfHL/ZJXB3F1mQFCOHeTze87OOXo/v
-	QwEPSGjXzPKSIeV/sN1Dx++F2UTspoUue1RM278N7FKKDjqEkg/INJhewJ0XQI96v93o9Q
-	j7wuTFiOP7ESEf2xjBhgJxuCrqJJKh7Gh4jxiTyORgH/M+D0MV4pBnoCEvQ0ug==
+	bh=B36lQzGmc6BirP+Aeg4Xr0DaY4W4N99CzPG3/BD5qhQ=;
+	b=J1qhPzQIXfZuykmFyrDwkLOaP/fmRoxe6VH2lc7U1Xp00zV4CgZ1Oz1Eovof+apvXVR5+/
+	/4G31hK5ivNOG6P5fO3P2cNXB2glL6rgcrd+y3GIbqKtT7iVrOak9XebSdXylkR/pGIWPq
+	PPuPEq0OtSUZO1VLZ3Y1YzkMDGEg2kgbs2tM1AnK/CjAAd1mY+HyCVTDoYUrm12b16g7Lr
+	b7hKYhpBtN3/qjmmDg6w05xOHCAfQ+M+LU9kqP1f5il51eUqgLNHKDwfxUZe8YOiIMYu70
+	CqGtfR7lxElyNdV3FD0jZcNwyjA06b0dIXJjwbNeoqNv9Qz3YQN0HXDz3G9O+A==
 From: Finn Behrens <fin@nyantec.com>
 To: ojeda@kernel.org
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -28,13 +28,14 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Gary Guo <gary@garyguo.net>,
  =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Viktor Garske <viktor@v-gar.de>
-Subject: Re: [PATCH v2 09/28] rust: error: add codes from `errno-base.h`
-Date: Tue, 06 Dec 2022 13:52:07 +0100
-Message-ID: <8D86E171-0030-4A3F-BE87-9B9FB9E79213@nyantec.com>
-In-Reply-To: <20221202161502.385525-10-ojeda@kernel.org>
+ patches@lists.linux.dev
+Subject: Re: [PATCH v2 13/28] rust: alloc: add
+ `Vec::try_with_capacity{,_in}()` constructors
+Date: Tue, 06 Dec 2022 13:55:56 +0100
+Message-ID: <F461629C-97D4-4A49-885E-BEE4AEB5C4FB@nyantec.com>
+In-Reply-To: <20221202161502.385525-14-ojeda@kernel.org>
 References: <20221202161502.385525-1-ojeda@kernel.org>
- <20221202161502.385525-10-ojeda@kernel.org>
+ <20221202161502.385525-14-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,23 +44,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 4NRL0Z5J26z9tBp
 
 
 
 On 2 Dec 2022, at 17:14, ojeda@kernel.org wrote:
 
-> From: Viktor Garske <viktor@v-gar.de>
+> From: Miguel Ojeda <ojeda@kernel.org>
 >
-> Only a few codes were added so far. With the `declare_err!`
-> macro in place, add the remaining ones (which is most of them)
-> from `include/uapi/asm-generic/errno-base.h`.
+> Add `Vec::try_with_capacity()` and `Vec::try_with_capacity_in()` as
+> the fallible versions of `Vec::with_capacity()` and
+> `Vec::with_capacity_in()`, respectively.
 >
-> Co-developed-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Signed-off-by: Viktor Garske <viktor@v-gar.de>
+> The implementations follow the originals and use the previously
+> added `RawVec::try_with_capacity_in()`.
+>
+> In turn, `Vec::try_with_capacity()` will be used to implement
+> the `CString` type (which wraps a `Vec<u8>`) in a later patch.
+>
 > Reviewed-by: Gary Guo <gary@garyguo.net>
-> [Reworded, adapted for upstream and applied latest changes]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Reviewed-by: Finn Behrens <fin@nyantec.com>
 
@@ -67,54 +69,155 @@ Regards,
 Finn
 
 > ---
->  rust/kernel/error.rs | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
+>  rust/alloc/raw_vec.rs |  1 -
+>  rust/alloc/vec/mod.rs | 89 +++++++++++++++++++++++++++++++++++++++++++=
+
+>  2 files changed, 89 insertions(+), 1 deletion(-)
 >
-> diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-> index b843f3445483..861746f2422d 100644
-> --- a/rust/kernel/error.rs
-> +++ b/rust/kernel/error.rs
-> @@ -17,7 +17,40 @@ pub mod code {
->          };
+> diff --git a/rust/alloc/raw_vec.rs b/rust/alloc/raw_vec.rs
+> index c342f3843972..eb77db5def55 100644
+> --- a/rust/alloc/raw_vec.rs
+> +++ b/rust/alloc/raw_vec.rs
+> @@ -135,7 +135,6 @@ impl<T, A: Allocator> RawVec<T, A> {
+>
+>      /// Like `try_with_capacity`, but parameterized over the choice of=
+
+>      /// allocator for the returned `RawVec`.
+> -    #[allow(dead_code)]
+>      #[inline]
+>      pub fn try_with_capacity_in(capacity: usize, alloc: A) -> Result<S=
+elf, TryReserveError> {
+>          Self::try_allocate_in(capacity, AllocInit::Uninitialized, allo=
+c)
+> diff --git a/rust/alloc/vec/mod.rs b/rust/alloc/vec/mod.rs
+> index 540787804cc2..8ac6c1e3b2a8 100644
+> --- a/rust/alloc/vec/mod.rs
+> +++ b/rust/alloc/vec/mod.rs
+> @@ -472,6 +472,48 @@ impl<T> Vec<T> {
+>          Self::with_capacity_in(capacity, Global)
 >      }
 >
-> +    declare_err!(EPERM, "Operation not permitted.");
-> +    declare_err!(ENOENT, "No such file or directory.");
-> +    declare_err!(ESRCH, "No such process.");
-> +    declare_err!(EINTR, "Interrupted system call.");
-> +    declare_err!(EIO, "I/O error.");
-> +    declare_err!(ENXIO, "No such device or address.");
-> +    declare_err!(E2BIG, "Argument list too long.");
-> +    declare_err!(ENOEXEC, "Exec format error.");
-> +    declare_err!(EBADF, "Bad file number.");
-> +    declare_err!(ECHILD, "Exec format error.");
-> +    declare_err!(EAGAIN, "Try again.");
->      declare_err!(ENOMEM, "Out of memory.");
-> +    declare_err!(EACCES, "Permission denied.");
-> +    declare_err!(EFAULT, "Bad address.");
-> +    declare_err!(ENOTBLK, "Block device required.");
-> +    declare_err!(EBUSY, "Device or resource busy.");
-> +    declare_err!(EEXIST, "File exists.");
-> +    declare_err!(EXDEV, "Cross-device link.");
-> +    declare_err!(ENODEV, "No such device.");
-> +    declare_err!(ENOTDIR, "Not a directory.");
-> +    declare_err!(EISDIR, "Is a directory.");
-> +    declare_err!(EINVAL, "Invalid argument.");
-> +    declare_err!(ENFILE, "File table overflow.");
-> +    declare_err!(EMFILE, "Too many open files.");
-> +    declare_err!(ENOTTY, "Not a typewriter.");
-> +    declare_err!(ETXTBSY, "Text file busy.");
-> +    declare_err!(EFBIG, "File too large.");
-> +    declare_err!(ENOSPC, "No space left on device.");
-> +    declare_err!(ESPIPE, "Illegal seek.");
-> +    declare_err!(EROFS, "Read-only file system.");
-> +    declare_err!(EMLINK, "Too many links.");
-> +    declare_err!(EPIPE, "Broken pipe.");
-> +    declare_err!(EDOM, "Math argument out of domain of func.");
-> +    declare_err!(ERANGE, "Math result not representable.");
->  }
+> +    /// Tries to construct a new, empty `Vec<T>` with the specified ca=
+pacity.
+> +    ///
+> +    /// The vector will be able to hold exactly `capacity` elements wi=
+thout
+> +    /// reallocating. If `capacity` is 0, the vector will not allocate=
+=2E
+> +    ///
+> +    /// It is important to note that although the returned vector has =
+the
+> +    /// *capacity* specified, the vector will have a zero *length*. Fo=
+r an
+> +    /// explanation of the difference between length and capacity, see=
+
+> +    /// *[Capacity and reallocation]*.
+> +    ///
+> +    /// [Capacity and reallocation]: #capacity-and-reallocation
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// let mut vec =3D Vec::try_with_capacity(10).unwrap();
+> +    ///
+> +    /// // The vector contains no items, even though it has capacity f=
+or more
+> +    /// assert_eq!(vec.len(), 0);
+> +    /// assert_eq!(vec.capacity(), 10);
+> +    ///
+> +    /// // These are all done without reallocating...
+> +    /// for i in 0..10 {
+> +    ///     vec.push(i);
+> +    /// }
+> +    /// assert_eq!(vec.len(), 10);
+> +    /// assert_eq!(vec.capacity(), 10);
+> +    ///
+> +    /// // ...but this may make the vector reallocate
+> +    /// vec.push(11);
+> +    /// assert_eq!(vec.len(), 11);
+> +    /// assert!(vec.capacity() >=3D 11);
+> +    ///
+> +    /// let mut result =3D Vec::try_with_capacity(usize::MAX);
+> +    /// assert!(result.is_err());
+> +    /// ```
+> +    #[inline]
+> +    #[stable(feature =3D "kernel", since =3D "1.0.0")]
+> +    pub fn try_with_capacity(capacity: usize) -> Result<Self, TryReser=
+veError> {
+> +        Self::try_with_capacity_in(capacity, Global)
+> +    }
+> +
+>      /// Creates a `Vec<T>` directly from the raw components of another=
+ vector.
+>      ///
+>      /// # Safety
+> @@ -617,6 +659,53 @@ impl<T, A: Allocator> Vec<T, A> {
+>          Vec { buf: RawVec::with_capacity_in(capacity, alloc), len: 0 }=
+
+>      }
 >
->  /// Generic integer kernel error.
+> +    /// Tries to construct a new, empty `Vec<T, A>` with the specified=
+ capacity
+> +    /// with the provided allocator.
+> +    ///
+> +    /// The vector will be able to hold exactly `capacity` elements wi=
+thout
+> +    /// reallocating. If `capacity` is 0, the vector will not allocate=
+=2E
+> +    ///
+> +    /// It is important to note that although the returned vector has =
+the
+> +    /// *capacity* specified, the vector will have a zero *length*. Fo=
+r an
+> +    /// explanation of the difference between length and capacity, see=
+
+> +    /// *[Capacity and reallocation]*.
+> +    ///
+> +    /// [Capacity and reallocation]: #capacity-and-reallocation
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// #![feature(allocator_api)]
+> +    ///
+> +    /// use std::alloc::System;
+> +    ///
+> +    /// let mut vec =3D Vec::try_with_capacity_in(10, System).unwrap()=
+;
+> +    ///
+> +    /// // The vector contains no items, even though it has capacity f=
+or more
+> +    /// assert_eq!(vec.len(), 0);
+> +    /// assert_eq!(vec.capacity(), 10);
+> +    ///
+> +    /// // These are all done without reallocating...
+> +    /// for i in 0..10 {
+> +    ///     vec.push(i);
+> +    /// }
+> +    /// assert_eq!(vec.len(), 10);
+> +    /// assert_eq!(vec.capacity(), 10);
+> +    ///
+> +    /// // ...but this may make the vector reallocate
+> +    /// vec.push(11);
+> +    /// assert_eq!(vec.len(), 11);
+> +    /// assert!(vec.capacity() >=3D 11);
+> +    ///
+> +    /// let mut result =3D Vec::try_with_capacity_in(usize::MAX, Syste=
+m);
+> +    /// assert!(result.is_err());
+> +    /// ```
+> +    #[inline]
+> +    #[stable(feature =3D "kernel", since =3D "1.0.0")]
+> +    pub fn try_with_capacity_in(capacity: usize, alloc: A) -> Result<S=
+elf, TryReserveError> {
+> +        Ok(Vec { buf: RawVec::try_with_capacity_in(capacity, alloc)?, =
+len: 0 })
+> +    }
+> +
+>      /// Creates a `Vec<T, A>` directly from the raw components of anot=
+her vector.
+>      ///
+>      /// # Safety
 > -- =
 
 > 2.38.1
