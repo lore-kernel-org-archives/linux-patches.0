@@ -1,114 +1,636 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73081180
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 00:16:26 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id q17-20020a17090aa01100b002194cba32e9so16484013pjp.1
-        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 16:16:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m0MaHRRiqHIESS4RVFnR6xMW+UY9asEzeHWMqoFz84s=;
-        b=RIpE3NyGcARnWYcRj4bwZYE7KpnzVzhZAG+qcWvD/jwMkPbcboDs3SQEPdUY/g0Ri6
-         BI0rP7Aznv7nG7eZ4ag25ya8XISq5m0z0s0lq6cGN4rSTGjYrIODpJ5n8rcw+c6P8JRN
-         B0K2mfz7VVgwAkSLCuoAZw7dbA3rJecVyX0cU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m0MaHRRiqHIESS4RVFnR6xMW+UY9asEzeHWMqoFz84s=;
-        b=My8vXbVrfGKemqxewhQlQuzz/MLBYAff1ScF+HU6GKZGNK+ogWu0oTf0pALCQzLTJX
-         Lge1H0NuOR/30OyypVsF/mACdyCHX89gyywKS33tm4RTuF8xJFizbFAWrkHYSoddB0/1
-         Lm61EFKz4kzBnxLTyNI5TtTlpv4TDU7BJVWbf51VqsYHDe8b0Uu+QD/IMvUMpCRYMmkE
-         KUBy+C2IxYuMxJQPzfUWWpfN2ktC0OP3mKA51XJnxy8ZC2PGq32JIoy3XhDE49swdtM3
-         I5r5RP5dfEeviZssuO6q+2MrZxZq+jeNud1/zMw8GKP0k2tJ98siajQwyxm/VPrmVbXk
-         gvVA==
-X-Gm-Message-State: ANoB5pmVqjS02jxz49kNHddWt9JjemXbYpj5IT7zCjczDN5s6FYb1Gho
-	fVvWlh92ayQBLQ4OPkjBx5NY1A==
-X-Google-Smtp-Source: AA0mqf5TTCbWD9D7sGsaPw7m1v7kOKJUqiRLJ0Y9f2Vfc0df+ZdSBMs/omk302+37+Z8oddO1AxsCA==
-X-Received: by 2002:a17:902:a703:b0:187:137c:b2ea with SMTP id w3-20020a170902a70300b00187137cb2eamr67052434plq.52.1670285785755;
-        Mon, 05 Dec 2022 16:16:25 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id e8-20020a056a0000c800b0053e38ac0ff4sm3482136pfj.115.2022.12.05.16.16.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 16:16:24 -0800 (PST)
-From: Kees Cook <keescook@chromium.org>
-To: Tony Luck <tony.luck@intel.com>,
-	swboyd@chromium.org,
-	anton@enomsg.org,
-	ccross@android.com
-Cc: Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	patches@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BCD194
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 01:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841A0C433C1;
+	Tue,  6 Dec 2022 01:05:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1670288748;
+	bh=UTfAIAX1EY1vET9A6esUIInfSVhtd5EuneV1EFr6AOY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=N5CA0rePMehuF5SNjKXtXC4no8g/uVf7rhoygQXeQyM9f2MeWL+aPbdgSyX/V+EZm
+	 +44+ucSkKKr8IfaNHu7vk2e0GP+vXiz1sy5hrmwlof8xGQ+pshVW6ju0limvNio2zv
+	 EVCEzCc4AjUhiCOp18vtSbpbevLZF8DkL/63jo5/tNqCNwBznrt+nKcxxgZzsniZtN
+	 Q0Pozsgbh25o0dzOVyIsWZ+UB2VvLWR7iPo8PUCr7YjGP2w61cu0pRX/VZbAcqRK+6
+	 FL7a/otI+jXluUSKsWJhZJ3ulROp5NBWHqTvjLYjUt1VQB7nYbP3louNgW82CZyFNb
+	 Q+CcrpLBcS1CQ==
+From: ojeda@kernel.org
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	rppt@kernel.org,
-	bgeffon@google.com
-Subject: Re: [PATCH] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
-Date: Mon,  5 Dec 2022 16:16:15 -0800
-Message-Id: <167028577239.2860027.4300649046470353371.b4-ty@chromium.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221205233136.3420802-1-swboyd@chromium.org>
-References: <20221205233136.3420802-1-swboyd@chromium.org>
+	patches@lists.linux.dev,
+	Josh Triplett <josh@joshtriplett.org>
+Subject: [PATCH v1] rust: alloc: remove the `borrow` module (`ToOwned`, `Cow`)
+Date: Tue,  6 Dec 2022 02:05:19 +0100
+Message-Id: <20221206010519.39075-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 5 Dec 2022 15:31:36 -0800, Stephen Boyd wrote:
-> An oops can be induced by running 'cat /proc/kcore > /dev/null' on
-> devices using pstore with the ram backend because kmap_atomic() assumes
-> lowmem pages are accessible with __va().
-> 
->  Unable to handle kernel paging request at virtual address ffffff807ff2b000
->  Mem abort info:
->  ESR = 0x96000006
->  EC = 0x25: DABT (current EL), IL = 32 bits
->  SET = 0, FnV = 0
->  EA = 0, S1PTW = 0
->  FSC = 0x06: level 2 translation fault
->  Data abort info:
->  ISV = 0, ISS = 0x00000006
->  CM = 0, WnR = 0
->  swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
->  [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
->  Internal error: Oops: 96000006 [#1] PREEMPT SMP
->  Modules linked in: dm_integrity
->  CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
->  Hardware name: Google Lazor (rev3 - 8) (DT)
->  pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->  pc : __memcpy+0x110/0x260
->  lr : vread+0x194/0x294
->  sp : ffffffc013ee39d0
->  x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
->  x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
->  x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
->  x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
->  x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
->  x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
->  x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
->  x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
->  x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
->  x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
->  Call trace:
->  __memcpy+0x110/0x260
->  read_kcore+0x584/0x778
->  proc_reg_read+0xb4/0xe4
-> 
-> [...]
+From: Miguel Ojeda <ojeda@kernel.org>
 
-Applied to for-next/pstore, thanks!
+The `Cow` type [1] requires that its generic parameter type implements
+the `ToOwned` trait [2], which provides a method to create owned data
+from borrowed data, usually by cloning.
 
-[1/1] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
-      https://git.kernel.org/kees/c/e6b842741b4f
+However, it is infallible, and thus in most cases it is not useful for
+the kernel. [3]
 
+Therefore, introduce `cfg(no_borrow)` to remove the `borrow` module
+(which contains `ToOwned` and `Cow`) from `alloc`.
+
+Link: https://doc.rust-lang.org/alloc/borrow/enum.Cow.html [1]
+Link: https://doc.rust-lang.org/alloc/borrow/trait.ToOwned.html [2]
+Link: https://lore.kernel.org/rust-for-linux/20221204103153.117675b1@GaryWorkstation/ [3]
+Cc: Gary Guo <gary@garyguo.net>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/Makefile         |   1 +
+ rust/alloc/borrow.rs  | 498 ------------------------------------------
+ rust/alloc/lib.rs     |   3 +-
+ rust/alloc/vec/mod.rs |   3 +
+ 4 files changed, 6 insertions(+), 499 deletions(-)
+ delete mode 100644 rust/alloc/borrow.rs
+
+diff --git a/rust/Makefile b/rust/Makefile
+index 7700d3853404..208b520fcbea 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -44,6 +44,7 @@ core-cfgs = \
+     --cfg no_fp_fmt_parse
+ 
+ alloc-cfgs = \
++    --cfg no_borrow \
+     --cfg no_fmt \
+     --cfg no_global_oom_handling \
+     --cfg no_macros \
+diff --git a/rust/alloc/borrow.rs b/rust/alloc/borrow.rs
+deleted file mode 100644
+index dde4957200d4..000000000000
+--- a/rust/alloc/borrow.rs
++++ /dev/null
+@@ -1,498 +0,0 @@
+-// SPDX-License-Identifier: Apache-2.0 OR MIT
+-
+-//! A module for working with borrowed data.
+-
+-#![stable(feature = "rust1", since = "1.0.0")]
+-
+-use core::cmp::Ordering;
+-use core::hash::{Hash, Hasher};
+-use core::ops::Deref;
+-#[cfg(not(no_global_oom_handling))]
+-use core::ops::{Add, AddAssign};
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-pub use core::borrow::{Borrow, BorrowMut};
+-
+-use core::fmt;
+-#[cfg(not(no_global_oom_handling))]
+-use crate::string::String;
+-
+-use Cow::*;
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<'a, B: ?Sized> Borrow<B> for Cow<'a, B>
+-where
+-    B: ToOwned,
+-    <B as ToOwned>::Owned: 'a,
+-{
+-    fn borrow(&self) -> &B {
+-        &**self
+-    }
+-}
+-
+-/// A generalization of `Clone` to borrowed data.
+-///
+-/// Some types make it possible to go from borrowed to owned, usually by
+-/// implementing the `Clone` trait. But `Clone` works only for going from `&T`
+-/// to `T`. The `ToOwned` trait generalizes `Clone` to construct owned data
+-/// from any borrow of a given type.
+-#[cfg_attr(not(test), rustc_diagnostic_item = "ToOwned")]
+-#[stable(feature = "rust1", since = "1.0.0")]
+-pub trait ToOwned {
+-    /// The resulting type after obtaining ownership.
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    type Owned: Borrow<Self>;
+-
+-    /// Creates owned data from borrowed data, usually by cloning.
+-    ///
+-    /// # Examples
+-    ///
+-    /// Basic usage:
+-    ///
+-    /// ```
+-    /// let s: &str = "a";
+-    /// let ss: String = s.to_owned();
+-    ///
+-    /// let v: &[i32] = &[1, 2];
+-    /// let vv: Vec<i32> = v.to_owned();
+-    /// ```
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    #[must_use = "cloning is often expensive and is not expected to have side effects"]
+-    fn to_owned(&self) -> Self::Owned;
+-
+-    /// Uses borrowed data to replace owned data, usually by cloning.
+-    ///
+-    /// This is borrow-generalized version of `Clone::clone_from`.
+-    ///
+-    /// # Examples
+-    ///
+-    /// Basic usage:
+-    ///
+-    /// ```
+-    /// # #![feature(toowned_clone_into)]
+-    /// let mut s: String = String::new();
+-    /// "hello".clone_into(&mut s);
+-    ///
+-    /// let mut v: Vec<i32> = Vec::new();
+-    /// [1, 2][..].clone_into(&mut v);
+-    /// ```
+-    #[unstable(feature = "toowned_clone_into", reason = "recently added", issue = "41263")]
+-    fn clone_into(&self, target: &mut Self::Owned) {
+-        *target = self.to_owned();
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<T> ToOwned for T
+-where
+-    T: Clone,
+-{
+-    type Owned = T;
+-    fn to_owned(&self) -> T {
+-        self.clone()
+-    }
+-
+-    fn clone_into(&self, target: &mut T) {
+-        target.clone_from(self);
+-    }
+-}
+-
+-/// A clone-on-write smart pointer.
+-///
+-/// The type `Cow` is a smart pointer providing clone-on-write functionality: it
+-/// can enclose and provide immutable access to borrowed data, and clone the
+-/// data lazily when mutation or ownership is required. The type is designed to
+-/// work with general borrowed data via the `Borrow` trait.
+-///
+-/// `Cow` implements `Deref`, which means that you can call
+-/// non-mutating methods directly on the data it encloses. If mutation
+-/// is desired, `to_mut` will obtain a mutable reference to an owned
+-/// value, cloning if necessary.
+-///
+-/// If you need reference-counting pointers, note that
+-/// [`Rc::make_mut`][crate::rc::Rc::make_mut] and
+-/// [`Arc::make_mut`][crate::sync::Arc::make_mut] can provide clone-on-write
+-/// functionality as well.
+-///
+-/// # Examples
+-///
+-/// ```
+-/// use std::borrow::Cow;
+-///
+-/// fn abs_all(input: &mut Cow<[i32]>) {
+-///     for i in 0..input.len() {
+-///         let v = input[i];
+-///         if v < 0 {
+-///             // Clones into a vector if not already owned.
+-///             input.to_mut()[i] = -v;
+-///         }
+-///     }
+-/// }
+-///
+-/// // No clone occurs because `input` doesn't need to be mutated.
+-/// let slice = [0, 1, 2];
+-/// let mut input = Cow::from(&slice[..]);
+-/// abs_all(&mut input);
+-///
+-/// // Clone occurs because `input` needs to be mutated.
+-/// let slice = [-1, 0, 1];
+-/// let mut input = Cow::from(&slice[..]);
+-/// abs_all(&mut input);
+-///
+-/// // No clone occurs because `input` is already owned.
+-/// let mut input = Cow::from(vec![-1, 0, 1]);
+-/// abs_all(&mut input);
+-/// ```
+-///
+-/// Another example showing how to keep `Cow` in a struct:
+-///
+-/// ```
+-/// use std::borrow::Cow;
+-///
+-/// struct Items<'a, X: 'a> where [X]: ToOwned<Owned = Vec<X>> {
+-///     values: Cow<'a, [X]>,
+-/// }
+-///
+-/// impl<'a, X: Clone + 'a> Items<'a, X> where [X]: ToOwned<Owned = Vec<X>> {
+-///     fn new(v: Cow<'a, [X]>) -> Self {
+-///         Items { values: v }
+-///     }
+-/// }
+-///
+-/// // Creates a container from borrowed values of a slice
+-/// let readonly = [1, 2];
+-/// let borrowed = Items::new((&readonly[..]).into());
+-/// match borrowed {
+-///     Items { values: Cow::Borrowed(b) } => println!("borrowed {b:?}"),
+-///     _ => panic!("expect borrowed value"),
+-/// }
+-///
+-/// let mut clone_on_write = borrowed;
+-/// // Mutates the data from slice into owned vec and pushes a new value on top
+-/// clone_on_write.values.to_mut().push(3);
+-/// println!("clone_on_write = {:?}", clone_on_write.values);
+-///
+-/// // The data was mutated. Let's check it out.
+-/// match clone_on_write {
+-///     Items { values: Cow::Owned(_) } => println!("clone_on_write contains owned data"),
+-///     _ => panic!("expect owned data"),
+-/// }
+-/// ```
+-#[stable(feature = "rust1", since = "1.0.0")]
+-#[cfg_attr(not(test), rustc_diagnostic_item = "Cow")]
+-pub enum Cow<'a, B: ?Sized + 'a>
+-where
+-    B: ToOwned,
+-{
+-    /// Borrowed data.
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    Borrowed(#[stable(feature = "rust1", since = "1.0.0")] &'a B),
+-
+-    /// Owned data.
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    Owned(#[stable(feature = "rust1", since = "1.0.0")] <B as ToOwned>::Owned),
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized + ToOwned> Clone for Cow<'_, B> {
+-    fn clone(&self) -> Self {
+-        match *self {
+-            Borrowed(b) => Borrowed(b),
+-            Owned(ref o) => {
+-                let b: &B = o.borrow();
+-                Owned(b.to_owned())
+-            }
+-        }
+-    }
+-
+-    fn clone_from(&mut self, source: &Self) {
+-        match (self, source) {
+-            (&mut Owned(ref mut dest), &Owned(ref o)) => o.borrow().clone_into(dest),
+-            (t, s) => *t = s.clone(),
+-        }
+-    }
+-}
+-
+-impl<B: ?Sized + ToOwned> Cow<'_, B> {
+-    /// Returns true if the data is borrowed, i.e. if `to_mut` would require additional work.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// #![feature(cow_is_borrowed)]
+-    /// use std::borrow::Cow;
+-    ///
+-    /// let cow = Cow::Borrowed("moo");
+-    /// assert!(cow.is_borrowed());
+-    ///
+-    /// let bull: Cow<'_, str> = Cow::Owned("...moo?".to_string());
+-    /// assert!(!bull.is_borrowed());
+-    /// ```
+-    #[unstable(feature = "cow_is_borrowed", issue = "65143")]
+-    #[rustc_const_unstable(feature = "const_cow_is_borrowed", issue = "65143")]
+-    pub const fn is_borrowed(&self) -> bool {
+-        match *self {
+-            Borrowed(_) => true,
+-            Owned(_) => false,
+-        }
+-    }
+-
+-    /// Returns true if the data is owned, i.e. if `to_mut` would be a no-op.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// #![feature(cow_is_borrowed)]
+-    /// use std::borrow::Cow;
+-    ///
+-    /// let cow: Cow<'_, str> = Cow::Owned("moo".to_string());
+-    /// assert!(cow.is_owned());
+-    ///
+-    /// let bull = Cow::Borrowed("...moo?");
+-    /// assert!(!bull.is_owned());
+-    /// ```
+-    #[unstable(feature = "cow_is_borrowed", issue = "65143")]
+-    #[rustc_const_unstable(feature = "const_cow_is_borrowed", issue = "65143")]
+-    pub const fn is_owned(&self) -> bool {
+-        !self.is_borrowed()
+-    }
+-
+-    /// Acquires a mutable reference to the owned form of the data.
+-    ///
+-    /// Clones the data if it is not already owned.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// use std::borrow::Cow;
+-    ///
+-    /// let mut cow = Cow::Borrowed("foo");
+-    /// cow.to_mut().make_ascii_uppercase();
+-    ///
+-    /// assert_eq!(
+-    ///   cow,
+-    ///   Cow::Owned(String::from("FOO")) as Cow<str>
+-    /// );
+-    /// ```
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    pub fn to_mut(&mut self) -> &mut <B as ToOwned>::Owned {
+-        match *self {
+-            Borrowed(borrowed) => {
+-                *self = Owned(borrowed.to_owned());
+-                match *self {
+-                    Borrowed(..) => unreachable!(),
+-                    Owned(ref mut owned) => owned,
+-                }
+-            }
+-            Owned(ref mut owned) => owned,
+-        }
+-    }
+-
+-    /// Extracts the owned data.
+-    ///
+-    /// Clones the data if it is not already owned.
+-    ///
+-    /// # Examples
+-    ///
+-    /// Calling `into_owned` on a `Cow::Borrowed` returns a clone of the borrowed data:
+-    ///
+-    /// ```
+-    /// use std::borrow::Cow;
+-    ///
+-    /// let s = "Hello world!";
+-    /// let cow = Cow::Borrowed(s);
+-    ///
+-    /// assert_eq!(
+-    ///   cow.into_owned(),
+-    ///   String::from(s)
+-    /// );
+-    /// ```
+-    ///
+-    /// Calling `into_owned` on a `Cow::Owned` returns the owned data. The data is moved out of the
+-    /// `Cow` without being cloned.
+-    ///
+-    /// ```
+-    /// use std::borrow::Cow;
+-    ///
+-    /// let s = "Hello world!";
+-    /// let cow: Cow<str> = Cow::Owned(String::from(s));
+-    ///
+-    /// assert_eq!(
+-    ///   cow.into_owned(),
+-    ///   String::from(s)
+-    /// );
+-    /// ```
+-    #[stable(feature = "rust1", since = "1.0.0")]
+-    pub fn into_owned(self) -> <B as ToOwned>::Owned {
+-        match self {
+-            Borrowed(borrowed) => borrowed.to_owned(),
+-            Owned(owned) => owned,
+-        }
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-#[rustc_const_unstable(feature = "const_deref", issue = "88955")]
+-impl<B: ?Sized + ToOwned> const Deref for Cow<'_, B>
+-where
+-    B::Owned: ~const Borrow<B>,
+-{
+-    type Target = B;
+-
+-    fn deref(&self) -> &B {
+-        match *self {
+-            Borrowed(borrowed) => borrowed,
+-            Owned(ref owned) => owned.borrow(),
+-        }
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized> Eq for Cow<'_, B> where B: Eq + ToOwned {}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized> Ord for Cow<'_, B>
+-where
+-    B: Ord + ToOwned,
+-{
+-    #[inline]
+-    fn cmp(&self, other: &Self) -> Ordering {
+-        Ord::cmp(&**self, &**other)
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<'a, 'b, B: ?Sized, C: ?Sized> PartialEq<Cow<'b, C>> for Cow<'a, B>
+-where
+-    B: PartialEq<C> + ToOwned,
+-    C: ToOwned,
+-{
+-    #[inline]
+-    fn eq(&self, other: &Cow<'b, C>) -> bool {
+-        PartialEq::eq(&**self, &**other)
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<'a, B: ?Sized> PartialOrd for Cow<'a, B>
+-where
+-    B: PartialOrd + ToOwned,
+-{
+-    #[inline]
+-    fn partial_cmp(&self, other: &Cow<'a, B>) -> Option<Ordering> {
+-        PartialOrd::partial_cmp(&**self, &**other)
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized> fmt::Debug for Cow<'_, B>
+-where
+-    B: fmt::Debug + ToOwned<Owned: fmt::Debug>,
+-{
+-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+-        match *self {
+-            Borrowed(ref b) => fmt::Debug::fmt(b, f),
+-            Owned(ref o) => fmt::Debug::fmt(o, f),
+-        }
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized> fmt::Display for Cow<'_, B>
+-where
+-    B: fmt::Display + ToOwned<Owned: fmt::Display>,
+-{
+-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+-        match *self {
+-            Borrowed(ref b) => fmt::Display::fmt(b, f),
+-            Owned(ref o) => fmt::Display::fmt(o, f),
+-        }
+-    }
+-}
+-
+-#[stable(feature = "default", since = "1.11.0")]
+-impl<B: ?Sized> Default for Cow<'_, B>
+-where
+-    B: ToOwned<Owned: Default>,
+-{
+-    /// Creates an owned Cow<'a, B> with the default value for the contained owned value.
+-    fn default() -> Self {
+-        Owned(<B as ToOwned>::Owned::default())
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<B: ?Sized> Hash for Cow<'_, B>
+-where
+-    B: Hash + ToOwned,
+-{
+-    #[inline]
+-    fn hash<H: Hasher>(&self, state: &mut H) {
+-        Hash::hash(&**self, state)
+-    }
+-}
+-
+-#[stable(feature = "rust1", since = "1.0.0")]
+-impl<T: ?Sized + ToOwned> AsRef<T> for Cow<'_, T> {
+-    fn as_ref(&self) -> &T {
+-        self
+-    }
+-}
+-
+-#[cfg(not(no_global_oom_handling))]
+-#[stable(feature = "cow_add", since = "1.14.0")]
+-impl<'a> Add<&'a str> for Cow<'a, str> {
+-    type Output = Cow<'a, str>;
+-
+-    #[inline]
+-    fn add(mut self, rhs: &'a str) -> Self::Output {
+-        self += rhs;
+-        self
+-    }
+-}
+-
+-#[cfg(not(no_global_oom_handling))]
+-#[stable(feature = "cow_add", since = "1.14.0")]
+-impl<'a> Add<Cow<'a, str>> for Cow<'a, str> {
+-    type Output = Cow<'a, str>;
+-
+-    #[inline]
+-    fn add(mut self, rhs: Cow<'a, str>) -> Self::Output {
+-        self += rhs;
+-        self
+-    }
+-}
+-
+-#[cfg(not(no_global_oom_handling))]
+-#[stable(feature = "cow_add", since = "1.14.0")]
+-impl<'a> AddAssign<&'a str> for Cow<'a, str> {
+-    fn add_assign(&mut self, rhs: &'a str) {
+-        if self.is_empty() {
+-            *self = Cow::Borrowed(rhs)
+-        } else if !rhs.is_empty() {
+-            if let Cow::Borrowed(lhs) = *self {
+-                let mut s = String::with_capacity(lhs.len() + rhs.len());
+-                s.push_str(lhs);
+-                *self = Cow::Owned(s);
+-            }
+-            self.to_mut().push_str(rhs);
+-        }
+-    }
+-}
+-
+-#[cfg(not(no_global_oom_handling))]
+-#[stable(feature = "cow_add", since = "1.14.0")]
+-impl<'a> AddAssign<Cow<'a, str>> for Cow<'a, str> {
+-    fn add_assign(&mut self, rhs: Cow<'a, str>) {
+-        if self.is_empty() {
+-            *self = rhs
+-        } else if !rhs.is_empty() {
+-            if let Cow::Borrowed(lhs) = *self {
+-                let mut s = String::with_capacity(lhs.len() + rhs.len());
+-                s.push_str(lhs);
+-                *self = Cow::Owned(s);
+-            }
+-            self.to_mut().push_str(&rhs);
+-        }
+-    }
+-}
+diff --git a/rust/alloc/lib.rs b/rust/alloc/lib.rs
+index 233bcd5e4654..3aebf83c9967 100644
+--- a/rust/alloc/lib.rs
++++ b/rust/alloc/lib.rs
+@@ -100,7 +100,7 @@
+ #![cfg_attr(not(no_global_oom_handling), feature(const_alloc_error))]
+ #![feature(const_box)]
+ #![cfg_attr(not(no_global_oom_handling), feature(const_btree_new))]
+-#![feature(const_cow_is_borrowed)]
++#![cfg_attr(not(no_borrow), feature(const_cow_is_borrowed))]
+ #![feature(const_convert)]
+ #![feature(const_size_of_val)]
+ #![feature(const_align_of_val)]
+@@ -215,6 +215,7 @@ pub mod boxed;
+ mod boxed {
+     pub use std::boxed::Box;
+ }
++#[cfg(not(no_borrow))]
+ pub mod borrow;
+ pub mod collections;
+ #[cfg(not(no_global_oom_handling))]
+diff --git a/rust/alloc/vec/mod.rs b/rust/alloc/vec/mod.rs
+index 540787804cc2..ae0085e1231f 100644
+--- a/rust/alloc/vec/mod.rs
++++ b/rust/alloc/vec/mod.rs
+@@ -72,6 +72,7 @@ use core::ptr::{self, NonNull};
+ use core::slice::{self, SliceIndex};
+ 
+ use crate::alloc::{Allocator, Global};
++#[cfg(not(no_borrow))]
+ use crate::borrow::{Cow, ToOwned};
+ use crate::boxed::Box;
+ use crate::collections::TryReserveError;
+@@ -94,6 +95,7 @@ pub use self::drain::Drain;
+ 
+ mod drain;
+ 
++#[cfg(not(no_borrow))]
+ #[cfg(not(no_global_oom_handling))]
+ mod cow;
+ 
+@@ -3014,6 +3016,7 @@ impl<T, const N: usize> From<[T; N]> for Vec<T> {
+     }
+ }
+ 
++#[cfg(not(no_borrow))]
+ #[stable(feature = "vec_from_cow_slice", since = "1.14.0")]
+ impl<'a, T> From<Cow<'a, [T]>> for Vec<T>
+ where
+
+base-commit: 76dcd734eca23168cb008912c0f69ff408905235
 -- 
-Kees Cook
+2.38.1
 
