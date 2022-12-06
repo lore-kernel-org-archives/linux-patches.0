@@ -1,90 +1,131 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10BB15CB6
-	for <patches@lists.linux.dev>; Mon,  5 Dec 2022 23:56:34 +0000 (UTC)
-Received: by mail-qt1-f174.google.com with SMTP id y15so12650262qtv.5
-        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 15:56:34 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B477F180
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 00:04:45 +0000 (UTC)
+Received: by mail-pj1-f46.google.com with SMTP id t17so12792515pjo.3
+        for <patches@lists.linux.dev>; Mon, 05 Dec 2022 16:04:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iIy0CU7yt4+X9mKqU8x+YEdNsjIIrmk6leKhWgrrnKg=;
-        b=EuKe8P+/DODwiEjsue4QUosOKRNzQGiO4ljWrDWvTSjOYalJ1nodD5y2e1L/Krn+5o
-         CjN3z3kwEyqqVk8EsBkuNjPmColYfJEKxUnTdD8bgBSl1c4SqHmo8lx57z1VI5RnZtHA
-         RyeX7f9N3CiOOKikm4xC8i05FdjS0ucjR1t/GHocu2XYfPjZ6bGm1exzChbr0W2ccUem
-         Y/Ys4qYob5fzRx9QuS1UAzchXpIfJZ3iSooau1xg3/0MLzK5TM4Um/FFNug0mq3v64vq
-         B6Kc4SjieW6bKvC0e9ztGnu9szlc4vbpgBRDUxN8zAYD1Q0DYtWkzWhmdebp71Mny40/
-         3H1w==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oIMcbh4Uza3ztFNGSDLU+/U5crvobqjVftiDBSiwTjk=;
+        b=pSZbv8jBbICX53SlYjb8kfYWE3h9Xp3SKfUcz9N2Xlw4pqyBzRf4Yk8A4IMeEJ+878
+         i1nF/+l414qa4Jb+nYx92bWOfo5PFuScpurW212olKgS1QqkNhB9HFOHAn3nT1Dw6YaN
+         PYZl/j0wGMXUV96HKRjH9XjVErJr4ESYh/QtGAyfafw/teHs0DROzMzugRtToH77GZSc
+         JP/1JzgLTqrdlD+XEgeSSl9RGZxgf19LW9ZtGZcsITWSfCyjNObwmseVYM7bb64XkKr1
+         SYgd+HeBUBZeiN/tZam/6FgQpk0Lc4sE617p91QhKBlDenDwmySowdQrGB6xBpOgBtCn
+         uZXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iIy0CU7yt4+X9mKqU8x+YEdNsjIIrmk6leKhWgrrnKg=;
-        b=euOqxGxc4vSdY1Yd5w/n35EVIzmMd1yZ1ostSaW9wuHbfQ/nvt/rpNbZ9WI0rhGHSV
-         VZi5i93cY43EkjwuZ5j3ZTwV+SRHdpLcnGUS2ErsutgLBtkqBMW5hZAiGbpruzVZWlEm
-         GdNloP1q04xijmjYH/Jjwvv/e//rsDdhf1feoWcLE4ql3u9sO7aloFwKqdyck4XQZNwH
-         HUasQJy1nHHTa+I7VTOJZtN7M2pbd64J2/3kZfhEcXMXjF1fd4G/lUxpW9eKtV521PuS
-         za7cjsQ/vEWO6OmrULT5gEOwT0pyoIXAwYM0qcOjZKEmCCGTmBMP9dpipdLAsiJZr6jq
-         8JHA==
-X-Gm-Message-State: ANoB5pnw2SHWnofgqflR6KnU9Koi9u8U5V3nwzZK+s9g4BQKXzh92ElV
-	cxtJbX/mDxv+dcChWvGzcFk=
-X-Google-Smtp-Source: AA0mqf7lMDNT73WkSKJf76e53D015ySK+agv0dvW9aOPQG/JfKsPXCUNiRAgDRYVRj7vCMUZXYNYjg==
-X-Received: by 2002:ac8:75c2:0:b0:39c:e98b:ea12 with SMTP id z2-20020ac875c2000000b0039ce98bea12mr78450279qtq.151.1670284593552;
-        Mon, 05 Dec 2022 15:56:33 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id s22-20020a05620a0bd600b006fc3fa1f589sm13684026qki.114.2022.12.05.15.56.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 15:56:33 -0800 (PST)
-Message-ID: <b4b89dcc-4e15-303c-1071-a0d103ca4d68@gmail.com>
-Date: Mon, 5 Dec 2022 15:56:30 -0800
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oIMcbh4Uza3ztFNGSDLU+/U5crvobqjVftiDBSiwTjk=;
+        b=cohpk8J19Cn/v86Xc9QrHLD7okWVNjZv4qURSzJTp2zCjkK4SSIUK2wte4aQDRcWNR
+         g92qo5mHQl4CHozNxgpT4dk0TXWPdFmDNhSagaCUeuaBQHLFupwxfNxPBg2RzM5VU1jh
+         Tb7lSCQ3VAfruAHzdHLhlLvMK8GsnayNghQYCO9KwngT3Ko4ZfHgLydN9jYeThp4xZU4
+         E/KZLEq/ZLvPMIroTbL6R3uTMbjbEoaBkCjQD4r5chnzPEa+Uo7adxZzRdB7d/WwljaZ
+         1HcBimW9aQSPU3gatJpVy+h6Ag+7hMWfeqP1zPmZ2APqYJ8htAd1odK5Nuqu9CsKXthJ
+         rYuQ==
+X-Gm-Message-State: ANoB5plICE9rxdLkOie8WHTx+CjTVZskGz0z+C7HAqaVR9yAZ6LTfKtn
+	ghqRmyU/u6H6ShNy9EDT9o1l1l+jC85pvIbubbTw8Q==
+X-Google-Smtp-Source: AA0mqf7o+e/O4Si5bnux9v49E5VbINeJXvopUH90PUMpqIJ6jEiLmVFajyOtNlHjSUmScud+fQ5NBZOgC9+va6fzbYI=
+X-Received: by 2002:a17:90a:6382:b0:219:fbc:a088 with SMTP id
+ f2-20020a17090a638200b002190fbca088mr53133493pjj.162.1670285084989; Mon, 05
+ Dec 2022 16:04:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.15 000/120] 5.15.82-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
 References: <20221205190806.528972574@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
 In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
+Date: Mon, 5 Dec 2022 18:04:33 -0600
+Message-ID: <CAEUSe7_2g6fde2JU7_yA9QCK+FfdLshCRnDd81FF3=SJwwDAzg@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/120] 5.15.82-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, guoren@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/5/22 11:09, Greg Kroah-Hartman wrote:
+Hello!
+
+On Mon, 5 Dec 2022 at 13:33, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 > This is the start of the stable review cycle for the 5.15.82 release.
 > There are 120 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Wed, 07 Dec 2022 19:07:46 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.82-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.82-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
+>
+> -------------
+> Pseudo-Shortlog of commits:
+>
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 5.15.82-rc1
+[...]
+> Guo Ren <guoren@linux.alibaba.com>
+>     riscv: kexec: Fixup crash_smp_send_stop without multi cores
+[...]
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+We have found regression with RISC V with GCC 8 and 11:
+-----8<----------8<----------8<-----
+/builds/linux/arch/riscv/kernel/smp.c: In function 'handle_IPI':
+/builds/linux/arch/riscv/kernel/smp.c:195:44: error: 'cpu' undeclared
+(first use in this function)
+  195 |                         ipi_cpu_crash_stop(cpu, get_irq_regs());
+      |                                            ^~~
+/builds/linux/arch/riscv/kernel/smp.c:195:44: note: each undeclared
+identifier is reported only once for each function it appears in
+/builds/linux/arch/riscv/kernel/smp.c:217:22: error: 'old_regs'
+undeclared (first use in this function)
+  217 |         set_irq_regs(old_regs);
+      |                      ^~~~~~~~
+make[3]: *** [/builds/linux/scripts/Makefile.build:289:
+arch/riscv/kernel/smp.o] Error 1
+make[3]: Target '__build' not remade because of errors.
+make[2]: *** [/builds/linux/scripts/Makefile.build:552:
+arch/riscv/kernel] Error 2
+make[2]: Target '__build' not remade because of errors.
+make[1]: *** [/builds/linux/Makefile:1900: arch/riscv] Error 2
+make[1]: Target '__all' not remade because of errors.
+make: *** [Makefile:219: __sub-make] Error 2
+----->8---------->8---------->8-----
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Bisection points to the above commit ("riscv: kexec: Fixup
+crash_smp_send_stop without multi cores"). Reverting it makes the
+build pass.
 
+In order to reproduce:
+# See https://docs.tuxmake.org/ for complete documentation.
+# Original tuxmake command with fragments listed below.
+tuxmake --runtime podman --target-arch riscv --toolchain gcc-11
+--kconfig defconfig
+
+Greetings!
+
+Daniel D=C3=ADaz
+daniel.diaz@linaro.org
