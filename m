@@ -1,77 +1,182 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D7D6AB3
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 12:51:46 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 2050F1C09DB; Tue,  6 Dec 2022 13:51:43 +0100 (CET)
-Date: Tue, 6 Dec 2022 13:51:42 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.9 38/62] qlcnic: fix sleep-in-atomic-context bugs
- caused by msleep
-Message-ID: <Y4863iukOiRJx3K+@duo.ucw.cz>
-References: <20221205190758.073114639@linuxfoundation.org>
- <20221205190759.531467030@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEBC6AB3
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 12:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2BBC433C1;
+	Tue,  6 Dec 2022 12:57:52 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="oFzeBUMT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1670331470;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=liPeNLw89LSsmfUf/XpEXJGiJ2gApcr7EO13bm4ZYks=;
+	b=oFzeBUMT5l1FnzbihzsK4Gs4lm23KIcxbKgVzPvG5IU+cbU8WJMWrTv3IFjEMwCTFVVri7
+	vOXWG1RSr8Q3p4RL+lcENAjtUXvZxak9eyyW/XacY0cHjeVmyxG5gYgLCdoGM9RzV2PGt5
+	qg2UsP6vW7bn+KNIDYUoKNFMEcHlYiw=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f37b35d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Dec 2022 12:57:49 +0000 (UTC)
+Date: Tue, 6 Dec 2022 13:57:46 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: Jann Horn <jannh@google.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
+	Liam.Howlett@oracle.com, akpm@linux-foundation.org, vbabka@suse.cz
+Subject: Re: [PATCH v11 1/4] random: add vgetrandom_alloc() syscall
+Message-ID: <Y488SnSlQALH9+Yk@zx2c4.com>
+References: <20221205020046.1876356-1-Jason@zx2c4.com>
+ <20221205020046.1876356-2-Jason@zx2c4.com>
+ <CAG48ez2R=Ov2Z9zn_W9+C3gHqOkPdQKAY=4SMWDUG=NfP=3eJw@mail.gmail.com>
+ <Y45OWhyN+U975vIN@zx2c4.com>
+ <87bkohpqdt.fsf@oldenburg.str.redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="oPIx4hLnTvh7JOJc"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221205190759.531467030@linuxfoundation.org>
+In-Reply-To: <87bkohpqdt.fsf@oldenburg.str.redhat.com>
 
+Hi Florian,
 
---oPIx4hLnTvh7JOJc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Dec 05, 2022 at 09:06:06PM +0100, Florian Weimer wrote:
+> * Jason A. Donenfeld:
+> 
+> > Hi Jann,
+> >
+> > On Mon, Dec 05, 2022 at 08:13:36PM +0100, Jann Horn wrote:
+> >> On Mon, Dec 5, 2022 at 3:01 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >> > +       mm->def_flags |=
+> >> > +               /*
+> >> > +                * Don't allow state to be written to swap, to preserve forward secrecy.
+> >> > +                * This works in conjunction with MAP_LOCKED in do_mmap(), below, which
+> >> > +                * actually does the locking (and associated permission check and accounting).
+> >> > +                * Here, VM_LOCKONFAULT together with VM_NORESERVE simply make the mlocking
+> >> > +                * happen the first time it's actually used, the same as when calling
+> >> > +                * mlock2(MLOCK_ONFAULT) from userspace.
+> >> > +                */
+> >> > +               VM_LOCKONFAULT | VM_NORESERVE |
+> >> 
+> >> Have you checked the interaction with this line in dup_mmap()?
+> >> "tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);"
+> >> 
+> >> As the mlock.2 manpage says, "Memory locks are not inherited by a
+> >> child created via fork(2)". I think the intention here is that the VMA
+> >> should stay unswappable after fork(), right?
+> >> 
+> >> Of course, trying to reserve more mlocked memory in fork() would also
+> >> be problematic...
+> >
+> > Thanks for pointing that out! Indeed that seems problematic.
+> > Fortunately, the use of WIPEONFORK at the same time as LOCKONFAULT means
+> > that memory doesn't actually need to be reserved in fork() itself. So
+> > something like the below seems correct and doable.
+> >
+> > Jason
+> >
+> > diff --git a/kernel/fork.c b/kernel/fork.c
+> > index ec57cae58ff1..cd53ffff615d 100644
+> > --- a/kernel/fork.c
+> > +++ b/kernel/fork.c
+> > @@ -656,7 +656,9 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+> >  			tmp->anon_vma = NULL;
+> >  		} else if (anon_vma_fork(tmp, mpnt))
+> >  			goto fail_nomem_anon_vma_fork;
+> > -		tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
+> > +		if ((tmp->vm_flags & (VM_LOCKONFAULT | VM_WIPEONFORK)) !=
+> > +		    (VM_LOCKONFAULT | VM_WIPEONFORK))
+> > +			tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
+> >  		file = tmp->vm_file;
+> >  		if (file) {
+> >  			struct address_space *mapping = file->f_mapping;
+> 
+> Still it's a bit concerning that calling getrandom (the libc function)
+> now apparently can kill the process if the system is under severe memory
+> pressure.  In many cases, that's okay, but we wouldn't want that for
+> PID 1, for example.  vm.overcommit_memory=2 mode is supposed to prevent
+> such crashes, and I think NORESERVE (not shown here) sidesteps that.
 
-Hi!
+Right. Setting VM_NORESERVE this way sidesteps it. Passing MAP_NORESERVE
+to do_mmap() would make it respect vm.overcommit_memory=2, but then we'd
+face problems at fork() time, as Jann pointed out, when we might go down
+the path of trying to mlock memory from the fork() handler, and that
+seems not so desirable. But moreover, the overcommitment potentially
+makes the allocation scheme a lot simpler for libcs. Do any init daemons
+actually use vm.overcommit_memory=2? Is this actually something to care
+about?
 
-> From: Duoming Zhou <duoming@zju.edu.cn>
+If this isn't something we really care about so much, then my little
+diff above should suffice, and this all remains very simple. I suspect
+that's the case, because there are several VMAs that get set with
+VM_NORESERVE already in the kernel.
 
->    (atomic context)
-> dev_watchdog
->   qlcnic_tx_timeout
->     qlcnic_83xx_idc_request_reset
->       qlcnic_83xx_lock_driver
->         qlcnic_83xx_recover_driver_lock
->           msleep
->=20
-> Fix by changing msleep() to mdelay(), the mdelay() is
-> busy-waiting and the bugs could be mitigated.
+If this is something we need to care about, then perhaps it's worth
+rethinking the problem space from its basic goals:
 
-The mdelay is for 200 msec:
+- This memory must not be written to swap. Even if we added some flag to
+  zero that part of swap when paging back in, that wouldn't cut it,
+  because it's often very hard to "truly" zero out disk writes (and
+  nobody wants to TRIM so often). (Rationale: forward secrecy.)
 
-qlcnic_83xx_hw.h:#define QLC_83XX_DRV_LOCK_RECOVERY_DELAY 200
+- It would be "nice" if untouched allocations didn't actually take
+  up any memory.
 
-This may be an improvement, but spinning for 200 msec in atomic
-context is not okay, I'm afraid.
+- This needs to be wiped on fork.
 
-Best regards,
-                                                        Pavel
+Complications thus far encountered:
 
+- VM_LOCKED|VM_LOCKONFAULT isn't inherited by forks.
 
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+- You're worried about forcing VM_LOCKONFAULT (rightfully or wrongly,
+  as yet established).
 
---oPIx4hLnTvh7JOJc
-Content-Type: application/pgp-signature; name="signature.asc"
+However, there are two useful characteristics of this series that we
+might be able to exploit in order to arrive at a solution:
 
------BEGIN PGP SIGNATURE-----
+1) Due to being wiped during fork(), the code is already robust to
+   having the contents of those pages zeroed out midway through.
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY4863gAKCRAw5/Bqldv6
-8pWaAJ4kRsHgwrGfjfCTmRaZ/zTKcmLpSgCdFiY8qfYUQjjVz/LYVwwsq0Yzr2A=
-=tBwU
------END PGP SIGNATURE-----
+2) In the absolute worst case of whatever contingency we're coding for,
+   we have the option to fallback to the getrandom() syscall, and
+   everything is fine.
 
---oPIx4hLnTvh7JOJc--
+So, putting together the basic goals with the complications thus far
+encountered, and trying to make use of (1) and (2), what if we introduce
+a VM_DROPPABLE flag. The semantics would be:
+
+a) It never is written out to swap.
+b) No memory is pre-reserved / committed.
+c) Under memory pressure, mm can just drop the pages and make them zero.
+d) If there's not enough memory to service a page fault, it's not fatal,
+   and no signal is sent. Instead, writes are simply lost, and reads
+   return zero, as if the page was dropped.
+e) It is inherited by fork.
+f) The pages are zeroed on fork (like VM_WIPEONFORK).
+g) It doesn't count against the mlock budget, since nothing is locked.
+
+Then, as an emergent restriction, we require that each opaque_state
+never straddle two pages, by returning a rounded up size_per_each.
+
+What do you think of this plan? It's harder to implement, so I still
+would prefer the simpler diff I sent to Jann above. But if you're really
+convinced that disrespecting vm.overcommit_memory=2 is abominable, then
+maybe this more complicated plan could work. Plus, semantic (g) has its
+own advantages alone.
+
+I'm CC'ing linux-mm about this matter, as I'm sure they'll have
+something to contribute here. (And linux-mm@, if your reaction is "why
+do we need this syscall at all, can't userspace just bla bla bla bla",
+please read the cover letter of the series, this patch's commit message,
+and prior discussion on that topic, so we don't have to rehash that.)
+
+Jason
