@@ -1,182 +1,320 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-b-105.mailbox.org (mout-b-105.mailbox.org [195.10.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEBC6AB3
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 12:57:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2BBC433C1;
-	Tue,  6 Dec 2022 12:57:52 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="oFzeBUMT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1670331470;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B586AB3
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 12:58:52 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-b-105.mailbox.org (Postfix) with ESMTPS id 4NRKxl3xwzz9sjV;
+	Tue,  6 Dec 2022 13:49:47 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
+	t=1670330987;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=liPeNLw89LSsmfUf/XpEXJGiJ2gApcr7EO13bm4ZYks=;
-	b=oFzeBUMT5l1FnzbihzsK4Gs4lm23KIcxbKgVzPvG5IU+cbU8WJMWrTv3IFjEMwCTFVVri7
-	vOXWG1RSr8Q3p4RL+lcENAjtUXvZxak9eyyW/XacY0cHjeVmyxG5gYgLCdoGM9RzV2PGt5
-	qg2UsP6vW7bn+KNIDYUoKNFMEcHlYiw=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f37b35d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Dec 2022 12:57:49 +0000 (UTC)
-Date: Tue, 6 Dec 2022 13:57:46 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: Jann Horn <jannh@google.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, tglx@linutronix.de,
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
-	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
-	Liam.Howlett@oracle.com, akpm@linux-foundation.org, vbabka@suse.cz
-Subject: Re: [PATCH v11 1/4] random: add vgetrandom_alloc() syscall
-Message-ID: <Y488SnSlQALH9+Yk@zx2c4.com>
-References: <20221205020046.1876356-1-Jason@zx2c4.com>
- <20221205020046.1876356-2-Jason@zx2c4.com>
- <CAG48ez2R=Ov2Z9zn_W9+C3gHqOkPdQKAY=4SMWDUG=NfP=3eJw@mail.gmail.com>
- <Y45OWhyN+U975vIN@zx2c4.com>
- <87bkohpqdt.fsf@oldenburg.str.redhat.com>
+	bh=b/IyN1k4sSXgRCF+1+PEIqkIeiletM0hoWg5Wus4Inc=;
+	b=C1I5Mkgg0aIUt6yc1nwq14VaB7duUSkdcsAE7ghJWi7wCbqy/E33FDUtmGliIlQ2D2tspP
+	owmb0+uQ2X3y1z0dQFAUiJj8/WtyaIvEll6eJl61Q8MctAzcSqGRQBgZdS/+C/mre8JNf7
+	p/JmrDun/KHtRjQHtIV9DpSwvReMWvhYXAHTcHJDreIVlgg2q6yHW07zuYHTwHI2F3XJ42
+	/O9w476WQnVgy3D0eCbnVkBBu1dcIiJMI2uYf33sOopSXjTcaiv9EFV7kZh0vO+9ezNQwR
+	KkKsq/1RoK+dR+R6UqACBTWZjqXVtLtdrbaNV7r9vtaTB/IjdDcpI+fCIg4SSQ==
+From: Finn Behrens <fin@nyantec.com>
+To: ojeda@kernel.org
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev,
+ =?utf-8?q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
+Subject: Re: [PATCH v2 06/28] rust: macros: add `#[vtable]` proc macro
+Date: Tue, 06 Dec 2022 13:49:40 +0100
+Message-ID: <982F921F-08BF-43E3-95F3-20329AB59A69@nyantec.com>
+In-Reply-To: <20221202161502.385525-7-ojeda@kernel.org>
+References: <20221202161502.385525-1-ojeda@kernel.org>
+ <20221202161502.385525-7-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87bkohpqdt.fsf@oldenburg.str.redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Florian,
 
-On Mon, Dec 05, 2022 at 09:06:06PM +0100, Florian Weimer wrote:
-> * Jason A. Donenfeld:
-> 
-> > Hi Jann,
-> >
-> > On Mon, Dec 05, 2022 at 08:13:36PM +0100, Jann Horn wrote:
-> >> On Mon, Dec 5, 2022 at 3:01 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >> > +       mm->def_flags |=
-> >> > +               /*
-> >> > +                * Don't allow state to be written to swap, to preserve forward secrecy.
-> >> > +                * This works in conjunction with MAP_LOCKED in do_mmap(), below, which
-> >> > +                * actually does the locking (and associated permission check and accounting).
-> >> > +                * Here, VM_LOCKONFAULT together with VM_NORESERVE simply make the mlocking
-> >> > +                * happen the first time it's actually used, the same as when calling
-> >> > +                * mlock2(MLOCK_ONFAULT) from userspace.
-> >> > +                */
-> >> > +               VM_LOCKONFAULT | VM_NORESERVE |
-> >> 
-> >> Have you checked the interaction with this line in dup_mmap()?
-> >> "tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);"
-> >> 
-> >> As the mlock.2 manpage says, "Memory locks are not inherited by a
-> >> child created via fork(2)". I think the intention here is that the VMA
-> >> should stay unswappable after fork(), right?
-> >> 
-> >> Of course, trying to reserve more mlocked memory in fork() would also
-> >> be problematic...
-> >
-> > Thanks for pointing that out! Indeed that seems problematic.
-> > Fortunately, the use of WIPEONFORK at the same time as LOCKONFAULT means
-> > that memory doesn't actually need to be reserved in fork() itself. So
-> > something like the below seems correct and doable.
-> >
-> > Jason
-> >
-> > diff --git a/kernel/fork.c b/kernel/fork.c
-> > index ec57cae58ff1..cd53ffff615d 100644
-> > --- a/kernel/fork.c
-> > +++ b/kernel/fork.c
-> > @@ -656,7 +656,9 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
-> >  			tmp->anon_vma = NULL;
-> >  		} else if (anon_vma_fork(tmp, mpnt))
-> >  			goto fail_nomem_anon_vma_fork;
-> > -		tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
-> > +		if ((tmp->vm_flags & (VM_LOCKONFAULT | VM_WIPEONFORK)) !=
-> > +		    (VM_LOCKONFAULT | VM_WIPEONFORK))
-> > +			tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
-> >  		file = tmp->vm_file;
-> >  		if (file) {
-> >  			struct address_space *mapping = file->f_mapping;
-> 
-> Still it's a bit concerning that calling getrandom (the libc function)
-> now apparently can kill the process if the system is under severe memory
-> pressure.  In many cases, that's okay, but we wouldn't want that for
-> PID 1, for example.  vm.overcommit_memory=2 mode is supposed to prevent
-> such crashes, and I think NORESERVE (not shown here) sidesteps that.
 
-Right. Setting VM_NORESERVE this way sidesteps it. Passing MAP_NORESERVE
-to do_mmap() would make it respect vm.overcommit_memory=2, but then we'd
-face problems at fork() time, as Jann pointed out, when we might go down
-the path of trying to mlock memory from the fork() handler, and that
-seems not so desirable. But moreover, the overcommitment potentially
-makes the allocation scheme a lot simpler for libcs. Do any init daemons
-actually use vm.overcommit_memory=2? Is this actually something to care
-about?
+On 2 Dec 2022, at 17:14, ojeda@kernel.org wrote:
 
-If this isn't something we really care about so much, then my little
-diff above should suffice, and this all remains very simple. I suspect
-that's the case, because there are several VMAs that get set with
-VM_NORESERVE already in the kernel.
+> From: Gary Guo <gary@garyguo.net>
+>
+> This procedural macro attribute provides a simple way to declare
+> a trait with a set of operations that later users can partially
+> implement, providing compile-time `HAS_*` boolean associated
+> constants that indicate whether a particular operation was overridden.
+>
+> This is useful as the Rust counterpart to structs like
+> `file_operations` where some pointers may be `NULL`, indicating
+> an operation is not provided.
+>
+> For instance:
+>
+>     #[vtable]
+>     trait Operations {
+>         fn read(...) -> Result<usize> {
+>             Err(EINVAL)
+>         }
+>
+>         fn write(...) -> Result<usize> {
+>             Err(EINVAL)
+>         }
+>     }
+>
+>     #[vtable]
+>     impl Operations for S {
+>         fn read(...) -> Result<usize> {
+>             ...
+>         }
+>     }
+>
+>     assert_eq!(<S as Operations>::HAS_READ, true);
+>     assert_eq!(<S as Operations>::HAS_WRITE, false);
+>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Reviewed-by: Sergio Gonz=C3=A1lez Collado <sergio.collado@gmail.com>
+> [Reworded, adapted for upstream and applied latest changes]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Finn Behrens <fin@nyantec.com>
 
-If this is something we need to care about, then perhaps it's worth
-rethinking the problem space from its basic goals:
+Regards,
+Finn
 
-- This memory must not be written to swap. Even if we added some flag to
-  zero that part of swap when paging back in, that wouldn't cut it,
-  because it's often very hard to "truly" zero out disk writes (and
-  nobody wants to TRIM so often). (Rationale: forward secrecy.)
+> ---
+>  rust/kernel/prelude.rs |  2 +-
+>  rust/macros/lib.rs     | 52 +++++++++++++++++++++++
+>  rust/macros/vtable.rs  | 95 ++++++++++++++++++++++++++++++++++++++++++=
 
-- It would be "nice" if untouched allocations didn't actually take
-  up any memory.
+>  3 files changed, 148 insertions(+), 1 deletion(-)
+>  create mode 100644 rust/macros/vtable.rs
+>
+> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+> index 6a1c6b38327f..7c4c35bf3c66 100644
+> --- a/rust/kernel/prelude.rs
+> +++ b/rust/kernel/prelude.rs
+> @@ -15,7 +15,7 @@ pub use core::pin::Pin;
+>
+>  pub use alloc::{boxed::Box, vec::Vec};
+>
+> -pub use macros::module;
+> +pub use macros::{module, vtable};
+>
+>  pub use super::{pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info=
+, pr_notice, pr_warn};
+>
+> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> index 15555e7ff487..e40caaf0a656 100644
+> --- a/rust/macros/lib.rs
+> +++ b/rust/macros/lib.rs
+> @@ -5,6 +5,7 @@
+>  mod concat_idents;
+>  mod helpers;
+>  mod module;
+> +mod vtable;
+>
+>  use proc_macro::TokenStream;
+>
+> @@ -72,6 +73,57 @@ pub fn module(ts: TokenStream) -> TokenStream {
+>      module::module(ts)
+>  }
+>
+> +/// Declares or implements a vtable trait.
+> +///
+> +/// Linux's use of pure vtables is very close to Rust traits, but they=
+ differ
+> +/// in how unimplemented functions are represented. In Rust, traits ca=
+n provide
+> +/// default implementation for all non-required methods (and the defau=
+lt
+> +/// implementation could just return `Error::EINVAL`); Linux typically=
+ use C
+> +/// `NULL` pointers to represent these functions.
+> +///
+> +/// This attribute is intended to close the gap. Traits can be declare=
+d and
+> +/// implemented with the `#[vtable]` attribute, and a `HAS_*` associat=
+ed constant
+> +/// will be generated for each method in the trait, indicating if the =
+implementor
+> +/// has overridden a method.
+> +///
+> +/// This attribute is not needed if all methods are required.
+> +///
+> +/// # Examples
+> +///
+> +/// ```ignore
+> +/// use kernel::prelude::*;
+> +///
+> +/// // Declares a `#[vtable]` trait
+> +/// #[vtable]
+> +/// pub trait Operations: Send + Sync + Sized {
+> +///     fn foo(&self) -> Result<()> {
+> +///         Err(EINVAL)
+> +///     }
+> +///
+> +///     fn bar(&self) -> Result<()> {
+> +///         Err(EINVAL)
+> +///     }
+> +/// }
+> +///
+> +/// struct Foo;
+> +///
+> +/// // Implements the `#[vtable]` trait
+> +/// #[vtable]
+> +/// impl Operations for Foo {
+> +///     fn foo(&self) -> Result<()> {
+> +/// #        Err(EINVAL)
+> +///         // ...
+> +///     }
+> +/// }
+> +///
+> +/// assert_eq!(<Foo as Operations>::HAS_FOO, true);
+> +/// assert_eq!(<Foo as Operations>::HAS_BAR, false);
+> +/// ```
+> +#[proc_macro_attribute]
+> +pub fn vtable(attr: TokenStream, ts: TokenStream) -> TokenStream {
+> +    vtable::vtable(attr, ts)
+> +}
+> +
+>  /// Concatenate two identifiers.
+>  ///
+>  /// This is useful in macros that need to declare or reference items w=
+ith names
+> diff --git a/rust/macros/vtable.rs b/rust/macros/vtable.rs
+> new file mode 100644
+> index 000000000000..34d5e7fb5768
+> --- /dev/null
+> +++ b/rust/macros/vtable.rs
+> @@ -0,0 +1,95 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +use proc_macro::{Delimiter, Group, TokenStream, TokenTree};
+> +use std::collections::HashSet;
+> +use std::fmt::Write;
+> +
+> +pub(crate) fn vtable(_attr: TokenStream, ts: TokenStream) -> TokenStre=
+am {
+> +    let mut tokens: Vec<_> =3D ts.into_iter().collect();
+> +
+> +    // Scan for the `trait` or `impl` keyword.
+> +    let is_trait =3D tokens
+> +        .iter()
+> +        .find_map(|token| match token {
+> +            TokenTree::Ident(ident) =3D> match ident.to_string().as_st=
+r() {
+> +                "trait" =3D> Some(true),
+> +                "impl" =3D> Some(false),
+> +                _ =3D> None,
+> +            },
+> +            _ =3D> None,
+> +        })
+> +        .expect("#[vtable] attribute should only be applied to trait o=
+r impl block");
+> +
+> +    // Retrieve the main body. The main body should be the last token =
+tree.
+> +    let body =3D match tokens.pop() {
+> +        Some(TokenTree::Group(group)) if group.delimiter() =3D=3D Deli=
+miter::Brace =3D> group,
+> +        _ =3D> panic!("cannot locate main body of trait or impl block"=
+),
+> +    };
+> +
+> +    let mut body_it =3D body.stream().into_iter();
+> +    let mut functions =3D Vec::new();
+> +    let mut consts =3D HashSet::new();
+> +    while let Some(token) =3D body_it.next() {
+> +        match token {
+> +            TokenTree::Ident(ident) if ident.to_string() =3D=3D "fn" =3D=
+> {
+> +                let fn_name =3D match body_it.next() {
+> +                    Some(TokenTree::Ident(ident)) =3D> ident.to_string=
+(),
+> +                    // Possibly we've encountered a fn pointer type in=
+stead.
+> +                    _ =3D> continue,
+> +                };
+> +                functions.push(fn_name);
+> +            }
+> +            TokenTree::Ident(ident) if ident.to_string() =3D=3D "const=
+" =3D> {
+> +                let const_name =3D match body_it.next() {
+> +                    Some(TokenTree::Ident(ident)) =3D> ident.to_string=
+(),
+> +                    // Possibly we've encountered an inline const bloc=
+k instead.
+> +                    _ =3D> continue,
+> +                };
+> +                consts.insert(const_name);
+> +            }
+> +            _ =3D> (),
+> +        }
+> +    }
+> +
+> +    let mut const_items;
+> +    if is_trait {
+> +        const_items =3D "
+> +                /// A marker to prevent implementors from forgetting t=
+o use [`#[vtable]`](vtable)
+> +                /// attribute when implementing this trait.
+> +                const USE_VTABLE_ATTR: ();
+> +        "
+> +        .to_owned();
+> +
+> +        for f in functions {
+> +            let gen_const_name =3D format!("HAS_{}", f.to_uppercase())=
+;
+> +            // Skip if it's declared already -- this allows user overr=
+ide.
+> +            if consts.contains(&gen_const_name) {
+> +                continue;
+> +            }
+> +            // We don't know on the implementation-site whether a meth=
+od is required or provided
+> +            // so we have to generate a const for all methods.
+> +            write!(
+> +                const_items,
+> +                "/// Indicates if the `{f}` method is overridden by th=
+e implementor.
+> +                const {gen_const_name}: bool =3D false;",
+> +            )
+> +            .unwrap();
+> +        }
+> +    } else {
+> +        const_items =3D "const USE_VTABLE_ATTR: () =3D ();".to_owned()=
+;
+> +
+> +        for f in functions {
+> +            let gen_const_name =3D format!("HAS_{}", f.to_uppercase())=
+;
+> +            if consts.contains(&gen_const_name) {
+> +                continue;
+> +            }
+> +            write!(const_items, "const {gen_const_name}: bool =3D true=
+;").unwrap();
+> +        }
+> +    }
+> +
+> +    let new_body =3D vec![const_items.parse().unwrap(), body.stream()]=
 
-- This needs to be wiped on fork.
+> +        .into_iter()
+> +        .collect();
+> +    tokens.push(TokenTree::Group(Group::new(Delimiter::Brace, new_body=
+)));
+> +    tokens.into_iter().collect()
+> +}
+> -- =
 
-Complications thus far encountered:
-
-- VM_LOCKED|VM_LOCKONFAULT isn't inherited by forks.
-
-- You're worried about forcing VM_LOCKONFAULT (rightfully or wrongly,
-  as yet established).
-
-However, there are two useful characteristics of this series that we
-might be able to exploit in order to arrive at a solution:
-
-1) Due to being wiped during fork(), the code is already robust to
-   having the contents of those pages zeroed out midway through.
-
-2) In the absolute worst case of whatever contingency we're coding for,
-   we have the option to fallback to the getrandom() syscall, and
-   everything is fine.
-
-So, putting together the basic goals with the complications thus far
-encountered, and trying to make use of (1) and (2), what if we introduce
-a VM_DROPPABLE flag. The semantics would be:
-
-a) It never is written out to swap.
-b) No memory is pre-reserved / committed.
-c) Under memory pressure, mm can just drop the pages and make them zero.
-d) If there's not enough memory to service a page fault, it's not fatal,
-   and no signal is sent. Instead, writes are simply lost, and reads
-   return zero, as if the page was dropped.
-e) It is inherited by fork.
-f) The pages are zeroed on fork (like VM_WIPEONFORK).
-g) It doesn't count against the mlock budget, since nothing is locked.
-
-Then, as an emergent restriction, we require that each opaque_state
-never straddle two pages, by returning a rounded up size_per_each.
-
-What do you think of this plan? It's harder to implement, so I still
-would prefer the simpler diff I sent to Jann above. But if you're really
-convinced that disrespecting vm.overcommit_memory=2 is abominable, then
-maybe this more complicated plan could work. Plus, semantic (g) has its
-own advantages alone.
-
-I'm CC'ing linux-mm about this matter, as I'm sure they'll have
-something to contribute here. (And linux-mm@, if your reaction is "why
-do we need this syscall at all, can't userspace just bla bla bla bla",
-please read the cover letter of the series, this patch's commit message,
-and prior discussion on that topic, so we don't have to rehash that.)
-
-Jason
+> 2.38.1
