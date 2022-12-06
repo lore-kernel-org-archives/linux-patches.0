@@ -1,68 +1,90 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86915CBF
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 15:45:05 +0000 (UTC)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-381662c78a9so156233667b3.7
-        for <patches@lists.linux.dev>; Tue, 06 Dec 2022 07:45:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xyn/5OOpj6fuvvU8fDY8RxPX62J9zsQGOj41hMQD++E=;
-        b=k8z+ItRXCJIZn49dArRvY9i2iLkbpKITT2yKWV7GhS15NtPNWTLX4W9gPJiA+n5QUF
-         NcxMp5umXW3D3lkSQYDFn7B92I7NQD79r09dTxc83Lmc5+iZ3mZf0H9JklZhxWkedCCx
-         RpF9jzuAYx3dFugt2ZfmjVuwhv5hqi8kn+Bk1Rxc5NQ3z4D7cd+oL1Lwu/EiiXu2VG+Q
-         C5bKbdEhWEhJd9hsfJdsXVrnwteuyekAYTIGcYnp6jX96HE1/jDe93IFNfCY7116GX7k
-         yFIipMpUPbzTNYVwr6pmiOnumxQXAfCg1qlTYyF8vX5PXphOLeKRirj5QQ7lXXVb12Ww
-         A9Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xyn/5OOpj6fuvvU8fDY8RxPX62J9zsQGOj41hMQD++E=;
-        b=JuF7EhvHTH/N/xUbG9EqiEqcNamMnmzsacytczb7F90ctK2QxOUv+++ToVOWt3djje
-         GYFFOqTbCisUu7XXCPzZRmoekDE+FjDAKLvEUTBVCu6KFp9ECt360zdCczycii4KaPVp
-         sa7jOYg3arO/iowP7ByKb+L5c0xath23KFERCsP9I+fMuuEh218Z2FdGG/m+pZ55vUPz
-         ZqvCdfJ6pz3y2phbg6f+NCQzBRcjJXbX4Ju7QiuUuy+kuFG418sS35wkTlNMGkzw06cS
-         2wjOHZgdyjpDaW/h9TgCYo5XME+1aVEkOc8jSiqgpbUCa797ZlOmkPrfudgfiu8++CNp
-         IE5A==
-X-Gm-Message-State: ANoB5pl3hiJbFNUl0UMyW1cs3x9IiAwMnconrP+vPVEVoHG7xXq9ONnF
-	SnMzyVBIChNqaJbz/2WgpEkPdpzeOzjiMABPG2Q=
-X-Google-Smtp-Source: AA0mqf7yhwfAtr/XG/SmzqtvjyIx0HdmN3mODQ5NsTqnY7yPgIynig5Nt7kqbdksBf+abg/7ApTsX1Zkryio5SQeUns=
-X-Received: by 2002:a05:690c:b03:b0:3f4:6e40:89c3 with SMTP id
- cj3-20020a05690c0b0300b003f46e4089c3mr4057837ywb.266.1670341504250; Tue, 06
- Dec 2022 07:45:04 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246711361
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 16:33:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10406C433C1;
+	Tue,  6 Dec 2022 16:33:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670344403;
+	bh=tjj3qZj9Emwq0jAd3d/L+wLhfBYyuz9FzS2LZYYSAzs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KNMwZcbyxa1tQJlT6gvYV8TsHwya8sfNbv3+H/bU3G1w92zBhc8lPFh/nuFOMcKor
+	 pqTeLHfqSgBaDwE3Hsb2ubexhDK/GUJaCXWaRy1rmgx4a/qmUcMBY65/vY/w7FrpIy
+	 uPSl7iPi9XqFZLU1Sj95nn+pmuhlbQ68esLtGKdg=
+Date: Tue, 6 Dec 2022 17:33:20 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/123] 5.15.82-rc2 review
+Message-ID: <Y49u0LhWMDJxc90l@kroah.com>
+References: <20221206124052.595650754@linuxfoundation.org>
+ <792a6fba-aa15-2e2a-7527-99ab1116a01d@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221202161502.385525-1-ojeda@kernel.org> <20221202161502.385525-7-ojeda@kernel.org>
- <982F921F-08BF-43E3-95F3-20329AB59A69@nyantec.com>
-In-Reply-To: <982F921F-08BF-43E3-95F3-20329AB59A69@nyantec.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 6 Dec 2022 16:44:53 +0100
-Message-ID: <CANiq72ncU_LcNgFBgLorHgiaP1ybGrtvi=xrNittX47n2WE5JQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/28] rust: macros: add `#[vtable]` proc macro
-To: Finn Behrens <fin@nyantec.com>
-Cc: ojeda@kernel.org, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, 
-	=?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <792a6fba-aa15-2e2a-7527-99ab1116a01d@roeck-us.net>
 
-On Tue, Dec 6, 2022 at 1:50 PM Finn Behrens <fin@nyantec.com> wrote:
->
-> Reviewed-by: Finn Behrens <fin@nyantec.com>
+On Tue, Dec 06, 2022 at 07:11:39AM -0800, Guenter Roeck wrote:
+> On 12/6/22 04:42, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.82 release.
+> > There are 123 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 08 Dec 2022 12:40:31 +0000.
+> > Anything received after that time might be too late.
+> > 
+> 
+> arch/riscv/kernel/smp.c: In function 'handle_IPI':
+> arch/riscv/kernel/smp.c:195:44: error: 'cpu' undeclared (first use in this function)
+>   195 |                         ipi_cpu_crash_stop(cpu, get_irq_regs());
+>       |                                            ^~~
+> arch/riscv/kernel/smp.c:195:44: note: each undeclared identifier is reported only once for each function it appears in
+> arch/riscv/kernel/smp.c:217:22: error: 'old_regs' undeclared (first use in this function)
+>   217 |         set_irq_regs(old_regs);
+>       |                      ^~~~~~~~
+> 
+> This is with v5.15.81-124-g9269e46bc838.
+> 
+> The backport of commit 9b932aadfc47d seems wrong. The original version introduces
+> the cpu variable in handle_IPI(). The backport doesn't, and removes old_regs
+> instead.
+> 
+> Backport:
+> 
+>  void handle_IPI(struct pt_regs *regs)
+>  {
+> -       struct pt_regs *old_regs = set_irq_regs(regs);
+>         unsigned long *pending_ipis = &ipi_data[smp_processor_id()].bits;
+>         unsigned long *stats = ipi_data[smp_processor_id()].stats;
+> 
+> Original:
+> 
+> void handle_IPI(struct pt_regs *regs)
+>  {
+> -       unsigned long *pending_ipis = &ipi_data[smp_processor_id()].bits;
+> -       unsigned long *stats = ipi_data[smp_processor_id()].stats;
+> +       unsigned int cpu = smp_processor_id();
+> +       unsigned long *pending_ipis = &ipi_data[cpu].bits;
+> +       unsigned long *stats = ipi_data[cpu].stats;
+> 
+> Upstream includes commit 7ecbc648102f which removes the old_regs variable.
+> That doesn't mean it can be removed in the backport.
 
-Thanks a lot for these, Finn -- I already queued the patches on the
-weekend, but if for some reason the series needs to be dropped and
-reapplied, I will pick your new tags.
+Yeah, that looks odd.  I've dropped it from both 5.15 and 6.0 now and
+will push out a new -rc with that removed.
 
-Cheers,
-Miguel
+thanks for testing!
+
+greg k-h
