@@ -1,67 +1,226 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA5A29AB
-	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 10:25:05 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id AAD6D1C09FA; Tue,  6 Dec 2022 11:25:02 +0100 (CET)
-Date: Tue, 6 Dec 2022 11:25:02 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.19 000/105] 4.19.268-rc1 review
-Message-ID: <Y48YfnCy/VuHNr3r@duo.ucw.cz>
-References: <20221205190803.124472741@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD181362
+	for <patches@lists.linux.dev>; Tue,  6 Dec 2022 10:31:30 +0000 (UTC)
+Received: by mail-qt1-f171.google.com with SMTP id h24so13364012qta.9
+        for <patches@lists.linux.dev>; Tue, 06 Dec 2022 02:31:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K5U7G8Lu2Ggn0XL2IuT7TVHn/1PFLVfrrCtYcS/Vxxg=;
+        b=B/jbe1V6IZFy+n6KSHw9cFejqlXUrDiXPm97QsiSYZpXEM8WYlSPlZ0tNRgWzmY8Ty
+         PxilBNovn2cwAEW0Qi5dASyBvIZbskSRuZJgk24eJXj+zux4RDPYGtvATItq0I1SGy9o
+         B1ZLlNQ6xZaAh+n5Xx8rtlO/w2YTDoSzNKd5i6AKGLFDSrmOLMX9QC4yigWKt5gpeA7G
+         4tWYpIga3DVp/yVfsw6XkOUIbZmrtLBgRLhNwBaWfRvaJv2Qszxch4AY/HLvjxXzOT12
+         NYfOtQWPW/0jaNuu6+/hxfT1LOIc5d2q3ds269GPM/tsWL6O9Voroz7jGFs84QpAueMC
+         BPkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=K5U7G8Lu2Ggn0XL2IuT7TVHn/1PFLVfrrCtYcS/Vxxg=;
+        b=brRiYYaVKSZx5N2T2kK+JaasFEo9rC4p+0XGFf49Gn//bt7CntKSyAF7wc+pq/r+ok
+         nCcH65HKaty0+raN5qH0UdGEj2x6A4PIHP/QlNjodQV0sqypZqQiQRzbPMlRqFuxJ2J1
+         haiPjyJYFWbH229LHC5XJiHTQMRJkAt1SiNrLkbc/249qs8ZDBkC8Vs5XPH3k5yB1RWp
+         8a1euV+RaYzXDV/zYboExwgEzMUKyKep46ykHe+3kt8cibpveNfQ8ICLUPG0N3Z+5ISj
+         NJdXzTHPsVvmJTa0xKYbygfBOPWZi1Zs8KBsQYHEJs/P/VmhPGIBXj28jaXHIP78RrW2
+         aE5g==
+X-Gm-Message-State: ANoB5plKLF/wTN7qG3ccvEZgwBo2/VvmJdEg0A5aGSChKp1djk3NvP0r
+	yYUnSUjwLDY0RQfU55dbirUs8jsTLTYL5qdUa4YJIg==
+X-Google-Smtp-Source: AA0mqf6WNrNi1e3dghxVEkL8WAQNZJJoRcfwITynys5vNGpZfxNhrYD9IGJxY3M6rHPSsCmhcyhL72n9kkExSu8BeaE=
+X-Received: by 2002:ac8:4649:0:b0:3a5:8ea9:34f5 with SMTP id
+ f9-20020ac84649000000b003a58ea934f5mr79976918qto.420.1670322689032; Tue, 06
+ Dec 2022 02:31:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="LMjnQgDMxF1eLQl3"
-Content-Disposition: inline
-In-Reply-To: <20221205190803.124472741@linuxfoundation.org>
-
-
---LMjnQgDMxF1eLQl3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20221205190806.528972574@linuxfoundation.org>
+In-Reply-To: <20221205190806.528972574@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 6 Dec 2022 16:01:17 +0530
+Message-ID: <CA+G9fYt-EU-J23nss2hB=6YTq6gpshBMsG878uo7KfuS-nppTg@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/120] 5.15.82-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 4.19.268 release.
-> There are 105 patches in this series, all will be posted as a response
+On Tue, 6 Dec 2022 at 01:03, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.82 release.
+> There are 120 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Wed, 07 Dec 2022 19:07:46 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.82-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-CIP testing did not find any problems here:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-4.19.y
+Results from Linaro=E2=80=99s test farm.
+RISC V build regression reported.
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+NOTE:
+RISC V defconfig build regression,
 
---LMjnQgDMxF1eLQl3
-Content-Type: application/pgp-signature; name="signature.asc"
+Build error:
+make --silent --keep-going --jobs=3D8
+O=3D/home/tuxbuild/.cache/tuxmake/builds/1/build LLVM=3D1 LLVM_IAS=3D1
+ARCH=3Driscv CROSS_COMPILE=3Driscv64-linux-gnu- 'HOSTCC=3Dsccache clang'
+'CC=3Dsccache clang'
+arch/riscv/kernel/smp.c:195:23: error: use of undeclared identifier 'cpu'
+                        ipi_cpu_crash_stop(cpu, get_irq_regs());
+                                           ^
+arch/riscv/kernel/smp.c:217:15: error: use of undeclared identifier 'old_re=
+gs'
+        set_irq_regs(old_regs);
+                     ^
+2 errors generated.
+make[3]: *** [scripts/Makefile.build:289: arch/riscv/kernel/smp.o] Error 1
 
------BEGIN PGP SIGNATURE-----
+ref:
+https://lore.kernel.org/stable/CAEUSe7_2g6fde2JU7_yA9QCK+FfdLshCRnDd81FF3=
+=3DSJwwDAzg@mail.gmail.com/
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY48YfgAKCRAw5/Bqldv6
-8rQ9AJsGs7+EZMv5xaayom1Q86GP/caMSQCffDV/EjV1DvoyTi1bO+IMiXTgveI=
-=U2dN
------END PGP SIGNATURE-----
+## Build
+* kernel: 5.15.82-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: 0ba3dda3cd904c39dff762076fae4a21634b8db6
+* git describe: v5.15.81-121-g0ba3dda3cd90
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.81-121-g0ba3dda3cd90
 
---LMjnQgDMxF1eLQl3--
+## Test Regressions (compared to v5.15.81)
+
+* riscv, build
+  - clang-15-defconfig
+  - clang-nightly-defconfig
+  - gcc-11-defconfig
+  - gcc-8-defconfig
+
+## Metric Regressions (compared to v5.15.81)
+
+## Test Fixes (compared to v5.15.81)
+
+## Metric Fixes (compared to v5.15.81)
+
+## Test result summary
+total: 119887, pass: 104751, fail: 2682, skip: 12101, xfail: 353
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 147 total, 146 passed, 1 failed
+* arm64: 45 total, 43 passed, 2 failed
+* i386: 35 total, 33 passed, 2 failed
+* mips: 27 total, 27 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 30 total, 30 passed, 0 failed
+* riscv: 10 total, 6 passed, 4 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 38 total, 36 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-lib
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-openat2
+* kselftest-seccomp
+* kselftest-timens
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* perf/Zstd-perf.data-compression
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
