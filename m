@@ -1,97 +1,244 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7B11367
-	for <patches@lists.linux.dev>; Wed,  7 Dec 2022 08:17:09 +0000 (UTC)
-Received: by mail-pj1-f47.google.com with SMTP id q15so15830274pja.0
-        for <patches@lists.linux.dev>; Wed, 07 Dec 2022 00:17:09 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A5E136D
+	for <patches@lists.linux.dev>; Wed,  7 Dec 2022 08:40:27 +0000 (UTC)
+Received: by mail-qk1-f181.google.com with SMTP id j26so9497446qki.10
+        for <patches@lists.linux.dev>; Wed, 07 Dec 2022 00:40:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WAPTC0pcx5Cs1ZVVn9tDcLNvXAwFQP3Hg05dJynKWJs=;
-        b=gIvaZ6nFPNi7TfAepCn0JAN6xTgHcfMiDvtRCFrDV3/HqwnZq+cKfPkp38pTpnCNbl
-         CviQva2t9xtWaS+WufWTeLqqK8zoGpZUNSmqBt0V0qo8qUEjILHklqsK5PI1BoAPvqiP
-         weSn1CRR7/RXGyn7urPcmOAOPxH6HH1gbUARaLhE4k3FcNdgLozoSw+pBBDDUltfvbrH
-         q6BO1QuLK3Xx9ECtyQkckm8nEqU9xblkyntS6YoaF9P6aWczf/kkKvonknlzqoIVjMj6
-         rhzXbnTw7BBmMcoirGdFvKrplMOiAlDWZXx1jW6UexgS+XzBRw9Hh6aYTaRd96pBb+zE
-         QJfA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MLC26Ke5fZpTRF2yXCb0Zzz0rWG7QspcEyfjjpZuefA=;
+        b=OLfMnsamTMztkSPHhCbImeUMn9iFFnW/C5MvcbYVR6UXWWhaqSlLKU4VvINPE29BsX
+         GE9ED7rztekxlZkH7wu33P22znQsxn8n7H2twRuuYOuwUbfoCOGAAS1bH1Y1pznOyQa0
+         /Yrsl5HrUP1KYmS/BMoa6R3KS/xM959I5mXDTt1icNj3N4LqqA7Zqqbwf4Nu2eq4vhxw
+         SOKnvUNVjcx1pAmL3paM4tENUfSJ0dYPJeyywmcI7em4lWQ0UFaalVbbgf341U9OMRMR
+         mMlQ+m0GMFndMY04lbgFqam5mZNzrBDBakmA+Y4dXcQO5KPvXjdxBpn7/qReUJwR1Pou
+         DMCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WAPTC0pcx5Cs1ZVVn9tDcLNvXAwFQP3Hg05dJynKWJs=;
-        b=ApPkZeILs4VgcXWQCGPxUEuk+x4yTpFl82XFjF7Tbj0kmfLQZ0XyBZflBr4TYtrr1/
-         WDjsd4ip2pPAajaGMU9RagvqFQPsigGIluVyH7DLz5WL3ZfyP2A/PznjIlT+ljD23mIg
-         2zV4D6xFlkU0VNzUAG3CB9ZrSikwOm0c+xHx9P4sI+e7XpdvclNHTeYXi9XCdFXSl0if
-         u6iobmvDqxoIIwzuU4jjcjolS/oDNyaQy/kfEuZHFUPHVFV2vXwZNIk1A/VVkVv0HfkF
-         fQ3XxXFrQfJeVwKJGGGnW6c9p4Wz8jNbJ+A665pFNZurRVF5BVUcQUTsHlJD5YK/smcw
-         VW4A==
-X-Gm-Message-State: ANoB5plJT8pP/YkQFRpA1Y0aiolWoFWdoB/zdCr49tDKAlWgPYBDepff
-	RRWir+IOFAQKNW3KUmmnPDw=
-X-Google-Smtp-Source: AA0mqf5rOfqXwvBQRguYfOqixMUKc6QDzMvqHm4p+EhLYjXsp7KoXsKgqobco1YZBFvXlnOxo/Syaw==
-X-Received: by 2002:a17:90b:3608:b0:219:6b1b:63d8 with SMTP id ml8-20020a17090b360800b002196b1b63d8mr34265621pjb.143.1670401029266;
-        Wed, 07 Dec 2022 00:17:09 -0800 (PST)
-Received: from debian.me (subs02-180-214-232-19.three.co.id. [180.214.232.19])
-        by smtp.gmail.com with ESMTPSA id z18-20020a170903019200b00177f4ef7970sm14052212plg.11.2022.12.07.00.17.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 00:17:08 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id E6A9910444C; Wed,  7 Dec 2022 15:17:04 +0700 (WIB)
-Date: Wed, 7 Dec 2022 15:17:03 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/125] 6.0.12-rc3 review
-Message-ID: <Y5BL//a2Ftbri276@debian.me>
-References: <20221206163445.868107856@linuxfoundation.org>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MLC26Ke5fZpTRF2yXCb0Zzz0rWG7QspcEyfjjpZuefA=;
+        b=qDrVx7nPH1tbaq4BH8IlMYgY2Umdbh9OD6X4rq5ExVRo5mvbvi01zi930fP4AVhmCZ
+         W7F3MgMMuWaKnPk1vAQ84/o35BvIThrYvha55sL3063PL6Ikjuo+V4fdxI0vbrrrHD5r
+         UDR6i0JgtWy/pZ0zFMThYPOs1p7kwTXc9Igo2QHSieizcRI/ihoVLbsPCQjjmRUyY/r6
+         j3HjHTNsj0Z8kt29kbh8jqLWAyshTYOIJJs50xri0gQLyuQPMaAbP/HqBG2BnWJJXCjr
+         vjvnfh7ny0uJ33rpXAbH9tdCbTvm5Gt4YYgY/MWgHwB23Vuq8wZIJvlxG95WQyRWOIcG
+         QtQw==
+X-Gm-Message-State: ANoB5plfvQ7Pj5u+W5QcRY7QZzGhHx4SBe9lfqDIe4jnZPn+/U0Pqbsb
+	1o+ixhHrjcisU8HRbmFI8IGLGjaNa3z04xvjpJrJ3Q==
+X-Google-Smtp-Source: AA0mqf4InsWz5gWyz42gsS73/ubeKbtB7JkhPdqfSzfmkW0T4JxuczOehqy6CZkXBTVB5vlGfBjt7LLkSPAtVvxScOg=
+X-Received: by 2002:a37:9a43:0:b0:6fe:c3d4:d9f4 with SMTP id
+ c64-20020a379a43000000b006fec3d4d9f4mr8417472qke.646.1670402426282; Wed, 07
+ Dec 2022 00:40:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="MdC5LBBVftpr3B+p"
-Content-Disposition: inline
+References: <20221206163445.868107856@linuxfoundation.org>
 In-Reply-To: <20221206163445.868107856@linuxfoundation.org>
-
-
---MdC5LBBVftpr3B+p
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 7 Dec 2022 14:10:14 +0530
+Message-ID: <CA+G9fYsNLYgoaRo7-0XCJEo2e6QaL3RRgo1bXXT20p7LZA-f-Q@mail.gmail.com>
+Subject: Re: [PATCH 6.0 000/125] 6.0.12-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 06, 2022 at 05:39:48PM +0100, Greg Kroah-Hartman wrote:
+On Tue, 6 Dec 2022 at 22:09, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.0.12 release.
 > There are 125 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
+> Responses should be made by Thu, 08 Dec 2022 16:34:27 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.0.12-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.0.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
---=20
-An old man doll... just what I always wanted! - Clara
+## Build
+* kernel: 6.0.12-rc3
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.0.y
+* git commit: b2f10309632954c8f7f5b26604c42ea6944edfd0
+* git describe: v6.0.11-126-gb2f103096329
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.1=
+1-126-gb2f103096329
 
---MdC5LBBVftpr3B+p
-Content-Type: application/pgp-signature; name="signature.asc"
+## Test Regressions (compared to v6.0.11)
 
------BEGIN PGP SIGNATURE-----
+## Metric Regressions (compared to v6.0.11)
 
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY5BL+gAKCRD2uYlJVVFO
-ox0oAP9o/4S6HMhOrCEn3fMZ5rdxcKvEi4X1OtmR3nqXGUIebgEA5EqF2xQn1cXQ
-64yoHlJTUuLp/6zeCxjkHz2RutJHAwM=
-=gp2s
------END PGP SIGNATURE-----
+## Test Fixes (compared to v6.0.11)
 
---MdC5LBBVftpr3B+p--
+## Metric Fixes (compared to v6.0.11)
+
+## Test result summary
+total: 150169, pass: 130851, fail: 3573, skip: 15282, xfail: 463
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 146 passed, 5 failed
+* arm64: 49 total, 48 passed, 1 failed
+* i386: 39 total, 36 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 32 passed, 6 failed
+* riscv: 16 total, 16 passed, 0 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 42 total, 41 passed, 1 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* perf/Zstd-perf.data-compression
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
