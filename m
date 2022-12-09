@@ -1,51 +1,211 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2211233F0;
-	Fri,  9 Dec 2022 13:55:00 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1670594093;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ab75hFCZtUT7NrQrs3DM49B+BwGSoyqvD4tFdAumbY8=;
-	b=RY1QOIM2IVUHyu82WZu8x/LEwRJC+kSbaeaJMlfJQYdu94BG4e7bwwSPU1tQ10LRASCLUp
-	AUVCjuT/RIcF0y3FQn5exvMNkS7wwVmSTUQ1oN5xjGu0vMcL5d3HdFE3V4fB9TLojNSZG9
-	oB3QnTwBMtNPz4dDwOYtyKbhwFCXH8kq+AulIRwDOguTqLD4etEJVmAzjCL/POQkx3z+gE
-	fGL+lUDIthdxP4+1eQ+A9jsma+DWxZLYvt8t0lMeAh4MJDE2ohx6yf53JsxXPogUqpdiu5
-	FdJ15QHYjtViEtUBA3paOnmbmOU1k10P5k8f2p2XN85DNdbH881AXs2K9PjLSQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1670594093;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ab75hFCZtUT7NrQrs3DM49B+BwGSoyqvD4tFdAumbY8=;
-	b=oW4Vnw2FpxWvCwG7welZP6XVKyLewZIllvjl7J9QiidSpN3OjGxaGVJ1wEBxHXEw/g2YNk
-	fItVdWWz4MTVemDA==
-To: Nathan Chancellor <nathan@kernel.org>, Andy Lutomirski
- <luto@kernel.org>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov
- <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org
-Cc: linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] x86/vdso: Conditionally export __vdso_sgx_enter_enclave
-In-Reply-To: <Y5M8SZEN1N5Dt15X@dev-arch.thelio-3990X>
-References: <20221109000306.1407357-1-nathan@kernel.org>
- <Y5M8SZEN1N5Dt15X@dev-arch.thelio-3990X>
-Date: Fri, 09 Dec 2022 14:54:52 +0100
-Message-ID: <87r0x8d6mr.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666C72F3D
+	for <patches@lists.linux.dev>; Fri,  9 Dec 2022 15:33:01 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B9E781FF90;
+	Fri,  9 Dec 2022 15:32:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1670599973; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=y1oe6AS8U5UukEMAdOkLhhvwGRmDfr7zc41wEr0hZu4=;
+	b=ayn0wV8GS6fm+bmItqAdnHivEWnOPqYsn6x3fG3WSBMb6eGCo6df6N5pU72oObs20/tI5O
+	wS+t9aQc60GZzPVEvoAbwNOrPl520SgEzEZRxuTMGUpvd1d4InltoP3udQZK43to+wLBKK
+	dKARUHGnbuX9cS0J+KdE/glbz+z0NfQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1670599973;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=y1oe6AS8U5UukEMAdOkLhhvwGRmDfr7zc41wEr0hZu4=;
+	b=kRLMNPLyBLrYAKA9pmp5HUvp99+kzkyCozx3WYfaHxhx/vjDjdrUzq1nZNI/aPYmqXNPqN
+	e6fA7t30FUBf8JBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 84F2913597;
+	Fri,  9 Dec 2022 15:32:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id hFDVHyVVk2N+LgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 09 Dec 2022 15:32:53 +0000
+Message-ID: <8f81dbc0-da85-dff7-4a88-c0c4639649c1@suse.cz>
+Date: Fri, 9 Dec 2022 16:32:53 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab updates for 6.2-rc1
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>,
+ Feng Tang <feng.tang@intel.com>, Dennis Zhou <dennis@kernel.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 09 2022 at 06:46, Nathan Chancellor wrote:
-> Ping? The default switch was remerged a couple of days ago so builds
-> with tip of tree LLVM are going to be broken again:
->
-> https://github.com/llvm/llvm-project/commit/241dbd310599e3c1a0f1b0c9ced14c8b8760539e
+Linus,
 
-Sorry. That fell through the cracks. I'll take care of it.
+please pull the latest slab updates from:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.2-rc1
+
+The changes, including the first step to remove SLOB, are summarized below.
+
+There's one trivial conflict with percpu tree:
+https://lore.kernel.org/all/20221122163634.3b21cf71@canb.auug.org.au/
+
+======================================
+
+* SLOB deprecation and SLUB_TINY
+
+  The SLOB allocator adds maintenance burden and stands in the way of API
+  improvements [1]. Deprecate it by renaming the config option (to make users
+  notice) to CONFIG_SLOB_DEPRECATED with updated help text. SLUB should be
+  used instead as SLAB will be the next on the removal list.
+
+  Based on reports from a riscv k210 board with 8MB RAM, add a CONFIG_SLUB_TINY
+  option to minimize SLUB's memory usage at the expense of scalability. This
+  has resolved the k210 regression [2] so in case there are no others (that
+  wouldn't be resolvable by further tweaks to SLUB_TINY) plan is to remove SLOB
+  in a few cycles.
+
+  Existing defconfigs with CONFIG_SLOB are converted to CONFIG_SLUB_TINY.
+
+* kmalloc() slub_debug redzone improvements
+
+  A series from Feng Tang that builds on the tracking or requested size for
+  kmalloc() allocations (for caches with debugging enabled) added in 6.1, to
+  make redzone checks consider the requested size and not the rounded up one,
+  in order to catch more subtle buffer overruns. Includes new slub_kunit test.
+
+* struct slab fields reordering to accomodate larger rcu_head
+
+  RCU folks would like to grow rcu_head with debugging options, which breaks
+  current struct slab layout's assumptions, so reorganize it to make this
+  possible.
+
+* Miscellaneous improvements/fixes
+
+  - __alloc_size checking compiler workaround by Kees Cook.
+  - Optimize and cleanup SLUB's sysfs init, by Rasmus Villemoes.
+  - Make SLAB compatible with PROVE_RAW_LOCK_NESTING, by Jiri Kosina.
+  - Correct SLUB's percpu allocation estimates, by Baoquan He.
+  - Re-enableS LUB's run-time failslab sysfs control, by Alexander Atanasov.
+  - Make tools/vm/slabinfo more user friendly when not run as root, by Rong Tao.
+  - Dead code removal in SLUB, by Hyeonggon Yoo.
+
+[1] https://lore.kernel.org/all/b35c3f82-f67b-2103-7d82-7a7ba7521439@suse.cz/
+[2] https://lore.kernel.org/all/6a1883c4-4c3f-545a-90e8-2cd805bcf4ae@opensource.wdc.com/
+
+----------------------------------------------------------------
+Alexander Atanasov (1):
+      mm: Make failslab writable again
+
+Baoquan He (2):
+      percpu: adjust the value of PERCPU_DYNAMIC_EARLY_SIZE
+      mm/slub, percpu: correct the calculation of early percpu allocation size
+
+Feng Tang (5):
+      mm/slub: only zero requested size of buffer for kzalloc when debug enabled
+      mm: kasan: Extend kasan_metadata_size() to also cover in-object size
+      mm/slub: extend redzone check to extra allocated kmalloc space than requested
+      mm/slub, kunit: add SLAB_SKIP_KFENCE flag for cache creation
+      mm/slub, kunit: Add a test case for kmalloc redzone check
+
+Hyeonggon Yoo (1):
+      mm/slub: remove dead code for debug caches on deactivate_slab()
+
+Jiri Kosina (1):
+      mm/slab: Annotate kmem_cache_node->list_lock as raw
+
+Kees Cook (2):
+      slab: Clean up SLOB vs kmalloc() definition
+      slab: Remove special-casing of const 0 size allocations
+
+Rasmus Villemoes (2):
+      mm: slub: remove dead and buggy code from sysfs_slab_add()
+      mm: slub: make slab_sysfs_init() a late_initcall
+
+Rong Tao (1):
+      tools/vm/slabinfo: indicates the cause of the EACCES error
+
+Vlastimil Babka (25):
+      mm/slub: perform free consistency checks before call_rcu
+      mm/slab: move and adjust kernel-doc for kmem_cache_alloc
+      mm/migrate: make isolate_movable_page() skip slab pages
+      mm/sl[au]b: rearrange struct slab fields to allow larger rcu_head
+      Merge branch 'slab/for-6.2/cleanups' into slab/for-next
+      Merge branch 'slab/for-6.2/locking' into slab/for-next
+      Merge branch 'slab/for-6.2/slub-sysfs' into slab/for-next
+      Merge branch 'slab/for-6.2/tools' into slab/for-next
+      Merge branch 'slab/for-6.2/fit_rcu_head' into slab/for-next
+      Merge branch 'slab/for-6.2/kmalloc_redzone' into slab/for-next
+      Merge branch 'slab/for-6.2/alloc_size' into slab/for-next
+      mm, slab: ignore hardened usercopy parameters when disabled
+      mm, slub: add CONFIG_SLUB_TINY
+      mm, slub: disable SYSFS support with CONFIG_SLUB_TINY
+      mm, slub: retain no free slabs on partial list with CONFIG_SLUB_TINY
+      mm, slub: lower the default slub_max_order with CONFIG_SLUB_TINY
+      mm, slub: don't create kmalloc-rcl caches with CONFIG_SLUB_TINY
+      mm, slab: ignore SLAB_RECLAIM_ACCOUNT with CONFIG_SLUB_TINY
+      mm, slub: refactor free debug processing
+      mm, slub: split out allocations from pre/post hooks
+      mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
+      mm, slub: don't aggressively inline with CONFIG_SLUB_TINY
+      mm, slob: rename CONFIG_SLOB to CONFIG_SLOB_DEPRECATED
+      Merge branch 'slab/for-6.2/kmalloc_redzone' into slab/for-next
+      Merge branch 'slub-tiny-v1r6' into slab/for-next
+
+ Documentation/mm/slub.rst                      |   2 +
+ arch/arm/configs/clps711x_defconfig            |   3 +-
+ arch/arm/configs/collie_defconfig              |   3 +-
+ arch/arm/configs/multi_v4t_defconfig           |   3 +-
+ arch/arm/configs/omap1_defconfig               |   3 +-
+ arch/arm/configs/pxa_defconfig                 |   3 +-
+ arch/arm/configs/tct_hammer_defconfig          |   3 +-
+ arch/arm/configs/xcep_defconfig                |   3 +-
+ arch/openrisc/configs/or1ksim_defconfig        |   3 +-
+ arch/openrisc/configs/simple_smp_defconfig     |   3 +-
+ arch/riscv/configs/nommu_k210_defconfig        |   3 +-
+ arch/riscv/configs/nommu_k210_sdcard_defconfig |   3 +-
+ arch/riscv/configs/nommu_virt_defconfig        |   3 +-
+ arch/sh/configs/rsk7201_defconfig              |   3 +-
+ arch/sh/configs/rsk7203_defconfig              |   3 +-
+ arch/sh/configs/se7206_defconfig               |   3 +-
+ arch/sh/configs/shmin_defconfig                |   3 +-
+ arch/sh/configs/shx3_defconfig                 |   3 +-
+ include/linux/kasan.h                          |   5 +-
+ include/linux/percpu.h                         |   2 +-
+ include/linux/slab.h                           |  64 ++-
+ include/linux/slab_def.h                       |   2 +
+ include/linux/slub_def.h                       |   8 +-
+ kernel/configs/tiny.config                     |   5 +-
+ lib/Kconfig.kasan                              |   2 +-
+ lib/slub_kunit.c                               |  57 ++-
+ mm/Kconfig                                     |  38 +-
+ mm/Kconfig.debug                               |   2 +-
+ mm/kasan/generic.c                             |  19 +-
+ mm/migrate.c                                   |  15 +-
+ mm/slab.c                                      | 113 +++--
+ mm/slab.h                                      |  86 ++--
+ mm/slab_common.c                               |  27 +-
+ mm/slub.c                                      | 553 +++++++++++++++++--------
+ tools/vm/slabinfo.c                            |   6 +-
+ 35 files changed, 713 insertions(+), 344 deletions(-)
