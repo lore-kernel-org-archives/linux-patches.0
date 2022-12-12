@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDED28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:50:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1935AC433F0;
-	Mon, 12 Dec 2022 13:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54CE28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:50:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D8BC433EF;
+	Mon, 12 Dec 2022 13:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853009;
-	bh=32GjUSZO50TOChG3Q65SYtHR5kPbYpCnzVf68che8L0=;
+	s=korg; t=1670853013;
+	bh=H5GVWkcY2rBV4REn8D7N2fUm6w0aI+KxlA8c/vnrJyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8AeolKtI7m1Gx0q/FV5RJ0QuAjE7rpTvlwOvEBBIMxUbLZLc0iU1SRYhnjIu07ka
-	 N60Myg4gs1+VDxXWXCEAoq6V4sqOiPHfc7TBrJOYKrsx0H/0hk8wkrc/OG12VBLtGj
-	 mdgVNGxqL5FozGeTw71S8wmWa2q1KvI99wd53FZo=
+	b=AoUay8o/jTCwUR1FIbixbtyRzwUyB+96c+WdqFA+76SYPFRnVvHEKAPmuGUJHnErn
+	 0np0ij/V/Rvr7R5PWIFxO7ErLUniygy4RNiXOBmC1QW4mfYi9Og4SgwtkXKohRDl9r
+	 oMhoPVqBH+TOwvy2ufoMSCOdZld4bc04BB5FdPWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
-	Kees Cook <keescook@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 38/49] NFC: nci: Bounds check struct nfc_target arrays
-Date: Mon, 12 Dec 2022 14:19:16 +0100
-Message-Id: <20221212130915.555054531@linuxfoundation.org>
+Subject: [PATCH 4.19 39/49] nvme initialize core quirks before calling nvme_init_subsystem
+Date: Mon, 12 Dec 2022 14:19:17 +0100
+Message-Id: <20221212130915.608859234@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -37,60 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Pankaj Raghav <p.raghav@samsung.com>
 
-[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
+[ Upstream commit 6f2d71524bcfdeb1fcbd22a4a92a5b7b161ab224 ]
 
-While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
+A device might have a core quirk for NVME_QUIRK_IGNORE_DEV_SUBNQN
+(such as Samsung X5) but it would still give a:
 
-  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
+    "missing or invalid SUBNQN field"
 
-This appears to be a legitimate lack of bounds checking in
-nci_add_new_protocol(). Add the missing checks.
+warning as core quirks are filled after calling nvme_init_subnqn.  Fill
+ctrl->quirks from struct core_quirks before calling nvme_init_subsystem
+to fix this.
 
-Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested on a Samsung X5.
+
+Fixes: ab9e00cc72fa ("nvme: track subsystems")
+Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/ntf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
-index 1e8c1a12aaec..4f75453c07aa 100644
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -230,6 +230,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		target->sens_res = nfca_poll->sens_res;
- 		target->sel_res = nfca_poll->sel_res;
- 		target->nfcid1_len = nfca_poll->nfcid1_len;
-+		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
-+			return -EPROTO;
- 		if (target->nfcid1_len > 0) {
- 			memcpy(target->nfcid1, nfca_poll->nfcid1,
- 			       target->nfcid1_len);
-@@ -238,6 +240,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index f47f3b992161..6adff541282b 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2463,10 +2463,6 @@ int nvme_init_identify(struct nvme_ctrl *ctrl)
+ 	if (!ctrl->identified) {
+ 		int i;
  
- 		target->sensb_res_len = nfcb_poll->sensb_res_len;
-+		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
-+			return -EPROTO;
- 		if (target->sensb_res_len > 0) {
- 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
- 			       target->sensb_res_len);
-@@ -246,6 +250,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
- 
- 		target->sensf_res_len = nfcf_poll->sensf_res_len;
-+		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
-+			return -EPROTO;
- 		if (target->sensf_res_len > 0) {
- 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
- 			       target->sensf_res_len);
+-		ret = nvme_init_subsystem(ctrl, id);
+-		if (ret)
+-			goto out_free;
+-
+ 		/*
+ 		 * Check for quirks.  Quirk can depend on firmware version,
+ 		 * so, in principle, the set of quirks present can change
+@@ -2479,6 +2475,10 @@ int nvme_init_identify(struct nvme_ctrl *ctrl)
+ 			if (quirk_matches(id, &core_quirks[i]))
+ 				ctrl->quirks |= core_quirks[i].quirks;
+ 		}
++
++		ret = nvme_init_subsystem(ctrl, id);
++		if (ret)
++			goto out_free;
+ 	}
+ 	memcpy(ctrl->subsys->firmware_rev, id->fr,
+ 	       sizeof(ctrl->subsys->firmware_rev));
 -- 
 2.35.1
 
