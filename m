@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B577D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CE6C433EF;
-	Mon, 12 Dec 2022 13:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3AC28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C41C433D2;
+	Mon, 12 Dec 2022 13:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851647;
-	bh=uAbHIsE6Pxufpz6ZO3sKBhzosc3M/V+AVZVMASvABfc=;
+	s=korg; t=1670851651;
+	bh=x+VMinI0WlGSPqyriXz1zC4cwc0mJcc5t5XmOfOqtgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=if4z4GU/Ti3IioZlkG9hF4V+WbYTQ+iALGqm1KebzQsK6clpy1LTs4okUn4WK61vY
-	 nv4okopkSxk8Xg4F3pfnHWw0CwqN9cs8NqQB39r5uUqCWWU4K0aALKZuW/miTTqbSq
-	 oznUu77nln0Y2+0DtPBQ4M6qTaExdX7QGPk0rATs=
+	b=dADdNyLZZ877XI3pLVhKpQd+WKsO/5kNqrBSchmIpQm9CvwNo2DrGe6QssDKnY50S
+	 1/I7yVIjouCKAaZ6hF+5mHP/SLCeBrXyNqNEFLx8Xcxl34/ffdeThaFJqQLMSxFdUR
+	 tMWb1zM37J4woCirvtTrgPgKRKe+vFaEQsv+zVVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.15 042/123] media: v4l2-dv-timings.c: fix too strict blanking sanity checks
-Date: Mon, 12 Dec 2022 14:16:48 +0100
-Message-Id: <20221212130928.681801558@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 043/123] memcg: fix possible use-after-free in memcg_write_event_control()
+Date: Mon, 12 Dec 2022 14:16:49 +0100
+Message-Id: <20221212130928.723309088@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -34,70 +41,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Tejun Heo <tj@kernel.org>
 
-commit 5eef2141776da02772c44ec406d6871a790761ee upstream.
+commit 4a7ba45b1a435e7097ca0f79a847d0949d0eb088 upstream.
 
-Sanity checks were added to verify the v4l2_bt_timings blanking fields
-in order to avoid integer overflows when userspace passes weird values.
+memcg_write_event_control() accesses the dentry->d_name of the specified
+control fd to route the write call.  As a cgroup interface file can't be
+renamed, it's safe to access d_name as long as the specified file is a
+regular cgroup file.  Also, as these cgroup interface files can't be
+removed before the directory, it's safe to access the parent too.
 
-But that assumed that userspace would correctly fill in the front porch,
-backporch and sync values, but sometimes all you know is the total
-blanking, which is then assigned to just one of these fields.
+Prior to 347c4a874710 ("memcg: remove cgroup_event->cft"), there was a
+call to __file_cft() which verified that the specified file is a regular
+cgroupfs file before further accesses.  The cftype pointer returned from
+__file_cft() was no longer necessary and the commit inadvertently dropped
+the file type check with it allowing any file to slip through.  With the
+invarients broken, the d_name and parent accesses can now race against
+renames and removals of arbitrary files and cause use-after-free's.
 
-And that can fail with these checks.
+Fix the bug by resurrecting the file type check in __file_cft().  Now that
+cgroupfs is implemented through kernfs, checking the file operations needs
+to go through a layer of indirection.  Instead, let's check the superblock
+and dentry type.
 
-So instead set a maximum for the total horizontal and vertical
-blanking and check that each field remains below that.
-
-That is still sufficient to avoid integer overflows, but it also
-allows for more flexibility in how userspace fills in these fields.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 4b6d66a45ed3 ("media: v4l2-dv-timings: add sanity checks for blanking values")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Link: https://lkml.kernel.org/r/Y5FRm/cfcKPGzWwl@slm.duckdns.org
+Fixes: 347c4a874710 ("memcg: remove cgroup_event->cft")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Jann Horn <jannh@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: <stable@vger.kernel.org>	[3.14+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dv-timings.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/linux/cgroup.h          |    1 +
+ kernel/cgroup/cgroup-internal.h |    1 -
+ mm/memcontrol.c                 |   15 +++++++++++++--
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-dv-timings.c
-+++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
-@@ -145,6 +145,8 @@ bool v4l2_valid_dv_timings(const struct
- 	const struct v4l2_bt_timings *bt = &t->bt;
- 	const struct v4l2_bt_timings_cap *cap = &dvcap->bt;
- 	u32 caps = cap->capabilities;
-+	const u32 max_vert = 10240;
-+	u32 max_hor = 3 * bt->width;
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -68,6 +68,7 @@ struct css_task_iter {
+ 	struct list_head		iters_node;	/* css_set->task_iters */
+ };
  
- 	if (t->type != V4L2_DV_BT_656_1120)
- 		return false;
-@@ -166,14 +168,20 @@ bool v4l2_valid_dv_timings(const struct
- 	if (!bt->interlaced &&
- 	    (bt->il_vbackporch || bt->il_vsync || bt->il_vfrontporch))
- 		return false;
--	if (bt->hfrontporch > 2 * bt->width ||
--	    bt->hsync > 1024 || bt->hbackporch > 1024)
-+	/*
-+	 * Some video receivers cannot properly separate the frontporch,
-+	 * backporch and sync values, and instead they only have the total
-+	 * blanking. That can be assigned to any of these three fields.
-+	 * So just check that none of these are way out of range.
++extern struct file_system_type cgroup_fs_type;
+ extern struct cgroup_root cgrp_dfl_root;
+ extern struct css_set init_css_set;
+ 
+--- a/kernel/cgroup/cgroup-internal.h
++++ b/kernel/cgroup/cgroup-internal.h
+@@ -169,7 +169,6 @@ extern struct mutex cgroup_mutex;
+ extern spinlock_t css_set_lock;
+ extern struct cgroup_subsys *cgroup_subsys[];
+ extern struct list_head cgroup_roots;
+-extern struct file_system_type cgroup_fs_type;
+ 
+ /* iterate across the hierarchies */
+ #define for_each_root(root)						\
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4789,6 +4789,7 @@ static ssize_t memcg_write_event_control
+ 	unsigned int efd, cfd;
+ 	struct fd efile;
+ 	struct fd cfile;
++	struct dentry *cdentry;
+ 	const char *name;
+ 	char *endp;
+ 	int ret;
+@@ -4840,6 +4841,16 @@ static ssize_t memcg_write_event_control
+ 		goto out_put_cfile;
+ 
+ 	/*
++	 * The control file must be a regular cgroup1 file. As a regular cgroup
++	 * file can't be renamed, it's safe to access its name afterwards.
 +	 */
-+	if (bt->hfrontporch > max_hor ||
-+	    bt->hsync > max_hor || bt->hbackporch > max_hor)
- 		return false;
--	if (bt->vfrontporch > 4096 ||
--	    bt->vsync > 128 || bt->vbackporch > 4096)
-+	if (bt->vfrontporch > max_vert ||
-+	    bt->vsync > max_vert || bt->vbackporch > max_vert)
- 		return false;
--	if (bt->interlaced && (bt->il_vfrontporch > 4096 ||
--	    bt->il_vsync > 128 || bt->il_vbackporch > 4096))
-+	if (bt->interlaced && (bt->il_vfrontporch > max_vert ||
-+	    bt->il_vsync > max_vert || bt->il_vbackporch > max_vert))
- 		return false;
- 	return fnc == NULL || fnc(t, fnc_handle);
- }
++	cdentry = cfile.file->f_path.dentry;
++	if (cdentry->d_sb->s_type != &cgroup_fs_type || !d_is_reg(cdentry)) {
++		ret = -EINVAL;
++		goto out_put_cfile;
++	}
++
++	/*
+ 	 * Determine the event callbacks and set them in @event.  This used
+ 	 * to be done via struct cftype but cgroup core no longer knows
+ 	 * about these events.  The following is crude but the whole thing
+@@ -4847,7 +4858,7 @@ static ssize_t memcg_write_event_control
+ 	 *
+ 	 * DO NOT ADD NEW FILES.
+ 	 */
+-	name = cfile.file->f_path.dentry->d_name.name;
++	name = cdentry->d_name.name;
+ 
+ 	if (!strcmp(name, "memory.usage_in_bytes")) {
+ 		event->register_event = mem_cgroup_usage_register_event;
+@@ -4871,7 +4882,7 @@ static ssize_t memcg_write_event_control
+ 	 * automatically removed on cgroup destruction but the removal is
+ 	 * asynchronous, so take an extra ref on @css.
+ 	 */
+-	cfile_css = css_tryget_online_from_dir(cfile.file->f_path.dentry->d_parent,
++	cfile_css = css_tryget_online_from_dir(cdentry->d_parent,
+ 					       &memory_cgrp_subsys);
+ 	ret = -EINVAL;
+ 	if (IS_ERR(cfile_css))
 
 
