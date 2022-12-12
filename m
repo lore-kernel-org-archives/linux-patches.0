@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF2828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226E8C433EF;
-	Mon, 12 Dec 2022 13:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E9828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48B1C433EF;
+	Mon, 12 Dec 2022 13:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851734;
-	bh=XoPaXyONmSppqbRdsqtz7hX+THbGBxs8VdJ0Z+lGzYg=;
+	s=korg; t=1670851740;
+	bh=LRfe16lCtSJyGtjW8AgZg6bL1gxLZ0gvVfSkxgU0NuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jO+e1glSBd2JFDiEVI67hK8jxJUBgSW4I3CPYAgIViUOPBNUO9+LK8tCJoqC04YgZ
-	 8CkjoIKtt6WrO3ip/gMM663F+vvqlVyF65nxxYngqsLJ3VuKM2lU1kwiS1NhZbZYAt
-	 FMA6wmT3MrFyPpkdLrWqFIqrwf16cLhTgKIcTSXo=
+	b=s3KBIr0qU8/jcc/4aCZayprsA/6Nvia6kfcKBOcNisJws/osfbRoxfnoyD8Vwt7Of
+	 TeA3ZWIOCEo6b0NAOrNLy2ZufZ6OFu4jPCpSbrNXkkLc8Kfqp3ZU3jkxJ7atU/Yrjt
+	 e9d9LtrwYbk+zD6yWjkIneue/v72VSNUpFJfLxVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Zeng Heng <zengheng4@huawei.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/123] rtc: cmos: avoid UIP when reading alarm time
-Date: Mon, 12 Dec 2022 14:16:39 +0100
-Message-Id: <20221212130928.300869895@linuxfoundation.org>
+Subject: [PATCH 5.15 034/123] cifs: fix use-after-free caused by invalid pointer `hostname`
+Date: Mon, 12 Dec 2022 14:16:40 +0100
+Message-Id: <20221212130928.344469149@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,141 +36,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit cdedc45c579faf8cc6608d3ef81576ee0d512aa4 ]
+[ Upstream commit 153695d36ead0ccc4d0256953c751cabf673e621 ]
 
-Some Intel chipsets disconnect the time and date RTC registers when the
-clock update is in progress: during this time reads may return bogus
-values and writes fail silently. This includes the RTC alarm registers.
-[1]
+`hostname` needs to be set as null-pointer after free in
+`cifs_put_tcp_session` function, or when `cifsd` thread attempts
+to resolve hostname and reconnect the host, the thread would deref
+the invalid pointer.
 
-cmos_read_alarm() did not take account for that, which caused alarm time
-reads to sometimes return bogus values. This can be shown with a test
-patch that I am attaching to this patch series.
+Here is one of practical backtrace examples as reference:
 
-Fix this, by using mc146818_avoid_UIP().
+Task 477
+---------------------------
+ do_mount
+  path_mount
+   do_new_mount
+    vfs_get_tree
+     smb3_get_tree
+      smb3_get_tree_common
+       cifs_smb3_do_mount
+        cifs_mount
+         mount_put_conns
+          cifs_put_tcp_session
+          --> kfree(server->hostname)
 
-[1] 7th Generation Intel ® Processor Family I/O for U/Y Platforms [...]
-Datasheet, Volume 1 of 2 (Intel's Document Number: 334658-006)
-Page 208
-https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/7th-and-8th-gen-core-family-mobile-u-y-processor-lines-i-o-datasheet-vol-1.pdf
-        "If a RAM read from the ten time and date bytes is attempted
-        during an update cycle, the value read do not necessarily
-        represent the true contents of those locations. Any RAM writes
-        under the same conditions are ignored."
+cifsd
+---------------------------
+ kthread
+  cifs_demultiplex_thread
+   cifs_reconnect
+    reconn_set_ipaddr_from_hostname
+    --> if (!server->hostname)
+    --> if (server->hostname[0] == '\0')  // !! UAF fault here
 
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Cc: Alessandro Zummo <a.zummo@towertech.it>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20211210200131.153887-9-mat.jonczyk@o2.pl
+CIFS: VFS: cifs_mount failed w/return code = -112
+mount error(112): Host is down
+BUG: KASAN: use-after-free in reconn_set_ipaddr_from_hostname+0x2ba/0x310
+Read of size 1 at addr ffff888108f35380 by task cifsd/480
+CPU: 2 PID: 480 Comm: cifsd Not tainted 6.1.0-rc2-00106-gf705792f89dd-dirty #25
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x68/0x85
+ print_report+0x16c/0x4a3
+ kasan_report+0x95/0x190
+ reconn_set_ipaddr_from_hostname+0x2ba/0x310
+ __cifs_reconnect.part.0+0x241/0x800
+ cifs_reconnect+0x65f/0xb60
+ cifs_demultiplex_thread+0x1570/0x2570
+ kthread+0x2c5/0x380
+ ret_from_fork+0x22/0x30
+ </TASK>
+Allocated by task 477:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x7e/0x90
+ __kmalloc_node_track_caller+0x52/0x1b0
+ kstrdup+0x3b/0x70
+ cifs_get_tcp_session+0xbc/0x19b0
+ mount_get_conns+0xa9/0x10c0
+ cifs_mount+0xdf/0x1970
+ cifs_smb3_do_mount+0x295/0x1660
+ smb3_get_tree+0x352/0x5e0
+ vfs_get_tree+0x8e/0x2e0
+ path_mount+0xf8c/0x1990
+ do_mount+0xee/0x110
+ __x64_sys_mount+0x14b/0x1f0
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Freed by task 477:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x2a/0x50
+ __kasan_slab_free+0x10a/0x190
+ __kmem_cache_free+0xca/0x3f0
+ cifs_put_tcp_session+0x30c/0x450
+ cifs_mount+0xf95/0x1970
+ cifs_smb3_do_mount+0x295/0x1660
+ smb3_get_tree+0x352/0x5e0
+ vfs_get_tree+0x8e/0x2e0
+ path_mount+0xf8c/0x1990
+ do_mount+0xee/0x110
+ __x64_sys_mount+0x14b/0x1f0
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+The buggy address belongs to the object at ffff888108f35380
+ which belongs to the cache kmalloc-16 of size 16
+The buggy address is located 0 bytes inside of
+ 16-byte region [ffff888108f35380, ffff888108f35390)
+The buggy address belongs to the physical page:
+page:00000000333f8e58 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff888108f350e0 pfn:0x108f35
+flags: 0x200000000000200(slab|node=0|zone=2)
+raw: 0200000000000200 0000000000000000 dead000000000122 ffff8881000423c0
+raw: ffff888108f350e0 000000008080007a 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+Memory state around the buggy address:
+ ffff888108f35280: fa fb fc fc fa fb fc fc fa fb fc fc fa fb fc fc
+ ffff888108f35300: fa fb fc fc fa fb fc fc fa fb fc fc fa fb fc fc
+>ffff888108f35380: fa fb fc fc fa fb fc fc fa fb fc fc fa fb fc fc
+                   ^
+ ffff888108f35400: fa fb fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff888108f35480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+
+Fixes: 7be3248f3139 ("cifs: To match file servers, make sure the server hostname matches")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 72 ++++++++++++++++++++++++++++--------------
- 1 file changed, 49 insertions(+), 23 deletions(-)
+ fs/cifs/connect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index a3297a9cbc59..7c006c2b125f 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -249,10 +249,46 @@ static int cmos_set_time(struct device *dev, struct rtc_time *t)
- 	return mc146818_set_time(t);
- }
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index c6e2a0ff8f0c..a4284c4d7e03 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1392,6 +1392,7 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	server->session_key.response = NULL;
+ 	server->session_key.len = 0;
+ 	kfree(server->hostname);
++	server->hostname = NULL;
  
-+struct cmos_read_alarm_callback_param {
-+	struct cmos_rtc *cmos;
-+	struct rtc_time *time;
-+	unsigned char	rtc_control;
-+};
-+
-+static void cmos_read_alarm_callback(unsigned char __always_unused seconds,
-+				     void *param_in)
-+{
-+	struct cmos_read_alarm_callback_param *p =
-+		(struct cmos_read_alarm_callback_param *)param_in;
-+	struct rtc_time *time = p->time;
-+
-+	time->tm_sec = CMOS_READ(RTC_SECONDS_ALARM);
-+	time->tm_min = CMOS_READ(RTC_MINUTES_ALARM);
-+	time->tm_hour = CMOS_READ(RTC_HOURS_ALARM);
-+
-+	if (p->cmos->day_alrm) {
-+		/* ignore upper bits on readback per ACPI spec */
-+		time->tm_mday = CMOS_READ(p->cmos->day_alrm) & 0x3f;
-+		if (!time->tm_mday)
-+			time->tm_mday = -1;
-+
-+		if (p->cmos->mon_alrm) {
-+			time->tm_mon = CMOS_READ(p->cmos->mon_alrm);
-+			if (!time->tm_mon)
-+				time->tm_mon = -1;
-+		}
-+	}
-+
-+	p->rtc_control = CMOS_READ(RTC_CONTROL);
-+}
-+
- static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- {
- 	struct cmos_rtc	*cmos = dev_get_drvdata(dev);
--	unsigned char	rtc_control;
-+	struct cmos_read_alarm_callback_param p = {
-+		.cmos = cmos,
-+		.time = &t->time,
-+	};
- 
- 	/* This not only a rtc_op, but also called directly */
- 	if (!is_valid_irq(cmos->irq))
-@@ -263,28 +299,18 @@ static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- 	 * the future.
- 	 */
- 
--	spin_lock_irq(&rtc_lock);
--	t->time.tm_sec = CMOS_READ(RTC_SECONDS_ALARM);
--	t->time.tm_min = CMOS_READ(RTC_MINUTES_ALARM);
--	t->time.tm_hour = CMOS_READ(RTC_HOURS_ALARM);
--
--	if (cmos->day_alrm) {
--		/* ignore upper bits on readback per ACPI spec */
--		t->time.tm_mday = CMOS_READ(cmos->day_alrm) & 0x3f;
--		if (!t->time.tm_mday)
--			t->time.tm_mday = -1;
--
--		if (cmos->mon_alrm) {
--			t->time.tm_mon = CMOS_READ(cmos->mon_alrm);
--			if (!t->time.tm_mon)
--				t->time.tm_mon = -1;
--		}
--	}
--
--	rtc_control = CMOS_READ(RTC_CONTROL);
--	spin_unlock_irq(&rtc_lock);
-+	/* Some Intel chipsets disconnect the alarm registers when the clock
-+	 * update is in progress - during this time reads return bogus values
-+	 * and writes may fail silently. See for example "7th Generation Intel®
-+	 * Processor Family I/O for U/Y Platforms [...] Datasheet", section
-+	 * 27.7.1
-+	 *
-+	 * Use the mc146818_avoid_UIP() function to avoid this.
-+	 */
-+	if (!mc146818_avoid_UIP(cmos_read_alarm_callback, &p))
-+		return -EIO;
- 
--	if (!(rtc_control & RTC_DM_BINARY) || RTC_ALWAYS_BCD) {
-+	if (!(p.rtc_control & RTC_DM_BINARY) || RTC_ALWAYS_BCD) {
- 		if (((unsigned)t->time.tm_sec) < 0x60)
- 			t->time.tm_sec = bcd2bin(t->time.tm_sec);
- 		else
-@@ -313,7 +339,7 @@ static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- 		}
- 	}
- 
--	t->enabled = !!(rtc_control & RTC_AIE);
-+	t->enabled = !!(p.rtc_control & RTC_AIE);
- 	t->pending = 0;
- 
- 	return 0;
+ 	task = xchg(&server->tsk, NULL);
+ 	if (task)
 -- 
 2.35.1
 
