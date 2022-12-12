@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B4BC433EF;
-	Mon, 12 Dec 2022 13:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D7B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44DEC433EF;
+	Mon, 12 Dec 2022 13:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852251;
-	bh=sKf3ZsI9gfQOtDSJE8Q/mGlMTz916LM0ih6v0olB0y4=;
+	s=korg; t=1670852256;
+	bh=Ul3RsEuzdnXmuIUuvGNnAF23Ti2hrg9ktnfRVmMzPzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBanNlnFM2DAKebJB/k1/CV+nbbz2bAapKN/REFk7RqjIEU4c4+omGgpRqtjddT4h
-	 xCOTCHI4l4GuO/gJgIHyjuO+4QNJQxSoldV2qJ6fR6e9NVSr0xQDG1WwA4onRzmJvh
-	 2O5V8t/KhMs9M5pO44jNqgpQK3AldMvOyPEN4MAs=
+	b=A+ksemGc/OV2QxGMwKheWxFGbTT1QyToLiuLFCs6djtALNOmqLwIeBwxyF4uLq4W8
+	 9RRoZ185qK9RR5U92sIB+7vpSsjc4jt9MYC8rgk5An9kYyoSzCQNH7bAuis0rHJepF
+	 n4PQP6PGNxJ5yn9RBXrGlfWSspj+TMLaUMnCnepg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
 	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	John Hubbard <jhubbard@nvidia.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Mina Almasry <almasrymina@google.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
 	Peter Xu <peterx@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 044/157] mm/khugepaged: invoke MMU notifiers in shmem/file collapse paths
-Date: Mon, 12 Dec 2022 14:16:32 +0100
-Message-Id: <20221212130936.317089732@linuxfoundation.org>
+Subject: [PATCH 6.0 045/157] hugetlb: dont delete vma_lock in hugetlb MADV_DONTNEED processing
+Date: Mon, 12 Dec 2022 14:16:33 +0100
+Message-Id: <20221212130936.358448651@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -39,66 +45,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit f268f6cf875f3220afc77bdd0bf1bb136eb54db9 upstream.
+commit 04ada095dcfc4ae359418053c0be94453bdf1e84 upstream.
 
-Any codepath that zaps page table entries must invoke MMU notifiers to
-ensure that secondary MMUs (like KVM) don't keep accessing pages which
-aren't mapped anymore.  Secondary MMUs don't hold their own references to
-pages that are mirrored over, so failing to notify them can lead to page
-use-after-free.
+madvise(MADV_DONTNEED) ends up calling zap_page_range() to clear page
+tables associated with the address range.  For hugetlb vmas,
+zap_page_range will call __unmap_hugepage_range_final.  However,
+__unmap_hugepage_range_final assumes the passed vma is about to be removed
+and deletes the vma_lock to prevent pmd sharing as the vma is on the way
+out.  In the case of madvise(MADV_DONTNEED) the vma remains, but the
+missing vma_lock prevents pmd sharing and could potentially lead to issues
+with truncation/fault races.
 
-I'm marking this as addressing an issue introduced in commit f3f0e1d2150b
-("khugepaged: add support of collapse for tmpfs/shmem pages"), but most of
-the security impact of this only came in commit 27e1f8273113 ("khugepaged:
-enable collapse pmd for pte-mapped THP"), which actually omitted flushes
-for the removal of present PTEs, not just for the removal of empty page
-tables.
+This issue was originally reported here [1] as a BUG triggered in
+page_try_dup_anon_rmap.  Prior to the introduction of the hugetlb
+vma_lock, __unmap_hugepage_range_final cleared the VM_MAYSHARE flag to
+prevent pmd sharing.  Subsequent faults on this vma were confused as
+VM_MAYSHARE indicates a sharable vma, but was not set so page_mapping was
+not set in new pages added to the page table.  This resulted in pages that
+appeared anonymous in a VM_SHARED vma and triggered the BUG.
 
-Link: https://lkml.kernel.org/r/20221129154730.2274278-3-jannh@google.com
-Link: https://lkml.kernel.org/r/20221128180252.1684965-3-jannh@google.com
-Link: https://lkml.kernel.org/r/20221125213714.4115729-3-jannh@google.com
-Fixes: f3f0e1d2150b ("khugepaged: add support of collapse for tmpfs/shmem pages")
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
+Address issue by adding a new zap flag ZAP_FLAG_UNMAP to indicate an unmap
+call from unmap_vmas().  This is used to indicate the 'final' unmapping of
+a hugetlb vma.  When called via MADV_DONTNEED, this flag is not set and
+the vm_lock is not deleted.
+
+NOTE - Prior to the introduction of the huegtlb vma_lock in v6.1,  this
+       issue is addressed by not clearing the VM_MAYSHARE flag when
+       __unmap_hugepage_range_final is called in the MADV_DONTNEED case.
+
+[1] https://lore.kernel.org/lkml/CAO4mrfdLMXsao9RF4fUE8-Wfde8xmjsKrTNMNC9wjUb6JudD0g@mail.gmail.com/
+
+Link: https://lkml.kernel.org/r/20221114235507.294320-3-mike.kravetz@oracle.com
+Fixes: 90e7e7f5ef3f ("mm: enable MADV_DONTNEED for hugetlb mappings")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
 Cc: Peter Xu <peterx@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[backported, no changes necessary]
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/mm.h |  2 ++
+ mm/hugetlb.c       | 25 ++++++++++++++-----------
+ mm/memory.c        |  2 +-
+ 3 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 1155d356d3ac..5935765bcb33 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1380,6 +1380,7 @@ static void collapse_and_free_pmd(struct mm_struct *mm, struct vm_area_struct *v
- 				  unsigned long addr, pmd_t *pmdp)
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index df804bf5f4a5..4ff52127a6b8 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1794,6 +1794,8 @@ struct zap_details {
+  * default, the flag is not set.
+  */
+ #define  ZAP_FLAG_DROP_MARKER        ((__force zap_flags_t) BIT(0))
++/* Set in unmap_vmas() to indicate a final unmap call.  Only used by hugetlb */
++#define  ZAP_FLAG_UNMAP              ((__force zap_flags_t) BIT(1))
+ 
+ #ifdef CONFIG_MMU
+ extern bool can_do_mlock(void);
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index dbb558e71e9e..022a3bfafec4 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5145,17 +5145,20 @@ void __unmap_hugepage_range_final(struct mmu_gather *tlb,
  {
- 	pmd_t pmd;
-+	struct mmu_notifier_range range;
+ 	__unmap_hugepage_range(tlb, vma, start, end, ref_page, zap_flags);
  
- 	mmap_assert_write_locked(mm);
- 	if (vma->vm_file)
-@@ -1391,8 +1392,12 @@ static void collapse_and_free_pmd(struct mm_struct *mm, struct vm_area_struct *v
- 	if (vma->anon_vma)
- 		lockdep_assert_held_write(&vma->anon_vma->root->rwsem);
+-	/*
+-	 * Clear this flag so that x86's huge_pmd_share page_table_shareable
+-	 * test will fail on a vma being torn down, and not grab a page table
+-	 * on its way out.  We're lucky that the flag has such an appropriate
+-	 * name, and can in fact be safely cleared here. We could clear it
+-	 * before the __unmap_hugepage_range above, but all that's necessary
+-	 * is to clear it before releasing the i_mmap_rwsem. This works
+-	 * because in the context this is called, the VMA is about to be
+-	 * destroyed and the i_mmap_rwsem is held.
+-	 */
+-	vma->vm_flags &= ~VM_MAYSHARE;
++	if (zap_flags & ZAP_FLAG_UNMAP) {	/* final unmap */
++		/*
++		 * Clear this flag so that x86's huge_pmd_share
++		 * page_table_shareable test will fail on a vma being torn
++		 * down, and not grab a page table on its way out.  We're lucky
++		 * that the flag has such an appropriate name, and can in fact
++		 * be safely cleared here. We could clear it before the
++		 * __unmap_hugepage_range above, but all that's necessary
++		 * is to clear it before releasing the i_mmap_rwsem. This works
++		 * because in the context this is called, the VMA is about to
++		 * be destroyed and the i_mmap_rwsem is held.
++		 */
++		vma->vm_flags &= ~VM_MAYSHARE;
++	}
+ }
  
-+	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, NULL, mm, addr,
-+				addr + HPAGE_PMD_SIZE);
-+	mmu_notifier_invalidate_range_start(&range);
- 	pmd = pmdp_collapse_flush(vma, addr, pmdp);
- 	tlb_remove_table_sync_one();
-+	mmu_notifier_invalidate_range_end(&range);
- 	mm_dec_nr_ptes(mm);
- 	page_table_check_pte_clear_range(mm, addr, pmd);
- 	pte_free(mm, pmd_pgtable(pmd));
+ void unmap_hugepage_range(struct vm_area_struct *vma, unsigned long start,
+diff --git a/mm/memory.c b/mm/memory.c
+index 68d5b3dcec2e..a0fdaa74091f 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -1712,7 +1712,7 @@ void unmap_vmas(struct mmu_gather *tlb,
+ {
+ 	struct mmu_notifier_range range;
+ 	struct zap_details details = {
+-		.zap_flags = ZAP_FLAG_DROP_MARKER,
++		.zap_flags = ZAP_FLAG_DROP_MARKER | ZAP_FLAG_UNMAP,
+ 		/* Careful - we need to zap private pages too! */
+ 		.even_cows = true,
+ 	};
 -- 
 2.35.1
 
