@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFEE28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67540C433EF;
-	Mon, 12 Dec 2022 13:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FD928ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:45:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A54C433D2;
+	Mon, 12 Dec 2022 13:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852695;
-	bh=YhFrxtbSrPcfAgE8SOiTQf+xOOJPsZvrx38dliz87Wk=;
+	s=korg; t=1670852700;
+	bh=Ifsob09A2HnLkQYwGfDz21JX4bOqjQMUir02pR9HhGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTfgFHwHdcGWN3z1y+gO72lauyFx6T3IySAXEy1xjK+6RbIqt3Wp5BkeGUEEFggNs
-	 w3PdmeCut9uWu9rQ867tKuswwqJunEirt+aaY9x42/wwJ2kn/vEyEQn5dP3YC2tI+b
-	 R0xTQKvhO6o96xdf7IIcESbfxQtNqPp4q6Qx3Kvo=
+	b=qxt6H5mV8Wr6UKzqFXeGHYXaEy83e39GxSCIT1qXPhgSarJtAR6NUSNbT3TjQ5DpS
+	 xLC/Kyoc/GbovCcr2WpHa+l2kT61l2hL2YH+7Srf/u9mdoz7Kl1Fi3lyko7nW3+5rR
+	 zPnWVJOchNB+yTLZAWG6dgG2Bv1EJSB6BpIdnLBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Valentina Goncharenko <goncharenko.vp@ispras.ru>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 134/157] net: microchip: sparx5: Fix missing destroy_workqueue of mact_queue
-Date: Mon, 12 Dec 2022 14:18:02 +0100
-Message-Id: <20221212130940.355948738@linuxfoundation.org>
+Subject: [PATCH 6.0 117/157] net: encx24j600: Add parentheses to fix precedence
+Date: Mon, 12 Dec 2022 14:17:45 +0100
+Message-Id: <20221212130939.554508820@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,45 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Valentina Goncharenko <goncharenko.vp@ispras.ru>
 
-[ Upstream commit 7b8232bdb1789a257de3129a9bb08c69b93a17db ]
+[ Upstream commit 167b3f2dcc62c271f3555b33df17e361bb1fa0ee ]
 
-The mchp_sparx5_probe() won't destroy workqueue created by
-create_singlethread_workqueue() in sparx5_start() when later
-inits failed. Add destroy_workqueue in the cleanup_ports case,
-also add it in mchp_sparx5_remove()
+In functions regmap_encx24j600_phy_reg_read() and
+regmap_encx24j600_phy_reg_write() in the conditions of the waiting
+cycles for filling the variable 'ret' it is necessary to add parentheses
+to prevent wrong assignment due to logical operations precedence.
 
-Fixes: b37a1bae742f ("net: sparx5: add mactable support")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Link: https://lore.kernel.org/r/20221203070259.19560-1-linqiheng@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d70e53262f5c ("net: Microchip encx24j600 driver")
+Signed-off-by: Valentina Goncharenko <goncharenko.vp@ispras.ru>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/microchip/encx24j600-regmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 30815c0e3f76..e58de119186a 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -876,6 +876,8 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/microchip/encx24j600-regmap.c b/drivers/net/ethernet/microchip/encx24j600-regmap.c
+index 81a8ccca7e5e..2e337c7a5773 100644
+--- a/drivers/net/ethernet/microchip/encx24j600-regmap.c
++++ b/drivers/net/ethernet/microchip/encx24j600-regmap.c
+@@ -359,7 +359,7 @@ static int regmap_encx24j600_phy_reg_read(void *context, unsigned int reg,
+ 		goto err_out;
  
- cleanup_ports:
- 	sparx5_cleanup_ports(sparx5);
-+	if (sparx5->mact_queue)
-+		destroy_workqueue(sparx5->mact_queue);
- cleanup_config:
- 	kfree(configs);
- cleanup_pnode:
-@@ -900,6 +902,7 @@ static int mchp_sparx5_remove(struct platform_device *pdev)
- 	sparx5_cleanup_ports(sparx5);
- 	/* Unregister netdevs */
- 	sparx5_unregister_notifier_blocks(sparx5);
-+	destroy_workqueue(sparx5->mact_queue);
+ 	usleep_range(26, 100);
+-	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
+ 	       (mistat & BUSY))
+ 		cpu_relax();
  
- 	return 0;
- }
+@@ -397,7 +397,7 @@ static int regmap_encx24j600_phy_reg_write(void *context, unsigned int reg,
+ 		goto err_out;
+ 
+ 	usleep_range(26, 100);
+-	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
+ 	       (mistat & BUSY))
+ 		cpu_relax();
+ 
 -- 
 2.35.1
 
