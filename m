@@ -1,83 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C306620
-	for <patches@lists.linux.dev>; Fri,  9 Dec 2022 18:38:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD703C433D2;
-	Fri,  9 Dec 2022 18:38:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670611138;
-	bh=eW16Z2d8UklJsHkVDknhAFCX3F1cvZy1MOKL5Ma0f+o=;
-	h=From:Date:Subject:To:Cc:From;
-	b=KMK1yzYL3QXDlLVZRgQ/7WACKR0mN7T2j2uJ+VskjvYFozdLBVH5lzgp+5DIKK9oY
-	 YFfWCPb72u6OoeXI6W2rsCKPfawRDxjRXSxFmddJjj4bL9jso3smleWmNPq8fwfhjx
-	 Pe2bkZGMVpKQVnjGeeAyZ2owXL0QYS+6uvkORJBs=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Fri, 09 Dec 2022 13:38:41 -0500
-Subject: [PATCH v2] Makefile: pirate > ninja
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E6A23BD
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 10:54:36 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 47AFF3380E;
+	Mon, 12 Dec 2022 10:54:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1670842469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jz7Lips898H9fEO8FHmnp/U+76VwTMZfI3iV22huR7g=;
+	b=NPhcr4mM7jngyRfUkBlHonm+HGcTi0wz/1yZ/4z9opH+ikoBkU+eMJD5LcKrtJWEJ4kuRf
+	8wlEC2fB9ooi/Y4TL1B6T2Cuzm6uZHe2EoSSUjlkUUvHFK9IEETO0fFBYk3gAhlLFldx33
+	+L31eHsss/i+cwP6azCY7+7Zc3kd0uM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1670842469;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jz7Lips898H9fEO8FHmnp/U+76VwTMZfI3iV22huR7g=;
+	b=O3k2kmLtaN98bHfuHywbtpiQfgfDvFKe3xdnCl/j7OeVZVogmPjrbyQWR6aW8L9zdbKTyp
+	next6oVtHfsYK9BQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 15B7F13456;
+	Mon, 12 Dec 2022 10:54:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id OPiABGUIl2MiUQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 12 Dec 2022 10:54:29 +0000
+Message-ID: <f318ccc3-eb03-e359-cb6f-157d0b4aed31@suse.cz>
+Date: Mon, 12 Dec 2022 11:54:28 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 10/12] mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
+Content-Language: en-US
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Baoquan He <bhe@redhat.com>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+ Dennis Zhou <dennis@kernel.org>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-11-vbabka@suse.cz> <Y4NEkF8DI1uXFRv4@hyeyoo>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <Y4NEkF8DI1uXFRv4@hyeyoo>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20220921-single-patch-v2-1-8c942b4792db@linuxfoundation.org>
-X-B4-Tracking: v=1; b=H4sIALGAk2MC/3WOwQrCMBBEf0X27EqSams8+R/iYZumTSBsJGmLU
- vrvLt49DTPwZmaD6kv0FW6HDYpfY42ZxZjjAVwgnjzGQTwYZYyyRmONPCWPL5pdQH12rTI0ut5a
- EKSn6rEvxC4IxEtKEoZY51w+v4lVizz+tK0aNTaXq6Wua5pBtfcUeXmPeeGBZjl2ymWC577vXzc
- 7FVK3AAAA
-To: Gee Mailer <mricon@gmail.com>
-Cc: Dev Nuller <devnull@kernel.org>, Castor Anxieux <k@castoranxieux.ca>,
- patches@lists.linux.dev,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- Kay Arr <konstantin.ryabitsev@linux.dev>
-X-Mailer: b4 0.11.0-dev-64ef0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1022;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=eW16Z2d8UklJsHkVDknhAFCX3F1cvZy1MOKL5Ma0f+o=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJInNxz0Wqstmqe/62pCveL2WCc3+XuubCFrH92OeHM/Sm7J
- pYAdHaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACYSt4Hhv3uqxzoBi5ssHJvq+bV6tX
- s7I0yWpdo/s/d46DFz8rHobkaGixt6DlTVzFycXXDl9IbsP0G1D9d62oY9X7XgUoXvIiNdJgA=
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-Pirates are always better than ninjas.
+On 11/27/22 12:05, Hyeonggon Yoo wrote:
+> On Mon, Nov 21, 2022 at 06:12:00PM +0100, Vlastimil Babka wrote:
+>> SLUB gets most of its scalability by percpu slabs. However for
+>> CONFIG_SLUB_TINY the goal is minimal memory overhead, not scalability.
+>> Thus, #ifdef out the whole kmem_cache_cpu percpu structure and
+>> associated code. Additionally to the slab page savings, this reduces
+>> percpu allocator usage, and code size.
+> 
+> [+Cc Dennis]
 
-Cc: Kay Arr <konstantin.ryabitsev@linux.dev>
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
----
-Here we include some extra info about the series.
----
-Changes in v2:
-- No changes, just need a new revision
-- Link to v1: https://lore.kernel.org/r/20220921-single-patch-v1-1-3589a7733d06@linuxfoundation.org
++To: Baoquan also.
 
-Changes in v1:
-- Taken from junky stuff
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Wondering if we can reduce (or zero) early reservation of percpu area
+> when #if !defined(CONFIG_SLUB) || defined(CONFIG_SLUB_TINY)?
 
-diff --git a/Makefile b/Makefile
-index f41ec8c8426b..695536fb1394 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3,7 +3,7 @@ VERSION = 6
- PATCHLEVEL = 1
- SUBLEVEL = 0
- EXTRAVERSION = -rc1
--NAME = Hurr durr I'ma ninja sloth
-+NAME = Hurr durr I'ma pirate sloth
- 
- # *DOCUMENTATION*
- # To see a list of typical targets execute "make help"
+Good point. I've sent a PR as it was [1], but (if merged) we can still
+improve that during RC series, if it means more memory saved thanks to less
+percpu usage with CONFIG_SLUB_TINY.
 
----
-base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
-change-id: 20220921-single-patch-14c602afcb99
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git/tag/?h=slab-for-6.2-rc1
 
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+>> This change builds on recent commit c7323a5ad078 ("mm/slub: restrict
+>> sysfs validation to debug caches and make it safe"), as caches with
+>> enabled debugging also avoid percpu slabs and all allocations and
+>> freeing ends up working with the partial list. With a bit more
+>> refactoring by the preceding patches, use the same code paths with
+>> CONFIG_SLUB_TINY.
+>> 
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> 
+
