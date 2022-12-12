@@ -1,32 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F9E2585
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:12:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0E7C433F0;
-	Mon, 12 Dec 2022 13:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED622585
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:12:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04415C433EF;
+	Mon, 12 Dec 2022 13:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850744;
-	bh=2nnZXA8RaZrSVvCN6ByjHxeIL4WuKWU/gteG+urh8OQ=;
+	s=korg; t=1670850756;
+	bh=oWC/Q9RHsgnXL57RJrWazyvwtSwmc8YjZ0itsLFoj/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAN2r1E0bygoCkxz7hDFKv0/ifwU82ezn8/VzpLHS9wpXP37xRCLCwhWN+WKO5a7l
-	 JqF+q/MAiKxmXBm4cG6S3jgeJPkXhVcqHriQH+a/ZcCmRIRNp6uSzZJykuFcC15VCJ
-	 +LPyVu3bWSKy+0F949T14kzxW+Vjm5mglNLrEYdI=
+	b=UnQ2qlycdwx+N9INEl7xo6fF2Fe2n48TMf4cH8O2xb+FDPCc7FcOfBTq04z4sW/PL
+	 ZsQgH6Xes8WDcaxFrhKYiI3SKtytpRfhyg0J44G/xPfSQHL4yzyBjrhoPlxrd7jl8J
+	 p0k9Ubu9rTOREOufeWBoIa8JCF+Ty8jyMU6Ei2+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	alsa-devel@alsa-project.org,
-	Kees Cook <keescook@chromium.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alex Shi <alex.shi@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Alexander Duyck <alexander.duyck@gmail.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Andrey Ryabinin <aryabinin@virtuozzo.com>,
+	"Chen, Rong A" <rong.a.chen@intel.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Jann Horn <jannh@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	"Kirill A. Shutemov" <kirill@shutemov.name>,
+	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mika.penttila@nextfour.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/106] ALSA: seq: Fix function prototype mismatch in snd_seq_expand_var_event
-Date: Mon, 12 Dec 2022 14:09:22 +0100
-Message-Id: <20221212130925.704708367@linuxfoundation.org>
+Subject: [PATCH 5.10 002/106] mm/mlock: remove __munlock_isolate_lru_page()
+Date: Mon, 12 Dec 2022 14:09:05 +0100
+Message-Id: <20221212130924.973976950@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -40,74 +62,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Alex Shi <alex.shi@linux.alibaba.com>
 
-[ Upstream commit 05530ef7cf7c7d700f6753f058999b1b5099a026 ]
+[ Upstream commit 13805a88a9bd3fb37f33dd8972d904de62796f3d ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed.
+__munlock_isolate_lru_page() only has one caller, remove it to clean up
+and simplify code.
 
-seq_copy_in_user() and seq_copy_in_kernel() did not have prototypes
-matching snd_seq_dump_func_t. Adjust this and remove the casts. There
-are not resulting binary output differences.
-
-This was found as a result of Clang's new -Wcast-function-type-strict
-flag, which is more sensitive than the simpler -Wcast-function-type,
-which only checks for type width mismatches.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/lkml/202211041527.HD8TLSE1-lkp@intel.com
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: alsa-devel@alsa-project.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221118232346.never.380-kees@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lkml.kernel.org/r/1604566549-62481-14-git-send-email-alex.shi@linux.alibaba.com
+Signed-off-by: Alex Shi <alex.shi@linux.alibaba.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Alexander Duyck <alexander.duyck@gmail.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
+Cc: "Chen, Rong A" <rong.a.chen@intel.com>
+Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kirill A. Shutemov <kirill@shutemov.name>
+Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mika Penttilä <mika.penttila@nextfour.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 829ae0f81ce0 ("mm: migrate: fix THP's mapcount on isolation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_memory.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/mlock.c | 31 +++++++++----------------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
-diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
-index 65db1a7c77b7..bb76a2dd0a2f 100644
---- a/sound/core/seq/seq_memory.c
-+++ b/sound/core/seq/seq_memory.c
-@@ -112,15 +112,19 @@ EXPORT_SYMBOL(snd_seq_dump_var_event);
-  * expand the variable length event to linear buffer space.
-  */
- 
--static int seq_copy_in_kernel(char **bufptr, const void *src, int size)
-+static int seq_copy_in_kernel(void *ptr, void *src, int size)
- {
-+	char **bufptr = ptr;
-+
- 	memcpy(*bufptr, src, size);
- 	*bufptr += size;
- 	return 0;
- }
- 
--static int seq_copy_in_user(char __user **bufptr, const void *src, int size)
-+static int seq_copy_in_user(void *ptr, void *src, int size)
- {
-+	char __user **bufptr = ptr;
-+
- 	if (copy_to_user(*bufptr, src, size))
- 		return -EFAULT;
- 	*bufptr += size;
-@@ -149,8 +153,7 @@ int snd_seq_expand_var_event(const struct snd_seq_event *event, int count, char
- 		return newlen;
+diff --git a/mm/mlock.c b/mm/mlock.c
+index 796c726a0407..d487aa864e86 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -105,26 +105,6 @@ void mlock_vma_page(struct page *page)
  	}
- 	err = snd_seq_dump_var_event(event,
--				     in_kernel ? (snd_seq_dump_func_t)seq_copy_in_kernel :
--				     (snd_seq_dump_func_t)seq_copy_in_user,
-+				     in_kernel ? seq_copy_in_kernel : seq_copy_in_user,
- 				     &buf);
- 	return err < 0 ? err : newlen;
  }
+ 
+-/*
+- * Isolate a page from LRU with optional get_page() pin.
+- * Assumes lru_lock already held and page already pinned.
+- */
+-static bool __munlock_isolate_lru_page(struct page *page, bool getpage)
+-{
+-	if (PageLRU(page)) {
+-		struct lruvec *lruvec;
+-
+-		lruvec = mem_cgroup_page_lruvec(page, page_pgdat(page));
+-		if (getpage)
+-			get_page(page);
+-		ClearPageLRU(page);
+-		del_page_from_lru_list(page, lruvec, page_lru(page));
+-		return true;
+-	}
+-
+-	return false;
+-}
+-
+ /*
+  * Finish munlock after successful page isolation
+  *
+@@ -296,9 +276,16 @@ static void __munlock_pagevec(struct pagevec *pvec, struct zone *zone)
+ 			 * We already have pin from follow_page_mask()
+ 			 * so we can spare the get_page() here.
+ 			 */
+-			if (__munlock_isolate_lru_page(page, false))
++			if (PageLRU(page)) {
++				struct lruvec *lruvec;
++
++				ClearPageLRU(page);
++				lruvec = mem_cgroup_page_lruvec(page,
++							page_pgdat(page));
++				del_page_from_lru_list(page, lruvec,
++							page_lru(page));
+ 				continue;
+-			else
++			} else
+ 				__munlock_isolation_failed(page);
+ 		} else {
+ 			delta_munlocked++;
 -- 
 2.35.1
 
