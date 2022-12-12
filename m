@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357D828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB01C433D2;
-	Mon, 12 Dec 2022 13:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7012428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC33C433EF;
+	Mon, 12 Dec 2022 13:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852231;
-	bh=+jeoKhMCkpT4hn7N4p82uMxd1KjE2kJWwyTuu2+7Vlc=;
+	s=korg; t=1670852235;
+	bh=w0P/WVl0b7eL8iOW0F2fFg8Qj+MW34631fhio195zGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJ7NdQYJEMgabI0/KgfS/YQVSTumkxq0npLN/wq5ti3gA2Eqf0k7JmPNsntwV2i9d
-	 HVZrjUFWyzBoMXv3n9PwfYz/n8CSMF1CfvSLHwHQMdLN288KM5JRXry4KYR9ZdxXas
-	 wa5XFee2V07atI7Mz8ELv0z7uUZawzZY0wrQ1zGE=
+	b=o2o5YSKe8UNp5wAqW3vsxMmDAp8WWNehd4Ox7M2Gs17+aZEmpszYoePA606MxJVWO
+	 Jwp1v35eFCpVmBo4gX7lpyrY7egp5Y1KXMKcTHoKX4y6UMUqGFvKN2XrvnKF9M1UPH
+	 d+NZ5SPBPsTV7MFcA0tZFxiiXb3P9OBUSEtbEwzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Jun Lei <Jun.Lei@amd.com>,
 	Brian Chang <Brian.Chang@amd.com>,
-	Taimur Hassan <Syed.Hassan@amd.com>,
+	Dillon Varone <Dillon.Varone@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 039/157] drm/amd/display: Avoid setting pixel rate divider to N/A
-Date: Mon, 12 Dec 2022 14:16:27 +0100
-Message-Id: <20221212130936.105799251@linuxfoundation.org>
+Subject: [PATCH 6.0 040/157] drm/amd/display: Use new num clk levels struct for max mclk index
+Date: Mon, 12 Dec 2022 14:16:28 +0100
+Message-Id: <20221212130936.147863101@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -38,97 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taimur Hassan <Syed.Hassan@amd.com>
+From: Dillon Varone <Dillon.Varone@amd.com>
 
-[ Upstream commit 2a5dd86a69ea5435f1a837bdb7fafcda609a7c91 ]
+[ Upstream commit e667ee3b0c049bf0c69426879586a2572bb28d26 ]
 
-[Why]
-Pixel rate divider values should never be set to N/A (0xF) as the K1/K2
-field is only 1/2 bits wide.
+[WHY?]
+When calculating watermark and dlg values, the max mclk level index and
+associated speed are needed to find the correlated dummy latency value.
+Currently the incorrect index is given due to a clock manager refactor.
 
-[How]
-Set valid divider values for virtual and FRL/DP2 cases.
+[HOW?]
+Use num_memclk_level from num_entries_per_clk struct for getting the correct max
+mem speed.
 
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
 Acked-by: Brian Chang <Brian.Chang@amd.com>
-Signed-off-by: Taimur Hassan <Syed.Hassan@amd.com>
+Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c  | 7 +++++++
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c | 3 ++-
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c    | 4 +++-
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c   | 1 +
- 4 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
-index fb729674953b..de9fa534b77a 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dccg.c
-@@ -96,6 +96,13 @@ static void dccg314_set_pixel_rate_div(
- 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
- 	enum pixel_rate_div cur_k1 = PIXEL_RATE_DIV_NA, cur_k2 = PIXEL_RATE_DIV_NA;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index 2f996fdaa70d..07c56e231b04 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1803,7 +1803,7 @@ void dcn32_calculate_wm_and_dlg_fpu(struct dc *dc, struct dc_state *context,
  
-+	// Don't program 0xF into the register field. Not valid since
-+	// K1 / K2 field is only 1 / 2 bits wide
-+	if (k1 == PIXEL_RATE_DIV_NA || k2 == PIXEL_RATE_DIV_NA) {
-+		BREAK_TO_DEBUGGER();
-+		return;
-+	}
-+
- 	dccg314_get_pixel_rate_div(dccg, otg_inst, &cur_k1, &cur_k2);
- 	if (k1 == PIXEL_RATE_DIV_NA || k2 == PIXEL_RATE_DIV_NA || (k1 == cur_k1 && k2 == cur_k2))
- 		return;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
-index f4d1b83979fe..a0741794db62 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
-@@ -349,6 +349,7 @@ unsigned int dcn314_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsig
- 	odm_combine_factor = get_odm_config(pipe_ctx, NULL);
+ 		if (context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][maxMpcComb] ==
+ 			dm_dram_clock_change_unsupported) {
+-			int min_dram_speed_mts_offset = dc->clk_mgr->bw_params->clk_table.num_entries - 1;
++			int min_dram_speed_mts_offset = dc->clk_mgr->bw_params->clk_table.num_entries_per_clk.num_memclk_levels - 1;
  
- 	if (is_dp_128b_132b_signal(pipe_ctx)) {
-+		*k1_div = PIXEL_RATE_DIV_BY_1;
- 		*k2_div = PIXEL_RATE_DIV_BY_1;
- 	} else if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal) || dc_is_dvi_signal(pipe_ctx->stream->signal)) {
- 		*k1_div = PIXEL_RATE_DIV_BY_1;
-@@ -356,7 +357,7 @@ unsigned int dcn314_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsig
- 			*k2_div = PIXEL_RATE_DIV_BY_2;
- 		else
- 			*k2_div = PIXEL_RATE_DIV_BY_4;
--	} else if (dc_is_dp_signal(pipe_ctx->stream->signal)) {
-+	} else if (dc_is_dp_signal(pipe_ctx->stream->signal) || dc_is_virtual_signal(pipe_ctx->stream->signal)) {
- 		if (two_pix_per_container) {
- 			*k1_div = PIXEL_RATE_DIV_BY_1;
- 			*k2_div = PIXEL_RATE_DIV_BY_2;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-index 6640d0ac4304..6dd8dadd68a5 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-@@ -96,8 +96,10 @@ static void dccg32_set_pixel_rate_div(
- 
- 	// Don't program 0xF into the register field. Not valid since
- 	// K1 / K2 field is only 1 / 2 bits wide
--	if (k1 == PIXEL_RATE_DIV_NA || k2 == PIXEL_RATE_DIV_NA)
-+	if (k1 == PIXEL_RATE_DIV_NA || k2 == PIXEL_RATE_DIV_NA) {
-+		BREAK_TO_DEBUGGER();
- 		return;
-+	}
- 
- 	dccg32_get_pixel_rate_div(dccg, otg_inst, &cur_k1, &cur_k2);
- 	if (k1 == cur_k1 && k2 == cur_k2)
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index bbc0bfbec6c4..3128c111c619 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -1171,6 +1171,7 @@ unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsign
- 	odm_combine_factor = get_odm_config(pipe_ctx, NULL);
- 
- 	if (is_dp_128b_132b_signal(pipe_ctx)) {
-+		*k1_div = PIXEL_RATE_DIV_BY_1;
- 		*k2_div = PIXEL_RATE_DIV_BY_1;
- 	} else if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal) || dc_is_dvi_signal(pipe_ctx->stream->signal)) {
- 		*k1_div = PIXEL_RATE_DIV_BY_1;
+ 			min_dram_speed_mts =
+ 				dc->clk_mgr->bw_params->clk_table.entries[min_dram_speed_mts_offset].memclk_mhz * 16;
 -- 
 2.35.1
 
