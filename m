@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13A928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D932AC433EF;
-	Mon, 12 Dec 2022 13:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0454B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E77C433EF;
+	Mon, 12 Dec 2022 13:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851410;
-	bh=0DNxVcRmdS7DEhAo2nDTuJ8pK4HYsyOuiCqmy4CPAis=;
+	s=korg; t=1670851415;
+	bh=v+MMJU4B/gqS/x/p1pbV2GtijJERge27S7mwpe3KR1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLHzfBx3b4WPmL22L1JFNkxtquFBRlExRjk060l/a0f2Nn0XAnhX1siRH5+PRznO1
-	 n/I3/SWmINTgxNNaoQtzZiVarSwlXrX3ZDBfQYHbloKajZ9HZsTBTt5VUEUWepWDiY
-	 WgtOfThOf35JC2MPEPRH3C/fkYXJH1uI60/5yAEs=
+	b=Q2CX4YH4ayMTZM8M2WGzDr76qMHCA7BhlNVN7UNGNObUkxwHHQ46YJ5hc0VaZFmyE
+	 4MXRFf1rndKtg7UT3TM3dK+OWf3K05BNzBFG2rzwMIBHDqoHDubimo57HnrYke9rLq
+	 HPJU4ztadJmJ6ZlKr3A7L9BUP2lP1dNXSDcxQ1ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Liu Jian <liujian56@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 56/67] net: thunderx: Fix missing destroy_workqueue of nicvf_rx_mode_wq
-Date: Mon, 12 Dec 2022 14:17:31 +0100
-Message-Id: <20221212130920.299385986@linuxfoundation.org>
+Subject: [PATCH 5.4 57/67] net: hisilicon: Fix potential use-after-free in hisi_femac_rx()
+Date: Mon, 12 Dec 2022 14:17:32 +0100
+Message-Id: <20221212130920.343158314@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -36,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 42330a32933fb42180c52022804dcf09f47a2f99 ]
+[ Upstream commit 4640177049549de1a43e9bc49265f0cdfce08cfd ]
 
-The nicvf_probe() won't destroy workqueue when register_netdev()
-failed. Add destroy_workqueue err handle case to fix this issue.
+The skb is delivered to napi_gro_receive() which may free it, after
+calling this, dereferencing skb may trigger use-after-free.
 
-Fixes: 2ecbe4f4a027 ("net: thunderx: replace global nicvf_rx_mode_wq work queue for all VFs to private for each of them.")
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20221203094125.602812-1-liuyongqiang13@huawei.com
+Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Link: https://lore.kernel.org/r/20221203094240.1240211-1-liujian56@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/thunder/nicvf_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hisi_femac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/thunder/nicvf_main.c b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
-index 27ea528ef448..e861567b2c49 100644
---- a/drivers/net/ethernet/cavium/thunder/nicvf_main.c
-+++ b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
-@@ -2268,7 +2268,7 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	err = register_netdev(netdev);
- 	if (err) {
- 		dev_err(dev, "Failed to register netdevice\n");
--		goto err_unregister_interrupts;
-+		goto err_destroy_workqueue;
- 	}
- 
- 	nic->msg_enable = debug;
-@@ -2277,6 +2277,8 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	return 0;
- 
-+err_destroy_workqueue:
-+	destroy_workqueue(nic->nicvf_rx_mode_wq);
- err_unregister_interrupts:
- 	nicvf_unregister_interrupts(nic);
- err_free_netdev:
+diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
+index 90ab7ade44c4..2ee6265228d1 100644
+--- a/drivers/net/ethernet/hisilicon/hisi_femac.c
++++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
+@@ -283,7 +283,7 @@ static int hisi_femac_rx(struct net_device *dev, int limit)
+ 		skb->protocol = eth_type_trans(skb, dev);
+ 		napi_gro_receive(&priv->napi, skb);
+ 		dev->stats.rx_packets++;
+-		dev->stats.rx_bytes += skb->len;
++		dev->stats.rx_bytes += len;
+ next:
+ 		pos = (pos + 1) % rxq->num;
+ 		if (rx_pkts_num >= limit)
 -- 
 2.35.1
 
