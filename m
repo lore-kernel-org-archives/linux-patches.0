@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ED528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46528C433D2;
-	Mon, 12 Dec 2022 13:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C00328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A455BC433D2;
+	Mon, 12 Dec 2022 13:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852366;
-	bh=wFJv/SIyttPLTWrKzL8P4VDK1X+3bsfYI2ibgv1F07I=;
+	s=korg; t=1670852372;
+	bh=4J0wGzJHK2ZUwVDi/3cnl5pEt1ZD/J0kKiPZV9kjMIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKaQnfjJlzzdLpCGUtk7cr93nvo7hoxmXUT+dliIfQtPIQcdXwt1Mz+VXXG3wxpq0
-	 U2AzPrXd9qtDMl7U43V4cjCXhKAyEMnPJvefmcfRP7fe0GTeAx2enWn0Wgj/0qXVGf
-	 vE9Z67TCEEhu0DSe7P94YKy4qfTWSEfoDvoTGpLM=
+	b=IIVqLCOauipoI/p/8JIFjCyr6QhLkjhxnQjKS1sji6wnBwXsV+zwwCS4V1LgbA3Jg
+	 cOEoDBb/nug0Gpx0CrJCQsbJoStrrgAGbVSx2jLGaQBDCR2jkMdXSK/31TioJiSSPg
+	 xeLPaTDO30W+V5rWfntTFsVkUHjYD2JT1U2a6ViA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 029/157] selftests/net: Find nettest in current directory
-Date: Mon, 12 Dec 2022 14:16:17 +0100
-Message-Id: <20221212130935.690971826@linuxfoundation.org>
+	John Starks <jostarks@microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Jan Kara <jack@suse.cz>,
+	Yu Zhao <yuzhao@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 059/157] mm/gup: fix gup_pud_range() for dax
+Date: Mon, 12 Dec 2022 14:16:47 +0100
+Message-Id: <20221212130936.937638366@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,90 +42,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Díaz <daniel.diaz@linaro.org>
+From: John Starks <jostarks@microsoft.com>
 
-[ Upstream commit bd5e1e42826f18147afb0ba07e6a815f52cf8bcb ]
+commit fcd0ccd836ffad73d98a66f6fea7b16f735ea920 upstream.
 
-The `nettest` binary, built from `selftests/net/nettest.c`,
-was expected to be found in the path during test execution of
-`fcnal-test.sh` and `pmtu.sh`, leading to tests getting
-skipped when the binary is not installed in the system, as can
-be seen in these logs found in the wild [1]:
+For dax pud, pud_huge() returns true on x86. So the function works as long
+as hugetlb is configured. However, dax doesn't depend on hugetlb.
+Commit 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax") fixed
+devmap-backed huge PMDs, but missed devmap-backed huge PUDs. Fix this as
+well.
 
-  # TEST: vti4: PMTU exceptions                                         [SKIP]
-  [  350.600250] IPv6: ADDRCONF(NETDEV_CHANGE): veth_b: link becomes ready
-  [  350.607421] IPv6: ADDRCONF(NETDEV_CHANGE): veth_a: link becomes ready
-  # 'nettest' command not found; skipping tests
-  #   xfrm6udp not supported
-  # TEST: vti6: PMTU exceptions (ESP-in-UDP)                            [SKIP]
-  [  351.605102] IPv6: ADDRCONF(NETDEV_CHANGE): veth_b: link becomes ready
-  [  351.612243] IPv6: ADDRCONF(NETDEV_CHANGE): veth_a: link becomes ready
-  # 'nettest' command not found; skipping tests
-  #   xfrm4udp not supported
+This fixes the below kernel panic:
 
-The `unicast_extensions.sh` tests also rely on `nettest`, but
-it runs fine there because it looks for the binary in the
-current working directory [2]:
+general protection fault, probably for non-canonical address 0x69e7c000cc478: 0000 [#1] SMP
+	< snip >
+Call Trace:
+<TASK>
+get_user_pages_fast+0x1f/0x40
+iov_iter_get_pages+0xc6/0x3b0
+? mempool_alloc+0x5d/0x170
+bio_iov_iter_get_pages+0x82/0x4e0
+? bvec_alloc+0x91/0xc0
+? bio_alloc_bioset+0x19a/0x2a0
+blkdev_direct_IO+0x282/0x480
+? __io_complete_rw_common+0xc0/0xc0
+? filemap_range_has_page+0x82/0xc0
+generic_file_direct_write+0x9d/0x1a0
+? inode_update_time+0x24/0x30
+__generic_file_write_iter+0xbd/0x1e0
+blkdev_write_iter+0xb4/0x150
+? io_import_iovec+0x8d/0x340
+io_write+0xf9/0x300
+io_issue_sqe+0x3c3/0x1d30
+? sysvec_reschedule_ipi+0x6c/0x80
+__io_queue_sqe+0x33/0x240
+? fget+0x76/0xa0
+io_submit_sqes+0xe6a/0x18d0
+? __fget_light+0xd1/0x100
+__x64_sys_io_uring_enter+0x199/0x880
+? __context_tracking_enter+0x1f/0x70
+? irqentry_exit_to_user_mode+0x24/0x30
+? irqentry_exit+0x1d/0x30
+? __context_tracking_exit+0xe/0x70
+do_syscall_64+0x3b/0x90
+entry_SYSCALL_64_after_hwframe+0x61/0xcb
+RIP: 0033:0x7fc97c11a7be
+	< snip >
+</TASK>
+---[ end trace 48b2e0e67debcaeb ]---
+RIP: 0010:internal_get_user_pages_fast+0x340/0x990
+	< snip >
+Kernel panic - not syncing: Fatal exception
+Kernel Offset: disabled
 
-The same mechanism that works for the Unicast extensions tests
-is here copied over to the PMTU and functional tests.
-
-[1] https://lkft.validation.linaro.org/scheduler/job/5839508#L6221
-[2] https://lkft.validation.linaro.org/scheduler/job/5839508#L7958
-
-Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/1670392853-28252-1-git-send-email-ssengar@linux.microsoft.com
+Fixes: 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax")
+Signed-off-by: John Starks <jostarks@microsoft.com>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh | 11 +++++++----
- tools/testing/selftests/net/pmtu.sh       | 10 ++++++----
- 2 files changed, 13 insertions(+), 8 deletions(-)
+ mm/gup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
-index 31c3b6ebd388..21ca91473c09 100755
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -4196,10 +4196,13 @@ elif [ "$TESTS" = "ipv6" ]; then
- 	TESTS="$TESTS_IPV6"
- fi
- 
--which nettest >/dev/null
--if [ $? -ne 0 ]; then
--	echo "'nettest' command not found; skipping tests"
--	exit $ksft_skip
-+# nettest can be run from PATH or from same directory as this selftest
-+if ! which nettest >/dev/null; then
-+	PATH=$PWD:$PATH
-+	if ! which nettest >/dev/null; then
-+		echo "'nettest' command not found; skipping tests"
-+		exit $ksft_skip
-+	fi
- fi
- 
- declare -i nfail=0
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 736e358dc549..dfe3d287f01d 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -686,10 +686,12 @@ setup_xfrm() {
- }
- 
- setup_nettest_xfrm() {
--	which nettest >/dev/null
--	if [ $? -ne 0 ]; then
--		echo "'nettest' command not found; skipping tests"
--	        return 1
-+	if ! which nettest >/dev/null; then
-+		PATH=$PWD:$PATH
-+		if ! which nettest >/dev/null; then
-+			echo "'nettest' command not found; skipping tests"
-+			return 1
-+		fi
- 	fi
- 
- 	[ ${1} -eq 6 ] && proto="-6" || proto=""
--- 
-2.35.1
-
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2818,7 +2818,7 @@ static int gup_pud_range(p4d_t *p4dp, p4
+ 		next = pud_addr_end(addr, end);
+ 		if (unlikely(!pud_present(pud)))
+ 			return 0;
+-		if (unlikely(pud_huge(pud))) {
++		if (unlikely(pud_huge(pud) || pud_devmap(pud))) {
+ 			if (!gup_huge_pud(pud, pudp, addr, next, flags,
+ 					  pages, nr))
+ 				return 0;
 
 
