@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E8728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:40:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E51C433D2;
-	Mon, 12 Dec 2022 13:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B6928ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:40:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC22C433D2;
+	Mon, 12 Dec 2022 13:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852401;
-	bh=CxZRlOpPWk/FuOIos9ofLQSbKk3f/xsxSiATelOfaV4=;
+	s=korg; t=1670852405;
+	bh=b5thqV3BytwIzBS8oLucKu9ZgsjqsUrFZrV2CO3YNmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcdmuWyrCwu63xbTn7fQJ3GDTCrgt+VY/bGiTpGLSEYxoobA6HMXSGjjJgURZrDcp
-	 gzMdrzxIABMpYgDSueYfNkhFsaRGf6wnYTSckts+wCwlNtnPxSphay9VPdkOdWqiXL
-	 +3u2noJc+h6DCZHcltl/yh9ovElCklmekvvjZVZw=
+	b=ZuHdfi/U6vxTZ2B13qjU7C5ys9ABSFywPyogVfNixyZ5g5wpUcmjJo5RvzZf8zTSi
+	 y6w98nTiKsJ7tiy6rR+f0boITMADK/rKJ46znqkbYnU9Ll8nuPRKSk5iK0P9zeIXks
+	 Zu7X7q7VVHlvZ4RkS5B4AqZFEkfSvwCp7t1iUPDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.0 073/157] drm/amdgpu/sdma_v4_0: turn off SDMA ring buffer in the s2idle suspend
-Date: Mon, 12 Dec 2022 14:17:01 +0100
-Message-Id: <20221212130937.602739717@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 074/157] drm/amd/display: fix array index out of bound error in DCN32 DML
+Date: Mon, 12 Dec 2022 14:17:02 +0100
+Message-Id: <20221212130937.659494556@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,94 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit bc21fe9a5844c5bc8f7ec319b11d2671a94eb867 upstream.
+commit aeffc8fb2174f017a10df114bc312f899904dc68 upstream.
 
-In the SDMA s0ix save process requires to turn off SDMA ring buffer for
-avoiding the SDMA in-flight request, otherwise will suffer from SDMA page
-fault which causes by page request from in-flight SDMA ring accessing at
-SDMA restore phase.
+[Why&How]
+LinkCapacitySupport array is indexed with the number of voltage states and
+not the number of max DPPs. Fix the error by changing the array
+declaration to use the correct (larger) array size of total number of
+voltage states.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2248
-Cc: stable@vger.kernel.org # 6.0,5.15+
-Fixes: f8f4e2a51834 ("drm/amdgpu: skipping SDMA hw_init and hw_fini for S0ix.")
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -980,13 +980,13 @@ static void sdma_v4_0_ring_emit_fence(st
- 
- 
- /**
-- * sdma_v4_0_gfx_stop - stop the gfx async dma engines
-+ * sdma_v4_0_gfx_enable - enable the gfx async dma engines
-  *
-  * @adev: amdgpu_device pointer
-- *
-- * Stop the gfx async dma ring buffers (VEGA10).
-+ * @enable: enable SDMA RB/IB
-+ * control the gfx async dma ring buffers (VEGA10).
-  */
--static void sdma_v4_0_gfx_stop(struct amdgpu_device *adev)
-+static void sdma_v4_0_gfx_enable(struct amdgpu_device *adev, bool enable)
- {
- 	struct amdgpu_ring *sdma[AMDGPU_MAX_SDMA_INSTANCES];
- 	u32 rb_cntl, ib_cntl;
-@@ -1001,10 +1001,10 @@ static void sdma_v4_0_gfx_stop(struct am
- 		}
- 
- 		rb_cntl = RREG32_SDMA(i, mmSDMA0_GFX_RB_CNTL);
--		rb_cntl = REG_SET_FIELD(rb_cntl, SDMA0_GFX_RB_CNTL, RB_ENABLE, 0);
-+		rb_cntl = REG_SET_FIELD(rb_cntl, SDMA0_GFX_RB_CNTL, RB_ENABLE, enable ? 1 : 0);
- 		WREG32_SDMA(i, mmSDMA0_GFX_RB_CNTL, rb_cntl);
- 		ib_cntl = RREG32_SDMA(i, mmSDMA0_GFX_IB_CNTL);
--		ib_cntl = REG_SET_FIELD(ib_cntl, SDMA0_GFX_IB_CNTL, IB_ENABLE, 0);
-+		ib_cntl = REG_SET_FIELD(ib_cntl, SDMA0_GFX_IB_CNTL, IB_ENABLE, enable ? 1 : 0);
- 		WREG32_SDMA(i, mmSDMA0_GFX_IB_CNTL, ib_cntl);
- 	}
- }
-@@ -1131,7 +1131,7 @@ static void sdma_v4_0_enable(struct amdg
- 	int i;
- 
- 	if (!enable) {
--		sdma_v4_0_gfx_stop(adev);
-+		sdma_v4_0_gfx_enable(adev, enable);
- 		sdma_v4_0_rlc_stop(adev);
- 		if (adev->sdma.has_page_queue)
- 			sdma_v4_0_page_stop(adev);
-@@ -2043,8 +2043,10 @@ static int sdma_v4_0_suspend(void *handl
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
- 	/* SMU saves SDMA state for us */
--	if (adev->in_s0ix)
-+	if (adev->in_s0ix) {
-+		sdma_v4_0_gfx_enable(adev, false);
- 		return 0;
-+	}
- 
- 	return sdma_v4_0_hw_fini(adev);
- }
-@@ -2054,8 +2056,12 @@ static int sdma_v4_0_resume(void *handle
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
- 	/* SMU restores SDMA state for us */
--	if (adev->in_s0ix)
-+	if (adev->in_s0ix) {
-+		sdma_v4_0_enable(adev, true);
-+		sdma_v4_0_gfx_enable(adev, true);
-+		amdgpu_ttm_set_buffer_funcs_status(adev, true);
- 		return 0;
-+	}
- 
- 	return sdma_v4_0_hw_init(adev);
- }
+--- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h
+@@ -1152,7 +1152,7 @@ struct vba_vars_st {
+ 	double UrgBurstFactorLumaPre[DC__NUM_DPP__MAX];
+ 	double UrgBurstFactorChromaPre[DC__NUM_DPP__MAX];
+ 	bool NotUrgentLatencyHidingPre[DC__NUM_DPP__MAX];
+-	bool LinkCapacitySupport[DC__NUM_DPP__MAX];
++	bool LinkCapacitySupport[DC__VOLTAGE_STATES];
+ 	bool VREADY_AT_OR_AFTER_VSYNC[DC__NUM_DPP__MAX];
+ 	unsigned int MIN_DST_Y_NEXT_START[DC__NUM_DPP__MAX];
+ 	unsigned int VFrontPorch[DC__NUM_DPP__MAX];
 
 
