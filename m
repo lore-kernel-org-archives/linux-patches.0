@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:46:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2089FC433EF;
-	Mon, 12 Dec 2022 13:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A1A28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71512C433D2;
+	Mon, 12 Dec 2022 13:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852809;
-	bh=83ndlwg9IoSxuyPFXnTOhVN1N/G3Mew6oEjsWoD86lc=;
+	s=korg; t=1670852813;
+	bh=28A9aXTqdeI0yQmARiaBRORW/ztIrUyXmih2nzNuaBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOfJksHZDvjx9WJnqllQsF3uNxmqOSBPzf1lSGGJ/3NTqsyNDr9TPYBKrhfQSjDqX
-	 36SZhkqkfh2tpSpfM2Hd4LukZbeMTyNw1BaGUuYrlt8mrkPp8h6GjrzVp548CtCSmr
-	 lrOPsNr8SwwKpNYfw+eThJ/HkqjAwYQcv2Y8EEN0=
+	b=zOQl3J2NMAhY662Ti7ue6vlAjT8eoWSFgedq9Kzn9AjBIJrOl+iKEomiVPlvE8ovc
+	 RKQjU0b2vWqHaBVs5QnwvjiFEQM+pBh2nejEAGmV0EzdWuZM5efNkwB+XXgtmZFkQ8
+	 r1nO66sBgwHUXEjd3+O9gi7sfS+dCddL0BpzRrjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.0 157/157] drm/amdgpu/vcn: update vcn4 fw shared data structure
-Date: Mon, 12 Dec 2022 14:18:25 +0100
-Message-Id: <20221212130941.616646357@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 147/157] dpaa2-switch: Fix memory leak in dpaa2_switch_acl_entry_add() and dpaa2_switch_acl_entry_remove()
+Date: Mon, 12 Dec 2022 14:18:15 +0100
+Message-Id: <20221212130941.092517258@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,67 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruijing Dong <ruijing.dong@amd.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 167be8522821fd38636410103e1c154b589cb1d9 upstream.
+[ Upstream commit 4fad22a1281c500f15b172c9d261eff347ca634b ]
 
-update VF_RB_SETUP_FLAG, add SMU_DPM_INTERFACE_FLAG,
-and corresponding change in VCN4.
+The cmd_buff needs to be freed when error happened in
+dpaa2_switch_acl_entry_add() and dpaa2_switch_acl_entry_remove().
 
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Hand modified large dependency of commit aa44beb5f0155 ("drm/amdgpu/vcn: Add sriov VCN v4_0 unified queue support")
-  This no longer updates VF_RB_SETUP_FLAG, but just adds SMU_DPM_INTERFACE_FLAG. ]
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1110318d83e8 ("dpaa2-switch: add tc flower hardware offload on ingress traffic")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221205061515.115012-1-yuancan@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h |    7 +++++++
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c   |    4 ++++
- 2 files changed, 11 insertions(+)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
-@@ -161,6 +161,7 @@
- #define AMDGPU_VCN_SW_RING_FLAG		(1 << 9)
- #define AMDGPU_VCN_FW_LOGGING_FLAG	(1 << 10)
- #define AMDGPU_VCN_SMU_VERSION_INFO_FLAG (1 << 11)
-+#define AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG (1 << 11)
- 
- #define AMDGPU_VCN_IB_FLAG_DECODE_BUFFER	0x00000001
- #define AMDGPU_VCN_CMD_FLAG_MSG_BUFFER		0x00000001
-@@ -170,6 +171,9 @@
- #define VCN_CODEC_DISABLE_MASK_HEVC (1 << 2)
- #define VCN_CODEC_DISABLE_MASK_H264 (1 << 3)
- 
-+#define AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU (0)
-+#define AMDGPU_VCN_SMU_DPM_INTERFACE_APU (1)
-+
- enum fw_queue_mode {
- 	FW_QUEUE_RING_RESET = 1,
- 	FW_QUEUE_DPG_HOLD_OFF = 2,
-@@ -323,6 +327,9 @@ struct amdgpu_vcn4_fw_shared {
- 	struct amdgpu_fw_shared_unified_queue_struct sq;
- 	uint8_t pad1[8];
- 	struct amdgpu_fw_shared_fw_logging fw_log;
-+	uint8_t pad2[20];
-+	uint32_t pad3[13];
-+	struct amdgpu_fw_shared_smu_interface_info smu_dpm_interface;
- };
- 
- struct amdgpu_vcn_fwlog {
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -132,6 +132,10 @@ static int vcn_v4_0_sw_init(void *handle
- 		fw_shared->present_flag_0 = cpu_to_le32(AMDGPU_FW_SHARED_FLAG_0_UNIFIED_QUEUE);
- 		fw_shared->sq.is_enabled = 1;
- 
-+		fw_shared->present_flag_0 |= cpu_to_le32(AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG);
-+		fw_shared->smu_dpm_interface.smu_interface_type = (adev->flags & AMD_IS_APU) ?
-+			AMDGPU_VCN_SMU_DPM_INTERFACE_APU : AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU;
-+
- 		if (amdgpu_vcnfw_log)
- 			amdgpu_vcn_fwlog_init(&adev->vcn.inst[i]);
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
+index cacd454ac696..c39b866e2582 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
+@@ -132,6 +132,7 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
+ 						 DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, acl_entry_cfg->key_iova))) {
+ 		dev_err(dev, "DMA mapping failed\n");
++		kfree(cmd_buff);
+ 		return -EFAULT;
  	}
+ 
+@@ -142,6 +143,7 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
+ 			 DMA_TO_DEVICE);
+ 	if (err) {
+ 		dev_err(dev, "dpsw_acl_add_entry() failed %d\n", err);
++		kfree(cmd_buff);
+ 		return err;
+ 	}
+ 
+@@ -172,6 +174,7 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
+ 						 DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, acl_entry_cfg->key_iova))) {
+ 		dev_err(dev, "DMA mapping failed\n");
++		kfree(cmd_buff);
+ 		return -EFAULT;
+ 	}
+ 
+@@ -182,6 +185,7 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
+ 			 DMA_TO_DEVICE);
+ 	if (err) {
+ 		dev_err(dev, "dpsw_acl_remove_entry() failed %d\n", err);
++		kfree(cmd_buff);
+ 		return err;
+ 	}
+ 
+-- 
+2.35.1
+
 
 
