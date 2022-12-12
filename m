@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E824D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:33:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF660C433D2;
-	Mon, 12 Dec 2022 13:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446628ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:33:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B206DC433D2;
+	Mon, 12 Dec 2022 13:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852027;
-	bh=th3bfNKi2Qpx9squelShXCs4+bhPLrfYv58AgnvCWNo=;
+	s=korg; t=1670852032;
+	bh=QMPCEwvtnD6H7yHPGtzMWvY4603SubY5iaH15NdXFF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMu5Yf5froqvEY0tuXLNGJ8F2jREeTkV4xAAMms+abJ+YvurssBSDUZxVHA50nkyx
-	 LZ0m37m54uaLBR6Gp/0UZn5kDYcClTf5jIW+2N8cjtrSrDYS/G20OPF7mEHmBTpXyy
-	 iWbrmVkcaobLsiuxuMdURcAMIsBcPJuIdrBwn7mA=
+	b=BDLaMwBnuZ0br9Y6iLzaEFEQ9beOP3PcA98nACgQyl94dlgvbikvz5wdIdEP26P8r
+	 ZruFSjm8xy7XBop4rxqtr3YC6JlmpUV4ZMKssRAoIeP5ghckSvW2f6GdXSgj994loF
+	 KD5HrbKPviyqSkCrJvWj41SaSFoj/UxS0zFvWnhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>,
-	Kamil Maziarz <kamil.maziarz@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 5.15 093/123] i40e: Disallow ip4 and ip6 l4_4_bytes
-Date: Mon, 12 Dec 2022 14:17:39 +0100
-Message-Id: <20221212130930.975969126@linuxfoundation.org>
+	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
+	Kees Cook <keescook@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 094/123] NFC: nci: Bounds check struct nfc_target arrays
+Date: Mon, 12 Dec 2022 14:17:40 +0100
+Message-Id: <20221212130931.038080581@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -38,57 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit d64aaf3f7869f915fd120763d75f11d6b116424d ]
+[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
 
-Return -EOPNOTSUPP, when user requests l4_4_bytes for raw IP4 or
-IP6 flow director filters. Flow director does not support filtering
-on l4 bytes for PCTYPEs used by IP4 and IP6 filters.
-Without this patch, user could create filters with l4_4_bytes fields,
-which did not do any filtering on L4, but only on L3 fields.
+While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
 
-Fixes: 36777d9fa24c ("i40e: check current configured input set when adding ntuple filters")
-Signed-off-by: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
-Signed-off-by: Kamil Maziarz  <kamil.maziarz@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
+
+This appears to be a legitimate lack of bounds checking in
+nci_add_new_protocol(). Add the missing checks.
+
+Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ net/nfc/nci/ntf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-index 4e3243287805..813889604ff8 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-@@ -4364,11 +4364,7 @@ static int i40e_check_fdir_input_set(struct i40e_vsi *vsi,
- 			return -EOPNOTSUPP;
+diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
+index c5eacaac41ae..8f48b1061944 100644
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -240,6 +240,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		target->sens_res = nfca_poll->sens_res;
+ 		target->sel_res = nfca_poll->sel_res;
+ 		target->nfcid1_len = nfca_poll->nfcid1_len;
++		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
++			return -EPROTO;
+ 		if (target->nfcid1_len > 0) {
+ 			memcpy(target->nfcid1, nfca_poll->nfcid1,
+ 			       target->nfcid1_len);
+@@ -248,6 +250,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
  
- 		/* First 4 bytes of L4 header */
--		if (usr_ip4_spec->l4_4_bytes == htonl(0xFFFFFFFF))
--			new_mask |= I40E_L4_SRC_MASK | I40E_L4_DST_MASK;
--		else if (!usr_ip4_spec->l4_4_bytes)
--			new_mask &= ~(I40E_L4_SRC_MASK | I40E_L4_DST_MASK);
--		else
-+		if (usr_ip4_spec->l4_4_bytes)
- 			return -EOPNOTSUPP;
+ 		target->sensb_res_len = nfcb_poll->sensb_res_len;
++		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
++			return -EPROTO;
+ 		if (target->sensb_res_len > 0) {
+ 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
+ 			       target->sensb_res_len);
+@@ -256,6 +260,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
  
- 		/* Filtering on Type of Service is not supported. */
-@@ -4407,11 +4403,7 @@ static int i40e_check_fdir_input_set(struct i40e_vsi *vsi,
- 		else
- 			return -EOPNOTSUPP;
- 
--		if (usr_ip6_spec->l4_4_bytes == htonl(0xFFFFFFFF))
--			new_mask |= I40E_L4_SRC_MASK | I40E_L4_DST_MASK;
--		else if (!usr_ip6_spec->l4_4_bytes)
--			new_mask &= ~(I40E_L4_SRC_MASK | I40E_L4_DST_MASK);
--		else
-+		if (usr_ip6_spec->l4_4_bytes)
- 			return -EOPNOTSUPP;
- 
- 		/* Filtering on Traffic class is not supported. */
+ 		target->sensf_res_len = nfcf_poll->sensf_res_len;
++		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
++			return -EPROTO;
+ 		if (target->sensf_res_len > 0) {
+ 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
+ 			       target->sensf_res_len);
 -- 
 2.35.1
 
