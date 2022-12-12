@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAC328F2
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:15:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA4CC433F0;
-	Mon, 12 Dec 2022 13:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DDD28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE00C433D2;
+	Mon, 12 Dec 2022 13:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850938;
-	bh=hbbVUuBxZcLOvbp9snt49Cupjl06xJOf/9Jo4y4WzlM=;
+	s=korg; t=1670850942;
+	bh=iw2ldqscaMLXfFMEhRPM4JPxQu23Y7mf3xeJEtbbt8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sy07MFjlYjfpbqvEs2YHZeNmqC00c1v1lDG/kQm2fyNnt1/ZSzyDBIA/6PBjViP8C
-	 /7E/GuQmzg6nwBSiE72wrJ55QTBKJtcp46fjrgOFeVFY1h3R/BXMpPFVxSEm57s0ro
-	 SfIXzAYsoQ1DLaFt4cow9c7iKO6FzBvht+2c4oyo=
+	b=h38oqPu47qp7io/aJG//QTY6v4My+V3t3j2do6ApEISozwUY1pDmjH5ZwDVnEm5FE
+	 diNKT8HPN9ZQRBEmn8Vj5WmIlzV1jbs+MOwC4niK7+ZZZdNHvS0F7IloHKwrWBu6ma
+	 Rvz0shKRSXBev/em7aZJLgs61+Cio/W685pELRoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/106] gpio: amd8111: Fix PCI device reference count leak
-Date: Mon, 12 Dec 2022 14:10:12 +0100
-Message-Id: <20221212130927.895866343@linuxfoundation.org>
+	Thomas Huth <thuth@redhat.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>
+Subject: [PATCH 5.10 052/106] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
+Date: Mon, 12 Dec 2022 14:09:55 +0100
+Message-Id: <20221212130927.129308647@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -35,54 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit 45fecdb9f658d9c82960c98240bc0770ade19aca ]
+commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+We recently experienced some weird huge time jumps in nested guests when
+rebooting them in certain cases. After adding some debug code to the epoch
+handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
+obvious that the "epdx" field (the multi-epoch extension) did not get set
+to 0xff in case the "epoch" field was negative.
+Seems like the code misses to copy the value from the epdx field from
+the guest to the shadow control block. By doing so, the weird time
+jumps are gone in our scenarios.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() after the 'out' label. Since pci_dev_put() can handle NULL
-input parameter, there is no problem for the 'Device not found' branch.
-For the normal path, add pci_dev_put() in amd_gpio_exit().
-
-Fixes: f942a7de047d ("gpio: add a driver for GPIO pins found on AMD-8111 south bridge chips")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
+Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.19+
+Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
+Message-Id: <20221123090833.292938-1-thuth@redhat.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-amd8111.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/kvm/vsie.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-amd8111.c b/drivers/gpio/gpio-amd8111.c
-index fdcebe59510d..68d95051dd0e 100644
---- a/drivers/gpio/gpio-amd8111.c
-+++ b/drivers/gpio/gpio-amd8111.c
-@@ -231,7 +231,10 @@ static int __init amd_gpio_init(void)
- 		ioport_unmap(gp.pm);
- 		goto out;
- 	}
-+	return 0;
-+
- out:
-+	pci_dev_put(pdev);
- 	return err;
- }
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -535,8 +535,10 @@ static int shadow_scb(struct kvm_vcpu *v
+ 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
+ 		scb_s->eca |= scb_o->eca & ECA_CEI;
+ 	/* Epoch Extension */
+-	if (test_kvm_facility(vcpu->kvm, 139))
++	if (test_kvm_facility(vcpu->kvm, 139)) {
+ 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
++		scb_s->epdx = scb_o->epdx;
++	}
  
-@@ -239,6 +242,7 @@ static void __exit amd_gpio_exit(void)
- {
- 	gpiochip_remove(&gp.chip);
- 	ioport_unmap(gp.pm);
-+	pci_dev_put(gp.pdev);
- }
- 
- module_init(amd_gpio_init);
--- 
-2.35.1
-
+ 	/* etoken */
+ 	if (test_kvm_facility(vcpu->kvm, 156))
 
 
