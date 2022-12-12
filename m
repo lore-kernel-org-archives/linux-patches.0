@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C00D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF11C433EF;
-	Mon, 12 Dec 2022 13:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF7D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA439C433D2;
+	Mon, 12 Dec 2022 13:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853331;
-	bh=CMf3mJoiiDYjSUMlxcs4bX65b1IFunj0Vs48ipWViO8=;
+	s=korg; t=1670853335;
+	bh=8FXUF136z2k7g9Dgw9fgEZQ/9bt95sdPn4GVO1EEXRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4pr+UHcabSG9b05wsES3bmWnwFM0dNhqOEYOVc3mfuWYmQxC+bATmrv3SyooUsLQ
-	 YitnjFynox8nHfmukGIaTkfmQc/+PaMvAnZj+HWGRp2TV6uWIJM+U8D3tQRKWGoSQ7
-	 OuC6IEtscVctbpSEyzLtzU8UqTg6TK35so+fSR1I=
+	b=sZXERmq7acwHqCzU0T7hFFj2iIodw+wYTh1aoTVDbRs8DNmzSHb7CqoddBogyou+h
+	 4l1Il4Nzfro8//sz6IIUNov6JS5yaar8D6wVCZz14LoXNHxpsJ23Tr4J8603OIrNXB
+	 bKI5/y8LAbnPqbBDbxPGrkGivdOaqEfvgXWA0GcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liu Jian <liujian56@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 25/31] net: hisilicon: Fix potential use-after-free in hisi_femac_rx()
-Date: Mon, 12 Dec 2022 14:19:43 +0100
-Message-Id: <20221212130911.380256159@linuxfoundation.org>
+Subject: [PATCH 4.9 26/31] net: hisilicon: Fix potential use-after-free in hix5hd2_rx()
+Date: Mon, 12 Dec 2022 14:19:44 +0100
+Message-Id: <20221212130911.434509378@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -37,33 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 4640177049549de1a43e9bc49265f0cdfce08cfd ]
+[ Upstream commit 433c07a13f59856e4585e89e86b7d4cc59348fab ]
 
 The skb is delivered to napi_gro_receive() which may free it, after
 calling this, dereferencing skb may trigger use-after-free.
 
-Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
+Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
 Signed-off-by: Liu Jian <liujian56@huawei.com>
-Link: https://lore.kernel.org/r/20221203094240.1240211-1-liujian56@huawei.com
+Link: https://lore.kernel.org/r/20221203094240.1240211-2-liujian56@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hisi_femac.c | 2 +-
+ drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
-index ced185962ef8..77f61167e238 100644
---- a/drivers/net/ethernet/hisilicon/hisi_femac.c
-+++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
-@@ -295,7 +295,7 @@ static int hisi_femac_rx(struct net_device *dev, int limit)
+diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+index dd24c352b200..4dc6c3e99d15 100644
+--- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
++++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+@@ -498,7 +498,7 @@ static int hix5hd2_rx(struct net_device *dev, int limit)
  		skb->protocol = eth_type_trans(skb, dev);
  		napi_gro_receive(&priv->napi, skb);
  		dev->stats.rx_packets++;
 -		dev->stats.rx_bytes += skb->len;
 +		dev->stats.rx_bytes += len;
  next:
- 		pos = (pos + 1) % rxq->num;
- 		if (rx_pkts_num >= limit)
+ 		pos = dma_ring_incr(pos, RX_DESC_NUM);
+ 	}
 -- 
 2.35.1
 
