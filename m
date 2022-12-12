@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E8328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:15:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDD4C433D2;
-	Mon, 12 Dec 2022 13:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDE928ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:15:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338F9C433EF;
+	Mon, 12 Dec 2022 13:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850901;
-	bh=ujVtRHiIASjKF+CRaYrXnontv2r32pzpDAfdShhl4xA=;
+	s=korg; t=1670850905;
+	bh=Vwp/oLq31Y5vgsBBsBLxRqVmxG2uRJU/ABT54o/FevE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cz6Tky2ndnYu31yAWqTbP3lrTzjhdlHyr+0cw0zkR/b06+O9Sn/fUmHnHxfIdpq3Q
-	 igjYr3D0ysIE7Dtad2d6Eyt9DYmqJ2o1/kNFfssdaCvOtxtIviJxmBptv3r/tzSZOJ
-	 aUD4s0FcI6uEMvlzS685QVthBUUH8Y1kXblNkiE0=
+	b=MkmI/qeHaQUDbwqUZYLniw6oHwiZB66sm+6KlDhWrlA40UM7h9Ddw5q1M1HkteSrt
+	 dygoBMuIUuikOnjIpjpFTGqE2j83IENNK9PISBbid/zKgCHWNqMFfyuixHHtiPgcm4
+	 dcadNQT5zJ0znv+0AwKxVHrBdP/UTfg9PjksBeoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	=?UTF-8?q?Leonardo=20Eug=C3=AAnio?= <lelgenio@disroot.org>
-Subject: [PATCH 5.10 051/106] Bluetooth: Fix crash when replugging CSR fake controllers
-Date: Mon, 12 Dec 2022 14:09:54 +0100
-Message-Id: <20221212130927.087149187@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Samuel Mendoza-Jonas <samjonas@amazon.com>
+Subject: [PATCH 5.10 060/106] mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
+Date: Mon, 12 Dec 2022 14:10:03 +0100
+Message-Id: <20221212130927.502830541@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -34,79 +39,172 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit b5ca338751ad4783ec8d37b5d99c3e37b7813e59 upstream.
+commit fac35ba763ed07ba93154c95ffc0c4a55023707f upstream.
 
-It seems fake CSR 5.0 clones can cause the suspend notifier to be
-registered twice causing the following kernel panic:
+On some architectures (like ARM64), it can support CONT-PTE/PMD size
+hugetlb, which means it can support not only PMD/PUD size hugetlb (2M and
+1G), but also CONT-PTE/PMD size(64K and 32M) if a 4K page size specified.
 
-[   71.986122] Call Trace:
-[   71.986124]  <TASK>
-[   71.986125]  blocking_notifier_chain_register+0x33/0x60
-[   71.986130]  hci_register_dev+0x316/0x3d0 [bluetooth 99b5497ea3d09708fa1366c1dc03288bf3cca8da]
-[   71.986154]  btusb_probe+0x979/0xd85 [btusb e1e0605a4f4c01984a4b9c8ac58c3666ae287477]
-[   71.986159]  ? __pm_runtime_set_status+0x1a9/0x300
-[   71.986162]  ? ktime_get_mono_fast_ns+0x3e/0x90
-[   71.986167]  usb_probe_interface+0xe3/0x2b0
-[   71.986171]  really_probe+0xdb/0x380
-[   71.986174]  ? pm_runtime_barrier+0x54/0x90
-[   71.986177]  __driver_probe_device+0x78/0x170
-[   71.986180]  driver_probe_device+0x1f/0x90
-[   71.986183]  __device_attach_driver+0x89/0x110
-[   71.986186]  ? driver_allows_async_probing+0x70/0x70
-[   71.986189]  bus_for_each_drv+0x8c/0xe0
-[   71.986192]  __device_attach+0xb2/0x1e0
-[   71.986195]  bus_probe_device+0x92/0xb0
-[   71.986198]  device_add+0x422/0x9a0
-[   71.986201]  ? sysfs_merge_group+0xd4/0x110
-[   71.986205]  usb_set_configuration+0x57a/0x820
-[   71.986208]  usb_generic_driver_probe+0x4f/0x70
-[   71.986211]  usb_probe_device+0x3a/0x110
-[   71.986213]  really_probe+0xdb/0x380
-[   71.986216]  ? pm_runtime_barrier+0x54/0x90
-[   71.986219]  __driver_probe_device+0x78/0x170
-[   71.986221]  driver_probe_device+0x1f/0x90
-[   71.986224]  __device_attach_driver+0x89/0x110
-[   71.986227]  ? driver_allows_async_probing+0x70/0x70
-[   71.986230]  bus_for_each_drv+0x8c/0xe0
-[   71.986232]  __device_attach+0xb2/0x1e0
-[   71.986235]  bus_probe_device+0x92/0xb0
-[   71.986237]  device_add+0x422/0x9a0
-[   71.986239]  ? _dev_info+0x7d/0x98
-[   71.986242]  ? blake2s_update+0x4c/0xc0
-[   71.986246]  usb_new_device.cold+0x148/0x36d
-[   71.986250]  hub_event+0xa8a/0x1910
-[   71.986255]  process_one_work+0x1c4/0x380
-[   71.986259]  worker_thread+0x51/0x390
-[   71.986262]  ? rescuer_thread+0x3b0/0x3b0
-[   71.986264]  kthread+0xdb/0x110
-[   71.986266]  ? kthread_complete_and_exit+0x20/0x20
-[   71.986268]  ret_from_fork+0x1f/0x30
-[   71.986273]  </TASK>
-[   71.986274] ---[ end trace 0000000000000000 ]---
-[   71.986284] btusb: probe of 2-1.6:1.0 failed with error -17
+So when looking up a CONT-PTE size hugetlb page by follow_page(), it will
+use pte_offset_map_lock() to get the pte entry lock for the CONT-PTE size
+hugetlb in follow_page_pte().  However this pte entry lock is incorrect
+for the CONT-PTE size hugetlb, since we should use huge_pte_lock() to get
+the correct lock, which is mm->page_table_lock.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216683
-Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Leonardo Eugênio <lelgenio@disroot.org>
+That means the pte entry of the CONT-PTE size hugetlb under current pte
+lock is unstable in follow_page_pte(), we can continue to migrate or
+poison the pte entry of the CONT-PTE size hugetlb, which can cause some
+potential race issues, even though they are under the 'pte lock'.
+
+For example, suppose thread A is trying to look up a CONT-PTE size hugetlb
+page by move_pages() syscall under the lock, however antoher thread B can
+migrate the CONT-PTE hugetlb page at the same time, which will cause
+thread A to get an incorrect page, if thread A also wants to do page
+migration, then data inconsistency error occurs.
+
+Moreover we have the same issue for CONT-PMD size hugetlb in
+follow_huge_pmd().
+
+To fix above issues, rename the follow_huge_pmd() as follow_huge_pmd_pte()
+to handle PMD and PTE level size hugetlb, which uses huge_pte_lock() to
+get the correct pte entry lock to make the pte entry stable.
+
+Mike said:
+
+Support for CONT_PMD/_PTE was added with bb9dd3df8ee9 ("arm64: hugetlb:
+refactor find_num_contig()").  Patch series "Support for contiguous pte
+hugepages", v4.  However, I do not believe these code paths were
+executed until migration support was added with 5480280d3f2d ("arm64/mm:
+enable HugeTLB migration for contiguous bit HugeTLB pages") I would go
+with 5480280d3f2d for the Fixes: targe.
+
+Link: https://lkml.kernel.org/r/635f43bdd85ac2615a58405da82b4d33c6e5eb05.1662017562.git.baolin.wang@linux.alibaba.com
+Fixes: 5480280d3f2d ("arm64/mm: enable HugeTLB migration for contiguous bit HugeTLB pages")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Suggested-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h |    8 ++++----
+ mm/gup.c                |   14 +++++++++++++-
+ mm/hugetlb.c            |   27 +++++++++++++--------------
+ 3 files changed, 30 insertions(+), 19 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3799,7 +3799,8 @@ int hci_register_dev(struct hci_dev *hde
- 	hci_sock_dev_event(hdev, HCI_DEV_REG);
- 	hci_dev_hold(hdev);
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -174,8 +174,8 @@ struct page *follow_huge_addr(struct mm_
+ struct page *follow_huge_pd(struct vm_area_struct *vma,
+ 			    unsigned long address, hugepd_t hpd,
+ 			    int flags, int pdshift);
+-struct page *follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+-				pmd_t *pmd, int flags);
++struct page *follow_huge_pmd_pte(struct vm_area_struct *vma, unsigned long address,
++				 int flags);
+ struct page *follow_huge_pud(struct mm_struct *mm, unsigned long address,
+ 				pud_t *pud, int flags);
+ struct page *follow_huge_pgd(struct mm_struct *mm, unsigned long address,
+@@ -261,8 +261,8 @@ static inline struct page *follow_huge_p
+ 	return NULL;
+ }
  
--	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
-+	if (!hdev->suspend_notifier.notifier_call &&
-+	    !test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
- 		hdev->suspend_notifier.notifier_call = hci_suspend_notifier;
- 		error = register_pm_notifier(&hdev->suspend_notifier);
- 		if (error)
+-static inline struct page *follow_huge_pmd(struct mm_struct *mm,
+-				unsigned long address, pmd_t *pmd, int flags)
++static inline struct page *follow_huge_pmd_pte(struct vm_area_struct *vma,
++				unsigned long address, int flags)
+ {
+ 	return NULL;
+ }
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -405,6 +405,18 @@ static struct page *follow_page_pte(stru
+ 	if (WARN_ON_ONCE((flags & (FOLL_PIN | FOLL_GET)) ==
+ 			 (FOLL_PIN | FOLL_GET)))
+ 		return ERR_PTR(-EINVAL);
++
++	/*
++	 * Considering PTE level hugetlb, like continuous-PTE hugetlb on
++	 * ARM64 architecture.
++	 */
++	if (is_vm_hugetlb_page(vma)) {
++		page = follow_huge_pmd_pte(vma, address, flags);
++		if (page)
++			return page;
++		return no_page_table(vma, flags);
++	}
++
+ retry:
+ 	if (unlikely(pmd_bad(*pmd)))
+ 		return no_page_table(vma, flags);
+@@ -560,7 +572,7 @@ static struct page *follow_pmd_mask(stru
+ 	if (pmd_none(pmdval))
+ 		return no_page_table(vma, flags);
+ 	if (pmd_huge(pmdval) && is_vm_hugetlb_page(vma)) {
+-		page = follow_huge_pmd(mm, address, pmd, flags);
++		page = follow_huge_pmd_pte(vma, address, flags);
+ 		if (page)
+ 			return page;
+ 		return no_page_table(vma, flags);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5585,12 +5585,13 @@ follow_huge_pd(struct vm_area_struct *vm
+ }
+ 
+ struct page * __weak
+-follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+-		pmd_t *pmd, int flags)
++follow_huge_pmd_pte(struct vm_area_struct *vma, unsigned long address, int flags)
+ {
++	struct hstate *h = hstate_vma(vma);
++	struct mm_struct *mm = vma->vm_mm;
+ 	struct page *page = NULL;
+ 	spinlock_t *ptl;
+-	pte_t pte;
++	pte_t *ptep, pte;
+ 
+ 	/* FOLL_GET and FOLL_PIN are mutually exclusive. */
+ 	if (WARN_ON_ONCE((flags & (FOLL_PIN | FOLL_GET)) ==
+@@ -5598,17 +5599,15 @@ follow_huge_pmd(struct mm_struct *mm, un
+ 		return NULL;
+ 
+ retry:
+-	ptl = pmd_lockptr(mm, pmd);
+-	spin_lock(ptl);
+-	/*
+-	 * make sure that the address range covered by this pmd is not
+-	 * unmapped from other threads.
+-	 */
+-	if (!pmd_huge(*pmd))
+-		goto out;
+-	pte = huge_ptep_get((pte_t *)pmd);
++	ptep = huge_pte_offset(mm, address, huge_page_size(h));
++	if (!ptep)
++		return NULL;
++
++	ptl = huge_pte_lock(h, mm, ptep);
++	pte = huge_ptep_get(ptep);
+ 	if (pte_present(pte)) {
+-		page = pmd_page(*pmd) + ((address & ~PMD_MASK) >> PAGE_SHIFT);
++		page = pte_page(pte) +
++			((address & ~huge_page_mask(h)) >> PAGE_SHIFT);
+ 		/*
+ 		 * try_grab_page() should always succeed here, because: a) we
+ 		 * hold the pmd (ptl) lock, and b) we've just checked that the
+@@ -5624,7 +5623,7 @@ retry:
+ 	} else {
+ 		if (is_hugetlb_entry_migration(pte)) {
+ 			spin_unlock(ptl);
+-			__migration_entry_wait(mm, (pte_t *)pmd, ptl);
++			__migration_entry_wait(mm, ptep, ptl);
+ 			goto retry;
+ 		}
+ 		/*
 
 
