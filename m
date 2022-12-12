@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA43A28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:35:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955B9C433EF;
-	Mon, 12 Dec 2022 13:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAAC28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F017C433D2;
+	Mon, 12 Dec 2022 13:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852141;
-	bh=r6ABrTExSj7XORA8ugle5D+yV4etWitLOUNUwkKrs/Q=;
+	s=korg; t=1670852146;
+	bh=6Q/ceYq2bcnZr3s3d6tLNoBiaxGV2h9u/VNlpMX+ekw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0uMzXF2tj+sQP2if05ptY0palRA+b4NgWF25OHWQk7wIrzSurqYLha4OReS/zgb8
-	 PhREwYzflazSgPpnDWfa1HFKnFoBIGlj/IWQ/1tZ83NC1OI4TwZJIwYEsBjAFr2jkf
-	 eGm+g2vdweFdo12N4WfsY8zBhB0alvJl9na51qnc=
+	b=QCDPkKUZbefkAf1rYSsthGayUr+EN/QqRuGRRVSLfsojJjDZANGldk6PiJHONNNH3
+	 QavYOi70atjYUFDH2Y0hUgPVYOYuMTKiQvqWK/2M+O1Q0IOLxP20oqnBsTlVTV9T7z
+	 dS1nYuVJc91JBfguS67Lk93MoYUpLuyTkHtVoJ5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Arun R Murthy <arun.r.murthy@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 002/157] drm/i915: Remove non-existent pipes from bigjoiner pipe mask
-Date: Mon, 12 Dec 2022 14:15:50 +0100
-Message-Id: <20221212130934.474226763@linuxfoundation.org>
+Subject: [PATCH 6.0 020/157] ARM: dts: rockchip: disable arm_global_timer on rk3066 and rk3188
+Date: Mon, 12 Dec 2022 14:16:08 +0100
+Message-Id: <20221212130935.296560236@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,64 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit 3c1ea6a5f4f55d4e376675dda16945eb5d9bb4de ]
+[ Upstream commit da74858a475782a3f16470907814c8cc5950ad68 ]
 
-bigjoiner_pipes() doesn't consider that:
-- RKL only has three pipes
-- some pipes may be fused off
+The clock source and the sched_clock provided by the arm_global_timer
+on Rockchip rk3066a/rk3188 are quite unstable because their rates
+depend on the CPU frequency.
 
-This means that intel_atomic_check_bigjoiner() won't reject
-all configurations that would need a non-existent pipe.
-Instead we just keep on rolling witout actually having
-reserved the slave pipe we need.
+Recent changes to the arm_global_timer driver makes it impossible to use.
 
-It's possible that we don't outright explode anywhere due to
-this since eg. for_each_intel_crtc_in_pipe_mask() will only
-walk the crtcs we've registered even though the passed in
-pipe_mask asks for more of them. But clearly the thing won't
-do what is expected of it when the required pipes are not
-present.
+On the other side, the arm_global_timer has a higher rating than the
+ROCKCHIP_TIMER, it will be selected by default by the time framework
+while we want to use the stable Rockchip clock source.
 
-Fix the problem by consulting the device info pipe_mask already
-in bigjoiner_pipes().
+Keep the arm_global_timer disabled in order to have the
+DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221118185201.10469-1-ville.syrjala@linux.intel.com
-Reviewed-by: Arun R Murthy <arun.r.murthy@intel.com>
-(cherry picked from commit f1c87a94a1087a26f41007ee83264033007421b5)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/f275ca8d-fd0a-26e5-b978-b7f3df815e0a@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/rk3188.dtsi | 1 -
+ arch/arm/boot/dts/rk3xxx.dtsi | 7 +++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index fc5d94862ef3..d0f20bd0e51a 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -3717,12 +3717,16 @@ static bool ilk_get_pipe_config(struct intel_crtc *crtc,
+diff --git a/arch/arm/boot/dts/rk3188.dtsi b/arch/arm/boot/dts/rk3188.dtsi
+index b8f34bef0efa..44b54af0bbf9 100644
+--- a/arch/arm/boot/dts/rk3188.dtsi
++++ b/arch/arm/boot/dts/rk3188.dtsi
+@@ -607,7 +607,6 @@
  
- static u8 bigjoiner_pipes(struct drm_i915_private *i915)
- {
-+	u8 pipes;
-+
- 	if (DISPLAY_VER(i915) >= 12)
--		return BIT(PIPE_A) | BIT(PIPE_B) | BIT(PIPE_C) | BIT(PIPE_D);
-+		pipes = BIT(PIPE_A) | BIT(PIPE_B) | BIT(PIPE_C) | BIT(PIPE_D);
- 	else if (DISPLAY_VER(i915) >= 11)
--		return BIT(PIPE_B) | BIT(PIPE_C);
-+		pipes = BIT(PIPE_B) | BIT(PIPE_C);
- 	else
--		return 0;
-+		pipes = 0;
-+
-+	return pipes & INTEL_INFO(i915)->display.pipe_mask;
- }
+ &global_timer {
+ 	interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_EDGE_RISING)>;
+-	status = "disabled";
+ };
  
- static bool transcoder_ddi_func_is_enabled(struct drm_i915_private *dev_priv,
+ &local_timer {
+diff --git a/arch/arm/boot/dts/rk3xxx.dtsi b/arch/arm/boot/dts/rk3xxx.dtsi
+index 616a828e0c6e..17e89d30de78 100644
+--- a/arch/arm/boot/dts/rk3xxx.dtsi
++++ b/arch/arm/boot/dts/rk3xxx.dtsi
+@@ -76,6 +76,13 @@
+ 		reg = <0x1013c200 0x20>;
+ 		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+ 		clocks = <&cru CORE_PERI>;
++		status = "disabled";
++		/* The clock source and the sched_clock provided by the arm_global_timer
++		 * on Rockchip rk3066a/rk3188 are quite unstable because their rates
++		 * depend on the CPU frequency.
++		 * Keep the arm_global_timer disabled in order to have the
++		 * DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
++		 */
+ 	};
+ 
+ 	local_timer: local-timer@1013c600 {
 -- 
 2.35.1
 
