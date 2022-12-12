@@ -1,54 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED622585
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:12:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04415C433EF;
-	Mon, 12 Dec 2022 13:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A4E2585
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FA5C433F0;
+	Mon, 12 Dec 2022 13:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850756;
-	bh=oWC/Q9RHsgnXL57RJrWazyvwtSwmc8YjZ0itsLFoj/M=;
+	s=korg; t=1670850761;
+	bh=63jcb79OZCqmZ6G4sBFSNNUkr9xSSzIbvnThpBAEVgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UnQ2qlycdwx+N9INEl7xo6fF2Fe2n48TMf4cH8O2xb+FDPCc7FcOfBTq04z4sW/PL
-	 ZsQgH6Xes8WDcaxFrhKYiI3SKtytpRfhyg0J44G/xPfSQHL4yzyBjrhoPlxrd7jl8J
-	 p0k9Ubu9rTOREOufeWBoIa8JCF+Ty8jyMU6Ei2+w=
+	b=iG7ee3ZmnfOhPYOu8sCTU1sJ7nlIjMz2pzEmFT/sz8/ei833tea+O6CvkvzuDtlm0
+	 NPFejQJVSzZ1yMVxP39fDabKy34dDzMmo514nBWSolGG0GlOpAx/M9OQlCHgimkuXz
+	 q+NfgGw/l8Hdjc2sYpu4s3FiIXUD4M2lXtJip+f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Shi <alex.shi@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Alexander Duyck <alexander.duyck@gmail.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Andrey Ryabinin <aryabinin@virtuozzo.com>,
-	"Chen, Rong A" <rong.a.chen@intel.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Jann Horn <jannh@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	"Kirill A. Shutemov" <kirill@shutemov.name>,
-	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mika.penttila@nextfour.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Tejun Heo <tj@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vladimir Davydov <vdavydov.dev@gmail.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Yang Shi <yang.shi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/106] mm/mlock: remove __munlock_isolate_lru_page()
-Date: Mon, 12 Dec 2022 14:09:05 +0100
-Message-Id: <20221212130924.973976950@linuxfoundation.org>
+Subject: [PATCH 5.10 020/106] btrfs: send: avoid unaligned encoded writes when attempting to clone range
+Date: Mon, 12 Dec 2022 14:09:23 +0100
+Message-Id: <20221212130925.746820821@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -62,99 +36,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Shi <alex.shi@linux.alibaba.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 13805a88a9bd3fb37f33dd8972d904de62796f3d ]
+[ Upstream commit a11452a3709e217492798cf3686ac2cc8eb3fb51 ]
 
-__munlock_isolate_lru_page() only has one caller, remove it to clean up
-and simplify code.
+When trying to see if we can clone a file range, there are cases where we
+end up sending two write operations in case the inode from the source root
+has an i_size that is not sector size aligned and the length from the
+current offset to its i_size is less than the remaining length we are
+trying to clone.
 
-Link: https://lkml.kernel.org/r/1604566549-62481-14-git-send-email-alex.shi@linux.alibaba.com
-Signed-off-by: Alex Shi <alex.shi@linux.alibaba.com>
-Acked-by: Hugh Dickins <hughd@google.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Alexander Duyck <alexander.duyck@gmail.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
-Cc: "Chen, Rong A" <rong.a.chen@intel.com>
-Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Kirill A. Shutemov <kirill@shutemov.name>
-Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mika Penttilä <mika.penttila@nextfour.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: Yang Shi <yang.shi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 829ae0f81ce0 ("mm: migrate: fix THP's mapcount on isolation")
+Issuing two write operations when we could instead issue a single write
+operation is not incorrect. However it is not optimal, specially if the
+extents are compressed and the flag BTRFS_SEND_FLAG_COMPRESSED was passed
+to the send ioctl. In that case we can end up sending an encoded write
+with an offset that is not sector size aligned, which makes the receiver
+fallback to decompressing the data and writing it using regular buffered
+IO (so re-compressing the data in case the fs is mounted with compression
+enabled), because encoded writes fail with -EINVAL when an offset is not
+sector size aligned.
+
+The following example, which triggered a bug in the receiver code for the
+fallback logic of decompressing + regular buffer IO and is fixed by the
+patchset referred in a Link at the bottom of this changelog, is an example
+where we have the non-optimal behaviour due to an unaligned encoded write:
+
+   $ cat test.sh
+   #!/bin/bash
+
+   DEV=/dev/sdj
+   MNT=/mnt/sdj
+
+   mkfs.btrfs -f $DEV > /dev/null
+   mount -o compress $DEV $MNT
+
+   # File foo has a size of 33K, not aligned to the sector size.
+   xfs_io -f -c "pwrite -S 0xab 0 33K" $MNT/foo
+
+   xfs_io -f -c "pwrite -S 0xcd 0 64K" $MNT/bar
+
+   # Now clone the first 32K of file bar into foo at offset 0.
+   xfs_io -c "reflink $MNT/bar 0 0 32K" $MNT/foo
+
+   # Snapshot the default subvolume and create a full send stream (v2).
+   btrfs subvolume snapshot -r $MNT $MNT/snap
+
+   btrfs send --compressed-data -f /tmp/test.send $MNT/snap
+
+   echo -e "\nFile bar in the original filesystem:"
+   od -A d -t x1 $MNT/snap/bar
+
+   umount $MNT
+   mkfs.btrfs -f $DEV > /dev/null
+   mount $DEV $MNT
+
+   echo -e "\nReceiving stream in a new filesystem..."
+   btrfs receive -f /tmp/test.send $MNT
+
+   echo -e "\nFile bar in the new filesystem:"
+   od -A d -t x1 $MNT/snap/bar
+
+   umount $MNT
+
+Before this patch, the send stream included one regular write and one
+encoded write for file 'bar', with the later being not sector size aligned
+and causing the receiver to fallback to decompression + buffered writes.
+The output of the btrfs receive command in verbose mode (-vvv):
+
+   (...)
+   mkfile o258-7-0
+   rename o258-7-0 -> bar
+   utimes
+   clone bar - source=foo source offset=0 offset=0 length=32768
+   write bar - offset=32768 length=1024
+   encoded_write bar - offset=33792, len=4096, unencoded_offset=33792, unencoded_file_len=31744, unencoded_len=65536, compression=1, encryption=0
+   encoded_write bar - falling back to decompress and write due to errno 22 ("Invalid argument")
+   (...)
+
+This patch avoids the regular write followed by an unaligned encoded write
+so that we end up sending a single encoded write that is aligned. So after
+this patch the stream content is (output of btrfs receive -vvv):
+
+   (...)
+   mkfile o258-7-0
+   rename o258-7-0 -> bar
+   utimes
+   clone bar - source=foo source offset=0 offset=0 length=32768
+   encoded_write bar - offset=32768, len=4096, unencoded_offset=32768, unencoded_file_len=32768, unencoded_len=65536, compression=1, encryption=0
+   (...)
+
+So we get more optimal behaviour and avoid the silent data loss bug in
+versions of btrfs-progs affected by the bug referred by the Link tag
+below (btrfs-progs v5.19, v5.19.1, v6.0 and v6.0.1).
+
+Link: https://lore.kernel.org/linux-btrfs/cover.1668529099.git.fdmanana@suse.com/
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mlock.c | 31 +++++++++----------------------
- 1 file changed, 9 insertions(+), 22 deletions(-)
+ fs/btrfs/send.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/mm/mlock.c b/mm/mlock.c
-index 796c726a0407..d487aa864e86 100644
---- a/mm/mlock.c
-+++ b/mm/mlock.c
-@@ -105,26 +105,6 @@ void mlock_vma_page(struct page *page)
- 	}
- }
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 6b80dee17f49..4a6ba0997e39 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -5398,6 +5398,7 @@ static int clone_range(struct send_ctx *sctx,
+ 		u64 ext_len;
+ 		u64 clone_len;
+ 		u64 clone_data_offset;
++		bool crossed_src_i_size = false;
  
--/*
-- * Isolate a page from LRU with optional get_page() pin.
-- * Assumes lru_lock already held and page already pinned.
-- */
--static bool __munlock_isolate_lru_page(struct page *page, bool getpage)
--{
--	if (PageLRU(page)) {
--		struct lruvec *lruvec;
--
--		lruvec = mem_cgroup_page_lruvec(page, page_pgdat(page));
--		if (getpage)
--			get_page(page);
--		ClearPageLRU(page);
--		del_page_from_lru_list(page, lruvec, page_lru(page));
--		return true;
--	}
--
--	return false;
--}
--
- /*
-  * Finish munlock after successful page isolation
-  *
-@@ -296,9 +276,16 @@ static void __munlock_pagevec(struct pagevec *pvec, struct zone *zone)
- 			 * We already have pin from follow_page_mask()
- 			 * so we can spare the get_page() here.
- 			 */
--			if (__munlock_isolate_lru_page(page, false))
-+			if (PageLRU(page)) {
-+				struct lruvec *lruvec;
-+
-+				ClearPageLRU(page);
-+				lruvec = mem_cgroup_page_lruvec(page,
-+							page_pgdat(page));
-+				del_page_from_lru_list(page, lruvec,
-+							page_lru(page));
- 				continue;
--			else
-+			} else
- 				__munlock_isolation_failed(page);
+ 		if (slot >= btrfs_header_nritems(leaf)) {
+ 			ret = btrfs_next_leaf(clone_root->root, path);
+@@ -5454,8 +5455,10 @@ static int clone_range(struct send_ctx *sctx,
+ 		if (key.offset >= clone_src_i_size)
+ 			break;
+ 
+-		if (key.offset + ext_len > clone_src_i_size)
++		if (key.offset + ext_len > clone_src_i_size) {
+ 			ext_len = clone_src_i_size - key.offset;
++			crossed_src_i_size = true;
++		}
+ 
+ 		clone_data_offset = btrfs_file_extent_offset(leaf, ei);
+ 		if (btrfs_file_extent_disk_bytenr(leaf, ei) == disk_byte) {
+@@ -5515,6 +5518,25 @@ static int clone_range(struct send_ctx *sctx,
+ 				ret = send_clone(sctx, offset, clone_len,
+ 						 clone_root);
+ 			}
++		} else if (crossed_src_i_size && clone_len < len) {
++			/*
++			 * If we are at i_size of the clone source inode and we
++			 * can not clone from it, terminate the loop. This is
++			 * to avoid sending two write operations, one with a
++			 * length matching clone_len and the final one after
++			 * this loop with a length of len - clone_len.
++			 *
++			 * When using encoded writes (BTRFS_SEND_FLAG_COMPRESSED
++			 * was passed to the send ioctl), this helps avoid
++			 * sending an encoded write for an offset that is not
++			 * sector size aligned, in case the i_size of the source
++			 * inode is not sector size aligned. That will make the
++			 * receiver fallback to decompression of the data and
++			 * writing it using regular buffered IO, therefore while
++			 * not incorrect, it's not optimal due decompression and
++			 * possible re-compression at the receiver.
++			 */
++			break;
  		} else {
- 			delta_munlocked++;
+ 			ret = send_extent_data(sctx, offset, clone_len);
+ 		}
 -- 
 2.35.1
 
