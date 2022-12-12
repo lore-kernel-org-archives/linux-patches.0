@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6384F28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:38:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B180C433AC;
-	Mon, 12 Dec 2022 13:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C6828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3F4C433EF;
+	Mon, 12 Dec 2022 13:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852300;
-	bh=LSTYAsJ2so29faNAUcrOjlu25F3jmu915dB1CHTM4wM=;
+	s=korg; t=1670852304;
+	bh=pOCHCiYSjZiGlGXCgCR6tGT5TX8Z0xcSfliAYwREkcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tRkoqWGHOn4bN5tUfnGDoF+ZMNL3YeKwaIPnLexZqDQ0ga7Z+A9h359H6DoO7wA4
-	 V3Twssa63vKQ1LxqkgMBmu3amBIuc0D9HYCJs+L7XyRlwgNLDjs9xvlxcMWxPUKmaz
-	 BIPKi2JNKyAQL2+e78/YFhF11AUOVKMGYmXy8xKg=
+	b=wyZJxZe7YyfGdg6VScV8nG13x9SmRIQ6DqswMuh3aI84JkQr93yp25sS/fcdyqBpK
+	 Rr+OEAJ3lJF1PrXr+sgSw/QhiX5f3Lp5lT3x1wdmxS3gCbZWQyED5PiwHbWTrEf/5S
+	 08wZEdgvl7Gqa5NqSUutqcLBsOzJJunlpPyXX1nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Daire Byrne <daire.byrne@gmail.com>,
+	Dave Wysochanski <dwysocha@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Daire Byrne <daire@dneg.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 053/157] media: videobuf2-core: take mmap_lock in vb2_get_unmapped_area()
-Date: Mon, 12 Dec 2022 14:16:41 +0100
-Message-Id: <20221212130936.688714810@linuxfoundation.org>
+Subject: [PATCH 6.0 054/157] fscache: Fix oops due to race with cookie_lru and use_cookie
+Date: Mon, 12 Dec 2022 14:16:42 +0100
+Message-Id: <20221212130936.729610218@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -38,263 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Dave Wysochanski <dwysocha@redhat.com>
 
-[ Upstream commit 098e5edc5d048a8df8691fd9fde895af100be42b ]
+[ Upstream commit b5b52de3214a29911f949459a79f6640969b5487 ]
 
-While vb2_mmap took the mmap_lock mutex, vb2_get_unmapped_area didn't.
-Add this.
+If a cookie expires from the LRU and the LRU_DISCARD flag is set, but
+the state machine has not run yet, it's possible another thread can call
+fscache_use_cookie and begin to use it.
 
-Also take this opportunity to move the 'q->memory != VB2_MEMORY_MMAP'
-check and vb2_fileio_is_active() check into __find_plane_by_offset() so
-both vb2_mmap and vb2_get_unmapped_area do the same checks.
+When the cookie_worker finally runs, it will see the LRU_DISCARD flag
+set, transition the cookie->state to LRU_DISCARDING, which will then
+withdraw the cookie.  Once the cookie is withdrawn the object is removed
+the below oops will occur because the object associated with the cookie
+is now NULL.
 
-Since q->memory is checked while mmap_lock is held, also take that lock
-in reqbufs and create_bufs when it is set, and set it back to
-MEMORY_UNKNOWN on error.
+Fix the oops by clearing the LRU_DISCARD bit if another thread uses the
+cookie before the cookie_worker runs.
 
-Fixes: f035eb4e976e ("[media] videobuf2: fix lockdep warning")
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Tomasz Figa <tfiga@chromium.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000008
+  ...
+  CPU: 31 PID: 44773 Comm: kworker/u130:1 Tainted: G     E    6.0.0-5.dneg.x86_64 #1
+  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 08/26/2022
+  Workqueue: events_unbound netfs_rreq_write_to_cache_work [netfs]
+  RIP: 0010:cachefiles_prepare_write+0x28/0x90 [cachefiles]
+  ...
+  Call Trace:
+    netfs_rreq_write_to_cache_work+0x11c/0x320 [netfs]
+    process_one_work+0x217/0x3e0
+    worker_thread+0x4a/0x3b0
+    kthread+0xd6/0x100
+
+Fixes: 12bb21a29c19 ("fscache: Implement cookie user counting and resource pinning")
+Reported-by: Daire Byrne <daire.byrne@gmail.com>
+Signed-off-by: Dave Wysochanski <dwysocha@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: Daire Byrne <daire@dneg.com>
+Link: https://lore.kernel.org/r/20221117115023.1350181-1-dwysocha@redhat.com/ # v1
+Link: https://lore.kernel.org/r/20221117142915.1366990-1-dwysocha@redhat.com/ # v2
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/common/videobuf2/videobuf2-core.c   | 102 +++++++++++++-----
- 1 file changed, 73 insertions(+), 29 deletions(-)
+ fs/fscache/cookie.c            | 8 ++++++++
+ include/trace/events/fscache.h | 2 ++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-index b203c1e26353..4eac35c4ea3b 100644
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -813,7 +813,13 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
- 	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
- 	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
-+	/*
-+	 * Set this now to ensure that drivers see the correct q->memory value
-+	 * in the queue_setup op.
-+	 */
-+	mutex_lock(&q->mmap_lock);
- 	q->memory = memory;
-+	mutex_unlock(&q->mmap_lock);
- 	set_queue_coherency(q, non_coherent_mem);
- 
- 	/*
-@@ -823,22 +829,27 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	ret = call_qop(q, queue_setup, q, &num_buffers, &num_planes,
- 		       plane_sizes, q->alloc_devs);
- 	if (ret)
--		return ret;
-+		goto error;
- 
- 	/* Check that driver has set sane values */
--	if (WARN_ON(!num_planes))
--		return -EINVAL;
-+	if (WARN_ON(!num_planes)) {
-+		ret = -EINVAL;
-+		goto error;
-+	}
- 
- 	for (i = 0; i < num_planes; i++)
--		if (WARN_ON(!plane_sizes[i]))
--			return -EINVAL;
-+		if (WARN_ON(!plane_sizes[i])) {
-+			ret = -EINVAL;
-+			goto error;
-+		}
- 
- 	/* Finally, allocate buffers and video memory */
- 	allocated_buffers =
- 		__vb2_queue_alloc(q, memory, num_buffers, num_planes, plane_sizes);
- 	if (allocated_buffers == 0) {
- 		dprintk(q, 1, "memory allocation failed\n");
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto error;
- 	}
- 
- 	/*
-@@ -879,7 +890,8 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	if (ret < 0) {
- 		/*
- 		 * Note: __vb2_queue_free() will subtract 'allocated_buffers'
--		 * from q->num_buffers.
-+		 * from q->num_buffers and it will reset q->memory to
-+		 * VB2_MEMORY_UNKNOWN.
- 		 */
- 		__vb2_queue_free(q, allocated_buffers);
- 		mutex_unlock(&q->mmap_lock);
-@@ -895,6 +907,12 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	q->waiting_for_buffers = !q->is_output;
- 
- 	return 0;
-+
-+error:
-+	mutex_lock(&q->mmap_lock);
-+	q->memory = VB2_MEMORY_UNKNOWN;
-+	mutex_unlock(&q->mmap_lock);
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(vb2_core_reqbufs);
- 
-@@ -906,6 +924,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 	unsigned int num_planes = 0, num_buffers, allocated_buffers;
- 	unsigned plane_sizes[VB2_MAX_PLANES] = { };
- 	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
-+	bool no_previous_buffers = !q->num_buffers;
- 	int ret;
- 
- 	if (q->num_buffers == VB2_MAX_FRAME) {
-@@ -913,13 +932,19 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 		return -ENOBUFS;
- 	}
- 
--	if (!q->num_buffers) {
-+	if (no_previous_buffers) {
- 		if (q->waiting_in_dqbuf && *count) {
- 			dprintk(q, 1, "another dup()ped fd is waiting for a buffer\n");
- 			return -EBUSY;
+diff --git a/fs/fscache/cookie.c b/fs/fscache/cookie.c
+index 451d8a077e12..bce2492186d0 100644
+--- a/fs/fscache/cookie.c
++++ b/fs/fscache/cookie.c
+@@ -605,6 +605,14 @@ void __fscache_use_cookie(struct fscache_cookie *cookie, bool will_modify)
+ 			set_bit(FSCACHE_COOKIE_DO_PREP_TO_WRITE, &cookie->flags);
+ 			queue = true;
  		}
- 		memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
 +		/*
-+		 * Set this now to ensure that drivers see the correct q->memory
-+		 * value in the queue_setup op.
++		 * We could race with cookie_lru which may set LRU_DISCARD bit
++		 * but has yet to run the cookie state machine.  If this happens
++		 * and another thread tries to use the cookie, clear LRU_DISCARD
++		 * so we don't end up withdrawing the cookie while in use.
 +		 */
-+		mutex_lock(&q->mmap_lock);
- 		q->memory = memory;
-+		mutex_unlock(&q->mmap_lock);
- 		q->waiting_for_buffers = !q->is_output;
- 		set_queue_coherency(q, non_coherent_mem);
- 	} else {
-@@ -945,14 +970,15 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 	ret = call_qop(q, queue_setup, q, &num_buffers,
- 		       &num_planes, plane_sizes, q->alloc_devs);
- 	if (ret)
--		return ret;
-+		goto error;
++		if (test_and_clear_bit(FSCACHE_COOKIE_DO_LRU_DISCARD, &cookie->flags))
++			fscache_see_cookie(cookie, fscache_cookie_see_lru_discard_clear);
+ 		break;
  
- 	/* Finally, allocate buffers and video memory */
- 	allocated_buffers = __vb2_queue_alloc(q, memory, num_buffers,
- 				num_planes, plane_sizes);
- 	if (allocated_buffers == 0) {
- 		dprintk(q, 1, "memory allocation failed\n");
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto error;
- 	}
- 
- 	/*
-@@ -983,7 +1009,8 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 	if (ret < 0) {
- 		/*
- 		 * Note: __vb2_queue_free() will subtract 'allocated_buffers'
--		 * from q->num_buffers.
-+		 * from q->num_buffers and it will reset q->memory to
-+		 * VB2_MEMORY_UNKNOWN.
- 		 */
- 		__vb2_queue_free(q, allocated_buffers);
- 		mutex_unlock(&q->mmap_lock);
-@@ -998,6 +1025,14 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 	*count = allocated_buffers;
- 
- 	return 0;
-+
-+error:
-+	if (no_previous_buffers) {
-+		mutex_lock(&q->mmap_lock);
-+		q->memory = VB2_MEMORY_UNKNOWN;
-+		mutex_unlock(&q->mmap_lock);
-+	}
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(vb2_core_create_bufs);
- 
-@@ -2164,6 +2199,22 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long off,
- 	struct vb2_buffer *vb;
- 	unsigned int buffer, plane;
- 
-+	/*
-+	 * Sanity checks to ensure the lock is held, MEMORY_MMAP is
-+	 * used and fileio isn't active.
-+	 */
-+	lockdep_assert_held(&q->mmap_lock);
-+
-+	if (q->memory != VB2_MEMORY_MMAP) {
-+		dprintk(q, 1, "queue is not currently set up for mmap\n");
-+		return -EINVAL;
-+	}
-+
-+	if (vb2_fileio_is_active(q)) {
-+		dprintk(q, 1, "file io in progress\n");
-+		return -EBUSY;
-+	}
-+
- 	/*
- 	 * Go over all buffers and their planes, comparing the given offset
- 	 * with an offset assigned to each plane. If a match is found,
-@@ -2265,11 +2316,6 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
- 	int ret;
- 	unsigned long length;
- 
--	if (q->memory != VB2_MEMORY_MMAP) {
--		dprintk(q, 1, "queue is not currently set up for mmap\n");
--		return -EINVAL;
--	}
--
- 	/*
- 	 * Check memory area access mode.
- 	 */
-@@ -2291,14 +2337,9 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
- 
- 	mutex_lock(&q->mmap_lock);
- 
--	if (vb2_fileio_is_active(q)) {
--		dprintk(q, 1, "mmap: file io in progress\n");
--		ret = -EBUSY;
--		goto unlock;
--	}
--
- 	/*
--	 * Find the plane corresponding to the offset passed by userspace.
-+	 * Find the plane corresponding to the offset passed by userspace. This
-+	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
- 	 */
- 	ret = __find_plane_by_offset(q, off, &buffer, &plane);
- 	if (ret)
-@@ -2351,22 +2392,25 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
- 	void *vaddr;
- 	int ret;
- 
--	if (q->memory != VB2_MEMORY_MMAP) {
--		dprintk(q, 1, "queue is not currently set up for mmap\n");
--		return -EINVAL;
--	}
-+	mutex_lock(&q->mmap_lock);
- 
- 	/*
--	 * Find the plane corresponding to the offset passed by userspace.
-+	 * Find the plane corresponding to the offset passed by userspace. This
-+	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
- 	 */
- 	ret = __find_plane_by_offset(q, off, &buffer, &plane);
- 	if (ret)
--		return ret;
-+		goto unlock;
- 
- 	vb = q->bufs[buffer];
- 
- 	vaddr = vb2_plane_vaddr(vb, plane);
-+	mutex_unlock(&q->mmap_lock);
- 	return vaddr ? (unsigned long)vaddr : -EINVAL;
-+
-+unlock:
-+	mutex_unlock(&q->mmap_lock);
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(vb2_get_unmapped_area);
- #endif
+ 	case FSCACHE_COOKIE_STATE_FAILED:
+diff --git a/include/trace/events/fscache.h b/include/trace/events/fscache.h
+index c078c48a8e6d..a6190aa1b406 100644
+--- a/include/trace/events/fscache.h
++++ b/include/trace/events/fscache.h
+@@ -66,6 +66,7 @@ enum fscache_cookie_trace {
+ 	fscache_cookie_put_work,
+ 	fscache_cookie_see_active,
+ 	fscache_cookie_see_lru_discard,
++	fscache_cookie_see_lru_discard_clear,
+ 	fscache_cookie_see_lru_do_one,
+ 	fscache_cookie_see_relinquish,
+ 	fscache_cookie_see_withdraw,
+@@ -149,6 +150,7 @@ enum fscache_access_trace {
+ 	EM(fscache_cookie_put_work,		"PQ  work ")		\
+ 	EM(fscache_cookie_see_active,		"-   activ")		\
+ 	EM(fscache_cookie_see_lru_discard,	"-   x-lru")		\
++	EM(fscache_cookie_see_lru_discard_clear,"-   lrudc")            \
+ 	EM(fscache_cookie_see_lru_do_one,	"-   lrudo")		\
+ 	EM(fscache_cookie_see_relinquish,	"-   x-rlq")		\
+ 	EM(fscache_cookie_see_withdraw,		"-   x-wth")		\
 -- 
 2.35.1
 
