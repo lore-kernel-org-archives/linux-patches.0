@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E666328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:43:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F2C43392;
-	Mon, 12 Dec 2022 13:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8240C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB86AC433EF;
+	Mon, 12 Dec 2022 13:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852581;
-	bh=xfJWD5IjMo4LJ2Bh7ac6RqUh6wxQdfK+zB4Yd9HzDag=;
+	s=korg; t=1670852587;
+	bh=0NK6JX/mzWLTvouOclsBzZ7p0GzKAyuATglVsxsh2S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GD3ezgq6EGu7ys3ktdqOOh1tcS9cPJdvh9ll0iR61V7Fi4yNNgek3vz6gvfoM0dj9
-	 5vtm14RbjmKyarc+nMXSUNOykSr+uFabqa8lVl3e38gulEWnXepGYaOa5bSs4AtWuI
-	 Dzp1Q8Lgm4YOIIxmQ1gRyrYRsltAHt20ltrHjcBE=
+	b=UlMfZlUkLBmWehCUWR+bCp6omLC3qMdq+w5EUMivG7g86UP4lgFsjU69rwiUw0xPQ
+	 uZNEMtIci4VrO8W9CP5D9dG74nNKq3Sg0qWFdWPGuE89GGMfs9d/D52++LDn0ChtiC
+	 VXAYyw/4JCjlOlP5IGiVUBKOUlyPxTZzSbN/m1AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chethan T N <chethan.tumkur.narayan@intel.com>,
-	Kiran K <kiran.k@intel.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 109/157] Bluetooth: Fix support for Read Local Supported Codecs V2
-Date: Mon, 12 Dec 2022 14:17:37 +0100
-Message-Id: <20221212130939.225039021@linuxfoundation.org>
+Subject: [PATCH 6.0 110/157] Bluetooth: Fix not cleanup led when bt_init fails
+Date: Mon, 12 Dec 2022 14:17:38 +0100
+Message-Id: <20221212130939.265830019@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,110 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chethan T N <chethan.tumkur.narayan@intel.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 828cea2b71de501827f62d3c92d149f6052ad01e ]
+[ Upstream commit 2f3957c7eb4e07df944169a3e50a4d6790e1c744 ]
 
-Handling of Read Local Supported Codecs was broken during the
-HCI serialization design change patches.
+bt_init() calls bt_leds_init() to register led, but if it fails later,
+bt_leds_cleanup() is not called to unregister it.
 
-Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
-Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
+This can cause panic if the argument "bluetooth-power" in text is freed
+and then another led_trigger_register() tries to access it:
+
+BUG: unable to handle page fault for address: ffffffffc06d3bc0
+RIP: 0010:strcmp+0xc/0x30
+  Call Trace:
+    <TASK>
+    led_trigger_register+0x10d/0x4f0
+    led_trigger_register_simple+0x7d/0x100
+    bt_init+0x39/0xf7 [bluetooth]
+    do_one_initcall+0xd0/0x4e0
+
+Fixes: e64c97b53bc6 ("Bluetooth: Add combined LED trigger for controller power")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_codec.c | 19 ++++++++++---------
- net/bluetooth/hci_sync.c  | 10 ++++++----
- 2 files changed, 16 insertions(+), 13 deletions(-)
+ net/bluetooth/af_bluetooth.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
-index 38201532f58e..3cc135bb1d30 100644
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -72,9 +72,8 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
- 				continue;
- 			}
+diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
+index dc65974f5adb..1c3c7ff5c3c6 100644
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -737,7 +737,7 @@ static int __init bt_init(void)
  
--			skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODEC_CAPS,
--					     sizeof(*cmd), cmd,
--					     HCI_CMD_TIMEOUT);
-+			skb = __hci_cmd_sync_sk(hdev, HCI_OP_READ_LOCAL_CODEC_CAPS,
-+						sizeof(*cmd), cmd, 0, HCI_CMD_TIMEOUT, NULL);
- 			if (IS_ERR(skb)) {
- 				bt_dev_err(hdev, "Failed to read codec capabilities (%ld)",
- 					   PTR_ERR(skb));
-@@ -127,8 +126,8 @@ void hci_read_supported_codecs(struct hci_dev *hdev)
- 	struct hci_op_read_local_codec_caps caps;
- 	__u8 i;
+ 	err = bt_sysfs_init();
+ 	if (err < 0)
+-		return err;
++		goto cleanup_led;
  
--	skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODECS, 0, NULL,
--			     HCI_CMD_TIMEOUT);
-+	skb = __hci_cmd_sync_sk(hdev, HCI_OP_READ_LOCAL_CODECS, 0, NULL,
-+				0, HCI_CMD_TIMEOUT, NULL);
- 
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Failed to read local supported codecs (%ld)",
-@@ -158,7 +157,8 @@ void hci_read_supported_codecs(struct hci_dev *hdev)
- 	for (i = 0; i < std_codecs->num; i++) {
- 		caps.id = std_codecs->codec[i];
- 		caps.direction = 0x00;
--		hci_read_codec_capabilities(hdev, LOCAL_CODEC_ACL_MASK, &caps);
-+		hci_read_codec_capabilities(hdev,
-+					    LOCAL_CODEC_ACL_MASK | LOCAL_CODEC_SCO_MASK, &caps);
- 	}
- 
- 	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
-@@ -178,7 +178,8 @@ void hci_read_supported_codecs(struct hci_dev *hdev)
- 		caps.cid = vnd_codecs->codec[i].cid;
- 		caps.vid = vnd_codecs->codec[i].vid;
- 		caps.direction = 0x00;
--		hci_read_codec_capabilities(hdev, LOCAL_CODEC_ACL_MASK, &caps);
-+		hci_read_codec_capabilities(hdev,
-+					    LOCAL_CODEC_ACL_MASK | LOCAL_CODEC_SCO_MASK, &caps);
- 	}
- 
- error:
-@@ -194,8 +195,8 @@ void hci_read_supported_codecs_v2(struct hci_dev *hdev)
- 	struct hci_op_read_local_codec_caps caps;
- 	__u8 i;
- 
--	skb = __hci_cmd_sync(hdev, HCI_OP_READ_LOCAL_CODECS_V2, 0, NULL,
--			     HCI_CMD_TIMEOUT);
-+	skb = __hci_cmd_sync_sk(hdev, HCI_OP_READ_LOCAL_CODECS_V2, 0, NULL,
-+				0, HCI_CMD_TIMEOUT, NULL);
- 
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Failed to read local supported codecs (%ld)",
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 831e816e1d20..a5e89e1b5452 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -12,6 +12,7 @@
- #include <net/bluetooth/mgmt.h>
- 
- #include "hci_request.h"
-+#include "hci_codec.h"
- #include "hci_debugfs.h"
- #include "smp.h"
- #include "eir.h"
-@@ -3918,11 +3919,12 @@ static int hci_set_event_mask_page_2_sync(struct hci_dev *hdev)
- /* Read local codec list if the HCI command is supported */
- static int hci_read_local_codecs_sync(struct hci_dev *hdev)
- {
--	if (!(hdev->commands[29] & 0x20))
--		return 0;
-+	if (hdev->commands[45] & 0x04)
-+		hci_read_supported_codecs_v2(hdev);
-+	else if (hdev->commands[29] & 0x20)
-+		hci_read_supported_codecs(hdev);
- 
--	return __hci_cmd_sync_status(hdev, HCI_OP_READ_LOCAL_CODECS, 0, NULL,
--				     HCI_CMD_TIMEOUT);
-+	return 0;
+ 	err = sock_register(&bt_sock_family_ops);
+ 	if (err)
+@@ -773,6 +773,8 @@ static int __init bt_init(void)
+ 	sock_unregister(PF_BLUETOOTH);
+ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
++cleanup_led:
++	bt_leds_cleanup();
+ 	return err;
  }
  
- /* Read local pairing options if the HCI command is supported */
 -- 
 2.35.1
 
