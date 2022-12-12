@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4F728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E0EC433D2;
-	Mon, 12 Dec 2022 13:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACC828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A42C433D2;
+	Mon, 12 Dec 2022 13:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853084;
-	bh=OBqqBj7blEIhXnqnGGCNSppkRf0fQbTEDUrvmApP7KA=;
+	s=korg; t=1670853090;
+	bh=cDNZWKlTuyYCb8XyZI8wd0mMCTaPUMwCU7yluAAaa4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onhr9AFM7o2T0qiI3NaYveKzFLnsRsOj4+yi6qVe/+Hn3SPDZ0HUmITFi1/79ot7H
-	 tyTqUTmteEI0oX02MyyOgv431BaVVgBjnB9B3aCTZbH3zNw/gwtjZHlhj2CM16+bqb
-	 kSXsZX8tL1kRk8P7Ln1Fi1hhKlEOCPb1UOyvFktc=
+	b=tKR7evxiOS4V2knd1cQiKLWn+i9r/vKXyIqS5D63S+NF6q0ozT62FRuHoSGPzJTUs
+	 6daIbXHeyUpkYYoAXxJqF4ov9GZ+U1Ku15VCe40kVCHe6MVYkwKsbhqnkN+8Z7X0kx
+	 opjJAfv5ui0ZuDj4ITFau9YB47Wr/ffmAw4Gh3pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Jungclaus <frank.jungclaus@esd.eu>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 48/49] net: mvneta: Fix an out of bounds check
-Date: Mon, 12 Dec 2022 14:19:26 +0100
-Message-Id: <20221212130916.063865878@linuxfoundation.org>
+Subject: [PATCH 4.19 49/49] can: esd_usb: Allow REC and TEC to return to zero
+Date: Mon, 12 Dec 2022 14:19:27 +0100
+Message-Id: <20221212130916.109154029@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -36,53 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Frank Jungclaus <frank.jungclaus@esd.eu>
 
-[ Upstream commit cdd97383e19d4afe29adc3376025a15ae3bab3a3 ]
+[ Upstream commit 918ee4911f7a41fb4505dff877c1d7f9f64eb43e ]
 
-In an earlier commit, I added a bounds check to prevent an out of bounds
-read and a WARN().  On further discussion and consideration that check
-was probably too aggressive.  Instead of returning -EINVAL, a better fix
-would be to just prevent the out of bounds read but continue the process.
+We don't get any further EVENT from an esd CAN USB device for changes
+on REC or TEC while those counters converge to 0 (with ecc == 0). So
+when handling the "Back to Error Active"-event force txerr = rxerr =
+0, otherwise the berr-counters might stay on values like 95 forever.
 
-Background: The value of "pp->rxq_def" is a number between 0-7 by default,
-or even higher depending on the value of "rxq_number", which is a module
-parameter. If the value is more than the number of available CPUs then
-it will trigger the WARN() in cpu_max_bits_warn().
+Also, to make life easier during the ongoing development a
+netdev_dbg() has been introduced to allow dumping error events send by
+an esd CAN USB device.
 
-Fixes: e8b4fc13900b ("net: mvneta: Prevent out of bounds read in mvneta_config_rss()")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/Y5A7d1E5ccwHTYPf@kadam
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
+Link: https://lore.kernel.org/all/20221130202242.3998219-2-frank.jungclaus@esd.eu
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/can/usb/esd_usb2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 5107382cefb5..fd1311681200 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -3620,7 +3620,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 	/* Use the cpu associated to the rxq when it is online, in all
- 	 * the other cases, use the cpu 0 which can't be offline.
- 	 */
--	if (cpu_online(pp->rxq_def))
-+	if (pp->rxq_def < nr_cpu_ids && cpu_online(pp->rxq_def))
- 		elected_cpu = pp->rxq_def;
+diff --git a/drivers/net/can/usb/esd_usb2.c b/drivers/net/can/usb/esd_usb2.c
+index d4e6b40f0ed4..ffdee5aeb8a9 100644
+--- a/drivers/net/can/usb/esd_usb2.c
++++ b/drivers/net/can/usb/esd_usb2.c
+@@ -239,6 +239,10 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
+ 		u8 rxerr = msg->msg.rx.data[2];
+ 		u8 txerr = msg->msg.rx.data[3];
  
- 	max_cpu = num_present_cpus();
-@@ -4141,9 +4141,6 @@ static int  mvneta_config_rss(struct mvneta_port *pp)
- 		napi_disable(&pp->napi);
- 	}
- 
--	if (pp->indir[0] >= nr_cpu_ids)
--		return -EINVAL;
--
- 	pp->rxq_def = pp->indir[0];
- 
- 	/* Update unicast mapping */
++		netdev_dbg(priv->netdev,
++			   "CAN_ERR_EV_EXT: dlc=%#02x state=%02x ecc=%02x rec=%02x tec=%02x\n",
++			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
++
+ 		skb = alloc_can_err_skb(priv->netdev, &cf);
+ 		if (skb == NULL) {
+ 			stats->rx_dropped++;
+@@ -265,6 +269,8 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
+ 				break;
+ 			default:
+ 				priv->can.state = CAN_STATE_ERROR_ACTIVE;
++				txerr = 0;
++				rxerr = 0;
+ 				break;
+ 			}
+ 		} else {
 -- 
 2.35.1
 
