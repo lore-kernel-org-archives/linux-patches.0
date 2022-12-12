@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C14F28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:48:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67F7C433F0;
-	Mon, 12 Dec 2022 13:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5A728ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAE4C433D2;
+	Mon, 12 Dec 2022 13:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852915;
-	bh=JfRHaN4ylaJBQTGtaRQS+Acy4D/jma42HO2mRQzKpz4=;
+	s=korg; t=1670852919;
+	bh=8iYZGnDD+VcIzfVfyyaw5uub/h+dy8+O5ekFvDmBu94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqaotgzaycnYZMPGd8PKJl8J8ACdwCwiw5E15nHyy5CzOIsVW0HY2x87gZvW2HoeF
-	 n05zFXNITOQ+jub/Yz0Bb6+fRdpIB/e0i0VSFv+90rZ8XGTHVtThiQfN7nZUo6EcBd
-	 4eG8E3J2DdYOortI/i3CCpmXrMpkQnars5Wa8qJc=
+	b=aW3kxO+1mGGYwpmtHPkc3KNuJ/bnElpcJyRT9lv63MjTAGi13zO61H4MyjbMGrfwU
+	 miZ1B6qvzfyTSrO8gwQdx7sCh9RowxRU4LzGeqMzTMwruFYQu1VjgWtdWFl7zJvZH1
+	 n17JJmCGADYvwJGq0mPYlbIDi5Ynn6vJS5OtVqDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	GUO Zihua <guozihua@huawei.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/49] ARM: dts: rockchip: disable arm_global_timer on rk3066 and rk3188
-Date: Mon, 12 Dec 2022 14:18:43 +0100
-Message-Id: <20221212130913.918342501@linuxfoundation.org>
+Subject: [PATCH 4.19 06/49] 9p/fd: Use P9_HDRSZ for header size
+Date: Mon, 12 Dec 2022 14:18:44 +0100
+Message-Id: <20221212130913.972985963@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -35,62 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit da74858a475782a3f16470907814c8cc5950ad68 ]
+[ Upstream commit 6854fadbeee10891ed74246bdc05031906b6c8cf ]
 
-The clock source and the sched_clock provided by the arm_global_timer
-on Rockchip rk3066a/rk3188 are quite unstable because their rates
-depend on the CPU frequency.
+Cleanup hardcoded header sizes to use P9_HDRSZ instead of '7'
 
-Recent changes to the arm_global_timer driver makes it impossible to use.
-
-On the other side, the arm_global_timer has a higher rating than the
-ROCKCHIP_TIMER, it will be selected by default by the time framework
-while we want to use the stable Rockchip clock source.
-
-Keep the arm_global_timer disabled in order to have the
-DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
-
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/f275ca8d-fd0a-26e5-b978-b7f3df815e0a@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lkml.kernel.org/r/20221117091159.31533-4-guozihua@huawei.com
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+[Dominique: commit message adjusted to make sense after offset size
+adjustment got removed]
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3188.dtsi | 1 -
- arch/arm/boot/dts/rk3xxx.dtsi | 7 +++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/9p/trans_fd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3188.dtsi b/arch/arm/boot/dts/rk3188.dtsi
-index 3b7cae6f4127..24efc9b31d89 100644
---- a/arch/arm/boot/dts/rk3188.dtsi
-+++ b/arch/arm/boot/dts/rk3188.dtsi
-@@ -509,7 +509,6 @@
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index e03ff8df1d3f..0ef3d2ede6e6 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -133,7 +133,7 @@ struct p9_conn {
+ 	struct list_head unsent_req_list;
+ 	struct p9_req_t *rreq;
+ 	struct p9_req_t *wreq;
+-	char tmp_buf[7];
++	char tmp_buf[P9_HDRSZ];
+ 	struct p9_fcall rc;
+ 	int wpos;
+ 	int wsize;
+@@ -306,7 +306,7 @@ static void p9_read_work(struct work_struct *work)
+ 	if (!m->rc.sdata) {
+ 		m->rc.sdata = m->tmp_buf;
+ 		m->rc.offset = 0;
+-		m->rc.capacity = 7; /* start by reading header */
++		m->rc.capacity = P9_HDRSZ; /* start by reading header */
+ 	}
  
- &global_timer {
- 	interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_EDGE_RISING)>;
--	status = "disabled";
- };
+ 	clear_bit(Rpending, &m->wsched);
+@@ -329,7 +329,7 @@ static void p9_read_work(struct work_struct *work)
+ 		p9_debug(P9_DEBUG_TRANS, "got new header\n");
  
- &local_timer {
-diff --git a/arch/arm/boot/dts/rk3xxx.dtsi b/arch/arm/boot/dts/rk3xxx.dtsi
-index 86a0d98d28ff..1b6429843bd4 100644
---- a/arch/arm/boot/dts/rk3xxx.dtsi
-+++ b/arch/arm/boot/dts/rk3xxx.dtsi
-@@ -108,6 +108,13 @@
- 		reg = <0x1013c200 0x20>;
- 		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
- 		clocks = <&cru CORE_PERI>;
-+		status = "disabled";
-+		/* The clock source and the sched_clock provided by the arm_global_timer
-+		 * on Rockchip rk3066a/rk3188 are quite unstable because their rates
-+		 * depend on the CPU frequency.
-+		 * Keep the arm_global_timer disabled in order to have the
-+		 * DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
-+		 */
- 	};
- 
- 	local_timer: local-timer@1013c600 {
+ 		/* Header size */
+-		m->rc.size = 7;
++		m->rc.size = P9_HDRSZ;
+ 		err = p9_parse_header(&m->rc, &m->rc.size, NULL, NULL, 0);
+ 		if (err) {
+ 			p9_debug(P9_DEBUG_ERROR,
 -- 
 2.35.1
 
