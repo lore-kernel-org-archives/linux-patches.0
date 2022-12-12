@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F57228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A04C433D2;
-	Mon, 12 Dec 2022 13:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9A128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF438C433D2;
+	Mon, 12 Dec 2022 13:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851724;
-	bh=Kt2XjoS8AtJa9Rb71rqz+die/tom3ykCn2N9L5Z/J0U=;
+	s=korg; t=1670851729;
+	bh=cb95x2E/PWeBwFYg+kgog4i3ZpoGV1BYXZPIpRMrf3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juKoXtVu10Dqdw/AoiOmLC7d6MJJrtetCiyngGU9FBNwEumO/YkRaVeV0U0hALOwo
-	 e2/SS0O1SPC8tZ/vMr9wbrQZpP6H71Jdz/zP8nv36riBjcIg5TusFIswneNcgCNtX+
-	 kChoQmg7KyYO6KgDCDXS+PulEZvKOlkeQj+xQlB8=
+	b=M4BJyyHLJon0q0Wp1eH9GaO/VHqxpK8GOEr+aYlUvAIjLlKqSBPcfiM41lOZXlqr4
+	 zOKL5AWWyZejnrQKbgupwWGJHm1TtzOUWuVGnddSpL0HFhTMAq2BhRsnwhZpuGgL9h
+	 3MzGdw/cL/NxZEog9G3AsQPSW/iNhZpINLJ7o0lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b1641d2f14732407e23@syzkaller.appspotmail.com,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.15 056/123] HID: core: fix shift-out-of-bounds in hid_report_raw_event
-Date: Mon, 12 Dec 2022 14:17:02 +0100
-Message-Id: <20221212130929.279386139@linuxfoundation.org>
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
+	Alessandro Zummo <a.zummo@towertech.it>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 032/123] rtc: cmos: avoid UIP when writing alarm time
+Date: Mon, 12 Dec 2022 14:16:38 +0100
+Message-Id: <20221212130928.257274291@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,72 +36,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Mateusz Jończyk <mat.jonczyk@o2.pl>
 
-commit ec61b41918587be530398b0d1c9a0d16619397e5 upstream.
+[ Upstream commit cd17420ebea580c22dd3a93f7237de3d2cfafc37 ]
 
-Syzbot reported shift-out-of-bounds in hid_report_raw_event.
+Some Intel chipsets disconnect the time and date RTC registers when the
+clock update is in progress: during this time reads may return bogus
+values and writes fail silently. This includes the RTC alarm registers.
+[1]
 
-microsoft 0003:045E:07DA.0001: hid_field_extract() called with n (128) >
-32! (swapper/0)
-======================================================================
-UBSAN: shift-out-of-bounds in drivers/hid/hid-core.c:1323:20
-shift exponent 127 is too large for 32-bit type 'int'
-CPU: 0 PID: 0 Comm: swapper/0 Not tainted
-6.1.0-rc4-syzkaller-00159-g4bbf3422df78 #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS
-Google 10/26/2022
-Call Trace:
- <IRQ>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e3/0x2cb lib/dump_stack.c:106
- ubsan_epilogue lib/ubsan.c:151 [inline]
- __ubsan_handle_shift_out_of_bounds+0x3a6/0x420 lib/ubsan.c:322
- snto32 drivers/hid/hid-core.c:1323 [inline]
- hid_input_fetch_field drivers/hid/hid-core.c:1572 [inline]
- hid_process_report drivers/hid/hid-core.c:1665 [inline]
- hid_report_raw_event+0xd56/0x18b0 drivers/hid/hid-core.c:1998
- hid_input_report+0x408/0x4f0 drivers/hid/hid-core.c:2066
- hid_irq_in+0x459/0x690 drivers/hid/usbhid/hid-core.c:284
- __usb_hcd_giveback_urb+0x369/0x530 drivers/usb/core/hcd.c:1671
- dummy_timer+0x86b/0x3110 drivers/usb/gadget/udc/dummy_hcd.c:1988
- call_timer_fn+0xf5/0x210 kernel/time/timer.c:1474
- expire_timers kernel/time/timer.c:1519 [inline]
- __run_timers+0x76a/0x980 kernel/time/timer.c:1790
- run_timer_softirq+0x63/0xf0 kernel/time/timer.c:1803
- __do_softirq+0x277/0x75b kernel/softirq.c:571
- __irq_exit_rcu+0xec/0x170 kernel/softirq.c:650
- irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
- sysvec_apic_timer_interrupt+0x91/0xb0 arch/x86/kernel/apic/apic.c:1107
-======================================================================
+cmos_set_alarm() did not take account for that, fix it.
 
-If the size of the integer (unsigned n) is bigger than 32 in snto32(),
-shift exponent will be too large for 32-bit type 'int', resulting in a
-shift-out-of-bounds bug.
-Fix this by adding a check on the size of the integer (unsigned n) in
-snto32(). To add support for n greater than 32 bits, set n to 32, if n
-is greater than 32.
+[1] 7th Generation Intel ® Processor Family I/O for U/Y Platforms [...]
+Datasheet, Volume 1 of 2 (Intel's Document Number: 334658-006)
+Page 208
+https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/7th-and-8th-gen-core-family-mobile-u-y-processor-lines-i-o-datasheet-vol-1.pdf
+        "If a RAM read from the ten time and date bytes is attempted
+        during an update cycle, the value read do not necessarily
+        represent the true contents of those locations. Any RAM writes
+        under the same conditions are ignored."
 
-Reported-by: syzbot+8b1641d2f14732407e23@syzkaller.appspotmail.com
-Fixes: dde5845a529f ("[PATCH] Generic HID layer - code split")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Cc: Alessandro Zummo <a.zummo@towertech.it>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20211210200131.153887-10-mat.jonczyk@o2.pl
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/rtc/rtc-cmos.c | 107 +++++++++++++++++++++++++----------------
+ 1 file changed, 66 insertions(+), 41 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1310,6 +1310,9 @@ static s32 snto32(__u32 value, unsigned
- 	if (!value || !n)
- 		return 0;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index b90a603d6b12..a3297a9cbc59 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -444,10 +444,57 @@ static int cmos_validate_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	return 0;
+ }
  
-+	if (n > 32)
-+		n = 32;
++struct cmos_set_alarm_callback_param {
++	struct cmos_rtc *cmos;
++	unsigned char mon, mday, hrs, min, sec;
++	struct rtc_wkalrm *t;
++};
 +
- 	switch (n) {
- 	case 8:  return ((__s8)value);
- 	case 16: return ((__s16)value);
++/* Note: this function may be executed by mc146818_avoid_UIP() more then
++ *	 once
++ */
++static void cmos_set_alarm_callback(unsigned char __always_unused seconds,
++				    void *param_in)
++{
++	struct cmos_set_alarm_callback_param *p =
++		(struct cmos_set_alarm_callback_param *)param_in;
++
++	/* next rtc irq must not be from previous alarm setting */
++	cmos_irq_disable(p->cmos, RTC_AIE);
++
++	/* update alarm */
++	CMOS_WRITE(p->hrs, RTC_HOURS_ALARM);
++	CMOS_WRITE(p->min, RTC_MINUTES_ALARM);
++	CMOS_WRITE(p->sec, RTC_SECONDS_ALARM);
++
++	/* the system may support an "enhanced" alarm */
++	if (p->cmos->day_alrm) {
++		CMOS_WRITE(p->mday, p->cmos->day_alrm);
++		if (p->cmos->mon_alrm)
++			CMOS_WRITE(p->mon, p->cmos->mon_alrm);
++	}
++
++	if (use_hpet_alarm()) {
++		/*
++		 * FIXME the HPET alarm glue currently ignores day_alrm
++		 * and mon_alrm ...
++		 */
++		hpet_set_alarm_time(p->t->time.tm_hour, p->t->time.tm_min,
++				    p->t->time.tm_sec);
++	}
++
++	if (p->t->enabled)
++		cmos_irq_enable(p->cmos, RTC_AIE);
++}
++
+ static int cmos_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ {
+ 	struct cmos_rtc	*cmos = dev_get_drvdata(dev);
+-	unsigned char mon, mday, hrs, min, sec, rtc_control;
++	struct cmos_set_alarm_callback_param p = {
++		.cmos = cmos,
++		.t = t
++	};
++	unsigned char rtc_control;
+ 	int ret;
+ 
+ 	/* This not only a rtc_op, but also called directly */
+@@ -458,11 +505,11 @@ static int cmos_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	mon = t->time.tm_mon + 1;
+-	mday = t->time.tm_mday;
+-	hrs = t->time.tm_hour;
+-	min = t->time.tm_min;
+-	sec = t->time.tm_sec;
++	p.mon = t->time.tm_mon + 1;
++	p.mday = t->time.tm_mday;
++	p.hrs = t->time.tm_hour;
++	p.min = t->time.tm_min;
++	p.sec = t->time.tm_sec;
+ 
+ 	spin_lock_irq(&rtc_lock);
+ 	rtc_control = CMOS_READ(RTC_CONTROL);
+@@ -470,43 +517,21 @@ static int cmos_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 
+ 	if (!(rtc_control & RTC_DM_BINARY) || RTC_ALWAYS_BCD) {
+ 		/* Writing 0xff means "don't care" or "match all".  */
+-		mon = (mon <= 12) ? bin2bcd(mon) : 0xff;
+-		mday = (mday >= 1 && mday <= 31) ? bin2bcd(mday) : 0xff;
+-		hrs = (hrs < 24) ? bin2bcd(hrs) : 0xff;
+-		min = (min < 60) ? bin2bcd(min) : 0xff;
+-		sec = (sec < 60) ? bin2bcd(sec) : 0xff;
++		p.mon = (p.mon <= 12) ? bin2bcd(p.mon) : 0xff;
++		p.mday = (p.mday >= 1 && p.mday <= 31) ? bin2bcd(p.mday) : 0xff;
++		p.hrs = (p.hrs < 24) ? bin2bcd(p.hrs) : 0xff;
++		p.min = (p.min < 60) ? bin2bcd(p.min) : 0xff;
++		p.sec = (p.sec < 60) ? bin2bcd(p.sec) : 0xff;
+ 	}
+ 
+-	spin_lock_irq(&rtc_lock);
+-
+-	/* next rtc irq must not be from previous alarm setting */
+-	cmos_irq_disable(cmos, RTC_AIE);
+-
+-	/* update alarm */
+-	CMOS_WRITE(hrs, RTC_HOURS_ALARM);
+-	CMOS_WRITE(min, RTC_MINUTES_ALARM);
+-	CMOS_WRITE(sec, RTC_SECONDS_ALARM);
+-
+-	/* the system may support an "enhanced" alarm */
+-	if (cmos->day_alrm) {
+-		CMOS_WRITE(mday, cmos->day_alrm);
+-		if (cmos->mon_alrm)
+-			CMOS_WRITE(mon, cmos->mon_alrm);
+-	}
+-
+-	if (use_hpet_alarm()) {
+-		/*
+-		 * FIXME the HPET alarm glue currently ignores day_alrm
+-		 * and mon_alrm ...
+-		 */
+-		hpet_set_alarm_time(t->time.tm_hour, t->time.tm_min,
+-				    t->time.tm_sec);
+-	}
+-
+-	if (t->enabled)
+-		cmos_irq_enable(cmos, RTC_AIE);
+-
+-	spin_unlock_irq(&rtc_lock);
++	/*
++	 * Some Intel chipsets disconnect the alarm registers when the clock
++	 * update is in progress - during this time writes fail silently.
++	 *
++	 * Use mc146818_avoid_UIP() to avoid this.
++	 */
++	if (!mc146818_avoid_UIP(cmos_set_alarm_callback, &p))
++		return -EIO;
+ 
+ 	cmos->alarm_expires = rtc_tm_to_time64(&t->time);
+ 
+-- 
+2.35.1
+
 
 
