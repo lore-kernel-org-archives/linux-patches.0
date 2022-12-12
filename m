@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C37828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE305C433EF;
-	Mon, 12 Dec 2022 13:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B43E28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7ACC433EF;
+	Mon, 12 Dec 2022 13:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851665;
-	bh=xEdluQM7U/DjEOPfSvn3WQ5HD/2ZyDmuemJR2LlgDWU=;
+	s=korg; t=1670851670;
+	bh=ACiR4qm1E19xMIk5BB0+BZSMefgIWKDrIKQaQdIWnFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhcB5dmou8KFjpeSt4T67uB7qEY0PIteZa11DCZA4XXBLC99hLGta5YLZhQsGOB41
-	 CWD0IyFioImu+XqPfHKaeCPvgjMULuffgdbM7T/OzLEOwTYIoPYVj70z1yiGyBe0eG
-	 M5M+gZuiaVXLiZINsvMM7dSlXDWvqdqqSaIcLHWA=
+	b=EIKvVQbesS6phsPDJ2vbBs+4nob4P/eyVmOKdGLHYtEMZLymzB2RLMsOljUJ2Pi/M
+	 ZQa4b4G6tBghEhrQv17OCGwyQeuJFkM6Tz3ofOPOspP4ZEwZmfn5Nul35t7Dl2esY+
+	 ZozhYAYD2DnkWpflpYhjygladfCdW9WZZ7VvP6To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	=?UTF-8?q?Leonardo=20Eug=C3=AAnio?= <lelgenio@disroot.org>
-Subject: [PATCH 5.15 046/123] Bluetooth: Fix crash when replugging CSR fake controllers
-Date: Mon, 12 Dec 2022 14:16:52 +0100
-Message-Id: <20221212130928.854985597@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 047/123] net: mana: Fix race on per-CQ variable napi work_done
+Date: Mon, 12 Dec 2022 14:16:53 +0100
+Message-Id: <20221212130928.896230907@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -34,79 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit b5ca338751ad4783ec8d37b5d99c3e37b7813e59 upstream.
+commit 18010ff776fa42340efc428b3ea6d19b3e7c7b21 upstream.
 
-It seems fake CSR 5.0 clones can cause the suspend notifier to be
-registered twice causing the following kernel panic:
+After calling napi_complete_done(), the NAPIF_STATE_SCHED bit may be
+cleared, and another CPU can start napi thread and access per-CQ variable,
+cq->work_done. If the other thread (for example, from busy_poll) sets
+it to a value >= budget, this thread will continue to run when it should
+stop, and cause memory corruption and panic.
 
-[   71.986122] Call Trace:
-[   71.986124]  <TASK>
-[   71.986125]  blocking_notifier_chain_register+0x33/0x60
-[   71.986130]  hci_register_dev+0x316/0x3d0 [bluetooth 99b5497ea3d09708fa1366c1dc03288bf3cca8da]
-[   71.986154]  btusb_probe+0x979/0xd85 [btusb e1e0605a4f4c01984a4b9c8ac58c3666ae287477]
-[   71.986159]  ? __pm_runtime_set_status+0x1a9/0x300
-[   71.986162]  ? ktime_get_mono_fast_ns+0x3e/0x90
-[   71.986167]  usb_probe_interface+0xe3/0x2b0
-[   71.986171]  really_probe+0xdb/0x380
-[   71.986174]  ? pm_runtime_barrier+0x54/0x90
-[   71.986177]  __driver_probe_device+0x78/0x170
-[   71.986180]  driver_probe_device+0x1f/0x90
-[   71.986183]  __device_attach_driver+0x89/0x110
-[   71.986186]  ? driver_allows_async_probing+0x70/0x70
-[   71.986189]  bus_for_each_drv+0x8c/0xe0
-[   71.986192]  __device_attach+0xb2/0x1e0
-[   71.986195]  bus_probe_device+0x92/0xb0
-[   71.986198]  device_add+0x422/0x9a0
-[   71.986201]  ? sysfs_merge_group+0xd4/0x110
-[   71.986205]  usb_set_configuration+0x57a/0x820
-[   71.986208]  usb_generic_driver_probe+0x4f/0x70
-[   71.986211]  usb_probe_device+0x3a/0x110
-[   71.986213]  really_probe+0xdb/0x380
-[   71.986216]  ? pm_runtime_barrier+0x54/0x90
-[   71.986219]  __driver_probe_device+0x78/0x170
-[   71.986221]  driver_probe_device+0x1f/0x90
-[   71.986224]  __device_attach_driver+0x89/0x110
-[   71.986227]  ? driver_allows_async_probing+0x70/0x70
-[   71.986230]  bus_for_each_drv+0x8c/0xe0
-[   71.986232]  __device_attach+0xb2/0x1e0
-[   71.986235]  bus_probe_device+0x92/0xb0
-[   71.986237]  device_add+0x422/0x9a0
-[   71.986239]  ? _dev_info+0x7d/0x98
-[   71.986242]  ? blake2s_update+0x4c/0xc0
-[   71.986246]  usb_new_device.cold+0x148/0x36d
-[   71.986250]  hub_event+0xa8a/0x1910
-[   71.986255]  process_one_work+0x1c4/0x380
-[   71.986259]  worker_thread+0x51/0x390
-[   71.986262]  ? rescuer_thread+0x3b0/0x3b0
-[   71.986264]  kthread+0xdb/0x110
-[   71.986266]  ? kthread_complete_and_exit+0x20/0x20
-[   71.986268]  ret_from_fork+0x1f/0x30
-[   71.986273]  </TASK>
-[   71.986274] ---[ end trace 0000000000000000 ]---
-[   71.986284] btusb: probe of 2-1.6:1.0 failed with error -17
+To fix this issue, save the per-CQ work_done variable in a local variable
+before napi_complete_done(), so it won't be corrupted by a possible
+concurrent thread after napi_complete_done().
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216683
+Also, add a flag bit to advertise to the NIC firmware: the NAPI work_done
+variable race is fixed, so the driver is able to reliably support features
+like busy_poll.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Leonardo Eugênio <lelgenio@disroot.org>
+Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://lore.kernel.org/r/1670010190-28595-1-git-send-email-haiyangz@microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/gdma.h    |    9 ++++++++-
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   16 +++++++++++-----
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3985,7 +3985,8 @@ int hci_register_dev(struct hci_dev *hde
- 	hci_sock_dev_event(hdev, HCI_DEV_REG);
- 	hci_dev_hold(hdev);
+--- a/drivers/net/ethernet/microsoft/mana/gdma.h
++++ b/drivers/net/ethernet/microsoft/mana/gdma.h
+@@ -488,7 +488,14 @@ enum {
  
--	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
-+	if (!hdev->suspend_notifier.notifier_call &&
-+	    !test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
- 		hdev->suspend_notifier.notifier_call = hci_suspend_notifier;
- 		error = register_pm_notifier(&hdev->suspend_notifier);
- 		if (error)
+ #define GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT BIT(0)
+ 
+-#define GDMA_DRV_CAP_FLAGS1 GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT
++/* Advertise to the NIC firmware: the NAPI work_done variable race is fixed,
++ * so the driver is able to reliably support features like busy_poll.
++ */
++#define GDMA_DRV_CAP_FLAG_1_NAPI_WKDONE_FIX BIT(2)
++
++#define GDMA_DRV_CAP_FLAGS1 \
++	(GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT | \
++	 GDMA_DRV_CAP_FLAG_1_NAPI_WKDONE_FIX)
+ 
+ #define GDMA_DRV_CAP_FLAGS2 0
+ 
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1071,10 +1071,11 @@ static void mana_poll_rx_cq(struct mana_
+ 	}
+ }
+ 
+-static void mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
++static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
+ {
+ 	struct mana_cq *cq = context;
+ 	u8 arm_bit;
++	int w;
+ 
+ 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
+ 
+@@ -1083,26 +1084,31 @@ static void mana_cq_handler(void *contex
+ 	else
+ 		mana_poll_tx_cq(cq);
+ 
+-	if (cq->work_done < cq->budget &&
+-	    napi_complete_done(&cq->napi, cq->work_done)) {
++	w = cq->work_done;
++
++	if (w < cq->budget &&
++	    napi_complete_done(&cq->napi, w)) {
+ 		arm_bit = SET_ARM_BIT;
+ 	} else {
+ 		arm_bit = 0;
+ 	}
+ 
+ 	mana_gd_ring_cq(gdma_queue, arm_bit);
++
++	return w;
+ }
+ 
+ static int mana_poll(struct napi_struct *napi, int budget)
+ {
+ 	struct mana_cq *cq = container_of(napi, struct mana_cq, napi);
++	int w;
+ 
+ 	cq->work_done = 0;
+ 	cq->budget = budget;
+ 
+-	mana_cq_handler(cq, cq->gdma_cq);
++	w = mana_cq_handler(cq, cq->gdma_cq);
+ 
+-	return min(cq->work_done, budget);
++	return min(w, budget);
+ }
+ 
+ static void mana_schedule_napi(void *context, struct gdma_queue *gdma_queue)
 
 
