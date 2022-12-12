@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE4828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254C2C43396;
-	Mon, 12 Dec 2022 13:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E8728ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:40:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E51C433D2;
+	Mon, 12 Dec 2022 13:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852396;
-	bh=GyJmL94tE6EAULppMVNFMUv9MmpZZWP+qA54Yt47XY8=;
+	s=korg; t=1670852401;
+	bh=CxZRlOpPWk/FuOIos9ofLQSbKk3f/xsxSiATelOfaV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0Fyihf3WjT8nErPX3XbISa3NNMpKAYUnafdM0DKkjSbmqDPFJpP+yn3wy1qRvNd0
-	 OcJ9QeNoXJT8dyWtq2v5dSY9+K4gYKc7NVn8g+pzt8zNvr4KevLYdPxHSnK1E1Wo93
-	 ZELlPw86nCsq2YrySWbevwfSs1VTTYeT6W1WrTPA=
+	b=jcdmuWyrCwu63xbTn7fQJ3GDTCrgt+VY/bGiTpGLSEYxoobA6HMXSGjjJgURZrDcp
+	 gzMdrzxIABMpYgDSueYfNkhFsaRGf6wnYTSckts+wCwlNtnPxSphay9VPdkOdWqiXL
+	 +3u2noJc+h6DCZHcltl/yh9ovElCklmekvvjZVZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.0 072/157] can: esd_usb: Allow REC and TEC to return to zero
-Date: Mon, 12 Dec 2022 14:17:00 +0100
-Message-Id: <20221212130937.550371924@linuxfoundation.org>
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.0 073/157] drm/amdgpu/sdma_v4_0: turn off SDMA ring buffer in the s2idle suspend
+Date: Mon, 12 Dec 2022 14:17:01 +0100
+Message-Id: <20221212130937.602739717@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -34,50 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit 918ee4911f7a41fb4505dff877c1d7f9f64eb43e upstream.
+commit bc21fe9a5844c5bc8f7ec319b11d2671a94eb867 upstream.
 
-We don't get any further EVENT from an esd CAN USB device for changes
-on REC or TEC while those counters converge to 0 (with ecc == 0). So
-when handling the "Back to Error Active"-event force txerr = rxerr =
-0, otherwise the berr-counters might stay on values like 95 forever.
+In the SDMA s0ix save process requires to turn off SDMA ring buffer for
+avoiding the SDMA in-flight request, otherwise will suffer from SDMA page
+fault which causes by page request from in-flight SDMA ring accessing at
+SDMA restore phase.
 
-Also, to make life easier during the ongoing development a
-netdev_dbg() has been introduced to allow dumping error events send by
-an esd CAN USB device.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20221130202242.3998219-2-frank.jungclaus@esd.eu
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2248
+Cc: stable@vger.kernel.org # 6.0,5.15+
+Fixes: f8f4e2a51834 ("drm/amdgpu: skipping SDMA hw_init and hw_fini for S0ix.")
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/drivers/net/can/usb/esd_usb.c
-+++ b/drivers/net/can/usb/esd_usb.c
-@@ -234,6 +234,10 @@ static void esd_usb_rx_event(struct esd_
- 		u8 rxerr = msg->msg.rx.data[2];
- 		u8 txerr = msg->msg.rx.data[3];
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -980,13 +980,13 @@ static void sdma_v4_0_ring_emit_fence(st
  
-+		netdev_dbg(priv->netdev,
-+			   "CAN_ERR_EV_EXT: dlc=%#02x state=%02x ecc=%02x rec=%02x tec=%02x\n",
-+			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
-+
- 		skb = alloc_can_err_skb(priv->netdev, &cf);
- 		if (skb == NULL) {
- 			stats->rx_dropped++;
-@@ -260,6 +264,8 @@ static void esd_usb_rx_event(struct esd_
- 				break;
- 			default:
- 				priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+				txerr = 0;
-+				rxerr = 0;
- 				break;
- 			}
- 		} else {
+ 
+ /**
+- * sdma_v4_0_gfx_stop - stop the gfx async dma engines
++ * sdma_v4_0_gfx_enable - enable the gfx async dma engines
+  *
+  * @adev: amdgpu_device pointer
+- *
+- * Stop the gfx async dma ring buffers (VEGA10).
++ * @enable: enable SDMA RB/IB
++ * control the gfx async dma ring buffers (VEGA10).
+  */
+-static void sdma_v4_0_gfx_stop(struct amdgpu_device *adev)
++static void sdma_v4_0_gfx_enable(struct amdgpu_device *adev, bool enable)
+ {
+ 	struct amdgpu_ring *sdma[AMDGPU_MAX_SDMA_INSTANCES];
+ 	u32 rb_cntl, ib_cntl;
+@@ -1001,10 +1001,10 @@ static void sdma_v4_0_gfx_stop(struct am
+ 		}
+ 
+ 		rb_cntl = RREG32_SDMA(i, mmSDMA0_GFX_RB_CNTL);
+-		rb_cntl = REG_SET_FIELD(rb_cntl, SDMA0_GFX_RB_CNTL, RB_ENABLE, 0);
++		rb_cntl = REG_SET_FIELD(rb_cntl, SDMA0_GFX_RB_CNTL, RB_ENABLE, enable ? 1 : 0);
+ 		WREG32_SDMA(i, mmSDMA0_GFX_RB_CNTL, rb_cntl);
+ 		ib_cntl = RREG32_SDMA(i, mmSDMA0_GFX_IB_CNTL);
+-		ib_cntl = REG_SET_FIELD(ib_cntl, SDMA0_GFX_IB_CNTL, IB_ENABLE, 0);
++		ib_cntl = REG_SET_FIELD(ib_cntl, SDMA0_GFX_IB_CNTL, IB_ENABLE, enable ? 1 : 0);
+ 		WREG32_SDMA(i, mmSDMA0_GFX_IB_CNTL, ib_cntl);
+ 	}
+ }
+@@ -1131,7 +1131,7 @@ static void sdma_v4_0_enable(struct amdg
+ 	int i;
+ 
+ 	if (!enable) {
+-		sdma_v4_0_gfx_stop(adev);
++		sdma_v4_0_gfx_enable(adev, enable);
+ 		sdma_v4_0_rlc_stop(adev);
+ 		if (adev->sdma.has_page_queue)
+ 			sdma_v4_0_page_stop(adev);
+@@ -2043,8 +2043,10 @@ static int sdma_v4_0_suspend(void *handl
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+ 	/* SMU saves SDMA state for us */
+-	if (adev->in_s0ix)
++	if (adev->in_s0ix) {
++		sdma_v4_0_gfx_enable(adev, false);
+ 		return 0;
++	}
+ 
+ 	return sdma_v4_0_hw_fini(adev);
+ }
+@@ -2054,8 +2056,12 @@ static int sdma_v4_0_resume(void *handle
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+ 	/* SMU restores SDMA state for us */
+-	if (adev->in_s0ix)
++	if (adev->in_s0ix) {
++		sdma_v4_0_enable(adev, true);
++		sdma_v4_0_gfx_enable(adev, true);
++		amdgpu_ttm_set_buffer_funcs_status(adev, true);
+ 		return 0;
++	}
+ 
+ 	return sdma_v4_0_hw_init(adev);
+ }
 
 
