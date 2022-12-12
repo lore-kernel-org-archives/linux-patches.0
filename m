@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E9928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA0C433D2;
-	Mon, 12 Dec 2022 13:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E8328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDD4C433D2;
+	Mon, 12 Dec 2022 13:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850897;
-	bh=bSTtfXQNXYy9YkT3lHAxfAs6Z51OW2zws+6vBnqEghs=;
+	s=korg; t=1670850901;
+	bh=ujVtRHiIASjKF+CRaYrXnontv2r32pzpDAfdShhl4xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcBYg3SHMJcgZH4rje5Y1NwOkFkV9X7kkL/UOkA8W4Ky0lFBQfJSz6kUGMIRx/SDm
-	 sT0r8f3LBw4JLBfYfsPHYman6QCsnC/vNPJpBE2XJNVJeiT7NW+cKNnQnZM73hLRvT
-	 HIw3jjg8HXLTDgw8ZwuJtmMN5yUOsM9a1jocsOoU=
+	b=Cz6Tky2ndnYu31yAWqTbP3lrTzjhdlHyr+0cw0zkR/b06+O9Sn/fUmHnHxfIdpq3Q
+	 igjYr3D0ysIE7Dtad2d6Eyt9DYmqJ2o1/kNFfssdaCvOtxtIviJxmBptv3r/tzSZOJ
+	 aUD4s0FcI6uEMvlzS685QVthBUUH8Y1kXblNkiE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/106] ASoC: soc-pcm: Add NULL check in BE reparenting
-Date: Mon, 12 Dec 2022 14:09:24 +0100
-Message-Id: <20221212130925.788211134@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Leonardo=20Eug=C3=AAnio?= <lelgenio@disroot.org>
+Subject: [PATCH 5.10 051/106] Bluetooth: Fix crash when replugging CSR fake controllers
+Date: Mon, 12 Dec 2022 14:09:54 +0100
+Message-Id: <20221212130927.087149187@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -35,37 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit db8f91d424fe0ea6db337aca8bc05908bbce1498 ]
+commit b5ca338751ad4783ec8d37b5d99c3e37b7813e59 upstream.
 
-Add NULL check in dpcm_be_reparent API, to handle
-kernel NULL pointer dereference error.
-The issue occurred in fuzzing test.
+It seems fake CSR 5.0 clones can cause the suspend notifier to be
+registered twice causing the following kernel panic:
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Link: https://lore.kernel.org/r/1669098673-29703-1-git-send-email-quic_srivasam@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[   71.986122] Call Trace:
+[   71.986124]  <TASK>
+[   71.986125]  blocking_notifier_chain_register+0x33/0x60
+[   71.986130]  hci_register_dev+0x316/0x3d0 [bluetooth 99b5497ea3d09708fa1366c1dc03288bf3cca8da]
+[   71.986154]  btusb_probe+0x979/0xd85 [btusb e1e0605a4f4c01984a4b9c8ac58c3666ae287477]
+[   71.986159]  ? __pm_runtime_set_status+0x1a9/0x300
+[   71.986162]  ? ktime_get_mono_fast_ns+0x3e/0x90
+[   71.986167]  usb_probe_interface+0xe3/0x2b0
+[   71.986171]  really_probe+0xdb/0x380
+[   71.986174]  ? pm_runtime_barrier+0x54/0x90
+[   71.986177]  __driver_probe_device+0x78/0x170
+[   71.986180]  driver_probe_device+0x1f/0x90
+[   71.986183]  __device_attach_driver+0x89/0x110
+[   71.986186]  ? driver_allows_async_probing+0x70/0x70
+[   71.986189]  bus_for_each_drv+0x8c/0xe0
+[   71.986192]  __device_attach+0xb2/0x1e0
+[   71.986195]  bus_probe_device+0x92/0xb0
+[   71.986198]  device_add+0x422/0x9a0
+[   71.986201]  ? sysfs_merge_group+0xd4/0x110
+[   71.986205]  usb_set_configuration+0x57a/0x820
+[   71.986208]  usb_generic_driver_probe+0x4f/0x70
+[   71.986211]  usb_probe_device+0x3a/0x110
+[   71.986213]  really_probe+0xdb/0x380
+[   71.986216]  ? pm_runtime_barrier+0x54/0x90
+[   71.986219]  __driver_probe_device+0x78/0x170
+[   71.986221]  driver_probe_device+0x1f/0x90
+[   71.986224]  __device_attach_driver+0x89/0x110
+[   71.986227]  ? driver_allows_async_probing+0x70/0x70
+[   71.986230]  bus_for_each_drv+0x8c/0xe0
+[   71.986232]  __device_attach+0xb2/0x1e0
+[   71.986235]  bus_probe_device+0x92/0xb0
+[   71.986237]  device_add+0x422/0x9a0
+[   71.986239]  ? _dev_info+0x7d/0x98
+[   71.986242]  ? blake2s_update+0x4c/0xc0
+[   71.986246]  usb_new_device.cold+0x148/0x36d
+[   71.986250]  hub_event+0xa8a/0x1910
+[   71.986255]  process_one_work+0x1c4/0x380
+[   71.986259]  worker_thread+0x51/0x390
+[   71.986262]  ? rescuer_thread+0x3b0/0x3b0
+[   71.986264]  kthread+0xdb/0x110
+[   71.986266]  ? kthread_complete_and_exit+0x20/0x20
+[   71.986268]  ret_from_fork+0x1f/0x30
+[   71.986273]  </TASK>
+[   71.986274] ---[ end trace 0000000000000000 ]---
+[   71.986284] btusb: probe of 2-1.6:1.0 failed with error -17
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216683
+Cc: stable@vger.kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Leonardo Eugênio <lelgenio@disroot.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-pcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 0e2261ee07b6..fb874f924bbe 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -1154,6 +1154,8 @@ static void dpcm_be_reparent(struct snd_soc_pcm_runtime *fe,
- 		return;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3799,7 +3799,8 @@ int hci_register_dev(struct hci_dev *hde
+ 	hci_sock_dev_event(hdev, HCI_DEV_REG);
+ 	hci_dev_hold(hdev);
  
- 	be_substream = snd_soc_dpcm_get_substream(be, stream);
-+	if (!be_substream)
-+		return;
- 
- 	for_each_dpcm_fe(be, stream, dpcm) {
- 		if (dpcm->fe == fe)
--- 
-2.35.1
-
+-	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
++	if (!hdev->suspend_notifier.notifier_call &&
++	    !test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
+ 		hdev->suspend_notifier.notifier_call = hci_suspend_notifier;
+ 		error = register_pm_notifier(&hdev->suspend_notifier);
+ 		if (error)
 
 
