@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F112C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34399C433EF;
-	Mon, 12 Dec 2022 13:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428F828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5EC433F1;
+	Mon, 12 Dec 2022 13:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851457;
-	bh=HtijZ5tVO7MeIEPv1AouZAV5k8dZQbJGcI1Vb/AvAhU=;
+	s=korg; t=1670851462;
+	bh=QW3JLtWtebeWyR+qmY4YSJWk8Xz3aEdIbYmshlfscwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfiypUV4pLSfhdXgUQSek1xxfsigLNP668qWNqJZRc6qcFCl3bRg9pI7vi5Di8bGM
-	 GjmXnM9Rro5OrYCeq1ak3G/5YglIRozYXBU8ZefyP9KB5dDQv9GrIKPj5/P9mIiN6b
-	 xBoP6gtmCKocV3iFKtRZfkIJP7PVUzmMBIdgkPLQ=
+	b=r4vDGFDEC5nAK8S/8zpRaa6SIlM+RR11SqFYA2PRUIgO1S+75RAarDnubLXU7OzhW
+	 OSkpbDHgk/05omkWyLb/KtckVfP9igNfgONrm031jSBFgHzZWFj3O25D2uSYYY4wZ4
+	 Fhu6SHevMmgEcF8cQIYytyVB1wDF2TlXuuUiOloE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 42/67] Bluetooth: Fix not cleanup led when bt_init fails
-Date: Mon, 12 Dec 2022 14:17:17 +0100
-Message-Id: <20221212130919.637292390@linuxfoundation.org>
+Subject: [PATCH 5.4 43/67] net: dsa: ksz: Check return value
+Date: Mon, 12 Dec 2022 14:17:18 +0100
+Message-Id: <20221212130919.682816667@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,54 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 2f3957c7eb4e07df944169a3e50a4d6790e1c744 ]
+[ Upstream commit 3d8fdcbf1f42e2bb9ae8b8c0b6f202278c788a22 ]
 
-bt_init() calls bt_leds_init() to register led, but if it fails later,
-bt_leds_cleanup() is not called to unregister it.
+Return NULL if we got unexpected value from skb_trim_rcsum()
+in ksz_common_rcv()
 
-This can cause panic if the argument "bluetooth-power" in text is freed
-and then another led_trigger_register() tries to access it:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-BUG: unable to handle page fault for address: ffffffffc06d3bc0
-RIP: 0010:strcmp+0xc/0x30
-  Call Trace:
-    <TASK>
-    led_trigger_register+0x10d/0x4f0
-    led_trigger_register_simple+0x7d/0x100
-    bt_init+0x39/0xf7 [bluetooth]
-    do_one_initcall+0xd0/0x4e0
-
-Fixes: e64c97b53bc6 ("Bluetooth: Add combined LED trigger for controller power")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: bafe9ba7d908 ("net: dsa: ksz: Factor out common tag code")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20221201140032.26746-1-artem.chernyshev@red-soft.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/af_bluetooth.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/dsa/tag_ksz.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
-index 5f508c50649d..8031526eeeee 100644
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -735,7 +735,7 @@ static int __init bt_init(void)
+diff --git a/net/dsa/tag_ksz.c b/net/dsa/tag_ksz.c
+index 73605bcbb385..7354c5db3a14 100644
+--- a/net/dsa/tag_ksz.c
++++ b/net/dsa/tag_ksz.c
+@@ -62,7 +62,8 @@ static struct sk_buff *ksz_common_rcv(struct sk_buff *skb,
+ 	if (!skb->dev)
+ 		return NULL;
  
- 	err = bt_sysfs_init();
- 	if (err < 0)
--		return err;
-+		goto cleanup_led;
+-	pskb_trim_rcsum(skb, skb->len - len);
++	if (pskb_trim_rcsum(skb, skb->len - len))
++		return NULL;
  
- 	err = sock_register(&bt_sock_family_ops);
- 	if (err)
-@@ -771,6 +771,8 @@ static int __init bt_init(void)
- 	sock_unregister(PF_BLUETOOTH);
- cleanup_sysfs:
- 	bt_sysfs_cleanup();
-+cleanup_led:
-+	bt_leds_cleanup();
- 	return err;
- }
+ 	skb->offload_fwd_mark = true;
  
 -- 
 2.35.1
