@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B0C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C49FC433D2;
-	Mon, 12 Dec 2022 13:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA35B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCA4C433EF;
+	Mon, 12 Dec 2022 13:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853257;
-	bh=32GjUSZO50TOChG3Q65SYtHR5kPbYpCnzVf68che8L0=;
+	s=korg; t=1670853262;
+	bh=RiAiArMmj9yqv3NLqy2z9VWExsJKLBO/7CgL/7lD42s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vm4VxVXeSoJp+fSFtd+zeTUW9tRopaKe7bfXmqEo92um3WnjEzYX8F6Z99aOaIb+f
-	 Hp1JeLBV7KlbuU0KVMkxMTny/v+IAd5T8xY7PM3wMJqSd7TDIPWIkw2Rya94Yv+lY7
-	 s8a+4KsejoPgNtp2ESQuNcXnK6vHQdOKRb1JHmKM=
+	b=lVzJPlBDMWxzODNvRqbW4+ClcToL0B2lW1ok/I2k1kILmJGpXojlphnZl34ecHhSD
+	 Ssyi/PibEFw3rtaPZUoXAL/nENYLszDUNOYPl3en100fc5hIigzLgb5oLgevYoIFtH
+	 Tu5ClsfoFgKwdliho/pDueWK1vHPxQsDJzR0QazU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
-	Kees Cook <keescook@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 29/38] NFC: nci: Bounds check struct nfc_target arrays
-Date: Mon, 12 Dec 2022 14:19:30 +0100
-Message-Id: <20221212130913.559997896@linuxfoundation.org>
+Subject: [PATCH 4.14 20/38] ca8210: Fix crash by zero initializing data
+Date: Mon, 12 Dec 2022 14:19:21 +0100
+Message-Id: <20221212130913.125654642@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130912.069170932@linuxfoundation.org>
 References: <20221212130912.069170932@linuxfoundation.org>
@@ -37,60 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Hauke Mehrtens <hauke@hauke-m.de>
 
-[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
+[ Upstream commit 1e24c54da257ab93cff5826be8a793b014a5dc9c ]
 
-While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
+The struct cas_control embeds multiple generic SPI structures and we
+have to make sure these structures are initialized to default values.
+This driver does not set all attributes. When using kmalloc before some
+attributes were not initialized and contained random data which caused
+random crashes at bootup.
 
-  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
-
-This appears to be a legitimate lack of bounds checking in
-nci_add_new_protocol(). Add the missing checks.
-
-Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+Link: https://lore.kernel.org/r/20221121002201.1339636-1-hauke@hauke-m.de
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/ntf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ieee802154/ca8210.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
-index 1e8c1a12aaec..4f75453c07aa 100644
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -230,6 +230,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		target->sens_res = nfca_poll->sens_res;
- 		target->sel_res = nfca_poll->sel_res;
- 		target->nfcid1_len = nfca_poll->nfcid1_len;
-+		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
-+			return -EPROTO;
- 		if (target->nfcid1_len > 0) {
- 			memcpy(target->nfcid1, nfca_poll->nfcid1,
- 			       target->nfcid1_len);
-@@ -238,6 +240,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
+diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
+index 9a1352f3fa4c..eff7571dbea2 100644
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -926,7 +926,7 @@ static int ca8210_spi_transfer(
  
- 		target->sensb_res_len = nfcb_poll->sensb_res_len;
-+		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
-+			return -EPROTO;
- 		if (target->sensb_res_len > 0) {
- 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
- 			       target->sensb_res_len);
-@@ -246,6 +250,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
+ 	dev_dbg(&spi->dev, "ca8210_spi_transfer called\n");
  
- 		target->sensf_res_len = nfcf_poll->sensf_res_len;
-+		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
-+			return -EPROTO;
- 		if (target->sensf_res_len > 0) {
- 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
- 			       target->sensf_res_len);
+-	cas_ctl = kmalloc(sizeof(*cas_ctl), GFP_ATOMIC);
++	cas_ctl = kzalloc(sizeof(*cas_ctl), GFP_ATOMIC);
+ 	if (!cas_ctl)
+ 		return -ENOMEM;
+ 
 -- 
 2.35.1
 
