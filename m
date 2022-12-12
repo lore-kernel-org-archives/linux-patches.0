@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2A228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:36:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89979C433EF;
-	Mon, 12 Dec 2022 13:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:36:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED079C433F1;
+	Mon, 12 Dec 2022 13:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852206;
-	bh=cfjQaKKE/DrVxUb2IW+KH/xN1pKSmSzXQ7ip/B+1a2M=;
+	s=korg; t=1670852210;
+	bh=TGHKlg9cl+zLIX/Xqqo2KxgkK5aAAi1hORmCdKk39bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PO5cQmNd8tDIhzMplcyIEX4jqTMN8q57gWC2/vOkbFuP9daAT5fNjTKOK7hEG4eGn
-	 E0I5sqwZMWHBGiunytr+853ATojpaTxoHdPorioni5qH/9d+vR8OyZq3K7tFsvM0mr
-	 iMkukO++ytPDKcCOppS+dSnYXc9Y7oMPd/2fsx4s=
+	b=RisYgRNxFdLqEQ/xrCMsKM55wxjJ2qcdE1iqc8lp9GrCkc5uHSJK2NhzQUo2iXErz
+	 i0plzxH/MX/aENZ31pSyGf9+qyiD86o5kJXF8PzaXLqk8jUgYcBocQi3Bxqj+V2iAh
+	 wbPHUSHf5NNLNF9qiPVidZNZ9gIAZR4xt5NbnkIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 007/157] arm64: dts: rockchip: fix node name for hym8563 rtc
-Date: Mon, 12 Dec 2022 14:15:55 +0100
-Message-Id: <20221212130934.704479465@linuxfoundation.org>
+Subject: [PATCH 6.0 008/157] arm: dts: rockchip: fix node name for hym8563 rtc
+Date: Mon, 12 Dec 2022 14:15:56 +0100
+Message-Id: <20221212130934.747610686@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -37,26 +37,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 67a9aeef44e42b1ac2becf5e61eae0880f48d9db ]
+[ Upstream commit 17b57beafccb4569accbfc8c11390744cf59c021 ]
 
-Fix the node name for hym8563 in all arm64 rockchip devicetrees.
+Fix the node name for hym8563 in all arm rockchip devicetrees.
 
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20221024165549.74574-2-sebastian.reichel@collabora.com
+Link: https://lore.kernel.org/r/20221024165549.74574-4-sebastian.reichel@collabora.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts | 2 +-
- arch/arm64/boot/dts/rockchip/rk3368-r88.dts            | 2 +-
- arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts    | 2 +-
- arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi  | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/rk3036-evb.dts          | 2 +-
+ arch/arm/boot/dts/rk3288-evb-act8846.dts  | 2 +-
+ arch/arm/boot/dts/rk3288-firefly.dtsi     | 2 +-
+ arch/arm/boot/dts/rk3288-miqi.dts         | 2 +-
+ arch/arm/boot/dts/rk3288-rock2-square.dts | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-index 7f5bba0c6001..0e88e9592c1c 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-@@ -208,7 +208,7 @@
+diff --git a/arch/arm/boot/dts/rk3036-evb.dts b/arch/arm/boot/dts/rk3036-evb.dts
+index 2a7e6624efb9..ea23ba98625e 100644
+--- a/arch/arm/boot/dts/rk3036-evb.dts
++++ b/arch/arm/boot/dts/rk3036-evb.dts
+@@ -31,7 +31,7 @@
+ &i2c1 {
+ 	status = "okay";
+ 
+-	hym8563: hym8563@51 {
++	hym8563: rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 		#clock-cells = <0>;
+diff --git a/arch/arm/boot/dts/rk3288-evb-act8846.dts b/arch/arm/boot/dts/rk3288-evb-act8846.dts
+index be695b8c1f67..8a635c243127 100644
+--- a/arch/arm/boot/dts/rk3288-evb-act8846.dts
++++ b/arch/arm/boot/dts/rk3288-evb-act8846.dts
+@@ -54,7 +54,7 @@
+ 		vin-supply = <&vcc_sys>;
+ 	};
+ 
+-	hym8563@51 {
++	rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 
+diff --git a/arch/arm/boot/dts/rk3288-firefly.dtsi b/arch/arm/boot/dts/rk3288-firefly.dtsi
+index 052afe5543e2..9267857beccb 100644
+--- a/arch/arm/boot/dts/rk3288-firefly.dtsi
++++ b/arch/arm/boot/dts/rk3288-firefly.dtsi
+@@ -233,7 +233,7 @@
  		vin-supply = <&vcc_sys>;
  	};
  
@@ -65,11 +92,11 @@ index 7f5bba0c6001..0e88e9592c1c 100644
  		compatible = "haoyu,hym8563";
  		reg = <0x51>;
  		#clock-cells = <0>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-index 38d757c00548..e147d6f8b43e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-@@ -192,7 +192,7 @@
+diff --git a/arch/arm/boot/dts/rk3288-miqi.dts b/arch/arm/boot/dts/rk3288-miqi.dts
+index 713f55e143c6..e3d5644f2915 100644
+--- a/arch/arm/boot/dts/rk3288-miqi.dts
++++ b/arch/arm/boot/dts/rk3288-miqi.dts
+@@ -162,7 +162,7 @@
  		vin-supply = <&vcc_sys>;
  	};
  
@@ -78,27 +105,14 @@ index 38d757c00548..e147d6f8b43e 100644
  		compatible = "haoyu,hym8563";
  		reg = <0x51>;
  		#clock-cells = <0>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-index 5a2661ae0131..18b5050c6cd3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
-@@ -98,7 +98,7 @@
+diff --git a/arch/arm/boot/dts/rk3288-rock2-square.dts b/arch/arm/boot/dts/rk3288-rock2-square.dts
+index 80e0f07c8e87..07a3a52753d2 100644
+--- a/arch/arm/boot/dts/rk3288-rock2-square.dts
++++ b/arch/arm/boot/dts/rk3288-rock2-square.dts
+@@ -165,7 +165,7 @@
  };
  
  &i2c0 {
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		interrupt-parent = <&gpio0>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi b/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
-index 935b8c68a71d..6c168566321b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
-@@ -297,7 +297,7 @@
- 	clock-frequency = <400000>;
- 	status = "okay";
- 
 -	hym8563: hym8563@51 {
 +	hym8563: rtc@51 {
  		compatible = "haoyu,hym8563";
