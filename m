@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B82728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:32:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE271C433EF;
-	Mon, 12 Dec 2022 13:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:32:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A8EC433EF;
+	Mon, 12 Dec 2022 13:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851930;
-	bh=bEemhHdJzetwFkczhtK/e++wMeAaMoLBUTyRX+Tk//E=;
+	s=korg; t=1670851934;
+	bh=8VnjgRBhaM2Et1c02AY5ECrC5bDgkZVGbjm9eKwy2kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWU0ZM+jX50b0BlZrSy19N8HazgpQmzdL6xiqXPXdEohhTAyYobq8AxuJqRAQM4X+
-	 18bd2hSnQ3ipRQnU5g3n//HPd/sJ2wiB5bOCcetYDJWkDNk62r1jFo0LcSy6ubiglo
-	 KuHdhrDXjuTuDoEm3l9WF5o59O0VzH9pZ2dsoAgM=
+	b=GbN2+Vw1vCmZZgii5gi2YzXGkzG2HtdQJk3JC8YRmZqIs7JpdvVIlGwVDhTbkDWqB
+	 kfXUtrNph+IvpjC01lEXHyL8EDDcxFSWap9ehas4E4FHtqlr54wzBkbmFJ5OlkD6nq
+	 jRLtuG8gBNVWyhUwg7ReyODzyN9gDlYD8ZvzJpx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/123] net: microchip: sparx5: Fix missing destroy_workqueue of mact_queue
-Date: Mon, 12 Dec 2022 14:17:45 +0100
-Message-Id: <20221212130931.299860095@linuxfoundation.org>
+Subject: [PATCH 5.15 100/123] net: thunderx: Fix missing destroy_workqueue of nicvf_rx_mode_wq
+Date: Mon, 12 Dec 2022 14:17:46 +0100
+Message-Id: <20221212130931.359196192@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,45 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-[ Upstream commit 7b8232bdb1789a257de3129a9bb08c69b93a17db ]
+[ Upstream commit 42330a32933fb42180c52022804dcf09f47a2f99 ]
 
-The mchp_sparx5_probe() won't destroy workqueue created by
-create_singlethread_workqueue() in sparx5_start() when later
-inits failed. Add destroy_workqueue in the cleanup_ports case,
-also add it in mchp_sparx5_remove()
+The nicvf_probe() won't destroy workqueue when register_netdev()
+failed. Add destroy_workqueue err handle case to fix this issue.
 
-Fixes: b37a1bae742f ("net: sparx5: add mactable support")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Link: https://lore.kernel.org/r/20221203070259.19560-1-linqiheng@huawei.com
+Fixes: 2ecbe4f4a027 ("net: thunderx: replace global nicvf_rx_mode_wq work queue for all VFs to private for each of them.")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20221203094125.602812-1-liuyongqiang13@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/cavium/thunder/nicvf_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-index 435ac224e38e..0463f20da17b 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
-@@ -829,6 +829,8 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/cavium/thunder/nicvf_main.c b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
+index a27227aeae88..b43b97e15a6f 100644
+--- a/drivers/net/ethernet/cavium/thunder/nicvf_main.c
++++ b/drivers/net/ethernet/cavium/thunder/nicvf_main.c
+@@ -2250,7 +2250,7 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	err = register_netdev(netdev);
+ 	if (err) {
+ 		dev_err(dev, "Failed to register netdevice\n");
+-		goto err_unregister_interrupts;
++		goto err_destroy_workqueue;
+ 	}
  
- cleanup_ports:
- 	sparx5_cleanup_ports(sparx5);
-+	if (sparx5->mact_queue)
-+		destroy_workqueue(sparx5->mact_queue);
- cleanup_config:
- 	kfree(configs);
- cleanup_pnode:
-@@ -852,6 +854,7 @@ static int mchp_sparx5_remove(struct platform_device *pdev)
- 	sparx5_cleanup_ports(sparx5);
- 	/* Unregister netdevs */
- 	sparx5_unregister_notifier_blocks(sparx5);
-+	destroy_workqueue(sparx5->mact_queue);
+ 	nic->msg_enable = debug;
+@@ -2259,6 +2259,8 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
  	return 0;
- }
+ 
++err_destroy_workqueue:
++	destroy_workqueue(nic->nicvf_rx_mode_wq);
+ err_unregister_interrupts:
+ 	nicvf_unregister_interrupts(nic);
+ err_free_netdev:
 -- 
 2.35.1
 
