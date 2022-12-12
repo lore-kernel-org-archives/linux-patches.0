@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A3328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C581C433EF;
-	Mon, 12 Dec 2022 13:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEFA28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A21BC433EF;
+	Mon, 12 Dec 2022 13:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851466;
-	bh=02MT6y9BK3V32xS9KlLOSTrA9s3Yq4kpYuX4zQO+g/4=;
+	s=korg; t=1670851469;
+	bh=P9gD8F6K7Qd9SFGHwEQIYmN8W4xchkkI6TM8rX8ZJz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoaPswXY7OnEv5SeShFheHYrDf5OEeL72wkoJX+rKnI61hGiFIeLbYVKfdWXIu6tr
-	 PunwYoYTQY+z9lvsPG0b+au1A85bIbRKSL4iunNZ+SsklQXWdAb9K9KAlZ3hbf+2Ho
-	 fs0pbyF+BOt44Sv4qk8/7JdKz5+SiIRgDR9Izsrs=
+	b=dv/gQ0VAiNmwobINbPo8KTnMY5W96slZx5KC4FLSWDPa8FEegzE5+2H8N2qCOQgLE
+	 yNg7xNTjFzXq7GdNcfT9Rl/ca6f1w21Zh3UxEda+c1YB4IVDofMTC5v84ebxXMc2i4
+	 2oabMwRRSttYgQ+MvReVe0oxvlgvJVx356huaig4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Juergen Gross <jgross@suse.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Jason Andryuk <jandryuk@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 34/67] ieee802154: cc2520: Fix error return code in cc2520_hw_init()
-Date: Mon, 12 Dec 2022 14:17:09 +0100
-Message-Id: <20221212130919.250780730@linuxfoundation.org>
+Subject: [PATCH 5.4 63/67] xen/netback: fix build warning
+Date: Mon, 12 Dec 2022 14:17:38 +0100
+Message-Id: <20221212130920.618822187@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,35 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 4d002d6a2a00ac1c433899bd7625c6400a74cfba ]
+[ Upstream commit 7dfa764e0223a324366a2a1fc056d4d9d4e95491 ]
 
-In cc2520_hw_init(), if oscillator start failed, the error code
-should be returned.
+Commit ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in
+the non-linear area") introduced a (valid) build warning. There have
+even been reports of this problem breaking networking of Xen guests.
 
-Fixes: 0da6bc8cc341 ("ieee802154: cc2520: adds driver for TI CC2520 radio")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Link: https://lore.kernel.org/r/20221120075046.2213633-1-william.xuanziyang@huawei.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Tested-by: Jason Andryuk <jandryuk@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/cc2520.c | 2 +-
+ drivers/net/xen-netback/netback.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ieee802154/cc2520.c b/drivers/net/ieee802154/cc2520.c
-index 0432a4f829a9..9739a6ed91ad 100644
---- a/drivers/net/ieee802154/cc2520.c
-+++ b/drivers/net/ieee802154/cc2520.c
-@@ -973,7 +973,7 @@ static int cc2520_hw_init(struct cc2520_private *priv)
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index 982e501173f1..036459670fc3 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -523,7 +523,7 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 	const bool sharedslot = nr_frags &&
+ 				frag_get_pending_idx(&shinfo->frags[0]) ==
+ 				    copy_pending_idx(skb, copy_count(skb) - 1);
+-	int i, err;
++	int i, err = 0;
  
- 		if (timeout-- <= 0) {
- 			dev_err(&priv->spi->dev, "oscillator start failed!\n");
--			return ret;
-+			return -ETIMEDOUT;
- 		}
- 		udelay(1);
- 	} while (!(status & CC2520_STATUS_XOSC32M_STABLE));
+ 	for (i = 0; i < copy_count(skb); i++) {
+ 		int newerr;
 -- 
 2.35.1
 
