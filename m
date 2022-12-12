@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D5328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D12C433D2;
-	Mon, 12 Dec 2022 13:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AF328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BD6C433D2;
+	Mon, 12 Dec 2022 13:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852565;
-	bh=dvUMe7KsiRzwecvOlo+urXQTfBPcvebejCE/zS1lCxY=;
+	s=korg; t=1670852571;
+	bh=ywrchfMtWhaZSpsf5YoNrqg5V7tuc7+/bI+thI0kY8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8YSo0kpBQOu6rcZwFG45b3ugP+HAnN1pjPg1iopzTRnM3H/rQwSkT1GC23IIU41E
-	 VuKchK19El0DLgnKyZqoccjTZ4uRt22dO5IRWvkIBnFBCef6iY+oAurk+FEDeRjWJN
-	 1SVlpnayhV3u+MNSYiva5Jq2yxudLFkx6fD/6kvg=
+	b=yIzsQ9o4inKHFvUmR9MxIxab5aFsnSYUviMrLRQSQjcXCF6/oDt49DF0wgISNblfk
+	 g6upf+ko/bxztcdyso7arfboSnj9SwMRZrPU5l3hfoMW4Cvog5zADVt3CbtdAj1qlP
+	 e+HHHrpC+iseydqjaoq9YQc3r6RZDgDHrUFRpzIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 089/157] netfilter: flowtable_offload: fix using __this_cpu_add in preemptible
-Date: Mon, 12 Dec 2022 14:17:17 +0100
-Message-Id: <20221212130938.387639092@linuxfoundation.org>
+Subject: [PATCH 6.0 107/157] Bluetooth: hci_conn: add missing hci_dev_put() in iso_listen_bis()
+Date: Mon, 12 Dec 2022 14:17:35 +0100
+Message-Id: <20221212130939.142510350@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,65 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit a81047154e7ce4eb8769d5d21adcbc9693542a79 ]
+[ Upstream commit 7e7df2c10c92cab7d1dde3b301e584e2e877fbda ]
 
-flow_offload_queue_work() can be called in workqueue without
-bh disabled, like the call trace showed in my act_ct testing,
-calling NF_FLOW_TABLE_STAT_INC() there would cause a call
-trace:
+hci_get_route() takes reference, we should use hci_dev_put() to release
+it when not need anymore.
 
-  BUG: using __this_cpu_add() in preemptible [00000000] code: kworker/u4:0/138560
-  caller is flow_offload_queue_work+0xec/0x1b0 [nf_flow_table]
-  Workqueue: act_ct_workqueue tcf_ct_flow_table_cleanup_work [act_ct]
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x33/0x46
-   check_preemption_disabled+0xc3/0xf0
-   flow_offload_queue_work+0xec/0x1b0 [nf_flow_table]
-   nf_flow_table_iterate+0x138/0x170 [nf_flow_table]
-   nf_flow_table_free+0x140/0x1a0 [nf_flow_table]
-   tcf_ct_flow_table_cleanup_work+0x2f/0x2b0 [act_ct]
-   process_one_work+0x6a3/0x1030
-   worker_thread+0x8a/0xdf0
-
-This patch fixes it by using NF_FLOW_TABLE_STAT_INC_ATOMIC()
-instead in flow_offload_queue_work().
-
-Note that for FLOW_CLS_REPLACE branch in flow_offload_queue_work(),
-it may not be called in preemptible path, but it's good to use
-NF_FLOW_TABLE_STAT_INC_ATOMIC() for all cases in
-flow_offload_queue_work().
-
-Fixes: b038177636f8 ("netfilter: nf_flow_table: count pending offload workqueue tasks")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_offload.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 00b522890d77..0fdcdb2c9ae4 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -997,13 +997,13 @@ static void flow_offload_queue_work(struct flow_offload_work *offload)
- 	struct net *net = read_pnet(&offload->flowtable->net);
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index f825857db6d0..26db929b97c4 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -879,6 +879,7 @@ static int iso_listen_bis(struct sock *sk)
+ 				 iso_pi(sk)->bc_sid);
  
- 	if (offload->cmd == FLOW_CLS_REPLACE) {
--		NF_FLOW_TABLE_STAT_INC(net, count_wq_add);
-+		NF_FLOW_TABLE_STAT_INC_ATOMIC(net, count_wq_add);
- 		queue_work(nf_flow_offload_add_wq, &offload->work);
- 	} else if (offload->cmd == FLOW_CLS_DESTROY) {
--		NF_FLOW_TABLE_STAT_INC(net, count_wq_del);
-+		NF_FLOW_TABLE_STAT_INC_ATOMIC(net, count_wq_del);
- 		queue_work(nf_flow_offload_del_wq, &offload->work);
- 	} else {
--		NF_FLOW_TABLE_STAT_INC(net, count_wq_stats);
-+		NF_FLOW_TABLE_STAT_INC_ATOMIC(net, count_wq_stats);
- 		queue_work(nf_flow_offload_stats_wq, &offload->work);
- 	}
+ 	hci_dev_unlock(hdev);
++	hci_dev_put(hdev);
+ 
+ 	return err;
  }
 -- 
 2.35.1
