@@ -1,103 +1,175 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8152585
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:11:16 +0000 (UTC)
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-381662c78a9so144777667b3.7
-        for <patches@lists.linux.dev>; Mon, 12 Dec 2022 05:11:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vtZ2FMA0O4uYUm7aQmSU8L+LI/VWAtJ0XYx+JdwdYTc=;
-        b=E6HxguKDSaNVHOvSzmZBUoJlCcvnZtBdnkDkuEzitIZ50BNkYn55nGhS3r2npKbsYv
-         7QhgrPpGckluzkGVxquC6+4da9elocmtanvZlkFPXq7N3Qy4pgNhQMRJx3v0LZQAbt6P
-         /fGlPgU/JnxQJ2FkKYAz87JliGCGhHg3sgxEfxOfhUwqHmxweN5Vk2c+OeOaONNttaNN
-         C7K+AaQ6cTV+EK3P1K7yWY5g5mpJLS5LQSuj7uhGuXM8FTd5sRSVIDFB1BBRxAtpVR3V
-         SMcKlkoaws+ky4K2xRNihbL9DrYBfVw2m5zS7SslWkUdUfGq4fH88BeTuKTkXJ7wCmh0
-         4Rfw==
-X-Gm-Message-State: ANoB5pnm03ij53cP/9Fs/t9lAtgU2MYvG4ARe0newKduGi1vNC+aoPZ7
-	FPrnRIQZjcndQw/MbI6rD6c=
-X-Google-Smtp-Source: AA0mqf7+Aixqg4qs18bRCQtwCQMbbfyLdDkUgVLDofTIN7Vq8afs+p552ohMQrOoGgYEsUcaaw5YyQ==
-X-Received: by 2002:a05:7508:3a85:b0:47:39b7:aeb8 with SMTP id de5-20020a0575083a8500b0004739b7aeb8mr1124297gbb.10.1670850675322;
-        Mon, 12 Dec 2022 05:11:15 -0800 (PST)
-Received: from fedora ([216.211.255.155])
-        by smtp.gmail.com with ESMTPSA id f9-20020a05620a280900b006ff8a122a1asm3626860qkp.78.2022.12.12.05.11.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 05:11:13 -0800 (PST)
-Date: Mon, 12 Dec 2022 05:11:11 -0800
-From: Dennis Zhou <dennis@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Baoquan He <bhe@redhat.com>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA6F2585
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:11:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757F4C433D2;
+	Mon, 12 Dec 2022 13:11:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670850704;
+	bh=6VSp0i79I5T83XdeetNKWeOU8b1RQGCgX3uT5uO8XM4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WutAnU+IoaPKVVxYrGpcu0QYPUGbbYarW0zLYV1WR8G34nqpbZo75X267ZBcLvTwh
+	 SV+EA/wOcbJzfCpNwEIrKOn2dfuAGfVsTDjWRbbCk2g+UqIKuV0CLnUhKeHPVlW/bH
+	 lyl6H2XwZec21FdMui30VkyeZKK+8Hd76oQRmR6o=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Alex Shi <alex.shi@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Alexander Duyck <alexander.duyck@gmail.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Andrey Ryabinin <aryabinin@virtuozzo.com>,
+	"Chen, Rong A" <rong.a.chen@intel.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Jann Horn <jannh@google.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Kirill A. Shutemov" <kirill@shutemov.name>,
+	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mika.penttila@nextfour.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/12] mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
-Message-ID: <Y5cob2jicdNoviU3@fedora>
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-11-vbabka@suse.cz>
- <Y4NEkF8DI1uXFRv4@hyeyoo>
- <f318ccc3-eb03-e359-cb6f-157d0b4aed31@suse.cz>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/106] mm/mlock: remove lru_lock on TestClearPageMlocked
+Date: Mon, 12 Dec 2022 14:09:04 +0100
+Message-Id: <20221212130924.929782499@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
+References: <20221212130924.863767275@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f318ccc3-eb03-e359-cb6f-157d0b4aed31@suse.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello,
+From: Alex Shi <alex.shi@linux.alibaba.com>
 
-On Mon, Dec 12, 2022 at 11:54:28AM +0100, Vlastimil Babka wrote:
-> On 11/27/22 12:05, Hyeonggon Yoo wrote:
-> > On Mon, Nov 21, 2022 at 06:12:00PM +0100, Vlastimil Babka wrote:
-> >> SLUB gets most of its scalability by percpu slabs. However for
-> >> CONFIG_SLUB_TINY the goal is minimal memory overhead, not scalability.
-> >> Thus, #ifdef out the whole kmem_cache_cpu percpu structure and
-> >> associated code. Additionally to the slab page savings, this reduces
-> >> percpu allocator usage, and code size.
-> > 
-> > [+Cc Dennis]
-> 
-> +To: Baoquan also.
-> 
-> > Wondering if we can reduce (or zero) early reservation of percpu area
-> > when #if !defined(CONFIG_SLUB) || defined(CONFIG_SLUB_TINY)?
-> 
-> Good point. I've sent a PR as it was [1], but (if merged) we can still
-> improve that during RC series, if it means more memory saved thanks to less
-> percpu usage with CONFIG_SLUB_TINY.
-> 
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git/tag/?h=slab-for-6.2-rc1
+[ Upstream commit 3db19aa39bac33f2e850fa1ddd67be29b192e51f ]
 
-The early reservation area not used at boot is then used to serve normal
-percpu allocations. Percpu allocates additional chunks based on a free
-page float count and is backed page by page, not all at once. I get
-slabs is the main motivator of early reservation, but if there are other
-users of percpu, then shrinking the early reservation area is a bit
-moot.
+In the func munlock_vma_page, comments mentained lru_lock needed for
+serialization with split_huge_pages.  But the page must be PageLocked as
+well as pages in split_huge_page series funcs.  Thus the PageLocked is
+enough to serialize both funcs.
 
-Thanks,
-Dennis
+Further more, Hugh Dickins pointed: before splitting in
+split_huge_page_to_list, the page was unmap_page() to remove pmd/ptes
+which protect the page from munlock.  Thus, no needs to guard
+__split_huge_page_tail for mlock clean, just keep the lru_lock there for
+isolation purpose.
 
-> 
-> >> This change builds on recent commit c7323a5ad078 ("mm/slub: restrict
-> >> sysfs validation to debug caches and make it safe"), as caches with
-> >> enabled debugging also avoid percpu slabs and all allocations and
-> >> freeing ends up working with the partial list. With a bit more
-> >> refactoring by the preceding patches, use the same code paths with
-> >> CONFIG_SLUB_TINY.
-> >> 
-> >> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> > 
-> 
+LKP found a preempt issue on __mod_zone_page_state which need change to
+mod_zone_page_state.  Thanks!
+
+Link: https://lkml.kernel.org/r/1604566549-62481-13-git-send-email-alex.shi@linux.alibaba.com
+Signed-off-by: Alex Shi <alex.shi@linux.alibaba.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Alexander Duyck <alexander.duyck@gmail.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
+Cc: "Chen, Rong A" <rong.a.chen@intel.com>
+Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kirill A. Shutemov <kirill@shutemov.name>
+Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mika Penttilä <mika.penttila@nextfour.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 829ae0f81ce0 ("mm: migrate: fix THP's mapcount on isolation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ mm/mlock.c | 26 +++++---------------------
+ 1 file changed, 5 insertions(+), 21 deletions(-)
+
+diff --git a/mm/mlock.c b/mm/mlock.c
+index 884b1216da6a..796c726a0407 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -187,40 +187,24 @@ static void __munlock_isolation_failed(struct page *page)
+ unsigned int munlock_vma_page(struct page *page)
+ {
+ 	int nr_pages;
+-	pg_data_t *pgdat = page_pgdat(page);
+ 
+ 	/* For try_to_munlock() and to serialize with page migration */
+ 	BUG_ON(!PageLocked(page));
+-
+ 	VM_BUG_ON_PAGE(PageTail(page), page);
+ 
+-	/*
+-	 * Serialize with any parallel __split_huge_page_refcount() which
+-	 * might otherwise copy PageMlocked to part of the tail pages before
+-	 * we clear it in the head page. It also stabilizes thp_nr_pages().
+-	 */
+-	spin_lock_irq(&pgdat->lru_lock);
+-
+ 	if (!TestClearPageMlocked(page)) {
+ 		/* Potentially, PTE-mapped THP: do not skip the rest PTEs */
+-		nr_pages = 1;
+-		goto unlock_out;
++		return 0;
+ 	}
+ 
+ 	nr_pages = thp_nr_pages(page);
+-	__mod_zone_page_state(page_zone(page), NR_MLOCK, -nr_pages);
++	mod_zone_page_state(page_zone(page), NR_MLOCK, -nr_pages);
+ 
+-	if (__munlock_isolate_lru_page(page, true)) {
+-		spin_unlock_irq(&pgdat->lru_lock);
++	if (!isolate_lru_page(page))
+ 		__munlock_isolated_page(page);
+-		goto out;
+-	}
+-	__munlock_isolation_failed(page);
+-
+-unlock_out:
+-	spin_unlock_irq(&pgdat->lru_lock);
++	else
++		__munlock_isolation_failed(page);
+ 
+-out:
+ 	return nr_pages - 1;
+ }
+ 
+-- 
+2.35.1
+
+
+
