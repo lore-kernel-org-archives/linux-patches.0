@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D7428ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F3C433D2;
-	Mon, 12 Dec 2022 13:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E9928ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA0C433D2;
+	Mon, 12 Dec 2022 13:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850894;
-	bh=nLh0JoeSK4XgCKXYPdKHukGcVydhO6tH4LpZk2p1wxQ=;
+	s=korg; t=1670850897;
+	bh=bSTtfXQNXYy9YkT3lHAxfAs6Z51OW2zws+6vBnqEghs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nygg7i+gAgkCAqOkKWA7Xea03JTqGVe97BThx6LQVdZ0Kh3HMSdothvmPXx4xo94u
-	 2IKY9857cKcbF7xL2ZvTZyg4zLw82CoptuH+rZPyJb5SVJm1SaxsK4u1SF6dVuSLZr
-	 iMm/mrzSOxUhwmG1r8Ql73pJ9SSIm5nCJ96T5fKk=
+	b=QcBYg3SHMJcgZH4rje5Y1NwOkFkV9X7kkL/UOkA8W4Ky0lFBQfJSz6kUGMIRx/SDm
+	 sT0r8f3LBw4JLBfYfsPHYman6QCsnC/vNPJpBE2XJNVJeiT7NW+cKNnQnZM73hLRvT
+	 HIw3jjg8HXLTDgw8ZwuJtmMN5yUOsM9a1jocsOoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/106] rtc: mc146818: Prevent reading garbage
-Date: Mon, 12 Dec 2022 14:09:33 +0100
-Message-Id: <20221212130926.168341282@linuxfoundation.org>
+Subject: [PATCH 5.10 021/106] ASoC: soc-pcm: Add NULL check in BE reparenting
+Date: Mon, 12 Dec 2022 14:09:24 +0100
+Message-Id: <20221212130925.788211134@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -35,163 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 
-[ Upstream commit 05a0302c35481e9b47fb90ba40922b0a4cae40d8 ]
+[ Upstream commit db8f91d424fe0ea6db337aca8bc05908bbce1498 ]
 
-The MC146818 driver is prone to read garbage from the RTC. There are
-several issues all related to the update cycle of the MC146818. The chip
-increments seconds obviously once per second and indicates that by a bit in
-a register. The bit goes high 244us before the actual update starts. During
-the update the readout of the time values is undefined.
+Add NULL check in dpcm_be_reparent API, to handle
+kernel NULL pointer dereference error.
+The issue occurred in fuzzing test.
 
-The code just checks whether the update in progress bit (UIP) is set before
-reading the clock. If it's set it waits arbitrary 20ms before retrying,
-which is ample because the maximum update time is ~2ms.
-
-But this check does not guarantee that the UIP bit goes high and the actual
-update happens during the readout. So the following can happen
-
- 0.997 	       UIP = False
-   -> Interrupt/NMI/preemption
- 0.998	       UIP -> True
- 0.999	       Readout	<- Undefined
-
-To prevent this rework the code so it checks UIP before and after the
-readout and if set after the readout try again.
-
-But that's not enough to cover the following:
-
- 0.997 	       UIP = False
- 	       Readout seconds
-   -> NMI (or vCPU scheduled out)
- 0.998	       UIP -> True
- 	       update completes
-	       UIP -> False
- 1.000	       Readout	minutes,....
- 	       UIP check succeeds
-
-That can make the readout wrong up to 59 seconds.
-
-To prevent this, read the seconds value before the first UIP check,
-validate it after checking UIP and after reading out the rest.
-
-It's amazing that the original i386 code had this actually correct and
-the generic implementation of the MC146818 driver got it wrong in 2002 and
-it stayed that way until today.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20201206220541.594826678@linutronix.de
-Stable-dep-of: cd17420ebea5 ("rtc: cmos: avoid UIP when writing alarm time")
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Link: https://lore.kernel.org/r/1669098673-29703-1-git-send-email-quic_srivasam@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-mc146818-lib.c | 64 +++++++++++++++++++++-------------
- 1 file changed, 39 insertions(+), 25 deletions(-)
+ sound/soc/soc-pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
-index b036ff33fbe6..8364e4141670 100644
---- a/drivers/rtc/rtc-mc146818-lib.c
-+++ b/drivers/rtc/rtc-mc146818-lib.c
-@@ -8,41 +8,41 @@
- #include <linux/acpi.h>
- #endif
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 0e2261ee07b6..fb874f924bbe 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1154,6 +1154,8 @@ static void dpcm_be_reparent(struct snd_soc_pcm_runtime *fe,
+ 		return;
  
--/*
-- * Returns true if a clock update is in progress
-- */
--static inline unsigned char mc146818_is_updating(void)
--{
--	unsigned char uip;
--	unsigned long flags;
--
--	spin_lock_irqsave(&rtc_lock, flags);
--	uip = (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP);
--	spin_unlock_irqrestore(&rtc_lock, flags);
--	return uip;
--}
--
- unsigned int mc146818_get_time(struct rtc_time *time)
- {
- 	unsigned char ctrl;
- 	unsigned long flags;
- 	unsigned char century = 0;
-+	bool retry;
+ 	be_substream = snd_soc_dpcm_get_substream(be, stream);
++	if (!be_substream)
++		return;
  
- #ifdef CONFIG_MACH_DECSTATION
- 	unsigned int real_year;
- #endif
- 
-+again:
-+	spin_lock_irqsave(&rtc_lock, flags);
- 	/*
--	 * read RTC once any update in progress is done. The update
--	 * can take just over 2ms. We wait 20ms. There is no need to
--	 * to poll-wait (up to 1s - eeccch) for the falling edge of RTC_UIP.
--	 * If you need to know *exactly* when a second has started, enable
--	 * periodic update complete interrupts, (via ioctl) and then
--	 * immediately read /dev/rtc which will block until you get the IRQ.
--	 * Once the read clears, read the RTC time (again via ioctl). Easy.
-+	 * Check whether there is an update in progress during which the
-+	 * readout is unspecified. The maximum update time is ~2ms. Poll
-+	 * every msec for completion.
-+	 *
-+	 * Store the second value before checking UIP so a long lasting NMI
-+	 * which happens to hit after the UIP check cannot make an update
-+	 * cycle invisible.
- 	 */
--	if (mc146818_is_updating())
--		mdelay(20);
-+	time->tm_sec = CMOS_READ(RTC_SECONDS);
-+
-+	if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
-+		spin_unlock_irqrestore(&rtc_lock, flags);
-+		mdelay(1);
-+		goto again;
-+	}
-+
-+	/* Revalidate the above readout */
-+	if (time->tm_sec != CMOS_READ(RTC_SECONDS)) {
-+		spin_unlock_irqrestore(&rtc_lock, flags);
-+		goto again;
-+	}
- 
- 	/*
- 	 * Only the values that we read from the RTC are set. We leave
-@@ -50,8 +50,6 @@ unsigned int mc146818_get_time(struct rtc_time *time)
- 	 * RTC has RTC_DAY_OF_WEEK, we ignore it, as it is only updated
- 	 * by the RTC when initially set to a non-zero value.
- 	 */
--	spin_lock_irqsave(&rtc_lock, flags);
--	time->tm_sec = CMOS_READ(RTC_SECONDS);
- 	time->tm_min = CMOS_READ(RTC_MINUTES);
- 	time->tm_hour = CMOS_READ(RTC_HOURS);
- 	time->tm_mday = CMOS_READ(RTC_DAY_OF_MONTH);
-@@ -66,8 +64,24 @@ unsigned int mc146818_get_time(struct rtc_time *time)
- 		century = CMOS_READ(acpi_gbl_FADT.century);
- #endif
- 	ctrl = CMOS_READ(RTC_CONTROL);
-+	/*
-+	 * Check for the UIP bit again. If it is set now then
-+	 * the above values may contain garbage.
-+	 */
-+	retry = CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP;
-+	/*
-+	 * A NMI might have interrupted the above sequence so check whether
-+	 * the seconds value has changed which indicates that the NMI took
-+	 * longer than the UIP bit was set. Unlikely, but possible and
-+	 * there is also virt...
-+	 */
-+	retry |= time->tm_sec != CMOS_READ(RTC_SECONDS);
-+
- 	spin_unlock_irqrestore(&rtc_lock, flags);
- 
-+	if (retry)
-+		goto again;
-+
- 	if (!(ctrl & RTC_DM_BINARY) || RTC_ALWAYS_BCD)
- 	{
- 		time->tm_sec = bcd2bin(time->tm_sec);
+ 	for_each_dpcm_fe(be, stream, dpcm) {
+ 		if (dpcm->fe == fe)
 -- 
 2.35.1
 
