@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F3C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFBEC433D2;
-	Mon, 12 Dec 2022 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD5328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1247C433F0;
+	Mon, 12 Dec 2022 13:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851242;
-	bh=nQD3F+yR5VcGd8c6PTDTnagnZIr6n93vFxGXEb3RfFs=;
+	s=korg; t=1670851246;
+	bh=brgwst/1mIC1XmVPWZ66bj5RoZCe7QPwFLSdga4Di0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSc0SeIfnmEpVyqgHRosSPUx0Hr9XD2Sr3e4x5Y1qC7DE8cYHBFiNRZGtLxMBM6u/
-	 RG+QMjGOmc20IrjtxSD8GGSt/KYHMfwlPFlXFHgnheRnSVvTuZj/ejoSU7rmClNUJA
-	 D3vm4c70/PjS0EtzqxrtN5Sq/vjFB7fKQIwJLR/c=
+	b=obB3TyBxw4mc41g++HqWF+UmewwGfd5C5PC4Z9mmMqDI7yltrOQQm/dhltMDzu3HZ
+	 B0Kbfu6xUD9V1cp/MdOPu/7GxEWfX2ViGlmZ9CMg4kowY20ppMDBPbNylBpkOxahXz
+	 CjswTWAIp+x0/jcCDaaWHAhrw3yCeAx+e2e3oUfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jann Horn <jannh@google.com>,
+	Yang Shi <shy828301@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 16/67] net: usb: qmi_wwan: add u-blox 0x1342 composition
-Date: Mon, 12 Dec 2022 14:16:51 +0100
-Message-Id: <20221212130918.399133092@linuxfoundation.org>
+Subject: [PATCH 5.4 17/67] mm/khugepaged: take the right locks for page table retraction
+Date: Mon, 12 Dec 2022 14:16:52 +0100
+Message-Id: <20221212130918.447051134@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -36,48 +39,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit a487069e11b6527373f7c6f435d8998051d0b5d9 ]
+commit 8d3c106e19e8d251da31ff4cc7462e4565d65084 upstream.
 
-Add RmNet support for LARA-L6.
+pagetable walks on address ranges mapped by VMAs can be done under the
+mmap lock, the lock of an anon_vma attached to the VMA, or the lock of the
+VMA's address_space.  Only one of these needs to be held, and it does not
+need to be held in exclusive mode.
 
-LARA-L6 module can be configured (by AT interface) in three different
-USB modes:
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1341) with 4 serial
-interfaces
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1342) with 4 serial
-interfaces and 1 RmNet virtual network interface
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1343) with 4 serial
-interface and 1 CDC-ECM virtual network interface
+Under those circumstances, the rules for concurrent access to page table
+entries are:
 
-In RmNet mode LARA-L6 exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parset/alternative functions
-If 4: RMNET interface
+ - Terminal page table entries (entries that don't point to another page
+   table) can be arbitrarily changed under the page table lock, with the
+   exception that they always need to be consistent for
+   hardware page table walks and lockless_pages_from_mm().
+   This includes that they can be changed into non-terminal entries.
+ - Non-terminal page table entries (which point to another page table)
+   can not be modified; readers are allowed to READ_ONCE() an entry, verify
+   that it is non-terminal, and then assume that its value will stay as-is.
 
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Retracting a page table involves modifying a non-terminal entry, so
+page-table-level locks are insufficient to protect against concurrent page
+table traversal; it requires taking all the higher-level locks under which
+it is possible to start a page walk in the relevant range in exclusive
+mode.
+
+The collapse_huge_page() path for anonymous THP already follows this rule,
+but the shmem/file THP path was getting it wrong, making it possible for
+concurrent rmap-based operations to cause corruption.
+
+Link: https://lkml.kernel.org/r/20221129154730.2274278-1-jannh@google.com
+Link: https://lkml.kernel.org/r/20221128180252.1684965-1-jannh@google.com
+Link: https://lkml.kernel.org/r/20221125213714.4115729-1-jannh@google.com
+Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[manual backport: this code was refactored from two copies into a common
+helper between 5.15 and 6.0]
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/khugepaged.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 7f0e3b09f776..c310cdbfd583 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1374,6 +1374,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x0489, 0xe0b4, 0)},	/* Foxconn T77W968 LTE */
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
-+	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 3c2326568193..55631cd73939 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1326,6 +1326,14 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 	if (!hugepage_vma_check(vma, vma->vm_flags | VM_HUGEPAGE))
+ 		return;
  
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
++	/*
++	 * Symmetry with retract_page_tables(): Exclude MAP_PRIVATE mappings
++	 * that got written to. Without this, we'd have to also lock the
++	 * anon_vma if one exists.
++	 */
++	if (vma->anon_vma)
++		return;
++
+ 	hpage = find_lock_page(vma->vm_file->f_mapping,
+ 			       linear_page_index(vma, haddr));
+ 	if (!hpage)
+@@ -1338,6 +1346,19 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 	if (!pmd)
+ 		goto drop_hpage;
+ 
++	/*
++	 * We need to lock the mapping so that from here on, only GUP-fast and
++	 * hardware page walks can access the parts of the page tables that
++	 * we're operating on.
++	 */
++	i_mmap_lock_write(vma->vm_file->f_mapping);
++
++	/*
++	 * This spinlock should be unnecessary: Nobody else should be accessing
++	 * the page tables under spinlock protection here, only
++	 * lockless_pages_from_mm() and the hardware page walker can access page
++	 * tables while all the high-level locks are held in write mode.
++	 */
+ 	start_pte = pte_offset_map_lock(mm, pmd, haddr, &ptl);
+ 
+ 	/* step 1: check all mapped PTEs are to the right huge page */
+@@ -1384,12 +1405,12 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 	}
+ 
+ 	/* step 4: collapse pmd */
+-	ptl = pmd_lock(vma->vm_mm, pmd);
+ 	_pmd = pmdp_collapse_flush(vma, haddr, pmd);
+-	spin_unlock(ptl);
+ 	mm_dec_nr_ptes(mm);
+ 	pte_free(mm, pmd_pgtable(_pmd));
+ 
++	i_mmap_unlock_write(vma->vm_file->f_mapping);
++
+ drop_hpage:
+ 	unlock_page(hpage);
+ 	put_page(hpage);
+@@ -1397,6 +1418,7 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 
+ abort:
+ 	pte_unmap_unlock(start_pte, ptl);
++	i_mmap_unlock_write(vma->vm_file->f_mapping);
+ 	goto drop_hpage;
+ }
+ 
+@@ -1446,7 +1468,8 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
+ 		 * An alternative would be drop the check, but check that page
+ 		 * table is clear before calling pmdp_collapse_flush() under
+ 		 * ptl. It has higher chance to recover THP for the VMA, but
+-		 * has higher cost too.
++		 * has higher cost too. It would also probably require locking
++		 * the anon_vma.
+ 		 */
+ 		if (vma->anon_vma)
+ 			continue;
+@@ -1468,10 +1491,8 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
+ 		 */
+ 		if (down_write_trylock(&mm->mmap_sem)) {
+ 			if (!khugepaged_test_exit(mm)) {
+-				spinlock_t *ptl = pmd_lock(mm, pmd);
+ 				/* assume page table is clear */
+ 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
+-				spin_unlock(ptl);
+ 				mm_dec_nr_ptes(mm);
+ 				pte_free(mm, pmd_pgtable(_pmd));
+ 			}
 -- 
 2.35.1
 
