@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACC828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A42C433D2;
-	Mon, 12 Dec 2022 13:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8AC28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B415BC433D2;
+	Mon, 12 Dec 2022 13:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853090;
-	bh=cDNZWKlTuyYCb8XyZI8wd0mMCTaPUMwCU7yluAAaa4c=;
+	s=korg; t=1670853094;
+	bh=rNdJFn4v0+0Ed6asYw2mjQp47DOWmWg2s3ELyE9Ysgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKR7evxiOS4V2knd1cQiKLWn+i9r/vKXyIqS5D63S+NF6q0ozT62FRuHoSGPzJTUs
-	 6daIbXHeyUpkYYoAXxJqF4ov9GZ+U1Ku15VCe40kVCHe6MVYkwKsbhqnkN+8Z7X0kx
-	 opjJAfv5ui0ZuDj4ITFau9YB47Wr/ffmAw4Gh3pw=
+	b=mjwQSbULCMZB5F4tRrFJ6AVWfVrusS/4AHqlc4ySuJzZ15x2OMsdaa5LjetrPJdUC
+	 t4vl5+1/xiJ3QvXCNR5aVOIk1UnAhbaiL7tShUqvsIWuIqP/rBFk8v45qvms0ndLCu
+	 TuLTJ8MH7YPPIwg2NKjyALXrL0IK4m35rJYYXAKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 49/49] can: esd_usb: Allow REC and TEC to return to zero
-Date: Mon, 12 Dec 2022 14:19:27 +0100
-Message-Id: <20221212130916.109154029@linuxfoundation.org>
+Subject: [PATCH 4.19 46/49] net: plip: dont call kfree_skb/dev_kfree_skb() under spin_lock_irq()
+Date: Mon, 12 Dec 2022 14:19:24 +0100
+Message-Id: <20221212130915.968491483@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -35,53 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 918ee4911f7a41fb4505dff877c1d7f9f64eb43e ]
+[ Upstream commit 7d8c19bfc8ff3f78e5337107ca9246327fcb6b45 ]
 
-We don't get any further EVENT from an esd CAN USB device for changes
-on REC or TEC while those counters converge to 0 (with ecc == 0). So
-when handling the "Back to Error Active"-event force txerr = rxerr =
-0, otherwise the berr-counters might stay on values like 95 forever.
+It is not allowed to call kfree_skb() or consume_skb() from
+hardware interrupt context or with interrupts being disabled.
+So replace kfree_skb/dev_kfree_skb() with dev_kfree_skb_irq()
+and dev_consume_skb_irq() under spin_lock_irq().
 
-Also, to make life easier during the ongoing development a
-netdev_dbg() has been introduced to allow dumping error events send by
-an esd CAN USB device.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20221130202242.3998219-2-frank.jungclaus@esd.eu
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20221207015310.2984909-1-yangyingliang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb2.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/plip/plip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/usb/esd_usb2.c b/drivers/net/can/usb/esd_usb2.c
-index d4e6b40f0ed4..ffdee5aeb8a9 100644
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -239,6 +239,10 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 		u8 rxerr = msg->msg.rx.data[2];
- 		u8 txerr = msg->msg.rx.data[3];
- 
-+		netdev_dbg(priv->netdev,
-+			   "CAN_ERR_EV_EXT: dlc=%#02x state=%02x ecc=%02x rec=%02x tec=%02x\n",
-+			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
-+
- 		skb = alloc_can_err_skb(priv->netdev, &cf);
- 		if (skb == NULL) {
- 			stats->rx_dropped++;
-@@ -265,6 +269,8 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 				break;
- 			default:
- 				priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+				txerr = 0;
-+				rxerr = 0;
- 				break;
- 			}
- 		} else {
+diff --git a/drivers/net/plip/plip.c b/drivers/net/plip/plip.c
+index feb92ecd1880..06d59e3af664 100644
+--- a/drivers/net/plip/plip.c
++++ b/drivers/net/plip/plip.c
+@@ -448,12 +448,12 @@ plip_bh_timeout_error(struct net_device *dev, struct net_local *nl,
+ 	}
+ 	rcv->state = PLIP_PK_DONE;
+ 	if (rcv->skb) {
+-		kfree_skb(rcv->skb);
++		dev_kfree_skb_irq(rcv->skb);
+ 		rcv->skb = NULL;
+ 	}
+ 	snd->state = PLIP_PK_DONE;
+ 	if (snd->skb) {
+-		dev_kfree_skb(snd->skb);
++		dev_consume_skb_irq(snd->skb);
+ 		snd->skb = NULL;
+ 	}
+ 	spin_unlock_irq(&nl->lock);
 -- 
 2.35.1
 
