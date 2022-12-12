@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FD828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D76C433EF;
-	Mon, 12 Dec 2022 13:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74B128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50C7C433D2;
+	Mon, 12 Dec 2022 13:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852550;
-	bh=bqeffSMUhDZYJLTZsspfEnsaxGnWB5F7RARi16EC1YE=;
+	s=korg; t=1670852556;
+	bh=fxdGncPSS8b9gX0+dSdEQDo5IGcISDZYEcPCnTvxkq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQI8ZL9QLCDfvjru0+Decng2hFLOs0JxyHwVFUda6BGK9FL9oiq53Kc22xegYBbmu
-	 +bSHyyxkf6HU3EzA0hnMc2GdHun4iWsgIkvYrJ7+BsuypPAcgU/xbVJsKzUMdpPFog
-	 rjmh8v4XA4jkxFZsGCR5oC+ueFga8LDCRNiRvwCg=
+	b=EajIbkX7FphVsf+H6osTT8EasGlvmK3D+MzRh5s/CDS2+w4tY+qBB4ivpBj1/PR5Z
+	 3jmOfLJD0qufGgjYB7v0OhJjg8zCbzyFjDhucdyuUG1+0gbOulLEPC5+qP2yHp+H95
+	 to9jjS+MKjfsuJk7ynO1o3Xc5rBuMJW5dtcZP0NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guolin Yang <gyang@vmware.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 104/157] vmxnet3: correctly report encapsulated LRO packet
-Date: Mon, 12 Dec 2022 14:17:32 +0100
-Message-Id: <20221212130939.018698045@linuxfoundation.org>
+Subject: [PATCH 6.0 105/157] vmxnet3: use correct intrConf reference when using extended queues
+Date: Mon, 12 Dec 2022 14:17:33 +0100
+Message-Id: <20221212130939.060027397@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -38,82 +38,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Ronak Doshi <doshir@vmware.com>
 
-[ Upstream commit 40b8c2a1af03ba3e8da55a4490d646bfa845e71a ]
+[ Upstream commit 409e8ec8c5825591895937b8499b54aa2476fae7 ]
 
-Commit dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload
-support") added support for encapsulation offload. However, the
-pathc did not report correctly the encapsulated packet which is
-LRO'ed by the hypervisor.
+Commit 39f9895a00f4 ("vmxnet3: add support for 32 Tx/Rx queues")
+added support for 32Tx/Rx queues. As a part of this patch, intrConf
+structure was extended to incorporate increased queues.
 
-This patch fixes this issue by using correct callback for the LRO'ed
-encapsulated packet.
+This patch fixes the issue where incorrect reference is being used.
 
-Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
+Fixes: 39f9895a00f4 ("vmxnet3: add support for 32 Tx/Rx queues")
 Signed-off-by: Ronak Doshi <doshir@vmware.com>
 Acked-by: Guolin Yang <gyang@vmware.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index 53b3b241e027..dd4fecbd1e2e 100644
+index dd4fecbd1e2e..c28c4a654615 100644
 --- a/drivers/net/vmxnet3/vmxnet3_drv.c
 +++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1396,6 +1396,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 	};
- 	u32 num_pkts = 0;
- 	bool skip_page_frags = false;
-+	bool encap_lro = false;
- 	struct Vmxnet3_RxCompDesc *rcd;
- 	struct vmxnet3_rx_ctx *ctx = &rq->rx_ctx;
- 	u16 segCnt = 0, mss = 0;
-@@ -1556,13 +1557,18 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 			if (VMXNET3_VERSION_GE_2(adapter) &&
- 			    rcd->type == VMXNET3_CDTYPE_RXCOMP_LRO) {
- 				struct Vmxnet3_RxCompDescExt *rcdlro;
-+				union Vmxnet3_GenericDesc *gdesc;
-+
- 				rcdlro = (struct Vmxnet3_RxCompDescExt *)rcd;
-+				gdesc = (union Vmxnet3_GenericDesc *)rcd;
+@@ -75,8 +75,14 @@ vmxnet3_enable_all_intrs(struct vmxnet3_adapter *adapter)
  
- 				segCnt = rcdlro->segCnt;
- 				WARN_ON_ONCE(segCnt == 0);
- 				mss = rcdlro->mss;
- 				if (unlikely(segCnt <= 1))
- 					segCnt = 0;
-+				encap_lro = (le32_to_cpu(gdesc->dword[0]) &
-+					(1UL << VMXNET3_RCD_HDR_INNER_SHIFT));
- 			} else {
- 				segCnt = 0;
- 			}
-@@ -1630,7 +1636,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 			vmxnet3_rx_csum(adapter, skb,
- 					(union Vmxnet3_GenericDesc *)rcd);
- 			skb->protocol = eth_type_trans(skb, adapter->netdev);
--			if (!rcd->tcp ||
-+			if ((!rcd->tcp && !encap_lro) ||
- 			    !(adapter->netdev->features & NETIF_F_LRO))
- 				goto not_lro;
+ 	for (i = 0; i < adapter->intr.num_intrs; i++)
+ 		vmxnet3_enable_intr(adapter, i);
+-	adapter->shared->devRead.intrConf.intrCtrl &=
++	if (!VMXNET3_VERSION_GE_6(adapter) ||
++	    !adapter->queuesExtEnabled) {
++		adapter->shared->devRead.intrConf.intrCtrl &=
+ 					cpu_to_le32(~VMXNET3_IC_DISABLE_ALL);
++	} else {
++		adapter->shared->devReadExt.intrConfExt.intrCtrl &=
++					cpu_to_le32(~VMXNET3_IC_DISABLE_ALL);
++	}
+ }
  
-@@ -1639,7 +1645,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 					SKB_GSO_TCPV4 : SKB_GSO_TCPV6;
- 				skb_shinfo(skb)->gso_size = mss;
- 				skb_shinfo(skb)->gso_segs = segCnt;
--			} else if (segCnt != 0 || skb->len > mtu) {
-+			} else if ((segCnt != 0 || skb->len > mtu) && !encap_lro) {
- 				u32 hlen;
  
- 				hlen = vmxnet3_get_hdr_len(adapter, skb,
-@@ -1668,6 +1674,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
- 				napi_gro_receive(&rq->napi, skb);
+@@ -85,8 +91,14 @@ vmxnet3_disable_all_intrs(struct vmxnet3_adapter *adapter)
+ {
+ 	int i;
  
- 			ctx->skb = NULL;
-+			encap_lro = false;
- 			num_pkts++;
- 		}
- 
+-	adapter->shared->devRead.intrConf.intrCtrl |=
++	if (!VMXNET3_VERSION_GE_6(adapter) ||
++	    !adapter->queuesExtEnabled) {
++		adapter->shared->devRead.intrConf.intrCtrl |=
+ 					cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
++	} else {
++		adapter->shared->devReadExt.intrConfExt.intrCtrl |=
++					cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
++	}
+ 	for (i = 0; i < adapter->intr.num_intrs; i++)
+ 		vmxnet3_disable_intr(adapter, i);
+ }
 -- 
 2.35.1
 
