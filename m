@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B6F2585
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B6DC433EF;
-	Mon, 12 Dec 2022 13:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E17A2585
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:13:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832BDC433D2;
+	Mon, 12 Dec 2022 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850798;
-	bh=DqKM849x7gt3PjeNUUtRJHZ1GNC+B3dQOWwls24FMt0=;
+	s=korg; t=1670850802;
+	bh=DtBcW4tLmfFdZQNo6uBCQ9zPwq/osweAonFwdx/01vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQBP716JQSWb2ddwpI0WQf9prmu4X+aSUiEb+ZIby19M9epLXWFV81qWWzU8bOv//
-	 GIXesncXazYOpodC3+EByh0UEdy3SEhHgLRT0cahJClj2J7i5HYvsfUjF+tGJBHAew
-	 hyx8p+wqkbPhEPN2G/7Hj5/67dA9xd0uva1xD83g=
+	b=UcZa0EUWwuH3bu0GECT6PjeNwJNhSYMA3N0nnWLz0AmHFKpeIae25b7TKM2H7GYXX
+	 dWFT+2jRl0B/p7mZ0KXdMMtALxJEgtizJ/pkFj+CtizgOZ6y5ij+gIzDPK3jjuMUDJ
+	 y43AReMP5Am4xYRRILvyp6f9VsJNNpkurrs16qy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Serge Belyshev <belyshev@depni.sinp.msu.ru>,
+	Dirk Gouders <dirk@gouders.net>,
+	Borislav Petkov <bp@suse.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@linux.microsoft.com>,
+	Len Brown <len.brown@intel.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/106] rtc: mc146818: Detect and handle broken RTCs
-Date: Mon, 12 Dec 2022 14:09:34 +0100
-Message-Id: <20221212130926.209972761@linuxfoundation.org>
+Subject: [PATCH 5.10 032/106] rtc: mc146818: Dont test for bit 0-5 in Register D
+Date: Mon, 12 Dec 2022 14:09:35 +0100
+Message-Id: <20221212130926.253163292@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -39,69 +41,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 211e5db19d15a721b2953ea54b8f26c2963720eb ]
+[ Upstream commit ebb22a05943666155e6da04407cc6e913974c78c ]
 
-The recent fix for handling the UIP bit unearthed another issue in the RTC
-code. If the RTC is advertised but the readout is straight 0xFF because
-it's not available, the old code just proceeded with crappy values, but the
-new code hangs because it waits for the UIP bit to become low.
+The recent change to validate the RTC turned out to be overly tight.
 
-Add a sanity check in the RTC CMOS probe function which reads the RTC_VALID
-register (Register D) which should have bit 0-6 cleared. If that's not the
-case then fail to register the CMOS.
+While it cures the problem on the reporters machine it breaks machines
+with Intel chipsets which use bit 0-5 of the D register. So check only
+for bit 6 being 0 which is the case on these Intel machines as well.
 
-Add the same check to mc146818_get_time(), warn once when the condition
-is true and invalidate the rtc_time data.
-
-Reported-by: Mickaël Salaün <mic@digikod.net>
+Fixes: 211e5db19d15 ("rtc: mc146818: Detect and handle broken RTCs")
+Reported-by: Serge Belyshev <belyshev@depni.sinp.msu.ru>
+Reported-by: Dirk Gouders <dirk@gouders.net>
+Reported-by: Borislav Petkov <bp@suse.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Mickaël Salaün <mic@linux.microsoft.com>
+Tested-by: Dirk Gouders <dirk@gouders.net>
+Tested-by: Len Brown <len.brown@intel.com>
+Tested-by: Borislav Petkov <bp@suse.de>
 Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/87tur3fx7w.fsf@nanos.tec.linutronix.de
+Link: https://lore.kernel.org/r/87zh0nbnha.fsf@nanos.tec.linutronix.de
 Stable-dep-of: cd17420ebea5 ("rtc: cmos: avoid UIP when writing alarm time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c         | 8 ++++++++
- drivers/rtc/rtc-mc146818-lib.c | 7 +++++++
- 2 files changed, 15 insertions(+)
+ drivers/rtc/rtc-cmos.c         | 4 ++--
+ drivers/rtc/rtc-mc146818-lib.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 58c6382a2807..cce4b62ffdd0 100644
+index cce4b62ffdd0..8e8ce40f6440 100644
 --- a/drivers/rtc/rtc-cmos.c
 +++ b/drivers/rtc/rtc-cmos.c
-@@ -808,6 +808,14 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+@@ -808,8 +808,8 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
  
  	spin_lock_irq(&rtc_lock);
  
-+	/* Ensure that the RTC is accessible. Bit 0-6 must be 0! */
-+	if ((CMOS_READ(RTC_VALID) & 0x7f) != 0) {
-+		spin_unlock_irq(&rtc_lock);
-+		dev_warn(dev, "not accessible\n");
-+		retval = -ENXIO;
-+		goto cleanup1;
-+	}
-+
- 	if (!(flags & CMOS_RTC_FLAGS_NOFREQ)) {
- 		/* force periodic irq to CMOS reset default of 1024Hz;
- 		 *
+-	/* Ensure that the RTC is accessible. Bit 0-6 must be 0! */
+-	if ((CMOS_READ(RTC_VALID) & 0x7f) != 0) {
++	/* Ensure that the RTC is accessible. Bit 6 must be 0! */
++	if ((CMOS_READ(RTC_VALID) & 0x40) != 0) {
+ 		spin_unlock_irq(&rtc_lock);
+ 		dev_warn(dev, "not accessible\n");
+ 		retval = -ENXIO;
 diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
-index 8364e4141670..7f01dc41271d 100644
+index 7f01dc41271d..6ed2cd5d2bba 100644
 --- a/drivers/rtc/rtc-mc146818-lib.c
 +++ b/drivers/rtc/rtc-mc146818-lib.c
-@@ -21,6 +21,13 @@ unsigned int mc146818_get_time(struct rtc_time *time)
+@@ -21,8 +21,8 @@ unsigned int mc146818_get_time(struct rtc_time *time)
  
  again:
  	spin_lock_irqsave(&rtc_lock, flags);
-+	/* Ensure that the RTC is accessible. Bit 0-6 must be 0! */
-+	if (WARN_ON_ONCE((CMOS_READ(RTC_VALID) & 0x7f) != 0)) {
-+		spin_unlock_irqrestore(&rtc_lock, flags);
-+		memset(time, 0xff, sizeof(*time));
-+		return 0;
-+	}
-+
- 	/*
- 	 * Check whether there is an update in progress during which the
- 	 * readout is unspecified. The maximum update time is ~2ms. Poll
+-	/* Ensure that the RTC is accessible. Bit 0-6 must be 0! */
+-	if (WARN_ON_ONCE((CMOS_READ(RTC_VALID) & 0x7f) != 0)) {
++	/* Ensure that the RTC is accessible. Bit 6 must be 0! */
++	if (WARN_ON_ONCE((CMOS_READ(RTC_VALID) & 0x40) != 0)) {
+ 		spin_unlock_irqrestore(&rtc_lock, flags);
+ 		memset(time, 0xff, sizeof(*time));
+ 		return 0;
 -- 
 2.35.1
 
