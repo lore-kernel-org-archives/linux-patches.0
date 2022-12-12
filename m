@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34E928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CFDC433D2;
-	Mon, 12 Dec 2022 13:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B60C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBB7C43396;
+	Mon, 12 Dec 2022 13:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853379;
-	bh=s8UTlsTHL+spmWejxSsGUWv+45uvXAz/KIpq6sKLYCo=;
+	s=korg; t=1670853383;
+	bh=OyJ+I3D0F90WRZF+J2iwpsLfKEJ1HT0fAfcoBMQ+/Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm7/I1I0ItMtwZHrgzYzqeWbdun8zTy3VsnJ1ExLZ5iiPuKQq5e8Hto5aLa2Cs8RL
-	 NwFygEKE77Qg7Ztc3ZfzxUaTDGjyxtP3APhaxVxKNEK/KHupNbsJJ1ZL0tl6YB0eiG
-	 nNqpx34mYsxrqQ8sAIiOUMKxXZLxZtjCy9rzDxj8=
+	b=V94RT7WpX/nKKwyenhM59figbjzKxtCV377ZbfYz9aEnWOkP3cnLsKMhY8VH9VM9k
+	 WWm4WDDgQ+4ZOXTpfVtsFytB1eJqu41Dxt8lZu3wJM6zhM6tqStmNbppiWbqqA6ZEL
+	 3zpm6HHYrEnKUCJFlDtg0PgjyjgkjHarB3yna4UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 19/31] Bluetooth: 6LoWPAN: add missing hci_dev_put() in get_l2cap_conn()
-Date: Mon, 12 Dec 2022 14:19:37 +0100
-Message-Id: <20221212130911.054924945@linuxfoundation.org>
+Subject: [PATCH 4.9 20/31] mac802154: fix missing INIT_LIST_HEAD in ieee802154_if_add()
+Date: Mon, 12 Dec 2022 14:19:38 +0100
+Message-Id: <20221212130911.101560720@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -35,33 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 747da1308bdd5021409974f9180f0d8ece53d142 ]
+[ Upstream commit b3d72d3135d2ef68296c1ee174436efd65386f04 ]
 
-hci_get_route() takes reference, we should use hci_dev_put() to release
-it when not need anymore.
+Kernel fault injection test reports null-ptr-deref as follows:
 
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+RIP: 0010:cfg802154_netdev_notifier_call+0x120/0x310 include/linux/list.h:114
+Call Trace:
+ <TASK>
+ raw_notifier_call_chain+0x6d/0xa0 kernel/notifier.c:87
+ call_netdevice_notifiers_info+0x6e/0xc0 net/core/dev.c:1944
+ unregister_netdevice_many_notify+0x60d/0xcb0 net/core/dev.c:1982
+ unregister_netdevice_queue+0x154/0x1a0 net/core/dev.c:10879
+ register_netdevice+0x9a8/0xb90 net/core/dev.c:10083
+ ieee802154_if_add+0x6ed/0x7e0 net/mac802154/iface.c:659
+ ieee802154_register_hw+0x29c/0x330 net/mac802154/main.c:229
+ mcr20a_probe+0xaaa/0xcb1 drivers/net/ieee802154/mcr20a.c:1316
+
+ieee802154_if_add() allocates wpan_dev as netdev's private data, but not
+init the list in struct wpan_dev. cfg802154_netdev_notifier_call() manage
+the list when device register/unregister, and may lead to null-ptr-deref.
+
+Use INIT_LIST_HEAD() on it to initialize it correctly.
+
+Fixes: fcf39e6e88e9 ("ieee802154: add wpan_dev_list")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+
+Link: https://lore.kernel.org/r/20221130091705.1831140-1-weiyongjun@huaweicloud.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 1 +
+ net/mac802154/iface.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 3bfd747aa515..4a29410f5abc 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1119,6 +1119,7 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- 	hci_dev_lock(hdev);
- 	hcon = hci_conn_hash_lookup_le(hdev, addr, *addr_type);
- 	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
+diff --git a/net/mac802154/iface.c b/net/mac802154/iface.c
+index 06019dba4b10..9f2355cb6701 100644
+--- a/net/mac802154/iface.c
++++ b/net/mac802154/iface.c
+@@ -670,6 +670,7 @@ ieee802154_if_add(struct ieee802154_local *local, const char *name,
+ 	sdata->dev = ndev;
+ 	sdata->wpan_dev.wpan_phy = local->hw.phy;
+ 	sdata->local = local;
++	INIT_LIST_HEAD(&sdata->wpan_dev.list);
  
- 	if (!hcon)
- 		return -ENOENT;
+ 	/* setup type-dependent data */
+ 	ret = ieee802154_setup_sdata(sdata, type);
 -- 
 2.35.1
 
