@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C00328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A455BC433D2;
-	Mon, 12 Dec 2022 13:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397ED28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C94C433D2;
+	Mon, 12 Dec 2022 13:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852372;
-	bh=4J0wGzJHK2ZUwVDi/3cnl5pEt1ZD/J0kKiPZV9kjMIE=;
+	s=korg; t=1670852377;
+	bh=W3LMiVFbTbzZXbpi+BgurGwJZb2IZI+2gLyeM7tg3QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIVqLCOauipoI/p/8JIFjCyr6QhLkjhxnQjKS1sji6wnBwXsV+zwwCS4V1LgbA3Jg
-	 cOEoDBb/nug0Gpx0CrJCQsbJoStrrgAGbVSx2jLGaQBDCR2jkMdXSK/31TioJiSSPg
-	 xeLPaTDO30W+V5rWfntTFsVkUHjYD2JT1U2a6ViA=
+	b=D7aVGbcN6JyNTfQfaX+wAOqwT7Aix0C0t2UJtMj2ZJO3k6q+tP0LXjkFGaj7pVAq9
+	 Pkcov9sE1hZLGOtOOB4WKEXIU7RVPU/b5v5lZY6ZazrX4xKw6ddIsOxIa7dQxtgmE5
+	 hWghn8dXQJhBeAiBUW6e4iwmmz8at04ipTF9e5Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jan Kara <jack@suse.cz>,
-	Yu Zhao <yuzhao@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
+	Thomas Huth <thuth@redhat.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	David Hildenbrand <david@redhat.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 059/157] mm/gup: fix gup_pud_range() for dax
-Date: Mon, 12 Dec 2022 14:16:47 +0100
-Message-Id: <20221212130936.937638366@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>
+Subject: [PATCH 6.0 068/157] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
+Date: Mon, 12 Dec 2022 14:16:56 +0100
+Message-Id: <20221212130937.333043892@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -42,87 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Starks <jostarks@microsoft.com>
+From: Thomas Huth <thuth@redhat.com>
 
-commit fcd0ccd836ffad73d98a66f6fea7b16f735ea920 upstream.
+commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
 
-For dax pud, pud_huge() returns true on x86. So the function works as long
-as hugetlb is configured. However, dax doesn't depend on hugetlb.
-Commit 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax") fixed
-devmap-backed huge PMDs, but missed devmap-backed huge PUDs. Fix this as
-well.
+We recently experienced some weird huge time jumps in nested guests when
+rebooting them in certain cases. After adding some debug code to the epoch
+handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
+obvious that the "epdx" field (the multi-epoch extension) did not get set
+to 0xff in case the "epoch" field was negative.
+Seems like the code misses to copy the value from the epdx field from
+the guest to the shadow control block. By doing so, the weird time
+jumps are gone in our scenarios.
 
-This fixes the below kernel panic:
-
-general protection fault, probably for non-canonical address 0x69e7c000cc478: 0000 [#1] SMP
-	< snip >
-Call Trace:
-<TASK>
-get_user_pages_fast+0x1f/0x40
-iov_iter_get_pages+0xc6/0x3b0
-? mempool_alloc+0x5d/0x170
-bio_iov_iter_get_pages+0x82/0x4e0
-? bvec_alloc+0x91/0xc0
-? bio_alloc_bioset+0x19a/0x2a0
-blkdev_direct_IO+0x282/0x480
-? __io_complete_rw_common+0xc0/0xc0
-? filemap_range_has_page+0x82/0xc0
-generic_file_direct_write+0x9d/0x1a0
-? inode_update_time+0x24/0x30
-__generic_file_write_iter+0xbd/0x1e0
-blkdev_write_iter+0xb4/0x150
-? io_import_iovec+0x8d/0x340
-io_write+0xf9/0x300
-io_issue_sqe+0x3c3/0x1d30
-? sysvec_reschedule_ipi+0x6c/0x80
-__io_queue_sqe+0x33/0x240
-? fget+0x76/0xa0
-io_submit_sqes+0xe6a/0x18d0
-? __fget_light+0xd1/0x100
-__x64_sys_io_uring_enter+0x199/0x880
-? __context_tracking_enter+0x1f/0x70
-? irqentry_exit_to_user_mode+0x24/0x30
-? irqentry_exit+0x1d/0x30
-? __context_tracking_exit+0xe/0x70
-do_syscall_64+0x3b/0x90
-entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7fc97c11a7be
-	< snip >
-</TASK>
----[ end trace 48b2e0e67debcaeb ]---
-RIP: 0010:internal_get_user_pages_fast+0x340/0x990
-	< snip >
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: disabled
-
-Link: https://lkml.kernel.org/r/1670392853-28252-1-git-send-email-ssengar@linux.microsoft.com
-Fixes: 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax")
-Signed-off-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
+Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.19+
+Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
+Message-Id: <20221123090833.292938-1-thuth@redhat.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/vsie.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2818,7 +2818,7 @@ static int gup_pud_range(p4d_t *p4dp, p4
- 		next = pud_addr_end(addr, end);
- 		if (unlikely(!pud_present(pud)))
- 			return 0;
--		if (unlikely(pud_huge(pud))) {
-+		if (unlikely(pud_huge(pud) || pud_devmap(pud))) {
- 			if (!gup_huge_pud(pud, pudp, addr, next, flags,
- 					  pages, nr))
- 				return 0;
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -546,8 +546,10 @@ static int shadow_scb(struct kvm_vcpu *v
+ 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
+ 		scb_s->eca |= scb_o->eca & ECA_CEI;
+ 	/* Epoch Extension */
+-	if (test_kvm_facility(vcpu->kvm, 139))
++	if (test_kvm_facility(vcpu->kvm, 139)) {
+ 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
++		scb_s->epdx = scb_o->epdx;
++	}
+ 
+ 	/* etoken */
+ 	if (test_kvm_facility(vcpu->kvm, 156))
 
 
