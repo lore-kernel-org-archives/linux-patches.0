@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E3B28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B33DC433EF;
-	Mon, 12 Dec 2022 13:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3472128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:47:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0036C433EF;
+	Mon, 12 Dec 2022 13:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852850;
-	bh=6GOpCJ0HJOcTskPOJE/2SNIGQYYu3hZSBh+fUebue6E=;
+	s=korg; t=1670852855;
+	bh=mkCG4Ck/QnC69kHJnGFVEn09J2tOh40TyjDDjyUyxM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXMunz/pNVb+JXvJgIC2W6df26DV3Uj/c/c1Fz10g7NARD+jr8LkpNkswymXf0Bu3
-	 WQwbUqF/YDXU1THEvnLZWHjjrGTitSjggvXp++LrWAIMnlKkoPYwl4qbJjOUqESa+P
-	 KK7LYUqXeYzE6IijJWy8C2zJV/QImJBS1x95/InY=
+	b=KBW6mtIsCL0PPEif6wtrppFfq4y39rRQ/T903zGD1soytBLF7h3iex2TQ32C7qX3/
+	 sdiQ1gqTKaf7gaNPZj9lIb3fqS6tH3AIX3Xv5ub0lWMkhEh8/amRq4e29vxrJzmqTe
+	 kRUVpasMR7t/0EgX4LRAkGFOuXZ5bPSNpDLTQDzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 154/157] net: mvneta: Fix an out of bounds check
-Date: Mon, 12 Dec 2022 14:18:22 +0100
-Message-Id: <20221212130941.458981220@linuxfoundation.org>
+Subject: [PATCH 6.0 145/157] tipc: call tipc_lxc_xmit without holding node_read_lock
+Date: Mon, 12 Dec 2022 14:18:13 +0100
+Message-Id: <20221212130940.991592018@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,53 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit cdd97383e19d4afe29adc3376025a15ae3bab3a3 ]
+[ Upstream commit 88956177db179e4eba7cd590971961857d1565b8 ]
 
-In an earlier commit, I added a bounds check to prevent an out of bounds
-read and a WARN().  On further discussion and consideration that check
-was probably too aggressive.  Instead of returning -EINVAL, a better fix
-would be to just prevent the out of bounds read but continue the process.
+When sending packets between nodes in netns, it calls tipc_lxc_xmit() for
+peer node to receive the packets where tipc_sk_mcast_rcv()/tipc_sk_rcv()
+might be called, and it's pretty much like in tipc_rcv().
 
-Background: The value of "pp->rxq_def" is a number between 0-7 by default,
-or even higher depending on the value of "rxq_number", which is a module
-parameter. If the value is more than the number of available CPUs then
-it will trigger the WARN() in cpu_max_bits_warn().
+Currently the local 'node rw lock' is held during calling tipc_lxc_xmit()
+to protect the peer_net not being freed by another thread. However, when
+receiving these packets, tipc_node_add_conn() might be called where the
+peer 'node rw lock' is acquired. Then a dead lock warning is triggered by
+lockdep detector, although it is not a real dead lock:
 
-Fixes: e8b4fc13900b ("net: mvneta: Prevent out of bounds read in mvneta_config_rss()")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/Y5A7d1E5ccwHTYPf@kadam
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    WARNING: possible recursive locking detected
+    --------------------------------------------
+    conn_server/1086 is trying to acquire lock:
+    ffff8880065cb020 (&n->lock#2){++--}-{2:2}, \
+                     at: tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
+
+    but task is already holding lock:
+    ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
+                     at: tipc_node_xmit+0x285/0xb30 [tipc]
+
+    other info that might help us debug this:
+     Possible unsafe locking scenario:
+
+           CPU0
+           ----
+      lock(&n->lock#2);
+      lock(&n->lock#2);
+
+     *** DEADLOCK ***
+
+     May be due to missing lock nesting notation
+
+    4 locks held by conn_server/1086:
+     #0: ffff8880036d1e40 (sk_lock-AF_TIPC){+.+.}-{0:0}, \
+                          at: tipc_accept+0x9c0/0x10b0 [tipc]
+     #1: ffff8880036d5f80 (sk_lock-AF_TIPC/1){+.+.}-{0:0}, \
+                          at: tipc_accept+0x363/0x10b0 [tipc]
+     #2: ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
+                          at: tipc_node_xmit+0x285/0xb30 [tipc]
+     #3: ffff888012e13370 (slock-AF_TIPC){+...}-{2:2}, \
+                          at: tipc_sk_rcv+0x2da/0x1b40 [tipc]
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x44/0x5b
+     __lock_acquire.cold.77+0x1f2/0x3d7
+     lock_acquire+0x1d2/0x610
+     _raw_write_lock_bh+0x38/0x80
+     tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
+     tipc_sk_finish_conn+0x21e/0x640 [tipc]
+     tipc_sk_filter_rcv+0x147b/0x3030 [tipc]
+     tipc_sk_rcv+0xbb4/0x1b40 [tipc]
+     tipc_lxc_xmit+0x225/0x26b [tipc]
+     tipc_node_xmit.cold.82+0x4a/0x102 [tipc]
+     __tipc_sendstream+0x879/0xff0 [tipc]
+     tipc_accept+0x966/0x10b0 [tipc]
+     do_accept+0x37d/0x590
+
+This patch avoids this warning by not holding the 'node rw lock' before
+calling tipc_lxc_xmit(). As to protect the 'peer_net', rcu_read_lock()
+should be enough, as in cleanup_net() when freeing the netns, it calls
+synchronize_rcu() before the free is continued.
+
+Also since tipc_lxc_xmit() is like the RX path in tipc_rcv(), it makes
+sense to call it under rcu_read_lock(). Note that the right lock order
+must be:
+
+   rcu_read_lock();
+   tipc_node_read_lock(n);
+   tipc_node_read_unlock(n);
+   tipc_lxc_xmit();
+   rcu_read_unlock();
+
+instead of:
+
+   tipc_node_read_lock(n);
+   rcu_read_lock();
+   tipc_node_read_unlock(n);
+   tipc_lxc_xmit();
+   rcu_read_unlock();
+
+and we have to call tipc_node_read_lock/unlock() twice in
+tipc_node_xmit().
+
+Fixes: f73b12812a3d ("tipc: improve throughput between nodes in netns")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/5bdd1f8fee9db695cfff4528a48c9b9d0523fb00.1670110641.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/tipc/node.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 3805b61b9263..85c93ba6a82b 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -4271,7 +4271,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 	/* Use the cpu associated to the rxq when it is online, in all
- 	 * the other cases, use the cpu 0 which can't be offline.
- 	 */
--	if (cpu_online(pp->rxq_def))
-+	if (pp->rxq_def < nr_cpu_ids && cpu_online(pp->rxq_def))
- 		elected_cpu = pp->rxq_def;
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index b48d97cbbe29..49ddc484c4fe 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1689,6 +1689,7 @@ int tipc_node_xmit(struct net *net, struct sk_buff_head *list,
+ 	struct tipc_node *n;
+ 	struct sk_buff_head xmitq;
+ 	bool node_up = false;
++	struct net *peer_net;
+ 	int bearer_id;
+ 	int rc;
  
- 	max_cpu = num_present_cpus();
-@@ -4927,9 +4927,6 @@ static int  mvneta_config_rss(struct mvneta_port *pp)
- 		napi_disable(&pp->napi);
+@@ -1705,18 +1706,23 @@ int tipc_node_xmit(struct net *net, struct sk_buff_head *list,
+ 		return -EHOSTUNREACH;
  	}
  
--	if (pp->indir[0] >= nr_cpu_ids)
--		return -EINVAL;
--
- 	pp->rxq_def = pp->indir[0];
++	rcu_read_lock();
+ 	tipc_node_read_lock(n);
+ 	node_up = node_is_up(n);
+-	if (node_up && n->peer_net && check_net(n->peer_net)) {
++	peer_net = n->peer_net;
++	tipc_node_read_unlock(n);
++	if (node_up && peer_net && check_net(peer_net)) {
+ 		/* xmit inner linux container */
+-		tipc_lxc_xmit(n->peer_net, list);
++		tipc_lxc_xmit(peer_net, list);
+ 		if (likely(skb_queue_empty(list))) {
+-			tipc_node_read_unlock(n);
++			rcu_read_unlock();
+ 			tipc_node_put(n);
+ 			return 0;
+ 		}
+ 	}
++	rcu_read_unlock();
  
- 	/* Update unicast mapping */
++	tipc_node_read_lock(n);
+ 	bearer_id = n->active_links[selector & 1];
+ 	if (unlikely(bearer_id == INVALID_BEARER_ID)) {
+ 		tipc_node_read_unlock(n);
 -- 
 2.35.1
 
