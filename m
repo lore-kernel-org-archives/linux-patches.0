@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24A828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:25:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D85C433D2;
-	Mon, 12 Dec 2022 13:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E8128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:25:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6195FC433D2;
+	Mon, 12 Dec 2022 13:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851541;
-	bh=n80BBL9rPZgCfM9ZDx1gmOm1sayh1trz1a8bP7Lci8Q=;
+	s=korg; t=1670851546;
+	bh=1q6LV/XCGJkICRHPhOXZv9+sukcew2TPlUBl0//TvHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clulFht6g7rFLjJF8uHtzQAa5h3wdv5KIq+i2ErqtUSWtwaDVEOC+zkTdw57CwZoa
-	 VlDu+Nb4+LfLQSFDG1zKbH3cF9GZQpoxMcJ09wEWGoljbv7CPS2HDkbzpRWN0asHm8
-	 /XzcJNuT9VxBrmrms7DhDZzJv/rt5eXuCwrfk5wc=
+	b=EtYKn2c8REVrvIboiyyaYwFu4mn/z3qeEkC9jFKkY/nXqL/8Tw6yoK07rn/Jq4r5S
+	 JnqPS35YgbOEKjCb6LPDT3eOCu6k0Ef8HcNRRJQ3pCicUgBZiWL7QCL9BaTCqkVBMc
+	 mvYJkh+2qo2YCJ/xrjBlBaQ8mlFWb3Ud9cQD3uXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alexandru Ardelean <aardelean@deviqon.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/123] clk: Provide new devm_clk helpers for prepared and enabled clocks
-Date: Mon, 12 Dec 2022 14:16:08 +0100
-Message-Id: <20221212130926.920492527@linuxfoundation.org>
+Subject: [PATCH 5.15 020/123] selftests/net: Find nettest in current directory
+Date: Mon, 12 Dec 2022 14:16:26 +0100
+Message-Id: <20221212130927.737612718@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -37,209 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Daniel Díaz <daniel.diaz@linaro.org>
 
-[ Upstream commit 7ef9651e9792b08eb310c6beb202cbc947f43cab ]
+[ Upstream commit bd5e1e42826f18147afb0ba07e6a815f52cf8bcb ]
 
-When a driver keeps a clock prepared (or enabled) during the whole
-lifetime of the driver, these helpers allow to simplify the drivers.
+The `nettest` binary, built from `selftests/net/nettest.c`,
+was expected to be found in the path during test execution of
+`fcnal-test.sh` and `pmtu.sh`, leading to tests getting
+skipped when the binary is not installed in the system, as can
+be seen in these logs found in the wild [1]:
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20220520075737.758761-4-u.kleine-koenig@pengutronix.de
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: c61bfb1cb63d ("mmc: mtk-sd: Fix missing clk_disable_unprepare in msdc_of_clock_parse()")
+  # TEST: vti4: PMTU exceptions                                         [SKIP]
+  [  350.600250] IPv6: ADDRCONF(NETDEV_CHANGE): veth_b: link becomes ready
+  [  350.607421] IPv6: ADDRCONF(NETDEV_CHANGE): veth_a: link becomes ready
+  # 'nettest' command not found; skipping tests
+  #   xfrm6udp not supported
+  # TEST: vti6: PMTU exceptions (ESP-in-UDP)                            [SKIP]
+  [  351.605102] IPv6: ADDRCONF(NETDEV_CHANGE): veth_b: link becomes ready
+  [  351.612243] IPv6: ADDRCONF(NETDEV_CHANGE): veth_a: link becomes ready
+  # 'nettest' command not found; skipping tests
+  #   xfrm4udp not supported
+
+The `unicast_extensions.sh` tests also rely on `nettest`, but
+it runs fine there because it looks for the binary in the
+current working directory [2]:
+
+The same mechanism that works for the Unicast extensions tests
+is here copied over to the PMTU and functional tests.
+
+[1] https://lkft.validation.linaro.org/scheduler/job/5839508#L6221
+[2] https://lkft.validation.linaro.org/scheduler/job/5839508#L7958
+
+Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-devres.c |  27 ++++++++++
- include/linux/clk.h      | 109 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 136 insertions(+)
+ tools/testing/selftests/net/fcnal-test.sh | 11 +++++++----
+ tools/testing/selftests/net/pmtu.sh       | 10 ++++++----
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
-index c822f4ef1584..43ccd20e0298 100644
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -66,12 +66,39 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
- }
- EXPORT_SYMBOL(devm_clk_get);
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index 91f54112167f..364c82b797c1 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -4072,10 +4072,13 @@ elif [ "$TESTS" = "ipv6" ]; then
+ 	TESTS="$TESTS_IPV6"
+ fi
  
-+struct clk *devm_clk_get_prepared(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get, clk_prepare, clk_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_prepared);
-+
-+struct clk *devm_clk_get_enabled(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get,
-+			      clk_prepare_enable, clk_disable_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_enabled);
-+
- struct clk *devm_clk_get_optional(struct device *dev, const char *id)
- {
- 	return __devm_clk_get(dev, id, clk_get_optional, NULL, NULL);
- }
- EXPORT_SYMBOL(devm_clk_get_optional);
+-which nettest >/dev/null
+-if [ $? -ne 0 ]; then
+-	echo "'nettest' command not found; skipping tests"
+-	exit $ksft_skip
++# nettest can be run from PATH or from same directory as this selftest
++if ! which nettest >/dev/null; then
++	PATH=$PWD:$PATH
++	if ! which nettest >/dev/null; then
++		echo "'nettest' command not found; skipping tests"
++		exit $ksft_skip
++	fi
+ fi
  
-+struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get_optional,
-+			      clk_prepare, clk_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_optional_prepared);
-+
-+struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get_optional,
-+			      clk_prepare_enable, clk_disable_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
-+
- struct clk_bulk_devres {
- 	struct clk_bulk_data *clks;
- 	int num_clks;
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 266e8de3cb51..e280e0acb55c 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -458,6 +458,47 @@ int __must_check devm_clk_bulk_get_all(struct device *dev,
-  */
- struct clk *devm_clk_get(struct device *dev, const char *id);
- 
-+/**
-+ * devm_clk_get_prepared - devm_clk_get() + clk_prepare()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  (IOW, @id may be identical strings, but
-+ * clk_get may return different clock producers depending on @dev.)
-+ *
-+ * The returned clk (if valid) is prepared. Drivers must however assume
-+ * that the clock is not enabled.
-+ *
-+ * The clock will automatically be unprepared and freed when the device
-+ * is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_prepared(struct device *dev, const char *id);
-+
-+/**
-+ * devm_clk_get_enabled - devm_clk_get() + clk_prepare_enable()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  (IOW, @id may be identical strings, but
-+ * clk_get may return different clock producers depending on @dev.)
-+ *
-+ * The returned clk (if valid) is prepared and enabled.
-+ *
-+ * The clock will automatically be disabled, unprepared and freed
-+ * when the device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_enabled(struct device *dev, const char *id);
-+
- /**
-  * devm_clk_get_optional - lookup and obtain a managed reference to an optional
-  *			   clock producer.
-@@ -469,6 +510,50 @@ struct clk *devm_clk_get(struct device *dev, const char *id);
-  */
- struct clk *devm_clk_get_optional(struct device *dev, const char *id);
- 
-+/**
-+ * devm_clk_get_optional_prepared - devm_clk_get_optional() + clk_prepare()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  If no such clk is found, it returns NULL
-+ * which serves as a dummy clk.  That's the only difference compared
-+ * to devm_clk_get_prepared().
-+ *
-+ * The returned clk (if valid) is prepared. Drivers must however
-+ * assume that the clock is not enabled.
-+ *
-+ * The clock will automatically be unprepared and freed when the
-+ * device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id);
-+
-+/**
-+ * devm_clk_get_optional_enabled - devm_clk_get_optional() +
-+ *                                 clk_prepare_enable()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  If no such clk is found, it returns NULL
-+ * which serves as a dummy clk.  That's the only difference compared
-+ * to devm_clk_get_enabled().
-+ *
-+ * The returned clk (if valid) is prepared and enabled.
-+ *
-+ * The clock will automatically be disabled, unprepared and freed
-+ * when the device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
-+
- /**
-  * devm_get_clk_from_child - lookup and obtain a managed reference to a
-  *			     clock producer from child node.
-@@ -813,12 +898,36 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
- 	return NULL;
+ declare -i nfail=0
+diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
+index 694732e4b344..da6ab300207c 100755
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -671,10 +671,12 @@ setup_xfrm() {
  }
  
-+static inline struct clk *devm_clk_get_prepared(struct device *dev,
-+						const char *id)
-+{
-+	return NULL;
-+}
-+
-+static inline struct clk *devm_clk_get_enabled(struct device *dev,
-+					       const char *id)
-+{
-+	return NULL;
-+}
-+
- static inline struct clk *devm_clk_get_optional(struct device *dev,
- 						const char *id)
- {
- 	return NULL;
- }
+ setup_nettest_xfrm() {
+-	which nettest >/dev/null
+-	if [ $? -ne 0 ]; then
+-		echo "'nettest' command not found; skipping tests"
+-	        return 1
++	if ! which nettest >/dev/null; then
++		PATH=$PWD:$PATH
++		if ! which nettest >/dev/null; then
++			echo "'nettest' command not found; skipping tests"
++			return 1
++		fi
+ 	fi
  
-+static inline struct clk *devm_clk_get_optional_prepared(struct device *dev,
-+							 const char *id)
-+{
-+	return NULL;
-+}
-+
-+static inline struct clk *devm_clk_get_optional_enabled(struct device *dev,
-+							const char *id)
-+{
-+	return NULL;
-+}
-+
- static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
- 						 struct clk_bulk_data *clks)
- {
+ 	[ ${1} -eq 6 ] && proto="-6" || proto=""
 -- 
 2.35.1
 
