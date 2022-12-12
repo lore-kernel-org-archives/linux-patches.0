@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE79428ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1F1C433D2;
-	Mon, 12 Dec 2022 13:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E22A28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BEEC433F1;
+	Mon, 12 Dec 2022 13:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851767;
-	bh=bjKzL0ABmnz7AqXAK9DkHcuh9Yodcz4M6I1m/3Xyyj0=;
+	s=korg; t=1670851773;
+	bh=dSTvkbl7td0zpHjnORlRYdPitxf6p3PqyX/lI0jEeiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaQ0n5Lp1uC1gK/8ZC6G+3qLtWjqP5QR3p9EUBwxdByzAf0xxiPPAXRsM6mi3InXs
-	 aETDPExDyKLGm6ggyjngpPcTKMdISyN6RW3pqEUr9vpGrP73DxBShmbjOC/rDicwmU
-	 mdvsXD1RptXiQA81SvjVPk/Rsxz0KA0ldIUXE/eE=
+	b=LGCgikwNQVpNQZW5EC8quAx8Pg4y8egJSOY6hDGGwDQoRuPg8g7m0A+4YV+XqGroT
+	 GTO1EDuLijgsNCHaxvyV+mHvS5qGJuytCkuyMgnGi0J2tFl2BmV/wi2mR6LPVotnTn
+	 TZIQrHICyyWraS7eDe7j5z8csbkbQ/0J86DN/QCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com,
-	Wei Chen <harperchen1110@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 058/123] can: af_can: fix NULL pointer dereference in can_rcv_filter
-Date: Mon, 12 Dec 2022 14:17:04 +0100
-Message-Id: <20221212130929.364766608@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Ivan Babrou <ivan@ivan.computer>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 067/123] netfilter: ctnetlink: fix compilation warning after data race fixes in ct mark
+Date: Mon, 12 Dec 2022 14:17:13 +0100
+Message-Id: <20221212130929.764219762@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,50 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 0acc442309a0a1b01bcdaa135e56e6398a49439c upstream.
+[ Upstream commit 1feeae071507ad65cf9f462a1bdd543a4bf89e71 ]
 
-Analogue to commit 8aa59e355949 ("can: af_can: fix NULL pointer
-dereference in can_rx_register()") we need to check for a missing
-initialization of ml_priv in the receive path of CAN frames.
+All warnings (new ones prefixed by >>):
 
-Since commit 4e096a18867a ("net: introduce CAN specific pointer in the
-struct net_device") the check for dev->type to be ARPHRD_CAN is not
-sufficient anymore since bonding or tun netdevices claim to be CAN
-devices but do not initialize ml_priv accordingly.
+   net/netfilter/nf_conntrack_netlink.c: In function '__ctnetlink_glue_build':
+>> net/netfilter/nf_conntrack_netlink.c:2674:13: warning: unused variable 'mark' [-Wunused-variable]
+    2674 |         u32 mark;
+         |             ^~~~
 
-Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
-Reported-by: syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20221206201259.3028-1-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 52d1aa8b8249 ("netfilter: conntrack: Fix data-races around ct mark")
+Reported-by: kernel test robot <lkp@intel.com>
+Tested-by: Ivan Babrou <ivan@ivan.computer>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -680,7 +680,7 @@ static int can_rcv(struct sk_buff *skb,
- {
- 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 1727a4c4764f..2cc6092b4f86 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -322,8 +322,13 @@ ctnetlink_dump_timestamp(struct sk_buff *skb, const struct nf_conn *ct)
+ }
  
--	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CAN_MTU)) {
-+	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CAN_MTU)) {
- 		pr_warn_once("PF_CAN: dropped non conform CAN skbuff: dev type %d, len %d\n",
- 			     dev->type, skb->len);
- 		goto free_skb;
-@@ -706,7 +706,7 @@ static int canfd_rcv(struct sk_buff *skb
+ #ifdef CONFIG_NF_CONNTRACK_MARK
+-static int ctnetlink_dump_mark(struct sk_buff *skb, u32 mark)
++static int ctnetlink_dump_mark(struct sk_buff *skb, const struct nf_conn *ct)
  {
- 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
++	u32 mark = READ_ONCE(ct->mark);
++
++	if (!mark)
++		return 0;
++
+ 	if (nla_put_be32(skb, CTA_MARK, htonl(mark)))
+ 		goto nla_put_failure;
+ 	return 0;
+@@ -537,7 +542,7 @@ static int ctnetlink_dump_extinfo(struct sk_buff *skb,
+ static int ctnetlink_dump_info(struct sk_buff *skb, struct nf_conn *ct)
+ {
+ 	if (ctnetlink_dump_status(skb, ct) < 0 ||
+-	    ctnetlink_dump_mark(skb, READ_ONCE(ct->mark)) < 0 ||
++	    ctnetlink_dump_mark(skb, ct) < 0 ||
+ 	    ctnetlink_dump_secctx(skb, ct) < 0 ||
+ 	    ctnetlink_dump_id(skb, ct) < 0 ||
+ 	    ctnetlink_dump_use(skb, ct) < 0 ||
+@@ -716,7 +721,6 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
+ 	struct sk_buff *skb;
+ 	unsigned int type;
+ 	unsigned int flags = 0, group;
+-	u32 mark;
+ 	int err;
  
--	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CANFD_MTU)) {
-+	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CANFD_MTU)) {
- 		pr_warn_once("PF_CAN: dropped non conform CAN FD skbuff: dev type %d, len %d\n",
- 			     dev->type, skb->len);
- 		goto free_skb;
+ 	if (events & (1 << IPCT_DESTROY)) {
+@@ -821,9 +825,8 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
+ 	}
+ 
+ #ifdef CONFIG_NF_CONNTRACK_MARK
+-	mark = READ_ONCE(ct->mark);
+-	if ((events & (1 << IPCT_MARK) || mark) &&
+-	    ctnetlink_dump_mark(skb, mark) < 0)
++	if (events & (1 << IPCT_MARK) &&
++	    ctnetlink_dump_mark(skb, ct) < 0)
+ 		goto nla_put_failure;
+ #endif
+ 	nlmsg_end(skb, nlh);
+@@ -2692,7 +2695,6 @@ static int __ctnetlink_glue_build(struct sk_buff *skb, struct nf_conn *ct)
+ {
+ 	const struct nf_conntrack_zone *zone;
+ 	struct nlattr *nest_parms;
+-	u32 mark;
+ 
+ 	zone = nf_ct_zone(ct);
+ 
+@@ -2754,8 +2756,7 @@ static int __ctnetlink_glue_build(struct sk_buff *skb, struct nf_conn *ct)
+ 		goto nla_put_failure;
+ 
+ #ifdef CONFIG_NF_CONNTRACK_MARK
+-	mark = READ_ONCE(ct->mark);
+-	if (mark && ctnetlink_dump_mark(skb, mark) < 0)
++	if (ctnetlink_dump_mark(skb, ct) < 0)
+ 		goto nla_put_failure;
+ #endif
+ 	if (ctnetlink_dump_labels(skb, ct) < 0)
+-- 
+2.35.1
+
 
 
