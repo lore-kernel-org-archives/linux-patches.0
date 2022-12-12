@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B2C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3931C433EF;
-	Mon, 12 Dec 2022 13:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37DF28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F570C433D2;
+	Mon, 12 Dec 2022 13:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851343;
-	bh=dveRpISKQkJLWLShsA1cxUOfEv49ruwMA12/Y9PcmJ8=;
+	s=korg; t=1670851346;
+	bh=3dvlsZ0crK7vigTaS1T23MKHxpBSClQQPfxLSsv+Jmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwRXpOEYzlYOomPPjM5Pf7Sz26rEd0I+5h/fuoABP63GAc5ZbJHVqi8w8HMAYlrQO
-	 wmcDTqgCTvdXXJNSPFycIrG7AJqJYjdUEzF+ZRd1lMwq6EY6Fgw6CUohIyRj0V3enc
-	 Cn0Ni3OfdXpJ2/0S+HdrybXyP8fjVQ6YsdP1PjAo=
+	b=KgRvHCUWdsm4VCcr91zdFeGn53Qn0J4buxFzQWVzJAylE5bSz4tYeVUZposIsGxK9
+	 PAKx4FPpPr+C9J9Xug9hNOxG+cQ/PK3IOOgas9vk8WKECI2iAGnEuLhU7E50hPaFr2
+	 /EkCeNEmoK9ZQDKPBiHN44cF3iWtUPktAOKxVlyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Tomislav Novak <tnovak@fb.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 14/67] fbcon: Use kzalloc() in fbcon_prepare_logo()
-Date: Mon, 12 Dec 2022 14:16:49 +0100
-Message-Id: <20221212130918.301223905@linuxfoundation.org>
+Subject: [PATCH 5.4 05/67] ARM: 9251/1: perf: Fix stacktraces for tracepoint events in THUMB2 kernels
+Date: Mon, 12 Dec 2022 14:16:40 +0100
+Message-Id: <20221212130917.878148025@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,91 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Tomislav Novak <tnovak@fb.com>
 
-[ Upstream commit a6a00d7e8ffd78d1cdb7a43f1278f081038c638f ]
+[ Upstream commit 612695bccfdbd52004551308a55bae410e7cd22f ]
 
-A kernel built with syzbot's config file reported that
+Store the frame address where arm_get_current_stackframe() looks for it
+(ARM_r7 instead of ARM_fp if CONFIG_THUMB2_KERNEL=y). Otherwise frame->fp
+gets set to 0, causing unwind_frame() to fail.
 
-  scr_memcpyw(q, save, array3_size(logo_lines, new_cols, 2))
+  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
+  Attaching 1 probe...
+  @[
+      __schedule+1059
+  ]: 1
 
-causes uninitialized "save" to be copied.
+A typical first unwind instruction is 0x97 (SP = R7), so after executing
+it SP ends up being 0 and -URC_FAILURE is returned.
 
-  ----------
-  [drm] Initialized vgem 1.0.0 20120112 for vgem on minor 0
-  [drm] Initialized vkms 1.0.0 20180514 for vkms on minor 1
-  Console: switching to colour frame buffer device 128x48
-  =====================================================
-  BUG: KMSAN: uninit-value in do_update_region+0x4b8/0xba0
-   do_update_region+0x4b8/0xba0
-   update_region+0x40d/0x840
-   fbcon_switch+0x3364/0x35e0
-   redraw_screen+0xae3/0x18a0
-   do_bind_con_driver+0x1cb3/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
+  unwind_frame(pc = ac9da7d7 lr = 00000000 sp = c69bdda0 fp = 00000000)
+  unwind_find_idx(ac9da7d7)
+  unwind_exec_insn: insn = 00000097
+  unwind_exec_insn: fp = 00000000 sp = 00000000 lr = 00000000 pc = 00000000
 
-  Uninit was stored to memory at:
-   fbcon_prepare_logo+0x143b/0x1940
-   fbcon_init+0x2c1b/0x31c0
-   visual_init+0x3e7/0x820
-   do_bind_con_driver+0x14a4/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
+With this patch:
 
-  Uninit was created at:
-   __kmem_cache_alloc_node+0xb69/0x1020
-   __kmalloc+0x379/0x680
-   fbcon_prepare_logo+0x704/0x1940
-   fbcon_init+0x2c1b/0x31c0
-   visual_init+0x3e7/0x820
-   do_bind_con_driver+0x14a4/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
+  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
+  Attaching 1 probe...
+  @[
+      __schedule+1059
+      __schedule+1059
+      schedule+79
+      schedule_hrtimeout_range_clock+163
+      schedule_hrtimeout_range+17
+      ep_poll+471
+      SyS_epoll_wait+111
+      sys_epoll_pwait+231
+      __ret_fast_syscall+1
+  ]: 1
 
-  CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.1.0-rc4-00356-g8f2975c2bb4c #924
-  Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
-  ----------
+Link: https://lore.kernel.org/r/20220920230728.2617421-1-tnovak@fb.com/
 
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/cad03d25-0ea0-32c4-8173-fd1895314bce@I-love.SAKURA.ne.jp
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Tomislav Novak <tnovak@fb.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 2 +-
+ arch/arm/include/asm/perf_event.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 4a544e1e2038..673af5937489 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -604,7 +604,7 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
- 		if (scr_readw(r) != vc->vc_video_erase_char)
- 			break;
- 	if (r != q && new_rows >= rows + logo_lines) {
--		save = kmalloc(array3_size(logo_lines, new_cols, 2),
-+		save = kzalloc(array3_size(logo_lines, new_cols, 2),
- 			       GFP_KERNEL);
- 		if (save) {
- 			int i = cols < new_cols ? cols : new_cols;
+diff --git a/arch/arm/include/asm/perf_event.h b/arch/arm/include/asm/perf_event.h
+index fe87397c3d8c..bdbc1e590891 100644
+--- a/arch/arm/include/asm/perf_event.h
++++ b/arch/arm/include/asm/perf_event.h
+@@ -17,7 +17,7 @@ extern unsigned long perf_misc_flags(struct pt_regs *regs);
+ 
+ #define perf_arch_fetch_caller_regs(regs, __ip) { \
+ 	(regs)->ARM_pc = (__ip); \
+-	(regs)->ARM_fp = (unsigned long) __builtin_frame_address(0); \
++	frame_pointer((regs)) = (unsigned long) __builtin_frame_address(0); \
+ 	(regs)->ARM_sp = current_stack_pointer; \
+ 	(regs)->ARM_cpsr = SVC_MODE; \
+ }
 -- 
 2.35.1
 
