@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73EA28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6179C433D2;
-	Mon, 12 Dec 2022 13:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061DC28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619C7C433D2;
+	Mon, 12 Dec 2022 13:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852478;
-	bh=6XtLrRztLT49PwtPcfJn1HavAPx/qrKBidrAAUeWkaY=;
+	s=korg; t=1670852483;
+	bh=Z6pnowHrYCT+Jh0WOGu9d7nkhVF1yZnL/CMcIrhqkSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClQXVPqftRO9kmv4Nx6A1ZnokHlE791U5XTosHg7xorKhM06UnETONiR0u+N6Y4ia
-	 D9DOcKr3MJfA6jNQe2Kuajt9Y73IY7v8SNAdYrF6u5YKre4phDVkOO7sAmDkn4Tj6i
-	 4MIpRQFkHZr/R8uFq8m7+EYSTJCcel4Q8eBb00L4=
+	b=QUSfbeuhIR3OcNolO9pDB5cISiwY5QqOmtJdhgGu2+/gvmFFkCnmz0d3RiU69fVKy
+	 PZe3Xwqg3/iuqFu8k7ZYaHDM59h7xj2ia6yn4g9pcesDV3vZcxJxMtcE+Shkft3nAv
+	 rYPu6c7yK5ECX7F2sPJrf6Lii76KZKnM+gncR64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.0 062/157] Bluetooth: btusb: Add debug message for CSR controllers
-Date: Mon, 12 Dec 2022 14:16:50 +0100
-Message-Id: <20221212130937.063792083@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Leonardo=20Eug=C3=AAnio?= <lelgenio@disroot.org>
+Subject: [PATCH 6.0 063/157] Bluetooth: Fix crash when replugging CSR fake controllers
+Date: Mon, 12 Dec 2022 14:16:51 +0100
+Message-Id: <20221212130937.104981275@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,42 +34,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 955aebd445e2b49622f2184b7abb82b05c060549 upstream.
+commit b5ca338751ad4783ec8d37b5d99c3e37b7813e59 upstream.
 
-The rationale of showing this is that it's potentially critical
-information to diagnose and find more CSR compatibility bugs in the
-future and it will save a lot of headaches.
+It seems fake CSR 5.0 clones can cause the suspend notifier to be
+registered twice causing the following kernel panic:
 
-Given that clones come from a wide array of vendors (some are actually
-Barrot, some are something else) and these numbers are what let us find
-differences between actual and fake ones, it will be immensely helpful
-to scour the Internet looking for this pattern and building an actual
-database to find correlations and improve the checks.
+[   71.986122] Call Trace:
+[   71.986124]  <TASK>
+[   71.986125]  blocking_notifier_chain_register+0x33/0x60
+[   71.986130]  hci_register_dev+0x316/0x3d0 [bluetooth 99b5497ea3d09708fa1366c1dc03288bf3cca8da]
+[   71.986154]  btusb_probe+0x979/0xd85 [btusb e1e0605a4f4c01984a4b9c8ac58c3666ae287477]
+[   71.986159]  ? __pm_runtime_set_status+0x1a9/0x300
+[   71.986162]  ? ktime_get_mono_fast_ns+0x3e/0x90
+[   71.986167]  usb_probe_interface+0xe3/0x2b0
+[   71.986171]  really_probe+0xdb/0x380
+[   71.986174]  ? pm_runtime_barrier+0x54/0x90
+[   71.986177]  __driver_probe_device+0x78/0x170
+[   71.986180]  driver_probe_device+0x1f/0x90
+[   71.986183]  __device_attach_driver+0x89/0x110
+[   71.986186]  ? driver_allows_async_probing+0x70/0x70
+[   71.986189]  bus_for_each_drv+0x8c/0xe0
+[   71.986192]  __device_attach+0xb2/0x1e0
+[   71.986195]  bus_probe_device+0x92/0xb0
+[   71.986198]  device_add+0x422/0x9a0
+[   71.986201]  ? sysfs_merge_group+0xd4/0x110
+[   71.986205]  usb_set_configuration+0x57a/0x820
+[   71.986208]  usb_generic_driver_probe+0x4f/0x70
+[   71.986211]  usb_probe_device+0x3a/0x110
+[   71.986213]  really_probe+0xdb/0x380
+[   71.986216]  ? pm_runtime_barrier+0x54/0x90
+[   71.986219]  __driver_probe_device+0x78/0x170
+[   71.986221]  driver_probe_device+0x1f/0x90
+[   71.986224]  __device_attach_driver+0x89/0x110
+[   71.986227]  ? driver_allows_async_probing+0x70/0x70
+[   71.986230]  bus_for_each_drv+0x8c/0xe0
+[   71.986232]  __device_attach+0xb2/0x1e0
+[   71.986235]  bus_probe_device+0x92/0xb0
+[   71.986237]  device_add+0x422/0x9a0
+[   71.986239]  ? _dev_info+0x7d/0x98
+[   71.986242]  ? blake2s_update+0x4c/0xc0
+[   71.986246]  usb_new_device.cold+0x148/0x36d
+[   71.986250]  hub_event+0xa8a/0x1910
+[   71.986255]  process_one_work+0x1c4/0x380
+[   71.986259]  worker_thread+0x51/0x390
+[   71.986262]  ? rescuer_thread+0x3b0/0x3b0
+[   71.986264]  kthread+0xdb/0x110
+[   71.986266]  ? kthread_complete_and_exit+0x20/0x20
+[   71.986268]  ret_from_fork+0x1f/0x30
+[   71.986273]  </TASK>
+[   71.986274] ---[ end trace 0000000000000000 ]---
+[   71.986284] btusb: probe of 2-1.6:1.0 failed with error -17
 
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216683
 Cc: stable@vger.kernel.org
-Cc: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Leonardo Eugênio <lelgenio@disroot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/hci_core.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2042,6 +2042,11 @@ static int btusb_setup_csr(struct hci_de
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2757,7 +2757,8 @@ int hci_register_suspend_notifier(struct
+ {
+ 	int ret = 0;
  
- 	rp = (struct hci_rp_read_local_version *)skb->data;
+-	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
++	if (!hdev->suspend_notifier.notifier_call &&
++	    !test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks)) {
+ 		hdev->suspend_notifier.notifier_call = hci_suspend_notifier;
+ 		ret = register_pm_notifier(&hdev->suspend_notifier);
+ 	}
+@@ -2769,8 +2770,11 @@ int hci_unregister_suspend_notifier(stru
+ {
+ 	int ret = 0;
  
-+	bt_dev_info(hdev, "CSR: Setting up dongle with HCI ver=%u rev=%04x; LMP ver=%u subver=%04x; manufacturer=%u",
-+		le16_to_cpu(rp->hci_ver), le16_to_cpu(rp->hci_rev),
-+		le16_to_cpu(rp->lmp_ver), le16_to_cpu(rp->lmp_subver),
-+		le16_to_cpu(rp->manufacturer));
-+
- 	/* Detect a wide host of Chinese controllers that aren't CSR.
- 	 *
- 	 * Known fake bcdDevices: 0x0100, 0x0134, 0x1915, 0x2520, 0x7558, 0x8891
+-	if (!test_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks))
++	if (hdev->suspend_notifier.notifier_call) {
+ 		ret = unregister_pm_notifier(&hdev->suspend_notifier);
++		if (!ret)
++			hdev->suspend_notifier.notifier_call = NULL;
++	}
+ 
+ 	return ret;
+ }
 
 
