@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FCD28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18119C433EF;
-	Mon, 12 Dec 2022 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2060228ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81332C433EF;
+	Mon, 12 Dec 2022 13:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853305;
-	bh=i/bRO8YxGj4a0j9TJYTezs5MzLShkasGmgQN6V71BHQ=;
+	s=korg; t=1670853308;
+	bh=/Wt+XuOJWJtoSaqCMHgZyEya4tx2G89R0f912R8I5hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAKdKijmgdkqG/nzttMPGhQqvNnkXrD6MbzblGplyLyqBbP1Hp7Iqi6mCi5dy1h5x
-	 CGzYbBWLYKipvuk3AG7ccnzgm2QJjXNUiG7Yk/iujCgg49e4+aPno09PNNkUeV8ntP
-	 xlHhzPRpEpsDq/fQK3MweSE7AskCpkNWmKHHxszE=
+	b=MeobWLK2HJ976BAUG+iW9njAMF+2svD7d2hBkKkT+fT+hFTNKIB5xORFm6sr1LiQT
+	 2LJA2HZAS/NXv+fLWI5Xfv8fnvEqvxW1UDwN37HrdcrJy5HactxUX8iWoG9sS1qwyh
+	 jknSRrTuhI1eSGj1tv0cxop7WA/ekmoS0cSedX/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Juergen Gross <jgross@suse.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 07/31] xen/netback: do some code cleanup
-Date: Mon, 12 Dec 2022 14:19:25 +0100
-Message-Id: <20221212130910.336698775@linuxfoundation.org>
+Subject: [PATCH 4.9 08/31] xen/netback: dont call kfree_skb() with interrupts disabled
+Date: Mon, 12 Dec 2022 14:19:26 +0100
+Message-Id: <20221212130910.388827910@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -38,143 +38,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 5834e72eda0b7e5767eb107259d98eef19ebd11f ]
+[ Upstream commit 74e7e1efdad45580cc3839f2a155174cf158f9b5 ]
 
-Remove some unused macros and functions, make local functions static.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So remove kfree_skb()
+from the spin_lock_irqsave() section and use the already existing
+"drop" label in xenvif_start_xmit() for dropping the SKB. At the
+same time replace the dev_kfree_skb() call there with a call of
+dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
+disabled interrupts.
 
+This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
+
+Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
+Reported-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
-Link: https://lore.kernel.org/r/20220608043726.9380-1-jgross@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 74e7e1efdad4 ("xen/netback: don't call kfree_skb() with interrupts disabled")
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/common.h    | 12 ------------
- drivers/net/xen-netback/interface.c | 16 +---------------
- drivers/net/xen-netback/netback.c   |  4 +++-
- drivers/net/xen-netback/rx.c        |  2 +-
- 4 files changed, 5 insertions(+), 29 deletions(-)
+ drivers/net/xen-netback/common.h    | 2 +-
+ drivers/net/xen-netback/interface.c | 6 ++++--
+ drivers/net/xen-netback/rx.c        | 8 +++++---
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
-index bfa3c6aaebe6..4ef648f79993 100644
+index 4ef648f79993..e5f254500c1c 100644
 --- a/drivers/net/xen-netback/common.h
 +++ b/drivers/net/xen-netback/common.h
-@@ -48,7 +48,6 @@
- #include <linux/debugfs.h>
- 
- typedef unsigned int pending_ring_idx_t;
--#define INVALID_PENDING_RING_IDX (~0U)
- 
- struct pending_tx_info {
- 	struct xen_netif_tx_request req; /* tx request */
-@@ -82,8 +81,6 @@ struct xenvif_rx_meta {
- /* Discriminate from any valid pending_idx value. */
- #define INVALID_PENDING_IDX 0xFFFF
- 
--#define MAX_BUFFER_OFFSET XEN_PAGE_SIZE
--
- #define MAX_PENDING_REQS XEN_NETIF_TX_RING_SIZE
- 
- /* The maximum number of frags is derived from the size of a grant (same
-@@ -345,11 +342,6 @@ void xenvif_free(struct xenvif *vif);
- int xenvif_xenbus_init(void);
- void xenvif_xenbus_fini(void);
- 
--int xenvif_schedulable(struct xenvif *vif);
--
--int xenvif_queue_stopped(struct xenvif_queue *queue);
--void xenvif_wake_queue(struct xenvif_queue *queue);
--
- /* (Un)Map communication rings. */
- void xenvif_unmap_frontend_data_rings(struct xenvif_queue *queue);
- int xenvif_map_frontend_data_rings(struct xenvif_queue *queue,
-@@ -372,7 +364,6 @@ int xenvif_dealloc_kthread(void *data);
+@@ -364,7 +364,7 @@ int xenvif_dealloc_kthread(void *data);
  irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
  
  bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
--void xenvif_rx_action(struct xenvif_queue *queue);
- void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
+-void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
++bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
  
  void xenvif_carrier_on(struct xenvif *vif);
-@@ -380,9 +371,6 @@ void xenvif_carrier_on(struct xenvif *vif);
- /* Callback from stack when TX packet can be released */
- void xenvif_zerocopy_callback(struct ubuf_info *ubuf, bool zerocopy_success);
  
--/* Unmap a pending page and release it back to the guest */
--void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx);
--
- static inline pending_ring_idx_t nr_pending_reqs(struct xenvif_queue *queue)
- {
- 	return MAX_PENDING_REQS -
 diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
-index d9d06dc689ed..186694f6c260 100644
+index 186694f6c260..b83777d4d35e 100644
 --- a/drivers/net/xen-netback/interface.c
 +++ b/drivers/net/xen-netback/interface.c
-@@ -69,7 +69,7 @@ void xenvif_skb_zerocopy_complete(struct xenvif_queue *queue)
- 	wake_up(&queue->dealloc_wq);
- }
+@@ -249,14 +249,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
+ 		skb_clear_hash(skb);
  
--int xenvif_schedulable(struct xenvif *vif)
-+static int xenvif_schedulable(struct xenvif *vif)
- {
- 	return netif_running(vif->dev) &&
- 		test_bit(VIF_STATUS_CONNECTED, &vif->status) &&
-@@ -177,20 +177,6 @@ irqreturn_t xenvif_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
--int xenvif_queue_stopped(struct xenvif_queue *queue)
--{
--	struct net_device *dev = queue->vif->dev;
--	unsigned int id = queue->id;
--	return netif_tx_queue_stopped(netdev_get_tx_queue(dev, id));
--}
--
--void xenvif_wake_queue(struct xenvif_queue *queue)
--{
--	struct net_device *dev = queue->vif->dev;
--	unsigned int id = queue->id;
--	netif_tx_wake_queue(netdev_get_tx_queue(dev, id));
--}
--
- static u16 xenvif_select_queue(struct net_device *dev, struct sk_buff *skb,
- 			       void *accel_priv,
- 			       select_queue_fallback_t fallback)
-diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
-index 25c0bced351d..c7d480c1a066 100644
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -105,6 +105,8 @@ static void make_tx_response(struct xenvif_queue *queue,
- 			     s8       st);
- static void push_tx_responses(struct xenvif_queue *queue);
- 
-+static void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx);
+-	xenvif_rx_queue_tail(queue, skb);
++	if (!xenvif_rx_queue_tail(queue, skb))
++		goto drop;
 +
- static inline int tx_work_todo(struct xenvif_queue *queue);
+ 	xenvif_kick_thread(queue);
  
- static inline unsigned long idx_to_pfn(struct xenvif_queue *queue,
-@@ -1426,7 +1428,7 @@ static void push_tx_responses(struct xenvif_queue *queue)
- 		notify_remote_via_irq(queue->tx_irq);
+ 	return NETDEV_TX_OK;
+ 
+  drop:
+ 	vif->dev->stats.tx_dropped++;
+-	dev_kfree_skb(skb);
++	dev_kfree_skb_any(skb);
+ 	return NETDEV_TX_OK;
  }
  
--void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx)
-+static void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx)
- {
- 	int ret;
- 	struct gnttab_unmap_grant_ref tx_unmap_op;
 diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
-index 2612810eadaf..6964f8b1a36b 100644
+index 6964f8b1a36b..5067fa0c751f 100644
 --- a/drivers/net/xen-netback/rx.c
 +++ b/drivers/net/xen-netback/rx.c
-@@ -473,7 +473,7 @@ void xenvif_rx_skb(struct xenvif_queue *queue)
+@@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
+ 	return false;
+ }
  
- #define RX_BATCH_SIZE 64
- 
--void xenvif_rx_action(struct xenvif_queue *queue)
-+static void xenvif_rx_action(struct xenvif_queue *queue)
+-void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
++bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
  {
- 	struct sk_buff_head completed_skbs;
- 	unsigned int work_done = 0;
+ 	unsigned long flags;
++	bool ret = true;
+ 
+ 	spin_lock_irqsave(&queue->rx_queue.lock, flags);
+ 
+@@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+ 		struct net_device *dev = queue->vif->dev;
+ 
+ 		netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
+-		kfree_skb(skb);
+-		queue->vif->dev->stats.rx_dropped++;
++		ret = false;
+ 	} else {
+ 		if (skb_queue_empty(&queue->rx_queue))
+ 			xenvif_update_needed_slots(queue, skb);
+@@ -104,6 +104,8 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+ 	}
+ 
+ 	spin_unlock_irqrestore(&queue->rx_queue.lock, flags);
++
++	return ret;
+ }
+ 
+ static struct sk_buff *xenvif_rx_dequeue(struct xenvif_queue *queue)
 -- 
 2.35.1
 
