@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D5728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7C1C433D2;
-	Mon, 12 Dec 2022 13:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FD828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D76C433EF;
+	Mon, 12 Dec 2022 13:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852545;
-	bh=YSVbyQ65vNQgobC8rJaKgghnzqGEtKPpWMESo2BLjbg=;
+	s=korg; t=1670852550;
+	bh=bqeffSMUhDZYJLTZsspfEnsaxGnWB5F7RARi16EC1YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDxEISxqhdaG2mR29NH9uq53Zx5VSDH9nXt8IU971WxB1qsDpCATjLG7iFdrs75wO
-	 KJyx4VN1t+Ry9+xKRGcXqYOPIPMngAZmbdfU+bs3BShSnlnd8GX4w2verxZA/s3Hgl
-	 YjgxD9vVYMWztPJ78w2wTyjSw4cqJfhmaxQexA84=
+	b=HQI8ZL9QLCDfvjru0+Decng2hFLOs0JxyHwVFUda6BGK9FL9oiq53Kc22xegYBbmu
+	 +bSHyyxkf6HU3EzA0hnMc2GdHun4iWsgIkvYrJ7+BsuypPAcgU/xbVJsKzUMdpPFog
+	 rjmh8v4XA4jkxFZsGCR5oC+ueFga8LDCRNiRvwCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ronak Doshi <doshir@vmware.com>,
+	Guolin Yang <gyang@vmware.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 103/157] inet: ping: use hlist_nulls rcu iterator during lookup
-Date: Mon, 12 Dec 2022 14:17:31 +0100
-Message-Id: <20221212130938.976364067@linuxfoundation.org>
+Subject: [PATCH 6.0 104/157] vmxnet3: correctly report encapsulated LRO packet
+Date: Mon, 12 Dec 2022 14:17:32 +0100
+Message-Id: <20221212130939.018698045@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,78 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Ronak Doshi <doshir@vmware.com>
 
-[ Upstream commit c25b7a7a565e5eeb2459b37583eea67942057511 ]
+[ Upstream commit 40b8c2a1af03ba3e8da55a4490d646bfa845e71a ]
 
-ping_lookup() does not acquire the table spinlock, so iteration should
-use hlist_nulls_for_each_entry_rcu().
+Commit dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload
+support") added support for encapsulation offload. However, the
+pathc did not report correctly the encapsulated packet which is
+LRO'ed by the hypervisor.
 
-Spotted during code review.
+This patch fixes this issue by using correct callback for the LRO'ed
+encapsulated packet.
 
-Fixes: dbca1596bbb0 ("ping: convert to RCU lookups, get rid of rwlock")
-Cc: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://lore.kernel.org/r/20221129140644.28525-1-fw@strlen.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
+Signed-off-by: Ronak Doshi <doshir@vmware.com>
+Acked-by: Guolin Yang <gyang@vmware.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .clang-format      | 1 +
- include/net/ping.h | 3 ---
- net/ipv4/ping.c    | 7 ++++++-
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/.clang-format b/.clang-format
-index 1247d54f9e49..8d01225bfcb7 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -535,6 +535,7 @@ ForEachMacros:
-   - 'perf_hpp_list__for_each_sort_list_safe'
-   - 'perf_pmu__for_each_hybrid_pmu'
-   - 'ping_portaddr_for_each_entry'
-+  - 'ping_portaddr_for_each_entry_rcu'
-   - 'plist_for_each'
-   - 'plist_for_each_continue'
-   - 'plist_for_each_entry'
-diff --git a/include/net/ping.h b/include/net/ping.h
-index e4ff3911cbf5..9233ad3de0ad 100644
---- a/include/net/ping.h
-+++ b/include/net/ping.h
-@@ -16,9 +16,6 @@
- #define PING_HTABLE_SIZE 	64
- #define PING_HTABLE_MASK 	(PING_HTABLE_SIZE-1)
- 
--#define ping_portaddr_for_each_entry(__sk, node, list) \
--	hlist_nulls_for_each_entry(__sk, node, list, sk_nulls_node)
--
- /*
-  * gid_t is either uint or ushort.  We want to pass it to
-  * proc_dointvec_minmax(), so it must not be larger than MAX_INT
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index b83c2bd9d722..3b2420829c23 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -48,6 +48,11 @@
- #include <net/transp_v6.h>
- #endif
- 
-+#define ping_portaddr_for_each_entry(__sk, node, list) \
-+	hlist_nulls_for_each_entry(__sk, node, list, sk_nulls_node)
-+#define ping_portaddr_for_each_entry_rcu(__sk, node, list) \
-+	hlist_nulls_for_each_entry_rcu(__sk, node, list, sk_nulls_node)
+diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
+index 53b3b241e027..dd4fecbd1e2e 100644
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -1396,6 +1396,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 	};
+ 	u32 num_pkts = 0;
+ 	bool skip_page_frags = false;
++	bool encap_lro = false;
+ 	struct Vmxnet3_RxCompDesc *rcd;
+ 	struct vmxnet3_rx_ctx *ctx = &rq->rx_ctx;
+ 	u16 segCnt = 0, mss = 0;
+@@ -1556,13 +1557,18 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 			if (VMXNET3_VERSION_GE_2(adapter) &&
+ 			    rcd->type == VMXNET3_CDTYPE_RXCOMP_LRO) {
+ 				struct Vmxnet3_RxCompDescExt *rcdlro;
++				union Vmxnet3_GenericDesc *gdesc;
 +
- struct ping_table {
- 	struct hlist_nulls_head	hash[PING_HTABLE_SIZE];
- 	spinlock_t		lock;
-@@ -191,7 +196,7 @@ static struct sock *ping_lookup(struct net *net, struct sk_buff *skb, u16 ident)
- 		return NULL;
- 	}
+ 				rcdlro = (struct Vmxnet3_RxCompDescExt *)rcd;
++				gdesc = (union Vmxnet3_GenericDesc *)rcd;
  
--	ping_portaddr_for_each_entry(sk, hnode, hslot) {
-+	ping_portaddr_for_each_entry_rcu(sk, hnode, hslot) {
- 		isk = inet_sk(sk);
+ 				segCnt = rcdlro->segCnt;
+ 				WARN_ON_ONCE(segCnt == 0);
+ 				mss = rcdlro->mss;
+ 				if (unlikely(segCnt <= 1))
+ 					segCnt = 0;
++				encap_lro = (le32_to_cpu(gdesc->dword[0]) &
++					(1UL << VMXNET3_RCD_HDR_INNER_SHIFT));
+ 			} else {
+ 				segCnt = 0;
+ 			}
+@@ -1630,7 +1636,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 			vmxnet3_rx_csum(adapter, skb,
+ 					(union Vmxnet3_GenericDesc *)rcd);
+ 			skb->protocol = eth_type_trans(skb, adapter->netdev);
+-			if (!rcd->tcp ||
++			if ((!rcd->tcp && !encap_lro) ||
+ 			    !(adapter->netdev->features & NETIF_F_LRO))
+ 				goto not_lro;
  
- 		pr_debug("iterate\n");
+@@ -1639,7 +1645,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 					SKB_GSO_TCPV4 : SKB_GSO_TCPV6;
+ 				skb_shinfo(skb)->gso_size = mss;
+ 				skb_shinfo(skb)->gso_segs = segCnt;
+-			} else if (segCnt != 0 || skb->len > mtu) {
++			} else if ((segCnt != 0 || skb->len > mtu) && !encap_lro) {
+ 				u32 hlen;
+ 
+ 				hlen = vmxnet3_get_hdr_len(adapter, skb,
+@@ -1668,6 +1674,7 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
+ 				napi_gro_receive(&rq->napi, skb);
+ 
+ 			ctx->skb = NULL;
++			encap_lro = false;
+ 			num_pkts++;
+ 		}
+ 
 -- 
 2.35.1
 
