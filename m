@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA9258F
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49925C433D2;
-	Mon, 12 Dec 2022 13:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EDC258F
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8211BC433D2;
+	Mon, 12 Dec 2022 13:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851290;
-	bh=ZwjIRjQ1ShLdDbeQcH/YUJ+3eQ1VZLCSYI8J6D7ZLYY=;
+	s=korg; t=1670851295;
+	bh=Ftk3/WpxJNvCzWHViDu/KeNbdM63f5WgR0ZOIKIQnCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GoSvYYZfodWnK41B8nv16mYm7OvRRGgGl5eW+JVXBjs04TDqtkmjUtWhsQeBw6nh
-	 K46joYptw9CVNA4zKhd/MHDCIsmRIOe04P071k1vBJtnA8rCvEzTWj8mDG3la1e/cn
-	 fQNzD4NgtIukBPxHCOsV2yp9JSJ40ZQrjWxGYfIs=
+	b=w34zgpFve539x8yFPRMMuXv+miGYdDGLf6O+qdXH1/dTAg91dibXORqvgxuB91a81
+	 CqDkfUbxxzaHzfGE6ZebSoGaOOGr6NdftAmDfHW3zm8G7EUJL61xHVIjyE4vNri+Fh
+	 98sFYidGAsyED6ivHhxUBjTBx/ChFNHAi7iHyrsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 5.4 27/67] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
-Date: Mon, 12 Dec 2022 14:17:02 +0100
-Message-Id: <20221212130918.919664449@linuxfoundation.org>
+	syzbot+c8ae65286134dd1b800d@syzkaller.appspotmail.com,
+	Rob Clark <robdclark@chromium.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 5.4 28/67] drm/shmem-helper: Remove errant put in error path
+Date: Mon, 12 Dec 2022 14:17:03 +0100
+Message-Id: <20221212130918.977738072@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -37,48 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Huth <thuth@redhat.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
+commit 24013314be6ee4ee456114a671e9fa3461323de8 upstream.
 
-We recently experienced some weird huge time jumps in nested guests when
-rebooting them in certain cases. After adding some debug code to the epoch
-handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
-obvious that the "epdx" field (the multi-epoch extension) did not get set
-to 0xff in case the "epoch" field was negative.
-Seems like the code misses to copy the value from the epdx field from
-the guest to the shadow control block. By doing so, the weird time
-jumps are gone in our scenarios.
+drm_gem_shmem_mmap() doesn't own this reference, resulting in the GEM
+object getting prematurely freed leading to a later use-after-free.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
-Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Cc: stable@vger.kernel.org # 4.19+
-Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
-Message-Id: <20221123090833.292938-1-thuth@redhat.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://syzkaller.appspot.com/bug?extid=c8ae65286134dd1b800d
+Reported-by: syzbot+c8ae65286134dd1b800d@syzkaller.appspotmail.com
+Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
+Cc: stable@vger.kernel.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221130185748.357410-2-robdclark@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/vsie.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -540,8 +540,10 @@ static int shadow_scb(struct kvm_vcpu *v
- 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
- 		scb_s->eca |= scb_o->eca & ECA_CEI;
- 	/* Epoch Extension */
--	if (test_kvm_facility(vcpu->kvm, 139))
-+	if (test_kvm_facility(vcpu->kvm, 139)) {
- 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
-+		scb_s->epdx = scb_o->epdx;
-+	}
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -554,10 +554,8 @@ int drm_gem_shmem_mmap(struct file *filp
+ 	shmem = to_drm_gem_shmem_obj(vma->vm_private_data);
  
- 	/* etoken */
- 	if (test_kvm_facility(vcpu->kvm, 156))
+ 	ret = drm_gem_shmem_get_pages(shmem);
+-	if (ret) {
+-		drm_gem_vm_close(vma);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	/* VM_PFNMAP was set by drm_gem_mmap() */
+ 	vma->vm_flags &= ~VM_PFNMAP;
 
 
