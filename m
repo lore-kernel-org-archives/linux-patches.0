@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BBB28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E95AC433F0;
-	Mon, 12 Dec 2022 13:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D971A28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:34:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFB9C433D2;
+	Mon, 12 Dec 2022 13:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852068;
-	bh=la/l2ByECrSfUBi7oeZsEB5vOX08PdTJSuNLsZB81gQ=;
+	s=korg; t=1670852072;
+	bh=R4x7psRlPUMF5lwLakU0Rk7V+V8YrqjfCKSwZ6+ROjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDrMVeHM0pTc9lMVJqPOOl+nPtk56Il2Ip/MBAGQks/FzR+De850kw6Mz8Ccvb0vY
-	 0b2MZYrSLTxS2lpSZdjXjKxnRctvK82Pgtp0ok3mpogtxU7MMoUT7Ts8/I2F0D+2hz
-	 qKcT4mXENJbACG18CpA4Nknqt7Kt65bp4dIq1YcU=
+	b=neV1XvJmd5OMoGvhCja4R03w2dvRXTXEU5TT9rSEPmVOJhaTn6Wjv82dX3aLS0xy8
+	 SVHzH+BCQvRihFxbNJ1oWOnpQ3tsDp4vjIL1c9U8C4TFcJyTIgvn85oJklHtPWVNdy
+	 WOmTHNm+Yr2MFsLyyaJVagrwX02HuxdzJFMji70M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/123] can: esd_usb: Allow REC and TEC to return to zero
-Date: Mon, 12 Dec 2022 14:18:06 +0100
-Message-Id: <20221212130932.402569504@linuxfoundation.org>
+Subject: [PATCH 5.15 121/123] block: move CONFIG_BLOCK guard to top Makefile
+Date: Mon, 12 Dec 2022 14:18:07 +0100
+Message-Id: <20221212130932.445448138@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,53 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 918ee4911f7a41fb4505dff877c1d7f9f64eb43e ]
+[ Upstream commit 4c928904ff771a8e830773b71a080047365324a5 ]
 
-We don't get any further EVENT from an esd CAN USB device for changes
-on REC or TEC while those counters converge to 0 (with ecc == 0). So
-when handling the "Back to Error Active"-event force txerr = rxerr =
-0, otherwise the berr-counters might stay on values like 95 forever.
+Every object under block/ depends on CONFIG_BLOCK.
 
-Also, to make life easier during the ongoing development a
-netdev_dbg() has been introduced to allow dumping error events send by
-an esd CAN USB device.
+Move the guard to the top Makefile since there is no point to
+descend into block/ if CONFIG_BLOCK=n.
 
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20221130202242.3998219-2-frank.jungclaus@esd.eu
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20210927140000.866249-5-masahiroy@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 998b30c3948e ("io_uring: Fix a null-ptr-deref in io_tctx_exit_cb()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb2.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Makefile       | 3 ++-
+ block/Makefile | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/usb/esd_usb2.c b/drivers/net/can/usb/esd_usb2.c
-index c6068a251fbe..9ed048cb07e6 100644
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -227,6 +227,10 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 		u8 rxerr = msg->msg.rx.data[2];
- 		u8 txerr = msg->msg.rx.data[3];
+diff --git a/Makefile b/Makefile
+index bc1cf1200b62..0acea54c2ffd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1150,7 +1150,8 @@ export MODORDER := $(extmod_prefix)modules.order
+ export MODULES_NSDEPS := $(extmod_prefix)modules.nsdeps
  
-+		netdev_dbg(priv->netdev,
-+			   "CAN_ERR_EV_EXT: dlc=%#02x state=%02x ecc=%02x rec=%02x tec=%02x\n",
-+			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
-+
- 		skb = alloc_can_err_skb(priv->netdev, &cf);
- 		if (skb == NULL) {
- 			stats->rx_dropped++;
-@@ -253,6 +257,8 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 				break;
- 			default:
- 				priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+				txerr = 0;
-+				rxerr = 0;
- 				break;
- 			}
- 		} else {
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y			+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/
++core-$(CONFIG_BLOCK)	+= block/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff --git a/block/Makefile b/block/Makefile
+index 41aa1ba69c90..74df168729ec 100644
+--- a/block/Makefile
++++ b/block/Makefile
+@@ -3,7 +3,7 @@
+ # Makefile for the kernel block layer
+ #
+ 
+-obj-$(CONFIG_BLOCK) := bdev.o fops.o bio.o elevator.o blk-core.o blk-sysfs.o \
++obj-y		:= bdev.o fops.o bio.o elevator.o blk-core.o blk-sysfs.o \
+ 			blk-flush.o blk-settings.o blk-ioc.o blk-map.o \
+ 			blk-exec.o blk-merge.o blk-timeout.o \
+ 			blk-lib.o blk-mq.o blk-mq-tag.o blk-stat.o \
 -- 
 2.35.1
 
