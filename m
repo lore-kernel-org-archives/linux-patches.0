@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B6D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D591FC433D2;
-	Mon, 12 Dec 2022 13:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2881328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5F9C433EF;
+	Mon, 12 Dec 2022 13:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852526;
-	bh=m7nX502XKe6TIgvNUE4bMQoKJT2EFM1Yfcyd2BDRLD4=;
+	s=korg; t=1670852532;
+	bh=s0LUIJvPpkur9LY6RxVIboEMBRomuSPgB+BetF6F2XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNAWtLi7lxOO+dhO0z8OS+koKPsbfizq83EBVLPm/qEBWjsUmSmsNk7ZYze7FU/Kf
-	 p0EdeDBiQWx2Tqb0RwY8CIQDzMXCEM2uB7xTB7nJsjnCgF4pZbXAfMuF8lQxemTEYb
-	 zrp1Hjfj+aGYF3caRK7bQ3RfvtQ3uE5OkA9jx+Gk=
+	b=BHzGtm6OiS+iuo6ABX3o2awi3O7EKrYfKBGnEcY7GbEnjBxPzrYC+76tSAeEhKQnK
+	 tXm6r3MusCLJPfSlUSgi0Cd2DPge2dSYgpU8hNw5bzy4MIbTIbEuDjvGk+boaYoDn7
+	 zVAIw9YhYlMynv5IvjTy9ur+0W7YT9YK5nIkOLZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	YueHaibing <yuehaibing@huawei.com>,
+	Schuyler Patton <spatton@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 099/157] net: broadcom: Add PTP_1588_CLOCK_OPTIONAL dependency for BCMGENET under ARCH_BCM2835
-Date: Mon, 12 Dec 2022 14:17:27 +0100
-Message-Id: <20221212130938.808817281@linuxfoundation.org>
+Subject: [PATCH 6.0 100/157] net: ethernet: ti: am65-cpsw: Fix RGMII configuration at SPEED_10
+Date: Mon, 12 Dec 2022 14:17:28 +0100
+Message-Id: <20221212130938.850463482@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -37,51 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 421f8663b3a775c32f724f793264097c60028f2e ]
+[ Upstream commit 6c681f899e0360803b924ac8c96ee21965118649 ]
 
-commit 8d820bc9d12b ("net: broadcom: Fix BCMGENET Kconfig") fixes the build
-that contain 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
-and enable BCMGENET=y but PTP_1588_CLOCK_OPTIONAL=m, which otherwise
-leads to a link failure. However this may trigger a runtime failure.
+The am65-cpsw driver supports configuring all RGMII variants at interface
+speed of 10 Mbps. However, in the process of shifting to the PHYLINK
+framework, the support for all variants of RGMII except the
+PHY_INTERFACE_MODE_RGMII variant was accidentally removed.
 
-Fix the original issue by propagating the PTP_1588_CLOCK_OPTIONAL dependency
-of BROADCOM_PHY down to BCMGENET.
+Fix this by using phy_interface_mode_is_rgmii() to check for all variants
+of RGMII mode.
 
-Fixes: 8d820bc9d12b ("net: broadcom: Fix BCMGENET Kconfig")
-Fixes: 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20221125115003.30308-1-yuehaibing@huawei.com
+Fixes: e8609e69470f ("net: ethernet: ti: am65-cpsw: Convert to PHYLINK")
+Reported-by: Schuyler Patton <spatton@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://lore.kernel.org/r/20221129050639.111142-1-s-vadapalli@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
-index 1cd3c289f49b..cd1706909044 100644
---- a/drivers/net/ethernet/broadcom/Kconfig
-+++ b/drivers/net/ethernet/broadcom/Kconfig
-@@ -71,13 +71,14 @@ config BCM63XX_ENET
- config BCMGENET
- 	tristate "Broadcom GENET internal MAC support"
- 	depends on HAS_IOMEM
-+	depends on PTP_1588_CLOCK_OPTIONAL || !ARCH_BCM2835
- 	select MII
- 	select PHYLIB
- 	select FIXED_PHY
- 	select BCM7XXX_PHY
- 	select MDIO_BCM_UNIMAC
- 	select DIMLIB
--	select BROADCOM_PHY if (ARCH_BCM2835 && PTP_1588_CLOCK_OPTIONAL)
-+	select BROADCOM_PHY if ARCH_BCM2835
- 	help
- 	  This driver supports the built-in Ethernet MACs found in the
- 	  Broadcom BCM7xxx Set Top Box family chipset.
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 95baacd6c761..47da11b9ac28 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -1450,7 +1450,7 @@ static void am65_cpsw_nuss_mac_link_up(struct phylink_config *config, struct phy
+ 
+ 	if (speed == SPEED_1000)
+ 		mac_control |= CPSW_SL_CTL_GIG;
+-	if (speed == SPEED_10 && interface == PHY_INTERFACE_MODE_RGMII)
++	if (speed == SPEED_10 && phy_interface_mode_is_rgmii(interface))
+ 		/* Can be used with in band mode only */
+ 		mac_control |= CPSW_SL_CTL_EXT_EN;
+ 	if (speed == SPEED_100 && interface == PHY_INTERFACE_MODE_RMII)
 -- 
 2.35.1
 
