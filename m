@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60FFC433EF;
-	Mon, 12 Dec 2022 13:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CDB28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C271FC433D2;
+	Mon, 12 Dec 2022 13:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852777;
-	bh=x3Jmmz1njMUjZsp0Qb6EeANfec/hdP8cxH/1omFSBEk=;
+	s=korg; t=1670852782;
+	bh=015J1zxDoA+R/LacpO+Yc7Veihcp5q6yywM4qOgGnko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Shwgfwyqbhz76XE1f+sl60Dlsjii/2X9iGV1bWZH45wZhAcsZNRE3C9Ge26oVweTx
-	 oDtDM0awjvANpBSDWPF6WtRo0sEsN+jYmaN8iXu5ak2kv/TNzgHGB2WX3Lpq6yhOsa
-	 qk8y/iHCh9f9ggRhDmv6QJb92xgjkG4KNwK52XsQ=
+	b=HepM+UeNOJNjxTQmUo/O++mjd/cM1M3iWNBLtexgV173sq/NgdCnkYNK3x4mN3p5p
+	 dxtyR0X6/6LTiaiQvk77LkZN/MLBVJEoMj52EH1aurCS7Ru7MZEIHm6rQQvUaYbZsZ
+	 YXkFDPbALf3/KrYv8EC2bzfTRmRiosG0tMAC2Qvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casper Andersson <casper.casan@gmail.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Lin Liu <lin.liu@citrix.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 122/157] net: microchip: sparx5: correctly free skb in xmit
-Date: Mon, 12 Dec 2022 14:17:50 +0100
-Message-Id: <20221212130939.760402682@linuxfoundation.org>
+Subject: [PATCH 6.0 123/157] xen-netfront: Fix NULL sring after live migration
+Date: Mon, 12 Dec 2022 14:17:51 +0100
+Message-Id: <20221212130939.801303986@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,105 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Casper Andersson <casper.casan@gmail.com>
+From: Lin Liu <lin.liu@citrix.com>
 
-[ Upstream commit 121c6672b0191ffcebff4b88ec022c39e0a95789 ]
+[ Upstream commit d50b7914fae04d840ce36491d22133070b18cca9 ]
 
-consume_skb on transmitted, kfree_skb on dropped, do not free on
-TX_BUSY.
+A NAPI is setup for each network sring to poll data to kernel
+The sring with source host is destroyed before live migration and
+new sring with target host is setup after live migration.
+The NAPI for the old sring is not deleted until setup new sring
+with target host after migration. With busy_poll/busy_read enabled,
+the NAPI can be polled before got deleted when resume VM.
 
-Previously the xmit function could return -EBUSY without freeing, which
-supposedly is interpreted as a drop. And was using kfree on successfully
-transmitted packets.
+BUG: unable to handle kernel NULL pointer dereference at
+0000000000000008
+IP: xennet_poll+0xae/0xd20
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP PTI
+Call Trace:
+ finish_task_switch+0x71/0x230
+ timerqueue_del+0x1d/0x40
+ hrtimer_try_to_cancel+0xb5/0x110
+ xennet_alloc_rx_buffers+0x2a0/0x2a0
+ napi_busy_loop+0xdb/0x270
+ sock_poll+0x87/0x90
+ do_sys_poll+0x26f/0x580
+ tracing_map_insert+0x1d4/0x2f0
+ event_hist_trigger+0x14a/0x260
 
-sparx5_fdma_xmit and sparx5_inject returns error code, where -EBUSY
-indicates TX_BUSY and any other error code indicates dropped.
+ finish_task_switch+0x71/0x230
+ __schedule+0x256/0x890
+ recalc_sigpending+0x1b/0x50
+ xen_sched_clock+0x15/0x20
+ __rb_reserve_next+0x12d/0x140
+ ring_buffer_lock_reserve+0x123/0x3d0
+ event_triggers_call+0x87/0xb0
+ trace_event_buffer_commit+0x1c4/0x210
+ xen_clocksource_get_cycles+0x15/0x20
+ ktime_get_ts64+0x51/0xf0
+ SyS_ppoll+0x160/0x1a0
+ SyS_ppoll+0x160/0x1a0
+ do_syscall_64+0x73/0x130
+ entry_SYSCALL_64_after_hwframe+0x41/0xa6
+...
+RIP: xennet_poll+0xae/0xd20 RSP: ffffb4f041933900
+CR2: 0000000000000008
+---[ end trace f8601785b354351c ]---
 
-Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
-Signed-off-by: Casper Andersson <casper.casan@gmail.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+xen frontend should remove the NAPIs for the old srings before live
+migration as the bond srings are destroyed
+
+There is a tiny window between the srings are set to NULL and
+the NAPIs are disabled, It is safe as the NAPI threads are still
+frozen at that time
+
+Signed-off-by: Lin Liu <lin.liu@citrix.com>
+Fixes: 4ec2411980d0 ([NET]: Do not check netif_running() and carrier state in ->poll())
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/microchip/sparx5/sparx5_fdma.c   |  2 +-
- .../ethernet/microchip/sparx5/sparx5_packet.c | 41 +++++++++++--------
- 2 files changed, 25 insertions(+), 18 deletions(-)
+ drivers/net/xen-netfront.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-index 66360c8c5a38..141897dfe388 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_fdma.c
-@@ -317,7 +317,7 @@ int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb)
- 	next_dcb_hw = sparx5_fdma_next_dcb(tx, tx->curr_entry);
- 	db_hw = &next_dcb_hw->db[0];
- 	if (!(db_hw->status & FDMA_DCB_STATUS_DONE))
--		tx->dropped++;
-+		return -EINVAL;
- 	db = list_first_entry(&tx->db_list, struct sparx5_db, list);
- 	list_move_tail(&db->list, &tx->db_list);
- 	next_dcb_hw->nextptr = FDMA_DCB_INVALID_DATA;
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-index 21844beba72d..0ce0fc985222 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
-@@ -234,9 +234,8 @@ int sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev)
- 	sparx5_set_port_ifh(ifh, port->portno);
+diff --git a/drivers/net/xen-netfront.c b/drivers/net/xen-netfront.c
+index 27a11cc08c61..479e215159fc 100644
+--- a/drivers/net/xen-netfront.c
++++ b/drivers/net/xen-netfront.c
+@@ -1862,6 +1862,12 @@ static int netfront_resume(struct xenbus_device *dev)
+ 	netif_tx_unlock_bh(info->netdev);
  
- 	if (sparx5->ptp && skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) {
--		ret = sparx5_ptp_txtstamp_request(port, skb);
--		if (ret)
--			return ret;
-+		if (sparx5_ptp_txtstamp_request(port, skb) < 0)
-+			return NETDEV_TX_BUSY;
- 
- 		sparx5_set_port_ifh_rew_op(ifh, SPARX5_SKB_CB(skb)->rew_op);
- 		sparx5_set_port_ifh_pdu_type(ifh, SPARX5_SKB_CB(skb)->pdu_type);
-@@ -250,23 +249,31 @@ int sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev)
- 	else
- 		ret = sparx5_inject(sparx5, ifh, skb, dev);
- 
--	if (ret == NETDEV_TX_OK) {
--		stats->tx_bytes += skb->len;
--		stats->tx_packets++;
-+	if (ret == -EBUSY)
-+		goto busy;
-+	if (ret < 0)
-+		goto drop;
- 
--		if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP &&
--		    SPARX5_SKB_CB(skb)->rew_op == IFH_REW_OP_TWO_STEP_PTP)
--			return ret;
-+	stats->tx_bytes += skb->len;
-+	stats->tx_packets++;
-+	sparx5->tx.packets++;
- 
--		dev_kfree_skb_any(skb);
--	} else {
--		stats->tx_dropped++;
-+	if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP &&
-+	    SPARX5_SKB_CB(skb)->rew_op == IFH_REW_OP_TWO_STEP_PTP)
-+		return NETDEV_TX_OK;
- 
--		if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP &&
--		    SPARX5_SKB_CB(skb)->rew_op == IFH_REW_OP_TWO_STEP_PTP)
--			sparx5_ptp_txtstamp_release(port, skb);
--	}
--	return ret;
-+	dev_consume_skb_any(skb);
-+	return NETDEV_TX_OK;
-+drop:
-+	stats->tx_dropped++;
-+	sparx5->tx.dropped++;
-+	dev_kfree_skb_any(skb);
-+	return NETDEV_TX_OK;
-+busy:
-+	if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP &&
-+	    SPARX5_SKB_CB(skb)->rew_op == IFH_REW_OP_TWO_STEP_PTP)
-+		sparx5_ptp_txtstamp_release(port, skb);
-+	return NETDEV_TX_BUSY;
+ 	xennet_disconnect_backend(info);
++
++	rtnl_lock();
++	if (info->queues)
++		xennet_destroy_queues(info);
++	rtnl_unlock();
++
+ 	return 0;
  }
  
- static enum hrtimer_restart sparx5_injection_timeout(struct hrtimer *tmr)
 -- 
 2.35.1
 
