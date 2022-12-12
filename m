@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3719628ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D912C433EF;
-	Mon, 12 Dec 2022 13:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA1428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28093C433EF;
+	Mon, 12 Dec 2022 13:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851280;
-	bh=P2+nVTZk03IyAt6aGTu7xU2AEqlJns0RVLTfyvBITAY=;
+	s=korg; t=1670851283;
+	bh=CtzuaoejSJjT+Dv4fSu+BWXOZp2LP2qdmZ/qfRlkh4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBeUUMeHpuiCvhx48leBur95wa9Q8NF8HBwEKDCYyJoijjnCS2jdB27d2I6tYNZl1
-	 NH8Ku5NqvTgR86ccpk5/eDdckumUfOD+yRvN4ejxilolZbMib67Ljl10OmA75d3hhy
-	 V37VIkiuxOH7EWnPgi+JLkzKHsTG2sEMnlyhJNp8=
+	b=KfjmS7Xx7ab6QA+2uWzVlsFdUvfeI+j1eh3jQ693PgXPYBY4Etp5ENS48Vg+gXQlj
+	 CuMXJEt56EwMaBlIbBphuwn+NUd7vFgvfNrVdwMqVSPLvvfrJhbU4ud+S8vKHlgJqc
+	 aEL0BzU6TqgBgZTggFv9si5vEv9VejvDdB8x6c7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 07/67] ARM: dts: rockchip: disable arm_global_timer on rk3066 and rk3188
-Date: Mon, 12 Dec 2022 14:16:42 +0100
-Message-Id: <20221212130917.979005131@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 25/67] memcg: fix possible use-after-free in memcg_write_event_control()
+Date: Mon, 12 Dec 2022 14:17:00 +0100
+Message-Id: <20221212130918.824277618@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,64 +41,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit da74858a475782a3f16470907814c8cc5950ad68 ]
+commit 4a7ba45b1a435e7097ca0f79a847d0949d0eb088 upstream.
 
-The clock source and the sched_clock provided by the arm_global_timer
-on Rockchip rk3066a/rk3188 are quite unstable because their rates
-depend on the CPU frequency.
+memcg_write_event_control() accesses the dentry->d_name of the specified
+control fd to route the write call.  As a cgroup interface file can't be
+renamed, it's safe to access d_name as long as the specified file is a
+regular cgroup file.  Also, as these cgroup interface files can't be
+removed before the directory, it's safe to access the parent too.
 
-Recent changes to the arm_global_timer driver makes it impossible to use.
+Prior to 347c4a874710 ("memcg: remove cgroup_event->cft"), there was a
+call to __file_cft() which verified that the specified file is a regular
+cgroupfs file before further accesses.  The cftype pointer returned from
+__file_cft() was no longer necessary and the commit inadvertently dropped
+the file type check with it allowing any file to slip through.  With the
+invarients broken, the d_name and parent accesses can now race against
+renames and removals of arbitrary files and cause use-after-free's.
 
-On the other side, the arm_global_timer has a higher rating than the
-ROCKCHIP_TIMER, it will be selected by default by the time framework
-while we want to use the stable Rockchip clock source.
+Fix the bug by resurrecting the file type check in __file_cft().  Now that
+cgroupfs is implemented through kernfs, checking the file operations needs
+to go through a layer of indirection.  Instead, let's check the superblock
+and dentry type.
 
-Keep the arm_global_timer disabled in order to have the
-DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
-
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/f275ca8d-fd0a-26e5-b978-b7f3df815e0a@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/Y5FRm/cfcKPGzWwl@slm.duckdns.org
+Fixes: 347c4a874710 ("memcg: remove cgroup_event->cft")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Jann Horn <jannh@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: <stable@vger.kernel.org>	[3.14+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/rk3188.dtsi | 1 -
- arch/arm/boot/dts/rk3xxx.dtsi | 7 +++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ include/linux/cgroup.h          |    1 +
+ kernel/cgroup/cgroup-internal.h |    1 -
+ mm/memcontrol.c                 |   15 +++++++++++++--
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3188.dtsi b/arch/arm/boot/dts/rk3188.dtsi
-index 95d558dc163c..5e8ba80d7b4f 100644
---- a/arch/arm/boot/dts/rk3188.dtsi
-+++ b/arch/arm/boot/dts/rk3188.dtsi
-@@ -632,7 +632,6 @@
- 
- &global_timer {
- 	interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_EDGE_RISING)>;
--	status = "disabled";
+--- a/include/linux/cgroup.h
++++ b/include/linux/cgroup.h
+@@ -69,6 +69,7 @@ struct css_task_iter {
+ 	struct list_head		iters_node;	/* css_set->task_iters */
  };
  
- &local_timer {
-diff --git a/arch/arm/boot/dts/rk3xxx.dtsi b/arch/arm/boot/dts/rk3xxx.dtsi
-index bce0b05ef7bf..0580eea90fbc 100644
---- a/arch/arm/boot/dts/rk3xxx.dtsi
-+++ b/arch/arm/boot/dts/rk3xxx.dtsi
-@@ -108,6 +108,13 @@
- 		reg = <0x1013c200 0x20>;
- 		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
- 		clocks = <&cru CORE_PERI>;
-+		status = "disabled";
-+		/* The clock source and the sched_clock provided by the arm_global_timer
-+		 * on Rockchip rk3066a/rk3188 are quite unstable because their rates
-+		 * depend on the CPU frequency.
-+		 * Keep the arm_global_timer disabled in order to have the
-+		 * DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
-+		 */
- 	};
++extern struct file_system_type cgroup_fs_type;
+ extern struct cgroup_root cgrp_dfl_root;
+ extern struct css_set init_css_set;
  
- 	local_timer: local-timer@1013c600 {
--- 
-2.35.1
-
+--- a/kernel/cgroup/cgroup-internal.h
++++ b/kernel/cgroup/cgroup-internal.h
+@@ -169,7 +169,6 @@ extern struct mutex cgroup_mutex;
+ extern spinlock_t css_set_lock;
+ extern struct cgroup_subsys *cgroup_subsys[];
+ extern struct list_head cgroup_roots;
+-extern struct file_system_type cgroup_fs_type;
+ 
+ /* iterate across the hierarchies */
+ #define for_each_root(root)						\
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4709,6 +4709,7 @@ static ssize_t memcg_write_event_control
+ 	unsigned int efd, cfd;
+ 	struct fd efile;
+ 	struct fd cfile;
++	struct dentry *cdentry;
+ 	const char *name;
+ 	char *endp;
+ 	int ret;
+@@ -4760,6 +4761,16 @@ static ssize_t memcg_write_event_control
+ 		goto out_put_cfile;
+ 
+ 	/*
++	 * The control file must be a regular cgroup1 file. As a regular cgroup
++	 * file can't be renamed, it's safe to access its name afterwards.
++	 */
++	cdentry = cfile.file->f_path.dentry;
++	if (cdentry->d_sb->s_type != &cgroup_fs_type || !d_is_reg(cdentry)) {
++		ret = -EINVAL;
++		goto out_put_cfile;
++	}
++
++	/*
+ 	 * Determine the event callbacks and set them in @event.  This used
+ 	 * to be done via struct cftype but cgroup core no longer knows
+ 	 * about these events.  The following is crude but the whole thing
+@@ -4767,7 +4778,7 @@ static ssize_t memcg_write_event_control
+ 	 *
+ 	 * DO NOT ADD NEW FILES.
+ 	 */
+-	name = cfile.file->f_path.dentry->d_name.name;
++	name = cdentry->d_name.name;
+ 
+ 	if (!strcmp(name, "memory.usage_in_bytes")) {
+ 		event->register_event = mem_cgroup_usage_register_event;
+@@ -4791,7 +4802,7 @@ static ssize_t memcg_write_event_control
+ 	 * automatically removed on cgroup destruction but the removal is
+ 	 * asynchronous, so take an extra ref on @css.
+ 	 */
+-	cfile_css = css_tryget_online_from_dir(cfile.file->f_path.dentry->d_parent,
++	cfile_css = css_tryget_online_from_dir(cdentry->d_parent,
+ 					       &memory_cgrp_subsys);
+ 	ret = -EINVAL;
+ 	if (IS_ERR(cfile_css))
 
 
