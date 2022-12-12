@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140C528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5795CC433D2;
-	Mon, 12 Dec 2022 13:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7425C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B70C433EF;
+	Mon, 12 Dec 2022 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853283;
-	bh=yH+nIYxhLR6srz2H2nH6u7Et12lm54Uyyxcx45MZ+UE=;
+	s=korg; t=1670853288;
+	bh=+5GGC/8eufWXSVnOGBvw3X8yB+l1PO1V+/FGgW8gFtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OTs7+X4+UuEfTSin4ifta1W7JeJi9W0LaSblMROViuVgJ+cdOUv/xz1FD/fSFxL8Z
-	 y1wFkCqMR/y4nynAoK8gx/FowiYwF0K5UJlKGzqky1GhdTZqLt0w012CCNpJXlrIPm
-	 z3zGp4KlOdomQgEor6cGXMkvKOd8MHqXPNmhf358=
+	b=rrlcJ6cn0XPA23NmOIiZpJGbG8QS8rvD95M19nFdbybJyAIup3mGQX9IP91P/gdVk
+	 v2yftgv28wAfX3+Agi1pe+l6tqE9hzsukIbYiX+wp4Lnvkb15HHEtglN4T7A4QnWnv
+	 h8lpq6xiRrPGyVfcLj40xWYqnZnC5toLSDaZXotk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Tomislav Novak <tnovak@fb.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 02/31] ARM: dts: rockchip: fix ir-receiver node names
-Date: Mon, 12 Dec 2022 14:19:20 +0100
-Message-Id: <20221212130910.085852388@linuxfoundation.org>
+Subject: [PATCH 4.9 03/31] ARM: 9251/1: perf: Fix stacktraces for tracepoint events in THUMB2 kernels
+Date: Mon, 12 Dec 2022 14:19:21 +0100
+Message-Id: <20221212130910.137612038@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -35,34 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Tomislav Novak <tnovak@fb.com>
 
-[ Upstream commit dd847fe34cdf1e89afed1af24986359f13082bfb ]
+[ Upstream commit 612695bccfdbd52004551308a55bae410e7cd22f ]
 
-Fix ir-receiver node names on Rockchip boards,
-so that they match with regex: '^ir(-receiver)?(@[a-f0-9]+)?$'
+Store the frame address where arm_get_current_stackframe() looks for it
+(ARM_r7 instead of ARM_fp if CONFIG_THUMB2_KERNEL=y). Otherwise frame->fp
+gets set to 0, causing unwind_frame() to fail.
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/ea5af279-f44c-afea-023d-bb37f5a0d58d@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
+  Attaching 1 probe...
+  @[
+      __schedule+1059
+  ]: 1
+
+A typical first unwind instruction is 0x97 (SP = R7), so after executing
+it SP ends up being 0 and -URC_FAILURE is returned.
+
+  unwind_frame(pc = ac9da7d7 lr = 00000000 sp = c69bdda0 fp = 00000000)
+  unwind_find_idx(ac9da7d7)
+  unwind_exec_insn: insn = 00000097
+  unwind_exec_insn: fp = 00000000 sp = 00000000 lr = 00000000 pc = 00000000
+
+With this patch:
+
+  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
+  Attaching 1 probe...
+  @[
+      __schedule+1059
+      __schedule+1059
+      schedule+79
+      schedule_hrtimeout_range_clock+163
+      schedule_hrtimeout_range+17
+      ep_poll+471
+      SyS_epoll_wait+111
+      sys_epoll_pwait+231
+      __ret_fast_syscall+1
+  ]: 1
+
+Link: https://lore.kernel.org/r/20220920230728.2617421-1-tnovak@fb.com/
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Tomislav Novak <tnovak@fb.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3188-radxarock.dts | 2 +-
+ arch/arm/include/asm/perf_event.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/rk3188-radxarock.dts b/arch/arm/boot/dts/rk3188-radxarock.dts
-index 1da46d138029..54e8e5dca93b 100644
---- a/arch/arm/boot/dts/rk3188-radxarock.dts
-+++ b/arch/arm/boot/dts/rk3188-radxarock.dts
-@@ -104,7 +104,7 @@
- 		#sound-dai-cells = <0>;
- 	};
+diff --git a/arch/arm/include/asm/perf_event.h b/arch/arm/include/asm/perf_event.h
+index 4f9dec489931..c5d27140834e 100644
+--- a/arch/arm/include/asm/perf_event.h
++++ b/arch/arm/include/asm/perf_event.h
+@@ -21,7 +21,7 @@ extern unsigned long perf_misc_flags(struct pt_regs *regs);
  
--	ir_recv: gpio-ir-receiver {
-+	ir_recv: ir-receiver {
- 		compatible = "gpio-ir-receiver";
- 		gpios = <&gpio0 10 1>;
- 		pinctrl-names = "default";
+ #define perf_arch_fetch_caller_regs(regs, __ip) { \
+ 	(regs)->ARM_pc = (__ip); \
+-	(regs)->ARM_fp = (unsigned long) __builtin_frame_address(0); \
++	frame_pointer((regs)) = (unsigned long) __builtin_frame_address(0); \
+ 	(regs)->ARM_sp = current_stack_pointer; \
+ 	(regs)->ARM_cpsr = SVC_MODE; \
+ }
 -- 
 2.35.1
 
