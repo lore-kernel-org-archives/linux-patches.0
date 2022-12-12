@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9E528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8731FC433F0;
-	Mon, 12 Dec 2022 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B0C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C49FC433D2;
+	Mon, 12 Dec 2022 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853254;
-	bh=s+Z/7/Ikdn+WalkSiXiuzeJg4PAMRv+98m9Z4Wobk94=;
+	s=korg; t=1670853257;
+	bh=32GjUSZO50TOChG3Q65SYtHR5kPbYpCnzVf68che8L0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7MBVfstFwZOv7SE72LlA0+z5HWZD25ryRsShko2cqi0BHgiCY9R7MZAXwahN0HDr
-	 lvbTRkfns5KZnPAVST17rREaDIIZiBNq6fvRA3O23qJZlP0i1YYYayPUuFQLkQscvv
-	 BtRLgAn5e9viQICdexZVuPi8Xa0RUQYSj307cBYo=
+	b=vm4VxVXeSoJp+fSFtd+zeTUW9tRopaKe7bfXmqEo92um3WnjEzYX8F6Z99aOaIb+f
+	 Hp1JeLBV7KlbuU0KVMkxMTny/v+IAd5T8xY7PM3wMJqSd7TDIPWIkw2Rya94Yv+lY7
+	 s8a+4KsejoPgNtp2ESQuNcXnK6vHQdOKRb1JHmKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
+	Kees Cook <keescook@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 28/38] net: mvneta: Prevent out of bounds read in mvneta_config_rss()
-Date: Mon, 12 Dec 2022 14:19:29 +0100
-Message-Id: <20221212130913.506801067@linuxfoundation.org>
+Subject: [PATCH 4.14 29/38] NFC: nci: Bounds check struct nfc_target arrays
+Date: Mon, 12 Dec 2022 14:19:30 +0100
+Message-Id: <20221212130913.559997896@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130912.069170932@linuxfoundation.org>
 References: <20221212130912.069170932@linuxfoundation.org>
@@ -35,39 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit e8b4fc13900b8e8be48debffd0dfd391772501f7 ]
+[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
 
-The pp->indir[0] value comes from the user.  It is passed to:
+While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
 
-	if (cpu_online(pp->rxq_def))
+  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
 
-inside the mvneta_percpu_elect() function.  It needs bounds checkeding
-to ensure that it is not beyond the end of the cpu bitmap.
+This appears to be a legitimate lack of bounds checking in
+nci_add_new_protocol(). Add the missing checks.
 
-Fixes: cad5d847a093 ("net: mvneta: Fix the CPU choice in mvneta_percpu_elect")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
+Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/nfc/nci/ntf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 8fde1515aec7..526705c21550 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -3871,6 +3871,9 @@ static int  mvneta_config_rss(struct mvneta_port *pp)
- 		napi_disable(&pcpu_port->napi);
- 	}
+diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
+index 1e8c1a12aaec..4f75453c07aa 100644
+--- a/net/nfc/nci/ntf.c
++++ b/net/nfc/nci/ntf.c
+@@ -230,6 +230,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		target->sens_res = nfca_poll->sens_res;
+ 		target->sel_res = nfca_poll->sel_res;
+ 		target->nfcid1_len = nfca_poll->nfcid1_len;
++		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
++			return -EPROTO;
+ 		if (target->nfcid1_len > 0) {
+ 			memcpy(target->nfcid1, nfca_poll->nfcid1,
+ 			       target->nfcid1_len);
+@@ -238,6 +240,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
  
-+	if (pp->indir[0] >= nr_cpu_ids)
-+		return -EINVAL;
-+
- 	pp->rxq_def = pp->indir[0];
+ 		target->sensb_res_len = nfcb_poll->sensb_res_len;
++		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
++			return -EPROTO;
+ 		if (target->sensb_res_len > 0) {
+ 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
+ 			       target->sensb_res_len);
+@@ -246,6 +250,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
+ 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
  
- 	/* Update unicast mapping */
+ 		target->sensf_res_len = nfcf_poll->sensf_res_len;
++		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
++			return -EPROTO;
+ 		if (target->sensf_res_len > 0) {
+ 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
+ 			       target->sensf_res_len);
 -- 
 2.35.1
 
