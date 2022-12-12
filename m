@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A5728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA4BC433D2;
-	Mon, 12 Dec 2022 13:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B28728ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7DBC433D2;
+	Mon, 12 Dec 2022 13:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851757;
-	bh=Vo+zy6uTFPY4i8+o+hOqUO4ofphXuHBZn/n0T/RrBy0=;
+	s=korg; t=1670851763;
+	bh=53e+sMVfkJUvc0ZExDVyqR1mcOCcJZUrGcFQUDnwpt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueYL/Jqjp8DC4CBYzQNY0pogQEmgGzC5grGb7HWKUelj3fKGQYjKmDXMhwG3TsiRD
-	 OLmlXUH7H1ezLP1kFtG/Vif3FnaYyWmapqJ6+5kO+gWcCPsdcx8IUkNJ/upRiAySuR
-	 PEzOJ9sPZFBLBDK6TshsRKDtlwZyMf8fTiko/TyM=
+	b=bQ1DSuNItR2WT5Nh12WdDehwpkoh7t1fAbaDXysfaAh3Ci3En0G6hnOb5XGvN/APu
+	 Mi1/ZwwbUNUzUaV1b5WUxVa2wK2M3/11+WD2TONOolQv7dGDGDC0N5XYQYrttGmSYH
+	 zGTicnFdFniopu93eARJJIGLaGzaHoUJVyuPGEb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>,
+	Jann Horn <jannh@google.com>,
+	Yang Shi <shy828301@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/123] xen/netback: dont call kfree_skb() with interrupts disabled
-Date: Mon, 12 Dec 2022 14:16:44 +0100
-Message-Id: <20221212130928.512949781@linuxfoundation.org>
+Subject: [PATCH 5.15 029/123] mm/khugepaged: fix GUP-fast interaction by sending IPI
+Date: Mon, 12 Dec 2022 14:16:35 +0100
+Message-Id: <20221212130928.130350415@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,103 +39,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 74e7e1efdad45580cc3839f2a155174cf158f9b5 ]
+commit 2ba99c5e08812494bc57f319fb562f527d9bacd8 upstream.
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So remove kfree_skb()
-from the spin_lock_irqsave() section and use the already existing
-"drop" label in xenvif_start_xmit() for dropping the SKB. At the
-same time replace the dev_kfree_skb() call there with a call of
-dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
-disabled interrupts.
+Since commit 70cbc3cc78a99 ("mm: gup: fix the fast GUP race against THP
+collapse"), the lockless_pages_from_mm() fastpath rechecks the pmd_t to
+ensure that the page table was not removed by khugepaged in between.
 
-This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
+However, lockless_pages_from_mm() still requires that the page table is
+not concurrently freed.  Fix it by sending IPIs (if the architecture uses
+semi-RCU-style page table freeing) before freeing/reusing page tables.
 
-Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
-Reported-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Link: https://lkml.kernel.org/r/20221129154730.2274278-2-jannh@google.com
+Link: https://lkml.kernel.org/r/20221128180252.1684965-2-jannh@google.com
+Link: https://lkml.kernel.org/r/20221125213714.4115729-2-jannh@google.com
+Fixes: ba76149f47d8 ("thp: khugepaged")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[manual backport: two of the three places in khugepaged that can free
+ptes were refactored into a common helper between 5.15 and 6.0]
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/common.h    | 2 +-
- drivers/net/xen-netback/interface.c | 6 ++++--
- drivers/net/xen-netback/rx.c        | 8 +++++---
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ include/asm-generic/tlb.h | 4 ++++
+ mm/khugepaged.c           | 3 +++
+ mm/mmu_gather.c           | 4 +---
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
-index 8174d7b2966c..adfd21aa5b6a 100644
---- a/drivers/net/xen-netback/common.h
-+++ b/drivers/net/xen-netback/common.h
-@@ -386,7 +386,7 @@ int xenvif_dealloc_kthread(void *data);
- irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
+diff --git a/include/asm-generic/tlb.h b/include/asm-generic/tlb.h
+index 71942a1c642d..c99710b3027a 100644
+--- a/include/asm-generic/tlb.h
++++ b/include/asm-generic/tlb.h
+@@ -207,12 +207,16 @@ extern void tlb_remove_table(struct mmu_gather *tlb, void *table);
+ #define tlb_needs_table_invalidate() (true)
+ #endif
  
- bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
--void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-+bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
- 
- void xenvif_carrier_on(struct xenvif *vif);
- 
-diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
-index e31936876e1f..e1a5610b1747 100644
---- a/drivers/net/xen-netback/interface.c
-+++ b/drivers/net/xen-netback/interface.c
-@@ -255,14 +255,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
- 		skb_clear_hash(skb);
- 
--	xenvif_rx_queue_tail(queue, skb);
-+	if (!xenvif_rx_queue_tail(queue, skb))
-+		goto drop;
++void tlb_remove_table_sync_one(void);
 +
- 	xenvif_kick_thread(queue);
+ #else
  
- 	return NETDEV_TX_OK;
+ #ifdef tlb_needs_table_invalidate
+ #error tlb_needs_table_invalidate() requires MMU_GATHER_RCU_TABLE_FREE
+ #endif
  
-  drop:
- 	vif->dev->stats.tx_dropped++;
--	dev_kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
- 	return NETDEV_TX_OK;
++static inline void tlb_remove_table_sync_one(void) { }
++
+ #endif /* CONFIG_MMU_GATHER_RCU_TABLE_FREE */
+ 
+ 
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index fc02de08e912..1735123e462a 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1156,6 +1156,7 @@ static void collapse_huge_page(struct mm_struct *mm,
+ 	_pmd = pmdp_collapse_flush(vma, address, pmd);
+ 	spin_unlock(pmd_ptl);
+ 	mmu_notifier_invalidate_range_end(&range);
++	tlb_remove_table_sync_one();
+ 
+ 	spin_lock(pte_ptl);
+ 	isolated = __collapse_huge_page_isolate(vma, address, pte,
+@@ -1537,6 +1538,7 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 	/* step 4: collapse pmd */
+ 	_pmd = pmdp_collapse_flush(vma, haddr, pmd);
+ 	mm_dec_nr_ptes(mm);
++	tlb_remove_table_sync_one();
+ 	pte_free(mm, pmd_pgtable(_pmd));
+ 
+ 	i_mmap_unlock_write(vma->vm_file->f_mapping);
+@@ -1623,6 +1625,7 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
+ 				/* assume page table is clear */
+ 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
+ 				mm_dec_nr_ptes(mm);
++				tlb_remove_table_sync_one();
+ 				pte_free(mm, pmd_pgtable(_pmd));
+ 			}
+ 			mmap_write_unlock(mm);
+diff --git a/mm/mmu_gather.c b/mm/mmu_gather.c
+index 1b9837419bf9..8be26c7ddb47 100644
+--- a/mm/mmu_gather.c
++++ b/mm/mmu_gather.c
+@@ -139,7 +139,7 @@ static void tlb_remove_table_smp_sync(void *arg)
+ 	/* Simply deliver the interrupt */
  }
  
-diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
-index 932762177110..0ba754ebc5ba 100644
---- a/drivers/net/xen-netback/rx.c
-+++ b/drivers/net/xen-netback/rx.c
-@@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
- 	return false;
- }
- 
--void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-+bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+-static void tlb_remove_table_sync_one(void)
++void tlb_remove_table_sync_one(void)
  {
- 	unsigned long flags;
-+	bool ret = true;
+ 	/*
+ 	 * This isn't an RCU grace period and hence the page-tables cannot be
+@@ -163,8 +163,6 @@ static void tlb_remove_table_free(struct mmu_table_batch *batch)
  
- 	spin_lock_irqsave(&queue->rx_queue.lock, flags);
+ #else /* !CONFIG_MMU_GATHER_RCU_TABLE_FREE */
  
-@@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
- 		struct net_device *dev = queue->vif->dev;
- 
- 		netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
--		kfree_skb(skb);
--		queue->vif->dev->stats.rx_dropped++;
-+		ret = false;
- 	} else {
- 		if (skb_queue_empty(&queue->rx_queue))
- 			xenvif_update_needed_slots(queue, skb);
-@@ -104,6 +104,8 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
- 	}
- 
- 	spin_unlock_irqrestore(&queue->rx_queue.lock, flags);
-+
-+	return ret;
- }
- 
- static struct sk_buff *xenvif_rx_dequeue(struct xenvif_queue *queue)
+-static void tlb_remove_table_sync_one(void) { }
+-
+ static void tlb_remove_table_free(struct mmu_table_batch *batch)
+ {
+ 	__tlb_remove_table_free(batch);
 -- 
 2.35.1
 
