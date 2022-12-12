@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EE02F22;
-	Mon, 12 Dec 2022 17:05:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B21C433F0;
-	Mon, 12 Dec 2022 17:05:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1670864704;
-	bh=KmG4ro7h+VdOXjEslNq+8iBWKBTQ/RA7zskQtxL+RXw=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21713212
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 17:15:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5AEC433EF;
+	Mon, 12 Dec 2022 17:15:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670865316;
+	bh=1r4VeIPQoxBxr+R/GTIMW5mPAXzswVki/cBhc9Sm3EY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Aj6vrtB3Y2skOx8SKPJd7krfhSKJ/utA+bWT4xTHarHMUD3/lISCtlvJqPHL60pzb
-	 gBefVSEqHgMTU2td3vxDOudSSqtIFyGEE3fjACq1ImpoFS6AbTSU4gyoNzKLtYmaUk
-	 8HFKc5bYSKCl0NPKxs5dwH01VjTI/AU8U1qEI6cnPh7ywjBflGg9Adm5tMcwnxVY3Q
-	 IzeAVMFpIdKeFQBwv3sUlGm3hpuFpURSm4Di7el+3ELuoTPiN3B+mdwleD0ujL+D77
-	 U47NENYSq9mwaTnfNquImIqO6NV+79DE502FuufTe2OhE4tXY8SzjLVoqYzGx34tUW
-	 xOp0Is+zD4lrA==
-Date: Mon, 12 Dec 2022 10:05:02 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	linux-crypto@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] padata: Mark padata_work_init() as __ref
-Message-ID: <Y5dfPgNF8E2EpNCM@dev-arch.thelio-3990X>
-References: <20221207191657.2852229-1-nathan@kernel.org>
- <20221207191657.2852229-2-nathan@kernel.org>
- <CAK7LNARoxqSzjpM0twcssMkf9X_PppzqtUo_opq=CX+zixma8g@mail.gmail.com>
+	b=oSSWVAtr8pvsCd4WGz3z0UbXPFf1saPmad6R1+2dGMtSpeviasUnz773qCSEn+aGY
+	 d/Ii3qrtUjTkpkGo4LCD9cmotgrEA9xNXubfMwUG2P/9W4fayubcyhVUQ4svgpb4wP
+	 q4XWHS/V+nB/7/cVbnS7os+oJq/xd5iau5nTn31E=
+Date: Mon, 12 Dec 2022 18:15:12 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 060/123] gpiolib: improve coding style for local
+ variables
+Message-ID: <Y5dhoACgKZDWAYne@kroah.com>
+References: <20221212130926.811961601@linuxfoundation.org>
+ <20221212130929.453689464@linuxfoundation.org>
+ <CAMRc=Mc5e6_1vLh0V97npZMSt0KSTnoFFTSAs0TZyJsbT5fDfw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,123 +33,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAK7LNARoxqSzjpM0twcssMkf9X_PppzqtUo_opq=CX+zixma8g@mail.gmail.com>
+In-Reply-To: <CAMRc=Mc5e6_1vLh0V97npZMSt0KSTnoFFTSAs0TZyJsbT5fDfw@mail.gmail.com>
 
-On Mon, Dec 12, 2022 at 10:07:24PM +0900, Masahiro Yamada wrote:
-> On Thu, Dec 8, 2022 at 4:17 AM Nathan Chancellor <nathan@kernel.org> wrote:
+On Mon, Dec 12, 2022 at 03:30:14PM +0100, Bartosz Golaszewski wrote:
+> On Mon, Dec 12, 2022 at 2:31 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
 > >
-> > When building arm64 allmodconfig + ThinLTO with clang and a proposed
-> > modpost update to account for -ffuncton-sections, the following warning
-> > appears:
+> > From: Bartosz Golaszewski <brgl@bgdev.pl>
 > >
-> >   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
-> >   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+> > [ Upstream commit e5ab49cd3d6937b1818b80cb5eb09dc018ae0718 ]
 > >
-> > LLVM has optimized padata_work_init() to include the address of
-> > padata_mt_helper() directly, which causes modpost to complain since
-> > padata_work_init() is not __init, whereas padata_mt_helper() is. In
-> > reality, padata_work_init() is only called with padata_mt_helper() as
-> > the work_fn argument in code that is __init, so this warning will not
-> > result in any problems. Silence it with __ref, which makes it clear to
-> > modpost that padata_work_init() can only use padata_mt_helper() in
-> > __init code.
+> > Drop unneeded whitespaces and put the variables of the same type
+> > together for consistency with the rest of the code.
 > >
-> > Suggested-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
+> > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Stable-dep-of: ec851b23084b ("gpiolib: fix memory leak in gpiochip_setup_dev()")
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > > ---
-> > Cc: Steffen Klassert <steffen.klassert@secunet.com>
-> > Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-> > Cc: linux-crypto@vger.kernel.org
-> > ---
-> >  kernel/padata.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >  drivers/gpio/gpiolib.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
 > >
-> > diff --git a/kernel/padata.c b/kernel/padata.c
-> > index e5819bb8bd1d..4c3137fe8449 100644
-> > --- a/kernel/padata.c
-> > +++ b/kernel/padata.c
-> > @@ -83,8 +83,8 @@ static struct padata_work *padata_work_alloc(void)
-> >         return pw;
-> >  }
-> >
-> > -static void padata_work_init(struct padata_work *pw, work_func_t work_fn,
-> > -                            void *data, int flags)
-> > +static __ref void padata_work_init(struct padata_work *pw, work_func_t work_fn,
-> > +                                  void *data, int flags)
+> > diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+> > index 320baed949ee..a87c4cd94f7a 100644
+> > --- a/drivers/gpio/gpiolib.c
+> > +++ b/drivers/gpio/gpiolib.c
+> > @@ -594,11 +594,11 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+> >                                struct lock_class_key *request_key)
 > >  {
-> >         if (flags & PADATA_WORK_ONSTACK)
-> >                 INIT_WORK_ONSTACK(&pw->pw_work, work_fn);
+> >         struct fwnode_handle *fwnode = gc->parent ? dev_fwnode(gc->parent) : NULL;
+> > -       unsigned long   flags;
+> > -       int             ret = 0;
+> > -       unsigned        i;
+> > -       int             base = gc->base;
+> >         struct gpio_device *gdev;
+> > +       unsigned long flags;
+> > +       int base = gc->base;
+> > +       unsigned int i;
+> > +       int ret = 0;
 > >
-> > base-commit: 76dcd734eca23168cb008912c0f69ff408905235
+> >         /*
+> >          * First: allocate and populate the internal stat container, and
 > > --
-> > 2.38.1
+> > 2.35.1
+> >
+> >
 > >
 > 
-> It took me a while to understand why LTO can embed
-> padata_mt_helper's address into padata_work_init().
+> This isn't a fix, please drop it from stable.
 
-Sorry about that, I can try to expand on this in both the commit message
-and in-code comment if I end up adding it.
+It's required for a follow-on fix in the series, based on the line:
 
-> There are 3 call-sites to padata_work_init().
-> 
-> (1)  __init padata_work_alloc_mt()
->          -->  padata_work_init(..., padata_mt_helper, ...)
-> 
-> (2) padata_do_parallel()
->          -->  padata_work_init(..., padata_parallel_worker, ...)
-> 
-> (3) __init padata_do_multithreaded()
->         --> padata_work_init(..., padata_mt_helper, ...)
-> 
-> 
-> The function call (2) is squashed away.
-> 
-> 
-> With only (1) and (3) remaining, the 2nd parameter to
-> padata_work_init() is always padata_mt_helper,
-> therefore LLVM embeds padata_mt_hlper's address
-> directly into padata_work_init().
-> 
-> I am not sure if the compiler should do this level of optimization
-> because kernel/padata.c does not seem to be a special case.
-> Perhaps, we might be hit with more cases that need __ref annotation,
-> which is only required by LTO.
+	Stable-dep-of: ec851b23084b ("gpiolib: fix memory leak in gpiochip_setup_dev()")
 
-That's possible. I did only see this once instance in all my builds but
-allmodconfig + ThinLTO might not be too interesting of a case,
-since the sanitizers will be enabled, which makes optimization more
-difficult. I could try to enable ThinLTO with some distribution
-configurations to see if there are any more instances that crop up.
+Do you want that one?  If not, then we can drop them all.
 
-> One note is that, we could discard padata_work_init()
-> because (1) and (3) are both annotated as __init.
-> So, another way of fixing is
->    static __always_inline void padata_work_init(...)
-> because the compiler would determine padata_work_init()
-> would be small enough if the caller and callee belonged to
-> the same section.
-> 
-> I do not have a strong opinion.
-> Honestly, I do not know what the best approach would be to fix this.
+thanks,
 
-Agreed to both points, it is really up to the padata maintainers.
-
-> If we go with the __ref annotation, I can pick this, but
-> at least can you add some comments?
-> 
-> 
-> include/linux/init.h says:
-> "optimally document why the __ref is needed and why it's OK"
-> 
-> 
-> I think this is the case that needs some comments
-> because LTO optimization looks too tricky to me.
-
-Sure thing, I will send a v3 either Tuesday or Wednesday with an updated
-commit message and code comment if we end up going this route.
-
-Thank you for the review!
-
-Cheers,
-Nathan
+greg k-h
