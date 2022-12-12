@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61EF28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FABFC433EF;
-	Mon, 12 Dec 2022 13:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511A428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFF5C433EF;
+	Mon, 12 Dec 2022 13:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853360;
-	bh=BbWl/gWdbeEM4bKbfp2plZpqI/1nVudHB2Y7ONZt5Lo=;
+	s=korg; t=1670853365;
+	bh=aPLxUTXdo/xecYuHkuSOuheoc+cRFJ2fpNAMlMypgHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3tzvx1psdAISWWGRnX/t1rzAEwfqZKLRuDnMil20kPDiz0eDHUI6w557csZc270S
-	 Adw9mMOP7ARgX+GO7pnoKL/lmTE4XztUuj+TSKz/2fL0/eO648F0fIxlMhw8/3/FhE
-	 ZNdbDZmTmOau+c+gAMnpvd7JhKs0Odt0nH30aFxM=
+	b=x2c+AhEGfw9IFpgjp72ahQ5GZRE8aLzDcZunVcrZQpTFyKKgox8TgZlher/z/zu7+
+	 HE5kWukYj3vCCKXPpBjua3P8DBsGQDqAd+PV887vJH4RK5cBhsWAsKtca7TKryXFWI
+	 z7upCV+RDT+qnZIIXvY5P+pVsHr3HJ29C9Kz4xmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 15/31] ieee802154: cc2520: Fix error return code in cc2520_hw_init()
-Date: Mon, 12 Dec 2022 14:19:33 +0100
-Message-Id: <20221212130910.826259851@linuxfoundation.org>
+Subject: [PATCH 4.9 16/31] gpio: amd8111: Fix PCI device reference count leak
+Date: Mon, 12 Dec 2022 14:19:34 +0100
+Message-Id: <20221212130910.868473540@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -35,35 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 4d002d6a2a00ac1c433899bd7625c6400a74cfba ]
+[ Upstream commit 45fecdb9f658d9c82960c98240bc0770ade19aca ]
 
-In cc2520_hw_init(), if oscillator start failed, the error code
-should be returned.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-Fixes: 0da6bc8cc341 ("ieee802154: cc2520: adds driver for TI CC2520 radio")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Link: https://lore.kernel.org/r/20221120075046.2213633-1-william.xuanziyang@huawei.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. Add the missing
+pci_dev_put() after the 'out' label. Since pci_dev_put() can handle NULL
+input parameter, there is no problem for the 'Device not found' branch.
+For the normal path, add pci_dev_put() in amd_gpio_exit().
+
+Fixes: f942a7de047d ("gpio: add a driver for GPIO pins found on AMD-8111 south bridge chips")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/cc2520.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-amd8111.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ieee802154/cc2520.c b/drivers/net/ieee802154/cc2520.c
-index 436cf2007138..92aefaf8ea19 100644
---- a/drivers/net/ieee802154/cc2520.c
-+++ b/drivers/net/ieee802154/cc2520.c
-@@ -979,7 +979,7 @@ static int cc2520_hw_init(struct cc2520_private *priv)
+diff --git a/drivers/gpio/gpio-amd8111.c b/drivers/gpio/gpio-amd8111.c
+index 30ad7d7c1678..f8486bac12d0 100644
+--- a/drivers/gpio/gpio-amd8111.c
++++ b/drivers/gpio/gpio-amd8111.c
+@@ -231,7 +231,10 @@ static int __init amd_gpio_init(void)
+ 		ioport_unmap(gp.pm);
+ 		goto out;
+ 	}
++	return 0;
++
+ out:
++	pci_dev_put(pdev);
+ 	return err;
+ }
  
- 		if (timeout-- <= 0) {
- 			dev_err(&priv->spi->dev, "oscillator start failed!\n");
--			return ret;
-+			return -ETIMEDOUT;
- 		}
- 		udelay(1);
- 	} while (!(status & CC2520_STATUS_XOSC32M_STABLE));
+@@ -239,6 +242,7 @@ static void __exit amd_gpio_exit(void)
+ {
+ 	gpiochip_remove(&gp.chip);
+ 	ioport_unmap(gp.pm);
++	pci_dev_put(gp.pdev);
+ }
+ 
+ module_init(amd_gpio_init);
 -- 
 2.35.1
 
