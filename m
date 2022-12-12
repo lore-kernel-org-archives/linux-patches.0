@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7425C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B70C433EF;
-	Mon, 12 Dec 2022 13:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D8F28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D58EC433D2;
+	Mon, 12 Dec 2022 13:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853288;
-	bh=+5GGC/8eufWXSVnOGBvw3X8yB+l1PO1V+/FGgW8gFtc=;
+	s=korg; t=1670853292;
+	bh=erx4mekDg9iblF1wO5yq7GtbKAKHxTvYsT67M7AkDa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrlcJ6cn0XPA23NmOIiZpJGbG8QS8rvD95M19nFdbybJyAIup3mGQX9IP91P/gdVk
-	 v2yftgv28wAfX3+Agi1pe+l6tqE9hzsukIbYiX+wp4Lnvkb15HHEtglN4T7A4QnWnv
-	 h8lpq6xiRrPGyVfcLj40xWYqnZnC5toLSDaZXotk=
+	b=m8TT0nFufF20H9xlTndK7Fz/MIHmTjUiohkTvwmNrlZyVm1B97pzBNWiiUnSHDfUG
+	 SeOsrBm3bipHrN1N4SfG8GUdEn3olwGVBIZoZoqsqAPQqZR3UPB8dhQuQDePZN+IpU
+	 XiSmkR83aTiV+WekPgBy7tUoE2nNDvHEEMXRzhiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Tomislav Novak <tnovak@fb.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	kernel test robot <lkp@intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	alsa-devel@alsa-project.org,
+	Kees Cook <keescook@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 03/31] ARM: 9251/1: perf: Fix stacktraces for tracepoint events in THUMB2 kernels
-Date: Mon, 12 Dec 2022 14:19:21 +0100
-Message-Id: <20221212130910.137612038@linuxfoundation.org>
+Subject: [PATCH 4.9 04/31] ALSA: seq: Fix function prototype mismatch in snd_seq_expand_var_event
+Date: Mon, 12 Dec 2022 14:19:22 +0100
+Message-Id: <20221212130910.180549087@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -36,66 +40,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomislav Novak <tnovak@fb.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 612695bccfdbd52004551308a55bae410e7cd22f ]
+[ Upstream commit 05530ef7cf7c7d700f6753f058999b1b5099a026 ]
 
-Store the frame address where arm_get_current_stackframe() looks for it
-(ARM_r7 instead of ARM_fp if CONFIG_THUMB2_KERNEL=y). Otherwise frame->fp
-gets set to 0, causing unwind_frame() to fail.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed.
 
-  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
-  Attaching 1 probe...
-  @[
-      __schedule+1059
-  ]: 1
+seq_copy_in_user() and seq_copy_in_kernel() did not have prototypes
+matching snd_seq_dump_func_t. Adjust this and remove the casts. There
+are not resulting binary output differences.
 
-A typical first unwind instruction is 0x97 (SP = R7), so after executing
-it SP ends up being 0 and -URC_FAILURE is returned.
+This was found as a result of Clang's new -Wcast-function-type-strict
+flag, which is more sensitive than the simpler -Wcast-function-type,
+which only checks for type width mismatches.
 
-  unwind_frame(pc = ac9da7d7 lr = 00000000 sp = c69bdda0 fp = 00000000)
-  unwind_find_idx(ac9da7d7)
-  unwind_exec_insn: insn = 00000097
-  unwind_exec_insn: fp = 00000000 sp = 00000000 lr = 00000000 pc = 00000000
-
-With this patch:
-
-  # bpftrace -e 't:sched:sched_switch { @[kstack] = count(); exit(); }'
-  Attaching 1 probe...
-  @[
-      __schedule+1059
-      __schedule+1059
-      schedule+79
-      schedule_hrtimeout_range_clock+163
-      schedule_hrtimeout_range+17
-      ep_poll+471
-      SyS_epoll_wait+111
-      sys_epoll_pwait+231
-      __ret_fast_syscall+1
-  ]: 1
-
-Link: https://lore.kernel.org/r/20220920230728.2617421-1-tnovak@fb.com/
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Tomislav Novak <tnovak@fb.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/202211041527.HD8TLSE1-lkp@intel.com
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: alsa-devel@alsa-project.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221118232346.never.380-kees@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/perf_event.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_memory.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/include/asm/perf_event.h b/arch/arm/include/asm/perf_event.h
-index 4f9dec489931..c5d27140834e 100644
---- a/arch/arm/include/asm/perf_event.h
-+++ b/arch/arm/include/asm/perf_event.h
-@@ -21,7 +21,7 @@ extern unsigned long perf_misc_flags(struct pt_regs *regs);
+diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
+index 4c8cbcd89887..42f4aa841051 100644
+--- a/sound/core/seq/seq_memory.c
++++ b/sound/core/seq/seq_memory.c
+@@ -126,15 +126,19 @@ EXPORT_SYMBOL(snd_seq_dump_var_event);
+  * expand the variable length event to linear buffer space.
+  */
  
- #define perf_arch_fetch_caller_regs(regs, __ip) { \
- 	(regs)->ARM_pc = (__ip); \
--	(regs)->ARM_fp = (unsigned long) __builtin_frame_address(0); \
-+	frame_pointer((regs)) = (unsigned long) __builtin_frame_address(0); \
- 	(regs)->ARM_sp = current_stack_pointer; \
- 	(regs)->ARM_cpsr = SVC_MODE; \
+-static int seq_copy_in_kernel(char **bufptr, const void *src, int size)
++static int seq_copy_in_kernel(void *ptr, void *src, int size)
+ {
++	char **bufptr = ptr;
++
+ 	memcpy(*bufptr, src, size);
+ 	*bufptr += size;
+ 	return 0;
+ }
+ 
+-static int seq_copy_in_user(char __user **bufptr, const void *src, int size)
++static int seq_copy_in_user(void *ptr, void *src, int size)
+ {
++	char __user **bufptr = ptr;
++
+ 	if (copy_to_user(*bufptr, src, size))
+ 		return -EFAULT;
+ 	*bufptr += size;
+@@ -163,8 +167,7 @@ int snd_seq_expand_var_event(const struct snd_seq_event *event, int count, char
+ 		return newlen;
+ 	}
+ 	err = snd_seq_dump_var_event(event,
+-				     in_kernel ? (snd_seq_dump_func_t)seq_copy_in_kernel :
+-				     (snd_seq_dump_func_t)seq_copy_in_user,
++				     in_kernel ? seq_copy_in_kernel : seq_copy_in_user,
+ 				     &buf);
+ 	return err < 0 ? err : newlen;
  }
 -- 
 2.35.1
