@@ -1,178 +1,165 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from condef-02.nifty.com (condef-02.nifty.com [202.248.20.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4D9258F
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E536C433EF;
-	Mon, 12 Dec 2022 13:13:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850830;
-	bh=Ab9cm2nN0an6sgaB9m1CEfDhWMDoSqZY9mlYwppv6XM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oo3GZrbdyI4S0fhQyFNF//WKaegKOfuIyIrCbTcvSkgfNE7m9njrOJR8YD9v+cfwT
-	 7GeKMu8BNzsLyq3IpD6FRCgwMfj5Jsw6cYWD8dZsuocxDnB3s7KQJgNYRlziWlPwPI
-	 yn819QIJmoa0v86IJ54peh9Hm8YQEVnk+TCERweQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/106] rtc: cmos: avoid UIP when reading alarm time
-Date: Mon, 12 Dec 2022 14:09:42 +0100
-Message-Id: <20221212130926.569758829@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
-References: <20221212130924.863767275@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4380E2585;
+	Mon, 12 Dec 2022 13:13:50 +0000 (UTC)
+Received: from conssluserg-02.nifty.com ([10.126.8.81])by condef-02.nifty.com with ESMTP id 2BCD8Blx015104;
+	Mon, 12 Dec 2022 22:08:11 +0900
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53]) (authenticated)
+	by conssluserg-02.nifty.com with ESMTP id 2BCD80UY001214;
+	Mon, 12 Dec 2022 22:08:01 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-02.nifty.com 2BCD80UY001214
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+	s=dec2015msa; t=1670850481;
+	bh=60Bgpu0atlDkoRoUv+KHKiAoEPhzrlitVEuwVEjISH8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=S1R8EygUdT0sePVuwyu0xVcBa/332qFMxveWrw988yuTPqcdlCYpH0J01FRF9GqRq
+	 6NAYUO6z6X8AWUmIj4fKF2AsETdOJnH2x89E7eB80ZHY5t1lXgDObzGiQByt6BSatZ
+	 KNnqsSHvAJMiTDsx9J6TKEOCW6VDImfE83tpC8QPwfSU3zxx3ls3Azb9z7nQAI4HJu
+	 1rTFJ1wbdy5xctyM2sikSwR28raiGgVdZzX9mmr1GfpspGtDprHH9OzkyWMmA/J+8+
+	 ZCYMyEdTf8XWhY9XkhnpVMOWF4S7nHPg5O8U9EDN7y99Xp+jWcY2fepFinQBSYL/Ak
+	 NEpGscyytV1lQ==
+X-Nifty-SrcIP: [209.85.160.53]
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-1443a16b71cso8212308fac.13;
+        Mon, 12 Dec 2022 05:08:01 -0800 (PST)
+X-Gm-Message-State: ANoB5pksYwX5Rn82ML6N+r6unvXKU+Ak8bniRKj2Z7VUVYEeoqwRTOyr
+	VkU0xSmbnqv0bGa8flV29w401TO7UFE8DyRv9PY=
+X-Google-Smtp-Source: AA0mqf7M4QfjT3R/GEAqDtO/Cby83qpELei3PVXnETZgJx/Q5WFbXGO/tMYP5+mZ+gL2OQ5qEKbSaAk/zOFU3ItDe8k=
+X-Received: by 2002:a05:6870:c7b4:b0:144:d060:72e with SMTP id
+ dy52-20020a056870c7b400b00144d060072emr5970097oab.287.1670850480174; Mon, 12
+ Dec 2022 05:08:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20221207191657.2852229-1-nathan@kernel.org> <20221207191657.2852229-2-nathan@kernel.org>
+In-Reply-To: <20221207191657.2852229-2-nathan@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 12 Dec 2022 22:07:24 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARoxqSzjpM0twcssMkf9X_PppzqtUo_opq=CX+zixma8g@mail.gmail.com>
+Message-ID: <CAK7LNARoxqSzjpM0twcssMkf9X_PppzqtUo_opq=CX+zixma8g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] padata: Mark padata_work_init() as __ref
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Sami Tolvanen <samitolvanen@google.com>,
+        Vincent Donnefort <vdonnefort@google.com>,
+        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev,
+        Daniel Jordan <daniel.m.jordan@oracle.com>,
+        Steffen Klassert <steffen.klassert@secunet.com>,
+        linux-crypto@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+On Thu, Dec 8, 2022 at 4:17 AM Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> When building arm64 allmodconfig + ThinLTO with clang and a proposed
+> modpost update to account for -ffuncton-sections, the following warning
+> appears:
+>
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: padata_work_init (section: .text.padata_work_init) -> padata_mt_helper (section: .init.text)
+>
+> LLVM has optimized padata_work_init() to include the address of
+> padata_mt_helper() directly, which causes modpost to complain since
+> padata_work_init() is not __init, whereas padata_mt_helper() is. In
+> reality, padata_work_init() is only called with padata_mt_helper() as
+> the work_fn argument in code that is __init, so this warning will not
+> result in any problems. Silence it with __ref, which makes it clear to
+> modpost that padata_work_init() can only use padata_mt_helper() in
+> __init code.
+>
+> Suggested-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Cc: Steffen Klassert <steffen.klassert@secunet.com>
+> Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
+> Cc: linux-crypto@vger.kernel.org
+> ---
+>  kernel/padata.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/kernel/padata.c b/kernel/padata.c
+> index e5819bb8bd1d..4c3137fe8449 100644
+> --- a/kernel/padata.c
+> +++ b/kernel/padata.c
+> @@ -83,8 +83,8 @@ static struct padata_work *padata_work_alloc(void)
+>         return pw;
+>  }
+>
+> -static void padata_work_init(struct padata_work *pw, work_func_t work_fn,
+> -                            void *data, int flags)
+> +static __ref void padata_work_init(struct padata_work *pw, work_func_t work_fn,
+> +                                  void *data, int flags)
+>  {
+>         if (flags & PADATA_WORK_ONSTACK)
+>                 INIT_WORK_ONSTACK(&pw->pw_work, work_fn);
+>
+> base-commit: 76dcd734eca23168cb008912c0f69ff408905235
+> --
+> 2.38.1
+>
 
-[ Upstream commit cdedc45c579faf8cc6608d3ef81576ee0d512aa4 ]
+It took me a while to understand why LTO can embed
+padata_mt_helper's address into padata_work_init().
 
-Some Intel chipsets disconnect the time and date RTC registers when the
-clock update is in progress: during this time reads may return bogus
-values and writes fail silently. This includes the RTC alarm registers.
-[1]
 
-cmos_read_alarm() did not take account for that, which caused alarm time
-reads to sometimes return bogus values. This can be shown with a test
-patch that I am attaching to this patch series.
+There are 3 call-sites to padata_work_init().
 
-Fix this, by using mc146818_avoid_UIP().
+(1)  __init padata_work_alloc_mt()
+         -->  padata_work_init(..., padata_mt_helper, ...)
 
-[1] 7th Generation Intel ® Processor Family I/O for U/Y Platforms [...]
-Datasheet, Volume 1 of 2 (Intel's Document Number: 334658-006)
-Page 208
-https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/7th-and-8th-gen-core-family-mobile-u-y-processor-lines-i-o-datasheet-vol-1.pdf
-        "If a RAM read from the ten time and date bytes is attempted
-        during an update cycle, the value read do not necessarily
-        represent the true contents of those locations. Any RAM writes
-        under the same conditions are ignored."
+(2) padata_do_parallel()
+         -->  padata_work_init(..., padata_parallel_worker, ...)
 
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Cc: Alessandro Zummo <a.zummo@towertech.it>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20211210200131.153887-9-mat.jonczyk@o2.pl
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/rtc/rtc-cmos.c | 72 ++++++++++++++++++++++++++++--------------
- 1 file changed, 49 insertions(+), 23 deletions(-)
+(3) __init padata_do_multithreaded()
+        --> padata_work_init(..., padata_mt_helper, ...)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 601e3967e1f0..d419eb988b22 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -249,10 +249,46 @@ static int cmos_set_time(struct device *dev, struct rtc_time *t)
- 	return mc146818_set_time(t);
- }
- 
-+struct cmos_read_alarm_callback_param {
-+	struct cmos_rtc *cmos;
-+	struct rtc_time *time;
-+	unsigned char	rtc_control;
-+};
-+
-+static void cmos_read_alarm_callback(unsigned char __always_unused seconds,
-+				     void *param_in)
-+{
-+	struct cmos_read_alarm_callback_param *p =
-+		(struct cmos_read_alarm_callback_param *)param_in;
-+	struct rtc_time *time = p->time;
-+
-+	time->tm_sec = CMOS_READ(RTC_SECONDS_ALARM);
-+	time->tm_min = CMOS_READ(RTC_MINUTES_ALARM);
-+	time->tm_hour = CMOS_READ(RTC_HOURS_ALARM);
-+
-+	if (p->cmos->day_alrm) {
-+		/* ignore upper bits on readback per ACPI spec */
-+		time->tm_mday = CMOS_READ(p->cmos->day_alrm) & 0x3f;
-+		if (!time->tm_mday)
-+			time->tm_mday = -1;
-+
-+		if (p->cmos->mon_alrm) {
-+			time->tm_mon = CMOS_READ(p->cmos->mon_alrm);
-+			if (!time->tm_mon)
-+				time->tm_mon = -1;
-+		}
-+	}
-+
-+	p->rtc_control = CMOS_READ(RTC_CONTROL);
-+}
-+
- static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- {
- 	struct cmos_rtc	*cmos = dev_get_drvdata(dev);
--	unsigned char	rtc_control;
-+	struct cmos_read_alarm_callback_param p = {
-+		.cmos = cmos,
-+		.time = &t->time,
-+	};
- 
- 	/* This not only a rtc_op, but also called directly */
- 	if (!is_valid_irq(cmos->irq))
-@@ -263,28 +299,18 @@ static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- 	 * the future.
- 	 */
- 
--	spin_lock_irq(&rtc_lock);
--	t->time.tm_sec = CMOS_READ(RTC_SECONDS_ALARM);
--	t->time.tm_min = CMOS_READ(RTC_MINUTES_ALARM);
--	t->time.tm_hour = CMOS_READ(RTC_HOURS_ALARM);
--
--	if (cmos->day_alrm) {
--		/* ignore upper bits on readback per ACPI spec */
--		t->time.tm_mday = CMOS_READ(cmos->day_alrm) & 0x3f;
--		if (!t->time.tm_mday)
--			t->time.tm_mday = -1;
--
--		if (cmos->mon_alrm) {
--			t->time.tm_mon = CMOS_READ(cmos->mon_alrm);
--			if (!t->time.tm_mon)
--				t->time.tm_mon = -1;
--		}
--	}
--
--	rtc_control = CMOS_READ(RTC_CONTROL);
--	spin_unlock_irq(&rtc_lock);
-+	/* Some Intel chipsets disconnect the alarm registers when the clock
-+	 * update is in progress - during this time reads return bogus values
-+	 * and writes may fail silently. See for example "7th Generation Intel®
-+	 * Processor Family I/O for U/Y Platforms [...] Datasheet", section
-+	 * 27.7.1
-+	 *
-+	 * Use the mc146818_avoid_UIP() function to avoid this.
-+	 */
-+	if (!mc146818_avoid_UIP(cmos_read_alarm_callback, &p))
-+		return -EIO;
- 
--	if (!(rtc_control & RTC_DM_BINARY) || RTC_ALWAYS_BCD) {
-+	if (!(p.rtc_control & RTC_DM_BINARY) || RTC_ALWAYS_BCD) {
- 		if (((unsigned)t->time.tm_sec) < 0x60)
- 			t->time.tm_sec = bcd2bin(t->time.tm_sec);
- 		else
-@@ -313,7 +339,7 @@ static int cmos_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- 		}
- 	}
- 
--	t->enabled = !!(rtc_control & RTC_AIE);
-+	t->enabled = !!(p.rtc_control & RTC_AIE);
- 	t->pending = 0;
- 
- 	return 0;
+
+The function call (2) is squashed away.
+
+
+With only (1) and (3) remaining, the 2nd parameter to
+padata_work_init() is always padata_mt_helper,
+therefore LLVM embeds padata_mt_hlper's address
+directly into padata_work_init().
+
+I am not sure if the compiler should do this level of optimization
+because kernel/padata.c does not seem to be a special case.
+Perhaps, we might be hit with more cases that need __ref annotation,
+which is only required by LTO.
+
+One note is that, we could discard padata_work_init()
+because (1) and (3) are both annotated as __init.
+So, another way of fixing is
+   static __always_inline void padata_work_init(...)
+because the compiler would determine padata_work_init()
+would be small enough if the caller and callee belonged to
+the same section.
+
+I do not have a strong opinion.
+Honestly, I do not know what the best approach would be to fix this.
+
+
+If we go with the __ref annotation, I can pick this, but
+at least can you add some comments?
+
+
+include/linux/init.h says:
+"optimally document why the __ref is needed and why it's OK"
+
+
+I think this is the case that needs some comments
+because LTO optimization looks too tricky to me.
+
+
+
+
+
+
+
 -- 
-2.35.1
-
-
-
+Best Regards
+Masahiro Yamada
