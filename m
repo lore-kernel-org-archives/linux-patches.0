@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083E628ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B8EC433EF;
-	Mon, 12 Dec 2022 13:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3A928ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:52:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7354BC433EF;
+	Mon, 12 Dec 2022 13:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853136;
-	bh=KSUA4w4D8iVRFHCvRuAbwbHEXE09wLHrZQ8gcCDa8bM=;
+	s=korg; t=1670853141;
+	bh=cVpys6z7S+B4VugSbDCCDh7rt+taI8cPveZ9fr2NBlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7Ls1Y9oPSEcFRQx2CDMOM0j3MPmp58FMJ2XoMzCiNF00MzfixAt40/69Apx+/Xfs
-	 DFk7mNXXFlJeFWljSZWC7UJMt3F2NhaUcuvcW2T/fwjUbQYkKl7gx625SPqdRB23T5
-	 4XgFmo0L50uno7HUOwCOceNxbvtGIRfVUaW+293k=
+	b=fS0eTUON4Gsd/UBZycoiQxVdvbJM/HUUkDKPMkh3P6OsANjdvWHMLFa2/C75vs/jp
+	 xoCyX9X2vKLSTvXds9C9wUuy/90Nb4+Xl0QmgOIQSHY9v/aeshtCu56T8XM2GndIks
+	 PZCKp4ZdNJJ5+yOtgB0bK6mmJ5y6EUBz8ihq4uKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
+	syzbot+8b1641d2f14732407e23@syzkaller.appspotmail.com,
+	ZhangPeng <zhangpeng362@huawei.com>,
 	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.14 17/38] HID: hid-lg4ff: Add check for empty lbuf
-Date: Mon, 12 Dec 2022 14:19:18 +0100
-Message-Id: <20221212130912.982279390@linuxfoundation.org>
+Subject: [PATCH 4.14 18/38] HID: core: fix shift-out-of-bounds in hid_report_raw_event
+Date: Mon, 12 Dec 2022 14:19:19 +0100
+Message-Id: <20221212130913.035913261@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130912.069170932@linuxfoundation.org>
 References: <20221212130912.069170932@linuxfoundation.org>
@@ -34,37 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-commit d180b6496143cd360c5d5f58ae4b9a8229c1f344 upstream.
+commit ec61b41918587be530398b0d1c9a0d16619397e5 upstream.
 
-If an empty buf is received, lbuf is also empty. So lbuf is
-accessed by index -1.
+Syzbot reported shift-out-of-bounds in hid_report_raw_event.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+microsoft 0003:045E:07DA.0001: hid_field_extract() called with n (128) >
+32! (swapper/0)
+======================================================================
+UBSAN: shift-out-of-bounds in drivers/hid/hid-core.c:1323:20
+shift exponent 127 is too large for 32-bit type 'int'
+CPU: 0 PID: 0 Comm: swapper/0 Not tainted
+6.1.0-rc4-syzkaller-00159-g4bbf3422df78 #0
+Hardware name: Google Compute Engine/Google Compute Engine, BIOS
+Google 10/26/2022
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e3/0x2cb lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:151 [inline]
+ __ubsan_handle_shift_out_of_bounds+0x3a6/0x420 lib/ubsan.c:322
+ snto32 drivers/hid/hid-core.c:1323 [inline]
+ hid_input_fetch_field drivers/hid/hid-core.c:1572 [inline]
+ hid_process_report drivers/hid/hid-core.c:1665 [inline]
+ hid_report_raw_event+0xd56/0x18b0 drivers/hid/hid-core.c:1998
+ hid_input_report+0x408/0x4f0 drivers/hid/hid-core.c:2066
+ hid_irq_in+0x459/0x690 drivers/hid/usbhid/hid-core.c:284
+ __usb_hcd_giveback_urb+0x369/0x530 drivers/usb/core/hcd.c:1671
+ dummy_timer+0x86b/0x3110 drivers/usb/gadget/udc/dummy_hcd.c:1988
+ call_timer_fn+0xf5/0x210 kernel/time/timer.c:1474
+ expire_timers kernel/time/timer.c:1519 [inline]
+ __run_timers+0x76a/0x980 kernel/time/timer.c:1790
+ run_timer_softirq+0x63/0xf0 kernel/time/timer.c:1803
+ __do_softirq+0x277/0x75b kernel/softirq.c:571
+ __irq_exit_rcu+0xec/0x170 kernel/softirq.c:650
+ irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
+ sysvec_apic_timer_interrupt+0x91/0xb0 arch/x86/kernel/apic/apic.c:1107
+======================================================================
 
-Fixes: f31a2de3fe36 ("HID: hid-lg4ff: Allow switching of Logitech gaming wheels between compatibility modes")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+If the size of the integer (unsigned n) is bigger than 32 in snto32(),
+shift exponent will be too large for 32-bit type 'int', resulting in a
+shift-out-of-bounds bug.
+Fix this by adding a check on the size of the integer (unsigned n) in
+snto32(). To add support for n greater than 32 bits, set n to 32, if n
+is greater than 32.
+
+Reported-by: syzbot+8b1641d2f14732407e23@syzkaller.appspotmail.com
+Fixes: dde5845a529f ("[PATCH] Generic HID layer - code split")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-lg4ff.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-lg4ff.c
-+++ b/drivers/hid/hid-lg4ff.c
-@@ -880,6 +880,12 @@ static ssize_t lg4ff_alternate_modes_sto
- 		return -ENOMEM;
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1132,6 +1132,9 @@ static s32 snto32(__u32 value, unsigned
+ 	if (!value || !n)
+ 		return 0;
  
- 	i = strlen(lbuf);
++	if (n > 32)
++		n = 32;
 +
-+	if (i == 0) {
-+		kfree(lbuf);
-+		return -EINVAL;
-+	}
-+
- 	if (lbuf[i-1] == '\n') {
- 		if (i == 1) {
- 			kfree(lbuf);
+ 	switch (n) {
+ 	case 8:  return ((__s8)value);
+ 	case 16: return ((__s16)value);
 
 
