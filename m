@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2881328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5F9C433EF;
-	Mon, 12 Dec 2022 13:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C46D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E419EC433EF;
+	Mon, 12 Dec 2022 13:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852532;
-	bh=s0LUIJvPpkur9LY6RxVIboEMBRomuSPgB+BetF6F2XE=;
+	s=korg; t=1670852536;
+	bh=oU+PJRKSBQUdS/wKZ89u66xf5ISHpbx8whdnRh1eKBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHzGtm6OiS+iuo6ABX3o2awi3O7EKrYfKBGnEcY7GbEnjBxPzrYC+76tSAeEhKQnK
-	 tXm6r3MusCLJPfSlUSgi0Cd2DPge2dSYgpU8hNw5bzy4MIbTIbEuDjvGk+boaYoDn7
-	 zVAIw9YhYlMynv5IvjTy9ur+0W7YT9YK5nIkOLZk=
+	b=BuDSXMez12IIKF9NRO5+u3XfiRZWw4NANbsIjVWRO3aIjBlgXSX8opiVgMWiWy9o/
+	 N9c5UKhF9j+jqxcMyYCS+yRqH38g+Th56kOENH/bn8x/r1YDWWbFIkO8V6uU0uI4Wy
+	 y2m52dv9FR59ka2Ccma9hogqTcML1MNONlt2Y8Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schuyler Patton <spatton@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guillaume BRUN <the.cheaterman@gmail.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Robert Foss <robert.foss@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 100/157] net: ethernet: ti: am65-cpsw: Fix RGMII configuration at SPEED_10
-Date: Mon, 12 Dec 2022 14:17:28 +0100
-Message-Id: <20221212130938.850463482@linuxfoundation.org>
+Subject: [PATCH 6.0 101/157] drm: bridge: dw_hdmi: fix preference of RGB modes over YUV420
+Date: Mon, 12 Dec 2022 14:17:29 +0100
+Message-Id: <20221212130938.891548947@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,41 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Guillaume BRUN <the.cheaterman@gmail.com>
 
-[ Upstream commit 6c681f899e0360803b924ac8c96ee21965118649 ]
+[ Upstream commit d3d6b1bf85aefe0ebc0624574b3bb62f0693914c ]
 
-The am65-cpsw driver supports configuring all RGMII variants at interface
-speed of 10 Mbps. However, in the process of shifting to the PHYLINK
-framework, the support for all variants of RGMII except the
-PHY_INTERFACE_MODE_RGMII variant was accidentally removed.
+Cheap monitors sometimes advertise YUV modes they don't really have
+(HDMI specification mandates YUV support so even monitors without actual
+support will often wrongfully advertise it) which results in YUV matches
+and user forum complaints of a red tint to light colour display areas in
+common desktop environments.
 
-Fix this by using phy_interface_mode_is_rgmii() to check for all variants
-of RGMII mode.
+Moving the default RGB fall-back before YUV selection results in RGB
+mode matching in most cases, reducing complaints.
 
-Fixes: e8609e69470f ("net: ethernet: ti: am65-cpsw: Convert to PHYLINK")
-Reported-by: Schuyler Patton <spatton@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://lore.kernel.org/r/20221129050639.111142-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6c3c719936da ("drm/bridge: synopsys: dw-hdmi: add bus format negociation")
+Signed-off-by: Guillaume BRUN <the.cheaterman@gmail.com>
+Tested-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221116143523.2126-1-the.cheaterman@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 95baacd6c761..47da11b9ac28 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1450,7 +1450,7 @@ static void am65_cpsw_nuss_mac_link_up(struct phylink_config *config, struct phy
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+index 40d8ca37f5bc..aa51c61a78c7 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+@@ -2720,6 +2720,9 @@ static u32 *dw_hdmi_bridge_atomic_get_output_bus_fmts(struct drm_bridge *bridge,
+ 	 * if supported. In any case the default RGB888 format is added
+ 	 */
  
- 	if (speed == SPEED_1000)
- 		mac_control |= CPSW_SL_CTL_GIG;
--	if (speed == SPEED_10 && interface == PHY_INTERFACE_MODE_RGMII)
-+	if (speed == SPEED_10 && phy_interface_mode_is_rgmii(interface))
- 		/* Can be used with in band mode only */
- 		mac_control |= CPSW_SL_CTL_EXT_EN;
- 	if (speed == SPEED_100 && interface == PHY_INTERFACE_MODE_RMII)
++	/* Default 8bit RGB fallback */
++	output_fmts[i++] = MEDIA_BUS_FMT_RGB888_1X24;
++
+ 	if (max_bpc >= 16 && info->bpc == 16) {
+ 		if (info->color_formats & DRM_COLOR_FORMAT_YCBCR444)
+ 			output_fmts[i++] = MEDIA_BUS_FMT_YUV16_1X48;
+@@ -2753,9 +2756,6 @@ static u32 *dw_hdmi_bridge_atomic_get_output_bus_fmts(struct drm_bridge *bridge,
+ 	if (info->color_formats & DRM_COLOR_FORMAT_YCBCR444)
+ 		output_fmts[i++] = MEDIA_BUS_FMT_YUV8_1X24;
+ 
+-	/* Default 8bit RGB fallback */
+-	output_fmts[i++] = MEDIA_BUS_FMT_RGB888_1X24;
+-
+ 	*num_output_fmts = i;
+ 
+ 	return output_fmts;
 -- 
 2.35.1
 
