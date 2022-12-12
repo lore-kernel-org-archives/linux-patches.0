@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B6528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8AFC433EF;
-	Mon, 12 Dec 2022 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4793328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AF7C433EF;
+	Mon, 12 Dec 2022 13:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852506;
-	bh=sFJnaQP5+40rUXblXmRmMc8mvGNWHODzp5PXz5cghiI=;
+	s=korg; t=1670852511;
+	bh=orClSxaAWRvBpt6OAEE+/Eg/iRAfY3zecFzYjXOj2+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPWL6iKCwEzSDL2+BVcyp1qEdwnU44yEF1z0oeucJ87g5Xu0a3s1sdkL3HseV1WHQ
-	 FoRV4s8ufD+azzSbgFSt/ljMhnqoIUhzquVS20oSyuDhlRhRp/gIoB9N41L5wmuFd2
-	 KvZCyU9b551i8AYp0m2K0VTCOU+96jXd6wrySAxI=
+	b=ZqBMC0v7PvhimUVW5y4TM6U39b3s+e9w0BYsFAmOpw+6ctybba7AroH4zwxxAE93g
+	 YFlWic0S03Sl5CwpoiJnCTBgyKCDvPnpm27bDIjB9/M0fT2wthr8b5jNNU+q8TqrAV
+	 E4c34ZuOgxELuAGvylNoNNT0v2qE8KenOXmH96+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 058/157] memcg: fix possible use-after-free in memcg_write_event_control()
-Date: Mon, 12 Dec 2022 14:16:46 +0100
-Message-Id: <20221212130936.895085036@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 088/157] netfilter: nft_set_pipapo: Actually validate intervals in fields after the first one
+Date: Mon, 12 Dec 2022 14:17:16 +0100
+Message-Id: <20221212130938.346030655@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -41,112 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
+From: Stefano Brivio <sbrivio@redhat.com>
 
-commit 4a7ba45b1a435e7097ca0f79a847d0949d0eb088 upstream.
+[ Upstream commit 97d4d394b58777f7056ebba8ffdb4002d0563259 ]
 
-memcg_write_event_control() accesses the dentry->d_name of the specified
-control fd to route the write call.  As a cgroup interface file can't be
-renamed, it's safe to access d_name as long as the specified file is a
-regular cgroup file.  Also, as these cgroup interface files can't be
-removed before the directory, it's safe to access the parent too.
+Embarrassingly, nft_pipapo_insert() checked for interval validity in
+the first field only.
 
-Prior to 347c4a874710 ("memcg: remove cgroup_event->cft"), there was a
-call to __file_cft() which verified that the specified file is a regular
-cgroupfs file before further accesses.  The cftype pointer returned from
-__file_cft() was no longer necessary and the commit inadvertently dropped
-the file type check with it allowing any file to slip through.  With the
-invarients broken, the d_name and parent accesses can now race against
-renames and removals of arbitrary files and cause use-after-free's.
+The start_p and end_p pointers were reset to key data from the first
+field at every iteration of the loop which was supposed to go over
+the set fields.
 
-Fix the bug by resurrecting the file type check in __file_cft().  Now that
-cgroupfs is implemented through kernfs, checking the file operations needs
-to go through a layer of indirection.  Instead, let's check the superblock
-and dentry type.
-
-Link: https://lkml.kernel.org/r/Y5FRm/cfcKPGzWwl@slm.duckdns.org
-Fixes: 347c4a874710 ("memcg: remove cgroup_event->cft")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Jann Horn <jannh@google.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: <stable@vger.kernel.org>	[3.14+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup.h          |    1 +
- kernel/cgroup/cgroup-internal.h |    1 -
- mm/memcontrol.c                 |   15 +++++++++++++--
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -68,6 +68,7 @@ struct css_task_iter {
- 	struct list_head		iters_node;	/* css_set->task_iters */
- };
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 4f9299b9dcdd..06d46d182634 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1162,6 +1162,7 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo_match *m = priv->clone;
+ 	u8 genmask = nft_genmask_next(net);
+ 	struct nft_pipapo_field *f;
++	const u8 *start_p, *end_p;
+ 	int i, bsize_max, err = 0;
  
-+extern struct file_system_type cgroup_fs_type;
- extern struct cgroup_root cgrp_dfl_root;
- extern struct css_set init_css_set;
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_KEY_END))
+@@ -1202,9 +1203,9 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 	}
  
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -168,7 +168,6 @@ extern struct mutex cgroup_mutex;
- extern spinlock_t css_set_lock;
- extern struct cgroup_subsys *cgroup_subsys[];
- extern struct list_head cgroup_roots;
--extern struct file_system_type cgroup_fs_type;
+ 	/* Validate */
++	start_p = start;
++	end_p = end;
+ 	nft_pipapo_for_each_field(f, i, m) {
+-		const u8 *start_p = start, *end_p = end;
+-
+ 		if (f->rules >= (unsigned long)NFT_PIPAPO_RULE0_MAX)
+ 			return -ENOSPC;
  
- /* iterate across the hierarchies */
- #define for_each_root(root)						\
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -4772,6 +4772,7 @@ static ssize_t memcg_write_event_control
- 	unsigned int efd, cfd;
- 	struct fd efile;
- 	struct fd cfile;
-+	struct dentry *cdentry;
- 	const char *name;
- 	char *endp;
- 	int ret;
-@@ -4826,6 +4827,16 @@ static ssize_t memcg_write_event_control
- 		goto out_put_cfile;
- 
- 	/*
-+	 * The control file must be a regular cgroup1 file. As a regular cgroup
-+	 * file can't be renamed, it's safe to access its name afterwards.
-+	 */
-+	cdentry = cfile.file->f_path.dentry;
-+	if (cdentry->d_sb->s_type != &cgroup_fs_type || !d_is_reg(cdentry)) {
-+		ret = -EINVAL;
-+		goto out_put_cfile;
-+	}
-+
-+	/*
- 	 * Determine the event callbacks and set them in @event.  This used
- 	 * to be done via struct cftype but cgroup core no longer knows
- 	 * about these events.  The following is crude but the whole thing
-@@ -4833,7 +4844,7 @@ static ssize_t memcg_write_event_control
- 	 *
- 	 * DO NOT ADD NEW FILES.
- 	 */
--	name = cfile.file->f_path.dentry->d_name.name;
-+	name = cdentry->d_name.name;
- 
- 	if (!strcmp(name, "memory.usage_in_bytes")) {
- 		event->register_event = mem_cgroup_usage_register_event;
-@@ -4857,7 +4868,7 @@ static ssize_t memcg_write_event_control
- 	 * automatically removed on cgroup destruction but the removal is
- 	 * asynchronous, so take an extra ref on @css.
- 	 */
--	cfile_css = css_tryget_online_from_dir(cfile.file->f_path.dentry->d_parent,
-+	cfile_css = css_tryget_online_from_dir(cdentry->d_parent,
- 					       &memory_cgrp_subsys);
- 	ret = -EINVAL;
- 	if (IS_ERR(cfile_css))
+-- 
+2.35.1
+
 
 
