@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DF228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9A3C433D2;
-	Mon, 12 Dec 2022 13:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F07428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C24C433EF;
+	Mon, 12 Dec 2022 13:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852492;
-	bh=UlQIcF4anpMd3SXMOJR9lMJ5nuI4m1Q6Q73lBoy8zfY=;
+	s=korg; t=1670852497;
+	bh=P2NcJ3/LgoirCpBku+9bcoktAcZnBkl+pkjVjJyvkaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Cfm8HJoDuznTsiyzr4hBNxlkxmlx0xLJ9BkxV2h9hV7kpPgE8+3FxHHhQI3DPy08
-	 G7AUtucmNM2lW0oGHTMTGv7xaeoHUuSThL8qBdhquRwgZqISvW6Rj6JwFrfqJTTIma
-	 xUQVgOVDeq6Hivm002M5QxfuK+C/cRTi4/Vh3KZk=
+	b=EpULnZmzVOjlkOn7mvUZZvs+zL1ZWv5g5XZei6x5ANqgm2XUzz5VF+2uptfRpSpvQ
+	 fwLTYtA1LOo0NDZbLJwQDAAiVSpE+8/9OcJ2tGp35g7Fv+IEKxGVlQUBBDsUQveuJs
+	 ptWbBkUFAt62YyIopeCHcu52ehFYzrsBj8iifl80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.0 065/157] net: mana: Fix race on per-CQ variable napi work_done
-Date: Mon, 12 Dec 2022 14:16:53 +0100
-Message-Id: <20221212130937.188521672@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.0 066/157] io_uring: Fix a null-ptr-deref in io_tctx_exit_cb()
+Date: Mon, 12 Dec 2022 14:16:54 +0100
+Message-Id: <20221212130937.232228492@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -34,103 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit 18010ff776fa42340efc428b3ea6d19b3e7c7b21 upstream.
+commit 998b30c3948e4d0b1097e639918c5cff332acac5 upstream.
 
-After calling napi_complete_done(), the NAPIF_STATE_SCHED bit may be
-cleared, and another CPU can start napi thread and access per-CQ variable,
-cq->work_done. If the other thread (for example, from busy_poll) sets
-it to a value >= budget, this thread will continue to run when it should
-stop, and cause memory corruption and panic.
+Syzkaller reports a NULL deref bug as follows:
 
-To fix this issue, save the per-CQ work_done variable in a local variable
-before napi_complete_done(), so it won't be corrupted by a possible
-concurrent thread after napi_complete_done().
+ BUG: KASAN: null-ptr-deref in io_tctx_exit_cb+0x53/0xd3
+ Read of size 4 at addr 0000000000000138 by task file1/1955
 
-Also, add a flag bit to advertise to the NIC firmware: the NAPI work_done
-variable race is fixed, so the driver is able to reliably support features
-like busy_poll.
+ CPU: 1 PID: 1955 Comm: file1 Not tainted 6.1.0-rc7-00103-gef4d3ea40565 #75
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0xcd/0x134
+  ? io_tctx_exit_cb+0x53/0xd3
+  kasan_report+0xbb/0x1f0
+  ? io_tctx_exit_cb+0x53/0xd3
+  kasan_check_range+0x140/0x190
+  io_tctx_exit_cb+0x53/0xd3
+  task_work_run+0x164/0x250
+  ? task_work_cancel+0x30/0x30
+  get_signal+0x1c3/0x2440
+  ? lock_downgrade+0x6e0/0x6e0
+  ? lock_downgrade+0x6e0/0x6e0
+  ? exit_signals+0x8b0/0x8b0
+  ? do_raw_read_unlock+0x3b/0x70
+  ? do_raw_spin_unlock+0x50/0x230
+  arch_do_signal_or_restart+0x82/0x2470
+  ? kmem_cache_free+0x260/0x4b0
+  ? putname+0xfe/0x140
+  ? get_sigframe_size+0x10/0x10
+  ? do_execveat_common.isra.0+0x226/0x710
+  ? lockdep_hardirqs_on+0x79/0x100
+  ? putname+0xfe/0x140
+  ? do_execveat_common.isra.0+0x238/0x710
+  exit_to_user_mode_prepare+0x15f/0x250
+  syscall_exit_to_user_mode+0x19/0x50
+  do_syscall_64+0x42/0xb0
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0023:0x0
+ Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+ RSP: 002b:00000000fffb7790 EFLAGS: 00000200 ORIG_RAX: 000000000000000b
+ RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+ RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+ R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  </TASK>
+ Kernel panic - not syncing: panic_on_warn set ...
+
+This happens because the adding of task_work from io_ring_exit_work()
+isn't synchronized with canceling all work items from eg exec. The
+execution of the two are ordered in that they are both run by the task
+itself, but if io_tctx_exit_cb() is queued while we're canceling all
+work items off exec AND gets executed when the task exits to userspace
+rather than in the main loop in io_uring_cancel_generic(), then we can
+find current->io_uring == NULL and hit the above crash.
+
+It's safe to add this NULL check here, because the execution of the two
+paths are done by the task itself.
 
 Cc: stable@vger.kernel.org
-Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://lore.kernel.org/r/1670010190-28595-1-git-send-email-haiyangz@microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d56d938b4bef ("io_uring: do ctx initiated file note removal")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221206093833.3812138-1-harshit.m.mogalapalli@oracle.com
+[axboe: add code comment and also put an explanation in the commit msg]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma.h    |    9 ++++++++-
- drivers/net/ethernet/microsoft/mana/mana_en.c |   16 +++++++++++-----
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ io_uring/io_uring.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microsoft/mana/gdma.h
-+++ b/drivers/net/ethernet/microsoft/mana/gdma.h
-@@ -498,7 +498,14 @@ enum {
- 
- #define GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT BIT(0)
- 
--#define GDMA_DRV_CAP_FLAGS1 GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT
-+/* Advertise to the NIC firmware: the NAPI work_done variable race is fixed,
-+ * so the driver is able to reliably support features like busy_poll.
-+ */
-+#define GDMA_DRV_CAP_FLAG_1_NAPI_WKDONE_FIX BIT(2)
-+
-+#define GDMA_DRV_CAP_FLAGS1 \
-+	(GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT | \
-+	 GDMA_DRV_CAP_FLAG_1_NAPI_WKDONE_FIX)
- 
- #define GDMA_DRV_CAP_FLAGS2 0
- 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1303,10 +1303,11 @@ static void mana_poll_rx_cq(struct mana_
- 		xdp_do_flush();
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2560,8 +2560,10 @@ static __cold void io_tctx_exit_cb(struc
+ 	/*
+ 	 * When @in_idle, we're in cancellation and it's racy to remove the
+ 	 * node. It'll be removed by the end of cancellation, just ignore it.
++	 * tctx can be NULL if the queueing of this task_work raced with
++	 * work cancelation off the exec path.
+ 	 */
+-	if (!atomic_read(&tctx->in_idle))
++	if (tctx && !atomic_read(&tctx->in_idle))
+ 		io_uring_del_tctx_node((unsigned long)work->ctx);
+ 	complete(&work->completion);
  }
- 
--static void mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
-+static int mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
- {
- 	struct mana_cq *cq = context;
- 	u8 arm_bit;
-+	int w;
- 
- 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
- 
-@@ -1315,26 +1316,31 @@ static void mana_cq_handler(void *contex
- 	else
- 		mana_poll_tx_cq(cq);
- 
--	if (cq->work_done < cq->budget &&
--	    napi_complete_done(&cq->napi, cq->work_done)) {
-+	w = cq->work_done;
-+
-+	if (w < cq->budget &&
-+	    napi_complete_done(&cq->napi, w)) {
- 		arm_bit = SET_ARM_BIT;
- 	} else {
- 		arm_bit = 0;
- 	}
- 
- 	mana_gd_ring_cq(gdma_queue, arm_bit);
-+
-+	return w;
- }
- 
- static int mana_poll(struct napi_struct *napi, int budget)
- {
- 	struct mana_cq *cq = container_of(napi, struct mana_cq, napi);
-+	int w;
- 
- 	cq->work_done = 0;
- 	cq->budget = budget;
- 
--	mana_cq_handler(cq, cq->gdma_cq);
-+	w = mana_cq_handler(cq, cq->gdma_cq);
- 
--	return min(cq->work_done, budget);
-+	return min(w, budget);
- }
- 
- static void mana_schedule_napi(void *context, struct gdma_queue *gdma_queue)
 
 
