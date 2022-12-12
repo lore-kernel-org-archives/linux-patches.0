@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413B628ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:38:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683B4C433EF;
-	Mon, 12 Dec 2022 13:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231EE28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2703C433EF;
+	Mon, 12 Dec 2022 13:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852339;
-	bh=Sbg4gnTeQtMEYh5BdDEKrNrqcS7U5MKEue2moFHjO7c=;
+	s=korg; t=1670852345;
+	bh=y0onyTytyGueODo0bQ1AhuLo99a7hvNCbNOB8XaCVK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckjlaCJaIs/YVLUsw/eA2pSaVnjPr37ui+EZwlL76thg9nigw07sLkkiz+RpOUjPE
-	 YsRJ6lHT20ZuMySKgTHG+wMVz19D0ydyZ099SWjLwUZkMWx9RnpobmLYm9P4OQrv95
-	 WKgg92WOngQs7koNmFeRmcTZRWTp60a0LP1aKf3o=
+	b=oXHlm2qP1ylBmHti7PXCG+xHPkjnRDKwTc4aROmA7MkWheZq2Le5OjtGPUXGOAN3t
+	 hQPyyaiQg9IK168jQNANcqZjHdXo4k4LW4zPjHy9l4mviyFqLsq83jr+40+KLbURHj
+	 /VPOqITy3T2RzvaYhedDa92x2kzkM/8yMRUqDPz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 035/157] usb: dwc3: gadget: Disable GUSB2PHYCFG.SUSPHY for End Transfer
-Date: Mon, 12 Dec 2022 14:16:23 +0100
-Message-Id: <20221212130935.939101361@linuxfoundation.org>
+Subject: [PATCH 6.0 036/157] 9p/xen: check logical size for buffer size
+Date: Mon, 12 Dec 2022 14:16:24 +0100
+Message-Id: <20221212130935.980026490@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -34,45 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 3aa07f72894d209fcf922ad686cbb28cf005aaad ]
+[ Upstream commit 391c18cf776eb4569ecda1f7794f360fe0a45a26 ]
 
-If there's a disconnection while operating in eSS, there may be a delay
-in VBUS drop response from the connector. In that case, the internal
-link state may drop to operate in usb2 speed while the controller thinks
-the VBUS is still high. The driver must make sure to disable
-GUSB2PHYCFG.SUSPHY when sending endpoint command while in usb2 speed.
-The End Transfer command may be called, and only that command needs to
-go through at this point. Let's keep it simple and unconditionally
-disable GUSB2PHYCFG.SUSPHY whenever we issue the command.
+trans_xen did not check the data fits into the buffer before copying
+from the xen ring, but we probably should.
+Add a check that just skips the request and return an error to
+userspace if it did not fit
 
-This scenario is not seen in real hardware. In a rare case, our
-prototype type-c controller/interface may have a slow response
-triggerring this issue.
-
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/5651117207803c26e2f22ddf4e5ce9e865dcf7c7.1668045468.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Stefano Stabellini <sstabellini@kernel.org>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Link: https://lkml.kernel.org/r/20221118135542.63400-1-asmadeus@codewreck.org
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/9p/trans_xen.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 6f61a288073b..c2075b90f3df 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -291,7 +291,8 @@ int dwc3_send_gadget_ep_cmd(struct dwc3_ep *dep, unsigned int cmd,
- 	 *
- 	 * DWC_usb3 3.30a and DWC_usb31 1.90a programming guide section 3.2.2
- 	 */
--	if (dwc->gadget->speed <= USB_SPEED_HIGH) {
-+	if (dwc->gadget->speed <= USB_SPEED_HIGH ||
-+	    DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER) {
- 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
- 		if (unlikely(reg & DWC3_GUSB2PHYCFG_SUSPHY)) {
- 			saved_config |= DWC3_GUSB2PHYCFG_SUSPHY;
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 227f89cc7237..0f862d5a5960 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -208,6 +208,14 @@ static void p9_xen_response(struct work_struct *work)
+ 			continue;
+ 		}
+ 
++		if (h.size > req->rc.capacity) {
++			dev_warn(&priv->dev->dev,
++				 "requested packet size too big: %d for tag %d with capacity %zd\n",
++				 h.size, h.tag, req->rc.capacity);
++			req->status = REQ_STATUS_ERROR;
++			goto recv_error;
++		}
++
+ 		memcpy(&req->rc, &h, sizeof(h));
+ 		req->rc.offset = 0;
+ 
+@@ -217,6 +225,7 @@ static void p9_xen_response(struct work_struct *work)
+ 				     masked_prod, &masked_cons,
+ 				     XEN_9PFS_RING_SIZE(ring));
+ 
++recv_error:
+ 		virt_mb();
+ 		cons += h.size;
+ 		ring->intf->in_cons = cons;
 -- 
 2.35.1
 
