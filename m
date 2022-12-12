@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B32228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FF1C433D2;
-	Mon, 12 Dec 2022 13:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549D328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60585C433D2;
+	Mon, 12 Dec 2022 13:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852747;
-	bh=c8vW/LaiFzuQy1zTI6gQj9YCHIVWvo7b+WOwtQ5EtRY=;
+	s=korg; t=1670852752;
+	bh=OyJhl0urYqLEGAXiMaD8NlhT5R4R3ciDN/M8xEd2JY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1ByCENdVkLqjTOsYnIvnCLVxQ1Jq90rCMj0wx9/jncLZ9oJnZO4hdKfS2/de7Dek
-	 qLeOJOVQXS0GCQ2oguEChk7RFDpBlavcwqT2fRaeqSoSCibveni5fCyRU8b8gKamkj
-	 n++31dultNfE6+q/N0QNof6b/3TSGa21oLvVNmOY=
+	b=YAoNLZoq6uBshnRHZ2vd07Xursz++46WGZeZtRVpJvIVCfNFCI9V4w2gSbEkfY9b0
+	 Ti+PF/in6QeG4QOM9xcmkyU8uGpazNirnHfX+zea4P1nR3CvoUHcTgXV9m+xIHdHsZ
+	 p5J3549FiaVHciwyt6qGcNCbQa55nzbmb0UmBhqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Valentina Goncharenko <goncharenko.vp@ispras.ru>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 144/157] net: dsa: sja1105: fix memory leak in sja1105_setup_devlink_regions()
-Date: Mon, 12 Dec 2022 14:18:12 +0100
-Message-Id: <20221212130940.938311770@linuxfoundation.org>
+Subject: [PATCH 6.0 118/157] net: encx24j600: Fix invalid logic in reading of MISTAT register
+Date: Mon, 12 Dec 2022 14:17:46 +0100
+Message-Id: <20221212130939.595269401@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -37,36 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Valentina Goncharenko <goncharenko.vp@ispras.ru>
 
-[ Upstream commit 78a9ea43fc1a7c06a420b132d2d47cbf4344a5df ]
+[ Upstream commit 25f427ac7b8d89b0259f86c0c6407b329df742b2 ]
 
-When dsa_devlink_region_create failed in sja1105_setup_devlink_regions(),
-priv->regions is not released.
+A loop for reading MISTAT register continues while regmap_read() fails
+and (mistat & BUSY), but if regmap_read() fails a value of mistat is
+undefined.
 
-Fixes: bf425b82059e ("net: dsa: sja1105: expose static config as devlink region")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20221205012132.2110979-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The patch proposes to check for BUSY flag only when regmap_read()
+succeed. Compile test only.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d70e53262f5c ("net: Microchip encx24j600 driver")
+Signed-off-by: Valentina Goncharenko <goncharenko.vp@ispras.ru>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_devlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/microchip/encx24j600-regmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_devlink.c b/drivers/net/dsa/sja1105/sja1105_devlink.c
-index 10c6fea1227f..bdbbff2a7909 100644
---- a/drivers/net/dsa/sja1105/sja1105_devlink.c
-+++ b/drivers/net/dsa/sja1105/sja1105_devlink.c
-@@ -95,6 +95,8 @@ static int sja1105_setup_devlink_regions(struct dsa_switch *ds)
- 		if (IS_ERR(region)) {
- 			while (--i >= 0)
- 				dsa_devlink_region_destroy(priv->regions[i]);
-+
-+			kfree(priv->regions);
- 			return PTR_ERR(region);
- 		}
+diff --git a/drivers/net/ethernet/microchip/encx24j600-regmap.c b/drivers/net/ethernet/microchip/encx24j600-regmap.c
+index 2e337c7a5773..5693784eec5b 100644
+--- a/drivers/net/ethernet/microchip/encx24j600-regmap.c
++++ b/drivers/net/ethernet/microchip/encx24j600-regmap.c
+@@ -359,7 +359,7 @@ static int regmap_encx24j600_phy_reg_read(void *context, unsigned int reg,
+ 		goto err_out;
+ 
+ 	usleep_range(26, 100);
+-	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) == 0) &&
+ 	       (mistat & BUSY))
+ 		cpu_relax();
+ 
+@@ -397,7 +397,7 @@ static int regmap_encx24j600_phy_reg_write(void *context, unsigned int reg,
+ 		goto err_out;
+ 
+ 	usleep_range(26, 100);
+-	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) == 0) &&
+ 	       (mistat & BUSY))
+ 		cpu_relax();
  
 -- 
 2.35.1
