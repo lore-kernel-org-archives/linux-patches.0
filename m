@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CD82585
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795BAC43392;
-	Mon, 12 Dec 2022 13:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DD02585
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125A2C433EF;
+	Mon, 12 Dec 2022 13:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850836;
-	bh=3XCvpEUAde9L5rOVYJiM7GSuh5V/A6GXuarnYLuqMH0=;
+	s=korg; t=1670850840;
+	bh=dgsijJgaHVGvAYNCfDVc6PBaCvK6D43P76YGC9hB6oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNj6jmxniaSbJud3xlzpViuhY8bStQ9zYPRPIJHAWcrbruibC/c6EdakdVEn/itgT
-	 nVmB/3ROPpFKae1a38rSvS+338be3DFhYxQrnh2daVLCRSkZj2XU+htC9r47122P8f
-	 CVq+GlLx+PD1Msv7N7JJ4Qru/lbkE6DAsIE3AtG4=
+	b=fSr99bvCehWHDyeP5bDry0K0i3wgNx5ac8ByZt8u+Te9kGR6FV4fk9eoe2mm7xcNM
+	 OATP+S6QoEDUokV9gu4D5P/CD1wbH2wG+dXYXWAQZPmslXtbb2jngSAklpAlfVsWn9
+	 ZlzrFCnZmrxvGvB4XnJgTlGsTA39VAFfyaw05fzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/106] fbcon: Use kzalloc() in fbcon_prepare_logo()
-Date: Mon, 12 Dec 2022 14:09:26 +0100
-Message-Id: <20221212130925.870385694@linuxfoundation.org>
+Subject: [PATCH 5.10 041/106] rtc: mc146818: Reduce spinlock section in mc146818_set_time()
+Date: Mon, 12 Dec 2022 14:09:44 +0100
+Message-Id: <20221212130926.653734354@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -35,91 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a6a00d7e8ffd78d1cdb7a43f1278f081038c638f ]
+[ Upstream commit dcf257e92622ba0e25fdc4b6699683e7ae67e2a1 ]
 
-A kernel built with syzbot's config file reported that
+No need to hold the lock and disable interrupts for doing math.
 
-  scr_memcpyw(q, save, array3_size(logo_lines, new_cols, 2))
-
-causes uninitialized "save" to be copied.
-
-  ----------
-  [drm] Initialized vgem 1.0.0 20120112 for vgem on minor 0
-  [drm] Initialized vkms 1.0.0 20180514 for vkms on minor 1
-  Console: switching to colour frame buffer device 128x48
-  =====================================================
-  BUG: KMSAN: uninit-value in do_update_region+0x4b8/0xba0
-   do_update_region+0x4b8/0xba0
-   update_region+0x40d/0x840
-   fbcon_switch+0x3364/0x35e0
-   redraw_screen+0xae3/0x18a0
-   do_bind_con_driver+0x1cb3/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
-
-  Uninit was stored to memory at:
-   fbcon_prepare_logo+0x143b/0x1940
-   fbcon_init+0x2c1b/0x31c0
-   visual_init+0x3e7/0x820
-   do_bind_con_driver+0x14a4/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
-
-  Uninit was created at:
-   __kmem_cache_alloc_node+0xb69/0x1020
-   __kmalloc+0x379/0x680
-   fbcon_prepare_logo+0x704/0x1940
-   fbcon_init+0x2c1b/0x31c0
-   visual_init+0x3e7/0x820
-   do_bind_con_driver+0x14a4/0x1df0
-   do_take_over_console+0x11cb/0x13f0
-   fbcon_fb_registered+0xacc/0xfd0
-   register_framebuffer+0x1179/0x1320
-   __drm_fb_helper_initial_config_and_unlock+0x23ad/0x2b40
-   drm_fbdev_client_hotplug+0xbea/0xda0
-   drm_fbdev_generic_setup+0x65e/0x9d0
-   vkms_init+0x9f3/0xc76
-   (...snipped...)
-
-  CPU: 2 PID: 1 Comm: swapper/0 Not tainted 6.1.0-rc4-00356-g8f2975c2bb4c #924
-  Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
-  ----------
-
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/cad03d25-0ea0-32c4-8173-fd1895314bce@I-love.SAKURA.ne.jp
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20201206220541.709243630@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-mc146818-lib.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 2618d3beef64..27828435dd4f 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -609,7 +609,7 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
- 		if (scr_readw(r) != vc->vc_video_erase_char)
- 			break;
- 	if (r != q && new_rows >= rows + logo_lines) {
--		save = kmalloc(array3_size(logo_lines, new_cols, 2),
-+		save = kzalloc(array3_size(logo_lines, new_cols, 2),
- 			       GFP_KERNEL);
- 		if (save) {
- 			int i = cols < new_cols ? cols : new_cols;
+diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
+index 46527a5d3912..1ca866461d10 100644
+--- a/drivers/rtc/rtc-mc146818-lib.c
++++ b/drivers/rtc/rtc-mc146818-lib.c
+@@ -249,7 +249,6 @@ int mc146818_set_time(struct rtc_time *time)
+ 	if (yrs > 255)	/* They are unsigned */
+ 		return -EINVAL;
+ 
+-	spin_lock_irqsave(&rtc_lock, flags);
+ #ifdef CONFIG_MACH_DECSTATION
+ 	real_yrs = yrs;
+ 	leap_yr = ((!((yrs + 1900) % 4) && ((yrs + 1900) % 100)) ||
+@@ -278,10 +277,8 @@ int mc146818_set_time(struct rtc_time *time)
+ 	/* These limits and adjustments are independent of
+ 	 * whether the chip is in binary mode or not.
+ 	 */
+-	if (yrs > 169) {
+-		spin_unlock_irqrestore(&rtc_lock, flags);
++	if (yrs > 169)
+ 		return -EINVAL;
+-	}
+ 
+ 	if (yrs >= 100)
+ 		yrs -= 100;
+@@ -297,6 +294,7 @@ int mc146818_set_time(struct rtc_time *time)
+ 		century = bin2bcd(century);
+ 	}
+ 
++	spin_lock_irqsave(&rtc_lock, flags);
+ 	save_control = CMOS_READ(RTC_CONTROL);
+ 	CMOS_WRITE((save_control|RTC_SET), RTC_CONTROL);
+ 	save_freq_select = CMOS_READ(RTC_FREQ_SELECT);
 -- 
 2.35.1
 
