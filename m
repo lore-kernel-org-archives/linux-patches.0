@@ -1,363 +1,176 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D47528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4094DC433EF;
-	Mon, 12 Dec 2022 13:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E18C433EF;
+	Mon, 12 Dec 2022 13:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851231;
-	bh=cIuO/YK/sb4kZMZnmwltYrqPmSY3b9FWO4Mq+D1ixJA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=u34wWpBjfdEyyeWLRSaSQCykUfyw/l6DV3khVJlAQr8QxxvsPTfJ0PtS0dFaNd2rp
-	 DOzJHnwgMSrbWWqvst7LnaXcw/FW1gAxT/TEiZw6dWCMh27oCbGflJ4ug8dEcF9ds2
-	 EnBqcUtX4njo2G9CIUMGIDwXl7h87KCso/B6KWMM=
+	s=korg; t=1670851235;
+	bh=ZtAsZyhXt8DPExVKQCM3qLWfdCY0J9kRK73vsLPgtqs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=S9qJkQ4sGEoDiJUKTUoXKyv1CBdatLY8c77BcHAnuXDdh3ilsV6Bpa9Mu1kDQt9UU
+	 bXUv6ER5YHT+qUd2DaakDUKCiy73AbhWuJZWf8pvpMeXT/1I2ihnAdVkl8oeJj5Skm
+	 q6qvtnxA4z/Hv049uUd4M7TUSUymMCNfaabzGvbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/67] 5.4.227-rc1 review
-Date: Mon, 12 Dec 2022 14:16:35 +0100
-Message-Id: <20221212130917.599345531@linuxfoundation.org>
+	Giulio Benetti <giulio.benetti@benettiengineering.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 06/67] ARM: 9266/1: mm: fix no-MMU ZERO_PAGE() implementation
+Date: Mon, 12 Dec 2022 14:16:41 +0100
+Message-Id: <20221212130917.930050458@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
+References: <20221212130917.599345531@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.227-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.227-rc1
-X-KernelTest-Deadline: 2022-12-14T13:09+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.227 release.
-There are 67 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+
+[ Upstream commit 340a982825f76f1cff0daa605970fe47321b5ee7 ]
+
+Actually in no-MMU SoCs(i.e. i.MXRT) ZERO_PAGE(vaddr) expands to
+```
+virt_to_page(0)
+```
+that in order expands to:
+```
+pfn_to_page(virt_to_pfn(0))
+```
+and then virt_to_pfn(0) to:
+```
+        ((((unsigned long)(0) - PAGE_OFFSET) >> PAGE_SHIFT) +
+         PHYS_PFN_OFFSET)
+```
+where PAGE_OFFSET and PHYS_PFN_OFFSET are the DRAM offset(0x80000000) and
+PAGE_SHIFT is 12. This way we obtain 16MB(0x01000000) summed to the base of
+DRAM(0x80000000).
+When ZERO_PAGE(0) is then used, for example in bio_add_page(), the page
+gets an address that is out of DRAM bounds.
+So instead of using fake virtual page 0 let's allocate a dedicated
+zero_page during paging_init() and assign it to a global 'struct page *
+empty_zero_page' the same way mmu.c does and it's the same approach used
+in m68k with commit dc068f462179 as discussed here[0]. Then let's move
+ZERO_PAGE() definition to the top of pgtable.h to be in common between
+mmu.c and nommu.c.
+
+[0]: https://lore.kernel.org/linux-m68k/2a462b23-5b8e-bbf4-ec7d-778434a3b9d7@google.com/T/#m1266ceb63
+ad140743174d6b3070364d3c9a5179b
+
+Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/include/asm/pgtable-nommu.h |  6 ------
+ arch/arm/include/asm/pgtable.h       | 16 +++++++++-------
+ arch/arm/mm/nommu.c                  | 19 +++++++++++++++++++
+ 3 files changed, 28 insertions(+), 13 deletions(-)
+
+diff --git a/arch/arm/include/asm/pgtable-nommu.h b/arch/arm/include/asm/pgtable-nommu.h
+index 010fa1a35a68..e8ac2f95fb37 100644
+--- a/arch/arm/include/asm/pgtable-nommu.h
++++ b/arch/arm/include/asm/pgtable-nommu.h
+@@ -51,12 +51,6 @@
+ 
+ typedef pte_t *pte_addr_t;
+ 
+-/*
+- * ZERO_PAGE is a global shared page that is always zero: used
+- * for zero-mapped memory areas etc..
+- */
+-#define ZERO_PAGE(vaddr)	(virt_to_page(0))
+-
+ /*
+  * Mark the prot value as uncacheable and unbufferable.
+  */
+diff --git a/arch/arm/include/asm/pgtable.h b/arch/arm/include/asm/pgtable.h
+index 3ae120cd1715..ecfd6e7e128f 100644
+--- a/arch/arm/include/asm/pgtable.h
++++ b/arch/arm/include/asm/pgtable.h
+@@ -10,6 +10,15 @@
+ #include <linux/const.h>
+ #include <asm/proc-fns.h>
+ 
++#ifndef __ASSEMBLY__
++/*
++ * ZERO_PAGE is a global shared page that is always zero: used
++ * for zero-mapped memory areas etc..
++ */
++extern struct page *empty_zero_page;
++#define ZERO_PAGE(vaddr)	(empty_zero_page)
++#endif
++
+ #ifndef CONFIG_MMU
+ 
+ #include <asm-generic/4level-fixup.h>
+@@ -166,13 +175,6 @@ extern pgprot_t phys_mem_access_prot(struct file *file, unsigned long pfn,
+ #define __S111  __PAGE_SHARED_EXEC
+ 
+ #ifndef __ASSEMBLY__
+-/*
+- * ZERO_PAGE is a global shared page that is always zero: used
+- * for zero-mapped memory areas etc..
+- */
+-extern struct page *empty_zero_page;
+-#define ZERO_PAGE(vaddr)	(empty_zero_page)
+-
+ 
+ extern pgd_t swapper_pg_dir[PTRS_PER_PGD];
+ 
+diff --git a/arch/arm/mm/nommu.c b/arch/arm/mm/nommu.c
+index 24ecf8d30a1e..a3ad8a1b0e07 100644
+--- a/arch/arm/mm/nommu.c
++++ b/arch/arm/mm/nommu.c
+@@ -26,6 +26,13 @@
+ 
+ unsigned long vectors_base;
+ 
++/*
++ * empty_zero_page is a special page that is used for
++ * zero-initialized data and COW.
++ */
++struct page *empty_zero_page;
++EXPORT_SYMBOL(empty_zero_page);
++
+ #ifdef CONFIG_ARM_MPU
+ struct mpu_rgn_info mpu_rgn_info;
+ #endif
+@@ -148,9 +155,21 @@ void __init adjust_lowmem_bounds(void)
+  */
+ void __init paging_init(const struct machine_desc *mdesc)
+ {
++	void *zero_page;
++
+ 	early_trap_init((void *)vectors_base);
+ 	mpu_setup();
++
++	/* allocate the zero page. */
++	zero_page = memblock_alloc(PAGE_SIZE, PAGE_SIZE);
++	if (!zero_page)
++		panic("%s: Failed to allocate %lu bytes align=0x%lx\n",
++		      __func__, PAGE_SIZE, PAGE_SIZE);
++
+ 	bootmem_init();
++
++	empty_zero_page = virt_to_page(zero_page);
++	flush_dcache_page(empty_zero_page);
+ }
+ 
+ /*
+-- 
+2.35.1
 
-Responses should be made by Wed, 14 Dec 2022 13:08:57 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.227-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.227-rc1
-
-Frank Jungclaus <frank.jungclaus@esd.eu>
-    can: esd_usb: Allow REC and TEC to return to zero
-
-Dan Carpenter <error27@gmail.com>
-    net: mvneta: Fix an out of bounds check
-
-Eric Dumazet <edumazet@google.com>
-    ipv6: avoid use-after-free in ip6_fragment()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    net: plip: don't call kfree_skb/dev_kfree_skb() under spin_lock_irq()
-
-Juergen Gross <jgross@suse.com>
-    xen/netback: fix build warning
-
-Zhang Changzhong <zhangchangzhong@huawei.com>
-    ethernet: aeroflex: fix potential skb leak in greth_init_rings()
-
-Ido Schimmel <idosch@nvidia.com>
-    ipv4: Fix incorrect route flushing when table ID 0 is used
-
-Ido Schimmel <idosch@nvidia.com>
-    ipv4: Fix incorrect route flushing when source address is deleted
-
-YueHaibing <yuehaibing@huawei.com>
-    tipc: Fix potential OOB in tipc_link_proto_rcv()
-
-Liu Jian <liujian56@huawei.com>
-    net: hisilicon: Fix potential use-after-free in hix5hd2_rx()
-
-Liu Jian <liujian56@huawei.com>
-    net: hisilicon: Fix potential use-after-free in hisi_femac_rx()
-
-Yongqiang Liu <liuyongqiang13@huawei.com>
-    net: thunderx: Fix missing destroy_workqueue of nicvf_rx_mode_wq
-
-Jisheng Zhang <jszhang@kernel.org>
-    net: stmmac: fix "snps,axi-config" node property parsing
-
-Pankaj Raghav <p.raghav@samsung.com>
-    nvme initialize core quirks before calling nvme_init_subsystem
-
-Kees Cook <keescook@chromium.org>
-    NFC: nci: Bounds check struct nfc_target arrays
-
-Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
-    i40e: Disallow ip4 and ip6 l4_4_bytes
-
-Sylwester Dziedziuch <sylwesterx.dziedziuch@intel.com>
-    i40e: Fix for VF MAC address 0
-
-Michal Jaron <michalx.jaron@intel.com>
-    i40e: Fix not setting default xps_cpus after reset
-
-Dan Carpenter <error27@gmail.com>
-    net: mvneta: Prevent out of bounds read in mvneta_config_rss()
-
-Lin Liu <lin.liu@citrix.com>
-    xen-netfront: Fix NULL sring after live migration
-
-Valentina Goncharenko <goncharenko.vp@ispras.ru>
-    net: encx24j600: Fix invalid logic in reading of MISTAT register
-
-Valentina Goncharenko <goncharenko.vp@ispras.ru>
-    net: encx24j600: Add parentheses to fix precedence
-
-Wei Yongjun <weiyongjun1@huawei.com>
-    mac802154: fix missing INIT_LIST_HEAD in ieee802154_if_add()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    selftests: rtnetlink: correct xfrm policy rule in kci_test_ipsec_offload
-
-Artem Chernyshev <artem.chernyshev@red-soft.ru>
-    net: dsa: ksz: Check return value
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    Bluetooth: Fix not cleanup led when bt_init fails
-
-Wang ShaoBo <bobo.shaobowang@huawei.com>
-    Bluetooth: 6LoWPAN: add missing hci_dev_put() in get_l2cap_conn()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    af_unix: Get user_ns from in_skb in unix_diag_get_exact().
-
-Akihiko Odaki <akihiko.odaki@daynix.com>
-    igb: Allocate MSI-X vector when testing
-
-Akihiko Odaki <akihiko.odaki@daynix.com>
-    e1000e: Fix TX dispatch condition
-
-Xiongfeng Wang <wangxiongfeng2@huawei.com>
-    gpio: amd8111: Fix PCI device reference count leak
-
-Qiqi Zhang <eddy.zhang@rock-chips.com>
-    drm/bridge: ti-sn65dsi86: Fix output polarity setting bug
-
-Hauke Mehrtens <hauke@hauke-m.de>
-    ca8210: Fix crash by zero initializing data
-
-Ziyang Xuan <william.xuanziyang@huawei.com>
-    ieee802154: cc2520: Fix error return code in cc2520_hw_init()
-
-Baolin Wang <baolin.wang@linux.alibaba.com>
-    mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
-
-Oliver Hartkopp <socketcan@hartkopp.net>
-    can: af_can: fix NULL pointer dereference in can_rcv_filter
-
-ZhangPeng <zhangpeng362@huawei.com>
-    HID: core: fix shift-out-of-bounds in hid_report_raw_event
-
-Anastasia Belova <abelova@astralinux.ru>
-    HID: hid-lg4ff: Add check for empty lbuf
-
-Ankit Patel <anpatel@nvidia.com>
-    HID: usbhid: Add ALWAYS_POLL quirk for some mice
-
-Rob Clark <robdclark@chromium.org>
-    drm/shmem-helper: Remove errant put in error path
-
-Thomas Huth <thuth@redhat.com>
-    KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
-
-John Starks <jostarks@microsoft.com>
-    mm/gup: fix gup_pud_range() for dax
-
-Tejun Heo <tj@kernel.org>
-    memcg: fix possible use-after-free in memcg_write_event_control()
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: v4l2-dv-timings.c: fix too strict blanking sanity checks
-
-Rafał Miłecki <rafal@milecki.pl>
-    Revert "net: dsa: b53: Fix valid setting for MDB entries"
-
-Juergen Gross <jgross@suse.com>
-    xen/netback: don't call kfree_skb() with interrupts disabled
-
-Juergen Gross <jgross@suse.com>
-    xen/netback: do some code cleanup
-
-Ross Lagerwall <ross.lagerwall@citrix.com>
-    xen/netback: Ensure protocol headers don't fall in the non-linear area
-
-Jann Horn <jannh@google.com>
-    mm/khugepaged: invoke MMU notifiers in shmem/file collapse paths
-
-Jann Horn <jannh@google.com>
-    mm/khugepaged: fix GUP-fast interaction by sending IPI
-
-Jann Horn <jannh@google.com>
-    mm/khugepaged: take the right locks for page table retraction
-
-Davide Tronchin <davide.tronchin.94@gmail.com>
-    net: usb: qmi_wwan: add u-blox 0x1342 composition
-
-Dominique Martinet <asmadeus@codewreck.org>
-    9p/xen: check logical size for buffer size
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    fbcon: Use kzalloc() in fbcon_prepare_logo()
-
-Andreas Kemnade <andreas@kemnade.info>
-    regulator: twl6030: fix get status of twl6032 regulators
-
-Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-    ASoC: soc-pcm: Add NULL check in BE reparenting
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: send: avoid unaligned encoded writes when attempting to clone range
-
-Kees Cook <keescook@chromium.org>
-    ALSA: seq: Fix function prototype mismatch in snd_seq_expand_var_event
-
-Konrad Dybcio <konrad.dybcio@linaro.org>
-    regulator: slg51000: Wait after asserting CS pin
-
-GUO Zihua <guozihua@huawei.com>
-    9p/fd: Use P9_HDRSZ for header size
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: disable arm_global_timer on rk3066 and rk3188
-
-Giulio Benetti <giulio.benetti@benettiengineering.com>
-    ARM: 9266/1: mm: fix no-MMU ZERO_PAGE() implementation
-
-Tomislav Novak <tnovak@fb.com>
-    ARM: 9251/1: perf: Fix stacktraces for tracepoint events in THUMB2 kernels
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: rk3188: fix lcdc1-rgb24 node name
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: fix ir-receiver node names
-
-Sebastian Reichel <sebastian.reichel@collabora.com>
-    arm: dts: rockchip: fix node name for hym8563 rtc
-
-FUKAUMI Naoki <naoki@radxa.com>
-    arm64: dts: rockchip: keep I2S1 disabled for GPIO function on ROCK Pi 4 series
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |    4 +-
- arch/arm/boot/dts/rk3036-evb.dts                   |    2 +-
- arch/arm/boot/dts/rk3188-radxarock.dts             |    2 +-
- arch/arm/boot/dts/rk3188.dtsi                      |    3 +-
- arch/arm/boot/dts/rk3288-evb-act8846.dts           |    2 +-
- arch/arm/boot/dts/rk3288-firefly.dtsi              |    2 +-
- arch/arm/boot/dts/rk3288-miqi.dts                  |    2 +-
- arch/arm/boot/dts/rk3288-rock2-square.dts          |    2 +-
- arch/arm/boot/dts/rk3xxx.dtsi                      |    7 +
- arch/arm/include/asm/perf_event.h                  |    2 +-
- arch/arm/include/asm/pgtable-nommu.h               |    6 -
- arch/arm/include/asm/pgtable.h                     |   16 +-
- arch/arm/mm/nommu.c                                |   19 +
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dts  |    1 -
- arch/s390/kvm/vsie.c                               |    4 +-
- drivers/gpio/gpio-amd8111.c                        |    4 +
- drivers/gpu/drm/bridge/ti-sn65dsi86.c              |    4 +-
- drivers/gpu/drm/drm_gem_shmem_helper.c             |    4 +-
- drivers/hid/hid-core.c                             |    3 +
- drivers/hid/hid-ids.h                              |    3 +
- drivers/hid/hid-lg4ff.c                            |    6 +
- drivers/hid/hid-quirks.c                           |    3 +
- drivers/media/v4l2-core/v4l2-dv-timings.c          |   20 +-
- drivers/net/can/usb/esd_usb2.c                     |    6 +
- drivers/net/dsa/b53/b53_common.c                   |    1 +
- drivers/net/ethernet/aeroflex/greth.c              |    1 +
- drivers/net/ethernet/cavium/thunder/nicvf_main.c   |    4 +-
- drivers/net/ethernet/hisilicon/hisi_femac.c        |    2 +-
- drivers/net/ethernet/hisilicon/hix5hd2_gmac.c      |    2 +-
- drivers/net/ethernet/intel/e1000e/netdev.c         |    4 +-
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c     |    6 +-
- drivers/net/ethernet/intel/i40e/i40e_main.c        |   19 +-
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    2 +
- drivers/net/ethernet/intel/igb/igb_ethtool.c       |    2 +
- drivers/net/ethernet/marvell/mvneta.c              |    2 +-
- drivers/net/ethernet/microchip/encx24j600-regmap.c |    4 +-
- .../net/ethernet/stmicro/stmmac/stmmac_platform.c  |    8 +-
- drivers/net/ieee802154/ca8210.c                    |    2 +-
- drivers/net/ieee802154/cc2520.c                    |    2 +-
- drivers/net/plip/plip.c                            |    4 +-
- drivers/net/usb/qmi_wwan.c                         |    1 +
- drivers/net/xen-netback/common.h                   |   14 +-
- drivers/net/xen-netback/interface.c                |   22 +-
- drivers/net/xen-netback/netback.c                  |  229 +--
- drivers/net/xen-netback/rx.c                       |   10 +-
- drivers/net/xen-netfront.c                         |    6 +
- drivers/nvme/host/core.c                           |    8 +-
- drivers/regulator/slg51000-regulator.c             |    2 +
- drivers/regulator/twl6030-regulator.c              |   15 +-
- drivers/video/fbdev/core/fbcon.c                   |    2 +-
- fs/btrfs/send.c                                    |   24 +-
- include/asm-generic/tlb.h                          |    4 +
- include/linux/cgroup.h                             |    1 +
- include/linux/hugetlb.h                            |    6 +-
- kernel/cgroup/cgroup-internal.h                    |    1 -
- mm/gup.c                                           |   15 +-
- mm/hugetlb.c                                       |   28 +-
- mm/khugepaged.c                                    |   47 +-
- mm/memcontrol.c                                    |   15 +-
- mm/mmu_gather.c                                    |    5 +
- net/9p/trans_fd.c                                  |    6 +-
- net/9p/trans_xen.c                                 |    9 +
- net/bluetooth/6lowpan.c                            |    1 +
- net/bluetooth/af_bluetooth.c                       |    4 +-
- net/can/af_can.c                                   |    4 +-
- net/dsa/tag_ksz.c                                  |    3 +-
- net/ipv4/fib_frontend.c                            |    3 +
- net/ipv4/fib_semantics.c                           |    1 +
- net/ipv6/ip6_output.c                              |    5 +
- net/mac802154/iface.c                              |    1 +
- net/nfc/nci/ntf.c                                  |    6 +
- net/tipc/link.c                                    |    4 +-
- net/unix/diag.c                                    |   20 +-
- sound/core/seq/seq_memory.c                        |   11 +-
- sound/soc/soc-pcm.c                                |    2 +
- tools/testing/selftests/net/fib_tests.sh           | 1727 --------------------
- tools/testing/selftests/net/rtnetlink.sh           |    2 +-
- 77 files changed, 476 insertions(+), 1980 deletions(-)
 
 
