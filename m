@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390EA28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42F6C433EF;
-	Mon, 12 Dec 2022 13:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F112C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34399C433EF;
+	Mon, 12 Dec 2022 13:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851453;
-	bh=tdmS3D2qUKTxyIo3yWSSBIPsRF2CqrdtLS252R/Ra3c=;
+	s=korg; t=1670851457;
+	bh=HtijZ5tVO7MeIEPv1AouZAV5k8dZQbJGcI1Vb/AvAhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGb+F8NxBJY4Ki0OfA/Z9TVifVfFzdPIbAWhpevfDXGDnlJgMCo8z2E4uyNCiBPr7
-	 lOuT59fiM1f/Co+M3XQG+6XviNCBwHJQSadH97WzxnOZmvtf8dQbNk8xbMEd8xHZXK
-	 Bmhi1jkBsRkrm8aBNpcjdG2EcpHTmMaKnthssIRI=
+	b=RfiypUV4pLSfhdXgUQSek1xxfsigLNP668qWNqJZRc6qcFCl3bRg9pI7vi5Di8bGM
+	 GjmXnM9Rro5OrYCeq1ak3G/5YglIRozYXBU8ZefyP9KB5dDQv9GrIKPj5/P9mIiN6b
+	 xBoP6gtmCKocV3iFKtRZfkIJP7PVUzmMBIdgkPLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 41/67] Bluetooth: 6LoWPAN: add missing hci_dev_put() in get_l2cap_conn()
-Date: Mon, 12 Dec 2022 14:17:16 +0100
-Message-Id: <20221212130919.587773864@linuxfoundation.org>
+Subject: [PATCH 5.4 42/67] Bluetooth: Fix not cleanup led when bt_init fails
+Date: Mon, 12 Dec 2022 14:17:17 +0100
+Message-Id: <20221212130919.637292390@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,33 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 747da1308bdd5021409974f9180f0d8ece53d142 ]
+[ Upstream commit 2f3957c7eb4e07df944169a3e50a4d6790e1c744 ]
 
-hci_get_route() takes reference, we should use hci_dev_put() to release
-it when not need anymore.
+bt_init() calls bt_leds_init() to register led, but if it fails later,
+bt_leds_cleanup() is not called to unregister it.
 
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+This can cause panic if the argument "bluetooth-power" in text is freed
+and then another led_trigger_register() tries to access it:
+
+BUG: unable to handle page fault for address: ffffffffc06d3bc0
+RIP: 0010:strcmp+0xc/0x30
+  Call Trace:
+    <TASK>
+    led_trigger_register+0x10d/0x4f0
+    led_trigger_register_simple+0x7d/0x100
+    bt_init+0x39/0xf7 [bluetooth]
+    do_one_initcall+0xd0/0x4e0
+
+Fixes: e64c97b53bc6 ("Bluetooth: Add combined LED trigger for controller power")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/af_bluetooth.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 52fb6d6d6d58..bccad8c048da 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -1002,6 +1002,7 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- 	hci_dev_lock(hdev);
- 	hcon = hci_conn_hash_lookup_le(hdev, addr, *addr_type);
- 	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
+diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
+index 5f508c50649d..8031526eeeee 100644
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -735,7 +735,7 @@ static int __init bt_init(void)
  
- 	if (!hcon)
- 		return -ENOENT;
+ 	err = bt_sysfs_init();
+ 	if (err < 0)
+-		return err;
++		goto cleanup_led;
+ 
+ 	err = sock_register(&bt_sock_family_ops);
+ 	if (err)
+@@ -771,6 +771,8 @@ static int __init bt_init(void)
+ 	sock_unregister(PF_BLUETOOTH);
+ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
++cleanup_led:
++	bt_leds_cleanup();
+ 	return err;
+ }
+ 
 -- 
 2.35.1
 
