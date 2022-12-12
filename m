@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F2228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD78C433F2;
-	Mon, 12 Dec 2022 13:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5197A28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8006C433F0;
+	Mon, 12 Dec 2022 13:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851432;
-	bh=suGJSlugSIlA5/xFGwXX230LcGqzmshN4VaqN6SRcQ0=;
+	s=korg; t=1670851436;
+	bh=hbbVUuBxZcLOvbp9snt49Cupjl06xJOf/9Jo4y4WzlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nyq3ehcEMVNiMVwKb0zi+31AJmCbT6E6pZEJHkF7nil0d+efB7uqb84xLwxdDHyv0
-	 l62AntpUTpp134hxzFwuILmx+twvaGGbJY/E550Au5YLuxcs+8wbnfPomtXDYOVdR1
-	 +PIMkafS++SaMsBQTxbdLotHqMZ0HeMhMs0Y7sjM=
+	b=KMUb4uPt+1hliJ21CQnQL7nKYGeBcN7ztO+77j/jDBncauF6ZZYd4cRjt6nutBJXe
+	 uWEFNKpleoowTg5MNrRfAIlzPg+3b14hQWGpYbd3VYO1V5tV0r6EOYEB1hXbAXQAOS
+	 r8TP61nlck8gSB+VTuAo49ml8x5u4cG9U6fMIA9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Sharp <sharpd@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 61/67] ipv4: Fix incorrect route flushing when table ID 0 is used
-Date: Mon, 12 Dec 2022 14:17:36 +0100
-Message-Id: <20221212130920.527377379@linuxfoundation.org>
+Subject: [PATCH 5.4 37/67] gpio: amd8111: Fix PCI device reference count leak
+Date: Mon, 12 Dec 2022 14:17:12 +0100
+Message-Id: <20221212130919.385802688@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -37,104 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit c0d999348e01df03e0a7f550351f3907fabbf611 ]
+[ Upstream commit 45fecdb9f658d9c82960c98240bc0770ade19aca ]
 
-Cited commit added the table ID to the FIB info structure, but did not
-properly initialize it when table ID 0 is used. This can lead to a route
-in the default VRF with a preferred source address not being flushed
-when the address is deleted.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-Consider the following example:
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. Add the missing
+pci_dev_put() after the 'out' label. Since pci_dev_put() can handle NULL
+input parameter, there is no problem for the 'Device not found' branch.
+For the normal path, add pci_dev_put() in amd_gpio_exit().
 
- # ip address add dev dummy1 192.0.2.1/28
- # ip address add dev dummy1 192.0.2.17/28
- # ip route add 198.51.100.0/24 via 192.0.2.2 src 192.0.2.17 metric 100
- # ip route add table 0 198.51.100.0/24 via 192.0.2.2 src 192.0.2.17 metric 200
- # ip route show 198.51.100.0/24
- 198.51.100.0/24 via 192.0.2.2 dev dummy1 src 192.0.2.17 metric 100
- 198.51.100.0/24 via 192.0.2.2 dev dummy1 src 192.0.2.17 metric 200
-
-Both routes are installed in the default VRF, but they are using two
-different FIB info structures. One with a metric of 100 and table ID of
-254 (main) and one with a metric of 200 and table ID of 0. Therefore,
-when the preferred source address is deleted from the default VRF,
-the second route is not flushed:
-
- # ip address del dev dummy1 192.0.2.17/28
- # ip route show 198.51.100.0/24
- 198.51.100.0/24 via 192.0.2.2 dev dummy1 src 192.0.2.17 metric 200
-
-Fix by storing a table ID of 254 instead of 0 in the route configuration
-structure.
-
-Add a test case that fails before the fix:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Table ID 0
-     TEST: Route removed in default VRF when source address deleted      [FAIL]
-
- Tests passed:   8
- Tests failed:   1
-
-And passes after:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Table ID 0
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-
- Tests passed:   9
- Tests failed:   0
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Reported-by: Donald Sharp <sharpd@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f942a7de047d ("gpio: add a driver for GPIO pins found on AMD-8111 south bridge chips")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpio-amd8111.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index d38c8ca93ba0..be31eeacb0be 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -840,6 +840,9 @@ static int rtm_to_fib_config(struct net *net, struct sk_buff *skb,
- 		return -EINVAL;
+diff --git a/drivers/gpio/gpio-amd8111.c b/drivers/gpio/gpio-amd8111.c
+index fdcebe59510d..68d95051dd0e 100644
+--- a/drivers/gpio/gpio-amd8111.c
++++ b/drivers/gpio/gpio-amd8111.c
+@@ -231,7 +231,10 @@ static int __init amd_gpio_init(void)
+ 		ioport_unmap(gp.pm);
+ 		goto out;
  	}
- 
-+	if (!cfg->fc_table)
-+		cfg->fc_table = RT_TABLE_MAIN;
++	return 0;
 +
- 	return 0;
- errout:
+ out:
++	pci_dev_put(pdev);
  	return err;
+ }
+ 
+@@ -239,6 +242,7 @@ static void __exit amd_gpio_exit(void)
+ {
+ 	gpiochip_remove(&gp.chip);
+ 	ioport_unmap(gp.pm);
++	pci_dev_put(gp.pdev);
+ }
+ 
+ module_init(amd_gpio_init);
 -- 
 2.35.1
 
