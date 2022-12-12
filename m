@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B797728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29E7C433D2;
-	Mon, 12 Dec 2022 13:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8BF28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331B8C433EF;
+	Mon, 12 Dec 2022 13:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851676;
-	bh=45i9J2FluU+irWJIHe0iIjsIUkaH+iYRyFTTpBT8kRs=;
+	s=korg; t=1670851681;
+	bh=5ccOfmGg+ZLn4saJOkzQLi0wJ/LueXJS65SCr3MW+qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IRmMerINSiVdocTV/O15fycAE+w4oU9xxS9dm+CZ4xXKPRndWgbGQV993jMFmFsbY
-	 d8GTB2IOVs8JwoLCtGTM7a+RJE8sSj0QAIzO/yd0dLsa/0dYDMYlOVq5727Qp3JJGL
-	 MoCoUaOlXkTWAO2+W+X3D9eRRsJdTOUTRsMOVDu8=
+	b=lvGkzNBK6i9WnOC93cjVGJBY4Z+bEpBXHUOwH06Ida6sdhs2140tYzmb0RJdhnmvj
+	 vZJr1f/ZZO/f1xniTUMWLt5Md8cxyOHryAMUY5wyq5vEqb90Nbli9P7R0TaUAGIFIb
+	 nILSGzpJOQP5h2EH9QdHM0MgV9lb/17KqwtlJvAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 5.15 048/123] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
-Date: Mon, 12 Dec 2022 14:16:54 +0100
-Message-Id: <20221212130928.939961257@linuxfoundation.org>
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
+	Alessandro Zummo <a.zummo@towertech.it>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 031/123] rtc: mc146818-lib: extract mc146818_avoid_UIP
+Date: Mon, 12 Dec 2022 14:16:37 +0100
+Message-Id: <20221212130928.214762492@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -37,48 +36,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Huth <thuth@redhat.com>
+From: Mateusz Jończyk <mat.jonczyk@o2.pl>
 
-commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
+[ Upstream commit ec5895c0f2d87b9bf4185db1915e40fa6fcfc0ac ]
 
-We recently experienced some weird huge time jumps in nested guests when
-rebooting them in certain cases. After adding some debug code to the epoch
-handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
-obvious that the "epdx" field (the multi-epoch extension) did not get set
-to 0xff in case the "epoch" field was negative.
-Seems like the code misses to copy the value from the epdx field from
-the guest to the shadow control block. By doing so, the weird time
-jumps are gone in our scenarios.
+Function mc146818_get_time() contains an elaborate mechanism of reading
+the RTC time while no RTC update is in progress. It turns out that
+reading the RTC alarm clock also requires avoiding the RTC update.
+Therefore, the mechanism in mc146818_get_time() should be reused - so
+extract it into a separate function.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
-Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Cc: stable@vger.kernel.org # 4.19+
-Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
-Message-Id: <20221123090833.292938-1-thuth@redhat.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The logic in mc146818_avoid_UIP() is same as in mc146818_get_time()
+except that after every
+
+        if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
+
+there is now "mdelay(1)".
+
+To avoid producing a very unreadable patch, mc146818_get_time() will be
+refactored to use mc146818_avoid_UIP() in the next patch.
+
+Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Cc: Alessandro Zummo <a.zummo@towertech.it>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20211210200131.153887-6-mat.jonczyk@o2.pl
+Stable-dep-of: cd17420ebea5 ("rtc: cmos: avoid UIP when writing alarm time")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/vsie.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-mc146818-lib.c | 70 ++++++++++++++++++++++++++++++++++
+ include/linux/mc146818rtc.h    |  3 ++
+ 2 files changed, 73 insertions(+)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -538,8 +538,10 @@ static int shadow_scb(struct kvm_vcpu *v
- 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
- 		scb_s->eca |= scb_o->eca & ECA_CEI;
- 	/* Epoch Extension */
--	if (test_kvm_facility(vcpu->kvm, 139))
-+	if (test_kvm_facility(vcpu->kvm, 139)) {
- 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
-+		scb_s->epdx = scb_o->epdx;
-+	}
+diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
+index f3f5a87fe376..347655d24b5d 100644
+--- a/drivers/rtc/rtc-mc146818-lib.c
++++ b/drivers/rtc/rtc-mc146818-lib.c
+@@ -8,6 +8,76 @@
+ #include <linux/acpi.h>
+ #endif
  
- 	/* etoken */
- 	if (test_kvm_facility(vcpu->kvm, 156))
++/*
++ * Execute a function while the UIP (Update-in-progress) bit of the RTC is
++ * unset.
++ *
++ * Warning: callback may be executed more then once.
++ */
++bool mc146818_avoid_UIP(void (*callback)(unsigned char seconds, void *param),
++			void *param)
++{
++	int i;
++	unsigned long flags;
++	unsigned char seconds;
++
++	for (i = 0; i < 10; i++) {
++		spin_lock_irqsave(&rtc_lock, flags);
++
++		/*
++		 * Check whether there is an update in progress during which the
++		 * readout is unspecified. The maximum update time is ~2ms. Poll
++		 * every msec for completion.
++		 *
++		 * Store the second value before checking UIP so a long lasting
++		 * NMI which happens to hit after the UIP check cannot make
++		 * an update cycle invisible.
++		 */
++		seconds = CMOS_READ(RTC_SECONDS);
++
++		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
++			spin_unlock_irqrestore(&rtc_lock, flags);
++			mdelay(1);
++			continue;
++		}
++
++		/* Revalidate the above readout */
++		if (seconds != CMOS_READ(RTC_SECONDS)) {
++			spin_unlock_irqrestore(&rtc_lock, flags);
++			continue;
++		}
++
++		if (callback)
++			callback(seconds, param);
++
++		/*
++		 * Check for the UIP bit again. If it is set now then
++		 * the above values may contain garbage.
++		 */
++		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
++			spin_unlock_irqrestore(&rtc_lock, flags);
++			mdelay(1);
++			continue;
++		}
++
++		/*
++		 * A NMI might have interrupted the above sequence so check
++		 * whether the seconds value has changed which indicates that
++		 * the NMI took longer than the UIP bit was set. Unlikely, but
++		 * possible and there is also virt...
++		 */
++		if (seconds != CMOS_READ(RTC_SECONDS)) {
++			spin_unlock_irqrestore(&rtc_lock, flags);
++			continue;
++		}
++		spin_unlock_irqrestore(&rtc_lock, flags);
++
++		return true;
++	}
++	return false;
++}
++EXPORT_SYMBOL_GPL(mc146818_avoid_UIP);
++
+ /*
+  * If the UIP (Update-in-progress) bit of the RTC is set for more then
+  * 10ms, the RTC is apparently broken or not present.
+diff --git a/include/linux/mc146818rtc.h b/include/linux/mc146818rtc.h
+index 3038124c6115..b0da04fe087b 100644
+--- a/include/linux/mc146818rtc.h
++++ b/include/linux/mc146818rtc.h
+@@ -129,4 +129,7 @@ bool mc146818_does_rtc_work(void);
+ int mc146818_get_time(struct rtc_time *time);
+ int mc146818_set_time(struct rtc_time *time);
+ 
++bool mc146818_avoid_UIP(void (*callback)(unsigned char seconds, void *param),
++			void *param);
++
+ #endif /* _MC146818RTC_H */
+-- 
+2.35.1
+
 
 
