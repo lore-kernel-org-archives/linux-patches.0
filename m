@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554AD28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:49:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977DEC433F0;
-	Mon, 12 Dec 2022 13:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1954428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:50:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05057C433EF;
+	Mon, 12 Dec 2022 13:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852987;
-	bh=HCUbj1iJgtNULoET1xCQXi/7gDT60mj2a5n7+7wDSow=;
+	s=korg; t=1670853001;
+	bh=ZGp5/e8Ohphb28winLlqyxkptSStA1iqI9P+Eb47xQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvRLJmCJuZY+pLuW6xeltlZP3Bg8v1XSZ2/U8ssGEjldRZe9Qf0ndiy0T/Auhxea8
-	 l4vPgHld4b7dQ0cHLQQtHmMzyQLeOPZ6L+YqhI7ZHBct01BprXczR7ulspI+FpLz6J
-	 3QaST9Q+cVekbdEBcwxW4gQpF7QPEzkNS+JL6F/c=
+	b=wZ+QnNJk1n5Jg+piQuazwCy7n7odoCznze2DMNVOwRw2mRdGnHkR6Icx0PJuccKjH
+	 Ljh5hGdgF2EA9yRvPqsGyrmW+VRhQu8qqKgRWzY+bLa95txXwt6IogzZ6lapqj+2Cp
+	 UVjUpu9tk587Oq0Kr5Fv4lHcBUyvFPlQCQow/oTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylwester Dziedziuch <sylwesterx.dziedziuch@intel.com>,
-	Jan Sokolowski <jan.sokolowski@intel.com>,
-	Konrad Jankowski <konrad0.jankowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/49] i40e: Fix for VF MAC address 0
-Date: Mon, 12 Dec 2022 14:19:14 +0100
-Message-Id: <20221212130915.458546033@linuxfoundation.org>
+	Thomas Huth <thuth@redhat.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>
+Subject: [PATCH 4.19 19/49] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
+Date: Mon, 12 Dec 2022 14:18:57 +0100
+Message-Id: <20221212130914.651576365@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -37,49 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sylwester Dziedziuch <sylwesterx.dziedziuch@intel.com>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit 08501970472077ed5de346ad89943a37d1692e9b ]
+commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
 
-After spawning max VFs on a PF, some VFs were not getting resources and
-their MAC addresses were 0. This was caused by PF sleeping before flushing
-HW registers which caused VIRTCHNL_VFR_VFACTIVE to not be set in time for
-VF.
+We recently experienced some weird huge time jumps in nested guests when
+rebooting them in certain cases. After adding some debug code to the epoch
+handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
+obvious that the "epdx" field (the multi-epoch extension) did not get set
+to 0xff in case the "epoch" field was negative.
+Seems like the code misses to copy the value from the epdx field from
+the guest to the shadow control block. By doing so, the weird time
+jumps are gone in our scenarios.
 
-Fix by adding a sleep after hw flush.
-
-Fixes: e4b433f4a741 ("i40e: reset all VFs in parallel when rebuilding PF")
-Signed-off-by: Sylwester Dziedziuch <sylwesterx.dziedziuch@intel.com>
-Signed-off-by: Jan Sokolowski <jan.sokolowski@intel.com>
-Tested-by: Konrad Jankowski <konrad0.jankowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
+Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.19+
+Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
+Message-Id: <20221123090833.292938-1-thuth@redhat.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/kvm/vsie.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index e98e3af06cf8..240083201dbf 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -1269,6 +1269,7 @@ bool i40e_reset_vf(struct i40e_vf *vf, bool flr)
- 	i40e_cleanup_reset_vf(vf);
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -376,8 +376,10 @@ static int shadow_scb(struct kvm_vcpu *v
+ 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
+ 		scb_s->eca |= scb_o->eca & ECA_CEI;
+ 	/* Epoch Extension */
+-	if (test_kvm_facility(vcpu->kvm, 139))
++	if (test_kvm_facility(vcpu->kvm, 139)) {
+ 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
++		scb_s->epdx = scb_o->epdx;
++	}
  
- 	i40e_flush(hw);
-+	usleep_range(20000, 40000);
- 	clear_bit(I40E_VF_STATE_RESETTING, &vf->vf_states);
- 
- 	return true;
-@@ -1392,6 +1393,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *pf, bool flr)
- 	}
- 
- 	i40e_flush(hw);
-+	usleep_range(20000, 40000);
- 	clear_bit(__I40E_VF_DISABLE, pf->state);
- 
- 	return true;
--- 
-2.35.1
-
+ 	/* etoken */
+ 	if (test_kvm_facility(vcpu->kvm, 156))
 
 
