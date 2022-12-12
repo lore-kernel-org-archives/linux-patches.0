@@ -1,108 +1,182 @@
-Received: from conssluserg-01.nifty.com (conssluserg-01.nifty.com [210.131.2.80])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887522585;
-	Mon, 12 Dec 2022 13:14:06 +0000 (UTC)
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180]) (authenticated)
-	by conssluserg-01.nifty.com with ESMTP id 2BCDDvOs015881;
-	Mon, 12 Dec 2022 22:13:57 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-01.nifty.com 2BCDDvOs015881
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-	s=dec2015msa; t=1670850838;
-	bh=Qyvr5aZkM+wmdhHKW6aw9JveC938iEMrNt3NYpNMYho=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=b5+lBzaQFXLoYKeSphoB86Oodwyjy3b9I8NHzJQNVZFS+/itGfmkNfo+6WSyINJXf
-	 qOxsZm/dxLZS7ebxowc1YLekgFybdLtdHsbpR9HBMVw7xln5QsZBqYR0ioRthhzo9Q
-	 8m6TILZSxsQORWoE0wtaelTgDrHHT2W9hiwu8PunxSWhtHf5vngzVFDh6bWl7eZ8H0
-	 XUL7sSsoyJh2Vp39ZpHt9uxGQMhZfFe3rVvavOwpizOYgPlSeV8nimuzM+S5UTiYqz
-	 yJU8M9BQxsrE6XBFgwxDPpbksm8eWxibVXpUM6XHZip6VmNSkNGQTQv9cFWGBh16+e
-	 U7Qbgz3noIu8w==
-X-Nifty-SrcIP: [209.85.167.180]
-Received: by mail-oi1-f180.google.com with SMTP id c129so11192520oia.0;
-        Mon, 12 Dec 2022 05:13:57 -0800 (PST)
-X-Gm-Message-State: ANoB5pnp7jmiYm0DG55YgMLfQUfbI+mlh3k6qIyvwZMFEcJ+XS1MSVEv
-	DDw3y08Os5USREan7IxV7k7sULW+s37z95ZI+Tg=
-X-Google-Smtp-Source: AA0mqf4I3SXFUfc/eWCj/dtwZNLGGSsqlfdozaJ6EZO9Qm+gTzG9smhalmAJvZK7tGN7or7+K+lH+s4AbNqf02TFKSc=
-X-Received: by 2002:a05:6808:3009:b0:354:94a6:a721 with SMTP id
- ay9-20020a056808300900b0035494a6a721mr37705245oib.194.1670850836790; Mon, 12
- Dec 2022 05:13:56 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F26258F
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37744C433D2;
+	Mon, 12 Dec 2022 13:14:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670850847;
+	bh=XlTwk7WqfxYnmjr7ipykDOQKw8esHFOGAmrdAPZgnRs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=l0pnNeXSSZtK4VyvEi52K6UojSXv28cO7bbPGNKoWnwMMai6xtIIkH4/XC8DNHDx1
+	 mvIUtMWcHtnIDkpKgLGRUuQLTJWf/revINTUqOGrs/HIpVvHVA2FgERQ+moV/NakpF
+	 z6CiTm9kAJksymY4OgdsVG3zv4h1/c0AGCyQl+bw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Juergen Gross <jgross@suse.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 043/106] xen/netback: do some code cleanup
+Date: Mon, 12 Dec 2022 14:09:46 +0100
+Message-Id: <20221212130926.737039919@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
+References: <20221212130924.863767275@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221207191657.2852229-1-nathan@kernel.org> <20221207191657.2852229-3-nathan@kernel.org>
-In-Reply-To: <20221207191657.2852229-3-nathan@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Mon, 12 Dec 2022 22:13:20 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASoHieMNQTwPw6JVYnn6nBm-aPpOTrXeBPGeQKR-TxaUg@mail.gmail.com>
-Message-ID: <CAK7LNASoHieMNQTwPw6JVYnn6nBm-aPpOTrXeBPGeQKR-TxaUg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] modpost: Include '.text.*' in TEXT_SECTIONS
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Sami Tolvanen <samitolvanen@google.com>,
-        Vincent Donnefort <vdonnefort@google.com>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev, patches@lists.linux.dev,
-        Alexander Lobakin <alexandr.lobakin@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 8, 2022 at 4:17 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> Commit 6c730bfc894f ("modpost: handle -ffunction-sections") added
-> ".text.*" to the OTHER_TEXT_SECTIONS macro to fix certain section
-> mismatch warnings. Unfortunately, this makes it impossible for modpost
-> to warn about section mismatchs with LTO, which implies
+From: Juergen Gross <jgross@suse.com>
 
-"mismatches"
-Other than the typo, this patch looks good to me.
+[ Upstream commit 5834e72eda0b7e5767eb107259d98eef19ebd11f ]
 
-It was just 1/2 was difficult for me to understand.
+Remove some unused macros and functions, make local functions static.
 
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
+Link: https://lore.kernel.org/r/20220608043726.9380-1-jgross@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 74e7e1efdad4 ("xen/netback: don't call kfree_skb() with interrupts disabled")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/xen-netback/common.h    | 12 ------------
+ drivers/net/xen-netback/interface.c | 16 +---------------
+ drivers/net/xen-netback/netback.c   |  4 +++-
+ drivers/net/xen-netback/rx.c        |  2 +-
+ 4 files changed, 5 insertions(+), 29 deletions(-)
 
-
-
-> '-ffunction-sections', as all functions are put in their own
-> '.text.<func_name>' sections, which may still reference functions in
-> sections they are not supposed to, such as __init.
->
-> Fix this by moving ".text.*" into TEXT_SECTIONS, so that configurations
-> with '-ffunction-sections' will see warnings about mismatched sections.
->
-> Link: https://lore.kernel.org/Y39kI3MOtVI5BAnV@google.com/
-> Reported-by: Vincent Donnefort <vdonnefort@google.com>
-> Reviewed-and-tested-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-> Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-> Tested-by: Vincent Donnefort <vdonnefort@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  scripts/mod/modpost.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-> index 2c80da0220c3..c861beabc128 100644
-> --- a/scripts/mod/modpost.c
-> +++ b/scripts/mod/modpost.c
-> @@ -823,10 +823,10 @@ static void check_section(const char *modname, struct elf_info *elf,
->  #define ALL_EXIT_SECTIONS EXIT_SECTIONS, ALL_XXXEXIT_SECTIONS
->
->  #define DATA_SECTIONS ".data", ".data.rel"
-> -#define TEXT_SECTIONS ".text", ".text.unlikely", ".sched.text", \
-> +#define TEXT_SECTIONS ".text", ".text.*", ".sched.text", \
->                 ".kprobes.text", ".cpuidle.text", ".noinstr.text"
->  #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
-> -               ".fixup", ".entry.text", ".exception.text", ".text.*", \
-> +               ".fixup", ".entry.text", ".exception.text", \
->                 ".coldtext", ".softirqentry.text"
->
->  #define INIT_SECTIONS      ".init.*"
-> --
-> 2.38.1
->
-
-
+diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
+index 6a9178896c90..945647128c0e 100644
+--- a/drivers/net/xen-netback/common.h
++++ b/drivers/net/xen-netback/common.h
+@@ -48,7 +48,6 @@
+ #include <linux/debugfs.h>
+ 
+ typedef unsigned int pending_ring_idx_t;
+-#define INVALID_PENDING_RING_IDX (~0U)
+ 
+ struct pending_tx_info {
+ 	struct xen_netif_tx_request req; /* tx request */
+@@ -82,8 +81,6 @@ struct xenvif_rx_meta {
+ /* Discriminate from any valid pending_idx value. */
+ #define INVALID_PENDING_IDX 0xFFFF
+ 
+-#define MAX_BUFFER_OFFSET XEN_PAGE_SIZE
+-
+ #define MAX_PENDING_REQS XEN_NETIF_TX_RING_SIZE
+ 
+ /* The maximum number of frags is derived from the size of a grant (same
+@@ -367,11 +364,6 @@ void xenvif_free(struct xenvif *vif);
+ int xenvif_xenbus_init(void);
+ void xenvif_xenbus_fini(void);
+ 
+-int xenvif_schedulable(struct xenvif *vif);
+-
+-int xenvif_queue_stopped(struct xenvif_queue *queue);
+-void xenvif_wake_queue(struct xenvif_queue *queue);
+-
+ /* (Un)Map communication rings. */
+ void xenvif_unmap_frontend_data_rings(struct xenvif_queue *queue);
+ int xenvif_map_frontend_data_rings(struct xenvif_queue *queue,
+@@ -394,7 +386,6 @@ int xenvif_dealloc_kthread(void *data);
+ irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
+ 
+ bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
+-void xenvif_rx_action(struct xenvif_queue *queue);
+ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
+ 
+ void xenvif_carrier_on(struct xenvif *vif);
+@@ -402,9 +393,6 @@ void xenvif_carrier_on(struct xenvif *vif);
+ /* Callback from stack when TX packet can be released */
+ void xenvif_zerocopy_callback(struct ubuf_info *ubuf, bool zerocopy_success);
+ 
+-/* Unmap a pending page and release it back to the guest */
+-void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx);
+-
+ static inline pending_ring_idx_t nr_pending_reqs(struct xenvif_queue *queue)
+ {
+ 	return MAX_PENDING_REQS -
+diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
+index 7ce9807fc24c..645a804ab788 100644
+--- a/drivers/net/xen-netback/interface.c
++++ b/drivers/net/xen-netback/interface.c
+@@ -70,7 +70,7 @@ void xenvif_skb_zerocopy_complete(struct xenvif_queue *queue)
+ 	wake_up(&queue->dealloc_wq);
+ }
+ 
+-int xenvif_schedulable(struct xenvif *vif)
++static int xenvif_schedulable(struct xenvif *vif)
+ {
+ 	return netif_running(vif->dev) &&
+ 		test_bit(VIF_STATUS_CONNECTED, &vif->status) &&
+@@ -178,20 +178,6 @@ irqreturn_t xenvif_interrupt(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
+-int xenvif_queue_stopped(struct xenvif_queue *queue)
+-{
+-	struct net_device *dev = queue->vif->dev;
+-	unsigned int id = queue->id;
+-	return netif_tx_queue_stopped(netdev_get_tx_queue(dev, id));
+-}
+-
+-void xenvif_wake_queue(struct xenvif_queue *queue)
+-{
+-	struct net_device *dev = queue->vif->dev;
+-	unsigned int id = queue->id;
+-	netif_tx_wake_queue(netdev_get_tx_queue(dev, id));
+-}
+-
+ static u16 xenvif_select_queue(struct net_device *dev, struct sk_buff *skb,
+ 			       struct net_device *sb_dev)
+ {
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index 06fd61b71d37..fed0f7458e18 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -112,6 +112,8 @@ static void make_tx_response(struct xenvif_queue *queue,
+ 			     s8       st);
+ static void push_tx_responses(struct xenvif_queue *queue);
+ 
++static void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx);
++
+ static inline int tx_work_todo(struct xenvif_queue *queue);
+ 
+ static inline unsigned long idx_to_pfn(struct xenvif_queue *queue,
+@@ -1440,7 +1442,7 @@ static void push_tx_responses(struct xenvif_queue *queue)
+ 		notify_remote_via_irq(queue->tx_irq);
+ }
+ 
+-void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx)
++static void xenvif_idx_unmap(struct xenvif_queue *queue, u16 pending_idx)
+ {
+ 	int ret;
+ 	struct gnttab_unmap_grant_ref tx_unmap_op;
+diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
+index a0335407be42..932762177110 100644
+--- a/drivers/net/xen-netback/rx.c
++++ b/drivers/net/xen-netback/rx.c
+@@ -486,7 +486,7 @@ static void xenvif_rx_skb(struct xenvif_queue *queue)
+ 
+ #define RX_BATCH_SIZE 64
+ 
+-void xenvif_rx_action(struct xenvif_queue *queue)
++static void xenvif_rx_action(struct xenvif_queue *queue)
+ {
+ 	struct sk_buff_head completed_skbs;
+ 	unsigned int work_done = 0;
 -- 
-Best Regards
-Masahiro Yamada
+2.35.1
+
+
+
