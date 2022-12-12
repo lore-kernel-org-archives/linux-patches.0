@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AFD28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970F3C4339C;
-	Mon, 12 Dec 2022 13:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D1E28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97007C433EF;
+	Mon, 12 Dec 2022 13:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853275;
-	bh=Ol9mwQzdRujNOMXTEVxA5y4NuqSoCpCmJxSOdGLbP+s=;
+	s=korg; t=1670853279;
+	bh=3qeGPIic+tXkC9ZVgcHHgkL/JEKzUHw+7msJA/t5gRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FMdXqutvLV9To54YgGnL2JraooWSXoLkeWs5SBb1kECsfTa6Z0C7FdB1M2X6aZiO
-	 fDuHy33lK+3LygNluBbHQ9uxC6iRk9y7BgOO9fWnpGStdtRI/U4xS85MpgltI+XeMK
-	 jOvrFJaFr3kmBgtmH9UBW9Zh+0M/Fl9HjMpRyZPY=
+	b=YPXp8yowrKq7u2Z9pY0OtRnNSl4Xu2/n5o6DL373ebfgGgDlpOWrDqN7RA/2cpXDt
+	 2vIYw7ffKAL4Zyyrmy+ycW7eRZPD2mABUXrJSslOlC0fu39TSf0RA/PS3E7H7uPyXR
+	 wRVDzPwcYYXy6wXQxdwUNVk2SVVQUhwuGgr1Ez34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.9 11/31] mmc: sdhci: Fix voltage switch delay
-Date: Mon, 12 Dec 2022 14:19:29 +0100
-Message-Id: <20221212130910.580294118@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 4.9 12/31] media: v4l2-dv-timings.c: fix too strict blanking sanity checks
+Date: Mon, 12 Dec 2022 14:19:30 +0100
+Message-Id: <20221212130910.637578211@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -34,190 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit c981cdfb9925f64a364f13c2b4f98f877308a408 upstream.
+commit 5eef2141776da02772c44ec406d6871a790761ee upstream.
 
-Commit 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-removed voltage switch delays from sdhci because mmc core had been
-enhanced to support them. However that assumed that sdhci_set_ios()
-did a single clock change, which it did not, and so the delays in mmc
-core, which should have come after the first clock change, were not
-effective.
+Sanity checks were added to verify the v4l2_bt_timings blanking fields
+in order to avoid integer overflows when userspace passes weird values.
 
-Fix by avoiding re-configuring UHS and preset settings when the clock
-is turning on and the settings have not changed. That then also avoids
-the associated clock changes, so that then sdhci_set_ios() does a single
-clock change when voltage switching, and the mmc core delays become
-effective.
+But that assumed that userspace would correctly fill in the front porch,
+backporch and sync values, but sometimes all you know is the total
+blanking, which is then assigned to just one of these fields.
 
-To do that has meant keeping track of driver strength (host->drv_type),
-and cases of reinitialization (host->reinit_uhs).
+And that can fail with these checks.
 
-Note also, the 'turning_on_clk' restriction should not be necessary
-but is done to minimize the impact of the change on stable kernels.
+So instead set a maximum for the total horizontal and vertical
+blanking and check that each field remains below that.
 
-Fixes: 20b92a30b561 ("mmc: sdhci: update signal voltage switch code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20221128133259.38305-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+That is still sufficient to avoid integer overflows, but it also
+allows for more flexibility in how userspace fills in these fields.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4b6d66a45ed3 ("media: v4l2-dv-timings: add sanity checks for blanking values")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |   63 +++++++++++++++++++++++++++++++++++++++++------
- drivers/mmc/host/sdhci.h |    2 +
- 2 files changed, 57 insertions(+), 8 deletions(-)
+ drivers/media/v4l2-core/v4l2-dv-timings.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -240,6 +240,7 @@ static void sdhci_init(struct sdhci_host
- 	if (soft) {
- 		/* force clock reconfiguration */
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	}
- }
-@@ -1580,12 +1581,47 @@ void sdhci_set_uhs_signaling(struct sdhc
- }
- EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
+--- a/drivers/media/v4l2-core/v4l2-dv-timings.c
++++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
+@@ -155,6 +155,8 @@ bool v4l2_valid_dv_timings(const struct
+ 	const struct v4l2_bt_timings *bt = &t->bt;
+ 	const struct v4l2_bt_timings_cap *cap = &dvcap->bt;
+ 	u32 caps = cap->capabilities;
++	const u32 max_vert = 10240;
++	u32 max_hor = 3 * bt->width;
  
-+static bool sdhci_timing_has_preset(unsigned char timing)
-+{
-+	switch (timing) {
-+	case MMC_TIMING_UHS_SDR12:
-+	case MMC_TIMING_UHS_SDR25:
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+	case MMC_TIMING_UHS_DDR50:
-+	case MMC_TIMING_MMC_DDR52:
-+		return true;
-+	};
-+	return false;
-+}
-+
-+static bool sdhci_preset_needed(struct sdhci_host *host, unsigned char timing)
-+{
-+	return !(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
-+	       sdhci_timing_has_preset(timing);
-+}
-+
-+static bool sdhci_presetable_values_change(struct sdhci_host *host, struct mmc_ios *ios)
-+{
+ 	if (t->type != V4L2_DV_BT_656_1120)
+ 		return false;
+@@ -176,14 +178,20 @@ bool v4l2_valid_dv_timings(const struct
+ 	if (!bt->interlaced &&
+ 	    (bt->il_vbackporch || bt->il_vsync || bt->il_vfrontporch))
+ 		return false;
+-	if (bt->hfrontporch > 2 * bt->width ||
+-	    bt->hsync > 1024 || bt->hbackporch > 1024)
 +	/*
-+	 * Preset Values are: Driver Strength, Clock Generator and SDCLK/RCLK
-+	 * Frequency. Check if preset values need to be enabled, or the Driver
-+	 * Strength needs updating. Note, clock changes are handled separately.
++	 * Some video receivers cannot properly separate the frontporch,
++	 * backporch and sync values, and instead they only have the total
++	 * blanking. That can be assigned to any of these three fields.
++	 * So just check that none of these are way out of range.
 +	 */
-+	return !host->preset_enabled &&
-+	       (sdhci_preset_needed(host, ios->timing) || host->drv_type != ios->drv_type);
-+}
-+
- static void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-+	bool reinit_uhs = host->reinit_uhs;
-+	bool turning_on_clk = false;
- 	unsigned long flags;
- 	u8 ctrl;
- 
-+	host->reinit_uhs = false;
-+
- 	spin_lock_irqsave(&host->lock, flags);
- 
- 	if (host->flags & SDHCI_DEVICE_DEAD) {
-@@ -1611,6 +1647,8 @@ static void sdhci_set_ios(struct mmc_hos
- 		sdhci_enable_preset_value(host, false);
- 
- 	if (!ios->clock || ios->clock != host->clock) {
-+		turning_on_clk = ios->clock && !host->clock;
-+
- 		host->ops->set_clock(host, ios->clock);
- 		host->clock = ios->clock;
- 
-@@ -1637,6 +1675,17 @@ static void sdhci_set_ios(struct mmc_hos
- 
- 	host->ops->set_bus_width(host, ios->bus_width);
- 
-+	/*
-+	 * Special case to avoid multiple clock changes during voltage
-+	 * switching.
-+	 */
-+	if (!reinit_uhs &&
-+	    turning_on_clk &&
-+	    host->timing == ios->timing &&
-+	    host->version >= SDHCI_SPEC_300 &&
-+	    !sdhci_presetable_values_change(host, ios))
-+		goto out;
-+
- 	ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
- 
- 	if ((ios->timing == MMC_TIMING_SD_HS ||
-@@ -1682,6 +1731,7 @@ static void sdhci_set_ios(struct mmc_hos
- 			}
- 
- 			sdhci_writew(host, ctrl_2, SDHCI_HOST_CONTROL2);
-+			host->drv_type = ios->drv_type;
- 		} else {
- 			/*
- 			 * According to SDHC Spec v3.00, if the Preset Value
-@@ -1709,26 +1759,21 @@ static void sdhci_set_ios(struct mmc_hos
- 		host->ops->set_uhs_signaling(host, ios->timing);
- 		host->timing = ios->timing;
- 
--		if (!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN) &&
--				((ios->timing == MMC_TIMING_UHS_SDR12) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR25) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR50) ||
--				 (ios->timing == MMC_TIMING_UHS_SDR104) ||
--				 (ios->timing == MMC_TIMING_UHS_DDR50) ||
--				 (ios->timing == MMC_TIMING_MMC_DDR52))) {
-+		if (sdhci_preset_needed(host, ios->timing)) {
- 			u16 preset;
- 
- 			sdhci_enable_preset_value(host, true);
- 			preset = sdhci_get_preset_value(host);
- 			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
- 						  preset);
-+			host->drv_type = ios->drv_type;
- 		}
- 
- 		/* Re-enable SD Clock */
- 		host->ops->set_clock(host, host->clock);
- 	} else
- 		sdhci_writeb(host, ctrl, SDHCI_HOST_CONTROL);
--
-+out:
- 	/*
- 	 * Some (ENE) controllers go apeshit on some ios operation,
- 	 * signalling timeout and CRC errors even on CMD0. Resetting
-@@ -2882,6 +2927,7 @@ int sdhci_resume_host(struct sdhci_host
- 		sdhci_init(host, 0);
- 		host->pwr = 0;
- 		host->clock = 0;
-+		host->reinit_uhs = true;
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (host->mmc->pm_flags & MMC_PM_KEEP_POWER));
-@@ -2946,6 +2992,7 @@ int sdhci_runtime_resume_host(struct sdh
- 	/* Force clock and power re-program */
- 	host->pwr = 0;
- 	host->clock = 0;
-+	host->reinit_uhs = true;
- 	mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 	mmc->ops->set_ios(mmc, &mmc->ios);
- 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -466,6 +466,8 @@ struct sdhci_host {
- 
- 	unsigned int clock;	/* Current clock (MHz) */
- 	u8 pwr;			/* Current voltage */
-+	u8 drv_type;		/* Current UHS-I driver type */
-+	bool reinit_uhs;	/* Force UHS-related re-initialization */
- 
- 	bool runtime_suspended;	/* Host is runtime suspended */
- 	bool bus_on;		/* Bus power prevents runtime suspend */
++	if (bt->hfrontporch > max_hor ||
++	    bt->hsync > max_hor || bt->hbackporch > max_hor)
+ 		return false;
+-	if (bt->vfrontporch > 4096 ||
+-	    bt->vsync > 128 || bt->vbackporch > 4096)
++	if (bt->vfrontporch > max_vert ||
++	    bt->vsync > max_vert || bt->vbackporch > max_vert)
+ 		return false;
+-	if (bt->interlaced && (bt->il_vfrontporch > 4096 ||
+-	    bt->il_vsync > 128 || bt->il_vbackporch > 4096))
++	if (bt->interlaced && (bt->il_vfrontporch > max_vert ||
++	    bt->il_vsync > max_vert || bt->il_vbackporch > max_vert))
+ 		return false;
+ 	return fnc == NULL || fnc(t, fnc_handle);
+ }
 
 
