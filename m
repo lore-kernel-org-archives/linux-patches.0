@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC4728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D243C433EF;
-	Mon, 12 Dec 2022 13:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA41D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA04C433F1;
+	Mon, 12 Dec 2022 13:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851485;
-	bh=aALPiJnZf/8jM6j0v3rQo1MBzMs664MSdjGsr0QTUSQ=;
+	s=korg; t=1670851490;
+	bh=FI8x2r+CHWfKaiErtbvHQGTXKXp9op82+7edVzkuB74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttuYcrrDk8bba8UCaL4rzY7oQDxeA1JWc0r+PDaH7UqS2UTBVeycPrHK5Ha/5t50J
-	 kHSS8b/u9t7rkRDFVPK3pbZ6+yKa2LPdEMYgEw5kovIcgyvSEcsGw1Cy0ZsEnFJYGJ
-	 SMM282JJg6jfvMd8XCJWPlh9N7wQzcpKL4x7kXkk=
+	b=eQNOqjDtn3XZR3dnJ6aWY0VJ9JGjAH7FE/BxKRxv07M5G5Ad3SD7nInwCSGKsMbRM
+	 tIYhcKBBORQyOiYhoQi6IdkSGOuWvVWW+O60Wu8b9qW8fauoMBbjQH0HTEAxgovrKF
+	 uBC7RELUnvHFMrPxL1aN8hzfi18ths9U1PDVJva4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Jungclaus <frank.jungclaus@esd.eu>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 67/67] can: esd_usb: Allow REC and TEC to return to zero
-Date: Mon, 12 Dec 2022 14:17:42 +0100
-Message-Id: <20221212130920.807276351@linuxfoundation.org>
+Subject: [PATCH 5.4 62/67] ethernet: aeroflex: fix potential skb leak in greth_init_rings()
+Date: Mon, 12 Dec 2022 14:17:37 +0100
+Message-Id: <20221212130920.572534680@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,53 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Jungclaus <frank.jungclaus@esd.eu>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 918ee4911f7a41fb4505dff877c1d7f9f64eb43e ]
+[ Upstream commit 063a932b64db3317ec020c94466fe52923a15f60 ]
 
-We don't get any further EVENT from an esd CAN USB device for changes
-on REC or TEC while those counters converge to 0 (with ecc == 0). So
-when handling the "Back to Error Active"-event force txerr = rxerr =
-0, otherwise the berr-counters might stay on values like 95 forever.
+The greth_init_rings() function won't free the newly allocated skb when
+dma_mapping_error() returns error, so add dev_kfree_skb() to fix it.
 
-Also, to make life easier during the ongoing development a
-netdev_dbg() has been introduced to allow dumping error events send by
-an esd CAN USB device.
+Compile tested only.
 
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Signed-off-by: Frank Jungclaus <frank.jungclaus@esd.eu>
-Link: https://lore.kernel.org/all/20221130202242.3998219-2-frank.jungclaus@esd.eu
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: d4c41139df6e ("net: Add Aeroflex Gaisler 10/100/1G Ethernet MAC driver")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/1670134149-29516-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/esd_usb2.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/aeroflex/greth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/usb/esd_usb2.c b/drivers/net/can/usb/esd_usb2.c
-index 8847942a8d97..73c5343e609b 100644
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -227,6 +227,10 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 		u8 rxerr = msg->msg.rx.data[2];
- 		u8 txerr = msg->msg.rx.data[3];
- 
-+		netdev_dbg(priv->netdev,
-+			   "CAN_ERR_EV_EXT: dlc=%#02x state=%02x ecc=%02x rec=%02x tec=%02x\n",
-+			   msg->msg.rx.dlc, state, ecc, rxerr, txerr);
-+
- 		skb = alloc_can_err_skb(priv->netdev, &cf);
- 		if (skb == NULL) {
- 			stats->rx_dropped++;
-@@ -253,6 +257,8 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
- 				break;
- 			default:
- 				priv->can.state = CAN_STATE_ERROR_ACTIVE;
-+				txerr = 0;
-+				rxerr = 0;
- 				break;
+diff --git a/drivers/net/ethernet/aeroflex/greth.c b/drivers/net/ethernet/aeroflex/greth.c
+index 907904c0a288..19e2b838750c 100644
+--- a/drivers/net/ethernet/aeroflex/greth.c
++++ b/drivers/net/ethernet/aeroflex/greth.c
+@@ -258,6 +258,7 @@ static int greth_init_rings(struct greth_private *greth)
+ 			if (dma_mapping_error(greth->dev, dma_addr)) {
+ 				if (netif_msg_ifup(greth))
+ 					dev_err(greth->dev, "Could not create initial DMA mapping\n");
++				dev_kfree_skb(skb);
+ 				goto cleanup;
  			}
- 		} else {
+ 			greth->rx_skbuff[i] = skb;
 -- 
 2.35.1
 
