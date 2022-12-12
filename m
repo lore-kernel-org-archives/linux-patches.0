@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B6828ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95054C433EF;
-	Mon, 12 Dec 2022 13:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336F28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE3BC433D2;
+	Mon, 12 Dec 2022 13:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851363;
-	bh=6t7OsnDmYf7Q3B+4yeknwoOuI3r7NFecIiR9N0x394A=;
+	s=korg; t=1670851368;
+	bh=cpwAiwQapXWgFY/UL7w5Ft4f9+ZrlXyc9172ypJ2SRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sllI3PRL05ZgPUUNpqa9htS64RYnuTYpBB7dAUdtUaujeqKLNgbsPlViR8UM/f0xK
-	 FdF/CutBPct0i/NaErlFchIbmcEFudh2qnb3Y+mYRoxOHy5G61M7xNzDgQmQTwR3CQ
-	 SuDnh3devoMWpodF/lMCSbhkp85xxNGe2RMQEm5E=
+	b=EV366/JtxP/9eRVLQGp8xNxF7oB07W/NNNyzO0ltwZHMi5gixPtsgn/JR0hQ0kL25
+	 G/Ol60u6Dyc0+0olxc3oxgibqG3KslIrwU+Kw8zWzZUDGzhGrlk7K8xtwj4xAuWV6R
+	 hNQ5hdQStx5iB648E6hTr5BzMhvWLxJR90ZTxtA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 46/67] net: encx24j600: Add parentheses to fix precedence
-Date: Mon, 12 Dec 2022 14:17:21 +0100
-Message-Id: <20221212130919.821186393@linuxfoundation.org>
+Subject: [PATCH 5.4 47/67] net: encx24j600: Fix invalid logic in reading of MISTAT register
+Date: Mon, 12 Dec 2022 14:17:22 +0100
+Message-Id: <20221212130919.871871546@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -38,12 +38,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Valentina Goncharenko <goncharenko.vp@ispras.ru>
 
-[ Upstream commit 167b3f2dcc62c271f3555b33df17e361bb1fa0ee ]
+[ Upstream commit 25f427ac7b8d89b0259f86c0c6407b329df742b2 ]
 
-In functions regmap_encx24j600_phy_reg_read() and
-regmap_encx24j600_phy_reg_write() in the conditions of the waiting
-cycles for filling the variable 'ret' it is necessary to add parentheses
-to prevent wrong assignment due to logical operations precedence.
+A loop for reading MISTAT register continues while regmap_read() fails
+and (mistat & BUSY), but if regmap_read() fails a value of mistat is
+undefined.
+
+The patch proposes to check for BUSY flag only when regmap_read()
+succeed. Compile test only.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
@@ -57,15 +59,15 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/microchip/encx24j600-regmap.c b/drivers/net/ethernet/microchip/encx24j600-regmap.c
-index e2528633c09a..8c07c3c3c00c 100644
+index 8c07c3c3c00c..8c6c5c706992 100644
 --- a/drivers/net/ethernet/microchip/encx24j600-regmap.c
 +++ b/drivers/net/ethernet/microchip/encx24j600-regmap.c
 @@ -364,7 +364,7 @@ static int regmap_encx24j600_phy_reg_read(void *context, unsigned int reg,
  		goto err_out;
  
  	usleep_range(26, 100);
--	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
-+	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
+-	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) == 0) &&
  	       (mistat & BUSY))
  		cpu_relax();
  
@@ -73,8 +75,8 @@ index e2528633c09a..8c07c3c3c00c 100644
  		goto err_out;
  
  	usleep_range(26, 100);
--	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
-+	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
+-	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
++	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) == 0) &&
  	       (mistat & BUSY))
  		cpu_relax();
  
