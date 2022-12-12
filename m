@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E8328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FE8C433EF;
-	Mon, 12 Dec 2022 13:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDF028ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:38:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A517C433EF;
+	Mon, 12 Dec 2022 13:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852286;
-	bh=4GScXyhq651+QiSsEyMyZidQkBo8jWNDhH9jRyFz9Wo=;
+	s=korg; t=1670852291;
+	bh=9e/8M06uZJ7GJH15Xsi5lWSOGZOrrCctCU8ZxDh29zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzBemds2xuwxw8TGtZnIjL3kairYhTnoNEYrXzf3B6ULW8WN1q2XeylMVUsfBDsWr
-	 pqKX0ons9Mhq8U927skUZy7M+QUd93gmhdRSCx6fy27KDnpGj5ipJbSZwdj/ns5j+z
-	 ZQBrFbAqFsxVUbacQE9U2X1ZvVsaL1vGYmabeea0=
+	b=yQq9iCadkHVpiHW4yXrWrGRW5yxmkBvB66ZDgqTQ6jxjw6xUbU9g3tX/8fDeVOaJB
+	 uF9KAoEg8WUa8miQKbn+/8t4zYjoieRMUiSiL5E720QQYejLrJmE8hnShSB32v3eAj
+	 7mYxvtxKNHpkTKHeffIoNOzrIN7hagAymg/dQxD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Paul Durrant <paul@xen.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 050/157] platform/x86: asus-wmi: Add support for ROG X13 tablet mode
-Date: Mon, 12 Dec 2022 14:16:38 +0100
-Message-Id: <20221212130936.564281200@linuxfoundation.org>
+Subject: [PATCH 6.0 051/157] xen/netback: Ensure protocol headers dont fall in the non-linear area
+Date: Mon, 12 Dec 2022 14:16:39 +0100
+Message-Id: <20221212130936.605730647@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,172 +36,387 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit e397c3c460bf3849384f2f55516d1887617cfca9 ]
+[ Upstream commit ad7f402ae4f466647c3a669b8a6f3e5d4271c84a ]
 
-Add quirk for ASUS ROG X13 Flow 2-in-1 to enable tablet mode with
-lid flip (all screen rotations).
+In some cases, the frontend may send a packet where the protocol headers
+are spread across multiple slots. This would result in netback creating
+an skb where the protocol headers spill over into the non-linear area.
+Some drivers and NICs don't handle this properly resulting in an
+interface reset or worse.
 
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20220813092753.6635-2-luke@ljones.dev
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+This issue was introduced by the removal of an unconditional skb pull in
+the tx path to improve performance.  Fix this without reintroducing the
+pull by setting up grant copy ops for as many slots as needed to reach
+the XEN_NETBACK_TX_COPY_LEN size. Adjust the rest of the code to handle
+multiple copy operations per skb.
+
+This is XSA-423 / CVE-2022-3643.
+
+Fixes: 7e5d7753956b ("xen-netback: remove unconditional __pskb_pull_tail() in guest Tx path")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c         | 15 +++++++++
- drivers/platform/x86/asus-wmi.c            | 37 ++++++++++++++++++++++
- drivers/platform/x86/asus-wmi.h            |  1 +
- include/linux/platform_data/x86/asus-wmi.h |  1 +
- 4 files changed, 54 insertions(+)
+ drivers/net/xen-netback/netback.c | 223 ++++++++++++++++--------------
+ 1 file changed, 123 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index 4672a2b8322e..d9e7cf6e4a0e 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -123,6 +123,11 @@ static struct quirk_entry quirk_asus_use_lid_flip_devid = {
- 	.tablet_switch_mode = asus_wmi_lid_flip_devid,
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index a256695fc89e..4962ff8b1534 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -332,10 +332,13 @@ static int xenvif_count_requests(struct xenvif_queue *queue,
+ 
+ 
+ struct xenvif_tx_cb {
+-	u16 pending_idx;
++	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
++	u8 copy_count;
  };
  
-+static struct quirk_entry quirk_asus_tablet_mode = {
-+	.wmi_backlight_set_devstate = true,
-+	.tablet_switch_mode = asus_wmi_lid_flip_rog_devid,
-+};
-+
- static int dmi_matched(const struct dmi_system_id *dmi)
- {
- 	pr_info("Identified laptop model '%s'\n", dmi->ident);
-@@ -471,6 +476,15 @@ static const struct dmi_system_id asus_quirks[] = {
- 		},
- 		.driver_data = &quirk_asus_use_lid_flip_devid,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS ROG FLOW X13",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "GV301Q"),
-+		},
-+		.driver_data = &quirk_asus_tablet_mode,
-+	},
- 	{},
- };
+ #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
++#define copy_pending_idx(skb, i) (XENVIF_TX_CB(skb)->copy_pending_idx[i])
++#define copy_count(skb) (XENVIF_TX_CB(skb)->copy_count)
  
-@@ -578,6 +592,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0xC5, { KEY_KBDILLUMDOWN } },
- 	{ KE_IGNORE, 0xC6, },  /* Ambient Light Sensor notification */
- 	{ KE_KEY, 0xFA, { KEY_PROG2 } },           /* Lid flip action */
-+	{ KE_KEY, 0xBD, { KEY_PROG2 } },           /* Lid flip action on ROG xflow laptops */
- 	{ KE_END, 0},
- };
- 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 26f75c984448..dce93187e11f 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -68,6 +68,7 @@ module_param(fnlock_default, bool, 0444);
- #define NOTIFY_KBD_FBM			0x99
- #define NOTIFY_KBD_TTP			0xae
- #define NOTIFY_LID_FLIP			0xfa
-+#define NOTIFY_LID_FLIP_ROG		0xbd
- 
- #define ASUS_WMI_FNLOCK_BIOS_DISABLED	BIT(0)
- 
-@@ -533,6 +534,19 @@ static int asus_wmi_input_init(struct asus_wmi *asus)
- 			dev_err(dev, "Error checking for lid-flip: %d\n", result);
- 		}
- 		break;
-+	case asus_wmi_lid_flip_rog_devid:
-+		result = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_LID_FLIP_ROG);
-+		if (result < 0)
-+			asus->driver->quirks->tablet_switch_mode = asus_wmi_no_tablet_switch;
-+		if (result >= 0) {
-+			input_set_capability(asus->inputdev, EV_SW, SW_TABLET_MODE);
-+			input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
-+		} else if (result == -ENODEV) {
-+			dev_err(dev, "This device has lid-flip-rog quirk but got ENODEV checking it. This is a bug.");
-+		} else {
-+			dev_err(dev, "Error checking for lid-flip: %d\n", result);
-+		}
-+		break;
- 	}
- 
- 	err = input_register_device(asus->inputdev);
-@@ -567,6 +581,17 @@ static void lid_flip_tablet_mode_get_state(struct asus_wmi *asus)
- 	}
+ static inline void xenvif_tx_create_map_op(struct xenvif_queue *queue,
+ 					   u16 pending_idx,
+@@ -370,31 +373,93 @@ static inline struct sk_buff *xenvif_alloc_skb(unsigned int size)
+ 	return skb;
  }
  
-+static void lid_flip_rog_tablet_mode_get_state(struct asus_wmi *asus)
-+{
-+	int result;
-+
-+	result = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_LID_FLIP_ROG);
-+	if (result >= 0) {
-+		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
-+		input_sync(asus->inputdev);
-+	}
-+}
-+
- /* dGPU ********************************************************************/
- static int dgpu_disable_check_present(struct asus_wmi *asus)
+-static struct gnttab_map_grant_ref *xenvif_get_requests(struct xenvif_queue *queue,
+-							struct sk_buff *skb,
+-							struct xen_netif_tx_request *txp,
+-							struct gnttab_map_grant_ref *gop,
+-							unsigned int frag_overflow,
+-							struct sk_buff *nskb)
++static void xenvif_get_requests(struct xenvif_queue *queue,
++				struct sk_buff *skb,
++				struct xen_netif_tx_request *first,
++				struct xen_netif_tx_request *txfrags,
++			        unsigned *copy_ops,
++			        unsigned *map_ops,
++				unsigned int frag_overflow,
++				struct sk_buff *nskb,
++				unsigned int extra_count,
++				unsigned int data_len)
  {
-@@ -3134,6 +3159,12 @@ static void asus_wmi_handle_event_code(int code, struct asus_wmi *asus)
- 		return;
- 	}
- 
-+	if (asus->driver->quirks->tablet_switch_mode == asus_wmi_lid_flip_rog_devid &&
-+	    code == NOTIFY_LID_FLIP_ROG) {
-+		lid_flip_rog_tablet_mode_get_state(asus);
-+		return;
-+	}
+ 	struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 	skb_frag_t *frags = shinfo->frags;
+-	u16 pending_idx = XENVIF_TX_CB(skb)->pending_idx;
+-	int start;
++	u16 pending_idx;
+ 	pending_ring_idx_t index;
+ 	unsigned int nr_slots;
++	struct gnttab_copy *cop = queue->tx_copy_ops + *copy_ops;
++	struct gnttab_map_grant_ref *gop = queue->tx_map_ops + *map_ops;
++	struct xen_netif_tx_request *txp = first;
 +
- 	if (asus->fan_boost_mode_available && code == NOTIFY_KBD_FBM) {
- 		fan_boost_mode_switch_next(asus);
- 		return;
-@@ -3773,6 +3804,9 @@ static int asus_hotk_resume(struct device *device)
- 	case asus_wmi_lid_flip_devid:
- 		lid_flip_tablet_mode_get_state(asus);
- 		break;
-+	case asus_wmi_lid_flip_rog_devid:
-+		lid_flip_rog_tablet_mode_get_state(asus);
-+		break;
++	nr_slots = shinfo->nr_frags + 1;
++
++	copy_count(skb) = 0;
++
++	/* Create copy ops for exactly data_len bytes into the skb head. */
++	__skb_put(skb, data_len);
++	while (data_len > 0) {
++		int amount = data_len > txp->size ? txp->size : data_len;
++
++		cop->source.u.ref = txp->gref;
++		cop->source.domid = queue->vif->domid;
++		cop->source.offset = txp->offset;
++
++		cop->dest.domid = DOMID_SELF;
++		cop->dest.offset = (offset_in_page(skb->data +
++						   skb_headlen(skb) -
++						   data_len)) & ~XEN_PAGE_MASK;
++		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
++				               - data_len);
++
++		cop->len = amount;
++		cop->flags = GNTCOPY_source_gref;
+ 
+-	nr_slots = shinfo->nr_frags;
++		index = pending_index(queue->pending_cons);
++		pending_idx = queue->pending_ring[index];
++		callback_param(queue, pending_idx).ctx = NULL;
++		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
++		copy_count(skb)++;
++
++		cop++;
++		data_len -= amount;
+ 
+-	/* Skip first skb fragment if it is on same page as header fragment. */
+-	start = (frag_get_pending_idx(&shinfo->frags[0]) == pending_idx);
++		if (amount == txp->size) {
++			/* The copy op covered the full tx_request */
++
++			memcpy(&queue->pending_tx_info[pending_idx].req,
++			       txp, sizeof(*txp));
++			queue->pending_tx_info[pending_idx].extra_count =
++				(txp == first) ? extra_count : 0;
++
++			if (txp == first)
++				txp = txfrags;
++			else
++				txp++;
++			queue->pending_cons++;
++			nr_slots--;
++		} else {
++			/* The copy op partially covered the tx_request.
++			 * The remainder will be mapped.
++			 */
++			txp->offset += amount;
++			txp->size -= amount;
++		}
++	}
+ 
+-	for (shinfo->nr_frags = start; shinfo->nr_frags < nr_slots;
+-	     shinfo->nr_frags++, txp++, gop++) {
++	for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
++	     shinfo->nr_frags++, gop++) {
+ 		index = pending_index(queue->pending_cons++);
+ 		pending_idx = queue->pending_ring[index];
+-		xenvif_tx_create_map_op(queue, pending_idx, txp, 0, gop);
++		xenvif_tx_create_map_op(queue, pending_idx, txp,
++				        txp == first ? extra_count : 0, gop);
+ 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
++
++		if (txp == first)
++			txp = txfrags;
++		else
++			txp++;
  	}
  
- 	return 0;
-@@ -3821,6 +3855,9 @@ static int asus_hotk_restore(struct device *device)
- 	case asus_wmi_lid_flip_devid:
- 		lid_flip_tablet_mode_get_state(asus);
- 		break;
-+	case asus_wmi_lid_flip_rog_devid:
-+		lid_flip_rog_tablet_mode_get_state(asus);
-+		break;
+ 	if (frag_overflow) {
+@@ -415,7 +480,8 @@ static struct gnttab_map_grant_ref *xenvif_get_requests(struct xenvif_queue *que
+ 		skb_shinfo(skb)->frag_list = nskb;
  	}
  
- 	return 0;
-diff --git a/drivers/platform/x86/asus-wmi.h b/drivers/platform/x86/asus-wmi.h
-index 413920bad0c6..0187f13d2414 100644
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -29,6 +29,7 @@ enum asus_wmi_tablet_switch_mode {
- 	asus_wmi_no_tablet_switch,
- 	asus_wmi_kbd_dock_devid,
- 	asus_wmi_lid_flip_devid,
-+	asus_wmi_lid_flip_rog_devid,
- };
+-	return gop;
++	(*copy_ops) = cop - queue->tx_copy_ops;
++	(*map_ops) = gop - queue->tx_map_ops;
+ }
  
- struct quirk_entry {
-diff --git a/include/linux/platform_data/x86/asus-wmi.h b/include/linux/platform_data/x86/asus-wmi.h
-index 98f2b2f20f3e..7c96db7f3060 100644
---- a/include/linux/platform_data/x86/asus-wmi.h
-+++ b/include/linux/platform_data/x86/asus-wmi.h
-@@ -65,6 +65,7 @@
- #define ASUS_WMI_DEVID_PANEL_OD		0x00050019
- #define ASUS_WMI_DEVID_CAMERA		0x00060013
- #define ASUS_WMI_DEVID_LID_FLIP		0x00060062
-+#define ASUS_WMI_DEVID_LID_FLIP_ROG	0x00060077
+ static inline void xenvif_grant_handle_set(struct xenvif_queue *queue,
+@@ -451,7 +517,7 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 			       struct gnttab_copy **gopp_copy)
+ {
+ 	struct gnttab_map_grant_ref *gop_map = *gopp_map;
+-	u16 pending_idx = XENVIF_TX_CB(skb)->pending_idx;
++	u16 pending_idx;
+ 	/* This always points to the shinfo of the skb being checked, which
+ 	 * could be either the first or the one on the frag_list
+ 	 */
+@@ -462,24 +528,37 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 	struct skb_shared_info *first_shinfo = NULL;
+ 	int nr_frags = shinfo->nr_frags;
+ 	const bool sharedslot = nr_frags &&
+-				frag_get_pending_idx(&shinfo->frags[0]) == pending_idx;
++				frag_get_pending_idx(&shinfo->frags[0]) ==
++				    copy_pending_idx(skb, copy_count(skb) - 1);
+ 	int i, err;
  
- /* Storage */
- #define ASUS_WMI_DEVID_CARDREADER	0x00080013
+-	/* Check status of header. */
+-	err = (*gopp_copy)->status;
+-	if (unlikely(err)) {
+-		if (net_ratelimit())
+-			netdev_dbg(queue->vif->dev,
+-				   "Grant copy of header failed! status: %d pending_idx: %u ref: %u\n",
+-				   (*gopp_copy)->status,
+-				   pending_idx,
+-				   (*gopp_copy)->source.u.ref);
+-		/* The first frag might still have this slot mapped */
+-		if (!sharedslot)
+-			xenvif_idx_release(queue, pending_idx,
+-					   XEN_NETIF_RSP_ERROR);
++	for (i = 0; i < copy_count(skb); i++) {
++		int newerr;
++
++		/* Check status of header. */
++		pending_idx = copy_pending_idx(skb, i);
++
++		newerr = (*gopp_copy)->status;
++		if (likely(!newerr)) {
++			/* The first frag might still have this slot mapped */
++			if (i < copy_count(skb) - 1 || !sharedslot)
++				xenvif_idx_release(queue, pending_idx,
++						   XEN_NETIF_RSP_OKAY);
++		} else {
++			err = newerr;
++			if (net_ratelimit())
++				netdev_dbg(queue->vif->dev,
++					   "Grant copy of header failed! status: %d pending_idx: %u ref: %u\n",
++					   (*gopp_copy)->status,
++					   pending_idx,
++					   (*gopp_copy)->source.u.ref);
++			/* The first frag might still have this slot mapped */
++			if (i < copy_count(skb) - 1 || !sharedslot)
++				xenvif_idx_release(queue, pending_idx,
++						   XEN_NETIF_RSP_ERROR);
++		}
++		(*gopp_copy)++;
+ 	}
+-	(*gopp_copy)++;
+ 
+ check_frags:
+ 	for (i = 0; i < nr_frags; i++, gop_map++) {
+@@ -526,14 +605,6 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 		if (err)
+ 			continue;
+ 
+-		/* First error: if the header haven't shared a slot with the
+-		 * first frag, release it as well.
+-		 */
+-		if (!sharedslot)
+-			xenvif_idx_release(queue,
+-					   XENVIF_TX_CB(skb)->pending_idx,
+-					   XEN_NETIF_RSP_OKAY);
+-
+ 		/* Invalidate preceding fragments of this skb. */
+ 		for (j = 0; j < i; j++) {
+ 			pending_idx = frag_get_pending_idx(&shinfo->frags[j]);
+@@ -803,7 +874,6 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 				     unsigned *copy_ops,
+ 				     unsigned *map_ops)
+ {
+-	struct gnttab_map_grant_ref *gop = queue->tx_map_ops;
+ 	struct sk_buff *skb, *nskb;
+ 	int ret;
+ 	unsigned int frag_overflow;
+@@ -885,8 +955,12 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 			continue;
+ 		}
+ 
++		data_len = (txreq.size > XEN_NETBACK_TX_COPY_LEN) ?
++			XEN_NETBACK_TX_COPY_LEN : txreq.size;
++
+ 		ret = xenvif_count_requests(queue, &txreq, extra_count,
+ 					    txfrags, work_to_do);
++
+ 		if (unlikely(ret < 0))
+ 			break;
+ 
+@@ -912,9 +986,8 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 		index = pending_index(queue->pending_cons);
+ 		pending_idx = queue->pending_ring[index];
+ 
+-		data_len = (txreq.size > XEN_NETBACK_TX_COPY_LEN &&
+-			    ret < XEN_NETBK_LEGACY_SLOTS_MAX) ?
+-			XEN_NETBACK_TX_COPY_LEN : txreq.size;
++		if (ret >= XEN_NETBK_LEGACY_SLOTS_MAX - 1 && data_len < txreq.size)
++			data_len = txreq.size;
+ 
+ 		skb = xenvif_alloc_skb(data_len);
+ 		if (unlikely(skb == NULL)) {
+@@ -925,8 +998,6 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 		}
+ 
+ 		skb_shinfo(skb)->nr_frags = ret;
+-		if (data_len < txreq.size)
+-			skb_shinfo(skb)->nr_frags++;
+ 		/* At this point shinfo->nr_frags is in fact the number of
+ 		 * slots, which can be as large as XEN_NETBK_LEGACY_SLOTS_MAX.
+ 		 */
+@@ -988,54 +1059,19 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 					     type);
+ 		}
+ 
+-		XENVIF_TX_CB(skb)->pending_idx = pending_idx;
+-
+-		__skb_put(skb, data_len);
+-		queue->tx_copy_ops[*copy_ops].source.u.ref = txreq.gref;
+-		queue->tx_copy_ops[*copy_ops].source.domid = queue->vif->domid;
+-		queue->tx_copy_ops[*copy_ops].source.offset = txreq.offset;
+-
+-		queue->tx_copy_ops[*copy_ops].dest.u.gmfn =
+-			virt_to_gfn(skb->data);
+-		queue->tx_copy_ops[*copy_ops].dest.domid = DOMID_SELF;
+-		queue->tx_copy_ops[*copy_ops].dest.offset =
+-			offset_in_page(skb->data) & ~XEN_PAGE_MASK;
+-
+-		queue->tx_copy_ops[*copy_ops].len = data_len;
+-		queue->tx_copy_ops[*copy_ops].flags = GNTCOPY_source_gref;
+-
+-		(*copy_ops)++;
+-
+-		if (data_len < txreq.size) {
+-			frag_set_pending_idx(&skb_shinfo(skb)->frags[0],
+-					     pending_idx);
+-			xenvif_tx_create_map_op(queue, pending_idx, &txreq,
+-						extra_count, gop);
+-			gop++;
+-		} else {
+-			frag_set_pending_idx(&skb_shinfo(skb)->frags[0],
+-					     INVALID_PENDING_IDX);
+-			memcpy(&queue->pending_tx_info[pending_idx].req,
+-			       &txreq, sizeof(txreq));
+-			queue->pending_tx_info[pending_idx].extra_count =
+-				extra_count;
+-		}
+-
+-		queue->pending_cons++;
+-
+-		gop = xenvif_get_requests(queue, skb, txfrags, gop,
+-				          frag_overflow, nskb);
++		xenvif_get_requests(queue, skb, &txreq, txfrags, copy_ops,
++				    map_ops, frag_overflow, nskb, extra_count,
++				    data_len);
+ 
+ 		__skb_queue_tail(&queue->tx_queue, skb);
+ 
+ 		queue->tx.req_cons = idx;
+ 
+-		if (((gop-queue->tx_map_ops) >= ARRAY_SIZE(queue->tx_map_ops)) ||
++		if ((*map_ops >= ARRAY_SIZE(queue->tx_map_ops)) ||
+ 		    (*copy_ops >= ARRAY_SIZE(queue->tx_copy_ops)))
+ 			break;
+ 	}
+ 
+-	(*map_ops) = gop - queue->tx_map_ops;
+ 	return;
+ }
+ 
+@@ -1114,9 +1150,8 @@ static int xenvif_tx_submit(struct xenvif_queue *queue)
+ 	while ((skb = __skb_dequeue(&queue->tx_queue)) != NULL) {
+ 		struct xen_netif_tx_request *txp;
+ 		u16 pending_idx;
+-		unsigned data_len;
+ 
+-		pending_idx = XENVIF_TX_CB(skb)->pending_idx;
++		pending_idx = copy_pending_idx(skb, 0);
+ 		txp = &queue->pending_tx_info[pending_idx].req;
+ 
+ 		/* Check the remap error code. */
+@@ -1135,18 +1170,6 @@ static int xenvif_tx_submit(struct xenvif_queue *queue)
+ 			continue;
+ 		}
+ 
+-		data_len = skb->len;
+-		callback_param(queue, pending_idx).ctx = NULL;
+-		if (data_len < txp->size) {
+-			/* Append the packet payload as a fragment. */
+-			txp->offset += data_len;
+-			txp->size -= data_len;
+-		} else {
+-			/* Schedule a response immediately. */
+-			xenvif_idx_release(queue, pending_idx,
+-					   XEN_NETIF_RSP_OKAY);
+-		}
+-
+ 		if (txp->flags & XEN_NETTXF_csum_blank)
+ 			skb->ip_summed = CHECKSUM_PARTIAL;
+ 		else if (txp->flags & XEN_NETTXF_data_validated)
+@@ -1331,7 +1354,7 @@ static inline void xenvif_tx_dealloc_action(struct xenvif_queue *queue)
+ /* Called after netfront has transmitted */
+ int xenvif_tx_action(struct xenvif_queue *queue, int budget)
+ {
+-	unsigned nr_mops, nr_cops = 0;
++	unsigned nr_mops = 0, nr_cops = 0;
+ 	int work_done, ret;
+ 
+ 	if (unlikely(!tx_work_todo(queue)))
 -- 
 2.35.1
 
