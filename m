@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E22A28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BEEC433F1;
-	Mon, 12 Dec 2022 13:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9BB28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158B2C433EF;
+	Mon, 12 Dec 2022 13:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851773;
-	bh=dSTvkbl7td0zpHjnORlRYdPitxf6p3PqyX/lI0jEeiI=;
+	s=korg; t=1670851778;
+	bh=H6/YYY3nYiet+wkunn+/UdDdUBVnFek4KCd/16UM1Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGCgikwNQVpNQZW5EC8quAx8Pg4y8egJSOY6hDGGwDQoRuPg8g7m0A+4YV+XqGroT
-	 GTO1EDuLijgsNCHaxvyV+mHvS5qGJuytCkuyMgnGi0J2tFl2BmV/wi2mR6LPVotnTn
-	 TZIQrHICyyWraS7eDe7j5z8csbkbQ/0J86DN/QCQ=
+	b=supdlNuvjasdRqp++lgo0DS91EYr2XGJgEDt2JueJmug5+SM5y8CwfcfBPpXHKboZ
+	 o8SHWNLKAGlL+YeshQHmLX6FlmHp7roDzBiivPZ/jdGc0mrGy0te+TS9QdnMwQmhc/
+	 xiFnkxmwhFJEM8j0m9UtrDU8m3EmpJZhy6+wsQmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Ivan Babrou <ivan@ivan.computer>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Qiqi Zhang <eddy.zhang@rock-chips.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/123] netfilter: ctnetlink: fix compilation warning after data race fixes in ct mark
-Date: Mon, 12 Dec 2022 14:17:13 +0100
-Message-Id: <20221212130929.764219762@linuxfoundation.org>
+Subject: [PATCH 5.15 068/123] drm/bridge: ti-sn65dsi86: Fix output polarity setting bug
+Date: Mon, 12 Dec 2022 14:17:14 +0100
+Message-Id: <20221212130929.813083781@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,92 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Qiqi Zhang <eddy.zhang@rock-chips.com>
 
-[ Upstream commit 1feeae071507ad65cf9f462a1bdd543a4bf89e71 ]
+[ Upstream commit 8c115864501fc09932cdfec53d9ec1cde82b4a28 ]
 
-All warnings (new ones prefixed by >>):
+According to the description in ti-sn65dsi86's datasheet:
 
-   net/netfilter/nf_conntrack_netlink.c: In function '__ctnetlink_glue_build':
->> net/netfilter/nf_conntrack_netlink.c:2674:13: warning: unused variable 'mark' [-Wunused-variable]
-    2674 |         u32 mark;
-         |             ^~~~
+CHA_HSYNC_POLARITY:
+0 = Active High Pulse. Synchronization signal is high for the sync
+pulse width. (default)
+1 = Active Low Pulse. Synchronization signal is low for the sync
+pulse width.
 
-Fixes: 52d1aa8b8249 ("netfilter: conntrack: Fix data-races around ct mark")
-Reported-by: kernel test robot <lkp@intel.com>
-Tested-by: Ivan Babrou <ivan@ivan.computer>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+CHA_VSYNC_POLARITY:
+0 = Active High Pulse. Synchronization signal is high for the sync
+pulse width. (Default)
+1 = Active Low Pulse. Synchronization signal is low for the sync
+pulse width.
+
+We should only set these bits when the polarity is negative.
+
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
+Signed-off-by: Qiqi Zhang <eddy.zhang@rock-chips.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221125104558.84616-1-eddy.zhang@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 1727a4c4764f..2cc6092b4f86 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -322,8 +322,13 @@ ctnetlink_dump_timestamp(struct sk_buff *skb, const struct nf_conn *ct)
- }
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 45a5f1e48f0e..bbedce0eedda 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -920,9 +920,9 @@ static void ti_sn_bridge_set_video_timings(struct ti_sn65dsi86 *pdata)
+ 		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+ 	u8 hsync_polarity = 0, vsync_polarity = 0;
  
- #ifdef CONFIG_NF_CONNTRACK_MARK
--static int ctnetlink_dump_mark(struct sk_buff *skb, u32 mark)
-+static int ctnetlink_dump_mark(struct sk_buff *skb, const struct nf_conn *ct)
- {
-+	u32 mark = READ_ONCE(ct->mark);
-+
-+	if (!mark)
-+		return 0;
-+
- 	if (nla_put_be32(skb, CTA_MARK, htonl(mark)))
- 		goto nla_put_failure;
- 	return 0;
-@@ -537,7 +542,7 @@ static int ctnetlink_dump_extinfo(struct sk_buff *skb,
- static int ctnetlink_dump_info(struct sk_buff *skb, struct nf_conn *ct)
- {
- 	if (ctnetlink_dump_status(skb, ct) < 0 ||
--	    ctnetlink_dump_mark(skb, READ_ONCE(ct->mark)) < 0 ||
-+	    ctnetlink_dump_mark(skb, ct) < 0 ||
- 	    ctnetlink_dump_secctx(skb, ct) < 0 ||
- 	    ctnetlink_dump_id(skb, ct) < 0 ||
- 	    ctnetlink_dump_use(skb, ct) < 0 ||
-@@ -716,7 +721,6 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
- 	struct sk_buff *skb;
- 	unsigned int type;
- 	unsigned int flags = 0, group;
--	u32 mark;
- 	int err;
+-	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
++	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
+ 		hsync_polarity = CHA_HSYNC_POLARITY;
+-	if (mode->flags & DRM_MODE_FLAG_PVSYNC)
++	if (mode->flags & DRM_MODE_FLAG_NVSYNC)
+ 		vsync_polarity = CHA_VSYNC_POLARITY;
  
- 	if (events & (1 << IPCT_DESTROY)) {
-@@ -821,9 +825,8 @@ ctnetlink_conntrack_event(unsigned int events, const struct nf_ct_event *item)
- 	}
- 
- #ifdef CONFIG_NF_CONNTRACK_MARK
--	mark = READ_ONCE(ct->mark);
--	if ((events & (1 << IPCT_MARK) || mark) &&
--	    ctnetlink_dump_mark(skb, mark) < 0)
-+	if (events & (1 << IPCT_MARK) &&
-+	    ctnetlink_dump_mark(skb, ct) < 0)
- 		goto nla_put_failure;
- #endif
- 	nlmsg_end(skb, nlh);
-@@ -2692,7 +2695,6 @@ static int __ctnetlink_glue_build(struct sk_buff *skb, struct nf_conn *ct)
- {
- 	const struct nf_conntrack_zone *zone;
- 	struct nlattr *nest_parms;
--	u32 mark;
- 
- 	zone = nf_ct_zone(ct);
- 
-@@ -2754,8 +2756,7 @@ static int __ctnetlink_glue_build(struct sk_buff *skb, struct nf_conn *ct)
- 		goto nla_put_failure;
- 
- #ifdef CONFIG_NF_CONNTRACK_MARK
--	mark = READ_ONCE(ct->mark);
--	if (mark && ctnetlink_dump_mark(skb, mark) < 0)
-+	if (ctnetlink_dump_mark(skb, ct) < 0)
- 		goto nla_put_failure;
- #endif
- 	if (ctnetlink_dump_labels(skb, ct) < 0)
+ 	ti_sn65dsi86_write_u16(pdata, SN_CHA_ACTIVE_LINE_LENGTH_LOW_REG,
 -- 
 2.35.1
 
