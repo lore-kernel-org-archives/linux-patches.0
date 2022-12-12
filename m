@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAA528ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32FFC433D2;
-	Mon, 12 Dec 2022 13:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A2128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E78C433EF;
+	Mon, 12 Dec 2022 13:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853369;
-	bh=25KDnCIcuwlP4rntTVq6uFbp5U4LJPrCgb/SvL0aCIs=;
+	s=korg; t=1670853374;
+	bh=TAnTTFstaFpM91ifNqxbtsY+WyrDIChBw/TczjcttXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyZ3/GQobLIpMoQObvXWqa4Gx+CgGx5nZj50Ow96YoFQdz58c16n1He8OlnaINRju
-	 acFv+0IYa7jCogVwFwTbEZuEKDXbjJuT/JDY52JYs7twV0gh2XJDykkEugrz2ctPJW
-	 2c9R70eiogchCet3jvqzCkYb9vb7446a8O4eCqUY=
+	b=ICBm7hBxQiBTDnFcs5KqPfhrwG7FVYUZE8c5pAapJAbJbtqkrDDnAqwvXmwWAIOnl
+	 m4jQwS3smfYdSg86Zu7l4r12WcB2NYATXWFUJqQIdoA19gYxWyiNeaZkQ/fJWOTbA/
+	 eykccg4pt4s2ax2Bx4yKRZWKkwNz24obmSHj9btE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 4.9 17/31] e1000e: Fix TX dispatch condition
-Date: Mon, 12 Dec 2022 14:19:35 +0100
-Message-Id: <20221212130910.922535589@linuxfoundation.org>
+Subject: [PATCH 4.9 18/31] igb: Allocate MSI-X vector when testing
+Date: Mon, 12 Dec 2022 14:19:36 +0100
+Message-Id: <20221212130910.985450117@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -39,63 +39,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-[ Upstream commit eed913f6919e253f35d454b2f115f2a4db2b741a ]
+[ Upstream commit 28e96556baca7056d11d9fb3cdd0aba4483e00d8 ]
 
-e1000_xmit_frame is expected to stop the queue and dispatch frames to
-hardware if there is not sufficient space for the next frame in the
-buffer, but sometimes it failed to do so because the estimated maximum
-size of frame was wrong. As the consequence, the later invocation of
-e1000_xmit_frame failed with NETDEV_TX_BUSY, and the frame in the buffer
-remained forever, resulting in a watchdog failure.
+Without this change, the interrupt test fail with MSI-X environment:
 
-This change fixes the estimated size by making it match with the
-condition for NETDEV_TX_BUSY. Apparently, the old estimation failed to
-account for the following lines which determines the space requirement
-for not causing NETDEV_TX_BUSY:
-    ```
-    	/* reserve a descriptor for the offload context */
-    	if ((mss) || (skb->ip_summed == CHECKSUM_PARTIAL))
-    		count++;
-    	count++;
+$ sudo ethtool -t enp0s2 offline
+[   43.921783] igb 0000:00:02.0: offline testing starting
+[   44.855824] igb 0000:00:02.0 enp0s2: igb: enp0s2 NIC Link is Down
+[   44.961249] igb 0000:00:02.0 enp0s2: igb: enp0s2 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX/TX
+[   51.272202] igb 0000:00:02.0: testing shared interrupt
+[   56.996975] igb 0000:00:02.0 enp0s2: igb: enp0s2 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX/TX
+The test result is FAIL
+The test extra info:
+Register test  (offline)	 0
+Eeprom test    (offline)	 0
+Interrupt test (offline)	 4
+Loopback test  (offline)	 0
+Link test   (on/offline)	 0
 
-    	count += DIV_ROUND_UP(len, adapter->tx_fifo_limit);
-    ```
+Here, "4" means an expected interrupt was not delivered.
 
-This issue was found when running http-stress02 test included in Linux
-Test Project 20220930 on QEMU with the following commandline:
-```
-qemu-system-x86_64 -M q35,accel=kvm -m 8G -smp 8
-	-drive if=virtio,format=raw,file=root.img,file.locking=on
-	-device e1000e,netdev=netdev
-	-netdev tap,script=ifup,downscript=no,id=netdev
-```
+To fix this, route IRQs correctly to the first MSI-X vector by setting
+IVAR_MISC. Also, set bit 0 of EIMS so that the vector will not be
+masked. The interrupt test now runs properly with this change:
 
-Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
+$ sudo ethtool -t enp0s2 offline
+[   42.762985] igb 0000:00:02.0: offline testing starting
+[   50.141967] igb 0000:00:02.0: testing shared interrupt
+[   56.163957] igb 0000:00:02.0 enp0s2: igb: enp0s2 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX/TX
+The test result is PASS
+The test extra info:
+Register test  (offline)	 0
+Eeprom test    (offline)	 0
+Interrupt test (offline)	 0
+Loopback test  (offline)	 0
+Link test   (on/offline)	 0
+
+Fixes: 4eefa8f01314 ("igb: add single vector msi-x testing to interrupt test")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ethtool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 5d7967c03554..8f459f910f73 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -5875,9 +5875,9 @@ static netdev_tx_t e1000_xmit_frame(struct sk_buff *skb,
- 		e1000_tx_queue(tx_ring, tx_flags, count);
- 		/* Make sure there is space in the ring for the next send. */
- 		e1000_maybe_stop_tx(tx_ring,
--				    (MAX_SKB_FRAGS *
-+				    ((MAX_SKB_FRAGS + 1) *
- 				     DIV_ROUND_UP(PAGE_SIZE,
--						  adapter->tx_fifo_limit) + 2));
-+						  adapter->tx_fifo_limit) + 4));
- 
- 		if (!skb->xmit_more ||
- 		    netif_xmit_stopped(netdev_get_tx_queue(netdev, 0))) {
+diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+index b02e262ed76a..fa23c93ef740 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
++++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+@@ -1401,6 +1401,8 @@ static int igb_intr_test(struct igb_adapter *adapter, u64 *data)
+ 			*data = 1;
+ 			return -1;
+ 		}
++		wr32(E1000_IVAR_MISC, E1000_IVAR_VALID << 8);
++		wr32(E1000_EIMS, BIT(0));
+ 	} else if (adapter->flags & IGB_FLAG_HAS_MSI) {
+ 		shared_int = false;
+ 		if (request_irq(irq,
 -- 
 2.35.1
 
