@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A3C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD18DC433EF;
-	Mon, 12 Dec 2022 13:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7004528ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AE3C433F2;
+	Mon, 12 Dec 2022 13:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852159;
-	bh=I5mzg9fFy1bW72TyvTZKG/bnL367pM9JALW3VqNVQrI=;
+	s=korg; t=1670852164;
+	bh=GRR9jBZFyWAtOBROCtryACD0FFkQK7yiBk7+JNb9llA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pgdqld7rXIAoTPbLACCKAlLUpeRVIW50wz6ioMfsM9ZZVxPZ2k2wgiwNtbgksRlV4
-	 mnJwNJJo4B2QJ0NqW/1Bb9vGg/UVD1FYAzIv3GxZOa5op4Qierd1zRgJd1wEgH8188
-	 d3fdvRYh+KLegol2yKHtWtMOoCNQg+fU9/nxx8M8=
+	b=Uh7bYSRZ2sg6bQyETA8rBzAnvTXPt/wrhY4TW9PWjtq1yeaLo75EU0XjlTNOEv+ot
+	 Je6DUvL9AauWuuPreH9KbnI6plyTgvrUrqLQwbj56yw4qf43PzpGv0B4BuwQAyrVoa
+	 jMwr1Uynbd5U+vVJ7+WAuZvZWYp1CGcLNge2pyjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	alsa-devel@alsa-project.org,
+	Kees Cook <keescook@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 023/157] regulator: slg51000: Wait after asserting CS pin
-Date: Mon, 12 Dec 2022 14:16:11 +0100
-Message-Id: <20221212130935.442414918@linuxfoundation.org>
+Subject: [PATCH 6.0 024/157] ALSA: seq: Fix function prototype mismatch in snd_seq_expand_var_event
+Date: Mon, 12 Dec 2022 14:16:12 +0100
+Message-Id: <20221212130935.484166559@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,42 +40,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 0b24dfa587c6cc7484cfb170da5c7dd73451f670 ]
+[ Upstream commit 05530ef7cf7c7d700f6753f058999b1b5099a026 ]
 
-Sony's downstream driver [1], among some other changes, adds a
-seemingly random 10ms usleep_range, which turned out to be necessary
-for the hardware to function properly on at least Sony Xperia 1 IV.
-Without this, I2C transactions with the SLG51000 straight up fail.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed.
 
-Relax (10-10ms -> 10-11ms) and add the aforementioned sleep to make
-sure the hardware has some time to wake up.
+seq_copy_in_user() and seq_copy_in_kernel() did not have prototypes
+matching snd_seq_dump_func_t. Adjust this and remove the casts. There
+are not resulting binary output differences.
 
-(nagara-2.0.0-mlc/vendor/semc/hardware/camera-kernel-module/)
-[1] https://developer.sony.com/file/download/open-source-archive-for-64-0-m-4-29/
+This was found as a result of Clang's new -Wcast-function-type-strict
+flag, which is more sensitive than the simpler -Wcast-function-type,
+which only checks for type width mismatches.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20221118131035.54874-1-konrad.dybcio@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/202211041527.HD8TLSE1-lkp@intel.com
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: alsa-devel@alsa-project.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221118232346.never.380-kees@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/slg51000-regulator.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/core/seq/seq_memory.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/slg51000-regulator.c b/drivers/regulator/slg51000-regulator.c
-index 75a941fb3c2b..1b2eee95ad3f 100644
---- a/drivers/regulator/slg51000-regulator.c
-+++ b/drivers/regulator/slg51000-regulator.c
-@@ -457,6 +457,8 @@ static int slg51000_i2c_probe(struct i2c_client *client)
- 		chip->cs_gpiod = cs_gpiod;
- 	}
+diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
+index b7aee23fc387..47ef6bc30c0e 100644
+--- a/sound/core/seq/seq_memory.c
++++ b/sound/core/seq/seq_memory.c
+@@ -113,15 +113,19 @@ EXPORT_SYMBOL(snd_seq_dump_var_event);
+  * expand the variable length event to linear buffer space.
+  */
  
-+	usleep_range(10000, 11000);
+-static int seq_copy_in_kernel(char **bufptr, const void *src, int size)
++static int seq_copy_in_kernel(void *ptr, void *src, int size)
+ {
++	char **bufptr = ptr;
 +
- 	i2c_set_clientdata(client, chip);
- 	chip->chip_irq = client->irq;
- 	chip->dev = dev;
+ 	memcpy(*bufptr, src, size);
+ 	*bufptr += size;
+ 	return 0;
+ }
+ 
+-static int seq_copy_in_user(char __user **bufptr, const void *src, int size)
++static int seq_copy_in_user(void *ptr, void *src, int size)
+ {
++	char __user **bufptr = ptr;
++
+ 	if (copy_to_user(*bufptr, src, size))
+ 		return -EFAULT;
+ 	*bufptr += size;
+@@ -151,8 +155,7 @@ int snd_seq_expand_var_event(const struct snd_seq_event *event, int count, char
+ 		return newlen;
+ 	}
+ 	err = snd_seq_dump_var_event(event,
+-				     in_kernel ? (snd_seq_dump_func_t)seq_copy_in_kernel :
+-				     (snd_seq_dump_func_t)seq_copy_in_user,
++				     in_kernel ? seq_copy_in_kernel : seq_copy_in_user,
+ 				     &buf);
+ 	return err < 0 ? err : newlen;
+ }
 -- 
 2.35.1
 
