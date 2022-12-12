@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F71A28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC9CC433D2;
-	Mon, 12 Dec 2022 13:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC1128ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02B6C433EF;
+	Mon, 12 Dec 2022 13:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851702;
-	bh=FWD5lyEC3nGhZHhzYOluEBmtHeupPeDRZ/vk9A1MoIo=;
+	s=korg; t=1670851707;
+	bh=Q+CG1lm+uTXz204pwl1mt6bYP7/jIYL8mmCRhTsRit0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIOumGo2f6VkzB3ecZr1zh8bD+xHrAM5MixwJVXkT4PdiGQUfj4k/GfBwXeTB61DL
-	 UaLGOpimTzS759sB+GVVDM3vTQ7zYcM63kujz1NGSDrMWOW+NaNFW+iY5XnetX4dB/
-	 9rQUIarQC6c0mpkCTGJx2u6/d50OZO5trgMm6cdg=
+	b=DTGTmScj8Nhu7lPZk96vG4hgHUXuL+UGVaZshl7m+5CdllwV0Ngp0fQv7L5D2m0mq
+	 v7/rB6SG608f8YymMmvM177P6H980rcGkni+DIJjvlFFpv+zPAja7+rx7ZSrrGLY2z
+	 3hDG6TFwIZPdFv4i+DoFE6CC3Q7AqUZtOHPke1xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 5.15 052/123] drm/shmem-helper: Avoid vm_open error paths
-Date: Mon, 12 Dec 2022 14:16:58 +0100
-Message-Id: <20221212130929.112550463@linuxfoundation.org>
+	"Radu Nicolae Pirea (OSS)" <radu-nicolae.pirea@oss.nxp.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 053/123] net: dsa: sja1105: avoid out of bounds access in sja1105_init_l2_policing()
+Date: Mon, 12 Dec 2022 14:16:59 +0100
+Message-Id: <20221212130929.154304549@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,54 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Radu Nicolae Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
 
-commit 09bf649a74573cb596e211418a4f8008f265c5a9 upstream.
+commit f8bac7f9fdb0017b32157957ffffd490f95faa07 upstream.
 
-vm_open() is not allowed to fail.  Fortunately we are guaranteed that
-the pages are already pinned, thanks to the initial mmap which is now
-being cloned into a forked process, and only need to increment the
-refcnt.  So just increment it directly.  Previously if a signal was
-delivered at the wrong time to the forking process, the
-mutex_lock_interruptible() could fail resulting in the pages_use_count
-not being incremented.
+The SJA1105 family has 45 L2 policing table entries
+(SJA1105_MAX_L2_POLICING_COUNT) and SJA1110 has 110
+(SJA1110_MAX_L2_POLICING_COUNT). Keeping the table structure but
+accounting for the difference in port count (5 in SJA1105 vs 10 in
+SJA1110) does not fully explain the difference. Rather, the SJA1110 also
+has L2 ingress policers for multicast traffic. If a packet is classified
+as multicast, it will be processed by the policer index 99 + SRCPORT.
 
-Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221130185748.357410-3-robdclark@gmail.com
+The sja1105_init_l2_policing() function initializes all L2 policers such
+that they don't interfere with normal packet reception by default. To have
+a common code between SJA1105 and SJA1110, the index of the multicast
+policer for the port is calculated because it's an index that is out of
+bounds for SJA1105 but in bounds for SJA1110, and a bounds check is
+performed.
+
+The code fails to do the proper thing when determining what to do with the
+multicast policer of port 0 on SJA1105 (ds->num_ports = 5). The "mcast"
+index will be equal to 45, which is also equal to
+table->ops->max_entry_count (SJA1105_MAX_L2_POLICING_COUNT). So it passes
+through the check. But at the same time, SJA1105 doesn't have multicast
+policers. So the code programs the SHARINDX field of an out-of-bounds
+element in the L2 Policing table of the static config.
+
+The comparison between index 45 and 45 entries should have determined the
+code to not access this policer index on SJA1105, since its memory wasn't
+even allocated.
+
+With enough bad luck, the out-of-bounds write could even overwrite other
+valid kernel data, but in this case, the issue was detected using KASAN.
+
+Kernel log:
+
+sja1105 spi5.0: Probed switch chip: SJA1105Q
+==================================================================
+BUG: KASAN: slab-out-of-bounds in sja1105_setup+0x1cbc/0x2340
+Write of size 8 at addr ffffff880bd57708 by task kworker/u8:0/8
+...
+Workqueue: events_unbound deferred_probe_work_func
+Call trace:
+...
+sja1105_setup+0x1cbc/0x2340
+dsa_register_switch+0x1284/0x18d0
+sja1105_probe+0x748/0x840
+...
+Allocated by task 8:
+...
+sja1105_setup+0x1bcc/0x2340
+dsa_register_switch+0x1284/0x18d0
+sja1105_probe+0x748/0x840
+...
+
+Fixes: 38fbe91f2287 ("net: dsa: sja1105: configure the multicast policers, if present")
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Radu Nicolae Pirea (OSS) <radu-nicolae.pirea@oss.nxp.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20221207132347.38698-1-radu-nicolae.pirea@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_shmem_helper.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_gem_shmem_helper.c
-+++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -541,12 +541,20 @@ static void drm_gem_shmem_vm_open(struct
- {
- 	struct drm_gem_object *obj = vma->vm_private_data;
- 	struct drm_gem_shmem_object *shmem = to_drm_gem_shmem_obj(obj);
--	int ret;
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -1025,7 +1025,7 @@ static int sja1105_init_l2_policing(stru
  
- 	WARN_ON(shmem->base.import_attach);
+ 		policing[bcast].sharindx = port;
+ 		/* Only SJA1110 has multicast policers */
+-		if (mcast <= table->ops->max_entry_count)
++		if (mcast < table->ops->max_entry_count)
+ 			policing[mcast].sharindx = port;
+ 	}
  
--	ret = drm_gem_shmem_get_pages(shmem);
--	WARN_ON_ONCE(ret != 0);
-+	mutex_lock(&shmem->pages_lock);
-+
-+	/*
-+	 * We should have already pinned the pages when the buffer was first
-+	 * mmap'd, vm_open() just grabs an additional reference for the new
-+	 * mm the vma is getting copied into (ie. on fork()).
-+	 */
-+	if (!WARN_ON_ONCE(!shmem->pages_use_count))
-+		shmem->pages_use_count++;
-+
-+	mutex_unlock(&shmem->pages_lock);
- 
- 	drm_gem_vm_open(vma);
- }
 
 
