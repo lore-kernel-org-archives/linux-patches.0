@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B3028ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B28C433D2;
-	Mon, 12 Dec 2022 13:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73EA28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6179C433D2;
+	Mon, 12 Dec 2022 13:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852474;
-	bh=34ZkLhg6ZyTG2pee4LvAyBHfMmdbqqGvQJNEEJxlOkg=;
+	s=korg; t=1670852478;
+	bh=6XtLrRztLT49PwtPcfJn1HavAPx/qrKBidrAAUeWkaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Phlq3k9bElEDmNgBgE+M1hM66rw6StKGMJ5Tj55zWexj9HAKY4WkGtwApa11EY9Xm
-	 k4IlzTwLfsEs6w10kti6LHIwe6ygKXTTV8Ku1XGYegLLJj5dLuYcGdaz81E0W1+uYM
-	 EEWOA9kkRhZax1bWE1d22rdp93aIKqG98lDQ7GCA=
+	b=ClQXVPqftRO9kmv4Nx6A1ZnokHlE791U5XTosHg7xorKhM06UnETONiR0u+N6Y4ia
+	 D9DOcKr3MJfA6jNQe2Kuajt9Y73IY7v8SNAdYrF6u5YKre4phDVkOO7sAmDkn4Tj6i
+	 4MIpRQFkHZr/R8uFq8m7+EYSTJCcel4Q8eBb00L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Ismael Ferreras Morezuelas <swyterzone@gmail.com>
-Subject: [PATCH 6.0 061/157] Bluetooth: btusb: Fix CSR clones again by re-adding ERR_DATA_REPORTING quirk
-Date: Mon, 12 Dec 2022 14:16:49 +0100
-Message-Id: <20221212130937.022580812@linuxfoundation.org>
+	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.0 062/157] Bluetooth: btusb: Add debug message for CSR controllers
+Date: Mon, 12 Dec 2022 14:16:50 +0100
+Message-Id: <20221212130937.063792083@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -38,125 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 
-commit 42d7731e3e7409f9444ff44e30c025958f1b14f0 upstream.
+commit 955aebd445e2b49622f2184b7abb82b05c060549 upstream.
 
-A patch series by a Qualcomm engineer essentially removed my
-quirk/workaround because they thought it was unnecessary.
+The rationale of showing this is that it's potentially critical
+information to diagnose and find more CSR compatibility bugs in the
+future and it will save a lot of headaches.
 
-It wasn't, and it broke everything again:
+Given that clones come from a wide array of vendors (some are actually
+Barrot, some are something else) and these numbers are what let us find
+differences between actual and fake ones, it will be immensely helpful
+to scour the Internet looking for this pattern and building an actual
+database to find correlations and improve the checks.
 
-https://patchwork.kernel.org/project/netdevbpf/list/?series=661703&archive=both&state=*
-
-He argues that the quirk is not necessary because the code should check
-if the dongle says if it's supported or not. The problem is that for
-these Chinese CSR clones they say that it would work:
-
-= New Index: 00:00:00:00:00:00 (Primary,USB,hci0)
-= Open Index: 00:00:00:00:00:00
-< HCI Command: Read Local Version Information (0x04|0x0001) plen 0
-> HCI Event: Command Complete (0x0e) plen 12
-> [hci0] 11.276039
-      Read Local Version Information (0x04|0x0001) ncmd 1
-        Status: Success (0x00)
-        HCI version: Bluetooth 5.0 (0x09) - Revision 2064 (0x0810)
-        LMP version: Bluetooth 5.0 (0x09) - Subversion 8978 (0x2312)
-        Manufacturer: Cambridge Silicon Radio (10)
-...
-< HCI Command: Read Local Supported Features (0x04|0x0003) plen 0
-> HCI Event: Command Complete (0x0e) plen 68
-> [hci0] 11.668030
-      Read Local Supported Commands (0x04|0x0002) ncmd 1
-        Status: Success (0x00)
-        Commands: 163 entries
-          ...
-          Read Default Erroneous Data Reporting (Octet 18 - Bit 2)
-          Write Default Erroneous Data Reporting (Octet 18 - Bit 3)
-          ...
-...
-< HCI Command: Read Default Erroneous Data Reporting (0x03|0x005a) plen 0
-= Close Index: 00:1A:7D:DA:71:XX
-
-So bring it back wholesale.
-
-Fixes: 63b1a7dd38bf ("Bluetooth: hci_sync: Remove HCI_QUIRK_BROKEN_ERR_DATA_REPORTING")
-Fixes: e168f6900877 ("Bluetooth: btusb: Remove HCI_QUIRK_BROKEN_ERR_DATA_REPORTING for fake CSR")
-Fixes: 766ae2422b43 ("Bluetooth: hci_sync: Check LMP feature bit instead of quirk")
 Cc: stable@vger.kernel.org
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Cc: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c   |    1 +
- include/net/bluetooth/hci.h |   11 +++++++++++
- net/bluetooth/hci_sync.c    |    9 +++++++--
- 3 files changed, 19 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -2104,6 +2104,7 @@ static int btusb_setup_csr(struct hci_de
- 		 * without these the controller will lock up.
- 		 */
- 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_FILTER_CLEAR_ALL, &hdev->quirks);
- 		set_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks);
+@@ -2042,6 +2042,11 @@ static int btusb_setup_csr(struct hci_de
  
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -228,6 +228,17 @@ enum {
- 	 */
- 	HCI_QUIRK_VALID_LE_STATES,
+ 	rp = (struct hci_rp_read_local_version *)skb->data;
  
-+	/* When this quirk is set, then erroneous data reporting
-+	 * is ignored. This is mainly due to the fact that the HCI
-+	 * Read Default Erroneous Data Reporting command is advertised,
-+	 * but not supported; these controllers often reply with unknown
-+	 * command and tend to lock up randomly. Needing a hard reset.
-+	 *
-+	 * This quirk can be set before hci_register_dev is called or
-+	 * during the hdev->setup vendor callback.
-+	 */
-+	HCI_QUIRK_BROKEN_ERR_DATA_REPORTING,
++	bt_dev_info(hdev, "CSR: Setting up dongle with HCI ver=%u rev=%04x; LMP ver=%u subver=%04x; manufacturer=%u",
++		le16_to_cpu(rp->hci_ver), le16_to_cpu(rp->hci_rev),
++		le16_to_cpu(rp->lmp_ver), le16_to_cpu(rp->lmp_subver),
++		le16_to_cpu(rp->manufacturer));
 +
- 	/*
- 	 * When this quirk is set, then the hci_suspend_notifier is not
- 	 * registered. This is intended for devices which drop completely
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3459,7 +3459,8 @@ static int hci_read_page_scan_activity_s
- static int hci_read_def_err_data_reporting_sync(struct hci_dev *hdev)
- {
- 	if (!(hdev->commands[18] & 0x04) ||
--	    !(hdev->features[0][6] & LMP_ERR_DATA_REPORTING))
-+	    !(hdev->features[0][6] & LMP_ERR_DATA_REPORTING) ||
-+	    test_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks))
- 		return 0;
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_READ_DEF_ERR_DATA_REPORTING,
-@@ -3977,7 +3978,8 @@ static int hci_set_err_data_report_sync(
- 	bool enabled = hci_dev_test_flag(hdev, HCI_WIDEBAND_SPEECH_ENABLED);
- 
- 	if (!(hdev->commands[18] & 0x08) ||
--	    !(hdev->features[0][6] & LMP_ERR_DATA_REPORTING))
-+	    !(hdev->features[0][6] & LMP_ERR_DATA_REPORTING) ||
-+	    test_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks))
- 		return 0;
- 
- 	if (enabled == hdev->err_data_reporting)
-@@ -4136,6 +4138,9 @@ static const struct {
- 	HCI_QUIRK_BROKEN(STORED_LINK_KEY,
- 			 "HCI Delete Stored Link Key command is advertised, "
- 			 "but not supported."),
-+	HCI_QUIRK_BROKEN(ERR_DATA_REPORTING,
-+			 "HCI Read Default Erroneous Data Reporting command is "
-+			 "advertised, but not supported."),
- 	HCI_QUIRK_BROKEN(READ_TRANSMIT_POWER,
- 			 "HCI Read Transmit Power Level command is advertised, "
- 			 "but not supported."),
+ 	/* Detect a wide host of Chinese controllers that aren't CSR.
+ 	 *
+ 	 * Known fake bcdDevices: 0x0100, 0x0134, 0x1915, 0x2520, 0x7558, 0x8891
 
 
