@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEFA28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A21BC433EF;
-	Mon, 12 Dec 2022 13:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7CB28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:24:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3252C433EF;
+	Mon, 12 Dec 2022 13:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851469;
-	bh=P9gD8F6K7Qd9SFGHwEQIYmN8W4xchkkI6TM8rX8ZJz4=;
+	s=korg; t=1670851473;
+	bh=aXCJmC2aoLo+KdjVUB/4THoWowqRU1K8uAlApOg9NEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dv/gQ0VAiNmwobINbPo8KTnMY5W96slZx5KC4FLSWDPa8FEegzE5+2H8N2qCOQgLE
-	 yNg7xNTjFzXq7GdNcfT9Rl/ca6f1w21Zh3UxEda+c1YB4IVDofMTC5v84ebxXMc2i4
-	 2oabMwRRSttYgQ+MvReVe0oxvlgvJVx356huaig4=
+	b=yMP0+6zk/id9csar/Jv3+7fW3oTsYbLPZpYcV54c0IV6KRxyVT38KLfApS0DuzceG
+	 jmDH0aTdkUaCRsfl4Ldf6s/55FJ5tzFIiH8iq3G9sce2WEJs5S2EWt8qh1XDJHDKhp
+	 Yw1910NQCZEhL8mBJfD6tQ+yAnOozVD4L75wVnl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Jason Andryuk <jandryuk@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 63/67] xen/netback: fix build warning
-Date: Mon, 12 Dec 2022 14:17:38 +0100
-Message-Id: <20221212130920.618822187@linuxfoundation.org>
+Subject: [PATCH 5.4 64/67] net: plip: dont call kfree_skb/dev_kfree_skb() under spin_lock_irq()
+Date: Mon, 12 Dec 2022 14:17:39 +0100
+Message-Id: <20221212130920.663946153@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -37,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7dfa764e0223a324366a2a1fc056d4d9d4e95491 ]
+[ Upstream commit 7d8c19bfc8ff3f78e5337107ca9246327fcb6b45 ]
 
-Commit ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in
-the non-linear area") introduced a (valid) build warning. There have
-even been reports of this problem breaking networking of Xen guests.
+It is not allowed to call kfree_skb() or consume_skb() from
+hardware interrupt context or with interrupts being disabled.
+So replace kfree_skb/dev_kfree_skb() with dev_kfree_skb_irq()
+and dev_consume_skb_irq() under spin_lock_irq().
 
-Fixes: ad7f402ae4f4 ("xen/netback: Ensure protocol headers don't fall in the non-linear area")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Tested-by: Jason Andryuk <jandryuk@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20221207015310.2984909-1-yangyingliang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/xen-netback/netback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/plip/plip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
-index 982e501173f1..036459670fc3 100644
---- a/drivers/net/xen-netback/netback.c
-+++ b/drivers/net/xen-netback/netback.c
-@@ -523,7 +523,7 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
- 	const bool sharedslot = nr_frags &&
- 				frag_get_pending_idx(&shinfo->frags[0]) ==
- 				    copy_pending_idx(skb, copy_count(skb) - 1);
--	int i, err;
-+	int i, err = 0;
- 
- 	for (i = 0; i < copy_count(skb); i++) {
- 		int newerr;
+diff --git a/drivers/net/plip/plip.c b/drivers/net/plip/plip.c
+index e8b7d596d749..4b50c28f01a7 100644
+--- a/drivers/net/plip/plip.c
++++ b/drivers/net/plip/plip.c
+@@ -444,12 +444,12 @@ plip_bh_timeout_error(struct net_device *dev, struct net_local *nl,
+ 	}
+ 	rcv->state = PLIP_PK_DONE;
+ 	if (rcv->skb) {
+-		kfree_skb(rcv->skb);
++		dev_kfree_skb_irq(rcv->skb);
+ 		rcv->skb = NULL;
+ 	}
+ 	snd->state = PLIP_PK_DONE;
+ 	if (snd->skb) {
+-		dev_kfree_skb(snd->skb);
++		dev_consume_skb_irq(snd->skb);
+ 		snd->skb = NULL;
+ 	}
+ 	spin_unlock_irq(&nl->lock);
 -- 
 2.35.1
 
