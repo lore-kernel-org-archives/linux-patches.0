@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4912928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7132BC433EF;
-	Mon, 12 Dec 2022 13:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3719628ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D912C433EF;
+	Mon, 12 Dec 2022 13:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851275;
-	bh=uAbHIsE6Pxufpz6ZO3sKBhzosc3M/V+AVZVMASvABfc=;
+	s=korg; t=1670851280;
+	bh=P2+nVTZk03IyAt6aGTu7xU2AEqlJns0RVLTfyvBITAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZGSyFaaGeWPHGNkqQXmlTrsx0kCHwpsjMyFSlTt9BiU2GUn8j+cAkAYJbN4AVAOy
-	 AUMRvgKIfHVqLsRJEUJ2d4FkeX0FTlUJAkZb8T1iRL7QfrReSaIGVauIwfwmR8xEGA
-	 ehoyNDJebgHnVzQ8F6Vpu686SoJvS4yAK5xMaXFw=
+	b=cBeUUMeHpuiCvhx48leBur95wa9Q8NF8HBwEKDCYyJoijjnCS2jdB27d2I6tYNZl1
+	 NH8Ku5NqvTgR86ccpk5/eDdckumUfOD+yRvN4ejxilolZbMib67Ljl10OmA75d3hhy
+	 V37VIkiuxOH7EWnPgi+JLkzKHsTG2sEMnlyhJNp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.4 24/67] media: v4l2-dv-timings.c: fix too strict blanking sanity checks
-Date: Mon, 12 Dec 2022 14:16:59 +0100
-Message-Id: <20221212130918.778494429@linuxfoundation.org>
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 07/67] ARM: dts: rockchip: disable arm_global_timer on rk3066 and rk3188
+Date: Mon, 12 Dec 2022 14:16:42 +0100
+Message-Id: <20221212130917.979005131@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -34,70 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Johan Jonker <jbx6244@gmail.com>
 
-commit 5eef2141776da02772c44ec406d6871a790761ee upstream.
+[ Upstream commit da74858a475782a3f16470907814c8cc5950ad68 ]
 
-Sanity checks were added to verify the v4l2_bt_timings blanking fields
-in order to avoid integer overflows when userspace passes weird values.
+The clock source and the sched_clock provided by the arm_global_timer
+on Rockchip rk3066a/rk3188 are quite unstable because their rates
+depend on the CPU frequency.
 
-But that assumed that userspace would correctly fill in the front porch,
-backporch and sync values, but sometimes all you know is the total
-blanking, which is then assigned to just one of these fields.
+Recent changes to the arm_global_timer driver makes it impossible to use.
 
-And that can fail with these checks.
+On the other side, the arm_global_timer has a higher rating than the
+ROCKCHIP_TIMER, it will be selected by default by the time framework
+while we want to use the stable Rockchip clock source.
 
-So instead set a maximum for the total horizontal and vertical
-blanking and check that each field remains below that.
+Keep the arm_global_timer disabled in order to have the
+DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
 
-That is still sufficient to avoid integer overflows, but it also
-allows for more flexibility in how userspace fills in these fields.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 4b6d66a45ed3 ("media: v4l2-dv-timings: add sanity checks for blanking values")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/f275ca8d-fd0a-26e5-b978-b7f3df815e0a@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-dv-timings.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/rk3188.dtsi | 1 -
+ arch/arm/boot/dts/rk3xxx.dtsi | 7 +++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-dv-timings.c
-+++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
-@@ -145,6 +145,8 @@ bool v4l2_valid_dv_timings(const struct
- 	const struct v4l2_bt_timings *bt = &t->bt;
- 	const struct v4l2_bt_timings_cap *cap = &dvcap->bt;
- 	u32 caps = cap->capabilities;
-+	const u32 max_vert = 10240;
-+	u32 max_hor = 3 * bt->width;
+diff --git a/arch/arm/boot/dts/rk3188.dtsi b/arch/arm/boot/dts/rk3188.dtsi
+index 95d558dc163c..5e8ba80d7b4f 100644
+--- a/arch/arm/boot/dts/rk3188.dtsi
++++ b/arch/arm/boot/dts/rk3188.dtsi
+@@ -632,7 +632,6 @@
  
- 	if (t->type != V4L2_DV_BT_656_1120)
- 		return false;
-@@ -166,14 +168,20 @@ bool v4l2_valid_dv_timings(const struct
- 	if (!bt->interlaced &&
- 	    (bt->il_vbackporch || bt->il_vsync || bt->il_vfrontporch))
- 		return false;
--	if (bt->hfrontporch > 2 * bt->width ||
--	    bt->hsync > 1024 || bt->hbackporch > 1024)
-+	/*
-+	 * Some video receivers cannot properly separate the frontporch,
-+	 * backporch and sync values, and instead they only have the total
-+	 * blanking. That can be assigned to any of these three fields.
-+	 * So just check that none of these are way out of range.
-+	 */
-+	if (bt->hfrontporch > max_hor ||
-+	    bt->hsync > max_hor || bt->hbackporch > max_hor)
- 		return false;
--	if (bt->vfrontporch > 4096 ||
--	    bt->vsync > 128 || bt->vbackporch > 4096)
-+	if (bt->vfrontporch > max_vert ||
-+	    bt->vsync > max_vert || bt->vbackporch > max_vert)
- 		return false;
--	if (bt->interlaced && (bt->il_vfrontporch > 4096 ||
--	    bt->il_vsync > 128 || bt->il_vbackporch > 4096))
-+	if (bt->interlaced && (bt->il_vfrontporch > max_vert ||
-+	    bt->il_vsync > max_vert || bt->il_vbackporch > max_vert))
- 		return false;
- 	return fnc == NULL || fnc(t, fnc_handle);
- }
+ &global_timer {
+ 	interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_EDGE_RISING)>;
+-	status = "disabled";
+ };
+ 
+ &local_timer {
+diff --git a/arch/arm/boot/dts/rk3xxx.dtsi b/arch/arm/boot/dts/rk3xxx.dtsi
+index bce0b05ef7bf..0580eea90fbc 100644
+--- a/arch/arm/boot/dts/rk3xxx.dtsi
++++ b/arch/arm/boot/dts/rk3xxx.dtsi
+@@ -108,6 +108,13 @@
+ 		reg = <0x1013c200 0x20>;
+ 		interrupts = <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
+ 		clocks = <&cru CORE_PERI>;
++		status = "disabled";
++		/* The clock source and the sched_clock provided by the arm_global_timer
++		 * on Rockchip rk3066a/rk3188 are quite unstable because their rates
++		 * depend on the CPU frequency.
++		 * Keep the arm_global_timer disabled in order to have the
++		 * DW_APB_TIMER (rk3066a) or ROCKCHIP_TIMER (rk3188) selected by default.
++		 */
+ 	};
+ 
+ 	local_timer: local-timer@1013c600 {
+-- 
+2.35.1
+
 
 
