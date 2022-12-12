@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFF428ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3391C433EF;
-	Mon, 12 Dec 2022 13:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E950F28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:39:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE80C433D2;
+	Mon, 12 Dec 2022 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852382;
-	bh=VsCVWcMEA6ib6koqt6jhTnfBBbcFlqvLnGyS/hpHQlw=;
+	s=korg; t=1670852387;
+	bh=h7In0NnjjbjZjxsJxGv5gfNAMW3C+AdRTJoqS9JIxNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roFr5iXC58CUnCeLlBckHxIMOqDF/XySUn5R5LcL0JXRnDXOs2CVvMH9rCFlAzZrU
-	 LnRsDghumhcZsiqUY7aFeJlM71WM5VHHG4R0E3K3NENFZuTU/R0AsX7UJqH9czrcjU
-	 DaJvC1yEzTfCF4C/5OxYmjxayZT2ml7eLX/MkY/M=
+	b=xfQFscjwMaEnnPqf+NaismneBhThGyIY7Qyac5d1Py4sJpwkK8HoVbgNDKWZLb/Kq
+	 HMamvIOHA0WQqsEfWRJxIoChaDG8CsJR04L3X96EJc/oWIuh+fiXtal/5q46iyfTkB
+	 Ex9upYYAegNecPTy2HEGKgDy1ZZyqwny85Oy0hUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Nicholas Hunt <nhunt@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>
-Subject: [PATCH 6.0 069/157] drm/vmwgfx: Dont use screen objects when SEV is active
-Date: Mon, 12 Dec 2022 14:16:57 +0100
-Message-Id: <20221212130937.388201295@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Max Staudt <max@enpas.org>,
+	Wolfgang Grandegger <wg@grandegger.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	linux-can@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH 6.0 070/157] can: can327: flush TX_work on ldisc .close()
+Date: Mon, 12 Dec 2022 14:16:58 +0100
+Message-Id: <20221212130937.442350836@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,43 +42,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+From: Max Staudt <max@enpas.org>
 
-commit 6e90293618ed476d6b11f82ce724efbb9e9a071b upstream.
+commit f4a4d121ebecaa6f396f21745ce97de014281ccc upstream.
 
-When SEV is enabled gmr's and mob's are explicitly disabled because
-the encrypted system memory can not be used by the hypervisor.
+Additionally, remove it from .ndo_stop().
 
-The driver was disabling GMR's but the presentation code, which depends
-on GMR's, wasn't honoring it which lead to black screen on hosts
-with SEV enabled.
+This ensures that the worker is not called after being freed, and that
+the UART TX queue remains active to send final commands when the
+netdev is stopped.
 
-Make sure screen objects presentation is not used when guest memory
-regions have been disabled to fix presentation on SEV enabled hosts.
+Thanks to Jiri Slaby for finding this in slcan:
 
-Fixes: 3b0d6458c705 ("drm/vmwgfx: Refuse DMA operation when SEV encryption is active")
-Cc: <stable@vger.kernel.org> # v5.7+
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Reported-by: Nicholas Hunt <nhunt@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221201175341.491884-1-zack@kde.org
+  https://lore.kernel.org/linux-can/20221201073426.17328-1-jirislaby@kernel.org/
+
+A variant of this patch for slcan, with the flush in .ndo_stop() still
+present, has been tested successfully on physical hardware:
+
+  https://bugzilla.suse.com/show_bug.cgi?id=1205597
+
+Fixes: 43da2f07622f ("can: can327: CAN/ldisc driver for ELM327 based OBD-II adapters")
+Cc: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Cc: Max Staudt <max@enpas.org>
+Cc: Wolfgang Grandegger <wg@grandegger.com>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: linux-can@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Max Staudt <max@enpas.org>
+Link: https://lore.kernel.org/all/20221202160148.282564-1-max@enpas.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/can/can327.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
-@@ -950,6 +950,10 @@ int vmw_kms_sou_init_display(struct vmw_
- 	struct drm_device *dev = &dev_priv->drm;
- 	int i, ret;
+diff --git a/drivers/net/can/can327.c b/drivers/net/can/can327.c
+index ed3d0b8989a0..dc7192ecb001 100644
+--- a/drivers/net/can/can327.c
++++ b/drivers/net/can/can327.c
+@@ -796,9 +796,9 @@ static int can327_netdev_close(struct net_device *dev)
  
-+	/* Screen objects won't work if GMR's aren't available */
-+	if (!dev_priv->has_gmr)
-+		return -ENOSYS;
+ 	netif_stop_queue(dev);
+ 
+-	/* Give UART one final chance to flush. */
+-	clear_bit(TTY_DO_WRITE_WAKEUP, &elm->tty->flags);
+-	flush_work(&elm->tx_work);
++	/* We don't flush the UART TX queue here, as we want final stop
++	 * commands (like the above dummy char) to be flushed out.
++	 */
+ 
+ 	can_rx_offload_disable(&elm->offload);
+ 	elm->can.state = CAN_STATE_STOPPED;
+@@ -1069,12 +1069,15 @@ static void can327_ldisc_close(struct tty_struct *tty)
+ {
+ 	struct can327 *elm = (struct can327 *)tty->disc_data;
+ 
+-	/* unregister_netdev() calls .ndo_stop() so we don't have to.
+-	 * Our .ndo_stop() also flushes the TTY write wakeup handler,
+-	 * so we can safely set elm->tty = NULL after this.
+-	 */
++	/* unregister_netdev() calls .ndo_stop() so we don't have to. */
+ 	unregister_candev(elm->dev);
+ 
++	/* Give UART one final chance to flush.
++	 * No need to clear TTY_DO_WRITE_WAKEUP since .write_wakeup() is
++	 * serialised against .close() and will not be called once we return.
++	 */
++	flush_work(&elm->tx_work);
 +
- 	if (!(dev_priv->capabilities & SVGA_CAP_SCREEN_OBJECT_2)) {
- 		return -ENOSYS;
- 	}
+ 	/* Mark channel as dead */
+ 	spin_lock_bh(&elm->lock);
+ 	tty->disc_data = NULL;
+-- 
+2.38.1
+
 
 
