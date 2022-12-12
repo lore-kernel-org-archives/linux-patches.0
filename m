@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AF328ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BD6C433D2;
-	Mon, 12 Dec 2022 13:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49E028ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:42:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2135C433EF;
+	Mon, 12 Dec 2022 13:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852571;
-	bh=ywrchfMtWhaZSpsf5YoNrqg5V7tuc7+/bI+thI0kY8w=;
+	s=korg; t=1670852576;
+	bh=FL0FOTJJ/qrVP1nyrQUDU0ioCJE7D//1YdPTBN3xRAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIzsQ9o4inKHFvUmR9MxIxab5aFsnSYUviMrLRQSQjcXCF6/oDt49DF0wgISNblfk
-	 g6upf+ko/bxztcdyso7arfboSnj9SwMRZrPU5l3hfoMW4Cvog5zADVt3CbtdAj1qlP
-	 e+HHHrpC+iseydqjaoq9YQc3r6RZDgDHrUFRpzIU=
+	b=OpBVnqavfzf6jUhpRyuIzFBdZo6sSyAzwYK7/vBZJzxHfbXBELDfUfBvuUE4R2Bcn
+	 gu2v3OVonKQEBRT80lXK7xoAvMTAljzo/ejG3zWshpEOskVkfXXKgV5b/K+5wEyzVu
+	 sdNyALJiF6Hpu3qEij0aKwuCQmlRJ9UTEka5xu7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chethan T N <chethan.tumkur.narayan@intel.com>,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 107/157] Bluetooth: hci_conn: add missing hci_dev_put() in iso_listen_bis()
-Date: Mon, 12 Dec 2022 14:17:35 +0100
-Message-Id: <20221212130939.142510350@linuxfoundation.org>
+Subject: [PATCH 6.0 108/157] Bluetooth: Remove codec id field in vendor codec definition
+Date: Mon, 12 Dec 2022 14:17:36 +0100
+Message-Id: <20221212130939.183507671@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,33 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Chethan T N <chethan.tumkur.narayan@intel.com>
 
-[ Upstream commit 7e7df2c10c92cab7d1dde3b301e584e2e877fbda ]
+[ Upstream commit 93df7d56f15e217009323c0fbb5213ab7a14520b ]
 
-hci_get_route() takes reference, we should use hci_dev_put() to release
-it when not need anymore.
+As per the specfication vendor codec id is defined.
+BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 4, Part E page 2127
 
-Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Fixes: 9ae664028a9e ("Bluetooth: Add support for Read Local Supported Codecs V2")
+Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/bluetooth/hci.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index f825857db6d0..26db929b97c4 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -879,6 +879,7 @@ static int iso_listen_bis(struct sock *sk)
- 				 iso_pi(sk)->bc_sid);
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index a3c7dcfa0a05..4518c63e9d17 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1431,7 +1431,6 @@ struct hci_std_codecs_v2 {
+ } __packed;
  
- 	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
- 
- 	return err;
- }
+ struct hci_vnd_codec_v2 {
+-	__u8	id;
+ 	__le16	cid;
+ 	__le16	vid;
+ 	__u8	transport;
 -- 
 2.35.1
 
