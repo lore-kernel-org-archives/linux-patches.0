@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEB628ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D04CC433D2;
-	Mon, 12 Dec 2022 13:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D8528ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6EEC433EF;
+	Mon, 12 Dec 2022 13:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851052;
-	bh=Ifsob09A2HnLkQYwGfDz21JX4bOqjQMUir02pR9HhGc=;
+	s=korg; t=1670851056;
+	bh=gZRIbtc+7rugh8bo35Se5xNBavKh/zjAi2GjYNQHYEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZOGMGsgoE2/sFUyc/Zw/SBZnwzrwAbRajf+jWr1K3GvFqNqAZdjdCSGJsWW7IdAY
-	 ygUmgwTuipwVYSgie0AW47EPUlj2O05VMpg7x4OYhSaRyUsY5aI+x9HlbJaW9mgPyI
-	 y3XcWMRWyS6IHnVAgB9oYzTCrJucouBauyA3bKOM=
+	b=JPCJJAXadGR/FdZL583thSsBgK5zVq3JO84ZMNVgxq7s5RntM6D0fVGI5A3M2+C1P
+	 /Td1HRaeRw9gSLeb4IsLu8D+NKk73ae14Z2BMWbtx8kQaAPx4xJGYl0FJWvqaxajc4
+	 Xd5QLmhAoXANEYuZt1nWZdnlASs2IFsL+gHcvgn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentina Goncharenko <goncharenko.vp@ispras.ru>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/106] net: encx24j600: Add parentheses to fix precedence
-Date: Mon, 12 Dec 2022 14:10:24 +0100
-Message-Id: <20221212130928.411650255@linuxfoundation.org>
+Subject: [PATCH 5.10 099/106] tipc: call tipc_lxc_xmit without holding node_read_lock
+Date: Mon, 12 Dec 2022 14:10:42 +0100
+Message-Id: <20221212130929.176091901@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -36,48 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Valentina Goncharenko <goncharenko.vp@ispras.ru>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 167b3f2dcc62c271f3555b33df17e361bb1fa0ee ]
+[ Upstream commit 88956177db179e4eba7cd590971961857d1565b8 ]
 
-In functions regmap_encx24j600_phy_reg_read() and
-regmap_encx24j600_phy_reg_write() in the conditions of the waiting
-cycles for filling the variable 'ret' it is necessary to add parentheses
-to prevent wrong assignment due to logical operations precedence.
+When sending packets between nodes in netns, it calls tipc_lxc_xmit() for
+peer node to receive the packets where tipc_sk_mcast_rcv()/tipc_sk_rcv()
+might be called, and it's pretty much like in tipc_rcv().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Currently the local 'node rw lock' is held during calling tipc_lxc_xmit()
+to protect the peer_net not being freed by another thread. However, when
+receiving these packets, tipc_node_add_conn() might be called where the
+peer 'node rw lock' is acquired. Then a dead lock warning is triggered by
+lockdep detector, although it is not a real dead lock:
 
-Fixes: d70e53262f5c ("net: Microchip encx24j600 driver")
-Signed-off-by: Valentina Goncharenko <goncharenko.vp@ispras.ru>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    WARNING: possible recursive locking detected
+    --------------------------------------------
+    conn_server/1086 is trying to acquire lock:
+    ffff8880065cb020 (&n->lock#2){++--}-{2:2}, \
+                     at: tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
+
+    but task is already holding lock:
+    ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
+                     at: tipc_node_xmit+0x285/0xb30 [tipc]
+
+    other info that might help us debug this:
+     Possible unsafe locking scenario:
+
+           CPU0
+           ----
+      lock(&n->lock#2);
+      lock(&n->lock#2);
+
+     *** DEADLOCK ***
+
+     May be due to missing lock nesting notation
+
+    4 locks held by conn_server/1086:
+     #0: ffff8880036d1e40 (sk_lock-AF_TIPC){+.+.}-{0:0}, \
+                          at: tipc_accept+0x9c0/0x10b0 [tipc]
+     #1: ffff8880036d5f80 (sk_lock-AF_TIPC/1){+.+.}-{0:0}, \
+                          at: tipc_accept+0x363/0x10b0 [tipc]
+     #2: ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
+                          at: tipc_node_xmit+0x285/0xb30 [tipc]
+     #3: ffff888012e13370 (slock-AF_TIPC){+...}-{2:2}, \
+                          at: tipc_sk_rcv+0x2da/0x1b40 [tipc]
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x44/0x5b
+     __lock_acquire.cold.77+0x1f2/0x3d7
+     lock_acquire+0x1d2/0x610
+     _raw_write_lock_bh+0x38/0x80
+     tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
+     tipc_sk_finish_conn+0x21e/0x640 [tipc]
+     tipc_sk_filter_rcv+0x147b/0x3030 [tipc]
+     tipc_sk_rcv+0xbb4/0x1b40 [tipc]
+     tipc_lxc_xmit+0x225/0x26b [tipc]
+     tipc_node_xmit.cold.82+0x4a/0x102 [tipc]
+     __tipc_sendstream+0x879/0xff0 [tipc]
+     tipc_accept+0x966/0x10b0 [tipc]
+     do_accept+0x37d/0x590
+
+This patch avoids this warning by not holding the 'node rw lock' before
+calling tipc_lxc_xmit(). As to protect the 'peer_net', rcu_read_lock()
+should be enough, as in cleanup_net() when freeing the netns, it calls
+synchronize_rcu() before the free is continued.
+
+Also since tipc_lxc_xmit() is like the RX path in tipc_rcv(), it makes
+sense to call it under rcu_read_lock(). Note that the right lock order
+must be:
+
+   rcu_read_lock();
+   tipc_node_read_lock(n);
+   tipc_node_read_unlock(n);
+   tipc_lxc_xmit();
+   rcu_read_unlock();
+
+instead of:
+
+   tipc_node_read_lock(n);
+   rcu_read_lock();
+   tipc_node_read_unlock(n);
+   tipc_lxc_xmit();
+   rcu_read_unlock();
+
+and we have to call tipc_node_read_lock/unlock() twice in
+tipc_node_xmit().
+
+Fixes: f73b12812a3d ("tipc: improve throughput between nodes in netns")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/5bdd1f8fee9db695cfff4528a48c9b9d0523fb00.1670110641.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/encx24j600-regmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/tipc/node.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/encx24j600-regmap.c b/drivers/net/ethernet/microchip/encx24j600-regmap.c
-index 81a8ccca7e5e..2e337c7a5773 100644
---- a/drivers/net/ethernet/microchip/encx24j600-regmap.c
-+++ b/drivers/net/ethernet/microchip/encx24j600-regmap.c
-@@ -359,7 +359,7 @@ static int regmap_encx24j600_phy_reg_read(void *context, unsigned int reg,
- 		goto err_out;
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 60059827563a..7589f2ac6fd0 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1660,6 +1660,7 @@ int tipc_node_xmit(struct net *net, struct sk_buff_head *list,
+ 	struct tipc_node *n;
+ 	struct sk_buff_head xmitq;
+ 	bool node_up = false;
++	struct net *peer_net;
+ 	int bearer_id;
+ 	int rc;
  
- 	usleep_range(26, 100);
--	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
-+	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
- 	       (mistat & BUSY))
- 		cpu_relax();
+@@ -1676,18 +1677,23 @@ int tipc_node_xmit(struct net *net, struct sk_buff_head *list,
+ 		return -EHOSTUNREACH;
+ 	}
  
-@@ -397,7 +397,7 @@ static int regmap_encx24j600_phy_reg_write(void *context, unsigned int reg,
- 		goto err_out;
++	rcu_read_lock();
+ 	tipc_node_read_lock(n);
+ 	node_up = node_is_up(n);
+-	if (node_up && n->peer_net && check_net(n->peer_net)) {
++	peer_net = n->peer_net;
++	tipc_node_read_unlock(n);
++	if (node_up && peer_net && check_net(peer_net)) {
+ 		/* xmit inner linux container */
+-		tipc_lxc_xmit(n->peer_net, list);
++		tipc_lxc_xmit(peer_net, list);
+ 		if (likely(skb_queue_empty(list))) {
+-			tipc_node_read_unlock(n);
++			rcu_read_unlock();
+ 			tipc_node_put(n);
+ 			return 0;
+ 		}
+ 	}
++	rcu_read_unlock();
  
- 	usleep_range(26, 100);
--	while ((ret = regmap_read(ctx->regmap, MISTAT, &mistat) != 0) &&
-+	while (((ret = regmap_read(ctx->regmap, MISTAT, &mistat)) != 0) &&
- 	       (mistat & BUSY))
- 		cpu_relax();
- 
++	tipc_node_read_lock(n);
+ 	bearer_id = n->active_links[selector & 1];
+ 	if (unlikely(bearer_id == INVALID_BEARER_ID)) {
+ 		tipc_node_read_unlock(n);
 -- 
 2.35.1
 
