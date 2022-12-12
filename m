@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5979D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:36:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BFDC433EF;
-	Mon, 12 Dec 2022 13:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2A228ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:36:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89979C433EF;
+	Mon, 12 Dec 2022 13:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852201;
-	bh=L64WBgC/3xVOVcTXDG/JqjEigDxM1JcG6cM8/6DbCbg=;
+	s=korg; t=1670852206;
+	bh=cfjQaKKE/DrVxUb2IW+KH/xN1pKSmSzXQ7ip/B+1a2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojIr63em7bXZn7KJH1DlsovHKb6gUNtYBqvPivG/QXC4cFhehnow11O9bplZMLmc+
-	 H8EYrY6VjIQDXHlTNjbM0//mMiS3ScrxOBMIy0VonxUhI1Vt6hQvehnMFfYLbkthzn
-	 lM7mBWG9NNvP4pbdYPY0t8May67OhRNDCVe/mOX8=
+	b=PO5cQmNd8tDIhzMplcyIEX4jqTMN8q57gWC2/vOkbFuP9daAT5fNjTKOK7hEG4eGn
+	 E0I5sqwZMWHBGiunytr+853ATojpaTxoHdPorioni5qH/9d+vR8OyZq3K7tFsvM0mr
+	 iMkukO++ytPDKcCOppS+dSnYXc9Y7oMPd/2fsx4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 006/157] arm64: dts: rockchip: keep I2S1 disabled for GPIO function on ROCK Pi 4 series
-Date: Mon, 12 Dec 2022 14:15:54 +0100
-Message-Id: <20221212130934.660952259@linuxfoundation.org>
+Subject: [PATCH 6.0 007/157] arm64: dts: rockchip: fix node name for hym8563 rtc
+Date: Mon, 12 Dec 2022 14:15:55 +0100
+Message-Id: <20221212130934.704479465@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -35,33 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 849c19d14940b87332d5d59c7fc581d73f2099fd ]
+[ Upstream commit 67a9aeef44e42b1ac2becf5e61eae0880f48d9db ]
 
-I2S1 pins are exposed on 40-pin header on Radxa ROCK Pi 4 series.
-their default function is GPIO, so I2S1 need to be disabled.
+Fix the node name for hym8563 in all arm64 rockchip devicetrees.
 
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://lore.kernel.org/r/20220924112812.1219-1-naoki@radxa.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/r/20221024165549.74574-2-sebastian.reichel@collabora.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3368-r88.dts            | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts    | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi  | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 401e1ae9d944..b045f74071e4 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -491,7 +491,6 @@
- &i2s1 {
- 	rockchip,playback-channels = <2>;
- 	rockchip,capture-channels = <2>;
--	status = "okay";
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
+index 7f5bba0c6001..0e88e9592c1c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
+@@ -208,7 +208,7 @@
+ 		vin-supply = <&vcc_sys>;
+ 	};
+ 
+-	hym8563: hym8563@51 {
++	hym8563: rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 		#clock-cells = <0>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
+index 38d757c00548..e147d6f8b43e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
+@@ -192,7 +192,7 @@
+ 		vin-supply = <&vcc_sys>;
+ 	};
+ 
+-	hym8563: hym8563@51 {
++	hym8563: rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 		#clock-cells = <0>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
+index 5a2661ae0131..18b5050c6cd3 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-plus.dts
+@@ -98,7 +98,7 @@
  };
  
- &i2s2 {
+ &i2c0 {
+-	hym8563: hym8563@51 {
++	hym8563: rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 		interrupt-parent = <&gpio0>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi b/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
+index 935b8c68a71d..6c168566321b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399pro-vmarc-som.dtsi
+@@ -297,7 +297,7 @@
+ 	clock-frequency = <400000>;
+ 	status = "okay";
+ 
+-	hym8563: hym8563@51 {
++	hym8563: rtc@51 {
+ 		compatible = "haoyu,hym8563";
+ 		reg = <0x51>;
+ 		#clock-cells = <0>;
 -- 
 2.35.1
 
