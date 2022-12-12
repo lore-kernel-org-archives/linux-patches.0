@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE0D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC86C433EF;
-	Mon, 12 Dec 2022 13:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D10B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DD2C433F0;
+	Mon, 12 Dec 2022 13:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851394;
-	bh=N8POFW2MfJZsSOQkr4FFUIKZ5S9Hyl3b7BHaaalpkG4=;
+	s=korg; t=1670851398;
+	bh=feB1qyBeXQiyfxC25OOeCwBFJONsKUa0FBlbjwF/Zak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckRtghA5NsWGZww1qMKtPtlGkY15xb49WwOKxXFVtND3Rc+aSBue0hyhySfQFP+6j
-	 VpO6FWPuOFBWz2ria1ZpPzLC59IdMiMHEGduAgJL30j7gP+cD3jCRnfo3t3zwZLXK/
-	 NW+AkWXpxrSalnciiLGUDTkcx/5OkFbqytnmmQ7w=
+	b=nyMntsNs8SNe+hg1P6o/7g68CX68w3/szkwulh0/7Q+RXmiO7JlCIputNEFFK5Scf
+	 D0YnjNWPsTNO1tD7mfXVPJkktSmKR8ZoRjMgWbdku/wxx6Zh47Lv5N3cLS/pOZNC2h
+	 TgvwegdfGpRr4qmHCunbFzYDTHLU+a3LLXdCeyAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
-	Kees Cook <keescook@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qiqi Zhang <eddy.zhang@rock-chips.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 53/67] NFC: nci: Bounds check struct nfc_target arrays
-Date: Mon, 12 Dec 2022 14:17:28 +0100
-Message-Id: <20221212130920.149787680@linuxfoundation.org>
+Subject: [PATCH 5.4 36/67] drm/bridge: ti-sn65dsi86: Fix output polarity setting bug
+Date: Mon, 12 Dec 2022 14:17:11 +0100
+Message-Id: <20221212130919.342484618@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -37,60 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Qiqi Zhang <eddy.zhang@rock-chips.com>
 
-[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
+[ Upstream commit 8c115864501fc09932cdfec53d9ec1cde82b4a28 ]
 
-While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
+According to the description in ti-sn65dsi86's datasheet:
 
-  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
+CHA_HSYNC_POLARITY:
+0 = Active High Pulse. Synchronization signal is high for the sync
+pulse width. (default)
+1 = Active Low Pulse. Synchronization signal is low for the sync
+pulse width.
 
-This appears to be a legitimate lack of bounds checking in
-nci_add_new_protocol(). Add the missing checks.
+CHA_VSYNC_POLARITY:
+0 = Active High Pulse. Synchronization signal is high for the sync
+pulse width. (Default)
+1 = Active Low Pulse. Synchronization signal is low for the sync
+pulse width.
 
-Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+We should only set these bits when the polarity is negative.
+
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
+Signed-off-by: Qiqi Zhang <eddy.zhang@rock-chips.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221125104558.84616-1-eddy.zhang@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/ntf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
-index 33e1170817f0..f8b20cddd5c9 100644
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -218,6 +218,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		target->sens_res = nfca_poll->sens_res;
- 		target->sel_res = nfca_poll->sel_res;
- 		target->nfcid1_len = nfca_poll->nfcid1_len;
-+		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
-+			return -EPROTO;
- 		if (target->nfcid1_len > 0) {
- 			memcpy(target->nfcid1, nfca_poll->nfcid1,
- 			       target->nfcid1_len);
-@@ -226,6 +228,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index dbb4a374cb64..20ea1c6bc8bb 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -460,9 +460,9 @@ static void ti_sn_bridge_set_video_timings(struct ti_sn_bridge *pdata)
+ 		&pdata->bridge.encoder->crtc->state->adjusted_mode;
+ 	u8 hsync_polarity = 0, vsync_polarity = 0;
  
- 		target->sensb_res_len = nfcb_poll->sensb_res_len;
-+		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
-+			return -EPROTO;
- 		if (target->sensb_res_len > 0) {
- 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
- 			       target->sensb_res_len);
-@@ -234,6 +238,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
+-	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
++	if (mode->flags & DRM_MODE_FLAG_NHSYNC)
+ 		hsync_polarity = CHA_HSYNC_POLARITY;
+-	if (mode->flags & DRM_MODE_FLAG_PVSYNC)
++	if (mode->flags & DRM_MODE_FLAG_NVSYNC)
+ 		vsync_polarity = CHA_VSYNC_POLARITY;
  
- 		target->sensf_res_len = nfcf_poll->sensf_res_len;
-+		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
-+			return -EPROTO;
- 		if (target->sensf_res_len > 0) {
- 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
- 			       target->sensf_res_len);
+ 	ti_sn_bridge_write_u16(pdata, SN_CHA_ACTIVE_LINE_LENGTH_LOW_REG,
 -- 
 2.35.1
 
