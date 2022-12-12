@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5993028ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3375EC433D2;
-	Mon, 12 Dec 2022 13:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF9528ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C10C433D2;
+	Mon, 12 Dec 2022 13:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851525;
-	bh=PAxi6eeJkAJBPTiO6t6sK57HyXc9bdfpzD8eQdRXDQ4=;
+	s=korg; t=1670851529;
+	bh=1dBqIMpoL7c60s8R/M/lYxjuNucSbI6Zhp0XOdOHS04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5SANns5ZHyqVlkVbo9mPaQvEHBMseT3QwRwpbU1ZKZzHt6ItWQJo1GtsAfX7IQk+
-	 lGAIjJamIA45TurD5DQ70N2Bia5gckOn6r4IxAcDmPfZI5vLeRcgkDb86h47Iw7GsQ
-	 KV30CmUTxit1GQypPj9g/Ui5XlWbOdqBWQfEJbKY=
+	b=2ngXi8CzqufR2aPxH5lDEot7zIpiWqiWbXDCY6tvSgx0Si4IrudLgZ2Si0tWrJv1g
+	 zqyS2Iljzs1MRqaKru4Q4V++kpCQaZXOWNO7H/qOpqAzXbp3E7iriZLX7a+65ejWws
+	 5BCEXFUhJ4yiqWqF7xqHgpUCoIwMxJ+Z08k416wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	GUO Zihua <guozihua@huawei.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/123] ASoC: rt711-sdca: fix the latency time of clock stop prepare state machine transitions
-Date: Mon, 12 Dec 2022 14:16:22 +0100
-Message-Id: <20221212130927.554106288@linuxfoundation.org>
+Subject: [PATCH 5.15 017/123] 9p/fd: Use P9_HDRSZ for header size
+Date: Mon, 12 Dec 2022 14:16:23 +0100
+Message-Id: <20221212130927.599907277@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,36 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit c7d7d4e7bb1290cc473610b0bb96d9fa606d00e7 ]
+[ Upstream commit 6854fadbeee10891ed74246bdc05031906b6c8cf ]
 
-Due to the hardware behavior, it takes some time for CBJ detection/impedance sensing/de-bounce.
-The ClockStop_NotFinished flag will be raised until these functions are completed.
-In ClockStopMode0 mode case, the SdW controller might check this flag from D3 to D0 when the
-jack detection interrupt happened.
+Cleanup hardcoded header sizes to use P9_HDRSZ instead of '7'
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://lore.kernel.org/r/20221116090318.5017-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20221117091159.31533-4-guozihua@huawei.com
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+[Dominique: commit message adjusted to make sense after offset size
+adjustment got removed]
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdca-sdw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/9p/trans_fd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt711-sdca-sdw.c b/sound/soc/codecs/rt711-sdca-sdw.c
-index a085b2f530aa..31e77d462ef3 100644
---- a/sound/soc/codecs/rt711-sdca-sdw.c
-+++ b/sound/soc/codecs/rt711-sdca-sdw.c
-@@ -230,7 +230,7 @@ static int rt711_sdca_read_prop(struct sdw_slave *slave)
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index e1c2c9242ce2..f359cfdc1858 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -122,7 +122,7 @@ struct p9_conn {
+ 	struct list_head unsent_req_list;
+ 	struct p9_req_t *rreq;
+ 	struct p9_req_t *wreq;
+-	char tmp_buf[7];
++	char tmp_buf[P9_HDRSZ];
+ 	struct p9_fcall rc;
+ 	int wpos;
+ 	int wsize;
+@@ -295,7 +295,7 @@ static void p9_read_work(struct work_struct *work)
+ 	if (!m->rc.sdata) {
+ 		m->rc.sdata = m->tmp_buf;
+ 		m->rc.offset = 0;
+-		m->rc.capacity = 7; /* start by reading header */
++		m->rc.capacity = P9_HDRSZ; /* start by reading header */
  	}
  
- 	/* set the timeout values */
--	prop->clk_stop_timeout = 20;
-+	prop->clk_stop_timeout = 700;
+ 	clear_bit(Rpending, &m->wsched);
+@@ -318,7 +318,7 @@ static void p9_read_work(struct work_struct *work)
+ 		p9_debug(P9_DEBUG_TRANS, "got new header\n");
  
- 	/* wake-up event */
- 	prop->wake_capable = 1;
+ 		/* Header size */
+-		m->rc.size = 7;
++		m->rc.size = P9_HDRSZ;
+ 		err = p9_parse_header(&m->rc, &m->rc.size, NULL, NULL, 0);
+ 		if (err) {
+ 			p9_debug(P9_DEBUG_ERROR,
 -- 
 2.35.1
 
