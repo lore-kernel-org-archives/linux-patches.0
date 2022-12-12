@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46AB28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:31:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301DEC433D2;
-	Mon, 12 Dec 2022 13:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF6728ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:31:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE8EC433F2;
+	Mon, 12 Dec 2022 13:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851906;
-	bh=VpuaNJiPjNJoZyUtH8tqiFmg74q2vgkizvuWLYgcD6g=;
+	s=korg; t=1670851911;
+	bh=Cl1GeB9WtY5pbsG0CurJhuAQ0LRtuVzB86m37uuEl7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWVUxtnaBWTkDNzaKmEo6w+UaL0nQUPIx4hOZH95VoCPahpp7Ni8QsHAtwNFaSu3n
-	 ir67NKTHGcOPrbMsNiC7jMsXncMCYGrfUxShF4NVIscUPKEZsvW4D3xCFsevK127Tv
-	 kTtOEdmSNNrZLR+UOX/Qaacn3Ch2KFV7eI+TX5PM=
+	b=0w3pjHNXv9CsdOX5bmb0pWIcwL7aIdnMd7HfEAlOwpZiGrbgcqYX8jvfXbkqp0Ceq
+	 Dc+5rs/DP+CDz5WyUWyAM56tyX/AXI+Bb2+z8Ftqa82qEfb8FD/Qvbip7GKvoN9FVQ
+	 uX8dC+Erm1JD1VPc4GeN0lTsULVJnJkBXNeYnBkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudolf Polzer <rpolzer@google.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.15 057/123] HID: ite: Enable QUIRK_TOUCHPAD_ON_OFF_REPORT on Acer Aspire Switch V 10
-Date: Mon, 12 Dec 2022 14:17:03 +0100
-Message-Id: <20221212130929.322255622@linuxfoundation.org>
+	Zeng Heng <zengheng4@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 087/123] net: mdiobus: fix double put fwnode in the error path
+Date: Mon, 12 Dec 2022 14:17:33 +0100
+Message-Id: <20221212130930.617310946@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,51 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 9ad6645a9dce4d0e42daca6ebf32a154401c59d3 upstream.
+[ Upstream commit 165df24186ecea95705505627df3dacf5e7ff6bf ]
 
-The Acer Aspire Switch V 10 (SW5-017)'s keyboard-dock uses the same
-ITE controller setup as other Acer Switch 2-in-1's.
+If phy_device_register() or fwnode_mdiobus_phy_device_register()
+fail, phy_device_free() is called, the device refcount is decreased
+to 0, then fwnode_handle_put() will be called in phy_device_release(),
+but in the error path, fwnode_handle_put() has already been called,
+so set fwnode to NULL after fwnode_handle_put() in the error path to
+avoid double put.
 
-This needs special handling for the wifi on/off toggle hotkey as well as
-to properly report touchpad on/off keypresses.
-
-Add the USB-ids for the SW5-017's keyboard-dock with a quirk setting of
-QUIRK_TOUCHPAD_ON_OFF_REPORT to fix both issues.
-
-Cc: Rudolf Polzer <rpolzer@google.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cdde1560118f ("net: mdiobus: fix unbalanced node reference count")
+Reported-by: Zeng Heng <zengheng4@huawei.com>
+Tested-by: Zeng Heng <zengheng4@huawei.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Zeng Heng <zengheng4@huawei.com>
+Tested-by: Zeng Heng <zengheng4@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h |    1 +
- drivers/hid/hid-ite.c |    5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/net/mdio/fwnode_mdio.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1184,6 +1184,7 @@
- #define USB_DEVICE_ID_SYNAPTICS_DELL_K15A	0x6e21
- #define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1002	0x73f4
- #define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003	0x73f5
-+#define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_017	0x73f6
- #define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5	0x81a7
- 
- #define USB_VENDOR_ID_TEXAS_INSTRUMENTS	0x2047
---- a/drivers/hid/hid-ite.c
-+++ b/drivers/hid/hid-ite.c
-@@ -121,6 +121,11 @@ static const struct hid_device_id ite_de
- 		     USB_VENDOR_ID_SYNAPTICS,
- 		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003),
- 	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
-+	/* ITE8910 USB kbd ctlr, with Synaptics touchpad connected to it. */
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_SYNAPTICS,
-+		     USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_017),
-+	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, ite_devices);
+diff --git a/drivers/net/mdio/fwnode_mdio.c b/drivers/net/mdio/fwnode_mdio.c
+index 403b07f8ec2c..2c47efdae73b 100644
+--- a/drivers/net/mdio/fwnode_mdio.c
++++ b/drivers/net/mdio/fwnode_mdio.c
+@@ -77,6 +77,7 @@ int fwnode_mdiobus_phy_device_register(struct mii_bus *mdio,
+ 	 */
+ 	rc = phy_device_register(phy);
+ 	if (rc) {
++		device_set_node(&phy->mdio.dev, NULL);
+ 		fwnode_handle_put(child);
+ 		return rc;
+ 	}
+@@ -125,7 +126,8 @@ int fwnode_mdiobus_register_phy(struct mii_bus *bus,
+ 		/* All data is now stored in the phy struct, so register it */
+ 		rc = phy_device_register(phy);
+ 		if (rc) {
+-			fwnode_handle_put(phy->mdio.dev.fwnode);
++			phy->mdio.dev.fwnode = NULL;
++			fwnode_handle_put(child);
+ 			goto clean_phy;
+ 		}
+ 	} else if (is_of_node(child)) {
+-- 
+2.35.1
+
 
 
