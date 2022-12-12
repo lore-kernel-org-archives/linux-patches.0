@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B28728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7DBC433D2;
-	Mon, 12 Dec 2022 13:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE79428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:29:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1F1C433D2;
+	Mon, 12 Dec 2022 13:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851763;
-	bh=53e+sMVfkJUvc0ZExDVyqR1mcOCcJZUrGcFQUDnwpt8=;
+	s=korg; t=1670851767;
+	bh=bjKzL0ABmnz7AqXAK9DkHcuh9Yodcz4M6I1m/3Xyyj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQ1DSuNItR2WT5Nh12WdDehwpkoh7t1fAbaDXysfaAh3Ci3En0G6hnOb5XGvN/APu
-	 Mi1/ZwwbUNUzUaV1b5WUxVa2wK2M3/11+WD2TONOolQv7dGDGDC0N5XYQYrttGmSYH
-	 zGTicnFdFniopu93eARJJIGLaGzaHoUJVyuPGEb8=
+	b=eaQ0n5Lp1uC1gK/8ZC6G+3qLtWjqP5QR3p9EUBwxdByzAf0xxiPPAXRsM6mi3InXs
+	 aETDPExDyKLGm6ggyjngpPcTKMdISyN6RW3pqEUr9vpGrP73DxBShmbjOC/rDicwmU
+	 mdvsXD1RptXiQA81SvjVPk/Rsxz0KA0ldIUXE/eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/123] mm/khugepaged: fix GUP-fast interaction by sending IPI
-Date: Mon, 12 Dec 2022 14:16:35 +0100
-Message-Id: <20221212130928.130350415@linuxfoundation.org>
+	syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com,
+	Wei Chen <harperchen1110@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 058/123] can: af_can: fix NULL pointer dereference in can_rcv_filter
+Date: Mon, 12 Dec 2022 14:17:04 +0100
+Message-Id: <20221212130929.364766608@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -39,112 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 2ba99c5e08812494bc57f319fb562f527d9bacd8 upstream.
+commit 0acc442309a0a1b01bcdaa135e56e6398a49439c upstream.
 
-Since commit 70cbc3cc78a99 ("mm: gup: fix the fast GUP race against THP
-collapse"), the lockless_pages_from_mm() fastpath rechecks the pmd_t to
-ensure that the page table was not removed by khugepaged in between.
+Analogue to commit 8aa59e355949 ("can: af_can: fix NULL pointer
+dereference in can_rx_register()") we need to check for a missing
+initialization of ml_priv in the receive path of CAN frames.
 
-However, lockless_pages_from_mm() still requires that the page table is
-not concurrently freed.  Fix it by sending IPIs (if the architecture uses
-semi-RCU-style page table freeing) before freeing/reusing page tables.
+Since commit 4e096a18867a ("net: introduce CAN specific pointer in the
+struct net_device") the check for dev->type to be ARPHRD_CAN is not
+sufficient anymore since bonding or tun netdevices claim to be CAN
+devices but do not initialize ml_priv accordingly.
 
-Link: https://lkml.kernel.org/r/20221129154730.2274278-2-jannh@google.com
-Link: https://lkml.kernel.org/r/20221128180252.1684965-2-jannh@google.com
-Link: https://lkml.kernel.org/r/20221125213714.4115729-2-jannh@google.com
-Fixes: ba76149f47d8 ("thp: khugepaged")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[manual backport: two of the three places in khugepaged that can free
-ptes were refactored into a common helper between 5.15 and 6.0]
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
+Reported-by: syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20221206201259.3028-1-socketcan@hartkopp.net
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/tlb.h | 4 ++++
- mm/khugepaged.c           | 3 +++
- mm/mmu_gather.c           | 4 +---
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ net/can/af_can.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/tlb.h b/include/asm-generic/tlb.h
-index 71942a1c642d..c99710b3027a 100644
---- a/include/asm-generic/tlb.h
-+++ b/include/asm-generic/tlb.h
-@@ -207,12 +207,16 @@ extern void tlb_remove_table(struct mmu_gather *tlb, void *table);
- #define tlb_needs_table_invalidate() (true)
- #endif
- 
-+void tlb_remove_table_sync_one(void);
-+
- #else
- 
- #ifdef tlb_needs_table_invalidate
- #error tlb_needs_table_invalidate() requires MMU_GATHER_RCU_TABLE_FREE
- #endif
- 
-+static inline void tlb_remove_table_sync_one(void) { }
-+
- #endif /* CONFIG_MMU_GATHER_RCU_TABLE_FREE */
- 
- 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index fc02de08e912..1735123e462a 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1156,6 +1156,7 @@ static void collapse_huge_page(struct mm_struct *mm,
- 	_pmd = pmdp_collapse_flush(vma, address, pmd);
- 	spin_unlock(pmd_ptl);
- 	mmu_notifier_invalidate_range_end(&range);
-+	tlb_remove_table_sync_one();
- 
- 	spin_lock(pte_ptl);
- 	isolated = __collapse_huge_page_isolate(vma, address, pte,
-@@ -1537,6 +1538,7 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
- 	/* step 4: collapse pmd */
- 	_pmd = pmdp_collapse_flush(vma, haddr, pmd);
- 	mm_dec_nr_ptes(mm);
-+	tlb_remove_table_sync_one();
- 	pte_free(mm, pmd_pgtable(_pmd));
- 
- 	i_mmap_unlock_write(vma->vm_file->f_mapping);
-@@ -1623,6 +1625,7 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
- 				/* assume page table is clear */
- 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
- 				mm_dec_nr_ptes(mm);
-+				tlb_remove_table_sync_one();
- 				pte_free(mm, pmd_pgtable(_pmd));
- 			}
- 			mmap_write_unlock(mm);
-diff --git a/mm/mmu_gather.c b/mm/mmu_gather.c
-index 1b9837419bf9..8be26c7ddb47 100644
---- a/mm/mmu_gather.c
-+++ b/mm/mmu_gather.c
-@@ -139,7 +139,7 @@ static void tlb_remove_table_smp_sync(void *arg)
- 	/* Simply deliver the interrupt */
- }
- 
--static void tlb_remove_table_sync_one(void)
-+void tlb_remove_table_sync_one(void)
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -680,7 +680,7 @@ static int can_rcv(struct sk_buff *skb,
  {
- 	/*
- 	 * This isn't an RCU grace period and hence the page-tables cannot be
-@@ -163,8 +163,6 @@ static void tlb_remove_table_free(struct mmu_table_batch *batch)
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
  
- #else /* !CONFIG_MMU_GATHER_RCU_TABLE_FREE */
- 
--static void tlb_remove_table_sync_one(void) { }
--
- static void tlb_remove_table_free(struct mmu_table_batch *batch)
+-	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CAN_MTU)) {
++	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CAN_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
+@@ -706,7 +706,7 @@ static int canfd_rcv(struct sk_buff *skb
  {
- 	__tlb_remove_table_free(batch);
--- 
-2.35.1
-
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
+ 
+-	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CANFD_MTU)) {
++	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CANFD_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN FD skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
 
 
