@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1954428ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05057C433EF;
-	Mon, 12 Dec 2022 13:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F117B28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4179DC433F0;
+	Mon, 12 Dec 2022 13:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853001;
-	bh=ZGp5/e8Ohphb28winLlqyxkptSStA1iqI9P+Eb47xQI=;
+	s=korg; t=1670853005;
+	bh=lMwiE6u6jninrwMQWPY4MZTV8BlLxaHskFIokhkvccU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZ+QnNJk1n5Jg+piQuazwCy7n7odoCznze2DMNVOwRw2mRdGnHkR6Icx0PJuccKjH
-	 Ljh5hGdgF2EA9yRvPqsGyrmW+VRhQu8qqKgRWzY+bLa95txXwt6IogzZ6lapqj+2Cp
-	 UVjUpu9tk587Oq0Kr5Fv4lHcBUyvFPlQCQow/oTw=
+	b=T/2CZuBC90Ps0cceLPlEntLITsgxH1CnNGXyO3P/+uvFfVyAIdS8ItGumxgMk+5Jc
+	 0T79qYsXx9I/bOWwa4yME6e5JYU/XAx5j0bD2zQe2y4AwsOsEBzfcmuzyXr7Ft8XgS
+	 iLcoKeJYgzSQAhDX1qmycmvdryzgb6dhLIA+hDkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 4.19 19/49] KVM: s390: vsie: Fix the initialization of the epoch extension (epdx) field
-Date: Mon, 12 Dec 2022 14:18:57 +0100
-Message-Id: <20221212130914.651576365@linuxfoundation.org>
+	Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>,
+	Kamil Maziarz <kamil.maziarz@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 4.19 37/49] i40e: Disallow ip4 and ip6 l4_4_bytes
+Date: Mon, 12 Dec 2022 14:19:15 +0100
+Message-Id: <20221212130915.505225169@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -37,48 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Huth <thuth@redhat.com>
+From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 
-commit 0dd4cdccdab3d74bd86b868768a7dca216bcce7e upstream.
+[ Upstream commit d64aaf3f7869f915fd120763d75f11d6b116424d ]
 
-We recently experienced some weird huge time jumps in nested guests when
-rebooting them in certain cases. After adding some debug code to the epoch
-handling in vsie.c (thanks to David Hildenbrand for the idea!), it was
-obvious that the "epdx" field (the multi-epoch extension) did not get set
-to 0xff in case the "epoch" field was negative.
-Seems like the code misses to copy the value from the epdx field from
-the guest to the shadow control block. By doing so, the weird time
-jumps are gone in our scenarios.
+Return -EOPNOTSUPP, when user requests l4_4_bytes for raw IP4 or
+IP6 flow director filters. Flow director does not support filtering
+on l4 bytes for PCTYPEs used by IP4 and IP6 filters.
+Without this patch, user could create filters with l4_4_bytes fields,
+which did not do any filtering on L4, but only on L3 fields.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2140899
-Fixes: 8fa1696ea781 ("KVM: s390: Multiple Epoch Facility support")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Cc: stable@vger.kernel.org # 4.19+
-Link: https://lore.kernel.org/r/20221123090833.292938-1-thuth@redhat.com
-Message-Id: <20221123090833.292938-1-thuth@redhat.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 36777d9fa24c ("i40e: check current configured input set when adding ntuple filters")
+Signed-off-by: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
+Signed-off-by: Kamil Maziarz  <kamil.maziarz@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/vsie.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -376,8 +376,10 @@ static int shadow_scb(struct kvm_vcpu *v
- 	if (test_kvm_cpu_feat(vcpu->kvm, KVM_S390_VM_CPU_FEAT_CEI))
- 		scb_s->eca |= scb_o->eca & ECA_CEI;
- 	/* Epoch Extension */
--	if (test_kvm_facility(vcpu->kvm, 139))
-+	if (test_kvm_facility(vcpu->kvm, 139)) {
- 		scb_s->ecd |= scb_o->ecd & ECD_MEF;
-+		scb_s->epdx = scb_o->epdx;
-+	}
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+index 16adba824811..fbfd43a7e592 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+@@ -3850,11 +3850,7 @@ static int i40e_check_fdir_input_set(struct i40e_vsi *vsi,
+ 			return -EOPNOTSUPP;
  
- 	/* etoken */
- 	if (test_kvm_facility(vcpu->kvm, 156))
+ 		/* First 4 bytes of L4 header */
+-		if (usr_ip4_spec->l4_4_bytes == htonl(0xFFFFFFFF))
+-			new_mask |= I40E_L4_SRC_MASK | I40E_L4_DST_MASK;
+-		else if (!usr_ip4_spec->l4_4_bytes)
+-			new_mask &= ~(I40E_L4_SRC_MASK | I40E_L4_DST_MASK);
+-		else
++		if (usr_ip4_spec->l4_4_bytes)
+ 			return -EOPNOTSUPP;
+ 
+ 		/* Filtering on Type of Service is not supported. */
+-- 
+2.35.1
+
 
 
