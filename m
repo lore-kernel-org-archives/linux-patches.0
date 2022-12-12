@@ -1,37 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D7B28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44DEC433EF;
-	Mon, 12 Dec 2022 13:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61FD28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:37:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812CEC433EF;
+	Mon, 12 Dec 2022 13:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852256;
-	bh=Ul3RsEuzdnXmuIUuvGNnAF23Ti2hrg9ktnfRVmMzPzw=;
+	s=korg; t=1670852261;
+	bh=TQybE/fXDNsPC++k5vcAQ2SGEpCTDyeVoShqFMvk/JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+ksemGc/OV2QxGMwKheWxFGbTT1QyToLiuLFCs6djtALNOmqLwIeBwxyF4uLq4W8
-	 9RRoZ185qK9RR5U92sIB+7vpSsjc4jt9MYC8rgk5An9kYyoSzCQNH7bAuis0rHJepF
-	 n4PQP6PGNxJ5yn9RBXrGlfWSspj+TMLaUMnCnepg=
+	b=TV/Pnc4UYQVdxMt7VQ2GqGzAHShjgJ5XPZpdTQZYy9ZjQxYuCTOb0gqm8cqERDA2R
+	 R0k5qfdC6RDZpO4ca9go5lKcqhQgHB+fAxFT9OqC6kPU0rdh9dKr/i2P7fzwEl41VS
+	 sq8pIK/dq9AGrzOsD/b3Z90k0KjEl4hYsq0qwHNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Wei Chen <harperchen1110@gmail.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
-	Peter Xu <peterx@redhat.com>,
-	Rik van Riel <riel@surriel.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 045/157] hugetlb: dont delete vma_lock in hugetlb MADV_DONTNEED processing
-Date: Mon, 12 Dec 2022 14:16:33 +0100
-Message-Id: <20221212130936.358448651@linuxfoundation.org>
+Subject: [PATCH 6.0 046/157] ALSA: hda/realtek: More robust component matching for CS35L41
+Date: Mon, 12 Dec 2022 14:16:34 +0100
+Message-Id: <20221212130936.401048854@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -45,123 +34,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 04ada095dcfc4ae359418053c0be94453bdf1e84 upstream.
+[ Upstream commit 35a1744423743247026668e2323d1b932583fc2a ]
 
-madvise(MADV_DONTNEED) ends up calling zap_page_range() to clear page
-tables associated with the address range.  For hugetlb vmas,
-zap_page_range will call __unmap_hugepage_range_final.  However,
-__unmap_hugepage_range_final assumes the passed vma is about to be removed
-and deletes the vma_lock to prevent pmd sharing as the vma is on the way
-out.  In the case of madvise(MADV_DONTNEED) the vma remains, but the
-missing vma_lock prevents pmd sharing and could potentially lead to issues
-with truncation/fault races.
+As the previous commit implies, a system may have a different SPI bus
+number that is embedded in the device string.  And, assuming the fixed
+bus number is rather fragile; it may be assigned differently depending
+on the configuration or on the boot environment.  Once when a bus
+number change happens, the binding fails, resulting in the silence.
 
-This issue was originally reported here [1] as a BUG triggered in
-page_try_dup_anon_rmap.  Prior to the introduction of the hugetlb
-vma_lock, __unmap_hugepage_range_final cleared the VM_MAYSHARE flag to
-prevent pmd sharing.  Subsequent faults on this vma were confused as
-VM_MAYSHARE indicates a sharable vma, but was not set so page_mapping was
-not set in new pages added to the page table.  This resulted in pages that
-appeared anonymous in a VM_SHARED vma and triggered the BUG.
+This patch tries to make the matching a bit more relaxed, allowing to
+bind with a different bus number (or without it).  So the previous
+fix, the introduction of ALC245_FIXUP_CS35L41_SPI1_2 fixup became
+superfluous, and this is unified to ALC245_FIXUP_CS35L41_SPI_2.
 
-Address issue by adding a new zap flag ZAP_FLAG_UNMAP to indicate an unmap
-call from unmap_vmas().  This is used to indicate the 'final' unmapping of
-a hugetlb vma.  When called via MADV_DONTNEED, this flag is not set and
-the vm_lock is not deleted.
-
-NOTE - Prior to the introduction of the huegtlb vma_lock in v6.1,  this
-       issue is addressed by not clearing the VM_MAYSHARE flag when
-       __unmap_hugepage_range_final is called in the MADV_DONTNEED case.
-
-[1] https://lore.kernel.org/lkml/CAO4mrfdLMXsao9RF4fUE8-Wfde8xmjsKrTNMNC9wjUb6JudD0g@mail.gmail.com/
-
-Link: https://lkml.kernel.org/r/20221114235507.294320-3-mike.kravetz@oracle.com
-Fixes: 90e7e7f5ef3f ("mm: enable MADV_DONTNEED for hugetlb mappings")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Fixes: 225f6e1bc151 ("ALSA: hda/realtek: Add quirk for HP Zbook Firefly 14 G9 model")
+Link: https://lore.kernel.org/r/20220930084810.10435-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm.h |  2 ++
- mm/hugetlb.c       | 25 ++++++++++++++-----------
- mm/memory.c        |  2 +-
- 3 files changed, 17 insertions(+), 12 deletions(-)
+ sound/pci/hda/patch_realtek.c | 62 +++++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 25 deletions(-)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index df804bf5f4a5..4ff52127a6b8 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -1794,6 +1794,8 @@ struct zap_details {
-  * default, the flag is not set.
-  */
- #define  ZAP_FLAG_DROP_MARKER        ((__force zap_flags_t) BIT(0))
-+/* Set in unmap_vmas() to indicate a final unmap call.  Only used by hugetlb */
-+#define  ZAP_FLAG_UNMAP              ((__force zap_flags_t) BIT(1))
- 
- #ifdef CONFIG_MMU
- extern bool can_do_mlock(void);
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index dbb558e71e9e..022a3bfafec4 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5145,17 +5145,20 @@ void __unmap_hugepage_range_final(struct mmu_gather *tlb,
- {
- 	__unmap_hugepage_range(tlb, vma, start, end, ref_page, zap_flags);
- 
--	/*
--	 * Clear this flag so that x86's huge_pmd_share page_table_shareable
--	 * test will fail on a vma being torn down, and not grab a page table
--	 * on its way out.  We're lucky that the flag has such an appropriate
--	 * name, and can in fact be safely cleared here. We could clear it
--	 * before the __unmap_hugepage_range above, but all that's necessary
--	 * is to clear it before releasing the i_mmap_rwsem. This works
--	 * because in the context this is called, the VMA is about to be
--	 * destroyed and the i_mmap_rwsem is held.
--	 */
--	vma->vm_flags &= ~VM_MAYSHARE;
-+	if (zap_flags & ZAP_FLAG_UNMAP) {	/* final unmap */
-+		/*
-+		 * Clear this flag so that x86's huge_pmd_share
-+		 * page_table_shareable test will fail on a vma being torn
-+		 * down, and not grab a page table on its way out.  We're lucky
-+		 * that the flag has such an appropriate name, and can in fact
-+		 * be safely cleared here. We could clear it before the
-+		 * __unmap_hugepage_range above, but all that's necessary
-+		 * is to clear it before releasing the i_mmap_rwsem. This works
-+		 * because in the context this is called, the VMA is about to
-+		 * be destroyed and the i_mmap_rwsem is held.
-+		 */
-+		vma->vm_flags &= ~VM_MAYSHARE;
-+	}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index bf58e98c7a69..d8c6af9e43ad 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -18,6 +18,7 @@
+ #include <linux/module.h>
+ #include <linux/input.h>
+ #include <linux/leds.h>
++#include <linux/ctype.h>
+ #include <sound/core.h>
+ #include <sound/jack.h>
+ #include <sound/hda_codec.h>
+@@ -6704,23 +6705,51 @@ static void comp_generic_playback_hook(struct hda_pcm_stream *hinfo, struct hda_
+ 	}
  }
  
- void unmap_hugepage_range(struct vm_area_struct *vma, unsigned long start,
-diff --git a/mm/memory.c b/mm/memory.c
-index 68d5b3dcec2e..a0fdaa74091f 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -1712,7 +1712,7 @@ void unmap_vmas(struct mmu_gather *tlb,
++struct cs35l41_dev_name {
++	const char *bus;
++	const char *hid;
++	int index;
++};
++
++/* match the device name in a slightly relaxed manner */
++static int comp_match_cs35l41_dev_name(struct device *dev, void *data)
++{
++	struct cs35l41_dev_name *p = data;
++	const char *d = dev_name(dev);
++	int n = strlen(p->bus);
++	char tmp[32];
++
++	/* check the bus name */
++	if (strncmp(d, p->bus, n))
++		return 0;
++	/* skip the bus number */
++	if (isdigit(d[n]))
++		n++;
++	/* the rest must be exact matching */
++	snprintf(tmp, sizeof(tmp), "-%s:00-cs35l41-hda.%d", p->hid, p->index);
++	return !strcmp(d + n, tmp);
++}
++
+ static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char *bus,
+ 				  const char *hid, int count)
  {
- 	struct mmu_notifier_range range;
- 	struct zap_details details = {
--		.zap_flags = ZAP_FLAG_DROP_MARKER,
-+		.zap_flags = ZAP_FLAG_DROP_MARKER | ZAP_FLAG_UNMAP,
- 		/* Careful - we need to zap private pages too! */
- 		.even_cows = true,
- 	};
+ 	struct device *dev = hda_codec_dev(cdc);
+ 	struct alc_spec *spec = cdc->spec;
+-	char *name;
++	struct cs35l41_dev_name *rec;
+ 	int ret, i;
+ 
+ 	switch (action) {
+ 	case HDA_FIXUP_ACT_PRE_PROBE:
+ 		for (i = 0; i < count; i++) {
+-			name = devm_kasprintf(dev, GFP_KERNEL,
+-					      "%s-%s:00-cs35l41-hda.%d", bus, hid, i);
+-			if (!name)
++			rec = devm_kmalloc(dev, sizeof(*rec), GFP_KERNEL);
++			if (!rec)
+ 				return;
++			rec->bus = bus;
++			rec->hid = hid;
++			rec->index = i;
+ 			spec->comps[i].codec = cdc;
+-			component_match_add(dev, &spec->match, component_compare_dev_name, name);
++			component_match_add(dev, &spec->match,
++					    comp_match_cs35l41_dev_name, rec);
+ 		}
+ 		ret = component_master_add_with_match(dev, &comp_master_ops, spec->match);
+ 		if (ret)
+@@ -6738,17 +6767,12 @@ static void cs35l41_fixup_i2c_two(struct hda_codec *cdc, const struct hda_fixup
+ 
+ static void cs35l41_fixup_spi_two(struct hda_codec *codec, const struct hda_fixup *fix, int action)
+ {
+-	cs35l41_generic_fixup(codec, action, "spi0", "CSC3551", 2);
+-}
+-
+-static void cs35l41_fixup_spi1_two(struct hda_codec *codec, const struct hda_fixup *fix, int action)
+-{
+-	cs35l41_generic_fixup(codec, action, "spi1", "CSC3551", 2);
++	cs35l41_generic_fixup(codec, action, "spi", "CSC3551", 2);
+ }
+ 
+ static void cs35l41_fixup_spi_four(struct hda_codec *codec, const struct hda_fixup *fix, int action)
+ {
+-	cs35l41_generic_fixup(codec, action, "spi0", "CSC3551", 4);
++	cs35l41_generic_fixup(codec, action, "spi", "CSC3551", 4);
+ }
+ 
+ static void alc287_fixup_legion_16achg6_speakers(struct hda_codec *cdc, const struct hda_fixup *fix,
+@@ -7137,8 +7161,6 @@ enum {
+ 	ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED,
+ 	ALC245_FIXUP_CS35L41_SPI_2,
+ 	ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED,
+-	ALC245_FIXUP_CS35L41_SPI1_2,
+-	ALC245_FIXUP_CS35L41_SPI1_2_HP_GPIO_LED,
+ 	ALC245_FIXUP_CS35L41_SPI_4,
+ 	ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED,
+ 	ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED,
+@@ -8988,16 +9010,6 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC285_FIXUP_HP_GPIO_LED,
+ 	},
+-	[ALC245_FIXUP_CS35L41_SPI1_2] = {
+-		.type = HDA_FIXUP_FUNC,
+-		.v.func = cs35l41_fixup_spi1_two,
+-	},
+-	[ALC245_FIXUP_CS35L41_SPI1_2_HP_GPIO_LED] = {
+-		.type = HDA_FIXUP_FUNC,
+-		.v.func = cs35l41_fixup_spi1_two,
+-		.chained = true,
+-		.chain_id = ALC285_FIXUP_HP_GPIO_LED,
+-	},
+ 	[ALC245_FIXUP_CS35L41_SPI_4] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cs35l41_fixup_spi_four,
+@@ -9361,7 +9373,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa8, "HP EliteBook 640 G9 (MB 8AA6)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aab, "HP EliteBook 650 G9 (MB 8AA9)", ALC236_FIXUP_HP_GPIO_LED),
+-	 SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI1_2_HP_GPIO_LED),
++	 SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
 -- 
 2.35.1
 
