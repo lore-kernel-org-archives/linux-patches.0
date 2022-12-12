@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D4F28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:31:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD56C433EF;
-	Mon, 12 Dec 2022 13:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46AB28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301DEC433D2;
+	Mon, 12 Dec 2022 13:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851902;
-	bh=bXhs/QhFvTKfcQWAO4+SVEV/Y18+U60jNnpFr6U46Bw=;
+	s=korg; t=1670851906;
+	bh=VpuaNJiPjNJoZyUtH8tqiFmg74q2vgkizvuWLYgcD6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLlhIQOqocEynKBXnSLNCyBtieeuFFiBovko0Jx16m0boJWlZ5c4GpTgejHrDh5UO
-	 DD/48M1X0eOUCcRQs2XnnIgBYK+sThXnt4ZKQodoO2HOPCVQyAcx+4qQxbn7B0Lbd8
-	 qw96j51GhOV6u3xwCT0ka2jRgpe3OLAdaR9M6ODc=
+	b=uWVUxtnaBWTkDNzaKmEo6w+UaL0nQUPIx4hOZH95VoCPahpp7Ni8QsHAtwNFaSu3n
+	 ir67NKTHGcOPrbMsNiC7jMsXncMCYGrfUxShF4NVIscUPKEZsvW4D3xCFsevK127Tv
+	 kTtOEdmSNNrZLR+UOX/Qaacn3Ch2KFV7eI+TX5PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hauke Mehrtens <hauke@hauke-m.de>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/123] ca8210: Fix crash by zero initializing data
-Date: Mon, 12 Dec 2022 14:17:12 +0100
-Message-Id: <20221212130929.721844425@linuxfoundation.org>
+	Rudolf Polzer <rpolzer@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.15 057/123] HID: ite: Enable QUIRK_TOUCHPAD_ON_OFF_REPORT on Acer Aspire Switch V 10
+Date: Mon, 12 Dec 2022 14:17:03 +0100
+Message-Id: <20221212130929.322255622@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -35,40 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hauke Mehrtens <hauke@hauke-m.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 1e24c54da257ab93cff5826be8a793b014a5dc9c ]
+commit 9ad6645a9dce4d0e42daca6ebf32a154401c59d3 upstream.
 
-The struct cas_control embeds multiple generic SPI structures and we
-have to make sure these structures are initialized to default values.
-This driver does not set all attributes. When using kmalloc before some
-attributes were not initialized and contained random data which caused
-random crashes at bootup.
+The Acer Aspire Switch V 10 (SW5-017)'s keyboard-dock uses the same
+ITE controller setup as other Acer Switch 2-in-1's.
 
-Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
-Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
-Link: https://lore.kernel.org/r/20221121002201.1339636-1-hauke@hauke-m.de
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This needs special handling for the wifi on/off toggle hotkey as well as
+to properly report touchpad on/off keypresses.
+
+Add the USB-ids for the SW5-017's keyboard-dock with a quirk setting of
+QUIRK_TOUCHPAD_ON_OFF_REPORT to fix both issues.
+
+Cc: Rudolf Polzer <rpolzer@google.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ieee802154/ca8210.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-ids.h |    1 +
+ drivers/hid/hid-ite.c |    5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index 96592a20c61f..0362917fce7a 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -927,7 +927,7 @@ static int ca8210_spi_transfer(
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1184,6 +1184,7 @@
+ #define USB_DEVICE_ID_SYNAPTICS_DELL_K15A	0x6e21
+ #define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1002	0x73f4
+ #define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003	0x73f5
++#define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_017	0x73f6
+ #define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5	0x81a7
  
- 	dev_dbg(&spi->dev, "%s called\n", __func__);
- 
--	cas_ctl = kmalloc(sizeof(*cas_ctl), GFP_ATOMIC);
-+	cas_ctl = kzalloc(sizeof(*cas_ctl), GFP_ATOMIC);
- 	if (!cas_ctl)
- 		return -ENOMEM;
- 
--- 
-2.35.1
-
+ #define USB_VENDOR_ID_TEXAS_INSTRUMENTS	0x2047
+--- a/drivers/hid/hid-ite.c
++++ b/drivers/hid/hid-ite.c
+@@ -121,6 +121,11 @@ static const struct hid_device_id ite_de
+ 		     USB_VENDOR_ID_SYNAPTICS,
+ 		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003),
+ 	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
++	/* ITE8910 USB kbd ctlr, with Synaptics touchpad connected to it. */
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_SYNAPTICS,
++		     USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_017),
++	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(hid, ite_devices);
 
 
