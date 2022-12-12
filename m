@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B34928ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:26:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A91C433D2;
-	Mon, 12 Dec 2022 13:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47CF28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:26:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602E4C433F0;
+	Mon, 12 Dec 2022 13:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851583;
-	bh=jzIkP72qq6Ncjl0NMkv0IC0e7yeRBpqeSSQVxHiHlGg=;
+	s=korg; t=1670851586;
+	bh=Qi7F2Hz6kwHyRCgxrnRrKVsbogZQ1IJ3XrIfJOd2h9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJoF6kxWjaIH1qu3uE6XB96niaANCEqGy7pwiY/VC+2LKlTjkDVMC21lST5VAzk3O
-	 egSC7ONgLsdtEHz0f6a96jnc7wEppj78fy40OwgFb1+id2R1wFjnfgMZDFZ5yvZSbH
-	 Ec4nAKF/WciNMuULw4bOI9JU+QqvQj7QIuscft6g=
+	b=DdwpmvjUI6aeZB+1z7glfoXPjHsz1HIvyA1lY4kgp9gsWxFvLAYBfwLhLdhvZ25yX
+	 njUab6f/thcFSKmaw3W+7OLinNI3SdZdyB7E8ZiBciWLXHjqIqdx1lWuaSf5kNryeC
+	 jjTt/T1tnHL8sehLqg7L2OZN6Hhly/7ceRgl5g6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/123] mm/khugepaged: take the right locks for page table retraction
-Date: Mon, 12 Dec 2022 14:16:34 +0100
-Message-Id: <20221212130928.088104367@linuxfoundation.org>
+Subject: [PATCH 5.15 003/123] mmc: mtk-sd: Fix missing clk_disable_unprepare in msdc_of_clock_parse()
+Date: Mon, 12 Dec 2022 14:16:09 +0100
+Message-Id: <20221212130926.962355206@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -39,139 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 8d3c106e19e8d251da31ff4cc7462e4565d65084 upstream.
+[ Upstream commit c61bfb1cb63ddab52b31cf5f1924688917e61fad ]
 
-pagetable walks on address ranges mapped by VMAs can be done under the
-mmap lock, the lock of an anon_vma attached to the VMA, or the lock of the
-VMA's address_space.  Only one of these needs to be held, and it does not
-need to be held in exclusive mode.
+The clk_disable_unprepare() should be called in the error handling
+of devm_clk_bulk_get_optional, fix it by replacing devm_clk_get_optional
+and clk_prepare_enable by devm_clk_get_optional_enabled.
 
-Under those circumstances, the rules for concurrent access to page table
-entries are:
-
- - Terminal page table entries (entries that don't point to another page
-   table) can be arbitrarily changed under the page table lock, with the
-   exception that they always need to be consistent for
-   hardware page table walks and lockless_pages_from_mm().
-   This includes that they can be changed into non-terminal entries.
- - Non-terminal page table entries (which point to another page table)
-   can not be modified; readers are allowed to READ_ONCE() an entry, verify
-   that it is non-terminal, and then assume that its value will stay as-is.
-
-Retracting a page table involves modifying a non-terminal entry, so
-page-table-level locks are insufficient to protect against concurrent page
-table traversal; it requires taking all the higher-level locks under which
-it is possible to start a page walk in the relevant range in exclusive
-mode.
-
-The collapse_huge_page() path for anonymous THP already follows this rule,
-but the shmem/file THP path was getting it wrong, making it possible for
-concurrent rmap-based operations to cause corruption.
-
-Link: https://lkml.kernel.org/r/20221129154730.2274278-1-jannh@google.com
-Link: https://lkml.kernel.org/r/20221128180252.1684965-1-jannh@google.com
-Link: https://lkml.kernel.org/r/20221125213714.4115729-1-jannh@google.com
-Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[manual backport: this code was refactored from two copies into a common
-helper between 5.15 and 6.0]
-Signed-off-by: Jann Horn <jannh@google.com>
+Fixes: f5eccd94b63f ("mmc: mediatek: Add subsys clock control for MT8192 msdc")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221125090141.3626747-1-cuigaosheng1@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index dd069afd9cb9..fc02de08e912 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1456,6 +1456,14 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
- 	if (!hugepage_vma_check(vma, vma->vm_flags | VM_HUGEPAGE))
- 		return;
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 99d8881a7d6c..9871c19d2b4e 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2455,13 +2455,11 @@ static int msdc_of_clock_parse(struct platform_device *pdev,
+ 	if (IS_ERR(host->src_clk_cg))
+ 		host->src_clk_cg = NULL;
  
-+	/*
-+	 * Symmetry with retract_page_tables(): Exclude MAP_PRIVATE mappings
-+	 * that got written to. Without this, we'd have to also lock the
-+	 * anon_vma if one exists.
-+	 */
-+	if (vma->anon_vma)
-+		return;
-+
- 	hpage = find_lock_page(vma->vm_file->f_mapping,
- 			       linear_page_index(vma, haddr));
- 	if (!hpage)
-@@ -1468,6 +1476,19 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
- 	if (!pmd)
- 		goto drop_hpage;
+-	host->sys_clk_cg = devm_clk_get_optional(&pdev->dev, "sys_cg");
++	/* If present, always enable for this clock gate */
++	host->sys_clk_cg = devm_clk_get_optional_enabled(&pdev->dev, "sys_cg");
+ 	if (IS_ERR(host->sys_clk_cg))
+ 		host->sys_clk_cg = NULL;
  
-+	/*
-+	 * We need to lock the mapping so that from here on, only GUP-fast and
-+	 * hardware page walks can access the parts of the page tables that
-+	 * we're operating on.
-+	 */
-+	i_mmap_lock_write(vma->vm_file->f_mapping);
-+
-+	/*
-+	 * This spinlock should be unnecessary: Nobody else should be accessing
-+	 * the page tables under spinlock protection here, only
-+	 * lockless_pages_from_mm() and the hardware page walker can access page
-+	 * tables while all the high-level locks are held in write mode.
-+	 */
- 	start_pte = pte_offset_map_lock(mm, pmd, haddr, &ptl);
- 
- 	/* step 1: check all mapped PTEs are to the right huge page */
-@@ -1514,12 +1535,12 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
- 	}
- 
- 	/* step 4: collapse pmd */
--	ptl = pmd_lock(vma->vm_mm, pmd);
- 	_pmd = pmdp_collapse_flush(vma, haddr, pmd);
--	spin_unlock(ptl);
- 	mm_dec_nr_ptes(mm);
- 	pte_free(mm, pmd_pgtable(_pmd));
- 
-+	i_mmap_unlock_write(vma->vm_file->f_mapping);
-+
- drop_hpage:
- 	unlock_page(hpage);
- 	put_page(hpage);
-@@ -1527,6 +1548,7 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
- 
- abort:
- 	pte_unmap_unlock(start_pte, ptl);
-+	i_mmap_unlock_write(vma->vm_file->f_mapping);
- 	goto drop_hpage;
- }
- 
-@@ -1575,7 +1597,8 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
- 		 * An alternative would be drop the check, but check that page
- 		 * table is clear before calling pmdp_collapse_flush() under
- 		 * ptl. It has higher chance to recover THP for the VMA, but
--		 * has higher cost too.
-+		 * has higher cost too. It would also probably require locking
-+		 * the anon_vma.
- 		 */
- 		if (vma->anon_vma)
- 			continue;
-@@ -1597,10 +1620,8 @@ static void retract_page_tables(struct address_space *mapping, pgoff_t pgoff)
- 		 */
- 		if (mmap_write_trylock(mm)) {
- 			if (!khugepaged_test_exit(mm)) {
--				spinlock_t *ptl = pmd_lock(mm, pmd);
- 				/* assume page table is clear */
- 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
--				spin_unlock(ptl);
- 				mm_dec_nr_ptes(mm);
- 				pte_free(mm, pmd_pgtable(_pmd));
- 			}
+-	/* If present, always enable for this clock gate */
+-	clk_prepare_enable(host->sys_clk_cg);
+-
+ 	host->bulk_clks[0].id = "pclk_cg";
+ 	host->bulk_clks[1].id = "axi_cg";
+ 	host->bulk_clks[2].id = "ahb_cg";
 -- 
 2.35.1
 
