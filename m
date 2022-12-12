@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB0E28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C31DC433F0;
-	Mon, 12 Dec 2022 13:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C00D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:55:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF11C433EF;
+	Mon, 12 Dec 2022 13:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853327;
-	bh=32GjUSZO50TOChG3Q65SYtHR5kPbYpCnzVf68che8L0=;
+	s=korg; t=1670853331;
+	bh=CMf3mJoiiDYjSUMlxcs4bX65b1IFunj0Vs48ipWViO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBCgyi+T0LvdyPiURdcN+/uLcG8S92VWR9uFTrqkAQ8Js+M4/CXJdgB/8p+42onkU
-	 jQEojNXAsiI8L1QK0/aXa83BzHs5HG2OJh0un610tSGTRw9l5dyKD03ZeiV3AOZ8Fx
-	 tTTM0gg4sil8ELRrrNn/hEeGZnrFmU/pDSQKhRzc=
+	b=o4pr+UHcabSG9b05wsES3bmWnwFM0dNhqOEYOVc3mfuWYmQxC+bATmrv3SyooUsLQ
+	 YitnjFynox8nHfmukGIaTkfmQc/+PaMvAnZj+HWGRp2TV6uWIJM+U8D3tQRKWGoSQ7
+	 OuC6IEtscVctbpSEyzLtzU8UqTg6TK35so+fSR1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+210e196cef4711b65139@syzkaller.appspotmail.com,
-	Kees Cook <keescook@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 24/31] NFC: nci: Bounds check struct nfc_target arrays
-Date: Mon, 12 Dec 2022 14:19:42 +0100
-Message-Id: <20221212130911.325175096@linuxfoundation.org>
+Subject: [PATCH 4.9 25/31] net: hisilicon: Fix potential use-after-free in hisi_femac_rx()
+Date: Mon, 12 Dec 2022 14:19:43 +0100
+Message-Id: <20221212130911.380256159@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
@@ -37,60 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit e329e71013c9b5a4535b099208493c7826ee4a64 ]
+[ Upstream commit 4640177049549de1a43e9bc49265f0cdfce08cfd ]
 
-While running under CONFIG_FORTIFY_SOURCE=y, syzkaller reported:
+The skb is delivered to napi_gro_receive() which may free it, after
+calling this, dereferencing skb may trigger use-after-free.
 
-  memcpy: detected field-spanning write (size 129) of single field "target->sensf_res" at net/nfc/nci/ntf.c:260 (size 18)
-
-This appears to be a legitimate lack of bounds checking in
-nci_add_new_protocol(). Add the missing checks.
-
-Reported-by: syzbot+210e196cef4711b65139@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/0000000000001c590f05ee7b3ff4@google.com
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221202214410.never.693-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Link: https://lore.kernel.org/r/20221203094240.1240211-1-liujian56@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/ntf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/hisilicon/hisi_femac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/nci/ntf.c b/net/nfc/nci/ntf.c
-index 1e8c1a12aaec..4f75453c07aa 100644
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -230,6 +230,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		target->sens_res = nfca_poll->sens_res;
- 		target->sel_res = nfca_poll->sel_res;
- 		target->nfcid1_len = nfca_poll->nfcid1_len;
-+		if (target->nfcid1_len > ARRAY_SIZE(target->nfcid1))
-+			return -EPROTO;
- 		if (target->nfcid1_len > 0) {
- 			memcpy(target->nfcid1, nfca_poll->nfcid1,
- 			       target->nfcid1_len);
-@@ -238,6 +240,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcb_poll = (struct rf_tech_specific_params_nfcb_poll *)params;
- 
- 		target->sensb_res_len = nfcb_poll->sensb_res_len;
-+		if (target->sensb_res_len > ARRAY_SIZE(target->sensb_res))
-+			return -EPROTO;
- 		if (target->sensb_res_len > 0) {
- 			memcpy(target->sensb_res, nfcb_poll->sensb_res,
- 			       target->sensb_res_len);
-@@ -246,6 +250,8 @@ static int nci_add_new_protocol(struct nci_dev *ndev,
- 		nfcf_poll = (struct rf_tech_specific_params_nfcf_poll *)params;
- 
- 		target->sensf_res_len = nfcf_poll->sensf_res_len;
-+		if (target->sensf_res_len > ARRAY_SIZE(target->sensf_res))
-+			return -EPROTO;
- 		if (target->sensf_res_len > 0) {
- 			memcpy(target->sensf_res, nfcf_poll->sensf_res,
- 			       target->sensf_res_len);
+diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
+index ced185962ef8..77f61167e238 100644
+--- a/drivers/net/ethernet/hisilicon/hisi_femac.c
++++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
+@@ -295,7 +295,7 @@ static int hisi_femac_rx(struct net_device *dev, int limit)
+ 		skb->protocol = eth_type_trans(skb, dev);
+ 		napi_gro_receive(&priv->napi, skb);
+ 		dev->stats.rx_packets++;
+-		dev->stats.rx_bytes += skb->len;
++		dev->stats.rx_bytes += len;
+ next:
+ 		pos = (pos + 1) % rxq->num;
+ 		if (rx_pkts_num >= limit)
 -- 
 2.35.1
 
