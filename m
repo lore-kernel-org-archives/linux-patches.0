@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582A228ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A76C433F0;
-	Mon, 12 Dec 2022 13:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEC828ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:51:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADB2C433D2;
+	Mon, 12 Dec 2022 13:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853099;
-	bh=iGLtKEOUciNosItJEjEuqdbn7b0630fdKzx1cnYZNOY=;
+	s=korg; t=1670853103;
+	bh=B2nI6IEUyyeOXMzdBUzkhVdl0q2jw3gtIqturdW1Xck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YuAk2HCNr3d2BekOX+FgQX6k5mlu4C41uOSkAHlfiCkEuM9PNVUG+ugPmekC79dM1
-	 yqOJHg0uD/f+3Ph+CBcLIt4sHtvbeZexsjGIW3anUKtcqZRHIlurVufX373JcyXm2R
-	 SodRwm0Xh4slqIzuLf3plv1nIobM8n6TUW7Clu5I=
+	b=deVxKJ0m4U6HUquOEjf2VEFJiEDUxHWwxf51tk20+rhc173ZCXopVaRpiIvrPL/y2
+	 g4jb9nj6KQJZd5MLwC2wHa6/tB6fuZkVxs16ygaQwwP3ccRGeSPtlOfiU63TKTlhZZ
+	 hIdM+15H+MAFs2feBkMJCPcqIdKLeK4UuoBpB4BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Paul Durrant <paul@xen.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/38] arm: dts: rockchip: fix node name for hym8563 rtc
-Date: Mon, 12 Dec 2022 14:19:02 +0100
-Message-Id: <20221212130912.138579916@linuxfoundation.org>
+Subject: [PATCH 4.14 10/38] xen/netback: Ensure protocol headers dont fall in the non-linear area
+Date: Mon, 12 Dec 2022 14:19:11 +0100
+Message-Id: <20221212130912.629831956@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130912.069170932@linuxfoundation.org>
 References: <20221212130912.069170932@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,89 +36,387 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit 17b57beafccb4569accbfc8c11390744cf59c021 ]
+[ Upstream commit ad7f402ae4f466647c3a669b8a6f3e5d4271c84a ]
 
-Fix the node name for hym8563 in all arm rockchip devicetrees.
+In some cases, the frontend may send a packet where the protocol headers
+are spread across multiple slots. This would result in netback creating
+an skb where the protocol headers spill over into the non-linear area.
+Some drivers and NICs don't handle this properly resulting in an
+interface reset or worse.
 
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20221024165549.74574-4-sebastian.reichel@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+This issue was introduced by the removal of an unconditional skb pull in
+the tx path to improve performance.  Fix this without reintroducing the
+pull by setting up grant copy ops for as many slots as needed to reach
+the XEN_NETBACK_TX_COPY_LEN size. Adjust the rest of the code to handle
+multiple copy operations per skb.
+
+This is XSA-423 / CVE-2022-3643.
+
+Fixes: 7e5d7753956b ("xen-netback: remove unconditional __pskb_pull_tail() in guest Tx path")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036-evb.dts          | 2 +-
- arch/arm/boot/dts/rk3288-evb-act8846.dts  | 2 +-
- arch/arm/boot/dts/rk3288-firefly.dtsi     | 2 +-
- arch/arm/boot/dts/rk3288-miqi.dts         | 2 +-
- arch/arm/boot/dts/rk3288-rock2-square.dts | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/xen-netback/netback.c | 223 ++++++++++++++++--------------
+ 1 file changed, 123 insertions(+), 100 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3036-evb.dts b/arch/arm/boot/dts/rk3036-evb.dts
-index c0953410121b..41309de6c91d 100644
---- a/arch/arm/boot/dts/rk3036-evb.dts
-+++ b/arch/arm/boot/dts/rk3036-evb.dts
-@@ -69,7 +69,7 @@
- &i2c1 {
- 	status = "okay";
+diff --git a/drivers/net/xen-netback/netback.c b/drivers/net/xen-netback/netback.c
+index e1d6dbb4b770..6ad36f1dcb44 100644
+--- a/drivers/net/xen-netback/netback.c
++++ b/drivers/net/xen-netback/netback.c
+@@ -323,10 +323,13 @@ static int xenvif_count_requests(struct xenvif_queue *queue,
  
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-evb-act8846.dts b/arch/arm/boot/dts/rk3288-evb-act8846.dts
-index b9418d170502..e5231ecb8279 100644
---- a/arch/arm/boot/dts/rk3288-evb-act8846.dts
-+++ b/arch/arm/boot/dts/rk3288-evb-act8846.dts
-@@ -91,7 +91,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
  
--	hym8563@51 {
-+	rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 
-diff --git a/arch/arm/boot/dts/rk3288-firefly.dtsi b/arch/arm/boot/dts/rk3288-firefly.dtsi
-index b9e6f3a97240..5b14e9105070 100644
---- a/arch/arm/boot/dts/rk3288-firefly.dtsi
-+++ b/arch/arm/boot/dts/rk3288-firefly.dtsi
-@@ -270,7 +270,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
- 
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-miqi.dts b/arch/arm/boot/dts/rk3288-miqi.dts
-index 4d923aa6ed11..2fd39bbf0b01 100644
---- a/arch/arm/boot/dts/rk3288-miqi.dts
-+++ b/arch/arm/boot/dts/rk3288-miqi.dts
-@@ -183,7 +183,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
- 
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-rock2-square.dts b/arch/arm/boot/dts/rk3288-rock2-square.dts
-index 0e084b8a86ac..6011b117ab68 100644
---- a/arch/arm/boot/dts/rk3288-rock2-square.dts
-+++ b/arch/arm/boot/dts/rk3288-rock2-square.dts
-@@ -177,7 +177,7 @@
+ struct xenvif_tx_cb {
+-	u16 pending_idx;
++	u16 copy_pending_idx[XEN_NETBK_LEGACY_SLOTS_MAX + 1];
++	u8 copy_count;
  };
  
- &i2c0 {
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
+ #define XENVIF_TX_CB(skb) ((struct xenvif_tx_cb *)(skb)->cb)
++#define copy_pending_idx(skb, i) (XENVIF_TX_CB(skb)->copy_pending_idx[i])
++#define copy_count(skb) (XENVIF_TX_CB(skb)->copy_count)
+ 
+ static inline void xenvif_tx_create_map_op(struct xenvif_queue *queue,
+ 					   u16 pending_idx,
+@@ -361,31 +364,93 @@ static inline struct sk_buff *xenvif_alloc_skb(unsigned int size)
+ 	return skb;
+ }
+ 
+-static struct gnttab_map_grant_ref *xenvif_get_requests(struct xenvif_queue *queue,
+-							struct sk_buff *skb,
+-							struct xen_netif_tx_request *txp,
+-							struct gnttab_map_grant_ref *gop,
+-							unsigned int frag_overflow,
+-							struct sk_buff *nskb)
++static void xenvif_get_requests(struct xenvif_queue *queue,
++				struct sk_buff *skb,
++				struct xen_netif_tx_request *first,
++				struct xen_netif_tx_request *txfrags,
++			        unsigned *copy_ops,
++			        unsigned *map_ops,
++				unsigned int frag_overflow,
++				struct sk_buff *nskb,
++				unsigned int extra_count,
++				unsigned int data_len)
+ {
+ 	struct skb_shared_info *shinfo = skb_shinfo(skb);
+ 	skb_frag_t *frags = shinfo->frags;
+-	u16 pending_idx = XENVIF_TX_CB(skb)->pending_idx;
+-	int start;
++	u16 pending_idx;
+ 	pending_ring_idx_t index;
+ 	unsigned int nr_slots;
++	struct gnttab_copy *cop = queue->tx_copy_ops + *copy_ops;
++	struct gnttab_map_grant_ref *gop = queue->tx_map_ops + *map_ops;
++	struct xen_netif_tx_request *txp = first;
++
++	nr_slots = shinfo->nr_frags + 1;
++
++	copy_count(skb) = 0;
++
++	/* Create copy ops for exactly data_len bytes into the skb head. */
++	__skb_put(skb, data_len);
++	while (data_len > 0) {
++		int amount = data_len > txp->size ? txp->size : data_len;
++
++		cop->source.u.ref = txp->gref;
++		cop->source.domid = queue->vif->domid;
++		cop->source.offset = txp->offset;
++
++		cop->dest.domid = DOMID_SELF;
++		cop->dest.offset = (offset_in_page(skb->data +
++						   skb_headlen(skb) -
++						   data_len)) & ~XEN_PAGE_MASK;
++		cop->dest.u.gmfn = virt_to_gfn(skb->data + skb_headlen(skb)
++				               - data_len);
++
++		cop->len = amount;
++		cop->flags = GNTCOPY_source_gref;
+ 
+-	nr_slots = shinfo->nr_frags;
++		index = pending_index(queue->pending_cons);
++		pending_idx = queue->pending_ring[index];
++		callback_param(queue, pending_idx).ctx = NULL;
++		copy_pending_idx(skb, copy_count(skb)) = pending_idx;
++		copy_count(skb)++;
++
++		cop++;
++		data_len -= amount;
+ 
+-	/* Skip first skb fragment if it is on same page as header fragment. */
+-	start = (frag_get_pending_idx(&shinfo->frags[0]) == pending_idx);
++		if (amount == txp->size) {
++			/* The copy op covered the full tx_request */
++
++			memcpy(&queue->pending_tx_info[pending_idx].req,
++			       txp, sizeof(*txp));
++			queue->pending_tx_info[pending_idx].extra_count =
++				(txp == first) ? extra_count : 0;
++
++			if (txp == first)
++				txp = txfrags;
++			else
++				txp++;
++			queue->pending_cons++;
++			nr_slots--;
++		} else {
++			/* The copy op partially covered the tx_request.
++			 * The remainder will be mapped.
++			 */
++			txp->offset += amount;
++			txp->size -= amount;
++		}
++	}
+ 
+-	for (shinfo->nr_frags = start; shinfo->nr_frags < nr_slots;
+-	     shinfo->nr_frags++, txp++, gop++) {
++	for (shinfo->nr_frags = 0; shinfo->nr_frags < nr_slots;
++	     shinfo->nr_frags++, gop++) {
+ 		index = pending_index(queue->pending_cons++);
+ 		pending_idx = queue->pending_ring[index];
+-		xenvif_tx_create_map_op(queue, pending_idx, txp, 0, gop);
++		xenvif_tx_create_map_op(queue, pending_idx, txp,
++				        txp == first ? extra_count : 0, gop);
+ 		frag_set_pending_idx(&frags[shinfo->nr_frags], pending_idx);
++
++		if (txp == first)
++			txp = txfrags;
++		else
++			txp++;
+ 	}
+ 
+ 	if (frag_overflow) {
+@@ -406,7 +471,8 @@ static struct gnttab_map_grant_ref *xenvif_get_requests(struct xenvif_queue *que
+ 		skb_shinfo(skb)->frag_list = nskb;
+ 	}
+ 
+-	return gop;
++	(*copy_ops) = cop - queue->tx_copy_ops;
++	(*map_ops) = gop - queue->tx_map_ops;
+ }
+ 
+ static inline void xenvif_grant_handle_set(struct xenvif_queue *queue,
+@@ -442,7 +508,7 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 			       struct gnttab_copy **gopp_copy)
+ {
+ 	struct gnttab_map_grant_ref *gop_map = *gopp_map;
+-	u16 pending_idx = XENVIF_TX_CB(skb)->pending_idx;
++	u16 pending_idx;
+ 	/* This always points to the shinfo of the skb being checked, which
+ 	 * could be either the first or the one on the frag_list
+ 	 */
+@@ -453,24 +519,37 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 	struct skb_shared_info *first_shinfo = NULL;
+ 	int nr_frags = shinfo->nr_frags;
+ 	const bool sharedslot = nr_frags &&
+-				frag_get_pending_idx(&shinfo->frags[0]) == pending_idx;
++				frag_get_pending_idx(&shinfo->frags[0]) ==
++				    copy_pending_idx(skb, copy_count(skb) - 1);
+ 	int i, err;
+ 
+-	/* Check status of header. */
+-	err = (*gopp_copy)->status;
+-	if (unlikely(err)) {
+-		if (net_ratelimit())
+-			netdev_dbg(queue->vif->dev,
+-				   "Grant copy of header failed! status: %d pending_idx: %u ref: %u\n",
+-				   (*gopp_copy)->status,
+-				   pending_idx,
+-				   (*gopp_copy)->source.u.ref);
+-		/* The first frag might still have this slot mapped */
+-		if (!sharedslot)
+-			xenvif_idx_release(queue, pending_idx,
+-					   XEN_NETIF_RSP_ERROR);
++	for (i = 0; i < copy_count(skb); i++) {
++		int newerr;
++
++		/* Check status of header. */
++		pending_idx = copy_pending_idx(skb, i);
++
++		newerr = (*gopp_copy)->status;
++		if (likely(!newerr)) {
++			/* The first frag might still have this slot mapped */
++			if (i < copy_count(skb) - 1 || !sharedslot)
++				xenvif_idx_release(queue, pending_idx,
++						   XEN_NETIF_RSP_OKAY);
++		} else {
++			err = newerr;
++			if (net_ratelimit())
++				netdev_dbg(queue->vif->dev,
++					   "Grant copy of header failed! status: %d pending_idx: %u ref: %u\n",
++					   (*gopp_copy)->status,
++					   pending_idx,
++					   (*gopp_copy)->source.u.ref);
++			/* The first frag might still have this slot mapped */
++			if (i < copy_count(skb) - 1 || !sharedslot)
++				xenvif_idx_release(queue, pending_idx,
++						   XEN_NETIF_RSP_ERROR);
++		}
++		(*gopp_copy)++;
+ 	}
+-	(*gopp_copy)++;
+ 
+ check_frags:
+ 	for (i = 0; i < nr_frags; i++, gop_map++) {
+@@ -517,14 +596,6 @@ static int xenvif_tx_check_gop(struct xenvif_queue *queue,
+ 		if (err)
+ 			continue;
+ 
+-		/* First error: if the header haven't shared a slot with the
+-		 * first frag, release it as well.
+-		 */
+-		if (!sharedslot)
+-			xenvif_idx_release(queue,
+-					   XENVIF_TX_CB(skb)->pending_idx,
+-					   XEN_NETIF_RSP_OKAY);
+-
+ 		/* Invalidate preceding fragments of this skb. */
+ 		for (j = 0; j < i; j++) {
+ 			pending_idx = frag_get_pending_idx(&shinfo->frags[j]);
+@@ -796,7 +867,6 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 				     unsigned *copy_ops,
+ 				     unsigned *map_ops)
+ {
+-	struct gnttab_map_grant_ref *gop = queue->tx_map_ops;
+ 	struct sk_buff *skb, *nskb;
+ 	int ret;
+ 	unsigned int frag_overflow;
+@@ -878,8 +948,12 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 			continue;
+ 		}
+ 
++		data_len = (txreq.size > XEN_NETBACK_TX_COPY_LEN) ?
++			XEN_NETBACK_TX_COPY_LEN : txreq.size;
++
+ 		ret = xenvif_count_requests(queue, &txreq, extra_count,
+ 					    txfrags, work_to_do);
++
+ 		if (unlikely(ret < 0))
+ 			break;
+ 
+@@ -905,9 +979,8 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 		index = pending_index(queue->pending_cons);
+ 		pending_idx = queue->pending_ring[index];
+ 
+-		data_len = (txreq.size > XEN_NETBACK_TX_COPY_LEN &&
+-			    ret < XEN_NETBK_LEGACY_SLOTS_MAX) ?
+-			XEN_NETBACK_TX_COPY_LEN : txreq.size;
++		if (ret >= XEN_NETBK_LEGACY_SLOTS_MAX - 1 && data_len < txreq.size)
++			data_len = txreq.size;
+ 
+ 		skb = xenvif_alloc_skb(data_len);
+ 		if (unlikely(skb == NULL)) {
+@@ -918,8 +991,6 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 		}
+ 
+ 		skb_shinfo(skb)->nr_frags = ret;
+-		if (data_len < txreq.size)
+-			skb_shinfo(skb)->nr_frags++;
+ 		/* At this point shinfo->nr_frags is in fact the number of
+ 		 * slots, which can be as large as XEN_NETBK_LEGACY_SLOTS_MAX.
+ 		 */
+@@ -981,54 +1052,19 @@ static void xenvif_tx_build_gops(struct xenvif_queue *queue,
+ 					     type);
+ 		}
+ 
+-		XENVIF_TX_CB(skb)->pending_idx = pending_idx;
+-
+-		__skb_put(skb, data_len);
+-		queue->tx_copy_ops[*copy_ops].source.u.ref = txreq.gref;
+-		queue->tx_copy_ops[*copy_ops].source.domid = queue->vif->domid;
+-		queue->tx_copy_ops[*copy_ops].source.offset = txreq.offset;
+-
+-		queue->tx_copy_ops[*copy_ops].dest.u.gmfn =
+-			virt_to_gfn(skb->data);
+-		queue->tx_copy_ops[*copy_ops].dest.domid = DOMID_SELF;
+-		queue->tx_copy_ops[*copy_ops].dest.offset =
+-			offset_in_page(skb->data) & ~XEN_PAGE_MASK;
+-
+-		queue->tx_copy_ops[*copy_ops].len = data_len;
+-		queue->tx_copy_ops[*copy_ops].flags = GNTCOPY_source_gref;
+-
+-		(*copy_ops)++;
+-
+-		if (data_len < txreq.size) {
+-			frag_set_pending_idx(&skb_shinfo(skb)->frags[0],
+-					     pending_idx);
+-			xenvif_tx_create_map_op(queue, pending_idx, &txreq,
+-						extra_count, gop);
+-			gop++;
+-		} else {
+-			frag_set_pending_idx(&skb_shinfo(skb)->frags[0],
+-					     INVALID_PENDING_IDX);
+-			memcpy(&queue->pending_tx_info[pending_idx].req,
+-			       &txreq, sizeof(txreq));
+-			queue->pending_tx_info[pending_idx].extra_count =
+-				extra_count;
+-		}
+-
+-		queue->pending_cons++;
+-
+-		gop = xenvif_get_requests(queue, skb, txfrags, gop,
+-				          frag_overflow, nskb);
++		xenvif_get_requests(queue, skb, &txreq, txfrags, copy_ops,
++				    map_ops, frag_overflow, nskb, extra_count,
++				    data_len);
+ 
+ 		__skb_queue_tail(&queue->tx_queue, skb);
+ 
+ 		queue->tx.req_cons = idx;
+ 
+-		if (((gop-queue->tx_map_ops) >= ARRAY_SIZE(queue->tx_map_ops)) ||
++		if ((*map_ops >= ARRAY_SIZE(queue->tx_map_ops)) ||
+ 		    (*copy_ops >= ARRAY_SIZE(queue->tx_copy_ops)))
+ 			break;
+ 	}
+ 
+-	(*map_ops) = gop - queue->tx_map_ops;
+ 	return;
+ }
+ 
+@@ -1107,9 +1143,8 @@ static int xenvif_tx_submit(struct xenvif_queue *queue)
+ 	while ((skb = __skb_dequeue(&queue->tx_queue)) != NULL) {
+ 		struct xen_netif_tx_request *txp;
+ 		u16 pending_idx;
+-		unsigned data_len;
+ 
+-		pending_idx = XENVIF_TX_CB(skb)->pending_idx;
++		pending_idx = copy_pending_idx(skb, 0);
+ 		txp = &queue->pending_tx_info[pending_idx].req;
+ 
+ 		/* Check the remap error code. */
+@@ -1128,18 +1163,6 @@ static int xenvif_tx_submit(struct xenvif_queue *queue)
+ 			continue;
+ 		}
+ 
+-		data_len = skb->len;
+-		callback_param(queue, pending_idx).ctx = NULL;
+-		if (data_len < txp->size) {
+-			/* Append the packet payload as a fragment. */
+-			txp->offset += data_len;
+-			txp->size -= data_len;
+-		} else {
+-			/* Schedule a response immediately. */
+-			xenvif_idx_release(queue, pending_idx,
+-					   XEN_NETIF_RSP_OKAY);
+-		}
+-
+ 		if (txp->flags & XEN_NETTXF_csum_blank)
+ 			skb->ip_summed = CHECKSUM_PARTIAL;
+ 		else if (txp->flags & XEN_NETTXF_data_validated)
+@@ -1316,7 +1339,7 @@ static inline void xenvif_tx_dealloc_action(struct xenvif_queue *queue)
+ /* Called after netfront has transmitted */
+ int xenvif_tx_action(struct xenvif_queue *queue, int budget)
+ {
+-	unsigned nr_mops, nr_cops = 0;
++	unsigned nr_mops = 0, nr_cops = 0;
+ 	int work_done, ret;
+ 
+ 	if (unlikely(!tx_work_todo(queue)))
 -- 
 2.35.1
 
