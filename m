@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E99C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9338C433D2;
-	Mon, 12 Dec 2022 13:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D0D28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:54:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63A4C433D2;
+	Mon, 12 Dec 2022 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670853266;
-	bh=ZNby5NHtZlgBTUb39XrLZ5JJvBq7trP8z2fxRcDJV5w=;
+	s=korg; t=1670853271;
+	bh=8QM0V+sylQ9NgxPfN44XcTwySq/1QPCNsEkUz4w1/To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n991u1vM02t63Q6PvWuCcE8dAEXH4Sj/4s8YZlAs1DGr/d0kIICzAdXeV88h6+nuf
-	 t30B9VmsrQ7RuMdW66ZplwVfR3ypbu+dX6TXTLmmX8Wax/14miK4bK3b5LQiQ81LK8
-	 FCyXR7CO/m6w9ZObVr3sIz9+3A4ccJxSBxrF6c4c=
+	b=0xYLUMWsyYJS1J2hgKfOYVs6ghGd/SAA/la7iWKCfFpO2QizU9y0DYJ0exiEd6u6F
+	 y9f5/COhA23mmHzDiUFX6LV37XvT+zpo3rqRn3Z7JsMPB/pTt7ZoHjpBe7AvcT97O1
+	 L4BcA8DHI4uiecWxkQn+WkzT1dTBqtpFOTCVQNxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 01/31] arm: dts: rockchip: fix node name for hym8563 rtc
-Date: Mon, 12 Dec 2022 14:19:19 +0100
-Message-Id: <20221212130910.032946112@linuxfoundation.org>
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.9 10/31] mmc: sdhci: use FIELD_GET for preset value bit masks
+Date: Mon, 12 Dec 2022 14:19:28 +0100
+Message-Id: <20221212130910.510466202@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130909.943483205@linuxfoundation.org>
 References: <20221212130909.943483205@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,91 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-[ Upstream commit 17b57beafccb4569accbfc8c11390744cf59c021 ]
+commit fa0910107a9fea170b817f31da2a65463e00e80e upstream.
 
-Fix the node name for hym8563 in all arm rockchip devicetrees.
+Use the FIELD_GET macro to get access to the register fields.
+Delete the shift macros.
 
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20221024165549.74574-4-sebastian.reichel@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Link: https://lore.kernel.org/r/20200312110050.21732-1-yamada.masahiro@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/rk3036-evb.dts          | 2 +-
- arch/arm/boot/dts/rk3288-evb-act8846.dts  | 2 +-
- arch/arm/boot/dts/rk3288-firefly.dtsi     | 2 +-
- arch/arm/boot/dts/rk3288-miqi.dts         | 2 +-
- arch/arm/boot/dts/rk3288-rock2-square.dts | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/mmc/host/sdhci.c |   10 +++++-----
+ drivers/mmc/host/sdhci.h |   10 ++++------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3036-evb.dts b/arch/arm/boot/dts/rk3036-evb.dts
-index 8db9e9b197a2..9f9e055a47dc 100644
---- a/arch/arm/boot/dts/rk3036-evb.dts
-+++ b/arch/arm/boot/dts/rk3036-evb.dts
-@@ -69,7 +69,7 @@
- &i2c1 {
- 	status = "okay";
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -13,6 +13,7 @@
+  *     - JMicron (hardware and technical support)
+  */
  
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-evb-act8846.dts b/arch/arm/boot/dts/rk3288-evb-act8846.dts
-index 041dd5d2d18c..0fb6843cb26c 100644
---- a/arch/arm/boot/dts/rk3288-evb-act8846.dts
-+++ b/arch/arm/boot/dts/rk3288-evb-act8846.dts
-@@ -91,7 +91,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <linux/highmem.h>
+ #include <linux/io.h>
+@@ -1266,10 +1267,9 @@ u16 sdhci_calc_clk(struct sdhci_host *ho
  
--	hym8563@51 {
-+	rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
+ 			clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+ 			pre_val = sdhci_get_preset_value(host);
+-			div = (pre_val & SDHCI_PRESET_SDCLK_FREQ_MASK)
+-				>> SDHCI_PRESET_SDCLK_FREQ_SHIFT;
++			div = FIELD_GET(SDHCI_PRESET_SDCLK_FREQ_MASK, pre_val);
+ 			if (host->clk_mul &&
+-				(pre_val & SDHCI_PRESET_CLKGEN_SEL_MASK)) {
++				(pre_val & SDHCI_PRESET_CLKGEN_SEL)) {
+ 				clk = SDHCI_PROG_CLOCK_MODE;
+ 				real_div = div + 1;
+ 				clk_mul = host->clk_mul;
+@@ -1720,8 +1720,8 @@ static void sdhci_set_ios(struct mmc_hos
  
-diff --git a/arch/arm/boot/dts/rk3288-firefly.dtsi b/arch/arm/boot/dts/rk3288-firefly.dtsi
-index 114c90fb65e2..f1bceeea8124 100644
---- a/arch/arm/boot/dts/rk3288-firefly.dtsi
-+++ b/arch/arm/boot/dts/rk3288-firefly.dtsi
-@@ -253,7 +253,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
+ 			sdhci_enable_preset_value(host, true);
+ 			preset = sdhci_get_preset_value(host);
+-			ios->drv_type = (preset & SDHCI_PRESET_DRV_MASK)
+-				>> SDHCI_PRESET_DRV_SHIFT;
++			ios->drv_type = FIELD_GET(SDHCI_PRESET_DRV_MASK,
++						  preset);
+ 		}
  
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-miqi.dts b/arch/arm/boot/dts/rk3288-miqi.dts
-index 24488421f0f0..05ad29271aa5 100644
---- a/arch/arm/boot/dts/rk3288-miqi.dts
-+++ b/arch/arm/boot/dts/rk3288-miqi.dts
-@@ -186,7 +186,7 @@
- 		vin-supply = <&vcc_sys>;
- 	};
+ 		/* Re-enable SD Clock */
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -13,6 +13,7 @@
+ #ifndef __SDHCI_HW_H
+ #define __SDHCI_HW_H
  
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
-diff --git a/arch/arm/boot/dts/rk3288-rock2-square.dts b/arch/arm/boot/dts/rk3288-rock2-square.dts
-index dd3ad2e93a6d..61490f03918c 100644
---- a/arch/arm/boot/dts/rk3288-rock2-square.dts
-+++ b/arch/arm/boot/dts/rk3288-rock2-square.dts
-@@ -159,7 +159,7 @@
- };
++#include <linux/bits.h>
+ #include <linux/scatterlist.h>
+ #include <linux/compiler.h>
+ #include <linux/types.h>
+@@ -244,12 +245,9 @@
+ #define SDHCI_PRESET_FOR_SDR104        0x6C
+ #define SDHCI_PRESET_FOR_DDR50 0x6E
+ #define SDHCI_PRESET_FOR_HS400 0x74 /* Non-standard */
+-#define SDHCI_PRESET_DRV_MASK  0xC000
+-#define SDHCI_PRESET_DRV_SHIFT  14
+-#define SDHCI_PRESET_CLKGEN_SEL_MASK   0x400
+-#define SDHCI_PRESET_CLKGEN_SEL_SHIFT	10
+-#define SDHCI_PRESET_SDCLK_FREQ_MASK   0x3FF
+-#define SDHCI_PRESET_SDCLK_FREQ_SHIFT	0
++#define SDHCI_PRESET_DRV_MASK		GENMASK(15, 14)
++#define SDHCI_PRESET_CLKGEN_SEL		BIT(10)
++#define SDHCI_PRESET_SDCLK_FREQ_MASK	GENMASK(9, 0)
  
- &i2c0 {
--	hym8563: hym8563@51 {
-+	hym8563: rtc@51 {
- 		compatible = "haoyu,hym8563";
- 		reg = <0x51>;
- 		#clock-cells = <0>;
--- 
-2.35.1
-
+ #define SDHCI_SLOT_INT_STATUS	0xFC
+ 
 
 
