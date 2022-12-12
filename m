@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2082028ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F45C433EF;
-	Mon, 12 Dec 2022 13:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354A028ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:32:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FA2C433EF;
+	Mon, 12 Dec 2022 13:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851957;
-	bh=VDUJT7UsVE3Lv/5CimujWOKrnGVD+AlGkz6dJnGcc6g=;
+	s=korg; t=1670851963;
+	bh=OPgLU4+SON2d6rv+3B934RSx4k0epT75RIOsRywKaz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBY/aIujCYAkoUIWLlVhbNinDE8DNWEjrhHmjAQOPqjMc5xhx4NkE/w8nsbD3Wwhx
-	 H/wFe35RcbC74Jdl2KP+DRYO9iWO0ZmPbPaTzVi1dYBY4D7u88yQp702mZokd+g95U
-	 Bb0//xAsJeQ1wim95eZZBfHeF7nX75jNMijcD0xM=
+	b=KMtFOf6kjcDiSBdTECiC3BjI8ZfYD/pD8kyPuPI+DlExV1tkuBTeBO9DeWloRO40o
+	 vF14MvA5BUd48kQI5MQQEuO5pkWoMXM1k/GuGOsvop3ALYiV/SASyvnCYaMcMcneFZ
+	 PrODp5L5KtQA5z+ZYIwHCTbkn3jWyDMP33Xqb4qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/123] ipv4: Fix incorrect route flushing when source address is deleted
-Date: Mon, 12 Dec 2022 14:17:51 +0100
-Message-Id: <20221212130931.650203689@linuxfoundation.org>
+Subject: [PATCH 5.15 088/123] octeontx2-pf: Fix potential memory leak in otx2_init_tc()
+Date: Mon, 12 Dec 2022 14:17:34 +0100
+Message-Id: <20221212130930.666249551@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,132 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
+[ Upstream commit fbf33f5ac76f2cdb47ad9763f620026d5cfa57ce ]
 
-Cited commit added the table ID to the FIB info structure, but did not
-prevent structures with different table IDs from being consolidated.
-This can lead to routes being flushed from a VRF when an address is
-deleted from a different VRF.
+In otx2_init_tc(), if rhashtable_init() failed, it does not free
+tc->tc_entries_bitmap which is allocated in otx2_tc_alloc_ent_bitmap().
 
-Fix by taking the table ID into account when looking for a matching FIB
-info. This is already done for FIB info structures backed by a nexthop
-object in fib_find_info_nh().
-
-Add test cases that fail before the fix:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [FAIL]
-     TEST: Route in default VRF not removed                              [ OK ]
- RTNETLINK answers: File exists
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [FAIL]
-
- Tests passed:   6
- Tests failed:   2
-
-And pass after:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-
- Tests passed:   8
- Tests failed:   0
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2e2a8126ffac ("octeontx2-pf: Unify flow management variables")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c                 |  1 +
- tools/testing/selftests/net/fib_tests.sh | 27 ++++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index af64ae689b13..250af6e5a892 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -421,6 +421,7 @@ static struct fib_info *fib_find_info(struct fib_info *nfi)
- 		    nfi->fib_prefsrc == fi->fib_prefsrc &&
- 		    nfi->fib_priority == fi->fib_priority &&
- 		    nfi->fib_type == fi->fib_type &&
-+		    nfi->fib_tb_id == fi->fib_tb_id &&
- 		    memcmp(nfi->fib_metrics, fi->fib_metrics,
- 			   sizeof(u32) * RTAX_MAX) == 0 &&
- 		    !((nfi->fib_flags ^ fi->fib_flags) & ~RTNH_COMPARE_MASK) &&
-diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
-index 996af1ae3d3d..d238617b6ab5 100755
---- a/tools/testing/selftests/net/fib_tests.sh
-+++ b/tools/testing/selftests/net/fib_tests.sh
-@@ -1622,13 +1622,19 @@ ipv4_del_addr_test()
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+index 75388a65f349..a42373e6f259 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -1090,7 +1090,12 @@ int otx2_init_tc(struct otx2_nic *nic)
+ 		return err;
  
- 	$IP addr add dev dummy1 172.16.104.1/24
- 	$IP addr add dev dummy1 172.16.104.11/24
-+	$IP addr add dev dummy1 172.16.104.12/24
- 	$IP addr add dev dummy2 172.16.104.1/24
- 	$IP addr add dev dummy2 172.16.104.11/24
-+	$IP addr add dev dummy2 172.16.104.12/24
- 	$IP route add 172.16.105.0/24 via 172.16.104.2 src 172.16.104.11
-+	$IP route add 172.16.106.0/24 dev lo src 172.16.104.12
- 	$IP route add vrf red 172.16.105.0/24 via 172.16.104.2 src 172.16.104.11
-+	$IP route add vrf red 172.16.106.0/24 dev lo src 172.16.104.12
- 	set +e
+ 	tc->flow_ht_params = tc_flow_ht_params;
+-	return rhashtable_init(&tc->flow_table, &tc->flow_ht_params);
++	err = rhashtable_init(&tc->flow_table, &tc->flow_ht_params);
++	if (err) {
++		kfree(tc->tc_entries_bitmap);
++		tc->tc_entries_bitmap = NULL;
++	}
++	return err;
+ }
  
- 	# removing address from device in vrf should only remove route from vrf table
-+	echo "    Regular FIB info"
-+
- 	$IP addr del dev dummy2 172.16.104.11/24
- 	$IP ro ls vrf red | grep -q 172.16.105.0/24
- 	log_test $? 1 "Route removed from VRF when source address deleted"
-@@ -1646,6 +1652,27 @@ ipv4_del_addr_test()
- 	$IP ro ls vrf red | grep -q 172.16.105.0/24
- 	log_test $? 0 "Route in VRF is not removed by address delete"
- 
-+	# removing address from device in vrf should only remove route from vrf
-+	# table even when the associated fib info only differs in table ID
-+	echo "    Identical FIB info with different table ID"
-+
-+	$IP addr del dev dummy2 172.16.104.12/24
-+	$IP ro ls vrf red | grep -q 172.16.106.0/24
-+	log_test $? 1 "Route removed from VRF when source address deleted"
-+
-+	$IP ro ls | grep -q 172.16.106.0/24
-+	log_test $? 0 "Route in default VRF not removed"
-+
-+	$IP addr add dev dummy2 172.16.104.12/24
-+	$IP route add vrf red 172.16.106.0/24 dev lo src 172.16.104.12
-+
-+	$IP addr del dev dummy1 172.16.104.12/24
-+	$IP ro ls | grep -q 172.16.106.0/24
-+	log_test $? 1 "Route removed in default VRF when source address deleted"
-+
-+	$IP ro ls vrf red | grep -q 172.16.106.0/24
-+	log_test $? 0 "Route in VRF is not removed by address delete"
-+
- 	$IP li del dummy1
- 	$IP li del dummy2
- 	cleanup
+ void otx2_shutdown_tc(struct otx2_nic *nic)
 -- 
 2.35.1
 
