@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD0C28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F89C433D2;
-	Mon, 12 Dec 2022 13:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D4E28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:14:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCB1C433D2;
+	Mon, 12 Dec 2022 13:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670850868;
-	bh=5S1DvJJPyJEMV/QViteFDkxOG733efxJOYUO+3wio6E=;
+	s=korg; t=1670850871;
+	bh=RkGcC+L/o3C3T8U79kn4EvSY71fjlysQ/JfKQcONjdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Na/euVZKqYVtioBjKpDu0oeloSwhSyMauVtlQweqK5AigUPrmPbS9Bc8VEn15PXWA
-	 R8Eop+KNqDeWr3OXNv3sgM42vzBQIf5t1GULx6opcZX8Vs8ffNMLAtiNYZAVRB8py0
-	 hhXT9zrW/cGgHQ8At61hBR5gJSqL+RKOd13PVkUM=
+	b=CCJal5h0UZcuL2asCWoeEaNTudh/0ASMc2PHnQjy+JAerriiFPdfT+hMZTtyvRZUb
+	 Rc5VQKi1w6+8VtCQFjNH1lVweIZ2Lmv92vWa8taWx4trSxuR+79QfPxeRG+YRKQmBs
+	 I0sJ5uJQ1nQ4pjBeFO46dVzlez09Y5yCWtK/wKAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jan Kara <jack@suse.cz>,
-	Yu Zhao <yuzhao@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 049/106] mm/gup: fix gup_pud_range() for dax
-Date: Mon, 12 Dec 2022 14:09:52 +0100
-Message-Id: <20221212130926.995138424@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 024/106] usb: dwc3: gadget: Disable GUSB2PHYCFG.SUSPHY for End Transfer
+Date: Mon, 12 Dec 2022 14:09:27 +0100
+Message-Id: <20221212130925.912373943@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130924.863767275@linuxfoundation.org>
 References: <20221212130924.863767275@linuxfoundation.org>
@@ -42,87 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Starks <jostarks@microsoft.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit fcd0ccd836ffad73d98a66f6fea7b16f735ea920 upstream.
+[ Upstream commit 3aa07f72894d209fcf922ad686cbb28cf005aaad ]
 
-For dax pud, pud_huge() returns true on x86. So the function works as long
-as hugetlb is configured. However, dax doesn't depend on hugetlb.
-Commit 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax") fixed
-devmap-backed huge PMDs, but missed devmap-backed huge PUDs. Fix this as
-well.
+If there's a disconnection while operating in eSS, there may be a delay
+in VBUS drop response from the connector. In that case, the internal
+link state may drop to operate in usb2 speed while the controller thinks
+the VBUS is still high. The driver must make sure to disable
+GUSB2PHYCFG.SUSPHY when sending endpoint command while in usb2 speed.
+The End Transfer command may be called, and only that command needs to
+go through at this point. Let's keep it simple and unconditionally
+disable GUSB2PHYCFG.SUSPHY whenever we issue the command.
 
-This fixes the below kernel panic:
+This scenario is not seen in real hardware. In a rare case, our
+prototype type-c controller/interface may have a slow response
+triggerring this issue.
 
-general protection fault, probably for non-canonical address 0x69e7c000cc478: 0000 [#1] SMP
-	< snip >
-Call Trace:
-<TASK>
-get_user_pages_fast+0x1f/0x40
-iov_iter_get_pages+0xc6/0x3b0
-? mempool_alloc+0x5d/0x170
-bio_iov_iter_get_pages+0x82/0x4e0
-? bvec_alloc+0x91/0xc0
-? bio_alloc_bioset+0x19a/0x2a0
-blkdev_direct_IO+0x282/0x480
-? __io_complete_rw_common+0xc0/0xc0
-? filemap_range_has_page+0x82/0xc0
-generic_file_direct_write+0x9d/0x1a0
-? inode_update_time+0x24/0x30
-__generic_file_write_iter+0xbd/0x1e0
-blkdev_write_iter+0xb4/0x150
-? io_import_iovec+0x8d/0x340
-io_write+0xf9/0x300
-io_issue_sqe+0x3c3/0x1d30
-? sysvec_reschedule_ipi+0x6c/0x80
-__io_queue_sqe+0x33/0x240
-? fget+0x76/0xa0
-io_submit_sqes+0xe6a/0x18d0
-? __fget_light+0xd1/0x100
-__x64_sys_io_uring_enter+0x199/0x880
-? __context_tracking_enter+0x1f/0x70
-? irqentry_exit_to_user_mode+0x24/0x30
-? irqentry_exit+0x1d/0x30
-? __context_tracking_exit+0xe/0x70
-do_syscall_64+0x3b/0x90
-entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7fc97c11a7be
-	< snip >
-</TASK>
----[ end trace 48b2e0e67debcaeb ]---
-RIP: 0010:internal_get_user_pages_fast+0x340/0x990
-	< snip >
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: disabled
-
-Link: https://lkml.kernel.org/r/1670392853-28252-1-git-send-email-ssengar@linux.microsoft.com
-Fixes: 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax")
-Signed-off-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/5651117207803c26e2f22ddf4e5ce9e865dcf7c7.1668045468.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2564,7 +2564,7 @@ static int gup_pud_range(p4d_t *p4dp, p4
- 		next = pud_addr_end(addr, end);
- 		if (unlikely(!pud_present(pud)))
- 			return 0;
--		if (unlikely(pud_huge(pud))) {
-+		if (unlikely(pud_huge(pud) || pud_devmap(pud))) {
- 			if (!gup_huge_pud(pud, pudp, addr, next, flags,
- 					  pages, nr))
- 				return 0;
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index a9a43d649478..28a1194f849f 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -291,7 +291,8 @@ int dwc3_send_gadget_ep_cmd(struct dwc3_ep *dep, unsigned int cmd,
+ 	 *
+ 	 * DWC_usb3 3.30a and DWC_usb31 1.90a programming guide section 3.2.2
+ 	 */
+-	if (dwc->gadget->speed <= USB_SPEED_HIGH) {
++	if (dwc->gadget->speed <= USB_SPEED_HIGH ||
++	    DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER) {
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 		if (unlikely(reg & DWC3_GUSB2PHYCFG_SUSPHY)) {
+ 			saved_config |= DWC3_GUSB2PHYCFG_SUSPHY;
+-- 
+2.35.1
+
 
 
