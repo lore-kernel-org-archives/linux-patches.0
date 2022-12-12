@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B45A28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F076C433EF;
-	Mon, 12 Dec 2022 13:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:23:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9989FC433D2;
+	Mon, 12 Dec 2022 13:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851376;
-	bh=S3Znr+tAXuXNPXWRC1pFxWRP8mfOfN7TIj/uNzwY7zI=;
+	s=korg; t=1670851380;
+	bh=CN6UsLlELhbC/fmn3IbT3WakVUqhHfbcPBl4AV0avB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14rajUNwfW98L8nLkwQ25rFuy6+aUIhIg7SzK27uI9xMnCjDeI8xuQ7DGBD/mxwfz
-	 evukfd+1qj0YpzdE6Y/pAm7bLpmSDZQ0PLow8By4WE9emlyvhxPZcFwUVkuvpwT2rI
-	 M7Wa/EEHueZqgit7z2aWXqlaZjEynkFKtSaK2avc=
+	b=TCMc4+P39mA7YzmAA6lROjfKx+4kKKqsBnz716IJQIX0ieO3Trd4d5wyM62fiXtDQ
+	 jYwVmtFxriq4MESyZhyvTA/Sw3aDdY1ckUhILzQDbPFMXtFL3G1rOSoVU/Q7I+H2d7
+	 TzQr1ny+naXCu7/nbNIPCOl3vqquuaFIZv+yJ034=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 49/67] net: mvneta: Prevent out of bounds read in mvneta_config_rss()
-Date: Mon, 12 Dec 2022 14:17:24 +0100
-Message-Id: <20221212130919.964938498@linuxfoundation.org>
+	Michal Jaron <michalx.jaron@intel.com>,
+	Kamil Maziarz <kamil.maziarz@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan <gurucharanx.g@intel.com>
+Subject: [PATCH 5.4 50/67] i40e: Fix not setting default xps_cpus after reset
+Date: Mon, 12 Dec 2022 14:17:25 +0100
+Message-Id: <20221212130920.015489501@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -35,39 +37,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Michal Jaron <michalx.jaron@intel.com>
 
-[ Upstream commit e8b4fc13900b8e8be48debffd0dfd391772501f7 ]
+[ Upstream commit 82e0572b23029b380464fa9fdc125db9c1506d0a ]
 
-The pp->indir[0] value comes from the user.  It is passed to:
+During tx rings configuration default XPS queue config is set and
+__I40E_TX_XPS_INIT_DONE is locked. __I40E_TX_XPS_INIT_DONE state is
+cleared and set again with default mapping only during queues build,
+it means after first setup or reset with queues rebuild. (i.e.
+ethtool -L <interface> combined <number>) After other resets (i.e.
+ethtool -t <interface>) XPS_INIT_DONE is not cleared and those default
+maps cannot be set again. It results in cleared xps_cpus mapping
+until queues are not rebuild or mapping is not set by user.
 
-	if (cpu_online(pp->rxq_def))
+Add clearing __I40E_TX_XPS_INIT_DONE state during reset to let
+the driver set xps_cpus to defaults again after it was cleared.
 
-inside the mvneta_percpu_elect() function.  It needs bounds checkeding
-to ensure that it is not beyond the end of the cpu bitmap.
-
-Fixes: cad5d847a093 ("net: mvneta: Fix the CPU choice in mvneta_percpu_elect")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6f853d4f8e93 ("i40e: allow XPS with QoS enabled")
+Signed-off-by: Michal Jaron <michalx.jaron@intel.com>
+Signed-off-by: Kamil Maziarz <kamil.maziarz@intel.com>
+Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 64aa5510e61a..67ba697518d6 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -4235,6 +4235,9 @@ static int  mvneta_config_rss(struct mvneta_port *pp)
- 		napi_disable(&pp->napi);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 15f177185d71..d612b23c2e3f 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -9953,6 +9953,21 @@ static int i40e_rebuild_channels(struct i40e_vsi *vsi)
+ 	return 0;
+ }
+ 
++/**
++ * i40e_clean_xps_state - clean xps state for every tx_ring
++ * @vsi: ptr to the VSI
++ **/
++static void i40e_clean_xps_state(struct i40e_vsi *vsi)
++{
++	int i;
++
++	if (vsi->tx_rings)
++		for (i = 0; i < vsi->num_queue_pairs; i++)
++			if (vsi->tx_rings[i])
++				clear_bit(__I40E_TX_XPS_INIT_DONE,
++					  vsi->tx_rings[i]->state);
++}
++
+ /**
+  * i40e_prep_for_reset - prep for the core to reset
+  * @pf: board private structure
+@@ -9984,8 +9999,10 @@ static void i40e_prep_for_reset(struct i40e_pf *pf, bool lock_acquired)
+ 		rtnl_unlock();
+ 
+ 	for (v = 0; v < pf->num_alloc_vsi; v++) {
+-		if (pf->vsi[v])
++		if (pf->vsi[v]) {
++			i40e_clean_xps_state(pf->vsi[v]);
+ 			pf->vsi[v]->seid = 0;
++		}
  	}
  
-+	if (pp->indir[0] >= nr_cpu_ids)
-+		return -EINVAL;
-+
- 	pp->rxq_def = pp->indir[0];
- 
- 	/* Update unicast mapping */
+ 	i40e_shutdown_adminq(&pf->hw);
 -- 
 2.35.1
 
