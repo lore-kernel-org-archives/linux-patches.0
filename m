@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8BF28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331B8C433EF;
-	Mon, 12 Dec 2022 13:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B56F28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:28:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D248C433D2;
+	Mon, 12 Dec 2022 13:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851681;
-	bh=5ccOfmGg+ZLn4saJOkzQLi0wJ/LueXJS65SCr3MW+qc=;
+	s=korg; t=1670851686;
+	bh=c+zOY0RhwOXblJOFhBONr4D0iyGGCwCyf/TPmyisYKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvGkzNBK6i9WnOC93cjVGJBY4Z+bEpBXHUOwH06Ida6sdhs2140tYzmb0RJdhnmvj
-	 vZJr1f/ZZO/f1xniTUMWLt5Md8cxyOHryAMUY5wyq5vEqb90Nbli9P7R0TaUAGIFIb
-	 nILSGzpJOQP5h2EH9QdHM0MgV9lb/17KqwtlJvAU=
+	b=GgyccGQDS6/17LhMzkgatfk2ElgqMHella/cT+pgBJBeFnvZP4GwpKGJ0Tea6RgX5
+	 ajToSJ7Fi0lQJFpitIvQib37f8jpXimS7qTfcx0PMMYJc7HcqELMkyBI7Xi1OEy/Qb
+	 B0AOBVj1QRJEFu/Iwa9hqF/ykgugbZEAYOrUIoEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/123] rtc: mc146818-lib: extract mc146818_avoid_UIP
-Date: Mon, 12 Dec 2022 14:16:37 +0100
-Message-Id: <20221212130928.214762492@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Nicholas Hunt <nhunt@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>
+Subject: [PATCH 5.15 049/123] drm/vmwgfx: Dont use screen objects when SEV is active
+Date: Mon, 12 Dec 2022 14:16:55 +0100
+Message-Id: <20221212130928.983378153@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -36,133 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+From: Zack Rusin <zackr@vmware.com>
 
-[ Upstream commit ec5895c0f2d87b9bf4185db1915e40fa6fcfc0ac ]
+commit 6e90293618ed476d6b11f82ce724efbb9e9a071b upstream.
 
-Function mc146818_get_time() contains an elaborate mechanism of reading
-the RTC time while no RTC update is in progress. It turns out that
-reading the RTC alarm clock also requires avoiding the RTC update.
-Therefore, the mechanism in mc146818_get_time() should be reused - so
-extract it into a separate function.
+When SEV is enabled gmr's and mob's are explicitly disabled because
+the encrypted system memory can not be used by the hypervisor.
 
-The logic in mc146818_avoid_UIP() is same as in mc146818_get_time()
-except that after every
+The driver was disabling GMR's but the presentation code, which depends
+on GMR's, wasn't honoring it which lead to black screen on hosts
+with SEV enabled.
 
-        if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
+Make sure screen objects presentation is not used when guest memory
+regions have been disabled to fix presentation on SEV enabled hosts.
 
-there is now "mdelay(1)".
-
-To avoid producing a very unreadable patch, mc146818_get_time() will be
-refactored to use mc146818_avoid_UIP() in the next patch.
-
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Cc: Alessandro Zummo <a.zummo@towertech.it>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/20211210200131.153887-6-mat.jonczyk@o2.pl
-Stable-dep-of: cd17420ebea5 ("rtc: cmos: avoid UIP when writing alarm time")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3b0d6458c705 ("drm/vmwgfx: Refuse DMA operation when SEV encryption is active")
+Cc: <stable@vger.kernel.org> # v5.7+
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Reported-by: Nicholas Hunt <nhunt@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221201175341.491884-1-zack@kde.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-mc146818-lib.c | 70 ++++++++++++++++++++++++++++++++++
- include/linux/mc146818rtc.h    |  3 ++
- 2 files changed, 73 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/rtc/rtc-mc146818-lib.c b/drivers/rtc/rtc-mc146818-lib.c
-index f3f5a87fe376..347655d24b5d 100644
---- a/drivers/rtc/rtc-mc146818-lib.c
-+++ b/drivers/rtc/rtc-mc146818-lib.c
-@@ -8,6 +8,76 @@
- #include <linux/acpi.h>
- #endif
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_scrn.c
+@@ -953,6 +953,10 @@ int vmw_kms_sou_init_display(struct vmw_
+ 	struct drm_device *dev = &dev_priv->drm;
+ 	int i, ret;
  
-+/*
-+ * Execute a function while the UIP (Update-in-progress) bit of the RTC is
-+ * unset.
-+ *
-+ * Warning: callback may be executed more then once.
-+ */
-+bool mc146818_avoid_UIP(void (*callback)(unsigned char seconds, void *param),
-+			void *param)
-+{
-+	int i;
-+	unsigned long flags;
-+	unsigned char seconds;
++	/* Screen objects won't work if GMR's aren't available */
++	if (!dev_priv->has_gmr)
++		return -ENOSYS;
 +
-+	for (i = 0; i < 10; i++) {
-+		spin_lock_irqsave(&rtc_lock, flags);
-+
-+		/*
-+		 * Check whether there is an update in progress during which the
-+		 * readout is unspecified. The maximum update time is ~2ms. Poll
-+		 * every msec for completion.
-+		 *
-+		 * Store the second value before checking UIP so a long lasting
-+		 * NMI which happens to hit after the UIP check cannot make
-+		 * an update cycle invisible.
-+		 */
-+		seconds = CMOS_READ(RTC_SECONDS);
-+
-+		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
-+			spin_unlock_irqrestore(&rtc_lock, flags);
-+			mdelay(1);
-+			continue;
-+		}
-+
-+		/* Revalidate the above readout */
-+		if (seconds != CMOS_READ(RTC_SECONDS)) {
-+			spin_unlock_irqrestore(&rtc_lock, flags);
-+			continue;
-+		}
-+
-+		if (callback)
-+			callback(seconds, param);
-+
-+		/*
-+		 * Check for the UIP bit again. If it is set now then
-+		 * the above values may contain garbage.
-+		 */
-+		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
-+			spin_unlock_irqrestore(&rtc_lock, flags);
-+			mdelay(1);
-+			continue;
-+		}
-+
-+		/*
-+		 * A NMI might have interrupted the above sequence so check
-+		 * whether the seconds value has changed which indicates that
-+		 * the NMI took longer than the UIP bit was set. Unlikely, but
-+		 * possible and there is also virt...
-+		 */
-+		if (seconds != CMOS_READ(RTC_SECONDS)) {
-+			spin_unlock_irqrestore(&rtc_lock, flags);
-+			continue;
-+		}
-+		spin_unlock_irqrestore(&rtc_lock, flags);
-+
-+		return true;
-+	}
-+	return false;
-+}
-+EXPORT_SYMBOL_GPL(mc146818_avoid_UIP);
-+
- /*
-  * If the UIP (Update-in-progress) bit of the RTC is set for more then
-  * 10ms, the RTC is apparently broken or not present.
-diff --git a/include/linux/mc146818rtc.h b/include/linux/mc146818rtc.h
-index 3038124c6115..b0da04fe087b 100644
---- a/include/linux/mc146818rtc.h
-+++ b/include/linux/mc146818rtc.h
-@@ -129,4 +129,7 @@ bool mc146818_does_rtc_work(void);
- int mc146818_get_time(struct rtc_time *time);
- int mc146818_set_time(struct rtc_time *time);
- 
-+bool mc146818_avoid_UIP(void (*callback)(unsigned char seconds, void *param),
-+			void *param);
-+
- #endif /* _MC146818RTC_H */
--- 
-2.35.1
-
+ 	if (!(dev_priv->capabilities & SVGA_CAP_SCREEN_OBJECT_2)) {
+ 		return -ENOSYS;
+ 	}
 
 
