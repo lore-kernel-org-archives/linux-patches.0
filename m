@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B0728ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D70C433EF;
-	Mon, 12 Dec 2022 13:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C28028ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BB0C433F0;
+	Mon, 12 Dec 2022 13:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851317;
-	bh=Bd2eFRNhkOGHlVzYZ5nYQqOe+1dRsye3Bs9JRq3TORg=;
+	s=korg; t=1670851321;
+	bh=MTVEl/eVAJqBrcHA5eO5rmojqkMRaNsSTr5K5+E3JWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtO8jk+7/fBdCryoneDLZTMmqVXAO/GfIKsUVlFsSomSovHUDLW4Jbi9v8EYJVCZV
-	 Yx+jKvomEq1B1pzbGP+5igV/UoTZY1Qqii7nbCbXBcbIkhu6XcgM0wuYvqDUNz8TL7
-	 kP4rrFTVbQ65nigQM9x3kEtuseGET2ZBwQbpOS+w=
+	b=J9pcU5hET+mm8+tcmsMe7a1cmHAL4zkRK3/cwSVaMZzlGlnSyLnASMfg0a2TpW9TN
+	 2mIMJxoGKKjwaKWwFTSqzOM1u6AGow+lWffKpUVBZ6+yHRChp3xXpu5oYQbUJGkVus
+	 M7SC0nkvVr7MCTgctW+qcLK5ONYh1RsL3y4g/kEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 08/67] 9p/fd: Use P9_HDRSZ for header size
-Date: Mon, 12 Dec 2022 14:16:43 +0100
-Message-Id: <20221212130918.029452334@linuxfoundation.org>
+Subject: [PATCH 5.4 09/67] regulator: slg51000: Wait after asserting CS pin
+Date: Mon, 12 Dec 2022 14:16:44 +0100
+Message-Id: <20221212130918.077792727@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -36,54 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 6854fadbeee10891ed74246bdc05031906b6c8cf ]
+[ Upstream commit 0b24dfa587c6cc7484cfb170da5c7dd73451f670 ]
 
-Cleanup hardcoded header sizes to use P9_HDRSZ instead of '7'
+Sony's downstream driver [1], among some other changes, adds a
+seemingly random 10ms usleep_range, which turned out to be necessary
+for the hardware to function properly on at least Sony Xperia 1 IV.
+Without this, I2C transactions with the SLG51000 straight up fail.
 
-Link: https://lkml.kernel.org/r/20221117091159.31533-4-guozihua@huawei.com
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-[Dominique: commit message adjusted to make sense after offset size
-adjustment got removed]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Relax (10-10ms -> 10-11ms) and add the aforementioned sleep to make
+sure the hardware has some time to wake up.
+
+(nagara-2.0.0-mlc/vendor/semc/hardware/camera-kernel-module/)
+[1] https://developer.sony.com/file/download/open-source-archive-for-64-0-m-4-29/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20221118131035.54874-1-konrad.dybcio@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/regulator/slg51000-regulator.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index 23c1d78ab1e4..872568cca926 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -118,7 +118,7 @@ struct p9_conn {
- 	struct list_head unsent_req_list;
- 	struct p9_req_t *rreq;
- 	struct p9_req_t *wreq;
--	char tmp_buf[7];
-+	char tmp_buf[P9_HDRSZ];
- 	struct p9_fcall rc;
- 	int wpos;
- 	int wsize;
-@@ -291,7 +291,7 @@ static void p9_read_work(struct work_struct *work)
- 	if (!m->rc.sdata) {
- 		m->rc.sdata = m->tmp_buf;
- 		m->rc.offset = 0;
--		m->rc.capacity = 7; /* start by reading header */
-+		m->rc.capacity = P9_HDRSZ; /* start by reading header */
+diff --git a/drivers/regulator/slg51000-regulator.c b/drivers/regulator/slg51000-regulator.c
+index a0565daecace..5a18d7e620a5 100644
+--- a/drivers/regulator/slg51000-regulator.c
++++ b/drivers/regulator/slg51000-regulator.c
+@@ -465,6 +465,8 @@ static int slg51000_i2c_probe(struct i2c_client *client,
+ 		chip->cs_gpiod = cs_gpiod;
  	}
  
- 	clear_bit(Rpending, &m->wsched);
-@@ -314,7 +314,7 @@ static void p9_read_work(struct work_struct *work)
- 		p9_debug(P9_DEBUG_TRANS, "got new header\n");
- 
- 		/* Header size */
--		m->rc.size = 7;
-+		m->rc.size = P9_HDRSZ;
- 		err = p9_parse_header(&m->rc, &m->rc.size, NULL, NULL, 0);
- 		if (err) {
- 			p9_debug(P9_DEBUG_ERROR,
++	usleep_range(10000, 11000);
++
+ 	i2c_set_clientdata(client, chip);
+ 	chip->chip_irq = client->irq;
+ 	chip->dev = dev;
 -- 
 2.35.1
 
