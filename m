@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1E428ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:40:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4870FC433EF;
-	Mon, 12 Dec 2022 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA80C28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:41:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21287C433EF;
+	Mon, 12 Dec 2022 13:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852457;
-	bh=+dCOKp5HDu8gfuthbDRRHAO03zpfaGehV31YqYiRQ8w=;
+	s=korg; t=1670852462;
+	bh=bjKzL0ABmnz7AqXAK9DkHcuh9Yodcz4M6I1m/3Xyyj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQLiMCChB1KvLjUcjJY1ZQDJcRvsNlG35Nvnleo73OdpooMRKP3evzGy0Uw7QAlmu
-	 d4IGfYAA05JrFhZLEP05CWHjnXUWocwEtI66IcqHiED0wN54N+NrvUgwo3ezhccC+S
-	 SVI7jbJrUsM0e+6DwMuFVCWQwiZOX8z6GOAtJHFE=
+	b=IiF0exgebkBcXZMdS0wT4ILLLFIKptAaedH/gpdWZBVFD4Sh8Lfe6yBseZWSTf0Xr
+	 2JZl2tuC+uN3ahmLDiJT+bNdzSpTjAq0AgBCxSb9Zy0mUudyACnPcOSf82OqatpTnV
+	 SMoIBu9W8uS23jFv35UsgzY7oBNHU0xk6DALwMEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.0 084/157] ARM: 9278/1: kfence: only handle translation faults
-Date: Mon, 12 Dec 2022 14:17:12 +0100
-Message-Id: <20221212130938.164150310@linuxfoundation.org>
+	syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com,
+	Wei Chen <harperchen1110@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.0 085/157] can: af_can: fix NULL pointer dereference in can_rcv_filter
+Date: Mon, 12 Dec 2022 14:17:13 +0100
+Message-Id: <20221212130938.206109341@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -34,90 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Kefeng <wangkefeng.wang@huawei.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 73a0b6ee5d6269f92df43e1d09b3278a2886bf8a upstream.
+commit 0acc442309a0a1b01bcdaa135e56e6398a49439c upstream.
 
-This is a similar fixup like arm64 does, only handle translation faults
-in case of unexpected kfence report when alignment faults on ARM, see
-more from commit 0bb1fbffc631 ("arm64: mm: kfence: only handle translation
-faults").
+Analogue to commit 8aa59e355949 ("can: af_can: fix NULL pointer
+dereference in can_rx_register()") we need to check for a missing
+initialization of ml_priv in the receive path of CAN frames.
 
-Fixes: 75969686ec0d ("ARM: 9166/1: Support KFENCE for ARM")
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Since commit 4e096a18867a ("net: introduce CAN specific pointer in the
+struct net_device") the check for dev->type to be ARPHRD_CAN is not
+sufficient anymore since bonding or tun netdevices claim to be CAN
+devices but do not initialize ml_priv accordingly.
+
+Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
+Reported-by: syzbot+2d7f58292cb5b29eb5ad@syzkaller.appspotmail.com
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20221206201259.3028-1-socketcan@hartkopp.net
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mm/fault.c |   18 ++++++++++++++++--
- arch/arm/mm/fault.h |    9 ++++++---
- 2 files changed, 22 insertions(+), 5 deletions(-)
+ net/can/af_can.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -105,6 +105,19 @@ static inline bool is_write_fault(unsign
- 	return (fsr & FSR_WRITE) && !(fsr & FSR_CM);
- }
- 
-+static inline bool is_translation_fault(unsigned int fsr)
-+{
-+	int fs = fsr_fs(fsr);
-+#ifdef CONFIG_ARM_LPAE
-+	if ((fs & FS_MMU_NOLL_MASK) == FS_TRANS_NOLL)
-+		return true;
-+#else
-+	if (fs == FS_L1_TRANS || fs == FS_L2_TRANS)
-+		return true;
-+#endif
-+	return false;
-+}
-+
- static void die_kernel_fault(const char *msg, struct mm_struct *mm,
- 			     unsigned long addr, unsigned int fsr,
- 			     struct pt_regs *regs)
-@@ -140,7 +153,8 @@ __do_kernel_fault(struct mm_struct *mm,
- 	if (addr < PAGE_SIZE) {
- 		msg = "NULL pointer dereference";
- 	} else {
--		if (kfence_handle_page_fault(addr, is_write_fault(fsr), regs))
-+		if (is_translation_fault(fsr) &&
-+		    kfence_handle_page_fault(addr, is_write_fault(fsr), regs))
- 			return;
- 
- 		msg = "paging request";
-@@ -208,7 +222,7 @@ static inline bool is_permission_fault(u
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -680,7 +680,7 @@ static int can_rcv(struct sk_buff *skb,
  {
- 	int fs = fsr_fs(fsr);
- #ifdef CONFIG_ARM_LPAE
--	if ((fs & FS_PERM_NOLL_MASK) == FS_PERM_NOLL)
-+	if ((fs & FS_MMU_NOLL_MASK) == FS_PERM_NOLL)
- 		return true;
- #else
- 	if (fs == FS_L1_PERM || fs == FS_L2_PERM)
---- a/arch/arm/mm/fault.h
-+++ b/arch/arm/mm/fault.h
-@@ -14,8 +14,9 @@
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
  
- #ifdef CONFIG_ARM_LPAE
- #define FSR_FS_AEA		17
-+#define FS_TRANS_NOLL		0x4
- #define FS_PERM_NOLL		0xC
--#define FS_PERM_NOLL_MASK	0x3C
-+#define FS_MMU_NOLL_MASK	0x3C
- 
- static inline int fsr_fs(unsigned int fsr)
+-	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CAN_MTU)) {
++	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CAN_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
+@@ -706,7 +706,7 @@ static int canfd_rcv(struct sk_buff *skb
  {
-@@ -23,8 +24,10 @@ static inline int fsr_fs(unsigned int fs
- }
- #else
- #define FSR_FS_AEA		22
--#define FS_L1_PERM             0xD
--#define FS_L2_PERM             0xF
-+#define FS_L1_TRANS		0x5
-+#define FS_L2_TRANS		0x7
-+#define FS_L1_PERM		0xD
-+#define FS_L2_PERM		0xF
+ 	struct canfd_frame *cfd = (struct canfd_frame *)skb->data;
  
- static inline int fsr_fs(unsigned int fsr)
- {
+-	if (unlikely(dev->type != ARPHRD_CAN || skb->len != CANFD_MTU)) {
++	if (unlikely(dev->type != ARPHRD_CAN || !can_get_ml_priv(dev) || skb->len != CANFD_MTU)) {
+ 		pr_warn_once("PF_CAN: dropped non conform CAN FD skbuff: dev type %d, len %d\n",
+ 			     dev->type, skb->len);
+ 		goto free_skb;
 
 
