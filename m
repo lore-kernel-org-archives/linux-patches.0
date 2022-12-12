@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB3128ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E66C433EF;
-	Mon, 12 Dec 2022 13:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1D328ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:27:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F61C433EF;
+	Mon, 12 Dec 2022 13:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851656;
-	bh=b7euXlXLj4GKoPLS7lm59dNKPZC5+9239P0ga8aayHQ=;
+	s=korg; t=1670851660;
+	bh=ibsatO31mO6MymaX9Bc+xQJXS8nzIu0zx+bo66LBsg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2PSwzLzRZxuSzAU7vzkE8RTszPn//IX96B9cyU5uns6MpHJEDcx1ecwkZkj3fP32
-	 Y1KP7s+le/b13kh3/XzNPynfj0ypD30nbOdYOcIaR/Rrk0mYo987hyOVU1eI2NzruW
-	 6pyUogWhmfMcujQLGMPNy/af/d38r6/cM1vMGpx4=
+	b=Xlh7W6m6eaO/bGWJInvUwVhs8i053OVmaaqcQdEVtWPAoI0x7emRezoS0Ili5cHBP
+	 KQPSYlgqBpXgr/i+9P1glUCYdXkJlMyvRGEHqB9mFVKNm8ADnhKs0q1VhnCYPfWr20
+	 IVA25YaW2ynGX8GVDKT8u0FSSM8d43QUI4K7wXMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jan Kara <jack@suse.cz>,
-	Yu Zhao <yuzhao@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 044/123] mm/gup: fix gup_pud_range() for dax
-Date: Mon, 12 Dec 2022 14:16:50 +0100
-Message-Id: <20221212130928.768199043@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 045/123] Bluetooth: btusb: Add debug message for CSR controllers
+Date: Mon, 12 Dec 2022 14:16:51 +0100
+Message-Id: <20221212130928.812032339@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130926.811961601@linuxfoundation.org>
 References: <20221212130926.811961601@linuxfoundation.org>
@@ -42,87 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Starks <jostarks@microsoft.com>
+From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 
-commit fcd0ccd836ffad73d98a66f6fea7b16f735ea920 upstream.
+commit 955aebd445e2b49622f2184b7abb82b05c060549 upstream.
 
-For dax pud, pud_huge() returns true on x86. So the function works as long
-as hugetlb is configured. However, dax doesn't depend on hugetlb.
-Commit 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax") fixed
-devmap-backed huge PMDs, but missed devmap-backed huge PUDs. Fix this as
-well.
+The rationale of showing this is that it's potentially critical
+information to diagnose and find more CSR compatibility bugs in the
+future and it will save a lot of headaches.
 
-This fixes the below kernel panic:
+Given that clones come from a wide array of vendors (some are actually
+Barrot, some are something else) and these numbers are what let us find
+differences between actual and fake ones, it will be immensely helpful
+to scour the Internet looking for this pattern and building an actual
+database to find correlations and improve the checks.
 
-general protection fault, probably for non-canonical address 0x69e7c000cc478: 0000 [#1] SMP
-	< snip >
-Call Trace:
-<TASK>
-get_user_pages_fast+0x1f/0x40
-iov_iter_get_pages+0xc6/0x3b0
-? mempool_alloc+0x5d/0x170
-bio_iov_iter_get_pages+0x82/0x4e0
-? bvec_alloc+0x91/0xc0
-? bio_alloc_bioset+0x19a/0x2a0
-blkdev_direct_IO+0x282/0x480
-? __io_complete_rw_common+0xc0/0xc0
-? filemap_range_has_page+0x82/0xc0
-generic_file_direct_write+0x9d/0x1a0
-? inode_update_time+0x24/0x30
-__generic_file_write_iter+0xbd/0x1e0
-blkdev_write_iter+0xb4/0x150
-? io_import_iovec+0x8d/0x340
-io_write+0xf9/0x300
-io_issue_sqe+0x3c3/0x1d30
-? sysvec_reschedule_ipi+0x6c/0x80
-__io_queue_sqe+0x33/0x240
-? fget+0x76/0xa0
-io_submit_sqes+0xe6a/0x18d0
-? __fget_light+0xd1/0x100
-__x64_sys_io_uring_enter+0x199/0x880
-? __context_tracking_enter+0x1f/0x70
-? irqentry_exit_to_user_mode+0x24/0x30
-? irqentry_exit+0x1d/0x30
-? __context_tracking_exit+0xe/0x70
-do_syscall_64+0x3b/0x90
-entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7fc97c11a7be
-	< snip >
-</TASK>
----[ end trace 48b2e0e67debcaeb ]---
-RIP: 0010:internal_get_user_pages_fast+0x340/0x990
-	< snip >
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: disabled
-
-Link: https://lkml.kernel.org/r/1670392853-28252-1-git-send-email-ssengar@linux.microsoft.com
-Fixes: 414fd080d125 ("mm/gup: fix gup_pmd_range() for dax")
-Signed-off-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2721,7 +2721,7 @@ static int gup_pud_range(p4d_t *p4dp, p4
- 		next = pud_addr_end(addr, end);
- 		if (unlikely(!pud_present(pud)))
- 			return 0;
--		if (unlikely(pud_huge(pud))) {
-+		if (unlikely(pud_huge(pud) || pud_devmap(pud))) {
- 			if (!gup_huge_pud(pud, pudp, addr, next, flags,
- 					  pages, nr))
- 				return 0;
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1901,6 +1901,11 @@ static int btusb_setup_csr(struct hci_de
+ 
+ 	rp = (struct hci_rp_read_local_version *)skb->data;
+ 
++	bt_dev_info(hdev, "CSR: Setting up dongle with HCI ver=%u rev=%04x; LMP ver=%u subver=%04x; manufacturer=%u",
++		le16_to_cpu(rp->hci_ver), le16_to_cpu(rp->hci_rev),
++		le16_to_cpu(rp->lmp_ver), le16_to_cpu(rp->lmp_subver),
++		le16_to_cpu(rp->manufacturer));
++
+ 	/* Detect a wide host of Chinese controllers that aren't CSR.
+ 	 *
+ 	 * Known fake bcdDevices: 0x0100, 0x0134, 0x1915, 0x2520, 0x7558, 0x8891
 
 
