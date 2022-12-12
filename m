@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC26B28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:48:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97697C433EF;
-	Mon, 12 Dec 2022 13:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591BE28ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B60C433EF;
+	Mon, 12 Dec 2022 13:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852895;
-	bh=fszPbQ/AAMT0n+PimCMVqHsGk82FZnPiF28cdcKDfGY=;
+	s=korg; t=1670852901;
+	bh=3YVJEu6un+1c8Rjtc7NWX56nTQhWRGgKZjnJm51T0lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0leuh5g0OZ8qvCEwXbPP1tON/obSMpVAKOQ7gDXD3bgAHvMlrMDqkodEn71YH0dLw
-	 sN4KXsNz91OAXghJodSX4eh7maLQ1cwkQ6gSvPy9J0zCN/JoCkMi+GxMLGaPTVBoiV
-	 ulum43/hA14sg3mLdxBnhQL3vtX8TqHc7Nr0A/2I=
+	b=ukR6QKGrNIT9wDQd1/W1M7hKChIXx+gSReBmwXPthrTh2Y6iNEx6283xYmqm/7xhb
+	 dT/sLHdG0v9ohQdnfMIww5aWv8Sju9cgkWOanuyP8njYAleSrXltyuGoQJFxWUY4v6
+	 JPjcJxdTQz3Q8z7OiaXAZJ2HPuIT2XrZQe8GtO2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Connor Shu <Connor.Shu@ibm.com>,
-	"Paul E. McKenney" <paulmck@linux.vnet.ibm.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 16/49] rcutorture: Automatically create initrd directory
-Date: Mon, 12 Dec 2022 14:18:54 +0100
-Message-Id: <20221212130914.499574496@linuxfoundation.org>
+Subject: [PATCH 4.19 02/49] ARM: dts: rockchip: fix ir-receiver node names
+Date: Mon, 12 Dec 2022 14:18:40 +0100
+Message-Id: <20221212130913.783342115@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
 References: <20221212130913.666185567@linuxfoundation.org>
@@ -36,116 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Connor Shu <Connor.Shu@ibm.com>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit 8f15c682ac5a778feb8e343f9057b89beb40d85b ]
+[ Upstream commit dd847fe34cdf1e89afed1af24986359f13082bfb ]
 
-The rcutorture scripts currently expect the user to create the
-tools/testing/selftests/rcutorture/initrd directory.  Should the user
-fail to do this, the kernel build will fail with obscure and confusing
-error messages.  This commit therefore adds explicit checks for the
-tools/testing/selftests/rcutorture/initrd directory, and if not present,
-creates one on systems on which dracut is installed.  If this directory
-could not be created, a less obscure error message is emitted and the
-test is aborted.
+Fix ir-receiver node names on Rockchip boards,
+so that they match with regex: '^ir(-receiver)?(@[a-f0-9]+)?$'
 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Connor Shu <Connor.Shu@ibm.com>
-[ paulmck: Adapt the script to fit into the rcutorture framework and
-  severely abbreviate the initrd/init script. ]
-Signed-off-by: Paul E. McKenney <paulmck@linux.vnet.ibm.com>
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/ea5af279-f44c-afea-023d-bb37f5a0d58d@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/rcutorture/bin/kvm.sh |  8 +++
- .../selftests/rcutorture/bin/mkinitrd.sh      | 60 +++++++++++++++++++
- 2 files changed, 68 insertions(+)
- create mode 100755 tools/testing/selftests/rcutorture/bin/mkinitrd.sh
+ arch/arm/boot/dts/rk3188-radxarock.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/rcutorture/bin/kvm.sh b/tools/testing/selftests/rcutorture/bin/kvm.sh
-index 5a7a62d76a50..19864f1cb27a 100755
---- a/tools/testing/selftests/rcutorture/bin/kvm.sh
-+++ b/tools/testing/selftests/rcutorture/bin/kvm.sh
-@@ -194,6 +194,14 @@ do
- 	shift
- done
+diff --git a/arch/arm/boot/dts/rk3188-radxarock.dts b/arch/arm/boot/dts/rk3188-radxarock.dts
+index 4a2890618f6f..720d0136f1ab 100644
+--- a/arch/arm/boot/dts/rk3188-radxarock.dts
++++ b/arch/arm/boot/dts/rk3188-radxarock.dts
+@@ -67,7 +67,7 @@
+ 		#sound-dai-cells = <0>;
+ 	};
  
-+if test -z "$TORTURE_INITRD" || tools/testing/selftests/rcutorture/bin/mkinitrd.sh
-+then
-+	:
-+else
-+	echo No initrd and unable to create one, aborting test >&2
-+	exit 1
-+fi
-+
- CONFIGFRAG=${KVM}/configs/${TORTURE_SUITE}; export CONFIGFRAG
- 
- if test -z "$configs"
-diff --git a/tools/testing/selftests/rcutorture/bin/mkinitrd.sh b/tools/testing/selftests/rcutorture/bin/mkinitrd.sh
-new file mode 100755
-index 000000000000..ae773760f396
---- /dev/null
-+++ b/tools/testing/selftests/rcutorture/bin/mkinitrd.sh
-@@ -0,0 +1,60 @@
-+#!/bin/bash
-+#
-+# Create an initrd directory if one does not already exist.
-+#
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation; either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program; if not, you can access it online at
-+# http://www.gnu.org/licenses/gpl-2.0.html.
-+#
-+# Copyright (C) IBM Corporation, 2013
-+#
-+# Author: Connor Shu <Connor.Shu@ibm.com>
-+
-+D=tools/testing/selftests/rcutorture
-+
-+# Prerequisite checks
-+[ -z "$D" ] && echo >&2 "No argument supplied" && exit 1
-+if [ ! -d "$D" ]; then
-+    echo >&2 "$D does not exist: Malformed kernel source tree?"
-+    exit 1
-+fi
-+if [ -d "$D/initrd" ]; then
-+    echo "$D/initrd already exists, no need to create it"
-+    exit 0
-+fi
-+
-+T=${TMPDIR-/tmp}/mkinitrd.sh.$$
-+trap 'rm -rf $T' 0 2
-+mkdir $T
-+
-+cat > $T/init << '__EOF___'
-+#!/bin/sh
-+while :
-+do
-+	sleep 1000000
-+done
-+__EOF___
-+
-+# Try using dracut to create initrd
-+command -v dracut >/dev/null 2>&1 || { echo >&2 "Dracut not installed"; exit 1; }
-+echo Creating $D/initrd using dracut.
-+
-+# Filesystem creation
-+dracut --force --no-hostonly --no-hostonly-cmdline --module "base" $T/initramfs.img
-+cd $D
-+mkdir initrd
-+cd initrd
-+zcat $T/initramfs.img | cpio -id
-+cp $T/init init
-+echo Done creating $D/initrd using dracut
-+exit 0
+-	ir_recv: gpio-ir-receiver {
++	ir_recv: ir-receiver {
+ 		compatible = "gpio-ir-receiver";
+ 		gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
+ 		pinctrl-names = "default";
 -- 
 2.35.1
 
