@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C953128ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:43:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46966C433D2;
-	Mon, 12 Dec 2022 13:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EF628ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:43:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A78C433EF;
+	Mon, 12 Dec 2022 13:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670852605;
-	bh=47MdCbnNyTWsRRKRgeLfoJxE6lQCtha12xlbpYXm9sY=;
+	s=korg; t=1670852610;
+	bh=yEA6rcNxNTAVkTyx9+68yURhJy0yQuRFWbb7JyLy7Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JiS7gnjgZGzCunD+LLeGXgvTRHQaJQ4zqhSy4O8eT0hE6PyL9UZ8/F6Odux4f2hC
-	 mXC05+tLY6GkYfMxmEiKEq//irS+s98+cfG3dd6mFgFlbKX3U7Y6DwIA5dAo0Sfu2H
-	 imW8vlOwtaj+8MscDonWFPqRev0sBtHm4wkU2VRk=
+	b=EDR/0W7RxSoKM/oVJXHXlpGlYJ7DM0zwb6JLX/f4ESEyEN7TqwZY/8kcibTBjfnTE
+	 +kUpVbPgZ/NPh4uuBk3hXduSIJInTrh87Mzs8pZpLYKvgXjQmD9e2KJJcdkoeBoH3H
+	 eRQUWRw/tCMK+CZSMTbKRemCKBYuMMRVtr+GXT1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dawei Li <set_pte_at@outlook.com>,
+	Martin Krastev <krastevm@vmware.com>,
+	Zack Rusin <zackr@vmware.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/157] selftests: rtnetlink: correct xfrm policy rule in kci_test_ipsec_offload
-Date: Mon, 12 Dec 2022 14:17:42 +0100
-Message-Id: <20221212130939.430915768@linuxfoundation.org>
+Subject: [PATCH 6.0 090/157] drm/vmwgfx: Fix race issue calling pin_user_pages
+Date: Mon, 12 Dec 2022 14:17:18 +0100
+Message-Id: <20221212130938.428356589@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
 References: <20221212130934.337225088@linuxfoundation.org>
@@ -36,38 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Dawei Li <set_pte_at@outlook.com>
 
-[ Upstream commit 85a0506c073332a3057f5a9635fa0d4db5a8e03b ]
+[ Upstream commit ed14d225cc7c842f6d4d5a3009f71a44f5852d09 ]
 
-When testing in kci_test_ipsec_offload, srcip is configured as $dstip,
-it should add xfrm policy rule in instead of out.
-The test result of this patch is as follows:
-PASS: ipsec_offload
+pin_user_pages() is unsafe without protection of mmap_lock,
+fix it by calling pin_user_pages_fast().
 
-Fixes: 2766a11161cc ("selftests: rtnetlink: add ipsec offload API test")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20221201082246.14131-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7a7a933edd6c ("drm/vmwgfx: Introduce VMware mks-guest-stats")
+Signed-off-by: Dawei Li <set_pte_at@outlook.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/TYWP286MB23193621CB443E1E1959A00BCA3E9@TYWP286MB2319.JPNP286.PROD.OUTLOOK.COM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/rtnetlink.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_msg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/rtnetlink.sh b/tools/testing/selftests/net/rtnetlink.sh
-index 0900c5438fbb..275491be3da2 100755
---- a/tools/testing/selftests/net/rtnetlink.sh
-+++ b/tools/testing/selftests/net/rtnetlink.sh
-@@ -782,7 +782,7 @@ kci_test_ipsec_offload()
- 	    tmpl proto esp src $srcip dst $dstip spi 9 \
- 	    mode transport reqid 42
- 	check_err $?
--	ip x p add dir out src $dstip/24 dst $srcip/24 \
-+	ip x p add dir in src $dstip/24 dst $srcip/24 \
- 	    tmpl proto esp src $dstip dst $srcip spi 9 \
- 	    mode transport reqid 42
- 	check_err $?
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_msg.c b/drivers/gpu/drm/vmwgfx/vmwgfx_msg.c
+index 089046fa21be..50fa3df0bc0c 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_msg.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_msg.c
+@@ -1085,21 +1085,21 @@ int vmw_mksstat_add_ioctl(struct drm_device *dev, void *data,
+ 	reset_ppn_array(pdesc->strsPPNs, ARRAY_SIZE(pdesc->strsPPNs));
+ 
+ 	/* Pin mksGuestStat user pages and store those in the instance descriptor */
+-	nr_pinned_stat = pin_user_pages(arg->stat, num_pages_stat, FOLL_LONGTERM, pages_stat, NULL);
++	nr_pinned_stat = pin_user_pages_fast(arg->stat, num_pages_stat, FOLL_LONGTERM, pages_stat);
+ 	if (num_pages_stat != nr_pinned_stat)
+ 		goto err_pin_stat;
+ 
+ 	for (i = 0; i < num_pages_stat; ++i)
+ 		pdesc->statPPNs[i] = page_to_pfn(pages_stat[i]);
+ 
+-	nr_pinned_info = pin_user_pages(arg->info, num_pages_info, FOLL_LONGTERM, pages_info, NULL);
++	nr_pinned_info = pin_user_pages_fast(arg->info, num_pages_info, FOLL_LONGTERM, pages_info);
+ 	if (num_pages_info != nr_pinned_info)
+ 		goto err_pin_info;
+ 
+ 	for (i = 0; i < num_pages_info; ++i)
+ 		pdesc->infoPPNs[i] = page_to_pfn(pages_info[i]);
+ 
+-	nr_pinned_strs = pin_user_pages(arg->strs, num_pages_strs, FOLL_LONGTERM, pages_strs, NULL);
++	nr_pinned_strs = pin_user_pages_fast(arg->strs, num_pages_strs, FOLL_LONGTERM, pages_strs);
+ 	if (num_pages_strs != nr_pinned_strs)
+ 		goto err_pin_strs;
+ 
 -- 
 2.35.1
 
