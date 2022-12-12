@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3D28ED
-	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E18C433EF;
-	Mon, 12 Dec 2022 13:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155E428ED
+	for <patches@lists.linux.dev>; Mon, 12 Dec 2022 13:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCCBC433D2;
+	Mon, 12 Dec 2022 13:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670851235;
-	bh=ZtAsZyhXt8DPExVKQCM3qLWfdCY0J9kRK73vsLPgtqs=;
+	s=korg; t=1670851238;
+	bh=0xXbsxiMPlFyZEbS3ZNMvu5qgWqcrJYiqoe5lSqqVj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9qJkQ4sGEoDiJUKTUoXKyv1CBdatLY8c77BcHAnuXDdh3ilsV6Bpa9Mu1kDQt9UU
-	 bXUv6ER5YHT+qUd2DaakDUKCiy73AbhWuJZWf8pvpMeXT/1I2ihnAdVkl8oeJj5Skm
-	 q6qvtnxA4z/Hv049uUd4M7TUSUymMCNfaabzGvbI=
+	b=REzSAaaD9EsoC27MCLGOgIO4pJSp1t35RPLV4XITl0nzcCoKNbl4W0mjo/LRdNqrP
+	 Ub5MKlh1f4Q7yPhVMtcbR1dxFXCgxD/Z6Qwvx7M/YqeFWoLUdUpz3qbIoi+ZGd1Wbb
+	 rrnuyKwyrgwDhMIVk01BhVnwOetjkL01McWhqCmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/67] ARM: 9266/1: mm: fix no-MMU ZERO_PAGE() implementation
-Date: Mon, 12 Dec 2022 14:16:41 +0100
-Message-Id: <20221212130917.930050458@linuxfoundation.org>
+Subject: [PATCH 5.4 15/67] 9p/xen: check logical size for buffer size
+Date: Mon, 12 Dec 2022 14:16:50 +0100
+Message-Id: <20221212130918.350790650@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221212130917.599345531@linuxfoundation.org>
 References: <20221212130917.599345531@linuxfoundation.org>
@@ -36,139 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 340a982825f76f1cff0daa605970fe47321b5ee7 ]
+[ Upstream commit 391c18cf776eb4569ecda1f7794f360fe0a45a26 ]
 
-Actually in no-MMU SoCs(i.e. i.MXRT) ZERO_PAGE(vaddr) expands to
-```
-virt_to_page(0)
-```
-that in order expands to:
-```
-pfn_to_page(virt_to_pfn(0))
-```
-and then virt_to_pfn(0) to:
-```
-        ((((unsigned long)(0) - PAGE_OFFSET) >> PAGE_SHIFT) +
-         PHYS_PFN_OFFSET)
-```
-where PAGE_OFFSET and PHYS_PFN_OFFSET are the DRAM offset(0x80000000) and
-PAGE_SHIFT is 12. This way we obtain 16MB(0x01000000) summed to the base of
-DRAM(0x80000000).
-When ZERO_PAGE(0) is then used, for example in bio_add_page(), the page
-gets an address that is out of DRAM bounds.
-So instead of using fake virtual page 0 let's allocate a dedicated
-zero_page during paging_init() and assign it to a global 'struct page *
-empty_zero_page' the same way mmu.c does and it's the same approach used
-in m68k with commit dc068f462179 as discussed here[0]. Then let's move
-ZERO_PAGE() definition to the top of pgtable.h to be in common between
-mmu.c and nommu.c.
+trans_xen did not check the data fits into the buffer before copying
+from the xen ring, but we probably should.
+Add a check that just skips the request and return an error to
+userspace if it did not fit
 
-[0]: https://lore.kernel.org/linux-m68k/2a462b23-5b8e-bbf4-ec7d-778434a3b9d7@google.com/T/#m1266ceb63
-ad140743174d6b3070364d3c9a5179b
-
-Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Tested-by: Stefano Stabellini <sstabellini@kernel.org>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Link: https://lkml.kernel.org/r/20221118135542.63400-1-asmadeus@codewreck.org
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/pgtable-nommu.h |  6 ------
- arch/arm/include/asm/pgtable.h       | 16 +++++++++-------
- arch/arm/mm/nommu.c                  | 19 +++++++++++++++++++
- 3 files changed, 28 insertions(+), 13 deletions(-)
+ net/9p/trans_xen.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm/include/asm/pgtable-nommu.h b/arch/arm/include/asm/pgtable-nommu.h
-index 010fa1a35a68..e8ac2f95fb37 100644
---- a/arch/arm/include/asm/pgtable-nommu.h
-+++ b/arch/arm/include/asm/pgtable-nommu.h
-@@ -51,12 +51,6 @@
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 2779ec1053a0..f043938ae782 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -230,6 +230,14 @@ static void p9_xen_response(struct work_struct *work)
+ 			continue;
+ 		}
  
- typedef pte_t *pte_addr_t;
- 
--/*
-- * ZERO_PAGE is a global shared page that is always zero: used
-- * for zero-mapped memory areas etc..
-- */
--#define ZERO_PAGE(vaddr)	(virt_to_page(0))
--
- /*
-  * Mark the prot value as uncacheable and unbufferable.
-  */
-diff --git a/arch/arm/include/asm/pgtable.h b/arch/arm/include/asm/pgtable.h
-index 3ae120cd1715..ecfd6e7e128f 100644
---- a/arch/arm/include/asm/pgtable.h
-+++ b/arch/arm/include/asm/pgtable.h
-@@ -10,6 +10,15 @@
- #include <linux/const.h>
- #include <asm/proc-fns.h>
- 
-+#ifndef __ASSEMBLY__
-+/*
-+ * ZERO_PAGE is a global shared page that is always zero: used
-+ * for zero-mapped memory areas etc..
-+ */
-+extern struct page *empty_zero_page;
-+#define ZERO_PAGE(vaddr)	(empty_zero_page)
-+#endif
++		if (h.size > req->rc.capacity) {
++			dev_warn(&priv->dev->dev,
++				 "requested packet size too big: %d for tag %d with capacity %zd\n",
++				 h.size, h.tag, req->rc.capacity);
++			req->status = REQ_STATUS_ERROR;
++			goto recv_error;
++		}
 +
- #ifndef CONFIG_MMU
+ 		memcpy(&req->rc, &h, sizeof(h));
+ 		req->rc.offset = 0;
  
- #include <asm-generic/4level-fixup.h>
-@@ -166,13 +175,6 @@ extern pgprot_t phys_mem_access_prot(struct file *file, unsigned long pfn,
- #define __S111  __PAGE_SHARED_EXEC
+@@ -239,6 +247,7 @@ static void p9_xen_response(struct work_struct *work)
+ 				     masked_prod, &masked_cons,
+ 				     XEN_9PFS_RING_SIZE);
  
- #ifndef __ASSEMBLY__
--/*
-- * ZERO_PAGE is a global shared page that is always zero: used
-- * for zero-mapped memory areas etc..
-- */
--extern struct page *empty_zero_page;
--#define ZERO_PAGE(vaddr)	(empty_zero_page)
--
- 
- extern pgd_t swapper_pg_dir[PTRS_PER_PGD];
- 
-diff --git a/arch/arm/mm/nommu.c b/arch/arm/mm/nommu.c
-index 24ecf8d30a1e..a3ad8a1b0e07 100644
---- a/arch/arm/mm/nommu.c
-+++ b/arch/arm/mm/nommu.c
-@@ -26,6 +26,13 @@
- 
- unsigned long vectors_base;
- 
-+/*
-+ * empty_zero_page is a special page that is used for
-+ * zero-initialized data and COW.
-+ */
-+struct page *empty_zero_page;
-+EXPORT_SYMBOL(empty_zero_page);
-+
- #ifdef CONFIG_ARM_MPU
- struct mpu_rgn_info mpu_rgn_info;
- #endif
-@@ -148,9 +155,21 @@ void __init adjust_lowmem_bounds(void)
-  */
- void __init paging_init(const struct machine_desc *mdesc)
- {
-+	void *zero_page;
-+
- 	early_trap_init((void *)vectors_base);
- 	mpu_setup();
-+
-+	/* allocate the zero page. */
-+	zero_page = memblock_alloc(PAGE_SIZE, PAGE_SIZE);
-+	if (!zero_page)
-+		panic("%s: Failed to allocate %lu bytes align=0x%lx\n",
-+		      __func__, PAGE_SIZE, PAGE_SIZE);
-+
- 	bootmem_init();
-+
-+	empty_zero_page = virt_to_page(zero_page);
-+	flush_dcache_page(empty_zero_page);
- }
- 
- /*
++recv_error:
+ 		virt_mb();
+ 		cons += h.size;
+ 		ring->intf->in_cons = cons;
 -- 
 2.35.1
 
