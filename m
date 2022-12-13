@@ -1,97 +1,129 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B88115AC
-	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 03:20:51 +0000 (UTC)
-Received: by mail-pf1-f177.google.com with SMTP id t18so1281336pfq.13
-        for <patches@lists.linux.dev>; Mon, 12 Dec 2022 19:20:51 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2C515A8
+	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 06:31:38 +0000 (UTC)
+Received: by mail-vk1-f177.google.com with SMTP id b81so1111210vkf.1
+        for <patches@lists.linux.dev>; Mon, 12 Dec 2022 22:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MKJurbxyohFsssUhoc+Q8kL3WN/Z5/vkHCwhZ/5bbzU=;
-        b=Dc7PjCZfYeOabX3l0PiGWRItYbl1HI2ws6OBXdFdwSHtTLK1W4g8Mu9dSnmbT3QRjt
-         H+tALhrD14MxgJfnocZLmi3mlDLSZpFwqXjSS+k0wlwF+hEPpjUPsSuWGy11k834ae+W
-         vPlKndhUAKq00TqVIzrrYzHr4HV1/qIEOOOMKLE/tsR0CHfl37sfBdo6EKd7zct2fKEU
-         TRFnFF7liKOGNPdEGc+Tc336YvKk8IZOCt7l8gyIo/rQatXBZ+YC8H5IvkQUxY322YQd
-         CH/BqkFrfz5WHjUh/p4UyBjzgGVTqliJ6bNE7gt28d/2HiSSgcMzzB1yYteLvXdWQiAD
-         uMDA==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VKyiy6rqr1s8RJTj8dqYYvulLQtys2Tc8voFn45GrzU=;
+        b=NnBfkXq/VChaqULajdA2qKhgoUKMVhfTWXDRqpnMJhcaCulwkj2CeMqrn3/Ay8AhRW
+         QUzdNE2kHqWMU33rDF5ccUEetiaPQr1oorsvAOAs8aiV377T546SzLQ70fDXdqzqQGVe
+         Fo4GryWPAmQHtqg/K/SWpXqvd0llTX1VG1YxarbtBjH17GbaOQXe+nnQqvYzPJ2JGCU9
+         tm3s2YqwOXRAC0IbnyuUO2ulXHs1eZCSX2T+EulxW0Y57VjaSTVlBAGxSsYgsDQS63Iu
+         enNs86Tt9+2YTs/8XLRHGtZ1CRjsQGENbDiQgZlfonUyN9kOV1X9eeV5JJFhBzexD2iD
+         dvoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MKJurbxyohFsssUhoc+Q8kL3WN/Z5/vkHCwhZ/5bbzU=;
-        b=gj2tiyeO9hfhg3bf1BJgCDvlu64709q0OEcFYOjViaxVLqX/YHMRBYnwZG4VHg+oFi
-         2Kn8yOI/hUqxwF4ZiMRXvotMkzjH1j4zQbOE2HhQHtHItEOtZrvTr8oweM45/MQ2fEaV
-         C9hntHEneXPn8d1K+mP43wCW9PUachpugJ0LvpW+/t1CCtEYlaai5lcTnm6+BWVgQD4j
-         MWet6/4Z+MdOmtMWetXPm1jPls9TG5+AIRlF/CsP4BkYB5mtKtktT4PyjV/M9ueMPQWv
-         BNlKbTyhz740JX6KYT6TTzsp4Ozi2m9fb5ti7ySLJyRpa/ZecH4nbaDCGOl8Tuk9Jh75
-         s9aA==
-X-Gm-Message-State: ANoB5pn/AH7Vhf2rDvoI7qLL3gZixilCsDKg9I1/4QEr3c63EKLEpnsg
-	FRxQkWA+5FnZRpNP05iaRJY=
-X-Google-Smtp-Source: AA0mqf4eAtkxGK4giED+IubXv3phvplhizX/bcyYERqDdNP95dh5cqiE1juG+PvoNCabPwElyjzpSw==
-X-Received: by 2002:aa7:8589:0:b0:56d:74bf:3265 with SMTP id w9-20020aa78589000000b0056d74bf3265mr16220608pfn.19.1670901650568;
-        Mon, 12 Dec 2022 19:20:50 -0800 (PST)
-Received: from debian.me (subs03-180-214-233-6.three.co.id. [180.214.233.6])
-        by smtp.gmail.com with ESMTPSA id 69-20020a621548000000b005741cb643bdsm6460662pfv.215.2022.12.12.19.20.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 19:20:49 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id 4172A103A81; Tue, 13 Dec 2022 10:20:47 +0700 (WIB)
-Date: Tue, 13 Dec 2022 10:20:47 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/157] 6.0.13-rc1 review
-Message-ID: <Y5fvjw1lO/8y6SII@debian.me>
-References: <20221212130934.337225088@linuxfoundation.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VKyiy6rqr1s8RJTj8dqYYvulLQtys2Tc8voFn45GrzU=;
+        b=qZoaSJdoNuCToy0nuR1t06X8ThKX2qEHvaTFbZWbjDQnx9ygJ9nULmEdqYvmcsl4w3
+         Y04wU1l+PqGcx/BHge3FN4vOP/U5ATQfh7K+rIbdvfZEPRBEA/JMOZUypKIWchOEC4/N
+         Ybdm5yfIrDyMGYRhmj9Q6Hreri7+Gs/iDPhNq3xLesPt+kzCs4OlMEcw3p0pb02qOYZM
+         V6QD3dFzevJPFTN2uO1VknNUdICQmDyg4IOEceEAPGhi4ycRtLBKELLDZ+9rzmkXHLcB
+         adX8uA9y34+gF8aSDVeoWAT9XqG0pGrTSMtQM8rKzASDLdU5jI1HAvOWKEukE59U3EXN
+         6sSw==
+X-Gm-Message-State: ANoB5pkm11XQBaWfvRRSGAayaA+6qzKFXtlgc8cm2gYVQN0WCG4i7jAI
+	98FpMrG47PXyx7GVgKQ4Z+kd0w2n0pQz4Xv77s5Xfw==
+X-Google-Smtp-Source: AA0mqf6jhubMdHwDvWT6AMebwaCz1mRJs22GLf8fj9JPa0C0R/H+CjLzed+EqoKIH7jkDZGht5kh9bXEwwhYOruAooI=
+X-Received: by 2002:a05:6122:1437:b0:3bd:dc4d:fb7d with SMTP id
+ o23-20020a056122143700b003bddc4dfb7dmr6550693vkp.7.1670913097036; Mon, 12 Dec
+ 2022 22:31:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cIS6zQjnKhbOgl8k"
-Content-Disposition: inline
+References: <20221212130934.337225088@linuxfoundation.org>
 In-Reply-To: <20221212130934.337225088@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 13 Dec 2022 12:01:25 +0530
+Message-ID: <CA+G9fYt7QTkGWPhj0NX8bcDOvEvf9jOW5Oaj8T2zmzasHjo1yA@mail.gmail.com>
+Subject: Re: [PATCH 6.0 000/157] 6.0.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, llvm@lists.linux.dev
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, Nathan Chancellor <nathan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-
---cIS6zQjnKhbOgl8k
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Dec 12, 2022 at 02:15:48PM +0100, Greg Kroah-Hartman wrote:
+On Mon, 12 Dec 2022 at 19:07, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.0.13 release.
 > There are 157 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
+> Responses should be made by Wed, 14 Dec 2022 13:08:57 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.13-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+This is an additional report.
+Following issue is specific to clang nightly,
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+x86 clang-nightly builds failed with defconfig and tinyconfig due to
+below errors / warnings.
 
---=20
-An old man doll... just what I always wanted! - Clara
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
---cIS6zQjnKhbOgl8k
-Content-Type: application/pgp-signature; name="signature.asc"
+Regressions found on x86_64:
 
------BEGIN PGP SIGNATURE-----
+    - build/clang-nightly-tinyconfig
+    - build/clang-nightly-x86_64_defconfig
+    - build/clang-nightly-allnoconfig
+    - build/clang-nightly-lkftconfig
 
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY5fvjgAKCRD2uYlJVVFO
-o3TeAP998nNaf5M9PsuGbu3+SqZ5Eeo/rWvlICb0fMj87o2qdgEAvPtdNOHcNsdf
-NaT2RlmgPBQR9921z75N3WfZA+Hzrgw=
-=kP/L
------END PGP SIGNATURE-----
+make --silent --keep-going --jobs=8
+O=/home/tuxbuild/.cache/tuxmake/builds/1/build LLVM=1 LLVM_IAS=1
+ARCH=x86_64 SRCARCH=x86 CROSS_COMPILE=x86_64-linux-gnu- HOSTCC=clang
+CC=clang
 
---cIS6zQjnKhbOgl8k--
+ld.lld: error: version script assignment of 'LINUX_2.6' to symbol
+'__vdso_sgx_enter_enclave' failed: symbol not defined
+llvm-objdump: error: 'arch/x86/entry/vdso/vdso64.so.dbg': No such file
+or directory
+llvm-objcopy: error: 'arch/x86/entry/vdso/vdso64.so.dbg': No such file
+or directory
+make[4]: *** [/builds/linux/arch/x86/entry/vdso/Makefile:136:
+arch/x86/entry/vdso/vdso64.so] Error 1
+
+Steps to reproduce:
+--------------------
+# To install tuxmake on your system globally:
+# sudo pip3 install -U tuxmake
+#
+# See https://docs.tuxmake.org/ for complete documentation.
+# Original tuxmake command with fragments listed below.
+# tuxmake --runtime podman --target-arch x86_64 --toolchain
+clang-nightly --kconfig x86_64_defconfig LLVM=1 LLVM_IAS=1
+
+tuxmake --runtime podman --target-arch x86_64 --toolchain
+clang-nightly --kconfig
+https://builds.tuxbuild.com/2IocvUIXEK9MUve4Uut67U0xskC/config LLVM=1
+LLVM_IAS=1
+
+Details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.12-158-g57dda3cf2efc/testrun/13588489/suite/build/test/clang-nightly-x86_64_defconfig/details/
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
