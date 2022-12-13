@@ -1,108 +1,260 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3EB2907
-	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 10:39:12 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id E26091C09F4; Tue, 13 Dec 2022 11:39:08 +0100 (CET)
-Date: Tue, 13 Dec 2022 11:39:08 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	YueHaibing <yuehaibing@huawei.com>, Netdev <netdev@vger.kernel.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Guenter Roeck <linux@roeck-us.net>, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	Pavel Machek <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
-	rwarsow@gmx.de, Jakub Kicinski <kuba@kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 5.10 000/106] 5.10.159-rc1 review
-Message-ID: <Y5hWTI0UF5f9I0a9@duo.ucw.cz>
-References: <20221212130924.863767275@linuxfoundation.org>
- <CA+G9fYv7tm9zQwVWnPMQMjFXtNDoRpdGkxZ4ehMjY9qAFF0QLQ@mail.gmail.com>
- <86c7e7a5-6457-49c5-a9e3-b28b8b8c1134@app.fastmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B0E2F2F
+	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 11:54:01 +0000 (UTC)
+Received: by mail-vs1-f42.google.com with SMTP id t5so14315652vsh.8
+        for <patches@lists.linux.dev>; Tue, 13 Dec 2022 03:54:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mZFILLndz4cbgf9FVCwj+Fm/jHKQQUcFiCQJTBVvxN0=;
+        b=Z877fi9PfiVzISRKpYzAq7+/YI+HSo3SiIvlTgEhi03SCiiG69kGeaYeRrK60FeMVr
+         t8azdZlIJ+dj+KViXHJRtLFWKQ0nOV3zEdPicE8crKP5iZvyD5V+1WAW/0WdtTQQRK2k
+         jgzWa19eGLmHqJ8nlyRCvO23fxusjVZzAOAS++PGnNMFRjI8ckZmftOXWNhekVPyc1h6
+         xkPCEGctubC0Vn9DJGGccs7yR/6mg+E90RrkKKv63snz5FcPZJNBDQ7mOv9N/jAaYqhY
+         jL5xLtDnDFqCI7QQdR4BIl6qho3y7tIN9QEatLKnyH2zwADzeYOWfVys8BWqTRMTUdoB
+         nP0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mZFILLndz4cbgf9FVCwj+Fm/jHKQQUcFiCQJTBVvxN0=;
+        b=FtXchSQe3fzWaTnFhOWeH5CqCL7koSPo7qYnj0pYeTd+XtmaoXVxNGwiU91Yba2pgV
+         Rfy0WSs67HOqytv9Pp0srZkdpJBS2KAjjm1ecNSrrCddj2MQN8YP9hGa8xGtxkng00Ci
+         sq+A8b24rF+0CNuuEfnNXCcWsObLpag3dWFEGgb/XT91zowRCH8tOXxcxb/62qoWjiby
+         X1k/pFLeNf7/+UX/pkQKnUksTILLQS9qx3GRzOQJZX0aINrEtD0o7a4basc/NwSFdWkW
+         p/JkFakGg4R1P0oVWjvHM4VxCuIiXSkr31T2tmZUNW26V/7VhNPmpw3vDJwHxrc1c/zO
+         AvtQ==
+X-Gm-Message-State: ANoB5plaUhLa05ClEex/4HRNKWVX8BWLjQ5OgabbVIdrvjnGdTL/w0Wl
+	2x4xpXFI7tc6WD929iGo7qfGI15gBP1OK5nLpA2mKQ==
+X-Google-Smtp-Source: AA0mqf7mPKsCAWs/++OsyxwN/lViTpODKmwQHcuZDmUaD2s7CG6XjSxnxG8W6XNZgJ0GhRYbGpaSpH8K1TLt20RPPco=
+X-Received: by 2002:a05:6102:dd1:b0:3b0:fd1d:3ded with SMTP id
+ e17-20020a0561020dd100b003b0fd1d3dedmr17259317vst.3.1670932440266; Tue, 13
+ Dec 2022 03:54:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="17sVYUeo7bE3z69j"
-Content-Disposition: inline
-In-Reply-To: <86c7e7a5-6457-49c5-a9e3-b28b8b8c1134@app.fastmail.com>
-
-
---17sVYUeo7bE3z69j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20221212130913.666185567@linuxfoundation.org>
+In-Reply-To: <20221212130913.666185567@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 13 Dec 2022 17:23:48 +0530
+Message-ID: <CA+G9fYtCTQHiW_pr+M8AVrLn-93Gf2gyP+ccx7Vr9FtUMungdg@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/49] 4.19.269-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, 
+	Giulio Benetti <giulio.benetti@benettiengineering.com>, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue 2022-12-13 10:20:30, Arnd Bergmann wrote:
-> On Tue, Dec 13, 2022, at 08:48, Naresh Kamboju wrote:
-> > On Mon, 12 Dec 2022 at 18:43, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> >
-> > Regression detected on arm64 Raspberry Pi 4 Model B the NFS mount faile=
-d.
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> >
-> > Following changes have been noticed in the Kconfig file between good an=
-d bad.
-> > The config files attached to this email.
-> >
-> > -CONFIG_BCMGENET=3Dy
-> > -CONFIG_BROADCOM_PHY=3Dy
-> > +# CONFIG_BROADCOM_PHY is not set
-> > -CONFIG_BCM7XXX_PHY=3Dy
-> > +# CONFIG_BCM7XXX_PHY is not set
-> > -CONFIG_BCM_NET_PHYLIB=3Dy
->=20
-> > Full test log details,
-> >  - https://lkft.validation.linaro.org/scheduler/job/5946533#L392
-> >  -=20
-> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v=
-5.10.158-107-gd2432186ff47/testrun/13594402/suite/log-parser-test/tests/
-> >  -=20
-> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v=
-5.10.158-107-gd2432186ff47/testrun/13594402/suite/log-parser-test/test/chec=
-k-kernel-panic/history/
->=20
-> Where does the kernel configuration come from? Is this
-> a plain defconfig that used to work, or do you have
-> a board specific config file?
->=20
-> This is most likely caused by the added dependency on
-> CONFIG_PTP_1588_CLOCK that would lead to the BCMGENET
-> driver not being built-in if PTP support is in a module.
+On Mon, 12 Dec 2022 at 19:19, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.269 release.
+> There are 49 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 14 Dec 2022 13:08:57 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.19.269-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-There's no PTP_1588_CLOCK_OPTIONAL in 5.10. This needs to be dropped:
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-|2a4912705 421f86 o: 5.10| net: broadcom: Add PTP_1588_CLOCK_OPTIONAL depen=
-dency for BCMGENET under ARCH_BCM2835
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Best regards,
-								Pavel
+NOTE:
+arm clang-nightly allnoconfig builds failed due to these warnings / errors.
+for clang-nightly warning showing as error and for gcc-12 it is just a warn=
+ing.
 
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+make --silent --keep-going --jobs=3D8
+O=3D/home/tuxbuild/.cache/tuxmake/builds/1/build LLVM=3D1 LLVM_IAS=3D0
+ARCH=3Darm CROSS_COMPILE=3Darm-linux-gnueabihf- HOSTCC=3Dclang CC=3Dclang
+arch/arm/mm/nommu.c:163:12: error: incompatible integer to pointer
+conversion assigning to 'void *' from 'phys_addr_t' (aka 'unsigned
+int') [-Wint-conversion]
+        zero_page =3D memblock_alloc(PAGE_SIZE, PAGE_SIZE);
+                  ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+make[2]: *** [/builds/linux/scripts/Makefile.build:303:
+arch/arm/mm/nommu.o] Error 1
 
---17sVYUeo7bE3z69j
-Content-Type: application/pgp-signature; name="signature.asc"
+commit causing this build failures,
+  ARM: 9266/1: mm: fix no-MMU ZERO_PAGE() implementation
+  [ Upstream commit 340a982825f76f1cff0daa605970fe47321b5ee7 ]
 
------BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY5hWTAAKCRAw5/Bqldv6
-8rDhAJ9a7yt02CI4FJMdok20phpAyMLt9wCfZ7K+tGfohkp+A/QHR76DTu7Vf5s=
-=tCRA
------END PGP SIGNATURE-----
+## Build
+* kernel: 4.19.269-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.19.y
+* git commit: bf741d1d7e6db2cb2fb6ba4634aaabad00089b40
+* git describe: v4.19.268-50-gbf741d1d7e6d
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
+.268-50-gbf741d1d7e6d
 
---17sVYUeo7bE3z69j--
+## Test Regressions (compared to v4.19.268)
+
+## Metric Regressions (compared to v4.19.268)
+
+## Test Fixes (compared to v4.19.268)
+
+## Metric Fixes (compared to v4.19.268)
+
+## Test result summary
+total: 95070, pass: 81469, fail: 1691, skip: 10892, xfail: 1018
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 323 total, 316 passed, 7 failed
+* arm64: 59 total, 58 passed, 1 failed
+* i386: 29 total, 28 passed, 1 failed
+* mips: 46 total, 46 passed, 0 failed
+* parisc: 12 total, 12 passed, 0 failed
+* powerpc: 63 total, 63 passed, 0 failed
+* s390: 15 total, 15 passed, 0 failed
+* sh: 24 total, 24 passed, 0 failed
+* sparc: 12 total, 12 passed, 0 failed
+* x86_64: 53 total, 52 passed, 1 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
