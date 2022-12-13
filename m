@@ -1,82 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDA95CBC
-	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 15:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D26FC433D2;
-	Tue, 13 Dec 2022 15:07:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1670944045;
-	bh=X59SuqTKmCW8FjdihUzqEkUaQKUu+lUWXER55/hIJOo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=1N9DAe5AAJVetVEYK/fLMePCiS7CBFq0YlQmK/A4xIM2Oe21BhGx8bfgsmhJi4cBa
-	 BtEPPqOKuVTiuWBgUW5LxSJfEKUEXV7L29WPI7DLwkfHbc/vOuSh9/YWFcph6s2I7n
-	 52MRoV7ux2FsjItBf5SJVwT7BDbPwqUUyPom8+uE=
-Date: Tue, 13 Dec 2022 16:07:23 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>
-Subject: Re: [PATCH 5.4 00/67] 5.4.227-rc1 review
-Message-ID: <Y5iVK4Yjre7cKhWH@kroah.com>
-References: <20221212130917.599345531@linuxfoundation.org>
- <CA+G9fYtdgLx0hrtGk7G8Jvt2GhY-FoCTp0KtF8ngGix289G2QQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35C5CBC
+	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 15:32:12 +0000 (UTC)
+Received: by mail-ed1-f43.google.com with SMTP id v8so18256505edi.3
+        for <patches@lists.linux.dev>; Tue, 13 Dec 2022 07:32:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9LFcn2LS2h1mCkUkoHgPOjFPfjs4oxAUSgVBVj57pOE=;
+        b=bwnC1QCUTzSNR0jnSkHm6+NJvylAT9qlE995YBiYZths7yzrOPGvqQLltEoONhJ2la
+         GflqEwoVSojbh60Z0i73QDq8c/1RO0QSMenTMRqDWjDd+ngpMibFdBlnslXzUTDlHH2N
+         svMaYW6+fZrBRJK2/mDNV1/rVtViogyVXdvXYhF+S3i/oIa8TmTydJfWi2ly3GtH6+Mb
+         G0ZcpiHYvHSplWtGeQuMcqUVA8ycgFMhuTQ//DBDnN6Ctj3SBr+L2DNfltRja0fiZJFM
+         XqFuJTBPm4t3pDIErWBXEa50bq2HgMiHyDNPVL+kJBXM2pc4RfcycXqZrLYhx5JVV1KV
+         3oXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9LFcn2LS2h1mCkUkoHgPOjFPfjs4oxAUSgVBVj57pOE=;
+        b=H3scSqEehx38sVEk9ZLj1WV9lAJMP8jB/wDHZpn9+HH0E+Hy8IjKmae5v6ce8XdUYH
+         d643G6/N/ETlHNMI/knm22JhOTN87+aDthmHxHS0SJE05Nbp63xFoBON3SBBhlEfyJID
+         QWcVl2vRJmaIg+tFS5XirecMtYKsv2yiF5OhaNy9QMUkamjAaSmIeu0VlzfdgW1ITGwo
+         plZkC2zB1nCCs5GHuxz46oNeVTYXl9QqK5R8v9uUwl6iXs0VM7SDOriQlf2IDFGp7GcQ
+         H3JGvGzVHXB/eCrTD9GwbNsM2HSPljhQ5C0pZ7q9mhTDdrvel1CxyHDPiz8ArDv4CSe3
+         Xpsg==
+X-Gm-Message-State: ANoB5pleMlnQMqWYvyoyWrdgpdaxmiHZF1X5bRNbEMd5PkWK3aSdPfFU
+	HomJMqwpV7fuwQtTZRwImMhlu7OfL/pWhwKp8YA=
+X-Google-Smtp-Source: AA0mqf679IR0szw2P7LGnGsO9Uvt78/3pJf6iUxIbum7zMS/JIZHte0W9eaVemwbp9x2EKxXCQd99qUcs19KL2jT5S0=
+X-Received: by 2002:aa7:d841:0:b0:46d:692e:8572 with SMTP id
+ f1-20020aa7d841000000b0046d692e8572mr7127576eds.25.1670945531147; Tue, 13 Dec
+ 2022 07:32:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYtdgLx0hrtGk7G8Jvt2GhY-FoCTp0KtF8ngGix289G2QQ@mail.gmail.com>
+References: <20221212130924.863767275@linuxfoundation.org> <Y5hqsggURI1Me1ik@debian>
+In-Reply-To: <Y5hqsggURI1Me1ik@debian>
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date: Tue, 13 Dec 2022 15:31:35 +0000
+Message-ID: <CADVatmPM4Q5A9jVO6-ixhqa2HWh4rWPKNpfwy75u69My=3Xhjw@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/106] 5.10.159-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net, 
+	rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 13, 2022 at 02:50:21PM +0530, Naresh Kamboju wrote:
-> On Mon, 12 Dec 2022 at 18:50, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.4.227 release.
-> > There are 67 patches in this series, all will be posted as a response
+On Tue, 13 Dec 2022 at 12:06, Sudip Mukherjee (Codethink)
+<sudipm.mukherjee@gmail.com> wrote:
+>
+> Hi Greg,
+>
+> On Mon, Dec 12, 2022 at 02:09:03PM +0100, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.159 release.
+> > There are 106 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > >
 > > Responses should be made by Wed, 14 Dec 2022 13:08:57 +0000.
 > > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.227-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> Results from Linaro’s test farm.
-> No regressions on arm64, arm, x86_64, and i386.
-> 
-> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> NOTE:
-> Following build warning found,
-> 
-> mm/hugetlb.c: In function 'follow_huge_pmd_pte':
-> mm/hugetlb.c:5191:1: warning: label 'out' defined but not used [-Wunused-label]
->  5191 | out:
->       | ^~~
-> 
-> details of commit causing this build warning.
->    mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
->    commit fac35ba763ed07ba93154c95ffc0c4a55023707f upstream.
+>
+> Build test (gcc version 11.3.1 20221127):
+> mips: 63 configs -> no failure
+> arm: 104 configs -> no failure
+> arm64: 3 configs -> no failure
+> x86_64: 4 configs -> no failure
+> alpha allmodconfig -> no failure
+> powerpc allmodconfig -> no failure
+> riscv allmodconfig -> no failure
+> s390 allmodconfig -> no failure
+> xtensa allmodconfig -> no failure
+>
+> Boot test:
+> x86_64: Booted on my test laptop. No regression.
+> x86_64: Booted on qemu. No regression. [1]
+>
+> arm64: Booted on rpi4b (4GB model).
+> Regression noticed:
+> Failed to start Network Manager
+>
+> Will try a bisect and find which commit caused it.
 
-Thanks, I'll go drop that commit now.
+Bisect pointed to 60aefe77fb48 ("net: broadcom: Add
+PTP_1588_CLOCK_OPTIONAL dependency for BCMGENET under ARCH_BCM2835")
 
-greg k-h
+
+-- 
+Regards
+Sudip
