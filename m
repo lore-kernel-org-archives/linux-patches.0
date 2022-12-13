@@ -1,150 +1,97 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1F233D4
-	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 14:02:57 +0000 (UTC)
-Received: by mail-pl1-f175.google.com with SMTP id m4so15725205pls.4
-        for <patches@lists.linux.dev>; Tue, 13 Dec 2022 06:02:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5YiSjWHoQWvxaPnMWkhQIQOkA+9eRIuJnwPdOS374zI=;
-        b=i191arESYf3ytwMfFMtgeaKAS9H5vjtkaPCums6F5nmiiiXLgP6n3izOpIxcPDHuMa
-         tGJT27K3n4zgHFtYDXQ/uuQ0wOOJJ8qYhZBSs2mJzJnZjInobNMYKb1uDZve++kIoQdO
-         lrn3gZIlO83al62AO3fAseNoqtZc5KiGkccvYuPzzKc3Do0EUC0I/Yn/cB4q+xHGkiKF
-         vYH/g7vgwp75Nw4Oi2NrBk/EDD4MKcjWRqiQbP0qGt+3Rlm5vOOWcYW3a5DrfIOlS/fT
-         SlsuX6f+4sIX3TyQ6AS/tL6BrA0Wh8C4PE0exCBY4cX0amezW2ahyc/0eRcs7bfoOd6H
-         8L0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5YiSjWHoQWvxaPnMWkhQIQOkA+9eRIuJnwPdOS374zI=;
-        b=WKoco+ZOoIrT7AOBHYpOgVxsBg00+3PD3B/ItO3SLAeKxqbq1B7fNdFh3KrEvz2K12
-         EID5y2SlLl10BT1zsfi9hLR85V+djSpBFqZbPjsQOT4jqQOdShTZRCMqgiMdE9bMqLn5
-         oBPkyOQAP3VCVAgBXRsJ0T3OYET1iAq0vhqZK+sNyUuIeY1hZ38jVfUwt760pEiXlPX8
-         wVv+CDww2IDdozqXS21zk6l1Xpg1oS5b1QcohoFbc+jo9WNM8uSHI4C+jOefBGEcwv6e
-         bgSGhCuPie8NuVhw8SVJ2vCPtNi4R11I3aSIdhiVuj5zhO2sQ/bscKpHj91ndH/2AxDk
-         U/qw==
-X-Gm-Message-State: ANoB5plkMxCLPfPkI7g8qxBhni2WQXlUIKPrZl8kf1iqkLnH4pFXfZQ8
-	JBhLKvluaw70Qw0RMChcnyY=
-X-Google-Smtp-Source: AA0mqf4ZPrtW54ww6Zvl6Ql4G2TELTlzGR4srjVLOEtRgpEOsxTRyyMe9EvHYVftTjcf85a6AR9rNw==
-X-Received: by 2002:a17:902:a588:b0:185:441e:90b5 with SMTP id az8-20020a170902a58800b00185441e90b5mr20420811plb.27.1670940176560;
-        Tue, 13 Dec 2022 06:02:56 -0800 (PST)
-Received: from hyeyoo ([114.29.91.56])
-        by smtp.gmail.com with ESMTPSA id jh19-20020a170903329300b001811a197797sm8462259plb.194.2022.12.13.06.02.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Dec 2022 06:02:55 -0800 (PST)
-Date: Tue, 13 Dec 2022 23:02:49 +0900
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Baoquan He <bhe@redhat.com>
-Cc: Dennis Zhou <dennis@kernel.org>, Vlastimil Babka <vbabka@suse.cz>,
-	Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/12] mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
-Message-ID: <Y5iGCY7LfQ1SKylO@hyeyoo>
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <20221121171202.22080-11-vbabka@suse.cz>
- <Y4NEkF8DI1uXFRv4@hyeyoo>
- <f318ccc3-eb03-e359-cb6f-157d0b4aed31@suse.cz>
- <Y5cob2jicdNoviU3@fedora>
- <Y5frwZNPN++sqHLY@MiWiFi-R3L-srv>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFEE5CA9
+	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 14:21:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C60C433D2;
+	Tue, 13 Dec 2022 14:21:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1670941305;
+	bh=xYmEQLyCE/ZYrA4m2lckNTlC0yxTMzsg760vvvhjo4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AaFvwtsABYnTKvUAJcKYcxw0HVl8JrL+vbQowCHqHhGo0LRnrOiDui5eF6PYCBM3R
+	 aN68N6tiqwwv5a57DEiOUrM5dQdHI+m2obwSGhLKc+INZp5y06lg/MwohlBrS07qgd
+	 JTkoToFx/Q0rRBeXvn7SLd6XXhkGUcIvkKE3FIY4=
+Date: Tue, 13 Dec 2022 15:21:37 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: YueHaibing <yuehaibing@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>, Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 072/106] net: broadcom: Add PTP_1588_CLOCK_OPTIONAL
+ dependency for BCMGENET under ARCH_BCM2835
+Message-ID: <Y5iKcV2zfolkeDYu@kroah.com>
+References: <20221212130924.863767275@linuxfoundation.org>
+ <20221212130928.024498741@linuxfoundation.org>
+ <b478e4a3-aa37-771d-eac9-dc30a9d3a508@huawei.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <Y5frwZNPN++sqHLY@MiWiFi-R3L-srv>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b478e4a3-aa37-771d-eac9-dc30a9d3a508@huawei.com>
 
-On Tue, Dec 13, 2022 at 11:04:33AM +0800, Baoquan He wrote:
-> On 12/12/22 at 05:11am, Dennis Zhou wrote:
-> > Hello,
-> > 
-> > On Mon, Dec 12, 2022 at 11:54:28AM +0100, Vlastimil Babka wrote:
-> > > On 11/27/22 12:05, Hyeonggon Yoo wrote:
-> > > > On Mon, Nov 21, 2022 at 06:12:00PM +0100, Vlastimil Babka wrote:
-> > > >> SLUB gets most of its scalability by percpu slabs. However for
-> > > >> CONFIG_SLUB_TINY the goal is minimal memory overhead, not scalability.
-> > > >> Thus, #ifdef out the whole kmem_cache_cpu percpu structure and
-> > > >> associated code. Additionally to the slab page savings, this reduces
-> > > >> percpu allocator usage, and code size.
-> > > > 
-> > > > [+Cc Dennis]
-> > > 
-> > > +To: Baoquan also.
+On Tue, Dec 13, 2022 at 03:24:50PM +0800, YueHaibing wrote:
+> On 2022/12/12 21:10, Greg Kroah-Hartman wrote:
 > 
-> Thanks for adding me.
+> > From: YueHaibing <yuehaibing@huawei.com>
+> >
+> > [ Upstream commit 421f8663b3a775c32f724f793264097c60028f2e ]
+> >
+> > commit 8d820bc9d12b ("net: broadcom: Fix BCMGENET Kconfig") fixes the build
+> > that contain 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
+> > and enable BCMGENET=y but PTP_1588_CLOCK_OPTIONAL=m, which otherwise
+> > leads to a link failure. However this may trigger a runtime failure.
+> >
+> > Fix the original issue by propagating the PTP_1588_CLOCK_OPTIONAL dependency
+> > of BROADCOM_PHY down to BCMGENET.
+> >
+> > Fixes: 8d820bc9d12b ("net: broadcom: Fix BCMGENET Kconfig")
+> > Fixes: 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
+> > Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> > Suggested-by: Arnd Bergmann <arnd@arndb.de>
+> > Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> > Acked-by: Arnd Bergmann <arnd@arndb.de>
+> > Link: https://lore.kernel.org/r/20221125115003.30308-1-yuehaibing@huawei.com
+> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >  drivers/net/ethernet/broadcom/Kconfig | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
+> > index 7b79528d6eed..06aaeaadf2e9 100644
+> > --- a/drivers/net/ethernet/broadcom/Kconfig
+> > +++ b/drivers/net/ethernet/broadcom/Kconfig
+> > @@ -63,6 +63,7 @@ config BCM63XX_ENET
+> >  config BCMGENET
+> >  	tristate "Broadcom GENET internal MAC support"
+> >  	depends on HAS_IOMEM
+> > +	depends on PTP_1588_CLOCK_OPTIONAL || !ARCH_BCM2835
 > 
-> > > 
-> > > > Wondering if we can reduce (or zero) early reservation of percpu area
-> > > > when #if !defined(CONFIG_SLUB) || defined(CONFIG_SLUB_TINY)?
-> > > 
-> > > Good point. I've sent a PR as it was [1], but (if merged) we can still
-> > > improve that during RC series, if it means more memory saved thanks to less
-> > > percpu usage with CONFIG_SLUB_TINY.
-> > > 
-> > > [1]
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git/tag/?h=slab-for-6.2-rc1
-> > 
-> > The early reservation area not used at boot is then used to serve normal
-> > percpu allocations. Percpu allocates additional chunks based on a free
-> > page float count and is backed page by page, not all at once. I get
-> > slabs is the main motivator of early reservation, but if there are other
-> > users of percpu, then shrinking the early reservation area is a bit
-> > moot.
+> This commit is not needed by 5.10,  see
 > 
-> Agree. Before kmem_cache_init() is done, anyone calling alloc_percpu()
-> can only get allocation done from early reservatoin of percpu area.
-> So, unless we can make sure nobody need to call alloc_percpu() before
-> kmem_cache_init() now and future.
+> commit 7be134eb691f6a54b267dbc321530ce0221a76b1
+> Author: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Date:   Fri Nov 25 15:51:06 2022 +0100
+> 
+>     Revert "net: broadcom: Fix BCMGENET Kconfig"
+> 
+>     This reverts commit fbb4e8e6dc7b38b3007354700f03c8ad2d9a2118 which is
+>     commit 8d820bc9d12b8beebca836cceaf2bbe68216c2f8 upstream.
+> 
+>     It causes runtime failures as reported by Naresh and Arnd writes:
+> 
+>             Greg, please just revert fbb4e8e6dc7b ("net: broadcom: Fix BCMGENET Kconfig")
+>             in stable/linux-5.10.y: it depends on e5f31552674e ("ethernet: fix
+>             PTP_1588_CLOCK dependencies"), which we probably don't want backported
+>             from 5.15 to 5.10.
 
-Thank you both for explaination.
-just googled and found random /proc/meminfo output of K210 board (6MB RAM, dual-core)
+Now dropped, thanks.
 
-Given that even K210 board uses around 100kB of percpu area,
-might not be worth thing to do :(
-
-https://gist.github.com/pdp7/0fd86d39e07ad7084f430c85a7a567f4?permalink_comment_id=3179983#gistcomment-3179983
-
-> The only drawback of early reservation is it's not so flexible. We can
-> only dynamically create chunk to increase percpu areas when early
-> reservation is run out, but can't shrink early reservation if system
-> doesn't need that much.
-> 
-> So we may need weigh the two ideas:
->   - Not allowing to alloc_percpu() before kmem_cache_init();
->   - Keep early reservation, and think of a economic value for
->     CONFIG_SLUB_TINY.
->  
-> start_kernel()
->   ->setup_per_cpu_areas();
->   ......
->   ->mm_init();
->       ......
->       -->kmem_cache_init();
-> 
-> 
-> __alloc_percpu()
->   -->pcpu_alloc()
->      --> succeed to allocate from early reservation
->       or
->      -->pcpu_create_chunk()
->         -->pcpu_alloc_chunk()
->            -->pcpu_mem_zalloc()
-> 
-
--- 
-Thanks,
-Hyeonggon
+greg k-h
