@@ -1,99 +1,119 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35C5CBC
-	for <patches@lists.linux.dev>; Tue, 13 Dec 2022 15:32:12 +0000 (UTC)
-Received: by mail-ed1-f43.google.com with SMTP id v8so18256505edi.3
-        for <patches@lists.linux.dev>; Tue, 13 Dec 2022 07:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9LFcn2LS2h1mCkUkoHgPOjFPfjs4oxAUSgVBVj57pOE=;
-        b=bwnC1QCUTzSNR0jnSkHm6+NJvylAT9qlE995YBiYZths7yzrOPGvqQLltEoONhJ2la
-         GflqEwoVSojbh60Z0i73QDq8c/1RO0QSMenTMRqDWjDd+ngpMibFdBlnslXzUTDlHH2N
-         svMaYW6+fZrBRJK2/mDNV1/rVtViogyVXdvXYhF+S3i/oIa8TmTydJfWi2ly3GtH6+Mb
-         G0ZcpiHYvHSplWtGeQuMcqUVA8ycgFMhuTQ//DBDnN6Ctj3SBr+L2DNfltRja0fiZJFM
-         XqFuJTBPm4t3pDIErWBXEa50bq2HgMiHyDNPVL+kJBXM2pc4RfcycXqZrLYhx5JVV1KV
-         3oXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9LFcn2LS2h1mCkUkoHgPOjFPfjs4oxAUSgVBVj57pOE=;
-        b=H3scSqEehx38sVEk9ZLj1WV9lAJMP8jB/wDHZpn9+HH0E+Hy8IjKmae5v6ce8XdUYH
-         d643G6/N/ETlHNMI/knm22JhOTN87+aDthmHxHS0SJE05Nbp63xFoBON3SBBhlEfyJID
-         QWcVl2vRJmaIg+tFS5XirecMtYKsv2yiF5OhaNy9QMUkamjAaSmIeu0VlzfdgW1ITGwo
-         plZkC2zB1nCCs5GHuxz46oNeVTYXl9QqK5R8v9uUwl6iXs0VM7SDOriQlf2IDFGp7GcQ
-         H3JGvGzVHXB/eCrTD9GwbNsM2HSPljhQ5C0pZ7q9mhTDdrvel1CxyHDPiz8ArDv4CSe3
-         Xpsg==
-X-Gm-Message-State: ANoB5pleMlnQMqWYvyoyWrdgpdaxmiHZF1X5bRNbEMd5PkWK3aSdPfFU
-	HomJMqwpV7fuwQtTZRwImMhlu7OfL/pWhwKp8YA=
-X-Google-Smtp-Source: AA0mqf679IR0szw2P7LGnGsO9Uvt78/3pJf6iUxIbum7zMS/JIZHte0W9eaVemwbp9x2EKxXCQd99qUcs19KL2jT5S0=
-X-Received: by 2002:aa7:d841:0:b0:46d:692e:8572 with SMTP id
- f1-20020aa7d841000000b0046d692e8572mr7127576eds.25.1670945531147; Tue, 13 Dec
- 2022 07:32:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B2E2563;
+	Tue, 13 Dec 2022 16:48:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D48CC433F1;
+	Tue, 13 Dec 2022 16:48:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1670950110;
+	bh=yRTgXuAMf26YmeJ6GO3YhLpQZxVOXCpEwtAqrvv29/Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TjJjkY2YGVnR6LqCjfdS2D5LCCcg32+s0afUDrOaRpM/ncCK37FdmyIV1/dTkE0ql
+	 UZnWh7jCfzA5wHltyK5OOJS4rMBVGmpZAHH9hqAqhbfESZaYw4U/f74UtJMFwKAIXT
+	 kwAADgB9JD2JGch4D2ztgHOYXyOIJOjF8qkvXjfzNSNba5/mDxkI0x1lDgpVcSZkmr
+	 9iVRyQkDMUh0J9fxo01bnzF4L2Qt4kRROA82yLskaVbAdrHQX42k5cvPjbYRJ0hArc
+	 JvuSEezW7XvZiwfhq4Lk+4gMFnxdo9nvuDU+wlLJgBn0fl6MjUfXZhrkNfwRahVRWv
+	 dEEOWGkKsaP6Q==
+Date: Tue, 13 Dec 2022 09:48:27 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Daniel Jordan <daniel.m.jordan@oracle.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Nicolas Schier <nicolas@fjasle.eu>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	linux-crypto@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] padata: Mark padata_work_init() as __ref
+Message-ID: <Y5is20DXQxtqyJLs@dev-arch.thelio-3990X>
+References: <20221207191657.2852229-1-nathan@kernel.org>
+ <20221207191657.2852229-2-nathan@kernel.org>
+ <CAK7LNARoxqSzjpM0twcssMkf9X_PppzqtUo_opq=CX+zixma8g@mail.gmail.com>
+ <Y5dfPgNF8E2EpNCM@dev-arch.thelio-3990X>
+ <20221212192157.plxiyyinfhieyzbt@parnassus.localdomain>
+ <Y5eJuBWoCJ+q++IM@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221212130924.863767275@linuxfoundation.org> <Y5hqsggURI1Me1ik@debian>
-In-Reply-To: <Y5hqsggURI1Me1ik@debian>
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Date: Tue, 13 Dec 2022 15:31:35 +0000
-Message-ID: <CADVatmPM4Q5A9jVO6-ixhqa2HWh4rWPKNpfwy75u69My=3Xhjw@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/106] 5.10.159-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net, 
-	rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y5eJuBWoCJ+q++IM@dev-arch.thelio-3990X>
 
-On Tue, 13 Dec 2022 at 12:06, Sudip Mukherjee (Codethink)
-<sudipm.mukherjee@gmail.com> wrote:
->
-> Hi Greg,
->
-> On Mon, Dec 12, 2022 at 02:09:03PM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.159 release.
-> > There are 106 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 14 Dec 2022 13:08:57 +0000.
-> > Anything received after that time might be too late.
->
-> Build test (gcc version 11.3.1 20221127):
-> mips: 63 configs -> no failure
-> arm: 104 configs -> no failure
-> arm64: 3 configs -> no failure
-> x86_64: 4 configs -> no failure
-> alpha allmodconfig -> no failure
-> powerpc allmodconfig -> no failure
-> riscv allmodconfig -> no failure
-> s390 allmodconfig -> no failure
-> xtensa allmodconfig -> no failure
->
-> Boot test:
-> x86_64: Booted on my test laptop. No regression.
-> x86_64: Booted on qemu. No regression. [1]
->
-> arm64: Booted on rpi4b (4GB model).
-> Regression noticed:
-> Failed to start Network Manager
->
-> Will try a bisect and find which commit caused it.
+On Mon, Dec 12, 2022 at 01:06:16PM -0700, Nathan Chancellor wrote:
+> On Mon, Dec 12, 2022 at 02:21:57PM -0500, Daniel Jordan wrote:
+> > On Mon, Dec 12, 2022 at 10:05:02AM -0700, Nathan Chancellor wrote:
+> > > On Mon, Dec 12, 2022 at 10:07:24PM +0900, Masahiro Yamada wrote:
+> > > > I am not sure if the compiler should do this level of optimization
+> > > > because kernel/padata.c does not seem to be a special case.
+> > > > Perhaps, we might be hit with more cases that need __ref annotation,
+> > > > which is only required by LTO.
+> > > 
+> > > That's possible. I did only see this once instance in all my builds but
+> > > allmodconfig + ThinLTO might not be too interesting of a case,
+> > > since the sanitizers will be enabled, which makes optimization more
+> > > difficult. I could try to enable ThinLTO with some distribution
+> > > configurations to see if there are any more instances that crop up.
+> > 
+> > Yes, if there were many more instances of this problem it might be worth
+> > thinking about an LTO-specific solution to fix it closer to the source.
+> 
+> Ack, I will wire up some build tests to see if this optimization occurs
+> frequently enough to warrant a wider fix.
 
-Bisect pointed to 60aefe77fb48 ("net: broadcom: Add
-PTP_1588_CLOCK_OPTIONAL dependency for BCMGENET under ARCH_BCM2835")
+Turns out this does not appear to happen often. I built several
+distribution configurations for arm64 and x86_64 with
+CONFIG_LTO_CLANG_THIN=y and saw no modpost warnings. So I think this is
+sufficiently odd to keep the fix local to this one instance. I will send
+a v3 later today.
 
-
--- 
-Regards
-Sudip
+> > > > One note is that, we could discard padata_work_init()
+> > > > because (1) and (3) are both annotated as __init.
+> > > > So, another way of fixing is
+> > > >    static __always_inline void padata_work_init(...)
+> > > > because the compiler would determine padata_work_init()
+> > > > would be small enough if the caller and callee belonged to
+> > > > the same section.
+> > > > 
+> > > > I do not have a strong opinion.
+> > 
+> > I'm right there with you.  :-)
+> > 
+> > > > Honestly, I do not know what the best approach would be to fix this.
+> > 
+> > Either approach works, either can include an explanatory comment.
+> > __ref seems more targeted to the problem at hand.
+> 
+> Right, I suspect __ref is the right way to go for this particular issue.
+> I will add a comment regardless.
+> 
+> > > > If we go with the __ref annotation, I can pick this, but
+> > > > at least can you add some comments?
+> > > > 
+> > > > 
+> > > > include/linux/init.h says:
+> > > > "optimally document why the __ref is needed and why it's OK"
+> > > > 
+> > > > 
+> > > > I think this is the case that needs some comments
+> > > > because LTO optimization looks too tricky to me.
+> > > 
+> > > Sure thing, I will send a v3 either Tuesday or Wednesday with an updated
+> > > commit message and code comment if we end up going this route.
+> > 
+> > A nitpick, but as long as you're respinning, if we stay with this
+> > approach, could you put __ref just before the function name?  init.h
+> > says "The markers follow same syntax rules as __init / __initdata" and
+> > for those it says "You should add __init immediately before the function
+> > name" though there are plenty of places in the tree that don't do this.
+> 
+> Sure thing!
+> 
+> Cheers,
+> Nathan
+> 
