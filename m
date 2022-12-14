@@ -1,112 +1,80 @@
-Received: from conssluserg-01.nifty.com (conssluserg-01.nifty.com [210.131.2.80])
+Received: from mout-b-206.mailbox.org (mout-b-206.mailbox.org [195.10.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732A617F9;
-	Wed, 14 Dec 2022 06:53:00 +0000 (UTC)
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46]) (authenticated)
-	by conssluserg-01.nifty.com with ESMTP id 2BE6qhkH010162;
-	Wed, 14 Dec 2022 15:52:43 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-01.nifty.com 2BE6qhkH010162
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-	s=dec2015msa; t=1671000763;
-	bh=kUp70rP8+WE375gZo6RwGVSoC7tN1va3x0gcuXXmVAc=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=fWj4uAFnhzIPVRwYJ4AcO3K43yxwwVige5gzPnptks2Dc9KHP0gdXw9ZgqA7lVN/l
-	 tBYwl+YsZkBxWNB6vDEkAPbxh+LGu0R8VVXeBNF/q9nkYNMYlt80QOkhs5MKWZLikb
-	 4PtdUJLwxzTDWDgGmc4daFosAMPfFbyWowixaKgfddq67sxqKUJo4z/Phn13gitaOo
-	 1D6D4U25eKwdG0sxEmLzfJPnw93R5vNJh9rGwzFvRBld/t5o65vDgOWr/byh9tc6U4
-	 Hr4F4MOPTsrLu4ux++vp+Dz3LZ7GEgyPxg2Jv94UDbgNnzvr2cunvmVVwmEvgZavlo
-	 tF8MkaknFwwOg==
-X-Nifty-SrcIP: [209.85.210.46]
-Received: by mail-ot1-f46.google.com with SMTP id i26-20020a9d68da000000b00672301a1664so491102oto.6;
-        Tue, 13 Dec 2022 22:52:43 -0800 (PST)
-X-Gm-Message-State: ANoB5pku2h6v860NZCJpUt95OKDPeNGWUbZXrXlegAwQ0/H4kVVRXZPB
-	BOTFUgOtHThU3uSM+TvMUfw132fqSwZePRE/MhA=
-X-Google-Smtp-Source: AA0mqf4hyLaZPZqPEZgMASVAcc5qkFLGibxEUKGsAwT9Hi2h9o8TOTn1hbIUpkclYCt2W71rUBR6CM5VPiXHvUbYKqI=
-X-Received: by 2002:a9d:282:0:b0:66c:794e:f8c6 with SMTP id
- 2-20020a9d0282000000b0066c794ef8c6mr49412729otl.343.1671000762325; Tue, 13
- Dec 2022 22:52:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3EE28F6
+	for <patches@lists.linux.dev>; Wed, 14 Dec 2022 09:35:09 +0000 (UTC)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-b-206.mailbox.org (Postfix) with ESMTPS id 4NX9FF23mNz9tNM;
+	Wed, 14 Dec 2022 10:34:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
+	t=1671010497;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=JECLRqzznZVJcQFxEyTyGBYjuCU4Zk5HVm/KjeUQy0I=;
+	b=HwA7McrarJVH/sxyrgRgGr+zC/lc6vUMGrXbB/tPfqGIat/vDLQUeeEN7HVYKH+SAe69/X
+	qkUjLPb4vIccxfoKgCP70xba6gUN+Nf10pRWqM19ElXmkU8Nm4n1bNvBqbvve3Y695x0BD
+	pz/Ine/xCXK3TGkx9zS/MZiJnyH9mWgQQlgvEzNo7jtoEt1Le0Xy8fWBMLfd5O9TyzUvWw
+	gr5JaRxFjsDLYr401Y5/pOY3bS41iBK0M0gjzWxMnsR57EH9ZtMW7d1m6FVowjMTRtdtWb
+	/3LUycOpUR7lQDiXr7CT/8biL9mw+PGZswEr2KRhJklglw+SwcwiS3tuTXjekw==
+Date: Wed, 14 Dec 2022 10:34:51 +0100
+From: Finn Behrens <fin@nyantec.com>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: prelude: prevent doc inline of external imports
+Message-ID: <20221214093451.zdyhmdyxwz73n6pe@imap.mailbox.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221213183529.766630-1-nathan@kernel.org>
-In-Reply-To: <20221213183529.766630-1-nathan@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Wed, 14 Dec 2022 15:52:06 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAR6aPQEM3e_yuq4jgCAAiJ+cr6xGvG1N4uZfw70xk_YSg@mail.gmail.com>
-Message-ID: <CAK7LNAR6aPQEM3e_yuq4jgCAAiJ+cr6xGvG1N4uZfw70xk_YSg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] Fix lack of section mismatch warnings with LTO
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Sami Tolvanen <samitolvanen@google.com>,
-        Vincent Donnefort <vdonnefort@google.com>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev, patches@lists.linux.dev,
-        Steffen Klassert <steffen.klassert@secunet.com>,
-        Daniel Jordan <daniel.m.jordan@oracle.com>,
-        linux-crypto@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, Dec 14, 2022 at 3:35 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> Hi all,
->
-> Vincent recently reported an issue with lack of section mismatch
-> warnings with LTO. This is due to commit 6c730bfc894f ("modpost: handle
-> -ffunction-sections"), which ignores all function sections for modpost.
->
-> I believe this is incorrect, as these function sections may still refer
-> to symbols in other sections and they will ultimately be coalesced into
-> .text by vmlinux.lds anyways.
->
-> The first patch fixes a warning that I see with allmodconfig + ThinLTO
-> builds after applying the second patch. The second patch moves ".text.*"
-> into TEXT_SECTIONS so that modpost audits them for mismatches.
->
-> I expect this to go via the kbuild tree with an ack from the padata
-> maintainers.
+This shows exactly where the items are from, previously the items from
+macros, alloc and core where shown as a decleration from the kernel crate,
+this shows the correct path.
 
+Signed-off-by: Finn Behrens <fin@nyantec.com>
+---
+ rust/kernel/prelude.rs | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Daniel Acked v2.
-
-Applied to kbuild with his Acked-by.
-
-Thanks.
-
-
->
-> Cc: Steffen Klassert <steffen.klassert@secunet.com>
-> Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-> Cc: linux-crypto@vger.kernel.org
->
-> v3:
->   - Stick a comment above padata_work_init() to explain presence of
->     __ref (Masahiro, Daniel).
->   - Expand on problem in first patch's commit message (Masahiro).
->   - Adjust location of __ref within function definition (Daniel)
->   - Fix typo in commit message of second patch (Masahiro).
-> v2: https://lore.kernel.org/20221207191657.2852229-1-nathan@kernel.org/
-> v1: https://lore.kernel.org/20221129190123.872394-1-nathan@kernel.org/
->
-> Nathan Chancellor (2):
->   padata: Mark padata_work_init() as __ref
->   modpost: Include '.text.*' in TEXT_SECTIONS
->
->  kernel/padata.c       | 12 ++++++++++--
->  scripts/mod/modpost.c |  4 ++--
->  2 files changed, 12 insertions(+), 4 deletions(-)
->
->
-> base-commit: 830b3c68c1fb1e9176028d02ef86f3cf76aa2476
-> --
-> 2.39.0
->
-
-
+diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+index 7a90249ee9b9..917721e791b6 100644
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -11,15 +11,21 @@
+ //! use kernel::prelude::*;
+ //! ```
+ 
++#[doc(no_inline)]
+ pub use core::pin::Pin;
+ 
++#[doc(no_inline)]
+ pub use alloc::{boxed::Box, vec::Vec};
+ 
++#[doc(no_inline)]
+ pub use macros::{module, vtable};
+ 
+ pub use super::build_assert;
+ 
+-pub use super::{dbg, pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info, pr_notice, pr_warn};
++// super::std_vendor is hidden, which makes the macro inline for some reason
++#[doc(no_inline)]
++pub use super::dbg;
++pub use super::{pr_alert, pr_crit, pr_debug, pr_emerg, pr_err, pr_info, pr_notice, pr_warn};
+ 
+ pub use super::static_assert;
+ 
 -- 
-Best Regards
-Masahiro Yamada
+2.31.1
+
