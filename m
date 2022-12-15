@@ -1,80 +1,124 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95650180
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 00:06:46 +0000 (UTC)
-Received: by mail-pl1-f173.google.com with SMTP id 4so5141191plj.3
-        for <patches@lists.linux.dev>; Wed, 14 Dec 2022 16:06:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Io4os3gTaCz4PVaBpjHUj2dUPT6iCaDC19vKypF5Q6s=;
-        b=i/gqh+ULBL84l7W+HaI+YPVA3abaIfQIMOgVOnljOmr/KVA68zwjp++CaIKotf3jQg
-         ZUOzQKPjmqqy4B/7LyynthiKp6gDWwdZ0BWj+GzLXpD3URXB/Z683HOwIBXxeh93b6GF
-         S1iZx+2M8h1CY+bK9AdVvDyvmaaHb+Ig46C2A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Io4os3gTaCz4PVaBpjHUj2dUPT6iCaDC19vKypF5Q6s=;
-        b=E6Jw6HWyLlcwXw1l6vjqRCrpJ5XZFfI0gNme1jdWfNkqHbWuyT6+dGmU8h1KlmNbrq
-         lrPqN+wrcaQMu355vV86+CSSAwNQ7gUpfbB+pkTOt0IXq9HS/G8p/ecM3nImPr5OIIQC
-         tqwDdvDQMPGFHYN+zrKt1uUGFuZk8pe60x8oNOEJ9xxDJWlqf8gGv0HUOdbdNrWVEiyn
-         QGdoUTFsEmHP01LBvguZc1HNOhmnYTRiaAnn16xObSx4/RhysJq2s0aBV6HPI1NH3cuN
-         AGyisHIAHJlQANf1LDLkNwYJhcNvXpdAX+D2KLhbE7zxqwQ6r9MKe5/sI6/aQv1CyaMw
-         nEUg==
-X-Gm-Message-State: ANoB5pkGEiGlzjkCq7mXE1SpsFKscZj5GxPBulxiD8/9FaFsEqmx8eAJ
-	AYuL4RFVICQE5wTeh0L7Q2OZ8g==
-X-Google-Smtp-Source: AA0mqf7K90bP3UUUfX9ygJAAX4zTnSIy4/T4H3TdPQBfKafxMyTh8efvMuJMEGl3HGTGWDSfjK9dew==
-X-Received: by 2002:a17:90a:b908:b0:21a:8c6:c89e with SMTP id p8-20020a17090ab90800b0021a08c6c89emr27261520pjr.2.1671062806002;
-        Wed, 14 Dec 2022 16:06:46 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id gj1-20020a17090b108100b002086ac07041sm1910624pjb.44.2022.12.14.16.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Dec 2022 16:06:45 -0800 (PST)
-From: Kees Cook <keescook@chromium.org>
-To: ndesaulniers@google.com,
-	nathan@kernel.org
-Cc: Kees Cook <keescook@chromium.org>,
-	stable@vger.kernel.org,
-	trix@redhat.com,
-	linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6735692
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:10:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8153C433EF;
+	Thu, 15 Dec 2022 18:10:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1671127839;
+	bh=F4U0ZFdAXj+74LYC3BcBLmMk6whq3qdqz6xNXMglYQg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jp6X1cIgtebuLvE011BNyCyt8TF2yuy4/qkxLSoYHnyWCYoG+UhV3GbHucDU0BZAz
+	 PIQ+A3C8fc3UQ06CBw8hTigEOaBwZt0Mo/0p5XImT/tYOF7gT8QNm1pap4OvZErzlV
+	 jNGNLO2Wcu/1nciDTfGuNwwkusefED9YWK5EJ+2Y=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
-Date: Wed, 14 Dec 2022 16:06:19 -0800
-Message-Id: <167106277582.3571286.12639413013649335692.b4-ty@chromium.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221214232602.4118147-1-nathan@kernel.org>
-References: <20221214232602.4118147-1-nathan@kernel.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.4 0/9] 5.4.228-rc1 review
+Date: Thu, 15 Dec 2022 19:10:27 +0100
+Message-Id: <20221215172905.468656378@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.228-rc1
+X-KernelTest-Deadline: 2022-12-17T17:29+00:00
 Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Dec 2022 16:26:03 -0700, Nathan Chancellor wrote:
-> A bad bug in clang's implementation of -fzero-call-used-regs can result
-> in NULL pointer dereferences (see the links above the check for more
-> information). Restrict CONFIG_CC_HAS_ZERO_CALL_USED_REGS to either a
-> supported GCC version or a clang newer than 15.0.6, which will catch
-> both a theoretical 15.0.7 and the upcoming 16.0.0, which will both have
-> the bug fixed.
-> 
-> [...]
+This is the start of the stable review cycle for the 5.4.228 release.
+There are 9 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Applied to for-next/hardening, thanks! (And I'll send it for v6.2-rc1 too.)
+Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
+Anything received after that time might be too late.
 
-[1/1] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
-      https://git.kernel.org/kees/c/d6a9fb87e9d1
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
--- 
-Kees Cook
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.228-rc1
+
+Yasushi SHOJI <yasushi.shoji@gmail.com>
+    can: mcba_usb: Fix termination command argument
+
+Heiko Schocher <hs@denx.de>
+    can: sja1000: fix size of OCR_MODE_MASK define
+
+Ricardo Ribalda <ribalda@chromium.org>
+    pinctrl: meditatek: Startup with the IRQs disabled
+
+Mark Brown <broonie@kernel.org>
+    ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
+
+Jialiang Wang <wangjialiang0806@163.com>
+    nfp: fix use-after-free in area_cache_get()
+
+Ming Lei <ming.lei@redhat.com>
+    block: unhash blkdev part inode when the part is deleted
+
+Baolin Wang <baolin.wang@linux.alibaba.com>
+    mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
+
+Paul E. McKenney <paulmck@kernel.org>
+    x86/smpboot: Move rcu_cpu_starting() earlier
+
+Lorenzo Colitti <lorenzo@google.com>
+    net: bpf: Allow TC programs to call BPF_FUNC_skb_change_head
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +--
+ arch/x86/kernel/cpu/mtrr/mtrr.c                    |  2 --
+ arch/x86/kernel/smpboot.c                          |  1 +
+ block/partition-generic.c                          |  7 +++++
+ drivers/net/can/usb/mcba_usb.c                     | 10 +++++---
+ .../ethernet/netronome/nfp/nfpcore/nfp_cppcore.c   |  3 ++-
+ drivers/pinctrl/mediatek/mtk-eint.c                |  9 ++++---
+ include/linux/can/platform/sja1000.h               |  2 +-
+ include/linux/hugetlb.h                            |  6 ++---
+ mm/gup.c                                           | 13 +++++++++-
+ mm/hugetlb.c                                       | 30 +++++++++++-----------
+ net/core/filter.c                                  |  2 ++
+ sound/soc/soc-ops.c                                |  6 +++++
+ 13 files changed, 64 insertions(+), 31 deletions(-)
+
 
