@@ -1,143 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B078569C
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BE0C433D2;
-	Thu, 15 Dec 2022 18:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4013E569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C42C433EF;
+	Thu, 15 Dec 2022 18:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127947;
-	bh=yAx6lHKjcRkOlQXpdcdxuKo/z+G9WfEZCw83EwdLEYU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=X8EKBJkx90QFgKQGMaPpfETKSzLjrBDc/OHglO4svYa2cHp8TBm8pl+oUyHw6em+s
-	 usLX5TZS//njBtIitM8Kas+2oiVEKwtbd46bb7lzO4hErAp76u/abUw4XUeb0dVzAx
-	 2F5hcqLeao1UUBCo67pKdXjQlkAftVCZugZhjQfc=
+	s=korg; t=1671127951;
+	bh=Gzk9ewzTM4s8hwLQCFNaWtzfmU0RXYWAhatft5jNbfQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YLeisV8dnf2KpmJedkiSzUvAx+wUFuhXj0u+7UQ5s1Yr9u0/YAHZrXJ9ZKdZYZZOU
+	 SqbmxcLi4w9NzqC0Q7f2UAA7pSVkVS9f+SHDGXLS3bh4YFdruJx+eqvjUAzX7nsKlD
+	 6C7MRh2hClIVA+cZuZp+umpqI66UlyUx6ZFHNAiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.15 00/14] 5.15.84-rc1 review
-Date: Thu, 15 Dec 2022 19:10:36 +0100
-Message-Id: <20221215172906.338769943@linuxfoundation.org>
+	Yasushi SHOJI <yashi@spacecubics.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 10/14] can: mcba_usb: Fix termination command argument
+Date: Thu, 15 Dec 2022 19:10:46 +0100
+Message-Id: <20221215172907.157569666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
+References: <20221215172906.338769943@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.84-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.84-rc1
-X-KernelTest-Deadline: 2022-12-17T17:29+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.15.84 release.
-There are 14 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Yasushi SHOJI <yasushi.shoji@gmail.com>
 
-Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 1a8e3bd25f1e789c8154e11ea24dc3ec5a4c1da0 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.84-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+Microchip USB Analyzer can activate the internal termination resistors
+by setting the "termination" option ON, or OFF to to deactivate them.
+As I've observed, both with my oscilloscope and captured USB packets
+below, you must send "0" to turn it ON, and "1" to turn it OFF.
 
-thanks,
+>From the schematics in the user's guide, I can confirm that you must
+drive the CAN_RES signal LOW "0" to activate the resistors.
 
-greg k-h
+Reverse the argument value of usb_msg.termination to fix this.
 
--------------
-Pseudo-Shortlog of commits:
+These are the two commands sequence, ON then OFF.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.84-rc1
+> No.     Time           Source                Destination           Protocol Length Info
+>       1 0.000000       host                  1.3.1                 USB      46     URB_BULK out
+>
+> Frame 1: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
+> USB URB
+> Leftover Capture Data: a80000000000000000000000000000000000a8
+>
+> No.     Time           Source                Destination           Protocol Length Info
+>       2 4.372547       host                  1.3.1                 USB      46     URB_BULK out
+>
+> Frame 2: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
+> USB URB
+> Leftover Capture Data: a80100000000000000000000000000000000a9
 
-Lei Rao <lei.rao@intel.com>
-    nvme-pci: clear the prp2 field when not used
+Signed-off-by: Yasushi SHOJI <yashi@spacecubics.com>
+Link: https://lore.kernel.org/all/20221124152504.125994-1-yashi@spacecubics.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/can/usb/mcba_usb.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Peter Zijlstra <peterz@infradead.org>
-    perf: Fix perf_pending_task() UaF
+diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
+index 023bd34d48e3..e9ccdcce01cc 100644
+--- a/drivers/net/can/usb/mcba_usb.c
++++ b/drivers/net/can/usb/mcba_usb.c
+@@ -47,6 +47,10 @@
+ #define MCBA_VER_REQ_USB 1
+ #define MCBA_VER_REQ_CAN 2
+ 
++/* Drive the CAN_RES signal LOW "0" to activate R24 and R25 */
++#define MCBA_VER_TERMINATION_ON 0
++#define MCBA_VER_TERMINATION_OFF 1
++
+ #define MCBA_SIDL_EXID_MASK 0x8
+ #define MCBA_DLC_MASK 0xf
+ #define MCBA_DLC_RTR_MASK 0x40
+@@ -469,7 +473,7 @@ static void mcba_usb_process_ka_usb(struct mcba_priv *priv,
+ 		priv->usb_ka_first_pass = false;
+ 	}
+ 
+-	if (msg->termination_state)
++	if (msg->termination_state == MCBA_VER_TERMINATION_ON)
+ 		priv->can.termination = MCBA_TERMINATION_ENABLED;
+ 	else
+ 		priv->can.termination = MCBA_TERMINATION_DISABLED;
+@@ -789,9 +793,9 @@ static int mcba_set_termination(struct net_device *netdev, u16 term)
+ 	};
+ 
+ 	if (term == MCBA_TERMINATION_ENABLED)
+-		usb_msg.termination = 1;
++		usb_msg.termination = MCBA_VER_TERMINATION_ON;
+ 	else
+-		usb_msg.termination = 0;
++		usb_msg.termination = MCBA_VER_TERMINATION_OFF;
+ 
+ 	mcba_usb_xmit_cmd(priv, (struct mcba_usb_msg *)&usb_msg);
+ 
+-- 
+2.35.1
 
-Charles Keepax <ckeepax@opensource.cirrus.com>
-    ASoC: cs42l51: Correct PGA Volume minimum value
-
-Rasmus Villemoes <linux@rasmusvillemoes.dk>
-    net: fec: don't reset irq coalesce settings to defaults on "ip link up"
-
-Yasushi SHOJI <yasushi.shoji@gmail.com>
-    can: mcba_usb: Fix termination command argument
-
-Heiko Schocher <hs@denx.de>
-    can: sja1000: fix size of OCR_MODE_MASK define
-
-Ricardo Ribalda <ribalda@chromium.org>
-    pinctrl: meditatek: Startup with the IRQs disabled
-
-Hou Tao <houtao1@huawei.com>
-    libbpf: Use page size as max_entries when probing ring buffer map
-
-Mark Brown <broonie@kernel.org>
-    ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
-
-Shengjiu Wang <shengjiu.wang@nxp.com>
-    ASoC: fsl_micfil: explicitly clear CHnF flags
-
-Shengjiu Wang <shengjiu.wang@nxp.com>
-    ASoC: fsl_micfil: explicitly clear software reset bit
-
-Jialiang Wang <wangjialiang0806@163.com>
-    nfp: fix use-after-free in area_cache_get()
-
-Amir Goldstein <amir73il@gmail.com>
-    vfs: fix copy_file_range() averts filesystem freeze protection
-
-Nathan Chancellor <nathan@kernel.org>
-    x86/vdso: Conditionally export __vdso_sgx_enter_enclave()
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 ++--
- arch/x86/entry/vdso/vdso.lds.S                     |  2 ++
- drivers/net/can/usb/mcba_usb.c                     | 10 +++++++---
- drivers/net/ethernet/freescale/fec_main.c          | 22 ++++++----------------
- .../ethernet/netronome/nfp/nfpcore/nfp_cppcore.c   |  3 ++-
- drivers/nvme/host/pci.c                            |  2 ++
- drivers/pinctrl/mediatek/mtk-eint.c                |  9 ++++++---
- fs/ksmbd/vfs.c                                     |  6 +++---
- fs/nfsd/vfs.c                                      |  4 ++--
- fs/read_write.c                                    | 17 +++++++++++++----
- include/linux/can/platform/sja1000.h               |  2 +-
- include/linux/fs.h                                 |  8 ++++++++
- kernel/events/core.c                               | 17 +++++++++++++----
- sound/soc/codecs/cs42l51.c                         |  2 +-
- sound/soc/fsl/fsl_micfil.c                         | 19 +++++++++++++++++++
- sound/soc/soc-ops.c                                |  6 ++++++
- tools/lib/bpf/libbpf_probes.c                      |  2 +-
- 17 files changed, 94 insertions(+), 41 deletions(-)
 
 
