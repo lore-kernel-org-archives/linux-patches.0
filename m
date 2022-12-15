@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF415692
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E096C433F2;
-	Thu, 15 Dec 2022 18:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFB55692
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A1CC433F0;
+	Thu, 15 Dec 2022 18:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127858;
-	bh=ZaQD/WVS9g1OcjcjJYZXkfWsF/I/ER9r62lK5f8TOd0=;
+	s=korg; t=1671127861;
+	bh=dbmSUR82P0cL+wKEywP2aWHs3sdjFr3uUeFglr1ybwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMjRmroxIi/Zcrs0s4YM/VTC7uFg3TndWskzM6gS8ieYN//N2tzV8HWM1GVA5q9Qj
-	 GaaPNebp9mc6GBQY8GmQK3b3IRTH2zn208CqF9pgQ/iHATJQxooQjz1FojnwJt9ykR
-	 0tVvenKTq+5P3R8cIyLr8+YUy5yuiNVdlZEUAHp0=
+	b=2nI/HZ5wxc16NXO6FQzmWYFgNUyNrwvO27kvDPKRqq2ITYUbLw0IZZa9VV8IiUvnt
+	 ibqcAUPwt5rUfrjFclCPs8A+ijVRwyjUQWiUThQA98y1Qb5+w5WKZXE8nGA4bDxu6U
+	 bYP1TbNqvi7CcDPHqgfVbKb6gkgX+zt10bP9dtjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 6/9] ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
-Date: Thu, 15 Dec 2022 19:10:33 +0100
-Message-Id: <20221215172905.693906724@linuxfoundation.org>
+Subject: [PATCH 5.4 7/9] pinctrl: meditatek: Startup with the IRQs disabled
+Date: Thu, 15 Dec 2022 19:10:34 +0100
+Message-Id: <20221215172905.732235854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
 References: <20221215172905.468656378@linuxfoundation.org>
@@ -34,39 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 97eea946b93961fffd29448dcda7398d0d51c4b2 ]
+[ Upstream commit 11780e37565db4dd064d3243ca68f755c13f65b4 ]
 
-The bounds checks in snd_soc_put_volsw_sx() are only being applied to the
-first channel, meaning it is possible to write out of bounds values to the
-second channel in stereo controls. Add appropriate checks.
+If the system is restarted via kexec(), the peripherals do not start
+with a known state.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20220511134137.169575-2-broonie@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If the previous system had enabled an IRQs we will receive unexected
+IRQs that can lock the system.
+
+[   28.109251] watchdog: BUG: soft lockup - CPU#0 stuck for 26s!
+[swapper/0:0]
+[   28.109263] Modules linked in:
+[   28.109273] CPU: 0 PID: 0 Comm: swapper/0 Not tainted
+5.15.79-14458-g4b9edf7b1ac6 #1 9f2e76613148af94acccd64c609a552fb4b4354b
+[   28.109284] Hardware name: Google Elm (DT)
+[   28.109290] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS
+		BTYPE=--)
+[   28.109298] pc : __do_softirq+0xa0/0x388
+[   28.109309] lr : __do_softirq+0x70/0x388
+[   28.109316] sp : ffffffc008003ee0
+[   28.109321] x29: ffffffc008003f00 x28: 000000000000000a x27:
+0000000000000080
+[   28.109334] x26: 0000000000000001 x25: ffffffefa7b350c0 x24:
+ffffffefa7b47480
+[   28.109346] x23: ffffffefa7b3d000 x22: 0000000000000000 x21:
+ffffffefa7b0fa40
+[   28.109358] x20: ffffffefa7b005b0 x19: ffffffefa7b47480 x18:
+0000000000065b6b
+[   28.109370] x17: ffffffefa749c8b0 x16: 000000000000018c x15:
+00000000000001b8
+[   28.109382] x14: 00000000000d3b6b x13: 0000000000000006 x12:
+0000000000057e91
+[   28.109394] x11: 0000000000000000 x10: 0000000000000000 x9 :
+ffffffefa7b47480
+[   28.109406] x8 : 00000000000000e0 x7 : 000000000f424000 x6 :
+0000000000000000
+[   28.109418] x5 : ffffffefa7dfaca0 x4 : ffffffefa7dfadf0 x3 :
+000000000000000f
+[   28.109429] x2 : 0000000000000000 x1 : 0000000000000100 x0 :
+0000000001ac65c5
+[   28.109441] Call trace:
+[   28.109447]  __do_softirq+0xa0/0x388
+[   28.109454]  irq_exit+0xc0/0xe0
+[   28.109464]  handle_domain_irq+0x68/0x90
+[   28.109473]  gic_handle_irq+0xac/0xf0
+[   28.109480]  call_on_irq_stack+0x28/0x50
+[   28.109488]  do_interrupt_handler+0x44/0x58
+[   28.109496]  el1_interrupt+0x30/0x58
+[   28.109506]  el1h_64_irq_handler+0x18/0x24
+[   28.109512]  el1h_64_irq+0x7c/0x80
+[   28.109519]  arch_local_irq_enable+0xc/0x18
+[   28.109529]  default_idle_call+0x40/0x140
+[   28.109539]  do_idle+0x108/0x290
+[   28.109547]  cpu_startup_entry+0x2c/0x30
+[   28.109554]  rest_init+0xe8/0xf8
+[   28.109562]  arch_call_rest_init+0x18/0x24
+[   28.109571]  start_kernel+0x338/0x42c
+[   28.109578]  __primary_switched+0xbc/0xc4
+[   28.109588] Kernel panic - not syncing: softlockup: hung tasks
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20221122-mtk-pinctrl-v1-1-bedf5655a3d2@chromium.org
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/mediatek/mtk-eint.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 2faf95d4bb75..fbd46a737652 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -460,6 +460,12 @@ int snd_soc_put_volsw_sx(struct snd_kcontrol *kcontrol,
- 	if (snd_soc_volsw_is_stereo(mc)) {
- 		val_mask = mask << rshift;
- 		val2 = (ucontrol->value.integer.value[1] + min) & mask;
-+
-+		if (mc->platform_max && val2 > mc->platform_max)
-+			return -EINVAL;
-+		if (val2 > max)
-+			return -EINVAL;
-+
- 		val2 = val2 << rshift;
+diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
+index 7e526bcf5e0b..24502dfeb83f 100644
+--- a/drivers/pinctrl/mediatek/mtk-eint.c
++++ b/drivers/pinctrl/mediatek/mtk-eint.c
+@@ -277,12 +277,15 @@ static struct irq_chip mtk_eint_irq_chip = {
  
- 		err = snd_soc_component_update_bits(component, reg2, val_mask,
+ static unsigned int mtk_eint_hw_init(struct mtk_eint *eint)
+ {
+-	void __iomem *reg = eint->base + eint->regs->dom_en;
++	void __iomem *dom_en = eint->base + eint->regs->dom_en;
++	void __iomem *mask_set = eint->base + eint->regs->mask_set;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < eint->hw->ap_num; i += 32) {
+-		writel(0xffffffff, reg);
+-		reg += 4;
++		writel(0xffffffff, dom_en);
++		writel(0xffffffff, mask_set);
++		dom_en += 4;
++		mask_set += 4;
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
