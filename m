@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1E4569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07525C433EF;
-	Thu, 15 Dec 2022 18:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64ED569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B091C433EF;
+	Thu, 15 Dec 2022 18:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671128001;
-	bh=sCd/RpVzTHWfscuq/JRkDn0LnaDIzYEJDSh6sNXPh1I=;
+	s=korg; t=1671128004;
+	bh=6n4Bm0ycM73dP38b0rr7ZAIppKs6PXLxvgCOtqGB2aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VOh48YTG3ocGZMOXQqvqy/jSDaq1+dn+0ELcu4rm/BNscgkbt2UNKZSRgYcXqiau
-	 WovMTqPe2RA5ZCm1mCCCINpzjA7YbzmSw3h+58wru5gAaIy9OfbrSeymKEVNWUAZIT
-	 EGJ+QMwrVEQ5VziuZgKnIcQUfk4kIecjJ4mBgAf8=
+	b=G2yWupU5wKUElZoJeqQR1IpOTKpMZXd35WTcIRtmp7/x2Q35rW6Az0PW1/zpBXg+y
+	 3zlg0JGNlbJhMTaaqhhQgdrvBKWnMN5MAGKJWx7gFAFx1Khfcrd0pmlfAHoxefmLsW
+	 8GYU0FVOoivyZ8SV4abaqvgZfGnBXRELGXNTfxpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.0 05/16] rtc: cmos: fix build on non-ACPI platforms
-Date: Thu, 15 Dec 2022 19:10:49 +0100
-Message-Id: <20221215172908.379253879@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 06/16] ASoC: fsl_micfil: explicitly clear software reset bit
+Date: Thu, 15 Dec 2022 19:10:50 +0100
+Message-Id: <20221215172908.420732424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
 References: <20221215172908.162858817@linuxfoundation.org>
@@ -34,32 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit db4e955ae333567dea02822624106c0b96a2f84f upstream.
+[ Upstream commit 292709b9cf3ba470af94b62c9bb60284cc581b79 ]
 
-Now that rtc_wake_setup is called outside of cmos_wake_setup, it also need
-to be defined on non-ACPI platforms.
+SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined as
+non volatile register, it still remain in regmap cache after set,
+then every update of REG_MICFIL_CTRL1, software reset happens.
+to avoid this, clear it explicitly.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/20221018203512.2532407-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1651925654-32060-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/fsl/fsl_micfil.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1346,6 +1346,9 @@ static void cmos_check_acpi_rtc_status(s
- {
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 79ef4e269bc9..8aa6871e0d42 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -194,6 +194,17 @@ static int fsl_micfil_reset(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined
++	 * as non-volatile register, so SRES still remain in regmap
++	 * cache after set, that every update of REG_MICFIL_CTRL1,
++	 * software reset happens. so clear it explicitly.
++	 */
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_SRES);
++	if (ret)
++		return ret;
++
+ 	return 0;
  }
  
-+static void rtc_wake_setup(struct device *dev)
-+{
-+}
- #endif
- 
- #ifdef	CONFIG_PNP
+-- 
+2.35.1
+
 
 
