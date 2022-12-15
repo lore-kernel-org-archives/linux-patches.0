@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F04569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A31C433EF;
-	Thu, 15 Dec 2022 18:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44FB569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EA4C433EF;
+	Thu, 15 Dec 2022 18:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127989;
-	bh=sLFnxQ8KdDFsbpCr7Ub0zv1OPy+heet3m84NrOcex7s=;
+	s=korg; t=1671127992;
+	bh=EhtRQwmiTIg3YPCxEKm2JhGqN9VZcD67HLkWR4mRl9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gYMXD8NB5HiNqSMZWUNT3FezbdJM2GoyATmyQxNPobYUD1ipyBsLxhRCrEFJfOLb
-	 TZnkf2v6qV0JYPVeW6DBTx9PCKvjIye+xKIg/m5NFqOMpqeWTe+KBzDUdkZf4c3kIQ
-	 13f/1Q+PKzWGN89bM3C90rDgByLeJe9CoiEcpYkE=
+	b=stSZO09Wjq/LnqsPqMf88Z5QwsW6m/LjQRRFU77lBFlhlQOQrpkOG5xhzcLPdXzXh
+	 S18c498CZolz9bK/LObfZhjfZUzXOvWcNf0yevYoevJeFcbG3xN8ckCDQDTEh/bWUj
+	 bM8leINR+AdpKJNGh3Rfmur8EGDQPFdzaAmz58ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Rao <lei.rao@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 16/16] nvme-pci: clear the prp2 field when not used
-Date: Thu, 15 Dec 2022 19:11:00 +0100
-Message-Id: <20221215172908.902154711@linuxfoundation.org>
+	Zhang Rui <rui.zhang@intel.com>,
+	Todd Brandt <todd.e.brandt@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.0 02/16] rtc: cmos: Fix wake alarm breakage
+Date: Thu, 15 Dec 2022 19:10:46 +0100
+Message-Id: <20221215172908.275219856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
 References: <20221215172908.162858817@linuxfoundation.org>
@@ -35,37 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lei Rao <lei.rao@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a56ea6147facce4ac1fc38675455f9733d96232b ]
+commit 0782b66ed2fbb035dda76111df0954515e417b24 upstream.
 
-If the prp2 field is not filled in nvme_setup_prp_simple(), the prp2
-field is garbage data. According to nvme spec, the prp2 is reserved if
-the data transfer does not cross a memory page boundary, so clear it to
-zero if it is not used.
+Commit 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration
+ordering issue") overlooked the fact that cmos_do_probe() depended
+on the preparations carried out by cmos_wake_setup() and the wake
+alarm stopped working after the ordering of them had been changed.
 
-Signed-off-by: Lei Rao <lei.rao@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Address this by partially reverting commit 4919d3eb2ec0 so that
+cmos_wake_setup() is called before cmos_do_probe() again and moving
+the rtc_wake_setup() invocation from cmos_wake_setup() directly to the
+callers of cmos_do_probe() where it will happen after a successful
+completion of the latter.
+
+Fixes: 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration ordering issue")
+Reported-by: Zhang Rui <rui.zhang@intel.com>
+Reported-by: Todd Brandt <todd.e.brandt@linux.intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/5887691.lOV4Wx5bFT@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/rtc/rtc-cmos.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0f34114c4596..6867620bcc98 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -804,6 +804,8 @@ static blk_status_t nvme_setup_prp_simple(struct nvme_dev *dev,
- 	cmnd->dptr.prp1 = cpu_to_le64(iod->first_dma);
- 	if (bv->bv_len > first_prp_len)
- 		cmnd->dptr.prp2 = cpu_to_le64(iod->first_dma + first_prp_len);
-+	else
-+		cmnd->dptr.prp2 = 0;
- 	return BLK_STS_OK;
- }
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1233,6 +1233,9 @@ static u32 rtc_handler(void *context)
  
--- 
-2.35.1
-
+ static inline void rtc_wake_setup(struct device *dev)
+ {
++	if (acpi_disabled)
++		return;
++
+ 	acpi_install_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler, dev);
+ 	/*
+ 	 * After the RTC handler is installed, the Fixed_RTC event should
+@@ -1286,7 +1289,6 @@ static void cmos_wake_setup(struct devic
+ 
+ 	use_acpi_alarm_quirks();
+ 
+-	rtc_wake_setup(dev);
+ 	acpi_rtc_info.wake_on = rtc_wake_on;
+ 	acpi_rtc_info.wake_off = rtc_wake_off;
+ 
+@@ -1354,6 +1356,8 @@ static int cmos_pnp_probe(struct pnp_dev
+ {
+ 	int irq, ret;
+ 
++	cmos_wake_setup(&pnp->dev);
++
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+ #ifdef CONFIG_X86
+@@ -1372,7 +1376,7 @@ static int cmos_pnp_probe(struct pnp_dev
+ 	if (ret)
+ 		return ret;
+ 
+-	cmos_wake_setup(&pnp->dev);
++	rtc_wake_setup(&pnp->dev);
+ 
+ 	return 0;
+ }
+@@ -1461,6 +1465,7 @@ static int __init cmos_platform_probe(st
+ 	int irq, ret;
+ 
+ 	cmos_of_init(pdev);
++	cmos_wake_setup(&pdev->dev);
+ 
+ 	if (RTC_IOMAPPED)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+@@ -1474,7 +1479,7 @@ static int __init cmos_platform_probe(st
+ 	if (ret)
+ 		return ret;
+ 
+-	cmos_wake_setup(&pdev->dev);
++	rtc_wake_setup(&pdev->dev);
+ 
+ 	return 0;
+ }
 
 
