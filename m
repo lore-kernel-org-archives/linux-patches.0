@@ -1,124 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6735692
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8153C433EF;
-	Thu, 15 Dec 2022 18:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D315692
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:10:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886F2C433D2;
+	Thu, 15 Dec 2022 18:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127839;
-	bh=F4U0ZFdAXj+74LYC3BcBLmMk6whq3qdqz6xNXMglYQg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jp6X1cIgtebuLvE011BNyCyt8TF2yuy4/qkxLSoYHnyWCYoG+UhV3GbHucDU0BZAz
-	 PIQ+A3C8fc3UQ06CBw8hTigEOaBwZt0Mo/0p5XImT/tYOF7gT8QNm1pap4OvZErzlV
-	 jNGNLO2Wcu/1nciDTfGuNwwkusefED9YWK5EJ+2Y=
+	s=korg; t=1671127845;
+	bh=jzLwdXzgafySvA5C/EzKSpNxurxVPP4aEZTPI3WEr+g=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LEj01kgHW76EliRE2DsGkm/U7m/WnlpubabeCesZCOmfnsHKcCgceHKpnqiQarAMd
+	 ElyuF2FUa6vHUv7JCGybwXL0gp6og87ugEVNvtUnk8a+sB8eA8H2nZkBwMeWpEPXLw
+	 zW5/fqeOR2l6mgv6BJOnleUUdBtcXb2pZ3fTAxtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 0/9] 5.4.228-rc1 review
-Date: Thu, 15 Dec 2022 19:10:27 +0100
-Message-Id: <20221215172905.468656378@linuxfoundation.org>
+	Lorenzo Colitti <lorenzo@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Subject: [PATCH 5.4 1/9] net: bpf: Allow TC programs to call BPF_FUNC_skb_change_head
+Date: Thu, 15 Dec 2022 19:10:28 +0100
+Message-Id: <20221215172905.529492378@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
+References: <20221215172905.468656378@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.228-rc1
-X-KernelTest-Deadline: 2022-12-17T17:29+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.228 release.
-There are 9 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Lorenzo Colitti <lorenzo@google.com>
 
-Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
-Anything received after that time might be too late.
+commit 6f3f65d80dac8f2bafce2213005821fccdce194c upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+This allows TC eBPF programs to modify and forward (redirect) packets
+from interfaces without ethernet headers (for example cellular)
+to interfaces with (for example ethernet/wifi).
 
-thanks,
+The lack of this appears to simply be an oversight.
 
-greg k-h
+Tested:
+  in active use in Android R on 4.14+ devices for ipv6
+  cellular to wifi tethering offload.
 
--------------
-Pseudo-Shortlog of commits:
+Signed-off-by: Lorenzo Colitti <lorenzo@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/core/filter.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.228-rc1
-
-Yasushi SHOJI <yasushi.shoji@gmail.com>
-    can: mcba_usb: Fix termination command argument
-
-Heiko Schocher <hs@denx.de>
-    can: sja1000: fix size of OCR_MODE_MASK define
-
-Ricardo Ribalda <ribalda@chromium.org>
-    pinctrl: meditatek: Startup with the IRQs disabled
-
-Mark Brown <broonie@kernel.org>
-    ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
-
-Jialiang Wang <wangjialiang0806@163.com>
-    nfp: fix use-after-free in area_cache_get()
-
-Ming Lei <ming.lei@redhat.com>
-    block: unhash blkdev part inode when the part is deleted
-
-Baolin Wang <baolin.wang@linux.alibaba.com>
-    mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
-
-Paul E. McKenney <paulmck@kernel.org>
-    x86/smpboot: Move rcu_cpu_starting() earlier
-
-Lorenzo Colitti <lorenzo@google.com>
-    net: bpf: Allow TC programs to call BPF_FUNC_skb_change_head
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +--
- arch/x86/kernel/cpu/mtrr/mtrr.c                    |  2 --
- arch/x86/kernel/smpboot.c                          |  1 +
- block/partition-generic.c                          |  7 +++++
- drivers/net/can/usb/mcba_usb.c                     | 10 +++++---
- .../ethernet/netronome/nfp/nfpcore/nfp_cppcore.c   |  3 ++-
- drivers/pinctrl/mediatek/mtk-eint.c                |  9 ++++---
- include/linux/can/platform/sja1000.h               |  2 +-
- include/linux/hugetlb.h                            |  6 ++---
- mm/gup.c                                           | 13 +++++++++-
- mm/hugetlb.c                                       | 30 +++++++++++-----------
- net/core/filter.c                                  |  2 ++
- sound/soc/soc-ops.c                                |  6 +++++
- 13 files changed, 64 insertions(+), 31 deletions(-)
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6196,6 +6196,8 @@ tc_cls_act_func_proto(enum bpf_func_id f
+ 		return &bpf_skb_adjust_room_proto;
+ 	case BPF_FUNC_skb_change_tail:
+ 		return &bpf_skb_change_tail_proto;
++	case BPF_FUNC_skb_change_head:
++		return &bpf_skb_change_head_proto;
+ 	case BPF_FUNC_skb_get_tunnel_key:
+ 		return &bpf_skb_get_tunnel_key_proto;
+ 	case BPF_FUNC_skb_set_tunnel_key:
 
 
