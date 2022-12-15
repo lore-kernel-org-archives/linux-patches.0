@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64ED569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B091C433EF;
-	Thu, 15 Dec 2022 18:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931C8569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B29C433D2;
+	Thu, 15 Dec 2022 18:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671128004;
-	bh=6n4Bm0ycM73dP38b0rr7ZAIppKs6PXLxvgCOtqGB2aM=;
+	s=korg; t=1671128008;
+	bh=Elk+bS2olFo5I3kfhcfCnppXGyQSQXi3NhZl/A9ocb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2yWupU5wKUElZoJeqQR1IpOTKpMZXd35WTcIRtmp7/x2Q35rW6Az0PW1/zpBXg+y
-	 3zlg0JGNlbJhMTaaqhhQgdrvBKWnMN5MAGKJWx7gFAFx1Khfcrd0pmlfAHoxefmLsW
-	 8GYU0FVOoivyZ8SV4abaqvgZfGnBXRELGXNTfxpc=
+	b=CHOOCwk1N7LM8elfpvGLxTGdL6vX5V4JZHgjGDxOakq0Op9ivxXpLV70/3DJ1fQTa
+	 KXKyLVssV7nxvkVOecm079HmVoMoFqR71gRCE05S9WbKgLmZZqQAQ3LUn76H0AM5eV
+	 ENDEvaexCAfSFg7maJ9dV3WJGOy3Pdl+gcDV2L0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 06/16] ASoC: fsl_micfil: explicitly clear software reset bit
-Date: Thu, 15 Dec 2022 19:10:50 +0100
-Message-Id: <20221215172908.420732424@linuxfoundation.org>
+Subject: [PATCH 6.0 07/16] ASoC: fsl_micfil: explicitly clear CHnF flags
+Date: Thu, 15 Dec 2022 19:10:51 +0100
+Message-Id: <20221215172908.470523768@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
 References: <20221215172908.162858817@linuxfoundation.org>
@@ -37,37 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 292709b9cf3ba470af94b62c9bb60284cc581b79 ]
+[ Upstream commit b776c4a4618ec1b5219d494c423dc142f23c4e8f ]
 
-SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined as
-non volatile register, it still remain in regmap cache after set,
-then every update of REG_MICFIL_CTRL1, software reset happens.
-to avoid this, clear it explicitly.
+There may be failure when start 1 channel recording after
+8 channels recording. The reason is that the CHnF
+flags are not cleared successfully by software reset.
+
+This issue is triggerred by the change of clearing
+software reset bit.
+
+CHnF flags are write 1 clear bits. Clear them by force
+write.
 
 Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://lore.kernel.org/r/1651925654-32060-1-git-send-email-shengjiu.wang@nxp.com
+Link: https://lore.kernel.org/r/1651925654-32060-2-git-send-email-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_micfil.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/fsl/fsl_micfil.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 79ef4e269bc9..8aa6871e0d42 100644
+index 8aa6871e0d42..4b86ef82fd93 100644
 --- a/sound/soc/fsl/fsl_micfil.c
 +++ b/sound/soc/fsl/fsl_micfil.c
-@@ -194,6 +194,17 @@ static int fsl_micfil_reset(struct device *dev)
+@@ -205,6 +205,14 @@ static int fsl_micfil_reset(struct device *dev)
  	if (ret)
  		return ret;
  
 +	/*
-+	 * SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined
-+	 * as non-volatile register, so SRES still remain in regmap
-+	 * cache after set, that every update of REG_MICFIL_CTRL1,
-+	 * software reset happens. so clear it explicitly.
++	 * Set SRES should clear CHnF flags, But even add delay here
++	 * the CHnF may not be cleared sometimes, so clear CHnF explicitly.
 +	 */
-+	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
-+				MICFIL_CTRL1_SRES);
++	ret = regmap_write_bits(micfil->regmap, REG_MICFIL_STAT, 0xFF, 0xFF);
 +	if (ret)
 +		return ret;
 +
