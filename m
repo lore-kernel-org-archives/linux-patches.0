@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77551569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5725C433EF;
-	Thu, 15 Dec 2022 18:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C38569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB73CC433D2;
+	Thu, 15 Dec 2022 18:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127889;
-	bh=zkoKR8iknSyY9yvGv2F6VD/kvf7vdoZTjDPP34VSaTY=;
+	s=korg; t=1671127892;
+	bh=d/a33XgM9HzAP8+lMgtDkj14R0RyBozaL/xSZ9eD4UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJ3Kj5rY+FFguB+FWYJFSOtptdtG76N8Nu3hIBlPipJGq0yzQ9MC3J7JPh9cZXuq9
-	 +a8M/W4i/+kITOkWlb2Nuy56beTqsZskQsGYnzSY/tS+yGWMQyd22ZIMxnQdUKJaS2
-	 eesi+ThX5vve8L/Gv+499JrHtOGcqHTaZYPUD5i0=
+	b=JCTLtiVESZv+uZksokQRmTd4eQB7BTOc2I+gKq4d+i4drMEkb/iGhLKht4rvolQ8L
+	 LDwHQdx1wyDltb+lieLmszeuWIG6QSmTT3NrYpzmcM5MH+7/iGXOFkBJmUPBsxtoB/
+	 TbaRsTaE46MJu54ja7nfvL6n17Oa8KFWHk+3vaIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasushi SHOJI <yashi@spacecubics.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/15] can: mcba_usb: Fix termination command argument
-Date: Thu, 15 Dec 2022 19:10:40 +0100
-Message-Id: <20221215172907.566009274@linuxfoundation.org>
+Subject: [PATCH 5.10 14/15] ASoC: cs42l51: Correct PGA Volume minimum value
+Date: Thu, 15 Dec 2022 19:10:41 +0100
+Message-Id: <20221215172907.604858201@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172906.638553794@linuxfoundation.org>
 References: <20221215172906.638553794@linuxfoundation.org>
@@ -35,80 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yasushi SHOJI <yasushi.shoji@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 1a8e3bd25f1e789c8154e11ea24dc3ec5a4c1da0 ]
+[ Upstream commit 3d1bb6cc1a654c8693a85b1d262e610196edec8b ]
 
-Microchip USB Analyzer can activate the internal termination resistors
-by setting the "termination" option ON, or OFF to to deactivate them.
-As I've observed, both with my oscilloscope and captured USB packets
-below, you must send "0" to turn it ON, and "1" to turn it OFF.
+The table in the datasheet actually shows the volume values in the wrong
+order, with the two -3dB values being reversed. This appears to have
+caused the lower of the two values to be used in the driver when the
+higher should have been, correct this mixup.
 
->From the schematics in the user's guide, I can confirm that you must
-drive the CAN_RES signal LOW "0" to activate the resistors.
-
-Reverse the argument value of usb_msg.termination to fix this.
-
-These are the two commands sequence, ON then OFF.
-
-> No.     Time           Source                Destination           Protocol Length Info
->       1 0.000000       host                  1.3.1                 USB      46     URB_BULK out
->
-> Frame 1: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
-> USB URB
-> Leftover Capture Data: a80000000000000000000000000000000000a8
->
-> No.     Time           Source                Destination           Protocol Length Info
->       2 4.372547       host                  1.3.1                 USB      46     URB_BULK out
->
-> Frame 2: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
-> USB URB
-> Leftover Capture Data: a80100000000000000000000000000000000a9
-
-Signed-off-by: Yasushi SHOJI <yashi@spacecubics.com>
-Link: https://lore.kernel.org/all/20221124152504.125994-1-yashi@spacecubics.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221125162348.1288005-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/mcba_usb.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/codecs/cs42l51.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
-index 21063335ab59..c07e327929ba 100644
---- a/drivers/net/can/usb/mcba_usb.c
-+++ b/drivers/net/can/usb/mcba_usb.c
-@@ -47,6 +47,10 @@
- #define MCBA_VER_REQ_USB 1
- #define MCBA_VER_REQ_CAN 2
- 
-+/* Drive the CAN_RES signal LOW "0" to activate R24 and R25 */
-+#define MCBA_VER_TERMINATION_ON 0
-+#define MCBA_VER_TERMINATION_OFF 1
-+
- #define MCBA_SIDL_EXID_MASK 0x8
- #define MCBA_DLC_MASK 0xf
- #define MCBA_DLC_RTR_MASK 0x40
-@@ -469,7 +473,7 @@ static void mcba_usb_process_ka_usb(struct mcba_priv *priv,
- 		priv->usb_ka_first_pass = false;
- 	}
- 
--	if (msg->termination_state)
-+	if (msg->termination_state == MCBA_VER_TERMINATION_ON)
- 		priv->can.termination = MCBA_TERMINATION_ENABLED;
- 	else
- 		priv->can.termination = MCBA_TERMINATION_DISABLED;
-@@ -789,9 +793,9 @@ static int mcba_set_termination(struct net_device *netdev, u16 term)
- 	};
- 
- 	if (term == MCBA_TERMINATION_ENABLED)
--		usb_msg.termination = 1;
-+		usb_msg.termination = MCBA_VER_TERMINATION_ON;
- 	else
--		usb_msg.termination = 0;
-+		usb_msg.termination = MCBA_VER_TERMINATION_OFF;
- 
- 	mcba_usb_xmit_cmd(priv, (struct mcba_usb_msg *)&usb_msg);
- 
+diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
+index fc6a2bc311b4..c61b17dc2af8 100644
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -146,7 +146,7 @@ static const struct snd_kcontrol_new cs42l51_snd_controls[] = {
+ 			0, 0xA0, 96, adc_att_tlv),
+ 	SOC_DOUBLE_R_SX_TLV("PGA Volume",
+ 			CS42L51_ALC_PGA_CTL, CS42L51_ALC_PGB_CTL,
+-			0, 0x19, 30, pga_tlv),
++			0, 0x1A, 30, pga_tlv),
+ 	SOC_SINGLE("Playback Deemphasis Switch", CS42L51_DAC_CTL, 3, 1, 0),
+ 	SOC_SINGLE("Auto-Mute Switch", CS42L51_DAC_CTL, 2, 1, 0),
+ 	SOC_SINGLE("Soft Ramp Switch", CS42L51_DAC_CTL, 1, 1, 0),
 -- 
 2.35.1
 
