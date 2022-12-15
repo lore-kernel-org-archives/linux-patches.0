@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E9569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8409AC433EF;
-	Thu, 15 Dec 2022 18:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4480F569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF6BC433EF;
+	Thu, 15 Dec 2022 18:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127939;
-	bh=a1DgpXuC/T5Vb4AR08jXF381digS34mHAVgIKR1cWqQ=;
+	s=korg; t=1671127942;
+	bh=7J2Nn6JsedXBhOJS7mvINO0RGlJ72/HyZdo850Cl6DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNgWMl/2ycOgefOKmNLqn7hsk9iBpVm1e4brvEPwkvbx/EZ/S2jSnB5QMG4bTzSTb
-	 tCkWfpba+fBiRGnO6K10ujde4rtJjF0OrIeeLEEkD+pJrtLt417PpyouNUuNlGq9qE
-	 zGo+yR7J5u2jTh0Beb9wxLpYerPZuS0h4LIatsNs=
+	b=jKGueLQvWJa+xtvmOJ/qqiqdpB1rxoINMa+0B43CUb+sUsnhIrq20D8eB+78vn3yu
+	 clCmd8tJBSovwEq3Vd30nt2LCyscBrh90FHO6Ni0/EJ19j6Bn1uHktKDAYap9GpGMp
+	 zCTC+bxtspfP06LxqfPQlDtvvYF3kbinIUwk5cwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 06/14] ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
-Date: Thu, 15 Dec 2022 19:10:42 +0100
-Message-Id: <20221215172906.641809529@linuxfoundation.org>
+Subject: [PATCH 5.15 07/14] libbpf: Use page size as max_entries when probing ring buffer map
+Date: Thu, 15 Dec 2022 19:10:43 +0100
+Message-Id: <20221215172906.680035649@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
 References: <20221215172906.338769943@linuxfoundation.org>
@@ -34,39 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 97eea946b93961fffd29448dcda7398d0d51c4b2 ]
+[ Upstream commit 689eb2f1ba46b4b02195ac2a71c55b96d619ebf8 ]
 
-The bounds checks in snd_soc_put_volsw_sx() are only being applied to the
-first channel, meaning it is possible to write out of bounds values to the
-second channel in stereo controls. Add appropriate checks.
+Using page size as max_entries when probing ring buffer map, else the
+probe may fail on host with 64KB page size (e.g., an ARM64 host).
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20220511134137.169575-2-broonie@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+After the fix, the output of "bpftool feature" on above host will be
+correct.
+
+Before :
+    eBPF map_type ringbuf is NOT available
+    eBPF map_type user_ringbuf is NOT available
+
+After :
+    eBPF map_type ringbuf is available
+    eBPF map_type user_ringbuf is available
+
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221116072351.1168938-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/lib/bpf/libbpf_probes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index b8a169d3b830..ece45fd654b8 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -451,6 +451,12 @@ int snd_soc_put_volsw_sx(struct snd_kcontrol *kcontrol,
- 
- 		val_mask = mask << rshift;
- 		val2 = (ucontrol->value.integer.value[1] + min) & mask;
-+
-+		if (mc->platform_max && val2 > mc->platform_max)
-+			return -EINVAL;
-+		if (val2 > max)
-+			return -EINVAL;
-+
- 		val2 = val2 << rshift;
- 
- 		err = snd_soc_component_update_bits(component, reg2, val_mask,
+diff --git a/tools/lib/bpf/libbpf_probes.c b/tools/lib/bpf/libbpf_probes.c
+index cd8c703dde71..8f425473ccaa 100644
+--- a/tools/lib/bpf/libbpf_probes.c
++++ b/tools/lib/bpf/libbpf_probes.c
+@@ -245,7 +245,7 @@ bool bpf_probe_map_type(enum bpf_map_type map_type, __u32 ifindex)
+ 	case BPF_MAP_TYPE_RINGBUF:
+ 		key_size = 0;
+ 		value_size = 0;
+-		max_entries = 4096;
++		max_entries = sysconf(_SC_PAGE_SIZE);
+ 		break;
+ 	case BPF_MAP_TYPE_UNSPEC:
+ 	case BPF_MAP_TYPE_HASH:
 -- 
 2.35.1
 
