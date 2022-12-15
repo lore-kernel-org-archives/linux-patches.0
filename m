@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44FB569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EA4C433EF;
-	Thu, 15 Dec 2022 18:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9911569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:13:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D52C433EF;
+	Thu, 15 Dec 2022 18:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127992;
-	bh=EhtRQwmiTIg3YPCxEKm2JhGqN9VZcD67HLkWR4mRl9E=;
+	s=korg; t=1671127995;
+	bh=GqlCljcXYcLyLProTWx1L+qLCPI4QH6WP7FAKEXkoJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stSZO09Wjq/LnqsPqMf88Z5QwsW6m/LjQRRFU77lBFlhlQOQrpkOG5xhzcLPdXzXh
-	 S18c498CZolz9bK/LObfZhjfZUzXOvWcNf0yevYoevJeFcbG3xN8ckCDQDTEh/bWUj
-	 bM8leINR+AdpKJNGh3Rfmur8EGDQPFdzaAmz58ro=
+	b=0ejIjyaBvcmMXS7vP+2tdCrGHH677ZuB/euqfBbSPWMkZfdrVUN8tUWPbEfoGzOQU
+	 SwrU7wKH/YxN8HCJNPI8karTybaUtshyAlI+v21tt9ygLvcu5WoPkZvrs9LxIcb8wX
+	 W+NNKvCBmMdqkZbcy44tS7RWXuqYYv6MZ9Xw50o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Todd Brandt <todd.e.brandt@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.0 02/16] rtc: cmos: Fix wake alarm breakage
-Date: Thu, 15 Dec 2022 19:10:46 +0100
-Message-Id: <20221215172908.275219856@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: [PATCH 6.0 03/16] x86/vdso: Conditionally export __vdso_sgx_enter_enclave()
+Date: Thu, 15 Dec 2022 19:10:47 +0100
+Message-Id: <20221215172908.306390891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
 References: <20221215172908.162858817@linuxfoundation.org>
@@ -36,86 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 0782b66ed2fbb035dda76111df0954515e417b24 upstream.
+commit 45be2ad007a9c6bea70249c4cf3e4905afe4caeb upstream.
 
-Commit 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration
-ordering issue") overlooked the fact that cmos_do_probe() depended
-on the preparations carried out by cmos_wake_setup() and the wake
-alarm stopped working after the ordering of them had been changed.
+Recently, ld.lld moved from '--undefined-version' to
+'--no-undefined-version' as the default, which breaks building the vDSO
+when CONFIG_X86_SGX is not set:
 
-Address this by partially reverting commit 4919d3eb2ec0 so that
-cmos_wake_setup() is called before cmos_do_probe() again and moving
-the rtc_wake_setup() invocation from cmos_wake_setup() directly to the
-callers of cmos_do_probe() where it will happen after a successful
-completion of the latter.
+  ld.lld: error: version script assignment of 'LINUX_2.6' to symbol '__vdso_sgx_enter_enclave' failed: symbol not defined
 
-Fixes: 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration ordering issue")
-Reported-by: Zhang Rui <rui.zhang@intel.com>
-Reported-by: Todd Brandt <todd.e.brandt@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/5887691.lOV4Wx5bFT@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+__vdso_sgx_enter_enclave is only included in the vDSO when
+CONFIG_X86_SGX is set. Only export it if it will be present in the final
+object, which clears up the error.
+
+Fixes: 8466436952017 ("x86/vdso: Implement a vDSO for Intel SGX enclave call")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1756
+Link: https://lore.kernel.org/r/20221109000306.1407357-1-nathan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-cmos.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/entry/vdso/vdso.lds.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1233,6 +1233,9 @@ static u32 rtc_handler(void *context)
- 
- static inline void rtc_wake_setup(struct device *dev)
- {
-+	if (acpi_disabled)
-+		return;
-+
- 	acpi_install_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler, dev);
- 	/*
- 	 * After the RTC handler is installed, the Fixed_RTC event should
-@@ -1286,7 +1289,6 @@ static void cmos_wake_setup(struct devic
- 
- 	use_acpi_alarm_quirks();
- 
--	rtc_wake_setup(dev);
- 	acpi_rtc_info.wake_on = rtc_wake_on;
- 	acpi_rtc_info.wake_off = rtc_wake_off;
- 
-@@ -1354,6 +1356,8 @@ static int cmos_pnp_probe(struct pnp_dev
- {
- 	int irq, ret;
- 
-+	cmos_wake_setup(&pnp->dev);
-+
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
- #ifdef CONFIG_X86
-@@ -1372,7 +1376,7 @@ static int cmos_pnp_probe(struct pnp_dev
- 	if (ret)
- 		return ret;
- 
--	cmos_wake_setup(&pnp->dev);
-+	rtc_wake_setup(&pnp->dev);
- 
- 	return 0;
- }
-@@ -1461,6 +1465,7 @@ static int __init cmos_platform_probe(st
- 	int irq, ret;
- 
- 	cmos_of_init(pdev);
-+	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
-@@ -1474,7 +1479,7 @@ static int __init cmos_platform_probe(st
- 	if (ret)
- 		return ret;
- 
--	cmos_wake_setup(&pdev->dev);
-+	rtc_wake_setup(&pdev->dev);
- 
- 	return 0;
+--- a/arch/x86/entry/vdso/vdso.lds.S
++++ b/arch/x86/entry/vdso/vdso.lds.S
+@@ -27,7 +27,9 @@ VERSION {
+ 		__vdso_time;
+ 		clock_getres;
+ 		__vdso_clock_getres;
++#ifdef CONFIG_X86_SGX
+ 		__vdso_sgx_enter_enclave;
++#endif
+ 	local: *;
+ 	};
  }
 
 
