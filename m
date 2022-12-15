@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11263569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BEDC433EF;
-	Thu, 15 Dec 2022 18:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD7B569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61380C433EF;
+	Thu, 15 Dec 2022 18:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127929;
-	bh=EQVw4W6XHpoYTwqKxUANMXO6GShKlmTRNZQPeDq9RPo=;
+	s=korg; t=1671127932;
+	bh=TqBnjsY6W9h8nVSTWhKJucNnSNV9DfSlrfaeFN+ZBDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFD/C+K8qpKV8/ZD/Q9fRVRYSK2qv/kWyc2ZYykkBnSvSbLCUSrwTVZws/DJI8VFL
-	 HsmAnAcBZU0wNxlaVOhxMI+MKsAgdF2qS+jIqVF6TwlHY6Y2olpTKhx8aS2lBlFuTF
-	 Kii9sjNmLZAcJ2CxADrhNuVSfS/e7/5MThhWh240=
+	b=F3ZzvcQq6IAOkMf+3HCl5VX/j85KlyUB7OwzWi+NnwPCENA4ogIXSj2wJzUEuMO7m
+	 /pqpb8b7DN6lqw8gu7qlW02Xl9uP8Oi8EZ+ZaS2hrxGgMDEQh/isItzIE3gh8GfWyJ
+	 SzCB+GuBbS8dCY+DQHyIRvkoZlwgwGDD8d+ObH3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jialiang Wang <wangjialiang0806@163.com>,
-	Yinjun Zhang <yinjun.zhang@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 03/14] nfp: fix use-after-free in area_cache_get()
-Date: Thu, 15 Dec 2022 19:10:39 +0100
-Message-Id: <20221215172906.488544089@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 04/14] ASoC: fsl_micfil: explicitly clear software reset bit
+Date: Thu, 15 Dec 2022 19:10:40 +0100
+Message-Id: <20221215172906.537422169@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
 References: <20221215172906.338769943@linuxfoundation.org>
@@ -36,74 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jialiang Wang <wangjialiang0806@163.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 02e1a114fdb71e59ee6770294166c30d437bf86a upstream.
+[ Upstream commit 292709b9cf3ba470af94b62c9bb60284cc581b79 ]
 
-area_cache_get() is used to distribute cache->area and set cache->id,
- and if cache->id is not 0 and cache->area->kref refcount is 0, it will
- release the cache->area by nfp_cpp_area_release(). area_cache_get()
- set cache->id before cpp->op->area_init() and nfp_cpp_area_acquire().
+SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined as
+non volatile register, it still remain in regmap cache after set,
+then every update of REG_MICFIL_CTRL1, software reset happens.
+to avoid this, clear it explicitly.
 
-But if area_init() or nfp_cpp_area_acquire() fails, the cache->id is
- is already set but the refcount is not increased as expected. At this
- time, calling the nfp_cpp_area_release() will cause use-after-free.
-
-To avoid the use-after-free, set cache->id after area_init() and
- nfp_cpp_area_acquire() complete successfully.
-
-Note: This vulnerability is triggerable by providing emulated device
- equipped with specified configuration.
-
- BUG: KASAN: use-after-free in nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
-  Write of size 4 at addr ffff888005b7f4a0 by task swapper/0/1
-
- Call Trace:
-  <TASK>
- nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
- area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:884)
-
- Allocated by task 1:
- nfp_cpp_area_alloc_with_name (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:303)
- nfp_cpp_area_cache_add (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:802)
- nfp6000_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:1230)
- nfp_cpp_from_operations (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:1215)
- nfp_pci_probe (drivers/net/ethernet/netronome/nfp/nfp_main.c:744)
-
- Freed by task 1:
- kfree (mm/slub.c:4562)
- area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:873)
- nfp_cpp_read (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:924 drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:973)
- nfp_cpp_readl (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cpplib.c:48)
-
-Signed-off-by: Jialiang Wang <wangjialiang0806@163.com>
-Reviewed-by: Yinjun Zhang <yinjun.zhang@corigine.com>
-Acked-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20220810073057.4032-1-wangjialiang0806@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1651925654-32060-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
-@@ -874,7 +874,6 @@ area_cache_get(struct nfp_cpp *cpp, u32
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 9f90989ac59a..cb84d95c3aac 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -191,6 +191,17 @@ static int fsl_micfil_reset(struct device *dev)
+ 		return ret;
  	}
  
- 	/* Adjust the start address to be cache size aligned */
--	cache->id = id;
- 	cache->addr = addr & ~(u64)(cache->size - 1);
- 
- 	/* Re-init to the new ID and address */
-@@ -894,6 +893,8 @@ area_cache_get(struct nfp_cpp *cpp, u32
- 		return NULL;
- 	}
- 
-+	cache->id = id;
++	/*
++	 * SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined
++	 * as non-volatile register, so SRES still remain in regmap
++	 * cache after set, that every update of REG_MICFIL_CTRL1,
++	 * software reset happens. so clear it explicitly.
++	 */
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_SRES);
++	if (ret)
++		return ret;
 +
- exit:
- 	/* Adjust offset */
- 	*offset = addr - cache->addr;
+ 	return 0;
+ }
+ 
+-- 
+2.35.1
+
 
 
