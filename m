@@ -1,119 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454F5692
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E92C433EF;
-	Thu, 15 Dec 2022 18:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA755692
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D91C433EF;
+	Thu, 15 Dec 2022 18:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127870;
-	bh=rrzhKR2FFhMqbzJKotAzYjuGZ0s/GYt8tzIN8ch8lzM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzF5qjWL7U4Ij4cfcvnc25GGk6bx5OiLp8AzeYy4Yf2Pyyh0+BZh3AF7nepGBkoFm
-	 4qXjYvSISWPxFzV34eJnNqc3vgaNREKWjL1mQP/uUyXAdMBQADY2bUp0GbZi4ypOI1
-	 913pnQxSbALWiUlrarC+NakNs/Zq5GmPUSx5hqew=
+	s=korg; t=1671127873;
+	bh=joiqiiTYyFEvkCxvbEtvnVF8t0zVSbYWt7+ZlbnuLeA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GMen7gg7gw0gsMLa7HxMtflrRE3BRiZTRiS97MdUHERjK36GgK1mmC4erDsbJ+ivc
+	 GvleQ2k8eW0bgY/gf89MPkvgmT2qw9Io9XAeHpHaFHdOA3TGtHFRBuaQoloy0vyoh5
+	 cb24Z4ihK0gg5sI9xJBOBiWkokxbSR9irU+HId34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qian Cai <cai@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>
-Subject: [PATCH 5.4 2/9] x86/smpboot:  Move rcu_cpu_starting() earlier
-Date: Thu, 15 Dec 2022 19:10:29 +0100
-Message-Id: <20221215172905.559686010@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.10 00/15] 5.10.160-rc1 review
+Date: Thu, 15 Dec 2022 19:10:27 +0100
+Message-Id: <20221215172906.638553794@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
-References: <20221215172905.468656378@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.160-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.160-rc1
+X-KernelTest-Deadline: 2022-12-17T17:29+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+This is the start of the stable review cycle for the 5.10.160 release.
+There are 15 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 29368e09392123800e5e2bf0f3eda91f16972e52 upstream.
+Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
+Anything received after that time might be too late.
 
-The call to rcu_cpu_starting() in mtrr_ap_init() is not early enough
-in the CPU-hotplug onlining process, which results in lockdep splats
-as follows:
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.160-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-=============================
-WARNING: suspicious RCU usage
-5.9.0+ #268 Not tainted
------------------------------
-kernel/kprobes.c:300 RCU-list traversed in non-reader section!!
+thanks,
 
-other info that might help us debug this:
+greg k-h
 
-RCU used illegally from offline CPU!
-rcu_scheduler_active = 1, debug_locks = 1
-no locks held by swapper/1/0.
+-------------
+Pseudo-Shortlog of commits:
 
-stack backtrace:
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 5.9.0+ #268
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.10.2-1ubuntu1 04/01/2014
-Call Trace:
- dump_stack+0x77/0x97
- __is_insn_slot_addr+0x15d/0x170
- kernel_text_address+0xba/0xe0
- ? get_stack_info+0x22/0xa0
- __kernel_text_address+0x9/0x30
- show_trace_log_lvl+0x17d/0x380
- ? dump_stack+0x77/0x97
- dump_stack+0x77/0x97
- __lock_acquire+0xdf7/0x1bf0
- lock_acquire+0x258/0x3d0
- ? vprintk_emit+0x6d/0x2c0
- _raw_spin_lock+0x27/0x40
- ? vprintk_emit+0x6d/0x2c0
- vprintk_emit+0x6d/0x2c0
- printk+0x4d/0x69
- start_secondary+0x1c/0x100
- secondary_startup_64_no_verify+0xb8/0xbb
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.160-rc1
 
-This is avoided by moving the call to rcu_cpu_starting up near
-the beginning of the start_secondary() function.  Note that the
-raw_smp_processor_id() is required in order to avoid calling into lockdep
-before RCU has declared the CPU to be watched for readers.
+Lei Rao <lei.rao@intel.com>
+    nvme-pci: clear the prp2 field when not used
 
-Link: https://lore.kernel.org/lkml/160223032121.7002.1269740091547117869.tip-bot2@tip-bot2/
-Reported-by: Qian Cai <cai@redhat.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/kernel/cpu/mtrr/mtrr.c |    2 --
- arch/x86/kernel/smpboot.c       |    1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
+Charles Keepax <ckeepax@opensource.cirrus.com>
+    ASoC: cs42l51: Correct PGA Volume minimum value
 
---- a/arch/x86/kernel/cpu/mtrr/mtrr.c
-+++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
-@@ -794,8 +794,6 @@ void mtrr_ap_init(void)
- 	if (!use_intel() || mtrr_aps_delayed_init)
- 		return;
- 
--	rcu_cpu_starting(smp_processor_id());
--
- 	/*
- 	 * Ideally we should hold mtrr_mutex here to avoid mtrr entries
- 	 * changed, but this routine will be called in cpu boot time,
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -224,6 +224,7 @@ static void notrace start_secondary(void
- #endif
- 	load_current_idt();
- 	cpu_init();
-+	rcu_cpu_starting(raw_smp_processor_id());
- 	x86_cpuinit.early_percpu_clock_init();
- 	preempt_disable();
- 	smp_callin();
+Yasushi SHOJI <yasushi.shoji@gmail.com>
+    can: mcba_usb: Fix termination command argument
+
+Heiko Schocher <hs@denx.de>
+    can: sja1000: fix size of OCR_MODE_MASK define
+
+Ricardo Ribalda <ribalda@chromium.org>
+    pinctrl: meditatek: Startup with the IRQs disabled
+
+Hou Tao <houtao1@huawei.com>
+    libbpf: Use page size as max_entries when probing ring buffer map
+
+Mark Brown <broonie@kernel.org>
+    ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
+
+Shengjiu Wang <shengjiu.wang@nxp.com>
+    ASoC: fsl_micfil: explicitly clear CHnF flags
+
+Shengjiu Wang <shengjiu.wang@nxp.com>
+    ASoC: fsl_micfil: explicitly clear software reset bit
+
+Bing-Jhong Billy Jheng <billy@starlabs.sg>
+    io_uring: add missing item types for splice request
+
+Miklos Szeredi <mszeredi@redhat.com>
+    fuse: always revalidate if exclusive create
+
+Jialiang Wang <wangjialiang0806@163.com>
+    nfp: fix use-after-free in area_cache_get()
+
+Amir Goldstein <amir73il@gmail.com>
+    vfs: fix copy_file_range() averts filesystem freeze protection
+
+Amir Goldstein <amir73il@gmail.com>
+    vfs: fix copy_file_range() regression in cross-fs copies
+
+Paul E. McKenney <paulmck@kernel.org>
+    x86/smpboot: Move rcu_cpu_starting() earlier
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/x86/kernel/cpu/mtrr/mtrr.c                    |  2 -
+ arch/x86/kernel/smpboot.c                          |  1 +
+ drivers/net/can/usb/mcba_usb.c                     | 10 ++-
+ .../ethernet/netronome/nfp/nfpcore/nfp_cppcore.c   |  3 +-
+ drivers/nvme/host/pci.c                            |  2 +
+ drivers/pinctrl/mediatek/mtk-eint.c                |  9 ++-
+ fs/fuse/dir.c                                      |  2 +-
+ fs/io_uring.c                                      |  2 +-
+ fs/nfsd/vfs.c                                      |  8 +-
+ fs/read_write.c                                    | 90 +++++++++++++---------
+ include/linux/can/platform/sja1000.h               |  2 +-
+ include/linux/fs.h                                 |  8 ++
+ sound/soc/codecs/cs42l51.c                         |  2 +-
+ sound/soc/fsl/fsl_micfil.c                         | 19 +++++
+ sound/soc/soc-ops.c                                |  6 ++
+ tools/lib/bpf/libbpf_probes.c                      |  2 +-
+ 17 files changed, 120 insertions(+), 52 deletions(-)
 
 
