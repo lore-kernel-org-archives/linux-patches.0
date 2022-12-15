@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36102569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84085C433EF;
-	Thu, 15 Dec 2022 18:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C66569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CCAC433EF;
+	Thu, 15 Dec 2022 18:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127968;
-	bh=EbE7+iIOkrFcFdM7K7ydS9dNih3fYA4gOkrWXoLqfOc=;
+	s=korg; t=1671127971;
+	bh=p4GOASrrw7BbRUax2gtf0OMf5bM0UdngPhO3xqzted4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVbWcOuUVKZ5ekx2pWJLmuc4sUUpPKIJtwum7DPTUSFkGkvcPdsQYod19+sWgzCGV
-	 r9aKN7o+FOMgbbo5Z0ZvYeoys8iq6IgWv59B+KDy1nWyg6061UFW6j0wIPmUvaKJE5
-	 EQY8lvorCn0H7TM4uE4S6qdf6HsSgwi3Uep2ImME=
+	b=NcQgme43z+bEh7zAi/Y4a0P5dbQRDWgy+7aaC6ZtfEzg+/eNseoleOdEir2DABYGL
+	 MlS/5c0HMUeClsmkDPl0LO/99sGK779YKXesgUnZWyZDHY48lUpE9SvM6LQyACklHO
+	 iyvOdEAxS99MvqVmR4O73GqIS9JV7PwIA2xm96bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mel Gorman <mgorman@techsingularity.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.0 01/16] rtc: cmos: Fix event handler registration ordering issue
-Date: Thu, 15 Dec 2022 19:10:45 +0100
-Message-Id: <20221215172908.232219022@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 10/16] pinctrl: meditatek: Startup with the IRQs disabled
+Date: Thu, 15 Dec 2022 19:10:54 +0100
+Message-Id: <20221215172908.602223272@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
 References: <20221215172908.162858817@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,118 +37,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 4919d3eb2ec0ee364f7e3cf2d99646c1b224fae8 upstream.
+[ Upstream commit 11780e37565db4dd064d3243ca68f755c13f65b4 ]
 
-Because acpi_install_fixed_event_handler() enables the event
-automatically on success, it is incorrect to call it before the
-handler routine passed to it is ready to handle events.
+If the system is restarted via kexec(), the peripherals do not start
+with a known state.
 
-Unfortunately, the rtc-cmos driver does exactly the incorrect thing
-by calling cmos_wake_setup(), which passes rtc_handler() to
-acpi_install_fixed_event_handler(), before cmos_do_probe(), because
-rtc_handler() uses dev_get_drvdata() to get to the cmos object
-pointer and the driver data pointer is only populated in
-cmos_do_probe().
+If the previous system had enabled an IRQs we will receive unexected
+IRQs that can lock the system.
 
-This leads to a NULL pointer dereference in rtc_handler() on boot
-if the RTC fixed event happens to be active at the init time.
+[   28.109251] watchdog: BUG: soft lockup - CPU#0 stuck for 26s!
+[swapper/0:0]
+[   28.109263] Modules linked in:
+[   28.109273] CPU: 0 PID: 0 Comm: swapper/0 Not tainted
+5.15.79-14458-g4b9edf7b1ac6 #1 9f2e76613148af94acccd64c609a552fb4b4354b
+[   28.109284] Hardware name: Google Elm (DT)
+[   28.109290] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS
+		BTYPE=--)
+[   28.109298] pc : __do_softirq+0xa0/0x388
+[   28.109309] lr : __do_softirq+0x70/0x388
+[   28.109316] sp : ffffffc008003ee0
+[   28.109321] x29: ffffffc008003f00 x28: 000000000000000a x27:
+0000000000000080
+[   28.109334] x26: 0000000000000001 x25: ffffffefa7b350c0 x24:
+ffffffefa7b47480
+[   28.109346] x23: ffffffefa7b3d000 x22: 0000000000000000 x21:
+ffffffefa7b0fa40
+[   28.109358] x20: ffffffefa7b005b0 x19: ffffffefa7b47480 x18:
+0000000000065b6b
+[   28.109370] x17: ffffffefa749c8b0 x16: 000000000000018c x15:
+00000000000001b8
+[   28.109382] x14: 00000000000d3b6b x13: 0000000000000006 x12:
+0000000000057e91
+[   28.109394] x11: 0000000000000000 x10: 0000000000000000 x9 :
+ffffffefa7b47480
+[   28.109406] x8 : 00000000000000e0 x7 : 000000000f424000 x6 :
+0000000000000000
+[   28.109418] x5 : ffffffefa7dfaca0 x4 : ffffffefa7dfadf0 x3 :
+000000000000000f
+[   28.109429] x2 : 0000000000000000 x1 : 0000000000000100 x0 :
+0000000001ac65c5
+[   28.109441] Call trace:
+[   28.109447]  __do_softirq+0xa0/0x388
+[   28.109454]  irq_exit+0xc0/0xe0
+[   28.109464]  handle_domain_irq+0x68/0x90
+[   28.109473]  gic_handle_irq+0xac/0xf0
+[   28.109480]  call_on_irq_stack+0x28/0x50
+[   28.109488]  do_interrupt_handler+0x44/0x58
+[   28.109496]  el1_interrupt+0x30/0x58
+[   28.109506]  el1h_64_irq_handler+0x18/0x24
+[   28.109512]  el1h_64_irq+0x7c/0x80
+[   28.109519]  arch_local_irq_enable+0xc/0x18
+[   28.109529]  default_idle_call+0x40/0x140
+[   28.109539]  do_idle+0x108/0x290
+[   28.109547]  cpu_startup_entry+0x2c/0x30
+[   28.109554]  rest_init+0xe8/0xf8
+[   28.109562]  arch_call_rest_init+0x18/0x24
+[   28.109571]  start_kernel+0x338/0x42c
+[   28.109578]  __primary_switched+0xbc/0xc4
+[   28.109588] Kernel panic - not syncing: softlockup: hung tasks
 
-To address this issue, change the initialization ordering of the
-driver so that cmos_wake_setup() is always called after a successful
-cmos_do_probe() call.
-
-While at it, change cmos_pnp_probe() to call cmos_do_probe() after
-the initial if () statement used for computing the IRQ argument to
-be passed to cmos_do_probe() which is cleaner than calling it in
-each branch of that if () (local variable "irq" can be of type int,
-because it is passed to that function as an argument of type int).
-
-Note that commit 6492fed7d8c9 ("rtc: rtc-cmos: Do not check
-ACPI_FADT_LOW_POWER_S0") caused this issue to affect a larger number
-of systems, because previously it only affected systems with
-ACPI_FADT_LOW_POWER_S0 set, but it is present regardless of that
-commit.
-
-Fixes: 6492fed7d8c9 ("rtc: rtc-cmos: Do not check ACPI_FADT_LOW_POWER_S0")
-Fixes: a474aaedac99 ("rtc-cmos: move wake setup from ACPI glue into RTC driver")
-Link: https://lore.kernel.org/linux-acpi/20221010141630.zfzi7mk7zvnmclzy@techsingularity.net/
-Reported-by: Mel Gorman <mgorman@techsingularity.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Mel Gorman <mgorman@techsingularity.net>
-Link: https://lore.kernel.org/r/5629262.DvuYhMxLoT@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20221122-mtk-pinctrl-v1-1-bedf5655a3d2@chromium.org
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c |   29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/pinctrl/mediatek/mtk-eint.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1352,10 +1352,10 @@ static void cmos_check_acpi_rtc_status(s
+diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
+index f7b54a551764..c24583bffa99 100644
+--- a/drivers/pinctrl/mediatek/mtk-eint.c
++++ b/drivers/pinctrl/mediatek/mtk-eint.c
+@@ -287,12 +287,15 @@ static struct irq_chip mtk_eint_irq_chip = {
  
- static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ static unsigned int mtk_eint_hw_init(struct mtk_eint *eint)
  {
--	cmos_wake_setup(&pnp->dev);
-+	int irq, ret;
+-	void __iomem *reg = eint->base + eint->regs->dom_en;
++	void __iomem *dom_en = eint->base + eint->regs->dom_en;
++	void __iomem *mask_set = eint->base + eint->regs->mask_set;
+ 	unsigned int i;
  
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
--		unsigned int irq = 0;
-+		irq = 0;
- #ifdef CONFIG_X86
- 		/* Some machines contain a PNP entry for the RTC, but
- 		 * don't define the IRQ. It should always be safe to
-@@ -1364,13 +1364,17 @@ static int cmos_pnp_probe(struct pnp_dev
- 		if (nr_legacy_irqs())
- 			irq = RTC_IRQ;
- #endif
--		return cmos_do_probe(&pnp->dev,
--				pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
- 	} else {
--		return cmos_do_probe(&pnp->dev,
--				pnp_get_resource(pnp, IORESOURCE_IO, 0),
--				pnp_irq(pnp, 0));
-+		irq = pnp_irq(pnp, 0);
+ 	for (i = 0; i < eint->hw->ap_num; i += 32) {
+-		writel(0xffffffff, reg);
+-		reg += 4;
++		writel(0xffffffff, dom_en);
++		writel(0xffffffff, mask_set);
++		dom_en += 4;
++		mask_set += 4;
  	}
-+
-+	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
-+	if (ret)
-+		return ret;
-+
-+	cmos_wake_setup(&pnp->dev);
-+
-+	return 0;
- }
  
- static void cmos_pnp_remove(struct pnp_dev *pnp)
-@@ -1454,10 +1458,9 @@ static inline void cmos_of_init(struct p
- static int __init cmos_platform_probe(struct platform_device *pdev)
- {
- 	struct resource *resource;
--	int irq;
-+	int irq, ret;
- 
- 	cmos_of_init(pdev);
--	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
-@@ -1467,7 +1470,13 @@ static int __init cmos_platform_probe(st
- 	if (irq < 0)
- 		irq = -1;
- 
--	return cmos_do_probe(&pdev->dev, resource, irq);
-+	ret = cmos_do_probe(&pdev->dev, resource, irq);
-+	if (ret)
-+		return ret;
-+
-+	cmos_wake_setup(&pdev->dev);
-+
-+	return 0;
- }
- 
- static int cmos_platform_remove(struct platform_device *pdev)
+ 	return 0;
+-- 
+2.35.1
+
 
 
