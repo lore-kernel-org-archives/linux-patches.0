@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22233569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EF9C433D2;
-	Thu, 15 Dec 2022 18:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2890F569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:12:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818F9C433EF;
+	Thu, 15 Dec 2022 18:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127957;
-	bh=d/a33XgM9HzAP8+lMgtDkj14R0RyBozaL/xSZ9eD4UY=;
+	s=korg; t=1671127960;
+	bh=OZfafIR5BzYTte8Ris8LN9kDDkt2u8dTy6WY8pG5geM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7F1k2q3SgQGjuEbvY915VrRWbSWWxYbMv2WiLP82MrVPSqgoXqOQ617cVnPqyeYE
-	 HnYYpprcMdsBHjn/Etw2XlX7GB32A6lOOCr/uY6yo41Cva0ef0v61GJcG+2nBMON9N
-	 71QT7UuHYQAtwk5DBn5l3J8dHMRJ6jBfYwqgetsI=
+	b=AIqrAtR8PBxPmmIu7zbRH7/q7Ps4sZ/hPy5FXq2Ju8x/K1lyHshiaVSeHL+FjSJtB
+	 KWrtoD/Eb7iguXsRxsFlSB9HER7vV4BUpdUkEQJX+PlTNJbprVRl2TChIN5Y2H7+KT
+	 LAWkf+gUiSAP1Nj0ZJsxaJAUZ5IzQliQcwfDh+jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+9228d6098455bb209ec8@syzkaller.appspotmail.com,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/14] ASoC: cs42l51: Correct PGA Volume minimum value
-Date: Thu, 15 Dec 2022 19:10:48 +0100
-Message-Id: <20221215172907.251548114@linuxfoundation.org>
+Subject: [PATCH 5.15 13/14] perf: Fix perf_pending_task() UaF
+Date: Thu, 15 Dec 2022 19:10:49 +0100
+Message-Id: <20221215172907.302003042@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
 References: <20221215172906.338769943@linuxfoundation.org>
@@ -35,36 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 3d1bb6cc1a654c8693a85b1d262e610196edec8b ]
+[ Upstream commit 517e6a301f34613bff24a8e35b5455884f2d83d8 ]
 
-The table in the datasheet actually shows the volume values in the wrong
-order, with the two -3dB values being reversed. This appears to have
-caused the lower of the two values to be used in the driver when the
-higher should have been, correct this mixup.
+Per syzbot it is possible for perf_pending_task() to run after the
+event is free()'d. There are two related but distinct cases:
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221125162348.1288005-2-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ - the task_work was already queued before destroying the event;
+ - destroying the event itself queues the task_work.
+
+The first cannot be solved using task_work_cancel() since
+perf_release() itself might be called from a task_work (____fput),
+which means the current->task_works list is already empty and
+task_work_cancel() won't be able to find the perf_pending_task()
+entry.
+
+The simplest alternative is extending the perf_event lifetime to cover
+the task_work.
+
+The second is just silly, queueing a task_work while you know the
+event is going away makes no sense and is easily avoided by
+re-arranging how the event is marked STATE_DEAD and ensuring it goes
+through STATE_OFF on the way down.
+
+Reported-by: syzbot+9228d6098455bb209ec8@syzkaller.appspotmail.com
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l51.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
-index fc6a2bc311b4..c61b17dc2af8 100644
---- a/sound/soc/codecs/cs42l51.c
-+++ b/sound/soc/codecs/cs42l51.c
-@@ -146,7 +146,7 @@ static const struct snd_kcontrol_new cs42l51_snd_controls[] = {
- 			0, 0xA0, 96, adc_att_tlv),
- 	SOC_DOUBLE_R_SX_TLV("PGA Volume",
- 			CS42L51_ALC_PGA_CTL, CS42L51_ALC_PGB_CTL,
--			0, 0x19, 30, pga_tlv),
-+			0, 0x1A, 30, pga_tlv),
- 	SOC_SINGLE("Playback Deemphasis Switch", CS42L51_DAC_CTL, 3, 1, 0),
- 	SOC_SINGLE("Auto-Mute Switch", CS42L51_DAC_CTL, 2, 1, 0),
- 	SOC_SINGLE("Soft Ramp Switch", CS42L51_DAC_CTL, 1, 1, 0),
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 44f982b73640..5422bd77c7d4 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2367,6 +2367,7 @@ event_sched_out(struct perf_event *event,
+ 		    !event->pending_work) {
+ 			event->pending_work = 1;
+ 			dec = false;
++			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+ 			task_work_add(current, &event->pending_task, TWA_RESUME);
+ 		}
+ 		if (dec)
+@@ -2412,6 +2413,7 @@ group_sched_out(struct perf_event *group_event,
+ 
+ #define DETACH_GROUP	0x01UL
+ #define DETACH_CHILD	0x02UL
++#define DETACH_DEAD	0x04UL
+ 
+ /*
+  * Cross CPU call to remove a performance event
+@@ -2432,12 +2434,20 @@ __perf_remove_from_context(struct perf_event *event,
+ 		update_cgrp_time_from_cpuctx(cpuctx, false);
+ 	}
+ 
++	/*
++	 * Ensure event_sched_out() switches to OFF, at the very least
++	 * this avoids raising perf_pending_task() at this time.
++	 */
++	if (flags & DETACH_DEAD)
++		event->pending_disable = 1;
+ 	event_sched_out(event, cpuctx, ctx);
+ 	if (flags & DETACH_GROUP)
+ 		perf_group_detach(event);
+ 	if (flags & DETACH_CHILD)
+ 		perf_child_detach(event);
+ 	list_del_event(event, ctx);
++	if (flags & DETACH_DEAD)
++		event->state = PERF_EVENT_STATE_DEAD;
+ 
+ 	if (!ctx->nr_events && ctx->is_active) {
+ 		if (ctx == &cpuctx->ctx)
+@@ -5212,9 +5222,7 @@ int perf_event_release_kernel(struct perf_event *event)
+ 
+ 	ctx = perf_event_ctx_lock(event);
+ 	WARN_ON_ONCE(ctx->parent_ctx);
+-	perf_remove_from_context(event, DETACH_GROUP);
+ 
+-	raw_spin_lock_irq(&ctx->lock);
+ 	/*
+ 	 * Mark this event as STATE_DEAD, there is no external reference to it
+ 	 * anymore.
+@@ -5226,8 +5234,7 @@ int perf_event_release_kernel(struct perf_event *event)
+ 	 * Thus this guarantees that we will in fact observe and kill _ALL_
+ 	 * child events.
+ 	 */
+-	event->state = PERF_EVENT_STATE_DEAD;
+-	raw_spin_unlock_irq(&ctx->lock);
++	perf_remove_from_context(event, DETACH_GROUP|DETACH_DEAD);
+ 
+ 	perf_event_ctx_unlock(event, ctx);
+ 
+@@ -6662,6 +6669,8 @@ static void perf_pending_task(struct callback_head *head)
+ 	if (rctx >= 0)
+ 		perf_swevent_put_recursion_context(rctx);
+ 	preempt_enable_notrace();
++
++	put_event(event);
+ }
+ 
+ /*              
 -- 
 2.35.1
 
