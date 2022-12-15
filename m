@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D7E569B
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF4DC433D2;
-	Thu, 15 Dec 2022 18:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB4F569B
+	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 18:11:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A229C433EF;
+	Thu, 15 Dec 2022 18:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671127910;
-	bh=feab34fh60OkZ5o0LqhME3It700OtN3FvjGK4gz1a+E=;
+	s=korg; t=1671127913;
+	bh=auDQjwHm6h2ALybttMU6AStHAYjCwp3thiNoP+tCx8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3IN6eANEpHo/HTGMt6XInclGbJ4Tvjhem2ZlRuyx2scu9irAw53kUwymBeAJSU6v
-	 tay+xAQAZq2QumiHc1DJJm42ZvAD16lrGxrzJUjg+0ErCvtQz4D31fG+AWJShBAiTf
-	 fDljyaaYvMPjQU7wsM1CtagFr18T8Ydy5IdRsjJg=
+	b=xoMdUy9s2mrGR0Z9nzM2deSgO8Wxsxs6/Inr2ziIw0mABPr7DcWCGxcBFOPZ2zOBZ
+	 1tbTRL9TjDve3noU7MpeEmwoXZXDXOIHyP8/CFvfJqwXD/5zCq+shLAfq6hQbGV/Cb
+	 j0Uqpr3qdwK8SiX/sZ9JF0CysmjRMvkmHtTM3FmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 06/15] io_uring: add missing item types for splice request
-Date: Thu, 15 Dec 2022 19:10:33 +0100
-Message-Id: <20221215172907.290429481@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 07/15] ASoC: fsl_micfil: explicitly clear software reset bit
+Date: Thu, 15 Dec 2022 19:10:34 +0100
+Message-Id: <20221215172907.331503609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221215172906.638553794@linuxfoundation.org>
 References: <20221215172906.638553794@linuxfoundation.org>
@@ -34,28 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-Splice is like read/write and should grab current->nsproxy, denoted by
-IO_WQ_WORK_FILES as it refers to current->files as well
+[ Upstream commit 292709b9cf3ba470af94b62c9bb60284cc581b79 ]
 
-Signed-off-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined as
+non volatile register, it still remain in regmap cache after set,
+then every update of REG_MICFIL_CTRL1, software reset happens.
+to avoid this, clear it explicitly.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1651925654-32060-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/io_uring.c
-+++ b/fs/io_uring.c
-@@ -936,7 +936,7 @@ static const struct io_op_def io_op_defs
- 		.needs_file		= 1,
- 		.hash_reg_file		= 1,
- 		.unbound_nonreg_file	= 1,
--		.work_flags		= IO_WQ_WORK_BLKCG,
-+		.work_flags		= IO_WQ_WORK_BLKCG | IO_WQ_WORK_FILES,
- 	},
- 	[IORING_OP_PROVIDE_BUFFERS] = {},
- 	[IORING_OP_REMOVE_BUFFERS] = {},
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index efc5daf53bba..ead4bfa13561 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -190,6 +190,17 @@ static int fsl_micfil_reset(struct device *dev)
+ 		return ret;
+ 	}
+ 
++	/*
++	 * SRES is self-cleared bit, but REG_MICFIL_CTRL1 is defined
++	 * as non-volatile register, so SRES still remain in regmap
++	 * cache after set, that every update of REG_MICFIL_CTRL1,
++	 * software reset happens. so clear it explicitly.
++	 */
++	ret = regmap_clear_bits(micfil->regmap, REG_MICFIL_CTRL1,
++				MICFIL_CTRL1_SRES);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
+-- 
+2.35.1
+
 
 
