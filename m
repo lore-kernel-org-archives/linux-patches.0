@@ -1,88 +1,57 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249C88490
-	for <patches@lists.linux.dev>; Thu, 15 Dec 2022 23:51:51 +0000 (UTC)
-Received: by mail-io1-f53.google.com with SMTP id r72so495937iod.5
-        for <patches@lists.linux.dev>; Thu, 15 Dec 2022 15:51:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099B0377
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 01:36:50 +0000 (UTC)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-3cbdd6c00adso14373997b3.11
+        for <patches@lists.linux.dev>; Thu, 15 Dec 2022 17:36:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ILYOzGOlcnUgJAYdg3KJrA0MBjq7Mpi0z4kbn89zmV8=;
-        b=EIS2cGv8LD9/kBmoKOj55rWq3IzpORr6ZL33Z9fGayOW5Q0gm5whglTj0RFgsYPAil
-         EAmFanxCA0beyFP858z2OxJgGsuEp05WE0nnvEba6qzsGTOqcvO+5VVUJp6fBSk7YyHa
-         d8FBL9+eobM2mi/2d2i5SNsiZNAQICjpH8dtM=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3j6IemJNFtv64Re31+0lccJ4egbtGN/aOrC7Lh6BALY=;
+        b=Vau5FMHKVZF2WUhCHt6uc+gU7tEE0JiHAVkkuHiBz6tfDEjsFM9uOiPEuPlRPLJyIl
+         SBxxsvzbrjvCO4hcAwiEJWdx+RbqRL6RCbcanhBRZjQDOo+ukMqgBew2einb/5dk/ukE
+         S7NzSlvOKk+sO9wGGqNogzKYg+1qI11PlQKC5pQ0SYB9GTqxobEBexl7oEIDHy2LmChB
+         +01wbeHop48a5bavn1wYKTF9C1mOQ9BOGcuX9OwX3pIvwtQEpc+tRoAkQ6b6cvqj7UeF
+         +Z3OktJnbo9+lxkQRs74X33AWxQM5n0G2jBrLlFGTK6VolQed+QHL74TCz+6tbh6tM5m
+         GRgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ILYOzGOlcnUgJAYdg3KJrA0MBjq7Mpi0z4kbn89zmV8=;
-        b=Zbsp8A9GHeKqEf1cb1z5R3p/hKTDoWeouhYNFMadxwmPLqAxL8FXpUFoKqVdzrNo8H
-         RrZi6Vb+d6hwIuepay6Oq+QT0ZpZnaykr1Z6SFSe8towCNC52XXk2yR8h3nXa7yQPU4o
-         +pq4jqAb5zWz8E9dpSsoMPIuBo3QcVNN3gUGCf7VGow86iRRAmihIS/k66rlIhTvslY7
-         /5bLnmsUFz3rgJAwNSBpko/GyhBxDxwjoMeqSzB+39TVH6wu5zQp2zjmS9R9jR2fr9TS
-         mViodeHj6WdvAvrkmgkbbOLkqr/E0E0816HZRsFhVSnCi2j7xarsUjyAAqgeZ1LbVY53
-         olHQ==
-X-Gm-Message-State: ANoB5pnUCkjd/S1JtjOSorgWsbDqXvFVVgoe5993qS2DB4Wu3LkCb2CX
-	SiamEiTWa3RDpo3KlrFsjcPoIQ==
-X-Google-Smtp-Source: AA0mqf4QVc0MpuqQNi5OeSMrV0I/CML3biumc7bMrEq4VWZB9Yt/1kWFkTSJlipkCzhzzy2IDDx55w==
-X-Received: by 2002:a6b:c415:0:b0:6cc:8b29:9a73 with SMTP id y21-20020a6bc415000000b006cc8b299a73mr3385501ioa.1.1671148310101;
-        Thu, 15 Dec 2022 15:51:50 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id f61-20020a0284c3000000b003717c1df569sm216114jai.165.2022.12.15.15.51.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 15:51:49 -0800 (PST)
-Message-ID: <2103e063-a758-f13a-1402-3a9570377912@linuxfoundation.org>
-Date: Thu, 15 Dec 2022 16:51:48 -0700
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3j6IemJNFtv64Re31+0lccJ4egbtGN/aOrC7Lh6BALY=;
+        b=U3hFzFjyTiaPbgA/wPqyNW4yd1sF7+Jwbwao+aMTLLpG5lRyTrvlzc6vg9hYXr3PKo
+         YqQtLwBVX1Cjf/LhZqVcwQuWnvk1EU51VziV40k10hEqOofUe7Nf0s6HX5RjOglmlZos
+         LbHMRgH8FrsgopGxXe8HtNrX0rBjPLS7fP7BllZUlEKNeuBvu5RlpU61RJwzgTDXbIP+
+         9yet/W+ilGcRfr30Bz8x996HczL/QPMTjokSy5PJVdzR8qJ1U7nrLINDqBBCO8VtpWHe
+         S3jI8ZumBIGRVauOQSC+qPdjcYqux+FuGHgUuOjW9Yw+bvod2+s05r5UDOn1qLPmi2f+
+         GXYQ==
+X-Gm-Message-State: ANoB5pktIsGWGQvVYqSbqwQEUPysbs4CblESUevfpBzyzGGSyyYCkftu
+	q2+mZPy7R652sG5W1arBwZNgNzrmMpn0xoX6BUI=
+X-Google-Smtp-Source: AA0mqf4ROYkj0LR7631e8plnEQ2wB3HwsQbowt0tlp5eWaC0PRaoM2uoFdo5oJrEtUu2mZAuW2P4e+0I+ETWld9+pS8=
+X-Received: by 2002:a81:951:0:b0:352:5ccb:2273 with SMTP id
+ 78-20020a810951000000b003525ccb2273mr28281681ywj.315.1671154609724; Thu, 15
+ Dec 2022 17:36:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.4 0/9] 5.4.228-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20221215172905.468656378@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a05:7108:504a:b0:250:fd85:e71a with HTTP; Thu, 15 Dec 2022
+ 17:36:49 -0800 (PST)
+Reply-To: michelgbagbola@aol.com
+From: Michel Gbagbo <kingballer895@gmail.com>
+Date: Thu, 15 Dec 2022 17:36:49 -0800
+Message-ID: <CAAOGKMQuC9-h_MvHtCxEg+XdVX+6YEwoo0OQARdpY+8fJRLn6w@mail.gmail.com>
+Subject: Communication
+To: undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/15/22 11:10, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.228 release.
-> There are 9 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
-
-Compiled and booted on my test system. No dmesg regressions.
-
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
+Hi
+I would like to have an important discussion with you. It=E2=80=99s private
+and Urgent for more details, please kindly Contacts me on my
+email:(michelgbagbola@aol.com). Michel Gbagbo Laurent. Thanks
