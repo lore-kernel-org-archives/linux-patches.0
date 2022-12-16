@@ -1,114 +1,90 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBA3362
-	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 16:32:36 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 86A1A3454D;
-	Fri, 16 Dec 2022 16:32:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1671208349; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ifpYR2PdESJAbvJefyXjW1EWj/1z2L0zImGtUVLVTog=;
-	b=G0OuXHi/vYNbH57ZVsfKkJHhPgNpbk73CrPzwAWNhyKC3Xh8oDQOLuRGpTKYCaTgy2aXzB
-	k0KaxX3xKjrzsD+IFm28RtsBbuoo+JfPz565cOawN8pNgSC13NF9g2u/aUaZ1t/RcOUdug
-	Qo9E/fq7nu67Auoe/CaI7a2LO2TRDg8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1671208349;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ifpYR2PdESJAbvJefyXjW1EWj/1z2L0zImGtUVLVTog=;
-	b=yah1WAubrE2ujAH04CMoJ6yYkHNQn4D1DQrpz87GR8v/vJCOlcD2/p8mCcKOkvRmP0v02E
-	soZWIZ2/b5FHFHAA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 580D0138F0;
-	Fri, 16 Dec 2022 16:32:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id /03PFJ2dnGOaKQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 16 Dec 2022 16:32:29 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>,
-	stable@vger.kernel.org,
-	"Kirill A . Shutemov" <kirill@shutemov.name>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>
-Subject: [PATCH for v6.1 regression] mm, mremap: fix mremap() expanding vma with addr inside vma
-Date: Fri, 16 Dec 2022 17:32:27 +0100
-Message-Id: <20221216163227.24648-1-vbabka@suse.cz>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA362F53
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 19:06:50 +0000 (UTC)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-381662c78a9so45946277b3.7
+        for <patches@lists.linux.dev>; Fri, 16 Dec 2022 11:06:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BKNh90Lruex5LAQVx5cYcXCYZ3q4FsH8oAZBjIKNToo=;
+        b=faEBGsNCbPrJQjhPt7zew12CHmk9bGgxaalNqc4ELtgLZCac6DcgndYwqv2fumfjGZ
+         0QnVb6LOj5Lx6fXwEHvR9gmnBa29rOZZsg/VET3NiLv9BqQ6gGIzVCLvKVDWM8z38s4l
+         wj3hcQFbBtlk3MHGItM+fNwqiALGHyTwqRO0Rwv0PwrmTXTI5Z+/o72vGihY0mSADsMF
+         Rk8E0MXXA8NNFr5F5hd/DZ69FTOTlhYIwE5uDbMIXgrURlJgUR9L19ARqqQtUc3qVld7
+         9I8L8Y83AmN3nqzASkJ6L1d6xbuzKIXv42DQIg22sijzO64DNSn6UT9pYIewkQiWdimr
+         nKAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BKNh90Lruex5LAQVx5cYcXCYZ3q4FsH8oAZBjIKNToo=;
+        b=MH9rytBEUU5vJhWtozNVhbAFXryQIlGpePA9Id+9T64SXgXtijZ7LbsrcA/tiqDMLw
+         wlE3h+uyaARCjiitGVWSKE1B4Vi6ocGZqCk+EjUipIMg5qMw774JmGJ98y9Bsr9pEDtq
+         ZAreru65rHkaMH7So9rISBhfNTbv7/KsY37LAwesCD5rbiO2GPKBvDFmqVzS/n8LohSs
+         dGvpEsOidTrcco2lq2yqGagvLQlP2ejZQZdvicTYYCBAonWmZgClb4PTmqrs7ys61sB9
+         QB7ZZVlsnXefIoI+dE7pSx7DKDnVAfx5tphC1jEY/anjY99AvmG53+nTI2xJdW1oZkak
+         4+gw==
+X-Gm-Message-State: ANoB5pm0b9ynSlEDOgZf02uIGMBAcUCYc4SMC17VCXYRYWu63wlzInYP
+	gm3sN8twxkBG/ybJKToSykk=
+X-Google-Smtp-Source: AA0mqf5McHIiY23aK+5KDxvpzI54RDbkKkvL3/zZY31DOkZjpjvJiWHlsng4dOOC6LzVCjGmB3J6nA==
+X-Received: by 2002:a05:7500:413:b0:ea:8267:6a4 with SMTP id f19-20020a057500041300b000ea826706a4mr5475544gab.40.1671217609769;
+        Fri, 16 Dec 2022 11:06:49 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id x17-20020a05620a449100b006fc2e2198easm2057704qkp.95.2022.12.16.11.06.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Dec 2022 11:06:49 -0800 (PST)
+Message-ID: <656e4296-5810-9eff-a7cf-513d134656de@gmail.com>
+Date: Fri, 16 Dec 2022 11:06:45 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 5.4 0/9] 5.4.228-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221215172905.468656378@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Since 6.1 we have noticed random rpm install failures that were tracked
-to mremap() returning -ENOMEM and to commit ca3d76b0aa80 ("mm: add
-merging after mremap resize").
+On 12/15/22 10:10, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.228 release.
+> There are 9 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-The problem occurs when mremap() expands a VMA in place, but using an
-starting address that's not vma->vm_start, but somewhere in the middle.
-The extension_pgoff calculation introduced by the commit is wrong in
-that case, so vma_merge() fails due to pgoffs not being compatible.
-Fix the calculation.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-By the way it seems that the situations, where rpm now expands a vma
-from the middle, were made possible also due to that commit, thanks to
-the improved vma merging. Yet it should work just fine, except for the
-buggy calculation.
-
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1206359
-Fixes: ca3d76b0aa80 ("mm: add merging after mremap resize")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Jakub Matěna <matenajakub@gmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: "Kirill A . Shutemov" <kirill@shutemov.name>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
----
-Hi, this fixes a regression in 6.1 so please process ASAP so that stable
-6.1.y can get the fix.
-
- mm/mremap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/mm/mremap.c b/mm/mremap.c
-index e465ffe279bb..fe587c5d6591 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1016,7 +1016,8 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
- 			long pages = (new_len - old_len) >> PAGE_SHIFT;
- 			unsigned long extension_start = addr + old_len;
- 			unsigned long extension_end = addr + new_len;
--			pgoff_t extension_pgoff = vma->vm_pgoff + (old_len >> PAGE_SHIFT);
-+			pgoff_t extension_pgoff = vma->vm_pgoff +
-+				((extension_start - vma->vm_start) >> PAGE_SHIFT);
- 
- 			if (vma->vm_flags & VM_ACCOUNT) {
- 				if (security_vm_enough_memory_mm(mm, pages)) {
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
 -- 
-2.38.1
+Florian
 
