@@ -1,57 +1,97 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099B0377
-	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 01:36:50 +0000 (UTC)
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-3cbdd6c00adso14373997b3.11
-        for <patches@lists.linux.dev>; Thu, 15 Dec 2022 17:36:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645DA371
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 04:32:13 +0000 (UTC)
+Received: by mail-pf1-f173.google.com with SMTP id a14so1023007pfa.1
+        for <patches@lists.linux.dev>; Thu, 15 Dec 2022 20:32:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3j6IemJNFtv64Re31+0lccJ4egbtGN/aOrC7Lh6BALY=;
-        b=Vau5FMHKVZF2WUhCHt6uc+gU7tEE0JiHAVkkuHiBz6tfDEjsFM9uOiPEuPlRPLJyIl
-         SBxxsvzbrjvCO4hcAwiEJWdx+RbqRL6RCbcanhBRZjQDOo+ukMqgBew2einb/5dk/ukE
-         S7NzSlvOKk+sO9wGGqNogzKYg+1qI11PlQKC5pQ0SYB9GTqxobEBexl7oEIDHy2LmChB
-         +01wbeHop48a5bavn1wYKTF9C1mOQ9BOGcuX9OwX3pIvwtQEpc+tRoAkQ6b6cvqj7UeF
-         +Z3OktJnbo9+lxkQRs74X33AWxQM5n0G2jBrLlFGTK6VolQed+QHL74TCz+6tbh6tM5m
-         GRgw==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oHCCuw298uC7S+tMrUZ1Er7Xg3PYJV4C5yb/JEiVNoA=;
+        b=RnCrxue86DUp4v/CQ/uLrjdjijleouqzV6EAFoAhsHkyHDnTmpVG22/LV6jN79czkX
+         jOPjexWjtesLSQs1oO+KVWYLoHaEGTg63vqv7y59pk6dhq2NP7BtmZLMzzVuzym46i+J
+         kAzIDljQls6r470dBtCWp+68vxHbFa7Cuama6FQFwLdZG5uBMHkhbVWJzFlY4W/Htx4m
+         Dyn7xtnKKGvlrdGX361WzhAxae8AS8PFQKzVqqRDPwPwH0/RX2ZMaFw6mQQSFontIsUC
+         mQbM1B+xVYZW1GAyUeQTGxUk+lJq0WPmhEcxmuJseqnTp4MeoeFeaA4xx4AUK097vR8g
+         p8Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3j6IemJNFtv64Re31+0lccJ4egbtGN/aOrC7Lh6BALY=;
-        b=U3hFzFjyTiaPbgA/wPqyNW4yd1sF7+Jwbwao+aMTLLpG5lRyTrvlzc6vg9hYXr3PKo
-         YqQtLwBVX1Cjf/LhZqVcwQuWnvk1EU51VziV40k10hEqOofUe7Nf0s6HX5RjOglmlZos
-         LbHMRgH8FrsgopGxXe8HtNrX0rBjPLS7fP7BllZUlEKNeuBvu5RlpU61RJwzgTDXbIP+
-         9yet/W+ilGcRfr30Bz8x996HczL/QPMTjokSy5PJVdzR8qJ1U7nrLINDqBBCO8VtpWHe
-         S3jI8ZumBIGRVauOQSC+qPdjcYqux+FuGHgUuOjW9Yw+bvod2+s05r5UDOn1qLPmi2f+
-         GXYQ==
-X-Gm-Message-State: ANoB5pktIsGWGQvVYqSbqwQEUPysbs4CblESUevfpBzyzGGSyyYCkftu
-	q2+mZPy7R652sG5W1arBwZNgNzrmMpn0xoX6BUI=
-X-Google-Smtp-Source: AA0mqf4ROYkj0LR7631e8plnEQ2wB3HwsQbowt0tlp5eWaC0PRaoM2uoFdo5oJrEtUu2mZAuW2P4e+0I+ETWld9+pS8=
-X-Received: by 2002:a81:951:0:b0:352:5ccb:2273 with SMTP id
- 78-20020a810951000000b003525ccb2273mr28281681ywj.315.1671154609724; Thu, 15
- Dec 2022 17:36:49 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oHCCuw298uC7S+tMrUZ1Er7Xg3PYJV4C5yb/JEiVNoA=;
+        b=RYsNPRtl0l/v9PIP5DowfQ7pJ/aKxXL7mtmCMM3HZpqNO9abCpHeiAtNCY4GQgCOd8
+         4QTqB7kMC/gMvD4APAh9WppMwtTPXW7CpAgWmFmmRIuqUhfZjSLzir11EiHwejTk17Kw
+         dpBzW/BCp4iaeW7vov647zBTvKipmjT+gbQ2IC2bNx1i7W0cB+I1nPsjhjOLPqiTESYa
+         LnPUFkP3Aqf0Fxg5T8UzSeNFjFQc0+IoH6MK70QUeznlxyuWZj2RitwKBpCy1LVZO8Jj
+         aLoYsEBhGd+ocLKyb8p70ORc9Qz88a+kaSH3r8kEtXNDJZB/reEC2xCohvK/KxBSGAIP
+         7ZLQ==
+X-Gm-Message-State: ANoB5plIMdnzMWbQzQ7lyfrY4kzSPegRjXOF3YBnZN4TKMTCZm0+yoXo
+	MfpVv78k+0M5NvplqKB3oIxFUexzuAE=
+X-Google-Smtp-Source: AA0mqf7EThoZQ2V9zANsJYr1MDcCbwdh92xbEddue3cfypQWSUeGf4ZBkho2m4H38b77I1g166xTxA==
+X-Received: by 2002:a62:188d:0:b0:578:777e:7f18 with SMTP id 135-20020a62188d000000b00578777e7f18mr22783552pfy.3.1671165132698;
+        Thu, 15 Dec 2022 20:32:12 -0800 (PST)
+Received: from debian.me (subs09a-223-255-225-73.three.co.id. [223.255.225.73])
+        by smtp.gmail.com with ESMTPSA id z29-20020aa79e5d000000b0057524960947sm442027pfq.39.2022.12.15.20.32.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 20:32:11 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id F0D14103CCF; Fri, 16 Dec 2022 11:32:07 +0700 (WIB)
+Date: Fri, 16 Dec 2022 11:32:07 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 00/14] 5.15.84-rc1 review
+Message-ID: <Y5v0x5wIRbNj5TEB@debian.me>
+References: <20221215172906.338769943@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Received: by 2002:a05:7108:504a:b0:250:fd85:e71a with HTTP; Thu, 15 Dec 2022
- 17:36:49 -0800 (PST)
-Reply-To: michelgbagbola@aol.com
-From: Michel Gbagbo <kingballer895@gmail.com>
-Date: Thu, 15 Dec 2022 17:36:49 -0800
-Message-ID: <CAAOGKMQuC9-h_MvHtCxEg+XdVX+6YEwoo0OQARdpY+8fJRLn6w@mail.gmail.com>
-Subject: Communication
-To: undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="R180pMqcGnsqKwiS"
+Content-Disposition: inline
+In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
+
+
+--R180pMqcGnsqKwiS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi
-I would like to have an important discussion with you. It=E2=80=99s private
-and Urgent for more details, please kindly Contacts me on my
-email:(michelgbagbola@aol.com). Michel Gbagbo Laurent. Thanks
+On Thu, Dec 15, 2022 at 07:10:36PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.84 release.
+> There are 14 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--R180pMqcGnsqKwiS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY5v0vgAKCRD2uYlJVVFO
+o19nAP93ROelBBB1P6C+ieeJtlERdLdkjdze3O1tkcqWnTdnPwEApXh94oshE1FZ
++zFALVEoatEiqZ45KBu38BY9mUG3aAA=
+=1cFY
+-----END PGP SIGNATURE-----
+
+--R180pMqcGnsqKwiS--
