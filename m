@@ -1,45 +1,45 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D2321E
-	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 21:30:39 +0000 (UTC)
-Received: by mail-ot1-f41.google.com with SMTP id m7-20020a9d6447000000b0066da0504b5eso2117186otl.13
-        for <patches@lists.linux.dev>; Fri, 16 Dec 2022 13:30:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8FE321E
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 21:31:00 +0000 (UTC)
+Received: by mail-oi1-f182.google.com with SMTP id c129so3115728oia.0
+        for <patches@lists.linux.dev>; Fri, 16 Dec 2022 13:31:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=faGp3q5VvI8mnMapKFqjzxGSUJuGRKvhZk/bzvMwrec=;
-        b=EG9MMukXtUfOFru3q0tQ7i2lPRQQd8YlI51YZCpfBI7Kpn+m1vJoe7GwMvs/WLSvTn
-         CxQVQAkd2w3j+2OkF5UEekmxAPGflMtuu3XPorCs9L0aPE6+tqoEesTFcAqtt4QHOGvT
-         g8gS47X7tDnFmSO6LQ2DDrA8C3pGRCZRr1WiCFwMh/Pi2nsYRdgEBp2MT9ENc7ZFu4+q
-         NT/MIoTNJOsL/DSugQXVj6w0+6huCzgDtjnHmM62Sr5U2IVlY6dcThGlJT4X5oel/gbW
-         lIrd4QUGKxLNFzIPQ1fr9UTvTi0HWwSMlv39cnLTz2sxFJKEbPNRGi4A78S8xiNNEBG9
-         oJaw==
+        bh=becLM1VwH5z0CNZX94TYWkxV4SssS0v5+RD3px/6fNY=;
+        b=WCOotyPLbeUPmiZLBjD9mfoq1zTocAD5kd4iCgh8d8QivIMwzLPbtRJqZQz/Ol6oyp
+         EA70nQoqO7yML2HPiOkMR14L+zU5eHdNJISwa2EwvwIuZcu/ckHCnLqYpsqlamjCgY1Z
+         xUydGVybLhnr4TTzWmwBTBH//j8TJ7+pEK3SCoJb6H2sUueigOtgQeMv66A64HSgwRQ5
+         HMNQFmfpdGD2J3/dYzsShzqqGxYgjAbaFTKEwkBKIGAFNczLbEZdbg4ebB1unJ832+FU
+         0rcufNBmq/tkTR4zURw+70i4TVcEYLHQ95CtsJZrftlFCozI9vC77Ym8Gw4Zuzq6M5RJ
+         fYTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=faGp3q5VvI8mnMapKFqjzxGSUJuGRKvhZk/bzvMwrec=;
-        b=wW9gCP8NvY1zj4x6Ba91I6zTh1k+Oe50eEpD3lTVlKRmnHwbbazw2STaiCIK2kLqNm
-         9wjcVrRv/bU9QlOe9UEBruaQclFr7PJs2q+n4Ean+JAGfwlNo/NhvNYpHs2+wMGZ/rVh
-         XPCf9OAY7VnYiv0dybBFGFnlmQ8Qbrx//C/jFKddUDF/G4vpskt8oucB+g79+n0HhRnW
-         bif+FHVnFCsa/3HK8DSrNEQSXSSqeDLVmSjV+VcgIavxeo1OH2HGEICju35D/vNoMuLJ
-         U586DwPOvcnWvI6HAkkm9zYCLrDBMUNUf83W1Qw4NAtIVxNG8ySECiiDi4nmMHIM+2Rr
-         LXuA==
-X-Gm-Message-State: ANoB5plPA3aUZ5oYlQbm+eIOXQHALraTVh2MWP6e2b5pG2ljhfgTVFaN
-	R0R0Mt85u1yaPrdWP7Dx4Sg=
-X-Google-Smtp-Source: AA0mqf5HX9yHM1K70mNKMezVLvpwm3DRYe7ckKN4YczJWg3BA3Sr+ZAPbep0hgWbB5oDc6XFP/H8GQ==
-X-Received: by 2002:a05:6830:d05:b0:66d:da2c:c7bb with SMTP id bu5-20020a0568300d0500b0066dda2cc7bbmr19924588otb.18.1671226238099;
-        Fri, 16 Dec 2022 13:30:38 -0800 (PST)
+        bh=becLM1VwH5z0CNZX94TYWkxV4SssS0v5+RD3px/6fNY=;
+        b=EacLj0w/x0DoxUqJCIiRLSWEzUry6dR61dAMXp6o7rmUtfXOea4cw2FHtzfLwR7K9v
+         Uf/glEMDL5+rc5BJes65pTymcVJaBnyTAID8alm1t91BuZs0xKuuMcgvOdHqYGR2ylxf
+         KPAz/pGjpuGStFXGOlXG8HALdH5ooepjurNsIEux94F+oMDxpUR/d9CHci4e/Tw1Fa8W
+         2pOgf68rj9f1uTnzuL6z1+FwuVOeLXf2hEkmcrihhAxDind1578cPIIq8ag1mcH8s52B
+         jzLLDM2+iU/5WeOv35IWCQJmZVGQ/lQawPrBZ9A6gfhSN9WLv/vOC37bdk9mRwc5l8V2
+         6gQw==
+X-Gm-Message-State: ANoB5pkFQgEU7/9FsILSjYVdX4ZrGnpaF3P5pmp5nieIAWi1snMcm2ZW
+	SjewE5o7mdFYL0jUdqNQshY=
+X-Google-Smtp-Source: AA0mqf7An314fgilxpsLdgTLmcvipSCdSAYqlDaZJHiM/gQFWYzewJSRz2gvuh5H736YhqzF2eJc7Q==
+X-Received: by 2002:a05:6808:2101:b0:35e:80f2:65cd with SMTP id r1-20020a056808210100b0035e80f265cdmr13560619oiw.35.1671226259677;
+        Fri, 16 Dec 2022 13:30:59 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id c11-20020aca1c0b000000b00353fe4fb4casm1214406oic.48.2022.12.16.13.30.37
+        by smtp.gmail.com with ESMTPSA id x8-20020a05680801c800b0035e7c48d08esm1234034oic.15.2022.12.16.13.30.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Dec 2022 13:30:37 -0800 (PST)
+        Fri, 16 Dec 2022 13:30:59 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 16 Dec 2022 13:30:36 -0800
+Date: Fri, 16 Dec 2022 13:30:58 -0800
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/15] 5.10.160-rc1 review
-Message-ID: <20221216213036.GB4067594@roeck-us.net>
-References: <20221215172906.638553794@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/14] 5.15.84-rc1 review
+Message-ID: <20221216213058.GC4067594@roeck-us.net>
+References: <20221215172906.338769943@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,11 +59,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221215172906.638553794@linuxfoundation.org>
+In-Reply-To: <20221215172906.338769943@linuxfoundation.org>
 
-On Thu, Dec 15, 2022 at 07:10:27PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.160 release.
-> There are 15 patches in this series, all will be posted as a response
+On Thu, Dec 15, 2022 at 07:10:36PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.84 release.
+> There are 14 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,9 +72,9 @@ On Thu, Dec 15, 2022 at 07:10:27PM +0100, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 162 pass: 162 fail: 0
+	total: 155 pass: 155 fail: 0
 Qemu test results:
-	total: 475 pass: 475 fail: 0
+	total: 489 pass: 489 fail: 0
 
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 
