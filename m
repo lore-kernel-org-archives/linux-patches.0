@@ -1,99 +1,103 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C335720E3
-	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 13:15:30 +0000 (UTC)
-Received: by mail-wm1-f49.google.com with SMTP id o5-20020a05600c510500b003d21f02fbaaso4072232wms.4
-        for <patches@lists.linux.dev>; Fri, 16 Dec 2022 05:15:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC288829
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 13:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=U6vape/K9pnaJlDnSHi71/S2eew2s8oAgi2GcuyJr7w=;
-        b=NLZIxDRvaBg09uYmB05NVGlfFgsM464YV4dfl87tccVxpKakbCNzZcGBXjk7S1UMk8
-         8F5wGjJr7qOdiWYYQJYHKWmCMmvmfh5zPRZqzpLI/RCMBreqE3htETqMlDkPEFukDQ1y
-         IpulM2fqI+JcatW9Rq7JdZRvSQt9ywZ1X/LKbE8rccnYQql2RqmIUqbBVKBs6dF6sapj
-         q9AXObH5zMCJ4cWIX0ix3Wssm8wh1Bfzv3TaB5w64RJ2ivVyUPTiARvXX8XXkycwOjKB
-         mBVcyJtKG8lDo8xKdWag3XW3ZlV+MmqPeZ0PQqehbpdV55ee6J/CSD0GCl8CKLyHNSe3
-         yGnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U6vape/K9pnaJlDnSHi71/S2eew2s8oAgi2GcuyJr7w=;
-        b=T2f0f72SkYPY1NAL3dYpS1srMpY1XeS3A2CTF+kzjM9dO+TXUO6ty+NqCqefFkTUs7
-         KNm/0EN5adfRVqnzRCg8EMkbczrVrEEm/UxZf9vpObcII67zCsoJWEviE49A3IQqN+uh
-         wZeHc5E4vUtLay57suNV/LNloClp0GgoRGZmjtPWJiJXiVVYgYfs4hOItfwxoZyTWS/C
-         WgKuzHJnNKl/FFs6DeXOkj33APZQQKqLLXAWhWnm67e83DCgxOk3xPdXhn4HAVsfOk8O
-         wRYuaZce3+DIqUxZulEZrVDGavmgN1xtFNDTMU6dKbn8cUZolb/bJetPG3UC0Bp5+gm0
-         XjDg==
-X-Gm-Message-State: ANoB5pktM7eP0RAVAFGrh5ZjC8HhQK3dpowAQ3Pqee39wuHLf0UjKylJ
-	xkb0m5XcUJZFcJuCvfQd+nWor4FJ96o=
-X-Google-Smtp-Source: AA0mqf6Mu47uRmTadCwmCNfwLaGp88C+FUnqUC1x8ZdL/mptD2Q2Fe0vtaYqIKOLcAWmOzKxnykJ1w==
-X-Received: by 2002:a05:600c:4e01:b0:3d2:3b8d:21e5 with SMTP id b1-20020a05600c4e0100b003d23b8d21e5mr8230872wmq.14.1671196528998;
-        Fri, 16 Dec 2022 05:15:28 -0800 (PST)
-Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id y21-20020a1c4b15000000b003d1b4d957aasm2556229wma.36.2022.12.16.05.15.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Dec 2022 05:15:28 -0800 (PST)
-Date: Fri, 16 Dec 2022 13:15:27 +0000
-From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 00/16] 6.0.14-rc1 review
-Message-ID: <Y5xvb4JB4ceOZdCQ@debian>
-References: <20221215172908.162858817@linuxfoundation.org>
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1671198183; x=1702734183;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=NBqV0S/NrkjAjfsbG61ehP8Z4OJavtUZCdDZHryrRTM=;
+  b=fkZHRSxWv7XXPQBU8AZSBWuUPFcpMC8ExNX2jwBq+ks86M/RWD1i2rXi
+   PshPFs+7/C3jIfeFRw3rZoNFcYq3g3odlYZ1KG+hqpeKor+laxIvBmsvM
+   wZVJiMwwn8h13FDzosaLUtSWlHD1QIT6WYgVSo7bQgFo43+vgc5v7BOEZ
+   4=;
+X-IronPort-AV: E=Sophos;i="5.96,249,1665446400"; 
+   d="scan'208";a="279704532"
+Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-pdx-2c-m6i4x-94edd59b.us-west-2.amazon.com) ([10.43.8.2])
+  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2022 13:43:00 +0000
+Received: from EX13D50EUB003.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
+	by email-inbound-relay-pdx-2c-m6i4x-94edd59b.us-west-2.amazon.com (Postfix) with ESMTPS id 0138541B19;
+	Fri, 16 Dec 2022 13:42:58 +0000 (UTC)
+Received: from EX19D028EUB002.ant.amazon.com (10.252.61.43) by
+ EX13D50EUB003.ant.amazon.com (10.43.166.146) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.42; Fri, 16 Dec 2022 13:42:57 +0000
+Received: from dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com
+ (10.43.161.114) by EX19D028EUB002.ant.amazon.com (10.252.61.43) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.20; Fri, 16 Dec
+ 2022 13:42:54 +0000
+From: Pratyush Yadav <ptyadav@amazon.de>
+To: <stable@vger.kernel.org>
+CC: Pratyush Yadav <ptyadav@amazon.de>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, <patches@lists.linux.dev>, Linux Trace Kernel
+	<linux-trace-kernel@vger.kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Primiano Tucci
+	<primiano@google.com>, "Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4] tracing/ring-buffer: Only do full wait when cpu != RING_BUFFER_ALL_CPUS
+Date: Fri, 16 Dec 2022 14:42:41 +0100
+Message-ID: <20221216134241.81381-1-ptyadav@amazon.de>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221215172908.162858817@linuxfoundation.org>
+X-Originating-IP: [10.43.161.114]
+X-ClientProxiedBy: EX13D36UWB001.ant.amazon.com (10.43.161.84) To
+ EX19D028EUB002.ant.amazon.com (10.252.61.43)
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-Hi Greg,
+full_hit() directly uses cpu as an array index. Since
+RING_BUFFER_ALL_CPUS == -1, calling full_hit() with cpu ==
+RING_BUFFER_ALL_CPUS will cause an invalid memory access.
 
-On Thu, Dec 15, 2022 at 07:10:44PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.14 release.
-> There are 16 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
-> Anything received after that time might be too late.
+The upstream commit 42fb0a1e84ff ("tracing/ring-buffer: Have polling
+block on watermark") already does this. This was missed when backporting
+to v5.4.y.
 
-Build test (gcc version 12.2.1 20221127):
-mips: 52 configs -> no failure
-arm: 100 configs -> no failure
-arm64: 3 configs -> no failure
-x86_64: 4 configs -> no failure
-alpha allmodconfig -> no failure
-csky allmodconfig -> no failure
-powerpc allmodconfig -> no failure
-riscv allmodconfig -> no failure
-s390 allmodconfig -> no failure
-xtensa allmodconfig -> no failure
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
-arm64: Booted on rpi4b (4GB model). No regression. [2]
-mips: Booted on ci20 board. No regression. [3]
+Fixes: e65ac2bdda54 ("tracing/ring-buffer: Have polling block on watermark")
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+---
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2364
-[2]. https://openqa.qa.codethink.co.uk/tests/2368
-[3]. https://openqa.qa.codethink.co.uk/tests/2367
+I am not familiar with this code. This was just pointed out by our
+static analysis tool and I wrote a quick patch fixing this. Only
+compile-tested.
 
-Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+ kernel/trace/ring_buffer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
--- 
-Regards
-Sudip
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 176d858903bd..11e8189dd8ae 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -727,6 +727,7 @@ __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
+
+ 	if (cpu == RING_BUFFER_ALL_CPUS) {
+ 		work = &buffer->irq_work;
++		full = 0;
+ 	} else {
+ 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 			return -EINVAL;
+--
+2.38.1
+
+
+
+
+Amazon Development Center Germany GmbH
+Krausenstr. 38
+10117 Berlin
+Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
+Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
+Sitz: Berlin
+Ust-ID: DE 289 237 879
+
+
+
