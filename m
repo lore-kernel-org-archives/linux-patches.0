@@ -1,100 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677D20E3
-	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 14:15:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44912C433EF;
-	Fri, 16 Dec 2022 14:15:35 +0000 (UTC)
-Date: Fri, 16 Dec 2022 09:15:33 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Pratyush Yadav <ptyadav@amazon.de>
-Cc: <stable@vger.kernel.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, <patches@lists.linux.dev>, Linux Trace Kernel
- <linux-trace-kernel@vger.kernel.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Primiano Tucci <primiano@google.com>
-Subject: Re: [PATCH 5.4] tracing/ring-buffer: Only do full wait when cpu !=
- RING_BUFFER_ALL_CPUS
-Message-ID: <20221216091533.6a74d5c5@gandalf.local.home>
-In-Reply-To: <20221216134241.81381-1-ptyadav@amazon.de>
-References: <20221216134241.81381-1-ptyadav@amazon.de>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBA3362
+	for <patches@lists.linux.dev>; Fri, 16 Dec 2022 16:32:36 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 86A1A3454D;
+	Fri, 16 Dec 2022 16:32:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1671208349; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ifpYR2PdESJAbvJefyXjW1EWj/1z2L0zImGtUVLVTog=;
+	b=G0OuXHi/vYNbH57ZVsfKkJHhPgNpbk73CrPzwAWNhyKC3Xh8oDQOLuRGpTKYCaTgy2aXzB
+	k0KaxX3xKjrzsD+IFm28RtsBbuoo+JfPz565cOawN8pNgSC13NF9g2u/aUaZ1t/RcOUdug
+	Qo9E/fq7nu67Auoe/CaI7a2LO2TRDg8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1671208349;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ifpYR2PdESJAbvJefyXjW1EWj/1z2L0zImGtUVLVTog=;
+	b=yah1WAubrE2ujAH04CMoJ6yYkHNQn4D1DQrpz87GR8v/vJCOlcD2/p8mCcKOkvRmP0v02E
+	soZWIZ2/b5FHFHAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 580D0138F0;
+	Fri, 16 Dec 2022 16:32:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id /03PFJ2dnGOaKQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 16 Dec 2022 16:32:29 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>,
+	stable@vger.kernel.org,
+	"Kirill A . Shutemov" <kirill@shutemov.name>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@kernel.org>
+Subject: [PATCH for v6.1 regression] mm, mremap: fix mremap() expanding vma with addr inside vma
+Date: Fri, 16 Dec 2022 17:32:27 +0100
+Message-Id: <20221216163227.24648-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, 16 Dec 2022 14:42:41 +0100
-Pratyush Yadav <ptyadav@amazon.de> wrote:
+Since 6.1 we have noticed random rpm install failures that were tracked
+to mremap() returning -ENOMEM and to commit ca3d76b0aa80 ("mm: add
+merging after mremap resize").
 
-> full_hit() directly uses cpu as an array index. Since
-> RING_BUFFER_ALL_CPUS == -1, calling full_hit() with cpu ==
-> RING_BUFFER_ALL_CPUS will cause an invalid memory access.
-> 
-> The upstream commit 42fb0a1e84ff ("tracing/ring-buffer: Have polling
-> block on watermark") already does this. This was missed when backporting
-> to v5.4.y.
-> 
-> This bug was discovered and resolved using Coverity Static Analysis
-> Security Testing (SAST) by Synopsys, Inc.
+The problem occurs when mremap() expands a VMA in place, but using an
+starting address that's not vma->vm_start, but somewhere in the middle.
+The extension_pgoff calculation introduced by the commit is wrong in
+that case, so vma_merge() fails due to pgoffs not being compatible.
+Fix the calculation.
 
-Nice.
+By the way it seems that the situations, where rpm now expands a vma
+from the middle, were made possible also due to that commit, thanks to
+the improved vma merging. Yet it should work just fine, except for the
+buggy calculation.
 
-> 
-> Fixes: e65ac2bdda54 ("tracing/ring-buffer: Have polling block on watermark")
-> Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-> ---
-> 
-> I am not familiar with this code. This was just pointed out by our
-> static analysis tool and I wrote a quick patch fixing this. Only
-> compile-tested.
-> 
->  kernel/trace/ring_buffer.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-> index 176d858903bd..11e8189dd8ae 100644
-> --- a/kernel/trace/ring_buffer.c
-> +++ b/kernel/trace/ring_buffer.c
-> @@ -727,6 +727,7 @@ __poll_t ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
-> 
->  	if (cpu == RING_BUFFER_ALL_CPUS) {
->  		work = &buffer->irq_work;
-> +		full = 0;
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1206359
+Fixes: ca3d76b0aa80 ("mm: add merging after mremap resize")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jakub Matěna <matenajakub@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: "Kirill A . Shutemov" <kirill@shutemov.name>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@kernel.org>
+---
+Hi, this fixes a regression in 6.1 so please process ASAP so that stable
+6.1.y can get the fix.
 
-Good catch. This was indeed missed in the backport. The backported patch
-even added the comment:
+ mm/mremap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-
-Greg, please take this patch.
-
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-
-Thanks,
-
--- Steve
-
->  	} else {
->  		if (!cpumask_test_cpu(cpu, buffer->cpumask))
->  			return -EINVAL;
-> --
-> 2.38.1
-> 
-> 
-> 
-> 
-> Amazon Development Center Germany GmbH
-> Krausenstr. 38
-> 10117 Berlin
-> Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-> Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
-> Sitz: Berlin
-> Ust-ID: DE 289 237 879
-> 
-> 
+diff --git a/mm/mremap.c b/mm/mremap.c
+index e465ffe279bb..fe587c5d6591 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1016,7 +1016,8 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
+ 			long pages = (new_len - old_len) >> PAGE_SHIFT;
+ 			unsigned long extension_start = addr + old_len;
+ 			unsigned long extension_end = addr + new_len;
+-			pgoff_t extension_pgoff = vma->vm_pgoff + (old_len >> PAGE_SHIFT);
++			pgoff_t extension_pgoff = vma->vm_pgoff +
++				((extension_start - vma->vm_start) >> PAGE_SHIFT);
+ 
+ 			if (vma->vm_flags & VM_ACCOUNT) {
+ 				if (security_vm_enough_memory_mm(mm, pages)) {
+-- 
+2.38.1
 
