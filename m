@@ -1,90 +1,374 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DBD818
-	for <patches@lists.linux.dev>; Sun, 18 Dec 2022 07:09:02 +0000 (UTC)
-Received: from kwepemm600020.china.huawei.com (unknown [172.30.72.57])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NZYjw6jjxzqT6P;
-	Sun, 18 Dec 2022 15:04:36 +0800 (CST)
-Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
- (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Sun, 18 Dec
- 2022 15:08:57 +0800
-Message-ID: <7659fdbb-4d30-a7bb-8c93-8b4863337502@huawei.com>
-Date: Sun, 18 Dec 2022 15:08:55 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913FE7E
+	for <patches@lists.linux.dev>; Sun, 18 Dec 2022 10:16:55 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id n65-20020a17090a2cc700b0021bc5ef7a14so6425005pjd.0
+        for <patches@lists.linux.dev>; Sun, 18 Dec 2022 02:16:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UUgPO3nIrHEP2yKYtSdTjCZNa8Szw2mXIBYp1TViRY0=;
+        b=gr4uPC6P3Kp/1W77+yXzfHqNuah60VbnNSWQhxJOqaS2tBqpgkw6D98p0/IH8e2JwF
+         2/lg1mgY/iSijAeIpz1ZGmEon3S72xRQc219KRRn+mvGEhrolq06AWt60pz3wuOXzliz
+         wUYvN3r0VFr2bu/Uo9YfF8gKliEAs7ZyS2N1tcPH6WwThiUsbzcwPIILQL02/1meXqth
+         fqvBfefmGJQg0wToLgV9bCE1DynTP7B1eptYC0jgzh0m9Tc//kdNhUBzRXzotHux/3YI
+         nOshza6knwurT2rAx2I1A7K5lho9lgsYAmt92vR9ZM0bcZVhXfjFWmFSS8L+iQx49Jex
+         Ofyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UUgPO3nIrHEP2yKYtSdTjCZNa8Szw2mXIBYp1TViRY0=;
+        b=BbYv/ks9D9L9lpWzkNf4Hsb/8hicR59kPRnRHxN4PdIH9812XyOUJ54E8UN3b51M5v
+         G/iZILPEe1JYDSQr0cbvAzNz4DtUJ+6nwDeAUTek8ReD0UtyQHz0h2XmA416Y9G2QvRv
+         IzZOrRq9zQZ4soEKkTFZWVOREFiAwv76JCPCzkcpiGy0y5T5lro2s3KKl2q4Bl+E0y0l
+         vfPZv6kCJu4To/Pfk5kaW9DCAK+HBjZv6eYMwXMrOtJPn0AgVvhAJavVk+Y+ssgilBrP
+         HN+FQuxtE7V1Bz21yiDZQhagk2Qy4+4CYgBjAtHZycqnq7QWM/FDzre9klEE/EaOyo1a
+         Rh2w==
+X-Gm-Message-State: ANoB5plhsnx54N48cPDtcTIcUE+tCofT/VNmZgu4/tXPOEXfbse6Ti4w
+	ejnuIHsa/BBiDtptOar9iSI=
+X-Google-Smtp-Source: AA0mqf4bQqMwjgLI2Wnk/8XxYmlXqSxjrYIiwpr2kIf8e+F0E91p/2ue8awNKYZUURu81C8tnqFV1g==
+X-Received: by 2002:a05:6a20:d90a:b0:a3:587b:56ac with SMTP id jd10-20020a056a20d90a00b000a3587b56acmr47505749pzb.52.1671358614861;
+        Sun, 18 Dec 2022 02:16:54 -0800 (PST)
+Received: from hyeyoo ([114.29.91.56])
+        by smtp.gmail.com with ESMTPSA id oa9-20020a17090b1bc900b0020a81cf4a9asm7404281pjb.14.2022.12.18.02.16.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Dec 2022 02:16:52 -0800 (PST)
+Date: Sun, 18 Dec 2022 19:16:46 +0900
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 10/12] mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
+Message-ID: <Y57ojm02Zi+CLdq/@hyeyoo>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-11-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 5.4 0/9] 5.4.228-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>
-References: <20221215172905.468656378@linuxfoundation.org>
-From: zhouzhixiu <zhouzhixiu@huawei.com>
-In-Reply-To: <20221215172905.468656378@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.178.94]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemm600020.china.huawei.com (7.193.23.147)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221121171202.22080-11-vbabka@suse.cz>
 
+On Mon, Nov 21, 2022 at 06:12:00PM +0100, Vlastimil Babka wrote:
+> SLUB gets most of its scalability by percpu slabs. However for
+> CONFIG_SLUB_TINY the goal is minimal memory overhead, not scalability.
+> Thus, #ifdef out the whole kmem_cache_cpu percpu structure and
+> associated code. Additionally to the slab page savings, this reduces
+> percpu allocator usage, and code size.
+> 
+> This change builds on recent commit c7323a5ad078 ("mm/slub: restrict
+> sysfs validation to debug caches and make it safe"), as caches with
+> enabled debugging also avoid percpu slabs and all allocations and
+> freeing ends up working with the partial list. With a bit more
+> refactoring by the preceding patches, use the same code paths with
+> CONFIG_SLUB_TINY.
+> 
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  include/linux/slub_def.h |   4 ++
+>  mm/slub.c                | 102 +++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 103 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
+> index c186f25c8148..79df64eb054e 100644
+> --- a/include/linux/slub_def.h
+> +++ b/include/linux/slub_def.h
+> @@ -41,6 +41,7 @@ enum stat_item {
+>  	CPU_PARTIAL_DRAIN,	/* Drain cpu partial to node partial */
+>  	NR_SLUB_STAT_ITEMS };
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  /*
+>   * When changing the layout, make sure freelist and tid are still compatible
+>   * with this_cpu_cmpxchg_double() alignment requirements.
+> @@ -57,6 +58,7 @@ struct kmem_cache_cpu {
+>  	unsigned stat[NR_SLUB_STAT_ITEMS];
+>  #endif
+>  };
+> +#endif /* CONFIG_SLUB_TINY */
+>  
+>  #ifdef CONFIG_SLUB_CPU_PARTIAL
+>  #define slub_percpu_partial(c)		((c)->partial)
+> @@ -88,7 +90,9 @@ struct kmem_cache_order_objects {
+>   * Slab cache management.
+>   */
+>  struct kmem_cache {
+> +#ifndef CONFIG_SLUB_TINY
+>  	struct kmem_cache_cpu __percpu *cpu_slab;
+> +#endif
+>  	/* Used for retrieving partial slabs, etc. */
+>  	slab_flags_t flags;
+>  	unsigned long min_partial;
+> diff --git a/mm/slub.c b/mm/slub.c
+> index 5677db3f6d15..7f1cd702c3b4 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -337,10 +337,12 @@ static inline void stat(const struct kmem_cache *s, enum stat_item si)
+>   */
+>  static nodemask_t slab_nodes;
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  /*
+>   * Workqueue used for flush_cpu_slab().
+>   */
+>  static struct workqueue_struct *flushwq;
+> +#endif
+>  
+>  /********************************************************************
+>   * 			Core slab cache functions
+> @@ -386,10 +388,12 @@ static inline void *get_freepointer(struct kmem_cache *s, void *object)
+>  	return freelist_dereference(s, object + s->offset);
+>  }
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  static void prefetch_freepointer(const struct kmem_cache *s, void *object)
+>  {
+>  	prefetchw(object + s->offset);
+>  }
+> +#endif
+>  
+>  /*
+>   * When running under KMSAN, get_freepointer_safe() may return an uninitialized
+> @@ -1681,11 +1685,13 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
+>  static inline void dec_slabs_node(struct kmem_cache *s, int node,
+>  							int objects) {}
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
+>  			       void **freelist, void *nextfree)
+>  {
+>  	return false;
+>  }
+> +#endif
+>  #endif /* CONFIG_SLUB_DEBUG */
+>  
+>  /*
+> @@ -2219,7 +2225,7 @@ static void *get_partial_node(struct kmem_cache *s, struct kmem_cache_node *n,
+>  		if (!pfmemalloc_match(slab, pc->flags))
+>  			continue;
+>  
+> -		if (kmem_cache_debug(s)) {
+> +		if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
+>  			object = alloc_single_from_partial(s, n, slab,
+>  							pc->orig_size);
+>  			if (object)
+> @@ -2334,6 +2340,8 @@ static void *get_partial(struct kmem_cache *s, int node, struct partial_context
+>  	return get_any_partial(s, pc);
+>  }
+>  
+> +#ifndef CONFIG_SLUB_TINY
+> +
+>  #ifdef CONFIG_PREEMPTION
+>  /*
+>   * Calculate the next globally unique transaction for disambiguation
+> @@ -2347,7 +2355,7 @@ static void *get_partial(struct kmem_cache *s, int node, struct partial_context
+>   * different cpus.
+>   */
+>  #define TID_STEP 1
+> -#endif
+> +#endif /* CONFIG_PREEMPTION */
+>  
+>  static inline unsigned long next_tid(unsigned long tid)
+>  {
+> @@ -2808,6 +2816,13 @@ static int slub_cpu_dead(unsigned int cpu)
+>  	return 0;
+>  }
+>  
+> +#else /* CONFIG_SLUB_TINY */
+> +static inline void flush_all_cpus_locked(struct kmem_cache *s) { }
+> +static inline void flush_all(struct kmem_cache *s) { }
+> +static inline void __flush_cpu_slab(struct kmem_cache *s, int cpu) { }
+> +static inline int slub_cpu_dead(unsigned int cpu) { return 0; }
+> +#endif /* CONFIG_SLUB_TINY */
+> +
+>  /*
+>   * Check if the objects in a per cpu structure fit numa
+>   * locality expectations.
+> @@ -2955,6 +2970,7 @@ static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags)
+>  	return true;
+>  }
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  /*
+>   * Check the slab->freelist and either transfer the freelist to the
+>   * per cpu freelist or deactivate the slab.
+> @@ -3320,6 +3336,33 @@ static __always_inline void *__slab_alloc_node(struct kmem_cache *s,
+>  
+>  	return object;
+>  }
+> +#else /* CONFIG_SLUB_TINY */
+> +static void *__slab_alloc_node(struct kmem_cache *s,
+> +		gfp_t gfpflags, int node, unsigned long addr, size_t orig_size)
+> +{
+> +	struct partial_context pc;
+> +	struct slab *slab;
+> +	void *object;
+> +
+> +	pc.flags = gfpflags;
+> +	pc.slab = &slab;
+> +	pc.orig_size = orig_size;
+> +	object = get_partial(s, node, &pc);
+> +
+> +	if (object)
+> +		return object;
+> +
+> +	slab = new_slab(s, gfpflags, node);
+> +	if (unlikely(!slab)) {
+> +		slab_out_of_memory(s, gfpflags, node);
+> +		return NULL;
+> +	}
+> +
+> +	object = alloc_single_from_new_slab(s, slab, orig_size);
+> +
+> +	return object;
+> +}
+> +#endif /* CONFIG_SLUB_TINY */
+>  
+>  /*
+>   * If the object has been wiped upon free, make sure it's fully initialized by
+> @@ -3503,7 +3546,7 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
+>  	if (kfence_free(head))
+>  		return;
+>  
+> -	if (kmem_cache_debug(s)) {
+> +	if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
+>  		free_to_partial_list(s, slab, head, tail, cnt, addr);
+>  		return;
+>  	}
+> @@ -3604,6 +3647,7 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
+>  	discard_slab(s, slab);
+>  }
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  /*
+>   * Fastpath with forced inlining to produce a kfree and kmem_cache_free that
+>   * can perform fastpath freeing without additional function calls.
+> @@ -3678,6 +3722,16 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
+>  	}
+>  	stat(s, FREE_FASTPATH);
+>  }
+> +#else /* CONFIG_SLUB_TINY */
+> +static void do_slab_free(struct kmem_cache *s,
+> +				struct slab *slab, void *head, void *tail,
+> +				int cnt, unsigned long addr)
+> +{
+> +	void *tail_obj = tail ? : head;
+> +
+> +	__slab_free(s, slab, head, tail_obj, cnt, addr);
+> +}
+> +#endif /* CONFIG_SLUB_TINY */
+>  
+>  static __always_inline void slab_free(struct kmem_cache *s, struct slab *slab,
+>  				      void *head, void *tail, void **p, int cnt,
+> @@ -3812,6 +3866,7 @@ void kmem_cache_free_bulk(struct kmem_cache *s, size_t size, void **p)
+>  }
+>  EXPORT_SYMBOL(kmem_cache_free_bulk);
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  static inline int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
+>  			size_t size, void **p, struct obj_cgroup *objcg)
+>  {
+> @@ -3880,6 +3935,36 @@ static inline int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
+>  	return 0;
+>  
+>  }
+> +#else /* CONFIG_SLUB_TINY */
+> +static int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
+> +			size_t size, void **p, struct obj_cgroup *objcg)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < size; i++) {
+> +		void *object = kfence_alloc(s, s->object_size, flags);
+> +
+> +		if (unlikely(object)) {
+> +			p[i] = object;
+> +			continue;
+> +		}
+> +
+> +		p[i] = __slab_alloc_node(s, flags, NUMA_NO_NODE,
+> +					 _RET_IP_, s->object_size);
+> +		if (unlikely(!p[i]))
+> +			goto error;
+> +
+> +		maybe_wipe_obj_freeptr(s, p[i]);
+> +	}
+> +
+> +	return i;
+> +
+> +error:
+> +	slab_post_alloc_hook(s, objcg, flags, i, p, false);
+> +	kmem_cache_free_bulk(s, i, p);
+> +	return 0;
+> +}
+> +#endif /* CONFIG_SLUB_TINY */
+>  
+>  /* Note that interrupts must be enabled when calling this function. */
+>  int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+> @@ -4059,6 +4144,7 @@ init_kmem_cache_node(struct kmem_cache_node *n)
+>  #endif
+>  }
+>  
+> +#ifndef CONFIG_SLUB_TINY
+>  static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+>  {
+>  	BUILD_BUG_ON(PERCPU_DYNAMIC_EARLY_SIZE <
+> @@ -4078,6 +4164,12 @@ static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+>  
+>  	return 1;
+>  }
+> +#else
+> +static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+> +{
+> +	return 1;
+> +}
+> +#endif /* CONFIG_SLUB_TINY */
+>  
+>  static struct kmem_cache *kmem_cache_node;
+>  
+> @@ -4140,7 +4232,9 @@ static void free_kmem_cache_nodes(struct kmem_cache *s)
+>  void __kmem_cache_release(struct kmem_cache *s)
+>  {
+>  	cache_random_seq_destroy(s);
+> +#ifndef CONFIG_SLUB_TINY
+>  	free_percpu(s->cpu_slab);
+> +#endif
+>  	free_kmem_cache_nodes(s);
+>  }
+>  
+> @@ -4917,8 +5011,10 @@ void __init kmem_cache_init(void)
+>  
+>  void __init kmem_cache_init_late(void)
+>  {
+> +#ifndef CONFIG_SLUB_TINY
+>  	flushwq = alloc_workqueue("slub_flushwq", WQ_MEM_RECLAIM, 0);
+>  	WARN_ON(!flushwq);
+> +#endif
+>  }
+>  
+>  struct kmem_cache *
+> -- 
+> 2.38.1
+> 
 
-On 2022/12/16 2:10, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.228 release.
-> There are 9 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 17 Dec 2022 17:28:57 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.228-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Tested on arm64 and x86 for 5.4.228-rc1,
+For the record:
 
-Kernel 
-repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-5.4.y
-Version: 5.4.228-rc1
-Commit: e538d4b64ed30c6b7248a14b4e8641db4db16736
-Compiler: gcc version 7.3.0 (GCC)
+Looks good to me.
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
-arm64:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-
-x86:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-Tested-by: Hulk Robot <hulkrobot@huawei.com>
-
+-- 
+Thanks,
+Hyeonggon
