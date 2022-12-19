@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D306FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8B9C433EF;
-	Mon, 19 Dec 2022 19:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C767D6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134ADC433D2;
+	Mon, 19 Dec 2022 19:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477860;
-	bh=3shrtc50Pe5iisggjD661bKL+IjgC5Oa+a+lkfrztOQ=;
+	s=korg; t=1671477863;
+	bh=9tOCVl8i7a60XfWezwjp7WkRn/fZwyxdSoraZlYDY/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvBvqixS+QtOJchmGrpguJLTy59iTu6jvEmFDIBt9O/s7/ZSzPrwDzSpOm5aZZ43M
-	 1CElIMsB5bIDK/0coUQPNeSmTKGKrH0qqEP87TqfeIIj2VG1WUKr/wwSiXsGvbwSHz
-	 ERTOQb8vnIqd5sHlz6c8kJOMxcVGienX1v9938is=
+	b=jTYvsecmA/KRO2gyZ5x+hK3MBgVllAMEFIHVI0l5FSNxitnsf063PNV5Wz9/VLEey
+	 kfn7dy8SO+EF8tQz7oOi4/OBgvFQQr/hA9ZlUFSRagTQhCuuhhQCfad6nGz6e3nRR4
+	 zvz2hvl4s70y9kTvMZ+sSeLeyeYQ4LeUJ2SgEBgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ferry Toth <ftoth@exalondelft.nl>
-Subject: [PATCH 6.1 25/25] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
-Date: Mon, 19 Dec 2022 20:23:04 +0100
-Message-Id: <20221219182944.457372692@linuxfoundation.org>
+	Duke Xin <duke_xinanwen@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 13/25] USB: serial: option: add Quectel EM05-G modem
+Date: Mon, 19 Dec 2022 20:22:52 +0100
+Message-Id: <20221219182943.951801310@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
 References: <20221219182943.395169070@linuxfoundation.org>
@@ -34,43 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Duke Xin <duke_xinanwen@163.com>
 
-commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac upstream.
+commit f0052d7a1edb3d8921b4e154aa8c46c4845b3714 upstream.
 
-Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
-if extcon is present") Dual Role support on Intel Merrifield platform
-broke due to rearranging the call to dwc3_get_extcon().
+The EM05-G modem has 2 USB configurations that are configurable via the AT
+command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate with
+the following interfaces, respectively:
 
-It appears to be caused by ulpi_read_id() on the first test write failing
-with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
-DT when the test write fails and returns 0 in that case, even if DT does not
-provide the phy. As a result usb probe completes without phy.
+"RMNET" : AT + DIAG + NMEA + Modem + QMI
+"MBIM"  : MBIM + AT + DIAG + NMEA + Modem
 
-Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
-fails. The user should then handle it appropriately. A follow up patch
-will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
+The detailed description of the USB configuration for each mode as follows:
 
-Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
+RMNET Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 21 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0311 Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+MBIM Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0311 Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Duke Xin <duke_xinanwen@163.com>
 Cc: stable@vger.kernel.org
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -207,7 +207,7 @@ static int ulpi_read_id(struct ulpi *ulp
- 	/* Test the interface */
- 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
- 	if (ret < 0)
--		goto err;
-+		return ret;
- 
- 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
- 	if (ret < 0)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -255,6 +255,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EP06			0x0306
+ #define QUECTEL_PRODUCT_EM05G			0x030a
+ #define QUECTEL_PRODUCT_EM060K			0x030b
++#define QUECTEL_PRODUCT_EM05G_SG		0x0311
+ #define QUECTEL_PRODUCT_EM12			0x0512
+ #define QUECTEL_PRODUCT_RM500Q			0x0800
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+@@ -1160,6 +1161,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EP06, 0xff, 0, 0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_SG, 0xff),
++	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x40) },
 
 
