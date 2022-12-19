@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9EF6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012B5C433D2;
-	Mon, 19 Dec 2022 19:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE65C6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12914C433D2;
+	Mon, 19 Dec 2022 19:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478120;
-	bh=ge5RUukD9XT75lLSEX4INDIWUIQdr5aLW7fIKhgF9ss=;
+	s=korg; t=1671478123;
+	bh=xtoi+cL5e9Hl7BG0Y7UVhfjTsNzzC+GciBM14Jm1VT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zW1wC2XSt9NDeUg0yCkZDF28AnGZLbeksqnfpbA2rsGMYLH8/1eUPB02IZuTA+VlU
-	 CrO6a7ftVK7wE/h6b7BNCjE4ETISA5kwj8UVtV2v7XUx4TBdW+goXLgWGnpdcchpum
-	 TAD5f+SWAKSpFSoD4sRKXI5M/bn0Dd4XAvk/1E1E=
+	b=qHEZ1HLkL5Wn8TA4mtElZ3nEewQx/CJZabwI4p3u3pW2vqItST0/MdKZ8ykqVPlgR
+	 F/0DFi4vY6DFqFpy5+QI3UnvqdmjLNll64RIKvWV6FaX0reiXeIdxR9lD18ZSMPPss
+	 gKhLcq7CPoI8W/aQLdsezZDi0kgWS78CHBtTbU9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 18/18] net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
-Date: Mon, 19 Dec 2022 20:25:11 +0100
-Message-Id: <20221219182941.249398663@linuxfoundation.org>
+	"Ji-Ze Hong (Peter Hong)" <hpeter@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 09/18] USB: serial: f81534: fix division by zero on line-speed change
+Date: Mon, 19 Dec 2022 20:25:02 +0100
+Message-Id: <20221219182940.981930907@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.701087296@linuxfoundation.org>
 References: <20221219182940.701087296@linuxfoundation.org>
@@ -36,50 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 31d929de5a112ee1b977a89c57de74710894bbbf ]
+commit 188c9c2e0c7f4ae864113f80c40bafb394062271 upstream.
 
-When the name_assign_type attribute was introduced (commit
-685343fc3ba6, "net: add name_assign_type netdev attribute"), the
-loopback device was explicitly mentioned as one which would make use
-of NET_NAME_PREDICTABLE:
+The driver leaves the line speed unchanged in case a requested speed is
+not supported. Make sure to handle the case where the current speed is
+B0 (hangup) without dividing by zero when determining the clock source.
 
-    The name_assign_type attribute gives hints where the interface name of a
-    given net-device comes from. These values are currently defined:
-...
-      NET_NAME_PREDICTABLE:
-        The ifname has been assigned by the kernel in a predictable way
-        that is guaranteed to avoid reuse and always be the same for a
-        given device. Examples include statically created devices like
-        the loopback device [...]
-
-Switch to that so that reading /sys/class/net/lo/name_assign_type
-produces something sensible instead of returning -EINVAL.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3aacac02f385 ("USB: serial: f81534: add high baud rate support")
+Cc: stable@vger.kernel.org      # 4.16
+Cc: Ji-Ze Hong (Peter Hong) <hpeter@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/loopback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/f81534.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
-index a1c77cc00416..498e5c8013ef 100644
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -208,7 +208,7 @@ static __net_init int loopback_net_init(struct net *net)
- 	int err;
+--- a/drivers/usb/serial/f81534.c
++++ b/drivers/usb/serial/f81534.c
+@@ -538,9 +538,6 @@ static int f81534_submit_writer(struct u
  
- 	err = -ENOMEM;
--	dev = alloc_netdev(0, "lo", NET_NAME_UNKNOWN, loopback_setup);
-+	dev = alloc_netdev(0, "lo", NET_NAME_PREDICTABLE, loopback_setup);
- 	if (!dev)
- 		goto out;
+ static u32 f81534_calc_baud_divisor(u32 baudrate, u32 clockrate)
+ {
+-	if (!baudrate)
+-		return 0;
+-
+ 	/* Round to nearest divisor */
+ 	return DIV_ROUND_CLOSEST(clockrate, baudrate);
+ }
+@@ -570,9 +567,14 @@ static int f81534_set_port_config(struct
+ 	u32 baud_list[] = {baudrate, old_baudrate, F81534_DEFAULT_BAUD_RATE};
  
--- 
-2.35.1
-
+ 	for (i = 0; i < ARRAY_SIZE(baud_list); ++i) {
+-		idx = f81534_find_clk(baud_list[i]);
++		baudrate = baud_list[i];
++		if (baudrate == 0) {
++			tty_encode_baud_rate(tty, 0, 0);
++			return 0;
++		}
++
++		idx = f81534_find_clk(baudrate);
+ 		if (idx >= 0) {
+-			baudrate = baud_list[i];
+ 			tty_encode_baud_rate(tty, baudrate, baudrate);
+ 			break;
+ 		}
 
 
