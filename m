@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379456FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F3FC433EF;
-	Mon, 19 Dec 2022 19:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348506FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE9C433EF;
+	Mon, 19 Dec 2022 19:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477988;
-	bh=m9R7HzOlcyUwmlTPlzZteTx97LlJagKzKH9uLyQ8PMY=;
+	s=korg; t=1671477991;
+	bh=JqVEA2Ejf2NRJJVe+CozMdgpuaLQeYnYwSoFfhfztXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSp4D9oV4XeuClbwvPlbyf8agdVzGo62jrr2ppDPFW6lvvgw9fC9RAujqdH+l2cNa
-	 N9K2HCcgGOP+PVZKMP+gbI+P9Xx55gaaMWIUKWbyFZpYnM5P9s9st2JWIheOPKhNuu
-	 IYuT2DHfSidMfTtS2cMLWzrluVkmOpofJMO6vR1E=
+	b=0CiC3S1MFqC9KCwmxGuMNXGvjPQap1Sd7C3uAm9W/fFH2uklDkC3iknHR6GoABqfc
+	 qx2WJYmXLAbzcC5l64Cdo4mlLU0qXo0MXPDRD2e91BcQSIm1ZvVP7T2k2UMS3fmBUX
+	 k+bdeyaNdaH3Bb6bme83oVta62AxSMBq9gW1CtiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Thomson <git@johnthomson.fastmail.com.au>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Subject: [PATCH 6.0 01/28] PCI: mt7621: Add sentinel to quirks table
-Date: Mon, 19 Dec 2022 20:22:48 +0100
-Message-Id: <20221219182944.245075142@linuxfoundation.org>
+	Todd Brandt <todd.e.brandt@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.0 22/28] usb: typec: ucsi: Resume in separate work
+Date: Mon, 19 Dec 2022 20:23:09 +0100
+Message-Id: <20221219182945.149297846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,43 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Thomson <git@johnthomson.fastmail.com.au>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 19098934f910b4d47cb30251dd39ffa57bef9523 upstream.
+commit e0dced9c7d4763fd97c86a13902d135f03cc42eb upstream.
 
-Current driver is missing a sentinel in the struct soc_device_attribute
-array, which causes an oops when assessed by the
-soc_device_match(mt7621_pcie_quirks_match) call.
+It can take more than one second to check each connector
+when the system is resumed. So if you have, say, eight
+connectors, it may take eight seconds for ucsi_resume() to
+finish. That's a bit too much.
 
-This was only exposed once the CONFIG_SOC_MT7621 mt7621 soc_dev_attr
-was fixed to register the SOC as a device, in:
+This will modify ucsi_resume() so that it schedules a work
+where the interface is actually resumed instead of checking
+the connectors directly. The connections will also be
+checked in separate tasks which are queued for each connector
+separately.
 
-commit 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
-
-Fix it by adding the required sentinel.
-
-Link: https://lore.kernel.org/lkml/26ebbed1-0fe9-4af9-8466-65f841d0b382@app.fastmail.com
-Link: https://lore.kernel.org/r/20221205204645.301301-1-git@johnthomson.fastmail.com.au
-Fixes: b483b4e4d3f6 ("staging: mt7621-pci: add quirks for 'E2' revision using 'soc_device_attribute'")
-Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216706
+Fixes: 99f6d4361113 ("usb: typec: ucsi: Check the connection on resume")
+Cc: <stable@vger.kernel.org>
+Reported-by: Todd Brandt <todd.e.brandt@intel.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221123093021.25981-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-mt7621.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |   17 +++++++++++++----
+ drivers/usb/typec/ucsi/ucsi.h |    1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/controller/pcie-mt7621.c
-+++ b/drivers/pci/controller/pcie-mt7621.c
-@@ -471,7 +471,8 @@ static int mt7621_pcie_register_host(str
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1270,8 +1270,9 @@ err:
+ 	return ret;
  }
  
- static const struct soc_device_attribute mt7621_pcie_quirks_match[] = {
--	{ .soc_id = "mt7621", .revision = "E2" }
-+	{ .soc_id = "mt7621", .revision = "E2" },
-+	{ /* sentinel */ }
- };
+-int ucsi_resume(struct ucsi *ucsi)
++static void ucsi_resume_work(struct work_struct *work)
+ {
++	struct ucsi *ucsi = container_of(work, struct ucsi, resume_work);
+ 	struct ucsi_connector *con;
+ 	u64 command;
+ 	int ret;
+@@ -1279,15 +1280,21 @@ int ucsi_resume(struct ucsi *ucsi)
+ 	/* Restore UCSI notification enable mask after system resume */
+ 	command = UCSI_SET_NOTIFICATION_ENABLE | ucsi->ntfy;
+ 	ret = ucsi_send_command(ucsi, command, NULL, 0);
+-	if (ret < 0)
+-		return ret;
++	if (ret < 0) {
++		dev_err(ucsi->dev, "failed to re-enable notifications (%d)\n", ret);
++		return;
++	}
  
- static int mt7621_pcie_probe(struct platform_device *pdev)
+ 	for (con = ucsi->connector; con->port; con++) {
+ 		mutex_lock(&con->lock);
+-		ucsi_check_connection(con);
++		ucsi_partner_task(con, ucsi_check_connection, 1, 0);
+ 		mutex_unlock(&con->lock);
+ 	}
++}
+ 
++int ucsi_resume(struct ucsi *ucsi)
++{
++	queue_work(system_long_wq, &ucsi->resume_work);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(ucsi_resume);
+@@ -1347,6 +1354,7 @@ struct ucsi *ucsi_create(struct device *
+ 	if (!ucsi)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	INIT_WORK(&ucsi->resume_work, ucsi_resume_work);
+ 	INIT_DELAYED_WORK(&ucsi->work, ucsi_init_work);
+ 	mutex_init(&ucsi->ppm_lock);
+ 	ucsi->dev = dev;
+@@ -1401,6 +1409,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 
+ 	/* Make sure that we are not in the middle of driver initialization */
+ 	cancel_delayed_work_sync(&ucsi->work);
++	cancel_work_sync(&ucsi->resume_work);
+ 
+ 	/* Disable notifications */
+ 	ucsi->ops->async_write(ucsi, UCSI_CONTROL, &cmd, sizeof(cmd));
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -287,6 +287,7 @@ struct ucsi {
+ 	struct ucsi_capability cap;
+ 	struct ucsi_connector *connector;
+ 
++	struct work_struct resume_work;
+ 	struct delayed_work work;
+ 	int work_count;
+ #define UCSI_ROLE_SWITCH_RETRY_PER_HZ	10
 
 
