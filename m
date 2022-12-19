@@ -1,131 +1,200 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A942A6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA48C433EF;
-	Mon, 19 Dec 2022 19:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB516FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2C8C433EF;
+	Mon, 19 Dec 2022 19:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477887;
-	bh=CnJvXTf4P2itAINfYRtvFMKFQAY6c4YbLe9xG5KR0uA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VW/VSoOGWitgU3T1tjjb/2aDhH1hWmZIYObThy8eam0ixaz2O8HJ3jMo3COk3IXVo
-	 ksMb5z5cdRJ8NG2yZn+VNaI74PUF8wLgAdko3/A506mlE/yn7c2fDAomXNtgTty+yG
-	 S4BL0BJ7I16fPbG3w/YxYwsLR/rstde7YD0ylDMU=
+	s=korg; t=1671477890;
+	bh=VEG+uXiflBKhgqBO/xFeCoQH0Zpafl5hadus6dwG1Fc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=E4/jb++WWMo/EyVUzGh1yKmxCtM+4dFlkE0bumKwIHclJKx8UWGHVWcTJU42xOXwv
+	 jq+tNByZHcVc6ghPYlWMpo5Ob6EuzRrCFmem7V+i4zDoVee/1A3lAaajgtlyR9nLnh
+	 WOAFMyJwsdUCUyf/CKmiAaEP4rnnUPI43Ai6sGF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 11/25] udf: Fix extending file within last block
-Date: Mon, 19 Dec 2022 20:22:50 +0100
-Message-Id: <20221219182943.874778437@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.0 00/28] 6.0.15-rc1 review
+Date: Mon, 19 Dec 2022 20:22:47 +0100
+Message-Id: <20221219182944.179389009@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
-References: <20221219182943.395169070@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.15-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.0.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.0.15-rc1
+X-KernelTest-Deadline: 2022-12-21T18:29+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+This is the start of the stable review cycle for the 6.0.15 release.
+There are 28 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 1f3868f06855c97a4954c99b36f3fc9eb8f60326 upstream.
+Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
+Anything received after that time might be too late.
 
-When extending file within last block it can happen that the extent is
-already rounded to the blocksize and thus contains the offset we want to
-grow up to. In such case we would mistakenly expand the last extent and
-make it one block longer than it should be, exposing unallocated block
-in a file and causing data corruption. Fix the problem by properly
-detecting this case and bailing out.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.15-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+and the diffstat can be found below.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/udf/inode.c |   32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+thanks,
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -590,13 +590,17 @@ out:
- static void udf_do_extend_final_block(struct inode *inode,
- 				      struct extent_position *last_pos,
- 				      struct kernel_long_ad *last_ext,
--				      uint32_t final_block_len)
-+				      uint32_t new_elen)
- {
--	struct super_block *sb = inode->i_sb;
- 	uint32_t added_bytes;
- 
--	added_bytes = final_block_len -
--		      (last_ext->extLength & (sb->s_blocksize - 1));
-+	/*
-+	 * Extent already large enough? It may be already rounded up to block
-+	 * size...
-+	 */
-+	if (new_elen <= (last_ext->extLength & UDF_EXTENT_LENGTH_MASK))
-+		return;
-+	added_bytes = (last_ext->extLength & UDF_EXTENT_LENGTH_MASK) - new_elen;
- 	last_ext->extLength += added_bytes;
- 	UDF_I(inode)->i_lenExtents += added_bytes;
- 
-@@ -613,12 +617,12 @@ static int udf_extend_file(struct inode
- 	int8_t etype;
- 	struct super_block *sb = inode->i_sb;
- 	sector_t first_block = newsize >> sb->s_blocksize_bits, offset;
--	unsigned long partial_final_block;
-+	loff_t new_elen;
- 	int adsize;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
- 	struct kernel_long_ad extent;
- 	int err = 0;
--	int within_final_block;
-+	bool within_last_ext;
- 
- 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
- 		adsize = sizeof(struct short_ad);
-@@ -634,9 +638,9 @@ static int udf_extend_file(struct inode
- 	udf_discard_prealloc(inode);
- 
- 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
--	within_final_block = (etype != -1);
-+	within_last_ext = (etype != -1);
- 	/* We don't expect extents past EOF... */
--	WARN_ON_ONCE(etype != -1 &&
-+	WARN_ON_ONCE(within_last_ext &&
- 		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
- 
- 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
-@@ -653,19 +657,17 @@ static int udf_extend_file(struct inode
- 		extent.extLength |= etype << 30;
- 	}
- 
--	partial_final_block = newsize & (sb->s_blocksize - 1);
-+	new_elen = ((loff_t)offset << inode->i_blkbits) |
-+					(newsize & (sb->s_blocksize - 1));
- 
- 	/* File has extent covering the new size (could happen when extending
- 	 * inside a block)?
- 	 */
--	if (within_final_block) {
-+	if (within_last_ext) {
- 		/* Extending file within the last file block */
--		udf_do_extend_final_block(inode, &epos, &extent,
--					  partial_final_block);
-+		udf_do_extend_final_block(inode, &epos, &extent, new_elen);
- 	} else {
--		loff_t add = ((loff_t)offset << sb->s_blocksize_bits) |
--			     partial_final_block;
--		err = udf_do_extend_file(inode, &epos, &extent, add);
-+		err = udf_do_extend_file(inode, &epos, &extent, new_elen);
- 	}
- 
- 	if (err < 0)
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.0.15-rc1
+
+Rasmus Villemoes <linux@rasmusvillemoes.dk>
+    net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
+
+Tiezhu Yang <yangtiezhu@loongson.cn>
+    selftests: net: Use "grep -E" instead of "egrep"
+
+Sungwoo Kim <iam@sung-woo.kim>
+    Bluetooth: L2CAP: Fix u8 overflow
+
+Ferry Toth <ftoth@exalondelft.nl>
+    usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+
+Nikolaus Voss <nikolaus.voss@haag-streit.com>
+    KEYS: encrypted: fix key instantiation with user-provided data
+
+Shruthi Sanil <shruthi.sanil@intel.com>
+    usb: dwc3: pci: Update PCIe device ID for USB3 controller on CPU sub-system for Raptor Lake
+
+Heikki Krogerus <heikki.krogerus@linux.intel.com>
+    usb: typec: ucsi: Resume in separate work
+
+Tony Nguyen <anthony.l.nguyen@intel.com>
+    igb: Initialize mailbox message for VF reset
+
+Reka Norman <rekanorman@chromium.org>
+    xhci: Apply XHCI_RESET_TO_DEFAULT quirk to ADL-N
+
+Andy Chi <andy.chi@canonical.com>
+    ALSA: hda/realtek: fix mute/micmute LEDs for a HP ProBook
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: f81534: fix division by zero on line-speed change
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: f81232: fix division by zero on line-speed change
+
+Bruno Thomsen <bruno.thomsen@gmail.com>
+    USB: serial: cp210x: add Kamstrup RF sniffer PIDs
+
+Duke Xin <duke_xinanwen@163.com>
+    USB: serial: option: add Quectel EM05-G modem
+
+Szymon Heidrich <szymon.heidrich@gmail.com>
+    usb: gadget: uvc: Prevent buffer overflow in setup handler
+
+Jan Kara <jack@suse.cz>
+    udf: Fix extending file within last block
+
+Jan Kara <jack@suse.cz>
+    udf: Do not bother looking for prealloc extents if i_lenExtents matches i_size
+
+Jan Kara <jack@suse.cz>
+    udf: Fix preallocation discarding at indirect extent boundary
+
+Jan Kara <jack@suse.cz>
+    udf: Discard preallocation before extending file with a hole
+
+Jiri Olsa <jolsa@kernel.org>
+    selftests/bpf: Add kprobe_multi kmod attach api tests
+
+Jiri Olsa <jolsa@kernel.org>
+    selftests/bpf: Add kprobe_multi check to module attach test
+
+Jiri Olsa <jolsa@kernel.org>
+    selftests/bpf: Add bpf_testmod_fentry_* functions
+
+Jiri Olsa <jolsa@kernel.org>
+    selftests/bpf: Add load_kallsyms_refresh function
+
+Jiri Olsa <jolsa@kernel.org>
+    bpf: Take module reference on kprobe_multi link
+
+Jiri Olsa <jolsa@kernel.org>
+    bpf: Rename __bpf_kprobe_multi_cookie_cmp to bpf_kprobe_multi_addrs_cmp
+
+Jiri Olsa <jolsa@kernel.org>
+    ftrace: Add support to resolve module symbols in ftrace_lookup_symbols
+
+Jiri Olsa <jolsa@kernel.org>
+    kallsyms: Make module_kallsyms_on_each_symbol generally available
+
+John Thomson <git@johnthomson.fastmail.com.au>
+    PCI: mt7621: Add sentinel to quirks table
+
+
+-------------
+
+Diffstat:
+
+ Documentation/security/keys/trusted-encrypted.rst  |  3 +-
+ Makefile                                           |  4 +-
+ drivers/net/ethernet/intel/igb/igb_main.c          |  2 +-
+ drivers/net/loopback.c                             |  2 +-
+ drivers/pci/controller/pcie-mt7621.c               |  3 +-
+ drivers/usb/common/ulpi.c                          |  2 +-
+ drivers/usb/dwc3/dwc3-pci.c                        |  2 +-
+ drivers/usb/gadget/function/f_uvc.c                |  5 +-
+ drivers/usb/host/xhci-pci.c                        |  4 +-
+ drivers/usb/serial/cp210x.c                        |  2 +
+ drivers/usb/serial/f81232.c                        | 12 +--
+ drivers/usb/serial/f81534.c                        | 12 +--
+ drivers/usb/serial/option.c                        |  3 +
+ drivers/usb/typec/ucsi/ucsi.c                      | 17 +++-
+ drivers/usb/typec/ucsi/ucsi.h                      |  1 +
+ fs/udf/inode.c                                     | 76 ++++++++---------
+ fs/udf/truncate.c                                  | 48 ++++-------
+ include/linux/module.h                             |  9 ++
+ kernel/module/kallsyms.c                           |  2 -
+ kernel/trace/bpf_trace.c                           | 98 +++++++++++++++++++++-
+ kernel/trace/ftrace.c                              | 16 ++--
+ net/bluetooth/l2cap_core.c                         |  3 +-
+ security/keys/encrypted-keys/encrypted.c           |  6 +-
+ sound/pci/hda/patch_realtek.c                      |  2 +
+ .../selftests/bpf/bpf_testmod/bpf_testmod.c        | 24 ++++++
+ .../bpf/prog_tests/kprobe_multi_testmod_test.c     | 89 ++++++++++++++++++++
+ .../selftests/bpf/prog_tests/module_attach.c       |  7 ++
+ tools/testing/selftests/bpf/progs/kprobe_multi.c   | 50 +++++++++++
+ .../selftests/bpf/progs/test_module_attach.c       |  6 ++
+ tools/testing/selftests/bpf/trace_helpers.c        | 20 +++--
+ tools/testing/selftests/bpf/trace_helpers.h        |  2 +
+ tools/testing/selftests/net/toeplitz.sh            |  2 +-
+ 32 files changed, 412 insertions(+), 122 deletions(-)
 
 
