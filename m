@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077946FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DA3C433EF;
-	Mon, 19 Dec 2022 19:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF7D6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C3FC433EF;
+	Mon, 19 Dec 2022 19:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478086;
-	bh=G0EJ61GzTux+H9glg4QmpfhsB6ctKiswmTxE6m1BVDo=;
+	s=korg; t=1671478090;
+	bh=8iSXyV+qmWP4GFG8JrPB7xuJXiOdE5TjS9+Jl/nrPSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fa2bQKUUA5tZbComu9cPsAjSX3u9Z+usvpNKn/8jg5IkbvVM36EzuLkMN2/McJyAN
-	 Scele0W3tnjYO7rStTt+3ESlNsZxJmhnb9qnjGf+jj1d0zkObWMJKiUFPRrdp70O5m
-	 Fupslo3UEK88pDgmC6UxnVQN+hTh/KHk1EcO4DOQ=
+	b=uiV7l/gfyZ4NIfCGY/uUC9rm1VaoFBgNCg4hWfjTSCRrvh+VFTkFmcqdNaA8b4Gi7
+	 O60vir1BCnaHpShejieEplMBvUBeVgUKvCVVp52GymsB78FthWZOBEQ7VllrJvJ7mo
+	 PTPp1E4PqVY9OCLkHvDfAPwHbEp9rWGfeqnSiKSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruno Thomsen <bruno.thomsen@gmail.com>,
+	"Ji-Ze Hong (Peter Hong)" <hpeter@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 07/18] USB: serial: cp210x: add Kamstrup RF sniffer PIDs
-Date: Mon, 19 Dec 2022 20:25:00 +0100
-Message-Id: <20221219182940.924245260@linuxfoundation.org>
+Subject: [PATCH 5.10 08/18] USB: serial: f81232: fix division by zero on line-speed change
+Date: Mon, 19 Dec 2022 20:25:01 +0100
+Message-Id: <20221219182940.952796836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.701087296@linuxfoundation.org>
 References: <20221219182940.701087296@linuxfoundation.org>
@@ -34,37 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bruno Thomsen <bruno.thomsen@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit e88906b169ebcb8046e8f0ad76edd09ab41cfdfe upstream.
+commit a08ca6ebafe615c9028c53fc4c9e6c9b2b1f2888 upstream.
 
-The RF sniffers are based on cp210x where the RF frontends
-are based on a different USB stack.
+The driver leaves the line speed unchanged in case a requested speed is
+not supported. Make sure to handle the case where the current speed is
+B0 (hangup) without dividing by zero when determining the clock source.
 
-RF sniffers can analyze packets meta data including power level
-and perform packet injection.
-
-Can be used to perform RF frontend self-test when connected to
-a concentrator, ex. arch/arm/boot/dts/imx7d-flex-concentrator.dts
-
-Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Cc: stable@vger.kernel.org
+Fixes: 268ddb5e9b62 ("USB: serial: f81232: add high baud rate support")
+Cc: stable@vger.kernel.org      # 5.2
+Cc: Ji-Ze Hong (Peter Hong) <hpeter@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/f81232.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -199,6 +199,8 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x16DC, 0x0015) }, /* W-IE-NE-R Plein & Baus GmbH CML Control, Monitoring and Data Logger */
- 	{ USB_DEVICE(0x17A8, 0x0001) }, /* Kamstrup Optical Eye/3-wire */
- 	{ USB_DEVICE(0x17A8, 0x0005) }, /* Kamstrup M-Bus Master MultiPort 250D */
-+	{ USB_DEVICE(0x17A8, 0x0011) }, /* Kamstrup 444 MHz RF sniffer */
-+	{ USB_DEVICE(0x17A8, 0x0013) }, /* Kamstrup 870 MHz RF sniffer */
- 	{ USB_DEVICE(0x17A8, 0x0101) }, /* Kamstrup 868 MHz wM-Bus C-Mode Meter Reader (Int Ant) */
- 	{ USB_DEVICE(0x17A8, 0x0102) }, /* Kamstrup 868 MHz wM-Bus C-Mode Meter Reader (Ext Ant) */
- 	{ USB_DEVICE(0x17F4, 0xAAAA) }, /* Wavesense Jazz blood glucose meter */
+--- a/drivers/usb/serial/f81232.c
++++ b/drivers/usb/serial/f81232.c
+@@ -130,9 +130,6 @@ static u8 const clock_table[] = { F81232
+ 
+ static int calc_baud_divisor(speed_t baudrate, speed_t clockrate)
+ {
+-	if (!baudrate)
+-		return 0;
+-
+ 	return DIV_ROUND_CLOSEST(clockrate, baudrate);
+ }
+ 
+@@ -523,9 +520,14 @@ static void f81232_set_baudrate(struct t
+ 	speed_t baud_list[] = { baudrate, old_baudrate, F81232_DEF_BAUDRATE };
+ 
+ 	for (i = 0; i < ARRAY_SIZE(baud_list); ++i) {
+-		idx = f81232_find_clk(baud_list[i]);
++		baudrate = baud_list[i];
++		if (baudrate == 0) {
++			tty_encode_baud_rate(tty, 0, 0);
++			return;
++		}
++
++		idx = f81232_find_clk(baudrate);
+ 		if (idx >= 0) {
+-			baudrate = baud_list[i];
+ 			tty_encode_baud_rate(tty, baudrate, baudrate);
+ 			break;
+ 		}
 
 
