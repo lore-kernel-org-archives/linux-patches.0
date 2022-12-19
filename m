@@ -1,85 +1,152 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836B06FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5CCC433EF;
-	Mon, 19 Dec 2022 19:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8FC6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7531C433EF;
+	Mon, 19 Dec 2022 19:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478062;
-	bh=f/+yAd95iiio2Apg+GwBH2JRY4ZFWoFTDUTP3iRCvok=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQiCOgrtuEcZ2D09NpLI4VkzdZ0Afok6UTQ3DwczakNPNBvjKGs8sFkl34n6xanhS
-	 yEwdLIX6IFRhB80lD3ndzpfvY4uRpnz8uroeGtTqHdYpT8cd+hHqupZbhCC5KHRkBN
-	 kF2OFURXvP6HvTPB8j4cdKZIXP6sh1di7qulk1cI=
+	s=korg; t=1671478065;
+	bh=+l6fYEjZ8zaNn6yJ0BowpGeVO91nrKBeUQXrDwrHFic=;
+	h=From:To:Cc:Subject:Date:From;
+	b=X2LbN7Oq6bHL82yy/wx4Gf9F/89BL5qqi1yv8hBtvzdSSnIOlj4Hf7LltYiDv/RrL
+	 vyjIMB4V+IrCSwOmMqm8hh5s8MJCcMSsK4dUQUkd2wXV6rtQoRESsKrYk8LQD8tNpf
+	 VJtT1b7ErqNXE334LnbmU4VaxDJg8/sNWOzkqmWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ji-Ze Hong (Peter Hong)" <hpeter@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 09/17] USB: serial: f81534: fix division by zero on line-speed change
-Date: Mon, 19 Dec 2022 20:24:55 +0100
-Message-Id: <20221219182941.024067385@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.15 00/17] 5.15.85-rc1 review
+Date: Mon, 19 Dec 2022 20:24:46 +0100
+Message-Id: <20221219182940.739981110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
-References: <20221219182940.739981110@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.85-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.85-rc1
+X-KernelTest-Deadline: 2022-12-21T18:29+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+This is the start of the stable review cycle for the 5.15.85 release.
+There are 17 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 188c9c2e0c7f4ae864113f80c40bafb394062271 upstream.
+Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
+Anything received after that time might be too late.
 
-The driver leaves the line speed unchanged in case a requested speed is
-not supported. Make sure to handle the case where the current speed is
-B0 (hangup) without dividing by zero when determining the clock source.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.85-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-Fixes: 3aacac02f385 ("USB: serial: f81534: add high baud rate support")
-Cc: stable@vger.kernel.org      # 4.16
-Cc: Ji-Ze Hong (Peter Hong) <hpeter@gmail.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/serial/f81534.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+thanks,
 
---- a/drivers/usb/serial/f81534.c
-+++ b/drivers/usb/serial/f81534.c
-@@ -536,9 +536,6 @@ static int f81534_submit_writer(struct u
- 
- static u32 f81534_calc_baud_divisor(u32 baudrate, u32 clockrate)
- {
--	if (!baudrate)
--		return 0;
--
- 	/* Round to nearest divisor */
- 	return DIV_ROUND_CLOSEST(clockrate, baudrate);
- }
-@@ -568,9 +565,14 @@ static int f81534_set_port_config(struct
- 	u32 baud_list[] = {baudrate, old_baudrate, F81534_DEFAULT_BAUD_RATE};
- 
- 	for (i = 0; i < ARRAY_SIZE(baud_list); ++i) {
--		idx = f81534_find_clk(baud_list[i]);
-+		baudrate = baud_list[i];
-+		if (baudrate == 0) {
-+			tty_encode_baud_rate(tty, 0, 0);
-+			return 0;
-+		}
-+
-+		idx = f81534_find_clk(baudrate);
- 		if (idx >= 0) {
--			baudrate = baud_list[i];
- 			tty_encode_baud_rate(tty, baudrate, baudrate);
- 			break;
- 		}
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.85-rc1
+
+Rasmus Villemoes <linux@rasmusvillemoes.dk>
+    net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
+
+Tiezhu Yang <yangtiezhu@loongson.cn>
+    selftests: net: Use "grep -E" instead of "egrep"
+
+Sungwoo Kim <iam@sung-woo.kim>
+    Bluetooth: L2CAP: Fix u8 overflow
+
+José Expósito <jose.exposito89@gmail.com>
+    HID: uclogic: Add HID_QUIRK_HIDINPUT_FORCE quirk
+
+Ferry Toth <ftoth@exalondelft.nl>
+    usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+
+Shruthi Sanil <shruthi.sanil@intel.com>
+    usb: dwc3: pci: Update PCIe device ID for USB3 controller on CPU sub-system for Raptor Lake
+
+Tony Nguyen <anthony.l.nguyen@intel.com>
+    igb: Initialize mailbox message for VF reset
+
+Reka Norman <rekanorman@chromium.org>
+    xhci: Apply XHCI_RESET_TO_DEFAULT quirk to ADL-N
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: f81534: fix division by zero on line-speed change
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: f81232: fix division by zero on line-speed change
+
+Bruno Thomsen <bruno.thomsen@gmail.com>
+    USB: serial: cp210x: add Kamstrup RF sniffer PIDs
+
+Duke Xin <duke_xinanwen@163.com>
+    USB: serial: option: add Quectel EM05-G modem
+
+Szymon Heidrich <szymon.heidrich@gmail.com>
+    usb: gadget: uvc: Prevent buffer overflow in setup handler
+
+Jan Kara <jack@suse.cz>
+    udf: Fix extending file within last block
+
+Jan Kara <jack@suse.cz>
+    udf: Do not bother looking for prealloc extents if i_lenExtents matches i_size
+
+Jan Kara <jack@suse.cz>
+    udf: Fix preallocation discarding at indirect extent boundary
+
+Jan Kara <jack@suse.cz>
+    udf: Discard preallocation before extending file with a hole
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                  |  4 +-
+ drivers/hid/hid-uclogic-core.c            |  1 +
+ drivers/net/ethernet/intel/igb/igb_main.c |  2 +-
+ drivers/net/loopback.c                    |  2 +-
+ drivers/usb/common/ulpi.c                 |  2 +-
+ drivers/usb/dwc3/dwc3-pci.c               |  2 +-
+ drivers/usb/gadget/function/f_uvc.c       |  5 +-
+ drivers/usb/host/xhci-pci.c               |  4 +-
+ drivers/usb/serial/cp210x.c               |  2 +
+ drivers/usb/serial/f81232.c               | 12 +++--
+ drivers/usb/serial/f81534.c               | 12 +++--
+ drivers/usb/serial/option.c               |  3 ++
+ fs/udf/inode.c                            | 76 ++++++++++++++-----------------
+ fs/udf/truncate.c                         | 48 ++++++-------------
+ net/bluetooth/l2cap_core.c                |  3 +-
+ tools/testing/selftests/net/toeplitz.sh   |  2 +-
+ 16 files changed, 84 insertions(+), 96 deletions(-)
 
 
