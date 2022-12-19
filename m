@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A76FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E50C433D2;
-	Mon, 19 Dec 2022 19:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B614F6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3C6C433F0;
+	Mon, 19 Dec 2022 19:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477878;
-	bh=QRfjUgsQLDW5HCX4CeXjYfYlOsNkFBIr6C8mJaHfc48=;
+	s=korg; t=1671477881;
+	bh=EROIqoNGp8qilXmWfqLANzbdi0DpAOqVMO0exYXA7wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4PebCKRHuGEqr701zLMyXCefDr05L3EJTuTiKIguyRou9eWvLWy1uAkIdAO/lhQB
-	 YPzVK+N73SP1SmlAyS564yNRL+vY5E/uffsykxGjFI2EWQ7U12/hy3ojzStlmduv0M
-	 0f9CD7DdQcUdiA3zUGnT1MykNzdc9n9FHGBUsDTs=
+	b=Wv0IOltScDXkFiurCYpAcScWVtEIOxYBYGPHJJVCC/aox/OcHupvJgeY/TN4Gd7YB
+	 VKvfle5eOBBRkYzYhOpxIGPmiOBwqzmU2dkJdd7qw9Jz4SjwdSW3DdI6dS6d9S5Edp
+	 Eyr12tLfxDk1j3kLn4ZvmALna3/icptq7XwcArtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reka Norman <rekanorman@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 18/25] xhci: Apply XHCI_RESET_TO_DEFAULT quirk to ADL-N
-Date: Mon, 19 Dec 2022 20:22:57 +0100
-Message-Id: <20221219182944.179224131@linuxfoundation.org>
+	Michael Straube <straube.linux@gmail.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Philipp Hortmann <philipp.g.hortmann@gmail.com>
+Subject: [PATCH 6.1 19/25] staging: r8188eu: fix led register settings
+Date: Mon, 19 Dec 2022 20:22:58 +0100
+Message-Id: <20221219182944.226551878@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
 References: <20221219182943.395169070@linuxfoundation.org>
@@ -34,48 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reka Norman <rekanorman@chromium.org>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit fed70b61ef2c0aed54456db3d485b215f6cc3209 upstream.
+commit 12c6223fc1804fd9295dc50d358294539b4a4184 upstream.
 
-ADL-N systems have the same issue as ADL-P, where a large boot firmware
-delay is seen if USB ports are left in U3 at shutdown. So apply the
-XHCI_RESET_TO_DEFAULT quirk to ADL-N as well.
+Using an InterTech DMG-02 dongle, the led remains on when the system goes
+into standby mode. After wakeup, it's no longer possible to control the
+led.
 
-This patch depends on commit 34cd2db408d5 ("xhci: Add quirk to reset
-host back to default state at shutdown").
+It turned out that the register settings to enable or disable the led were
+not correct. They worked for some dongles like the Edimax V2 but not for
+others like the InterTech DMG-02.
 
-The issue it fixes is a ~20s boot time delay when booting from S5. It
-affects ADL-N devices, and ADL-N support was added starting from v5.16.
+This patch fixes the register settings. Bit 3 in the led_cfg2 register
+controls the led status, bit 5 must always be set to be able to control
+the led, bit 6 has no influence on the led. Setting the mac_pinmux_cfg
+register is not necessary.
+
+These settings were tested with Edimax V2 and InterTech DMG-02.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Reka Norman <rekanorman@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130091944.2171610-3-mathias.nyman@linux.intel.com
+Fixes: 8cd574e6af54 ("staging: r8188eu: introduce new hal dir for RTL8188eu driver")
+Suggested-by: Michael Straube <straube.linux@gmail.com>
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Tested-by: Michael Straube <straube.linux@gmail.com> # InterTech DMG-02,
+Tested-by: Philipp Hortmann <philipp.g.hortmann@gmail.com> # Edimax N150
+Link: https://lore.kernel.org/r/20221015151115.232095-2-martin@kaiser.cx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/r8188eu/core/rtw_led.c |   25 ++-----------------------
+ 1 file changed, 2 insertions(+), 23 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -59,6 +59,7 @@
- #define PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI		0x9a13
- #define PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI		0x1138
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
-+#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
+--- a/drivers/staging/r8188eu/core/rtw_led.c
++++ b/drivers/staging/r8188eu/core/rtw_led.c
+@@ -32,40 +32,19 @@ static void ResetLedStatus(struct led_pr
  
- #define PCI_DEVICE_ID_AMD_RENOIR_XHCI			0x1639
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
-@@ -246,7 +247,8 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_MISSING_CAS;
+ static void SwLedOn(struct adapter *padapter, struct led_priv *pLed)
+ {
+-	u8	LedCfg;
+-	int res;
+-
+ 	if (padapter->bDriverStopped)
+ 		return;
  
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
--	    pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI)
-+	    (pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI))
- 		xhci->quirks |= XHCI_RESET_TO_DEFAULT;
+-	res = rtw_read8(padapter, REG_LEDCFG2, &LedCfg);
+-	if (res)
+-		return;
+-
+-	rtw_write8(padapter, REG_LEDCFG2, (LedCfg & 0xf0) | BIT(5) | BIT(6)); /*  SW control led0 on. */
++	rtw_write8(padapter, REG_LEDCFG2, BIT(5)); /*  SW control led0 on. */
+ 	pLed->bLedOn = true;
+ }
  
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
+ static void SwLedOff(struct adapter *padapter, struct led_priv *pLed)
+ {
+-	u8	LedCfg;
+-	int res;
+-
+ 	if (padapter->bDriverStopped)
+ 		goto exit;
+ 
+-	res = rtw_read8(padapter, REG_LEDCFG2, &LedCfg);/* 0x4E */
+-	if (res)
+-		goto exit;
+-
+-	LedCfg &= 0x90; /*  Set to software control. */
+-	rtw_write8(padapter, REG_LEDCFG2, (LedCfg | BIT(3)));
+-	res = rtw_read8(padapter, REG_MAC_PINMUX_CFG, &LedCfg);
+-	if (res)
+-		goto exit;
+-
+-	LedCfg &= 0xFE;
+-	rtw_write8(padapter, REG_MAC_PINMUX_CFG, LedCfg);
++	rtw_write8(padapter, REG_LEDCFG2, BIT(5) | BIT(3));
+ exit:
+ 	pLed->bLedOn = false;
+ }
 
 
