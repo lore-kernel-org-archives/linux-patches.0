@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBB56FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAF3C433EF;
-	Mon, 19 Dec 2022 19:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7606F6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB50C433EF;
+	Mon, 19 Dec 2022 19:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478029;
-	bh=NmHYeCaXXFEtSVNq2vYn2o2X3MdTvxoe/2Pv2zKOdrs=;
+	s=korg; t=1671478032;
+	bh=riyEXSCxEjeDrWaRHbbQWSjZro/Z222V/DZB1Lk0WYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VyHQCN2Ud1ZBFKh+iye3U9IlZtGHHs3k2g4W/XFKFB+bAVh/zC8yIqkttD3f80Gpt
-	 53saZPcuZ1O6liWXCw/8i2vdL75+yBl2rxJAbYneDcLhVJbvO9XLa9MSt3RHZ/h8Zq
-	 m9CsVg+Vv4lzvootirV+SDU1yhO87LFnfxPy/3UQ=
+	b=l/GepvrMRyRe0KpBv4bxHKL9zFLKCMqHqEFF++tdr/ThILAyAFfDSEzfzVafgwZWF
+	 5VjzBZTdDk0RMnmUzqNd6ztkPINY4urpg11FEs+B7yAj+RKeVCmpFaH8DgoRofHmZc
+	 OErJSMe1J6qe91vKC5GNBsXLAHeSxg/jRGS5zzh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Torge Matthies <openglfreak@googlemail.com>,
-	Alexander Zhang <alex@alexyzhang.dev>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/17] HID: uclogic: Add HID_QUIRK_HIDINPUT_FORCE quirk
-Date: Mon, 19 Dec 2022 20:25:00 +0100
-Message-Id: <20221219182941.168444560@linuxfoundation.org>
+Subject: [PATCH 5.15 15/17] Bluetooth: L2CAP: Fix u8 overflow
+Date: Mon, 19 Dec 2022 20:25:01 +0100
+Message-Id: <20221219182941.197191924@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 References: <20221219182940.739981110@linuxfoundation.org>
@@ -37,41 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 3405a4beaaa852f3ed2a5eb3b5149932d5c3779b ]
+[ Upstream commit bcd70260ef56e0aee8a4fc6cd214a419900b0765 ]
 
-Commit f7d8e387d9ae ("HID: uclogic: Switch to Digitizer usage for
-styluses") changed the usage used in UCLogic from "Pen" to "Digitizer".
+By keep sending L2CAP_CONF_REQ packets, chan->num_conf_rsp increases
+multiple times and eventually it will wrap around the maximum number
+(i.e., 255).
+This patch prevents this by adding a boundary check with
+L2CAP_MAX_CONF_RSP
 
-However, the IS_INPUT_APPLICATION() macro evaluates to false for
-HID_DG_DIGITIZER causing issues with the XP-Pen Star G640 tablet.
+Btmon log:
+Bluetooth monitor ver 5.64
+= Note: Linux version 6.1.0-rc2 (x86_64)                               0.264594
+= Note: Bluetooth subsystem version 2.22                               0.264636
+@ MGMT Open: btmon (privileged) version 1.22                  {0x0001} 0.272191
+= New Index: 00:00:00:00:00:00 (Primary,Virtual,hci0)          [hci0] 13.877604
+@ RAW Open: 9496 (privileged) version 2.22                   {0x0002} 13.890741
+= Open Index: 00:00:00:00:00:00                                [hci0] 13.900426
+(...)
+> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #32 [hci0] 14.273106
+        invalid packet size (12 != 1033)
+        08 00 01 00 02 01 04 00 01 10 ff ff              ............
+> ACL Data RX: Handle 200 flags 0x00 dlen 1547             #33 [hci0] 14.273561
+        invalid packet size (14 != 1547)
+        0a 00 01 00 04 01 06 00 40 00 00 00 00 00        ........@.....
+> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #34 [hci0] 14.274390
+        invalid packet size (16 != 2061)
+        0c 00 01 00 04 01 08 00 40 00 00 00 00 00 00 04  ........@.......
+> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #35 [hci0] 14.274932
+        invalid packet size (16 != 2061)
+        0c 00 01 00 04 01 08 00 40 00 00 00 07 00 03 00  ........@.......
+= bluetoothd: Bluetooth daemon 5.43                                   14.401828
+> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #36 [hci0] 14.275753
+        invalid packet size (12 != 1033)
+        08 00 01 00 04 01 04 00 40 00 00 00              ........@...
 
-Add the HID_QUIRK_HIDINPUT_FORCE quirk to bypass the
-IS_INPUT_APPLICATION() check.
-
-Reported-by: Torge Matthies <openglfreak@googlemail.com>
-Reported-by: Alexander Zhang <alex@alexyzhang.dev>
-Tested-by: Alexander Zhang <alex@alexyzhang.dev>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
-index d8ab0139e5cd..785d81d61ba4 100644
---- a/drivers/hid/hid-uclogic-core.c
-+++ b/drivers/hid/hid-uclogic-core.c
-@@ -172,6 +172,7 @@ static int uclogic_probe(struct hid_device *hdev,
- 	 * than the pen, so use QUIRK_MULTI_INPUT for all tablets.
- 	 */
- 	hdev->quirks |= HID_QUIRK_MULTI_INPUT;
-+	hdev->quirks |= HID_QUIRK_HIDINPUT_FORCE;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 761efd7da514..e15fcf72a342 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4453,7 +4453,8 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
  
- 	/* Allocate and assign driver data */
- 	drvdata = devm_kzalloc(&hdev->dev, sizeof(*drvdata), GFP_KERNEL);
+ 	chan->ident = cmd->ident;
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_CONF_RSP, len, rsp);
+-	chan->num_conf_rsp++;
++	if (chan->num_conf_rsp < L2CAP_CONF_MAX_CONF_RSP)
++		chan->num_conf_rsp++;
+ 
+ 	/* Reset config buffer. */
+ 	chan->conf_len = 0;
 -- 
 2.35.1
 
