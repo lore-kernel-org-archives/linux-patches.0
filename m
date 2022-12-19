@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BED96FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22093C433EF;
-	Mon, 19 Dec 2022 19:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD206FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6636EC433F0;
+	Mon, 19 Dec 2022 19:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477844;
-	bh=5ZDOjbYUGFtDrhJfNexYvt7IYoYLQn0v7tEJh8v3gi8=;
+	s=korg; t=1671477847;
+	bh=JqVEA2Ejf2NRJJVe+CozMdgpuaLQeYnYwSoFfhfztXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gV00Knv739MWIUYT5nBXAdkRULjc/OLLtsiIhhk4H+Y9ptWIhiC2qW2z3+7uWsQFu
-	 joC/NhDpV+fPjbj/AVJsDnmbBcE2X3UJ3CPQbH8etFrXk7P5jbTF6LJ5gMNKPU/c5F
-	 z2YiFRoXtwKo01vESAWWHF9Hnl0nZ06h9nPEvBWA=
+	b=M4HP9DkjwM/Efa5BrBw3L4RJW8JnehJPWs0o7xmVfzKhgUSUFtClo7qSE5q19TAMQ
+	 x7EhCr6E3pizUg7KLom2ejW3cm6T/PsZ16BomuH9JKL03GaEY+lLfk78RGFPj10Xdc
+	 Nlfqa76D05uIiAdlooqJ8jdSnybV/KuFMly2BI3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Szymon Heidrich <szymon.heidrich@gmail.com>
-Subject: [PATCH 6.1 12/25] usb: gadget: uvc: Prevent buffer overflow in setup handler
-Date: Mon, 19 Dec 2022 20:22:51 +0100
-Message-Id: <20221219182943.912391400@linuxfoundation.org>
+	Todd Brandt <todd.e.brandt@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 21/25] usb: typec: ucsi: Resume in separate work
+Date: Mon, 19 Dec 2022 20:23:00 +0100
+Message-Id: <20221219182944.296955674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
 References: <20221219182943.395169070@linuxfoundation.org>
@@ -36,40 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 4c92670b16727365699fe4b19ed32013bab2c107 upstream.
+commit e0dced9c7d4763fd97c86a13902d135f03cc42eb upstream.
 
-Setup function uvc_function_setup permits control transfer
-requests with up to 64 bytes of payload (UVC_MAX_REQUEST_SIZE),
-data stage handler for OUT transfer uses memcpy to copy req->actual
-bytes to uvc_event->data.data array of size 60. This may result
-in an overflow of 4 bytes.
+It can take more than one second to check each connector
+when the system is resumed. So if you have, say, eight
+connectors, it may take eight seconds for ucsi_resume() to
+finish. That's a bit too much.
 
-Fixes: cdda479f15cd ("USB gadget: video class function driver")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Link: https://lore.kernel.org/r/20221206141301.51305-1-szymon.heidrich@gmail.com
+This will modify ucsi_resume() so that it schedules a work
+where the interface is actually resumed instead of checking
+the connectors directly. The connections will also be
+checked in separate tasks which are queued for each connector
+separately.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216706
+Fixes: 99f6d4361113 ("usb: typec: ucsi: Check the connection on resume")
+Cc: <stable@vger.kernel.org>
+Reported-by: Todd Brandt <todd.e.brandt@intel.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221123093021.25981-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   17 +++++++++++++----
+ drivers/usb/typec/ucsi/ucsi.h |    1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -216,8 +216,9 @@ uvc_function_ep0_complete(struct usb_ep
- 
- 		memset(&v4l2_event, 0, sizeof(v4l2_event));
- 		v4l2_event.type = UVC_EVENT_DATA;
--		uvc_event->data.length = req->actual;
--		memcpy(&uvc_event->data.data, req->buf, req->actual);
-+		uvc_event->data.length = min_t(unsigned int, req->actual,
-+			sizeof(uvc_event->data.data));
-+		memcpy(&uvc_event->data.data, req->buf, uvc_event->data.length);
- 		v4l2_event_queue(&uvc->vdev, &v4l2_event);
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1270,8 +1270,9 @@ err:
+ 	return ret;
  }
+ 
+-int ucsi_resume(struct ucsi *ucsi)
++static void ucsi_resume_work(struct work_struct *work)
+ {
++	struct ucsi *ucsi = container_of(work, struct ucsi, resume_work);
+ 	struct ucsi_connector *con;
+ 	u64 command;
+ 	int ret;
+@@ -1279,15 +1280,21 @@ int ucsi_resume(struct ucsi *ucsi)
+ 	/* Restore UCSI notification enable mask after system resume */
+ 	command = UCSI_SET_NOTIFICATION_ENABLE | ucsi->ntfy;
+ 	ret = ucsi_send_command(ucsi, command, NULL, 0);
+-	if (ret < 0)
+-		return ret;
++	if (ret < 0) {
++		dev_err(ucsi->dev, "failed to re-enable notifications (%d)\n", ret);
++		return;
++	}
+ 
+ 	for (con = ucsi->connector; con->port; con++) {
+ 		mutex_lock(&con->lock);
+-		ucsi_check_connection(con);
++		ucsi_partner_task(con, ucsi_check_connection, 1, 0);
+ 		mutex_unlock(&con->lock);
+ 	}
++}
+ 
++int ucsi_resume(struct ucsi *ucsi)
++{
++	queue_work(system_long_wq, &ucsi->resume_work);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(ucsi_resume);
+@@ -1347,6 +1354,7 @@ struct ucsi *ucsi_create(struct device *
+ 	if (!ucsi)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	INIT_WORK(&ucsi->resume_work, ucsi_resume_work);
+ 	INIT_DELAYED_WORK(&ucsi->work, ucsi_init_work);
+ 	mutex_init(&ucsi->ppm_lock);
+ 	ucsi->dev = dev;
+@@ -1401,6 +1409,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 
+ 	/* Make sure that we are not in the middle of driver initialization */
+ 	cancel_delayed_work_sync(&ucsi->work);
++	cancel_work_sync(&ucsi->resume_work);
+ 
+ 	/* Disable notifications */
+ 	ucsi->ops->async_write(ucsi, UCSI_CONTROL, &cmd, sizeof(cmd));
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -287,6 +287,7 @@ struct ucsi {
+ 	struct ucsi_capability cap;
+ 	struct ucsi_connector *connector;
+ 
++	struct work_struct resume_work;
+ 	struct delayed_work work;
+ 	int work_count;
+ #define UCSI_ROLE_SWITCH_RETRY_PER_HZ	10
 
 
