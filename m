@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867D6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B9CC433EF;
-	Mon, 19 Dec 2022 19:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3EB6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302F1C433F0;
+	Mon, 19 Dec 2022 19:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478105;
-	bh=iJ7rxC4CUAQQBLlxZgaDUUjCB7SyCLIq7baOx8xB0IM=;
+	s=korg; t=1671478108;
+	bh=FNDevMvDQYjJvIM61DJo57BWb/uarRZE4PxJGOZCs6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gb5WtSjdEpW8azbwxPCl0/Yu7CI85UX38IAm1F5afXgrY89RdnIYeCxi0aUqSA8u7
-	 UJeMXFBSkoms2pp3rgiXCyP10VVJWs+1w7SSKCt0nDg6Lrg+bBQ62oluAbqeDfOn/Z
-	 vw05j0nOdk1yMGy7WvmYu/tZZVZ3siYu/xnC2/Zw=
+	b=i24E1AJiyHBIGunGPn2aS8MDlsYsBZgAqrrqZhEjpuaHctdLxcA/YDXOFJ3tqJb0k
+	 ffCBhX/P+Tu17d4w0W9OhOaC/TK3YytZvimcnt4B6sOVHhzi5OaGpps35xYDez2HjI
+	 tWBx8BfkWu2il92tKd+WNm62uNK+qnTxtGa+nTf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/18] HID: ite: Add support for Acer S1002 keyboard-dock
-Date: Mon, 19 Dec 2022 20:25:06 +0100
-Message-Id: <20221219182941.100788902@linuxfoundation.org>
+Subject: [PATCH 5.10 14/18] HID: ite: Enable QUIRK_TOUCHPAD_ON_OFF_REPORT on Acer Aspire Switch 10E
+Date: Mon, 19 Dec 2022 20:25:07 +0100
+Message-Id: <20221219182941.130887915@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.701087296@linuxfoundation.org>
 References: <20221219182940.701087296@linuxfoundation.org>
@@ -37,71 +37,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit c961facb5b19634eee5bcdd91fc5bf3f1c545bc5 ]
+[ Upstream commit b7c20f3815985570ac71c39b1a3e68c201109578 ]
 
-Make the hid-ite driver handle the Acer S1002 keyboard-dock, this
-leads to 2 improvements:
+The Acer Aspire Switch 10E (SW3-016)'s keyboard-dock uses the same USB-ids
+as the Acer One S1003 keyboard-dock. Yet they are not entirely the same:
 
-1. The non working wifi-toggle hotkey now works.
-2. Toggling the touchpad on of with the hotkey will no show OSD
-notifications in e.g. GNOME3. The actual toggling is handled inside
-the keyboard, this adds support for notifying evdev listeners about this.
+1. The S1003 keyboard-dock has the same report descriptors as the
+S1002 keyboard-dock (which has different USB-ids)
+
+2. The Acer Aspire Switch 10E's keyboard-dock has different
+report descriptors from the S1002/S1003 keyboard docks and it
+sends 0x00880078 / 0x00880079 usage events when the touchpad is
+toggled on/off (which is handled internally).
+
+This means that all Acer kbd-docks handled by the hid-ite.c drivers
+report their touchpad being toggled on/off through these custom
+usage-codes with the exception of the S1003 dock, which likely is
+a bug of that dock.
+
+Add a QUIRK_TOUCHPAD_ON_OFF_REPORT quirk for the Aspire Switch 10E / S1003
+usb-id so that the touchpad toggling will get reported to userspace on
+the Aspire Switch 10E.
+
+Since the Aspire Switch 10E's kbd-dock has different report-descriptors,
+this also requires adding support for fixing those to ite_report_fixup().
+
+Setting the quirk will also cause ite_report_fixup() to hit the
+S1002/S1003 descriptors path on the S1003. Since the S1003 kbd-dock
+never generates any input-reports for the fixed up part of the
+descriptors this does not matter; and if there are versions out there
+which do actually send input-reports for the touchpad-toggle then the
+fixup should actually help to make things work.
+
+This was tested on both an Acer Aspire Switch 10E and on an Acer One S1003.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Stable-dep-of: 9ad6645a9dce ("HID: ite: Enable QUIRK_TOUCHPAD_ON_OFF_REPORT on Acer Aspire Switch V 10")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h |  1 +
- drivers/hid/hid-ite.c | 13 ++++++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ite.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 70a693f8f034..7fc6b204c399 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1150,6 +1150,7 @@
- #define USB_DEVICE_ID_SYNAPTICS_DELL_K12A	0x2819
- #define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_012	0x2968
- #define USB_DEVICE_ID_SYNAPTICS_TP_V103	0x5710
-+#define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1002	0x73f4
- #define USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003	0x73f5
- #define USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5	0x81a7
- 
 diff --git a/drivers/hid/hid-ite.c b/drivers/hid/hid-ite.c
-index 742c052b0110..22bfbebceaf4 100644
+index 22bfbebceaf4..14fc068affad 100644
 --- a/drivers/hid/hid-ite.c
 +++ b/drivers/hid/hid-ite.c
-@@ -18,10 +18,16 @@ static __u8 *ite_report_fixup(struct hid_device *hdev, __u8 *rdesc, unsigned int
- 	unsigned long quirks = (unsigned long)hid_get_drvdata(hdev);
- 
- 	if (quirks & QUIRK_TOUCHPAD_ON_OFF_REPORT) {
-+		/* For Acer Aspire Switch 10 SW5-012 keyboard-dock */
- 		if (*rsize == 188 && rdesc[162] == 0x81 && rdesc[163] == 0x02) {
--			hid_info(hdev, "Fixing up ITE keyboard report descriptor\n");
-+			hid_info(hdev, "Fixing up Acer Sw5-012 ITE keyboard report descriptor\n");
+@@ -23,11 +23,16 @@ static __u8 *ite_report_fixup(struct hid_device *hdev, __u8 *rdesc, unsigned int
+ 			hid_info(hdev, "Fixing up Acer Sw5-012 ITE keyboard report descriptor\n");
  			rdesc[163] = HID_MAIN_ITEM_RELATIVE;
  		}
-+		/* For Acer One S1002 keyboard-dock */
-+		if (*rsize == 188 && rdesc[185] == 0x81 && rdesc[186] == 0x02) {
-+			hid_info(hdev, "Fixing up Acer S1002 ITE keyboard report descriptor\n");
-+			rdesc[186] = HID_MAIN_ITEM_RELATIVE;
+-		/* For Acer One S1002 keyboard-dock */
++		/* For Acer One S1002/S1003 keyboard-dock */
+ 		if (*rsize == 188 && rdesc[185] == 0x81 && rdesc[186] == 0x02) {
+-			hid_info(hdev, "Fixing up Acer S1002 ITE keyboard report descriptor\n");
++			hid_info(hdev, "Fixing up Acer S1002/S1003 ITE keyboard report descriptor\n");
+ 			rdesc[186] = HID_MAIN_ITEM_RELATIVE;
+ 		}
++		/* For Acer Aspire Switch 10E (SW3-016) keyboard-dock */
++		if (*rsize == 210 && rdesc[184] == 0x81 && rdesc[185] == 0x02) {
++			hid_info(hdev, "Fixing up Acer Aspire Switch 10E (SW3-016) ITE keyboard report descriptor\n");
++			rdesc[185] = HID_MAIN_ITEM_RELATIVE;
 +		}
  	}
  
  	return rdesc;
-@@ -101,6 +107,11 @@ static const struct hid_device_id ite_devices[] = {
- 		     USB_DEVICE_ID_SYNAPTICS_ACER_SWITCH5_012),
- 	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
+@@ -114,7 +119,8 @@ static const struct hid_device_id ite_devices[] = {
  	/* ITE8910 USB kbd ctlr, with Synaptics touchpad connected to it. */
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_SYNAPTICS,
-+		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1002),
-+	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
-+	/* ITE8910 USB kbd ctlr, with Synaptics touchpad connected to it. */
  	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
  		     USB_VENDOR_ID_SYNAPTICS,
- 		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003) },
+-		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003) },
++		     USB_DEVICE_ID_SYNAPTICS_ACER_ONE_S1003),
++	  .driver_data = QUIRK_TOUCHPAD_ON_OFF_REPORT },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(hid, ite_devices);
 -- 
 2.35.1
 
