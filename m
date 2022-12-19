@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4876FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08D9C433D2;
-	Mon, 19 Dec 2022 19:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBD46FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B884BC433D2;
+	Mon, 19 Dec 2022 19:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477976;
-	bh=Hbq50VbUFEVVqKD0Q5oDKqIw7LVPtOiJhJHjvE8rWLg=;
+	s=korg; t=1671477979;
+	bh=8T9j6cAym9Qs16iNaMwAKVIfrJMCsYtd2B0fQ/NRddg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mURVp8HcCte54BeFcDJrtUi1Gt69kynQgdZ/gNVQ0d9UQT4TWMQdtZD01hupw+IzJ
-	 IB01Iuv7EdpsHwctQHkN1paJLn+eDlq2ekLFfpsSCbQjmSujV4McOz/dlRcdZCiddJ
-	 iGoKWRs+dkIR2TXV+smoonD2XkOEIH+KT/7IJI9Q=
+	b=J+ZbSwsRgMJGAibH5HU4qtVM+GYvzjwwBbfOKHTDwsZaCavuV4Lp/daOjiXabobpC
+	 j56UfIKB53n5fAzfXMpW3IujiRffZ12OVsmYif7UrbCquK1JTBbdDHDFNuCb/DE9GS
+	 KF/24ozq/U1mvhH8BhK87/zpQXK7eI0vDKcDTK+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Song Liu <song@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.0 07/28] selftests/bpf: Add bpf_testmod_fentry_* functions
-Date: Mon, 19 Dec 2022 20:22:54 +0100
-Message-Id: <20221219182944.492514965@linuxfoundation.org>
+Subject: [PATCH 6.0 08/28] selftests/bpf: Add kprobe_multi check to module attach test
+Date: Mon, 19 Dec 2022 20:22:55 +0100
+Message-Id: <20221219182944.530586355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -37,63 +37,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-commit fee356ede980b6c2c8db612e18b25738356d6744 upstream.
+commit e697d8dcebd2f557fa5e5ed57aaf0a9992ce9df8 upstream.
 
-Adding 3 bpf_testmod_fentry_* functions to have a way to test
-kprobe multi link on kernel module. They follow bpf_fentry_test*
-functions prototypes/code.
-
-Adding equivalent functions to all bpf_fentry_test* does not
-seems necessary at the moment, could be added later.
+Adding test that makes sure the kernel module won't be removed
+if there's kprobe multi link defined on top of it.
 
 Acked-by: Song Liu <song@kernel.org>
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20221025134148.3300700-7-jolsa@kernel.org
+Link: https://lore.kernel.org/r/20221025134148.3300700-8-jolsa@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c |   24 ++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/module_attach.c |    7 +++++++
+ tools/testing/selftests/bpf/progs/test_module_attach.c |    6 ++++++
+ 2 files changed, 13 insertions(+)
 
---- a/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
-+++ b/tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
-@@ -88,6 +88,23 @@ __weak noinline struct file *bpf_testmod
- 	}
+--- a/tools/testing/selftests/bpf/prog_tests/module_attach.c
++++ b/tools/testing/selftests/bpf/prog_tests/module_attach.c
+@@ -103,6 +103,13 @@ void test_module_attach(void)
+ 	ASSERT_ERR(delete_module("bpf_testmod", 0), "delete_module");
+ 	bpf_link__destroy(link);
+ 
++	link = bpf_program__attach(skel->progs.kprobe_multi);
++	if (!ASSERT_OK_PTR(link, "attach_kprobe_multi"))
++		goto cleanup;
++
++	ASSERT_ERR(delete_module("bpf_testmod", 0), "delete_module");
++	bpf_link__destroy(link);
++
+ cleanup:
+ 	test_module_attach__destroy(skel);
+ }
+--- a/tools/testing/selftests/bpf/progs/test_module_attach.c
++++ b/tools/testing/selftests/bpf/progs/test_module_attach.c
+@@ -110,4 +110,10 @@ int BPF_PROG(handle_fmod_ret,
+ 	return 0; /* don't override the exit code */
  }
  
-+noinline int bpf_testmod_fentry_test1(int a)
++SEC("kprobe.multi/bpf_testmod_test_read")
++int BPF_PROG(kprobe_multi)
 +{
-+	return a + 1;
++	return 0;
 +}
 +
-+noinline int bpf_testmod_fentry_test2(int a, u64 b)
-+{
-+	return a + b;
-+}
-+
-+noinline int bpf_testmod_fentry_test3(char a, int b, u64 c)
-+{
-+	return a + b + c;
-+}
-+
-+int bpf_testmod_fentry_ok;
-+
- noinline ssize_t
- bpf_testmod_test_read(struct file *file, struct kobject *kobj,
- 		      struct bin_attribute *bin_attr,
-@@ -119,6 +136,13 @@ bpf_testmod_test_read(struct file *file,
- 			return snprintf(buf, len, "%d\n", writable.val);
- 	}
- 
-+	if (bpf_testmod_fentry_test1(1) != 2 ||
-+	    bpf_testmod_fentry_test2(2, 3) != 5 ||
-+	    bpf_testmod_fentry_test3(4, 5, 6) != 15)
-+		goto out;
-+
-+	bpf_testmod_fentry_ok = 1;
-+out:
- 	return -EIO; /* always fail */
- }
- EXPORT_SYMBOL(bpf_testmod_test_read);
+ char _license[] SEC("license") = "GPL";
 
 
