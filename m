@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC566FB9
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099C8C433F0;
-	Mon, 19 Dec 2022 19:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9537C6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E0CC433D2;
+	Mon, 19 Dec 2022 19:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478023;
-	bh=FCjAbUB2xBROcnAtEJ5ueCBisRVIvHa6pMZ74ngFdbY=;
+	s=korg; t=1671478026;
+	bh=UyPyFbKl9kgsXB+u9+j+M8kLM7ddd+2KPJv11peV7E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6EDkAeIRzbUTiRuKRq2ierF0WgYQcDk3l+8CyTsgQEiCSIpaB3NV30ByXYccrsPo
-	 uWEv++J6SwH7BJ4Rz37+gY/UlBxEZICxb4C2K9g8AJ0r4RN9bYJfh1cSfFKJ0NjlKr
-	 /a78/UWucy+/05VdheyAV8PanrXMQq4IZiGms33o=
+	b=zr/6pVbaFcrhZm8mViuQ46SZgHLfI9wJoqEUGEV4rE+rG1gLm36dYW06R9974rBVe
+	 I0o26LfgHsA/3CWGU41wnlzjH47XvzN4fjv34cycA0CrXra31BzpcogwwyuBLRcIwP
+	 ME6TR/cAFlMdbvGsWoXXSxhqa1CMAZs/y3AaJlt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Shruthi Sanil <shruthi.sanil@intel.com>
-Subject: [PATCH 5.15 12/17] usb: dwc3: pci: Update PCIe device ID for USB3 controller on CPU sub-system for Raptor Lake
-Date: Mon, 19 Dec 2022 20:24:58 +0100
-Message-Id: <20221219182941.111533777@linuxfoundation.org>
+	Ferry Toth <ftoth@exalondelft.nl>
+Subject: [PATCH 5.15 13/17] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+Date: Mon, 19 Dec 2022 20:24:59 +0100
+Message-Id: <20221219182941.140526839@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 References: <20221219182940.739981110@linuxfoundation.org>
@@ -35,33 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shruthi Sanil <shruthi.sanil@intel.com>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-commit f05f80f217bf52443a2582bca19fd78188333f25 upstream.
+commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac upstream.
 
-The device ID 0xa70e is defined for the USB3 device controller in the CPU
-sub-system of Raptor Lake platform. Hence updating the ID accordingly.
+Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
+if extcon is present") Dual Role support on Intel Merrifield platform
+broke due to rearranging the call to dwc3_get_extcon().
 
-Fixes: bad0d1d726ac ("usb: dwc3: pci: Add support for Intel Raptor Lake")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Shruthi Sanil <shruthi.sanil@intel.com>
-Link: https://lore.kernel.org/r/20221125105327.27945-1-shruthi.sanil@intel.com
+It appears to be caused by ulpi_read_id() on the first test write failing
+with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
+DT when the test write fails and returns 0 in that case, even if DT does not
+provide the phy. As a result usb probe completes without phy.
+
+Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
+fails. The user should then handle it appropriately. A follow up patch
+will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
+
+Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
+Cc: stable@vger.kernel.org
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c |    2 +-
+ drivers/usb/common/ulpi.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -43,7 +43,7 @@
- #define PCI_DEVICE_ID_INTEL_ADLP		0x51ee
- #define PCI_DEVICE_ID_INTEL_ADLM		0x54ee
- #define PCI_DEVICE_ID_INTEL_ADLS		0x7ae1
--#define PCI_DEVICE_ID_INTEL_RPL			0x460e
-+#define PCI_DEVICE_ID_INTEL_RPL			0xa70e
- #define PCI_DEVICE_ID_INTEL_RPLS		0x7a61
- #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
- #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -206,7 +206,7 @@ static int ulpi_read_id(struct ulpi *ulp
+ 	/* Test the interface */
+ 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
+ 	if (ret < 0)
+-		goto err;
++		return ret;
+ 
+ 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
+ 	if (ret < 0)
 
 
