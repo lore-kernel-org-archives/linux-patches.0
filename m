@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAE46FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF8CC433EF;
-	Mon, 19 Dec 2022 19:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA93A6FB9
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCE3C433F1;
+	Mon, 19 Dec 2022 19:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478005;
-	bh=HvNKuWYFW8umeX/fI6aXrzjdk4JcPKrYu3UMnlPw/N8=;
+	s=korg; t=1671478011;
+	bh=cFZDr3iGcfKiX9rWgBaBaE9vpKVOax1baPuaHLrzF6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrFuIMG94nIr6f3DuEh2+ZfabVjffzNMx71av+xM1Yo30tHK4moollx53XimtpUSn
-	 hVijDTnjlS5c4vUD1N/kXJv5t2Wa/yeKlONs8dTTa6iuWkEPMTzdGVxq6PHYi0DDMw
-	 eB0KOWa6vbgM5jRYV/TD3i3oaOxubnbTTGlnac8U=
+	b=QQYnxBuk7iWsHWF1/fypIDSDG9gLna0Aa/6bVDCtcyI4nDxKmOT5YmtJKeg++QT/t
+	 NQ3TWOq+97EE3EJL+bd2qhEYiXjoQ0u7GTEaaGxliwtgE4WvI3ooTeJPXjk9DJ+trQ
+	 7AwRcUhd819GQOI9cFzE3LTXLPK5swx6FlePQous=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 27/28] selftests: net: Use "grep -E" instead of "egrep"
-Date: Mon, 19 Dec 2022 20:23:14 +0100
-Message-Id: <20221219182945.343897724@linuxfoundation.org>
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.0 21/28] igb: Initialize mailbox message for VF reset
+Date: Mon, 19 Dec 2022 20:23:08 +0100
+Message-Id: <20221219182945.105856338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -35,48 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Tony Nguyen <anthony.l.nguyen@intel.com>
 
-[ Upstream commit 6a30d3e3491dc562384e9f15b201a8a25b57439f ]
+commit de5dc44370fbd6b46bd7f1a1e00369be54a041c8 upstream.
 
-The latest version of grep claims the egrep is now obsolete so the build
-now contains warnings that look like:
-	egrep: warning: egrep is obsolescent; using grep -E
-fix this using "grep -E" instead.
+When a MAC address is not assigned to the VF, that portion of the message
+sent to the VF is not set. The memory, however, is allocated from the
+stack meaning that information may be leaked to the VM. Initialize the
+message buffer to 0 so that no information is passed to the VM in this
+case.
 
-  sed -i "s/egrep/grep -E/g" `grep egrep -rwl tools/testing/selftests/net`
-
-Here are the steps to install the latest grep:
-
-  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
-  tar xf grep-3.8.tar.gz
-  cd grep-3.8 && ./configure && make
-  sudo make install
-  export PATH=/usr/local/bin:$PATH
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/r/1669864248-829-1-git-send-email-yangtiezhu@loongson.cn
+Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
+Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221212190031.3983342-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/toeplitz.sh | 2 +-
+ drivers/net/ethernet/intel/igb/igb_main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/toeplitz.sh b/tools/testing/selftests/net/toeplitz.sh
-index 0a49907cd4fe..da5bfd834eff 100755
---- a/tools/testing/selftests/net/toeplitz.sh
-+++ b/tools/testing/selftests/net/toeplitz.sh
-@@ -32,7 +32,7 @@ DEV="eth0"
- # This is determined by reading the RSS indirection table using ethtool.
- get_rss_cfg_num_rxqs() {
- 	echo $(ethtool -x "${DEV}" |
--		egrep [[:space:]]+[0-9]+:[[:space:]]+ |
-+		grep -E [[:space:]]+[0-9]+:[[:space:]]+ |
- 		cut -d: -f2- |
- 		awk '{$1=$1};1' |
- 		tr ' ' '\n' |
--- 
-2.35.1
-
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -7522,7 +7522,7 @@ static void igb_vf_reset_msg(struct igb_
+ {
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	unsigned char *vf_mac = adapter->vf_data[vf].vf_mac_addresses;
+-	u32 reg, msgbuf[3];
++	u32 reg, msgbuf[3] = {};
+ 	u8 *addr = (u8 *)(&msgbuf[1]);
+ 
+ 	/* process all the same items cleared in a function level reset */
 
 
