@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA93A6FB9
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCE3C433F1;
-	Mon, 19 Dec 2022 19:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6C86FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B26C433EF;
+	Mon, 19 Dec 2022 19:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478011;
-	bh=cFZDr3iGcfKiX9rWgBaBaE9vpKVOax1baPuaHLrzF6o=;
+	s=korg; t=1671478008;
+	bh=JcJAohdVommNiKb/r0jtp/FlBXIDbmpdu+aTbW7u1wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQYnxBuk7iWsHWF1/fypIDSDG9gLna0Aa/6bVDCtcyI4nDxKmOT5YmtJKeg++QT/t
-	 NQ3TWOq+97EE3EJL+bd2qhEYiXjoQ0u7GTEaaGxliwtgE4WvI3ooTeJPXjk9DJ+trQ
-	 7AwRcUhd819GQOI9cFzE3LTXLPK5swx6FlePQous=
+	b=BnBtgyh/Wa/2hNXeoDMlwu/vwLya+/qsCX7hu7fH6SDGCKlO8jSFsw4FCiYkIR+eY
+	 YLagPWxpEXeo052HY5GzoSU/Ol824D0fehI0Jkhe/XeNCQPFKwxn7AUsJl4vQp00O5
+	 e16NXzT4aJVrTDpICOGqaVz85IneF20bNNkm5kkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.0 21/28] igb: Initialize mailbox message for VF reset
-Date: Mon, 19 Dec 2022 20:23:08 +0100
-Message-Id: <20221219182945.105856338@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 28/28] net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
+Date: Mon, 19 Dec 2022 20:23:15 +0100
+Message-Id: <20221219182945.393706203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -36,38 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Nguyen <anthony.l.nguyen@intel.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-commit de5dc44370fbd6b46bd7f1a1e00369be54a041c8 upstream.
+[ Upstream commit 31d929de5a112ee1b977a89c57de74710894bbbf ]
 
-When a MAC address is not assigned to the VF, that portion of the message
-sent to the VF is not set. The memory, however, is allocated from the
-stack meaning that information may be leaked to the VM. Initialize the
-message buffer to 0 so that no information is passed to the VM in this
-case.
+When the name_assign_type attribute was introduced (commit
+685343fc3ba6, "net: add name_assign_type netdev attribute"), the
+loopback device was explicitly mentioned as one which would make use
+of NET_NAME_PREDICTABLE:
 
-Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
-Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221212190031.3983342-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    The name_assign_type attribute gives hints where the interface name of a
+    given net-device comes from. These values are currently defined:
+...
+      NET_NAME_PREDICTABLE:
+        The ifname has been assigned by the kernel in a predictable way
+        that is guaranteed to avoid reuse and always be the same for a
+        given device. Examples include statically created devices like
+        the loopback device [...]
+
+Switch to that so that reading /sys/class/net/lo/name_assign_type
+produces something sensible instead of returning -EINVAL.
+
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 +-
+ drivers/net/loopback.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -7522,7 +7522,7 @@ static void igb_vf_reset_msg(struct igb_
- {
- 	struct e1000_hw *hw = &adapter->hw;
- 	unsigned char *vf_mac = adapter->vf_data[vf].vf_mac_addresses;
--	u32 reg, msgbuf[3];
-+	u32 reg, msgbuf[3] = {};
- 	u8 *addr = (u8 *)(&msgbuf[1]);
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 14e8d04cb434..2e9742952c4e 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -211,7 +211,7 @@ static __net_init int loopback_net_init(struct net *net)
+ 	int err;
  
- 	/* process all the same items cleared in a function level reset */
+ 	err = -ENOMEM;
+-	dev = alloc_netdev(0, "lo", NET_NAME_UNKNOWN, loopback_setup);
++	dev = alloc_netdev(0, "lo", NET_NAME_PREDICTABLE, loopback_setup);
+ 	if (!dev)
+ 		goto out;
+ 
+-- 
+2.35.1
+
 
 
