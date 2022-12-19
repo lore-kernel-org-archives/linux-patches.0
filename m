@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386486FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4780C433EF;
-	Mon, 19 Dec 2022 19:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42756FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB66C433D2;
+	Mon, 19 Dec 2022 19:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477823;
-	bh=/Pldpmzlcy5Qw8pDeCjbAU2AHTtkanDviipFsOndU+E=;
+	s=korg; t=1671477835;
+	bh=Vh3n+7LqWlbT5bq9mawkUw8tSF8Nd6asBEPhxZKrqzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKUFixQw8TDRD5Vky2Tb64G94EtYEpG2av6QWWzDBXxD+/Y5uFvrNn2kBis+tBpW0
-	 KdWz4+Z9g/1xIKyNZnGu+ELnD3LFDdxVFOeZSYoAqBHTJHo3eakxFF8YFYnulSg3nh
-	 r6WI9uKCiQATw5ccjGC41FwR9vibArkEeyrJ524A=
+	b=z4sL6tD+sblRhW50a0MOUNVRaypYJu97Fe2YiwezRMDvsZlp/6uNVAjb0BiVBHY33
+	 uPjof8BtawXAlkUnjIBN51ue4GJhYKSFWFLm3NS0IfIJJd7FZbRxvyncQcrmhI0h5K
+	 mwoVHDPszTKhBt6CqZKMJfN3o8VhvHh4Lax0rslo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 07/25] irqchip/ls-extirq: Fix endianness detection
-Date: Mon, 19 Dec 2022 20:22:46 +0100
-Message-Id: <20221219182943.712549304@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 08/25] udf: Discard preallocation before extending file with a hole
+Date: Mon, 19 Dec 2022 20:22:47 +0100
+Message-Id: <20221219182943.748235492@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
 References: <20221219182943.395169070@linuxfoundation.org>
@@ -34,32 +33,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 3ae977d0e4e3a2a2ccc912ca2d20c9430508ecdd upstream.
+commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
 
-parent is the interrupt parent, not the parent of node. Use
-node->parent. This fixes endianness detection on big-endian platforms.
+When extending file with a hole, we tried to preserve existing
+preallocation for the file. However that is not very useful and
+complicates code because the previous extent may need to be rounded to
+block boundary as well (which we forgot to do thus causing data
+corruption for sequence like:
 
-Fixes: 1b00adce8afd ("irqchip/ls-extirq: Fix invalid wait context by avoiding to use regmap")
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221201212807.616191-1-sean.anderson@seco.com
+xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
+  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
+  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
+
+with 512-byte block size. Just discard preallocation before extending
+file to simplify things and also fix this data corruption.
+
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-ls-extirq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
+ 1 file changed, 18 insertions(+), 28 deletions(-)
 
---- a/drivers/irqchip/irq-ls-extirq.c
-+++ b/drivers/irqchip/irq-ls-extirq.c
-@@ -203,7 +203,7 @@ ls_extirq_of_init(struct device_node *no
- 	if (ret)
- 		goto err_parse_map;
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -439,6 +439,12 @@ static int udf_get_block(struct inode *i
+ 		iinfo->i_next_alloc_goal++;
+ 	}
  
--	priv->big_endian = of_device_is_big_endian(parent);
-+	priv->big_endian = of_device_is_big_endian(node->parent);
- 	priv->is_ls1021a_or_ls1043a = of_device_is_compatible(node, "fsl,ls1021a-extirq") ||
- 				      of_device_is_compatible(node, "fsl,ls1043a-extirq");
- 	raw_spin_lock_init(&priv->lock);
++	/*
++	 * Block beyond EOF and prealloc extents? Just discard preallocation
++	 * as it is not useful and complicates things.
++	 */
++	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
++		udf_discard_prealloc(inode);
+ 	udf_clear_extent_cache(inode);
+ 	phys = inode_getblk(inode, block, &err, &new);
+ 	if (!phys)
+@@ -488,8 +494,6 @@ static int udf_do_extend_file(struct ino
+ 	uint32_t add;
+ 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	struct super_block *sb = inode->i_sb;
+-	struct kernel_lb_addr prealloc_loc = {};
+-	uint32_t prealloc_len = 0;
+ 	struct udf_inode_info *iinfo;
+ 	int err;
+ 
+@@ -510,19 +514,6 @@ static int udf_do_extend_file(struct ino
+ 			~(sb->s_blocksize - 1);
+ 	}
+ 
+-	/* Last extent are just preallocated blocks? */
+-	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+-						EXT_NOT_RECORDED_ALLOCATED) {
+-		/* Save the extent so that we can reattach it to the end */
+-		prealloc_loc = last_ext->extLocation;
+-		prealloc_len = last_ext->extLength;
+-		/* Mark the extent as a hole */
+-		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
+-			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+-		last_ext->extLocation.logicalBlockNum = 0;
+-		last_ext->extLocation.partitionReferenceNum = 0;
+-	}
+-
+ 	/* Can we merge with the previous extent? */
+ 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+ 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
+@@ -550,7 +541,7 @@ static int udf_do_extend_file(struct ino
+ 		 * more extents, we may need to enter possible following
+ 		 * empty indirect extent.
+ 		 */
+-		if (new_block_bytes || prealloc_len)
++		if (new_block_bytes)
+ 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
+ 	}
+ 
+@@ -584,17 +575,6 @@ static int udf_do_extend_file(struct ino
+ 	}
+ 
+ out:
+-	/* Do we have some preallocated blocks saved? */
+-	if (prealloc_len) {
+-		err = udf_add_aext(inode, last_pos, &prealloc_loc,
+-				   prealloc_len, 1);
+-		if (err)
+-			return err;
+-		last_ext->extLocation = prealloc_loc;
+-		last_ext->extLength = prealloc_len;
+-		count++;
+-	}
+-
+ 	/* last_pos should point to the last written extent... */
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		last_pos->offset -= sizeof(struct short_ad);
+@@ -647,8 +627,17 @@ static int udf_extend_file(struct inode
+ 	else
+ 		BUG();
+ 
++	/*
++	 * When creating hole in file, just don't bother with preserving
++	 * preallocation. It likely won't be very useful anyway.
++	 */
++	udf_discard_prealloc(inode);
++
+ 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
+ 	within_final_block = (etype != -1);
++	/* We don't expect extents past EOF... */
++	WARN_ON_ONCE(etype != -1 &&
++		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
+ 
+ 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
+ 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
+@@ -777,10 +766,11 @@ static sector_t inode_getblk(struct inod
+ 		goto out_free;
+ 	}
+ 
+-	/* Are we beyond EOF? */
++	/* Are we beyond EOF and preallocated extent? */
+ 	if (etype == -1) {
+ 		int ret;
+ 		loff_t hole_len;
++
+ 		isBeyondEOF = true;
+ 		if (count) {
+ 			if (c)
 
 
