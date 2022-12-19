@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E756FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334C8C433F0;
-	Mon, 19 Dec 2022 19:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0426FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41674C433EF;
+	Mon, 19 Dec 2022 19:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477795;
-	bh=T6ogtEA/k+38oJHMiRWvj7T+7+jE5E9D0h7SCn0qiRo=;
+	s=korg; t=1671477798;
+	bh=yAcrlxapSA193BaI+p6HvnTi2F1LTYMxaNUhWgnfKlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yypOe9xziJZkIeFmmS1WZs6dVBekx4BvqsRPM/cFlASfurB9Yf1m0b+QaaOd6vIyF
-	 yMC+RUw2WMSbAkncObtnBjNMKAXZIexKmWhQxLFeFU2Yz3iN4xBqCM5sTMTKRoOiI5
-	 DiTZxDDPpQOtqOj1P0W8k36E+W/SIh11xjWtd1Yc=
+	b=Vb86zGh2Ya9jgBjeT4lqGtAJPC79lM6g0449/YmpDIPJw+lYey0ro+ZAgkM/zPP1o
+	 VTmGzp18dEd4ZwigtbC7cyUvNNBLz32PlAPjqN9eRopRcM4cZLC3Gy54U0KKmVfjCk
+	 8V6M4/qHnGk1HyAJvV/10xY6Q04+FaJQqfPcd9LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 10/25] udf: Do not bother looking for prealloc extents if i_lenExtents matches i_size
-Date: Mon, 19 Dec 2022 20:22:49 +0100
-Message-Id: <20221219182943.825756132@linuxfoundation.org>
+	David Michael <fedora.dm0@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alan Maguire <alan.maguire@oracle.com>
+Subject: [PATCH 6.1 02/25] libbpf: Fix uninitialized warning in btf_dump_dump_type_data
+Date: Mon, 19 Dec 2022 20:22:41 +0100
+Message-Id: <20221219182943.502040859@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
 References: <20221219182943.395169070@linuxfoundation.org>
@@ -33,34 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: David Michael <fedora.dm0@gmail.com>
 
-commit 6ad53f0f71c52871202a7bf096feb2c59db33fc5 upstream.
+commit dfd0afbf151d85411b371e841f62b81ee5d1ca54 upstream.
 
-If rounded block-rounded i_lenExtents matches block rounded i_size,
-there are no preallocation extents. Do not bother walking extent linked
-list.
+GCC 11.3.0 fails to compile btf_dump.c due to the following error,
+which seems to originate in btf_dump_struct_data where the returned
+value would be uninitialized if btf_vlen returns zero.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+btf_dump.c: In function ‘btf_dump_dump_type_data’:
+btf_dump.c:2363:12: error: ‘err’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+ 2363 |         if (err < 0)
+      |            ^
+
+Fixes: 920d16af9b42 ("libbpf: BTF dumper support for typed data")
+Signed-off-by: David Michael <fedora.dm0@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Acked-by: Alan Maguire <alan.maguire@oracle.com>
+Link: https://lore.kernel.org/bpf/87zgcu60hq.fsf@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/truncate.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/lib/bpf/btf_dump.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/truncate.c
-+++ b/fs/udf/truncate.c
-@@ -127,9 +127,10 @@ void udf_discard_prealloc(struct inode *
- 	uint64_t lbcount = 0;
- 	int8_t etype = -1, netype;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-+	int bsize = 1 << inode->i_blkbits;
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -1963,7 +1963,7 @@ static int btf_dump_struct_data(struct b
+ {
+ 	const struct btf_member *m = btf_members(t);
+ 	__u16 n = btf_vlen(t);
+-	int i, err;
++	int i, err = 0;
  
- 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
--	    inode->i_size == iinfo->i_lenExtents)
-+	    ALIGN(inode->i_size, bsize) == ALIGN(iinfo->i_lenExtents, bsize))
- 		return;
- 
- 	epos.block = iinfo->i_location;
+ 	/* note that we increment depth before calling btf_dump_print() below;
+ 	 * this is intentional.  btf_dump_data_newline() will not print a
 
 
