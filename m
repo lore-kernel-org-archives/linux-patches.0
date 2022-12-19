@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7606F6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB50C433EF;
-	Mon, 19 Dec 2022 19:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868EE6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DEAC433F0;
+	Mon, 19 Dec 2022 19:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478032;
-	bh=riyEXSCxEjeDrWaRHbbQWSjZro/Z222V/DZB1Lk0WYg=;
+	s=korg; t=1671478035;
+	bh=HvNKuWYFW8umeX/fI6aXrzjdk4JcPKrYu3UMnlPw/N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/GepvrMRyRe0KpBv4bxHKL9zFLKCMqHqEFF++tdr/ThILAyAFfDSEzfzVafgwZWF
-	 5VjzBZTdDk0RMnmUzqNd6ztkPINY4urpg11FEs+B7yAj+RKeVCmpFaH8DgoRofHmZc
-	 OErJSMe1J6qe91vKC5GNBsXLAHeSxg/jRGS5zzh4=
+	b=ay6AkpVMmwykJOfVIrsMdsOtQY45ur42zSPBViAHal+Udp7nWbLmdsv0CztfWRB8Q
+	 M5gF4h/W4opj5u3A5TBXv3ewF3xwbu1TvWDrua0GyNoj+Xw85HoqHkIU75XAH8p93s
+	 YDOwK3B9ct0bleK+D+64B8TEso2Qo0VWN6BkSs3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/17] Bluetooth: L2CAP: Fix u8 overflow
-Date: Mon, 19 Dec 2022 20:25:01 +0100
-Message-Id: <20221219182941.197191924@linuxfoundation.org>
+Subject: [PATCH 5.15 16/17] selftests: net: Use "grep -E" instead of "egrep"
+Date: Mon, 19 Dec 2022 20:25:02 +0100
+Message-Id: <20221219182941.227748263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 References: <20221219182940.739981110@linuxfoundation.org>
@@ -35,63 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit bcd70260ef56e0aee8a4fc6cd214a419900b0765 ]
+[ Upstream commit 6a30d3e3491dc562384e9f15b201a8a25b57439f ]
 
-By keep sending L2CAP_CONF_REQ packets, chan->num_conf_rsp increases
-multiple times and eventually it will wrap around the maximum number
-(i.e., 255).
-This patch prevents this by adding a boundary check with
-L2CAP_MAX_CONF_RSP
+The latest version of grep claims the egrep is now obsolete so the build
+now contains warnings that look like:
+	egrep: warning: egrep is obsolescent; using grep -E
+fix this using "grep -E" instead.
 
-Btmon log:
-Bluetooth monitor ver 5.64
-= Note: Linux version 6.1.0-rc2 (x86_64)                               0.264594
-= Note: Bluetooth subsystem version 2.22                               0.264636
-@ MGMT Open: btmon (privileged) version 1.22                  {0x0001} 0.272191
-= New Index: 00:00:00:00:00:00 (Primary,Virtual,hci0)          [hci0] 13.877604
-@ RAW Open: 9496 (privileged) version 2.22                   {0x0002} 13.890741
-= Open Index: 00:00:00:00:00:00                                [hci0] 13.900426
-(...)
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #32 [hci0] 14.273106
-        invalid packet size (12 != 1033)
-        08 00 01 00 02 01 04 00 01 10 ff ff              ............
-> ACL Data RX: Handle 200 flags 0x00 dlen 1547             #33 [hci0] 14.273561
-        invalid packet size (14 != 1547)
-        0a 00 01 00 04 01 06 00 40 00 00 00 00 00        ........@.....
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #34 [hci0] 14.274390
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 00 00 00 04  ........@.......
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #35 [hci0] 14.274932
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 07 00 03 00  ........@.......
-= bluetoothd: Bluetooth daemon 5.43                                   14.401828
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #36 [hci0] 14.275753
-        invalid packet size (12 != 1033)
-        08 00 01 00 04 01 04 00 40 00 00 00              ........@...
+  sed -i "s/egrep/grep -E/g" `grep egrep -rwl tools/testing/selftests/net`
 
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Here are the steps to install the latest grep:
+
+  wget http://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz
+  tar xf grep-3.8.tar.gz
+  cd grep-3.8 && ./configure && make
+  sudo make install
+  export PATH=/usr/local/bin:$PATH
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/r/1669864248-829-1-git-send-email-yangtiezhu@loongson.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/toeplitz.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 761efd7da514..e15fcf72a342 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4453,7 +4453,8 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
- 
- 	chan->ident = cmd->ident;
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_CONF_RSP, len, rsp);
--	chan->num_conf_rsp++;
-+	if (chan->num_conf_rsp < L2CAP_CONF_MAX_CONF_RSP)
-+		chan->num_conf_rsp++;
- 
- 	/* Reset config buffer. */
- 	chan->conf_len = 0;
+diff --git a/tools/testing/selftests/net/toeplitz.sh b/tools/testing/selftests/net/toeplitz.sh
+index 0a49907cd4fe..da5bfd834eff 100755
+--- a/tools/testing/selftests/net/toeplitz.sh
++++ b/tools/testing/selftests/net/toeplitz.sh
+@@ -32,7 +32,7 @@ DEV="eth0"
+ # This is determined by reading the RSS indirection table using ethtool.
+ get_rss_cfg_num_rxqs() {
+ 	echo $(ethtool -x "${DEV}" |
+-		egrep [[:space:]]+[0-9]+:[[:space:]]+ |
++		grep -E [[:space:]]+[0-9]+:[[:space:]]+ |
+ 		cut -d: -f2- |
+ 		awk '{$1=$1};1' |
+ 		tr ' ' '\n' |
 -- 
 2.35.1
 
