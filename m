@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C5B6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653A0C433D2;
-	Mon, 19 Dec 2022 19:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B286FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D9BC433F1;
+	Mon, 19 Dec 2022 19:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477958;
-	bh=AxLwZ6f+dsmGY1QlU+P7+KNzqy2Ky9O4zVwsUblrHBo=;
+	s=korg; t=1671477961;
+	bh=QRfjUgsQLDW5HCX4CeXjYfYlOsNkFBIr6C8mJaHfc48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDXj4W71pAIk1sMxUBZ7Kgv5oRqbx0dnlVmsbnP7+emvze2a0btSrbBxcoQY2azdz
-	 1NdR3z8pMLfDtoEWaU7dCEGJHiqkmcQJ8M7WcsO+Kn4vx3c3+Ax3TXVc2zDjUJROhG
-	 LkorZV9hLYRTjfYpe7p5Uor5ZTfEt8XQu98LKeLI=
+	b=johGZ2bBaL4c3DbOXcg2GwE6MziMgW5ZJwnf+7rjf06mOYbhkx5ENOCvqS9HeisBA
+	 icepctIi1PSMO3SyuVHOijwa+vwuNvyBI4ivEu0MTBJoqscxpLX8Av89eJ0Mky8E/8
+	 PmwaBt7w019+lHfx9AB7bVqDH5vukw1gP3NOLGAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chi <andy.chi@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.0 19/28] ALSA: hda/realtek: fix mute/micmute LEDs for a HP ProBook
-Date: Mon, 19 Dec 2022 20:23:06 +0100
-Message-Id: <20221219182945.026063336@linuxfoundation.org>
+	Reka Norman <rekanorman@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.0 20/28] xhci: Apply XHCI_RESET_TO_DEFAULT quirk to ADL-N
+Date: Mon, 19 Dec 2022 20:23:07 +0100
+Message-Id: <20221219182945.057039552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -34,33 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Chi <andy.chi@canonical.com>
+From: Reka Norman <rekanorman@chromium.org>
 
-commit 1d8025ec722d5e011f9299c46274eb21fb54a428 upstream.
+commit fed70b61ef2c0aed54456db3d485b215f6cc3209 upstream.
 
-There is a HP ProBook which using ALC236 codec and need the
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make mute LED and
-micmute LED work.
+ADL-N systems have the same issue as ADL-P, where a large boot firmware
+delay is seen if USB ports are left in U3 at shutdown. So apply the
+XHCI_RESET_TO_DEFAULT quirk to ADL-N as well.
 
-Signed-off-by: Andy Chi <andy.chi@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221128022849.13759-1-andy.chi@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch depends on commit 34cd2db408d5 ("xhci: Add quirk to reset
+host back to default state at shutdown").
+
+The issue it fixes is a ~20s boot time delay when booting from S5. It
+affects ADL-N devices, and ADL-N support was added starting from v5.16.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Reka Norman <rekanorman@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221130091944.2171610-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/xhci-pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9376,6 +9376,8 @@ static const struct snd_pci_quirk alc269
- 	 SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -59,6 +59,7 @@
+ #define PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI		0x9a13
+ #define PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI		0x1138
+ #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
++#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
+ 
+ #define PCI_DEVICE_ID_AMD_RENOIR_XHCI			0x1639
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
+@@ -246,7 +247,8 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_MISSING_CAS;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
+-	    pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI)
++	    (pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI))
+ 		xhci->quirks |= XHCI_RESET_TO_DEFAULT;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
 
 
