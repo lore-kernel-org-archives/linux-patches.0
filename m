@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9537C6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E0CC433D2;
-	Mon, 19 Dec 2022 19:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBB56FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAF3C433EF;
+	Mon, 19 Dec 2022 19:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478026;
-	bh=UyPyFbKl9kgsXB+u9+j+M8kLM7ddd+2KPJv11peV7E4=;
+	s=korg; t=1671478029;
+	bh=NmHYeCaXXFEtSVNq2vYn2o2X3MdTvxoe/2Pv2zKOdrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zr/6pVbaFcrhZm8mViuQ46SZgHLfI9wJoqEUGEV4rE+rG1gLm36dYW06R9974rBVe
-	 I0o26LfgHsA/3CWGU41wnlzjH47XvzN4fjv34cycA0CrXra31BzpcogwwyuBLRcIwP
-	 ME6TR/cAFlMdbvGsWoXXSxhqa1CMAZs/y3AaJlt4=
+	b=VyHQCN2Ud1ZBFKh+iye3U9IlZtGHHs3k2g4W/XFKFB+bAVh/zC8yIqkttD3f80Gpt
+	 53saZPcuZ1O6liWXCw/8i2vdL75+yBl2rxJAbYneDcLhVJbvO9XLa9MSt3RHZ/h8Zq
+	 m9CsVg+Vv4lzvootirV+SDU1yhO87LFnfxPy/3UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ferry Toth <ftoth@exalondelft.nl>
-Subject: [PATCH 5.15 13/17] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
-Date: Mon, 19 Dec 2022 20:24:59 +0100
-Message-Id: <20221219182941.140526839@linuxfoundation.org>
+	Torge Matthies <openglfreak@googlemail.com>,
+	Alexander Zhang <alex@alexyzhang.dev>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 14/17] HID: uclogic: Add HID_QUIRK_HIDINPUT_FORCE quirk
+Date: Mon, 19 Dec 2022 20:25:00 +0100
+Message-Id: <20221219182941.168444560@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 References: <20221219182940.739981110@linuxfoundation.org>
@@ -34,43 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: José Expósito <jose.exposito89@gmail.com>
 
-commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac upstream.
+[ Upstream commit 3405a4beaaa852f3ed2a5eb3b5149932d5c3779b ]
 
-Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
-if extcon is present") Dual Role support on Intel Merrifield platform
-broke due to rearranging the call to dwc3_get_extcon().
+Commit f7d8e387d9ae ("HID: uclogic: Switch to Digitizer usage for
+styluses") changed the usage used in UCLogic from "Pen" to "Digitizer".
 
-It appears to be caused by ulpi_read_id() on the first test write failing
-with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
-DT when the test write fails and returns 0 in that case, even if DT does not
-provide the phy. As a result usb probe completes without phy.
+However, the IS_INPUT_APPLICATION() macro evaluates to false for
+HID_DG_DIGITIZER causing issues with the XP-Pen Star G640 tablet.
 
-Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
-fails. The user should then handle it appropriately. A follow up patch
-will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
+Add the HID_QUIRK_HIDINPUT_FORCE quirk to bypass the
+IS_INPUT_APPLICATION() check.
 
-Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
-Cc: stable@vger.kernel.org
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Torge Matthies <openglfreak@googlemail.com>
+Reported-by: Alexander Zhang <alex@alexyzhang.dev>
+Tested-by: Alexander Zhang <alex@alexyzhang.dev>
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/ulpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-uclogic-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -206,7 +206,7 @@ static int ulpi_read_id(struct ulpi *ulp
- 	/* Test the interface */
- 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
- 	if (ret < 0)
--		goto err;
-+		return ret;
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index d8ab0139e5cd..785d81d61ba4 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -172,6 +172,7 @@ static int uclogic_probe(struct hid_device *hdev,
+ 	 * than the pen, so use QUIRK_MULTI_INPUT for all tablets.
+ 	 */
+ 	hdev->quirks |= HID_QUIRK_MULTI_INPUT;
++	hdev->quirks |= HID_QUIRK_HIDINPUT_FORCE;
  
- 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
- 	if (ret < 0)
+ 	/* Allocate and assign driver data */
+ 	drvdata = devm_kzalloc(&hdev->dev, sizeof(*drvdata), GFP_KERNEL);
+-- 
+2.35.1
+
 
 
