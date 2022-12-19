@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8125E6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FFEC433EF;
-	Mon, 19 Dec 2022 19:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC566FB9
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099C8C433F0;
+	Mon, 19 Dec 2022 19:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671478020;
-	bh=1iH+bu/Nd45DICzLkxVgiMTjFH+WRjk15DEtkm1Rx/w=;
+	s=korg; t=1671478023;
+	bh=FCjAbUB2xBROcnAtEJ5ueCBisRVIvHa6pMZ74ngFdbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtF+GoDOED3OwLxxpDhDcFVBu80rJFaImxaivbEFjgWNGUN2b6iyVElgr3gWwPbAY
-	 mKrAPUFFhFqaWEuZq91rV352MbJWw6qt3X9JnDfb4XF6euDPqCS3phR7XyJkAdlVY4
-	 Ldd9LmfIAhf5QPiHIuQ91CLYGMH/R/4uwMzN/hpI=
+	b=Z6EDkAeIRzbUTiRuKRq2ierF0WgYQcDk3l+8CyTsgQEiCSIpaB3NV30ByXYccrsPo
+	 uWEv++J6SwH7BJ4Rz37+gY/UlBxEZICxb4C2K9g8AJ0r4RN9bYJfh1cSfFKJ0NjlKr
+	 /a78/UWucy+/05VdheyAV8PanrXMQq4IZiGms33o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 11/17] igb: Initialize mailbox message for VF reset
-Date: Mon, 19 Dec 2022 20:24:57 +0100
-Message-Id: <20221219182941.082220128@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Shruthi Sanil <shruthi.sanil@intel.com>
+Subject: [PATCH 5.15 12/17] usb: dwc3: pci: Update PCIe device ID for USB3 controller on CPU sub-system for Raptor Lake
+Date: Mon, 19 Dec 2022 20:24:58 +0100
+Message-Id: <20221219182941.111533777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 References: <20221219182940.739981110@linuxfoundation.org>
@@ -36,38 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Nguyen <anthony.l.nguyen@intel.com>
+From: Shruthi Sanil <shruthi.sanil@intel.com>
 
-commit de5dc44370fbd6b46bd7f1a1e00369be54a041c8 upstream.
+commit f05f80f217bf52443a2582bca19fd78188333f25 upstream.
 
-When a MAC address is not assigned to the VF, that portion of the message
-sent to the VF is not set. The memory, however, is allocated from the
-stack meaning that information may be leaked to the VM. Initialize the
-message buffer to 0 so that no information is passed to the VM in this
-case.
+The device ID 0xa70e is defined for the USB3 device controller in the CPU
+sub-system of Raptor Lake platform. Hence updating the ID accordingly.
 
-Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
-Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221212190031.3983342-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bad0d1d726ac ("usb: dwc3: pci: Add support for Intel Raptor Lake")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Shruthi Sanil <shruthi.sanil@intel.com>
+Link: https://lore.kernel.org/r/20221125105327.27945-1-shruthi.sanil@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 +-
+ drivers/usb/dwc3/dwc3-pci.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -7410,7 +7410,7 @@ static void igb_vf_reset_msg(struct igb_
- {
- 	struct e1000_hw *hw = &adapter->hw;
- 	unsigned char *vf_mac = adapter->vf_data[vf].vf_mac_addresses;
--	u32 reg, msgbuf[3];
-+	u32 reg, msgbuf[3] = {};
- 	u8 *addr = (u8 *)(&msgbuf[1]);
- 
- 	/* process all the same items cleared in a function level reset */
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -43,7 +43,7 @@
+ #define PCI_DEVICE_ID_INTEL_ADLP		0x51ee
+ #define PCI_DEVICE_ID_INTEL_ADLM		0x54ee
+ #define PCI_DEVICE_ID_INTEL_ADLS		0x7ae1
+-#define PCI_DEVICE_ID_INTEL_RPL			0x460e
++#define PCI_DEVICE_ID_INTEL_RPL			0xa70e
+ #define PCI_DEVICE_ID_INTEL_RPLS		0x7a61
+ #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
+ #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
 
 
