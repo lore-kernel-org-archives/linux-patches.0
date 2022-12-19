@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A56D6FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:25:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44852C433EF;
-	Mon, 19 Dec 2022 19:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1935C6FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:25:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B4EC433D2;
+	Mon, 19 Dec 2022 19:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477931;
-	bh=9QF0bl25L5DLL1DBNGISC6SPFeEo/9AT4+fpHI6PJ4U=;
+	s=korg; t=1671477934;
+	bh=hky+L9OqszPzzfyyNFRtDqP5ZOd/0ysZcJ2HNj/l+b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AZZ74NsK1P0Hq8p7NgwY8DSkE7wVTXZvAXS+yZlwl8D+6dA8jhPpBgG3lV0MJ3JZ
-	 LPkAFEEO9gSlKcz5cI/PI5et0TFPOpi2r1tsg7Ujlnta/mmdt1T+ktQ9oR+Fudk9J9
-	 pgnIxbyDuFwFuiPY1DoMjCf8EyiFX/7gtsdchg7w=
+	b=ANN+zeMMmOk9gyECX4TtJ8K0+x6ZBJZtqb+3ov/X0b7/Wp1WP/i3epBEGNG5ix6zs
+	 iiGVWxJu1DLaWZT9cdJdNqT/TBMuxd+QbRhWZZGOBpnZsMEID9m4Mlyi824e8S0qRF
+	 SXhIbGdlUcqA9lYbiMfMzH1C27lelJXRp3+r4qQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.0 02/28] kallsyms: Make module_kallsyms_on_each_symbol generally available
-Date: Mon, 19 Dec 2022 20:22:49 +0100
-Message-Id: <20221219182944.294037997@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.0 11/28] udf: Fix preallocation discarding at indirect extent boundary
+Date: Mon, 19 Dec 2022 20:22:58 +0100
+Message-Id: <20221219182944.669604402@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -36,62 +33,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 73feb8d5fa3b755bb51077c0aabfb6aa556fd498 upstream.
+commit cfe4c1b25dd6d2f056afc00b7c98bcb3dd0b1fc3 upstream.
 
-Making module_kallsyms_on_each_symbol generally available, so it
-can be used outside CONFIG_LIVEPATCH option in following changes.
+When preallocation extent is the first one in the extent block, the
+code would corrupt extent tree header instead. Fix the problem and use
+udf_delete_aext() for deleting extent to avoid some code duplication.
 
-Rather than adding another ifdef option let's make the function
-generally available (when CONFIG_KALLSYMS and CONFIG_MODULES
-options are defined).
-
-Cc: Christoph Hellwig <hch@lst.de>
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20221025134148.3300700-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/module.h   |    9 +++++++++
- kernel/module/kallsyms.c |    2 --
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ fs/udf/truncate.c |   45 +++++++++++++--------------------------------
+ 1 file changed, 13 insertions(+), 32 deletions(-)
 
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -879,8 +879,17 @@ static inline bool module_sig_ok(struct
- }
- #endif	/* CONFIG_MODULE_SIG */
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -120,60 +120,41 @@ void udf_truncate_tail_extent(struct ino
  
-+#if defined(CONFIG_MODULES) && defined(CONFIG_KALLSYMS)
- int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
- 					     struct module *, unsigned long),
- 				   void *data);
-+#else
-+static inline int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
-+						 struct module *, unsigned long),
-+						 void *data)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif  /* CONFIG_MODULES && CONFIG_KALLSYMS */
+ void udf_discard_prealloc(struct inode *inode)
+ {
+-	struct extent_position epos = { NULL, 0, {0, 0} };
++	struct extent_position epos = {};
++	struct extent_position prev_epos = {};
+ 	struct kernel_lb_addr eloc;
+ 	uint32_t elen;
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1, netype;
+-	int adsize;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
  
- #endif /* _LINUX_MODULE_H */
---- a/kernel/module/kallsyms.c
-+++ b/kernel/module/kallsyms.c
-@@ -494,7 +494,6 @@ unsigned long module_kallsyms_lookup_nam
- 	return ret;
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
+ 	    inode->i_size == iinfo->i_lenExtents)
+ 		return;
+ 
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-		adsize = sizeof(struct short_ad);
+-	else if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-		adsize = sizeof(struct long_ad);
+-	else
+-		adsize = 0;
+-
+ 	epos.block = iinfo->i_location;
+ 
+ 	/* Find the last extent in the file */
+-	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 1)) != -1) {
+-		etype = netype;
++	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 0)) != -1) {
++		brelse(prev_epos.bh);
++		prev_epos = epos;
++		if (prev_epos.bh)
++			get_bh(prev_epos.bh);
++
++		etype = udf_next_aext(inode, &epos, &eloc, &elen, 1);
+ 		lbcount += elen;
+ 	}
+ 	if (etype == (EXT_NOT_RECORDED_ALLOCATED >> 30)) {
+-		epos.offset -= adsize;
+ 		lbcount -= elen;
+-		extent_trunc(inode, &epos, &eloc, etype, elen, 0);
+-		if (!epos.bh) {
+-			iinfo->i_lenAlloc =
+-				epos.offset -
+-				udf_file_entry_alloc_offset(inode);
+-			mark_inode_dirty(inode);
+-		} else {
+-			struct allocExtDesc *aed =
+-				(struct allocExtDesc *)(epos.bh->b_data);
+-			aed->lengthAllocDescs =
+-				cpu_to_le32(epos.offset -
+-					    sizeof(struct allocExtDesc));
+-			if (!UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_STRICT) ||
+-			    UDF_SB(inode->i_sb)->s_udfrev >= 0x0201)
+-				udf_update_tag(epos.bh->b_data, epos.offset);
+-			else
+-				udf_update_tag(epos.bh->b_data,
+-					       sizeof(struct allocExtDesc));
+-			mark_buffer_dirty_inode(epos.bh, inode);
+-		}
++		udf_delete_aext(inode, prev_epos);
++		udf_free_blocks(inode->i_sb, inode, &eloc, 0,
++				DIV_ROUND_UP(elen, 1 << inode->i_blkbits));
+ 	}
+ 	/* This inode entry is in-memory only and thus we don't have to mark
+ 	 * the inode dirty */
+ 	iinfo->i_lenExtents = lbcount;
+ 	brelse(epos.bh);
++	brelse(prev_epos.bh);
  }
  
--#ifdef CONFIG_LIVEPATCH
- int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
- 					     struct module *, unsigned long),
- 				   void *data)
-@@ -531,4 +530,3 @@ out:
- 	mutex_unlock(&module_mutex);
- 	return ret;
- }
--#endif /* CONFIG_LIVEPATCH */
+ static void udf_update_alloc_ext_desc(struct inode *inode,
 
 
