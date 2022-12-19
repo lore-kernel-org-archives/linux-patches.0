@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B286FB4
-	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D9BC433F1;
-	Mon, 19 Dec 2022 19:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115806FB4
+	for <patches@lists.linux.dev>; Mon, 19 Dec 2022 19:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7129DC433F0;
+	Mon, 19 Dec 2022 19:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671477961;
-	bh=QRfjUgsQLDW5HCX4CeXjYfYlOsNkFBIr6C8mJaHfc48=;
+	s=korg; t=1671477964;
+	bh=2ktixRPzbKnwNXYxtSVgA80LeEe/dN1cRmpSm14PV1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=johGZ2bBaL4c3DbOXcg2GwE6MziMgW5ZJwnf+7rjf06mOYbhkx5ENOCvqS9HeisBA
-	 icepctIi1PSMO3SyuVHOijwa+vwuNvyBI4ivEu0MTBJoqscxpLX8Av89eJ0Mky8E/8
-	 PmwaBt7w019+lHfx9AB7bVqDH5vukw1gP3NOLGAg=
+	b=WS899v1wWEekyQ8ffWonHMOeTCiWRQBHfzO+pxXDqdOFJLhAqSAXdR0f0ZKjk/DX/
+	 WOYF4vFaMob8cqJ4QVbYGjSaYpoabAx0vtLA+p0P2jcfkg01nM8zD9H7CRae4MzsHf
+	 fNznic53BaZv1QXd+/4Wx7bcfNlGKfORzhXxp2L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reka Norman <rekanorman@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.0 20/28] xhci: Apply XHCI_RESET_TO_DEFAULT quirk to ADL-N
-Date: Mon, 19 Dec 2022 20:23:07 +0100
-Message-Id: <20221219182945.057039552@linuxfoundation.org>
+	Martynas Pumputis <m@lambda.lt>,
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.0 03/28] ftrace: Add support to resolve module symbols in ftrace_lookup_symbols
+Date: Mon, 19 Dec 2022 20:22:50 +0100
+Message-Id: <20221219182944.342333467@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 References: <20221219182944.179389009@linuxfoundation.org>
@@ -34,48 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reka Norman <rekanorman@chromium.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit fed70b61ef2c0aed54456db3d485b215f6cc3209 upstream.
+commit 3640bf8584f4ab0f5eed6285f09213954acd8b62 upstream.
 
-ADL-N systems have the same issue as ADL-P, where a large boot firmware
-delay is seen if USB ports are left in U3 at shutdown. So apply the
-XHCI_RESET_TO_DEFAULT quirk to ADL-N as well.
+Currently ftrace_lookup_symbols iterates only over core symbols,
+adding module_kallsyms_on_each_symbol call to check on modules
+symbols as well.
 
-This patch depends on commit 34cd2db408d5 ("xhci: Add quirk to reset
-host back to default state at shutdown").
+Also removing 'args.found == args.cnt' condition, because it's
+already checked in kallsyms_callback function.
 
-The issue it fixes is a ~20s boot time delay when booting from S5. It
-affects ADL-N devices, and ADL-N support was added starting from v5.16.
+Also removing 'err < 0' check, because both *kallsyms_on_each_symbol
+functions do not return error.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Reka Norman <rekanorman@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130091944.2171610-3-mathias.nyman@linux.intel.com
+Reported-by: Martynas Pumputis <m@lambda.lt>
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20221025134148.3300700-3-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/ftrace.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -59,6 +59,7 @@
- #define PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI		0x9a13
- #define PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI		0x1138
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
-+#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -8261,6 +8261,10 @@ struct kallsyms_data {
+ 	size_t found;
+ };
  
- #define PCI_DEVICE_ID_AMD_RENOIR_XHCI			0x1639
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
-@@ -246,7 +247,8 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_MISSING_CAS;
++/* This function gets called for all kernel and module symbols
++ * and returns 1 in case we resolved all the requested symbols,
++ * 0 otherwise.
++ */
+ static int kallsyms_callback(void *data, const char *name,
+ 			     struct module *mod, unsigned long addr)
+ {
+@@ -8304,17 +8308,19 @@ static int kallsyms_callback(void *data,
+ int ftrace_lookup_symbols(const char **sorted_syms, size_t cnt, unsigned long *addrs)
+ {
+ 	struct kallsyms_data args;
+-	int err;
++	int found_all;
  
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
--	    pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI)
-+	    (pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI))
- 		xhci->quirks |= XHCI_RESET_TO_DEFAULT;
+ 	memset(addrs, 0, sizeof(*addrs) * cnt);
+ 	args.addrs = addrs;
+ 	args.syms = sorted_syms;
+ 	args.cnt = cnt;
+ 	args.found = 0;
+-	err = kallsyms_on_each_symbol(kallsyms_callback, &args);
+-	if (err < 0)
+-		return err;
+-	return args.found == args.cnt ? 0 : -ESRCH;
++
++	found_all = kallsyms_on_each_symbol(kallsyms_callback, &args);
++	if (found_all)
++		return 0;
++	found_all = module_kallsyms_on_each_symbol(kallsyms_callback, &args);
++	return found_all ? 0 : -ESRCH;
+ }
  
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
+ #ifdef CONFIG_SYSCTL
 
 
