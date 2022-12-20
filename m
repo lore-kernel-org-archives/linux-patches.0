@@ -1,105 +1,86 @@
-Received: from qproxy6-pub.mail.unifiedlayer.com (qproxy6-pub.mail.unifiedlayer.com [69.89.23.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513D6ED1
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 08:34:23 +0000 (UTC)
-Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
-	by qproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 21D6D8033D94
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 08:10:14 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id 603E7100455FE
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 07:41:41 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 7XFtp8FvSOtvw7XFtpijOw; Tue, 20 Dec 2022 07:41:41 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=J8ZvUCrS c=1 sm=1 tr=0 ts=63a16735
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=sHyYjHe8cH0A:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=iUC+0qtUXBzYSUU3EVNigEQd6hZ9Bsf/9QV9KlPcDa8=; b=0Q/vb/4xkk988RFSIRbbJ0s834
-	x+CL4H9imwgaqIMtKciqho2e5El0ZwHhK8sU8kwoIEWYux+Qya8H8O0O7nng97QP4jJ7TUIzUsEam
-	Qi1WCDEAsMTZDQn2wRB+Xy9wO4j8FU1MCORpLQa38buTBcQwFPXdPqFLqtsdjZ1c8j1Q4S2RFJGCN
-	7mpWnvZ8p7Ni8xA1/11XLjmb0jG1TwvgJqYczIoZPy3EBhnq/X5NjuTxU8bE3cDdzqnaP+4lk1vq4
-	BasB/gSUtLq83yhkUAE1xvcqtdhAdf+wyt6+9v+ePEmIv6OVbohPzhBsY9HX/bpYXrwovnSMfc07a
-	wuIioH0w==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:33920 helo=[10.0.1.48])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1p7XFr-002DHK-VC;
-	Tue, 20 Dec 2022 00:41:40 -0700
-Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20221219182943.395169070@linuxfoundation.org>
-In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <cf3ca40f-2bce-0b86-81c8-cd982b1f7378@w6rz.net>
-Date: Mon, 19 Dec 2022 23:41:33 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0201876
+	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 09:18:15 +0000 (UTC)
+Received: by mail-pl1-f171.google.com with SMTP id w20so5066829ply.12
+        for <patches@lists.linux.dev>; Tue, 20 Dec 2022 01:18:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jYtnjCT1VE6xPysrQULKJxODm4kr4P07YtrAqXvYELs=;
+        b=EAB6OAdYSQC8gvGWV7mv5rj4USmhY3S5d9HSqFJ8llTT+xc5ZjO6lcMWksu3D5bFqK
+         X2brA4qbfsjTGuXA9ZVcBlh3Qb2CtAGgHc9oy3Cuh8Ev8zRwaG9Bl2vdzhHi4yaF4zaZ
+         ckA86ITd4WtTnMM20VNuFb6IkH2y5/h37i2kQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jYtnjCT1VE6xPysrQULKJxODm4kr4P07YtrAqXvYELs=;
+        b=Dt0oiwH7bu0JP0ZAhK8oJEjZmAsvKI9lX0nAhAgbQpPP6jEjAgV4ge7sjW5boHazCJ
+         /KYi2gaCDrxzu7+WzdbzZ2DMN7N5xpBXSHfs4W8E+2dPNWIuQQkYT3j605OJG5ofE8GQ
+         HeYLQ72UAyl5xSSVBpVtMrfAEd2cTrZNa5ylwo2vFZDe1UdYJac/CN6mUY6kh8MlOVcd
+         JlyW8fQTgoyX9f3NlQSThoSDyck+pHllT7e9FHR5REKOT2eYwiO4BURj67siiQN67E/8
+         SfILxqpR/EyCNr0+v90On3beJIqCypJML0AiXd3VtU/pzONrVvZlkA5x+MDHENZMZHCb
+         +XOg==
+X-Gm-Message-State: ANoB5pnwSnPFqzoHJk7sOOiYy+LlWtQPT696c8QmHmifJ6YMjegqGbUe
+	F9S7+4JrEjzPwbJPDmPSmQ+QtQ==
+X-Google-Smtp-Source: AA0mqf4YwgL2vvSeSQcktLr7W6vtjAyReWbydmWPih2WA9Cv80rZ1vPZsuMdcwjyiPdaNt0ObAngpQ==
+X-Received: by 2002:a17:902:eb8b:b0:189:ced9:a5ff with SMTP id q11-20020a170902eb8b00b00189ced9a5ffmr46168902plg.26.1671527894944;
+        Tue, 20 Dec 2022 01:18:14 -0800 (PST)
+Received: from ec167f3768ca ([220.253.112.46])
+        by smtp.gmail.com with ESMTPSA id f15-20020a170902684f00b00189ed861791sm8789543pln.266.2022.12.20.01.18.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 01:18:13 -0800 (PST)
+Date: Tue, 20 Dec 2022 09:18:01 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/18] 5.10.161-rc1 review
+Message-ID: <20221220091801.GA955606@ec167f3768ca>
+References: <20221219182940.701087296@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1p7XFr-002DHK-VC
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:33920
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221219182940.701087296@linuxfoundation.org>
 
-On 12/19/22 11:22 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.1 release.
-> There are 25 patches in this series, all will be posted as a response
+On Mon, Dec 19, 2022 at 08:24:53PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.161 release.
+> There are 18 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Hi Greg,
 
-Tested-by: Ron Economos <re@w6rz.net>
+5.10.161-rc1 tested.
 
+Run tested on:
+- Intel Skylake x86_64 (nuc6 i5-6260U)
+
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- Allwinner H6
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
