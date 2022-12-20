@@ -1,81 +1,81 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88052CA6
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 18:57:40 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id 17so13250473pll.0
-        for <patches@lists.linux.dev>; Tue, 20 Dec 2022 10:57:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mSPTHsXsrhOIwndCIwPpGYW6EAktLLgeTGWc4GBS0Ec=;
-        b=CFYf2eZ3CxVmwaUbcrKsNBy1u3NuzGBER4gEuMCisQ0jtzy5T7WsAdO0uC81YTwpqv
-         Lz7OJ3/Hvp19gi7jP53I5nGZV6qMTknqUI8pR8oaIQzh7zTkMgB5AeRBVmDOjpP+7O4Y
-         nfBMDg+AH6rST6a7BkZXVsYQUIoHq0XuY/BB8zPvcJPium21oZKC3zEWhxQncGi2JbiJ
-         1+GYdPezqgQPcHHE8TB/Ewz1FekLkzcPml+VQHnvWXI7zyPZxC2fI4Avhj5pWOXI7vet
-         dWZJt2cjRqwZgU+b4GeKefFv5tesAJhGSy6+2a51JlMGJLSd5/nCRXmJcaLW9niefa33
-         RAoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mSPTHsXsrhOIwndCIwPpGYW6EAktLLgeTGWc4GBS0Ec=;
-        b=A/ynzLhH+kg/zcoJsgvDg0cp1iKafRi7Xjonwe7eVevYO86z/r10e06QKEqIj4Q1rx
-         tpODIuh6OT7o30q4/LEqQ7XabkfCWW7vYWP8kilzTGEpdgvo8nWaLSdq7Ml2SiQwC6VS
-         yARRdvOae/K1tIfatY+gJu2dQf9uwIgg5XYB4qxpOdcgLUYUH8hAflxLajEAGkFZ3dWg
-         f0nrSKPLIgmcw6WOVcl2c6FTMJD+zMjc1QW8AiQROKayYyxByC626hBOtvt2Utb88ElE
-         FwNAWQxoj8tAqzvqBWT+ZTZ7yywuv3drg5s8g922c4K8BGTKortjjEqrxRCz5H2lqsdd
-         HKXA==
-X-Gm-Message-State: ANoB5pkRusKhr4wUVCD+gbQH+N9+futF4vnKB6UapwiFF2DN3neYhAqT
-	OhqOHfJUSK6QOhPjj/VJ5fC1FAPwTfwzLcCt4mHCF4GpMEY=
-X-Google-Smtp-Source: AA0mqf6l0TavrCU9yrUNKxvMLdkUhelDFyBVVaaLkbmUpK9hN79cFp9gg2EuTkBDIgjjaIxXPqohuR4pcmNWkgGWx4c=
-X-Received: by 2002:a17:902:c951:b0:189:e81a:1520 with SMTP id
- i17-20020a170902c95100b00189e81a1520mr16236577pla.48.1671562660294; Tue, 20
- Dec 2022 10:57:40 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732928F66
+	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 20:13:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2276C433EF;
+	Tue, 20 Dec 2022 20:13:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1671567196;
+	bh=Gv7ILarnqG6VXDv1zDoq4dXMcpli2fdU3fYWtrhD7CU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BNIgEyD2b/kwnXbaR5eP2QBP6UOPAvQD/zXFajZWt6RT74gXhm2s6OW4N4KlIDYfC
+	 Wxj/cb6C47OFZnLUTyNjRVTrtsstBCz34eSTcFuSh8xOdIJfvtKJ0/S3YG8qtuZO+h
+	 LVw/GM01Blb4idgGSfUfT/5N9ejTRXvuE5Mw1vrfiD3+t4k4Xbat5lWBMHcLkl/46L
+	 MZPNmMJsegfvf0rTSEXW5sH0CokCzOrUgUPmh+IzXUqga3I07y9uao2n9w8QT5IQiS
+	 MZzetOEpR2Sv47PnKm1OJ3NaodmMfXpe4ekWd75YuDtjccDI1UPYcXzuqMblveH5rR
+	 DHTVp2kedMNHw==
+Date: Tue, 20 Dec 2022 20:13:14 +0000
+From: Eric Biggers <ebiggers@kernel.org>
+To: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
+Subject: Re: [PATCH v12 0/6] implement getrandom() in vDSO
+Message-ID: <Y6IXWltScF2CI1v3@gmail.com>
+References: <20221212185347.1286824-1-Jason@zx2c4.com>
+ <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221219182943.395169070@linuxfoundation.org>
-In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Tue, 20 Dec 2022 10:57:29 -0800
-Message-ID: <CAJq+SaBiKCraBGBY7m8RmvSxrPF=Ccw579nMkCnhp+N1NYLPfg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
 
-> This is the start of the stable review cycle for the 6.1.1 release.
-> There are 25 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.1-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Dec 20, 2022 at 05:17:52PM +0000, Christophe Leroy wrote:
+> Hi Jason,
+> 
+> Le 12/12/2022 à 19:53, Jason A. Donenfeld a écrit :
+> > Changes v11->v12:
+> > ----------------
+> > - In order to avoid mlock()ing pages, and the related rlimit and fork
+> >    inheritance issues there, Introduce VM_DROPPABLE to prevent swapping
+> >    while meeting the cache-like requirements of vDSO getrandom().
+> > 
+> >    This has some tenticles in mm/ and arch/x86/ code, so I've marked the
+> >    two patches for that as still RFC, while the rest of the series is not
+> >    RFC.
+> > 
+> > - Mandate that opaque state blobs don't straddle page boundaries, so
+> >    that VM_DROPPABLE can work on page-level granularity rather than
+> >    allocation-level granularity.
+> > 
+> > - Add compiler barriers to vDSO getrandom() to prevent theoretical
+> >    reordering potential.
+> > 
+> > - Initialize the trials loop counter in the chacha test.
+> 
+> I would have liked to give it a try on powerpc, but the series 
+> conflicts. I tried both on v6.1 and on linus/master from now:
+> 
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Same here, I can't figure out how to apply this series.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+It would help if people always used the --base option to git format-patch...
 
-Thanks.
+- Eric
