@@ -1,43 +1,43 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F657E
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 11:18:24 +0000 (UTC)
-Received: by mail-wr1-f47.google.com with SMTP id o5so11416322wrm.1
-        for <patches@lists.linux.dev>; Tue, 20 Dec 2022 03:18:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9F37E
+	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 11:20:04 +0000 (UTC)
+Received: by mail-wm1-f42.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so10869138wma.1
+        for <patches@lists.linux.dev>; Tue, 20 Dec 2022 03:20:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtoQLOQcMrzMvarcNfJn3CYdynYcRi+UXcHZGS5Iv9E=;
-        b=kABbtNC75GxFicSWkl2QLheKTFhLPIaxtsW4wPGRDbjmzXn3Z1esbIBSHk98AaGtHr
-         8lUx6nqY4j/NtQJxKg50K0pX37ue+UX90OTbVtQn5M0cnnTLmL9uqI5/mdwL5R6dwHHC
-         3jXQuOddLVsCS6yMblyjOPNv1mXbs55XjzWuKHhZBmoPdtEjGRbHXgl9vAdzIZL+H34O
-         pNfu+zCYICY3fKUDMq1dA9WLF9yoN7781/KYVrvDWh3OJB3rlpM4+gawFXBBoJX9Du7C
-         Dos1JVeqFKdDDsCghpdWZKoKzxwe19BvbwEiNyFf3rC664n1K37DzMLzJ3bBLDuuvUZG
-         MjEA==
+        bh=2lkzhxocRun/354TaurNhyByO/xU5VYZuEn4lnI7Les=;
+        b=LG2XND57AYCLmmziUE9xBeCYCWIBljQwA1eSzf4iNVyblavE5P+LlRaHRHY7f099VW
+         su5EG5OIK3/oCwVFzqN/LJxbl07L4aLCMDdnq6IpJIQwYjg4NjgqlUPhs8xpSjJ+kLIW
+         CnuAbMdekFTVZ8aD1Kt3LCy39UdYGKow4PIxXcre+oe/s7bR/dNItcUbLZLDplGd7iRG
+         qmYFf3K9beZgpI7P7xEqUI1VdECTr7QtBfy0632vFbbvCperkdq85qcTNVW1QbKGpPh6
+         SzcyplIxRUuLFfDkiATBxjMzUi4uUxgHbluKprQ3oif8AVhWQaFkrQ5q39wcLBYthq9o
+         FeHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mtoQLOQcMrzMvarcNfJn3CYdynYcRi+UXcHZGS5Iv9E=;
-        b=dBmwQWHqy7vWHV4pl1RFyf09c1c7T3YFg7LRuUwX1Bc+ZPHFtUAOWtoLcibzmZq7rG
-         qa0SwRmZWEEYofZ7mIkC5lZe4faWlJXySULU6Wvym9Vy55vy/EJT84qOKa5o4gmYM78z
-         CLGdBBYTaHZg0cZMTRgWSkBdDkcfgLba59jmL6wiMSZ3zY5L1R05ciuUX/kQdVcEdzSK
-         N/ZClNot9mpNwSjKVExhLEAUPLdM+gsLddsxYCpAXwi4gI5p8WESAMNvPuZGovxwUB1H
-         zEz1Z05fUk4ulSidlGubNoqEVQinWFFFY8LJEZYT82E0CAngCPZcVn8aQnB413fntqa4
-         Aoow==
-X-Gm-Message-State: ANoB5pl7aojD/k7UhzlBFpLwnuygPBWhkNG43pWLhmZITHUrM6dQfpZo
-	pLwwOch65O6kz6Rqnof8Xio=
-X-Google-Smtp-Source: AA0mqf5nzKQxGjJrCbgu0kJhJRMCNqeV8ZxKRevg1rDIoBoXvAF9t7txIwXZ8EXHy2bNzm36/LTxZA==
-X-Received: by 2002:a5d:4112:0:b0:242:1433:a8ba with SMTP id l18-20020a5d4112000000b002421433a8bamr30717013wrp.20.1671535102555;
-        Tue, 20 Dec 2022 03:18:22 -0800 (PST)
+        bh=2lkzhxocRun/354TaurNhyByO/xU5VYZuEn4lnI7Les=;
+        b=10+DK4pBXKO1wmqJhy/01+rF8NY7WVochOkxY9XdWT+MUJy6W8mi0AOkQ9KTZ6QPZp
+         rJbChS1zk2a1Q+hKVMDnaL79zfpZL27RvmTq758JOqTPLWWLfew8hvfAska+Eespt4kv
+         NQw1uqYciDOPBZau4z3hWUp6QCmpWqgQ8wHjcPsNiDehBqD29lLQjolEvSDMDqNMlU/c
+         SVSsi9NlYq9prXja+JRzAztPdo//hH0npikpdMHbMLyK6HaCtveSKuca8k5ZAfE+lqpa
+         /6KtzWfIzFHaBuDv1al/TQ9OZaZK1btGW9DwgPity5nGbQjp/y+4rdCPQUTmzayiv+8F
+         Z89w==
+X-Gm-Message-State: ANoB5pl9/ok8marZxEaXSeIJpN43o21bXMCTZTg3hHGj3D3+8O9dWmFL
+	mvJ0RLDthffC9DvTzTxdDU0=
+X-Google-Smtp-Source: AA0mqf6lLW7WJ7KzxajZSlVFlhw1yOdpWQtaC+WCBLV+bGwGK7ancWAEq8J4wbmzHcLmc+r0p3SUrg==
+X-Received: by 2002:a7b:c30e:0:b0:3cf:6910:51d4 with SMTP id k14-20020a7bc30e000000b003cf691051d4mr33540745wmj.29.1671535202599;
+        Tue, 20 Dec 2022 03:20:02 -0800 (PST)
 Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id y14-20020adffa4e000000b00268aae5fb5bsm215451wrr.3.2022.12.20.03.18.21
+        by smtp.gmail.com with ESMTPSA id p189-20020a1c29c6000000b003c701c12a17sm22204179wmp.12.2022.12.20.03.20.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 03:18:22 -0800 (PST)
-Date: Tue, 20 Dec 2022 11:18:20 +0000
+        Tue, 20 Dec 2022 03:20:02 -0800 (PST)
+Date: Tue, 20 Dec 2022 11:20:00 +0000
 From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/18] 5.10.161-rc1 review
-Message-ID: <Y6GZ/NLLnGD4hOYL@debian>
-References: <20221219182940.701087296@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/17] 5.15.85-rc1 review
+Message-ID: <Y6GaYM7gg3ManVGc@debian>
+References: <20221219182940.739981110@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,25 +57,26 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221219182940.701087296@linuxfoundation.org>
+In-Reply-To: <20221219182940.739981110@linuxfoundation.org>
 
 Hi Greg,
 
-On Mon, Dec 19, 2022 at 08:24:53PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.161 release.
-> There are 18 patches in this series, all will be posted as a response
+On Mon, Dec 19, 2022 at 08:24:46PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.85 release.
+> There are 17 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
 > Anything received after that time might be too late.
 
-Build test (gcc version 11.3.1 20221127):
-mips: 63 configs -> no failure
-arm: 104 configs -> no failure
+Build test (gcc version 12.2.1 20221127):
+mips: 62 configs -> no failure
+arm: 99 configs -> no failure
 arm64: 3 configs -> no failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
 powerpc allmodconfig -> no failure
 riscv allmodconfig -> no failure
 s390 allmodconfig -> no failure
@@ -85,10 +86,11 @@ Boot test:
 x86_64: Booted on my test laptop. No regression.
 x86_64: Booted on qemu. No regression. [1]
 arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2409
-[2]. https://openqa.qa.codethink.co.uk/tests/2424
-
+[1]. https://openqa.qa.codethink.co.uk/tests/2422
+[2]. https://openqa.qa.codethink.co.uk/tests/2425
+[3]. https://openqa.qa.codethink.co.uk/tests/2428
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
