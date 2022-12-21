@@ -1,88 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C199F7E
-	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 14:25:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D712FC433D2;
-	Wed, 21 Dec 2022 14:25:53 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="lRfbtyA5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1671632752;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8QQzlcDreGvKeI1pdR+V0dkEGrKkHpwe4Fd6Sw7snfM=;
-	b=lRfbtyA5Ug1Tw0zhKb/BNFVoEpWyjAGCyO/CoLabvh7W3k4ANnWkdSVX9WueP0sD+6Ai0z
-	fM66bagOmE4QBhCc6XTBVj7Ox6yRN+8yBHyMnexD8QI1Ge3QpORi6PmoQMnlF78mdrWHTA
-	+rvAZXe36hNg+4rNK2pXFWP3l6D+F3g=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 421bb0b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Dec 2022 14:25:52 +0000 (UTC)
-Date: Wed, 21 Dec 2022 15:25:49 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
-Subject: Re: [PATCH v12 0/6] implement getrandom() in vDSO
-Message-ID: <Y6MXbTAHBSR5WBrU@zx2c4.com>
-References: <20221212185347.1286824-1-Jason@zx2c4.com>
- <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
- <Y6IXWltScF2CI1v3@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79D12573
+	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 16:04:28 +0000 (UTC)
+Received: by mail-oo1-f52.google.com with SMTP id v62-20020a4a7c41000000b004a0a214dfbaso2471931ooc.9
+        for <patches@lists.linux.dev>; Wed, 21 Dec 2022 08:04:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HJmsn58xKPbGHiKrj82Ko5wI0bke7L5N3g2n349swQQ=;
+        b=VKZh8Z+o5HVhAYyL+Km4C+pZUd+tLLpykKq2K/NWLT0ihGl9RzIOi5JSJAcyYXbrbr
+         t5eUzkVG7RqeD9P5pckYLyBQYGRLG36GEjIUPTJJqHneXFr3ZcS4nkHwNvOCqJO44CHj
+         sbXsoUOqo6DrXBuRI1E4Kj/ceWeGFfg+MFf/U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HJmsn58xKPbGHiKrj82Ko5wI0bke7L5N3g2n349swQQ=;
+        b=xjpK30gxAZvEU78tPdCc9FxUUpFy2bZ5ftxG5tR1z44M/M5CnFpJEK9Sz+mvJBota9
+         VIuc2sT/5vew0tr6urE1MjIhxd4qWb3XNEO0XtRPCuxMJpI9tX5+1idLS2eAhiIJElRE
+         FAXCXVBFALYqsKXGwWv29a/OGRUq7cKUlQaSa0Z4/ALF4UIRpiJ1keNJcNW8v3EdfBO5
+         G1N+U68F9lyAc1HOMQHGtGKyzk8WlPhaSMgp/2Fn0Y3xRLNTdx9fwUmLvMUcaJnfDZe4
+         6gygONDpFY7K57pOh9mRHcRNy1wWgTm3A/IFzs0OmEIB7I05E+bCnjCQsLv0X4P2ijyd
+         Mjmg==
+X-Gm-Message-State: AFqh2koNzGVd9SHU3hOC4f33NaFbHEGwTJTTaM4V4qAtiiZfWawMfK79
+	HRy66MWiIaLuXxrgQ7CMOmFZVg==
+X-Google-Smtp-Source: AMrXdXvFCPfGpZRQD5dV4PjhY/izAVNd9gTVAqDtT3zxjxX8W42bImEfLYj6CVX1qzV+cfy5caAGYg==
+X-Received: by 2002:a4a:43:0:b0:49f:8720:d5b2 with SMTP id 64-20020a4a0043000000b0049f8720d5b2mr1070027ooh.8.1671638667751;
+        Wed, 21 Dec 2022 08:04:27 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id a11-20020a4ab10b000000b0049fb39100a5sm6205846ooo.37.2022.12.21.08.04.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Dec 2022 08:04:27 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Wed, 21 Dec 2022 10:04:25 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 00/28] 6.0.15-rc1 review
+Message-ID: <Y6MuiZJZ/6wLsXpu@fedora64.linuxtx.org>
+References: <20221219182944.179389009@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y6IXWltScF2CI1v3@gmail.com>
+In-Reply-To: <20221219182944.179389009@linuxfoundation.org>
 
-On Tue, Dec 20, 2022 at 08:13:14PM +0000, Eric Biggers wrote:
-> On Tue, Dec 20, 2022 at 05:17:52PM +0000, Christophe Leroy wrote:
-> > Hi Jason,
-> > 
-> > Le 12/12/2022 à 19:53, Jason A. Donenfeld a écrit :
-> > > Changes v11->v12:
-> > > ----------------
-> > > - In order to avoid mlock()ing pages, and the related rlimit and fork
-> > >    inheritance issues there, Introduce VM_DROPPABLE to prevent swapping
-> > >    while meeting the cache-like requirements of vDSO getrandom().
-> > > 
-> > >    This has some tenticles in mm/ and arch/x86/ code, so I've marked the
-> > >    two patches for that as still RFC, while the rest of the series is not
-> > >    RFC.
-> > > 
-> > > - Mandate that opaque state blobs don't straddle page boundaries, so
-> > >    that VM_DROPPABLE can work on page-level granularity rather than
-> > >    allocation-level granularity.
-> > > 
-> > > - Add compiler barriers to vDSO getrandom() to prevent theoretical
-> > >    reordering potential.
-> > > 
-> > > - Initialize the trials loop counter in the chacha test.
-> > 
-> > I would have liked to give it a try on powerpc, but the series 
-> > conflicts. I tried both on v6.1 and on linus/master from now:
-> > 
+On Mon, Dec 19, 2022 at 08:22:47PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.15 release.
+> There are 28 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Same here, I can't figure out how to apply this series.
+> Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.15-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Rebased v13 posted: https://lore.kernel.org/all/20221221142327.126451-1-Jason@zx2c4.com/
+Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
-Jason
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
