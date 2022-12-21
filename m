@@ -1,73 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D19291C
-	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 18:20:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E517EC433D2;
-	Wed, 21 Dec 2022 18:20:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1671646823;
-	bh=EaL1FZjLFJ4p/Kw6JDysbkFcTcClZFXC8wsmE4QUj1I=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CCC2FAF
+	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 20:48:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2A8C433D2;
+	Wed, 21 Dec 2022 20:48:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1671655726;
+	bh=V20cak5a7oCUhu/ElPJQDWDEPcrzF+kUY7ml3BOPRAA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=y0b/+0V0GXcWQHdrRu33PGYH0DmXMpXG6qg84EZ0JRauzqdfTqRtTNTcxbXu84JfZ
-	 C5fmHMEPmZPZiTiBZyBEZW+ExFvfc2vGtyswlbyFyoZvrg9FMDMhwI35hpRKOtTxM4
-	 HRMl1vc+5C6gujCacBy5T+06vipBA3t7u+wUTRjk=
-Date: Wed, 21 Dec 2022 19:20:20 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
-Message-ID: <Y6NOZEaDpod+9r/0@kroah.com>
-References: <20221219182943.395169070@linuxfoundation.org>
- <20221220150049.GE3748047@roeck-us.net>
- <Y6HQfwEnw75iajYr@kroah.com>
- <20221220161135.GA1983195@roeck-us.net>
- <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
+	b=ugzfuQ/F8El0jwSlwYMle/yRAjDhWVugkamPioI3pUY+8UDkXBGc1PHBwn8DGQkiv
+	 IGRQdriSNr3uGD9Ra03+7w75b6rRHNUSxRCD1N3Womaolj2G7ePA+z2/+YI6XaA038
+	 dsaLm+ie15QOiyOS3pJe8Jg3FR4zF+ya0zTgHOiD7MuP0XLvhw89RIC75wVV9pWdbf
+	 jRRXfZYGifZfd+IMnojvmz5kzGVG4J9guOfY4ep/o/vKfNfIRKcUFpeIobehqrSXp1
+	 svckhF3Mu4pRx6vuFsEYboC9GspJv7a9W5o3/1sVPpOlDoGHkl8XOjHvwTBloaMKtP
+	 ijFjIzlG7t9wg==
+Date: Wed, 21 Dec 2022 12:48:44 -0800
+From: Eric Biggers <ebiggers@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
+Subject: Re: [PATCH v12 0/6] implement getrandom() in vDSO
+Message-ID: <Y6NxLCyk6XVJu2iM@sol.localdomain>
+References: <20221212185347.1286824-1-Jason@zx2c4.com>
+ <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
+ <Y6IXWltScF2CI1v3@gmail.com>
+ <Y6MXbTAHBSR5WBrU@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y6MXbTAHBSR5WBrU@zx2c4.com>
 
-On Wed, Dec 21, 2022 at 07:34:04AM +0100, Jiri Slaby wrote:
-> On 20. 12. 22, 17:11, Guenter Roeck wrote:
-> > You probably didn't see any reports on mainline because I didn't report
-> > the issue there yet. There are so many failures in mainline that it is
-> > a bit difficult to keep up.
+On Wed, Dec 21, 2022 at 03:25:49PM +0100, Jason A. Donenfeld wrote:
+> On Tue, Dec 20, 2022 at 08:13:14PM +0000, Eric Biggers wrote:
+> > On Tue, Dec 20, 2022 at 05:17:52PM +0000, Christophe Leroy wrote:
+> > > Hi Jason,
+> > > 
+> > > Le 12/12/2022 à 19:53, Jason A. Donenfeld a écrit :
+> > > > Changes v11->v12:
+> > > > ----------------
+> > > > - In order to avoid mlock()ing pages, and the related rlimit and fork
+> > > >    inheritance issues there, Introduce VM_DROPPABLE to prevent swapping
+> > > >    while meeting the cache-like requirements of vDSO getrandom().
+> > > > 
+> > > >    This has some tenticles in mm/ and arch/x86/ code, so I've marked the
+> > > >    two patches for that as still RFC, while the rest of the series is not
+> > > >    RFC.
+> > > > 
+> > > > - Mandate that opaque state blobs don't straddle page boundaries, so
+> > > >    that VM_DROPPABLE can work on page-level granularity rather than
+> > > >    allocation-level granularity.
+> > > > 
+> > > > - Add compiler barriers to vDSO getrandom() to prevent theoretical
+> > > >    reordering potential.
+> > > > 
+> > > > - Initialize the trials loop counter in the chacha test.
+> > > 
+> > > I would have liked to give it a try on powerpc, but the series 
+> > > conflicts. I tried both on v6.1 and on linus/master from now:
+> > > 
+> > 
+> > Same here, I can't figure out how to apply this series.
 > 
-> Just heads up, these are breakages in 6.1 known to me:
+> Rebased v13 posted: https://lore.kernel.org/all/20221221142327.126451-1-Jason@zx2c4.com/
 > 
-> an io_uring 32bit test crashes the kernel:
-> https://lore.kernel.org/all/c80c1e3f-800b-dc49-f2f5-acc8ceb34d51@gmail.com/
-> 
-> Fixed in io_uring tree.
-> 
-> 
-> bind() of previously bound port no longer fails:
-> https://lore.kernel.org/all/6b971a4e-c7d8-411e-1f92-fda29b5b2fb9@kernel.org/
-> 
-> No fix available and revert close to impossible.
-> 
-> 
-> 
-> And most important, mremap() is broken in 6.1, so mostly everything fails in
-> some random way:
-> https://lore.kernel.org/all/20221216163227.24648-1-vbabka@suse.cz/T/#u
-> 
-> Fixed in -mm.
-> 
-> maybe it can help...
 
-Thanks for the list, I'll keep an eye out for these...
+Thanks, it is always good to give the *actual* base commit though, preferably
+with the --base option to git format-patch.  "Latest random.git master branch"
+changes over time.
 
-greg k-h
+- Eric
