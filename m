@@ -1,81 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732928F66
-	for <patches@lists.linux.dev>; Tue, 20 Dec 2022 20:13:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2276C433EF;
-	Tue, 20 Dec 2022 20:13:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1671567196;
-	bh=Gv7ILarnqG6VXDv1zDoq4dXMcpli2fdU3fYWtrhD7CU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BNIgEyD2b/kwnXbaR5eP2QBP6UOPAvQD/zXFajZWt6RT74gXhm2s6OW4N4KlIDYfC
-	 Wxj/cb6C47OFZnLUTyNjRVTrtsstBCz34eSTcFuSh8xOdIJfvtKJ0/S3YG8qtuZO+h
-	 LVw/GM01Blb4idgGSfUfT/5N9ejTRXvuE5Mw1vrfiD3+t4k4Xbat5lWBMHcLkl/46L
-	 MZPNmMJsegfvf0rTSEXW5sH0CokCzOrUgUPmh+IzXUqga3I07y9uao2n9w8QT5IQiS
-	 MZzetOEpR2Sv47PnKm1OJ3NaodmMfXpe4ekWd75YuDtjccDI1UPYcXzuqMblveH5rR
-	 DHTVp2kedMNHw==
-Date: Tue, 20 Dec 2022 20:13:14 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
-Subject: Re: [PATCH v12 0/6] implement getrandom() in vDSO
-Message-ID: <Y6IXWltScF2CI1v3@gmail.com>
-References: <20221212185347.1286824-1-Jason@zx2c4.com>
- <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866B91365
+	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 01:07:56 +0000 (UTC)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1445ca00781so17566806fac.1
+        for <patches@lists.linux.dev>; Tue, 20 Dec 2022 17:07:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SA7wPis3qfy2mAWSDnJYGuGWdIgrAcp0Jn1gFSZFKIg=;
+        b=m3NG5wkj/m7kkFKRhSMlP1JND+8MdIIGHEYBzxjoSqZYzVFd7KEVnfkvEch6PmjnRb
+         i/b7L7frHtBLoOlumMAZhQz0pobwBxl3cOTXxqJ8Kto/Q2LOe01Oxv2mOLi37e+76ym2
+         fC7hB3P92Nv8KZDLFutXoiJ4cJ/JG3f1Vgyemx9cseeNTtsGcZIVP1PqMk7bsOiCFz4P
+         qyytWi1QmCNQXNa8HxGm6uitXW1zYAfxFzgHQeWoicCV76H5vk2pPjIkvyq5s44w3JkY
+         Kr/oZOlZltX8ljNauhwdeISVUKM9apfonea/8T0ZKaLku0uOesz03FVV5aQx1s2MFp/N
+         VSOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SA7wPis3qfy2mAWSDnJYGuGWdIgrAcp0Jn1gFSZFKIg=;
+        b=KTDcbEw3jtt/8W5v8hsRaQnahahC6saHZq1ifmoej8FvLP25jBss8iOKU0h8d4pB7k
+         5fVdji+zAOIMWRFLGmg464Y179G7n38XKz0K5cLUcr2achJWVOsCxE74xYLdF2iDemqr
+         KO8zFBrwcM8Incs2LZUdBQzJx2zTMFq2+V8giqNWLUIQElOag/EWjKLk+2aSYCw9/vfg
+         ABdoPiYOUQm1Ywbd7XIJ2Moh6VuH8o0VRtAO1Rb/mjROI2JjBmvCTRf/BcPWhe7do4Wb
+         jmGQfqK2sRh90pSugpc1mrVBfTVuPUBp1wa/Kn+yYiK/dDOZwIxBq+NH+uQXtDPpHjpd
+         wKnw==
+X-Gm-Message-State: AFqh2kp0oo147U6R+jRirhv9XuMjFFAI6Fs2mNAqgXrO4r0KT0X6oym6
+	LvheVVW6bEeQoiVxNlZAqY8=
+X-Google-Smtp-Source: AMrXdXtWoE9P9QibiVW9qIOny6LTxFjK29vK9WVgIiBvgohFEoMFmzx8osi6URBhEsG0FRcCFydeiA==
+X-Received: by 2002:a05:6870:bac5:b0:143:fca2:e03f with SMTP id js5-20020a056870bac500b00143fca2e03fmr6943142oab.11.1671584875576;
+        Tue, 20 Dec 2022 17:07:55 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id j23-20020a4adf57000000b004a3543fbfbbsm5647721oou.14.2022.12.20.17.07.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 17:07:55 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 20 Dec 2022 17:07:53 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 00/28] 6.0.15-rc1 review
+Message-ID: <20221221010753.GA1319848@roeck-us.net>
+References: <20221219182944.179389009@linuxfoundation.org>
+ <20221220144900.GD3748047@roeck-us.net>
+ <20221220153302.GA907923@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <86cfa465-2485-ff24-16f5-9014e25a0e98@csgroup.eu>
+In-Reply-To: <20221220153302.GA907923@roeck-us.net>
 
-On Tue, Dec 20, 2022 at 05:17:52PM +0000, Christophe Leroy wrote:
-> Hi Jason,
+On Tue, Dec 20, 2022 at 07:33:03AM -0800, Guenter Roeck wrote:
+> On Tue, Dec 20, 2022 at 06:49:02AM -0800, Guenter Roeck wrote:
+> > On Mon, Dec 19, 2022 at 08:22:47PM +0100, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.0.15 release.
+> > > There are 28 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > 
+> > Build results:
+> > 	total: 155 pass: 155 fail: 0
+> > Qemu test results:
+> > 	total: 500 pass: 500 fail: 0
+> > 
+> > Tested-by: Guenter Roeck <linux@roeck-us.net>
+> > 
 > 
-> Le 12/12/2022 à 19:53, Jason A. Donenfeld a écrit :
-> > Changes v11->v12:
-> > ----------------
-> > - In order to avoid mlock()ing pages, and the related rlimit and fork
-> >    inheritance issues there, Introduce VM_DROPPABLE to prevent swapping
-> >    while meeting the cache-like requirements of vDSO getrandom().
-> > 
-> >    This has some tenticles in mm/ and arch/x86/ code, so I've marked the
-> >    two patches for that as still RFC, while the rest of the series is not
-> >    RFC.
-> > 
-> > - Mandate that opaque state blobs don't straddle page boundaries, so
-> >    that VM_DROPPABLE can work on page-level granularity rather than
-> >    allocation-level granularity.
-> > 
-> > - Add compiler barriers to vDSO getrandom() to prevent theoretical
-> >    reordering potential.
-> > 
-> > - Initialize the trials loop counter in the chacha test.
-> 
-> I would have liked to give it a try on powerpc, but the series 
-> conflicts. I tried both on v6.1 and on linus/master from now:
+> Wrong results, sorry. I'll resend once I have real ones. 
 > 
 
-Same here, I can't figure out how to apply this series.
+Here are the real test results:
 
-It would help if people always used the --base option to git format-patch...
+Build results:
+	total: 155 pass: 155 fail: 0
+Qemu test results:
+	total: 500 pass: 498 fail: 2
+Failed tests:
+	arm:xilinx-zynq-a9:multi_v7_defconfig:usb0:mem128:net,default:zynq-zc702:rootfs
+	arm:xilinx-zynq-a9:multi_v7_defconfig:usb0:mem128:zynq-zed:rootfs
 
-- Eric
+The arm:xilinx-zynq-a9 test failures are seen all the way to v4.19.y.
+
+Guenter
+
