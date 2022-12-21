@@ -1,21 +1,21 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC61A33C1
-	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 22:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6167C433F0;
-	Wed, 21 Dec 2022 22:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E19753B4
+	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 23:27:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64466C433EF;
+	Wed, 21 Dec 2022 23:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1671661422;
-	bh=a4YlhMKwpDx91P9/OqB5YgBJ3CZZKs0GBLO0nss4l5w=;
+	s=k20201202; t=1671665226;
+	bh=z/T5QRAMwI/aM2wSsvcjJlnhhFOn5MGclCR919Yyc9g=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gW5FaHCafpN8ZHL5irBlgHeFWBBO/ENKqAJyXcOmUTD05EsGlo0F23Di+6Itkj35X
-	 2JkRi9prJRsOH9MVAjKt07kLTzk9konccJ9E/1E/g/B4iE3Vv/pJ2jzhnBlgX56wVv
-	 mz2RJjDDGpuzmPi9CCiFFnpWxlY2fEk5xmomRZjRfzATOugR/Cf42Z84mJIJsfg+U+
-	 JtJLZZzN5vtKPy5MCC+yhO79taV+3t+yQV2/vu+Dlh51p/3/flMkLXhdvgQjPxiBMv
-	 iYWG31s1SNjYaSYZRi/cXz0JqV986Bt6O8kPvsQPRUq9CNS8KXpoG5IJFUd7W/93bU
-	 lzbkgNAYsMUNQ==
-Date: Wed, 21 Dec 2022 14:23:39 -0800
+	b=CBJBAqiV8Y6Yn0s72mlVPq8NAGCYsJ2iv06chckorAsZ5hhjyx/uzq4Lm29vAxN0O
+	 7DRljHogOCCn5utlXE7SwE77nd0MXxaARNjaoS69qIWH3sVOvh903lXm0CYwhiI2/z
+	 VHY7BUWmJgT5iiI8sFnpc8KYrHij+Pg4AtH3CKQsJsZMPyto/DxYyVLHloauo7j0vu
+	 BQPjeMGA6i2LiXH/0yGHme4NjpvQZ8AZvistVUBPmDs1QQjfu8cAovssywwzNtoMP2
+	 tk1MER+XsHax/ErTIGc+eHak8dntLfFH4R3ltAzbQ+OIqGlXOIRzv/XbANpRrFWg5y
+	 QqU2H7eBjYjcg==
+Date: Wed, 21 Dec 2022 15:27:04 -0800
 From: Eric Biggers <ebiggers@kernel.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
@@ -26,12 +26,13 @@ Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
 	Carlos O'Donell <carlos@redhat.com>,
 	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
 	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v13 6/7] random: introduce generic vDSO getrandom()
+	Christian Brauner <brauner@kernel.org>,
+	Samuel Neves <sneves@dei.uc.pt>
+Subject: Re: [PATCH v13 7/7] x86: vdso: Wire up getrandom() vDSO
  implementation
-Message-ID: <Y6OHa196S8e1mImg@sol.localdomain>
+Message-ID: <Y6OWSM18QL977nbC@sol.localdomain>
 References: <20221221142327.126451-1-Jason@zx2c4.com>
- <20221221142327.126451-7-Jason@zx2c4.com>
+ <20221221142327.126451-8-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,42 +41,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221221142327.126451-7-Jason@zx2c4.com>
+In-Reply-To: <20221221142327.126451-8-Jason@zx2c4.com>
 
-On Wed, Dec 21, 2022 at 03:23:26PM +0100, Jason A. Donenfeld wrote:
-> diff --git a/drivers/char/random.c b/drivers/char/random.c
-> index 6425f5f838e0..660cd15b6228 100644
-> --- a/drivers/char/random.c
-> +++ b/drivers/char/random.c
-> @@ -60,6 +60,7 @@
->  #include <crypto/blake2s.h>
->  #ifdef CONFIG_VDSO_GETRANDOM
->  #include <vdso/getrandom.h>
-> +#include <vdso/datapage.h>
->  #endif
->  #include <asm/archrandom.h>
->  #include <asm/processor.h>
-> @@ -407,6 +408,9 @@ static void crng_reseed(struct work_struct *work)
->	/*
->	 * We copy the new key into the base_crng, overwriting the old one,
->	 * and update the generation counter. We avoid hitting ULONG_MAX,
->	 * because the per-cpu crngs are initialized to ULONG_MAX, so this
->	 * forces new CPUs that come online to always initialize.
->	 */
->	spin_lock_irqsave(&base_crng.lock, flags);
->	memcpy(base_crng.key, key, sizeof(base_crng.key));
->	next_gen = base_crng.generation + 1;
->  	if (next_gen == ULONG_MAX)
->  		++next_gen;
->  	WRITE_ONCE(base_crng.generation, next_gen);
-> +#ifdef CONFIG_VDSO_GETRANDOM
-> +	smp_store_release(&_vdso_rng_data.generation, next_gen + 1);
-> +#endif
+On Wed, Dec 21, 2022 at 03:23:27PM +0100, Jason A. Donenfeld wrote:
+> diff --git a/arch/x86/entry/vdso/vgetrandom-chacha.S b/arch/x86/entry/vdso/vgetrandom-chacha.S
+> new file mode 100644
+> index 000000000000..91fbb7ac7af4
+> --- /dev/null
+> +++ b/arch/x86/entry/vdso/vgetrandom-chacha.S
+> @@ -0,0 +1,177 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+> + */
+> +
+> +#include <linux/linkage.h>
+> +#include <asm/frame.h>
+> +
+> +.section	.rodata.cst16.CONSTANTS, "aM", @progbits, 16
+> +.align 16
+> +CONSTANTS:	.octa 0x6b20657479622d323320646e61707865
+> +.text
 
-It's confusing that "uninitialized generation" is ULONG_MAX in the per-cpu
-crngs, but 0 in the vdso_rng_data.  That results in a weird off-by one thing,
-where the vdso_rng_data generation number has to be 1 higher.
+For simplicity, maybe leave off the section mergeability stuff and just have
+plain ".section .rodata"?
 
-Would it be possible to use 0 for both?
+> +/*
+> + * Very basic SSE2 implementation of ChaCha20. Produces a given positive number
+> + * of blocks of output with a nonce of 0, taking an input key and 8-byte
+> + * counter. Importantly does not spill to the stack. Its arguments are:
+> + *
+> + *	rdi: output bytes
+> + *	rsi: 32-byte key input
+> + *	rdx: 8-byte counter input/output
+> + *	rcx: number of 64-byte blocks to write to output
+> + */
+> +SYM_FUNC_START(__arch_chacha20_blocks_nostack)
+> +
+> +#define output  %rdi
+> +#define key     %rsi
+> +#define counter %rdx
+> +#define nblocks %rcx
+> +#define i       %al
+> +#define state0  %xmm0
+> +#define state1  %xmm1
+> +#define state2  %xmm2
+> +#define state3  %xmm3
+> +#define copy0   %xmm4
+> +#define copy1   %xmm5
+> +#define copy2   %xmm6
+> +#define copy3   %xmm7
+> +#define temp    %xmm8
+> +#define one     %xmm9
+
+It would be worth mentioning in the function comment that none of the xmm
+registers are callee-save.  That was not obvious to me.  I know that on arm64,
+*kernel* code doesn't need to save/restore NEON registers, so it's not something
+that arch/arm64/crypto/ does.  But, it *is* needed in arm64 userspace code.  So
+I was worried that something similar would apply to x86_64, but it seems not.
+
+> +	/* state1[0,1,2,3] = state1[0,3,2,1] */
+> +	pshufd		$0x39,state1,state1
+> +	/* state2[0,1,2,3] = state2[1,0,3,2] */
+> +	pshufd		$0x4e,state2,state2
+> +	/* state3[0,1,2,3] = state3[2,1,0,3] */
+> +	pshufd		$0x93,state3,state3
+
+The comments don't match the pshufd constants.  The code is correct but the
+comments are not.  They should be:
+
+	/* state1[0,1,2,3] = state1[1,2,3,0] */
+	pshufd		$0x39,state1,state1
+	/* state2[0,1,2,3] = state2[2,3,0,1] */
+	pshufd		$0x4e,state2,state2
+	/* state3[0,1,2,3] = state3[3,0,1,2] */
+	pshufd		$0x93,state3,state3
+
+> +	/* state0 += state1, state3 = rotl32(state3 ^ state0, 16) */
+> +	paddd		state1,state0
+> +	pxor		state0,state3
+> +	movdqa		state3,temp
+> +	pslld		$16,temp
+> +	psrld		$16,state3
+> +	por		temp,state3
+> +
+> +	/* state2 += state3, state1 = rotl32(state1 ^ state2, 12) */
+> +	paddd		state3,state2
+> +	pxor		state2,state1
+> +	movdqa		state1,temp
+> +	pslld		$12,temp
+> +	psrld		$20,state1
+> +	por		temp,state1
+> +
+> +	/* state0 += state1, state3 = rotl32(state3 ^ state0, 8) */
+> +	paddd		state1,state0
+> +	pxor		state0,state3
+> +	movdqa		state3,temp
+> +	pslld		$8,temp
+> +	psrld		$24,state3
+> +	por		temp,state3
+> +
+> +	/* state2 += state3, state1 = rotl32(state1 ^ state2, 7) */
+> +	paddd		state3,state2
+> +	pxor		state2,state1
+> +	movdqa		state1,temp
+> +	pslld		$7,temp
+> +	psrld		$25,state1
+> +	por		temp,state1
+
+The above sequence of 24 instructions is repeated twice, so maybe it should be a
+macro (".chacha_round"?).
+
+> +	/* state1[0,1,2,3] = state1[2,1,0,3] */
+> +	pshufd		$0x93,state1,state1
+> +	/* state2[0,1,2,3] = state2[1,0,3,2] */
+> +	pshufd		$0x4e,state2,state2
+> +	/* state3[0,1,2,3] = state3[0,3,2,1] */
+> +	pshufd		$0x39,state3,state3
+
+Similarly, the above comments are wrong.  They should be:
+
+	/* state1[0,1,2,3] = state1[3,0,1,2] */
+	pshufd		$0x93,state1,state1
+	/* state2[0,1,2,3] = state2[2,3,0,1] */
+	pshufd		$0x4e,state2,state2
+	/* state3[0,1,2,3] = state3[1,2,3,0] */
+	pshufd		$0x39,state3,state3
 
 - Eric
