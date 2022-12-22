@@ -1,171 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E19753B4
-	for <patches@lists.linux.dev>; Wed, 21 Dec 2022 23:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64466C433EF;
-	Wed, 21 Dec 2022 23:27:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1671665226;
-	bh=z/T5QRAMwI/aM2wSsvcjJlnhhFOn5MGclCR919Yyc9g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CBJBAqiV8Y6Yn0s72mlVPq8NAGCYsJ2iv06chckorAsZ5hhjyx/uzq4Lm29vAxN0O
-	 7DRljHogOCCn5utlXE7SwE77nd0MXxaARNjaoS69qIWH3sVOvh903lXm0CYwhiI2/z
-	 VHY7BUWmJgT5iiI8sFnpc8KYrHij+Pg4AtH3CKQsJsZMPyto/DxYyVLHloauo7j0vu
-	 BQPjeMGA6i2LiXH/0yGHme4NjpvQZ8AZvistVUBPmDs1QQjfu8cAovssywwzNtoMP2
-	 tk1MER+XsHax/ErTIGc+eHak8dntLfFH4R3ltAzbQ+OIqGlXOIRzv/XbANpRrFWg5y
-	 QqU2H7eBjYjcg==
-Date: Wed, 21 Dec 2022 15:27:04 -0800
-From: Eric Biggers <ebiggers@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Samuel Neves <sneves@dei.uc.pt>
-Subject: Re: [PATCH v13 7/7] x86: vdso: Wire up getrandom() vDSO
- implementation
-Message-ID: <Y6OWSM18QL977nbC@sol.localdomain>
-References: <20221221142327.126451-1-Jason@zx2c4.com>
- <20221221142327.126451-8-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8BA23AE
+	for <patches@lists.linux.dev>; Thu, 22 Dec 2022 08:07:25 +0000 (UTC)
+Received: from [2a02:8108:963f:de38:eca4:7d19:f9a2:22c5]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1p8Gbq-0005kI-JY; Thu, 22 Dec 2022 09:07:22 +0100
+Message-ID: <918e41dd-e5ea-9dc5-e6d4-5d524f317d18@leemhuis.info>
+Date: Thu, 22 Dec 2022 09:07:21 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221221142327.126451-8-Jason@zx2c4.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
+Content-Language: en-US, de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ akpm@linux-foundation.org, Vlastimil Babka <vbabka@suse.cz>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org,
+ pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ Jiri Slaby <jirislaby@kernel.org>, Guenter Roeck <linux@roeck-us.net>
+References: <20221219182943.395169070@linuxfoundation.org>
+ <20221220150049.GE3748047@roeck-us.net> <Y6HQfwEnw75iajYr@kroah.com>
+ <20221220161135.GA1983195@roeck-us.net>
+ <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
+From: Thorsten Leemhuis <regressions@leemhuis.info>
+In-Reply-To: <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1671696445;fb6d1a39;
+X-HE-SMSGID: 1p8Gbq-0005kI-JY
 
-On Wed, Dec 21, 2022 at 03:23:27PM +0100, Jason A. Donenfeld wrote:
-> diff --git a/arch/x86/entry/vdso/vgetrandom-chacha.S b/arch/x86/entry/vdso/vgetrandom-chacha.S
-> new file mode 100644
-> index 000000000000..91fbb7ac7af4
-> --- /dev/null
-> +++ b/arch/x86/entry/vdso/vgetrandom-chacha.S
-> @@ -0,0 +1,177 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-> + */
-> +
-> +#include <linux/linkage.h>
-> +#include <asm/frame.h>
-> +
-> +.section	.rodata.cst16.CONSTANTS, "aM", @progbits, 16
-> +.align 16
-> +CONSTANTS:	.octa 0x6b20657479622d323320646e61707865
-> +.text
+On 21.12.22 07:34, Jiri Slaby wrote:
+> On 20. 12. 22, 17:11, Guenter Roeck wrote:
+>> You probably didn't see any reports on mainline because I didn't report
+>> the issue there yet. There are so many failures in mainline that it is
+>> a bit difficult to keep up.
+> 
+> Just heads up, these are breakages in 6.1 known to me:
+> 
+> an io_uring 32bit test crashes the kernel:
+> https://lore.kernel.org/all/c80c1e3f-800b-dc49-f2f5-acc8ceb34d51@gmail.com/
+> 
+> Fixed in io_uring tree.
 
-For simplicity, maybe leave off the section mergeability stuff and just have
-plain ".section .rodata"?
+Just BTW: afaics the fix is now in mainline as 990a4de57e44
 
-> +/*
-> + * Very basic SSE2 implementation of ChaCha20. Produces a given positive number
-> + * of blocks of output with a nonce of 0, taking an input key and 8-byte
-> + * counter. Importantly does not spill to the stack. Its arguments are:
-> + *
-> + *	rdi: output bytes
-> + *	rsi: 32-byte key input
-> + *	rdx: 8-byte counter input/output
-> + *	rcx: number of 64-byte blocks to write to output
-> + */
-> +SYM_FUNC_START(__arch_chacha20_blocks_nostack)
-> +
-> +#define output  %rdi
-> +#define key     %rsi
-> +#define counter %rdx
-> +#define nblocks %rcx
-> +#define i       %al
-> +#define state0  %xmm0
-> +#define state1  %xmm1
-> +#define state2  %xmm2
-> +#define state3  %xmm3
-> +#define copy0   %xmm4
-> +#define copy1   %xmm5
-> +#define copy2   %xmm6
-> +#define copy3   %xmm7
-> +#define temp    %xmm8
-> +#define one     %xmm9
+> bind() of previously bound port no longer fails:
+> https://lore.kernel.org/all/6b971a4e-c7d8-411e-1f92-fda29b5b2fb9@kernel.org/
+> 
+> No fix available and revert close to impossible.
 
-It would be worth mentioning in the function comment that none of the xmm
-registers are callee-save.  That was not obvious to me.  I know that on arm64,
-*kernel* code doesn't need to save/restore NEON registers, so it's not something
-that arch/arm64/crypto/ does.  But, it *is* needed in arm64 userspace code.  So
-I was worried that something similar would apply to x86_64, but it seems not.
+Also just BTW: fix posted yesterday.
 
-> +	/* state1[0,1,2,3] = state1[0,3,2,1] */
-> +	pshufd		$0x39,state1,state1
-> +	/* state2[0,1,2,3] = state2[1,0,3,2] */
-> +	pshufd		$0x4e,state2,state2
-> +	/* state3[0,1,2,3] = state3[2,1,0,3] */
-> +	pshufd		$0x93,state3,state3
+> And most important, mremap() is broken in 6.1, so mostly everything
+> fails in some random way:
+> https://lore.kernel.org/all/20221216163227.24648-1-vbabka@suse.cz/T/#u
+> 
+> Fixed in -mm.
 
-The comments don't match the pshufd constants.  The code is correct but the
-comments are not.  They should be:
+That one seems to fix an annoying issue many people might run into (at
+least it looks like it to my untrained eyes), which is the reason why I
+write this mail.
 
-	/* state1[0,1,2,3] = state1[1,2,3,0] */
-	pshufd		$0x39,state1,state1
-	/* state2[0,1,2,3] = state2[2,3,0,1] */
-	pshufd		$0x4e,state2,state2
-	/* state3[0,1,2,3] = state3[3,0,1,2] */
-	pshufd		$0x93,state3,state3
+Andrew moved that fix from mm-hotfixes-unstable to mm-hotfixes-stable
+yesterday and I assume he'll send it to Linus pretty soon now to ensure
+it makes it into -rc1, so that the stable team can pick it up. It might
+be a bad season to ask this, but that made me wonder:
 
-> +	/* state0 += state1, state3 = rotl32(state3 ^ state0, 16) */
-> +	paddd		state1,state0
-> +	pxor		state0,state3
-> +	movdqa		state3,temp
-> +	pslld		$16,temp
-> +	psrld		$16,state3
-> +	por		temp,state3
-> +
-> +	/* state2 += state3, state1 = rotl32(state1 ^ state2, 12) */
-> +	paddd		state3,state2
-> +	pxor		state2,state1
-> +	movdqa		state1,temp
-> +	pslld		$12,temp
-> +	psrld		$20,state1
-> +	por		temp,state1
-> +
-> +	/* state0 += state1, state3 = rotl32(state3 ^ state0, 8) */
-> +	paddd		state1,state0
-> +	pxor		state0,state3
-> +	movdqa		state3,temp
-> +	pslld		$8,temp
-> +	psrld		$24,state3
-> +	por		temp,state3
-> +
-> +	/* state2 += state3, state1 = rotl32(state1 ^ state2, 7) */
-> +	paddd		state3,state2
-> +	pxor		state2,state1
-> +	movdqa		state1,temp
-> +	pslld		$7,temp
-> +	psrld		$25,state1
-> +	por		temp,state1
+Should that patch have progressed quicker? And if so: how to make that
+happen when a similar situation arises in the future? Should somebody
+(the developer of the patch? me?) kindly ask the maintainer in question
+to sent the fix straight to Linus once it spend 1 or 2 days in next?
 
-The above sequence of 24 instructions is repeated twice, so maybe it should be a
-macro (".chacha_round"?).
+It's not the first time that I see something like this, that's why I'm
+wondering if I should do something in such situations.
 
-> +	/* state1[0,1,2,3] = state1[2,1,0,3] */
-> +	pshufd		$0x93,state1,state1
-> +	/* state2[0,1,2,3] = state2[1,0,3,2] */
-> +	pshufd		$0x4e,state2,state2
-> +	/* state3[0,1,2,3] = state3[0,3,2,1] */
-> +	pshufd		$0x39,state3,state3
-
-Similarly, the above comments are wrong.  They should be:
-
-	/* state1[0,1,2,3] = state1[3,0,1,2] */
-	pshufd		$0x93,state1,state1
-	/* state2[0,1,2,3] = state2[2,3,0,1] */
-	pshufd		$0x4e,state2,state2
-	/* state3[0,1,2,3] = state3[1,2,3,0] */
-	pshufd		$0x39,state3,state3
-
-- Eric
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
