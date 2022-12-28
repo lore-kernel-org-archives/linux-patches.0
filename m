@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652961C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1C7C433D2;
-	Wed, 28 Dec 2022 16:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AE61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FF6C433D2;
+	Wed, 28 Dec 2022 16:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245709;
-	bh=GuXTu5/hidCC2R7hOxAOtJdnLMXTgANkXwXB3AxJ2ps=;
+	s=korg; t=1672245712;
+	bh=XLEiZvTkEEAwuhWrHpN9qyqocU/jogGxwcB92TCq5kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cODfe/eqTw2MJTV41JYDbPWV+MpRsaVrN9N0E5FJfiZKkS6W3ftQiaXSI6Rs3YuEB
-	 U6+4mFALVUZ1q0PLvbNMtg1UAePpIM0yYlJG7qSMIKkSvQl6GygdXqMLe22mJETsfX
-	 3++vA8h6tWkPmYlmXUVH3VH/kc6iTdrBDA8X7K+g=
+	b=uwzHvcwpmmHUswurChv5TMP49jbLQhjjCk/ul15iABE/ekoemAI17L2WV86XAjOzI
+	 W5o0nCKB79rdvbo9vm4gN1hdK3jejc/DVQPrZ8L6/WxVme7KtEHnQH4UNzbUKgk5BV
+	 ju70dnSorcXSaoYXjRxiPeAEH4H4RxAsnAdKeVqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Kiselev <bigunclemax@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiao Ni <xni@redhat.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0909/1146] net: dsa: mv88e6xxx: avoid reg_lock deadlock in mv88e6xxx_setup_port()
-Date: Wed, 28 Dec 2022 15:40:48 +0100
-Message-Id: <20221228144354.917454331@linuxfoundation.org>
+Subject: [PATCH 6.0 0942/1073] md/raid0, raid10: Dont set discard sectors for request queue
+Date: Wed, 28 Dec 2022 15:42:10 +0100
+Message-Id: <20221228144353.623157054@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,119 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit a7d82367daa6baa5e8399e6327e7f2f463534505 ]
+[ Upstream commit 8e1a2279ca2b0485cc379a153d02a9793f74a48f ]
 
-In the blamed commit, it was not noticed that one implementation of
-chip->info->ops->phylink_get_caps(), called by mv88e6xxx_get_caps(),
-may access hardware registers, and in doing so, it takes the
-mv88e6xxx_reg_lock(). Namely, this is mv88e6352_phylink_get_caps().
+It should use disk_stack_limits to get a proper max_discard_sectors
+rather than setting a value by stack drivers.
 
-This is a problem because mv88e6xxx_get_caps(), apart from being
-a top-level function (method invoked by dsa_switch_ops), is now also
-directly called from mv88e6xxx_setup_port(), which runs under the
-mv88e6xxx_reg_lock() taken by mv88e6xxx_setup(). Therefore, when running
-on mv88e6352, the reg_lock would be acquired a second time and the
-system would deadlock on driver probe.
+And there is a bug. If all member disks are rotational devices,
+raid0/raid10 set max_discard_sectors. So the member devices are
+not ssd/nvme, but raid0/raid10 export the wrong value. It reports
+warning messages in function __blkdev_issue_discard when mkfs.xfs
+like this:
 
-The things that mv88e6xxx_setup() can compete with in terms of register
-access with are the IRQ handlers and MDIO bus operations registered by
-mv88e6xxx_probe(). So there is a real need to acquire the register lock.
+[ 4616.022599] ------------[ cut here ]------------
+[ 4616.027779] WARNING: CPU: 4 PID: 99634 at block/blk-lib.c:50 __blkdev_issue_discard+0x16a/0x1a0
+[ 4616.140663] RIP: 0010:__blkdev_issue_discard+0x16a/0x1a0
+[ 4616.146601] Code: 24 4c 89 20 31 c0 e9 fe fe ff ff c1 e8 09 8d 48 ff 4c 89 f0 4c 09 e8 48 85 c1 0f 84 55 ff ff ff b8 ea ff ff ff e9 df fe ff ff <0f> 0b 48 8d 74 24 08 e8 ea d6 00 00 48 c7 c6 20 1e 89 ab 48 c7 c7
+[ 4616.167567] RSP: 0018:ffffaab88cbffca8 EFLAGS: 00010246
+[ 4616.173406] RAX: ffff9ba1f9e44678 RBX: 0000000000000000 RCX: ffff9ba1c9792080
+[ 4616.181376] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff9ba1c9792080
+[ 4616.189345] RBP: 0000000000000cc0 R08: ffffaab88cbffd10 R09: 0000000000000000
+[ 4616.197317] R10: 0000000000000012 R11: 0000000000000000 R12: 0000000000000000
+[ 4616.205288] R13: 0000000000400000 R14: 0000000000000cc0 R15: ffff9ba1c9792080
+[ 4616.213259] FS:  00007f9a5534e980(0000) GS:ffff9ba1b7c80000(0000) knlGS:0000000000000000
+[ 4616.222298] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 4616.228719] CR2: 000055a390a4c518 CR3: 0000000123e40006 CR4: 00000000001706e0
+[ 4616.236689] Call Trace:
+[ 4616.239428]  blkdev_issue_discard+0x52/0xb0
+[ 4616.244108]  blkdev_common_ioctl+0x43c/0xa00
+[ 4616.248883]  blkdev_ioctl+0x116/0x280
+[ 4616.252977]  __x64_sys_ioctl+0x8a/0xc0
+[ 4616.257163]  do_syscall_64+0x5c/0x90
+[ 4616.261164]  ? handle_mm_fault+0xc5/0x2a0
+[ 4616.265652]  ? do_user_addr_fault+0x1d8/0x690
+[ 4616.270527]  ? do_syscall_64+0x69/0x90
+[ 4616.274717]  ? exc_page_fault+0x62/0x150
+[ 4616.279097]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 4616.284748] RIP: 0033:0x7f9a55398c6b
 
-The register lock can, in principle, be dropped and re-acquired pretty
-much at will within the driver, as long as no operations that involve
-waiting for indirect access to complete (essentially, callers of
-mv88e6xxx_smi_direct_wait() and mv88e6xxx_wait_mask()) are interrupted
-with the lock released. However, I would guess that in mv88e6xxx_setup(),
-the critical section is kept open for such a long time just in order to
-optimize away multiple lock/unlock operations on the registers.
-
-We could, in principle, drop the reg_lock right before the
-mv88e6xxx_setup_port() -> mv88e6xxx_get_caps() call, and
-re-acquire it immediately afterwards. But this would look ugly, because
-mv88e6xxx_setup_port() would release a lock which it didn't acquire, but
-the caller did.
-
-A cleaner solution to this issue comes from the observation that struct
-mv88e6xxxx_ops methods generally assume they are called with the
-reg_lock already acquired. Whereas mv88e6352_phylink_get_caps() is more
-the exception rather than the norm, in that it acquires the lock itself.
-
-Let's enforce the same locking pattern/convention for
-chip->info->ops->phylink_get_caps() as well, and make
-mv88e6xxx_get_caps(), the top-level function, acquire the register lock
-explicitly, for this one implementation that will access registers for
-port 4 to work properly.
-
-This means that mv88e6xxx_setup_port() will no longer call the top-level
-function, but the low-level mv88e6xxx_ops method which expects the
-correct calling context (register lock held).
-
-Compared to chip->info->ops->phylink_get_caps(), mv88e6xxx_get_caps()
-also fixes up the supported_interfaces bitmap for internal ports, since
-that can be done generically and does not require per-switch knowledge.
-That's code which will no longer execute, however mv88e6xxx_setup_port()
-doesn't need that. It just needs to look at the mac_capabilities bitmap.
-
-Fixes: cc1049ccee20 ("net: dsa: mv88e6xxx: fix speed setting for CPU/DSA ports")
-Reported-by: Maksim Kiselev <bigunclemax@gmail.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
-Link: https://lore.kernel.org/r/20221214110120.3368472-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/md/raid0.c  | 1 -
+ drivers/md/raid10.c | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 937cb22cb3d4..3b8b2d0fbafa 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -689,13 +689,12 @@ static void mv88e6352_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
+diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
+index 857c49399c28..b536befd8898 100644
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -398,7 +398,6 @@ static int raid0_run(struct mddev *mddev)
  
- 	/* Port 4 supports automedia if the serdes is associated with it. */
- 	if (port == 4) {
--		mv88e6xxx_reg_lock(chip);
- 		err = mv88e6352_g2_scratch_port_has_serdes(chip, port);
- 		if (err < 0)
- 			dev_err(chip->dev, "p%d: failed to read scratch\n",
- 				port);
- 		if (err <= 0)
--			goto unlock;
-+			return;
+ 		blk_queue_max_hw_sectors(mddev->queue, mddev->chunk_sectors);
+ 		blk_queue_max_write_zeroes_sectors(mddev->queue, mddev->chunk_sectors);
+-		blk_queue_max_discard_sectors(mddev->queue, UINT_MAX);
  
- 		cmode = mv88e6352_get_port4_serdes_cmode(chip);
- 		if (cmode < 0)
-@@ -703,8 +702,6 @@ static void mv88e6352_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
- 				port);
- 		else
- 			mv88e6xxx_translate_cmode(cmode, supported);
--unlock:
--		mv88e6xxx_reg_unlock(chip);
- 	}
- }
+ 		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
+ 		blk_queue_io_opt(mddev->queue,
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 64d6e4cd8a3a..b19c6ce89d5e 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -4104,8 +4104,6 @@ static int raid10_run(struct mddev *mddev)
+ 	conf->thread = NULL;
  
-@@ -831,7 +828,9 @@ static void mv88e6xxx_get_caps(struct dsa_switch *ds, int port,
- {
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 
-+	mv88e6xxx_reg_lock(chip);
- 	chip->info->ops->phylink_get_caps(chip, port, config);
-+	mv88e6xxx_reg_unlock(chip);
- 
- 	if (mv88e6xxx_phy_is_internal(ds, port)) {
- 		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
-@@ -3307,7 +3306,7 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
- 		struct phylink_config pl_config = {};
- 		unsigned long caps;
- 
--		mv88e6xxx_get_caps(ds, port, &pl_config);
-+		chip->info->ops->phylink_get_caps(chip, port, &pl_config);
- 
- 		caps = pl_config.mac_capabilities;
- 
+ 	if (mddev->queue) {
+-		blk_queue_max_discard_sectors(mddev->queue,
+-					      UINT_MAX);
+ 		blk_queue_max_write_zeroes_sectors(mddev->queue, 0);
+ 		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
+ 		raid10_set_io_opt(conf);
 -- 
 2.35.1
 
