@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3340CC433EF;
-	Wed, 28 Dec 2022 16:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9751C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28E7C433EF;
+	Wed, 28 Dec 2022 16:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244408;
-	bh=inN9e4ytR+NXrAHnhQ1/s4gFHfne7lWj4TQ3jrvLG2c=;
+	s=korg; t=1672244411;
+	bh=GmCXSwPE5NP+SaO5s7kju7LigtOKyGlQFSX61WElufY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODG6E5QRSNq62cQlxgaNhCKrpa43e+1J4BAqY0TR7qyDy+DeBUrwrJEZP8zY6YT8k
-	 QYyC8arETvBPaauZo2OBrnbT/yN/m1OeCq1l1v9goyyHZGLi2u1mgEDPwJOOvGAF6J
-	 9JC31tPQ1vmyPIjEZEGhcrnH2RZtI4YH132UwJns=
+	b=t44ORpTiDSDa776QHbcnH60CVlN4By90so++gj4vhXSZYEwABAAIl9rM3P/cGwH/V
+	 8Nc91lhOPPwMGgjZri67b/am8qeMZSYshKwp3HwJ5f87nd7FmWAG25agffr2w6Ane3
+	 hokHql7iOvlAp39rq5a1eOm46rDdYhRIMBqyJ2Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Tong Tiangen <tongtiangen@huawei.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0705/1073] usb: roles: fix of node refcount leak in usb_role_switch_is_parent()
-Date: Wed, 28 Dec 2022 15:38:13 +0100
-Message-Id: <20221228144347.181340736@linuxfoundation.org>
+Subject: [PATCH 6.1 0665/1146] riscv/mm: add arch hook arch_clear_hugepage_flags
+Date: Wed, 28 Dec 2022 15:36:44 +0100
+Message-Id: <20221228144348.214959183@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Tong Tiangen <tongtiangen@huawei.com>
 
-[ Upstream commit 1ab30c610630da5391a373cddb8a065bf4c4bc01 ]
+[ Upstream commit d8bf77a1dc3079692f54be3087a5fd16d90027b0 ]
 
-I got the following report while doing device(mt6370-tcpc) load
-test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
+With the PG_arch_1 we keep track if the page's data cache is clean,
+architecture rely on this property to treat new pages as dirty with
+respect to the data cache and perform the flushing before mapping the pages
+into userspace.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@34
+This patch adds a new architecture hook, arch_clear_hugepage_flags,so that
+architectures which rely on the page flags being in a particular state for
+fresh allocations can adjust the flags accordingly when a page is freed
+into the pool.
 
-The 'parent' returned by fwnode_get_parent() with refcount incremented.
-it needs be put after using.
-
-Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221122111226.251588-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9e953cda5cdf ("riscv: Introduce huge page support for 32/64bit kernel")
+Signed-off-by: Tong Tiangen <tongtiangen@huawei.com>
+Link: https://lore.kernel.org/r/20221024094725.3054311-3-tongtiangen@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/roles/class.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/hugetlb.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
-index dfaed7eee94f..32e6d19f7011 100644
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -106,10 +106,13 @@ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
- 	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
- 	struct device *dev;
+diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
+index a5c2ca1d1cd8..ec19d6afc896 100644
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -5,4 +5,10 @@
+ #include <asm-generic/hugetlb.h>
+ #include <asm/page.h>
  
--	if (!parent || !fwnode_property_present(parent, "usb-role-switch"))
-+	if (!fwnode_property_present(parent, "usb-role-switch")) {
-+		fwnode_handle_put(parent);
- 		return NULL;
-+	}
- 
- 	dev = class_find_device_by_fwnode(role_class, parent);
-+	fwnode_handle_put(parent);
- 	return dev ? to_role_switch(dev) : ERR_PTR(-EPROBE_DEFER);
- }
- 
++static inline void arch_clear_hugepage_flags(struct page *page)
++{
++	clear_bit(PG_dcache_clean, &page->flags);
++}
++#define arch_clear_hugepage_flags arch_clear_hugepage_flags
++
+ #endif /* _ASM_RISCV_HUGETLB_H */
 -- 
 2.35.1
 
