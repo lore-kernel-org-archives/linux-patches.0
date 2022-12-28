@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFF31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9450C433D2;
-	Wed, 28 Dec 2022 15:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC021863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80586C433F0;
+	Wed, 28 Dec 2022 15:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242520;
-	bh=EyQ++/BKTEpOyoxOhcI6CKqke6ZcQmhSGSi5ClADbY0=;
+	s=korg; t=1672242522;
+	bh=w2VH7BR6TdFoK2qaCSRHDnGx24GePt9+BKxsLt61T5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeFUNwB2HuJeT8P34w37EVI2UGduZPncosX/htL77sZ1sp5fm10cIdu5qT6tZteHx
-	 R7y3/YhE52gc2xBXGvKqvO29w5CHCF241db/qCDLfDrikUL2dR9DwTuTbI7W44edR2
-	 4ZFDjI5+ip21sn+D3Glcg/9OjBf6QOjKcw4XhKVU=
+	b=L07h53kMVMj22TtYovQWneg/cilLXCIFFvS4CWj1h+N9mfxLlhNwbTy9MbE/xr2gR
+	 daECvMEduJkigItvIQSlmiU9+fSTs/+1PU+gimFaCfF9TTFTMeyRBY9HQFz5hWp8NW
+	 X5UpzK2YbrFrtlLSQ1FecuIfRBbe9DwNvqBKZP7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Changheon Lee <darklight2357@icloud.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0379/1146] clk: rockchip: Fix memory leak in rockchip_clk_register_pll()
-Date: Wed, 28 Dec 2022 15:31:58 +0100
-Message-Id: <20221228144340.460430848@linuxfoundation.org>
+Subject: [PATCH 5.15 613/731] net: stream: purge sk_error_queue in sk_stream_kill_queues()
+Date: Wed, 28 Dec 2022 15:42:00 +0100
+Message-Id: <20221228144314.303640263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 739a6a6bbdb793bd57938cb24aa5a6df89983546 ]
+[ Upstream commit e0c8bccd40fc1c19e1d246c39bcf79e357e1ada3 ]
 
-If clk_register() fails, @pll->rate_table may have allocated memory by
-kmemdup(), so it needs to be freed, otherwise will cause memory leak
-issue, this patch fixes it.
+Changheon Lee reported TCP socket leaks, with a nice repro.
 
-Fixes: 90c590254051 ("clk: rockchip: add clock type for pll clocks and pll used on rk3066")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221123091201.199819-1-xiujianfeng@huawei.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+It seems we leak TCP sockets with the following sequence:
+
+1) SOF_TIMESTAMPING_TX_ACK is enabled on the socket.
+
+   Each ACK will cook an skb put in error queue, from __skb_tstamp_tx().
+   __skb_tstamp_tx() is using skb_clone(), unless
+   SOF_TIMESTAMPING_OPT_TSONLY was also requested.
+
+2) If the application is also using MSG_ZEROCOPY, then we put in the
+   error queue cloned skbs that had a struct ubuf_info attached to them.
+
+   Whenever an struct ubuf_info is allocated, sock_zerocopy_alloc()
+   does a sock_hold().
+
+   As long as the cloned skbs are still in sk_error_queue,
+   socket refcount is kept elevated.
+
+3) Application closes the socket, while error queue is not empty.
+
+Since tcp_close() no longer purges the socket error queue,
+we might end up with a TCP socket with at least one skb in
+error queue keeping the socket alive forever.
+
+This bug can be (ab)used to consume all kernel memory
+and freeze the host.
+
+We need to purge the error queue, with proper synchronization
+against concurrent writers.
+
+Fixes: 24bcbe1cc69f ("net: stream: don't purge sk_error_queue in sk_stream_kill_queues()")
+Reported-by: Changheon Lee <darklight2357@icloud.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/stream.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
-index f7827b3b7fc1..6e5e502be44a 100644
---- a/drivers/clk/rockchip/clk-pll.c
-+++ b/drivers/clk/rockchip/clk-pll.c
-@@ -981,6 +981,7 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
- 	return mux_clk;
+diff --git a/net/core/stream.c b/net/core/stream.c
+index a61130504827..d7c5413d16d5 100644
+--- a/net/core/stream.c
++++ b/net/core/stream.c
+@@ -196,6 +196,12 @@ void sk_stream_kill_queues(struct sock *sk)
+ 	/* First the read buffer. */
+ 	__skb_queue_purge(&sk->sk_receive_queue);
  
- err_pll:
-+	kfree(pll->rate_table);
- 	clk_unregister(mux_clk);
- 	mux_clk = pll_clk;
- err_mux:
++	/* Next, the error queue.
++	 * We need to use queue lock, because other threads might
++	 * add packets to the queue without socket lock being held.
++	 */
++	skb_queue_purge(&sk->sk_error_queue);
++
+ 	/* Next, the write queue. */
+ 	WARN_ON(!skb_queue_empty(&sk->sk_write_queue));
+ 
 -- 
 2.35.1
 
