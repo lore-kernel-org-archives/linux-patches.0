@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3C31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A626C433EF;
-	Wed, 28 Dec 2022 14:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C06A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FA7C433D2;
+	Wed, 28 Dec 2022 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239229;
-	bh=B5tV1oTGgvoXhlOoEArNRTFR0VLSxDh9CS/nvEbz4RY=;
+	s=korg; t=1672239235;
+	bh=tUsVKxn27BdMvYIkmS7RoEiAmmkFH3wvzkSJd7B0bGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbpHj10uGos7KEew/JUD5e8ioQymOUroGCPwCMyOv7JqLah0a5iGbg9KKzMoF4ggD
-	 BCcuE/VEqUsuLmLsxT7kgY0CrS7SfQUl7Bi741NEfBOttdTaoyIYjJodVt+TB2dkLC
-	 K8yiPhc9+wDnKSm5WzUsDn3ekr0QBa2kwyc7LkwY=
+	b=Ls0pqjd9/NzckJcx28/SkpZxICn2Y/paxyWZCVA9i3SLIRFekDNtRfpvuIbb07YBp
+	 n/O8AKA86ABKDXcUvGS3KcwMGrckFzTopLYjrvuT6Sp2wK//KPDeWpamaEoBLhDF1F
+	 ztHlx4i3zEi1XxMQcQVpInNGANQsfLZHmrW47uFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/731] drm/msm/hdmi: use devres helper for runtime PM management
-Date: Wed, 28 Dec 2022 15:34:45 +0100
-Message-Id: <20221228144301.724257031@linuxfoundation.org>
+Subject: [PATCH 5.15 180/731] media: vivid: fix compose size exceed boundary
+Date: Wed, 28 Dec 2022 15:34:47 +0100
+Message-Id: <20221228144301.780762077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit b964444b2b64ce182495731d830499d1c588ccf6 ]
+[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
 
-Use devm_pm_runtime_enable() to enable runtime PM. This way its effect
-will be reverted on device unbind/destruction.
+syzkaller found a bug:
 
-Fixes: 6ed9ed484d04 ("drm/msm/hdmi: Set up runtime PM for HDMI")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/499647/
-Link: https://lore.kernel.org/r/20220826093927.851597-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ BUG: unable to handle page fault for address: ffffc9000a3b1000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
+ Oops: 0002 [#1] PREEMPT SMP
+ CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+ RIP: 0010:memcpy_erms+0x6/0x10
+[...]
+ Call Trace:
+  <TASK>
+  ? tpg_fill_plane_buffer+0x856/0x15b0
+  vivid_fillbuff+0x8ac/0x1110
+  vivid_thread_vid_cap_tick+0x361/0xc90
+  vivid_thread_vid_cap+0x21a/0x3a0
+  kthread+0x143/0x180
+  ret_from_fork+0x1f/0x30
+  </TASK>
+
+This is because we forget to check boundary after adjust compose->height
+int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
+for this case.
+
+Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index efb14043a6ec..e1a9b52d0a29 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -261,7 +261,7 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
- 	if (hdmi->hpd_gpiod)
- 		gpiod_set_consumer_name(hdmi->hpd_gpiod, "HDMI_HPD");
- 
--	pm_runtime_enable(&pdev->dev);
-+	devm_pm_runtime_enable(&pdev->dev);
- 
- 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
- 
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index 99139a8cd4c4..331a3f4286d2 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -961,6 +961,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 			if (dev->has_compose_cap) {
+ 				v4l2_rect_set_min_size(compose, &min_rect);
+ 				v4l2_rect_set_max_size(compose, &max_rect);
++				v4l2_rect_map_inside(compose, &fmt);
+ 			}
+ 			dev->fmt_cap_rect = fmt;
+ 			tpg_s_buf_height(&dev->tpg, fmt.height);
 -- 
 2.35.1
 
