@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B271868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9158BC433D2;
-	Wed, 28 Dec 2022 15:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B488F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E0DC433D2;
+	Wed, 28 Dec 2022 15:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240956;
-	bh=AwSq+tNbqhVUBJhHq2Il+ctNtr0VGa4hvH3SnZp8t+g=;
+	s=korg; t=1672240959;
+	bh=3sOBcQxRetvwd6JEeMeaIjfwfbmL06MvSlThWTyQsq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePAuHV8ahBS18vjL0ldMjGOIQlEULLHNoXaM6ng2SFmpZy+CMsfIHtcZEQk8ViduA
-	 ue+tn6JUe5qOMV/NeoMM0yRF/mM/3JATGogo1i43MvefxshMW9U+ipUSPmebob6io/
-	 Ij2d91yoCpYNixDQvx+aO/vTYKxhKarQhMooBI14=
+	b=AgDCVcdEf918ez3Q2qi0fGYN30f06AXgDEcCPKS8J3MQMxg+CcbuiHCbafMKGMSCK
+	 UkHTKvFLl0l1XrChWVgHOw2SXZOdcYE5BvZRc5CZKcFMkLO0zCXrgW8mYPBlI93wGC
+	 FUuqCiBOyhuB1SmR3AeDV44syT9P20S/UoPdRr90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	wuchi <wuchi.zero@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 421/731] crypto: amlogic - Remove kcalloc without check
-Date: Wed, 28 Dec 2022 15:38:48 +0100
-Message-Id: <20221228144308.774532774@linuxfoundation.org>
+Subject: [PATCH 6.1 0189/1146] relay: fix type mismatch when allocating memory in relay_create_buf()
+Date: Wed, 28 Dec 2022 15:28:48 +0100
+Message-Id: <20221228144335.283718387@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 3d780c8a9850ad60dee47a8d971ba7888f3d1bd3 ]
+[ Upstream commit 4d8586e04602fe42f0a782d2005956f8b6302678 ]
 
-There is no real point in allocating dedicated memory for the irqs array.
-MAXFLOW is only 2, so it is easier to allocated the needed space
-directly within the 'meson_dev' structure.
+The 'padding' field of the 'rchan_buf' structure is an array of 'size_t'
+elements, but the memory is allocated for an array of 'size_t *' elements.
 
-This saves some memory allocation and avoids an indirection when using the
-irqs array.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator...")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lkml.kernel.org/r/20221129092002.3538384-1-Ilia.Gavrilov@infotecs.ru
+Fixes: b86ff981a825 ("[PATCH] relay: migrate from relayfs to a generic relay API")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: wuchi <wuchi.zero@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-core.c | 1 -
- drivers/crypto/amlogic/amlogic-gxl.h      | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ kernel/relay.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/amlogic/amlogic-gxl-core.c b/drivers/crypto/amlogic/amlogic-gxl-core.c
-index 6e7ae896717c..937187027ad5 100644
---- a/drivers/crypto/amlogic/amlogic-gxl-core.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
-@@ -237,7 +237,6 @@ static int meson_crypto_probe(struct platform_device *pdev)
- 		return err;
- 	}
+diff --git a/kernel/relay.c b/kernel/relay.c
+index d7edc934c56d..88bcb09f0a1f 100644
+--- a/kernel/relay.c
++++ b/kernel/relay.c
+@@ -148,13 +148,13 @@ static struct rchan_buf *relay_create_buf(struct rchan *chan)
+ {
+ 	struct rchan_buf *buf;
  
--	mc->irqs = devm_kcalloc(mc->dev, MAXFLOW, sizeof(int), GFP_KERNEL);
- 	for (i = 0; i < MAXFLOW; i++) {
- 		mc->irqs[i] = platform_get_irq(pdev, i);
- 		if (mc->irqs[i] < 0)
-diff --git a/drivers/crypto/amlogic/amlogic-gxl.h b/drivers/crypto/amlogic/amlogic-gxl.h
-index dc0f142324a3..8c0746a1d6d4 100644
---- a/drivers/crypto/amlogic/amlogic-gxl.h
-+++ b/drivers/crypto/amlogic/amlogic-gxl.h
-@@ -95,7 +95,7 @@ struct meson_dev {
- 	struct device *dev;
- 	struct meson_flow *chanlist;
- 	atomic_t flow;
--	int *irqs;
-+	int irqs[MAXFLOW];
- #ifdef CONFIG_CRYPTO_DEV_AMLOGIC_GXL_DEBUG
- 	struct dentry *dbgfs_dir;
- #endif
+-	if (chan->n_subbufs > KMALLOC_MAX_SIZE / sizeof(size_t *))
++	if (chan->n_subbufs > KMALLOC_MAX_SIZE / sizeof(size_t))
+ 		return NULL;
+ 
+ 	buf = kzalloc(sizeof(struct rchan_buf), GFP_KERNEL);
+ 	if (!buf)
+ 		return NULL;
+-	buf->padding = kmalloc_array(chan->n_subbufs, sizeof(size_t *),
++	buf->padding = kmalloc_array(chan->n_subbufs, sizeof(size_t),
+ 				     GFP_KERNEL);
+ 	if (!buf->padding)
+ 		goto free_buf;
 -- 
 2.35.1
 
