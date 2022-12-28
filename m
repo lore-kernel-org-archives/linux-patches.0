@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDBC1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D747DC433D2;
-	Wed, 28 Dec 2022 16:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328AA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89F4C433EF;
+	Wed, 28 Dec 2022 16:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245648;
-	bh=cmtKgn86exmHAmSRo4zDb/zf9WnHvRGB3TuwMpOcczY=;
+	s=korg; t=1672245651;
+	bh=qyKiVUx5zu3jpD5VHqL60Pcg8UYVn/ip1Dbjq39eS0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWGQIntTuHRx7LHvMByZ0gc9xR9ENyW1q62S44jhotcGGrws0p1EmGywPCFu+Uy/d
-	 HOfENQPauzUOADrG5YyIArp/p9Bg8zoIdmnG2luUUcAiJd2P/ocU1UAamdODmnp10d
-	 IUUzSSf13V9rPMGcf8pymDjSgIfqOFchJnpTtP1Y=
+	b=LnGFmhb/cym80lTkGEBUMj/rvS4jtWAcvesrksAjCrLH/SBDUaAleOegq34ytRswS
+	 ddPfThzWi3wfNtZCj3zOjEV5w6SISSRn7+d+hMcBZgRohiKrNOzvF8O2C6U2xq3LuO
+	 SgEK0qp/Lm/D968e5nF87xP9+7tmUp/r+k2kBxc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0899/1146] nfc: pn533: Clear nfc_target before being used
-Date: Wed, 28 Dec 2022 15:40:38 +0100
-Message-Id: <20221228144354.622778336@linuxfoundation.org>
+Subject: [PATCH 6.0 0932/1073] drm/amdgpu: Fix type of second parameter in odn_edit_dpm_table() callback
+Date: Wed, 28 Dec 2022 15:42:00 +0100
+Message-Id: <20221228144353.343786775@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
+[ Upstream commit e4d0ef752081e7aa6ffb7ccac11c499c732a2e05 ]
 
-Fix a slab-out-of-bounds read that occurs in nla_put() called from
-nfc_genl_send_target() when target->sensb_res_len, which is duplicated
-from an nfc_target in pn533, is too large as the nfc_target is not
-properly initialized and retains garbage values. Clear nfc_targets with
-memset() before they are used.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Found by a modified version of syzkaller.
+  drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: incompatible function pointer types initializing 'int (*)(void *, uint32_t, long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .odn_edit_dpm_table      = smu_od_edit_dpm_table,
+                                     ^~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-BUG: KASAN: slab-out-of-bounds in nla_put
-Call Trace:
- memcpy
- nla_put
- nfc_genl_dump_targets
- genl_lock_dumpit
- netlink_dump
- __netlink_dump_start
- genl_family_rcv_msg_dumpit
- genl_rcv_msg
- netlink_rcv_skb
- genl_rcv
- netlink_unicast
- netlink_sendmsg
- sock_sendmsg
- ____sys_sendmsg
- ___sys_sendmsg
- __sys_sendmsg
- do_syscall_64
+There are only two implementations of ->odn_edit_dpm_table() in 'struct
+amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
+has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
+other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
+->od_edit_dpm_table() from 'struct pptable_funcs' and
+pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
+pp_hwmgr_func', which both have a second parameter type of 'enum
+PP_OD_DPM_TABLE_COMMAND'.
 
-Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
-Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Update the type parameter in both the prototype in 'struct amd_pm_funcs'
+and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
+cleans up the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/include/kgd_pp_interface.h   | 3 ++-
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index d9f6367b9993..f0cac1900552 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1295,6 +1295,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
- 	if (IS_ERR(resp))
- 		return PTR_ERR(resp);
+diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+index 7e3231c2191c..ffe19883b2ee 100644
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -354,7 +354,8 @@ struct amd_pm_funcs {
+ 	int (*get_power_profile_mode)(void *handle, char *buf);
+ 	int (*set_power_profile_mode)(void *handle, long *input, uint32_t size);
+ 	int (*set_fine_grain_clk_vol)(void *handle, uint32_t type, long *input, uint32_t size);
+-	int (*odn_edit_dpm_table)(void *handle, uint32_t type, long *input, uint32_t size);
++	int (*odn_edit_dpm_table)(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				  long *input, uint32_t size);
+ 	int (*set_mp1_state)(void *handle, enum pp_mp1_state mp1_state);
+ 	int (*smu_i2c_bus_access)(void *handle, bool acquire);
+ 	int (*gfx_state_change_set)(void *handle, uint32_t state);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index 1eb4e613b27a..6562978de84a 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -838,7 +838,8 @@ static int pp_set_fine_grain_clk_vol(void *handle, uint32_t type, long *input, u
+ 	return hwmgr->hwmgr_func->set_fine_grain_clk_vol(hwmgr, type, input, size);
+ }
  
-+	memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
+-static int pp_odn_edit_dpm_table(void *handle, uint32_t type, long *input, uint32_t size)
++static int pp_odn_edit_dpm_table(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				 long *input, uint32_t size)
+ {
+ 	struct pp_hwmgr *hwmgr = handle;
  
- 	rc = rsp->status & PN533_CMD_RET_MASK;
-@@ -1926,6 +1928,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
- 
- 		dev_dbg(dev->dev, "Creating new target\n");
- 
-+		memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
- 		nfc_target.nfcid1_len = 10;
- 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
 -- 
 2.35.1
 
