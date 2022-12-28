@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2067E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822B8C433EF;
-	Wed, 28 Dec 2022 15:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBD11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30465C433D2;
+	Wed, 28 Dec 2022 15:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242667;
-	bh=MDEkBS14t9zOKpOegTTLz/PJjOLWSO9yvycEsJs76RE=;
+	s=korg; t=1672242670;
+	bh=cwW1JDZkj7fyOCeQCCALGD2p2Gzu8nzCk1xuTf+vgxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fo8ilHUCse9Z+SUTpR/738f5Ui++MBaiyHxc8RWB2qb8zZb4LBi8KJfOH8oO2BWOA
-	 QHRlxlyVGXukSAo948lOSxoj9hctq1Vk4GzM+Th6928oWTDkbzYg2DP6rAKQEwXNcm
-	 hb6G+uxOrGA7rGinDTCs0TdTJpn2l/w0mL5dgb1w=
+	b=PTE4BSP50KWruDD/ErUk64K7szVfqVbCtPwBN7Q+f37YuoPcuBR9ANcJs7lCS3OcN
+	 xpBcbKk+ZWnr7gFx1qWHoAP4Lt5qWYhP0knbKacldL7+mLTaenz32CIaarN+vrMwEs
+	 pZTUi52eHB2+zxAe6dk0AveYzIXgsDy//7r/5KLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0400/1146] clk: imx8mn: fix imx8mn_sai2_sels clocks list
-Date: Wed, 28 Dec 2022 15:32:19 +0100
-Message-Id: <20221228144341.028599371@linuxfoundation.org>
+Subject: [PATCH 6.0 0423/1073] drm/amdgpu: Fix PCI device refcount leak in amdgpu_atrm_get_bios()
+Date: Wed, 28 Dec 2022 15:33:31 +0100
+Message-Id: <20221228144339.512023677@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 34d996747a74e3a86990f9f9c48de09159d78edb ]
+[ Upstream commit ca54639c7752edf1304d92ff4d0c049d4efc9ba0 ]
 
-According to the "Clock Root" table of the reference manual (document
-IMX8MNRM Rev 2, 07/2022):
+As comment of pci_get_class() says, it returns a pci_device with its
+refcount increased and decreased the refcount for the input parameter
+@from if it is not NULL.
 
-     Clock Root     offset     Source Select (CCM_TARGET_ROOTn[MUX])
-        ...          ...                    ...
-   SAI2_CLK_ROOT    0xA600            000 - 24M_REF_CLK
-                                      001 - AUDIO_PLL1_CLK
-                                      010 - AUDIO_PLL2_CLK
-                                      011 - VIDEO_PLL_CLK
-                                      100 - SYSTEM_PLL1_DIV6
-                                      110 - EXT_CLK_2
-                                      111 - EXT_CLK_3
-        ...          ...                    ...
+If we break the loop in amdgpu_atrm_get_bios() with 'pdev' not NULL, we
+need to call pci_dev_put() to decrease the refcount. Add the missing
+pci_dev_put() to avoid refcount leak.
 
-while the imx8mn_sai2_sels list contained clk_ext3 and clk_ext4 for
-source select bits 110b and 111b.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-5-dario.binacchi@amarulasolutions.com
+Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index b80af5d1ef46..37128c35198d 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -109,7 +109,7 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll_out"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index e363f56c72af..30c28a69e847 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -317,6 +317,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll_out", "sys_pll1_133m", "dummy",
--						"clk_ext3", "clk_ext4", };
-+						"clk_ext2", "clk_ext3", };
+ 	if (!found)
+ 		return false;
++	pci_dev_put(pdev);
  
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll_out", "sys_pll1_133m", "dummy",
+ 	adev->bios = kmalloc(size, GFP_KERNEL);
+ 	if (!adev->bios) {
 -- 
 2.35.1
 
