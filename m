@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731611863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA1AC433D2;
-	Wed, 28 Dec 2022 15:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F241863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DB8C433EF;
+	Wed, 28 Dec 2022 15:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240871;
-	bh=pvlQrj2X9CHWoDjKElzDkcTQ3pvjEyggMdRDMY+TNDk=;
+	s=korg; t=1672240874;
+	bh=oAFmwgTa0iWjrNoNZpBerzG958B+wbIs72xunWuwJbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKBBLFfNUWusBeZFhOKYtQR4RwgsAZxZypXhC3hVWDLVFD4+B0gma8HLwYr2pcImX
-	 /SB0gBv4PJ24rXrfkX2hYraFC+TPjnK6V2l0yTwGk6lr4lAmsryCro3Y8fkM9cfThv
-	 VUjiDY7tXJtIlh4E8QM93vaY7/pFi8xbNFQPTnQQ=
+	b=P/I6xU0mSbNVI70Uqg3Rrbsou48mAnIpXf5i60r+Tj/ALkDd3eD1tLYgbXvjvzqmW
+	 270Rs+TcmaYDtCfuckV7TquMmKVWwdC7gw7dtyUx3/OzNYSFWgew692hj8EodAWFcA
+	 laRcq69mw4pm5xJoi04+/tGt71+rZOu1Mf140YkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+2ae90e873e97f1faf6f2@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 407/731] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
-Date: Wed, 28 Dec 2022 15:38:34 +0100
-Message-Id: <20221228144308.364806720@linuxfoundation.org>
+Subject: [PATCH 6.1 0177/1146] erofs: validate the extent length for uncompressed pclusters
+Date: Wed, 28 Dec 2022 15:28:36 +0100
+Message-Id: <20221228144334.963687449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
+[ Upstream commit c505feba4c0d76084e56ec498ce819f02a7043ae ]
 
-In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
-sas_rphy_free() needs be called to free the resource allocated in
-sas_end_device_alloc(). Otherwise a kernel crash will happen:
+syzkaller reported a KASAN use-after-free:
+https://syzkaller.appspot.com/bug?extid=2ae90e873e97f1faf6f2
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- scsih_remove+0xd8/0x420 [mpt3sas]
+The referenced fuzzed image actually has two issues:
+ - m_pa == 0 as a non-inlined pcluster;
+ - The logical length is longer than its physical length.
 
-Because transport_add_device() is not called when sas_rphy_add() fails, the
-device is not added. When sas_rphy_remove() is subsequently called to
-remove the device in the remove() path, a NULL pointer dereference happens.
+The first issue has already been addressed.  This patch addresses
+the second issue by checking the extent length validity.
 
-Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+2ae90e873e97f1faf6f2@syzkaller.appspotmail.com
+Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20221205150050.47784-2-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/erofs/zmap.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index 0681daee6c14..e5ecd6ada6cd 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -829,6 +829,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 	if ((sas_rphy_add(rphy))) {
- 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
- 			__FILE__, __LINE__, __func__);
-+		sas_rphy_free(rphy);
-+		rphy = NULL;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index f49295b9f2e1..e6d5d7a18fb0 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -698,6 +698,11 @@ static int z_erofs_do_map_blocks(struct inode *inode,
  	}
  
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
+ 	if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_PLAIN) {
++		if (map->m_llen > map->m_plen) {
++			DBG_BUGON(1);
++			err = -EFSCORRUPTED;
++			goto unmap_out;
++		}
+ 		if (vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER)
+ 			map->m_algorithmformat =
+ 				Z_EROFS_COMPRESSION_INTERLACED;
 -- 
 2.35.1
 
