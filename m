@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137521875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9BCC433D2;
-	Wed, 28 Dec 2022 15:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A11875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330E1C433EF;
+	Wed, 28 Dec 2022 15:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242691;
-	bh=vhqsa+bycHaM4cXUwdi2UxCgJld51aK+QR9hRvM3B04=;
+	s=korg; t=1672242694;
+	bh=tKrsNASXm356EdJnY/G+089reObObzamFt1AZTTZjzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxqTKY2roJSzgRV0oojM9Oh83XdQ2uv1u0FXdp6p4hsMEFbvGxiijOVrxE8UV6L5P
-	 hQ8X+2EQtw991EF4vBl1QZtO4jEnP0ZLeJUT+HmnBkk7AYDbX/nvJEGgEXSxfVH7yW
-	 eTPqjnMWoBrcH7vvz/ETpz1Tn4BjdUeg/uVJAQFI=
+	b=g2XxOUGw2+yjb37NWrys+qwZHEtz12uAJh87z19wUjdRUpyhtO7vmiD0OJlLWH5iN
+	 dKepjyV5Xbad0KmDpkJdbWG7p9iLw+u4sieLaqfQVES5DJIIFB5wajnlWyXxN0Rwpe
+	 VY6UWRKrLG2nnUZ2QK4erRyPs8VCZdPuxNd+IOQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 634/731] ASoC: codecs: rt298: Add quirk for KBL-R RVP platform
-Date: Wed, 28 Dec 2022 15:42:21 +0100
-Message-Id: <20221228144314.896339326@linuxfoundation.org>
+Subject: [PATCH 6.1 0403/1146] media: dvb-core: Fix ignored return value in dvb_register_frontend()
+Date: Wed, 28 Dec 2022 15:32:22 +0100
+Message-Id: <20221228144341.111430984@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 953dbd1cef18ce9ac0d69c1bd735b929fe52a17e ]
+[ Upstream commit a574359e2e71ce16be212df3a082ed60a4bd2c5f ]
 
-KBL-R RVP platforms also use combojack, so we need to enable that
-configuration for them.
+In dvb_register_frontend(), dvb_register_device() is possible to fail
+but its return value is ignored.
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+It will cause use-after-free when module is removed, because in
+dvb_unregister_frontend() it tries to unregister a not registered
+device.
+
+BUG: KASAN: use-after-free in dvb_remove_device+0x18b/0x1f0 [dvb_core]
+Read of size 4 at addr ffff88800dff4824 by task rmmod/428
+CPU: 3 PID: 428 Comm: rmmod
+Call Trace:
+ <TASK>
+ ...
+ dvb_remove_device+0x18b/0x1f0 [dvb_core]
+ dvb_unregister_frontend+0x7b/0x130 [dvb_core]
+ vidtv_bridge_remove+0x6e/0x160 [dvb_vidtv_bridge]
+ ...
+
+Fix this by catching return value of dvb_register_device().
+However the fe->refcount can't be put to zero immediately, because
+there are still modules calling dvb_frontend_detach() when
+dvb_register_frontend() fails.
+
+Link: https://lore.kernel.org/linux-media/20221108033005.169095-1-chenzhongjin@huawei.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt298.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/dvb-core/dvb_frontend.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt298.c b/sound/soc/codecs/rt298.c
-index c592c40a7ab3..604754e4b29f 100644
---- a/sound/soc/codecs/rt298.c
-+++ b/sound/soc/codecs/rt298.c
-@@ -1173,6 +1173,13 @@ static const struct dmi_system_id force_combo_jack_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Geminilake")
- 		}
- 	},
-+	{
-+		.ident = "Intel Kabylake R RVP",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Kabylake Client platform")
-+		}
-+	},
- 	{ }
- };
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index 48e735cdbe6b..a7792ef4baf8 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -2986,6 +2986,7 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
+ 		.name = fe->ops.info.name,
+ #endif
+ 	};
++	int ret;
  
+ 	dev_dbg(dvb->device, "%s:\n", __func__);
+ 
+@@ -3019,8 +3020,13 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
+ 		 "DVB: registering adapter %i frontend %i (%s)...\n",
+ 		 fe->dvb->num, fe->id, fe->ops.info.name);
+ 
+-	dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
++	ret = dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
+ 			    fe, DVB_DEVICE_FRONTEND, 0);
++	if (ret) {
++		dvb_frontend_put(fe);
++		mutex_unlock(&frontend_mutex);
++		return ret;
++	}
+ 
+ 	/*
+ 	 * Initialize the cache to the proper values according with the
 -- 
 2.35.1
 
