@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334041C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26A0C433D2;
-	Wed, 28 Dec 2022 16:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40CA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A58C433D2;
+	Wed, 28 Dec 2022 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245080;
-	bh=FsfpOartd4Ml1rfdWDWlHdOeYWjDt7bGW/0F3rvErpY=;
+	s=korg; t=1672245082;
+	bh=EburepUz3/VPm54H9JLafbIA0MJZRjiFiR4eFeT2XS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1VfoKtCYLXVQPuVS1VSi32dWHiMMQslgxUhv9FS8Wk8mEHoBddg85MVRsj9Ht4rs
-	 PPdNv0QEol0jf8oYbhxxxU+lkWbTb9LHywWxYjhdNX4dVoWPSSQnN1ftKhZcXjQTX1
-	 WSVyFMzHnGYu2FdIps/AmZWlcDwendz+MnCOjQ/Y=
+	b=Ht3zW+qEQ+BXv57zjnq3AhNhAf162vxfMRJgUQMeFLgcM8CBtQ1MCqkZQ8xJSFm87
+	 CQw2aEGCzzLQwjxTvaYXZ+sRgtVf2pECobE4goUqet0UE5OomICq4XwWy7m7JBaYkn
+	 ZgPSiu7H05PTwQgazTrFl1JhsJeS5zwTdEXhZK7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Vincent Knecht <vincent.knecht@mailoo.org>,
+	Pavel Machek <pavel@ucw.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0793/1146] phy: qcom-qmp-pcie: drop bogus register update
-Date: Wed, 28 Dec 2022 15:38:52 +0100
-Message-Id: <20221228144351.687644630@linuxfoundation.org>
+Subject: [PATCH 6.1 0785/1146] leds: is31fl319x: Fix setting current limit for is31fl319{0,1,3}
+Date: Wed, 28 Dec 2022 15:38:44 +0100
+Message-Id: <20221228144351.469436187@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,51 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit 2d93887cb4bac0a36ce9e146956f631ab7994680 ]
+[ Upstream commit 135780f1048b3f956f5b10bb23dec9c2d2c4ef6d ]
 
-Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
-PHY is powered on before configuring the registers and only the MSM8996
-PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
-initialisation table, may possibly require a second update afterwards.
+The current setting lives in bits 4:2 (as also defined by the mask) but
+the current limit defines in the driver use bits 2:0 which should be
+shifted over so they don't get masked out completely (except for 17.5mA
+which became 10mA).
 
-To make things worse, the POWER_DOWN_CONTROL register lies at a
-different offset on more recent SoCs so that the second update, which
-still used a hard-coded offset, would write to an unrelated register
-(e.g. a revision-id register on SC8280XP).
+Now checking /sys/kernel/debug/regmap/1-0068/registers shows that the
+current limit is applied correctly and doesn't take the default b000 =
+42mA.
 
-As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
-the bogus register update.
-
-Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #RB3
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221017065013.19647-12-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: fa877cf1abb9 ("leds: is31fl319x: Add support for is31fl319{0,1,3} chips")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Reviewed-by: Vincent Knecht <vincent.knecht@mailoo.org>
+Signed-off-by: Pavel Machek <pavel@ucw.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/leds/leds-is31fl319x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 5be5348fbb26..9c8c30ee7c71 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1975,12 +1975,6 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl, cfg->pcs_misc_tbl_num);
- 	qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec, cfg->pcs_misc_tbl_num_sec);
+diff --git a/drivers/leds/leds-is31fl319x.c b/drivers/leds/leds-is31fl319x.c
+index 52b59b62f437..b2f4c4ec7c56 100644
+--- a/drivers/leds/leds-is31fl319x.c
++++ b/drivers/leds/leds-is31fl319x.c
+@@ -38,6 +38,7 @@
+ #define IS31FL3190_CURRENT_uA_MIN	5000
+ #define IS31FL3190_CURRENT_uA_DEFAULT	42000
+ #define IS31FL3190_CURRENT_uA_MAX	42000
++#define IS31FL3190_CURRENT_SHIFT	2
+ #define IS31FL3190_CURRENT_MASK		GENMASK(4, 2)
+ #define IS31FL3190_CURRENT_5_mA		0x02
+ #define IS31FL3190_CURRENT_10_mA	0x01
+@@ -553,7 +554,7 @@ static int is31fl319x_probe(struct i2c_client *client)
+ 			     is31fl3196_db_to_gain(is31->audio_gain_db));
+ 	else
+ 		regmap_update_bits(is31->regmap, IS31FL3190_CURRENT, IS31FL3190_CURRENT_MASK,
+-				   is31fl3190_microamp_to_cs(dev, aggregated_led_microamp));
++				   is31fl3190_microamp_to_cs(dev, aggregated_led_microamp) << IS31FL3190_CURRENT_SHIFT);
  
--	/*
--	 * Pull out PHY from POWER DOWN state.
--	 * This is active low enable signal to power-down PHY.
--	 */
--	qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
--
- 	if (cfg->has_pwrdn_delay)
- 		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
- 
+ 	for (i = 0; i < is31->cdef->num_leds; i++) {
+ 		struct is31fl319x_led *led = &is31->leds[i];
 -- 
 2.35.1
 
