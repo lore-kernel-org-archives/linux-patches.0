@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48221863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566D8C433EF;
-	Wed, 28 Dec 2022 15:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DCF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05641C433F0;
+	Wed, 28 Dec 2022 15:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240900;
-	bh=uDniHmXSBUzrvnEKTj8QBlPmhwTGemgZlim2KMDpL9c=;
+	s=korg; t=1672240903;
+	bh=+peOpAZJpiG0NESRyBu2rsUCn5Xx0Ey45SFJcBHmahM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icrU65paPzlyUg2BTzjPgB8TXECqPYsPFbKZbIIcYGEnkoKxtmN8ya5d1/ZfKu8uz
-	 N5N2H4m6DOlWmmjv5o/selGj+tJ/gTbDqierglM+rFQXVaNgb+z4N7UDognw0NTUIR
-	 SSpH5M62ewt0M29RDggaANPoA74lNRV19gD9wmP8=
+	b=HGEj/ojNjqW1nqn074keWxlPdvIDyQfv4IEk9mFaA3rUQBhDbDoAFmIvuPKeSw+o4
+	 T5Sb31euHpNi73w2scIGo5xannoiGdiVNImhg2qeQ4dgW8RbQ6Mo9M57CQoVdyEKKI
+	 bQK2rLNykAhzljGnC254tejNo25ZtygtvHtTAxSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongdong Zhang <zhangdongdong1@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 379/731] f2fs: fix normal discard process
-Date: Wed, 28 Dec 2022 15:38:06 +0100
-Message-Id: <20221228144307.547165034@linuxfoundation.org>
+Subject: [PATCH 5.15 411/731] scsi: scsi_debug: Fix a warning in resp_verify()
+Date: Wed, 28 Dec 2022 15:38:38 +0100
+Message-Id: <20221228144308.483876288@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,41 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongdong Zhang <zhangdongdong1@oppo.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit b5f1a218ae5e4339130d6e733f0e63d623e09a2c ]
+[ Upstream commit ed0f17b748b20271cb568c7ca0b23b120316a47d ]
 
-In the DPOLICY_BG mode, there is a conflict between
-the two conditions "i + 1 < dpolicy->granularity" and
-"i < DEFAULT_DISCARD_GRANULARITY". If i = 15, the first
-condition is false, it will enter the second condition
-and dispatch all small granularity discards in function
- __issue_discard_cmd_orderly. The restrictive effect
-of the first condition to small discards will be
-invalidated. These two conditions should align.
+As 'vnum' is controlled by user, so if user tries to allocate memory larger
+than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack trace and
+messes up dmesg with a warning.
 
-Fixes: 20ee4382322c ("f2fs: issue small discard by LBA order")
-Signed-off-by: Dongdong Zhang <zhangdongdong1@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
+detected by static analysis using smatch.
+
+Fixes: c3e2fe9222d4 ("scsi: scsi_debug: Implement VERIFY(10), add VERIFY(16)")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221112070031.2121068-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
+ drivers/scsi/scsi_debug.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 28939e3573ea..194c0811fbdf 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1551,7 +1551,7 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
- 		if (i + 1 < dpolicy->granularity)
- 			break;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index b44fd9b80934..6ca3205a0bf5 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -4296,7 +4296,7 @@ static int resp_verify(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
+ 	if (ret)
+ 		return ret;
  
--		if (i < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
-+		if (i + 1 < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
- 			return __issue_discard_cmd_orderly(sbi, dpolicy);
- 
- 		pend_list = &dcc->pend_list[i];
+-	arr = kcalloc(lb_size, vnum, GFP_ATOMIC);
++	arr = kcalloc(lb_size, vnum, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!arr) {
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
+ 				INSUFF_RES_ASCQ);
 -- 
 2.35.1
 
