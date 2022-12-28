@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2B41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35428C433D2;
-	Wed, 28 Dec 2022 15:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7513B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A96C433EF;
+	Wed, 28 Dec 2022 15:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239962;
-	bh=WA8MtBXPsmOfc4X9Y5fEGDSvQo1SK7z+JRzUXyIdYYE=;
+	s=korg; t=1672239965;
+	bh=rsvbKeLYFHMBzZ88M14YxHvEvbSs2E2fLFjhKoLXicw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2e6zgXQWTnTPzTeydnAtT9P82BidnTQq9QOaZiQga5Q447mUEu5szQ7qKnxeRhTF
-	 0dqc0GWZ1QMDas47JMekg8TlQ8pP5wFu/kREyKnrLWeTAHIng3g0+c0fkebKqIk4+l
-	 ZeVlTZZPkI9MphMUC2expV6e+acjw8Z/vFLVN6wk=
+	b=OQbPgQtY69q5qu/yn5tD3vb3Ff5lfGaTI+hZiYpCzUMAcDLgp0CcgEaM4SXDaRaPa
+	 85nAdz7us+FzpM1bhTuY6wRYXpZYTP4jhCvfzxoD48+m9n3RjLgPxr2To6dYbLgoTQ
+	 DXLTK05C1iQdhlpG6vbbgi94+msq7Q6LBJk+w3Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0063/1146] arm64: dts: ti: k3-am65-main: Drop dma-coherent in crypto node
-Date: Wed, 28 Dec 2022 15:26:42 +0100
-Message-Id: <20221228144331.871872192@linuxfoundation.org>
+Subject: [PATCH 6.0 0073/1073] ARM: dts: armada-38x: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:41 +0100
+Message-Id: <20221228144330.062812982@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,34 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit b86833ab3653dbb0dc453eec4eef8615e63de4e2 ]
+[ Upstream commit 44f47b7a8fa4678ce4c38ea74837e4996b9df6d6 ]
 
-crypto driver itself is not dma-coherent. So drop it.
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: b366b2409c97 ("arm64: dts: ti: k3-am6: Add crypto accelarator node")
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Link: https://lore.kernel.org/r/20221031152520.355653-2-j-choudhary@ti.com
+Fixes: 0d3d96ab0059 ("ARM: mvebu: add Device Tree description of the Armada 380/385 SoCs")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/armada-380.dtsi | 4 ++--
+ arch/arm/boot/dts/armada-385.dtsi | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-index 4005a73cfea9..ebb1c5ce7aec 100644
---- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
-@@ -120,7 +120,6 @@ crypto: crypto@4e00000 {
- 		dmas = <&main_udmap 0xc001>, <&main_udmap 0x4002>,
- 				<&main_udmap 0x4003>;
- 		dma-names = "tx", "rx1", "rx2";
--		dma-coherent;
- 
- 		rng: rng@4e10000 {
- 			compatible = "inside-secure,safexcel-eip76";
+diff --git a/arch/arm/boot/dts/armada-380.dtsi b/arch/arm/boot/dts/armada-380.dtsi
+index cff1269f3fbf..7146cc8f082a 100644
+--- a/arch/arm/boot/dts/armada-380.dtsi
++++ b/arch/arm/boot/dts/armada-380.dtsi
+@@ -79,7 +79,7 @@ pcie@1,0 {
+ 			/* x1 port */
+ 			pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -98,7 +98,7 @@ pcie@2,0 {
+ 			/* x1 port */
+ 			pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+diff --git a/arch/arm/boot/dts/armada-385.dtsi b/arch/arm/boot/dts/armada-385.dtsi
+index 83392b92dae2..be8d607c59b2 100644
+--- a/arch/arm/boot/dts/armada-385.dtsi
++++ b/arch/arm/boot/dts/armada-385.dtsi
+@@ -93,7 +93,7 @@ pcie1_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie2: pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -121,7 +121,7 @@ pcie2_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie3: pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -152,7 +152,7 @@ pcie3_intc: interrupt-controller {
+ 			 */
+ 			pcie4: pcie@4,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
++				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
+ 				reg = <0x2000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
 -- 
 2.35.1
 
