@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE221C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3361EC433F0;
-	Wed, 28 Dec 2022 16:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D8E1C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE02C433D2;
+	Wed, 28 Dec 2022 16:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245337;
-	bh=STWR08XNfDHGIgwVqoMjIcCEx47HDiY/pzVuziTSxrU=;
+	s=korg; t=1672245340;
+	bh=nhikWAwj5FeueVMWraRDqHfOxJVsytxlgYdJ4Mmhqso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdVAa7NrNnoSeaOzb5qpXCPyj1GWCBERpxghgD6jPXUl7Z6J60BoM/08PdTUH1tSo
-	 fVvS5wqJkDn0Y4D0ZgvrT2fmAYs4TmlA+sMvrpRJTdvlwe5TKUjJvfwDCVdqu2Mnpo
-	 +TJyZaAqDjJD++PMqVXfG/cVlu/2/rfMwclFFU6A=
+	b=om+VMj7P99+28aRpb1oLuCmRzsPMerP7sM6Yj/HN0FwIuewKx0SLCKu4eomwe9x80
+	 b2WduM0mA81FqhqDMTn7hNTV63tboOPVPeG/zKRVbuDtaG+CKw9nGlKBLGPclep91J
+	 7VmlK4ndR/CNVOvfFh1Cey6FGbUlLEGJaa1oCo2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0875/1073] mailbox: mpfs: read the system controllers status
-Date: Wed, 28 Dec 2022 15:41:03 +0100
-Message-Id: <20221228144351.790957744@linuxfoundation.org>
+Subject: [PATCH 6.1 0842/1146] iommu: Avoid races around device probe
+Date: Wed, 28 Dec 2022 15:39:41 +0100
+Message-Id: <20221228144353.026684981@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,97 +36,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit ab47d0bfdf88faac0eb02749e5bfaa306e004300 ]
+[ Upstream commit 01657bc14a3990c665375f77978631fee77b1fce ]
 
-Some services explicitly return an error code in their response, but
-others rely on the system controller to set a status in its status
-register. The meaning of the bits varies based on what service is
-requested, so pass it back up to the driver that requested the service
-in the first place. The field in the message struct already existed, but
-was unused until now.
+We currently have 3 different ways that __iommu_probe_device() may be
+called, but no real guarantee that multiple callers can't tread on each
+other, especially once asynchronous driver probe gets involved. It would
+likely have taken a fair bit of luck to hit this previously, but commit
+57365a04c921 ("iommu: Move bus setup to IOMMU device registration") ups
+the odds since now it's not just omap-iommu that may trigger multiple
+bus_iommu_probe() calls in parallel if probing asynchronously.
 
-If the system controller is busy, in which case we should never actually
-be in the interrupt handler, or if the service fails the mailbox itself
-should not be read. Callers should check the status before operating on
-the response.
+Add a lock to ensure we can't try to double-probe a device, and also
+close some possible race windows to make sure we're truly robust against
+trying to double-initialise a group via two different member devices.
 
-There's an existing, but unused, #define for the mailbox mask - but it
-was incorrect. It was doing a GENMASK_ULL(32, 16) which should've just
-been a GENMASK(31, 16), so fix that up and start using it.
-
-Fixes: 83d7b1560810 ("mbox: add polarfire soc system controller mailbox")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Reported-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Brian Norris <briannorris@chromium.org>
+Fixes: 57365a04c921 ("iommu: Move bus setup to IOMMU device registration")
+Link: https://lore.kernel.org/r/1946ef9f774851732eed78760a78ec40dbc6d178.1667591503.git.robin.murphy@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-mpfs.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ drivers/iommu/iommu.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
-index cfacb3f320a6..853901acaeec 100644
---- a/drivers/mailbox/mailbox-mpfs.c
-+++ b/drivers/mailbox/mailbox-mpfs.c
-@@ -2,7 +2,7 @@
- /*
-  * Microchip PolarFire SoC (MPFS) system controller/mailbox controller driver
-  *
-- * Copyright (c) 2020 Microchip Corporation. All rights reserved.
-+ * Copyright (c) 2020-2022 Microchip Corporation. All rights reserved.
-  *
-  * Author: Conor Dooley <conor.dooley@microchip.com>
-  *
-@@ -56,7 +56,7 @@
- #define SCB_STATUS_NOTIFY_MASK BIT(SCB_STATUS_NOTIFY)
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 65a3b3d886dc..959d895fc1df 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -283,13 +283,23 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
+ 	const struct iommu_ops *ops = dev->bus->iommu_ops;
+ 	struct iommu_device *iommu_dev;
+ 	struct iommu_group *group;
++	static DEFINE_MUTEX(iommu_probe_device_lock);
+ 	int ret;
  
- #define SCB_STATUS_POS (16)
--#define SCB_STATUS_MASK GENMASK_ULL(SCB_STATUS_POS + SCB_MASK_WIDTH, SCB_STATUS_POS)
-+#define SCB_STATUS_MASK GENMASK(SCB_STATUS_POS + SCB_MASK_WIDTH - 1, SCB_STATUS_POS)
- 
- struct mpfs_mbox {
- 	struct mbox_controller controller;
-@@ -130,13 +130,38 @@ static void mpfs_mbox_rx_data(struct mbox_chan *chan)
- 	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
- 	struct mpfs_mss_response *response = mbox->response;
- 	u16 num_words = ALIGN((response->resp_size), (4)) / 4U;
--	u32 i;
-+	u32 i, status;
- 
- 	if (!response->resp_msg) {
- 		dev_err(mbox->dev, "failed to assign memory for response %d\n", -ENOMEM);
- 		return;
- 	}
- 
+ 	if (!ops)
+ 		return -ENODEV;
+-
+-	if (!dev_iommu_get(dev))
+-		return -ENOMEM;
 +	/*
-+	 * The status is stored in bits 31:16 of the SERVICES_SR register.
-+	 * It is only valid when BUSY == 0.
-+	 * We should *never* get an interrupt while the controller is
-+	 * still in the busy state. If we do, something has gone badly
-+	 * wrong & the content of the mailbox would not be valid.
++	 * Serialise to avoid races between IOMMU drivers registering in
++	 * parallel and/or the "replay" calls from ACPI/OF code via client
++	 * driver probe. Once the latter have been cleaned up we should
++	 * probably be able to use device_lock() here to minimise the scope,
++	 * but for now enforcing a simple global ordering is fine.
 +	 */
-+	if (mpfs_mbox_busy(mbox)) {
-+		dev_err(mbox->dev, "got an interrupt but system controller is busy\n");
-+		response->resp_status = 0xDEAD;
-+		return;
++	mutex_lock(&iommu_probe_device_lock);
++	if (!dev_iommu_get(dev)) {
++		ret = -ENOMEM;
++		goto err_unlock;
 +	}
+ 
+ 	if (!try_module_get(ops->owner)) {
+ 		ret = -EINVAL;
+@@ -309,11 +319,14 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
+ 		ret = PTR_ERR(group);
+ 		goto out_release;
+ 	}
+-	iommu_group_put(group);
+ 
++	mutex_lock(&group->mutex);
+ 	if (group_list && !group->default_domain && list_empty(&group->entry))
+ 		list_add_tail(&group->entry, group_list);
++	mutex_unlock(&group->mutex);
++	iommu_group_put(group);
+ 
++	mutex_unlock(&iommu_probe_device_lock);
+ 	iommu_device_link(iommu_dev, dev);
+ 
+ 	return 0;
+@@ -328,6 +341,9 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
+ err_free:
+ 	dev_iommu_free(dev);
+ 
++err_unlock:
++	mutex_unlock(&iommu_probe_device_lock);
 +
-+	status = readl_relaxed(mbox->ctrl_base + SERVICES_SR_OFFSET);
+ 	return ret;
+ }
+ 
+@@ -1799,11 +1815,11 @@ int bus_iommu_probe(struct bus_type *bus)
+ 		return ret;
+ 
+ 	list_for_each_entry_safe(group, next, &group_list, entry) {
++		mutex_lock(&group->mutex);
 +
-+	/*
-+	 * If the status of the individual servers is non-zero, the service has
-+	 * failed. The contents of the mailbox at this point are not be valid,
-+	 * so don't bother reading them. Set the status so that the driver
-+	 * implementing the service can handle the result.
-+	 */
-+	response->resp_status = (status & SCB_STATUS_MASK) >> SCB_STATUS_POS;
-+	if (response->resp_status)
-+		return;
-+
- 	if (!mpfs_mbox_busy(mbox)) {
- 		for (i = 0; i < num_words; i++) {
- 			response->resp_msg[i] =
+ 		/* Remove item from the list */
+ 		list_del_init(&group->entry);
+ 
+-		mutex_lock(&group->mutex);
+-
+ 		/* Try to allocate default domain */
+ 		probe_alloc_default_domain(bus, group);
+ 
 -- 
 2.35.1
 
