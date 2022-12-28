@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B031863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C4FC433D2;
-	Wed, 28 Dec 2022 15:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6758C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3053C43392;
+	Wed, 28 Dec 2022 15:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242325;
-	bh=6WPVI2RzqdiPWNz6u8FMFbRCToeTpaZF137s1wsRmk8=;
+	s=korg; t=1672242328;
+	bh=lxG/BseRpMSvx4WZ3vOTYKABrcCbTH0xZN/XOm6jfsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQEPkDlVKwWFh0p0y/Tay/buZDnN/k3v4dJ+IpiyzwqdalzDhJlrRGauQ5F0rPvra
-	 2Lr//AimxZYah4C76B3u2BvVczw2ukipPSO8cAcRQtwQ2Ojh8/JjQb9HIxP+u+/Qjb
-	 7aRm263j2iqSk8Z/0JrdiE5t9eOTEL9mV3LeAl9I=
+	b=nDxRjjXf/bk3REBgJhzssMID/if1CTbDT6Vl9md/n54DZFtxgiL4DlZkcDpeyR3Vt
+	 po9SlZwYbxl5fQceZJQ98ovEe1SFVT/Zc94H+IEbkfHLycbHwbHZlFpPvFY/bJwFZE
+	 X16oioJW9+8kcbllt9zKelgxTpIAZOAEJO3qb9gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Yuan Can <yuancan@huawei.com>,
+	ming_qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0397/1073] media: mediatek: vcodec: Fix getting NULL pointer for dst buffer
-Date: Wed, 28 Dec 2022 15:33:05 +0100
-Message-Id: <20221228144338.801201091@linuxfoundation.org>
+Subject: [PATCH 6.1 0357/1146] media: amphion: Fix error handling in vpu_driver_init()
+Date: Wed, 28 Dec 2022 15:31:36 +0100
+Message-Id: <20221228144339.858486431@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit d879f770e4d1d5f0d9b692d3a2702f23ee441dbb ]
+[ Upstream commit a95cc6d11aae16a7b2d043b073a40de81bbea689 ]
 
-The driver may can't get v4l2 buffer when lat or core decode timeout,
-will lead to crash when call v4l2_m2m_buf_done to set dst buffer
-(NULL pointer) done.
+A problem about modprobe amphion-vpu failed is triggered with the
+following log given:
 
-Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+ [ 2208.634841] Error: Driver 'amphion-vpu' is already registered, aborting...
+ modprobe: ERROR: could not insert 'amphion_vpu': Device or resource busy
+
+The reason is that vpu_driver_init() returns vpu_core_driver_init()
+directly without checking its return value, if vpu_core_driver_init()
+failed, it returns without unregister amphion_vpu_driver, resulting the
+amphion-vpu can never be installed later.
+A simple call graph is shown as below:
+
+ vpu_driver_init()
+   platform_driver_register() # register amphion_vpu_driver
+   vpu_core_driver_init()
+     platform_driver_register()
+       driver_register()
+         bus_add_driver()
+           dev = kzalloc(...) # OOM happened
+   # return without unregister amphion_vpu_driver
+
+Fix by unregister amphion_vpu_driver when vpu_core_driver_init() returns
+error.
+
+Fixes: b50a64fc54af ("media: amphion: add amphion vpu device driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: ming_qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/mtk_vcodec_dec_stateless.c        | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/media/platform/amphion/vpu_drv.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-index c45bd2599bb2..e86809052a9f 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-@@ -138,10 +138,13 @@ static void mtk_vdec_stateless_cap_to_disp(struct mtk_vcodec_ctx *ctx, int error
- 		state = VB2_BUF_STATE_DONE;
+diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
+index 9d5a5075343d..f01ce49d27e8 100644
+--- a/drivers/media/platform/amphion/vpu_drv.c
++++ b/drivers/media/platform/amphion/vpu_drv.c
+@@ -245,7 +245,11 @@ static int __init vpu_driver_init(void)
+ 	if (ret)
+ 		return ret;
  
- 	vb2_dst = v4l2_m2m_dst_buf_remove(ctx->m2m_ctx);
--	v4l2_m2m_buf_done(vb2_dst, state);
--
--	mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
--		       vb2_dst->vb2_buf.index);
-+	if (vb2_dst) {
-+		v4l2_m2m_buf_done(vb2_dst, state);
-+		mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
-+			       vb2_dst->vb2_buf.index);
-+	} else {
-+		mtk_v4l2_err("dst buffer is NULL");
-+	}
+-	return vpu_core_driver_init();
++	ret = vpu_core_driver_init();
++	if (ret)
++		platform_driver_unregister(&amphion_vpu_driver);
++
++	return ret;
+ }
  
- 	if (src_buf_req)
- 		v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
+ static void __exit vpu_driver_exit(void)
 -- 
 2.35.1
 
