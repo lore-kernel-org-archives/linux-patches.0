@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878F81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B10C433D2;
-	Wed, 28 Dec 2022 15:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DEE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7E8C433F0;
+	Wed, 28 Dec 2022 15:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240449;
-	bh=qaHdWzLaIUy4wu7m/qyhYPKcImFYoVno+khASkewFo0=;
+	s=korg; t=1672240451;
+	bh=yQi0KKFy++VnQxeN1EaZEtnH9V/nrQBt/zrBPeiXXF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTnItrp3Z7UZRlSxteggSs9n+iPyOooCh01fTgNOTHeI9X9V1KWSdjrpsLY9tif/Y
-	 OBKFSxiTIYmukYj3v3PmvDvB3Xk75ExU29FpBgy1xvsUQwuSVfZ0FSe9ehx9iInizc
-	 Ih7rj16xc57uOZOdXFw32AvPqYOJICWLWYnoDoRo=
+	b=qG+eSEzexfJ0EOExIsDPRVEjIUhXK5oPjkP68c5RV7X1Xu0vJG1d9NTFClKtySfWg
+	 igpQxTPpvmCOtByq3OBxvOfZQ6mXeOoYCiCoRMMMv8unqStS4dR5dpcplyh4zzoidc
+	 LeHHIsKtyg8GqcOLb2oPltgVQ2Xj6GWArQ0sn5Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0162/1073] x86/xen: Fix memory leak in xen_smp_intr_init{_pv}()
-Date: Wed, 28 Dec 2022 15:29:10 +0100
-Message-Id: <20221228144332.418668655@linuxfoundation.org>
+Subject: [PATCH 6.1 0127/1146] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
+Date: Wed, 28 Dec 2022 15:27:46 +0100
+Message-Id: <20221228144333.603058680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,176 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit 69143f60868b3939ddc89289b29db593b647295e ]
+[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
 
-These local variables @{resched|pmu|callfunc...}_name saves the new
-string allocated by kasprintf(), and when bind_{v}ipi_to_irqhandler()
-fails, it goes to the @fail tag, and calls xen_smp_intr_free{_pv}() to
-free resource, however the new string is not saved, which cause a memory
-leak issue. fix it.
+When `timerqueue_getnext()` is called on an empty timer queue, it will
+use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
+`rb_entry_safe()` which handles NULL pointers.
 
-Fixes: 9702785a747a ("i386: move xen")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221123155858.11382-2-xiujianfeng@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+This has not caused any issues so far because the offset of the `rb_node`
+member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
+
+Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/smp.c    | 24 ++++++++++++------------
- arch/x86/xen/smp_pv.c | 12 ++++++------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ include/linux/timerqueue.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/xen/smp.c b/arch/x86/xen/smp.c
-index c3e1f9a7d43a..4b0d6fff88de 100644
---- a/arch/x86/xen/smp.c
-+++ b/arch/x86/xen/smp.c
-@@ -32,30 +32,30 @@ static irqreturn_t xen_reschedule_interrupt(int irq, void *dev_id)
- 
- void xen_smp_intr_free(unsigned int cpu)
+diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
+index 93884086f392..adc80e29168e 100644
+--- a/include/linux/timerqueue.h
++++ b/include/linux/timerqueue.h
+@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
  {
-+	kfree(per_cpu(xen_resched_irq, cpu).name);
-+	per_cpu(xen_resched_irq, cpu).name = NULL;
- 	if (per_cpu(xen_resched_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_resched_irq, cpu).irq, NULL);
- 		per_cpu(xen_resched_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_resched_irq, cpu).name);
--		per_cpu(xen_resched_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfunc_irq, cpu).name);
-+	per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfunc_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfunc_irq, cpu).irq, NULL);
- 		per_cpu(xen_callfunc_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfunc_irq, cpu).name);
--		per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_debug_irq, cpu).name);
-+	per_cpu(xen_debug_irq, cpu).name = NULL;
- 	if (per_cpu(xen_debug_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_debug_irq, cpu).irq, NULL);
- 		per_cpu(xen_debug_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_debug_irq, cpu).name);
--		per_cpu(xen_debug_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfuncsingle_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfuncsingle_irq, cpu).irq,
- 				       NULL);
- 		per_cpu(xen_callfuncsingle_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
--		per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	}
+ 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
+ 
+-	return rb_entry(leftmost, struct timerqueue_node, node);
++	return rb_entry_safe(leftmost, struct timerqueue_node, node);
  }
  
-@@ -65,6 +65,7 @@ int xen_smp_intr_init(unsigned int cpu)
- 	char *resched_name, *callfunc_name, *debug_name;
- 
- 	resched_name = kasprintf(GFP_KERNEL, "resched%d", cpu);
-+	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 	rc = bind_ipi_to_irqhandler(XEN_RESCHEDULE_VECTOR,
- 				    cpu,
- 				    xen_reschedule_interrupt,
-@@ -74,9 +75,9 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_resched_irq, cpu).irq = rc;
--	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfunc%d", cpu);
-+	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_VECTOR,
- 				    cpu,
- 				    xen_call_function_interrupt,
-@@ -86,10 +87,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfunc_irq, cpu).irq = rc;
--	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 
- 	if (!xen_fifo_events) {
- 		debug_name = kasprintf(GFP_KERNEL, "debug%d", cpu);
-+		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_DEBUG, cpu,
- 					     xen_debug_interrupt,
- 					     IRQF_PERCPU | IRQF_NOBALANCING,
-@@ -97,10 +98,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_debug_irq, cpu).irq = rc;
--		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 	}
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfuncsingle%d", cpu);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_SINGLE_VECTOR,
- 				    cpu,
- 				    xen_call_function_single_interrupt,
-@@ -110,7 +111,6 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfuncsingle_irq, cpu).irq = rc;
--	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 
- 	return 0;
- 
-diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
-index ba7af2eca755..cd80f8422e17 100644
---- a/arch/x86/xen/smp_pv.c
-+++ b/arch/x86/xen/smp_pv.c
-@@ -97,18 +97,18 @@ asmlinkage __visible void cpu_bringup_and_idle(void)
- 
- void xen_smp_intr_free_pv(unsigned int cpu)
- {
-+	kfree(per_cpu(xen_irq_work, cpu).name);
-+	per_cpu(xen_irq_work, cpu).name = NULL;
- 	if (per_cpu(xen_irq_work, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_irq_work, cpu).irq, NULL);
- 		per_cpu(xen_irq_work, cpu).irq = -1;
--		kfree(per_cpu(xen_irq_work, cpu).name);
--		per_cpu(xen_irq_work, cpu).name = NULL;
- 	}
- 
-+	kfree(per_cpu(xen_pmu_irq, cpu).name);
-+	per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	if (per_cpu(xen_pmu_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_pmu_irq, cpu).irq, NULL);
- 		per_cpu(xen_pmu_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_pmu_irq, cpu).name);
--		per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	}
- }
- 
-@@ -118,6 +118,7 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	char *callfunc_name, *pmu_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "irqwork%d", cpu);
-+	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_IRQ_WORK_VECTOR,
- 				    cpu,
- 				    xen_irq_work_interrupt,
-@@ -127,10 +128,10 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_irq_work, cpu).irq = rc;
--	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 
- 	if (is_xen_pmu) {
- 		pmu_name = kasprintf(GFP_KERNEL, "pmu%d", cpu);
-+		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_XENPMU, cpu,
- 					     xen_pmu_irq_handler,
- 					     IRQF_PERCPU|IRQF_NOBALANCING,
-@@ -138,7 +139,6 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_pmu_irq, cpu).irq = rc;
--		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 	}
- 
- 	return 0;
+ static inline void timerqueue_init(struct timerqueue_node *node)
 -- 
 2.35.1
 
