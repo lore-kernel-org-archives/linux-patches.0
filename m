@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98B81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2CCC433EF;
-	Wed, 28 Dec 2022 15:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0021863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DBDC433D2;
+	Wed, 28 Dec 2022 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242493;
-	bh=m2tIFWpZhwX608DpSwwB/+qfxFqSV5W3BTcJjDw7Uf0=;
+	s=korg; t=1672242496;
+	bh=tBrRq5yisab6ky71x8kdBKUTgTazPU6FQyLlXolWpf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+RIkSwV6DKXNPtTFW+ufR4gFRBv1PPqgx1riwmNUvIdo5k8qmPM4MNgZL9dhy5fd
-	 rJ2Nv6IvmgBlZpApyZN+V0yxsSvcchl/jauULDgWGx60g3K2/y5rGZ+69NK2JSX2h4
-	 d/TF+0aKlIt9gY8OuNw7tMuC+Xd3vYGCXp+JkkzE=
+	b=c4krU2lEBl2yBRja+o8UGcss3c/vjzlKwaYQRKj9+b5DJO1lCUVxtsBO3xM4YekyF
+	 Ej16g8g5qDnPVDd8u/x01yA7YatTlUra6u7gCZpEDkofDUNmhylEdDaP1nwo4X+xtD
+	 fo5AnNOPVOlyHhotUJxHLFr/oPWoC+N4/0+LtB18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lorenzo Bianconi <lorenzo.bianconi@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0376/1146] ALSA: pcm: fix undefined behavior in bit shift for SNDRV_PCM_RATE_KNOT
-Date: Wed, 28 Dec 2022 15:31:55 +0100
-Message-Id: <20221228144340.375975802@linuxfoundation.org>
+Subject: [PATCH 5.15 589/731] net: enetc: avoid buffer leaks on xdp_do_redirect() failure
+Date: Wed, 28 Dec 2022 15:41:36 +0100
+Message-Id: <20221228144313.619046407@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,89 +36,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b5172e62458f8e6ff359e5f096044a488db90ac5 ]
+[ Upstream commit 628050ec952d2e2e46ec9fb6aa07e41139e030c8 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Before enetc_clean_rx_ring_xdp() calls xdp_do_redirect(), each software
+BD in the RX ring between index orig_i and i can have one of 2 refcount
+values on its page.
 
-UBSAN: shift-out-of-bounds in sound/core/pcm_native.c:2676:21
-left shift of 1 by 31 places cannot be represented in type 'int'
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0x8d/0xcf
- ubsan_epilogue+0xa/0x44
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
- snd_pcm_open_substream+0x9f0/0xa90
- snd_pcm_oss_open.part.26+0x313/0x670
- snd_pcm_oss_open+0x30/0x40
- soundcore_open+0x18b/0x2e0
- chrdev_open+0xe2/0x270
- do_dentry_open+0x2f7/0x620
- path_openat+0xd66/0xe70
- do_filp_open+0xe3/0x170
- do_sys_openat2+0x357/0x4a0
- do_sys_open+0x87/0xd0
- do_syscall_64+0x34/0x80
+We are the owner of the current buffer that is being processed, so the
+refcount will be at least 1.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Link: https://lore.kernel.org/r/20221121110044.3115686-1-zhongbaisong@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the current owner of the buffer at the diametrically opposed index
+in the RX ring (i.o.w, the other half of this page) has not yet called
+kfree(), this page's refcount could even be 2.
+
+enetc_page_reusable() in enetc_flip_rx_buff() tests for the page
+refcount against 1, and [ if it's 2 ] does not attempt to reuse it.
+
+But if enetc_flip_rx_buff() is put after the xdp_do_redirect() call,
+the page refcount can have one of 3 values. It can also be 0, if there
+is no owner of the other page half, and xdp_do_redirect() for this
+buffer ran so far that it triggered a flush of the devmap/cpumap bulk
+queue, and the consumers of those bulk queues also freed the buffer,
+all by the time xdp_do_redirect() returns the execution back to enetc.
+
+This is the reason why enetc_flip_rx_buff() is called before
+xdp_do_redirect(), but there is a big flaw with that reasoning:
+enetc_flip_rx_buff() will set rx_swbd->page = NULL on both sides of the
+enetc_page_reusable() branch, and if xdp_do_redirect() returns an error,
+we call enetc_xdp_free(), which does not deal gracefully with that.
+
+In fact, what happens is quite special. The page refcounts start as 1.
+enetc_flip_rx_buff() figures they're reusable, transfers these
+rx_swbd->page pointers to a different rx_swbd in enetc_reuse_page(), and
+bumps the refcount to 2. When xdp_do_redirect() later returns an error,
+we call the no-op enetc_xdp_free(), but we still haven't lost the
+reference to that page. A copy of it is still at rx_ring->next_to_alloc,
+but that has refcount 2 (and there are no concurrent owners of it in
+flight, to drop the refcount). What really kills the system is when
+we'll flip the rx_swbd->page the second time around. With an updated
+refcount of 2, the page will not be reusable and we'll really leak it.
+Then enetc_new_page() will have to allocate more pages, which will then
+eventually leak again on further errors from xdp_do_redirect().
+
+The problem, summarized, is that we zeroize rx_swbd->page before we're
+completely done with it, and this makes it impossible for the error path
+to do something with it.
+
+Since the packet is potentially multi-buffer and therefore the
+rx_swbd->page is potentially an array, manual passing of the old
+pointers between enetc_flip_rx_buff() and enetc_xdp_free() is a bit
+difficult.
+
+For the sake of going with a simple solution, we accept the possibility
+of racing with xdp_do_redirect(), and we move the flip procedure to
+execute only on the redirect success path. By racing, I mean that the
+page may be deemed as not reusable by enetc (having a refcount of 0),
+but there will be no leak in that case, either.
+
+Once we accept that, we have something better to do with buffers on
+XDP_REDIRECT failure. Since we haven't performed half-page flipping yet,
+we won't, either (and this way, we can avoid enetc_xdp_free()
+completely, which gives the entire page to the slab allocator).
+Instead, we'll call enetc_xdp_drop(), which will recycle this half of
+the buffer back to the RX ring.
+
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Suggested-by: Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20221213001908.2347046-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/pcm.h | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 35 +++++---------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
 
-diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-index 7b1a022910e8..27040b472a4f 100644
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -106,24 +106,24 @@ struct snd_pcm_ops {
- #define SNDRV_PCM_POS_XRUN		((snd_pcm_uframes_t)-1)
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 222a250fba84..adccb14c1644 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1220,23 +1220,6 @@ static void enetc_xdp_drop(struct enetc_bdr *rx_ring, int rx_ring_first,
+ 	rx_ring->stats.xdp_drops++;
+ }
  
- /* If you change this don't forget to change rates[] table in pcm_native.c */
--#define SNDRV_PCM_RATE_5512		(1<<0)		/* 5512Hz */
--#define SNDRV_PCM_RATE_8000		(1<<1)		/* 8000Hz */
--#define SNDRV_PCM_RATE_11025		(1<<2)		/* 11025Hz */
--#define SNDRV_PCM_RATE_16000		(1<<3)		/* 16000Hz */
--#define SNDRV_PCM_RATE_22050		(1<<4)		/* 22050Hz */
--#define SNDRV_PCM_RATE_32000		(1<<5)		/* 32000Hz */
--#define SNDRV_PCM_RATE_44100		(1<<6)		/* 44100Hz */
--#define SNDRV_PCM_RATE_48000		(1<<7)		/* 48000Hz */
--#define SNDRV_PCM_RATE_64000		(1<<8)		/* 64000Hz */
--#define SNDRV_PCM_RATE_88200		(1<<9)		/* 88200Hz */
--#define SNDRV_PCM_RATE_96000		(1<<10)		/* 96000Hz */
--#define SNDRV_PCM_RATE_176400		(1<<11)		/* 176400Hz */
--#define SNDRV_PCM_RATE_192000		(1<<12)		/* 192000Hz */
--#define SNDRV_PCM_RATE_352800		(1<<13)		/* 352800Hz */
--#define SNDRV_PCM_RATE_384000		(1<<14)		/* 384000Hz */
+-static void enetc_xdp_free(struct enetc_bdr *rx_ring, int rx_ring_first,
+-			   int rx_ring_last)
+-{
+-	while (rx_ring_first != rx_ring_last) {
+-		struct enetc_rx_swbd *rx_swbd = &rx_ring->rx_swbd[rx_ring_first];
 -
--#define SNDRV_PCM_RATE_CONTINUOUS	(1<<30)		/* continuous range */
--#define SNDRV_PCM_RATE_KNOT		(1<<31)		/* supports more non-continuos rates */
-+#define SNDRV_PCM_RATE_5512		(1U<<0)		/* 5512Hz */
-+#define SNDRV_PCM_RATE_8000		(1U<<1)		/* 8000Hz */
-+#define SNDRV_PCM_RATE_11025		(1U<<2)		/* 11025Hz */
-+#define SNDRV_PCM_RATE_16000		(1U<<3)		/* 16000Hz */
-+#define SNDRV_PCM_RATE_22050		(1U<<4)		/* 22050Hz */
-+#define SNDRV_PCM_RATE_32000		(1U<<5)		/* 32000Hz */
-+#define SNDRV_PCM_RATE_44100		(1U<<6)		/* 44100Hz */
-+#define SNDRV_PCM_RATE_48000		(1U<<7)		/* 48000Hz */
-+#define SNDRV_PCM_RATE_64000		(1U<<8)		/* 64000Hz */
-+#define SNDRV_PCM_RATE_88200		(1U<<9)		/* 88200Hz */
-+#define SNDRV_PCM_RATE_96000		(1U<<10)	/* 96000Hz */
-+#define SNDRV_PCM_RATE_176400		(1U<<11)	/* 176400Hz */
-+#define SNDRV_PCM_RATE_192000		(1U<<12)	/* 192000Hz */
-+#define SNDRV_PCM_RATE_352800		(1U<<13)	/* 352800Hz */
-+#define SNDRV_PCM_RATE_384000		(1U<<14)	/* 384000Hz */
-+
-+#define SNDRV_PCM_RATE_CONTINUOUS	(1U<<30)	/* continuous range */
-+#define SNDRV_PCM_RATE_KNOT		(1U<<31)	/* supports more non-continuos rates */
+-		if (rx_swbd->page) {
+-			dma_unmap_page(rx_ring->dev, rx_swbd->dma, PAGE_SIZE,
+-				       rx_swbd->dir);
+-			__free_page(rx_swbd->page);
+-			rx_swbd->page = NULL;
+-		}
+-		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
+-	}
+-	rx_ring->stats.xdp_redirect_failures++;
+-}
+-
+ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				   struct napi_struct *napi, int work_limit,
+ 				   struct bpf_prog *prog)
+@@ -1258,8 +1241,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 		int orig_i, orig_cleaned_cnt;
+ 		struct xdp_buff xdp_buff;
+ 		struct sk_buff *skb;
+-		int tmp_orig_i, err;
+ 		u32 bd_status;
++		int err;
  
- #define SNDRV_PCM_RATE_8000_44100	(SNDRV_PCM_RATE_8000|SNDRV_PCM_RATE_11025|\
- 					 SNDRV_PCM_RATE_16000|SNDRV_PCM_RATE_22050|\
+ 		rxbd = enetc_rxbd(rx_ring, i);
+ 		bd_status = le32_to_cpu(rxbd->r.lstatus);
+@@ -1346,18 +1329,16 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				break;
+ 			}
+ 
+-			tmp_orig_i = orig_i;
+-
+-			while (orig_i != i) {
+-				enetc_flip_rx_buff(rx_ring,
+-						   &rx_ring->rx_swbd[orig_i]);
+-				enetc_bdr_idx_inc(rx_ring, &orig_i);
+-			}
+-
+ 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
+ 			if (unlikely(err)) {
+-				enetc_xdp_free(rx_ring, tmp_orig_i, i);
++				enetc_xdp_drop(rx_ring, orig_i, i);
++				rx_ring->stats.xdp_redirect_failures++;
+ 			} else {
++				while (orig_i != i) {
++					enetc_flip_rx_buff(rx_ring,
++							   &rx_ring->rx_swbd[orig_i]);
++					enetc_bdr_idx_inc(rx_ring, &orig_i);
++				}
+ 				xdp_redirect_frm_cnt++;
+ 				rx_ring->stats.xdp_redirect++;
+ 			}
 -- 
 2.35.1
 
