@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4391863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44228C433EF;
-	Wed, 28 Dec 2022 15:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6641F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05A7C433D2;
+	Wed, 28 Dec 2022 15:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240673;
-	bh=BTGVFUP1JdWvqlRaCUUYEVaSvv9kxTKah4UUWx/dp0o=;
+	s=korg; t=1672240676;
+	bh=Ep9axNm+95NhPhmqWzUR3+1g3g79x2VlYPQMtWm/ed4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRQV64PN2FEowuNzbO2HBAdMp5QTtT5JraYQQtv9ogTKfagsYbiZ7Ncxp+ahllJen
-	 efoJjI7f1lKiRcvDzkJLUKfNrVZuZiA/c1vrQVW2/hKtk4QVuT8/vemOkfG/GcwA2j
-	 AMaQ6iXi9gWN+RlpvPim3Ei87k2+GcxzJZbbD8Xo=
+	b=1+NyBt6VgAcIcrqpKe8DczTSu2N75VP3pKQHTEmM4MZwlvAvsK0h1UkXv3v6DZ3Sw
+	 rq/37vXlXh4AJobJAPDlT9CmtBGH1j+3q4IlF2avIdTw7BIlCo+l9b0T77qWihDBSd
+	 6wzK6kvXILkpvzpBWhtqghl/TPxm6RqavKIxNBGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Ravich <lravich@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 384/731] IB/mad: Dont call to function that might sleep while in atomic context
-Date: Wed, 28 Dec 2022 15:38:11 +0100
-Message-Id: <20221228144307.693238782@linuxfoundation.org>
+Subject: [PATCH 6.1 0154/1146] genirq/irqdesc: Dont try to remove non-existing sysfs files
+Date: Wed, 28 Dec 2022 15:28:13 +0100
+Message-Id: <20221228144334.341853605@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,143 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leonid Ravich <lravich@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5c20311d76cbaeb7ed2ecf9c8b8322f8fc4a7ae3 ]
+[ Upstream commit 9049e1ca41983ab773d7ea244bee86d7835ec9f5 ]
 
-Tracepoints are not allowed to sleep, as such the following splat is
-generated due to call to ib_query_pkey() in atomic context.
+Fault injection tests trigger warnings like this:
 
-WARNING: CPU: 0 PID: 1888000 at kernel/trace/ring_buffer.c:2492 rb_commit+0xc1/0x220
-CPU: 0 PID: 1888000 Comm: kworker/u9:0 Kdump: loaded Tainted: G           OE    --------- -  - 4.18.0-305.3.1.el8.x86_64 #1
- Hardware name: Red Hat KVM, BIOS 1.13.0-2.module_el8.3.0+555+a55c8938 04/01/2014
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- RIP: 0010:rb_commit+0xc1/0x220
- RSP: 0000:ffffa8ac80f9bca0 EFLAGS: 00010202
- RAX: ffff8951c7c01300 RBX: ffff8951c7c14a00 RCX: 0000000000000246
- RDX: ffff8951c707c000 RSI: ffff8951c707c57c RDI: ffff8951c7c14a00
- RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
- R10: ffff8951c7c01300 R11: 0000000000000001 R12: 0000000000000246
- R13: 0000000000000000 R14: ffffffff964c70c0 R15: 0000000000000000
- FS:  0000000000000000(0000) GS:ffff8951fbc00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f20e8f39010 CR3: 000000002ca10005 CR4: 0000000000170ef0
- Call Trace:
-  ring_buffer_unlock_commit+0x1d/0xa0
-  trace_buffer_unlock_commit_regs+0x3b/0x1b0
-  trace_event_buffer_commit+0x67/0x1d0
-  trace_event_raw_event_ib_mad_recv_done_handler+0x11c/0x160 [ib_core]
-  ib_mad_recv_done+0x48b/0xc10 [ib_core]
-  ? trace_event_raw_event_cq_poll+0x6f/0xb0 [ib_core]
-  __ib_process_cq+0x91/0x1c0 [ib_core]
-  ib_cq_poll_work+0x26/0x80 [ib_core]
-  process_one_work+0x1a7/0x360
-  ? create_worker+0x1a0/0x1a0
-  worker_thread+0x30/0x390
-  ? create_worker+0x1a0/0x1a0
-  kthread+0x116/0x130
-  ? kthread_flush_work_fn+0x10/0x10
-  ret_from_fork+0x35/0x40
- ---[ end trace 78ba8509d3830a16 ]---
+  kernfs: can not remove 'chip_name', no directory
+  WARNING: CPU: 0 PID: 253 at fs/kernfs/dir.c:1616 kernfs_remove_by_name_ns+0xce/0xe0
+  RIP: 0010:kernfs_remove_by_name_ns+0xce/0xe0
+  Call Trace:
+   <TASK>
+   remove_files.isra.1+0x3f/0xb0
+   sysfs_remove_group+0x68/0xe0
+   sysfs_remove_groups+0x41/0x70
+   __kobject_del+0x45/0xc0
+   kobject_del+0x29/0x40
+   free_desc+0x42/0x70
+   irq_free_descs+0x5e/0x90
 
-Fixes: 821bf1de45a1 ("IB/MAD: Add recv path trace point")
-Signed-off-by: Leonid Ravich <lravich@gmail.com>
-Link: https://lore.kernel.org/r/Y2t5feomyznrVj7V@leonid-Inspiron-3421
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The reason is that the interrupt descriptor sysfs handling does not roll
+back on a failing kobject_add() during allocation. If the descriptor is
+freed later on, kobject_del() is invoked with a not added kobject resulting
+in the above warnings.
+
+A proper rollback in case of a kobject_add() failure would be the straight
+forward solution. But this is not possible due to the way how interrupt
+descriptor sysfs handling works.
+
+Interrupt descriptors are allocated before sysfs becomes available. So the
+sysfs files for the early allocated descriptors are added later in the boot
+process. At this point there can be nothing useful done about a failing
+kobject_add(). For consistency the interrupt descriptor allocation always
+treats kobject_add() failures as non-critical and just emits a warning.
+
+To solve this problem, keep track in the interrupt descriptor whether
+kobject_add() was successful or not and make the invocation of
+kobject_del() conditional on that.
+
+[ tglx: Massage changelog, comments and use a state bit. ]
+
+Fixes: ecb3f394c5db ("genirq: Expose interrupt information through sysfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20221128151612.1786122-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c |  5 -----
- include/trace/events/ib_mad.h | 13 ++++---------
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ kernel/irq/internals.h |  2 ++
+ kernel/irq/irqdesc.c   | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 1893aa613ad7..674344eb8e2f 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -59,9 +59,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
- 			  struct ib_mad_qp_info *qp_info,
- 			  struct trace_event_raw_ib_mad_send_template *entry)
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index f09c60393e55..5fdc0b557579 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -52,6 +52,7 @@ enum {
+  * IRQS_PENDING			- irq is pending and replayed later
+  * IRQS_SUSPENDED		- irq is suspended
+  * IRQS_NMI			- irq line is used to deliver NMIs
++ * IRQS_SYSFS			- descriptor has been added to sysfs
+  */
+ enum {
+ 	IRQS_AUTODETECT		= 0x00000001,
+@@ -64,6 +65,7 @@ enum {
+ 	IRQS_SUSPENDED		= 0x00000800,
+ 	IRQS_TIMINGS		= 0x00001000,
+ 	IRQS_NMI		= 0x00002000,
++	IRQS_SYSFS		= 0x00004000,
+ };
+ 
+ #include "debug.h"
+diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
+index a91f9001103c..fd0996274401 100644
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -288,22 +288,25 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
+ 	if (irq_kobj_base) {
+ 		/*
+ 		 * Continue even in case of failure as this is nothing
+-		 * crucial.
++		 * crucial and failures in the late irq_sysfs_init()
++		 * cannot be rolled back.
+ 		 */
+ 		if (kobject_add(&desc->kobj, irq_kobj_base, "%d", irq))
+ 			pr_warn("Failed to add kobject for irq %d\n", irq);
++		else
++			desc->istate |= IRQS_SYSFS;
+ 	}
+ }
+ 
+ static void irq_sysfs_del(struct irq_desc *desc)
  {
--	u16 pkey;
--	struct ib_device *dev = qp_info->port_priv->device;
--	u32 pnum = qp_info->port_priv->port_num;
- 	struct ib_ud_wr *wr = &mad_send_wr->send_wr;
- 	struct rdma_ah_attr attr = {};
- 
-@@ -69,8 +66,6 @@ static void create_mad_addr_info(struct ib_mad_send_wr_private *mad_send_wr,
- 
- 	/* These are common */
- 	entry->sl = attr.sl;
--	ib_query_pkey(dev, pnum, wr->pkey_index, &pkey);
--	entry->pkey = pkey;
- 	entry->rqpn = wr->remote_qpn;
- 	entry->rqkey = wr->remote_qkey;
- 	entry->dlid = rdma_ah_get_dlid(&attr);
-diff --git a/include/trace/events/ib_mad.h b/include/trace/events/ib_mad.h
-index 59363a083ecb..d92691c78cff 100644
---- a/include/trace/events/ib_mad.h
-+++ b/include/trace/events/ib_mad.h
-@@ -49,7 +49,6 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		__field(int,            retries_left)
- 		__field(int,            max_retries)
- 		__field(int,            retry)
--		__field(u16,            pkey)
- 	),
- 
- 	TP_fast_assign(
-@@ -89,7 +88,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		  "hdr : base_ver 0x%x class 0x%x class_ver 0x%x " \
- 		  "method 0x%x status 0x%x class_specific 0x%x tid 0x%llx " \
- 		  "attr_id 0x%x attr_mod 0x%x  => dlid 0x%08x sl %d "\
--		  "pkey 0x%x rpqn 0x%x rqpkey 0x%x",
-+		  "rpqn 0x%x rqpkey 0x%x",
- 		__entry->dev_index, __entry->port_num, __entry->qp_num,
- 		__entry->agent_priv, be64_to_cpu(__entry->wrtid),
- 		__entry->retries_left, __entry->max_retries,
-@@ -100,7 +99,7 @@ DECLARE_EVENT_CLASS(ib_mad_send_template,
- 		be16_to_cpu(__entry->class_specific),
- 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
- 		be32_to_cpu(__entry->attr_mod),
--		be32_to_cpu(__entry->dlid), __entry->sl, __entry->pkey,
-+		be32_to_cpu(__entry->dlid), __entry->sl,
- 		__entry->rqpn, __entry->rqkey
- 	)
- );
-@@ -204,7 +203,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		__field(u16,            wc_status)
- 		__field(u32,            slid)
- 		__field(u32,            dev_index)
--		__field(u16,            pkey)
- 	),
- 
- 	TP_fast_assign(
-@@ -224,9 +222,6 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		__entry->slid = wc->slid;
- 		__entry->src_qp = wc->src_qp;
- 		__entry->sl = wc->sl;
--		ib_query_pkey(qp_info->port_priv->device,
--			      qp_info->port_priv->port_num,
--			      wc->pkey_index, &__entry->pkey);
- 		__entry->wc_status = wc->status;
- 	),
- 
-@@ -234,7 +229,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		  "base_ver 0x%02x class 0x%02x class_ver 0x%02x " \
- 		  "method 0x%02x status 0x%04x class_specific 0x%04x " \
- 		  "tid 0x%016llx attr_id 0x%04x attr_mod 0x%08x " \
--		  "slid 0x%08x src QP%d, sl %d pkey 0x%04x",
-+		  "slid 0x%08x src QP%d, sl %d",
- 		__entry->dev_index, __entry->port_num, __entry->qp_num,
- 		__entry->wc_status,
- 		__entry->length,
-@@ -244,7 +239,7 @@ TRACE_EVENT(ib_mad_recv_done_handler,
- 		be16_to_cpu(__entry->class_specific),
- 		be64_to_cpu(__entry->tid), be16_to_cpu(__entry->attr_id),
- 		be32_to_cpu(__entry->attr_mod),
--		__entry->slid, __entry->src_qp, __entry->sl, __entry->pkey
-+		__entry->slid, __entry->src_qp, __entry->sl
- 	)
- );
+ 	/*
+-	 * If irq_sysfs_init() has not yet been invoked (early boot), then
+-	 * irq_kobj_base is NULL and the descriptor was never added.
+-	 * kobject_del() complains about a object with no parent, so make
+-	 * it conditional.
++	 * Only invoke kobject_del() when kobject_add() was successfully
++	 * invoked for the descriptor. This covers both early boot, where
++	 * sysfs is not initialized yet, and the case of a failed
++	 * kobject_add() invocation.
+ 	 */
+-	if (irq_kobj_base)
++	if (desc->istate & IRQS_SYSFS)
+ 		kobject_del(&desc->kobj);
+ }
  
 -- 
 2.35.1
