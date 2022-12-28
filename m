@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D201863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B75C433EF;
-	Wed, 28 Dec 2022 14:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134331863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E98AC433EF;
+	Wed, 28 Dec 2022 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239456;
-	bh=U2addjFdtshisNSgLVa56f4T+jCmby5Ax3MK2zgQy1c=;
+	s=korg; t=1672239458;
+	bh=lbf2YaO11ke/+UiD0Kja8kmdyiUeaXr1QSF0rZHPj+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oCR4jxnuIx7oIbDHi2o7r5EmpyahQbYHYvqcfWVD+T5wALwQy4pO3FZwX3fQgsV8M
-	 k4WjG6Kz3IHOq6n/usMUi5Tgj7CQXk0isBfVz4FF+D1kvM2AZWbA4noQi/aL21BB29
-	 jL6gDYUqMqvs7Sq+ArW0p6ZVOf+dHKmGgDAEtlrI=
+	b=PfNt/s+43fMVjLX6IoHNsC1H6AsNFZlxtprNh6sFUrwPKHvbIvdDjjIgvTbvzOge7
+	 H/KpGqGNZbMc78pga8XSp7ZApoJEwbLVNMl5dwfNWOlm9qC0h3k6dpOYMH8SG8Rnu6
+	 poRy/n5qdc4bmg6c3BwWoMwWRd8xR+1QjL5cXnIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/731] drbd: remove call to memset before free device/resource/connection
-Date: Wed, 28 Dec 2022 15:35:35 +0100
-Message-Id: <20221228144303.170804825@linuxfoundation.org>
+Subject: [PATCH 6.0 0033/1073] arm64: dts: qcom: sm8350: fix UFS PHY registers
+Date: Wed, 28 Dec 2022 15:27:01 +0100
+Message-Id: <20221228144329.037368714@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 6e7b854e4c1b02dba00760dfa79d8dbf6cce561e ]
+[ Upstream commit b3c7839b698cc617e97dd2e4f1eeb4adc280fe58 ]
 
-This revert c2258ffc56f2 ("drbd: poison free'd device, resource and
-connection structs"), add memset is odd here for debugging, there are
-some methods to accurately show what happened, such as kdump.
+The sizes of the UFS PHY register regions are too small and does
+specifically not cover all registers used by the Linux driver.
 
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221124015817.2729789-2-bobo.shaobowang@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 8692814b77ca ("drbd: destroy workqueue when drbd device was freed")
+As Linux maps these regions as full pages this is currently not an issue
+on Linux, but let's update the sizes to match the vendor driver.
+
+Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221024091507.20342-4-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index f4e38c208b9f..be819f80884f 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2244,7 +2244,6 @@ void drbd_destroy_device(struct kref *kref)
- 		kref_put(&peer_device->connection->kref, drbd_destroy_connection);
- 		kfree(peer_device);
- 	}
--	memset(device, 0xfd, sizeof(*device));
- 	kfree(device);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
-@@ -2336,7 +2335,6 @@ void drbd_destroy_resource(struct kref *kref)
- 	idr_destroy(&resource->devices);
- 	free_cpumask_var(resource->cpu_mask);
- 	kfree(resource->name);
--	memset(resource, 0xf2, sizeof(*resource));
- 	kfree(resource);
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index d9b08dfc2980..eace5b2ee381 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -2142,11 +2142,11 @@ ufs_mem_phy: phy@1d87000 {
+ 			status = "disabled";
  
-@@ -2677,7 +2675,6 @@ void drbd_destroy_connection(struct kref *kref)
- 	drbd_free_socket(&connection->data);
- 	kfree(connection->int_dig_in);
- 	kfree(connection->int_dig_vv);
--	memset(connection, 0xfc, sizeof(*connection));
- 	kfree(connection);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
+ 			ufs_mem_phy_lanes: phy@1d87400 {
+-				reg = <0 0x01d87400 0 0x108>,
+-				      <0 0x01d87600 0 0x1e0>,
+-				      <0 0x01d87c00 0 0x1dc>,
+-				      <0 0x01d87800 0 0x108>,
+-				      <0 0x01d87a00 0 0x1e0>;
++				reg = <0 0x01d87400 0 0x188>,
++				      <0 0x01d87600 0 0x200>,
++				      <0 0x01d87c00 0 0x200>,
++				      <0 0x01d87800 0 0x188>,
++				      <0 0x01d87a00 0 0x200>;
+ 				#phy-cells = <0>;
+ 			};
+ 		};
 -- 
 2.35.1
 
