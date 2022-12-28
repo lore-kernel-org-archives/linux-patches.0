@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAFC1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B384C433EF;
-	Wed, 28 Dec 2022 16:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CEE1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA056C433EF;
+	Wed, 28 Dec 2022 16:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246554;
-	bh=UO2KWIN9lEp9rlsay7SFYUnLpIwAJ6qTyqrbsgEsLyI=;
+	s=korg; t=1672246557;
+	bh=UhnRP5xJv+eN8kx5sD6N7kKtsFqsuCQhb0p1qF5MzI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGNl943VJikMjWUSi88ZgIje92jW1pSosyGFG9luHglI3dh2V603DH4xhH6Z0ZRzt
-	 emF/jiv6V2Pk/0OoBMTVFDhav2QxEDC2yHcqOzWPizaOgl4M2ouNJVb+eXkeDH/5QS
-	 /27pOsh4kWOWD6E2f5vNCICLI1K9V6GWWiD1635M=
+	b=Dbwa+456zkJlv7I4pnPUN0f+dDNGfdiy3Fvc+UygY+/LPAvvrrKHnhdJynUQ9e71f
+	 i8nT7KO6kIJ92fJ7V+nNT/UMzO1hF2FGWJoaYDcuQ7W+UhJHcg6b5d6KgUMHNOMxZb
+	 L7/9gRiauzgiR3wbtK53DS0TENfNT0h7Ytip9wBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>,
+	Kristina Martsenko <kristina.martsenko@arm.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1062/1146] orangefs: Fix kmemleak in orangefs_prepare_debugfs_help_string()
-Date: Wed, 28 Dec 2022 15:43:21 +0100
-Message-Id: <20221228144359.123642253@linuxfoundation.org>
+Subject: [PATCH 6.1 1080/1146] lkdtm: cfi: Make PAC test work with GCC 7 and 8
+Date: Wed, 28 Dec 2022 15:43:39 +0100
+Message-Id: <20221228144359.549532291@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,60 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Kristina Martsenko <kristina.martsenko@arm.com>
 
-[ Upstream commit d23417a5bf3a3afc55de5442eb46e1e60458b0a1 ]
+[ Upstream commit f68022ae0aeb0803450e05abc0e984027c33ef1b ]
 
-When insert and remove the orangefs module, then debug_help_string will
-be leaked:
+The CFI test uses the branch-protection=none compiler attribute to
+disable PAC return address protection on a function. While newer GCC
+versions support this attribute, older versions (GCC 7 and 8) instead
+supported the sign-return-address=none attribute, leading to a build
+failure when the test is built with older compilers. Fix it by checking
+which attribute is supported and using the correct one.
 
-  unreferenced object 0xffff8881652ba000 (size 4096):
-    comm "insmod", pid 1701, jiffies 4294893639 (age 13218.530s)
-    hex dump (first 32 bytes):
-      43 6c 69 65 6e 74 20 44 65 62 75 67 20 4b 65 79  Client Debug Key
-      77 6f 72 64 73 20 61 72 65 20 75 6e 6b 6e 6f 77  words are unknow
-    backtrace:
-      [<0000000004e6f8e3>] kmalloc_trace+0x27/0xa0
-      [<0000000006f75d85>] orangefs_prepare_debugfs_help_string+0x5e/0x480 [orangefs]
-      [<0000000091270a2a>] _sub_I_65535_1+0x57/0xf70 [crc_itu_t]
-      [<000000004b1ee1a3>] do_one_initcall+0x87/0x2a0
-      [<000000001d0614ae>] do_init_module+0xdf/0x320
-      [<00000000efef068c>] load_module+0x2f98/0x3330
-      [<000000006533b44d>] __do_sys_finit_module+0x113/0x1b0
-      [<00000000a0da6f99>] do_syscall_64+0x35/0x80
-      [<000000007790b19b>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-When remove the module, should always free debug_help_string. Should
-always free the allocated buffer when change the free_debug_help_string.
-
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: 2e53b877dc12 ("lkdtm: Add CFI_BACKWARD to test ROP mitigations")
+Reported-by: Daniel Díaz <daniel.diaz@linaro.org>
+Signed-off-by: Kristina Martsenko <kristina.martsenko@arm.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/all/CAEUSe78kDPxQmQqCWW-_9LCgJDFhAeMoVBFnX9QLx18Z4uT4VQ@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/misc/lkdtm/cfi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index 29eaa4544372..a848b6ef9599 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -222,6 +222,8 @@ static void orangefs_kernel_debug_init(void)
- void orangefs_debugfs_cleanup(void)
- {
- 	debugfs_remove_recursive(debug_dir);
-+	kfree(debug_help_string);
-+	debug_help_string = NULL;
- }
- 
- /* open ORANGEFS_KMOD_DEBUG_HELP_FILE */
-@@ -671,6 +673,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
- 		strlcat(debug_help_string, new, string_size);
- 		mutex_unlock(&orangefs_help_file_lock);
-+		kfree(new);
- 	}
- 
- 	rc = 0;
+diff --git a/drivers/misc/lkdtm/cfi.c b/drivers/misc/lkdtm/cfi.c
+index 5245cf6013c9..fc28714ae3a6 100644
+--- a/drivers/misc/lkdtm/cfi.c
++++ b/drivers/misc/lkdtm/cfi.c
+@@ -54,7 +54,11 @@ static void lkdtm_CFI_FORWARD_PROTO(void)
+ # ifdef CONFIG_ARM64_BTI_KERNEL
+ #  define __no_pac             "branch-protection=bti"
+ # else
+-#  define __no_pac             "branch-protection=none"
++#  ifdef CONFIG_CC_HAS_BRANCH_PROT_PAC_RET
++#   define __no_pac            "branch-protection=none"
++#  else
++#   define __no_pac            "sign-return-address=none"
++#  endif
+ # endif
+ # define __no_ret_protection   __noscs __attribute__((__target__(__no_pac)))
+ #else
 -- 
 2.35.1
 
