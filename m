@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F631C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70437C433EF;
-	Wed, 28 Dec 2022 16:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1FE1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180FFC433D2;
+	Wed, 28 Dec 2022 16:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245238;
-	bh=d7qnGsQb5nXdXTgUtUwCiB+xdXkn/m9UY8KHFauaA40=;
+	s=korg; t=1672245241;
+	bh=O/c2K+3SVHHDfHCUQlx+c2lVWGvQVGauO2ixrrjWCZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGDQn2irboRuRx8U1E/SB7vwSCSFMQqZsM+se4nVQTpuYO9eydXVWnFTwZ0rKQxfr
-	 qRta9yL6syu2k6KKdyv5t+58lQIj2Hz9Rg7rs542xhLp0Q1QU810uCx4BKm4kAni4Q
-	 pNsXwoNpAlRs6VQpHGBeg2238YdM2rIgyDlSUnwI=
+	b=GAfahziv87XdTo9YAfMlsxFPDCc+j5bWykmik6D/Ak8f7d2HX57m+v3KlIpP72rAf
+	 10kIAkisoEPpPyaQsJVCJHd7af7ujdZHjJVQvgIHU/Nf/Ahrb07KMOr9ZMHu0/ftd+
+	 gwcSbcqkrfTJv5Geb4LYx1KjILpgzfe5xUNyPQ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Redfearn <matt.redfearn@mips.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0820/1146] include/uapi/linux/swab: Fix potentially missing __always_inline
-Date: Wed, 28 Dec 2022 15:39:19 +0100
-Message-Id: <20221228144352.428605303@linuxfoundation.org>
+Subject: [PATCH 6.1 0825/1146] phy: qcom-qmp-pcie: support separate tables for EP mode
+Date: Wed, 28 Dec 2022 15:39:24 +0100
+Message-Id: <20221228144352.565630944@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -38,58 +36,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Redfearn <matt.redfearn@mips.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
+[ Upstream commit 11bf53a38c82baef349b4efc6a84f069dab7085a ]
 
-Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
-of some byteswap operations") added __always_inline to swab functions
-and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
-userspace headers") added a definition of __always_inline for use in
-exported headers when the kernel's compiler.h is not available.
+The PCIe QMP PHY requires different programming sequences when being
+used for the RC (Root Complex) or for the EP (End Point) modes. Allow
+selecting the submode and thus selecting a set of PHY programming
+tables.
 
-However, since swab.h does not include stddef.h, if the header soup does
-not indirectly include it, the definition of __always_inline is missing,
-resulting in a compilation failure, which was observed compiling the
-perf tool using exported headers containing this commit:
+Since the RC and EP modes share common some common init sequence, the
+common sequence is kept in the main table and the sequence differences
+are pushed to the extra tables.
 
-In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
-                 from /usr/include/asm/byteorder.h:14,
-                 from tools/include/uapi/linux/perf_event.h:20,
-                 from perf.h:8,
-                 from builtin-bench.c:18:
-/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
- static __always_inline __u16 __swab16p(const __u16 *p)
-
-Fix this by replacing the inclusion of linux/compiler.h with
-linux/stddef.h to ensure that we pick up that definition if required,
-without relying on it's indirect inclusion. compiler.h is then included
-indirectly, via stddef.h.
-
-Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
-Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220927092207.161501-3-dmitry.baryshkov@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 9ddcd920f8ed ("phy: qcom-qmp-pcie: Fix high latency with 4x2 PHY when ASPM is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/swab.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 46 ++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
-index 0723a9cce747..01717181339e 100644
---- a/include/uapi/linux/swab.h
-+++ b/include/uapi/linux/swab.h
-@@ -3,7 +3,7 @@
- #define _UAPI_LINUX_SWAB_H
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 9ccc6e27fc1f..0a5493940b99 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -14,6 +14,7 @@
+ #include <linux/of.h>
+ #include <linux/of_device.h>
+ #include <linux/of_address.h>
++#include <linux/phy/pcie.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+ #include <linux/regulator/consumer.h>
+@@ -1323,10 +1324,14 @@ struct qmp_phy_cfg {
+ 	/* Main init sequence for PHY blocks - serdes, tx, rx, pcs */
+ 	const struct qmp_phy_cfg_tables tables;
+ 	/*
+-	 * Additional init sequence for PHY blocks, providing additional
+-	 * register programming. Unless required it can be left omitted.
++	 * Additional init sequences for PHY blocks, providing additional
++	 * register programming. They are used for providing separate sequences
++	 * for the Root Complex and End Point use cases.
++	 *
++	 * If EP mode is not supported, both tables can be left unset.
+ 	 */
+ 	const struct qmp_phy_cfg_tables *tables_rc;
++	const struct qmp_phy_cfg_tables *tables_ep;
  
- #include <linux/types.h>
--#include <linux/compiler.h>
-+#include <linux/stddef.h>
- #include <asm/bitsperlong.h>
- #include <asm/swab.h>
+ 	/* clock ids to be requested */
+ 	const char * const *clk_list;
+@@ -1366,6 +1371,7 @@ struct qmp_phy_cfg {
+  * @pcs_misc: iomapped memory space for lane's pcs_misc
+  * @pipe_clk: pipe clock
+  * @qmp: QMP phy to which this lane belongs
++ * @mode: currently selected PHY mode
+  */
+ struct qmp_phy {
+ 	struct phy *phy;
+@@ -1379,6 +1385,7 @@ struct qmp_phy {
+ 	void __iomem *pcs_misc;
+ 	struct clk *pipe_clk;
+ 	struct qcom_qmp *qmp;
++	int mode;
+ };
+ 
+ /**
+@@ -1953,13 +1960,19 @@ static int qmp_pcie_power_on(struct phy *phy)
+ 	struct qmp_phy *qphy = phy_get_drvdata(phy);
+ 	struct qcom_qmp *qmp = qphy->qmp;
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
++	const struct qmp_phy_cfg_tables *mode_tables;
+ 	void __iomem *pcs = qphy->pcs;
+ 	void __iomem *status;
+ 	unsigned int mask, val, ready;
+ 	int ret;
+ 
++	if (qphy->mode == PHY_MODE_PCIE_RC)
++		mode_tables = cfg->tables_rc;
++	else
++		mode_tables = cfg->tables_ep;
++
+ 	qmp_pcie_serdes_init(qphy, &cfg->tables);
+-	qmp_pcie_serdes_init(qphy, cfg->tables_rc);
++	qmp_pcie_serdes_init(qphy, mode_tables);
+ 
+ 	ret = clk_prepare_enable(qphy->pipe_clk);
+ 	if (ret) {
+@@ -1969,10 +1982,10 @@ static int qmp_pcie_power_on(struct phy *phy)
+ 
+ 	/* Tx, Rx, and PCS configurations */
+ 	qmp_pcie_lanes_init(qphy, &cfg->tables);
+-	qmp_pcie_lanes_init(qphy, cfg->tables_rc);
++	qmp_pcie_lanes_init(qphy, mode_tables);
+ 
+ 	qmp_pcie_pcs_init(qphy, &cfg->tables);
+-	qmp_pcie_pcs_init(qphy, cfg->tables_rc);
++	qmp_pcie_pcs_init(qphy, mode_tables);
+ 
+ 	/* Pull PHY out of reset state */
+ 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+@@ -2053,6 +2066,23 @@ static int qmp_pcie_disable(struct phy *phy)
+ 	return qmp_pcie_exit(phy);
+ }
+ 
++static int qmp_pcie_set_mode(struct phy *phy, enum phy_mode mode, int submode)
++{
++	struct qmp_phy *qphy = phy_get_drvdata(phy);
++
++	switch (submode) {
++	case PHY_MODE_PCIE_RC:
++	case PHY_MODE_PCIE_EP:
++		qphy->mode = submode;
++		break;
++	default:
++		dev_err(&phy->dev, "Unsupported submode %d\n", submode);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int qmp_pcie_vreg_init(struct device *dev, const struct qmp_phy_cfg *cfg)
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+@@ -2176,6 +2206,7 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
+ static const struct phy_ops qmp_pcie_ops = {
+ 	.power_on	= qmp_pcie_enable,
+ 	.power_off	= qmp_pcie_disable,
++	.set_mode	= qmp_pcie_set_mode,
+ 	.owner		= THIS_MODULE,
+ };
+ 
+@@ -2191,6 +2222,8 @@ static int qmp_pcie_create(struct device *dev, struct device_node *np, int id,
+ 	if (!qphy)
+ 		return -ENOMEM;
+ 
++	qphy->mode = PHY_MODE_PCIE_RC;
++
+ 	qphy->cfg = cfg;
+ 	qphy->serdes = serdes;
+ 	/*
+@@ -2234,7 +2267,8 @@ static int qmp_pcie_create(struct device *dev, struct device_node *np, int id,
+ 
+ 	if (IS_ERR(qphy->pcs_misc)) {
+ 		if (cfg->tables.pcs_misc ||
+-		    (cfg->tables_rc && cfg->tables_rc->pcs_misc))
++		    (cfg->tables_rc && cfg->tables_rc->pcs_misc) ||
++		    (cfg->tables_ep && cfg->tables_ep->pcs_misc))
+ 			return PTR_ERR(qphy->pcs_misc);
+ 	}
  
 -- 
 2.35.1
