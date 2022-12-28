@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C06A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FA7C433D2;
-	Wed, 28 Dec 2022 14:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03CA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551F6C433D2;
+	Wed, 28 Dec 2022 14:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239235;
-	bh=tUsVKxn27BdMvYIkmS7RoEiAmmkFH3wvzkSJd7B0bGo=;
+	s=korg; t=1672239237;
+	bh=epAXlGaFXl6ZYkvAS06e99X0DhEpSptH1wcxRKBFoJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ls0pqjd9/NzckJcx28/SkpZxICn2Y/paxyWZCVA9i3SLIRFekDNtRfpvuIbb07YBp
-	 n/O8AKA86ABKDXcUvGS3KcwMGrckFzTopLYjrvuT6Sp2wK//KPDeWpamaEoBLhDF1F
-	 ztHlx4i3zEi1XxMQcQVpInNGANQsfLZHmrW47uFM=
+	b=Qw5DgcEuyKe+DXK5JbhQTuWHJ4U9dCAhuUL63TAvcEc5OPtlJvOTdfWVPX5Je9Tb/
+	 BqBGw1LEByhBqMKbTRXyNEMRaPOHTZOavG30k7KhviXaMLBaKDRHO6t/9BuINSPHtB
+	 P8+KeCkvE4ggxjrNFZWIT322URq9pq4K+6OIVkxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 180/731] media: vivid: fix compose size exceed boundary
-Date: Wed, 28 Dec 2022 15:34:47 +0100
-Message-Id: <20221228144301.780762077@linuxfoundation.org>
+Subject: [PATCH 5.15 181/731] media: platform: exynos4-is: fix return value check in fimc_md_probe()
+Date: Wed, 28 Dec 2022 15:34:48 +0100
+Message-Id: <20221228144301.810642790@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,55 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
+[ Upstream commit e38e42c078da4af962d322b97e726dcb2f184e3f ]
 
-syzkaller found a bug:
+devm_pinctrl_get() may return ERR_PTR(-EPROBE_DEFER), add a minus sign
+to fix it.
 
- BUG: unable to handle page fault for address: ffffc9000a3b1000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:memcpy_erms+0x6/0x10
-[...]
- Call Trace:
-  <TASK>
-  ? tpg_fill_plane_buffer+0x856/0x15b0
-  vivid_fillbuff+0x8ac/0x1110
-  vivid_thread_vid_cap_tick+0x361/0xc90
-  vivid_thread_vid_cap+0x21a/0x3a0
-  kthread+0x143/0x180
-  ret_from_fork+0x1f/0x30
-  </TASK>
-
-This is because we forget to check boundary after adjust compose->height
-int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
-for this case.
-
-Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Fixes: 4163851f7b99 ("[media] s5p-fimc: Use pinctrl API for camera ports configuration")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/exynos4-is/media-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index 99139a8cd4c4..331a3f4286d2 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -961,6 +961,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
-+				v4l2_rect_map_inside(compose, &fmt);
- 			}
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index aa5982e32b2b..00225e16dd49 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -1472,7 +1472,7 @@ static int fimc_md_probe(struct platform_device *pdev)
+ 	pinctrl = devm_pinctrl_get(dev);
+ 	if (IS_ERR(pinctrl)) {
+ 		ret = PTR_ERR(pinctrl);
+-		if (ret != EPROBE_DEFER)
++		if (ret != -EPROBE_DEFER)
+ 			dev_err(dev, "Failed to get pinctrl: %d\n", ret);
+ 		goto err_clk;
+ 	}
 -- 
 2.35.1
 
