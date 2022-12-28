@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B811863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1464C433EF;
-	Wed, 28 Dec 2022 15:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1241B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2B9C433EF;
+	Wed, 28 Dec 2022 15:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242408;
-	bh=7azP4kBAynbiBDz9TJGBxgDgOXfj68K0OySkFAqgMp0=;
+	s=korg; t=1672242410;
+	bh=IZ0oxqCPr5IVYWaPNqkxfUteDuMJWHvQggc3Rfb76xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NERgQoW1CdU8pebXCx+61AlBmcJ6p4qKZk2dHAKfPEnHoplcBAaoDWTte7WKWKCMm
-	 RkYMa53VMAB6fl5X53YJcgIlTaj5lEwgmE3xCCSBLUvXva3tvLntBuKo4+ehjebzfd
-	 Xg90EwtfANAgNUa8lLSNpx1oSf5WEhJ4uuior790=
+	b=JGO1s41oUZAMOqbykQ3VM07fIhNeShzeoxJyweBTFE76x6YYT8xLg5WY5pHGiSrn5
+	 +VolRHdXk9PxjjggLDs+6ZvqOJeRCOnGI4J4bCWupNbTXg3BbydB214BRMbSwsYxti
+	 FNyTDZKVfa6baKMVgEd7e6U/iTqEfoHZ6deoiOo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 588/731] selftests/bpf: Add test for unstable CT lookup API
-Date: Wed, 28 Dec 2022 15:41:35 +0100
-Message-Id: <20221228144313.590805699@linuxfoundation.org>
+Subject: [PATCH 5.15 600/731] igc: Set Qbv start_time and end_time to end_time if not being configured in GCL
+Date: Wed, 28 Dec 2022 15:41:47 +0100
+Message-Id: <20221228144313.929903337@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,207 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Tan Tee Min <tee.min.tan@linux.intel.com>
 
-[ Upstream commit 87091063df5d4845d1db0761a9ed5510c4756a96 ]
+[ Upstream commit 72abeedd83982c1bc6023f631e412db78374d9b4 ]
 
-This tests that we return errors as documented, and also that the kfunc
-calls work from both XDP and TC hooks.
+The default setting of end_time minus start_time is whole 1 second.
+Thus, if it's not being configured in any GCL entry then it will be
+staying at original 1 second.
 
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20220114163953.1455836-8-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: a8dfde09c901 ("selftests/bpf: Select CONFIG_FUNCTION_ERROR_INJECTION")
+This patch is changing the start_time and end_time to be end_time as
+if setting zero will be having weird HW behavior where the gate will
+not be fully closed.
+
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/config            |   4 +
- .../testing/selftests/bpf/prog_tests/bpf_nf.c |  48 ++++++++
- .../testing/selftests/bpf/progs/test_bpf_nf.c | 109 ++++++++++++++++++
- 3 files changed, 161 insertions(+)
- create mode 100644 tools/testing/selftests/bpf/prog_tests/bpf_nf.c
- create mode 100644 tools/testing/selftests/bpf/progs/test_bpf_nf.c
+ drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
-index 5192305159ec..4a2a47fcd6ef 100644
---- a/tools/testing/selftests/bpf/config
-+++ b/tools/testing/selftests/bpf/config
-@@ -46,3 +46,7 @@ CONFIG_IMA_READ_POLICY=y
- CONFIG_BLK_DEV_LOOP=y
- CONFIG_FUNCTION_TRACER=y
- CONFIG_DYNAMIC_FTRACE=y
-+CONFIG_NETFILTER=y
-+CONFIG_NF_DEFRAG_IPV4=y
-+CONFIG_NF_DEFRAG_IPV6=y
-+CONFIG_NF_CONNTRACK=y
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-new file mode 100644
-index 000000000000..e3166a81e989
---- /dev/null
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <test_progs.h>
-+#include <network_helpers.h>
-+#include "test_bpf_nf.skel.h"
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 791f59d09d28..3726c8413c74 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -5987,6 +5987,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
+ 	u32 start_time = 0, end_time = 0;
+ 	size_t n;
++	int i;
+ 
+ 	adapter->qbv_enable = qopt->enable;
+ 
+@@ -6007,7 +6008,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 
+ 	for (n = 0; n < qopt->num_entries; n++) {
+ 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
+-		int i;
+ 
+ 		end_time += e->interval;
+ 
+@@ -6046,6 +6046,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 		start_time += e->interval;
+ 	}
+ 
++	/* Check whether a queue gets configured.
++	 * If not, set the start and end time to be end time.
++	 */
++	for (i = 0; i < adapter->num_tx_queues; i++) {
++		if (!queue_configured[i]) {
++			struct igc_ring *ring = adapter->tx_ring[i];
 +
-+enum {
-+	TEST_XDP,
-+	TEST_TC_BPF,
-+};
++			ring->start_time = end_time;
++			ring->end_time = end_time;
++		}
++	}
 +
-+void test_bpf_nf_ct(int mode)
-+{
-+	struct test_bpf_nf *skel;
-+	int prog_fd, err, retval;
-+
-+	skel = test_bpf_nf__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "test_bpf_nf__open_and_load"))
-+		return;
-+
-+	if (mode == TEST_XDP)
-+		prog_fd = bpf_program__fd(skel->progs.nf_xdp_ct_test);
-+	else
-+		prog_fd = bpf_program__fd(skel->progs.nf_skb_ct_test);
-+
-+	err = bpf_prog_test_run(prog_fd, 1, &pkt_v4, sizeof(pkt_v4), NULL, NULL,
-+				(__u32 *)&retval, NULL);
-+	if (!ASSERT_OK(err, "bpf_prog_test_run"))
-+		goto end;
-+
-+	ASSERT_EQ(skel->bss->test_einval_bpf_tuple, -EINVAL, "Test EINVAL for NULL bpf_tuple");
-+	ASSERT_EQ(skel->bss->test_einval_reserved, -EINVAL, "Test EINVAL for reserved not set to 0");
-+	ASSERT_EQ(skel->bss->test_einval_netns_id, -EINVAL, "Test EINVAL for netns_id < -1");
-+	ASSERT_EQ(skel->bss->test_einval_len_opts, -EINVAL, "Test EINVAL for len__opts != NF_BPF_CT_OPTS_SZ");
-+	ASSERT_EQ(skel->bss->test_eproto_l4proto, -EPROTO, "Test EPROTO for l4proto != TCP or UDP");
-+	ASSERT_EQ(skel->bss->test_enonet_netns_id, -ENONET, "Test ENONET for bad but valid netns_id");
-+	ASSERT_EQ(skel->bss->test_enoent_lookup, -ENOENT, "Test ENOENT for failed lookup");
-+	ASSERT_EQ(skel->bss->test_eafnosupport, -EAFNOSUPPORT, "Test EAFNOSUPPORT for invalid len__tuple");
-+end:
-+	test_bpf_nf__destroy(skel);
-+}
-+
-+void test_bpf_nf(void)
-+{
-+	if (test__start_subtest("xdp-ct"))
-+		test_bpf_nf_ct(TEST_XDP);
-+	if (test__start_subtest("tc-bpf-ct"))
-+		test_bpf_nf_ct(TEST_TC_BPF);
-+}
-diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-new file mode 100644
-index 000000000000..6f131c993c0b
---- /dev/null
-+++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-@@ -0,0 +1,109 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <vmlinux.h>
-+#include <bpf/bpf_helpers.h>
-+
-+#define EAFNOSUPPORT 97
-+#define EPROTO 71
-+#define ENONET 64
-+#define EINVAL 22
-+#define ENOENT 2
-+
-+int test_einval_bpf_tuple = 0;
-+int test_einval_reserved = 0;
-+int test_einval_netns_id = 0;
-+int test_einval_len_opts = 0;
-+int test_eproto_l4proto = 0;
-+int test_enonet_netns_id = 0;
-+int test_enoent_lookup = 0;
-+int test_eafnosupport = 0;
-+
-+struct nf_conn *bpf_xdp_ct_lookup(struct xdp_md *, struct bpf_sock_tuple *, u32,
-+				  struct bpf_ct_opts *, u32) __ksym;
-+struct nf_conn *bpf_skb_ct_lookup(struct __sk_buff *, struct bpf_sock_tuple *, u32,
-+				  struct bpf_ct_opts *, u32) __ksym;
-+void bpf_ct_release(struct nf_conn *) __ksym;
-+
-+static __always_inline void
-+nf_ct_test(struct nf_conn *(*func)(void *, struct bpf_sock_tuple *, u32,
-+				   struct bpf_ct_opts *, u32),
-+	   void *ctx)
-+{
-+	struct bpf_ct_opts opts_def = { .l4proto = IPPROTO_TCP, .netns_id = -1 };
-+	struct bpf_sock_tuple bpf_tuple;
-+	struct nf_conn *ct;
-+
-+	__builtin_memset(&bpf_tuple, 0, sizeof(bpf_tuple.ipv4));
-+
-+	ct = func(ctx, NULL, 0, &opts_def, sizeof(opts_def));
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_einval_bpf_tuple = opts_def.error;
-+
-+	opts_def.reserved[0] = 1;
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
-+	opts_def.reserved[0] = 0;
-+	opts_def.l4proto = IPPROTO_TCP;
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_einval_reserved = opts_def.error;
-+
-+	opts_def.netns_id = -2;
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
-+	opts_def.netns_id = -1;
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_einval_netns_id = opts_def.error;
-+
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def) - 1);
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_einval_len_opts = opts_def.error;
-+
-+	opts_def.l4proto = IPPROTO_ICMP;
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
-+	opts_def.l4proto = IPPROTO_TCP;
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_eproto_l4proto = opts_def.error;
-+
-+	opts_def.netns_id = 0xf00f;
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
-+	opts_def.netns_id = -1;
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_enonet_netns_id = opts_def.error;
-+
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_enoent_lookup = opts_def.error;
-+
-+	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4) - 1, &opts_def, sizeof(opts_def));
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_eafnosupport = opts_def.error;
-+}
-+
-+SEC("xdp")
-+int nf_xdp_ct_test(struct xdp_md *ctx)
-+{
-+	nf_ct_test((void *)bpf_xdp_ct_lookup, ctx);
-+	return 0;
-+}
-+
-+SEC("tc")
-+int nf_skb_ct_test(struct __sk_buff *ctx)
-+{
-+	nf_ct_test((void *)bpf_skb_ct_lookup, ctx);
-+	return 0;
-+}
-+
-+char _license[] SEC("license") = "GPL";
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
