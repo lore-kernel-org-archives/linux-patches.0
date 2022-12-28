@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F73C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23771C433D2;
-	Wed, 28 Dec 2022 16:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4F11C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3D4C433D2;
+	Wed, 28 Dec 2022 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244665;
-	bh=gF+h+ABmY5dZwDVfEFPIILKAqEER3hSUGmWU0JSOzyA=;
+	s=korg; t=1672244668;
+	bh=aglx1usQfBM6l0KL+69bpy35bIYjRlMNolD+5Qwgf44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQdYZoYsKJf4EXr3vH65bTESnDrelBIatOx7/IcIMImqeMRgxQTMDT3LHBXkrqZ4w
-	 GHIHMDNflyi9Utw7iav03Tp/pGZa/3YLBI87KEQ65tn70+iw++X8C5Xr4EpfB/15+X
-	 30LjryOV55nGwg8eLvoBYP+boIRVLDVko1Fq2ZbY=
+	b=RAwY4kCpVky9iHElWRAkyMyij1IFhxK9KSz0D6QLJNROC4YUDE7GjO4C07IZj5Bi6
+	 Fc8BdyXvDJ3sJeE1sLLywzK1mxoobysoDtqObDjV2qpi4dVRUVoFaOXIp4AK8CxOox
+	 RLq8JkPpqGYYAP6xiU28vdSYP5AI+N1AtJxje/n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheyu Ma <zheyuma97@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0719/1073] i2c: ismt: Fix an out-of-bounds bug in ismt_access()
-Date: Wed, 28 Dec 2022 15:38:27 +0100
-Message-Id: <20221228144347.555905683@linuxfoundation.org>
+Subject: [PATCH 6.1 0681/1146] hwrng: amd - Fix PCI device refcount leak
+Date: Wed, 28 Dec 2022 15:37:00 +0100
+Message-Id: <20221228144348.641459237@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 39244cc754829bf707dccd12e2ce37510f5b1f8d ]
+[ Upstream commit ecadb5b0111ea19fc7c240bb25d424a94471eb7d ]
 
-When the driver does not check the data from the user, the variable
-'data->block[0]' may be very large to cause an out-of-bounds bug.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-The following log can reveal it:
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. Add the missing
+pci_dev_put() for the normal and error path.
 
-[   33.995542] i2c i2c-1: ioctl, cmd=0x720, arg=0x7ffcb3dc3a20
-[   33.995978] ismt_smbus 0000:00:05.0: I2C_SMBUS_BLOCK_DATA:  WRITE
-[   33.996475] ==================================================================
-[   33.996995] BUG: KASAN: out-of-bounds in ismt_access.cold+0x374/0x214b
-[   33.997473] Read of size 18446744073709551615 at addr ffff88810efcfdb1 by task ismt_poc/485
-[   33.999450] Call Trace:
-[   34.001849]  memcpy+0x20/0x60
-[   34.002077]  ismt_access.cold+0x374/0x214b
-[   34.003382]  __i2c_smbus_xfer+0x44f/0xfb0
-[   34.004007]  i2c_smbus_xfer+0x10a/0x390
-[   34.004291]  i2cdev_ioctl_smbus+0x2c8/0x710
-[   34.005196]  i2cdev_ioctl+0x5ec/0x74c
-
-Fix this bug by checking the size of 'data->block[0]' first.
-
-Fixes: 13f35ac14cd0 ("i2c: Adding support for Intel iSMT SMBus 2.0 host controller")
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ismt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/hw_random/amd-rng.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-ismt.c b/drivers/i2c/busses/i2c-ismt.c
-index 6078fa0c0d48..63120c41354c 100644
---- a/drivers/i2c/busses/i2c-ismt.c
-+++ b/drivers/i2c/busses/i2c-ismt.c
-@@ -509,6 +509,9 @@ static int ismt_access(struct i2c_adapter *adap, u16 addr,
- 		if (read_write == I2C_SMBUS_WRITE) {
- 			/* Block Write */
- 			dev_dbg(dev, "I2C_SMBUS_BLOCK_DATA:  WRITE\n");
-+			if (data->block[0] < 1 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
-+				return -EINVAL;
+diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
+index c22d4184bb61..0555e3838bce 100644
+--- a/drivers/char/hw_random/amd-rng.c
++++ b/drivers/char/hw_random/amd-rng.c
+@@ -143,15 +143,19 @@ static int __init amd_rng_mod_init(void)
+ found:
+ 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
+ 	if (err)
+-		return err;
++		goto put_dev;
+ 
+ 	pmbase &= 0x0000FF00;
+-	if (pmbase == 0)
+-		return -EIO;
++	if (pmbase == 0) {
++		err = -EIO;
++		goto put_dev;
++	}
+ 
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+-	if (!priv)
+-		return -ENOMEM;
++	if (!priv) {
++		err = -ENOMEM;
++		goto put_dev;
++	}
+ 
+ 	if (!request_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE, DRV_NAME)) {
+ 		dev_err(&pdev->dev, DRV_NAME " region 0x%x already in use!\n",
+@@ -185,6 +189,8 @@ static int __init amd_rng_mod_init(void)
+ 	release_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE);
+ out:
+ 	kfree(priv);
++put_dev:
++	pci_dev_put(pdev);
+ 	return err;
+ }
+ 
+@@ -200,6 +206,8 @@ static void __exit amd_rng_mod_exit(void)
+ 
+ 	release_region(priv->pmbase + PMBASE_OFFSET, PMBASE_SIZE);
+ 
++	pci_dev_put(priv->pcidev);
 +
- 			dma_size = data->block[0] + 1;
- 			dma_direction = DMA_TO_DEVICE;
- 			desc->wr_len_cmd = dma_size;
+ 	kfree(priv);
+ }
+ 
 -- 
 2.35.1
 
