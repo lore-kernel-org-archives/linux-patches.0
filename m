@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55301863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BD1C433D2;
-	Wed, 28 Dec 2022 14:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2621863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E342BC433D2;
+	Wed, 28 Dec 2022 14:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239082;
-	bh=gl5nlAu75CzZC/pEqUgjcTjAV8+/LRQ+Np8AdqWCzfU=;
+	s=korg; t=1672239085;
+	bh=a30lcUAUkVhTXqbEPEJwUaKuaBs4RVEPcVVf/mU1yTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcI7v+vDzTjr/5rqN8eZfHhiXiCXpGSuoNeJS5+OGMLRet6W+LF+UXRqEkwcM1P/o
-	 v1nDRe2DvSB9ml5fBF0sAYaqdkL7+pX/FJfqfYxMHV1gytszIy/0JwITDhUcBC/N9z
-	 Ib2XRG1Ob+fhW8iGtbbbAm2bkTvb6FwBmt2cCcdw=
+	b=R/PasEldQHVQBBkAIJouPAc6LCbOueGP0rp5XQSLxdam7VExsUsLDego7dWZq3erU
+	 l3GEI/K9DpYoX88mm6n+tNGl05KmSlr+ooaLkXm6L4dByOFX3AoiMSCVRGArMiZtr2
+	 1HzCunpXw6A7mdjuSieQqCjbga+ImkmT8ENzxoFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	Denys Vlasenko <dvlasenk@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/731] uprobes/x86: Allow to probe a NOP instruction with 0x66 prefix
-Date: Wed, 28 Dec 2022 15:33:49 +0100
-Message-Id: <20221228144300.089850368@linuxfoundation.org>
+Subject: [PATCH 5.15 123/731] x86/xen: Fix memory leak in xen_smp_intr_init{_pv}()
+Date: Wed, 28 Dec 2022 15:33:50 +0100
+Message-Id: <20221228144300.118403027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -38,51 +35,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit cefa72129e45313655d53a065b8055aaeb01a0c9 ]
+[ Upstream commit 69143f60868b3939ddc89289b29db593b647295e ]
 
-Intel ICC -hotpatch inserts 2-byte "0x66 0x90" NOP at the start of each
-function to reserve extra space for hot-patching, and currently it is not
-possible to probe these functions because branch_setup_xol_ops() wrongly
-rejects NOP with REP prefix as it treats them like word-sized branch
-instructions.
+These local variables @{resched|pmu|callfunc...}_name saves the new
+string allocated by kasprintf(), and when bind_{v}ipi_to_irqhandler()
+fails, it goes to the @fail tag, and calls xen_smp_intr_free{_pv}() to
+free resource, however the new string is not saved, which cause a memory
+leak issue. fix it.
 
-Fixes: 250bbd12c2fe ("uprobes/x86: Refuse to attach uprobe to "word-sized" branch insns")
-Reported-by: Seiji Nishikawa <snishika@redhat.com>
-Suggested-by: Denys Vlasenko <dvlasenk@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20221204173933.GA31544@redhat.com
+Fixes: 9702785a747a ("i386: move xen")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221123155858.11382-2-xiujianfeng@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/xen/smp.c    | 24 ++++++++++++------------
+ arch/x86/xen/smp_pv.c | 12 ++++++------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index b63cf8f7745e..6c07f6daaa22 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -722,8 +722,9 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
- 	switch (opc1) {
- 	case 0xeb:	/* jmp 8 */
- 	case 0xe9:	/* jmp 32 */
--	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
- 		break;
-+	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
-+		goto setup;
+diff --git a/arch/x86/xen/smp.c b/arch/x86/xen/smp.c
+index c1b2f764b29a..cdec892b28e2 100644
+--- a/arch/x86/xen/smp.c
++++ b/arch/x86/xen/smp.c
+@@ -32,30 +32,30 @@ static irqreturn_t xen_reschedule_interrupt(int irq, void *dev_id)
  
- 	case 0xe8:	/* call relative */
- 		branch_clear_offset(auprobe, insn);
-@@ -753,6 +754,7 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
- 			return -ENOTSUPP;
+ void xen_smp_intr_free(unsigned int cpu)
+ {
++	kfree(per_cpu(xen_resched_irq, cpu).name);
++	per_cpu(xen_resched_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_resched_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_resched_irq, cpu).irq, NULL);
+ 		per_cpu(xen_resched_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_resched_irq, cpu).name);
+-		per_cpu(xen_resched_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_callfunc_irq, cpu).name);
++	per_cpu(xen_callfunc_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_callfunc_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_callfunc_irq, cpu).irq, NULL);
+ 		per_cpu(xen_callfunc_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_callfunc_irq, cpu).name);
+-		per_cpu(xen_callfunc_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_debug_irq, cpu).name);
++	per_cpu(xen_debug_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_debug_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_debug_irq, cpu).irq, NULL);
+ 		per_cpu(xen_debug_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_debug_irq, cpu).name);
+-		per_cpu(xen_debug_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
++	per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_callfuncsingle_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_callfuncsingle_irq, cpu).irq,
+ 				       NULL);
+ 		per_cpu(xen_callfuncsingle_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
+-		per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
+ 	}
+ }
+ 
+@@ -65,6 +65,7 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	char *resched_name, *callfunc_name, *debug_name;
+ 
+ 	resched_name = kasprintf(GFP_KERNEL, "resched%d", cpu);
++	per_cpu(xen_resched_irq, cpu).name = resched_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_RESCHEDULE_VECTOR,
+ 				    cpu,
+ 				    xen_reschedule_interrupt,
+@@ -74,9 +75,9 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_resched_irq, cpu).irq = rc;
+-	per_cpu(xen_resched_irq, cpu).name = resched_name;
+ 
+ 	callfunc_name = kasprintf(GFP_KERNEL, "callfunc%d", cpu);
++	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_VECTOR,
+ 				    cpu,
+ 				    xen_call_function_interrupt,
+@@ -86,10 +87,10 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_callfunc_irq, cpu).irq = rc;
+-	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
+ 
+ 	if (!xen_fifo_events) {
+ 		debug_name = kasprintf(GFP_KERNEL, "debug%d", cpu);
++		per_cpu(xen_debug_irq, cpu).name = debug_name;
+ 		rc = bind_virq_to_irqhandler(VIRQ_DEBUG, cpu,
+ 					     xen_debug_interrupt,
+ 					     IRQF_PERCPU | IRQF_NOBALANCING,
+@@ -97,10 +98,10 @@ int xen_smp_intr_init(unsigned int cpu)
+ 		if (rc < 0)
+ 			goto fail;
+ 		per_cpu(xen_debug_irq, cpu).irq = rc;
+-		per_cpu(xen_debug_irq, cpu).name = debug_name;
  	}
  
-+setup:
- 	auprobe->branch.opc1 = opc1;
- 	auprobe->branch.ilen = insn->length;
- 	auprobe->branch.offs = insn->immediate.value;
+ 	callfunc_name = kasprintf(GFP_KERNEL, "callfuncsingle%d", cpu);
++	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_SINGLE_VECTOR,
+ 				    cpu,
+ 				    xen_call_function_single_interrupt,
+@@ -110,7 +111,6 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_callfuncsingle_irq, cpu).irq = rc;
+-	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
+ 
+ 	return 0;
+ 
+diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
+index cd5539fc5eb4..b47b5111397a 100644
+--- a/arch/x86/xen/smp_pv.c
++++ b/arch/x86/xen/smp_pv.c
+@@ -97,18 +97,18 @@ asmlinkage __visible void cpu_bringup_and_idle(void)
+ 
+ void xen_smp_intr_free_pv(unsigned int cpu)
+ {
++	kfree(per_cpu(xen_irq_work, cpu).name);
++	per_cpu(xen_irq_work, cpu).name = NULL;
+ 	if (per_cpu(xen_irq_work, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_irq_work, cpu).irq, NULL);
+ 		per_cpu(xen_irq_work, cpu).irq = -1;
+-		kfree(per_cpu(xen_irq_work, cpu).name);
+-		per_cpu(xen_irq_work, cpu).name = NULL;
+ 	}
+ 
++	kfree(per_cpu(xen_pmu_irq, cpu).name);
++	per_cpu(xen_pmu_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_pmu_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_pmu_irq, cpu).irq, NULL);
+ 		per_cpu(xen_pmu_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_pmu_irq, cpu).name);
+-		per_cpu(xen_pmu_irq, cpu).name = NULL;
+ 	}
+ }
+ 
+@@ -118,6 +118,7 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 	char *callfunc_name, *pmu_name;
+ 
+ 	callfunc_name = kasprintf(GFP_KERNEL, "irqwork%d", cpu);
++	per_cpu(xen_irq_work, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_IRQ_WORK_VECTOR,
+ 				    cpu,
+ 				    xen_irq_work_interrupt,
+@@ -127,10 +128,10 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_irq_work, cpu).irq = rc;
+-	per_cpu(xen_irq_work, cpu).name = callfunc_name;
+ 
+ 	if (is_xen_pmu) {
+ 		pmu_name = kasprintf(GFP_KERNEL, "pmu%d", cpu);
++		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
+ 		rc = bind_virq_to_irqhandler(VIRQ_XENPMU, cpu,
+ 					     xen_pmu_irq_handler,
+ 					     IRQF_PERCPU|IRQF_NOBALANCING,
+@@ -138,7 +139,6 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 		if (rc < 0)
+ 			goto fail;
+ 		per_cpu(xen_pmu_irq, cpu).irq = rc;
+-		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
