@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3921863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFFCC433EF;
-	Wed, 28 Dec 2022 15:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAC01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CBCC433D2;
+	Wed, 28 Dec 2022 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240327;
-	bh=Khz4X6fklwfLlen7u7Qd6jOUH8iS3NnJ0Vs+p3NnXiw=;
+	s=korg; t=1672240329;
+	bh=3Q9Ed8auQaTghL45ipcy5dENrm8ZkV7jbGeGcTsb89s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0uXFHDGknaxCwgYoH8G4sUts1aJnedyOUxIk+uPZRrH4Gufzs3fZtwes7ClnEieG
-	 k8fq3JeqvfDnQN00C4W7VCbowLm32NQ1s7OLOmVf4S9K6pPuiB3NMtUwjNt7MK/l3u
-	 XA3cp6HN/ZtZPTcJtVQqTFnLt/YIkb2gx3D0cYE0=
+	b=qgTLIKimK+QkV7cRmG4V9bdMlXuSCZT+8MQzV6WphK+TJv2q1/TB84mVALllMuq4R
+	 lm7OH5xOvF5icDT6BsH4jjrwOmRydnQFXgbXYnXsIIsMbCf4d19yI7u+alk+pfsys6
+	 vffbUsBfJmTDU+cZWJQiE/4fzkfwtzHa1dVhyEkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0109/1146] sched/uclamp: Make select_idle_capacity() use util_fits_cpu()
-Date: Wed, 28 Dec 2022 15:27:28 +0100
-Message-Id: <20221228144333.114624707@linuxfoundation.org>
+Subject: [PATCH 5.15 337/731] af_unix: call proto_unregister() in the error path in af_unix_init()
+Date: Wed, 28 Dec 2022 15:37:24 +0100
+Message-Id: <20221228144306.337118308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b759caa1d9f667b94727b2ad12589cbc4ce13a82 ]
+[ Upstream commit 73e341e0281a35274629e9be27eae2f9b1b492bf ]
 
-Use the new util_fits_cpu() to ensure migration margin and capacity
-pressure are taken into account correctly when uclamp is being used
-otherwise we will fail to consider CPUs as fitting in scenarios where
-they should.
+If register unix_stream_proto returns error, unix_dgram_proto needs
+be unregistered.
 
-Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-5-qais.yousef@arm.com
+Fixes: 94531cfcbe79 ("af_unix: Add unix_stream_proto for sockmap")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c8eb5ff81084..c877bbfe5deb 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6779,21 +6779,23 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
- static int
- select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- {
--	unsigned long task_util, best_cap = 0;
-+	unsigned long task_util, util_min, util_max, best_cap = 0;
- 	int cpu, best_cpu = -1;
- 	struct cpumask *cpus;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index a579e28bd213..545823c1d5ed 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3401,6 +3401,7 @@ static int __init af_unix_init(void)
+ 	rc = proto_register(&unix_stream_proto, 1);
+ 	if (rc != 0) {
+ 		pr_crit("%s: Cannot create unix_sock SLAB cache!\n", __func__);
++		proto_unregister(&unix_dgram_proto);
+ 		goto out;
+ 	}
  
- 	cpus = this_cpu_cpumask_var_ptr(select_rq_mask);
- 	cpumask_and(cpus, sched_domain_span(sd), p->cpus_ptr);
- 
--	task_util = uclamp_task_util(p);
-+	task_util = task_util_est(p);
-+	util_min = uclamp_eff_value(p, UCLAMP_MIN);
-+	util_max = uclamp_eff_value(p, UCLAMP_MAX);
- 
- 	for_each_cpu_wrap(cpu, cpus, target) {
- 		unsigned long cpu_cap = capacity_of(cpu);
- 
- 		if (!available_idle_cpu(cpu) && !sched_idle_cpu(cpu))
- 			continue;
--		if (fits_capacity(task_util, cpu_cap))
-+		if (util_fits_cpu(task_util, util_min, util_max, cpu))
- 			return cpu;
- 
- 		if (cpu_cap > best_cap) {
 -- 
 2.35.1
 
