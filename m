@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA6E1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CF4C433D2;
-	Wed, 28 Dec 2022 16:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3D1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799EDC433D2;
+	Wed, 28 Dec 2022 16:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243257;
-	bh=MaduEKFH7wJK2FtAh/uuzeU+w+u4AuEb7WtiXz8s/mU=;
+	s=korg; t=1672243259;
+	bh=zrLGZ7ro5zvgwPpc2dk8woCRO7b4s8v5+kXF4UJZj/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iupchyuhBp71/I2vyb+xgrREC/EbD5S1fIJx0K5irOYqt6f5EFNuKXgQizrSjIezK
-	 jmfIfShVmartBB/okDKf0B0sBrsQzHJsszP3JTGZH0iF7n334JUEhM9S/RvuWyg4h7
-	 yz9RqLKRjjK0FvXSo6VqkFjcDWO5iYlX6OhHks60=
+	b=C5uIu/qZEb/r1UCPOqSHGi47Mm3rlDKKSWu+ZjWQ5M+Qw7MfzqyfOqSbPuYxbP8s+
+	 a1NWoJIE9q4MKDozKMchZz5cn0NuFnn6qIQunANhFyftw+D/HouYc7VYnU/LwVjoOK
+	 K5FUzVXCPeyQOMm+9dXgQh9jTZ0B3EraUvybBxmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0468/1146] clk: qcom: clk-krait: fix wrong div2 functions
-Date: Wed, 28 Dec 2022 15:33:27 +0100
-Message-Id: <20221228144342.896927647@linuxfoundation.org>
+Subject: [PATCH 6.0 0483/1073] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:31 +0100
+Message-Id: <20221228144341.156654013@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d676d3a3717cf726d3affedbe5ba98fc4ccad7b3 ]
+[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
 
-Currently div2 value is applied to the wrong bits. This is caused by a
-bug in the code where the shift is done only for lpl, for anything
-else the mask is not shifted to the correct bits.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fix this by correctly shift if lpl is not supported.
+So fix this by checking the return value and calling mmc_free_host() in the
+error path, besides, led_classdev_unregister() and pm_runtime_disable() also
+need be called.
 
-Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221108215625.30186-1-ansuelsmth@gmail.com
+Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-krait.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-index 45da736bd5f4..293a9dfa7151 100644
---- a/drivers/clk/qcom/clk-krait.c
-+++ b/drivers/clk/qcom/clk-krait.c
-@@ -114,6 +114,8 @@ static int krait_div2_set_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index 5fe4528e296e..1be3a355f10d 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1332,6 +1332,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
+ #ifdef RTSX_USB_USE_LEDS_CLASS
+ 	int err;
+ #endif
++	int ret;
  
- 	if (d->lpl)
- 		mask = mask << (d->shift + LPL_SHIFT) | mask << d->shift;
-+	else
-+		mask <<= d->shift;
+ 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
+ 	if (!ucr)
+@@ -1368,7 +1369,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
+ 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
  
- 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
- 	val = krait_get_l2_indirect_reg(d->offset);
+ #endif
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++#ifdef RTSX_USB_USE_LEDS_CLASS
++		led_classdev_unregister(&host->led);
++#endif
++		mmc_free_host(mmc);
++		pm_runtime_disable(&pdev->dev);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
