@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBCC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED23C433EF;
-	Wed, 28 Dec 2022 15:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F86D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75A3C433EF;
+	Wed, 28 Dec 2022 15:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241432;
-	bh=tUsVKxn27BdMvYIkmS7RoEiAmmkFH3wvzkSJd7B0bGo=;
+	s=korg; t=1672241435;
+	bh=s30D2pAhz04U+XCQ1T9rDF6lZbMoYUQ0Kx+k0Dx9DjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgzBRRK66MVpCYdrcH0qPn+4ugqYWv3JF3W00eK87VwjvJ2GL1j0O5ne5hZfLZ6wJ
-	 yFa65eSN9TsyzipYks27Ejr2hyN4NBSWLTZ1QUF8I7NsSVhDa3M8avjhGwDZMsZJiD
-	 zNhOQRgczHIh5rHUMwLA5bLT4IJ4iZMzNDNqtFec=
+	b=C8/dDaSi61yTNCBDqyp/tOGePVu/FkuhibdK9tqz42Wy6VuBcljl9ZmlGJiTw3mT1
+	 vG7N464IsmgfBLlxX/Td1Q1IcW1q4cXpnoN4GXJhC0AmT32Eg8BbBXZB5ThaRfjZTj
+	 K0nMCyOu0gArI80jnd+V7/V5UF+xUuXvlVxH6UcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0283/1073] media: vivid: fix compose size exceed boundary
-Date: Wed, 28 Dec 2022 15:31:11 +0100
-Message-Id: <20221228144335.706549083@linuxfoundation.org>
+Subject: [PATCH 6.1 0246/1146] can: kvaser_usb: kvaser_usb_leaf: Rename {leaf,usbcan}_cmd_error_event to {leaf,usbcan}_cmd_can_error_event
+Date: Wed, 28 Dec 2022 15:29:45 +0100
+Message-Id: <20221228144336.818079781@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +36,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
+[ Upstream commit 7ea56128dbf904a3359bcf9289cccdfa3c85c7e8 ]
 
-syzkaller found a bug:
+Prepare for handling CMD_ERROR_EVENT. Rename struct
+{leaf,usbcan}_cmd_error_event to {leaf,usbcan}_cmd_can_error_event.
 
- BUG: unable to handle page fault for address: ffffc9000a3b1000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:memcpy_erms+0x6/0x10
-[...]
- Call Trace:
-  <TASK>
-  ? tpg_fill_plane_buffer+0x856/0x15b0
-  vivid_fillbuff+0x8ac/0x1110
-  vivid_thread_vid_cap_tick+0x361/0xc90
-  vivid_thread_vid_cap+0x21a/0x3a0
-  kthread+0x143/0x180
-  ret_from_fork+0x1f/0x30
-  </TASK>
-
-This is because we forget to check boundary after adjust compose->height
-int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
-for this case.
-
-Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Reported-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-4-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 38 +++++++++----------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index 99139a8cd4c4..331a3f4286d2 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -961,6 +961,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
-+				v4l2_rect_map_inside(compose, &fmt);
- 			}
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 33ff62cd1729..a1d4ac8d4a08 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -234,7 +234,7 @@ struct kvaser_cmd_tx_acknowledge_header {
+ 	u8 tid;
+ } __packed;
+ 
+-struct leaf_cmd_error_event {
++struct leaf_cmd_can_error_event {
+ 	u8 tid;
+ 	u8 flags;
+ 	__le16 time[3];
+@@ -246,7 +246,7 @@ struct leaf_cmd_error_event {
+ 	u8 error_factor;
+ } __packed;
+ 
+-struct usbcan_cmd_error_event {
++struct usbcan_cmd_can_error_event {
+ 	u8 tid;
+ 	u8 padding;
+ 	u8 tx_errors_count_ch0;
+@@ -319,7 +319,7 @@ struct kvaser_cmd {
+ 			struct leaf_cmd_softinfo softinfo;
+ 			struct leaf_cmd_rx_can rx_can;
+ 			struct leaf_cmd_chip_state_event chip_state_event;
+-			struct leaf_cmd_error_event error_event;
++			struct leaf_cmd_can_error_event can_error_event;
+ 			struct leaf_cmd_log_message log_message;
+ 			struct kvaser_cmd_cap_req cap_req;
+ 			struct kvaser_cmd_cap_res cap_res;
+@@ -329,7 +329,7 @@ struct kvaser_cmd {
+ 			struct usbcan_cmd_softinfo softinfo;
+ 			struct usbcan_cmd_rx_can rx_can;
+ 			struct usbcan_cmd_chip_state_event chip_state_event;
+-			struct usbcan_cmd_error_event error_event;
++			struct usbcan_cmd_can_error_event can_error_event;
+ 		} __packed usbcan;
+ 
+ 		struct kvaser_cmd_tx_can tx_can;
+@@ -351,7 +351,7 @@ static const u8 kvaser_usb_leaf_cmd_sizes_leaf[] = {
+ 	[CMD_RX_EXT_MESSAGE]		= kvaser_fsize(u.leaf.rx_can),
+ 	[CMD_LEAF_LOG_MESSAGE]		= kvaser_fsize(u.leaf.log_message),
+ 	[CMD_CHIP_STATE_EVENT]		= kvaser_fsize(u.leaf.chip_state_event),
+-	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.leaf.error_event),
++	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.leaf.can_error_event),
+ 	[CMD_GET_CAPABILITIES_RESP]	= kvaser_fsize(u.leaf.cap_res),
+ 	/* ignored events: */
+ 	[CMD_FLUSH_QUEUE_REPLY]		= CMD_SIZE_ANY,
+@@ -366,7 +366,7 @@ static const u8 kvaser_usb_leaf_cmd_sizes_usbcan[] = {
+ 	[CMD_RX_STD_MESSAGE]		= kvaser_fsize(u.usbcan.rx_can),
+ 	[CMD_RX_EXT_MESSAGE]		= kvaser_fsize(u.usbcan.rx_can),
+ 	[CMD_CHIP_STATE_EVENT]		= kvaser_fsize(u.usbcan.chip_state_event),
+-	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.usbcan.error_event),
++	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.usbcan.can_error_event),
+ 	/* ignored events: */
+ 	[CMD_USBCAN_CLOCK_OVERFLOW_EVENT] = CMD_SIZE_ANY,
+ };
+@@ -1132,11 +1132,11 @@ static void kvaser_usb_leaf_usbcan_rx_error(const struct kvaser_usb *dev,
+ 
+ 	case CMD_CAN_ERROR_EVENT:
+ 		es.channel = 0;
+-		es.status = cmd->u.usbcan.error_event.status_ch0;
+-		es.txerr = cmd->u.usbcan.error_event.tx_errors_count_ch0;
+-		es.rxerr = cmd->u.usbcan.error_event.rx_errors_count_ch0;
++		es.status = cmd->u.usbcan.can_error_event.status_ch0;
++		es.txerr = cmd->u.usbcan.can_error_event.tx_errors_count_ch0;
++		es.rxerr = cmd->u.usbcan.can_error_event.rx_errors_count_ch0;
+ 		es.usbcan.other_ch_status =
+-			cmd->u.usbcan.error_event.status_ch1;
++			cmd->u.usbcan.can_error_event.status_ch1;
+ 		kvaser_usb_leaf_usbcan_conditionally_rx_error(dev, &es);
+ 
+ 		/* The USBCAN firmware supports up to 2 channels.
+@@ -1144,13 +1144,13 @@ static void kvaser_usb_leaf_usbcan_rx_error(const struct kvaser_usb *dev,
+ 		 */
+ 		if (dev->nchannels == MAX_USBCAN_NET_DEVICES) {
+ 			es.channel = 1;
+-			es.status = cmd->u.usbcan.error_event.status_ch1;
++			es.status = cmd->u.usbcan.can_error_event.status_ch1;
+ 			es.txerr =
+-				cmd->u.usbcan.error_event.tx_errors_count_ch1;
++				cmd->u.usbcan.can_error_event.tx_errors_count_ch1;
+ 			es.rxerr =
+-				cmd->u.usbcan.error_event.rx_errors_count_ch1;
++				cmd->u.usbcan.can_error_event.rx_errors_count_ch1;
+ 			es.usbcan.other_ch_status =
+-				cmd->u.usbcan.error_event.status_ch0;
++				cmd->u.usbcan.can_error_event.status_ch0;
+ 			kvaser_usb_leaf_usbcan_conditionally_rx_error(dev, &es);
+ 		}
+ 		break;
+@@ -1167,11 +1167,11 @@ static void kvaser_usb_leaf_leaf_rx_error(const struct kvaser_usb *dev,
+ 
+ 	switch (cmd->id) {
+ 	case CMD_CAN_ERROR_EVENT:
+-		es.channel = cmd->u.leaf.error_event.channel;
+-		es.status = cmd->u.leaf.error_event.status;
+-		es.txerr = cmd->u.leaf.error_event.tx_errors_count;
+-		es.rxerr = cmd->u.leaf.error_event.rx_errors_count;
+-		es.leaf.error_factor = cmd->u.leaf.error_event.error_factor;
++		es.channel = cmd->u.leaf.can_error_event.channel;
++		es.status = cmd->u.leaf.can_error_event.status;
++		es.txerr = cmd->u.leaf.can_error_event.tx_errors_count;
++		es.rxerr = cmd->u.leaf.can_error_event.rx_errors_count;
++		es.leaf.error_factor = cmd->u.leaf.can_error_event.error_factor;
+ 		break;
+ 	case CMD_LEAF_LOG_MESSAGE:
+ 		es.channel = cmd->u.leaf.log_message.channel;
 -- 
 2.35.1
 
