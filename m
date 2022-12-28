@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9241863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D98C433D2;
-	Wed, 28 Dec 2022 15:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7C91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D933C433D2;
+	Wed, 28 Dec 2022 15:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241937;
-	bh=mKY2bpqH2t/H56qSjTYe3tCTu4L1mi/O8q3pnYF6mS4=;
+	s=korg; t=1672241939;
+	bh=38jSdmiYNZXcHnqRT0auU/Tt1YCty9NRXjRHv71gXts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=js/xV6KPkxkEE1t2UDbdgBuHDG1mJflg+Mzwkubu9Em3UEdVKjMrmX+YNwZVU9PiS
-	 TnCuPuTHBwt9qdlPGC4QPGWoIEGBIA4X0x/O6cvvh7dJykzz8bPGcidW/hlIHhsXW9
-	 I/txyxD5RG9DxDRq9fSDziuNeicsRWa9eJfyW1ak=
+	b=QU5XAMP/Bcg9NV3B6XCGp93/ULJp4yco8YShu6ri3i1YuFqlSLAW0nrcRzitXMxdh
+	 aveQNu01CnVUu56OAeKOu8Wy6UKd53h061L/tCWAKBoIEHmrIE2D86u8L0E4TuF6Bu
+	 63lh7femUKVpzn0y0Cuiss/YXtVsrIxfvixwZcSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0307/1146] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
-Date: Wed, 28 Dec 2022 15:30:46 +0100
-Message-Id: <20221228144338.493695497@linuxfoundation.org>
+Subject: [PATCH 6.0 0334/1073] dm: track per-add_disk holder relations in DM
+Date: Wed, 28 Dec 2022 15:32:02 +0100
+Message-Id: <20221228144337.075842492@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,40 +37,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
+[ Upstream commit 1a581b72169968f4154b5793828f3bc28b258b35 ]
 
-Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
+dm is a bit special in that it opens the underlying devices.  Commit
+89f871af1b26 ("dm: delay registering the gendisk") tried to accommodate
+that by allowing to add the holder to the list before add_gendisk and
+then just add them to sysfs once add_disk is called.  But that leads to
+really odd lifetime problems and error handling problems as we can't
+know the state of the kobjects and don't unwind properly.  To fix this
+switch to just registering all existing table_devices with the holder
+code right after add_disk, and remove them before calling del_gendisk.
 
-Also provide a fallback for proc_create_net_data_write().
-
-Fixes: 564def71765c ("proc: Add a way to make network proc files writable")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
+Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-7-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/proc_fs.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm.c | 49 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index 81d6e4ec2294..0260f5ea98fe 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -208,8 +208,10 @@ static inline void proc_remove(struct proc_dir_entry *de) {}
- static inline int remove_proc_subtree(const char *name, struct proc_dir_entry *parent) { return 0; }
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index e7fc2a69633c..bbde744f7dba 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -751,9 +751,16 @@ static struct table_device *open_table_device(struct mapped_device *md,
+ 		goto out_free_td;
+ 	}
  
- #define proc_create_net_data(name, mode, parent, ops, state_size, data) ({NULL;})
-+#define proc_create_net_data_write(name, mode, parent, ops, write, state_size, data) ({NULL;})
- #define proc_create_net(name, mode, parent, state_size, ops) ({NULL;})
- #define proc_create_net_single(name, mode, parent, show, data) ({NULL;})
-+#define proc_create_net_single_write(name, mode, parent, show, write, data) ({NULL;})
+-	r = bd_link_disk_holder(bdev, dm_disk(md));
+-	if (r)
+-		goto out_blkdev_put;
++	/*
++	 * We can be called before the dm disk is added.  In that case we can't
++	 * register the holder relation here.  It will be done once add_disk was
++	 * called.
++	 */
++	if (md->disk->slave_dir) {
++		r = bd_link_disk_holder(bdev, md->disk);
++		if (r)
++			goto out_blkdev_put;
++	}
  
- static inline struct pid *tgid_pidfd_to_pid(const struct file *file)
+ 	td->dm_dev.mode = mode;
+ 	td->dm_dev.bdev = bdev;
+@@ -774,7 +781,8 @@ static struct table_device *open_table_device(struct mapped_device *md,
+  */
+ static void close_table_device(struct table_device *td, struct mapped_device *md)
  {
+-	bd_unlink_disk_holder(td->dm_dev.bdev, dm_disk(md));
++	if (md->disk->slave_dir)
++		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
+ 	blkdev_put(td->dm_dev.bdev, td->dm_dev.mode | FMODE_EXCL);
+ 	put_dax(td->dm_dev.dax_dev);
+ 	list_del(&td->list);
+@@ -1964,7 +1972,13 @@ static void cleanup_mapped_device(struct mapped_device *md)
+ 		md->disk->private_data = NULL;
+ 		spin_unlock(&_minor_lock);
+ 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
++			struct table_device *td;
++
+ 			dm_sysfs_exit(md);
++			list_for_each_entry(td, &md->table_devices, list) {
++				bd_unlink_disk_holder(td->dm_dev.bdev,
++						      md->disk);
++			}
+ 
+ 			/*
+ 			 * Hold lock to make sure del_gendisk() won't concurrent
+@@ -2304,6 +2318,7 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
+ {
+ 	enum dm_queue_mode type = dm_table_get_type(t);
+ 	struct queue_limits limits;
++	struct table_device *td;
+ 	int r;
+ 
+ 	switch (type) {
+@@ -2342,16 +2357,30 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
+ 	if (r)
+ 		return r;
+ 
+-	r = dm_sysfs_init(md);
+-	if (r) {
+-		mutex_lock(&md->table_devices_lock);
+-		del_gendisk(md->disk);
+-		mutex_unlock(&md->table_devices_lock);
+-		return r;
++	/*
++	 * Register the holder relationship for devices added before the disk
++	 * was live.
++	 */
++	list_for_each_entry(td, &md->table_devices, list) {
++		r = bd_link_disk_holder(td->dm_dev.bdev, md->disk);
++		if (r)
++			goto out_undo_holders;
+ 	}
+ 
++	r = dm_sysfs_init(md);
++	if (r)
++		goto out_undo_holders;
++
+ 	md->type = type;
+ 	return 0;
++
++out_undo_holders:
++	list_for_each_entry_continue_reverse(td, &md->table_devices, list)
++		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
++	mutex_lock(&md->table_devices_lock);
++	del_gendisk(md->disk);
++	mutex_unlock(&md->table_devices_lock);
++	return r;
+ }
+ 
+ struct mapped_device *dm_get_md(dev_t dev)
 -- 
 2.35.1
 
