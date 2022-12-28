@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F3D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4198FC433D2;
-	Wed, 28 Dec 2022 15:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A90D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0674C433D2;
+	Wed, 28 Dec 2022 15:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242477;
-	bh=XkPe3dJ9RRR1N8aSr2mMb0JFqzW72j2gCtbe4xfFdds=;
+	s=korg; t=1672242480;
+	bh=d266scq9zGpyNUQ6Afw40j9FICaRCkGtoyqNTb3E5IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH7SRlDQgeH0ynufnxigfQo5iQhpX+4KAlXKFsMfg+mQRWyyigM7/9/sWviXFJU2r
-	 6ad+cI/nZ0i3kIEXJluICUA0GDz7sbyGlOisdkwpi6qgC9iu9dE2PygRNjBydHB8WI
-	 /koafmBN9Bv039515Ie1mTRsNkrTiQNF7cbMp+Ac=
+	b=1/9+DJ+jOexkykEdaLCbc1WrWRRxuMUt6fOXHejKi3hfg3MSs1+OsvODod/tiZGom
+	 KpikYEaJlgds6/6c5n11zwVx8wBCLLAMlFn/xbIfqcEUpxiHG0pQhOHBOZxik0B08f
+	 uqVfljjWK6pABctUQpKo4tuKWYrr6U54Vft9fXPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Chang <junxiao.chang@intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Lili Li <lili.li@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0374/1146] ASoC: Intel: Skylake: Fix Kconfig dependency
-Date: Wed, 28 Dec 2022 15:31:53 +0100
-Message-Id: <20221228144340.322316385@linuxfoundation.org>
+Subject: [PATCH 5.15 608/731] mailbox: arm_mhuv2: Fix return value check in mhuv2_probe()
+Date: Wed, 28 Dec 2022 15:41:55 +0100
+Message-Id: <20221228144314.162919435@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lili Li <lili.li@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e5d4d2b23aed20a7815d1b500dbcd50af1da0023 ]
+[ Upstream commit 165b7643f2df890066b1b4e8a387888a600ca9bf ]
 
-Commit e4746d94d00c ("ASoC: Intel: Skylake: Introduce HDA codec init and
-exit routines") introduced HDA codec init routine which depends on SND_HDA.
-Select SND_SOC_HDAC_HDA unconditionally to fix following compile error:
-ERROR: modpost: "snd_hda_codec_device_init" [sound/soc/intel/skylake/snd-soc-skl.ko] undefined!
+If devm_of_iomap() fails, it returns ERR_PTR() and never
+return NULL, so replace NULL pointer check with IS_ERR()
+to fix this problem.
 
-Fixes: e4746d94d00c ("ASoC: Intel: Skylake: Introduce HDA codec init and exit routines")
-Reviewed-by: Junxiao Chang <junxiao.chang@intel.com>
-Suggested-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Lili Li <lili.li@intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221121104742.1007486-1-lili.li@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5a6338cce9f4 ("mailbox: arm_mhuv2: Add driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/arm_mhuv2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/Kconfig b/sound/soc/intel/Kconfig
-index d2ca710ac3fa..ac799de4f7fd 100644
---- a/sound/soc/intel/Kconfig
-+++ b/sound/soc/intel/Kconfig
-@@ -177,7 +177,7 @@ config SND_SOC_INTEL_SKYLAKE_COMMON
- 	select SND_HDA_DSP_LOADER
- 	select SND_SOC_TOPOLOGY
- 	select SND_SOC_INTEL_SST
--	select SND_SOC_HDAC_HDA if SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC
-+	select SND_SOC_HDAC_HDA
- 	select SND_SOC_ACPI_INTEL_MATCH
- 	select SND_INTEL_DSP_CONFIG
- 	help
+diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
+index d997f8ebfa98..3af15083a25a 100644
+--- a/drivers/mailbox/arm_mhuv2.c
++++ b/drivers/mailbox/arm_mhuv2.c
+@@ -1061,8 +1061,8 @@ static int mhuv2_probe(struct amba_device *adev, const struct amba_id *id)
+ 	int ret = -EINVAL;
+ 
+ 	reg = devm_of_iomap(dev, dev->of_node, 0, NULL);
+-	if (!reg)
+-		return -ENOMEM;
++	if (IS_ERR(reg))
++		return PTR_ERR(reg);
+ 
+ 	mhu = devm_kzalloc(dev, sizeof(*mhu), GFP_KERNEL);
+ 	if (!mhu)
 -- 
 2.35.1
 
