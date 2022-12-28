@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BBA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D915C433D2;
-	Wed, 28 Dec 2022 15:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B1F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD66DC433EF;
+	Wed, 28 Dec 2022 15:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242041;
-	bh=IdNOCukQi4WqQbNJ8DBWaJ9xqZqO2hb2IG8hlx24j1s=;
+	s=korg; t=1672242044;
+	bh=PpfDcUChdczWqCkpHadSl7VJy3AjayjgqxcU11WcKCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2tHIRn9XcfcP/rFzAzBpJeqQe0wY2p2WUbIW/2Vv3mv78WGIp39rZouHt9R2smF1
-	 mwUoz0p+dyZWm5uIkRLDn4Y9V0Mgbpx5ANCmSW4rQYnBP4wjZ91TsuMkycbhb6oVag
-	 mFNjsIkccALJonkqJX5tWTYNuufjRt7rb/2D/zaw=
+	b=F76+rIEZL3Ruqky5fACEt4+Lw5vKyM3Guxjrwo35h7l48N1kQuQWb6TX6Mqd29Wbp
+	 VePckQy0FhrlRFqyLQPprVX/RPWuCapaLLuGhu7uEJ7Ea/WWOf8eNCSoPzXApO3jz/
+	 IBPrZXpTBelviD/+z/fawo5T9hoQC0SkjLlPWvSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 556/731] powerpc/xive: add missing iounmap() in error path in xive_spapr_populate_irq_data()
-Date: Wed, 28 Dec 2022 15:41:03 +0100
-Message-Id: <20221228144312.653685105@linuxfoundation.org>
+Subject: [PATCH 6.1 0319/1146] wifi: iwlwifi: mei: dont send SAP commands if AMT is disabled
+Date: Wed, 28 Dec 2022 15:30:58 +0100
+Message-Id: <20221228144338.818086540@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +36,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 8b49670f3bb3f10cd4d5a6dca17f5a31b173ecdc ]
+[ Upstream commit 95170a46b7dddbc3ac31b20ef2e8fa9d556d783d ]
 
-If remapping 'data->trig_page' fails, the 'data->eoi_mmio' need be unmapped
-before returning from xive_spapr_populate_irq_data().
+We should not send any SAP command to CSME if AMT is disabled.
 
-Fixes: eac1e731b59e ("powerpc/xive: guest exploitation of the XIVE interrupt controller")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221017032333.1852406-1-yangyingliang@huawei.com
+Reported-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.ea222d41c781.Ifc90ddc3e35187683ff7f59371d792b61c8854c8@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xive/spapr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 85 ++++++++++---------
+ 1 file changed, 44 insertions(+), 41 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/xive/spapr.c b/arch/powerpc/sysdev/xive/spapr.c
-index 2bf78a30238b..43bd2579d942 100644
---- a/arch/powerpc/sysdev/xive/spapr.c
-+++ b/arch/powerpc/sysdev/xive/spapr.c
-@@ -437,6 +437,7 @@ static int xive_spapr_populate_irq_data(u32 hw_irq, struct xive_irq_data *data)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index 90646c54a3c5..64a637ef199c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -596,8 +596,6 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
+ 			   const struct iwl_sap_me_msg_start_ok *rsp,
+ 			   ssize_t len)
+ {
+-	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
+-
+ 	if (len != sizeof(*rsp)) {
+ 		dev_err(&cldev->dev,
+ 			"got invalid SAP_ME_MSG_START_OK from CSME firmware\n");
+@@ -616,13 +614,10 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
  
- 	data->trig_mmio = ioremap(data->trig_page, 1u << data->esb_shift);
- 	if (!data->trig_mmio) {
-+		iounmap(data->eoi_mmio);
- 		pr_err("Failed to map trigger page for irq 0x%x\n", hw_irq);
- 		return -ENOMEM;
+ 	mutex_lock(&iwl_mei_mutex);
+ 	set_bit(IWL_MEI_STATUS_SAP_CONNECTED, &iwl_mei_status);
+-	/* wifi driver has registered already */
+-	if (iwl_mei_cache.ops) {
+-		iwl_mei_send_sap_msg(mei->cldev,
+-				     SAP_MSG_NOTIF_WIFIDR_UP);
+-		iwl_mei_cache.ops->sap_connected(iwl_mei_cache.priv);
+-	}
+-
++	/*
++	 * We'll receive AMT_STATE SAP message in a bit and
++	 * that will continue the flow
++	 */
+ 	mutex_unlock(&iwl_mei_mutex);
+ }
+ 
+@@ -715,6 +710,13 @@ static void iwl_mei_set_init_conf(struct iwl_mei *mei)
+ 		.val = cpu_to_le32(iwl_mei_cache.rf_kill),
+ 	};
+ 
++	/* wifi driver has registered already */
++	if (iwl_mei_cache.ops) {
++		iwl_mei_send_sap_msg(mei->cldev,
++				     SAP_MSG_NOTIF_WIFIDR_UP);
++		iwl_mei_cache.ops->sap_connected(iwl_mei_cache.priv);
++	}
++
+ 	iwl_mei_send_sap_msg(mei->cldev, SAP_MSG_NOTIF_WHO_OWNS_NIC);
+ 
+ 	if (iwl_mei_cache.conn_info) {
+@@ -1420,10 +1422,7 @@ void iwl_mei_host_associated(const struct iwl_mei_conn_info *conn_info,
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
+-		goto out;
+-
+-	if (!mei->amt_enabled)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
+@@ -1452,7 +1451,7 @@ void iwl_mei_host_disassociated(void)
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
+@@ -1488,7 +1487,7 @@ void iwl_mei_set_rfkill_state(bool hw_rfkill, bool sw_rfkill)
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
+@@ -1517,7 +1516,7 @@ void iwl_mei_set_nic_info(const u8 *mac_address, const u8 *nvm_address)
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
+@@ -1545,7 +1544,7 @@ void iwl_mei_set_country_code(u16 mcc)
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
+@@ -1571,7 +1570,7 @@ void iwl_mei_set_power_limit(const __le16 *power_limit)
+ 
+ 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 
+-	if (!mei)
++	if (!mei && !mei->amt_enabled)
+ 		goto out;
+ 
+ 	memcpy(msg.sar_chain_info_table, power_limit, sizeof(msg.sar_chain_info_table));
+@@ -1678,9 +1677,10 @@ int iwl_mei_register(void *priv, const struct iwl_mei_ops *ops)
+ 
+ 		/* we have already a SAP connection */
+ 		if (iwl_mei_is_connected()) {
+-			iwl_mei_send_sap_msg(mei->cldev,
+-					     SAP_MSG_NOTIF_WIFIDR_UP);
+-			ops->rfkill(priv, mei->link_prot_state);
++			if (mei->amt_enabled)
++				iwl_mei_send_sap_msg(mei->cldev,
++						     SAP_MSG_NOTIF_WIFIDR_UP);
++			ops->rfkill(priv, mei->link_prot_state, false);
+ 		}
  	}
+ 	ret = 0;
+@@ -1931,29 +1931,32 @@ static void iwl_mei_remove(struct mei_cl_device *cldev)
+ 
+ 	mutex_lock(&iwl_mei_mutex);
+ 
+-	/*
+-	 * Tell CSME that we are going down so that it won't access the
+-	 * memory anymore, make sure this message goes through immediately.
+-	 */
+-	mei->csa_throttled = false;
+-	iwl_mei_send_sap_msg(mei->cldev,
+-			     SAP_MSG_NOTIF_HOST_GOES_DOWN);
++	if (mei->amt_enabled) {
++		/*
++		 * Tell CSME that we are going down so that it won't access the
++		 * memory anymore, make sure this message goes through immediately.
++		 */
++		mei->csa_throttled = false;
++		iwl_mei_send_sap_msg(mei->cldev,
++				     SAP_MSG_NOTIF_HOST_GOES_DOWN);
+ 
+-	for (i = 0; i < SEND_SAP_MAX_WAIT_ITERATION; i++) {
+-		if (!iwl_mei_host_to_me_data_pending(mei))
+-			break;
++		for (i = 0; i < SEND_SAP_MAX_WAIT_ITERATION; i++) {
++			if (!iwl_mei_host_to_me_data_pending(mei))
++				break;
+ 
+-		msleep(5);
+-	}
++			msleep(20);
++		}
+ 
+-	/*
+-	 * If we couldn't make sure that CSME saw the HOST_GOES_DOWN message,
+-	 * it means that it will probably keep reading memory that we are going
+-	 * to unmap and free, expect IOMMU error messages.
+-	 */
+-	if (i == SEND_SAP_MAX_WAIT_ITERATION)
+-		dev_err(&mei->cldev->dev,
+-			"Couldn't get ACK from CSME on HOST_GOES_DOWN message\n");
++		/*
++		 * If we couldn't make sure that CSME saw the HOST_GOES_DOWN
++		 * message, it means that it will probably keep reading memory
++		 * that we are going to unmap and free, expect IOMMU error
++		 * messages.
++		 */
++		if (i == SEND_SAP_MAX_WAIT_ITERATION)
++			dev_err(&mei->cldev->dev,
++				"Couldn't get ACK from CSME on HOST_GOES_DOWN message\n");
++	}
+ 
+ 	mutex_unlock(&iwl_mei_mutex);
+ 
 -- 
 2.35.1
 
