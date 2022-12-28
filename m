@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476101C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4FAC433EF;
-	Wed, 28 Dec 2022 16:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C51C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663E9C433D2;
+	Wed, 28 Dec 2022 16:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246345;
-	bh=ChABwfarEnxpiZ8bKwylaKD1+QV4NBac45YFxo79hTM=;
+	s=korg; t=1672246347;
+	bh=9tm+8jRDQilPkH7rR150lBeFa5xhvMEIY4E7qaiUcWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RP79OluqqjMZjBEmvv9TSx8pj1jSPMs9PdWDF9DJn7Rpk5kLEy3maqNnKLTEqFj2y
-	 TTOhERfKWHQzWavv6wSuHZzCBuCrH/g0MWDp8ldCI5jdLS6t8DtnLPWP2BYOVoh7x4
-	 LM8gxGh7tPBnV1tmvnQGOzl7BUNIJeAoOds61yGk=
+	b=F885V4p2dX77vFBkyI/C2DpSNwMl9g1uCYvH2JNTM6AifF+PAeG+y5atQsfvKVVNZ
+	 A5Y+ipMggZRLgrt6YgqOT7ToRAQwFLilWoV3w3WxEgQAXpifvCuSBjX43NYjjmGQNK
+	 DG+Z26qYxB9/pAqoU6kBrsfTpO1/3L0sWIr3ic74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rickard x Andersson <rickaran@axis.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Martin Liska <mliska@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 1053/1073] gcov: add support for checksum field
-Date: Wed, 28 Dec 2022 15:44:01 +0100
-Message-Id: <20221228144356.824098357@linuxfoundation.org>
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1025/1146] media: mediatek: vcodec: Cant set dst buffer to done when lat decode error
+Date: Wed, 28 Dec 2022 15:42:44 +0100
+Message-Id: <20221228144358.206843958@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
+[ Upstream commit 3568ecd3f3a6d133ab7feffbba34955c8c79bbc4 ]
 
-In GCC version 12.1 a checksum field was added.
+Core thread will call v4l2_m2m_buf_done to set dst buffer done for
+lat architecture. If lat call v4l2_m2m_buf_done_and_job_finish to
+free dst buffer when lat decode error, core thread will access kernel
+NULL pointer dereference, then crash.
 
-This patch fixes a kernel crash occurring during boot when using
-gcov-kernel with GCC version 12.2.  The crash occurred on a system running
-on i.MX6SX.
-
-Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
-Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Martin Liska <mliska@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gcov/gcc_4_7.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ .../media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c   | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -82,6 +82,7 @@ struct gcov_fn_info {
-  * @version: gcov version magic indicating the gcc version used for compilation
-  * @next: list head for a singly-linked list
-  * @stamp: uniquifying time stamp
-+ * @checksum: unique object checksum
-  * @filename: name of the associated gcov data file
-  * @merge: merge functions (null for unused counter type)
-  * @n_functions: number of instrumented functions
-@@ -94,6 +95,10 @@ struct gcov_info {
- 	unsigned int version;
- 	struct gcov_info *next;
- 	unsigned int stamp;
-+ /* Since GCC 12.1 a checksum field is added. */
-+#if (__GNUC__ >= 12)
-+	unsigned int checksum;
-+#endif
- 	const char *filename;
- 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
- 	unsigned int n_functions;
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+index e86809052a9f..ffbcee04dc26 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+@@ -253,7 +253,7 @@ static void mtk_vdec_worker(struct work_struct *work)
+ 
+ 	state = ret ? VB2_BUF_STATE_ERROR : VB2_BUF_STATE_DONE;
+ 	if (!IS_VDEC_LAT_ARCH(dev->vdec_pdata->hw_arch) ||
+-	    ctx->current_codec == V4L2_PIX_FMT_VP8_FRAME || ret) {
++	    ctx->current_codec == V4L2_PIX_FMT_VP8_FRAME) {
+ 		v4l2_m2m_buf_done_and_job_finish(dev->m2m_dev_dec, ctx->m2m_ctx, state);
+ 		if (src_buf_req)
+ 			v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
+-- 
+2.35.1
+
 
 
