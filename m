@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A24C433D2;
-	Wed, 28 Dec 2022 15:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C977A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CF3C433D2;
+	Wed, 28 Dec 2022 15:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239622;
-	bh=BI81VsQgUesnbRAeUXPSJMeE4jCEZUlWXKKX1VZNNp4=;
+	s=korg; t=1672239624;
+	bh=LePJ2vt1YjtHwGGSiscpXiJIZjF6rgIfetJV+DGwa8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiqhYqwaZLhQE6jpUe33UyCSRtPrgAnKiYW9M8qN8yC26vRVBrdhf7nfXnmGF4j6f
-	 5S+N/TAn60NN8bk9U4UPxk2Kj+b3S9JTRj7/CuUGYOdN0UOSQ6+JtcJJonA1m0VORh
-	 35tRx+PSMG6+ZyDbgJ2UYrYpabZLUzagK4kPand0=
+	b=Hc8ch8w0c+4bYaAbHwxiXNiz1n7VgMdhnEsyVdBW1HQ/r0zxQ12Hp9rrCxKyzr6na
+	 CNzepL6pe4J8DFM9nFgFEycXIrH3cSBdzHZbvokZQQebw+A3teZdwgbeDZ+ne++z9A
+	 XcwwvWdiaiNxWNtuXYvoMYoPKfXiwpgtZfn8Oi2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jiahao <chenjiahao16@huawei.com>,
-	Nishanth Menon <nm@ti.com>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0020/1146] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
-Date: Wed, 28 Dec 2022 15:25:59 +0100
-Message-Id: <20221228144330.719825544@linuxfoundation.org>
+Subject: [PATCH 6.1 0005/1146] arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
+Date: Wed, 28 Dec 2022 15:25:44 +0100
+Message-Id: <20221228144330.330850958@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,40 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jiahao <chenjiahao16@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
+[ Upstream commit 7ff4a646fae3697b039c6b684786a1e309e8445c ]
 
-There is a sparse warning shown below:
+The property to disable bias is "bias-disable".
 
-drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
-'knav_acc_firmwares' was not declared. Should it be static?
-
-Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
-mark it as static to fix the warning.
-
-Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
-Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
+Fixes: e76c7e1f15fe ("arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220930192954.242546-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss_queue.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 92af7d1b6f5b..16a6d530a0d4 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -67,7 +67,7 @@ static DEFINE_MUTEX(knav_dev_lock);
-  * Newest followed by older ones. Search is done from start of the array
-  * until a firmware file is found.
-  */
--const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
-+static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index 5428aab3058d..e4769dcfaad7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -619,7 +619,7 @@ ts_int_default: ts-int-default {
+ 		pins = "gpio39";
+ 		function = "gpio";
+ 		drive-strength = <2>;
+-		bias-disabled;
++		bias-disable;
+ 		input-enable;
+ 	};
  
- static bool device_ready;
- bool knav_qmss_device_ready(void)
 -- 
 2.35.1
 
