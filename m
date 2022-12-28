@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B7D1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C044C433F0;
-	Wed, 28 Dec 2022 16:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239671C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D50C433EF;
+	Wed, 28 Dec 2022 16:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246289;
-	bh=Y7kbWXuDOj+hzcAssOqgpvYiCnNRoXh9Wx+/4unqG7g=;
+	s=korg; t=1672246295;
+	bh=JQkNrYxNccafkooCq8unRqC3PodZ5psPvaDCz7dH4FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZxO19oN9j9/mXFOhMcMrS0g7BrhUo+Xk/dOo8GUTfq5bnEQHudx3JlXF0woT6mu0
-	 TJ8Q6ZqQcH83k7couDwwLyVG7hkcFYIne6PlB2FJe5/7jusPFpd/Z3sbu2C4TTE785
-	 XnBB6CFiWyTnYrdHpfRyph5Rm3+OZDz9VoZA4I5g=
+	b=F4wU/xoINmWplN87BuuE3PQ2JW3zoU/mLmuHsZEGwQ66z4eaAx3jf7RpJ2Xq+SUdB
+	 KLa9cde5u/NlZaZdTtRJMzp/gBowLQpzIMHW7+LyqlQhPXtYNxi7LPMwmTGme5aXqF
+	 Z1yoUhY+9Z3FFx1mboey0cg2CQI8+y7hzatEaTxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.0 1045/1073] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
-Date: Wed, 28 Dec 2022 15:43:53 +0100
-Message-Id: <20221228144356.584366121@linuxfoundation.org>
+	Paul Mackerras <paulus@samba.org>,
+	linux-ppp@vger.kernel.org,
+	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1017/1146] ppp: associate skb with a device at tx
+Date: Wed, 28 Dec 2022 15:42:36 +0100
+Message-Id: <20221228144357.989392237@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,37 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-commit d6a9fb87e9d18f3394a9845546bbe868efdccfd2 upstream.
+[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
 
-A bad bug in clang's implementation of -fzero-call-used-regs can result
-in NULL pointer dereferences (see the links above the check for more
-information). Restrict CONFIG_CC_HAS_ZERO_CALL_USED_REGS to either a
-supported GCC version or a clang newer than 15.0.6, which will catch
-both a theoretical 15.0.7 and the upcoming 16.0.0, which will both have
-the bug fixed.
+Syzkaller triggered flow dissector warning with the following:
 
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221214232602.4118147-1-nathan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
+ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
+ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
+pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
+
+[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
+[    9.485929]  skb_get_poff+0x53/0xa0
+[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
+[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
+[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
+[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
+[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
+[    9.485974]  ? ppp_write+0x12a/0x190
+[    9.485981]  ? do_iter_write+0x18e/0x2d0
+[    9.485987]  ? __import_iovec+0x30/0x130
+[    9.485997]  ? do_pwritev+0x1b6/0x240
+[    9.486016]  ? trace_hardirqs_on+0x47/0x50
+[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
+[    9.486026]  ? do_syscall_64+0x3d/0x80
+[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Flow dissector tries to find skb net namespace either via device
+or via socket. Neigher is set in ppp_send_frame, so let's manually
+use ppp->dev.
+
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: linux-ppp@vger.kernel.org
+Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/Kconfig.hardening |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/security/Kconfig.hardening
-+++ b/security/Kconfig.hardening
-@@ -253,6 +253,9 @@ config INIT_ON_FREE_DEFAULT_ON
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 9206c660a72e..d4c821c8cf57 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1743,6 +1743,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *cp;
  
- config CC_HAS_ZERO_CALL_USED_REGS
- 	def_bool $(cc-option,-fzero-call-used-regs=used-gpr)
-+	# https://github.com/ClangBuiltLinux/linux/issues/1766
-+	# https://github.com/llvm/llvm-project/issues/59242
-+	depends on !CC_IS_CLANG || CLANG_VERSION > 150006
- 
- config ZERO_CALL_USED_REGS
- 	bool "Enable register zeroing on function exit"
++	skb->dev = ppp->dev;
++
+ 	if (proto < 0x8000) {
+ #ifdef CONFIG_PPP_FILTER
+ 		/* check if we should pass this packet */
+-- 
+2.35.1
+
 
 
