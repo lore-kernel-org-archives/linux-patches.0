@@ -1,36 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CCA1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF8EC433EF;
-	Wed, 28 Dec 2022 15:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69421875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B160C433EF;
+	Wed, 28 Dec 2022 15:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242807;
-	bh=3pFuYycp5XaySMSnYBC9uKdZny+VGlfNZ0G0lpWOGrM=;
+	s=korg; t=1672242809;
+	bh=EFWRYaa315ZcgWkEslmF75YPQc+EnqURzZtIM6eliqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3e/7pZVq2vyyhCntsryNPXW7ZaO6J/uvTjcWxrTz3g19bfLVqhjYhs+lPc1iAVy4
-	 7u8jOvV79did+vEbT3yR7Zj3UuN787r9QrLSllwRxtsG+JQSzEnHMamOd3Q/6sfekG
-	 VvpRrqOe/Nsqc8rdbXfNL7vx9koKn3IoHVN6smHw=
+	b=lLpXiL+rxqOZ359KQ7+F6YIdvD4djuP3kk6JrqQj9VOl+7gDmoDpaE7b0UtbXc9Ga
+	 hSIFiNmNv/h6ljMK9FwlK+QKSFQnpLx9s+FY/KU6XbLze+XzV2imF+tzZXkaB6sxke
+	 bpuhNc7q0q5VBETu5BXO+L3Udz5Ix+X1ckM/+g34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 649/731] drm/msm: Use drm_mode_copy()
-Date: Wed, 28 Dec 2022 15:42:36 +0100
-Message-Id: <20221228144315.322114745@linuxfoundation.org>
+Subject: [PATCH 6.0 0457/1073] hsr: Avoid double remove of a node.
+Date: Wed, 28 Dec 2022 15:34:05 +0100
+Message-Id: <20221228144340.452351875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -41,94 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit b2a1c5ca50db22b3677676dd5bad5f6092429acf ]
+[ Upstream commit 0c74d9f79ec4299365bbe803baa736ae0068179e ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+Due to the hashed-MAC optimisation one problem become visible:
+hsr_handle_sup_frame() walks over the list of available nodes and merges
+two node entries into one if based on the information in the supervision
+both MAC addresses belong to one node. The list-walk happens on a RCU
+protected list and delete operation happens under a lock.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
+If the supervision arrives on both slave interfaces at the same time
+then this delete operation can occur simultaneously on two CPUs. The
+result is the first-CPU deletes the from the list and the second CPUs
+BUGs while attempting to dereference a poisoned list-entry. This happens
+more likely with the optimisation because a new node for the mac_B entry
+is created once a packet has been received and removed (merged) once the
+supervision frame has been received.
 
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
+Avoid removing/ cleaning up a hsr_node twice by adding a `removed' field
+which is set to true after the removal and checked before the removal.
 
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-5-ville.syrjala@linux.intel.com
+Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/hsr/hsr_framereg.c | 16 +++++++++++-----
+ net/hsr/hsr_framereg.h |  1 +
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d13fd39f05de..15e38ad7aefb 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -840,7 +840,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 9b8eaebce254..f2dd846ff903 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -366,9 +366,12 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 	node_real->addr_B_port = port_rcv->type;
  
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 	spin_lock_bh(&hsr->list_lock);
+-	list_del_rcu(&node_curr->mac_list);
++	if (!node_curr->removed) {
++		list_del_rcu(&node_curr->mac_list);
++		node_curr->removed = true;
++		kfree_rcu(node_curr, rcu_head);
++	}
+ 	spin_unlock_bh(&hsr->list_lock);
+-	kfree_rcu(node_curr, rcu_head);
  
--	dp->panel->dp_mode.drm_mode = mode->drm_mode;
-+	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
- 	dp->panel->dp_mode.bpp = mode->bpp;
- 	dp->panel->dp_mode.capabilities = mode->capabilities;
- 	dp_panel_init_panel_info(dp->panel);
+ done:
+ 	/* Push back here */
+@@ -539,9 +542,12 @@ void hsr_prune_nodes(struct timer_list *t)
+ 		if (time_is_before_jiffies(timestamp +
+ 				msecs_to_jiffies(HSR_NODE_FORGET_TIME))) {
+ 			hsr_nl_nodedown(hsr, node->macaddress_A);
+-			list_del_rcu(&node->mac_list);
+-			/* Note that we need to free this entry later: */
+-			kfree_rcu(node, rcu_head);
++			if (!node->removed) {
++				list_del_rcu(&node->mac_list);
++				node->removed = true;
++				/* Note that we need to free this entry later: */
++				kfree_rcu(node, rcu_head);
++			}
+ 		}
+ 	}
+ 	spin_unlock_bh(&hsr->list_lock);
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index bdbb8c822ba1..b5f902397bf1 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -80,6 +80,7 @@ struct hsr_node {
+ 	bool			san_a;
+ 	bool			san_b;
+ 	u16			seq_out[HSR_PT_PORTS];
++	bool			removed;
+ 	struct rcu_head		rcu_head;
+ };
+ 
 -- 
 2.35.1
 
