@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9082F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12667C433D2;
-	Wed, 28 Dec 2022 16:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610B51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0452C433D2;
+	Wed, 28 Dec 2022 16:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244748;
-	bh=ywJrkEpTAfYhoKZHfeHDEd5jyweWANU02GseuLk+nR0=;
+	s=korg; t=1672244751;
+	bh=IlAqDXUvJ4iIaZ6G/S0/eWkfBghb8GqAhsXMul4kkmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcRvFcWerLlsQc/hg+9i3y1cGREoSwA4vSv0pYxYHq97IxPR2PNhxGq6Cq/NDthU2
-	 zsZ6ezqag+1XMueTzAxl/SlcVUDjcS5HSWPA4kbFZ8WqpNC1n2I2Ww2UmmIzMwpJlo
-	 coymkHJ3OZU08e0D4z7bLPR8fgkMCZ0h9BFF+h30=
+	b=ys6g0MLIxYTXgqBPTx1dEcMNm2UOOST23CiupXIciyeMQQ/JmyVrDtdn0EGgw23W2
+	 G/tfe3RwFUVTnMPIhh14+fdJtbie+pJtcSj3NV1uUUTDEcUUGieqHofTYacT7MAuhh
+	 a2M/JMgN3A7r7daIt0bsscRumZ59uSahDizjDWIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Lee Jones <lee@kernel.org>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0767/1073] iommu/s390: Fix duplicate domain attachments
-Date: Wed, 28 Dec 2022 15:39:15 +0100
-Message-Id: <20221228144348.846957887@linuxfoundation.org>
+Subject: [PATCH 6.1 0730/1146] usb: gadget: f_hid: fix f_hidg lifetime vs cdev
+Date: Wed, 28 Dec 2022 15:37:49 +0100
+Message-Id: <20221228144349.974769580@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,206 +36,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit bf8d2dd2ed0825a58f31cc510245a1eb46f8a87e ]
+[ Upstream commit 89ff3dfac604614287ad5aad9370c3f984ea3f4b ]
 
-Since commit fa7e9ecc5e1c ("iommu/s390: Tolerate repeat attach_dev
-calls") we can end up with duplicates in the list of devices attached to
-a domain. This is inefficient and confusing since only one domain can
-actually be in control of the IOMMU translations for a device. Fix this
-by detaching the device from the previous domain, if any, on attach.
-Add a WARN_ON() in case we still have attached devices on freeing the
-domain. While here remove the re-attach on failure dance as it was
-determined to be unlikely to help and may confuse debug and recovery.
+The embedded struct cdev does not have its lifetime correctly tied to
+the enclosing struct f_hidg, so there is a use-after-free if /dev/hidgN
+is held open while the gadget is deleted.
 
-Fixes: fa7e9ecc5e1c ("iommu/s390: Tolerate repeat attach_dev calls")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221025115657.1666860-2-schnelle@linux.ibm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+This can readily be replicated with libusbgx's example programs (for
+conciseness - operating directly via configfs is equivalent):
+
+	gadget-hid
+	exec 3<> /dev/hidg0
+	gadget-vid-pid-remove
+	exec 3<&-
+
+Pull the existing device up in to struct f_hidg and make use of the
+cdev_device_{add,del}() helpers.  This changes the lifetime of the
+device object to match struct f_hidg, but note that it is still added
+and deleted at the same time.
+
+Fixes: 71adf1189469 ("USB: gadget: add HID gadget driver")
+Tested-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20221122123523.3068034-2-john@metanate.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/s390-iommu.c | 106 ++++++++++++++++---------------------
- 1 file changed, 45 insertions(+), 61 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 52 ++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-index c898bcbbce11..96173cfee324 100644
---- a/drivers/iommu/s390-iommu.c
-+++ b/drivers/iommu/s390-iommu.c
-@@ -79,10 +79,36 @@ static void s390_domain_free(struct iommu_domain *domain)
- {
- 	struct s390_domain *s390_domain = to_s390_domain(domain);
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index ca0a7d9eaa34..8b8bbeaa27cb 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -71,7 +71,7 @@ struct f_hidg {
+ 	wait_queue_head_t		write_queue;
+ 	struct usb_request		*req;
  
-+	WARN_ON(!list_empty(&s390_domain->devices));
- 	dma_cleanup_tables(s390_domain->dma_table);
- 	kfree(s390_domain);
+-	int				minor;
++	struct device			dev;
+ 	struct cdev			cdev;
+ 	struct usb_function		func;
+ 
+@@ -84,6 +84,14 @@ static inline struct f_hidg *func_to_hidg(struct usb_function *f)
+ 	return container_of(f, struct f_hidg, func);
  }
  
-+static void __s390_iommu_detach_device(struct zpci_dev *zdev)
++static void hidg_release(struct device *dev)
 +{
-+	struct s390_domain *s390_domain = zdev->s390_domain;
-+	struct s390_domain_device *domain_device, *tmp;
-+	unsigned long flags;
++	struct f_hidg *hidg = container_of(dev, struct f_hidg, dev);
 +
-+	if (!s390_domain)
-+		return;
-+
-+	spin_lock_irqsave(&s390_domain->list_lock, flags);
-+	list_for_each_entry_safe(domain_device, tmp, &s390_domain->devices,
-+				 list) {
-+		if (domain_device->zdev == zdev) {
-+			list_del(&domain_device->list);
-+			kfree(domain_device);
-+			break;
-+		}
-+	}
-+	spin_unlock_irqrestore(&s390_domain->list_lock, flags);
-+
-+	zpci_unregister_ioat(zdev, 0);
-+	zdev->s390_domain = NULL;
-+	zdev->dma_table = NULL;
++	kfree(hidg->set_report_buf);
++	kfree(hidg);
 +}
 +
- static int s390_iommu_attach_device(struct iommu_domain *domain,
- 				    struct device *dev)
- {
-@@ -90,7 +116,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
- 	struct s390_domain_device *domain_device;
- 	unsigned long flags;
--	int cc, rc;
-+	int cc, rc = 0;
+ /*-------------------------------------------------------------------------*/
+ /*                           Static descriptors                            */
  
- 	if (!zdev)
- 		return -ENODEV;
-@@ -99,24 +125,18 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	if (!domain_device)
- 		return -ENOMEM;
+@@ -904,9 +912,7 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+ 	struct usb_ep		*ep;
+ 	struct f_hidg		*hidg = func_to_hidg(f);
+ 	struct usb_string	*us;
+-	struct device		*device;
+ 	int			status;
+-	dev_t			dev;
  
--	if (zdev->dma_table && !zdev->s390_domain) {
--		cc = zpci_dma_exit_device(zdev);
--		if (cc) {
--			rc = -EIO;
--			goto out_free;
--		}
+ 	/* maybe allocate device-global string IDs, and patch descriptors */
+ 	us = usb_gstrings_attach(c->cdev, ct_func_strings,
+@@ -999,21 +1005,11 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+ 
+ 	/* create char device */
+ 	cdev_init(&hidg->cdev, &f_hidg_fops);
+-	dev = MKDEV(major, hidg->minor);
+-	status = cdev_add(&hidg->cdev, dev, 1);
++	status = cdev_device_add(&hidg->cdev, &hidg->dev);
+ 	if (status)
+ 		goto fail_free_descs;
+ 
+-	device = device_create(hidg_class, NULL, dev, NULL,
+-			       "%s%d", "hidg", hidg->minor);
+-	if (IS_ERR(device)) {
+-		status = PTR_ERR(device);
+-		goto del;
 -	}
 -
- 	if (zdev->s390_domain)
--		zpci_unregister_ioat(zdev, 0);
-+		__s390_iommu_detach_device(zdev);
-+	else if (zdev->dma_table)
-+		zpci_dma_exit_device(zdev);
- 
--	zdev->dma_table = s390_domain->dma_table;
- 	cc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
--				virt_to_phys(zdev->dma_table));
-+				virt_to_phys(s390_domain->dma_table));
- 	if (cc) {
- 		rc = -EIO;
--		goto out_restore;
-+		goto out_free;
- 	}
-+	zdev->dma_table = s390_domain->dma_table;
- 
- 	spin_lock_irqsave(&s390_domain->list_lock, flags);
- 	/* First device defines the DMA range limits */
-@@ -127,9 +147,9 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	/* Allow only devices with identical DMA range limits */
- 	} else if (domain->geometry.aperture_start != zdev->start_dma ||
- 		   domain->geometry.aperture_end != zdev->end_dma) {
--		rc = -EINVAL;
- 		spin_unlock_irqrestore(&s390_domain->list_lock, flags);
--		goto out_restore;
-+		rc = -EINVAL;
-+		goto out_unregister;
- 	}
- 	domain_device->zdev = zdev;
- 	zdev->s390_domain = s390_domain;
-@@ -138,14 +158,9 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 
  	return 0;
+-del:
+-	cdev_del(&hidg->cdev);
+ fail_free_descs:
+ 	usb_free_all_descriptors(f);
+ fail:
+@@ -1244,9 +1240,7 @@ static void hidg_free(struct usb_function *f)
  
--out_restore:
--	if (!zdev->s390_domain) {
--		zpci_dma_init_device(zdev);
--	} else {
--		zdev->dma_table = zdev->s390_domain->dma_table;
--		zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
--				   virt_to_phys(zdev->dma_table));
--	}
-+out_unregister:
-+	zpci_unregister_ioat(zdev, 0);
-+	zdev->dma_table = NULL;
- out_free:
- 	kfree(domain_device);
- 
-@@ -155,32 +170,12 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- static void s390_iommu_detach_device(struct iommu_domain *domain,
- 				     struct device *dev)
+ 	hidg = func_to_hidg(f);
+ 	opts = container_of(f->fi, struct f_hid_opts, func_inst);
+-	kfree(hidg->report_desc);
+-	kfree(hidg->set_report_buf);
+-	kfree(hidg);
++	put_device(&hidg->dev);
+ 	mutex_lock(&opts->lock);
+ 	--opts->refcnt;
+ 	mutex_unlock(&opts->lock);
+@@ -1256,8 +1250,7 @@ static void hidg_unbind(struct usb_configuration *c, struct usb_function *f)
  {
--	struct s390_domain *s390_domain = to_s390_domain(domain);
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
--	struct s390_domain_device *domain_device, *tmp;
--	unsigned long flags;
--	int found = 0;
+ 	struct f_hidg *hidg = func_to_hidg(f);
  
--	if (!zdev)
--		return;
-+	WARN_ON(zdev->s390_domain != to_s390_domain(domain));
+-	device_destroy(hidg_class, MKDEV(major, hidg->minor));
+-	cdev_del(&hidg->cdev);
++	cdev_device_del(&hidg->cdev, &hidg->dev);
  
--	spin_lock_irqsave(&s390_domain->list_lock, flags);
--	list_for_each_entry_safe(domain_device, tmp, &s390_domain->devices,
--				 list) {
--		if (domain_device->zdev == zdev) {
--			list_del(&domain_device->list);
--			kfree(domain_device);
--			found = 1;
--			break;
--		}
--	}
--	spin_unlock_irqrestore(&s390_domain->list_lock, flags);
--
--	if (found && (zdev->s390_domain == s390_domain)) {
--		zdev->s390_domain = NULL;
--		zpci_unregister_ioat(zdev, 0);
--		zpci_dma_init_device(zdev);
--	}
-+	__s390_iommu_detach_device(zdev);
-+	zpci_dma_init_device(zdev);
+ 	usb_free_all_descriptors(f);
  }
- 
- static struct iommu_device *s390_iommu_probe_device(struct device *dev)
-@@ -193,24 +188,13 @@ static struct iommu_device *s390_iommu_probe_device(struct device *dev)
- static void s390_iommu_release_device(struct device *dev)
+@@ -1266,6 +1259,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
  {
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
--	struct iommu_domain *domain;
+ 	struct f_hidg *hidg;
+ 	struct f_hid_opts *opts;
++	int ret;
  
- 	/*
--	 * This is a workaround for a scenario where the IOMMU API common code
--	 * "forgets" to call the detach_dev callback: After binding a device
--	 * to vfio-pci and completing the VFIO_SET_IOMMU ioctl (which triggers
--	 * the attach_dev), removing the device via
--	 * "echo 1 > /sys/bus/pci/devices/.../remove" won't trigger detach_dev,
--	 * only release_device will be called via the BUS_NOTIFY_REMOVED_DEVICE
--	 * notifier.
--	 *
--	 * So let's call detach_dev from here if it hasn't been called before.
-+	 * release_device is expected to detach any domain currently attached
-+	 * to the device, but keep it attached to other devices in the group.
- 	 */
--	if (zdev && zdev->s390_domain) {
--		domain = iommu_get_domain_for_dev(dev);
--		if (domain)
--			s390_iommu_detach_device(domain, dev);
--	}
-+	if (zdev)
-+		__s390_iommu_detach_device(zdev);
- }
+ 	/* allocate and initialize one new instance */
+ 	hidg = kzalloc(sizeof(*hidg), GFP_KERNEL);
+@@ -1277,17 +1271,27 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
+ 	mutex_lock(&opts->lock);
+ 	++opts->refcnt;
  
- static int s390_iommu_update_trans(struct s390_domain *s390_domain,
+-	hidg->minor = opts->minor;
++	device_initialize(&hidg->dev);
++	hidg->dev.release = hidg_release;
++	hidg->dev.class = hidg_class;
++	hidg->dev.devt = MKDEV(major, opts->minor);
++	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
++	if (ret) {
++		--opts->refcnt;
++		mutex_unlock(&opts->lock);
++		return ERR_PTR(ret);
++	}
++
+ 	hidg->bInterfaceSubClass = opts->subclass;
+ 	hidg->bInterfaceProtocol = opts->protocol;
+ 	hidg->report_length = opts->report_length;
+ 	hidg->report_desc_length = opts->report_desc_length;
+ 	if (opts->report_desc) {
+-		hidg->report_desc = kmemdup(opts->report_desc,
+-					    opts->report_desc_length,
+-					    GFP_KERNEL);
++		hidg->report_desc = devm_kmemdup(&hidg->dev, opts->report_desc,
++						 opts->report_desc_length,
++						 GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+-			kfree(hidg);
++			put_device(&hidg->dev);
+ 			mutex_unlock(&opts->lock);
+ 			return ERR_PTR(-ENOMEM);
+ 		}
 -- 
 2.35.1
 
