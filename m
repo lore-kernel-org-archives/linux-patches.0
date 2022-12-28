@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939811C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E2BC433D2;
-	Wed, 28 Dec 2022 16:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2F01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B3DC433EF;
+	Wed, 28 Dec 2022 16:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245720;
-	bh=5xvXsTOLzHlAJIewX3mcwQxGPCuRzuNZW0UpJ8JmGrk=;
+	s=korg; t=1672245723;
+	bh=g5DWXgmezYnT/RO8YzVpE4jnKtnrAXeoJ9Yq5ZKvGXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5pdFOk+8HoO+RO+GvuhKc7kmtjERLvBsn3ji2bjGIP+Xibabb/FngxaGMDYTXd6H
-	 FcUpRZq4QNP2CGvsgWpnluuvZA2CI8G5k4oLc2jWALfYQH2xt4E2Ll1Xx4rqiYRNPb
-	 zq/HFsWdcGsHE9QY+O0yK9yxvgvpSKB9qMujnBlA=
+	b=Cwo3cMfLLUFhNKqnNC8ChJCQlFt/dZQxIEap9xrU45qY+TERyeYSaLaRsLCCq3adg
+	 gFr8gPfvteFOLefFG9HIcsb3gc2VuMAGJr6oiaR95CaYmMH/xg72sQ2r+tRR+tgz6D
+	 hgfgc40UIMntzHBFqqzsqrjgB569zqP5oe3uR1/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiang Li <jiang.li@ugreen.com>,
-	Song Liu <song@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0943/1073] md/raid1: stop mdx_raid1 thread when raid1 array run failed
-Date: Wed, 28 Dec 2022 15:42:11 +0100
-Message-Id: <20221228144353.652140913@linuxfoundation.org>
+Subject: [PATCH 6.1 0911/1146] igc: Use strict cycles for Qbv scheduling
+Date: Wed, 28 Dec 2022 15:40:50 +0100
+Message-Id: <20221228144354.976862108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiang Li <jiang.li@ugreen.com>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit b611ad14006e5be2170d9e8e611bf49dff288911 ]
+[ Upstream commit d8f45be01dd9381065a3778a579385249ed011dc ]
 
-fail run raid1 array when we assemble array with the inactive disk only,
-but the mdx_raid1 thread were not stop, Even if the associated resources
-have been released. it will caused a NULL dereference when we do poweroff.
+Configuring strict cycle mode in the controller forces more well
+behaved transmissions when taprio is offloaded.
 
-This causes the following Oops:
-    [  287.587787] BUG: kernel NULL pointer dereference, address: 0000000000000070
-    [  287.594762] #PF: supervisor read access in kernel mode
-    [  287.599912] #PF: error_code(0x0000) - not-present page
-    [  287.605061] PGD 0 P4D 0
-    [  287.607612] Oops: 0000 [#1] SMP NOPTI
-    [  287.611287] CPU: 3 PID: 5265 Comm: md0_raid1 Tainted: G     U            5.10.146 #0
-    [  287.619029] Hardware name: xxxxxxx/To be filled by O.E.M, BIOS 5.19 06/16/2022
-    [  287.626775] RIP: 0010:md_check_recovery+0x57/0x500 [md_mod]
-    [  287.632357] Code: fe 01 00 00 48 83 bb 10 03 00 00 00 74 08 48 89 ......
-    [  287.651118] RSP: 0018:ffffc90000433d78 EFLAGS: 00010202
-    [  287.656347] RAX: 0000000000000000 RBX: ffff888105986800 RCX: 0000000000000000
-    [  287.663491] RDX: ffffc90000433bb0 RSI: 00000000ffffefff RDI: ffff888105986800
-    [  287.670634] RBP: ffffc90000433da0 R08: 0000000000000000 R09: c0000000ffffefff
-    [  287.677771] R10: 0000000000000001 R11: ffffc90000433ba8 R12: ffff888105986800
-    [  287.684907] R13: 0000000000000000 R14: fffffffffffffe00 R15: ffff888100b6b500
-    [  287.692052] FS:  0000000000000000(0000) GS:ffff888277f80000(0000) knlGS:0000000000000000
-    [  287.700149] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [  287.705897] CR2: 0000000000000070 CR3: 000000000320a000 CR4: 0000000000350ee0
-    [  287.713033] Call Trace:
-    [  287.715498]  raid1d+0x6c/0xbbb [raid1]
-    [  287.719256]  ? __schedule+0x1ff/0x760
-    [  287.722930]  ? schedule+0x3b/0xb0
-    [  287.726260]  ? schedule_timeout+0x1ed/0x290
-    [  287.730456]  ? __switch_to+0x11f/0x400
-    [  287.734219]  md_thread+0xe9/0x140 [md_mod]
-    [  287.738328]  ? md_thread+0xe9/0x140 [md_mod]
-    [  287.742601]  ? wait_woken+0x80/0x80
-    [  287.746097]  ? md_register_thread+0xe0/0xe0 [md_mod]
-    [  287.751064]  kthread+0x11a/0x140
-    [  287.754300]  ? kthread_park+0x90/0x90
-    [  287.757974]  ret_from_fork+0x1f/0x30
+When set this strict_cycle and strict_end, transmission is not
+enabled if the whole packet cannot be completed before end of
+the Qbv cycle.
 
-In fact, when raid1 array run fail, we need to do
-md_unregister_thread() before raid1_free().
-
-Signed-off-by: Jiang Li <jiang.li@ugreen.com>
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igc/igc_tsn.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 05d8438cfec8..58f705f42948 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3159,6 +3159,7 @@ static int raid1_run(struct mddev *mddev)
- 	 * RAID1 needs at least one disk in active
- 	 */
- 	if (conf->raid_disks - mddev->degraded < 1) {
-+		md_unregister_thread(&conf->thread);
- 		ret = -EINVAL;
- 		goto abort;
- 	}
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 0fce22de2ab8..4a019954cadb 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -110,15 +110,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 		wr32(IGC_STQT(i), ring->start_time);
+ 		wr32(IGC_ENDQT(i), ring->end_time);
+ 
+-		if (adapter->base_time) {
+-			/* If we have a base_time we are in "taprio"
+-			 * mode and we need to be strict about the
+-			 * cycles: only transmit a packet if it can be
+-			 * completed during that cycle.
+-			 */
+-			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
+-				IGC_TXQCTL_STRICT_END;
+-		}
++		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
++			IGC_TXQCTL_STRICT_END;
+ 
+ 		if (ring->launchtime_enable)
+ 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
 -- 
 2.35.1
 
