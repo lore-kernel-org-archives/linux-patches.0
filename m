@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF51D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5446EC433D2;
-	Wed, 28 Dec 2022 15:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957FD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21594C433EF;
+	Wed, 28 Dec 2022 15:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240467;
-	bh=tm0898h3WOXG6oC8J3n1LMoBFSGJE7ZJ/sWPjZclCxA=;
+	s=korg; t=1672240470;
+	bh=HPmIDxaoMR6U9pgJ5s3dbnjhjWZLgiwkRCFGedtKinE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIGqxiD4UxqJh4/6L0JlfZmzuf30n35scd3lXgbOmHLIJaVKrGBIiHoQ78HHhT6DT
-	 qz4YkpxYlvUad1khGkiXdR5GBkI4uzh47LTnV0RWBq4JwBy3TTKCmY3CllwXsSQNpd
-	 aamqdQyw1ue9gOOcn7nzGMKkAYWeM8qv2iao9tQA=
+	b=ss9jVUDIzATXOngtZuK7FfUxlO2+d5Mq3pM3c3JjO9JL/liciUQafxTtS1q9I0PHX
+	 lSjkPZSsfyzOGVmff5RqlYGx+8Lck5zK0ovSkz7IqNbcQCeH8JEmRGL2ep8VbuCrQ7
+	 b35q/IaPhIRxgjXbddbSHMniI+TCVYqHXJ2oAsF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0164/1073] xen/privcmd: Fix a possible warning in privcmd_ioctl_mmap_resource()
-Date: Wed, 28 Dec 2022 15:29:12 +0100
-Message-Id: <20221228144332.471103748@linuxfoundation.org>
+Subject: [PATCH 6.1 0129/1146] lib/fonts: fix undefined behavior in bit shift for get_default_font
+Date: Wed, 28 Dec 2022 15:27:48 +0100
+Message-Id: <20221228144333.656415973@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 8b997b2bb2c53b76a6db6c195930e9ab8e4b0c79 ]
+[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
 
-As 'kdata.num' is user-controlled data, if user tries to allocate
-memory larger than(>=) MAX_ORDER, then kcalloc() will fail, it
-creates a stack trace and messes up dmesg with a warning.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned.  The UBSAN warning calltrace like below:
 
-Call trace:
--> privcmd_ioctl
---> privcmd_ioctl_mmap_resource
+UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
+left shift of 1 by 31 places cannot be represented in type 'int'
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ get_default_font+0x1c7/0x1f0
+ fbcon_startup+0x347/0x3a0
+ do_take_over_console+0xce/0x270
+ do_fbcon_takeover+0xa1/0x170
+ do_fb_registered+0x2a8/0x340
+ fbcon_fb_registered+0x47/0xe0
+ register_framebuffer+0x294/0x4a0
+ __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
+ drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
+ drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
+ drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
+ bochs_pci_probe+0x6ca/0x772 [bochs]
+ local_pci_probe+0x4d/0xb0
+ pci_device_probe+0x119/0x320
+ really_probe+0x181/0x550
+ __driver_probe_device+0xc6/0x220
+ driver_probe_device+0x32/0x100
+ __driver_attach+0x195/0x200
+ bus_for_each_dev+0xbb/0x120
+ driver_attach+0x27/0x30
+ bus_add_driver+0x22e/0x2f0
+ driver_register+0xa9/0x190
+ __pci_register_driver+0x90/0xa0
+ bochs_pci_driver_init+0x52/0x1000 [bochs]
+ do_one_initcall+0x76/0x430
+ do_init_module+0x61/0x28a
+ load_module+0x1f82/0x2e50
+ __do_sys_finit_module+0xf8/0x190
+ __x64_sys_finit_module+0x23/0x30
+ do_syscall_64+0x58/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.
-This is detected by static analysis using smatch.
-
-Fixes: 3ad0876554ca ("xen/privcmd: add IOCTL_PRIVCMD_MMAP_RESOURCE")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221126050745.778967-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
+Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/fonts/fonts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index e88e8f6f0a33..719c5d1dda27 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -760,7 +760,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
- 		goto out;
- 	}
+diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
+index 5f4b07b56cd9..973866438608 100644
+--- a/lib/fonts/fonts.c
++++ b/lib/fonts/fonts.c
+@@ -135,8 +135,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
+ 		if (res > 20)
+ 			c += 20 - res;
  
--	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL);
-+	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL | __GFP_NOWARN);
- 	if (!pfns) {
- 		rc = -ENOMEM;
- 		goto out;
+-		if ((font_w & (1 << (f->width - 1))) &&
+-		    (font_h & (1 << (f->height - 1))))
++		if ((font_w & (1U << (f->width - 1))) &&
++		    (font_h & (1U << (f->height - 1))))
+ 			c += 1000;
+ 
+ 		if (c > cc) {
 -- 
 2.35.1
 
