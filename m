@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132001C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8630AC433D2;
-	Wed, 28 Dec 2022 16:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85391C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE2DC433EF;
+	Wed, 28 Dec 2022 16:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244114;
-	bh=xRj2zAE3lEOGlozonGI9PfAv12yBVV/t3FQ8OXG8rNw=;
+	s=korg; t=1672244117;
+	bh=oTgVX5QI6QmTMaNlU2Rhod3duPRSKyCResDUBIkwI5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEgrhxD6udTaqcNKp87ukC91kC/c8IWdkoSgm5LGIUW3Lr2XPNMI4rhFg62MP1g65
-	 xesu4BVdVtX+HJiQf24OZwswZrJ+krHxLLI0hBjN6ckghhIUtnbwwctc2mximmFTfb
-	 JfA7j8hRkCNpV31q7hUEm+RDuaDGDzio3j6Dy7Zc=
+	b=nJBs/9Z1xVEtj12NHl9/3gga+I3HCjHLFA22xAfeIScUbA8VAbxv/mNFpFZscFCIU
+	 dfiyfCIQ0z1R1DWd2FmgKgdUzCU4cmeI6SzBJ3v00NaIkbWQfDVB4XtNHvoyw9wZH9
+	 ZjDa0MnmdKCr/cQFS10ihC0mtWBTckuwJ5ViN9zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Bresticker <abrestic@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0653/1073] RISC-V: Fix unannoted hardirqs-on in return to userspace slow-path
-Date: Wed, 28 Dec 2022 15:37:21 +0100
-Message-Id: <20221228144345.783119307@linuxfoundation.org>
+Subject: [PATCH 6.1 0614/1146] RDMA/irdma: Do not request 2-level PBLEs for CQ alloc
+Date: Wed, 28 Dec 2022 15:35:53 +0100
+Message-Id: <20221228144346.846494718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Bresticker <abrestic@rivosinc.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit b0f4c74eadbf69a3298f38566bfaa2e202541f2f ]
+[ Upstream commit 8f7e2daa6336f9f4b6f8a4715a809674606df16b ]
 
-The return to userspace path in entry.S may enable interrupts without the
-corresponding lockdep annotation, producing a splat[0] when DEBUG_LOCKDEP
-is enabled. Simply calling __trace_hardirqs_on() here gets a bit messy
-due to the use of RA to point back to ret_from_exception, so just move
-the whole slow-path loop into C. It's more readable and it lets us use
-local_irq_{enable,disable}(), avoiding the need for manual annotations
-altogether.
+When allocating PBLE's for a large CQ, it is possible
+that a 2-level PBLE is returned which would cause the
+CQ allocation to fail since 1-level is assumed and checked for.
+Fix this by requesting a level one PBLE only.
 
-[0]:
-  ------------[ cut here ]------------
-  DEBUG_LOCKS_WARN_ON(!lockdep_hardirqs_enabled())
-  WARNING: CPU: 2 PID: 1 at kernel/locking/lockdep.c:5512 check_flags+0x10a/0x1e0
-  Modules linked in:
-  CPU: 2 PID: 1 Comm: init Not tainted 6.1.0-rc4-00160-gb56b6e2b4f31 #53
-  Hardware name: riscv-virtio,qemu (DT)
-  epc : check_flags+0x10a/0x1e0
-  ra : check_flags+0x10a/0x1e0
-  <snip>
-   status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
-  [<ffffffff808edb90>] lock_is_held_type+0x78/0x14e
-  [<ffffffff8003dae2>] __might_resched+0x26/0x22c
-  [<ffffffff8003dd24>] __might_sleep+0x3c/0x66
-  [<ffffffff80022c60>] get_signal+0x9e/0xa70
-  [<ffffffff800054a2>] do_notify_resume+0x6e/0x422
-  [<ffffffff80003c68>] ret_from_exception+0x0/0x10
-  irq event stamp: 44512
-  hardirqs last  enabled at (44511): [<ffffffff808f901c>] _raw_spin_unlock_irqrestore+0x54/0x62
-  hardirqs last disabled at (44512): [<ffffffff80008200>] __trace_hardirqs_off+0xc/0x14
-  softirqs last  enabled at (44472): [<ffffffff808f9fbe>] __do_softirq+0x3de/0x51e
-  softirqs last disabled at (44467): [<ffffffff80017760>] irq_exit+0xd6/0x104
-  ---[ end trace 0000000000000000 ]---
-  possible reason: unannotated irqs-on.
-
-Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
-Fixes: 3c4697982982 ("riscv: Enable LOCKDEP_SUPPORT & fixup TRACE_IRQFLAGS_SUPPORT")
-Link: https://lore.kernel.org/r/20221111223108.1976562-1-abrestic@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20221115011701.1379-4-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/entry.S  | 18 +++++-------------
- arch/riscv/kernel/signal.c | 34 +++++++++++++++++++++-------------
- 2 files changed, 26 insertions(+), 26 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index 186abd146eaf..3221a9e5f372 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -263,12 +263,11 @@ ret_from_exception:
- #endif
- 	bnez s0, resume_kernel
- 
--resume_userspace:
- 	/* Interrupts must be disabled here so flags are checked atomically */
- 	REG_L s0, TASK_TI_FLAGS(tp) /* current_thread_info->flags */
- 	andi s1, s0, _TIF_WORK_MASK
--	bnez s1, work_pending
--
-+	bnez s1, resume_userspace_slow
-+resume_userspace:
- #ifdef CONFIG_CONTEXT_TRACKING_USER
- 	call user_enter_callable
- #endif
-@@ -368,19 +367,12 @@ resume_kernel:
- 	j restore_all
- #endif
- 
--work_pending:
-+resume_userspace_slow:
- 	/* Enter slow path for supplementary processing */
--	la ra, ret_from_exception
--	andi s1, s0, _TIF_NEED_RESCHED
--	bnez s1, work_resched
--work_notifysig:
--	/* Handle pending signals and notify-resume requests */
--	csrs CSR_STATUS, SR_IE /* Enable interrupts for do_notify_resume() */
- 	move a0, sp /* pt_regs */
- 	move a1, s0 /* current_thread_info->flags */
--	tail do_notify_resume
--work_resched:
--	tail schedule
-+	call do_work_pending
-+	j resume_userspace
- 
- /* Slow paths for ptrace. */
- handle_syscall_trace_enter:
-diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
-index 5c591123c440..bfb2afa4135f 100644
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -313,19 +313,27 @@ static void do_signal(struct pt_regs *regs)
- }
- 
- /*
-- * notification of userspace execution resumption
-- * - triggered by the _TIF_WORK_MASK flags
-+ * Handle any pending work on the resume-to-userspace path, as indicated by
-+ * _TIF_WORK_MASK. Entered from assembly with IRQs off.
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 01d0dc4b5649..dc3f5f3fee90 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2329,9 +2329,10 @@ static bool irdma_check_mr_contiguous(struct irdma_pble_alloc *palloc,
+  * @rf: RDMA PCI function
+  * @iwmr: mr pointer for this memory registration
+  * @use_pbles: flag if to use pble's
++ * @lvl_1_only: request only level 1 pble if true
   */
--asmlinkage __visible void do_notify_resume(struct pt_regs *regs,
--					   unsigned long thread_info_flags)
-+asmlinkage __visible void do_work_pending(struct pt_regs *regs,
-+					  unsigned long thread_info_flags)
+ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+-			     bool use_pbles)
++			     bool use_pbles, bool lvl_1_only)
  {
--	if (thread_info_flags & _TIF_UPROBE)
--		uprobe_notify_resume(regs);
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+ 	struct irdma_pble_alloc *palloc = &iwpbl->pble_alloc;
+@@ -2342,7 +2343,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+ 
+ 	if (use_pbles) {
+ 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
+-					false);
++					lvl_1_only);
+ 		if (status)
+ 			return status;
+ 
+@@ -2385,16 +2386,10 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
+ 	bool ret = true;
+ 
+ 	pg_size = iwmr->page_size;
+-	err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles);
++	err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles, true);
+ 	if (err)
+ 		return err;
+ 
+-	if (use_pbles && palloc->level != PBLE_LEVEL_1) {
+-		irdma_free_pble(iwdev->rf->pble_rsrc, palloc);
+-		iwpbl->pbl_allocated = false;
+-		return -ENOMEM;
+-	}
 -
--	/* Handle pending signal delivery */
--	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
--		do_signal(regs);
--
--	if (thread_info_flags & _TIF_NOTIFY_RESUME)
--		resume_user_mode_work(regs);
-+	do {
-+		if (thread_info_flags & _TIF_NEED_RESCHED) {
-+			schedule();
-+		} else {
-+			local_irq_enable();
-+			if (thread_info_flags & _TIF_UPROBE)
-+				uprobe_notify_resume(regs);
-+			/* Handle pending signal delivery */
-+			if (thread_info_flags & (_TIF_SIGPENDING |
-+						 _TIF_NOTIFY_SIGNAL))
-+				do_signal(regs);
-+			if (thread_info_flags & _TIF_NOTIFY_RESUME)
-+				resume_user_mode_work(regs);
-+		}
-+		local_irq_disable();
-+		thread_info_flags = read_thread_flags();
-+	} while (thread_info_flags & _TIF_WORK_MASK);
- }
+ 	if (use_pbles)
+ 		arr = palloc->level1.addr;
+ 
+@@ -2870,7 +2865,7 @@ static struct ib_mr *irdma_reg_user_mr(struct ib_pd *pd, u64 start, u64 len,
+ 	case IRDMA_MEMREG_TYPE_MEM:
+ 		use_pbles = (iwmr->page_cnt != 1);
+ 
+-		err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles);
++		err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles, false);
+ 		if (err)
+ 			goto error;
+ 
 -- 
 2.35.1
 
