@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857D2187A
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02550C433EF;
-	Wed, 28 Dec 2022 15:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B541875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B72AC433A1;
+	Wed, 28 Dec 2022 15:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242881;
-	bh=R1ZI8fnPvLvYYjkLwu9vlpgBmH7JzG/bFohF2dhWMhE=;
+	s=korg; t=1672242878;
+	bh=2GkK5YJnqS2K8+x4XjShdS4yf6xmc9uTVGnxYH8807A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crzlr9MHjeM92RFcjjfkN8Xt8bLT1KjZT/1Weg+iFu9LS4nWTzCEkG/NdC+395OsW
-	 GeQfyZgZnU5iVYjEx+B0ujEc4JxM5iS7RmapEpJrU/BicahRig8z5jSOB3GghCGsuc
-	 ExStvW+h07bUubJKJN8PQr1X7nQMzvwXaCHOZhNs=
+	b=s5dClnYfAmleN249qXbSUm2WHIPdAKk5su941OizIgfBkoRnpYpPRwnz5YbgmyTS/
+	 V3f1yW++QaZFz2ee5Hl+gjG49s1u3s0liw1uY1JRGM5k3Qmz1AAkA/b66hWYy9SxON
+	 CsghlacUSVvBJlpnYx3QTM3wAa3XYcEmfei0NxhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Song Liu <songliubraving@fb.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0465/1073] bpf, sockmap: fix race in sock_map_free()
-Date: Wed, 28 Dec 2022 15:34:13 +0100
-Message-Id: <20221228144340.665780722@linuxfoundation.org>
+Subject: [PATCH 5.15 645/731] drm/amdgpu: Fix type of second parameter in odn_edit_dpm_table() callback
+Date: Wed, 28 Dec 2022 15:42:32 +0100
+Message-Id: <20221228144315.209768724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,84 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0a182f8d607464911756b4dbef5d6cad8de22469 ]
+[ Upstream commit e4d0ef752081e7aa6ffb7ccac11c499c732a2e05 ]
 
-sock_map_free() calls release_sock(sk) without owning a reference
-on the socket. This can cause use-after-free as syzbot found [1]
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Jakub Sitnicki already took care of a similar issue
-in sock_hash_free() in commit 75e68e5bf2c7 ("bpf, sockhash:
-Synchronize delete from bucket list on map free")
+  drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: incompatible function pointer types initializing 'int (*)(void *, uint32_t, long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .odn_edit_dpm_table      = smu_od_edit_dpm_table,
+                                     ^~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-[1]
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 0 PID: 3785 at lib/refcount.c:31 refcount_warn_saturate+0x17c/0x1a0 lib/refcount.c:31
-Modules linked in:
-CPU: 0 PID: 3785 Comm: kworker/u4:6 Not tainted 6.1.0-rc7-syzkaller-00103-gef4d3ea40565 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Workqueue: events_unbound bpf_map_free_deferred
-RIP: 0010:refcount_warn_saturate+0x17c/0x1a0 lib/refcount.c:31
-Code: 68 8b 31 c0 e8 75 71 15 fd 0f 0b e9 64 ff ff ff e8 d9 6e 4e fd c6 05 62 9c 3d 0a 01 48 c7 c7 80 bb 68 8b 31 c0 e8 54 71 15 fd <0f> 0b e9 43 ff ff ff 89 d9 80 e1 07 80 c1 03 38 c1 0f 8c a2 fe ff
-RSP: 0018:ffffc9000456fb60 EFLAGS: 00010246
-RAX: eae59bab72dcd700 RBX: 0000000000000004 RCX: ffff8880207057c0
-RDX: 0000000000000000 RSI: 0000000000000201 RDI: 0000000000000000
-RBP: 0000000000000004 R08: ffffffff816fdabd R09: fffff520008adee5
-R10: fffff520008adee5 R11: 1ffff920008adee4 R12: 0000000000000004
-R13: dffffc0000000000 R14: ffff88807b1c6c00 R15: 1ffff1100f638dcf
-FS: 0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b30c30000 CR3: 000000000d08e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-__refcount_dec include/linux/refcount.h:344 [inline]
-refcount_dec include/linux/refcount.h:359 [inline]
-__sock_put include/net/sock.h:779 [inline]
-tcp_release_cb+0x2d0/0x360 net/ipv4/tcp_output.c:1092
-release_sock+0xaf/0x1c0 net/core/sock.c:3468
-sock_map_free+0x219/0x2c0 net/core/sock_map.c:356
-process_one_work+0x81c/0xd10 kernel/workqueue.c:2289
-worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
-kthread+0x266/0x300 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-</TASK>
+There are only two implementations of ->odn_edit_dpm_table() in 'struct
+amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
+has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
+other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
+->od_edit_dpm_table() from 'struct pptable_funcs' and
+pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
+pp_hwmgr_func', which both have a second parameter type of 'enum
+PP_OD_DPM_TABLE_COMMAND'.
 
-Fixes: 7e81a3530206 ("bpf: Sockmap, ensure sock lock held during tear down")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Cc: Jakub Sitnicki <jakub@cloudflare.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Song Liu <songliubraving@fb.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20221202111640.2745533-1-edumazet@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Update the type parameter in both the prototype in 'struct amd_pm_funcs'
+and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
+cleans up the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/include/kgd_pp_interface.h   | 3 ++-
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 632df0c52562..bfc300103212 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -349,11 +349,13 @@ static void sock_map_free(struct bpf_map *map)
+diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+index bac15c466733..6e27c8b16391 100644
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -341,7 +341,8 @@ struct amd_pm_funcs {
+ 	int (*get_power_profile_mode)(void *handle, char *buf);
+ 	int (*set_power_profile_mode)(void *handle, long *input, uint32_t size);
+ 	int (*set_fine_grain_clk_vol)(void *handle, uint32_t type, long *input, uint32_t size);
+-	int (*odn_edit_dpm_table)(void *handle, uint32_t type, long *input, uint32_t size);
++	int (*odn_edit_dpm_table)(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				  long *input, uint32_t size);
+ 	int (*set_mp1_state)(void *handle, enum pp_mp1_state mp1_state);
+ 	int (*smu_i2c_bus_access)(void *handle, bool acquire);
+ 	int (*gfx_state_change_set)(void *handle, uint32_t state);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index 321215003643..0f5930e797bd 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -924,7 +924,8 @@ static int pp_set_fine_grain_clk_vol(void *handle, uint32_t type, long *input, u
+ 	return hwmgr->hwmgr_func->set_fine_grain_clk_vol(hwmgr, type, input, size);
+ }
  
- 		sk = xchg(psk, NULL);
- 		if (sk) {
-+			sock_hold(sk);
- 			lock_sock(sk);
- 			rcu_read_lock();
- 			sock_map_unref(sk, psk);
- 			rcu_read_unlock();
- 			release_sock(sk);
-+			sock_put(sk);
- 		}
- 	}
+-static int pp_odn_edit_dpm_table(void *handle, uint32_t type, long *input, uint32_t size)
++static int pp_odn_edit_dpm_table(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				 long *input, uint32_t size)
+ {
+ 	struct pp_hwmgr *hwmgr = handle;
  
 -- 
 2.35.1
