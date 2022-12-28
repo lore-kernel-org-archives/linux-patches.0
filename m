@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A431863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE36C433EF;
-	Wed, 28 Dec 2022 15:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94668C433D2;
+	Wed, 28 Dec 2022 15:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239867;
-	bh=0GQc4wQs5aK27rPJQJ98L0crID95I3l/htv6HJjJQV0=;
+	s=korg; t=1672239870;
+	bh=ZaxVzrrKeC0+AxsyMBxgRBrWUXjgwt8XTpTbLK7TLBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k833/106k1TNFBRvD2CAz5LKpUB5ZcQqkElaP0zYZkOUS+jWQIIXnn9xI0C9w+vG/
-	 FySNAQn1fBh93xWGy0W/6spd23fcpuKbfm+5SRn0H3X0e2OBtwEGUNyJ3aEQjxG7ga
-	 YZQ6Gfg2vyIaXNDNMgsphY57Jv+bqsXWV6W/pKnk=
+	b=NOG6ukoPmgVe3LSNmQ/gRwao9P4reBnHl1ecs0LQmG1EdQVwThbcpK8RcFpx+9VGa
+	 +MC36JGHDfB7ZRslM3mg4XRexKVCDut1dbqOxiHzRGbfT2GvnJELhXzkU+v1R8s1H6
+	 VZZntvZo4u8HEODRDOF//hgodbeJLW4xJz2UO90Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Eddie James <eajames@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Joel Stanley <joel@jms.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0052/1146] soc/tegra: cbb: Check firewall before enabling error reporting
-Date: Wed, 28 Dec 2022 15:26:31 +0100
-Message-Id: <20221228144331.577890684@linuxfoundation.org>
+Subject: [PATCH 6.0 0088/1073] tpm: tis_i2c: Fix sanity check interrupt enable mask
+Date: Wed, 28 Dec 2022 15:27:56 +0100
+Message-Id: <20221228144330.448613807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,206 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 2927cf85f4877f417f884919de8e04ab9b362d32 ]
+[ Upstream commit 561d6ef75628db9cce433e573aa3cdb6b3bba903 ]
 
-To enable error reporting for a fabric to CCPLEX, we need to write its
-register for enabling error interrupt to CCPLEX during boot and later
-clear the error status register after error occurs. If a fabric's
-registers are protected and not accessible from CCPLEX, then accessing
-the registers will cause CBB firewall error.
+The sanity check mask for TPM_INT_ENABLE register was off by 8 bits,
+resulting in failure to probe if the TPM_INT_ENABLE register was a
+valid value.
 
-Add support to check whether write access from CCPLEX to the registers
-of a fabric is not blocked by it's firewall before enabling error
-reporting to CCPLEX for that fabric.
-
-Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/cbb/tegra234-cbb.c | 83 +++++++++++++++++++++++++++-
- 1 file changed, 81 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 0fab9e21d677..f33d094e5ea6 100644
---- a/drivers/soc/tegra/cbb/tegra234-cbb.c
-+++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
-@@ -72,6 +72,11 @@
+diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
+index ba0911b1d1ff..29f0db41c0b7 100644
+--- a/drivers/char/tpm/tpm_tis_i2c.c
++++ b/drivers/char/tpm/tpm_tis_i2c.c
+@@ -49,7 +49,7 @@
  
- #define REQ_SOCKET_ID			GENMASK(27, 24)
- 
-+#define CCPLEX_MSTRID			0x1
-+#define FIREWALL_APERTURE_SZ		0x10000
-+/* Write firewall check enable */
-+#define WEN				0x20000
-+
- enum tegra234_cbb_fabric_ids {
- 	CBB_FAB_ID,
- 	SCE_FAB_ID,
-@@ -92,6 +97,9 @@ struct tegra234_slave_lookup {
- struct tegra234_cbb_fabric {
- 	const char *name;
- 	phys_addr_t off_mask_erd;
-+	phys_addr_t firewall_base;
-+	unsigned int firewall_ctl;
-+	unsigned int firewall_wr_ctl;
- 	const char * const *master_id;
- 	unsigned int notifier_offset;
- 	const struct tegra_cbb_error *errors;
-@@ -129,6 +137,44 @@ static inline struct tegra234_cbb *to_tegra234_cbb(struct tegra_cbb *cbb)
- static LIST_HEAD(cbb_list);
- static DEFINE_SPINLOCK(cbb_lock);
- 
-+static bool
-+tegra234_cbb_write_access_allowed(struct platform_device *pdev, struct tegra234_cbb *cbb)
-+{
-+	u32 val;
-+
-+	if (!cbb->fabric->firewall_base ||
-+	    !cbb->fabric->firewall_ctl ||
-+	    !cbb->fabric->firewall_wr_ctl) {
-+		dev_info(&pdev->dev, "SoC data missing for firewall\n");
-+		return false;
-+	}
-+
-+	if ((cbb->fabric->firewall_ctl > FIREWALL_APERTURE_SZ) ||
-+	    (cbb->fabric->firewall_wr_ctl > FIREWALL_APERTURE_SZ)) {
-+		dev_err(&pdev->dev, "wrong firewall offset value\n");
-+		return false;
-+	}
-+
-+	val = readl(cbb->regs + cbb->fabric->firewall_base + cbb->fabric->firewall_ctl);
-+	/*
-+	 * If the firewall check feature for allowing or blocking the
-+	 * write accesses through the firewall of a fabric is disabled
-+	 * then CCPLEX can write to the registers of that fabric.
-+	 */
-+	if (!(val & WEN))
-+		return true;
-+
-+	/*
-+	 * If the firewall check is enabled then check whether CCPLEX
-+	 * has write access to the fabric's error notifier registers
-+	 */
-+	val = readl(cbb->regs + cbb->fabric->firewall_base + cbb->fabric->firewall_wr_ctl);
-+	if (val & (BIT(CCPLEX_MSTRID)))
-+		return true;
-+
-+	return false;
-+}
-+
- static void tegra234_cbb_fault_enable(struct tegra_cbb *cbb)
- {
- 	struct tegra234_cbb *priv = to_tegra234_cbb(cbb);
-@@ -551,7 +597,7 @@ static irqreturn_t tegra234_cbb_isr(int irq, void *data)
- 			 */
- 			if (priv->fabric->off_mask_erd) {
- 				mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->mn_user_bits);
--				if (mstr_id == 0x1)
-+				if (mstr_id == CCPLEX_MSTRID)
- 					is_inband_err = 1;
- 			}
- 		}
-@@ -665,6 +711,9 @@ static const struct tegra234_cbb_fabric tegra234_aon_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x17000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x8d0,
-+	.firewall_wr_ctl = 0x8c8,
- };
- 
- static const struct tegra234_slave_lookup tegra234_bpmp_slave_map[] = {
-@@ -683,6 +732,9 @@ static const struct tegra234_cbb_fabric tegra234_bpmp_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x19000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x8f0,
-+	.firewall_wr_ctl = 0x8e8,
- };
- 
- static const struct tegra234_slave_lookup tegra234_cbb_slave_map[] = {
-@@ -757,7 +809,10 @@ static const struct tegra234_cbb_fabric tegra234_cbb_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x60000,
--	.off_mask_erd = 0x3a004
-+	.off_mask_erd = 0x3a004,
-+	.firewall_base = 0x10000,
-+	.firewall_ctl = 0x23f0,
-+	.firewall_wr_ctl = 0x23e8,
- };
- 
- static const struct tegra234_slave_lookup tegra234_common_slave_map[] = {
-@@ -777,6 +832,9 @@ static const struct tegra234_cbb_fabric tegra234_dce_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x19000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x290,
-+	.firewall_wr_ctl = 0x288,
- };
- 
- static const struct tegra234_cbb_fabric tegra234_rce_fabric = {
-@@ -787,6 +845,9 @@ static const struct tegra234_cbb_fabric tegra234_rce_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x19000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x290,
-+	.firewall_wr_ctl = 0x288,
- };
- 
- static const struct tegra234_cbb_fabric tegra234_sce_fabric = {
-@@ -797,6 +858,9 @@ static const struct tegra234_cbb_fabric tegra234_sce_fabric = {
- 	.errors = tegra234_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra234_cbb_errors),
- 	.notifier_offset = 0x19000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x290,
-+	.firewall_wr_ctl = 0x288,
- };
- 
- static const char * const tegra241_master_id[] = {
-@@ -979,6 +1043,9 @@ static const struct tegra234_cbb_fabric tegra241_cbb_fabric = {
- 	.max_errors = ARRAY_SIZE(tegra241_cbb_errors),
- 	.notifier_offset = 0x60000,
- 	.off_mask_erd = 0x40004,
-+	.firewall_base = 0x20000,
-+	.firewall_ctl = 0x2370,
-+	.firewall_wr_ctl = 0x2368,
- };
- 
- static const struct tegra234_slave_lookup tegra241_bpmp_slave_map[] = {
-@@ -1000,6 +1067,9 @@ static const struct tegra234_cbb_fabric tegra241_bpmp_fabric = {
- 	.errors = tegra241_cbb_errors,
- 	.max_errors = ARRAY_SIZE(tegra241_cbb_errors),
- 	.notifier_offset = 0x19000,
-+	.firewall_base = 0x30000,
-+	.firewall_ctl = 0x8f0,
-+	.firewall_wr_ctl = 0x8e8,
- };
- 
- static const struct of_device_id tegra234_cbb_dt_ids[] = {
-@@ -1084,6 +1154,15 @@ static int tegra234_cbb_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, cbb);
- 
-+	/*
-+	 * Don't enable error reporting for a Fabric if write to it's registers
-+	 * is blocked by CBB firewall.
-+	 */
-+	if (!tegra234_cbb_write_access_allowed(pdev, cbb)) {
-+		dev_info(&pdev->dev, "error reporting not enabled due to firewall\n");
-+		return 0;
-+	}
-+
- 	spin_lock_irqsave(&cbb_lock, flags);
- 	list_add(&cbb->base.node, &cbb_list);
- 	spin_unlock_irqrestore(&cbb_lock, flags);
+ /* Masks with bits that must be read zero */
+ #define TPM_ACCESS_READ_ZERO 0x48
+-#define TPM_INT_ENABLE_ZERO 0x7FFFFF6
++#define TPM_INT_ENABLE_ZERO 0x7FFFFF60
+ #define TPM_STS_READ_ZERO 0x23
+ #define TPM_INTF_CAPABILITY_ZERO 0x0FFFF000
+ #define TPM_I2C_INTERFACE_CAPABILITY_ZERO 0x80000000
 -- 
 2.35.1
 
