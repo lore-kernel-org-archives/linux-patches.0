@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC611863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C7EC433D2;
-	Wed, 28 Dec 2022 15:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B611863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B756C433D2;
+	Wed, 28 Dec 2022 15:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240882;
-	bh=nFxOc1XNvVZFR1/aX+3ddg/bNF0MDaD3f8yHQ31RcyU=;
+	s=korg; t=1672240884;
+	bh=Je4pk+eJwCMqzVlYFI9lsOSF+59eNDNw44I7PKQseVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3lLQ/DUE/qCrcde9RIuv6x5aD3Azja5GQxmHGX/inogOyLu21GXpjrvBGYbHezz6
-	 GNyfQg9UBEhqnMq0+F6PoDAOo0gwmXscNy/I/cZAp2y1u+iJTK8bpesf8zQxwxx5WG
-	 haLW3Fof2Djygj+KoDPeba32ago+LFAMdVNyl2D8=
+	b=gdEKmQ3yK3KUbfs1oYWA6cy2zvNfOyQ3ssmJuKiu3/cGsC6e9TzFrwcm/xLUj96IN
+	 VtphZ+4V9JhopHt8a+t5XCraHFLbnjI0m0M8vnskbDtmjRd3vZJz8qlZHpqzbLSum/
+	 PojYt15ykhVAYRz63l4qya1gsEvv9LvlVZC4I2ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Victor Ding <victording@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 408/731] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
-Date: Wed, 28 Dec 2022 15:38:35 +0100
-Message-Id: <20221228144308.397332528@linuxfoundation.org>
+Subject: [PATCH 6.1 0178/1146] platform/chrome: cros_ec_typec: zero out stale pointers
+Date: Wed, 28 Dec 2022 15:28:37 +0100
+Message-Id: <20221228144334.990508572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Victor Ding <victording@chromium.org>
 
-[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
+[ Upstream commit 9a8aadcf0b459c1257b9477fd6402e1d5952ae07 ]
 
-hpsa_sas_port_add_phy() does:
-  ...
-  sas_phy_add()  -> may return error here
-  sas_port_add_phy()
-  ...
+`cros_typec_get_switch_handles` allocates four pointers when obtaining
+type-c switch handles. These pointers are all freed if failing to obtain
+any of them; therefore, pointers in `port` become stale. The stale
+pointers eventually cause use-after-free or double free in later code
+paths. Zeroing out all pointer fields after freeing to eliminate these
+stale pointers.
 
-Whereas hpsa_free_sas_phy() does:
-  ...
-  sas_port_delete_phy()
-  sas_phy_delete()
-  ...
-
-If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
-called to free the memory because the port and the phy have not been added
-yet.
-
-Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
-crash in this case.
-
-Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f28adb41dab4 ("platform/chrome: cros_ec_typec: Register Type C switches")
+Fixes: 1a8912caba02 ("platform/chrome: cros_ec_typec: Get retimer handle")
+Signed-off-by: Victor Ding <victording@chromium.org>
+Acked-by: Prashant Malani <pmalani@chromium.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20221207093924.v2.1.I1864b6a7ee98824118b93677868d22d3750f439b@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_typec.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index 74d563950c64..a4a00944b290 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -9788,7 +9788,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
- 	return 0;
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 2a7ff14dc37e..59de4ce01fab 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -173,10 +173,13 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
  
- free_sas_phy:
--	hpsa_free_sas_phy(hpsa_sas_phy);
-+	sas_phy_free(hpsa_sas_phy->phy);
-+	kfree(hpsa_sas_phy);
- free_sas_port:
- 	hpsa_free_sas_port(hpsa_sas_port);
- free_sas_node:
+ role_sw_err:
+ 	typec_switch_put(port->ori_sw);
++	port->ori_sw = NULL;
+ ori_sw_err:
+ 	typec_retimer_put(port->retimer);
++	port->retimer = NULL;
+ retimer_sw_err:
+ 	typec_mux_put(port->mux);
++	port->mux = NULL;
+ mux_err:
+ 	return -ENODEV;
+ }
 -- 
 2.35.1
 
