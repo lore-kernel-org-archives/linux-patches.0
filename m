@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A22B1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D977C433D2;
-	Wed, 28 Dec 2022 16:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B18B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2324C433D2;
+	Wed, 28 Dec 2022 16:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243624;
-	bh=xJkQVbE7K7jGXPJJOILonjE8IKncfp2TYi7RJBxEdBU=;
+	s=korg; t=1672243627;
+	bh=6UWEPM4mJ5OfjtTA1xwv7phRztA4mBpMJxlbCkjLdUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd3q/nMfoPDgfy5RaQR6D+vJ3lWSQnpXn11WzBO4e4BnMYvyX7ZauWzLs2u7XFdOV
-	 aZ5PMiWOCwTo22LZHi/VePcIee/GU3p8ANmkBDfx7oRzIRy6ixmb8t/vJQ4ffBd7xG
-	 /I6dl7rD1h/vLuGd3uh96w1du/cT9zbwHj6Ygx1A=
+	b=O5Z874nY5h1VXdCVx2VivuxhTw6vzAOXhF6Ir11nA30uFrj58bYz/yyoN/U5CBdYm
+	 CHCdrMA3PHKPZQEufVhDNDiG7BL7iSvfUWMbv+XKwsWnlMFlLzJprhVVIKxQuu8fxO
+	 5QPibwUQRRo3d37kRPIhHrDxeO+O/tH3Clwn1vh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0523/1146] wifi: rtl8xxxu: Fix the channel width reporting
-Date: Wed, 28 Dec 2022 15:34:22 +0100
-Message-Id: <20221228144344.379882135@linuxfoundation.org>
+Subject: [PATCH 6.0 0559/1073] crypto: hisilicon/qm - re-enable communicate interrupt before notifying PF
+Date: Wed, 28 Dec 2022 15:35:47 +0100
+Message-Id: <20221228144343.238655840@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 76c16af2cb10282274596e21add2c9f0b95c941b ]
+[ Upstream commit ee1537fe3dd89860d0336563891f6cac707d0cb5 ]
 
-The gen 2 chips RTL8192EU and RTL8188FU periodically send the driver
-reports about the TX rate, and the driver passes these reports to
-sta_statistics. The reports from RTL8192EU may or may not include the
-channel width. The reports from RTL8188FU do not include it.
+After the device is reset, the VF needs to re-enable communication
+interrupt before the VF sends restart complete message to the PF.
+If the interrupt is re-enabled after the VF notifies the PF, the PF
+may fail to send messages to the VF after receiving VF's restart
+complete message.
 
-Only access the c2h->ra_report.bw field if the report (skb) is big
-enough.
-
-The other problem fixed here is that the code was actually never
-changing the channel width initially reported by
-rtl8xxxu_bss_info_changed because the value of RATE_INFO_BW_20 is 0.
-
-Fixes: 0985d3a410ac ("rtl8xxxu: Feed current txrate information for mac80211")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/5b41f1ae-72e7-6b7a-2459-b736399a1c40@gmail.com
+Fixes: 760fe22cf5e9 ("crypto: hisilicon/qm - update reset flow")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/crypto/hisilicon/qm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 2d908296cf70..e9c1b62c9c3c 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5574,7 +5574,6 @@ static void rtl8xxxu_c2hcmd_callback(struct work_struct *work)
- 			rarpt->txrate.flags = 0;
- 			rate = c2h->ra_report.rate;
- 			sgi = c2h->ra_report.sgi;
--			bw = c2h->ra_report.bw;
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 2cfb072a218f..180589c73663 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -5776,6 +5776,7 @@ static void qm_pf_reset_vf_done(struct hisi_qm *qm)
+ 		cmd = QM_VF_START_FAIL;
+ 	}
  
- 			if (rate < DESC_RATE_MCS0) {
- 				rarpt->txrate.legacy =
-@@ -5591,8 +5590,13 @@ static void rtl8xxxu_c2hcmd_callback(struct work_struct *work)
- 						RATE_INFO_FLAGS_SHORT_GI;
- 				}
++	qm_cmd_init(qm);
+ 	ret = qm_ping_pf(qm, cmd);
+ 	if (ret)
+ 		dev_warn(&pdev->dev, "PF responds timeout in reset done!\n");
+@@ -5837,7 +5838,6 @@ static void qm_pf_reset_vf_process(struct hisi_qm *qm,
+ 		goto err_get_status;
  
--				if (bw == RATE_INFO_BW_20)
--					rarpt->txrate.bw |= RATE_INFO_BW_20;
-+				if (skb->len >= offsetofend(typeof(*c2h), ra_report.bw)) {
-+					if (c2h->ra_report.bw == RTL8XXXU_CHANNEL_WIDTH_40)
-+						bw = RATE_INFO_BW_40;
-+					else
-+						bw = RATE_INFO_BW_20;
-+					rarpt->txrate.bw = bw;
-+				}
- 			}
- 			bit_rate = cfg80211_calculate_bitrate(&rarpt->txrate);
- 			rarpt->bit_rate = bit_rate;
+ 	qm_pf_reset_vf_done(qm);
+-	qm_cmd_init(qm);
+ 
+ 	dev_info(dev, "device reset done.\n");
+ 
 -- 
 2.35.1
 
