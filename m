@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F10F1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA729C433D2;
-	Wed, 28 Dec 2022 15:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71A11875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5844BC433EF;
+	Wed, 28 Dec 2022 15:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243111;
-	bh=W9wUOoN8RjUY0goWAA4qXdYTiG1MYt93A2fnmLO/5aI=;
+	s=korg; t=1672243113;
+	bh=EYBmkEcnndsWfvt7ODrn0GRA9KEwevxS2YF+FZyi1Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W33Kd9rKBp+48kXNfar9SEt3FWyyjTb06QgQS61wNMXFvt5eCnee/8lSqCbFo0PHI
-	 uxNLgyQ7+o8BOyqIIVNibiZqfvjJhOz5PXzTod2zBElMfqcBZ9bsLmSPnx2veeQKMJ
-	 Yx8x8fDdpG4tFLFksU9lDO8kOlbqtxjOgI+KBnSc=
+	b=q0/3ocKXhkKxtKH+sFo97fL4RqFPFe3XACeLdZUxhw1M+KmfNfaeAfCnNNuZru8Km
+	 dWKM9ZtXWYudTiAYW0ZhezdX19LY4SSwflD3vhIK87mFZRAyVWzevo0D7zkfmi7/sg
+	 P5+Mv5W7L3tZn7/rOhDGNlQ4pIcuqkbVkSgzr30U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0491/1073] mmc: via-sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:39 +0100
-Message-Id: <20221228144341.371264170@linuxfoundation.org>
+Subject: [PATCH 5.15 685/731] hwmon: (jc42) Fix missing unlock on error in jc42_write()
+Date: Wed, 28 Dec 2022 15:43:12 +0100
+Message-Id: <20221228144316.325152690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,42 +40,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e4e46fb61e3bb4628170810d3f2b996b709b90d9 ]
+[ Upstream commit b744db17abf6a2efc2bfa80870cc88e9799a8ccc ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+Add the missing unlock before return from function jc42_write()
+in the error handling case.
 
-Fix this by checking the return value and goto error path which
-will call mmc_free_host().
-
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
+Fixes: 37dedaee8bc6 ("hwmon: (jc42) Convert register access and caching to regmap/regcache")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221108130949.1067699-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221027062931.598247-1-yangyingliang@huawei.com
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/via-sdmmc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/jc42.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
-index 88662a90ed96..a2b0d9461665 100644
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1151,7 +1151,9 @@ static int via_sd_probe(struct pci_dev *pcidev,
- 	    pcidev->subsystem_device == 0x3891)
- 		sdhost->quirks = VIA_CRDR_QUIRK_300MS_PWRDELAY;
+diff --git a/drivers/hwmon/jc42.c b/drivers/hwmon/jc42.c
+index 5240bfdfcf2e..52f341d46029 100644
+--- a/drivers/hwmon/jc42.c
++++ b/drivers/hwmon/jc42.c
+@@ -340,7 +340,7 @@ static int jc42_write(struct device *dev, enum hwmon_sensor_types type,
+ 		ret = regmap_read(data->regmap, JC42_REG_TEMP_CRITICAL,
+ 				  &regval);
+ 		if (ret)
+-			return ret;
++			break;
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto unmap;
- 
- 	return 0;
- 
+ 		/*
+ 		 * JC42.4 compliant chips only support four hysteresis values.
 -- 
 2.35.1
 
