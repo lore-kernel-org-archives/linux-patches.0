@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808311863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F53C433D2;
-	Wed, 28 Dec 2022 15:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFB01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3BFC433D2;
+	Wed, 28 Dec 2022 15:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240097;
-	bh=vGVaCzCmmr8w9aQ0EeNdcw++8Hnymw9yXnKkc4k3Buk=;
+	s=korg; t=1672240100;
+	bh=ZfqrHiCEGiV7vExI9qbA+EiaJlDYqbhK+PQWPeueR1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkGPLavJBO+jec6gMppvLz6ngHwvKOP0cVAxm+LPVvx/XICuSfhsH7J26oQDp4s0u
-	 BKdFpudJSKiGDjETQCC34RXGSawcfANJkKC/TUm2fCU1lsScnAkdKWPaeTPr6hmGx4
-	 X0RHRCdwWfEc8vFSVU00IlwRQllRn5/R6+V/M3hM=
+	b=DG3Y64RFleSX0myJJrk+JWxCsIN7iVOX55/og8bkHlGbqyuUvBDfJRRLrwyPSwsls
+	 HwaRHMyMJ/sWHCjS2F0mp2SC4+cI8xSE0808SRSoPQ7ORSWf3zbq4lz5aqiMRviFcN
+	 m43C1UqxRigQGKSUEYbUJXtQ5Q+BYhKDsiKI1j34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0080/1146] arm64: dts: mt7986: move wed_pcie node
-Date: Wed, 28 Dec 2022 15:26:59 +0100
-Message-Id: <20221228144332.319458679@linuxfoundation.org>
+Subject: [PATCH 5.15 309/731] mmc: core: Normalize the error handling branch in sd_read_ext_regs()
+Date: Wed, 28 Dec 2022 15:36:56 +0100
+Message-Id: <20221228144305.534317948@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,52 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Wunderlich <frank-w@public-files.de>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 99cce13b82a9366cfdd230ba6ddb48ba30d2741f ]
+[ Upstream commit fc02e2b52389c8fde02852b2f959c0b45f042bbd ]
 
-Move the wed_pcie node to have node aligned by address.
+Let's use pr_err() to output the error messages and let's extend a comment
+to clarify why returning 0 (success) in one case make sense.
 
-Fixes: 00b9903996b3 ("arm64: dts: mediatek: mt7986: add support for Wireless Ethernet Dispatch")
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221118190126.100895-2-linux@fw-web.de
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: c784f92769ae ("mmc: core: Read the SD function extension registers for power management")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+[Ulf: Clarified the comment and the commit-msg]
+Link: https://lore.kernel.org/r/20221130134920.2109-1-thunder.leizhen@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/mmc/core/sd.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-index 14c91ded29e6..35e01fa2d314 100644
---- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-@@ -112,6 +112,12 @@ infracfg: infracfg@10001000 {
- 			#clock-cells = <1>;
- 		};
+diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
+index 86a8a1f56583..592166e53dce 100644
+--- a/drivers/mmc/core/sd.c
++++ b/drivers/mmc/core/sd.c
+@@ -1252,7 +1252,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
+ 	 */
+ 	err = sd_read_ext_reg(card, 0, 0, 0, 512, gen_info_buf);
+ 	if (err) {
+-		pr_warn("%s: error %d reading general info of SD ext reg\n",
++		pr_err("%s: error %d reading general info of SD ext reg\n",
+ 			mmc_hostname(card->host), err);
+ 		goto out;
+ 	}
+@@ -1266,7 +1266,12 @@ static int sd_read_ext_regs(struct mmc_card *card)
+ 	/* Number of extensions to be find. */
+ 	num_ext = gen_info_buf[4];
  
-+		wed_pcie: wed-pcie@10003000 {
-+			compatible = "mediatek,mt7986-wed-pcie",
-+				     "syscon";
-+			reg = <0 0x10003000 0 0x10>;
-+		};
-+
- 		topckgen: topckgen@1001b000 {
- 			compatible = "mediatek,mt7986-topckgen", "syscon";
- 			reg = <0 0x1001B000 0 0x1000>;
-@@ -228,12 +234,6 @@ ethsys: syscon@15000000 {
- 			 #reset-cells = <1>;
- 		};
- 
--		wed_pcie: wed-pcie@10003000 {
--			compatible = "mediatek,mt7986-wed-pcie",
--				     "syscon";
--			reg = <0 0x10003000 0 0x10>;
--		};
--
- 		wed0: wed@15010000 {
- 			compatible = "mediatek,mt7986-wed",
- 				     "syscon";
+-	/* We support revision 0, but limit it to 512 bytes for simplicity. */
++	/*
++	 * We only support revision 0 and limit it to 512 bytes for simplicity.
++	 * No matter what, let's return zero to allow us to continue using the
++	 * card, even if we can't support the features from the SD function
++	 * extensions registers.
++	 */
+ 	if (rev != 0 || len > 512) {
+ 		pr_warn("%s: non-supported SD ext reg layout\n",
+ 			mmc_hostname(card->host));
+@@ -1281,7 +1286,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
+ 	for (i = 0; i < num_ext; i++) {
+ 		err = sd_parse_ext_reg(card, gen_info_buf, &next_ext_addr);
+ 		if (err) {
+-			pr_warn("%s: error %d parsing SD ext reg\n",
++			pr_err("%s: error %d parsing SD ext reg\n",
+ 				mmc_hostname(card->host), err);
+ 			goto out;
+ 		}
 -- 
 2.35.1
 
