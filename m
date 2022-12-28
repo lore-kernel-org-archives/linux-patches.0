@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D341863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F0EC433EF;
-	Wed, 28 Dec 2022 15:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CF61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6D6C433D2;
+	Wed, 28 Dec 2022 15:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240892;
-	bh=Y1DO5o7BuAe5s+ybFJLesPQquWluBXAXBGwYrizFhzo=;
+	s=korg; t=1672240895;
+	bh=lo4z5B9MN2WhtIyWkl9mUfMw5lBDx+wz5fxdV6qibew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVypsd1ya2j0k1weErgY+L34FWtbCHP8GewGIITaLvg1FI+J4LtbeyHAKLT7NGQcz
-	 mZWb+x9o+yosTbZHBNOcexvIQ3BLPBYGkgSDsD9gKaKpkF7zqcFm6gOwS+KpbLFScF
-	 Ra//Nx2xsabeVP4B/BG7JkAeWISKtqlVNzA8s8jE=
+	b=ueYMtpfH+FNd1QkM68a79hfxZs6PHVK+LaUQgTCM/cbuueQt/uTzF3RCbAzj7cOVv
+	 /bMUAqMO1HQT42K50StYkjYHnj4ayRN/aTI+KuJEoy4mDBcpeEQYkhKu2BaJUxdpOY
+	 /oMEyR1sOVurXxc6K2XhCdpB3Gh0s4zlIFnAH5UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Joel Stanley <joel@jms.id.au>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0179/1146] platform/x86: mxm-wmi: fix memleak in mxm_wmi_call_mx[ds|mx]()
-Date: Wed, 28 Dec 2022 15:28:38 +0100
-Message-Id: <20221228144335.016801620@linuxfoundation.org>
+Subject: [PATCH 6.0 0215/1073] ipmi: kcs: Poll OBF briefly to reduce OBE latency
+Date: Wed, 28 Dec 2022 15:30:03 +0100
+Message-Id: <20221228144333.856035528@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,60 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Liao <liaoyu15@huawei.com>
+From: Andrew Jeffery <andrew@aj.id.au>
 
-[ Upstream commit 727cc0147f5066e359aca65cc6cc5e6d64cc15d8 ]
+[ Upstream commit f90bc0f97f2b65af233a37b2e32fc81871a1e3cf ]
 
-The ACPI buffer memory (out.pointer) returned by wmi_evaluate_method()
-is not freed after the call, so it leads to memory leak.
+The ASPEED KCS devices don't provide a BMC-side interrupt for the host
+reading the output data register (ODR). The act of the host reading ODR
+clears the output buffer full (OBF) flag in the status register (STR),
+informing the BMC it can transmit a subsequent byte.
 
-The method results in ACPI buffer is not used, so just pass NULL to
-wmi_evaluate_method() which fixes the memory leak.
+On the BMC side the KCS client must enable the OBE event *and* perform a
+subsequent read of STR anyway to avoid races - the polling provides a
+window for the host to read ODR if data was freshly written while
+minimising BMC-side latency.
 
-Fixes: 99b38b4acc0d ("platform/x86: add MXM WMI driver.")
-Signed-off-by: Yu Liao <liaoyu15@huawei.com>
-Link: https://lore.kernel.org/r/20221129011101.2042315-1-liaoyu15@huawei.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 28651e6c4237 ("ipmi: kcs_bmc: Allow clients to control KCS IRQ state")
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Message-Id: <20220812144741.240315-1-andrew@aj.id.au>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/mxm-wmi.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/char/ipmi/kcs_bmc_aspeed.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/mxm-wmi.c b/drivers/platform/x86/mxm-wmi.c
-index 9a19fbd2f734..9a457956025a 100644
---- a/drivers/platform/x86/mxm-wmi.c
-+++ b/drivers/platform/x86/mxm-wmi.c
-@@ -35,13 +35,11 @@ int mxm_wmi_call_mxds(int adapter)
- 		.xarg = 1,
- 	};
- 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
--	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
- 	acpi_status status;
+diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+index cdc88cde1e9a..417e5a3ccfae 100644
+--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
++++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+@@ -399,13 +399,31 @@ static void aspeed_kcs_check_obe(struct timer_list *timer)
+ static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
+ {
+ 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
++	int rc;
++	u8 str;
  
- 	printk("calling mux switch %d\n", adapter);
+ 	/* We don't have an OBE IRQ, emulate it */
+ 	if (mask & KCS_BMC_EVENT_TYPE_OBE) {
+-		if (KCS_BMC_EVENT_TYPE_OBE & state)
+-			mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
+-		else
++		if (KCS_BMC_EVENT_TYPE_OBE & state) {
++			/*
++			 * Given we don't have an OBE IRQ, delay by polling briefly to see if we can
++			 * observe such an event before returning to the caller. This is not
++			 * incorrect because OBF may have already become clear before enabling the
++			 * IRQ if we had one, under which circumstance no event will be propagated
++			 * anyway.
++			 *
++			 * The onus is on the client to perform a race-free check that it hasn't
++			 * missed the event.
++			 */
++			rc = read_poll_timeout_atomic(aspeed_kcs_inb, str,
++						      !(str & KCS_BMC_STR_OBF), 1, 100, false,
++						      &priv->kcs_bmc, priv->kcs_bmc.ioreg.str);
++			/* Time for the slow path? */
++			if (rc == -ETIMEDOUT)
++				mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
++		} else {
+ 			del_timer(&priv->obe.timer);
++		}
+ 	}
  
--	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
--				     &output);
-+	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
- 
- 	if (ACPI_FAILURE(status))
- 		return status;
-@@ -60,13 +58,11 @@ int mxm_wmi_call_mxmx(int adapter)
- 		.xarg = 1,
- 	};
- 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
--	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
- 	acpi_status status;
- 
- 	printk("calling mux switch %d\n", adapter);
- 
--	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
--				     &output);
-+	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
- 
- 	if (ACPI_FAILURE(status))
- 		return status;
+ 	if (mask & KCS_BMC_EVENT_TYPE_IBF) {
 -- 
 2.35.1
 
