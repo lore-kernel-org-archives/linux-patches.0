@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB85C433D2;
-	Wed, 28 Dec 2022 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEB91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30C2C433D2;
+	Wed, 28 Dec 2022 15:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240732;
-	bh=2+yGkZGaNyCbSJI9rUMdqTnr556rvhFSXRwi13uONHk=;
+	s=korg; t=1672240735;
+	bh=B+qOLWrrcjScKG5mowKSnO1AwUThhJxyTge94gyLfJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfUMxkfPbdx+CYuDHvCZq2AbHkPtciIo7i8fL8siI6d13dGZEE79dKFYr0tEAEMWw
-	 Hc88gRwFzYbIaAEw4S70N55DUE71QCbu7O/uadhIFM1FV6d3vHWncIM9xcaQ5XyayW
-	 LTuLnlLeNhe0n4hVuTf6Zw6VUvQD8mYYcoimS4EM=
+	b=wDi07xQgteeSjew+eyGdEnEQBn7Mx7ynh7erc99M757M4BYZ/O+JWfyl+MBNbHF7Q
+	 f2ABWEy35cwdCQK8Rq791ft1SfLVtMxga1m52b1rPTdWrXtfEzZzzkE6Y8+VVpQk7t
+	 dykqwuI4D0Yz/lyAJU2LKH9+rYFDovb1zNrO2N24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 391/731] crypto: ccree - Remove debugfs when platform_driver_register failed
-Date: Wed, 28 Dec 2022 15:38:18 +0100
-Message-Id: <20221228144307.894012115@linuxfoundation.org>
+Subject: [PATCH 6.1 0161/1146] rapidio: rio: fix possible name leak in rio_register_mport()
+Date: Wed, 28 Dec 2022 15:28:20 +0100
+Message-Id: <20221228144334.532988647@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
+[ Upstream commit e92a216d16bde65d21a3227e0fb2aa0794576525 ]
 
-When platform_driver_register failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+If device_register() returns error, the name allocated by dev_set_name()
+need be freed.  It should use put_device() to give up the reference in the
+error path, so that the name can be freed in kobject_cleanup(), and
+list_del() is called to delete the port from rio_mports.
 
-Failed logs as follows:
-[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
-
-Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lkml.kernel.org/r/20221114152636.2939035-3-yangyingliang@huawei.com
+Fixes: 2aaf308b95b2 ("rapidio: rework device hierarchy and introduce mport class of devices")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/rapidio/rio.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
-index 790fa9058a36..41f0a404bdf9 100644
---- a/drivers/crypto/ccree/cc_driver.c
-+++ b/drivers/crypto/ccree/cc_driver.c
-@@ -656,9 +656,17 @@ static struct platform_driver ccree_driver = {
+diff --git a/drivers/rapidio/rio.c b/drivers/rapidio/rio.c
+index e74cf09eeff0..9544b8ee0c96 100644
+--- a/drivers/rapidio/rio.c
++++ b/drivers/rapidio/rio.c
+@@ -2186,11 +2186,16 @@ int rio_register_mport(struct rio_mport *port)
+ 	atomic_set(&port->state, RIO_DEVICE_RUNNING);
  
- static int __init ccree_init(void)
- {
-+	int rc;
-+
- 	cc_debugfs_global_init();
- 
--	return platform_driver_register(&ccree_driver);
-+	rc = platform_driver_register(&ccree_driver);
-+	if (rc) {
-+		cc_debugfs_global_fini();
-+		return rc;
+ 	res = device_register(&port->dev);
+-	if (res)
++	if (res) {
+ 		dev_err(&port->dev, "RIO: mport%d registration failed ERR=%d\n",
+ 			port->id, res);
+-	else
++		mutex_lock(&rio_mport_list_lock);
++		list_del(&port->node);
++		mutex_unlock(&rio_mport_list_lock);
++		put_device(&port->dev);
++	} else {
+ 		dev_dbg(&port->dev, "RIO: registered mport%d\n", port->id);
 +	}
-+
-+	return 0;
- }
- module_init(ccree_init);
  
+ 	return res;
+ }
 -- 
 2.35.1
 
