@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B054C1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350F4C433D2;
-	Wed, 28 Dec 2022 16:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799AD1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FBBC433EF;
+	Wed, 28 Dec 2022 16:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245659;
-	bh=qZG5T3xyT7Knk3MeTWpsmEUZ4/PyUg2RjPoFA7v5H1M=;
+	s=korg; t=1672245662;
+	bh=6ocy3ubqZwJeaGEFeeXOKtCsKKmHyIlyeX/VXNLlc4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iw6zZ6kq01dpCNBs17J1JPaHQd/Z11fw0rUf1uu5TM5xoEUEkmVWIgsAe6utTw+ff
-	 1eFZqmWw9OQyxOGYTRJnEWyj/52yLBeLzUhppEuz3OiaQHGIo7+x1ZKVXy8eTFhzL8
-	 iB5rTvHRpgMGRg1j3D7oMYr5nGaAu47yP1EBfrac=
+	b=jd2upc7fNzZmwpxJfoWRoRsv1yf5LFgOQckGL6eJjclqHW+dTMZB5ilsaF3KjDcpZ
+	 5cMwc1LRJ+L432E0EV8BY3/yMgroQL5DuoFZB4SCeWeaW8m7FwvCGLEp33Mh6aIwLO
+	 2inmpSjQPM2huDYuudNnUN2sX3wr4IbNARApQUlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Li Zetao <lizetao1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0933/1073] s390/ctcm: Fix return type of ctc{mp,}m_tx()
-Date: Wed, 28 Dec 2022 15:42:01 +0100
-Message-Id: <20221228144353.370520680@linuxfoundation.org>
+Subject: [PATCH 6.1 0901/1146] r6040: Fix kmemleak in probe and remove
+Date: Wed, 28 Dec 2022 15:40:40 +0100
+Message-Id: <20221228144354.681321753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,74 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit aa5bf80c3c067b82b4362cd6e8e2194623bcaca6 ]
+[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+There is a memory leaks reported by kmemleak:
 
-  drivers/s390/net/ctcm_main.c:1064:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = ctcm_tx,
-                                    ^~~~~~~
-  drivers/s390/net/ctcm_main.c:1072:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = ctcmpc_tx,
-                                    ^~~~~~~~~
+  unreferenced object 0xffff888116111000 (size 2048):
+    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
+    hex dump (first 32 bytes):
+      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
+      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
+      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
+      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
+      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
+      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
+      ...
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of ctc{mp,}m_tx() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+The problem occurs in probe process as follows:
+  r6040_init_one:
+    mdiobus_register
+      mdiobus_scan    <- alloc and register phy_device,
+                         the reference count of phy_device is 3
+    r6040_mii_probe
+      phy_connect     <- connect to the first phy_device,
+                         so the reference count of the first
+                         phy_device is 4, others are 3
+    register_netdev   <- fault inject succeeded, goto error handling path
 
-Additionally, while in the area, remove a comment block that is no
-longer relevant.
+    // error handling path
+    err_out_mdio_unregister:
+      mdiobus_unregister(lp->mii_bus);
+    err_out_mdio:
+      mdiobus_free(lp->mii_bus);    <- the reference count of the first
+                                       phy_device is 1, it is not released
+                                       and other phy_devices are released
+  // similarly, the remove process also has the same problem
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The root cause is traced to the phy_device is not disconnected when
+removes one r6040 device in r6040_remove_one() or on error handling path
+after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
+device is connected to the first PHY device of mii_bus, in order to
+notify the connected driver when the link status changes, which is the
+default behavior of the PHY infrastructure to handle everything.
+Therefore the phy_device should be disconnected when removes one r6040
+device or on error handling path.
+
+Fix it by adding phy_disconnect() when removes one r6040 device or on
+error handling path after r6040_mii probed successfully.
+
+Fixes: 3831861b4ad8 ("r6040: implement phylib")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ctcm_main.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/rdc/r6040.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/ctcm_main.c b/drivers/s390/net/ctcm_main.c
-index e0fdd54bfeb7..f672c610cb24 100644
---- a/drivers/s390/net/ctcm_main.c
-+++ b/drivers/s390/net/ctcm_main.c
-@@ -825,16 +825,9 @@ static int ctcmpc_transmit_skb(struct channel *ch, struct sk_buff *skb)
- /*
-  * Start transmission of a packet.
-  * Called from generic network device layer.
-- *
-- *  skb		Pointer to buffer containing the packet.
-- *  dev		Pointer to interface struct.
-- *
-- * returns 0 if packet consumed, !0 if packet rejected.
-- *         Note: If we return !0, then the packet is free'd by
-- *               the generic network layer.
-  */
- /* first merge version - leaving both functions separated */
--static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t ctcm_tx(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct ctcm_priv *priv = dev->ml_priv;
+diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
+index eecd52ed1ed2..f4d434c379e7 100644
+--- a/drivers/net/ethernet/rdc/r6040.c
++++ b/drivers/net/ethernet/rdc/r6040.c
+@@ -1159,10 +1159,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	err = register_netdev(dev);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to register net device\n");
+-		goto err_out_mdio_unregister;
++		goto err_out_phy_disconnect;
+ 	}
+ 	return 0;
  
-@@ -877,7 +870,7 @@ static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
- }
++err_out_phy_disconnect:
++	phy_disconnect(dev->phydev);
+ err_out_mdio_unregister:
+ 	mdiobus_unregister(lp->mii_bus);
+ err_out_mdio:
+@@ -1186,6 +1188,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
+ 	struct r6040_private *lp = netdev_priv(dev);
  
- /* unmerged MPC variant of ctcm_tx */
--static int ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
- {
- 	int len = 0;
- 	struct ctcm_priv *priv = dev->ml_priv;
+ 	unregister_netdev(dev);
++	phy_disconnect(dev->phydev);
+ 	mdiobus_unregister(lp->mii_bus);
+ 	mdiobus_free(lp->mii_bus);
+ 	netif_napi_del(&lp->napi);
 -- 
 2.35.1
 
