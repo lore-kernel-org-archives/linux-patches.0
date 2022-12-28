@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002971C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A846C433D2;
-	Wed, 28 Dec 2022 16:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29851C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2092DC433F1;
+	Wed, 28 Dec 2022 16:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245318;
-	bh=jGcAeo89nT9RIMcLsxrp1gHQkh8auXr/Qg3p0MBOKA0=;
+	s=korg; t=1672245321;
+	bh=2u+JqZVFjNOYCm9GMc8BJ4EA8rIcooMLdSQI+41VY6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+6AgS9aE7qvUT4FTdE1wGyGoLLFCByLwGYf/FSi19MQ55y9Vt+ei6vGnPj6bznUs
-	 OZL+m2SlSf9W2yVPuSurspCIPhWP5QqOx1wD773wOI6gq/LdAKoVs95qMhJENsTHkW
-	 /g0fQZPkCY3JxRdq8y+9uZzS2MRSQNtAe1raWMxM=
+	b=r3m7wqmkCm7cPJmFLtEsOFK/aYzGSfhg4D0M17T6E3pSjeaPW/wO9i12ZXnOKiw37
+	 epJs40rEfT2cHM+DJonXRHDAE2WLDyf0q30srllSQnlRu/oBdiIXS6bvoxBkTmPkyK
+	 8XxqBvYxpH6pr9bWPLv5RFqkNm5M0pFFABU7GLFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Francesco Dolcini <francesco@dolcini.it>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0872/1073] arm64: dts: mt8183: Fix Mali GPU clock
-Date: Wed, 28 Dec 2022 15:41:00 +0100
-Message-Id: <20221228144351.706899589@linuxfoundation.org>
+Subject: [PATCH 6.1 0839/1146] rtc: snvs: Allow a time difference on clock register read
+Date: Wed, 28 Dec 2022 15:39:38 +0100
+Message-Id: <20221228144352.946106716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,42 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit ad2631b5645a1d0ca9bf6fecf71f77e3b0071ee5 ]
+[ Upstream commit 0462681e207ccc44778a77b3297af728b1cf5b9f ]
 
-The actual clock feeding into the Mali GPU on the MT8183 is from the
-clock gate in the MFGCFG block, not CLK_TOP_MFGPLL_CK from the TOPCKGEN
-block, which itself is simply a pass-through placeholder for the MFGPLL
-in the APMIXEDSYS block.
+On an iMX6ULL the following message appears when a wakealarm is set:
 
-Fix the hardware description with the correct clock reference.
+echo 0 > /sys/class/rtc/rtc1/wakealarm
+rtc rtc1: Timeout trying to get valid LPSRT Counter read
 
-Fixes: a8168cebf1bc ("arm64: dts: mt8183: Add node for the Mali GPU")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20220927101128.44758-2-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+This does not always happen but is reproducible quite often (7 out of 10
+times). The problem appears because the iMX6ULL is not able to read the
+registers within one 32kHz clock cycle which is the base clock of the
+RTC. Therefore, this patch allows a difference of up to 320 cycles
+(10ms). 10ms was chosen to be big enough even on systems with less cpu
+power (e.g. iMX6ULL). According to the reference manual a difference is
+fine:
+- If the two consecutive reads are similar, the value is correct.
+The values have to be similar, not equal.
+
+Fixes: cd7f3a249dbe ("rtc: snvs: Add timeouts to avoid kernel lockups")
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco@dolcini.it>
+Link: https://lore.kernel.org/r/20221106115915.7930-1-francesco@dolcini.it
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-snvs.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 9d32871973a2..85fb61324be8 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1670,7 +1670,7 @@ gpu: gpu@13040000 {
- 				<GIC_SPI 278 IRQ_TYPE_LEVEL_LOW>;
- 			interrupt-names = "job", "mmu", "gpu";
+diff --git a/drivers/rtc/rtc-snvs.c b/drivers/rtc/rtc-snvs.c
+index bd929b0e7d7d..d82acf1af1fa 100644
+--- a/drivers/rtc/rtc-snvs.c
++++ b/drivers/rtc/rtc-snvs.c
+@@ -32,6 +32,14 @@
+ #define SNVS_LPPGDR_INIT	0x41736166
+ #define CNTR_TO_SECS_SH		15
  
--			clocks = <&topckgen CLK_TOP_MFGPLL_CK>;
-+			clocks = <&mfgcfg CLK_MFG_BG3D>;
++/* The maximum RTC clock cycles that are allowed to pass between two
++ * consecutive clock counter register reads. If the values are corrupted a
++ * bigger difference is expected. The RTC frequency is 32kHz. With 320 cycles
++ * we end at 10ms which should be enough for most cases. If it once takes
++ * longer than expected we do a retry.
++ */
++#define MAX_RTC_READ_DIFF_CYCLES	320
++
+ struct snvs_rtc_data {
+ 	struct rtc_device *rtc;
+ 	struct regmap *regmap;
+@@ -56,6 +64,7 @@ static u64 rtc_read_lpsrt(struct snvs_rtc_data *data)
+ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ {
+ 	u64 read1, read2;
++	s64 diff;
+ 	unsigned int timeout = 100;
  
- 			power-domains =
- 				<&spm MT8183_POWER_DOMAIN_MFG_CORE0>,
+ 	/* As expected, the registers might update between the read of the LSB
+@@ -66,7 +75,8 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ 	do {
+ 		read2 = read1;
+ 		read1 = rtc_read_lpsrt(data);
+-	} while (read1 != read2 && --timeout);
++		diff = read1 - read2;
++	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
+ 	if (!timeout)
+ 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
+ 
+@@ -78,13 +88,15 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ static int rtc_read_lp_counter_lsb(struct snvs_rtc_data *data, u32 *lsb)
+ {
+ 	u32 count1, count2;
++	s32 diff;
+ 	unsigned int timeout = 100;
+ 
+ 	regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
+ 	do {
+ 		count2 = count1;
+ 		regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
+-	} while (count1 != count2 && --timeout);
++		diff = count1 - count2;
++	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
+ 	if (!timeout) {
+ 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
+ 		return -ETIMEDOUT;
 -- 
 2.35.1
 
