@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636591875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD378C433F1;
-	Wed, 28 Dec 2022 16:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066731875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D389C433EF;
+	Wed, 28 Dec 2022 16:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243659;
-	bh=85omXn5FVO11lwaIPOdLpY9zVnj8HCnM54sZwW8BRuw=;
+	s=korg; t=1672243661;
+	bh=xFZx9leuCJgbMXiiX9g1ARpxtzdYalSiEPvhxz40504=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GUzOErOI4gM3zfD5WAiHOkdBWQjhF5yMAfC7LoTBhIF2hppY7k4Q3Zb4Nhxq213VN
-	 FPPzEy1RqLCYbK1RNK+pyqM1hC7Ma/xGIbK7RqC5t3za4nS9VW7BOcNMZnNaOPn6w7
-	 g2+eYsTRmzM1JqT+ne2sXkezuVck7SYZekCdYdeg=
+	b=0SQD7EEZ8oBKbZe5qM4vxKaRLgAG0PKz3NZP8eLGo0bzVBy2XVWOJA8MixtI3UmcK
+	 QeLtqe1if4HA0B8lctIw/2FlcvTdaimm06rAGfy/UJxSGjdXNpm6TYV2im0i+jt+El
+	 OlUp1hY0IrGb7IPauvBJ4EJlyqEbg2Ol5pbfmp7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0529/1146] net: defxx: Fix missing err handling in dfx_init()
-Date: Wed, 28 Dec 2022 15:34:28 +0100
-Message-Id: <20221228144344.545099471@linuxfoundation.org>
+Subject: [PATCH 6.0 0565/1073] PCI: dwc: Fix n_fts[] array overrun
+Date: Wed, 28 Dec 2022 15:35:53 +0100
+Message-Id: <20221228144343.402787549@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,58 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
+[ Upstream commit 66110361281b2f7da0c8bd51eaf1f152f4236035 ]
 
-When eisa_driver_register() or tc_register_driver() failed,
-the modprobe defxx would fail with some err log as follows:
+commit aeaa0bfe89654 ("PCI: dwc: Move N_FTS setup to common setup")
+incorrectly uses pci->link_gen in deriving the index to the
+n_fts[] array also introducing the issue of accessing beyond the
+boundaries of array for greater than Gen-2 speeds. This change fixes
+that issue.
 
- Error: Driver 'defxx' is already registered, aborting...
-
-Fix this issue by adding err hanling in dfx_init().
-
-Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20220926111923.22487-1-vidyas@nvidia.com
+Fixes: aeaa0bfe8965 ("PCI: dwc: Move N_FTS setup to common setup")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Jingoo Han <jingoohan1@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
-index b584ffe38ad6..1fef8a9b1a0f 100644
---- a/drivers/net/fddi/defxx.c
-+++ b/drivers/net/fddi/defxx.c
-@@ -3831,10 +3831,24 @@ static int dfx_init(void)
- 	int status;
- 
- 	status = pci_register_driver(&dfx_pci_driver);
--	if (!status)
--		status = eisa_driver_register(&dfx_eisa_driver);
--	if (!status)
--		status = tc_register_driver(&dfx_tc_driver);
-+	if (status)
-+		goto err_pci_register;
-+
-+	status = eisa_driver_register(&dfx_eisa_driver);
-+	if (status)
-+		goto err_eisa_register;
-+
-+	status = tc_register_driver(&dfx_tc_driver);
-+	if (status)
-+		goto err_tc_register;
-+
-+	return 0;
-+
-+err_tc_register:
-+	eisa_driver_unregister(&dfx_eisa_driver);
-+err_eisa_register:
-+	pci_unregister_driver(&dfx_pci_driver);
-+err_pci_register:
- 	return status;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index c6725c519a47..9e4d96e5a3f5 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -641,7 +641,7 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 	if (pci->n_fts[1]) {
+ 		val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
+ 		val &= ~PORT_LOGIC_N_FTS_MASK;
+-		val |= pci->n_fts[pci->link_gen - 1];
++		val |= pci->n_fts[1];
+ 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
+ 	}
  
 -- 
 2.35.1
