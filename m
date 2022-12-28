@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B5E1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E8BC433EF;
-	Wed, 28 Dec 2022 16:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89091C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CF9C433D2;
+	Wed, 28 Dec 2022 16:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245761;
-	bh=Ftmd9MOwYC0jJGKz6xA4bYBxWvR0KhrwihV0mKET/wU=;
+	s=korg; t=1672245764;
+	bh=hWWyl7jUQijlVAmDgfQH9uGQhvU0smuLPmuN63nxNYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01EhVTzhJ5oq9JBS01TsQOC3V/ANLCcu2vjT3l+ghJEzi7zkmXbFT3Q9I5ldX06JX
-	 3V5HILEzrUaQLb0EE6f7nmsv0jfCJiu+h/nOJv+DCz0/KRBIjg4X3GEM1xdN3z70z8
-	 ekzRgUZEj3JcJ92mZtFAm7EgJOBeNyn+xdMEWWPs=
+	b=SRsCsVMM3lJG92y5P9Q2+vgz6vG39RK0ry2yXok2xTVh4Jg+aHRo+WQZnlh9VprdO
+	 kaVPrg9DWf/bZlpltNJ6F58VPjqr7BiDu1XNKCmShR13hU+WUPTW0aO9f4OdPieZAl
+	 ue+vNadIoGqa62iC1+gUZwy01l514ZiZ2dQXBZD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
 	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0950/1073] net: ethernet: mtk_eth_soc: drop packets to WDMA if the ring is full
-Date: Wed, 28 Dec 2022 15:42:18 +0100
-Message-Id: <20221228144353.838800623@linuxfoundation.org>
+Subject: [PATCH 6.1 0918/1146] selftests: devlink: fix the fd redirect in dummy_reporter_test
+Date: Wed, 28 Dec 2022 15:40:57 +0100
+Message-Id: <20221228144355.187505470@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f4b2fa2c25e1ade78f766aa82e733a0b5198d484 ]
+[ Upstream commit 2fc60e2ff972d3dca836bff0b08cbe503c4ca1ce ]
 
-Improves handling of DMA ring overflow.
-Clarify other WDMA drop related comment.
+$number + > bash means redirect FD $number, e.g. commonly
+used 2> redirects stderr (fd 2). The test uses 8192> to
+write the number 8192 to a file, this results in:
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20221116080734.44013-3-nbd@nbd.name
+  ./devlink.sh: line 499: 8192: Bad file descriptor
+
+Oddly the test also papers over this issue by checking
+for failure (expecting an error rather than success)
+so it passes, anyway.
+
+Fixes: ff18176ad806 ("selftests: Add a test of large binary to devlink health test")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 5 ++++-
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/selftests/drivers/net/netdevsim/devlink.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 4c16f2df566f..559c7a42c1c9 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3344,9 +3344,12 @@ static int mtk_hw_init(struct mtk_eth *eth)
- 	mtk_w32(eth, 0x21021000, MTK_FE_INT_GRP);
+diff --git a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
+index 9de1d123f4f5..a08c02abde12 100755
+--- a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
++++ b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
+@@ -496,8 +496,8 @@ dummy_reporter_test()
  
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
--		/* PSE should not drop port8 and port9 packets */
-+		/* PSE should not drop port8 and port9 packets from WDMA Tx */
- 		mtk_w32(eth, 0x00000300, PSE_DROP_CFG);
+ 	check_reporter_info dummy healthy 3 3 10 true
  
-+		/* PSE should drop packets to port 8/9 on WDMA Rx ring full */
-+		mtk_w32(eth, 0x00000300, PSE_PPE0_DROP);
-+
- 		/* PSE Free Queue Flow Control  */
- 		mtk_w32(eth, 0x01fa01f4, PSE_FQFC_CFG2);
+-	echo 8192> $DEBUGFS_DIR/health/binary_len
+-	check_fail $? "Failed set dummy reporter binary len to 8192"
++	echo 8192 > $DEBUGFS_DIR/health/binary_len
++	check_err $? "Failed set dummy reporter binary len to 8192"
  
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index da261dd49d6f..df8e6e95254e 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -121,6 +121,7 @@
- #define PSE_FQFC_CFG1		0x100
- #define PSE_FQFC_CFG2		0x104
- #define PSE_DROP_CFG		0x108
-+#define PSE_PPE0_DROP		0x110
- 
- /* PSE Input Queue Reservation Register*/
- #define PSE_IQ_REV(x)		(0x140 + (((x) - 1) << 2))
+ 	local dump=$(devlink health dump show $DL_HANDLE reporter dummy -j)
+ 	check_err $? "Failed show dump of dummy reporter"
 -- 
 2.35.1
 
