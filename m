@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56571863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656A1C433EF;
-	Wed, 28 Dec 2022 15:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC6F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1099DC433D2;
+	Wed, 28 Dec 2022 15:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240523;
-	bh=nM8GguaSRbiVaEzUdFooTn59i6CLzLiozzPgY4OEJDs=;
+	s=korg; t=1672240526;
+	bh=YWXyEml4yqDY5LK05CcTctoFxzyp7bkqjDqjGEZa82E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR5igsaq0H4kNYllDkbOHG/Tk4ziJjVoXRgULlP97KBNRfxDZbVDSJWTDNgNHJLjD
-	 GAJcv9OYHwQn3uuSN8Q/3N2z8cI9WiBp2r6GpyhZEE0vMvjUBWCKBQdIX8cQqxzz5V
-	 JRDanBD1N/LW3dpJsxAxaJrro1O/vkB33iV6QaMI=
+	b=MrUzqyk+wh7QMQTI5E5+QW0W8w42ArmBIKVv2k9KSoNgdG60nksy9U3B7tf4uvC+1
+	 ShGNx1HwPoEHp0oirS44o/luW74L1iTC1FI4Hz8x7DgrQPAmkib7LKdL1+arQIGSic
+	 D+2SDTq8mjPeWxTsg9zVNbG2iBt2aW18WuDVcLok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0123/1146] selftests/ftrace: event_triggers: wait longer for test_event_enable
-Date: Wed, 28 Dec 2022 15:27:42 +0100
-Message-Id: <20221228144333.496195760@linuxfoundation.org>
+Subject: [PATCH 5.15 363/731] crypto: nitrox - avoid double free on error path in nitrox_sriov_init()
+Date: Wed, 28 Dec 2022 15:37:50 +0100
+Message-Id: <20221228144307.082713718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,55 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit a1d6cd88c8973cfb08ee85722488b1d6d5d16327 ]
+[ Upstream commit 094528b6a5a755b1195a01e10b13597d67d1a0e6 ]
 
-In some platform, the schedule event may came slowly, delay 100ms can't
-cover it.
+If alloc_workqueue() fails in nitrox_mbox_init() it deallocates
+ndev->iov.vfdev and returns error code, but then nitrox_sriov_init()
+calls nitrox_sriov_cleanup() where ndev->iov.vfdev is deallocated
+again.
 
-I was notice that on my board which running in low cpu_freq,and this
-selftests allways gose fail.
+Fix this by nulling ndev->iov.vfdev after the first deallocation.
 
-So maybe we can check more times here to wait longer.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 43bb45da82f9 ("selftests: ftrace: Add a selftest to test event enable/disable func trigger")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 9e5de3e06e54 ("crypto: cavium/nitrox - Add mailbox...")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/ftrace/func_event_triggers.tc   | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/crypto/cavium/nitrox/nitrox_mbx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 8d26d5505808..3eea2abf68f9 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -38,11 +38,18 @@ cnt_trace() {
- 
- test_event_enabled() {
-     val=$1
-+    check_times=10		# wait for 10 * SLEEP_TIME at most
- 
--    e=`cat $EVENT_ENABLE`
--    if [ "$e" != $val ]; then
--	fail "Expected $val but found $e"
--    fi
-+    while [ $check_times -ne 0 ]; do
-+	e=`cat $EVENT_ENABLE`
-+	if [ "$e" == $val ]; then
-+	    return 0
-+	fi
-+	sleep $SLEEP_TIME
-+	check_times=$((check_times - 1))
-+    done
-+
-+    fail "Expected $val but found $e"
- }
- 
- run_enable_disable() {
+diff --git a/drivers/crypto/cavium/nitrox/nitrox_mbx.c b/drivers/crypto/cavium/nitrox/nitrox_mbx.c
+index 2e9c0d214363..199fcec9b8d0 100644
+--- a/drivers/crypto/cavium/nitrox/nitrox_mbx.c
++++ b/drivers/crypto/cavium/nitrox/nitrox_mbx.c
+@@ -191,6 +191,7 @@ int nitrox_mbox_init(struct nitrox_device *ndev)
+ 	ndev->iov.pf2vf_wq = alloc_workqueue("nitrox_pf2vf", 0, 0);
+ 	if (!ndev->iov.pf2vf_wq) {
+ 		kfree(ndev->iov.vfdev);
++		ndev->iov.vfdev = NULL;
+ 		return -ENOMEM;
+ 	}
+ 	/* enable pf2vf mailbox interrupts */
 -- 
 2.35.1
 
