@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D821C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7411DC433D2;
-	Wed, 28 Dec 2022 16:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F73C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23771C433D2;
+	Wed, 28 Dec 2022 16:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244662;
-	bh=0wxqIuC41VHbvzGNAJLK3kvZBi15ChrR6wbomyFkiaE=;
+	s=korg; t=1672244665;
+	bh=gF+h+ABmY5dZwDVfEFPIILKAqEER3hSUGmWU0JSOzyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgjslxlJCZ9ulOFqPx0X01novNn1a8mLik2RbY8RxHo0fpCVP5FN7yrE8DQa6o1it
-	 8LAUHbVjXz5byeQ3aPNbiWXkhSpt4e7CcdekEB7a1e3sSGSf9MTXhcG/6/vdqvqkDV
-	 glB64bJvTmElvB7cIJ241GYWG8Avt+JBH44U0CWw=
+	b=zQdYZoYsKJf4EXr3vH65bTESnDrelBIatOx7/IcIMImqeMRgxQTMDT3LHBXkrqZ4w
+	 GHIHMDNflyi9Utw7iav03Tp/pGZa/3YLBI87KEQ65tn70+iw++X8C5Xr4EpfB/15+X
+	 30LjryOV55nGwg8eLvoBYP+boIRVLDVko1Fq2ZbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zheyu Ma <zheyuma97@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0750/1073] power: supply: ab8500: Fix error handling in ab8500_charger_init()
-Date: Wed, 28 Dec 2022 15:38:58 +0100
-Message-Id: <20221228144348.392706285@linuxfoundation.org>
+Subject: [PATCH 6.0 0719/1073] i2c: ismt: Fix an out-of-bounds bug in ismt_access()
+Date: Wed, 28 Dec 2022 15:38:27 +0100
+Message-Id: <20221228144347.555905683@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,45 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-[ Upstream commit c4d33381b134da188ccd1084aef21e2b8c3c422e ]
+[ Upstream commit 39244cc754829bf707dccd12e2ce37510f5b1f8d ]
 
-The ab8500_charger_init() returns the platform_driver_register() directly
-without checking its return value, if platform_driver_register() failed,
-all ab8500_charger_component_drivers are not unregistered.
+When the driver does not check the data from the user, the variable
+'data->block[0]' may be very large to cause an out-of-bounds bug.
 
-Fix by unregister ab8500_charger_component_drivers when
-platform_driver_register() failed.
+The following log can reveal it:
 
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[   33.995542] i2c i2c-1: ioctl, cmd=0x720, arg=0x7ffcb3dc3a20
+[   33.995978] ismt_smbus 0000:00:05.0: I2C_SMBUS_BLOCK_DATA:  WRITE
+[   33.996475] ==================================================================
+[   33.996995] BUG: KASAN: out-of-bounds in ismt_access.cold+0x374/0x214b
+[   33.997473] Read of size 18446744073709551615 at addr ffff88810efcfdb1 by task ismt_poc/485
+[   33.999450] Call Trace:
+[   34.001849]  memcpy+0x20/0x60
+[   34.002077]  ismt_access.cold+0x374/0x214b
+[   34.003382]  __i2c_smbus_xfer+0x44f/0xfb0
+[   34.004007]  i2c_smbus_xfer+0x10a/0x390
+[   34.004291]  i2cdev_ioctl_smbus+0x2c8/0x710
+[   34.005196]  i2cdev_ioctl+0x5ec/0x74c
+
+Fix this bug by checking the size of 'data->block[0]' first.
+
+Fixes: 13f35ac14cd0 ("i2c: Adding support for Intel iSMT SMBus 2.0 host controller")
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-ismt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index c19c50442761..58757a5799f8 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3719,7 +3719,14 @@ static int __init ab8500_charger_init(void)
- 	if (ret)
- 		return ret;
- 
--	return platform_driver_register(&ab8500_charger_driver);
-+	ret = platform_driver_register(&ab8500_charger_driver);
-+	if (ret) {
-+		platform_unregister_drivers(ab8500_charger_component_drivers,
-+				ARRAY_SIZE(ab8500_charger_component_drivers));
-+		return ret;
-+	}
+diff --git a/drivers/i2c/busses/i2c-ismt.c b/drivers/i2c/busses/i2c-ismt.c
+index 6078fa0c0d48..63120c41354c 100644
+--- a/drivers/i2c/busses/i2c-ismt.c
++++ b/drivers/i2c/busses/i2c-ismt.c
+@@ -509,6 +509,9 @@ static int ismt_access(struct i2c_adapter *adap, u16 addr,
+ 		if (read_write == I2C_SMBUS_WRITE) {
+ 			/* Block Write */
+ 			dev_dbg(dev, "I2C_SMBUS_BLOCK_DATA:  WRITE\n");
++			if (data->block[0] < 1 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
++				return -EINVAL;
 +
-+	return 0;
- }
- 
- static void __exit ab8500_charger_exit(void)
+ 			dma_size = data->block[0] + 1;
+ 			dma_direction = DMA_TO_DEVICE;
+ 			desc->wr_len_cmd = dma_size;
 -- 
 2.35.1
 
