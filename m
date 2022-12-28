@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C171863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2288C433D2;
-	Wed, 28 Dec 2022 15:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135B61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D547C433D2;
+	Wed, 28 Dec 2022 15:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242384;
-	bh=ddEyr2L5NZjhQkReltEmm30D5lRXSJMwbWEk530wFlU=;
+	s=korg; t=1672242386;
+	bh=lOB/T60sWXx1He6Mrm1mXZncXUBjlFbZN3/xTZPaES8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnydTcpl4uOg46CCL81112bh7CQfGbwPfLZMIw+wLA8nD8HW/d1YhZW0Ye2zwWRXL
-	 S8LLGYhA6UTwZ5QWqTpk3b1f+bR+m6mgiNW0BQhm2mZUX7szvmDNvvPrFwoK4tf+jr
-	 m3085Lcj6EteMKVbHIFsZSxaEA7cpp/gyCyKPkuE=
+	b=1XJ5+Su7ldJcsMIMaIJcylnWc9Eb8pgPww3f2MgQrYHHWU3dq50isO0UVVEiECPxi
+	 5YVNnnTLnXTzpFl8MN4XqKljo1K5Lwx/V8saWUGglNaOYDaA0Q84dczWLgeqv1X4kl
+	 A2kwmyl8BUo4kzD8Lm1NxcKPKfZxSNSTYZdhVD5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 597/731] igc: allow BaseTime 0 enrollment for Qbv
-Date: Wed, 28 Dec 2022 15:41:44 +0100
-Message-Id: <20221228144313.846280652@linuxfoundation.org>
+Subject: [PATCH 6.0 0404/1073] ASoC: mediatek: mtk-btcvsd: Add checks for write and read of mtk_btcvsd_snd
+Date: Wed, 28 Dec 2022 15:33:12 +0100
+Message-Id: <20221228144338.990316536@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit e17090eb24944fbbe1f24d9f336d7bad4fbe47e8 ]
+[ Upstream commit d067b3378a78c9c3048ac535e31c171b6f5b5846 ]
 
-Introduce qbv_enable flag in igc_adapter struct to store the Qbv on/off.
-So this allow the BaseTime to enroll with zero value.
+As the mtk_btcvsd_snd_write and mtk_btcvsd_snd_read may return error,
+it should be better to catch the exception.
 
-Fixes: 61572d5f8f91 ("igc: Simplify TSN flags handling")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 4bd8597dc36c ("ASoC: mediatek: add btcvsd driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20221116030750.40500-1-jiasheng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      | 1 +
- drivers/net/ethernet/intel/igc/igc_main.c | 2 ++
- drivers/net/ethernet/intel/igc/igc_tsn.c  | 2 +-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/common/mtk-btcvsd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index b69373d67e2d..66678cd72a6c 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -184,6 +184,7 @@ struct igc_adapter {
+diff --git a/sound/soc/mediatek/common/mtk-btcvsd.c b/sound/soc/mediatek/common/mtk-btcvsd.c
+index d884bb7c0fc7..1c28b41e4311 100644
+--- a/sound/soc/mediatek/common/mtk-btcvsd.c
++++ b/sound/soc/mediatek/common/mtk-btcvsd.c
+@@ -1038,11 +1038,9 @@ static int mtk_pcm_btcvsd_copy(struct snd_soc_component *component,
+ 	struct mtk_btcvsd_snd *bt = snd_soc_component_get_drvdata(component);
  
- 	ktime_t base_time;
- 	ktime_t cycle_time;
-+	bool qbv_enable;
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-		mtk_btcvsd_snd_write(bt, buf, count);
++		return mtk_btcvsd_snd_write(bt, buf, count);
+ 	else
+-		mtk_btcvsd_snd_read(bt, buf, count);
+-
+-	return 0;
++		return mtk_btcvsd_snd_read(bt, buf, count);
+ }
  
- 	/* OS defined structs */
- 	struct pci_dev *pdev;
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 26dd710fba8f..f06b67ae3602 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5981,6 +5981,8 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	u32 start_time = 0, end_time = 0;
- 	size_t n;
- 
-+	adapter->qbv_enable = qopt->enable;
-+
- 	if (!qopt->enable)
- 		return igc_tsn_clear_schedule(adapter);
- 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 4a019954cadb..356c7455c5ce 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -36,7 +36,7 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
- {
- 	unsigned int new_flags = adapter->flags & ~IGC_FLAG_TSN_ANY_ENABLED;
- 
--	if (adapter->base_time)
-+	if (adapter->qbv_enable)
- 		new_flags |= IGC_FLAG_TSN_QBV_ENABLED;
- 
- 	if (is_any_launchtime(adapter))
+ /* kcontrol */
 -- 
 2.35.1
 
