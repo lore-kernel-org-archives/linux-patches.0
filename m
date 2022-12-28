@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75221863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4B6C433D2;
-	Wed, 28 Dec 2022 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803D81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053BFC433EF;
+	Wed, 28 Dec 2022 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240563;
-	bh=pVC7MVCyZdZX8ovYcMhgIWY6UEK6SdisgBHqLFqlBRc=;
+	s=korg; t=1672240566;
+	bh=4FC6jk3ntqI5H7ME6PgtFQUY/Yig9Gf7EsmELbq0Vfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIS8I//QOR3eENRXZAfnvKaQeo4CcEuypmSYv7TitL/WGr9sFYNBAvwKja4k0VTTp
-	 qgcL1ocGDep69dlBMU7NCdAmXhq7bxrnsCpkL8NKwJfPPVxpTNOrrIZk/u/Dq5b7H7
-	 z2FrmcFCObpMJLB2mw84e6tei7Tk60Qtf/5jYT1s=
+	b=fVAgxbfWiSZuB/FV4/WpR1UI9vu5vzmZja3aKobAbp8Z9l6mu/FwMVBLcBQnd6DhW
+	 gv6cdfLBStRVDkqN7pGntuVvpRnd5S8mVxX8jdgBlGFa9nPBSs5BBN6bcJ6KeKEEZp
+	 7k/O/9XFPkO9XwK1BagiSPp+drxKRZatQ+LSqCKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0175/1073] MIPS: BCM63xx: Add check for NULL for clk in clk_enable
-Date: Wed, 28 Dec 2022 15:29:23 +0100
-Message-Id: <20221228144332.764902603@linuxfoundation.org>
+Subject: [PATCH 6.1 0140/1146] perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()
+Date: Wed, 28 Dec 2022 15:27:59 +0100
+Message-Id: <20221228144333.949559299@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit ee9ef11bd2a59c2fefaa0959e5efcdf040d7c654 ]
+[ Upstream commit c508eb042d9739bf9473526f53303721b70e9100 ]
 
-Check clk for NULL before calling clk_enable_unlocked where clk
-is dereferenced. There is such check in other implementations
-of clk_enable.
+pci_get_device() will increase the reference count for the returned
+pci_dev, and also decrease the reference count for the input parameter
+*from* if it is not NULL.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+If we break the loop in sad_cfg_iio_topology() with 'dev' not NULL. We
+need to call pci_dev_put() to decrease the reference count. Since
+pci_dev_put() can handle the NULL input parameter, we can just add one
+pci_dev_put() right before 'return ret'.
 
-Fixes: e7300d04bd08 ("MIPS: BCM63xx: Add support for the Broadcom BCM63xx family of SOCs.")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: c1777be3646b ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on SNR")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-2-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/bcm63xx/clk.c | 2 ++
+ arch/x86/events/intel/uncore_snbep.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/mips/bcm63xx/clk.c b/arch/mips/bcm63xx/clk.c
-index 6e6756e8fa0a..86a6e2590866 100644
---- a/arch/mips/bcm63xx/clk.c
-+++ b/arch/mips/bcm63xx/clk.c
-@@ -361,6 +361,8 @@ static struct clk clk_periph = {
-  */
- int clk_enable(struct clk *clk)
- {
-+	if (!clk)
-+		return 0;
- 	mutex_lock(&clocks_mutex);
- 	clk_enable_unlocked(clk);
- 	mutex_unlock(&clocks_mutex);
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index ed869443efb2..76fedc8e12dd 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -4492,6 +4492,8 @@ static int sad_cfg_iio_topology(struct intel_uncore_type *type, u8 *sad_pmon_map
+ 		type->topology = NULL;
+ 	}
+ 
++	pci_dev_put(dev);
++
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
