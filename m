@@ -1,29 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4701863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5267DC433F0;
-	Wed, 28 Dec 2022 15:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E741863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A7CC433D2;
+	Wed, 28 Dec 2022 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241039;
-	bh=YG6lVsrVTqRNh+4M9kK0c7vwuigfw/2hwuvyqQ5C5Wo=;
+	s=korg; t=1672241042;
+	bh=JuJf+d/y6bvJQ2oX+OqYizt3ypu/VUeJEIGZXe7F+fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWX6xYpoTZFS3X4O1cEQ4n6Jrz5jRQhcxFSkLxG3i0VhW+MdxVeYHuP6SsmAX/gm/
-	 gaWgIRDC2dY9gUn3PA9ArjbJKHYxuc3aiHOjq4Fvb0vFlViXoGKqds1CWZRnZj4t+Z
-	 QifBSMOy52oVPzynfsqW+cB7t6z5KtamfFe/W2M8=
+	b=uoQBgT19wO1blAqFmxVcGAsW7G2pcPMmKUiIzEx0nYBRRtlttmESikBG1JoLv31f/
+	 R6qtNNQXaeAVOcd3UGJwqT/kja3ejtHx/uQcOxwftCWcoVKV6RA3MoZESkOpYHXmmX
+	 aANsCi1qINe9DOyel2l6PWPbYk+HV3xZt7vfVkA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Jason Ekstrand <jason@jlekstrand.net>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Ramalingam C <ramalingam.c@intel.com>,
+	Akeem G Abodunrin <akeem.g.abodunrin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0198/1146] wifi: mac80211: fix ifdef symbol name
-Date: Wed, 28 Dec 2022 15:28:57 +0100
-Message-Id: <20221228144335.523267711@linuxfoundation.org>
+Subject: [PATCH 6.0 0233/1073] drm/i915: Fix compute pre-emption w/a to apply to compute engines
+Date: Wed, 28 Dec 2022 15:30:21 +0100
+Message-Id: <20221228144334.355326152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,33 +54,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 9d13aff91ecd3f077b432df35291c945bde585be ]
+[ Upstream commit c3bd49cd9a1043b963331e7fd874b380bed3f2bd ]
 
-This should of course be CONFIG_, not CPTCFG_, which is an
-artifact from working with backports.
+An earlier patch added support for compute engines. However, it missed
+enabling the anti-pre-emption w/a for the new engine class. So move
+the 'compute capable' flag earlier and use it for the pre-emption w/a
+test.
 
-Fixes: 9dd1953846c7 ("wifi: nl80211/mac80211: clarify link ID in control port TX")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: c674c5b9342e ("drm/i915/xehp: CCS should use RCS setup functions")
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Jason Ekstrand <jason@jlekstrand.net>
+Cc: "Michał Winiarski" <michal.winiarski@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>
+Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Ramalingam C <ramalingam.c@intel.com>
+Cc: Akeem G Abodunrin <akeem.g.abodunrin@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221006213813.1563435-3-John.C.Harrison@Intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c | 24 +++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 874f2a4d831d..cc10ee1ff8e9 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2973,7 +2973,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index 699308a1323d..3dd0af057e6b 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -486,6 +486,17 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 	engine->logical_mask = BIT(logical_instance);
+ 	__sprint_engine_name(engine);
  
- 		if (pre_conf_link_id != link_id &&
- 		    link_id != IEEE80211_LINK_UNSPECIFIED) {
--#ifdef CPTCFG_MAC80211_VERBOSE_DEBUG
-+#ifdef CONFIG_MAC80211_VERBOSE_DEBUG
- 			net_info_ratelimited("%s: dropped frame to %pM with bad link ID request (%d vs. %d)\n",
- 					     sdata->name, hdr.addr1,
- 					     pre_conf_link_id, link_id);
++	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
++	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
++	     engine->class == RENDER_CLASS)
++		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
++
++	/* features common between engines sharing EUs */
++	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
++		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
++		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
++	}
++
+ 	engine->props.heartbeat_interval_ms =
+ 		CONFIG_DRM_I915_HEARTBEAT_INTERVAL;
+ 	engine->props.max_busywait_duration_ns =
+@@ -498,20 +509,9 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 		CONFIG_DRM_I915_TIMESLICE_DURATION;
+ 
+ 	/* Override to uninterruptible for OpenCL workloads. */
+-	if (GRAPHICS_VER(i915) == 12 && engine->class == RENDER_CLASS)
++	if (GRAPHICS_VER(i915) == 12 && (engine->flags & I915_ENGINE_HAS_RCS_REG_STATE))
+ 		engine->props.preempt_timeout_ms = 0;
+ 
+-	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
+-	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
+-	     engine->class == RENDER_CLASS)
+-		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
+-
+-	/* features common between engines sharing EUs */
+-	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
+-		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
+-		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
+-	}
+-
+ 	/* Cap properties according to any system limits */
+ #define CLAMP_PROP(field) \
+ 	do { \
 -- 
 2.35.1
 
