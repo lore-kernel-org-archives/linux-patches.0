@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08201863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63849C433EF;
-	Wed, 28 Dec 2022 15:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB85C433D2;
+	Wed, 28 Dec 2022 15:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240729;
-	bh=ODsTsYmcglnQCN6gjPfBgID3WIYJsMRdwFXk/NMbGIA=;
+	s=korg; t=1672240732;
+	bh=2+yGkZGaNyCbSJI9rUMdqTnr556rvhFSXRwi13uONHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mfEbnPAr2ZeJIvQCDwVM8XWFNxIH43qwfFyWN/M+7WM2/bQs26MuiXz2ghsREf5u+
-	 y4lFhILI+bv0an2kfdNZDdO9vWIN0kd2kc5AiYIZp2t8WqWw+Ezw+yo6UggvhQZ3kJ
-	 hVJkEV1kg7rJBXYb/evIuy2Q3V37LMDonLR6WCw0=
+	b=NfUMxkfPbdx+CYuDHvCZq2AbHkPtciIo7i8fL8siI6d13dGZEE79dKFYr0tEAEMWw
+	 Hc88gRwFzYbIaAEw4S70N55DUE71QCbu7O/uadhIFM1FV6d3vHWncIM9xcaQ5XyayW
+	 LTuLnlLeNhe0n4hVuTf6Zw6VUvQD8mYYcoimS4EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hurley <jahurley@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0187/1073] platform/mellanox: mlxbf-pmc: Fix event typo
-Date: Wed, 28 Dec 2022 15:29:35 +0100
-Message-Id: <20221228144333.090786028@linuxfoundation.org>
+Subject: [PATCH 5.15 391/731] crypto: ccree - Remove debugfs when platform_driver_register failed
+Date: Wed, 28 Dec 2022 15:38:18 +0100
+Message-Id: <20221228144307.894012115@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,36 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Hurley <jahurley@nvidia.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit b0b698b80c56b0712f0d4346d51bf0363ba03068 ]
+[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
 
-Had a duplicate event typo, so just fixed the 1 character typo.
+When platform_driver_register failed, we need to remove debugfs,
+which will caused a resource leak, fix it.
 
-Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
-Signed-off-by: James Hurley <jahurley@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
-Link: https://lore.kernel.org/r/aadacdbbd3186c55e74ea9456fe011b77938eb6c.1670535330.git.jahurley@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Failed logs as follows:
+[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
+
+Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index 65b4a819f1bd..c2c9b0d3244c 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -358,7 +358,7 @@ static const struct mlxbf_pmc_events mlxbf_pmc_hnfnet_events[] = {
- 	{ 0x32, "DDN_DIAG_W_INGRESS" },
- 	{ 0x33, "DDN_DIAG_C_INGRESS" },
- 	{ 0x34, "DDN_DIAG_CORE_SENT" },
--	{ 0x35, "NDN_DIAG_S_OUT_OF_CRED" },
-+	{ 0x35, "NDN_DIAG_N_OUT_OF_CRED" },
- 	{ 0x36, "NDN_DIAG_S_OUT_OF_CRED" },
- 	{ 0x37, "NDN_DIAG_E_OUT_OF_CRED" },
- 	{ 0x38, "NDN_DIAG_W_OUT_OF_CRED" },
+diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
+index 790fa9058a36..41f0a404bdf9 100644
+--- a/drivers/crypto/ccree/cc_driver.c
++++ b/drivers/crypto/ccree/cc_driver.c
+@@ -656,9 +656,17 @@ static struct platform_driver ccree_driver = {
+ 
+ static int __init ccree_init(void)
+ {
++	int rc;
++
+ 	cc_debugfs_global_init();
+ 
+-	return platform_driver_register(&ccree_driver);
++	rc = platform_driver_register(&ccree_driver);
++	if (rc) {
++		cc_debugfs_global_fini();
++		return rc;
++	}
++
++	return 0;
+ }
+ module_init(ccree_init);
+ 
 -- 
 2.35.1
 
