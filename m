@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB03C433EF;
-	Wed, 28 Dec 2022 15:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048181863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD7AC433D2;
+	Wed, 28 Dec 2022 15:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241735;
-	bh=bmwe9hza0Kq2PcA9tFkgJDySBGKlVx+NuVKGOQmv3Mg=;
+	s=korg; t=1672241737;
+	bh=1TjtFbsIZv5NGqDHCzpNDsVKhY55ko3BCqipYKiYS64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ilyy+57xoqWO7KKmoXXTZ21Jj3+GPM5pCGREippPfUUx0PSnj7JC8EJ0miX5pvQzX
-	 YPu67xbFPIfInYqlCHYtWSIbokMRTCM3wT/v2Cj7beTBmaYf/kcUXoe4xuusJwvFdp
-	 aWbQyOeU7lDnRo+ZHpemGwAeinchTdhUa6BpbSQA=
+	b=HxSI2kPnaiwq0qLTtsyNqTuEnx11arVPsLv2wf3jGCwlFdiRgJVcIkCCHR2VmaWlD
+	 kOVoR+CezcaanpLwPFdSPJ447Vf+ZoAyfQw0wO9j6RoZaTZeFQ3bJriTHfoezH6l8k
+	 YpxZ46n+T5Hy9eNKarll/es2amd4VDOMRcCxCpqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0321/1073] nvmet: only allocate a single slab for bvecs
-Date: Wed, 28 Dec 2022 15:31:49 +0100
-Message-Id: <20221228144336.726985290@linuxfoundation.org>
+Subject: [PATCH 6.1 0283/1146] drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
+Date: Wed, 28 Dec 2022 15:30:22 +0100
+Message-Id: <20221228144337.827453477@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,164 +36,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit fa8f9ac42350edd3ce82d0d148a60f0fa088f995 ]
+[ Upstream commit c3a1aabce2d4087255de90100c3dad492e7d925c ]
 
-There is no need to have a separate slab cache for each namespace,
-and having separate ones creates duplicate debugs file names as well.
+As per the FIXME this code is entirely duplicate with what is already
+provided inside drm_dsc_compute_rc_parameters(), supposedly because that
+function was yielding "incorrect" results while in reality the panel
+driver(s?) used for testing were providing incorrect parameters.
 
-Fixes: d5eff33ee6f8 ("nvmet: add simple file backed ns support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+For example, this code from downstream assumed dsc->bits_per_pixel to
+contain an integer value, whereas the upstream drm_dsc_config struct
+stores it with 4 fractional bits.  drm_dsc_compute_rc_parameters()
+already accounts for this feat while the panel driver used for testing
+[1] wasn't, hence making drm_dsc_compute_rc_parameters() seem like it
+was returning an incorrect result.
+Other users of dsc->bits_per_pixel inside dsi_populate_dsc_params() also
+treat it in the same erroneous way, and will be addressed in a separate
+patch.
+In the end, using drm_dsc_compute_rc_parameters() spares both a lot of
+duplicate code and erratic behaviour.
+
+[1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=topic/pixel3_5.18-rc1&id=1d7d98ad564f1ec69e7525e07418918d90f247a1
+
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508939/
+Link: https://lore.kernel.org/r/20221026182824.876933-7-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c        | 22 ++++++++++++++--------
- drivers/nvme/target/io-cmd-file.c | 16 +++-------------
- drivers/nvme/target/nvmet.h       |  3 ++-
- 3 files changed, 19 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 64 +++---------------------------
+ 1 file changed, 6 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index aecb5853f8da..683b75a992b3 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -15,6 +15,7 @@
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 906ee38133c1..36d42f17331d 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -21,6 +21,7 @@
  
- #include "nvmet.h"
+ #include <video/mipi_display.h>
  
-+struct kmem_cache *nvmet_bvec_cache;
- struct workqueue_struct *buffered_io_wq;
- struct workqueue_struct *zbd_wq;
- static const struct nvmet_fabrics_ops *nvmet_transports[NVMF_TRTYPE_MAX];
-@@ -1631,26 +1632,28 @@ void nvmet_subsys_put(struct nvmet_subsys *subsys)
++#include <drm/display/drm_dsc_helper.h>
+ #include <drm/drm_of.h>
  
- static int __init nvmet_init(void)
+ #include "dsi.h"
+@@ -1749,14 +1750,6 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+ 
+ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
  {
--	int error;
-+	int error = -ENOMEM;
+-	int mux_words_size;
+-	int groups_per_line, groups_total;
+-	int min_rate_buffer_size;
+-	int hrd_delay;
+-	int pre_num_extra_mux_bits, num_extra_mux_bits;
+-	int slice_bits;
+-	int data;
+-	int final_value, final_scale;
+ 	int i;
  
- 	nvmet_ana_group_enabled[NVMET_DEFAULT_ANA_GRPID] = 1;
+ 	dsc->rc_model_size = 8192;
+@@ -1782,11 +1775,11 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	if (dsc->bits_per_pixel != 8)
+ 		dsc->initial_offset = 2048;	/* bpp = 12 */
  
-+	nvmet_bvec_cache = kmem_cache_create("nvmet-bvec",
-+			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec), 0,
-+			SLAB_HWCACHE_ALIGN, NULL);
-+	if (!nvmet_bvec_cache)
-+		return -ENOMEM;
-+
- 	zbd_wq = alloc_workqueue("nvmet-zbd-wq", WQ_MEM_RECLAIM, 0);
- 	if (!zbd_wq)
--		return -ENOMEM;
-+		goto out_destroy_bvec_cache;
+-	mux_words_size = 48;		/* bpc == 8/10 */
+-	if (dsc->bits_per_component == 12)
+-		mux_words_size = 64;
++	if (dsc->bits_per_component <= 10)
++		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
++	else
++		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
  
- 	buffered_io_wq = alloc_workqueue("nvmet-buffered-io-wq",
- 			WQ_MEM_RECLAIM, 0);
--	if (!buffered_io_wq) {
--		error = -ENOMEM;
-+	if (!buffered_io_wq)
- 		goto out_free_zbd_work_queue;
--	}
+-	dsc->mux_word_size = mux_words_size;
+ 	dsc->initial_xmit_delay = 512;
+ 	dsc->initial_scale_value = 32;
+ 	dsc->first_line_bpg_offset = 12;
+@@ -1798,52 +1791,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	dsc->rc_quant_incr_limit0 = 11;
+ 	dsc->rc_quant_incr_limit1 = 11;
  
- 	nvmet_wq = alloc_workqueue("nvmet-wq", WQ_MEM_RECLAIM, 0);
--	if (!nvmet_wq) {
--		error = -ENOMEM;
-+	if (!nvmet_wq)
- 		goto out_free_buffered_work_queue;
--	}
- 
- 	error = nvmet_init_discovery();
- 	if (error)
-@@ -1669,6 +1672,8 @@ static int __init nvmet_init(void)
- 	destroy_workqueue(buffered_io_wq);
- out_free_zbd_work_queue:
- 	destroy_workqueue(zbd_wq);
-+out_destroy_bvec_cache:
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 	return error;
- }
- 
-@@ -1680,6 +1685,7 @@ static void __exit nvmet_exit(void)
- 	destroy_workqueue(nvmet_wq);
- 	destroy_workqueue(buffered_io_wq);
- 	destroy_workqueue(zbd_wq);
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_entry) != 1024);
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_hdr) != 1024);
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index 64b47e2a4633..e55ec6fefd7f 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -11,7 +11,6 @@
- #include <linux/fs.h>
- #include "nvmet.h"
- 
--#define NVMET_MAX_MPOOL_BVEC		16
- #define NVMET_MIN_MPOOL_OBJ		16
- 
- void nvmet_file_ns_revalidate(struct nvmet_ns *ns)
-@@ -26,8 +25,6 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
- 			flush_workqueue(buffered_io_wq);
- 		mempool_destroy(ns->bvec_pool);
- 		ns->bvec_pool = NULL;
--		kmem_cache_destroy(ns->bvec_cache);
--		ns->bvec_cache = NULL;
- 		fput(ns->file);
- 		ns->file = NULL;
- 	}
-@@ -59,16 +56,8 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 	ns->blksize_shift = min_t(u8,
- 			file_inode(ns->file)->i_blkbits, 12);
- 
--	ns->bvec_cache = kmem_cache_create("nvmet-bvec",
--			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec),
--			0, SLAB_HWCACHE_ALIGN, NULL);
--	if (!ns->bvec_cache) {
--		ret = -ENOMEM;
--		goto err;
--	}
+-	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+-	 * params are calculated
+-	 */
+-	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
+-	dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
 -
- 	ns->bvec_pool = mempool_create(NVMET_MIN_MPOOL_OBJ, mempool_alloc_slab,
--			mempool_free_slab, ns->bvec_cache);
-+			mempool_free_slab, nvmet_bvec_cache);
- 
- 	if (!ns->bvec_pool) {
- 		ret = -ENOMEM;
-@@ -77,9 +66,10 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 
- 	return ret;
- err:
-+	fput(ns->file);
-+	ns->file = NULL;
- 	ns->size = 0;
- 	ns->blksize_shift = 0;
--	nvmet_file_ns_disable(ns);
- 	return ret;
+-	/* rbs-min */
+-	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
+-				dsc->initial_xmit_delay * dsc->bits_per_pixel +
+-				groups_per_line * dsc->first_line_bpg_offset;
+-
+-	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
+-
+-	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
+-
+-	dsc->initial_scale_value = 8 * dsc->rc_model_size /
+-				       (dsc->rc_model_size - dsc->initial_offset);
+-
+-	slice_bits = 8 * dsc->slice_chunk_size * dsc->slice_height;
+-
+-	groups_total = groups_per_line * dsc->slice_height;
+-
+-	data = dsc->first_line_bpg_offset * 2048;
+-
+-	dsc->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->slice_height - 1));
+-
+-	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->bits_per_component + 4) - 2);
+-
+-	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+-			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+-
+-	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
+-	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+-
+-	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
+-	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
+-	dsc->final_offset = final_value;
+-
+-	final_scale = 8 * dsc->rc_model_size / (dsc->rc_model_size - final_value);
+-
+-	data = (final_scale - 9) * (dsc->nfl_bpg_offset + dsc->slice_bpg_offset);
+-	dsc->scale_increment_interval = (2048 * dsc->final_offset) / data;
+-
+-	dsc->scale_decrement_interval = groups_per_line / (dsc->initial_scale_value - 8);
+-
+-	return 0;
++	return drm_dsc_compute_rc_parameters(dsc);
  }
  
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index dfe3894205aa..bda1c1f71f39 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -77,7 +77,6 @@ struct nvmet_ns {
- 
- 	struct completion	disable_done;
- 	mempool_t		*bvec_pool;
--	struct kmem_cache	*bvec_cache;
- 
- 	int			use_p2pmem;
- 	struct pci_dev		*p2p_dev;
-@@ -393,6 +392,8 @@ struct nvmet_req {
- 	u64			error_slba;
- };
- 
-+#define NVMET_MAX_MPOOL_BVEC		16
-+extern struct kmem_cache *nvmet_bvec_cache;
- extern struct workqueue_struct *buffered_io_wq;
- extern struct workqueue_struct *zbd_wq;
- extern struct workqueue_struct *nvmet_wq;
+ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
 -- 
 2.35.1
 
