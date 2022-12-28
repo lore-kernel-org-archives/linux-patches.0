@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CCF1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E85C433EF;
-	Wed, 28 Dec 2022 16:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0375F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1ABC433D2;
+	Wed, 28 Dec 2022 16:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243933;
-	bh=pvlQrj2X9CHWoDjKElzDkcTQ3pvjEyggMdRDMY+TNDk=;
+	s=korg; t=1672243935;
+	bh=xFZx9leuCJgbMXiiX9g1ARpxtzdYalSiEPvhxz40504=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZQzFYYU6p5m4y5iD6lNNssLK8cwl/+LsbuzAOPdANfjT8ufTMrzKNv3LPDEES5Wi
-	 BRlznbMlV1mhHf+ki4WvQqk74TXUaN/mM70bixuiu/HPL2TmT3EsvUxHfFU2BBkVKH
-	 X00dxHQ3MJBIZWNZ/dSNq9X/y9tw6zkBJxk9ci20=
+	b=Xb5PlhvuRScQb2bnll2WPsQnYW+rWYhLzqGDWBn6wm3fmb+IlRkJMp3bD8pj8HTAI
+	 jPryi5dEO2ejHWaXEkpgf0SysPWPkeBUvAF5naeivIAxcMwR+ngvV8bwQggGN17WEX
+	 UT16zGlRVFm6sf6GgOM0PKUHs71yY5RZSzi8AA6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0618/1073] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
-Date: Wed, 28 Dec 2022 15:36:46 +0100
-Message-Id: <20221228144344.829117667@linuxfoundation.org>
+Subject: [PATCH 6.1 0582/1146] PCI: dwc: Fix n_fts[] array overrun
+Date: Wed, 28 Dec 2022 15:35:21 +0100
+Message-Id: <20221228144345.982672329@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
+[ Upstream commit 66110361281b2f7da0c8bd51eaf1f152f4236035 ]
 
-In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
-sas_rphy_free() needs be called to free the resource allocated in
-sas_end_device_alloc(). Otherwise a kernel crash will happen:
+commit aeaa0bfe89654 ("PCI: dwc: Move N_FTS setup to common setup")
+incorrectly uses pci->link_gen in deriving the index to the
+n_fts[] array also introducing the issue of accessing beyond the
+boundaries of array for greater than Gen-2 speeds. This change fixes
+that issue.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- scsih_remove+0xd8/0x420 [mpt3sas]
-
-Because transport_add_device() is not called when sas_rphy_add() fails, the
-device is not added. When sas_rphy_remove() is subsequently called to
-remove the device in the remove() path, a NULL pointer dereference happens.
-
-Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20220926111923.22487-1-vidyas@nvidia.com
+Fixes: aeaa0bfe8965 ("PCI: dwc: Move N_FTS setup to common setup")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Jingoo Han <jingoohan1@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index 0681daee6c14..e5ecd6ada6cd 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -829,6 +829,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 	if ((sas_rphy_add(rphy))) {
- 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
- 			__FILE__, __LINE__, __func__);
-+		sas_rphy_free(rphy);
-+		rphy = NULL;
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index c6725c519a47..9e4d96e5a3f5 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -641,7 +641,7 @@ void dw_pcie_setup(struct dw_pcie *pci)
+ 	if (pci->n_fts[1]) {
+ 		val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
+ 		val &= ~PORT_LOGIC_N_FTS_MASK;
+-		val |= pci->n_fts[pci->link_gen - 1];
++		val |= pci->n_fts[1];
+ 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
  	}
  
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
 -- 
 2.35.1
 
