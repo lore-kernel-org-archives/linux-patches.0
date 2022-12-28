@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07F21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57867C433EF;
-	Wed, 28 Dec 2022 16:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839C61C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0995BC433D2;
+	Wed, 28 Dec 2022 16:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244539;
-	bh=UGrJQkGLYnITeM1Zh1Zc8PyDtNFRBhOBeZLvoF7bcVk=;
+	s=korg; t=1672244542;
+	bh=9+uHZHSAkDZhS97Ugx/m5mbrwWz2dUQfjfjKPOjrGGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNFgfrzhD2w21TXBcSpc8odySsLcDENEIg3rVF7JctDHOSldXDMZXUiS2AYLc6z5k
-	 xgsbrOGsBsH5yDIy8RC2+STXZJJ/A4RT4eyR6lMiM1/bzB7NeAqv5qXPaC7Hj2T3yL
-	 9+oT8q+L6ezC9pjN54PhnS+2tkI4JF/9mkxVyMYw=
+	b=dkQPR3ZVWr+zK/smChV/Zx7zfGFB2FXl5ereIgmnSPwKpOWbwck9NixRRv1A92e0t
+	 9alwwGw+MDzZGmVYwR0aKmTiIsQ70q0LbM93rph/QDz0wOnrY65F1tOcSq2tXVEGzi
+	 4w77X1Qfau8i3FjsY30OTs8OUIpfMz9K+zDfbLx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Helge Deller <deller@gmx.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0729/1073] fbdev: ssd1307fb: Drop optional dependency
-Date: Wed, 28 Dec 2022 15:38:37 +0100
-Message-Id: <20221228144347.824351003@linuxfoundation.org>
+Subject: [PATCH 6.1 0691/1146] class: fix possible memory leak in __class_register()
+Date: Wed, 28 Dec 2022 15:37:10 +0100
+Message-Id: <20221228144348.912545793@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +34,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
+[ Upstream commit 8c3e8a6bdb5253b97ad532570f8b5db5f7a06407 ]
 
-Only a single out of three devices need a PWM, so from driver it's
-optional. Moreover it's a single driver in the entire kernel that
-currently selects PWM. Unfortunately this selection is a root cause
-of the circular dependencies when we want to enable optional PWM
-for some other drivers that select GPIOLIB.
+If class_add_groups() returns error, the 'cp->subsys' need be
+unregister, and the 'cp' need be freed.
 
-Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+We can not call kset_unregister() here, because the 'cls' will
+be freed in callback function class_release() and it's also
+freed in caller's error path, it will cause double free.
+
+So fix this by calling kobject_del() and kfree_const(name) to
+cleanup kobject. Besides, call kfree() to free the 'cp'.
+
+Fault injection test can trigger this:
+
+unreferenced object 0xffff888102fa8190 (size 8):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 8 bytes):
+    70 6b 74 63 64 76 64 00                          pktcdvd.
+  backtrace:
+    [<00000000e7c7703d>] __kmalloc_track_caller+0x1ae/0x320
+    [<000000005e4d70bc>] kstrdup+0x3a/0x70
+    [<00000000c2e5e85a>] kstrdup_const+0x68/0x80
+    [<000000000049a8c7>] kvasprintf_const+0x10b/0x190
+    [<0000000029123163>] kobject_set_name_vargs+0x56/0x150
+    [<00000000747219c9>] kobject_set_name+0xab/0xe0
+    [<0000000005f1ea4e>] __class_register+0x15c/0x49a
+
+unreferenced object 0xffff888037274000 (size 1024):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 32 bytes):
+    00 40 27 37 80 88 ff ff 00 40 27 37 80 88 ff ff  .@'7.....@'7....
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+  backtrace:
+    [<00000000151f9600>] kmem_cache_alloc_trace+0x17c/0x2f0
+    [<00000000ecf3dd95>] __class_register+0x86/0x49a
+
+Fixes: ced6473e7486 ("driver core: class: add class_groups support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221026082803.3458760-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/base/class.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
-index cfc55273dc5d..9497fe929162 100644
---- a/drivers/video/fbdev/Kconfig
-+++ b/drivers/video/fbdev/Kconfig
-@@ -2217,7 +2217,6 @@ config FB_SSD1307
- 	select FB_SYS_COPYAREA
- 	select FB_SYS_IMAGEBLIT
- 	select FB_DEFERRED_IO
--	select PWM
- 	select FB_BACKLIGHT
- 	help
- 	  This driver implements support for the Solomon SSD1307
+diff --git a/drivers/base/class.c b/drivers/base/class.c
+index 64f7b9a0970f..8ceafb7d0203 100644
+--- a/drivers/base/class.c
++++ b/drivers/base/class.c
+@@ -192,6 +192,11 @@ int __class_register(struct class *cls, struct lock_class_key *key)
+ 	}
+ 	error = class_add_groups(class_get(cls), cls->class_groups);
+ 	class_put(cls);
++	if (error) {
++		kobject_del(&cp->subsys.kobj);
++		kfree_const(cp->subsys.kobj.name);
++		kfree(cp);
++	}
+ 	return error;
+ }
+ EXPORT_SYMBOL_GPL(__class_register);
 -- 
 2.35.1
 
