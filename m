@@ -1,49 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EE01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68C4C433D2;
-	Wed, 28 Dec 2022 15:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6841863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ED2C433EF;
+	Wed, 28 Dec 2022 15:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241363;
-	bh=LbPBkLsQ7kmazh9kDWXgxYRjhKF5eyLSrujJg/KWihc=;
+	s=korg; t=1672241366;
+	bh=Ahna/NP30srCdrx7nAND2cBio79OnK2NRZyRY2pwK7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YrWzzCUIi+oJGPmr3fvXol5I0VQi1H8Ak3wDpDUFjFCk89s4qtDJTEGVQj/6Fl1it
-	 ZN9EXtFjozrRvtLHjDXoElV3lkbdwxtlDFOB69LVhOwY2IZW7jefR2zf7lOyEfPVtS
-	 Emu/gAm0qlLoz/92/ZN6XFrrBMza3vdLYwOM240Y=
+	b=kUztqynsE09lxpEif8jveq3jtpylTDeLyU1DvYTQ3IehOXVPz0KJR0YU9AkSraYuP
+	 XWaWSSnpkhz92czcaNjWFIyZ8ThbDEgZbg08Ntuudi+UawunqJFDZYrseSx+kVrT93
+	 I3UZUwOnE1WmSTgPkj9S8WyvCKzvyd0VedoZIxPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Jason Ekstrand <jason@jlekstrand.net>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Ramalingam C <ramalingam.c@intel.com>,
-	Akeem G Abodunrin <akeem.g.abodunrin@intel.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0237/1146] drm/i915: Fix compute pre-emption w/a to apply to compute engines
-Date: Wed, 28 Dec 2022 15:29:36 +0100
-Message-Id: <20221228144336.575818881@linuxfoundation.org>
+Subject: [PATCH 6.0 0271/1073] drm/msm/dpu1: Account for DSCs bits_per_pixel having 4 fractional bits
+Date: Wed, 28 Dec 2022 15:30:59 +0100
+Message-Id: <20221228144335.377928886@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -54,89 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit c3bd49cd9a1043b963331e7fd874b380bed3f2bd ]
+[ Upstream commit d3c1a8663d0ddb74eaa51121ccbb8340739a12a8 ]
 
-An earlier patch added support for compute engines. However, it missed
-enabling the anti-pre-emption w/a for the new engine class. So move
-the 'compute capable' flag earlier and use it for the pre-emption w/a
-test.
+According to the comment this DPU register contains the bits per pixel
+as a 6.4 fractional value, conveniently matching the contents of
+bits_per_pixel in struct drm_dsc_config which also uses 4 fractional
+bits.  However, the downstream source this implementation was
+copy-pasted from has its bpp field stored _without_ fractional part.
 
-Fixes: c674c5b9342e ("drm/i915/xehp: CCS should use RCS setup functions")
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Jason Ekstrand <jason@jlekstrand.net>
-Cc: "Michał Winiarski" <michal.winiarski@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-Cc: Stuart Summers <stuart.summers@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Ramalingam C <ramalingam.c@intel.com>
-Cc: Akeem G Abodunrin <akeem.g.abodunrin@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221006213813.1563435-3-John.C.Harrison@Intel.com
+This makes the entire convoluted math obsolete as it is impossible to
+pull those 4 fractional bits out of thin air, by somehow trying to reuse
+the lowest 2 bits of a non-fractional bpp (lsb = bpp % 4??).
+
+The rest of the code merely attempts to keep the integer part a multiple
+of 4, which is rendered useless thanks to data |= dsc->bits_per_pixel <<
+12; already filling up those bits anyway (but not on downstream).
+
+Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508946/
+Link: https://lore.kernel.org/r/20221026182824.876933-10-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_cs.c | 24 +++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-index d6cc90ae70c9..83bfeb872bda 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-@@ -486,6 +486,17 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
- 	engine->logical_mask = BIT(logical_instance);
- 	__sprint_engine_name(engine);
- 
-+	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
-+	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
-+	     engine->class == RENDER_CLASS)
-+		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
-+
-+	/* features common between engines sharing EUs */
-+	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
-+		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
-+		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
-+	}
-+
- 	engine->props.heartbeat_interval_ms =
- 		CONFIG_DRM_I915_HEARTBEAT_INTERVAL;
- 	engine->props.max_busywait_duration_ns =
-@@ -498,20 +509,9 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
- 		CONFIG_DRM_I915_TIMESLICE_DURATION;
- 
- 	/* Override to uninterruptible for OpenCL workloads. */
--	if (GRAPHICS_VER(i915) == 12 && engine->class == RENDER_CLASS)
-+	if (GRAPHICS_VER(i915) == 12 && (engine->flags & I915_ENGINE_HAS_RCS_REG_STATE))
- 		engine->props.preempt_timeout_ms = 0;
- 
--	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
--	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
--	     engine->class == RENDER_CLASS)
--		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+index f2ddcfb6f7ee..3662df698dae 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+@@ -42,7 +42,7 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+ 			      u32 initial_lines)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+-	u32 data, lsb, bpp;
++	u32 data;
+ 	u32 slice_last_group_size;
+ 	u32 det_thresh_flatness;
+ 	bool is_cmd_mode = !(mode & DSC_MODE_VIDEO);
+@@ -56,14 +56,7 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+ 	data = (initial_lines << 20);
+ 	data |= ((slice_last_group_size - 1) << 18);
+ 	/* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+-	data |= dsc->bits_per_pixel << 12;
+-	lsb = dsc->bits_per_pixel % 4;
+-	bpp = dsc->bits_per_pixel / 4;
+-	bpp *= 4;
+-	bpp <<= 4;
+-	bpp |= lsb;
 -
--	/* features common between engines sharing EUs */
--	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
--		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
--		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
--	}
--
- 	/* Cap properties according to any system limits */
- #define CLAMP_PROP(field) \
- 	do { \
+-	data |= bpp << 8;
++	data |= (dsc->bits_per_pixel << 8);
+ 	data |= (dsc->block_pred_enable << 7);
+ 	data |= (dsc->line_buf_depth << 3);
+ 	data |= (dsc->simple_422 << 2);
 -- 
 2.35.1
 
