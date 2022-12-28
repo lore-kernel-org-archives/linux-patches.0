@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EE51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FCAC433EF;
-	Wed, 28 Dec 2022 15:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702841863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93C4C433EF;
+	Wed, 28 Dec 2022 15:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240438;
-	bh=PCWzEaybhJ4ZtyWCSo+H0GuBY9Q8YxgUjAqg68gIfYE=;
+	s=korg; t=1672240441;
+	bh=gl5nlAu75CzZC/pEqUgjcTjAV8+/LRQ+Np8AdqWCzfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qa5hrvseBWuMYjdJFrNt2ArBfs35JRAc6rbU3CIGGHtEH3Zi+2uzWKgyZKfyrZ+jO
-	 yf0rne/8JqgO2yeuVU4xXepq74eQe2VbR4HvXOSMlT39upiKhCBaUn4PHqHxYi2VL6
-	 MN1C92oVisvWqG8K70JRz7YlQa9MrJmJ1kNEiU9o=
+	b=0j20XyQGBKb+yjMQocl7RIhQy/g1kT+8yjNeaw3vLGGCQiklVNx4KBUtoO9pKTZMt
+	 PdMDMIb8TNHW535r6JLbOF0oVvQBFpWGBRU6j28JdQ1sAKm2e9KB1+S5pMXwsycZEu
+	 k1xTGVmTGTc3+73IvrsE+J122f1FM2c05ZaVguDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Seiji Nishikawa <snishika@redhat.com>,
+	Denys Vlasenko <dvlasenk@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 353/731] Bluetooth: hci_core: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:37:40 +0100
-Message-Id: <20221228144306.796212799@linuxfoundation.org>
+Subject: [PATCH 6.0 0161/1073] uprobes/x86: Allow to probe a NOP instruction with 0x66 prefix
+Date: Wed, 28 Dec 2022 15:29:09 +0100
+Message-Id: <20221228144332.392269957@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 39c1eb6fcbae8ce9bb71b2ac5cb609355a2b181b ]
+[ Upstream commit cefa72129e45313655d53a065b8055aaeb01a0c9 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+Intel ICC -hotpatch inserts 2-byte "0x66 0x90" NOP at the start of each
+function to reserve extra space for hot-patching, and currently it is not
+possible to probe these functions because branch_setup_xol_ops() wrongly
+rejects NOP with REP prefix as it treats them like word-sized branch
+instructions.
 
-Fixes: 9238f36a5a50 ("Bluetooth: Add request cmd_complete and cmd_status functions")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 250bbd12c2fe ("uprobes/x86: Refuse to attach uprobe to "word-sized" branch insns")
+Reported-by: Seiji Nishikawa <snishika@redhat.com>
+Suggested-by: Denys Vlasenko <dvlasenk@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20221204173933.GA31544@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/uprobes.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index bb84ff5fb98a..a41b4dcf1a7a 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -5101,7 +5101,7 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
- 			*req_complete_skb = bt_cb(skb)->hci.req_complete_skb;
- 		else
- 			*req_complete = bt_cb(skb)->hci.req_complete;
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
+diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
+index b63cf8f7745e..6c07f6daaa22 100644
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -722,8 +722,9 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
+ 	switch (opc1) {
+ 	case 0xeb:	/* jmp 8 */
+ 	case 0xe9:	/* jmp 32 */
+-	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
+ 		break;
++	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
++		goto setup;
+ 
+ 	case 0xe8:	/* call relative */
+ 		branch_clear_offset(auprobe, insn);
+@@ -753,6 +754,7 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
+ 			return -ENOTSUPP;
  	}
- 	spin_unlock_irqrestore(&hdev->cmd_q.lock, flags);
- }
+ 
++setup:
+ 	auprobe->branch.opc1 = opc1;
+ 	auprobe->branch.ilen = insn->length;
+ 	auprobe->branch.offs = insn->immediate.value;
 -- 
 2.35.1
 
