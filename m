@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8D91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF0DC433D2;
-	Wed, 28 Dec 2022 16:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D178C433D2;
+	Wed, 28 Dec 2022 16:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246379;
-	bh=FzNuxnPPYExoY0cDF++vRdxD2C/bPSXUIv3mFgh85gE=;
+	s=korg; t=1672246381;
+	bh=VJogmBw8B5TDJSm1Dx40EjiDykgr1JCGBYsI90FICZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFKwXS2UHVyWPtHWC0D4vqJEe0NkiPJDD9+DnQE0DINrfLBAiwuBghNggLwFk2maC
-	 8NOahGQEFYbHmU4lH/v4ZBGTAjyYoH1r9NuMzX/2VyTFYLsg/ltJyjZN6K94S94TN1
-	 BDYQVhY0KcQG+6JQSwIMBJvPTw/cqWzW3M1WsW8g=
+	b=trqFX4TedF3Sar60tuoJbe74jE5nlgubi/bWvwLbQvsZj4UVq0OWNPQvNnRpPjdgc
+	 whJyg5dUt/15pbPo94YFfIi/r0nvUsimNejqe1W6YhMNYzjSfRR6JlKAjLBf6xtx1Y
+	 CYhIV2hUi3pjDe1YYziuSlDfmsoeVi4pEDkTEOn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Jasdeep Dhillon <jdhillon@amd.com>,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1029/1146] drm/amd/display: Use the largest vready_offset in pipe group
-Date: Wed, 28 Dec 2022 15:42:48 +0100
-Message-Id: <20221228144358.310637136@linuxfoundation.org>
+	Marco Patalano <mpatalan@redhat.com>,
+	Arun Easi <aeasi@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.0 1058/1073] scsi: qla2xxx: Fix crash when I/O abort times out
+Date: Wed, 28 Dec 2022 15:44:06 +0100
+Message-Id: <20221228144356.970736750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,141 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Arun Easi <aeasi@marvell.com>
 
-[ Upstream commit 5842abd985b792a3b13a89b6dae4869b56656c92 ]
+commit 68ad83188d782b2ecef2e41ac245d27e0710fe8e upstream.
 
-[WHY]
-Corruption can occur in LB if vready_offset is not large enough.
-DML calculates vready_offset for each pipe, but we currently select the
-top pipe's vready_offset, which is not necessarily enough for all pipes
-in the group.
+While performing CPU hotplug, a crash with the following stack was seen:
 
-[HOW]
-Wherever program_global_sync is currently called, iterate through the
-entire pipe group and find the highest vready_offset.
+Call Trace:
+     qla24xx_process_response_queue+0x42a/0x970 [qla2xxx]
+     qla2x00_start_nvme_mq+0x3a2/0x4b0 [qla2xxx]
+     qla_nvme_post_cmd+0x166/0x240 [qla2xxx]
+     nvme_fc_start_fcp_op.part.0+0x119/0x2e0 [nvme_fc]
+     blk_mq_dispatch_rq_list+0x17b/0x610
+     __blk_mq_sched_dispatch_requests+0xb0/0x140
+     blk_mq_sched_dispatch_requests+0x30/0x60
+     __blk_mq_run_hw_queue+0x35/0x90
+     __blk_mq_delay_run_hw_queue+0x161/0x180
+     blk_execute_rq+0xbe/0x160
+     __nvme_submit_sync_cmd+0x16f/0x220 [nvme_core]
+     nvmf_connect_admin_queue+0x11a/0x170 [nvme_fabrics]
+     nvme_fc_create_association.cold+0x50/0x3dc [nvme_fc]
+     nvme_fc_connect_ctrl_work+0x19/0x30 [nvme_fc]
+     process_one_work+0x1e8/0x3c0
 
-Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
-Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On abort timeout, completion was called without checking if the I/O was
+already completed.
+
+Verify that I/O and abort request are indeed outstanding before attempting
+completion.
+
+Fixes: 71c80b75ce8f ("scsi: qla2xxx: Do command completion on abort timeout")
+Reported-by: Marco Patalano <mpatalan@redhat.com>
+Tested-by: Marco Patalano <mpatalan@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Arun Easi <aeasi@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20221129092634.15347-1-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../amd/display/dc/dcn10/dcn10_hw_sequencer.c | 30 +++++++++++++++++--
- .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    | 29 ++++++++++++++++--
- 2 files changed, 55 insertions(+), 4 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-index 11e4c4e46947..c06538c37a11 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-@@ -867,6 +867,32 @@ static void false_optc_underflow_wa(
- 		tg->funcs->clear_optc_underflow(tg);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -110,6 +110,7 @@ static void qla24xx_abort_iocb_timeout(v
+ 	struct qla_qpair *qpair = sp->qpair;
+ 	u32 handle;
+ 	unsigned long flags;
++	int sp_found = 0, cmdsp_found = 0;
+ 
+ 	if (sp->cmd_sp)
+ 		ql_dbg(ql_dbg_async, sp->vha, 0x507c,
+@@ -124,18 +125,21 @@ static void qla24xx_abort_iocb_timeout(v
+ 	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
+ 	for (handle = 1; handle < qpair->req->num_outstanding_cmds; handle++) {
+ 		if (sp->cmd_sp && (qpair->req->outstanding_cmds[handle] ==
+-		    sp->cmd_sp))
++		    sp->cmd_sp)) {
+ 			qpair->req->outstanding_cmds[handle] = NULL;
++			cmdsp_found = 1;
++		}
+ 
+ 		/* removing the abort */
+ 		if (qpair->req->outstanding_cmds[handle] == sp) {
+ 			qpair->req->outstanding_cmds[handle] = NULL;
++			sp_found = 1;
+ 			break;
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
+ 
+-	if (sp->cmd_sp) {
++	if (cmdsp_found && sp->cmd_sp) {
+ 		/*
+ 		 * This done function should take care of
+ 		 * original command ref: INIT
+@@ -143,8 +147,10 @@ static void qla24xx_abort_iocb_timeout(v
+ 		sp->cmd_sp->done(sp->cmd_sp, QLA_OS_TIMER_EXPIRED);
+ 	}
+ 
+-	abt->u.abt.comp_status = cpu_to_le16(CS_TIMEOUT);
+-	sp->done(sp, QLA_OS_TIMER_EXPIRED);
++	if (sp_found) {
++		abt->u.abt.comp_status = cpu_to_le16(CS_TIMEOUT);
++		sp->done(sp, QLA_OS_TIMER_EXPIRED);
++	}
  }
  
-+static int calculate_vready_offset_for_group(struct pipe_ctx *pipe)
-+{
-+	struct pipe_ctx *other_pipe;
-+	int vready_offset = pipe->pipe_dlg_param.vready_offset;
-+
-+	/* Always use the largest vready_offset of all connected pipes */
-+	for (other_pipe = pipe->bottom_pipe; other_pipe != NULL; other_pipe = other_pipe->bottom_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->top_pipe; other_pipe != NULL; other_pipe = other_pipe->top_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->next_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->next_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->prev_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->prev_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+
-+	return vready_offset;
-+}
-+
- enum dc_status dcn10_enable_stream_timing(
- 		struct pipe_ctx *pipe_ctx,
- 		struct dc_state *context,
-@@ -910,7 +936,7 @@ enum dc_status dcn10_enable_stream_timing(
- 	pipe_ctx->stream_res.tg->funcs->program_timing(
- 			pipe_ctx->stream_res.tg,
- 			&stream->timing,
--			pipe_ctx->pipe_dlg_param.vready_offset,
-+			calculate_vready_offset_for_group(pipe_ctx),
- 			pipe_ctx->pipe_dlg_param.vstartup_start,
- 			pipe_ctx->pipe_dlg_param.vupdate_offset,
- 			pipe_ctx->pipe_dlg_param.vupdate_width,
-@@ -2900,7 +2926,7 @@ void dcn10_program_pipe(
- 
- 		pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 				pipe_ctx->stream_res.tg,
--				pipe_ctx->pipe_dlg_param.vready_offset,
-+				calculate_vready_offset_for_group(pipe_ctx),
- 				pipe_ctx->pipe_dlg_param.vstartup_start,
- 				pipe_ctx->pipe_dlg_param.vupdate_offset,
- 				pipe_ctx->pipe_dlg_param.vupdate_width);
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index a34c2cd78dd5..f348bc15a925 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1616,6 +1616,31 @@ static void dcn20_update_dchubp_dpp(
- 		hubp->funcs->phantom_hubp_post_enable(hubp);
- }
- 
-+static int calculate_vready_offset_for_group(struct pipe_ctx *pipe)
-+{
-+	struct pipe_ctx *other_pipe;
-+	int vready_offset = pipe->pipe_dlg_param.vready_offset;
-+
-+	/* Always use the largest vready_offset of all connected pipes */
-+	for (other_pipe = pipe->bottom_pipe; other_pipe != NULL; other_pipe = other_pipe->bottom_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->top_pipe; other_pipe != NULL; other_pipe = other_pipe->top_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->next_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->next_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->prev_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->prev_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+
-+	return vready_offset;
-+}
- 
- static void dcn20_program_pipe(
- 		struct dc *dc,
-@@ -1634,7 +1659,7 @@ static void dcn20_program_pipe(
- 			&& !pipe_ctx->prev_odm_pipe) {
- 		pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 				pipe_ctx->stream_res.tg,
--				pipe_ctx->pipe_dlg_param.vready_offset,
-+				calculate_vready_offset_for_group(pipe_ctx),
- 				pipe_ctx->pipe_dlg_param.vstartup_start,
- 				pipe_ctx->pipe_dlg_param.vupdate_offset,
- 				pipe_ctx->pipe_dlg_param.vupdate_width);
-@@ -2035,7 +2060,7 @@ bool dcn20_update_bandwidth(
- 
- 			pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 					pipe_ctx->stream_res.tg,
--					pipe_ctx->pipe_dlg_param.vready_offset,
-+					calculate_vready_offset_for_group(pipe_ctx),
- 					pipe_ctx->pipe_dlg_param.vstartup_start,
- 					pipe_ctx->pipe_dlg_param.vupdate_offset,
- 					pipe_ctx->pipe_dlg_param.vupdate_width);
--- 
-2.35.1
-
+ static void qla24xx_abort_sp_done(srb_t *sp, int res)
 
 
