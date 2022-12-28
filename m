@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676701868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B86C433F0;
-	Wed, 28 Dec 2022 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4E71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86655C433EF;
+	Wed, 28 Dec 2022 15:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240264;
-	bh=r+fIj9rI22pciiGWei/XhG78gxF9mEKm9Ku3Em0IRL4=;
+	s=korg; t=1672240266;
+	bh=n/C2t+sJi+BcjAa9Qf7vzV++y35dqIbsd7k4GwQBhUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AI1mR1fyjc8uzoIlmtKDZPUpCD2HNuTT3bJLmVpG7TiNnZxH6T3erkV8JwtE/s11P
-	 vq1q7e7hNHWXUZwNq1fh/FPCyw2DiGpdA4NLQm5YPPJQTnukbHeJ/FPJ+dx0crRUY9
-	 C6UQmZVJcHo4cOOaamXGahDKCmyts/86eSe7x2No=
+	b=I9E6D/P1FhnZlP67ctGvcOk3TYqE/rS7PA/4tDO4ppJnQzHGDOtLWBldvfvO4FC5Q
+	 4oy66fpOltgzc0XS+KjrP9T8GBDztfMIeqZM2L1WMpDX7uk9iqmGO61WHOyeJDMusa
+	 sHrBVVOza6PUOA62wYW92Yjft2T6PGRiQuR+vVXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Maxim Uvarov <maxim.uvarov@linaro.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0140/1073] NFSD: Finish converting the NFSv2 GETACL result encoder
-Date: Wed, 28 Dec 2022 15:28:48 +0100
-Message-Id: <20221228144331.833017897@linuxfoundation.org>
+Subject: [PATCH 6.1 0102/1146] tpm/tpm_ftpm_tee: Fix error handling in ftpm_mod_init()
+Date: Wed, 28 Dec 2022 15:27:21 +0100
+Message-Id: <20221228144332.914084249@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit ea5021e911d3479346a75ac9b7d9dcd751b0fb99 ]
+[ Upstream commit 2b7d07f7acaac2c7750e420dcf4414588ede6d03 ]
 
-The xdr_stream conversion inadvertently left some code that set the
-page_len of the send buffer. The XDR stream encoders should handle
-this automatically now.
+The ftpm_mod_init() returns the driver_register() directly without checking
+its return value, if driver_register() failed, the ftpm_tee_plat_driver is
+not unregistered.
 
-This oversight adds garbage past the end of the Reply message.
-Clients typically ignore the garbage, but NFSD does not need to send
-it, as it leaks stale memory contents onto the wire.
+Fix by unregister ftpm_tee_plat_driver when driver_register() failed.
 
-Fixes: f8cba47344f7 ("NFSD: Update the NFSv2 GETACL result encoder to use struct xdr_stream")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 9f1944c23c8c ("tpm_ftpm_tee: register driver on TEE bus")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Maxim Uvarov <maxim.uvarov@linaro.org>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/char/tpm/tpm_ftpm_tee.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index 9edd3c1a30fb..87f224cd30a8 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -246,7 +246,6 @@ nfsaclsvc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
- 	struct dentry *dentry = resp->fh.fh_dentry;
- 	struct inode *inode;
--	int w;
+diff --git a/drivers/char/tpm/tpm_ftpm_tee.c b/drivers/char/tpm/tpm_ftpm_tee.c
+index 5c233423c56f..deff23bb54bf 100644
+--- a/drivers/char/tpm/tpm_ftpm_tee.c
++++ b/drivers/char/tpm/tpm_ftpm_tee.c
+@@ -397,7 +397,13 @@ static int __init ftpm_mod_init(void)
+ 	if (rc)
+ 		return rc;
  
- 	if (!svcxdr_encode_stat(xdr, resp->status))
- 		return false;
-@@ -260,15 +259,6 @@ nfsaclsvc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
- 		return false;
+-	return driver_register(&ftpm_tee_driver.driver);
++	rc = driver_register(&ftpm_tee_driver.driver);
++	if (rc) {
++		platform_driver_unregister(&ftpm_tee_plat_driver);
++		return rc;
++	}
++
++	return 0;
+ }
  
--	rqstp->rq_res.page_len = w = nfsacl_size(
--		(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
--		(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
--	while (w > 0) {
--		if (!*(rqstp->rq_next_page++))
--			return true;
--		w -= PAGE_SIZE;
--	}
--
- 	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
- 				   resp->mask & NFS_ACL, 0))
- 		return false;
+ static void __exit ftpm_mod_exit(void)
 -- 
 2.35.1
 
