@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBFE1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C09C433D2;
-	Wed, 28 Dec 2022 16:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C561B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49172C433D2;
+	Wed, 28 Dec 2022 16:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244062;
-	bh=63tR6qPp/UwI1Ikt7A38gIkXkKy9HK27cS4inHeaIo8=;
+	s=korg; t=1672244064;
+	bh=GmCXSwPE5NP+SaO5s7kju7LigtOKyGlQFSX61WElufY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIKYZDXcETQ7AoFG8DDBcntoMW5RPTou2CRoDH22htkj0lYBNQV4stp5p2wJd4eEp
-	 +gmEKi1Ngj0y/mid9/18WYFFbyd5Y9ZPZW95hQ+Esy74SizLFuKkN2HEm8KT4E8/cr
-	 YLzyD2g5c7xM8LIzRUizvyJFUeHDrvlmZJ/I83fs=
+	b=2RW0dK3W9p7hB/8NmZHfh6uXlfaVDSUJKfGMM3/JebK2E75Uiz0tKL9JjO4QGtOGK
+	 MY9wqwxljG1IA+cGYubcqR8ciT0LW5N2bQqfrPtN3dvCK+pTxt/PmpUC/1uJnUtEfS
+	 wyzjBk7J84Fh06VC/hb92+lGKX80was9Qsh6TwFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tong Tiangen <tongtiangen@huawei.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0603/1146] RDMA/siw: Fix immediate work request flush to completion queue
-Date: Wed, 28 Dec 2022 15:35:42 +0100
-Message-Id: <20221228144346.552344368@linuxfoundation.org>
+Subject: [PATCH 6.0 0640/1073] riscv/mm: add arch hook arch_clear_hugepage_flags
+Date: Wed, 28 Dec 2022 15:37:08 +0100
+Message-Id: <20221228144345.423866209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,135 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Tong Tiangen <tongtiangen@huawei.com>
 
-[ Upstream commit bdf1da5df9da680589a7f74448dd0a94dd3e1446 ]
+[ Upstream commit d8bf77a1dc3079692f54be3087a5fd16d90027b0 ]
 
-Correctly set send queue element opcode during immediate work request
-flushing in post sendqueue operation, if the QP is in ERROR state.
-An undefined ocode value results in out-of-bounds access to an array
-for mapping the opcode between siw internal and RDMA core representation
-in work completion generation. It resulted in a KASAN BUG report
-of type 'global-out-of-bounds' during NFSoRDMA testing.
+With the PG_arch_1 we keep track if the page's data cache is clean,
+architecture rely on this property to treat new pages as dirty with
+respect to the data cache and perform the flushing before mapping the pages
+into userspace.
 
-This patch further fixes a potential case of a malicious user which may
-write undefined values for completion queue elements status or opcode,
-if the CQ is memory mapped to user land. It avoids the same out-of-bounds
-access to arrays for status and opcode mapping as described above.
+This patch adds a new architecture hook, arch_clear_hugepage_flags,so that
+architectures which rely on the page flags being in a particular state for
+fresh allocations can adjust the flags accordingly when a page is freed
+into the pool.
 
-Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
-Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20221107145057.895747-1-bmt@zurich.ibm.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 9e953cda5cdf ("riscv: Introduce huge page support for 32/64bit kernel")
+Signed-off-by: Tong Tiangen <tongtiangen@huawei.com>
+Link: https://lore.kernel.org/r/20221024094725.3054311-3-tongtiangen@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cq.c    | 24 ++++++++++++++--
- drivers/infiniband/sw/siw/siw_verbs.c | 40 ++++++++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ arch/riscv/include/asm/hugetlb.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
-index d68e37859e73..acc7bcd538b5 100644
---- a/drivers/infiniband/sw/siw/siw_cq.c
-+++ b/drivers/infiniband/sw/siw/siw_cq.c
-@@ -56,8 +56,6 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 	if (READ_ONCE(cqe->flags) & SIW_WQE_VALID) {
- 		memset(wc, 0, sizeof(*wc));
- 		wc->wr_id = cqe->id;
--		wc->status = map_cqe_status[cqe->status].ib;
--		wc->opcode = map_wc_opcode[cqe->opcode];
- 		wc->byte_len = cqe->bytes;
+diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
+index a5c2ca1d1cd8..ec19d6afc896 100644
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -5,4 +5,10 @@
+ #include <asm-generic/hugetlb.h>
+ #include <asm/page.h>
  
- 		/*
-@@ -71,10 +69,32 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 				wc->wc_flags = IB_WC_WITH_INVALIDATE;
- 			}
- 			wc->qp = cqe->base_qp;
-+			wc->opcode = map_wc_opcode[cqe->opcode];
-+			wc->status = map_cqe_status[cqe->status].ib;
- 			siw_dbg_cq(cq,
- 				   "idx %u, type %d, flags %2x, id 0x%pK\n",
- 				   cq->cq_get % cq->num_cqe, cqe->opcode,
- 				   cqe->flags, (void *)(uintptr_t)cqe->id);
-+		} else {
-+			/*
-+			 * A malicious user may set invalid opcode or
-+			 * status in the user mmapped CQE array.
-+			 * Sanity check and correct values in that case
-+			 * to avoid out-of-bounds access to global arrays
-+			 * for opcode and status mapping.
-+			 */
-+			u8 opcode = cqe->opcode;
-+			u16 status = cqe->status;
++static inline void arch_clear_hugepage_flags(struct page *page)
++{
++	clear_bit(PG_dcache_clean, &page->flags);
++}
++#define arch_clear_hugepage_flags arch_clear_hugepage_flags
 +
-+			if (opcode >= SIW_NUM_OPCODES) {
-+				opcode = 0;
-+				status = IB_WC_GENERAL_ERR;
-+			} else if (status >= SIW_NUM_WC_STATUS) {
-+				status = IB_WC_GENERAL_ERR;
-+			}
-+			wc->opcode = map_wc_opcode[opcode];
-+			wc->status = map_cqe_status[status].ib;
-+
- 		}
- 		WRITE_ONCE(cqe->flags, 0);
- 		cq->cq_get++;
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 3e814cfb298c..906fde1a2a0d 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -676,13 +676,45 @@ static int siw_copy_inline_sgl(const struct ib_send_wr *core_wr,
- static int siw_sq_flush_wr(struct siw_qp *qp, const struct ib_send_wr *wr,
- 			   const struct ib_send_wr **bad_wr)
- {
--	struct siw_sqe sqe = {};
- 	int rv = 0;
- 
- 	while (wr) {
--		sqe.id = wr->wr_id;
--		sqe.opcode = wr->opcode;
--		rv = siw_sqe_complete(qp, &sqe, 0, SIW_WC_WR_FLUSH_ERR);
-+		struct siw_sqe sqe = {};
-+
-+		switch (wr->opcode) {
-+		case IB_WR_RDMA_WRITE:
-+			sqe.opcode = SIW_OP_WRITE;
-+			break;
-+		case IB_WR_RDMA_READ:
-+			sqe.opcode = SIW_OP_READ;
-+			break;
-+		case IB_WR_RDMA_READ_WITH_INV:
-+			sqe.opcode = SIW_OP_READ_LOCAL_INV;
-+			break;
-+		case IB_WR_SEND:
-+			sqe.opcode = SIW_OP_SEND;
-+			break;
-+		case IB_WR_SEND_WITH_IMM:
-+			sqe.opcode = SIW_OP_SEND_WITH_IMM;
-+			break;
-+		case IB_WR_SEND_WITH_INV:
-+			sqe.opcode = SIW_OP_SEND_REMOTE_INV;
-+			break;
-+		case IB_WR_LOCAL_INV:
-+			sqe.opcode = SIW_OP_INVAL_STAG;
-+			break;
-+		case IB_WR_REG_MR:
-+			sqe.opcode = SIW_OP_REG_MR;
-+			break;
-+		default:
-+			rv = -EINVAL;
-+			break;
-+		}
-+		if (!rv) {
-+			sqe.id = wr->wr_id;
-+			rv = siw_sqe_complete(qp, &sqe, 0,
-+					      SIW_WC_WR_FLUSH_ERR);
-+		}
- 		if (rv) {
- 			if (bad_wr)
- 				*bad_wr = wr;
+ #endif /* _ASM_RISCV_HUGETLB_H */
 -- 
 2.35.1
 
