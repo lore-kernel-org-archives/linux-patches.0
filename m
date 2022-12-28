@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404861C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CB9C433D2;
-	Wed, 28 Dec 2022 16:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573421C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1BFC4339E;
+	Wed, 28 Dec 2022 16:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243861;
-	bh=NSnjBrBZ+AWvoKzJjSIouAQFi7wI3pN0wxopmdHS8LY=;
+	s=korg; t=1672243864;
+	bh=P0WVHBO8likUkQRHK5qupw0dPHZMWENdeFfIbGGBecE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juHAlZMZHlLjV6pjWdemwNFD9p8/PedOVAN+msLWVW9yGh2gHbQqR32xV3J/c0pTO
-	 0aP38ExNrRALada0CXnrLtUUwjZnz0YnFSJuD1D+IUgPVcUYpDx8B7lgEXq5hAXLZc
-	 DB8X2xhGw65t7EMJruyIkZFuzG4tgn9yhjhV2fSI=
+	b=kUrSl91a8h2jWGS5+mrRxMjKog7Iw260L2MGDg7w/+q4Lens/2dQYTwqT3X3TeuED
+	 6xZ+TAM2rIhaFIwC+9L7yYH6shXiBO8OpbDoSUcYMkJNBetkwvbIFjt/ea/2gBflWA
+	 +SDN8hdbn17uDbCdIaQGoq/l+hy5ImWi3leCdtFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0568/1146] stmmac: fix potential division by 0
-Date: Wed, 28 Dec 2022 15:35:07 +0100
-Message-Id: <20221228144345.597227603@linuxfoundation.org>
+Subject: [PATCH 6.0 0601/1073] RDMA/rxe: Fix mr->map double free
+Date: Wed, 28 Dec 2022 15:36:29 +0100
+Message-Id: <20221228144344.370808749@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,87 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
+[ Upstream commit 7d984dac8f6bf4ebd3398af82b357e1d181ecaac ]
 
-When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
-from the MAC reference clock (default), the clk_ptp_rate becomes too
-small and the calculated sub second increment becomes 0 when computed by
-the stmmac_config_sub_second_increment() function within
-stmmac_init_tstamp_counter().
+rxe_mr_cleanup() which tries to free mr->map again will be called when
+rxe_mr_init_user() fails:
 
-Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
-operation triggers a divide by 0 exception as shown below.
+   CPU: 0 PID: 4917 Comm: rdma_flush_serv Kdump: loaded Not tainted 6.1.0-rc1-roce-flush+ #25
+   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+   Call Trace:
+    <TASK>
+    dump_stack_lvl+0x45/0x5d
+    panic+0x19e/0x349
+    end_report.part.0+0x54/0x7c
+    kasan_report.cold+0xa/0xf
+    rxe_mr_cleanup+0x9d/0xf0 [rdma_rxe]
+    __rxe_cleanup+0x10a/0x1e0 [rdma_rxe]
+    rxe_reg_user_mr+0xb7/0xd0 [rdma_rxe]
+    ib_uverbs_reg_mr+0x26a/0x480 [ib_uverbs]
+    ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x1a2/0x250 [ib_uverbs]
+    ib_uverbs_cmd_verbs+0x1397/0x15a0 [ib_uverbs]
 
-[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
-[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
-[   95.095964] dwmac1000: Master AXI performs any burst length
-[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
-[   95.109428] Division by zero in kernel.
-[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
-[   95.123686] Hardware name: Altera SOCFPGA
-[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
-[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
-[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
-[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
-[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
-[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
-[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
-[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
-[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
-[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
-[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
-[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
-[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
-[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
-[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
-[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
-[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
-[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
-[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
-[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
-[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
-[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
+This issue was firstly exposed since commit b18c7da63fcb ("RDMA/rxe: Fix
+memory leak in error path code") and then we fixed it in commit
+8ff5f5d9d8cf ("RDMA/rxe: Prevent double freeing rxe_map_set()") but this
+fix was reverted together at last by commit 1e75550648da (Revert
+"RDMA/rxe: Create duplicate mapping tables for FMRs")
 
-Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
-Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Simply let rxe_mr_cleanup() always handle freeing the mr->map once it is
+successfully allocated.
+
+Fixes: 1e75550648da ("Revert "RDMA/rxe: Create duplicate mapping tables for FMRs"")
+Link: https://lore.kernel.org/r/1667099073-2-1-git-send-email-lizhijian@fujitsu.com
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mr.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 764832f4dae1..8b50f03056b7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -47,7 +47,8 @@ static void config_sub_second_increment(void __iomem *ioaddr,
- 	if (!(value & PTP_TCR_TSCTRLSSR))
- 		data = (data * 1000) / 465;
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index af34f198e645..8cd6f1b165d5 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -99,6 +99,7 @@ static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
+ 		kfree(mr->map[i]);
  
--	data &= PTP_SSIR_SSINC_MASK;
-+	if (data > PTP_SSIR_SSINC_MAX)
-+		data = PTP_SSIR_SSINC_MAX;
+ 	kfree(mr->map);
++	mr->map = NULL;
+ err1:
+ 	return -ENOMEM;
+ }
+@@ -122,7 +123,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 	int			num_buf;
+ 	void			*vaddr;
+ 	int err;
+-	int i;
  
- 	reg_value = data;
- 	if (gmac4)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-index 53172a439810..bf619295d079 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-@@ -64,7 +64,7 @@
- #define	PTP_TCR_TSENMACADDR	BIT(18)
+ 	umem = ib_umem_get(&rxe->ib_dev, start, length, access);
+ 	if (IS_ERR(umem)) {
+@@ -163,9 +163,8 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 				pr_warn("%s: Unable to get virtual address\n",
+ 						__func__);
+ 				err = -ENOMEM;
+-				goto err_cleanup_map;
++				goto err_release_umem;
+ 			}
+-
+ 			buf->addr = (uintptr_t)vaddr;
+ 			buf->size = PAGE_SIZE;
+ 			num_buf++;
+@@ -185,10 +184,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
  
- /* SSIR defines */
--#define	PTP_SSIR_SSINC_MASK		0xff
-+#define	PTP_SSIR_SSINC_MAX		0xff
- #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
+ 	return 0;
  
- /* Auxiliary Control defines */
+-err_cleanup_map:
+-	for (i = 0; i < mr->num_map; i++)
+-		kfree(mr->map[i]);
+-	kfree(mr->map);
+ err_release_umem:
+ 	ib_umem_release(umem);
+ err_out:
 -- 
 2.35.1
 
