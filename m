@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECC01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D3CC433D2;
-	Wed, 28 Dec 2022 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEB51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4794C433D2;
+	Wed, 28 Dec 2022 15:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239801;
-	bh=HYvGODctq/5rLDUBG29sPClg+MD7Rh8TIZ7V34lHyK4=;
+	s=korg; t=1672239804;
+	bh=6SQ70RZccRw/EhbzPjDFSwlXxLAY5Ne+GUKkdIONBpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GfO+U0811wlZKBiHORPpWv0Sd0vTR6h3sLoQ+bITq96xAsrLCeqmqNSz21oAcWkCp
-	 bPcXCRtS0hD4dqiCbxjHypQubqnIi/wb3kkzujJXufW/DcmlQdzIUktpjw/YjkQx1U
-	 kyU6/wZ+vtu2YyKZlZLgO5ZEYKMgw8OZOAwO+UMU=
+	b=bFu1ZdVsyiFJG3oRRiPr6tA7MNeg/F6/QolQEQ+rHYwcO2FR3d+n/Mvrv2JNBCvHX
+	 G1LIqh3/bImFjm7d9Ai4rNmMEpPIl6JU2tLDluOGQS54yI7G0gcVzd+ZRFzMerP3JY
+	 YxRaSihgJXpChR+gaz5oAkPjvjA4bd+Js11TYpGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Hector Martin <marcan@marcan.st>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0080/1073] soc: apple: sart: Stop casting function pointer signatures
-Date: Wed, 28 Dec 2022 15:27:48 +0100
-Message-Id: <20221228144330.240339289@linuxfoundation.org>
+Subject: [PATCH 5.15 272/731] clk: qcom: lpass-sc7180: Fix pm_runtime usage
+Date: Wed, 28 Dec 2022 15:36:19 +0100
+Message-Id: <20221228144304.458439314@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 422d0b860dc223b5dfc6d083697cae258bb5a4a1 ]
+[ Upstream commit ff1ccf59eaffd192efe21f7de9fb0c130faf1b1b ]
 
-Fixes: b170143ae111 ("soc: apple: Add SART driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
+The sc7180 lpass clock controller's pm_runtime usage wasn't broken
+quite as spectacularly as the sc7280's pm_runtime usage, but it was
+still broken. Putting some printouts in at boot showed me this (with
+serial console enabled, which makes the prints slow and thus changes
+timing):
+  [    3.109951] DOUG: my_pm_clk_resume, usage=1
+  [    3.114767] DOUG: my_pm_clk_resume, usage=1
+  [    3.664443] DOUG: my_pm_clk_suspend, usage=0
+  [    3.897566] DOUG: my_pm_clk_suspend, usage=0
+  [    3.910137] DOUG: my_pm_clk_resume, usage=1
+  [    3.923217] DOUG: my_pm_clk_resume, usage=0
+  [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
+  [    4.444982] DOUG: my_pm_clk_suspend, usage=0
+  [   14.170501] DOUG: my_pm_clk_resume, usage=1
+  [   14.176245] DOUG: my_pm_clk_resume, usage=0
+
+...or this w/out serial console:
+  [    0.556139] DOUG: my_pm_clk_resume, usage=1
+  [    0.556279] DOUG: my_pm_clk_resume, usage=1
+  [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
+  [    1.058464] DOUG: my_pm_clk_suspend, usage=0
+  [    1.186250] DOUG: my_pm_clk_resume, usage=1
+  [    1.186292] DOUG: my_pm_clk_resume, usage=0
+  [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
+  [    1.731557] DOUG: my_pm_clk_suspend, usage=0
+  [   10.288910] DOUG: my_pm_clk_resume, usage=1
+  [   10.289496] DOUG: my_pm_clk_resume, usage=0
+
+It seems to be doing roughly the right sequence of calls, but just
+like with sc7280 this is more by luck than anything. Having a usage of
+-1 is just not OK.
+
+Let's fix this like we did with sc7280.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/apple/sart.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/lpasscorecc-sc7180.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/apple/sart.c b/drivers/soc/apple/sart.c
-index 83804b16ad03..afa111736899 100644
---- a/drivers/soc/apple/sart.c
-+++ b/drivers/soc/apple/sart.c
-@@ -164,6 +164,11 @@ static int apple_sart_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
+index ac09b7b840ab..a5731994cbed 100644
+--- a/drivers/clk/qcom/lpasscorecc-sc7180.c
++++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
+@@ -356,7 +356,7 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
+ 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
+ };
+ 
+-static int lpass_create_pm_clks(struct platform_device *pdev)
++static int lpass_setup_runtime_pm(struct platform_device *pdev)
+ {
+ 	int ret;
+ 
+@@ -375,7 +375,7 @@ static int lpass_create_pm_clks(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+ 
+-	return ret;
++	return pm_runtime_resume_and_get(&pdev->dev);
  }
  
-+static void apple_sart_put_device(void *dev)
-+{
-+	put_device(dev);
-+}
-+
- struct apple_sart *devm_apple_sart_get(struct device *dev)
- {
- 	struct device_node *sart_node;
-@@ -187,7 +192,7 @@ struct apple_sart *devm_apple_sart_get(struct device *dev)
- 		return ERR_PTR(-EPROBE_DEFER);
- 	}
+ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+@@ -384,7 +384,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	struct regmap *regmap;
+ 	int ret;
  
--	ret = devm_add_action_or_reset(dev, (void (*)(void *))put_device,
-+	ret = devm_add_action_or_reset(dev, apple_sart_put_device,
- 				       &sart_pdev->dev);
+-	ret = lpass_create_pm_clks(pdev);
++	ret = lpass_setup_runtime_pm(pdev);
  	if (ret)
- 		return ERR_PTR(ret);
+ 		return ret;
+ 
+@@ -392,12 +392,14 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	desc = &lpass_audio_hm_sc7180_desc;
+ 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+ 	if (ret)
+-		return ret;
++		goto exit;
+ 
+ 	lpass_core_cc_sc7180_regmap_config.name = "lpass_core_cc";
+ 	regmap = qcom_cc_map(pdev, &lpass_core_cc_sc7180_desc);
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
++	if (IS_ERR(regmap)) {
++		ret = PTR_ERR(regmap);
++		goto exit;
++	}
+ 
+ 	/*
+ 	 * Keep the CLK always-ON
+@@ -415,6 +417,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	ret = qcom_cc_really_probe(pdev, &lpass_core_cc_sc7180_desc, regmap);
+ 
+ 	pm_runtime_mark_last_busy(&pdev->dev);
++exit:
+ 	pm_runtime_put_autosuspend(&pdev->dev);
+ 
+ 	return ret;
+@@ -425,14 +428,19 @@ static int lpass_hm_core_probe(struct platform_device *pdev)
+ 	const struct qcom_cc_desc *desc;
+ 	int ret;
+ 
+-	ret = lpass_create_pm_clks(pdev);
++	ret = lpass_setup_runtime_pm(pdev);
+ 	if (ret)
+ 		return ret;
+ 
+ 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
+ 	desc = &lpass_core_hm_sc7180_desc;
+ 
+-	return qcom_cc_probe_by_index(pdev, 0, desc);
++	ret = qcom_cc_probe_by_index(pdev, 0, desc);
++
++	pm_runtime_mark_last_busy(&pdev->dev);
++	pm_runtime_put_autosuspend(&pdev->dev);
++
++	return ret;
+ }
+ 
+ static const struct of_device_id lpass_hm_sc7180_match_table[] = {
 -- 
 2.35.1
 
