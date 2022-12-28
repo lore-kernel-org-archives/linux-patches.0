@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628491C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F83C433EF;
-	Wed, 28 Dec 2022 16:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15261C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CED1C433F0;
+	Wed, 28 Dec 2022 16:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245223;
-	bh=QxSUR4nYeki/U9OxdIBOBvWP0VUu4Wb6oL8wXCjPKmQ=;
+	s=korg; t=1672245225;
+	bh=T+MYcn/Y/qcdtAdrtyzgE3InQY06U4UYxo2sitkTqVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2y+9hteMkiSnqfypRcoGBt33BeSrjMc+dcDH6rjS0JZsRAykGPw7eGYMIYboKK7C
-	 GzD/Mr0kQapGPND0ipYodn+5JONZzjKLl552H6gYV9lwk0+sDkErlQ7OCUZqS5IK3b
-	 ciHQaX8OyjKiMvJhzixwf8jP8J3s8qn+HAkFLyds=
+	b=1ASyqUKwf2XobIBg7ANQW9aYMYOP0MjmqW1jSJAR47RmDL96RF9wWCOsB56GnH9si
+	 gQDp/gJzfZ30t6eBJQ6QPmwA508jKMpH24N0K7JiqRhrcto088E+60Ek/hRNhMbZ/u
+	 ihyAxAbSGn2sQDCLgbNDvhxt/mHLdtuaD+2Md3dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0818/1146] phy: usb: Use slow clock for wake enabled suspend
-Date: Wed, 28 Dec 2022 15:39:17 +0100
-Message-Id: <20221228144352.371246441@linuxfoundation.org>
+Subject: [PATCH 6.0 0854/1073] blk-crypto: pass a gendisk to blk_crypto_sysfs_{,un}register
+Date: Wed, 28 Dec 2022 15:40:42 +0100
+Message-Id: <20221228144351.215744571@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 700c44b508020a3ea29d297c677f8d4ab14b7e6a ]
+[ Upstream commit 450deb93df7d457cdd93594a1987f9650c749b96 ]
 
-The logic was incorrect when switching to slow clock. We want the slow
-clock if wake_enabled is set.
+Prepare for changes to the block layer sysfs handling by passing the
+readily available gendisk to blk_crypto_sysfs_{,un}register.
 
-Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-6-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221114042637.1009333-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ block/blk-crypto-internal.h | 10 ++++++----
+ block/blk-crypto-sysfs.c    |  7 ++++---
+ block/blk-sysfs.c           |  4 ++--
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-index d2524b70ea16..b3386e458dd4 100644
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -331,13 +331,12 @@ static void usb_uninit_common_7216(struct brcm_usb_init_params *params)
+diff --git a/block/blk-crypto-internal.h b/block/blk-crypto-internal.h
+index e6818ffaddbf..b8a00847171f 100644
+--- a/block/blk-crypto-internal.h
++++ b/block/blk-crypto-internal.h
+@@ -21,9 +21,9 @@ extern const struct blk_crypto_mode blk_crypto_modes[];
  
- 	pr_debug("%s\n", __func__);
+ #ifdef CONFIG_BLK_INLINE_ENCRYPTION
  
--	if (!params->wake_enabled) {
--		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
--
-+	if (params->wake_enabled) {
- 		/* Switch to using slower clock during suspend to save power */
- 		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
--	} else {
- 		usb_wake_enable_7216(params, true);
-+	} else {
-+		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
- 	}
+-int blk_crypto_sysfs_register(struct request_queue *q);
++int blk_crypto_sysfs_register(struct gendisk *disk);
+ 
+-void blk_crypto_sysfs_unregister(struct request_queue *q);
++void blk_crypto_sysfs_unregister(struct gendisk *disk);
+ 
+ void bio_crypt_dun_increment(u64 dun[BLK_CRYPTO_DUN_ARRAY_SIZE],
+ 			     unsigned int inc);
+@@ -67,12 +67,14 @@ static inline bool blk_crypto_rq_is_encrypted(struct request *rq)
+ 
+ #else /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 
+-static inline int blk_crypto_sysfs_register(struct request_queue *q)
++static inline int blk_crypto_sysfs_register(struct gendisk *disk)
+ {
+ 	return 0;
  }
  
+-static inline void blk_crypto_sysfs_unregister(struct request_queue *q) { }
++static inline void blk_crypto_sysfs_unregister(struct gendisk *disk)
++{
++}
+ 
+ static inline bool bio_crypt_rq_ctx_compatible(struct request *rq,
+ 					       struct bio *bio)
+diff --git a/block/blk-crypto-sysfs.c b/block/blk-crypto-sysfs.c
+index fd93bd2f33b7..e05f145cd797 100644
+--- a/block/blk-crypto-sysfs.c
++++ b/block/blk-crypto-sysfs.c
+@@ -126,8 +126,9 @@ static struct kobj_type blk_crypto_ktype = {
+  * If the request_queue has a blk_crypto_profile, create the "crypto"
+  * subdirectory in sysfs (/sys/block/$disk/queue/crypto/).
+  */
+-int blk_crypto_sysfs_register(struct request_queue *q)
++int blk_crypto_sysfs_register(struct gendisk *disk)
+ {
++	struct request_queue *q = disk->queue;
+ 	struct blk_crypto_kobj *obj;
+ 	int err;
+ 
+@@ -149,9 +150,9 @@ int blk_crypto_sysfs_register(struct request_queue *q)
+ 	return 0;
+ }
+ 
+-void blk_crypto_sysfs_unregister(struct request_queue *q)
++void blk_crypto_sysfs_unregister(struct gendisk *disk)
+ {
+-	kobject_put(q->crypto_kobject);
++	kobject_put(disk->queue->crypto_kobject);
+ }
+ 
+ static int __init blk_crypto_sysfs_init(void)
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 8822b4b6bed2..c8a1119c3950 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -833,7 +833,7 @@ int blk_register_queue(struct gendisk *disk)
+ 			goto put_dev;
+ 	}
+ 
+-	ret = blk_crypto_sysfs_register(q);
++	ret = blk_crypto_sysfs_register(disk);
+ 	if (ret)
+ 		goto put_dev;
+ 
+@@ -910,7 +910,7 @@ void blk_unregister_queue(struct gendisk *disk)
+ 	 */
+ 	if (queue_is_mq(q))
+ 		blk_mq_sysfs_unregister(disk);
+-	blk_crypto_sysfs_unregister(q);
++	blk_crypto_sysfs_unregister(disk);
+ 
+ 	mutex_lock(&q->sysfs_lock);
+ 	elv_unregister_queue(q);
 -- 
 2.35.1
 
