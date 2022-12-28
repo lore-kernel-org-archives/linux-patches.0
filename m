@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161581863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9124EC433D2;
-	Wed, 28 Dec 2022 15:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14281863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7A4C433D2;
+	Wed, 28 Dec 2022 15:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241837;
-	bh=wHvCMiDEAvVz8k7yAsD88jMAnGezdXv8HKXJaKfbMCA=;
+	s=korg; t=1672241840;
+	bh=cK9HfdiMGS09SrHtmCcwlDg+UehRq+u3y9E3r8xx+oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7MyjMGiTiXm4D+6cua4XQixxT0fxSr5MNUXN/MvRPMlL/XXNwSWqEAcCOEIV1ouk
-	 61XeTU3G+cPi/7ktdmAdo/Bj6FuikV/pf4atGk03IAe1WK62db55CbgTFDf/KQRbZa
-	 eI6SJe7q8TE975BN5PZbF6KUJiyO0SRicDSTCxkQ=
+	b=u/spvdFLsWUffgIEpomzomDSPxI862RAfK6bWoHX3tzTdDv38cCrk4JwFSBoRlAMS
+	 zUwP0qeG22rjwDdExXJqxlpyKFGD1hg9ytgY/Ljrj9d/egT4afTXPDuDrTQQKbC6Vt
+	 04GRP0cNdJwrW0jgoJBWMbcIg5G60A0uIty7rpxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 528/731] iommu/sun50i: Fix reset release
-Date: Wed, 28 Dec 2022 15:40:35 +0100
-Message-Id: <20221228144311.850001534@linuxfoundation.org>
+Subject: [PATCH 6.0 0333/1073] dm: make sure create and remove dm device wont race with open and close table
+Date: Wed, 28 Dec 2022 15:32:01 +0100
+Message-Id: <20221228144337.048891917@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 9ad0c1252e84dbc664f0462707182245ed603237 ]
+[ Upstream commit d563792c8933a810d28ce0f2831f0726c2b15a31 ]
 
-Reset signal is asserted by writing 0 to the corresponding locations of
-masters we want to reset. So in order to deassert all reset signals, we
-should write 1's to all locations.
+open_table_device() and close_table_device() is protected by
+table_devices_lock, hence use it to protect add_disk() and
+del_gendisk().
 
-Current code writes 1's to locations of masters which were just reset
-which is good. However, at the same time it also writes 0's to other
-locations and thus asserts reset signals of remaining masters. Fix code
-by writing all 1's when we want to deassert all reset signals.
+Prepare to track per-add_disk holder relations in dm.
 
-This bug was discovered when working with Cedrus (video decoder). When
-it faulted, display went blank due to reset signal assertion.
-
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-2-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221115141054.1051801-6-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 92997021e188..3fd1ee147953 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -27,6 +27,7 @@
- #include <linux/types.h>
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 620abcef2df5..e7fc2a69633c 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1965,7 +1965,14 @@ static void cleanup_mapped_device(struct mapped_device *md)
+ 		spin_unlock(&_minor_lock);
+ 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
+ 			dm_sysfs_exit(md);
++
++			/*
++			 * Hold lock to make sure del_gendisk() won't concurrent
++			 * with open/close_table_device().
++			 */
++			mutex_lock(&md->table_devices_lock);
+ 			del_gendisk(md->disk);
++			mutex_unlock(&md->table_devices_lock);
+ 		}
+ 		dm_queue_destroy_crypto_profile(md->queue);
+ 		put_disk(md->disk);
+@@ -2325,15 +2332,24 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
+ 	if (r)
+ 		return r;
  
- #define IOMMU_RESET_REG			0x010
-+#define IOMMU_RESET_RELEASE_ALL			0xffffffff
- #define IOMMU_ENABLE_REG		0x020
- #define IOMMU_ENABLE_ENABLE			BIT(0)
++	/*
++	 * Hold lock to make sure add_disk() and del_gendisk() won't concurrent
++	 * with open_table_device() and close_table_device().
++	 */
++	mutex_lock(&md->table_devices_lock);
+ 	r = add_disk(md->disk);
++	mutex_unlock(&md->table_devices_lock);
+ 	if (r)
+ 		return r;
  
-@@ -894,7 +895,7 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
- 
- 	iommu_write(iommu, IOMMU_RESET_REG, ~status);
--	iommu_write(iommu, IOMMU_RESET_REG, status);
-+	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
- 
- 	spin_unlock(&iommu->iommu_lock);
- 
+ 	r = dm_sysfs_init(md);
+ 	if (r) {
++		mutex_lock(&md->table_devices_lock);
+ 		del_gendisk(md->disk);
++		mutex_unlock(&md->table_devices_lock);
+ 		return r;
+ 	}
++
+ 	md->type = type;
+ 	return 0;
+ }
 -- 
 2.35.1
 
