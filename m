@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5841C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83C0C433EF;
-	Wed, 28 Dec 2022 16:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC11C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F401C433EF;
+	Wed, 28 Dec 2022 16:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243547;
-	bh=VKQfryT/iuoKXEWGlNMPXyOdVpScYOSuy2mBU3Mz0TY=;
+	s=korg; t=1672243549;
+	bh=bT5Fk04Bkb07fBBG+fbMfqZeGA2yX7czI1av1s6bY8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCWdtAUk8eZ0KDjvjPs1pSQC/b4e4N/t9TaDyBpOSeGhaqWedVxIznV+ZYTpBMpy0
-	 sF0x4w2VKFmFbRZhZjUYnT7cXwSPKHr/cKPnakJp//W3tGBfnfnzqBOflKFS/754Zk
-	 oWv1L7tcOep3npju2XOw3iBvWh92iIoc1W1Un7uc=
+	b=JZpdJ5iD0tni72A4BGYwOvZlZws7M5vkThqdbVBZO7COkJaUyA3G+nIgU3SMxXh8T
+	 O8cLosg6aaXOjGXKiOHv/KuYM3Xa32H+I+RfBYw7KHIrlpoWCc5lCJY9SHXx/TTB0t
+	 0hTxIYmDNaQ8eR6WUnuUUUXKq3fR1n95qCYzi+QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0510/1146] mmc: mmci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:09 +0100
-Message-Id: <20221228144344.028756761@linuxfoundation.org>
+Subject: [PATCH 6.0 0546/1073] Bluetooth: hci_h5: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:34 +0100
+Message-Id: <20221228144342.885809405@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,42 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b38a20f29a49ae04d23750d104b25400b792b98c ]
+[ Upstream commit 383630cc6758d619874c2e8bb2f68a61f3f9ef6e ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 43eb12d78960 ("Bluetooth: Fix/implement Three-wire reliable packet sending")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133539.3275664-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_h5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/mmci.c b/drivers/mmc/host/mmci.c
-index 012aa85489d8..b9e5dfe74e5c 100644
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2256,7 +2256,9 @@ static int mmci_probe(struct amba_device *dev,
- 	pm_runtime_set_autosuspend_delay(&dev->dev, 50);
- 	pm_runtime_use_autosuspend(&dev->dev);
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index c5a0409ef84f..6455bc4fb5bb 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -313,7 +313,7 @@ static void h5_pkt_cull(struct h5 *h5)
+ 			break;
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto clk_disable;
+ 		__skb_unlink(skb, &h5->unack);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 	}
  
- 	pm_runtime_put(&dev->dev);
- 	return 0;
+ 	if (skb_queue_empty(&h5->unack))
 -- 
 2.35.1
 
