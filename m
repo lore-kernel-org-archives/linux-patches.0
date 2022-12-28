@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760F91875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10F3C433D2;
-	Wed, 28 Dec 2022 15:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2036E1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9B2C433D2;
+	Wed, 28 Dec 2022 15:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242968;
-	bh=bGDsxwRMuhHdwn4tRIuRcfyfJm46g2xSTZ3EKUTpDM0=;
+	s=korg; t=1672242970;
+	bh=KU5932pjdhrvglRKigLEN1WSCikHdkmqEQYKAcOC468=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDRpeMFQTzEt7TUkmF5ivvLk5OofqnpCaLI7roH8+CL7NQ8g/z5mKwLb+9cmCWnYJ
-	 teLwyMxbxr/T9GFwt5ZpfWKZr0JuxdtOrEBW7aGKOh/7pl5k238i0jdEIrvvQ1MVU2
-	 J//tNiAeBa8xhmHYI1fZqCKMLGYRkZkfwfu1P6SQ=
+	b=TYYiz4lsdZ7GAVlXfGIpysrd6b9oiFnjeufDYB9yRfAkrLJWdFE9w9XLVKT6sSYRE
+	 Czo0Lgeys/K2zWf3tGJuqmUs3d8r6P1nUloSvLVUFYdC472F9vCkHNk0bFL5Pmwy6q
+	 rYYVJSIxI8b6wNiFrkLLbhzhF6qM1kHsiiEWBbhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Jasdeep Dhillon <jdhillon@amd.com>,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 666/731] drm/amd/display: Use the largest vready_offset in pipe group
-Date: Wed, 28 Dec 2022 15:42:53 +0100
-Message-Id: <20221228144315.793995911@linuxfoundation.org>
+Subject: [PATCH 6.0 0474/1073] NFS: Allow very small rsize & wsize again
+Date: Wed, 28 Dec 2022 15:34:22 +0100
+Message-Id: <20221228144340.909541821@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,139 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-[ Upstream commit 5842abd985b792a3b13a89b6dae4869b56656c92 ]
+[ Upstream commit a60214c2465493aac0b014d87ee19327b6204c42 ]
 
-[WHY]
-Corruption can occur in LB if vready_offset is not large enough.
-DML calculates vready_offset for each pipe, but we currently select the
-top pipe's vready_offset, which is not necessarily enough for all pipes
-in the group.
+940261a19508 introduced nfs_io_size() to clamp the iosize to a multiple
+of PAGE_SIZE. This had the unintended side effect of no longer allowing
+iosizes less than a page, which could be useful in some situations.
 
-[HOW]
-Wherever program_global_sync is currently called, iterate through the
-entire pipe group and find the highest vready_offset.
+UDP already has an exception that causes it to fall back on the
+power-of-two style sizes instead. This patch adds an additional
+exception for very small iosizes.
 
-Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
-Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 940261a19508 ("NFS: Allow setting rsize / wsize to a multiple of PAGE_SIZE")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dcn10/dcn10_hw_sequencer.c | 30 +++++++++++++++++--
- .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    | 29 ++++++++++++++++--
- 2 files changed, 55 insertions(+), 4 deletions(-)
+ fs/nfs/internal.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-index 91ab4dbbe1a6..c655d03ef754 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-@@ -804,6 +804,32 @@ static void false_optc_underflow_wa(
- 		tg->funcs->clear_optc_underflow(tg);
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 898dd95bc7a7..c194a1e50f0b 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -741,12 +741,10 @@ unsigned long nfs_io_size(unsigned long iosize, enum xprt_transports proto)
+ 		iosize = NFS_DEF_FILE_IO_SIZE;
+ 	else if (iosize >= NFS_MAX_FILE_IO_SIZE)
+ 		iosize = NFS_MAX_FILE_IO_SIZE;
+-	else
+-		iosize = iosize & PAGE_MASK;
+ 
+-	if (proto == XPRT_TRANSPORT_UDP)
++	if (proto == XPRT_TRANSPORT_UDP || iosize < PAGE_SIZE)
+ 		return nfs_block_bits(iosize, NULL);
+-	return iosize;
++	return iosize & PAGE_MASK;
  }
  
-+static int calculate_vready_offset_for_group(struct pipe_ctx *pipe)
-+{
-+	struct pipe_ctx *other_pipe;
-+	int vready_offset = pipe->pipe_dlg_param.vready_offset;
-+
-+	/* Always use the largest vready_offset of all connected pipes */
-+	for (other_pipe = pipe->bottom_pipe; other_pipe != NULL; other_pipe = other_pipe->bottom_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->top_pipe; other_pipe != NULL; other_pipe = other_pipe->top_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->next_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->next_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->prev_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->prev_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+
-+	return vready_offset;
-+}
-+
- enum dc_status dcn10_enable_stream_timing(
- 		struct pipe_ctx *pipe_ctx,
- 		struct dc_state *context,
-@@ -838,7 +864,7 @@ enum dc_status dcn10_enable_stream_timing(
- 	pipe_ctx->stream_res.tg->funcs->program_timing(
- 			pipe_ctx->stream_res.tg,
- 			&stream->timing,
--			pipe_ctx->pipe_dlg_param.vready_offset,
-+			calculate_vready_offset_for_group(pipe_ctx),
- 			pipe_ctx->pipe_dlg_param.vstartup_start,
- 			pipe_ctx->pipe_dlg_param.vupdate_offset,
- 			pipe_ctx->pipe_dlg_param.vupdate_width,
-@@ -2776,7 +2802,7 @@ void dcn10_program_pipe(
- 
- 		pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 				pipe_ctx->stream_res.tg,
--				pipe_ctx->pipe_dlg_param.vready_offset,
-+				calculate_vready_offset_for_group(pipe_ctx),
- 				pipe_ctx->pipe_dlg_param.vstartup_start,
- 				pipe_ctx->pipe_dlg_param.vupdate_offset,
- 				pipe_ctx->pipe_dlg_param.vupdate_width);
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 58eea3aa3bfc..bf2a8f53694b 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1564,6 +1564,31 @@ static void dcn20_update_dchubp_dpp(
- 		hubp->funcs->set_blank(hubp, false);
- }
- 
-+static int calculate_vready_offset_for_group(struct pipe_ctx *pipe)
-+{
-+	struct pipe_ctx *other_pipe;
-+	int vready_offset = pipe->pipe_dlg_param.vready_offset;
-+
-+	/* Always use the largest vready_offset of all connected pipes */
-+	for (other_pipe = pipe->bottom_pipe; other_pipe != NULL; other_pipe = other_pipe->bottom_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->top_pipe; other_pipe != NULL; other_pipe = other_pipe->top_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->next_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->next_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+	for (other_pipe = pipe->prev_odm_pipe; other_pipe != NULL; other_pipe = other_pipe->prev_odm_pipe) {
-+		if (other_pipe->pipe_dlg_param.vready_offset > vready_offset)
-+			vready_offset = other_pipe->pipe_dlg_param.vready_offset;
-+	}
-+
-+	return vready_offset;
-+}
- 
- static void dcn20_program_pipe(
- 		struct dc *dc,
-@@ -1582,7 +1607,7 @@ static void dcn20_program_pipe(
- 
- 		pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 				pipe_ctx->stream_res.tg,
--				pipe_ctx->pipe_dlg_param.vready_offset,
-+				calculate_vready_offset_for_group(pipe_ctx),
- 				pipe_ctx->pipe_dlg_param.vstartup_start,
- 				pipe_ctx->pipe_dlg_param.vupdate_offset,
- 				pipe_ctx->pipe_dlg_param.vupdate_width);
-@@ -1875,7 +1900,7 @@ bool dcn20_update_bandwidth(
- 
- 			pipe_ctx->stream_res.tg->funcs->program_global_sync(
- 					pipe_ctx->stream_res.tg,
--					pipe_ctx->pipe_dlg_param.vready_offset,
-+					calculate_vready_offset_for_group(pipe_ctx),
- 					pipe_ctx->pipe_dlg_param.vstartup_start,
- 					pipe_ctx->pipe_dlg_param.vupdate_offset,
- 					pipe_ctx->pipe_dlg_param.vupdate_width);
+ /*
 -- 
 2.35.1
 
