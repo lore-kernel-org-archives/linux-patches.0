@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2171863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337ECC433D2;
-	Wed, 28 Dec 2022 15:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652251863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC98EC433EF;
+	Wed, 28 Dec 2022 15:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241285;
-	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
+	s=korg; t=1672241288;
+	bh=uLIsukXJhEgNwWpKq1WAWN1iQVsKjrvxWp8y71oSqwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0XMM8yE92A78DExSrDTeIFUCaiKS4qUCcYm4+3Yyu1kOeuFKg0dUHAKQZkLUukFfm
-	 lA6y93W8Ll2Sx1BHTFnlzC6Ff9ibyRENfN8e9Ee56TGvnci72iqfs2LXV79UNwkmLb
-	 +SzUV/kabkQAWViLkRpKUKIJS5BNu3Tr6VYRvMtY=
+	b=VpM4hu+if9gehtYQ9KSQaAYpNWUoQGQ3gFl46huT8YgPUAnXcj4OXJ+oDlHbt2Aec
+	 84v/+E9bTmZ50/jOdPOPzQ5La6Lsrcz6yyYUE6kICgPhlnTCOtMFvjf1xPFbEgamlB
+	 IVbY3WNFb7+ExVAgORAlxS+nKyYfSKdfxteWKlRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0262/1073] spi: Update reference to struct spi_controller
-Date: Wed, 28 Dec 2022 15:30:50 +0100
-Message-Id: <20221228144335.133041079@linuxfoundation.org>
+Subject: [PATCH 5.15 462/731] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
+Date: Wed, 28 Dec 2022 15:39:29 +0100
+Message-Id: <20221228144309.942306262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
+[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
 
-struct spi_master has been renamed to struct spi_controller. Update the
-reference in spi.rst to make it clickable again.
+Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
+pass the former from altera_uart_interrupt() directly.
 
-Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Apart it maybe saves a dereference, this makes the transition of
+altera_uart_tx_chars() easier to follow in the next patch.
+
+Cc: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/spi.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/altera_uart.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
-index f64cb666498a..f28887045049 100644
---- a/Documentation/driver-api/spi.rst
-+++ b/Documentation/driver-api/spi.rst
-@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
- a pair of FIFOs connected to dual DMA engines on the other side of the
- SPI shift register (maximizing throughput). Such drivers bridge between
- whatever bus they sit on (often the platform bus) and SPI, and expose
--the SPI side of their device as a :c:type:`struct spi_master
--<spi_master>`. SPI devices are children of that master,
-+the SPI side of their device as a :c:type:`struct spi_controller
-+<spi_controller>`. SPI devices are children of that master,
- represented as a :c:type:`struct spi_device <spi_device>` and
- manufactured from :c:type:`struct spi_board_info
- <spi_board_info>` descriptors which are usually provided by
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 0e194556d76e..6e08fa11ceea 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
+ 	 */
+ }
+ 
+-static void altera_uart_rx_chars(struct altera_uart *pp)
++static void altera_uart_rx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	unsigned char ch, flag;
+ 	unsigned short status;
+ 
+@@ -246,9 +245,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
+ 	tty_flip_buffer_push(&port->state->port);
+ }
+ 
+-static void altera_uart_tx_chars(struct altera_uart *pp)
++static void altera_uart_tx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 
+ 	if (port->x_char) {
+@@ -286,9 +284,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 
+ 	spin_lock(&port->lock);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+-		altera_uart_rx_chars(pp);
++		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+-		altera_uart_tx_chars(pp);
++		altera_uart_tx_chars(port);
+ 	spin_unlock(&port->lock);
+ 
+ 	return IRQ_RETVAL(isr);
 -- 
 2.35.1
 
