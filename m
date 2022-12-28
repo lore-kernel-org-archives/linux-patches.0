@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C711C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFC3C433EF;
-	Wed, 28 Dec 2022 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20981C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ED1C433D2;
+	Wed, 28 Dec 2022 16:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244252;
-	bh=22tb6SCy+zVazC/MOAPqPzppOhp+45mRhkG6WrOxtVA=;
+	s=korg; t=1672244255;
+	bh=c0wHV7iAOCGJO9PrE0TOS4SpgYhrfvRKC0MP2K00bWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEnsBndOGfjynvbQrnNPa2zeHkHxv4TNgkkXnIOZ/XxzW46OlV0oVMx5BhZhu/rh6
-	 l4WD5jznmnOxY6Zv6KBWyoQa9vi0h3OLb7RfUxJNl7XS8hZz/iUBvT48RIYmn5QQCB
-	 2H30lUEkpkQc2thxZ4r1EzVv3JQvMXFsC3ZdzqKg=
+	b=zdy15XQVbuB1B7ihm7xi6Du2wymuzasZ2mGbsXrFEeAfwxo8wcEXF/5aWFWOy8cMF
+	 pnlwwloECe/9ZuO1zQkJge6gsK+sIRrFYzsnpVK6YW3pdwwTsRIHhkzxt7m+s6Y8Cd
+	 B4NHPh7fvivePSxzTUS503i/KubcRoFGpKx7kGhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sven Peter <sven@svenpeter.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0636/1146] crypto: x86/aria - fix crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:15 +0100
-Message-Id: <20221228144347.439118172@linuxfoundation.org>
+Subject: [PATCH 6.0 0676/1073] usb: typec: tipd: Cleanup resources if devm_tps6598_psy_register fails
+Date: Wed, 28 Dec 2022 15:37:44 +0100
+Message-Id: <20221228144346.399782847@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,96 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit c67b553a4f4a8bd921e4c9ceae00e111be09c488 ]
+[ Upstream commit 19c220e9ab00f50edefb9667e3101e84a5112df2 ]
 
-aria_aesni_avx_encrypt_16way(), aria_aesni_avx_decrypt_16way(),
-aria_aesni_avx_ctr_crypt_16way(), aria_aesni_avx_gfni_encrypt_16way(),
-aria_aesni_avx_gfni_decrypt_16way(), and
-aria_aesni_avx_gfni_ctr_crypt_16way() are called via indirect function
-calls.  Therefore they need to use SYM_TYPED_FUNC_START instead of
-SYM_FUNC_START to cause their type hashes to be emitted when the kernel
-is built with CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a
-CFI failure.
+We can't just return if devm_tps6598_psy_register fails since previous
+resources are not devres managed and have yet to be cleaned up.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 10eb0b6ac63a ("usb: typec: tps6598x: Export some power supply properties")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221114174449.34634-1-sven@svenpeter.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aria-aesni-avx-asm_64.S | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/usb/typec/tipd/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/crypto/aria-aesni-avx-asm_64.S b/arch/x86/crypto/aria-aesni-avx-asm_64.S
-index c75fd7d015ed..03ae4cd1d976 100644
---- a/arch/x86/crypto/aria-aesni-avx-asm_64.S
-+++ b/arch/x86/crypto/aria-aesni-avx-asm_64.S
-@@ -7,6 +7,7 @@
-  */
+diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
+index 92e35e62e78c..28dd5c3b175b 100644
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -814,7 +814,7 @@ static int tps6598x_probe(struct i2c_client *client)
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- #include <asm/frame.h>
+ 	ret = devm_tps6598_psy_register(tps);
+ 	if (ret)
+-		return ret;
++		goto err_role_put;
  
- /* struct aria_ctx: */
-@@ -913,7 +914,7 @@ SYM_FUNC_START_LOCAL(__aria_aesni_avx_crypt_16way)
- 	RET;
- SYM_FUNC_END(__aria_aesni_avx_crypt_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_encrypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_encrypt_16way)
- 	/* input:
- 	*      %rdi: ctx, CTX
- 	*      %rsi: dst
-@@ -938,7 +939,7 @@ SYM_FUNC_START(aria_aesni_avx_encrypt_16way)
- 	RET;
- SYM_FUNC_END(aria_aesni_avx_encrypt_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_decrypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_decrypt_16way)
- 	/* input:
- 	*      %rdi: ctx, CTX
- 	*      %rsi: dst
-@@ -1039,7 +1040,7 @@ SYM_FUNC_START_LOCAL(__aria_aesni_avx_ctr_gen_keystream_16way)
- 	RET;
- SYM_FUNC_END(__aria_aesni_avx_ctr_gen_keystream_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_ctr_crypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_ctr_crypt_16way)
- 	/* input:
- 	*      %rdi: ctx
- 	*      %rsi: dst
-@@ -1208,7 +1209,7 @@ SYM_FUNC_START_LOCAL(__aria_aesni_avx_gfni_crypt_16way)
- 	RET;
- SYM_FUNC_END(__aria_aesni_avx_gfni_crypt_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_gfni_encrypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_gfni_encrypt_16way)
- 	/* input:
- 	*      %rdi: ctx, CTX
- 	*      %rsi: dst
-@@ -1233,7 +1234,7 @@ SYM_FUNC_START(aria_aesni_avx_gfni_encrypt_16way)
- 	RET;
- SYM_FUNC_END(aria_aesni_avx_gfni_encrypt_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_gfni_decrypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_gfni_decrypt_16way)
- 	/* input:
- 	*      %rdi: ctx, CTX
- 	*      %rsi: dst
-@@ -1258,7 +1259,7 @@ SYM_FUNC_START(aria_aesni_avx_gfni_decrypt_16way)
- 	RET;
- SYM_FUNC_END(aria_aesni_avx_gfni_decrypt_16way)
- 
--SYM_FUNC_START(aria_aesni_avx_gfni_ctr_crypt_16way)
-+SYM_TYPED_FUNC_START(aria_aesni_avx_gfni_ctr_crypt_16way)
- 	/* input:
- 	*      %rdi: ctx
- 	*      %rsi: dst
+ 	tps->port = typec_register_port(&client->dev, &typec_cap);
+ 	if (IS_ERR(tps->port)) {
 -- 
 2.35.1
 
