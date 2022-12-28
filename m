@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E901C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0D7C433D2;
-	Wed, 28 Dec 2022 16:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831DB1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F82C433D2;
+	Wed, 28 Dec 2022 16:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245948;
-	bh=lQGAP/snTMjwoSYXY3GbX8jpN2CvzI0RX4mIqUXyyHA=;
+	s=korg; t=1672245951;
+	bh=IbJt7hoDzTGeI/HrT8fi9aO+cZYR8AAZaGsSXvLuF9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oa6i1NfkdJeoXMIJAykpztOAhDEIw5BKLT+QpT/tbod1RFaS51j7uFMPvDLHbC0Rf
-	 iqlLq+AH2EDhK+6LwCD3JDPtwFrGXygyespDBRW7WrXQiA2p5VZtmOSFtjo3RKCm9Y
-	 DzCQC6DKqYDewsglo2tcnoM7KeFW1EktGs4ZMSyM=
+	b=tFdsGm8uR51eHdd370ind7JYdyqEBMxDLU3GlS+0xB0aCBdDuUwX6j/uMKb9wyHSx
+	 4SO9Xb7sYvgFJ40tFh3lv/SBGre7kP/+wsuk1qL4FqJ8vQEdl5fsEhFIn+5A+3pLjw
+	 SqZUYfd2tzGMtOSQC1pqZpDBdke5sWDtaav8w4hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Ian Kent <raven@themaw.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0985/1073] hugetlbfs: fix null-ptr-deref in hugetlbfs_parse_param()
-Date: Wed, 28 Dec 2022 15:42:53 +0100
-Message-Id: <20221228144354.845405785@linuxfoundation.org>
+Subject: [PATCH 6.1 0952/1146] thermal/core: Ensure that thermal device is registered in thermal_zone_get_temp
+Date: Wed, 28 Dec 2022 15:41:31 +0100
+Message-Id: <20221228144356.177248052@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,94 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 26215b7ee923b9251f7bb12c4e5f09dc465d35f2 ]
+[ Upstream commit 1c6b30060777352e7881383bab726046d8c3c610 ]
 
-Syzkaller reports a null-ptr-deref bug as follows:
-======================================================
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:hugetlbfs_parse_param+0x1dd/0x8e0 fs/hugetlbfs/inode.c:1380
-[...]
+Calls to thermal_zone_get_temp() are not protected against thermal zone
+device removal. As result, it is possible that the thermal zone operations
+callbacks are no longer valid when thermal_zone_get_temp() is called.
+This may result in crashes such as
+
+BUG: unable to handle page fault for address: ffffffffc04ef420
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+PGD 5d60e067 P4D 5d60e067 PUD 5d610067 PMD 110197067 PTE 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 1 PID: 3209 Comm: cat Tainted: G        W         5.10.136-19389-g615abc6eb807 #1 02df41ac0b12f3a64f4b34245188d8875bb3bce1
+Hardware name: Google Coral/Coral, BIOS Google_Coral.10068.92.0 11/27/2018
+RIP: 0010:thermal_zone_get_temp+0x26/0x73
+Code: 89 c3 eb d3 0f 1f 44 00 00 55 48 89 e5 41 57 41 56 53 48 85 ff 74 50 48 89 fb 48 81 ff 00 f0 ff ff 77 44 48 8b 83 98 03 00 00 <48> 83 78 10 00 74 36 49 89 f6 4c 8d bb d8 03 00 00 4c 89 ff e8 9f
+RSP: 0018:ffffb3758138fd38 EFLAGS: 00010287
+RAX: ffffffffc04ef410 RBX: ffff98f14d7fb000 RCX: 0000000000000000
+RDX: ffff98f17cf90000 RSI: ffffb3758138fd64 RDI: ffff98f14d7fb000
+RBP: ffffb3758138fd50 R08: 0000000000001000 R09: ffff98f17cf90000
+R10: 0000000000000000 R11: ffffffff8dacad28 R12: 0000000000001000
+R13: ffff98f1793a7d80 R14: ffff98f143231708 R15: ffff98f14d7fb018
+FS:  00007ec166097800(0000) GS:ffff98f1bbd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffc04ef420 CR3: 000000010ee9a000 CR4: 00000000003506e0
 Call Trace:
- <TASK>
- vfs_parse_fs_param fs/fs_context.c:148 [inline]
- vfs_parse_fs_param+0x1f9/0x3c0 fs/fs_context.c:129
- vfs_parse_fs_string+0xdb/0x170 fs/fs_context.c:191
- generic_parse_monolithic+0x16f/0x1f0 fs/fs_context.c:231
- do_new_mount fs/namespace.c:3036 [inline]
- path_mount+0x12de/0x1e20 fs/namespace.c:3370
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount fs/namespace.c:3568 [inline]
- __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- [...]
- </TASK>
-======================================================
+ temp_show+0x31/0x68
+ dev_attr_show+0x1d/0x4f
+ sysfs_kf_seq_show+0x92/0x107
+ seq_read_iter+0xf5/0x3f2
+ vfs_read+0x205/0x379
+ __x64_sys_read+0x7c/0xe2
+ do_syscall_64+0x43/0x55
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-According to commit "vfs: parse: deal with zero length string value",
-kernel will set the param->string to null pointer in vfs_parse_fs_string()
-if fs string has zero length.
+if a thermal device is removed while accesses to its device attributes
+are ongoing.
 
-Yet the problem is that, hugetlbfs_parse_param() will dereference the
-param->string, without checking whether it is a null pointer.  To be more
-specific, if hugetlbfs_parse_param() parses an illegal mount parameter,
-such as "size=,", kernel will constructs struct fs_parameter with null
-pointer in vfs_parse_fs_string(), then passes this struct fs_parameter to
-hugetlbfs_parse_param(), which triggers the above null-ptr-deref bug.
+The problem is exposed by code in iwl_op_mode_mvm_start(), which registers
+a thermal zone device only to unregister it shortly afterwards if an
+unrelated failure is encountered while accessing the hardware.
 
-This patch solves it by adding sanity check on param->string
-in hugetlbfs_parse_param().
+Check if the thermal zone device is registered after acquiring the
+thermal zone device mutex to ensure this does not happen.
 
-Link: https://lkml.kernel.org/r/20221020231609.4810-1-yin31149@gmail.com
-Reported-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
-Tested-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
-  Link: https://lore.kernel.org/all/0000000000005ad00405eb7148c6@google.com/
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Hawkins Jiawei <yin31149@gmail.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Ian Kent <raven@themaw.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The code was tested by triggering the failure in iwl_op_mode_mvm_start()
+on purpose. Without this patch, the kernel crashes reliably. The crash
+is no longer observed after applying this and the preceding patches.
+
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/thermal/thermal_helpers.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index fbcfa6bfee80..26169d75f6cf 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -1256,7 +1256,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
+diff --git a/drivers/thermal/thermal_helpers.c b/drivers/thermal/thermal_helpers.c
+index c65cdce8f856..fca0b23570f9 100644
+--- a/drivers/thermal/thermal_helpers.c
++++ b/drivers/thermal/thermal_helpers.c
+@@ -115,7 +115,12 @@ int thermal_zone_get_temp(struct thermal_zone_device *tz, int *temp)
+ 	int ret;
  
- 	case Opt_size:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->max_size_opt = memparse(param->string, &rest);
- 		ctx->max_val_type = SIZE_STD;
-@@ -1266,7 +1266,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
+ 	mutex_lock(&tz->lock);
+-	ret = __thermal_zone_get_temp(tz, temp);
++
++	if (device_is_registered(&tz->device))
++		ret = __thermal_zone_get_temp(tz, temp);
++	else
++		ret = -ENODEV;
++
+ 	mutex_unlock(&tz->lock);
  
- 	case Opt_nr_inodes:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->nr_inodes = memparse(param->string, &rest);
- 		return 0;
-@@ -1282,7 +1282,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
- 
- 	case Opt_min_size:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->min_size_opt = memparse(param->string, &rest);
- 		ctx->min_val_type = SIZE_STD;
+ 	return ret;
 -- 
 2.35.1
 
