@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549981868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4CDC433F0;
-	Wed, 28 Dec 2022 15:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D211868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7963DC433F0;
+	Wed, 28 Dec 2022 15:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242061;
-	bh=3SoTL61kE5Bpg9br4zxMudE56UITQE72/CZf9FpPBYY=;
+	s=korg; t=1672242063;
+	bh=MbAb0bNy8l/E5IppMg6LDyvbtgW8oiWqlw+mbO+kd0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvjJjB1SlaKxReMZoRB5eakBGSpu45H0qy8+J2Ggk0Txo/A44atCj4TM3pQcVYMy0
-	 mcEy7jxteLNjvrmW7xmGkE35jJaV2mX9G5xO8aBKfAVLLbqHoxfGYkbzMNlh0mQ8ZK
-	 nof238Cc+iWuJnmwJGuMkzVQL1/vplrTurdSqxMY=
+	b=ukC047UA4xS6BD6CT7nlUgVl2147xPmeFJHgzT6f6NyYCLy1ObFZLWDbhKoiwQfnX
+	 0EJffcIAtujYed2zGqTF7NYS7eU8KAr7vpqD1Klwse5VukFE5zEcKJ8PQPju9SRdCh
+	 n486a//CTZ98UcEXihj0eBMESDRxDSWKVACFLeqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0321/1146] wifi: iwlwifi: mei: avoid blocking sap messages handling due to rtnl lock
-Date: Wed, 28 Dec 2022 15:31:00 +0100
-Message-Id: <20221228144338.872726533@linuxfoundation.org>
+Subject: [PATCH 6.0 0360/1073] pinctrl: k210: call of_node_put()
+Date: Wed, 28 Dec 2022 15:32:28 +0100
+Message-Id: <20221228144337.780319245@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,146 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit d288067ede4b375e72daf7f9a98d937ede11a311 ]
+[ Upstream commit a8acc11643082a706de86a19f1f824712d971984 ]
 
-The AMT_STATE sap message handler tries to take the rtnl lock.
-This means that in case the rtnl lock is already taken, sap messages
-will not be processed.
-When an interface is brought up, the host requests ownership from
-csme. However, since the rtnl lock is already held, if there is a
-pending amt state message, the host will not be able to read the
-ownership confirm message because the amt state message handler
-is pending. As a result, the host fails to get ownership although
-csme granted it.
-Fix it by moving the part that needs the rtnl lock into a dedicated
-worker, so handling sap messages can continue.
+Since for_each_available_child_of_node() will increase the refcount of
+node, we need to call of_node_put() manually when breaking out of the
+iteration.
 
-Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20221030191011.8599f2b4e9dd.I518f79e9099bf815c5f8d90235b4ce3250f59970@changeid
+Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20221122075853.2496680-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 57 ++++++++++++-------
- 1 file changed, 37 insertions(+), 20 deletions(-)
+ drivers/pinctrl/pinctrl-k210.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index 64a637ef199c..c0142093c768 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -152,6 +152,8 @@ struct iwl_mei_filters {
-  * @csa_throttle_end_wk: used when &csa_throttled is true
-  * @data_q_lock: protects the access to the data queues which are
-  *	accessed without the mutex.
-+ * @netdev_work: used to defer registering and unregistering of the netdev to
-+ *	avoid taking the rtnl lock in the SAP messages handlers.
-  * @sap_seq_no: the sequence number for the SAP messages
-  * @seq_no: the sequence number for the SAP messages
-  * @dbgfs_dir: the debugfs dir entry
-@@ -172,6 +174,7 @@ struct iwl_mei {
- 	bool device_down;
- 	struct delayed_work csa_throttle_end_wk;
- 	spinlock_t data_q_lock;
-+	struct work_struct netdev_work;
+diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
+index ecab6bf63dc6..ad4db99094a7 100644
+--- a/drivers/pinctrl/pinctrl-k210.c
++++ b/drivers/pinctrl/pinctrl-k210.c
+@@ -862,8 +862,10 @@ static int k210_pinctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = k210_pinctrl_dt_subnode_to_map(pctldev, np, map,
+ 						     &reserved_maps, num_maps);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto err;
++		}
+ 	}
+ 	return 0;
  
- 	atomic_t sap_seq_no;
- 	atomic_t seq_no;
-@@ -591,6 +594,33 @@ static rx_handler_result_t iwl_mei_rx_handler(struct sk_buff **pskb)
- 	return res;
- }
- 
-+static void iwl_mei_netdev_work(struct work_struct *wk)
-+{
-+	struct iwl_mei *mei =
-+		container_of(wk, struct iwl_mei, netdev_work);
-+	struct net_device *netdev;
-+
-+	/*
-+	 * First take rtnl and only then the mutex to avoid an ABBA
-+	 * with iwl_mei_set_netdev()
-+	 */
-+	rtnl_lock();
-+	mutex_lock(&iwl_mei_mutex);
-+
-+	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
-+					   lockdep_is_held(&iwl_mei_mutex));
-+	if (netdev) {
-+		if (mei->amt_enabled)
-+			netdev_rx_handler_register(netdev, iwl_mei_rx_handler,
-+						   mei);
-+		else
-+			netdev_rx_handler_unregister(netdev);
-+	}
-+
-+	mutex_unlock(&iwl_mei_mutex);
-+	rtnl_unlock();
-+}
-+
- static void
- iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
- 			   const struct iwl_sap_me_msg_start_ok *rsp,
-@@ -743,38 +773,23 @@ static void iwl_mei_handle_amt_state(struct mei_cl_device *cldev,
- 				     const struct iwl_sap_msg_dw *dw)
- {
- 	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
--	struct net_device *netdev;
- 
--	/*
--	 * First take rtnl and only then the mutex to avoid an ABBA
--	 * with iwl_mei_set_netdev()
--	 */
--	rtnl_lock();
- 	mutex_lock(&iwl_mei_mutex);
- 
--	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
--					   lockdep_is_held(&iwl_mei_mutex));
--
- 	if (mei->amt_enabled == !!le32_to_cpu(dw->val))
- 		goto out;
- 
- 	mei->amt_enabled = dw->val;
- 
--	if (mei->amt_enabled) {
--		if (netdev)
--			netdev_rx_handler_register(netdev, iwl_mei_rx_handler, mei);
--
-+	if (mei->amt_enabled)
- 		iwl_mei_set_init_conf(mei);
--	} else {
--		if (iwl_mei_cache.ops)
--			iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false);
--		if (netdev)
--			netdev_rx_handler_unregister(netdev);
--	}
-+	else if (iwl_mei_cache.ops)
-+		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false, false);
-+
-+	schedule_work(&mei->netdev_work);
- 
- out:
- 	mutex_unlock(&iwl_mei_mutex);
--	rtnl_unlock();
- }
- 
- static void iwl_mei_handle_nic_owner(struct mei_cl_device *cldev,
-@@ -1827,6 +1842,7 @@ static int iwl_mei_probe(struct mei_cl_device *cldev,
- 			  iwl_mei_csa_throttle_end_wk);
- 	init_waitqueue_head(&mei->get_ownership_wq);
- 	spin_lock_init(&mei->data_q_lock);
-+	INIT_WORK(&mei->netdev_work, iwl_mei_netdev_work);
- 
- 	mei_cldev_set_drvdata(cldev, mei);
- 	mei->cldev = cldev;
-@@ -1989,6 +2005,7 @@ static void iwl_mei_remove(struct mei_cl_device *cldev)
- 	 */
- 	cancel_work_sync(&mei->send_csa_msg_wk);
- 	cancel_delayed_work_sync(&mei->csa_throttle_end_wk);
-+	cancel_work_sync(&mei->netdev_work);
- 
- 	/*
- 	 * If someone waits for the ownership, let him know that we are going
 -- 
 2.35.1
 
