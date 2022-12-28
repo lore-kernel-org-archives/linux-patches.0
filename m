@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA621863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD4CC433D2;
-	Wed, 28 Dec 2022 15:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5D21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D577CC433D2;
+	Wed, 28 Dec 2022 15:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239893;
-	bh=Egan8dBnkmqdyzSjTQHOJa+f6h5hRjInUcFsmqeCk4Y=;
+	s=korg; t=1672239896;
+	bh=j8xY4JdpcEhaOIVnUbLgo/a5jPXdEx8Rio+crTjylc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYOBKj3wqHZ/jB+azNxNCK83tdPQ2n674LxMsMkPD/2k6IfdWe7CswDJ6RECMe7Wx
-	 AYC6BGMbVJ+07f5lwAOGhGrCFideLXFlZMfU62v0XAXdWys9UNsOvMl69sQuFFBdHl
-	 88A3wj6zheZVCupH7cNEim6c2S/O00aEH99lxO2U=
+	b=D3goeyaQjr8poiSoWOC6hX+5VJuI5Wiryo9DK0GSgruTOz/GPeRX7pRNkVTzTpMSw
+	 42hhHHLJrbdctsrOLvX0MNlnPj8JiC515xK9seFSsFjk95sgpyftTKkg5+afDmDc/R
+	 k7TwDanFFIenwJlTs2YdS9gVIr8d20GEB88UXLQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0055/1146] riscv: dts: microchip: fix the icicles #pwm-cells
-Date: Wed, 28 Dec 2022 15:26:34 +0100
-Message-Id: <20221228144331.656766831@linuxfoundation.org>
+Subject: [PATCH 6.0 0091/1073] tpm/tpm_crb: Fix error message in __crb_relinquish_locality()
+Date: Wed, 28 Dec 2022 15:27:59 +0100
+Message-Id: <20221228144330.526474904@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit bdd28ab35c163553a2a686fdc5ea3cf247aad69b ]
+[ Upstream commit f5264068071964b56dc02c9dab3d11574aaca6ff ]
 
-\#pwm-cells for the Icicle kit's fabric PWM was incorrectly set to 2 &
-blindly overridden by the (out of tree) driver anyway. The core can
-support inverted operation, so update the entry to correctly report its
-capabilities.
+The error message in __crb_relinquish_locality() mentions requestAccess
+instead of Relinquish. Fix it.
 
-Fixes: 72560c6559b8 ("riscv: dts: microchip: add fpga fabric section to icicle kit")
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 888d867df441 ("tpm: cmd_ready command can be issued only after granting locality")
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Acked-by: Tomas Winkler <tomas.winkler@intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/microchip/mpfs-icicle-kit-fabric.dtsi | 2 +-
+ drivers/char/tpm/tpm_crb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/microchip/mpfs-icicle-kit-fabric.dtsi b/arch/riscv/boot/dts/microchip/mpfs-icicle-kit-fabric.dtsi
-index 24b1cfb9a73e..5d3e5240e33a 100644
---- a/arch/riscv/boot/dts/microchip/mpfs-icicle-kit-fabric.dtsi
-+++ b/arch/riscv/boot/dts/microchip/mpfs-icicle-kit-fabric.dtsi
-@@ -9,7 +9,7 @@ core_pwm0: pwm@40000000 {
- 		compatible = "microchip,corepwm-rtl-v4";
- 		reg = <0x0 0x40000000 0x0 0xF0>;
- 		microchip,sync-update-mask = /bits/ 32 <0>;
--		#pwm-cells = <2>;
-+		#pwm-cells = <3>;
- 		clocks = <&fabric_clk3>;
- 		status = "disabled";
- 	};
+diff --git a/drivers/char/tpm/tpm_crb.c b/drivers/char/tpm/tpm_crb.c
+index 18606651d1aa..65f8f179a27f 100644
+--- a/drivers/char/tpm/tpm_crb.c
++++ b/drivers/char/tpm/tpm_crb.c
+@@ -252,7 +252,7 @@ static int __crb_relinquish_locality(struct device *dev,
+ 	iowrite32(CRB_LOC_CTRL_RELINQUISH, &priv->regs_h->loc_ctrl);
+ 	if (!crb_wait_for_reg_32(&priv->regs_h->loc_state, mask, value,
+ 				 TPM2_TIMEOUT_C)) {
+-		dev_warn(dev, "TPM_LOC_STATE_x.requestAccess timed out\n");
++		dev_warn(dev, "TPM_LOC_STATE_x.Relinquish timed out\n");
+ 		return -ETIME;
+ 	}
+ 
 -- 
 2.35.1
 
