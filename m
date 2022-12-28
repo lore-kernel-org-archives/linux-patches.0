@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4561863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3FFC433D2;
-	Wed, 28 Dec 2022 15:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856AEC433D2;
+	Wed, 28 Dec 2022 15:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241541;
-	bh=AneIGNGeTxm7Ds+h80KjUti9WNHwRciL5L8MSXaRuyI=;
+	s=korg; t=1672241543;
+	bh=vq/GNhPCQ1t1QBGROyBX1JQNozTtv/RuPQIlVEsUJWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoOSbH/DU3wPrAFvYTh615gohwRxzjSC+IDTRtcrt4euq3kh8xppqmbmyDgQQhLFP
-	 2V8YuYsK7sALTF0ZRaWmr6Qyows0pO5j9SqW+elOLl4Jw6IVBsPr8KvZxrcLohhlYe
-	 rPItzJqRhzlYbr90E2PKecwQdncLb1NBFjGFUVrA=
+	b=H/3iOxAcP6vklwOrVCW9/fCHX0IrnKSl8KWgzbcaQ4Ln4n7eo7gUFHNi81BcxrDDQ
+	 yk2PcjXd9GRLbqMaGfrd7b+/5gNc43Dy/FkfuF5wvBxrCWjx+iBrvd/POwTVXrH6eS
+	 1nTywcWrkL+ogeoVjk5ELsiRkifAXfsinIo2nTwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 494/731] i2c: mux: reg: check return value after calling platform_get_resource()
-Date: Wed, 28 Dec 2022 15:40:01 +0100
-Message-Id: <20221228144310.866451415@linuxfoundation.org>
+Subject: [PATCH 6.0 0296/1073] clk: renesas: r8a779f0: Fix HSCIF parent clocks
+Date: Wed, 28 Dec 2022 15:31:24 +0100
+Message-Id: <20221228144336.053780100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 2d47b79d2bd39cc6369eccf94a06568d84c906ae ]
+[ Upstream commit c258e3ab639112d8f5ae9df9a873750ae2623ce2 ]
 
-It will cause null-ptr-deref in resource_size(), if platform_get_resource()
-returns NULL, move calling resource_size() after devm_ioremap_resource() that
-will check 'res' to avoid null-ptr-deref.
-And use devm_platform_get_and_ioremap_resource() to simplify code.
+As serial communication requires a clean clock signal, the High Speed
+Serial Communication Interfaces with FIFO (HSCIF) are clocked by a clock
+that is not affected by Spread Spectrum or Fractional Multiplication.
 
-Fixes: b3fdd32799d8 ("i2c: mux: Add register-based mux i2c-mux-reg")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Hence change the parent clocks for the HSCIF modules from the S0D3_PER
+clock to the SASYNCPERD1 clock (which has the same clock rate), cfr.
+R-Car S4-8 Hardware User's Manual rev. 0.81.
+
+Fixes: 080bcd8d5997 ("clk: renesas: r8a779f0: Add HSCIF clocks")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221103143440.46449-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-reg.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/renesas/r8a779f0-cpg-mssr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-reg.c b/drivers/i2c/muxes/i2c-mux-reg.c
-index 0e0679f65cf7..30a6de1694e0 100644
---- a/drivers/i2c/muxes/i2c-mux-reg.c
-+++ b/drivers/i2c/muxes/i2c-mux-reg.c
-@@ -183,13 +183,12 @@ static int i2c_mux_reg_probe(struct platform_device *pdev)
- 	if (!mux->data.reg) {
- 		dev_info(&pdev->dev,
- 			"Register not set, using platform resource\n");
--		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--		mux->data.reg_size = resource_size(res);
--		mux->data.reg = devm_ioremap_resource(&pdev->dev, res);
-+		mux->data.reg = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 		if (IS_ERR(mux->data.reg)) {
- 			ret = PTR_ERR(mux->data.reg);
- 			goto err_put_parent;
- 		}
-+		mux->data.reg_size = resource_size(res);
- 	}
+diff --git a/drivers/clk/renesas/r8a779f0-cpg-mssr.c b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+index cd80b6084ece..90cac3f8b2ed 100644
+--- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+@@ -120,10 +120,10 @@ static const struct cpg_core_clk r8a779f0_core_clks[] __initconst = {
+ };
  
- 	if (mux->data.reg_size != 4 && mux->data.reg_size != 2 &&
+ static const struct mssr_mod_clk r8a779f0_mod_clks[] __initconst = {
+-	DEF_MOD("hscif0",	514,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif1",	515,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif2",	516,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif3",	517,	R8A779F0_CLK_S0D3),
++	DEF_MOD("hscif0",	514,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif1",	515,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif2",	516,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif3",	517,	R8A779F0_CLK_SASYNCPERD1),
+ 	DEF_MOD("i2c0",		518,	R8A779F0_CLK_S0D6_PER),
+ 	DEF_MOD("i2c1",		519,	R8A779F0_CLK_S0D6_PER),
+ 	DEF_MOD("i2c2",		520,	R8A779F0_CLK_S0D6_PER),
 -- 
 2.35.1
 
