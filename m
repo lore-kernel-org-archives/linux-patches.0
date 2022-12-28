@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5040A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA72FC433F0;
-	Wed, 28 Dec 2022 15:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD521863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7165FC433EF;
+	Wed, 28 Dec 2022 15:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240569;
-	bh=UJhwYti2ReR2+D0E9d97pY7m97WR85RhOj5MVYvjwHw=;
+	s=korg; t=1672240571;
+	bh=bStODH//uoNgIQzokissAlAGcDFttmQ5PfzEbyo0UUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIsGcfsqQevnuOZbW8nWc7f6REuDDJ0ue26aq4YqXDTkkDuhMFtSXpuJYo1hprUPX
-	 7AKPoQOiXK84kN8haCeHsAQ9V30TlJIKGcWT2UeXSHBR/UHHRMc6hJUaMH6Tx6lhDF
-	 3W6OrRbws535a/OwHAMa0PaOROIr7XXsvIMryxHA=
+	b=aNETw6J/d1yq1tOMG4hA/F+UGqV3JvXPMoGDmI6Swkx5Z4UUqI4BWBJlwJl1W4zZo
+	 etKj1c4SetrCFI+Zzlxdh9D7wTnzDDtc3kNr3/lN/NtIuZ4Sxpw4+v14IxyBA5G1gB
+	 bl0cC3pBuwDnjhIiOrK9JN5CeXHnw787V20b6mKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Om Prakash Singh <omp@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
+	Ladislav Michl <ladis@linux-mips.org>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 368/731] PCI: pci-epf-test: Register notifier if only core_init_notifier is enabled
-Date: Wed, 28 Dec 2022 15:37:55 +0100
-Message-Id: <20221228144307.229677594@linuxfoundation.org>
+Subject: [PATCH 6.0 0176/1073] MIPS: OCTEON: warn only once if deprecated link status is being used
+Date: Wed, 28 Dec 2022 15:29:24 +0100
+Message-Id: <20221228144332.791632964@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,37 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Ladislav Michl <ladis@linux-mips.org>
 
-[ Upstream commit 6acd25cc98ce0c9ee4fefdaf44fc8bca534b26e5 ]
+[ Upstream commit 4c587a982603d7e7e751b4925809a1512099a690 ]
 
-The pci_epf_test_notifier function should be installed also if only
-core_init_notifier is enabled. Fix the current logic.
+Avoid flooding kernel log with warnings.
 
-Link: https://lore.kernel.org/r/20220825090101.20474-1-hayashi.kunihiko@socionext.com
-Fixes: 5e50ee27d4a5 ("PCI: pci-epf-test: Add support to defer core initialization")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Om Prakash Singh <omp@nvidia.com>
-Acked-by: Kishon Vijay Abraham I <kishon@ti.com>
+Fixes: 2c0756d306c2 ("MIPS: OCTEON: warn if deprecated link status is being used")
+Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/cavium-octeon/executive/cvmx-helper-board.c | 2 +-
+ arch/mips/cavium-octeon/executive/cvmx-helper.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index a5ed779b0a51..45535d4ae644 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -883,7 +883,7 @@ static int pci_epf_test_bind(struct pci_epf *epf)
- 	if (ret)
- 		epf_test->dma_supported = false;
+diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
+index d09d0769f549..0fd9ac76eb74 100644
+--- a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
++++ b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
+@@ -211,7 +211,7 @@ union cvmx_helper_link_info __cvmx_helper_board_link_get(int ipd_port)
+ {
+ 	union cvmx_helper_link_info result;
  
--	if (linkup_notifier) {
-+	if (linkup_notifier || core_init_notifier) {
- 		epf->nb.notifier_call = pci_epf_test_notifier;
- 		pci_epc_register_notifier(epc, &epf->nb);
- 	} else {
+-	WARN(!octeon_is_simulation(),
++	WARN_ONCE(!octeon_is_simulation(),
+ 	     "Using deprecated link status - please update your DT");
+ 
+ 	/* Unless we fix it later, all links are defaulted to down */
+diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper.c b/arch/mips/cavium-octeon/executive/cvmx-helper.c
+index 6f49fd9be1f3..9abfc4bf9bd8 100644
+--- a/arch/mips/cavium-octeon/executive/cvmx-helper.c
++++ b/arch/mips/cavium-octeon/executive/cvmx-helper.c
+@@ -1096,7 +1096,7 @@ union cvmx_helper_link_info cvmx_helper_link_get(int ipd_port)
+ 		if (index == 0)
+ 			result = __cvmx_helper_rgmii_link_get(ipd_port);
+ 		else {
+-			WARN(1, "Using deprecated link status - please update your DT");
++			WARN_ONCE(1, "Using deprecated link status - please update your DT");
+ 			result.s.full_duplex = 1;
+ 			result.s.link_up = 1;
+ 			result.s.speed = 1000;
 -- 
 2.35.1
 
