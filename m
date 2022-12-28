@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFC41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F3DC433D2;
-	Wed, 28 Dec 2022 16:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59489C433D2;
+	Wed, 28 Dec 2022 16:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245932;
-	bh=ZkxL9EC5gdiSeuBMoXXn7hPEESSX2sCMYeJ2MoXdUBY=;
+	s=korg; t=1672245934;
+	bh=RGJDOU0CQ402OaMUXRraXDNKYQZybk4l++nVvWs5NCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIAwJ2IPM3di3Z5uD2TnAQTaXCgTLbiHSRHV93fzfH+iOhXwMTKe0r8bi2IwbBD/N
-	 ID82+t2Grc4ThAkublWU4paTacta06fKADHjgnonxJ4b/PJfIvsS6ONnKrAiyVP8AA
-	 kF4VUiiquw+0JJLFMf/4LFHYdxin9VOrsA3Hj2o4=
+	b=IF2J9qpsLjL37T/eNZjMZHgpUVVr3x6Xqbh+OTbSurcfqwQGMBTtEfkcsALQAgq+a
+	 a9OBmFEa6aJqXoxrO8xe0yBL20+mFJ0IUCIr9gDjcnzcaGGaNfKIayQK+tokrnS9Hc
+	 fY+MQYoTt+gvzkRLpiSE1UgVAcJFtCYMwrfk4YEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhong <floridsleeves@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0949/1146] ACPI: processor: idle: Check acpi_fetch_acpi_dev() return value
-Date: Wed, 28 Dec 2022 15:41:28 +0100
-Message-Id: <20221228144356.096159479@linuxfoundation.org>
+Subject: [PATCH 6.0 0983/1073] Revert "PCI: Clear PCI_STATUS when setting up device"
+Date: Wed, 28 Dec 2022 15:42:51 +0100
+Message-Id: <20221228144354.786494603@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhong <floridsleeves@gmail.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 2437513a814b3e93bd02879740a8a06e52e2cf7d ]
+[ Upstream commit 44e985938e85503d0a69ec538e15fd33c1a4df05 ]
 
-The return value of acpi_fetch_acpi_dev() could be NULL, which would
-cause a NULL pointer dereference to occur in acpi_device_hid().
+This reverts commit 6cd514e58f12b211d638dbf6f791fa18d854f09c.
 
-Signed-off-by: Li Zhong <floridsleeves@gmail.com>
-[ rjw: Subject and changelog edits, added empty line after if () ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Christophe Fergeau reported that 6cd514e58f12 ("PCI: Clear PCI_STATUS when
+setting up device") causes boot failures when trying to start linux guests
+with Apple's virtualization framework (for example using
+https://developer.apple.com/documentation/virtualization/running_linux_in_a_virtual_machine?language=objc)
+
+6cd514e58f12 only solved a cosmetic problem, so revert it to fix the boot
+failures.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2137803
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/probe.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index acfabfe07c4f..fc5b5b2c9e81 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1134,6 +1134,9 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
- 	status = acpi_get_parent(handle, &pr_ahandle);
- 	while (ACPI_SUCCESS(status)) {
- 		d = acpi_fetch_acpi_dev(pr_ahandle);
-+		if (!d)
-+			break;
-+
- 		handle = pr_ahandle;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index c5286b027f00..bdcad5e0f057 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1890,9 +1890,6 @@ int pci_setup_device(struct pci_dev *dev)
  
- 		if (strcmp(acpi_device_hid(d), ACPI_PROCESSOR_CONTAINER_HID))
+ 	dev->broken_intx_masking = pci_intx_mask_broken(dev);
+ 
+-	/* Clear errors left from system firmware */
+-	pci_write_config_word(dev, PCI_STATUS, 0xffff);
+-
+ 	switch (dev->hdr_type) {		    /* header type */
+ 	case PCI_HEADER_TYPE_NORMAL:		    /* standard header */
+ 		if (class == PCI_CLASS_BRIDGE_PCI)
 -- 
 2.35.1
 
