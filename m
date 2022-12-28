@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC291863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C8FC433F0;
-	Wed, 28 Dec 2022 14:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFF51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59E1C433EF;
+	Wed, 28 Dec 2022 14:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239569;
-	bh=mZxfjgMbuKdGvct+30V9py4QHMbsZ7T5ri43MT4MQQk=;
+	s=korg; t=1672239572;
+	bh=5R1ObGQQYvultph7900Pb/VVwMdrKCAcYNF/LlI8B84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOJ7VbfVsMgROWRAPBakoU6dtc/8ygBkTzKGPs37dFN3IRUDYWHz6BUg6bwOLFrnR
-	 7fARR+UyFs3k95zsVVYVi76fa8OB3JtkmN2Ee25ShAzYq05Xpsl/c13eSLOsLdy1tB
-	 qwz62VX8iozFZS48hXgeQsnYHmpjdwKElI8lh7fM=
+	b=XuGun1LlrJD+a7JCxOPyXPUP87AXFLfdHYvwcD/wkId2uxPOij994l8QInotqPH2Y
+	 MOeBFVkIokrDOkw2nA6nF66VWgYdi3hy1kxzttsLNdQ9YstiYNSapQcItBa1DC4p5C
+	 XzJSDFVzrOSlCj29snPfQ+QkBKYtTHxjpJWKblTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marco Elver <elver@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 244/731] NFSv4.2: Clear FATTR4_WORD2_SECURITY_LABEL when done decoding
-Date: Wed, 28 Dec 2022 15:35:51 +0100
-Message-Id: <20221228144303.635722335@linuxfoundation.org>
+Subject: [PATCH 6.0 0051/1073] arm64: mm: kfence: only handle translation faults
+Date: Wed, 28 Dec 2022 15:27:19 +0100
+Message-Id: <20221228144329.499318523@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,40 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit eef7314caf2d73a94b68ba293cd105154d3a664e ]
+[ Upstream commit 0bb1fbffc631064db567ccaeb9ed6b6df6342b66 ]
 
-We need to clear the FATTR4_WORD2_SECURITY_LABEL bitmap flag
-irrespective of whether or not the label is too long.
+Alexander noted that KFENCE only expects to handle faults from invalid page
+table entries (i.e. translation faults), but arm64's fault handling logic will
+call kfence_handle_page_fault() for other types of faults, including alignment
+faults caused by unaligned atomics. This has the unfortunate property of
+causing those other faults to be reported as "KFENCE: use-after-free",
+which is misleading and hinders debugging.
 
-Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fix this by only forwarding unhandled translation faults to the KFENCE
+code, similar to what x86 does already.
+
+Alexander has verified that this passes all the tests in the KFENCE test
+suite and avoids bogus reports on misaligned atomics.
+
+Link: https://lore.kernel.org/all/20221102081620.1465154-1-zhongbaisong@huawei.com/
+Fixes: 840b23986344 ("arm64, kfence: enable KFENCE for ARM64")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114104411.2853040-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/fault.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index 046788afb6d9..9d19b801cb39 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -4179,6 +4179,7 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
- 		p = xdr_inline_decode(xdr, len);
- 		if (unlikely(!p))
- 			return -EIO;
-+		bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 		if (len < NFS4_MAXLABELLEN) {
- 			if (label) {
- 				if (label->len) {
-@@ -4191,7 +4192,6 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
- 				label->lfs = lfs;
- 				status = NFS_ATTR_FATTR_V4_SECURITY_LABEL;
- 			}
--			bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 		} else
- 			printk(KERN_WARNING "%s: label too long (%u)!\n",
- 					__func__, len);
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index c33f1fad2745..89628bd370d9 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -353,6 +353,11 @@ static bool is_el1_mte_sync_tag_check_fault(unsigned long esr)
+ 	return false;
+ }
+ 
++static bool is_translation_fault(unsigned long esr)
++{
++	return (esr & ESR_ELx_FSC_TYPE) == ESR_ELx_FSC_FAULT;
++}
++
+ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
+ 			      struct pt_regs *regs)
+ {
+@@ -385,7 +390,8 @@ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
+ 	} else if (addr < PAGE_SIZE) {
+ 		msg = "NULL pointer dereference";
+ 	} else {
+-		if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
++		if (is_translation_fault(esr) &&
++		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+ 			return;
+ 
+ 		msg = "paging request";
 -- 
 2.35.1
 
