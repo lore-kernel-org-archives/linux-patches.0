@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8606B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CB7C433EF;
-	Wed, 28 Dec 2022 16:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB8FC43392;
+	Wed, 28 Dec 2022 16:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244288;
-	bh=O4cQUMK7hWJ+FXEHEO6/mZRPa3tQuqcXw+rM/CzyI4U=;
+	s=korg; t=1672244291;
+	bh=Eomowx/T3GjyFCvBrMDvjqjHDMzuD2GLU8lAWek0qUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dvmNPeGtpcWSBEqvDsmphs9/3p3TyX0AaOIHs64vi6yvhFxFwMzwg8jZXDCA3y9F0
-	 amyUdgePuERg6HvUEzvuVEarXRnJj0d0I+ywGo1sqvE6hqMkgN/CqCfn2fiFsGH0m8
-	 vuwghqsu0NFbrP5MylmS8xiIgDotEn1nyI5+jhpI=
+	b=PBTdVc7hLpB6SNIFau0EXXl6fjE2bJAY9bfWTSZ8nvKhBzD0bh9netIl7L40akYbf
+	 jhBlKY+7EhWv1Hsn46hSs7jWP2Cpi7jKtWZaRAN3u40Y0jLbtbScCQ4nVcEEcd02ox
+	 IMxnGQDDEEhquUUkLH0ruCS5z70s577N1Q9pLzuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0644/1073] PCI: vmd: Fix secondary bus reset for Intel bridges
-Date: Wed, 28 Dec 2022 15:37:12 +0100
-Message-Id: <20221228144345.536598975@linuxfoundation.org>
+Subject: [PATCH 6.1 0641/1146] crypto: x86/sm4 - fix crash with CFI enabled
+Date: Wed, 28 Dec 2022 15:36:20 +0100
+Message-Id: <20221228144347.572779132@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,73 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 0a584655ef89541dae4d48d2c523b1480ae80284 ]
+[ Upstream commit 2d203c46a0fa5df0785383b13b722483e1fd27a8 ]
 
-The reset was never applied in the current implementation because Intel
-Bridges owned by VMD are parentless. Internally, pci_reset_bus() applies
-a reset to the parent of the PCI device supplied as argument, but in this
-case it failed because there wasn't a parent.
+sm4_aesni_avx_ctr_enc_blk8(), sm4_aesni_avx_cbc_dec_blk8(),
+sm4_aesni_avx_cfb_dec_blk8(), sm4_aesni_avx2_ctr_enc_blk16(),
+sm4_aesni_avx2_cbc_dec_blk16(), and sm4_aesni_avx2_cfb_dec_blk16() are
+called via indirect function calls.  Therefore they need to use
+SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause their type
+hashes to be emitted when the kernel is built with CONFIG_CFI_CLANG=y.
+Otherwise, the code crashes with a CFI failure.
 
-In more detail, this change allows the VMD driver to enumerate NVMe devices
-in pass-through configurations when guest reboots are performed. There was
-an attempted to fix this, but later we discovered that the code inside
-pci_reset_bus() wasn’t triggering secondary bus resets. Therefore, we
-updated the parameters passed to it, and now NVMe SSDs attached to VMD
-bridges are properly enumerated in VT-d pass-through scenarios.
+(Or at least that should be the case.  For some reason the CFI checks in
+sm4_avx_cbc_decrypt(), sm4_avx_cfb_decrypt(), and sm4_avx_ctr_crypt()
+are not always being generated, using current tip-of-tree clang.
+Anyway, this patch is a good idea anyway.)
 
-Link: https://lore.kernel.org/r/20221206001637.4744-1-francisco.munoz.ruiz@linux.intel.com
-Fixes: 6aab5622296b ("PCI: vmd: Clean up domain before enumeration")
-Signed-off-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Reviewed-by: Jonathan Derrick <jonathan.derrick@linux.dev>
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ arch/x86/crypto/sm4-aesni-avx-asm_64.S  | 7 ++++---
+ arch/x86/crypto/sm4-aesni-avx2-asm_64.S | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 98e0746e681c..769eedeb8802 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -719,6 +719,7 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
- 	resource_size_t offset[2] = {0};
- 	resource_size_t membar2_offset = 0x2000;
- 	struct pci_bus *child;
-+	struct pci_dev *dev;
- 	int ret;
+diff --git a/arch/x86/crypto/sm4-aesni-avx-asm_64.S b/arch/x86/crypto/sm4-aesni-avx-asm_64.S
+index 4767ab61ff48..22b6560eb9e1 100644
+--- a/arch/x86/crypto/sm4-aesni-avx-asm_64.S
++++ b/arch/x86/crypto/sm4-aesni-avx-asm_64.S
+@@ -14,6 +14,7 @@
+  */
  
- 	/*
-@@ -859,8 +860,25 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ #include <asm/frame.h>
  
- 	pci_scan_child_bus(vmd->bus);
- 	vmd_domain_reset(vmd);
--	list_for_each_entry(child, &vmd->bus->children, node)
--		pci_reset_bus(child->self);
-+
-+	/* When Intel VMD is enabled, the OS does not discover the Root Ports
-+	 * owned by Intel VMD within the MMCFG space. pci_reset_bus() applies
-+	 * a reset to the parent of the PCI device supplied as argument. This
-+	 * is why we pass a child device, so the reset can be triggered at
-+	 * the Intel bridge level and propagated to all the children in the
-+	 * hierarchy.
-+	 */
-+	list_for_each_entry(child, &vmd->bus->children, node) {
-+		if (!list_empty(&child->devices)) {
-+			dev = list_first_entry(&child->devices,
-+					       struct pci_dev, bus_list);
-+			if (pci_reset_bus(dev))
-+				pci_warn(dev, "can't reset device: %d\n", ret);
-+
-+			break;
-+		}
-+	}
-+
- 	pci_assign_unassigned_bus_resources(vmd->bus);
+ #define rRIP         (%rip)
+@@ -420,7 +421,7 @@ SYM_FUNC_END(sm4_aesni_avx_crypt8)
+  *                                 const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx_ctr_enc_blk8)
++SYM_TYPED_FUNC_START(sm4_aesni_avx_ctr_enc_blk8)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (8 blocks)
+@@ -495,7 +496,7 @@ SYM_FUNC_END(sm4_aesni_avx_ctr_enc_blk8)
+  *                                 const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx_cbc_dec_blk8)
++SYM_TYPED_FUNC_START(sm4_aesni_avx_cbc_dec_blk8)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (8 blocks)
+@@ -545,7 +546,7 @@ SYM_FUNC_END(sm4_aesni_avx_cbc_dec_blk8)
+  *                                 const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx_cfb_dec_blk8)
++SYM_TYPED_FUNC_START(sm4_aesni_avx_cfb_dec_blk8)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (8 blocks)
+diff --git a/arch/x86/crypto/sm4-aesni-avx2-asm_64.S b/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
+index 4732fe8bb65b..23ee39a8ada8 100644
+--- a/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
++++ b/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
+@@ -14,6 +14,7 @@
+  */
  
- 	/*
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ #include <asm/frame.h>
+ 
+ #define rRIP         (%rip)
+@@ -282,7 +283,7 @@ SYM_FUNC_END(__sm4_crypt_blk16)
+  *                                   const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx2_ctr_enc_blk16)
++SYM_TYPED_FUNC_START(sm4_aesni_avx2_ctr_enc_blk16)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (16 blocks)
+@@ -395,7 +396,7 @@ SYM_FUNC_END(sm4_aesni_avx2_ctr_enc_blk16)
+  *                                   const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx2_cbc_dec_blk16)
++SYM_TYPED_FUNC_START(sm4_aesni_avx2_cbc_dec_blk16)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (16 blocks)
+@@ -449,7 +450,7 @@ SYM_FUNC_END(sm4_aesni_avx2_cbc_dec_blk16)
+  *                                   const u8 *src, u8 *iv)
+  */
+ .align 8
+-SYM_FUNC_START(sm4_aesni_avx2_cfb_dec_blk16)
++SYM_TYPED_FUNC_START(sm4_aesni_avx2_cfb_dec_blk16)
+ 	/* input:
+ 	 *	%rdi: round key array, CTX
+ 	 *	%rsi: dst (16 blocks)
 -- 
 2.35.1
 
