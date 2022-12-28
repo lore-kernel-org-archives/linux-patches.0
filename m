@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F531863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1287C433EF;
-	Wed, 28 Dec 2022 15:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198A71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C579C433D2;
+	Wed, 28 Dec 2022 15:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240847;
-	bh=bf8LZ5847U/Z3DF4tZv9ybVIiF/Jz49uRAwOuKdGyXo=;
+	s=korg; t=1672240849;
+	bh=JIS9Qvi3RBc2Iq0v21C+ECz28uh8UNXi5ppKNyKm+U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wedfhM41WRTrH80YyxeO+rYqdauw4c5ZDrIgQy/dgZrYM+YHslFG4a3upt9dfkIAL
-	 00kwUUTUDR0wnTr034So/SNep2ieiOVAK8xu2KwteuAuI0sp6+8vyTbvX4JEvY0cNE
-	 e+KpFxqIhpIS4h2lDlyDVsEBljw4JRlde6LsxAZE=
+	b=amzi4tw5mBC2cSgoj0hQqbAzwSWOP0H6TzfjKjNlanGsnK4ATpnALDRmp2TGXQNEr
+	 gpfXDzS6Ecz09VlT0ZicAucRTd1bPMXlGGlgqhGd8j3Imo4wj4tDzB6Spw0YqBL/kS
+	 W+w8Fxlfi3wWzeMMNxlQ6dxcRsOH9wyIPZmCc13U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 383/731] RDMA/siw: Fix immediate work request flush to completion queue
-Date: Wed, 28 Dec 2022 15:38:10 +0100
-Message-Id: <20221228144307.664379648@linuxfoundation.org>
+Subject: [PATCH 6.1 0174/1146] erofs: check the uniqueness of fsid in shared domain in advance
+Date: Wed, 28 Dec 2022 15:28:33 +0100
+Message-Id: <20221228144334.882663183@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,135 +38,229 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit bdf1da5df9da680589a7f74448dd0a94dd3e1446 ]
+[ Upstream commit 27f2a2dcc6261406b509b5022a1e5c23bf622830 ]
 
-Correctly set send queue element opcode during immediate work request
-flushing in post sendqueue operation, if the QP is in ERROR state.
-An undefined ocode value results in out-of-bounds access to an array
-for mapping the opcode between siw internal and RDMA core representation
-in work completion generation. It resulted in a KASAN BUG report
-of type 'global-out-of-bounds' during NFSoRDMA testing.
+When shared domain is enabled, doing mount twice with the same fsid and
+domain_id will trigger sysfs warning as shown below:
 
-This patch further fixes a potential case of a malicious user which may
-write undefined values for completion queue elements status or opcode,
-if the CQ is memory mapped to user land. It avoids the same out-of-bounds
-access to arrays for status and opcode mapping as described above.
+ sysfs: cannot create duplicate filename '/fs/erofs/d0,meta.bin'
+ CPU: 15 PID: 1051 Comm: mount Not tainted 6.1.0-rc6+ #1
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x38/0x49
+  dump_stack+0x10/0x12
+  sysfs_warn_dup.cold+0x17/0x27
+  sysfs_create_dir_ns+0xb8/0xd0
+  kobject_add_internal+0xb1/0x240
+  kobject_init_and_add+0x71/0xa0
+  erofs_register_sysfs+0x89/0x110
+  erofs_fc_fill_super+0x98c/0xaf0
+  vfs_get_super+0x7d/0x100
+  get_tree_nodev+0x16/0x20
+  erofs_fc_get_tree+0x20/0x30
+  vfs_get_tree+0x24/0xb0
+  path_mount+0x2fa/0xa90
+  do_mount+0x7c/0xa0
+  __x64_sys_mount+0x8b/0xe0
+  do_syscall_64+0x30/0x60
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
-Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20221107145057.895747-1-bmt@zurich.ibm.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The reason is erofs_fscache_register_cookie() doesn't guarantee the primary
+data blob (aka fsid) is unique in the shared domain and
+erofs_register_sysfs() invoked by the second mount will fail due to the
+duplicated fsid in the shared domain and report warning.
+
+It would be better to check the uniqueness of fsid before doing
+erofs_register_sysfs(), so adding a new flags parameter for
+erofs_fscache_register_cookie() and doing the uniqueness check if
+EROFS_REG_COOKIE_NEED_NOEXIST is enabled.
+
+After the patch, the error in dmesg for the duplicated mount would be:
+
+ erofs: ...: erofs_domain_register_cookie: XX already exists in domain YY
+
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20221125110822.3812942-1-houtao@huaweicloud.com
+Fixes: 7d41963759fe ("erofs: Support sharing cookies in the same domain")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cq.c    | 24 ++++++++++++++--
- drivers/infiniband/sw/siw/siw_verbs.c | 40 ++++++++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ fs/erofs/fscache.c  | 47 +++++++++++++++++++++++++++++++++------------
+ fs/erofs/internal.h | 10 ++++++++--
+ fs/erofs/super.c    |  2 +-
+ 3 files changed, 44 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
-index d68e37859e73..acc7bcd538b5 100644
---- a/drivers/infiniband/sw/siw/siw_cq.c
-+++ b/drivers/infiniband/sw/siw/siw_cq.c
-@@ -56,8 +56,6 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 	if (READ_ONCE(cqe->flags) & SIW_WQE_VALID) {
- 		memset(wc, 0, sizeof(*wc));
- 		wc->wr_id = cqe->id;
--		wc->status = map_cqe_status[cqe->status].ib;
--		wc->opcode = map_wc_opcode[cqe->opcode];
- 		wc->byte_len = cqe->bytes;
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index af5ed6b9c54d..6a792a513d6b 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -494,7 +494,8 @@ static int erofs_fscache_register_domain(struct super_block *sb)
  
- 		/*
-@@ -71,10 +69,32 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 				wc->wc_flags = IB_WC_WITH_INVALIDATE;
- 			}
- 			wc->qp = cqe->base_qp;
-+			wc->opcode = map_wc_opcode[cqe->opcode];
-+			wc->status = map_cqe_status[cqe->status].ib;
- 			siw_dbg_cq(cq,
- 				   "idx %u, type %d, flags %2x, id 0x%pK\n",
- 				   cq->cq_get % cq->num_cqe, cqe->opcode,
- 				   cqe->flags, (void *)(uintptr_t)cqe->id);
-+		} else {
-+			/*
-+			 * A malicious user may set invalid opcode or
-+			 * status in the user mmapped CQE array.
-+			 * Sanity check and correct values in that case
-+			 * to avoid out-of-bounds access to global arrays
-+			 * for opcode and status mapping.
-+			 */
-+			u8 opcode = cqe->opcode;
-+			u16 status = cqe->status;
-+
-+			if (opcode >= SIW_NUM_OPCODES) {
-+				opcode = 0;
-+				status = IB_WC_GENERAL_ERR;
-+			} else if (status >= SIW_NUM_WC_STATUS) {
-+				status = IB_WC_GENERAL_ERR;
-+			}
-+			wc->opcode = map_wc_opcode[opcode];
-+			wc->status = map_cqe_status[status].ib;
-+
- 		}
- 		WRITE_ONCE(cqe->flags, 0);
- 		cq->cq_get++;
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index ff33659acffa..9c7fbda9e068 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -674,13 +674,45 @@ static int siw_copy_inline_sgl(const struct ib_send_wr *core_wr,
- static int siw_sq_flush_wr(struct siw_qp *qp, const struct ib_send_wr *wr,
- 			   const struct ib_send_wr **bad_wr)
+ static
+ struct erofs_fscache *erofs_fscache_acquire_cookie(struct super_block *sb,
+-						    char *name, bool need_inode)
++						   char *name,
++						   unsigned int flags)
  {
--	struct siw_sqe sqe = {};
- 	int rv = 0;
+ 	struct fscache_volume *volume = EROFS_SB(sb)->volume;
+ 	struct erofs_fscache *ctx;
+@@ -516,7 +517,7 @@ struct erofs_fscache *erofs_fscache_acquire_cookie(struct super_block *sb,
+ 	fscache_use_cookie(cookie, false);
+ 	ctx->cookie = cookie;
  
- 	while (wr) {
--		sqe.id = wr->wr_id;
--		sqe.opcode = wr->opcode;
--		rv = siw_sqe_complete(qp, &sqe, 0, SIW_WC_WR_FLUSH_ERR);
-+		struct siw_sqe sqe = {};
+-	if (need_inode) {
++	if (flags & EROFS_REG_COOKIE_NEED_INODE) {
+ 		struct inode *const inode = new_inode(sb);
+ 
+ 		if (!inode) {
+@@ -554,14 +555,15 @@ static void erofs_fscache_relinquish_cookie(struct erofs_fscache *ctx)
+ 
+ static
+ struct erofs_fscache *erofs_fscache_domain_init_cookie(struct super_block *sb,
+-		char *name, bool need_inode)
++						       char *name,
++						       unsigned int flags)
+ {
+ 	int err;
+ 	struct inode *inode;
+ 	struct erofs_fscache *ctx;
+ 	struct erofs_domain *domain = EROFS_SB(sb)->domain;
+ 
+-	ctx = erofs_fscache_acquire_cookie(sb, name, need_inode);
++	ctx = erofs_fscache_acquire_cookie(sb, name, flags);
+ 	if (IS_ERR(ctx))
+ 		return ctx;
+ 
+@@ -589,7 +591,8 @@ struct erofs_fscache *erofs_fscache_domain_init_cookie(struct super_block *sb,
+ 
+ static
+ struct erofs_fscache *erofs_domain_register_cookie(struct super_block *sb,
+-						   char *name, bool need_inode)
++						   char *name,
++						   unsigned int flags)
+ {
+ 	struct inode *inode;
+ 	struct erofs_fscache *ctx;
+@@ -602,23 +605,30 @@ struct erofs_fscache *erofs_domain_register_cookie(struct super_block *sb,
+ 		ctx = inode->i_private;
+ 		if (!ctx || ctx->domain != domain || strcmp(ctx->name, name))
+ 			continue;
+-		igrab(inode);
++		if (!(flags & EROFS_REG_COOKIE_NEED_NOEXIST)) {
++			igrab(inode);
++		} else {
++			erofs_err(sb, "%s already exists in domain %s", name,
++				  domain->domain_id);
++			ctx = ERR_PTR(-EEXIST);
++		}
+ 		spin_unlock(&psb->s_inode_list_lock);
+ 		mutex_unlock(&erofs_domain_cookies_lock);
+ 		return ctx;
+ 	}
+ 	spin_unlock(&psb->s_inode_list_lock);
+-	ctx = erofs_fscache_domain_init_cookie(sb, name, need_inode);
++	ctx = erofs_fscache_domain_init_cookie(sb, name, flags);
+ 	mutex_unlock(&erofs_domain_cookies_lock);
+ 	return ctx;
+ }
+ 
+ struct erofs_fscache *erofs_fscache_register_cookie(struct super_block *sb,
+-						    char *name, bool need_inode)
++						    char *name,
++						    unsigned int flags)
+ {
+ 	if (EROFS_SB(sb)->domain_id)
+-		return erofs_domain_register_cookie(sb, name, need_inode);
+-	return erofs_fscache_acquire_cookie(sb, name, need_inode);
++		return erofs_domain_register_cookie(sb, name, flags);
++	return erofs_fscache_acquire_cookie(sb, name, flags);
+ }
+ 
+ void erofs_fscache_unregister_cookie(struct erofs_fscache *ctx)
+@@ -647,6 +657,7 @@ int erofs_fscache_register_fs(struct super_block *sb)
+ 	int ret;
+ 	struct erofs_sb_info *sbi = EROFS_SB(sb);
+ 	struct erofs_fscache *fscache;
++	unsigned int flags;
+ 
+ 	if (sbi->domain_id)
+ 		ret = erofs_fscache_register_domain(sb);
+@@ -655,8 +666,20 @@ int erofs_fscache_register_fs(struct super_block *sb)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* acquired domain/volume will be relinquished in kill_sb() on error */
+-	fscache = erofs_fscache_register_cookie(sb, sbi->fsid, true);
++	/*
++	 * When shared domain is enabled, using NEED_NOEXIST to guarantee
++	 * the primary data blob (aka fsid) is unique in the shared domain.
++	 *
++	 * For non-shared-domain case, fscache_acquire_volume() invoked by
++	 * erofs_fscache_register_volume() has already guaranteed
++	 * the uniqueness of primary data blob.
++	 *
++	 * Acquired domain/volume will be relinquished in kill_sb() on error.
++	 */
++	flags = EROFS_REG_COOKIE_NEED_INODE;
++	if (sbi->domain_id)
++		flags |= EROFS_REG_COOKIE_NEED_NOEXIST;
++	fscache = erofs_fscache_register_cookie(sb, sbi->fsid, flags);
+ 	if (IS_ERR(fscache))
+ 		return PTR_ERR(fscache);
+ 
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 05dc68627722..e51f27b6bde1 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -604,13 +604,18 @@ static inline int z_erofs_load_lzma_config(struct super_block *sb,
+ }
+ #endif	/* !CONFIG_EROFS_FS_ZIP */
+ 
++/* flags for erofs_fscache_register_cookie() */
++#define EROFS_REG_COOKIE_NEED_INODE	1
++#define EROFS_REG_COOKIE_NEED_NOEXIST	2
 +
-+		switch (wr->opcode) {
-+		case IB_WR_RDMA_WRITE:
-+			sqe.opcode = SIW_OP_WRITE;
-+			break;
-+		case IB_WR_RDMA_READ:
-+			sqe.opcode = SIW_OP_READ;
-+			break;
-+		case IB_WR_RDMA_READ_WITH_INV:
-+			sqe.opcode = SIW_OP_READ_LOCAL_INV;
-+			break;
-+		case IB_WR_SEND:
-+			sqe.opcode = SIW_OP_SEND;
-+			break;
-+		case IB_WR_SEND_WITH_IMM:
-+			sqe.opcode = SIW_OP_SEND_WITH_IMM;
-+			break;
-+		case IB_WR_SEND_WITH_INV:
-+			sqe.opcode = SIW_OP_SEND_REMOTE_INV;
-+			break;
-+		case IB_WR_LOCAL_INV:
-+			sqe.opcode = SIW_OP_INVAL_STAG;
-+			break;
-+		case IB_WR_REG_MR:
-+			sqe.opcode = SIW_OP_REG_MR;
-+			break;
-+		default:
-+			rv = -EINVAL;
-+			break;
-+		}
-+		if (!rv) {
-+			sqe.id = wr->wr_id;
-+			rv = siw_sqe_complete(qp, &sqe, 0,
-+					      SIW_WC_WR_FLUSH_ERR);
-+		}
- 		if (rv) {
- 			if (bad_wr)
- 				*bad_wr = wr;
+ /* fscache.c */
+ #ifdef CONFIG_EROFS_FS_ONDEMAND
+ int erofs_fscache_register_fs(struct super_block *sb);
+ void erofs_fscache_unregister_fs(struct super_block *sb);
+ 
+ struct erofs_fscache *erofs_fscache_register_cookie(struct super_block *sb,
+-						     char *name, bool need_inode);
++						    char *name,
++						    unsigned int flags);
+ void erofs_fscache_unregister_cookie(struct erofs_fscache *fscache);
+ 
+ extern const struct address_space_operations erofs_fscache_access_aops;
+@@ -623,7 +628,8 @@ static inline void erofs_fscache_unregister_fs(struct super_block *sb) {}
+ 
+ static inline
+ struct erofs_fscache *erofs_fscache_register_cookie(struct super_block *sb,
+-						     char *name, bool need_inode)
++						     char *name,
++						     unsigned int flags)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 1c7dcca702b3..481788c24a68 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -245,7 +245,7 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
+ 	}
+ 
+ 	if (erofs_is_fscache_mode(sb)) {
+-		fscache = erofs_fscache_register_cookie(sb, dif->path, false);
++		fscache = erofs_fscache_register_cookie(sb, dif->path, 0);
+ 		if (IS_ERR(fscache))
+ 			return PTR_ERR(fscache);
+ 		dif->fscache = fscache;
 -- 
 2.35.1
 
