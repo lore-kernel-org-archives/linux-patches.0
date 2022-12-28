@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A35D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAFEC433D2;
-	Wed, 28 Dec 2022 15:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437901863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99C7C433D2;
+	Wed, 28 Dec 2022 15:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239986;
-	bh=zrLGZ7ro5zvgwPpc2dk8woCRO7b4s8v5+kXF4UJZj/8=;
+	s=korg; t=1672239989;
+	bh=LN62Qwap7FxUixeVq+R4s4nnFyLMUv94FDJ3IEkQxr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+mqu6Z0x1nwL5UW7uHCUOaRziE1aTOKA6SyPEXNoFZZ6pKnpJ5tcRWcgFIoiv4YI
-	 5CzgkQFS2P3wNhdgomivjnRqIitksvDBJIv8skNURc9PPF97TUyBsA/oH+JLyhJQkE
-	 Dm4Fy4uf/7eeh6hJdKrQ+CmsH4GeQrmpj1wDuAMw=
+	b=2mCFDCGJ08l3UwZcGGu4b+SPyE8caOeLAq1E2x2v8PmyxiQGskt4d4fO58MKFxwv6
+	 hl6Sbj+o5SQdUbzdQXwxaDEKHmcEORu0ZGubaBmbAcncSRuUqnkiuctQbzgoAOT4z7
+	 ooNn3dfebuBarv7+Xt+Kp647wrFZ0zAJit8bVEqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Joel Stanley <joel@jms.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 296/731] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:43 +0100
-Message-Id: <20221228144305.153776458@linuxfoundation.org>
+Subject: [PATCH 6.1 0068/1146] ARM: dts: nuvoton: Remove bogus unit addresses from fixed-partition nodes
+Date: Wed, 28 Dec 2022 15:26:47 +0100
+Message-Id: <20221228144332.004987343@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
+[ Upstream commit ea3ce4cf076ba11bb591c8013c5315136cae52c8 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+The unit addresses do not correspond to the nodes' reg properties,
+because they don't have any.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, besides, led_classdev_unregister() and pm_runtime_disable() also
-need be called.
-
-Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: e42b650f828d ("ARM: dts: nuvoton: Add new device nodes to NPCM750 EVB")
+Fixes: ee33e2fb3d70 ("ARM: dts: nuvoton: Add Quanta GBS BMC Device Tree")
+Fixes: 59f5abe09f0a ("ARM: dts: nuvoton: Add Quanta GSJ BMC")
+Fixes: 14579c76f5ca ("ARM: dts: nuvoton: Add Fii Kudo system")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20221031221553.163273-1-j.neuschaefer@gmx.net
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
+ arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
+ arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
+ arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 5fe4528e296e..1be3a355f10d 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1332,6 +1332,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- #ifdef RTSX_USB_USE_LEDS_CLASS
- 	int err;
- #endif
-+	int ret;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+index d10669fcd527..9e9eba8bad5e 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+@@ -366,7 +366,7 @@ flash@0 {
+ 		spi-max-frequency = <20000000>;
+ 		spi-rx-bus-width = <2>;
+ 		label = "bmc";
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+index 491606c4f044..2a394cc15284 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+@@ -142,7 +142,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
  
- 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
- 	if (!ucr)
-@@ -1368,7 +1369,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+index a0c2d7652625..f7b38bee039b 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+@@ -388,7 +388,7 @@ flash@0 {
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+ 		label = "bmc";
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -422,7 +422,7 @@ flash@1 {
+ 		reg = <1>;
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+-		partitions@88000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -447,7 +447,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index 3dad32834e5e..f53d45fa1de8 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -74,7 +74,7 @@ flash@0 {
+ 		spi-rx-bus-width = <2>;
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -135,7 +135,7 @@ flash@0 {
+ 		spi-rx-bus-width = <2>;
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+index 132e702281fc..87359ab05db3 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+@@ -107,7 +107,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
  
- #endif
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+#ifdef RTSX_USB_USE_LEDS_CLASS
-+		led_classdev_unregister(&host->led);
-+#endif
-+		mmc_free_host(mmc);
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -146,7 +146,7 @@ flash@1 {
+ 		reg = <1>;
+ 		npcm,fiu-rx-bus-width = <2>;
  
- 	return 0;
- }
+-		partitions@88000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -173,7 +173,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
+ 
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
 -- 
 2.35.1
 
