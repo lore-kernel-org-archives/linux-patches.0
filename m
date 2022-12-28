@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBC61C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E57AC433D2;
-	Wed, 28 Dec 2022 16:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF8A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C39C433D2;
+	Wed, 28 Dec 2022 16:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244194;
-	bh=NPuYGUqoaJCN5UZOm+63amOiGeELMeSmG08BtDIokYU=;
+	s=korg; t=1672244197;
+	bh=RsPN6Cih1drWpTzTHANb6J0fDXe1efH+azSd+bcqrKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S976Om0rnqTxYeMt5rjaQ6VXX44onrgGfi5P+y2aTR7yZADQxdYMeQr5VN+PjSdKi
-	 bav3MduWQzI0YZFhEwem7kxUuD5TzfKbtH8VWDSQI4rfrQr6AfLrlAYj27TXGfFBf9
-	 zK+MRuJnlDvBNweml92xjGc/8/cwF4QE0zOY4Yg0=
+	b=yImHYaJqFzZLotfslwzUlFZynIqrpEoncT2ZgTP34SNzxu5TN1jZhIU3l9t5GgXRm
+	 oGSPcjuafJnnjBP0CRQWB5ZgXj/F9kRi1jP939fu4HfWVd8ECywkJKT1GgxRyV3fbQ
+	 LLMSxI22Xx2iFifzhqUgod7VRacp2qJmUewG4zhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0627/1146] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
-Date: Wed, 28 Dec 2022 15:36:06 +0100
-Message-Id: <20221228144347.199199187@linuxfoundation.org>
+Subject: [PATCH 6.0 0667/1073] class: fix possible memory leak in __class_register()
+Date: Wed, 28 Dec 2022 15:37:35 +0100
+Message-Id: <20221228144346.159600195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,75 +34,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
+[ Upstream commit 8c3e8a6bdb5253b97ad532570f8b5db5f7a06407 ]
 
-There is a null-ptr-deref when mount.cifs over rdma:
+If class_add_groups() returns error, the 'cp->subsys' need be
+unregister, and the 'cp' need be freed.
 
-  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
+We can not call kset_unregister() here, because the 'cls' will
+be freed in callback function class_release() and it's also
+freed in caller's error path, it will cause double free.
 
-  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   kasan_report+0xad/0x130
-   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-   execute_in_process_context+0x25/0x90
-   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
-   rxe_create_qp+0x16a/0x180 [rdma_rxe]
-   create_qp.part.0+0x27d/0x340
-   ib_create_qp_kernel+0x73/0x160
-   rdma_create_qp+0x100/0x230
-   _smbd_get_connection+0x752/0x20f0
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+So fix this by calling kobject_del() and kfree_const(name) to
+cleanup kobject. Besides, call kfree() to free the 'cp'.
 
-The root cause of the issue is the socket create failed in
-rxe_qp_init_req().
+Fault injection test can trigger this:
 
-So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
+unreferenced object 0xffff888102fa8190 (size 8):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 8 bytes):
+    70 6b 74 63 64 76 64 00                          pktcdvd.
+  backtrace:
+    [<00000000e7c7703d>] __kmalloc_track_caller+0x1ae/0x320
+    [<000000005e4d70bc>] kstrdup+0x3a/0x70
+    [<00000000c2e5e85a>] kstrdup_const+0x68/0x80
+    [<000000000049a8c7>] kvasprintf_const+0x10b/0x190
+    [<0000000029123163>] kobject_set_name_vargs+0x56/0x150
+    [<00000000747219c9>] kobject_set_name+0xab/0xe0
+    [<0000000005f1ea4e>] __class_register+0x15c/0x49a
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+unreferenced object 0xffff888037274000 (size 1024):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 32 bytes):
+    00 40 27 37 80 88 ff ff 00 40 27 37 80 88 ff ff  .@'7.....@'7....
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+  backtrace:
+    [<00000000151f9600>] kmem_cache_alloc_trace+0x17c/0x2f0
+    [<00000000ecf3dd95>] __class_register+0x86/0x49a
+
+Fixes: ced6473e7486 ("driver core: class: add class_groups support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221026082803.3458760-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/base/class.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index a62bab88415c..e459fb542b83 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -829,12 +829,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
- 	if (qp->resp.mr)
- 		rxe_put(qp->resp.mr);
- 
--	if (qp_type(qp) == IB_QPT_RC)
--		sk_dst_reset(qp->sk->sk);
--
- 	free_rd_atomic_resources(qp);
- 
- 	if (qp->sk) {
-+		if (qp_type(qp) == IB_QPT_RC)
-+			sk_dst_reset(qp->sk->sk);
-+
- 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
- 		sock_release(qp->sk);
+diff --git a/drivers/base/class.c b/drivers/base/class.c
+index 8feb85e186e3..e394e3e473b5 100644
+--- a/drivers/base/class.c
++++ b/drivers/base/class.c
+@@ -192,6 +192,11 @@ int __class_register(struct class *cls, struct lock_class_key *key)
  	}
+ 	error = class_add_groups(class_get(cls), cls->class_groups);
+ 	class_put(cls);
++	if (error) {
++		kobject_del(&cp->subsys.kobj);
++		kfree_const(cp->subsys.kobj.name);
++		kfree(cp);
++	}
+ 	return error;
+ }
+ EXPORT_SYMBOL_GPL(__class_register);
 -- 
 2.35.1
 
