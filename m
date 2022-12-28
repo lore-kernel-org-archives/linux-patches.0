@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B691875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8856C433EF;
-	Wed, 28 Dec 2022 15:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E7187A
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DF8C433F1;
+	Wed, 28 Dec 2022 15:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243061;
-	bh=aqhTVUAqNs5uG0668dzDfneghVWFgYrpeQTgcxSUuxg=;
+	s=korg; t=1672243064;
+	bh=oyl127HXmqtHfp/cgiU0zfcaX050uHC9XbWrQ5TgbzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTpjl792wfkUUYJLMK6qQrGKTjYEWyJStNPQMrgSv7IYg2jCWR+SpPoFP2Jlqwhs2
-	 tmtPo8iR+ZpAbR0qF4mGzeccWwfpDVMMGssfnpF5zYhQ3cXuWseB6RAMhxinszvVZu
-	 8+CMzRP6rr6XHzzw0dCvxeflc0XJwMlbrdsddAk4=
+	b=VoZB7Tua/sWCjFqhz5YoePUpTQeEt7s204fJ/nG69/filPxbeiFWmbdCwj1JqmAnw
+	 RTDRcVk9KPHHycOjWmvDcsAG4QvGaOTpiR9cmr5fPyBhJSbHtmvwoIu7Ym1LJ8aZ14
+	 51LPGbI78Fc/RGWzepzhRtGW7bdgB6eXmsR3xYpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0447/1146] bpf, sockmap: Fix data loss caused by using apply_bytes on ingress redirect
-Date: Wed, 28 Dec 2022 15:33:06 +0100
-Message-Id: <20221228144342.323220215@linuxfoundation.org>
+Subject: [PATCH 6.0 0486/1073] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:34 +0100
+Message-Id: <20221228144341.237470536@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 9072931f020bfd907d6d89ee21ff1481cd78b407 ]
+[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
 
-Use apply_bytes on ingress redirect, when apply_bytes is less than
-the length of msg data, some data may be skipped and lost in
-bpf_tcp_ingress().
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-If there is still data in the scatterlist that has not been consumed,
-we cannot move the msg iter.
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
 
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-4-git-send-email-yangpc@wangsu.com
+Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 275c5ca9e04d..94aad3870c5f 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -45,8 +45,11 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
- 		tmp->sg.end = i;
- 		if (apply) {
- 			apply_bytes -= size;
--			if (!apply_bytes)
-+			if (!apply_bytes) {
-+				if (sge->length)
-+					sk_msg_iter_var_prev(i);
- 				break;
-+			}
- 		}
- 	} while (i != msg->sg.end);
+diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
+index 9b5c503e3a3f..9aa3027ca25e 100644
+--- a/drivers/mmc/host/wmt-sdmmc.c
++++ b/drivers/mmc/host/wmt-sdmmc.c
+@@ -856,11 +856,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
+ 	/* configure the controller to a known 'ready' state */
+ 	wmt_reset_hardware(mmc);
  
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto fail7;
+ 
+ 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
+ 
+ 	return 0;
++fail7:
++	clk_disable_unprepare(priv->clk_sdmmc);
+ fail6:
+ 	clk_put(priv->clk_sdmmc);
+ fail5_and_a_half:
 -- 
 2.35.1
 
