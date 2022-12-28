@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDE71C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A83BC433EF;
-	Wed, 28 Dec 2022 16:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1491C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEC0C433EF;
+	Wed, 28 Dec 2022 16:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244478;
-	bh=FkhWfCq6aFAUBTTHKhFSXWhEzPjELgj/IBt//V8wm80=;
+	s=korg; t=1672244481;
+	bh=pvlQrj2X9CHWoDjKElzDkcTQ3pvjEyggMdRDMY+TNDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txomsBvqm6ZUzUZ7LqM9Ssw4HuB8XuxsFu63A80PRLyiodMJaORC6HjgLvIWNtr3p
-	 ChUfbfu52tp/GOhzYNk/EXPeZZsfeoUHFEcAQ58SMaZhhedzUjYkgbSJgi+aXiipng
-	 8hjnzIu15Yvc37yn3h7WuaM95+JEc+QO9504roSc=
+	b=o22w6q2v32v691wrOwHDT2YUc9tVAtX3nUw6GWkMkRL7BzuEnBdtuxqHqbWdeMwZc
+	 qlc6rdGFFj11zHsL11ocKx8ThAXR2E/Bf//SAisISh42fyyz37gI9itRMeNqe+1vSx
+	 KucEgTCf9/R6pGgUPOsEuFgDICq/wSF72UlGJxCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	delisun <delisun@pateo.com.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0685/1073] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
-Date: Wed, 28 Dec 2022 15:37:53 +0100
-Message-Id: <20221228144346.642413557@linuxfoundation.org>
+Subject: [PATCH 6.1 0645/1146] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
+Date: Wed, 28 Dec 2022 15:36:24 +0100
+Message-Id: <20221228144347.679466962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: delisun <delisun@pateo.com.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
+[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
 
-Clearing the RX FIFO will cause data loss.
-Copy the pl011_enabl_interrupts implementation, and remove the clear
-interrupt and FIFO part of the code.
+In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
+sas_rphy_free() needs be called to free the resource allocated in
+sas_end_device_alloc(). Otherwise a kernel crash will happen:
 
-Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
-Signed-off-by: delisun <delisun@pateo.com.cn>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
+CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
+pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x54/0x3d0
+lr : device_del+0x37c/0x3d0
+Call trace:
+ device_del+0x54/0x3d0
+ attribute_container_class_device_del+0x28/0x38
+ transport_remove_classdev+0x6c/0x80
+ attribute_container_device_trigger+0x108/0x110
+ transport_remove_device+0x28/0x38
+ sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_remove_host+0x20/0x38 [scsi_transport_sas]
+ scsih_remove+0xd8/0x420 [mpt3sas]
+
+Because transport_add_device() is not called when sas_rphy_add() fails, the
+device is not added. When sas_rphy_remove() is subsequently called to
+remove the device in the remove() path, a NULL pointer dereference happens.
+
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 72c2a978cf61..c211a1e92db7 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1831,8 +1831,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
- static void pl011_unthrottle_rx(struct uart_port *port)
- {
- 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
-+	unsigned long flags;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index 0681daee6c14..e5ecd6ada6cd 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -829,6 +829,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 	if ((sas_rphy_add(rphy))) {
+ 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
+ 			__FILE__, __LINE__, __func__);
++		sas_rphy_free(rphy);
++		rphy = NULL;
+ 	}
  
--	pl011_enable_interrupts(uap);
-+	spin_lock_irqsave(&uap->port.lock, flags);
-+
-+	uap->im = UART011_RTIM;
-+	if (!pl011_dma_rx_running(uap))
-+		uap->im |= UART011_RXIM;
-+
-+	pl011_write(uap->im, uap, REG_IMSC);
-+
-+	spin_unlock_irqrestore(&uap->port.lock, flags);
- }
- 
- static int pl011_startup(struct uart_port *port)
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
 -- 
 2.35.1
 
