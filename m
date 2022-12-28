@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405881863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7809C433D2;
-	Wed, 28 Dec 2022 15:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C1A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EDDC433D2;
+	Wed, 28 Dec 2022 15:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241109;
-	bh=S4MofCqekZZLQeDNlqqTmspwwgyyYMA449UzYiU88zk=;
+	s=korg; t=1672241111;
+	bh=O4CxeNPEV5eLv/DcTRzwBruZmVuTTM/YybLnINaUCys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TODeH6pM3EpoRa2v62Y9PFJnel4Vvl0w/1uV/YYNA3Vr8Vq3uUDac7gIRJnc8Rd8X
-	 YAuDcDNxqEp3mNB01ih9vdvg/dBsON8loRrsmEOKDtl+QtEPRRslHLmdpKcSPwL5O6
-	 pi/o/NE6MZiZQGAJZP0+CFd6yoOCKBzfZVOlfX6M=
+	b=ybitUfwM7AZVQyQ+bWl7uYw8lLpEWN9EKvJZEbaQNYr4zZOB8eVdKFvvN31HDCZBr
+	 jKQJDx2NmGbGcGq1/FeidQrV0HoBRwFZyTgM9suSQi9G3mrN3wf7LjmQJSCb7HhDA5
+	 xaUi2eyz8/D5D8AurIXJ5vGQTLxbqa6H+M8pPOTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0217/1073] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-Date: Wed, 28 Dec 2022 15:30:05 +0100
-Message-Id: <20221228144333.909761804@linuxfoundation.org>
+Subject: [PATCH 6.1 0206/1146] libbpf: Fix memory leak in parse_usdt_arg()
+Date: Wed, 28 Dec 2022 15:29:05 +0100
+Message-Id: <20221228144335.743297154@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
+[ Upstream commit 0dc9254e03704c75f2ebc9cbef2ce4de83fba603 ]
 
-On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
-fragments, and mark the QMAN ports as 10G.
+In the arm64 version of parse_usdt_arg(), when sscanf returns 2, reg_name
+is allocated but not freed. Fix it.
 
-Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0f8619929c57 ("libbpf: Usdt aarch64 arg parsing support")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/bpf/20221011120108.782373-3-xukuohai@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
- .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
- 3 files changed, 90 insertions(+), 2 deletions(-)
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+ tools/lib/bpf/usdt.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-new file mode 100644
-index 000000000000..437dab3fc017
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x08: port@88000 {
-+		cell-index = <0x8>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x88000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x28: port@a8000 {
-+		cell-index = <0x28>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa8000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e0000 {
-+		cell-index = <0>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe0000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy0>;
-+	};
-+
-+	mdio@e1000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe1000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy0: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-new file mode 100644
-index 000000000000..ad116b17850a
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x09: port@89000 {
-+		cell-index = <0x9>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x89000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x29: port@a9000 {
-+		cell-index = <0x29>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa9000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e2000 {
-+		cell-index = <1>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe2000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy1>;
-+	};
-+
-+	mdio@e3000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe3000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy1: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-index ecbb447920bc..74e17e134387 100644
---- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-+++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-@@ -609,8 +609,8 @@ usb1: usb@211000 {
- /include/ "qoriq-bman1.dtsi"
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index e83b497c2245..49f3c3b7f609 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -1348,25 +1348,23 @@ static int calc_pt_regs_off(const char *reg_name)
  
- /include/ "qoriq-fman3-0.dtsi"
--/include/ "qoriq-fman3-0-1g-0.dtsi"
--/include/ "qoriq-fman3-0-1g-1.dtsi"
-+/include/ "qoriq-fman3-0-10g-2.dtsi"
-+/include/ "qoriq-fman3-0-10g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-2.dtsi"
- /include/ "qoriq-fman3-0-1g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-4.dtsi"
+ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec *arg)
+ {
+-	char *reg_name = NULL;
++	char reg_name[16];
+ 	int arg_sz, len, reg_off;
+ 	long off;
+ 
+-	if (sscanf(arg_str, " %d @ \[ %m[a-z0-9], %ld ] %n", &arg_sz, &reg_name, &off, &len) == 3) {
++	if (sscanf(arg_str, " %d @ \[ %15[a-z0-9], %ld ] %n", &arg_sz, reg_name, &off, &len) == 3) {
+ 		/* Memory dereference case, e.g., -4@[sp, 96] */
+ 		arg->arg_type = USDT_ARG_REG_DEREF;
+ 		arg->val_off = off;
+ 		reg_off = calc_pt_regs_off(reg_name);
+-		free(reg_name);
+ 		if (reg_off < 0)
+ 			return reg_off;
+ 		arg->reg_off = reg_off;
+-	} else if (sscanf(arg_str, " %d @ \[ %m[a-z0-9] ] %n", &arg_sz, &reg_name, &len) == 2) {
++	} else if (sscanf(arg_str, " %d @ \[ %15[a-z0-9] ] %n", &arg_sz, reg_name, &len) == 2) {
+ 		/* Memory dereference case, e.g., -4@[sp] */
+ 		arg->arg_type = USDT_ARG_REG_DEREF;
+ 		arg->val_off = 0;
+ 		reg_off = calc_pt_regs_off(reg_name);
+-		free(reg_name);
+ 		if (reg_off < 0)
+ 			return reg_off;
+ 		arg->reg_off = reg_off;
+@@ -1375,12 +1373,11 @@ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec
+ 		arg->arg_type = USDT_ARG_CONST;
+ 		arg->val_off = off;
+ 		arg->reg_off = 0;
+-	} else if (sscanf(arg_str, " %d @ %m[a-z0-9] %n", &arg_sz, &reg_name, &len) == 2) {
++	} else if (sscanf(arg_str, " %d @ %15[a-z0-9] %n", &arg_sz, reg_name, &len) == 2) {
+ 		/* Register read case, e.g., -8@x4 */
+ 		arg->arg_type = USDT_ARG_REG;
+ 		arg->val_off = 0;
+ 		reg_off = calc_pt_regs_off(reg_name);
+-		free(reg_name);
+ 		if (reg_off < 0)
+ 			return reg_off;
+ 		arg->reg_off = reg_off;
 -- 
 2.35.1
 
