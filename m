@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE591C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BC4C433D2;
-	Wed, 28 Dec 2022 16:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDA1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1CBC433D2;
+	Wed, 28 Dec 2022 16:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244133;
-	bh=C7fUcCl0MYG6C35XWcB0lDVuuWtKalbjDQBErs8rt1c=;
+	s=korg; t=1672244136;
+	bh=+4Zvaa0MdZ8E7XuqalKiyLuNju0/wJug6N0636E/LTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfmJ3ROUArQvInT1tvzSPubDvWPN/0sEw74hDxwoK3WcVzr9jmToVeR8+jiZzKGaO
-	 LgDuCUtMM26Fk9d5Pst2QEmB2S8GXBxFfM/1NKYnZAaDIXbqFlLbJf56miQ0aaPjsz
-	 jM0VNUB/gb8GdtO/Ua/WxowCp4jx74/lKOQIH1sU=
+	b=Eb/ypVkMsBxFK4AMOyp22qxwRIdrOrxPhjevkgl+Lc5LaKD2uzLdHJcvz4Rkgqk5f
+	 xQQ9xwWOnBSWERZNOXps4shpTUsQFiOgdWcHJHcYMcshA6a4IEzQX4yyfgo5Tu3YOA
+	 H2T26JBP4YIIV7zG1iZyPUQvj/xmxqLOtUcB8r1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0656/1073] crypto: img-hash - Fix variable dereferenced before check hdev->req
-Date: Wed, 28 Dec 2022 15:37:24 +0100
-Message-Id: <20221228144345.863138005@linuxfoundation.org>
+Subject: [PATCH 6.1 0617/1146] crypto: cryptd - Use request context instead of stack for sub-request
+Date: Wed, 28 Dec 2022 15:35:56 +0100
+Message-Id: <20221228144346.928267123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +34,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
+[ Upstream commit 3a58c231172537f7b0e19d93ed33decd04f80eab ]
 
-Smatch report warning as follows:
+cryptd is buggy as it tries to use sync_skcipher without going
+through the proper sync_skcipher interface.  In fact it doesn't
+even need sync_skcipher since it's already a proper skcipher and
+can easily access the request context instead of using something
+off the stack.
 
-drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
-dereferenced before check 'hdev->req'
-
-Variable dereferenced should be done after check 'hdev->req',
-fix it.
-
-Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
-Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Fixes: 36b3875a97b8 ("crypto: cryptd - Remove VLA usage of skcipher")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/img-hash.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ crypto/cryptd.c | 36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
-index d8e82d69745d..9629e98bd68b 100644
---- a/drivers/crypto/img-hash.c
-+++ b/drivers/crypto/img-hash.c
-@@ -358,12 +358,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
- static void img_hash_dma_task(unsigned long d)
+diff --git a/crypto/cryptd.c b/crypto/cryptd.c
+index 668095eca0fa..ca3a40fc7da9 100644
+--- a/crypto/cryptd.c
++++ b/crypto/cryptd.c
+@@ -68,11 +68,12 @@ struct aead_instance_ctx {
+ 
+ struct cryptd_skcipher_ctx {
+ 	refcount_t refcnt;
+-	struct crypto_sync_skcipher *child;
++	struct crypto_skcipher *child;
+ };
+ 
+ struct cryptd_skcipher_request_ctx {
+ 	crypto_completion_t complete;
++	struct skcipher_request req;
+ };
+ 
+ struct cryptd_hash_ctx {
+@@ -227,13 +228,13 @@ static int cryptd_skcipher_setkey(struct crypto_skcipher *parent,
+ 				  const u8 *key, unsigned int keylen)
  {
- 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
--	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
-+	struct img_hash_request_ctx *ctx;
- 	u8 *addr;
- 	size_t nbytes, bleft, wsend, len, tbc;
- 	struct scatterlist tsg;
+ 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(parent);
+-	struct crypto_sync_skcipher *child = ctx->child;
++	struct crypto_skcipher *child = ctx->child;
  
--	if (!hdev->req || !ctx->sg)
-+	if (!hdev->req)
-+		return;
-+
-+	ctx = ahash_request_ctx(hdev->req);
-+	if (!ctx->sg)
- 		return;
+-	crypto_sync_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
+-	crypto_sync_skcipher_set_flags(child,
+-				       crypto_skcipher_get_flags(parent) &
+-					 CRYPTO_TFM_REQ_MASK);
+-	return crypto_sync_skcipher_setkey(child, key, keylen);
++	crypto_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
++	crypto_skcipher_set_flags(child,
++				  crypto_skcipher_get_flags(parent) &
++				  CRYPTO_TFM_REQ_MASK);
++	return crypto_skcipher_setkey(child, key, keylen);
+ }
  
- 	addr = sg_virt(ctx->sg);
+ static void cryptd_skcipher_complete(struct skcipher_request *req, int err)
+@@ -258,13 +259,13 @@ static void cryptd_skcipher_encrypt(struct crypto_async_request *base,
+ 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+ 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+-	struct crypto_sync_skcipher *child = ctx->child;
+-	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
++	struct skcipher_request *subreq = &rctx->req;
++	struct crypto_skcipher *child = ctx->child;
+ 
+ 	if (unlikely(err == -EINPROGRESS))
+ 		goto out;
+ 
+-	skcipher_request_set_sync_tfm(subreq, child);
++	skcipher_request_set_tfm(subreq, child);
+ 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
+ 				      NULL, NULL);
+ 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
+@@ -286,13 +287,13 @@ static void cryptd_skcipher_decrypt(struct crypto_async_request *base,
+ 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+ 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+-	struct crypto_sync_skcipher *child = ctx->child;
+-	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
++	struct skcipher_request *subreq = &rctx->req;
++	struct crypto_skcipher *child = ctx->child;
+ 
+ 	if (unlikely(err == -EINPROGRESS))
+ 		goto out;
+ 
+-	skcipher_request_set_sync_tfm(subreq, child);
++	skcipher_request_set_tfm(subreq, child);
+ 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
+ 				      NULL, NULL);
+ 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
+@@ -343,9 +344,10 @@ static int cryptd_skcipher_init_tfm(struct crypto_skcipher *tfm)
+ 	if (IS_ERR(cipher))
+ 		return PTR_ERR(cipher);
+ 
+-	ctx->child = (struct crypto_sync_skcipher *)cipher;
++	ctx->child = cipher;
+ 	crypto_skcipher_set_reqsize(
+-		tfm, sizeof(struct cryptd_skcipher_request_ctx));
++		tfm, sizeof(struct cryptd_skcipher_request_ctx) +
++		     crypto_skcipher_reqsize(cipher));
+ 	return 0;
+ }
+ 
+@@ -353,7 +355,7 @@ static void cryptd_skcipher_exit_tfm(struct crypto_skcipher *tfm)
+ {
+ 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
+-	crypto_free_sync_skcipher(ctx->child);
++	crypto_free_skcipher(ctx->child);
+ }
+ 
+ static void cryptd_skcipher_free(struct skcipher_instance *inst)
+@@ -931,7 +933,7 @@ struct crypto_skcipher *cryptd_skcipher_child(struct cryptd_skcipher *tfm)
+ {
+ 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(&tfm->base);
+ 
+-	return &ctx->child->base;
++	return ctx->child;
+ }
+ EXPORT_SYMBOL_GPL(cryptd_skcipher_child);
+ 
 -- 
 2.35.1
 
