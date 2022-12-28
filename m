@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5909D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF05FC433EF;
-	Wed, 28 Dec 2022 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEDE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721F0C433D2;
+	Wed, 28 Dec 2022 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239282;
-	bh=JwES6eCXKDSXKi5MHnE4zZyAHXGOjzt/qtjkJKeYBOQ=;
+	s=korg; t=1672239284;
+	bh=uYkr0ptwyMdaC2srWYnTT1MLtk7AGAAzURmQUDOvkHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHIeaTtx+c2IpoWXHRJZoYO4OfOqZ8sX/cqP8JrRf4cdZa7euAuPuarBeA7NvNikC
-	 0Ob/xLmSRGg8SG/qlygJsjcP6L/41rN0LhWkKPrBPmuzxE5IcAgDUn4hqZTAjKOCNs
-	 ABFQfENXpVb09/a0o6uYbDOFaY2xVUfH5WuoAnSo=
+	b=uhv/pECdCSY9TabLDKNEC2v9fB7igqJHgCgcaYaBbFoYr8JpHgbvvclJlCLoqCOIw
+	 CvegIsSOEySOopR7fmMEo9zyND1SYuWSWVlptu4wAKlqtReRlVUsL9nFp1ul+reNr0
+	 +z0f7b/85O9m/A9nOSkPax4PIryQ/GmpOqA2s57o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/731] can: kvaser_usb: Add struct kvaser_usb_busparams
-Date: Wed, 28 Dec 2022 15:34:37 +0100
-Message-Id: <20221228144301.489944622@linuxfoundation.org>
+Subject: [PATCH 5.15 197/731] nvmet: only allocate a single slab for bvecs
+Date: Wed, 28 Dec 2022 15:35:04 +0100
+Message-Id: <20221228144302.269902737@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,141 +38,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 00e5786177649c1e3110f9454fdd34e336597265 ]
+[ Upstream commit fa8f9ac42350edd3ce82d0d148a60f0fa088f995 ]
 
-Add struct kvaser_usb_busparams containing the busparameters used in
-CMD_{SET,GET}_BUSPARAMS* commands.
+There is no need to have a separate slab cache for each namespace,
+and having separate ones creates duplicate debugs file names as well.
 
-Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-11-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
+Fixes: d5eff33ee6f8 ("nvmet: add simple file backed ns support")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  8 +++++
- .../net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 32 +++++++------------
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 18 ++++-------
- 3 files changed, 27 insertions(+), 31 deletions(-)
+ drivers/nvme/target/core.c        | 22 ++++++++++++++--------
+ drivers/nvme/target/io-cmd-file.c | 16 +++-------------
+ drivers/nvme/target/nvmet.h       |  3 ++-
+ 3 files changed, 19 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-index 1f4583f1dae2..cb8018723748 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-@@ -76,6 +76,14 @@ struct kvaser_usb_tx_urb_context {
- 	int dlc;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 87a347248c38..cfd038551156 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -15,6 +15,7 @@
+ 
+ #include "nvmet.h"
+ 
++struct kmem_cache *nvmet_bvec_cache;
+ struct workqueue_struct *buffered_io_wq;
+ struct workqueue_struct *zbd_wq;
+ static const struct nvmet_fabrics_ops *nvmet_transports[NVMF_TRTYPE_MAX];
+@@ -1607,26 +1608,28 @@ void nvmet_subsys_put(struct nvmet_subsys *subsys)
+ 
+ static int __init nvmet_init(void)
+ {
+-	int error;
++	int error = -ENOMEM;
+ 
+ 	nvmet_ana_group_enabled[NVMET_DEFAULT_ANA_GRPID] = 1;
+ 
++	nvmet_bvec_cache = kmem_cache_create("nvmet-bvec",
++			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec), 0,
++			SLAB_HWCACHE_ALIGN, NULL);
++	if (!nvmet_bvec_cache)
++		return -ENOMEM;
++
+ 	zbd_wq = alloc_workqueue("nvmet-zbd-wq", WQ_MEM_RECLAIM, 0);
+ 	if (!zbd_wq)
+-		return -ENOMEM;
++		goto out_destroy_bvec_cache;
+ 
+ 	buffered_io_wq = alloc_workqueue("nvmet-buffered-io-wq",
+ 			WQ_MEM_RECLAIM, 0);
+-	if (!buffered_io_wq) {
+-		error = -ENOMEM;
++	if (!buffered_io_wq)
+ 		goto out_free_zbd_work_queue;
+-	}
+ 
+ 	nvmet_wq = alloc_workqueue("nvmet-wq", WQ_MEM_RECLAIM, 0);
+-	if (!nvmet_wq) {
+-		error = -ENOMEM;
++	if (!nvmet_wq)
+ 		goto out_free_buffered_work_queue;
+-	}
+ 
+ 	error = nvmet_init_discovery();
+ 	if (error)
+@@ -1645,6 +1648,8 @@ static int __init nvmet_init(void)
+ 	destroy_workqueue(buffered_io_wq);
+ out_free_zbd_work_queue:
+ 	destroy_workqueue(zbd_wq);
++out_destroy_bvec_cache:
++	kmem_cache_destroy(nvmet_bvec_cache);
+ 	return error;
+ }
+ 
+@@ -1656,6 +1661,7 @@ static void __exit nvmet_exit(void)
+ 	destroy_workqueue(nvmet_wq);
+ 	destroy_workqueue(buffered_io_wq);
+ 	destroy_workqueue(zbd_wq);
++	kmem_cache_destroy(nvmet_bvec_cache);
+ 
+ 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_entry) != 1024);
+ 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_hdr) != 1024);
+diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
+index 228871d48106..eadba13b276d 100644
+--- a/drivers/nvme/target/io-cmd-file.c
++++ b/drivers/nvme/target/io-cmd-file.c
+@@ -11,7 +11,6 @@
+ #include <linux/fs.h>
+ #include "nvmet.h"
+ 
+-#define NVMET_MAX_MPOOL_BVEC		16
+ #define NVMET_MIN_MPOOL_OBJ		16
+ 
+ int nvmet_file_ns_revalidate(struct nvmet_ns *ns)
+@@ -33,8 +32,6 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
+ 			flush_workqueue(buffered_io_wq);
+ 		mempool_destroy(ns->bvec_pool);
+ 		ns->bvec_pool = NULL;
+-		kmem_cache_destroy(ns->bvec_cache);
+-		ns->bvec_cache = NULL;
+ 		fput(ns->file);
+ 		ns->file = NULL;
+ 	}
+@@ -68,16 +65,8 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
+ 	ns->blksize_shift = min_t(u8,
+ 			file_inode(ns->file)->i_blkbits, 12);
+ 
+-	ns->bvec_cache = kmem_cache_create("nvmet-bvec",
+-			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec),
+-			0, SLAB_HWCACHE_ALIGN, NULL);
+-	if (!ns->bvec_cache) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
+-
+ 	ns->bvec_pool = mempool_create(NVMET_MIN_MPOOL_OBJ, mempool_alloc_slab,
+-			mempool_free_slab, ns->bvec_cache);
++			mempool_free_slab, nvmet_bvec_cache);
+ 
+ 	if (!ns->bvec_pool) {
+ 		ret = -ENOMEM;
+@@ -86,9 +75,10 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
+ 
+ 	return ret;
+ err:
++	fput(ns->file);
++	ns->file = NULL;
+ 	ns->size = 0;
+ 	ns->blksize_shift = 0;
+-	nvmet_file_ns_disable(ns);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index dbeb0b8c1194..fdb06a9d430d 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -77,7 +77,6 @@ struct nvmet_ns {
+ 
+ 	struct completion	disable_done;
+ 	mempool_t		*bvec_pool;
+-	struct kmem_cache	*bvec_cache;
+ 
+ 	int			use_p2pmem;
+ 	struct pci_dev		*p2p_dev;
+@@ -363,6 +362,8 @@ struct nvmet_req {
+ 	u64			error_slba;
  };
  
-+struct kvaser_usb_busparams {
-+	__le32 bitrate;
-+	u8 tseg1;
-+	u8 tseg2;
-+	u8 sjw;
-+	u8 nsamples;
-+} __packed;
-+
- struct kvaser_usb {
- 	struct usb_device *udev;
- 	struct usb_interface *intf;
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-index b485f0bc2e6b..64b84c8d5dfd 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -196,17 +196,9 @@ struct kvaser_cmd_chip_state_event {
- #define KVASER_USB_HYDRA_BUS_MODE_CANFD_ISO	0x01
- #define KVASER_USB_HYDRA_BUS_MODE_NONISO	0x02
- struct kvaser_cmd_set_busparams {
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 nsamples;
-+	struct kvaser_usb_busparams busparams_arb;
- 	u8 reserved0[4];
--	__le32 bitrate_d;
--	u8 tseg1_d;
--	u8 tseg2_d;
--	u8 sjw_d;
--	u8 nsamples_d;
-+	struct kvaser_usb_busparams busparams_data;
- 	u8 canfd_mode;
- 	u8 reserved1[7];
- } __packed;
-@@ -1542,11 +1534,11 @@ static int kvaser_usb_hydra_set_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
- 
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_REQ;
--	cmd->set_busparams_req.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->set_busparams_req.sjw = (u8)sjw;
--	cmd->set_busparams_req.tseg1 = (u8)tseg1;
--	cmd->set_busparams_req.tseg2 = (u8)tseg2;
--	cmd->set_busparams_req.nsamples = 1;
-+	cmd->set_busparams_req.busparams_arb.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->set_busparams_req.busparams_arb.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_arb.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_arb.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_arb.nsamples = 1;
- 
- 	kvaser_usb_hydra_set_cmd_dest_he
- 		(cmd, dev->card_data.hydra.channel_to_he[priv->channel]);
-@@ -1576,11 +1568,11 @@ static int kvaser_usb_hydra_set_data_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
- 
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_FD_REQ;
--	cmd->set_busparams_req.bitrate_d = cpu_to_le32(dbt->bitrate);
--	cmd->set_busparams_req.sjw_d = (u8)sjw;
--	cmd->set_busparams_req.tseg1_d = (u8)tseg1;
--	cmd->set_busparams_req.tseg2_d = (u8)tseg2;
--	cmd->set_busparams_req.nsamples_d = 1;
-+	cmd->set_busparams_req.busparams_data.bitrate = cpu_to_le32(dbt->bitrate);
-+	cmd->set_busparams_req.busparams_data.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_data.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_data.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_data.nsamples = 1;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_FD) {
- 		if (priv->can.ctrlmode & CAN_CTRLMODE_FD_NON_ISO)
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index b44a9ca22136..9818bc6dc8e9 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -164,11 +164,7 @@ struct usbcan_cmd_softinfo {
- struct kvaser_cmd_busparams {
- 	u8 tid;
- 	u8 channel;
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 no_samp;
-+	struct kvaser_usb_busparams busparams;
- } __packed;
- 
- struct kvaser_cmd_tx_can {
-@@ -1704,15 +1700,15 @@ static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
- 	cmd->len = CMD_HEADER_LEN + sizeof(struct kvaser_cmd_busparams);
- 	cmd->u.busparams.channel = priv->channel;
- 	cmd->u.busparams.tid = 0xff;
--	cmd->u.busparams.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->u.busparams.sjw = bt->sjw;
--	cmd->u.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
--	cmd->u.busparams.tseg2 = bt->phase_seg2;
-+	cmd->u.busparams.busparams.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->u.busparams.busparams.sjw = bt->sjw;
-+	cmd->u.busparams.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
-+	cmd->u.busparams.busparams.tseg2 = bt->phase_seg2;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_3_SAMPLES)
--		cmd->u.busparams.no_samp = 3;
-+		cmd->u.busparams.busparams.nsamples = 3;
- 	else
--		cmd->u.busparams.no_samp = 1;
-+		cmd->u.busparams.busparams.nsamples = 1;
- 
- 	rc = kvaser_usb_send_cmd(dev, cmd, cmd->len);
- 
++#define NVMET_MAX_MPOOL_BVEC		16
++extern struct kmem_cache *nvmet_bvec_cache;
+ extern struct workqueue_struct *buffered_io_wq;
+ extern struct workqueue_struct *zbd_wq;
+ extern struct workqueue_struct *nvmet_wq;
 -- 
 2.35.1
 
