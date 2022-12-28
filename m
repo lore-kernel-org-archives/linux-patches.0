@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32A21868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A33EC433EF;
-	Wed, 28 Dec 2022 15:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC2A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D44C433EF;
+	Wed, 28 Dec 2022 15:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239727;
-	bh=gAmBoqw4wbX+MYP/T9RGg4IOrRl8Kem9L1L7oGTJ7uo=;
+	s=korg; t=1672239730;
+	bh=XVoSdK8260yXeH93s7NZlS9+BxbdpXSUO5DzpwF9pHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwM1eZyeZnTEDPR4MQAJNNaDC1YEu4KOr92rcwv4Y2R7tNF7vykPbWmjDJN9Smmsv
-	 utoWRBA480HuGUdO9pru9Xd8nuFEJZ4bc9Bz95OC/lbMu/HY8Um8t3DjdZ1f3fBFBt
-	 e1ggjypkG2as10Ls0MGHhWaLuZ0aEvOfoArIhuJE=
+	b=x+VepysU3JX7xGgzj8/q+9Q6AfrjEKV/SkPF1jCbY6G56MszBpVaQErYM7KfRUjIp
+	 lOQZYGxrLjcb5f54rH6aKWWag64IqAXTRrfaSN8odIgptNz73GiQSVCPRHYEkss92T
+	 hUXWmmR+KPOcLsTLhXBL6ehHKu9m70hZyP+L1Vyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0032/1146] arm64: dts: qcom: sm8250-mtp: fix reset line polarity
-Date: Wed, 28 Dec 2022 15:26:11 +0100
-Message-Id: <20221228144331.041302267@linuxfoundation.org>
+Subject: [PATCH 6.0 0069/1073] ARM: dts: dove: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:37 +0100
+Message-Id: <20221228144329.959950093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 15d9fcbb3e6e8420c7d1ae331405780c5d9c1c25 ]
+[ Upstream commit dcc7d8c72b64a479b8017e4332d99179deb8802d ]
 
-The driver for the codec, when resetting the chip, first drives the line
-low, and then high. This means that the line is active low. Change the
-annotation in the DTS accordingly.
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: 36c9d012f193 ("arm64: dts: qcom: use GPIO flags for tlmm")
-Fixes: 5a263cf629a8 ("arm64: dts: qcom: sm8250-mtp: Add wcd9380 audio codec node")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221027074652.1044235-3-dmitry.torokhov@gmail.com
+Fixes: 74ecaa403a74 ("ARM: dove: add PCIe controllers to SoC DT")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 2 +-
+ arch/arm/boot/dts/dove.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index a102aa5efa32..a05fe468e0b4 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -635,7 +635,7 @@ &soc {
- 	wcd938x: codec {
- 		compatible = "qcom,wcd9380-codec";
- 		#sound-dai-cells = <1>;
--		reset-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
- 		vdd-buck-supply = <&vreg_s4a_1p8>;
- 		vdd-rxtx-supply = <&vreg_s4a_1p8>;
- 		vdd-io-supply = <&vreg_s4a_1p8>;
+diff --git a/arch/arm/boot/dts/dove.dtsi b/arch/arm/boot/dts/dove.dtsi
+index 89e0bdaf3a85..726d353eda68 100644
+--- a/arch/arm/boot/dts/dove.dtsi
++++ b/arch/arm/boot/dts/dove.dtsi
+@@ -129,7 +129,7 @@ pcie0: pcie@1 {
+ 			pcie1: pcie@2 {
+ 				device_type = "pci";
+ 				status = "disabled";
+-				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x80000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				clocks = <&gate_clk 5>;
+ 				marvell,pcie-port = <1>;
 -- 
 2.35.1
 
