@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46D41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DACC433F0;
-	Wed, 28 Dec 2022 15:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DDF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA642C433D2;
+	Wed, 28 Dec 2022 15:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239600;
-	bh=xLMSABwJiBXNgc997gcjKHd9GNASxvEMxkI0yI52mec=;
+	s=korg; t=1672239603;
+	bh=feo39I59bd4Pp6kg/IoV5mJhQOT7RjZVAt3IV0PeY0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOAL0HcZe22Z9dD0KoZpLxYMXX2/rYSXqLcoAtdtA2pqyoq6qHMc7EHUKMCWl+aN4
-	 ns+5bDJW4fFsqlgVqsdC0gkLmOPTxT9OkWAu/vAX3tu2405feLyKvQcPgEmwoe+h6E
-	 I4IQtZWnMiuLdJo8p2bopBvx2V9e0kl+sVchU764=
+	b=RDeWG3E0vpzNM3o+1UfSJn26wfzJ4OpOSkX+XG7VAgstvSVLJRFSki+VaDiJuhO8Z
+	 BtGWG0CpPtsxYJCKl57rFoJe1Y4e2yyqalYPe4NhZvo02SxR6flAVSvmRJ3zE4hcKl
+	 tLce4k+JGtw1FZXS4Ar04WkUVkadB8/x1j0uPd9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Punit Agrawal <punit.agrawal@bytedance.com>,
-	Will Deacon <will@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0054/1073] perf/arm_dmc620: Fix hotplug callback leak in dmc620_pmu_init()
-Date: Wed, 28 Dec 2022 15:27:22 +0100
-Message-Id: <20221228144329.574444641@linuxfoundation.org>
+Subject: [PATCH 5.15 248/731] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
+Date: Wed, 28 Dec 2022 15:35:55 +0100
+Message-Id: <20221228144303.750951713@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit d9f564c966e63925aac4ba273a9319d7fb6f4b4e ]
+[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
 
-dmc620_pmu_init() won't remove the callback added by
-cpuhp_setup_state_multi() when platform_driver_register() failed. Remove
-the callback by cpuhp_remove_multi_state() in fail path.
+If we're asked to recover open state while a delegation return is
+outstanding, then the state manager thread cannot use a cached open, so
+if the server returns a delegation, we can end up deadlocked behind the
+pending delegreturn.
+To avoid this problem, let's just ask the server not to give us a
+delegation unless we're explicitly reclaiming one.
 
-Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
-arm-ccn: Prevent hotplug callback leak")
-
-Fixes: 53c218da220c ("driver/perf: Add PMU driver for the ARM DMC-620 memory controller")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Punit Agrawal <punit.agrawal@bytedance.com>
-Link: https://lore.kernel.org/r/20221115115540.6245-2-shangxiaojing@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_dmc620_pmu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
-index 280a6ae3e27c..54aa4658fb36 100644
---- a/drivers/perf/arm_dmc620_pmu.c
-+++ b/drivers/perf/arm_dmc620_pmu.c
-@@ -725,6 +725,8 @@ static struct platform_driver dmc620_pmu_driver = {
- 
- static int __init dmc620_pmu_init(void)
- {
-+	int ret;
-+
- 	cpuhp_state_num = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN,
- 				      DMC620_DRVNAME,
- 				      NULL,
-@@ -732,7 +734,11 @@ static int __init dmc620_pmu_init(void)
- 	if (cpuhp_state_num < 0)
- 		return cpuhp_state_num;
- 
--	return platform_driver_register(&dmc620_pmu_driver);
-+	ret = platform_driver_register(&dmc620_pmu_driver);
-+	if (ret)
-+		cpuhp_remove_multi_state(cpuhp_state_num);
-+
-+	return ret;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 3c9ed63710a9..b6b1fad031c7 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -2144,18 +2144,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
  }
  
- static void __exit dmc620_pmu_exit(void)
+ static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
+-		fmode_t fmode)
++				    fmode_t fmode)
+ {
+ 	struct nfs4_state *newstate;
++	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
++	int openflags = opendata->o_arg.open_flags;
+ 	int ret;
+ 
+ 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
+ 		return 0;
+-	opendata->o_arg.open_flags = 0;
+ 	opendata->o_arg.fmode = fmode;
+-	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
+-			NFS_SB(opendata->dentry->d_sb),
+-			fmode, 0);
++	opendata->o_arg.share_access =
++		nfs4_map_atomic_open_share(server, fmode, openflags);
+ 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
+ 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
+ 	nfs4_init_opendata_res(opendata);
+@@ -2735,10 +2735,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
+ 	struct nfs4_opendata *opendata;
+ 	int ret;
+ 
+-	opendata = nfs4_open_recoverdata_alloc(ctx, state,
+-			NFS4_OPEN_CLAIM_FH);
++	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
+ 	if (IS_ERR(opendata))
+ 		return PTR_ERR(opendata);
++	/*
++	 * We're not recovering a delegation, so ask for no delegation.
++	 * Otherwise the recovery thread could deadlock with an outstanding
++	 * delegation return.
++	 */
++	opendata->o_arg.open_flags = O_DIRECT;
+ 	ret = nfs4_open_recover(opendata, state);
+ 	if (ret == -ESTALE)
+ 		d_drop(ctx->dentry);
 -- 
 2.35.1
 
