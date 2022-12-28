@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624C41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41CCC433D2;
-	Wed, 28 Dec 2022 15:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004271863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7946BC433D2;
+	Wed, 28 Dec 2022 15:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239912;
-	bh=Zw2Qby8m7WjbAf0R9AFaJsdYj5Bdka2UBKP7EQwATxY=;
+	s=korg; t=1672239914;
+	bh=yY9imwIZpyQ07U+IWI4jNgFJ3e3gVQ1hcl1zwzlLWDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/4FVYTyug5tUzV6sdJkXkOo4RiOIJVbEmOIqg4o7i/c66PiMG+7sVmD/18LZaSXG
-	 +Newaze5OHuwahTUoCKpf58/P7gI/XHrv9t9XWxCqH3j3676uOsipo3hGhKA7CXYW1
-	 sAl3vpWbfUut1gmzXZjdB4dWGpR38FwlS3i3BIgk=
+	b=qqOdZ5I7pOgRC4M6G76nT6mlwNYFyH65FHsTjVq5bP3Co4Od/ftVmE8YIuP+yr6P4
+	 7/NBgZ4hZH8qxt3zoJzAcRG02dpq+npLzCn7SLq/FFb4/tmRdRxFPqZZSysdc6fwQf
+	 6SCc6pXeHozoVTzMlRXJKJ0dnArAlLcrEHRbSpsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0093/1073] ovl: remove privs in ovl_fallocate()
-Date: Wed, 28 Dec 2022 15:28:01 +0100
-Message-Id: <20221228144330.577932810@linuxfoundation.org>
+Subject: [PATCH 5.15 264/731] bonding: uninitialized variable in bond_miimon_inspect()
+Date: Wed, 28 Dec 2022 15:36:11 +0100
+Message-Id: <20221228144304.215633858@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 23a8ce16419a3066829ad4a8b7032a75817af65b ]
+[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
 
-Underlying fs doesn't remove privs because fallocate is called with
-privileged mounter credentials.
+The "ignore_updelay" variable needs to be initialized to false.
 
-This fixes some failure in fstests generic/683..687.
-
-Fixes: aab8848cee5e ("ovl: add ovl_fallocate()")
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/file.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
-index 362a4eed92b5..a34f8042724c 100644
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -517,9 +517,16 @@ static long ovl_fallocate(struct file *file, int mode, loff_t offset, loff_t len
- 	const struct cred *old_cred;
- 	int ret;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 6dca5bfe8247..456298919d54 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2499,10 +2499,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
+ /* called with rcu_read_lock() */
+ static int bond_miimon_inspect(struct bonding *bond)
+ {
++	bool ignore_updelay = false;
+ 	int link_state, commit = 0;
+ 	struct list_head *iter;
+ 	struct slave *slave;
+-	bool ignore_updelay;
  
-+	inode_lock(inode);
-+	/* Update mode */
-+	ovl_copyattr(inode);
-+	ret = file_remove_privs(file);
-+	if (ret)
-+		goto out_unlock;
-+
- 	ret = ovl_real_fdget(file, &real);
- 	if (ret)
--		return ret;
-+		goto out_unlock;
- 
- 	old_cred = ovl_override_creds(file_inode(file)->i_sb);
- 	ret = vfs_fallocate(real.file, mode, offset, len);
-@@ -530,6 +537,9 @@ static long ovl_fallocate(struct file *file, int mode, loff_t offset, loff_t len
- 
- 	fdput(real);
- 
-+out_unlock:
-+	inode_unlock(inode);
-+
- 	return ret;
- }
- 
+ 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
+ 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
 -- 
 2.35.1
 
