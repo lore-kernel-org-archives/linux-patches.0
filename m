@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EC91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C620C433D2;
-	Wed, 28 Dec 2022 15:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3461863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB059C433D2;
+	Wed, 28 Dec 2022 15:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239693;
-	bh=6mK1mk1fXoqVbtgKC6LDu1AZYaR14wRYh167YVCuGDs=;
+	s=korg; t=1672239696;
+	bh=omBc3ScJUWtsOWSPluRFNtly+g4OLl7z5Xs4Hj3y6IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNzSv2opX7EWRdHRzNNm9zKEQoNWy8AupExXqNaQaPErjSL40vOAqWzhnFgKjcVBu
-	 FlCYNw3aj55ZH1JYUUmLk6ZP6bUgRu6crOT/8638kaWhJjK3KYAPNV1myNypas6UnH
-	 tjnkYmzuU1L86Fyyit+bBvPPuNGRlznXkf5BK69w=
+	b=zAwTCxc9UCl75t0cAF9rx5DmxUET2/jaIRySxOa3PmOmBTwXmJ+sod8ly9PKS+MW2
+	 cHzuslFMVsTb4b9cS06Oh+EC2RMD33r0j1TrgbhD3TnY7a8YLHhmxTtuZKsYoLidxF
+	 gvzu4dNb0W6+vi2x8gVFjT1c/VX2v26ASQD6ccCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0028/1146] arm64: dts: qcom: sm8250: fix UFS PHY registers
-Date: Wed, 28 Dec 2022 15:26:07 +0100
-Message-Id: <20221228144330.934855322@linuxfoundation.org>
+Subject: [PATCH 6.0 0065/1073] arm64: dts: mt2712-evb: Fix vproc fixed regulators unit names
+Date: Wed, 28 Dec 2022 15:27:33 +0100
+Message-Id: <20221228144329.856631352@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 7f8b37dd4e7bf50160529530d9789b846153df71 ]
+[ Upstream commit 377063156893bf6c088309ac799fe5c6dce2822d ]
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
+Update the names to regulator-vproc-buck{0,1} to fix unit_addres_vs_reg
+warnings for those.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
-
-Fixes: b7e2fba06622 ("arm64: dts: qcom: sm8250: Add UFS controller and PHY")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221024091507.20342-3-johan+linaro@kernel.org
+Fixes: f75dd8bdd344 ("arm64: dts: mediatek: add mt2712 cpufreq related device nodes")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 334be39ccaf5..1452213efb00 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2180,11 +2180,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+index 9b1af9c80130..638908773706 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+@@ -26,14 +26,14 @@ chosen {
+ 		stdout-path = "serial0:921600n8";
+ 	};
  
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x16c>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x16c>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
+-	cpus_fixed_vproc0: fixedregulator@0 {
++	cpus_fixed_vproc0: regulator-vproc-buck0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vproc_buck0";
+ 		regulator-min-microvolt = <1000000>;
+ 		regulator-max-microvolt = <1000000>;
+ 	};
+ 
+-	cpus_fixed_vproc1: fixedregulator@1 {
++	cpus_fixed_vproc1: regulator-vproc-buck1 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vproc_buck1";
+ 		regulator-min-microvolt = <1000000>;
 -- 
 2.35.1
 
