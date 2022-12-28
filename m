@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C681863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03D9C433EF;
-	Wed, 28 Dec 2022 15:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BEC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2D0C433EF;
+	Wed, 28 Dec 2022 15:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241634;
-	bh=voRNV1ehR6mL7kdn35OYuaaty47peth5ZS4yX4ausPc=;
+	s=korg; t=1672241636;
+	bh=HPHPWnoRvPM2PnbXmQYwBAdsBSkzdycET8TZdRqisOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGJzFFSMdJ/d6Ep2LpPFcWeQA38BA83yVOpdhPka+aLWAQIh7GffgXi2SbPM84gQA
-	 PKwuF8XPxJWtUgoZVHfauDiXWTxTGyHp76LizKd+oPQPx5wz4IOu5nIOzYXwqD2mTv
-	 ZPcyL6/5/OwwHOt+zUBhCdPujP1QzPTRbJfxRgGo=
+	b=fJ9u48Eb/17dii7PFnZU1yJz1tw8s8PlYZa05e7ewxbBUKmUOfiGntjGHVIDnefAv
+	 ncY1ykA16kQK/2fZAETUf0ZJaITXy8XA57X1QbEChflcEkyIYrpFEpwdZ79YEftvTx
+	 R3USSQtndxSlhBW1Y7cm7J2Q9cyCK72K03sqAsBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0271/1146] drm/ttm: fix undefined behavior in bit shift for TTM_TT_FLAG_PRIV_POPULATED
-Date: Wed, 28 Dec 2022 15:30:10 +0100
-Message-Id: <20221228144337.496630830@linuxfoundation.org>
+Subject: [PATCH 6.0 0310/1073] wifi: iwlwifi: mei: make sure ownership confirmed message is sent
+Date: Wed, 28 Dec 2022 15:31:38 +0100
+Message-Id: <20221228144336.426455429@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,95 +35,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 387659939c00156f8d6bab0fbc55b4eaf2b6bc5b ]
+[ Upstream commit 5aa7ce31bd84c2f4f059200f06c537c920cbb458 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+It is possible that CSME will try to take ownership while the driver
+is stopping. In this case, if the CSME takes ownership message arrives
+after the driver started unregistering, the iwl_mei_cache->ops is
+already invalid, so the host will not answer with the ownership
+confirmed message.
+Similarly, if the take ownership message arrived after the mac was
+stopped or when iwl_mvm_up() failed, setting rfkill will not trigger
+sending the confirm message. As a result, CSME will not take
+ownership, which will result in a disconnection.
 
-UBSAN: shift-out-of-bounds in ./include/drm/ttm/ttm_tt.h:122:26
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- ttm_bo_move_memcpy+0x3b4/0x460 [ttm]
- bo_driver_move+0x32/0x40 [drm_vram_helper]
- ttm_bo_handle_move_mem+0x118/0x200 [ttm]
- ttm_bo_validate+0xfa/0x220 [ttm]
- drm_gem_vram_pin_locked+0x70/0x1b0 [drm_vram_helper]
- drm_gem_vram_pin+0x48/0xb0 [drm_vram_helper]
- drm_gem_vram_plane_helper_prepare_fb+0x53/0xe0 [drm_vram_helper]
- drm_gem_vram_simple_display_pipe_prepare_fb+0x26/0x30 [drm_vram_helper]
- drm_simple_kms_plane_prepare_fb+0x4d/0xe0 [drm_kms_helper]
- drm_atomic_helper_prepare_planes+0xda/0x210 [drm_kms_helper]
- drm_atomic_helper_commit+0xc3/0x1e0 [drm_kms_helper]
- drm_atomic_commit+0x9c/0x160 [drm]
- drm_client_modeset_commit_atomic+0x33a/0x380 [drm]
- drm_client_modeset_commit_locked+0x77/0x220 [drm]
- drm_client_modeset_commit+0x31/0x60 [drm]
- __drm_fb_helper_restore_fbdev_mode_unlocked+0xa7/0x170 [drm_kms_helper]
- drm_fb_helper_set_par+0x51/0x90 [drm_kms_helper]
- fbcon_init+0x316/0x790
- visual_init+0x113/0x1d0
- do_bind_con_driver+0x2a3/0x5c0
- do_take_over_console+0xa9/0x270
- do_fbcon_takeover+0xa1/0x170
- do_fb_registered+0x2a8/0x340
- fbcon_fb_registered+0x47/0xe0
- register_framebuffer+0x294/0x4a0
- __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
- drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
- drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
- drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
- bochs_pci_probe+0x6ca/0x772 [bochs]
- local_pci_probe+0x4d/0xb0
- pci_device_probe+0x119/0x320
- really_probe+0x181/0x550
- __driver_probe_device+0xc6/0x220
- driver_probe_device+0x32/0x100
- __driver_attach+0x195/0x200
- bus_for_each_dev+0xbb/0x120
- driver_attach+0x27/0x30
- bus_add_driver+0x22e/0x2f0
- driver_register+0xa9/0x190
- __pci_register_driver+0x90/0xa0
- bochs_pci_driver_init+0x52/0x1000 [bochs]
- do_one_initcall+0x76/0x430
- do_init_module+0x61/0x28a
- load_module+0x1f82/0x2e50
- __do_sys_finit_module+0xf8/0x190
- __x64_sys_finit_module+0x23/0x30
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
+Fix it by sending the ownership confirmed message immediately in such
+cases.
 
-Fixes: 3312be8f6fc8 ("drm/ttm: move populated state into page flags")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221031113350.4180975-1-cuigaosheng1@huawei.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.b2a4c009e3e6.I7f931b7ee8b168e8ac88b11f23bff98b7ed3cb19@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/ttm/ttm_tt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/intel/iwlwifi/mei/iwl-mei.h  |  7 +++--
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 30 ++++++++++++-------
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c   |  2 ++
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  4 +--
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c  |  2 +-
+ 5 files changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/include/drm/ttm/ttm_tt.h b/include/drm/ttm/ttm_tt.h
-index 17a0310e8aaa..b7d3f3843f1e 100644
---- a/include/drm/ttm/ttm_tt.h
-+++ b/include/drm/ttm/ttm_tt.h
-@@ -88,7 +88,7 @@ struct ttm_tt {
- #define TTM_TT_FLAG_EXTERNAL		(1 << 2)
- #define TTM_TT_FLAG_EXTERNAL_MAPPABLE	(1 << 3)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
+index 67122cfa2292..5409699c9a1f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
++++ b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
+@@ -446,9 +446,10 @@ void iwl_mei_host_associated(const struct iwl_mei_conn_info *conn_info,
+ void iwl_mei_host_disassociated(void);
  
--#define TTM_TT_FLAG_PRIV_POPULATED  (1 << 31)
-+#define TTM_TT_FLAG_PRIV_POPULATED  (1U << 31)
- 	uint32_t page_flags;
- 	/** @num_pages: Number of pages in the page array. */
- 	uint32_t num_pages;
+ /**
+- * iwl_mei_device_down() - must be called when the device is down
++ * iwl_mei_device_state() - must be called when the device changes up/down state
++ * @up: true if the device is up, false otherwise.
+  */
+-void iwl_mei_device_down(void);
++void iwl_mei_device_state(bool up);
+ 
+ #else
+ 
+@@ -497,7 +498,7 @@ static inline void iwl_mei_host_associated(const struct iwl_mei_conn_info *conn_
+ static inline void iwl_mei_host_disassociated(void)
+ {}
+ 
+-static inline void iwl_mei_device_down(void)
++static inline void iwl_mei_device_state(bool up)
+ {}
+ 
+ #endif /* CONFIG_IWLMEI */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index 357f14626cf4..90646c54a3c5 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -147,6 +147,8 @@ struct iwl_mei_filters {
+  *	to send CSME_OWNERSHIP_CONFIRMED when the driver completes its down
+  *	flow.
+  * @link_prot_state: true when we are in link protection PASSIVE
++ * @device_down: true if the device is down. Used to remember to send
++ *	CSME_OWNERSHIP_CONFIRMED when the driver is already down.
+  * @csa_throttle_end_wk: used when &csa_throttled is true
+  * @data_q_lock: protects the access to the data queues which are
+  *	accessed without the mutex.
+@@ -167,6 +169,7 @@ struct iwl_mei {
+ 	bool csa_throttled;
+ 	bool csme_taking_ownership;
+ 	bool link_prot_state;
++	bool device_down;
+ 	struct delayed_work csa_throttle_end_wk;
+ 	spinlock_t data_q_lock;
+ 
+@@ -798,14 +801,18 @@ static void iwl_mei_handle_csme_taking_ownership(struct mei_cl_device *cldev,
+ 
+ 	mei->got_ownership = false;
+ 
+-	/*
+-	 * Remember to send CSME_OWNERSHIP_CONFIRMED when the wifi driver
+-	 * is finished taking the device down.
+-	 */
+-	mei->csme_taking_ownership = true;
++	if (iwl_mei_cache.ops && !mei->device_down) {
++		/*
++		 * Remember to send CSME_OWNERSHIP_CONFIRMED when the wifi
++		 * driver is finished taking the device down.
++		 */
++		mei->csme_taking_ownership = true;
+ 
+-	if (iwl_mei_cache.ops)
+-		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true);
++		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, true, true);
++	} else {
++		iwl_mei_send_sap_msg(cldev,
++				     SAP_MSG_NOTIF_CSME_OWNERSHIP_CONFIRMED);
++	}
+ }
+ 
+ static void iwl_mei_handle_nvm(struct mei_cl_device *cldev,
+@@ -1616,7 +1623,7 @@ void iwl_mei_set_netdev(struct net_device *netdev)
+ }
+ EXPORT_SYMBOL_GPL(iwl_mei_set_netdev);
+ 
+-void iwl_mei_device_down(void)
++void iwl_mei_device_state(bool up)
+ {
+ 	struct iwl_mei *mei;
+ 
+@@ -1630,7 +1637,9 @@ void iwl_mei_device_down(void)
+ 	if (!mei)
+ 		goto out;
+ 
+-	if (!mei->csme_taking_ownership)
++	mei->device_down = !up;
++
++	if (up || !mei->csme_taking_ownership)
+ 		goto out;
+ 
+ 	iwl_mei_send_sap_msg(mei->cldev,
+@@ -1639,7 +1648,7 @@ void iwl_mei_device_down(void)
+ out:
+ 	mutex_unlock(&iwl_mei_mutex);
+ }
+-EXPORT_SYMBOL_GPL(iwl_mei_device_down);
++EXPORT_SYMBOL_GPL(iwl_mei_device_state);
+ 
+ int iwl_mei_register(void *priv, const struct iwl_mei_ops *ops)
+ {
+@@ -1821,6 +1830,7 @@ static int iwl_mei_probe(struct mei_cl_device *cldev,
+ 
+ 	mei_cldev_set_drvdata(cldev, mei);
+ 	mei->cldev = cldev;
++	mei->device_down = true;
+ 
+ 	do {
+ 		ret = iwl_mei_alloc_shared_mem(cldev);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index f041e77af059..5de34edc51fe 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -1665,6 +1665,8 @@ int iwl_mvm_up(struct iwl_mvm *mvm)
+ 			iwl_rfi_send_config_cmd(mvm, NULL);
+ 	}
+ 
++	iwl_mvm_mei_device_state(mvm, true);
++
+ 	IWL_DEBUG_INFO(mvm, "RT uCode started.\n");
+ 	return 0;
+  error:
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index bf35e130c876..cc71049bd9b3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -2201,10 +2201,10 @@ static inline void iwl_mvm_mei_host_disassociated(struct iwl_mvm *mvm)
+ 		iwl_mei_host_disassociated();
+ }
+ 
+-static inline void iwl_mvm_mei_device_down(struct iwl_mvm *mvm)
++static inline void iwl_mvm_mei_device_state(struct iwl_mvm *mvm, bool up)
+ {
+ 	if (mvm->mei_registered)
+-		iwl_mei_device_down();
++		iwl_mei_device_state(up);
+ }
+ 
+ static inline void iwl_mvm_mei_set_sw_rfkill_state(struct iwl_mvm *mvm)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index db43c8a83a31..3fec87fb6b7b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -1370,7 +1370,7 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
+ 	iwl_trans_stop_device(mvm->trans);
+ 	iwl_free_fw_paging(&mvm->fwrt);
+ 	iwl_fw_dump_conf_clear(&mvm->fwrt);
+-	iwl_mvm_mei_device_down(mvm);
++	iwl_mvm_mei_device_state(mvm, false);
+ }
+ 
+ static void iwl_op_mode_mvm_stop(struct iwl_op_mode *op_mode)
 -- 
 2.35.1
 
