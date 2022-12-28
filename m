@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB9C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FDEC433D2;
-	Wed, 28 Dec 2022 16:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721A01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97A0C433F0;
+	Wed, 28 Dec 2022 16:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243866;
-	bh=Ji4/G+UIIXU/SjG7Jk+TfsvSa2Cn/msnuOyQCiZ4O0k=;
+	s=korg; t=1672243872;
+	bh=wFlKBag6jmOfqSU2vf4BT3olpGbBBPwt3w9v6R3MY4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5A7Z6BOKgdVtkJk+zeQv1mJ12wdPuaxtRuKdPy9fDhGR7RLecTsmzcWEkwCWEiXk
-	 Lli2FXrQbKfRwKNRJ08YV3EK1IpsUCPFzlymItdITBHwVAeebXN4C4tfVLJrYFak4W
-	 Qc+ycKKTorVnZhF/yXfPswyX9DcKxraXE1EECUS4=
+	b=x0rjr03erI3jLcEnMuK/k49mTJ9CJWaRlL0dOU3NJVitA9gvGD6gNL1ZwFHfQVcS0
+	 SmrUKxsAP3BPH9GZpmcvadWd2Lk+xgrfA8L6ZDds7CUHybhXXx8+tahUATwqMoci0f
+	 mWIJ7GNaQ7yJQ0QCZGsmBm6IWqFsQaHTRAS1VR0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Staszewski <bartoszx.staszewski@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Shwetha Nagaraju <Shwetha.nagaraju@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Saeed Mahameed <saeed@kernel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luoyouming <luoyouming@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0569/1146] i40e: Fix the inability to attach XDP program on downed interface
-Date: Wed, 28 Dec 2022 15:35:08 +0100
-Message-Id: <20221228144345.626471297@linuxfoundation.org>
+Subject: [PATCH 6.0 0602/1073] RDMA/hns: Repacing dseg_len by macros in fill_ext_sge_inl_data()
+Date: Wed, 28 Dec 2022 15:36:30 +0100
+Message-Id: <20221228144344.397934875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,100 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Staszewski <bartoszx.staszewski@intel.com>
+From: Luoyouming <luoyouming@huawei.com>
 
-[ Upstream commit 0c87b545a2ed5cd8a6318011f1c92b188c2d74bc ]
+[ Upstream commit 3b1f864c904915b3baebffb31ea05ee704b0df3c ]
 
-Whenever trying to load XDP prog on downed interface, function i40e_xdp
-was passing vsi->rx_buf_len field to i40e_xdp_setup() which was equal 0.
-i40e_open() calls i40e_vsi_configure_rx() which configures that field,
-but that only happens when interface is up. When it is down, i40e_open()
-is not being called, thus vsi->rx_buf_len is not set.
+The sge size is known to be constant, so it's unnecessary to use sizeof to
+calculate.
 
-Solution for this is calculate buffer length in newly created
-function - i40e_calculate_vsi_rx_buf_len() that return actual buffer
-length. Buffer length is being calculated based on the same rules
-applied previously in i40e_vsi_configure_rx() function.
-
-Fixes: 613142b0bb88 ("i40e: Log error for oversized MTU on device")
-Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
-Signed-off-by: Bartosz Staszewski <bartoszx.staszewski@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Shwetha Nagaraju <Shwetha.nagaraju@intel.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.com>
-Link: https://lore.kernel.org/r/20221209185411.2519898-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20220922123315.3732205-11-xuhaoyue1@hisilicon.com
+Signed-off-by: Luoyouming <luoyouming@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 8eaa6f7d569b ("RDMA/hns: Fix ext_sge num error when post send")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 36 ++++++++++++++-------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 6416322d7c18..e6e349f0c945 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -3693,6 +3693,24 @@ static int i40e_vsi_configure_tx(struct i40e_vsi *vsi)
- 	return err;
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 105888c6ccb7..eb1601bd1255 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -192,8 +192,7 @@ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
+ 				 unsigned int *sge_idx, u32 msg_len)
+ {
+ 	struct ib_device *ibdev = &(to_hr_dev(qp->ibqp.device))->ib_dev;
+-	unsigned int dseg_len = sizeof(struct hns_roce_v2_wqe_data_seg);
+-	unsigned int ext_sge_sz = qp->sq.max_gs * dseg_len;
++	unsigned int ext_sge_sz = qp->sq.max_gs * HNS_ROCE_SGE_SIZE;
+ 	unsigned int left_len_in_pg;
+ 	unsigned int idx = *sge_idx;
+ 	unsigned int i = 0;
+@@ -221,7 +220,7 @@ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
+ 		if (len <= left_len_in_pg) {
+ 			memcpy(dseg, addr, len);
  
-+/**
-+ * i40e_calculate_vsi_rx_buf_len - Calculates buffer length
-+ *
-+ * @vsi: VSI to calculate rx_buf_len from
-+ */
-+static u16 i40e_calculate_vsi_rx_buf_len(struct i40e_vsi *vsi)
-+{
-+	if (!vsi->netdev || (vsi->back->flags & I40E_FLAG_LEGACY_RX))
-+		return I40E_RXBUFFER_2048;
-+
-+#if (PAGE_SIZE < 8192)
-+	if (!I40E_2K_TOO_SMALL_WITH_PADDING && vsi->netdev->mtu <= ETH_DATA_LEN)
-+		return I40E_RXBUFFER_1536 - NET_IP_ALIGN;
-+#endif
-+
-+	return PAGE_SIZE < 8192 ? I40E_RXBUFFER_3072 : I40E_RXBUFFER_2048;
-+}
-+
- /**
-  * i40e_vsi_configure_rx - Configure the VSI for Rx
-  * @vsi: the VSI being configured
-@@ -3704,20 +3722,14 @@ static int i40e_vsi_configure_rx(struct i40e_vsi *vsi)
- 	int err = 0;
- 	u16 i;
+-			idx += len / dseg_len;
++			idx += len / HNS_ROCE_SGE_SIZE;
  
--	if (!vsi->netdev || (vsi->back->flags & I40E_FLAG_LEGACY_RX)) {
--		vsi->max_frame = I40E_MAX_RXBUFFER;
--		vsi->rx_buf_len = I40E_RXBUFFER_2048;
-+	vsi->max_frame = I40E_MAX_RXBUFFER;
-+	vsi->rx_buf_len = i40e_calculate_vsi_rx_buf_len(vsi);
-+
- #if (PAGE_SIZE < 8192)
--	} else if (!I40E_2K_TOO_SMALL_WITH_PADDING &&
--		   (vsi->netdev->mtu <= ETH_DATA_LEN)) {
-+	if (vsi->netdev && !I40E_2K_TOO_SMALL_WITH_PADDING &&
-+	    vsi->netdev->mtu <= ETH_DATA_LEN)
- 		vsi->max_frame = I40E_RXBUFFER_1536 - NET_IP_ALIGN;
--		vsi->rx_buf_len = I40E_RXBUFFER_1536 - NET_IP_ALIGN;
- #endif
--	} else {
--		vsi->max_frame = I40E_MAX_RXBUFFER;
--		vsi->rx_buf_len = (PAGE_SIZE < 8192) ? I40E_RXBUFFER_3072 :
--						       I40E_RXBUFFER_2048;
--	}
+ 			i++;
+ 			if (i >= wr->num_sge)
+@@ -236,7 +235,7 @@ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
  
- 	/* set up individual rings */
- 	for (i = 0; i < vsi->num_queue_pairs && !err; i++)
-@@ -13282,7 +13294,7 @@ static int i40e_xdp_setup(struct i40e_vsi *vsi, struct bpf_prog *prog,
- 	int i;
- 
- 	/* Don't allow frames that span over multiple buffers */
--	if (frame_size > vsi->rx_buf_len) {
-+	if (frame_size > i40e_calculate_vsi_rx_buf_len(vsi)) {
- 		NL_SET_ERR_MSG_MOD(extack, "MTU too large to enable XDP");
- 		return -EINVAL;
- 	}
+ 			len -= left_len_in_pg;
+ 			addr += left_len_in_pg;
+-			idx += left_len_in_pg / dseg_len;
++			idx += left_len_in_pg / HNS_ROCE_SGE_SIZE;
+ 			dseg = hns_roce_get_extend_sge(qp,
+ 						idx & (qp->sge.sge_cnt - 1));
+ 			left_len_in_pg = 1 << HNS_HW_PAGE_SHIFT;
 -- 
 2.35.1
 
