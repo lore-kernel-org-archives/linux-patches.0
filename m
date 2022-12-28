@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE3A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B93C433EF;
-	Wed, 28 Dec 2022 15:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A8F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D461AC433D2;
+	Wed, 28 Dec 2022 15:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241894;
-	bh=ds3eCcpdginc4ug2YeaenO+SBOWQllEdDcqHmmnSRko=;
+	s=korg; t=1672241897;
+	bh=vRLkE86fpirHqul2CUIg/o2NFoI2q2mrfmZebt6V5PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRJKcpAyf0AsoFq6Rqhdt6lxpqRwMdlQxypSPwkvVVvRWbTlyBQz5HFIy0repfCQd
-	 LoE+7t+TMh3roa5DUvIbnqZ8sbkTRuMy8KNGfb/HKoF0Tdd6A38fjXvlHUVskW21GF
-	 nTu0HuNx5TYEhQnL1E/7M/QFwcSW1yZbyBUD7BNA=
+	b=faxhM2sDYq04aOY7LNqhE2VpYDfY2vDumeFO07sTTMDptUa1yIi3lBz8eNpp4od0b
+	 Es12nq4ITmrHugWOnktvBLPyB8hFC7YudMBc6yNG7dRCeQw0AV8t7T46TojG+jUnBm
+	 jckbpCplP+tnRc5p6cslXV43StBGjH1aQnoDlP20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
+	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0302/1146] media: camss: Clean up received buffers on failed start of streaming
-Date: Wed, 28 Dec 2022 15:30:41 +0100
-Message-Id: <20221228144338.350638089@linuxfoundation.org>
+Subject: [PATCH 6.0 0341/1073] media: amphion: add lock around vdec_g_fmt
+Date: Wed, 28 Dec 2022 15:32:09 +0100
+Message-Id: <20221228144337.268656126@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,60 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
+[ Upstream commit 8480dd5fb3c82b5887d456b3fbe4201d99231814 ]
 
-It is required to return the received buffers, if streaming can not be
-started. For instance media_pipeline_start() may fail with EPIPE, if
-a link validation between entities is not passed, and in such a case
-a user gets a kernel warning:
+the capture format may be changed when
+sequence header is parsed,
+it may be read and write in the same time,
+add lock around vdec_g_fmt to synchronize it
 
-  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
-  <snip>
-  Call trace:
-   vb2_start_streaming+0xec/0x160
-   vb2_core_streamon+0x9c/0x1a0
-   vb2_ioctl_streamon+0x68/0xbc
-   v4l_streamon+0x30/0x3c
-   __video_do_ioctl+0x184/0x3e0
-   video_usercopy+0x37c/0x7b0
-   video_ioctl2+0x24/0x40
-   v4l2_ioctl+0x4c/0x70
-
-The fix is to correct the error path in video_start_streaming() of camss.
-
-Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/amphion/vdec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 81fb3a5bc1d5..41deda232e4a 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
+index 84c90ce265f2..b27e6bed85f0 100644
+--- a/drivers/media/platform/amphion/vdec.c
++++ b/drivers/media/platform/amphion/vdec.c
+@@ -286,6 +286,7 @@ static int vdec_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+ 	struct vpu_format *cur_fmt;
+ 	int i;
  
- 	ret = video_device_pipeline_start(vdev, &video->pipe);
- 	if (ret < 0)
--		return ret;
-+		goto flush_buffers;
++	vpu_inst_lock(inst);
+ 	cur_fmt = vpu_get_format(inst, f->type);
  
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- error:
- 	video_device_pipeline_stop(vdev);
+ 	pixmp->pixelformat = cur_fmt->pixfmt;
+@@ -303,6 +304,7 @@ static int vdec_g_fmt(struct file *file, void *fh, struct v4l2_format *f)
+ 	f->fmt.pix_mp.xfer_func = vdec->codec_info.transfer_chars;
+ 	f->fmt.pix_mp.ycbcr_enc = vdec->codec_info.matrix_coeffs;
+ 	f->fmt.pix_mp.quantization = vdec->codec_info.full_range;
++	vpu_inst_unlock(inst);
  
-+flush_buffers:
- 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
- 
- 	return ret;
+ 	return 0;
+ }
 -- 
 2.35.1
 
