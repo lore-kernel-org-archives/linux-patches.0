@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF6D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59E0C433D2;
-	Wed, 28 Dec 2022 15:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557ACC433D2;
+	Wed, 28 Dec 2022 15:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240428;
-	bh=1VRA98DtIypg+5pvhqP+KOO6DnS43DUQXm/uUmTP+Vc=;
+	s=korg; t=1672240430;
+	bh=UVijFt/tOpGD2l3/z1ymEi5pmXo7aTOFsoByvTDKQXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkRNzZ6nZRuaEUiW55DQZ2I31FI/qPyVvc6L4wnBlVkPk51IY1ntEZkyF1nI5ZPpv
-	 4OweuaTF3x1ZOqm+eZ96NFP71MEMj3f4v+J66RLWE0q3rkAT1bTVEW4wtr6pdszjo9
-	 l4SJCREqEOMTAUVAUFk7O/JR8GASKdE1KXpNeowk=
+	b=xNTbKjRPM+ldufBoslGT3JFPzTfqpNxAHp89UEA7Pj0Aw002FYtKRvAGP8PH0UfUC
+	 P2BlOAghLLXXdMSIHFImfcgqso4F34HIMLsogjMJFfaiOs2Vzmmp98PfthDpvTigaO
+	 MSpPRWLBTNfis9+hXgARpY/EhnFdEnpqfOngQfsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0159/1073] clocksource/drivers/timer-ti-dm: Fix missing clk_disable_unprepare in dmtimer_systimer_init_clock()
-Date: Wed, 28 Dec 2022 15:29:07 +0100
-Message-Id: <20221228144332.338867750@linuxfoundation.org>
+Subject: [PATCH 6.0 0133/1073] platform/chrome: cros_usbpd_notify: Fix error handling in cros_usbpd_notify_init()
+Date: Wed, 28 Dec 2022 15:28:41 +0100
+Message-Id: <20221228144331.645893524@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,40 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 180d35a7c05d520314a590c99ad8643d0213f28b ]
+[ Upstream commit 5a2d96623670155d94aca72c320c0ac27bdc6bd2 ]
 
-If clk_get_rate() fails which is called after clk_prepare_enable(),
-clk_disable_unprepare() need be called in error path to disable the
-clock in dmtimer_systimer_init_clock().
+The following WARNING message was given when rmmod cros_usbpd_notify:
 
-Fixes: 52762fbd1c47 ("clocksource/drivers/timer-ti-dm: Add clockevent and clocksource support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221029114427.946520-1-yangyingliang@huawei.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+ Unexpected driver unregister!
+ WARNING: CPU: 0 PID: 253 at drivers/base/driver.c:270 driver_unregister+0x8a/0xb0
+ Modules linked in: cros_usbpd_notify(-)
+ CPU: 0 PID: 253 Comm: rmmod Not tainted 6.1.0-rc3 #24
+ ...
+ Call Trace:
+  <TASK>
+  cros_usbpd_notify_exit+0x11/0x1e [cros_usbpd_notify]
+  __x64_sys_delete_module+0x3c7/0x570
+  ? __ia32_sys_delete_module+0x570/0x570
+  ? lock_is_held_type+0xe3/0x140
+  ? syscall_enter_from_user_mode+0x17/0x50
+  ? rcu_read_lock_sched_held+0xa0/0xd0
+  ? syscall_enter_from_user_mode+0x1c/0x50
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x7f333fe9b1b7
+
+The reason is that the cros_usbpd_notify_init() does not check the return
+value of platform_driver_register(), and the cros_usbpd_notify can
+install successfully even if platform_driver_register() failed.
+
+Fix by checking the return value of platform_driver_register() and
+unregister cros_usbpd_notify_plat_driver when it failed.
+
+Fixes: ec2daf6e33f9 ("platform: chrome: Add cros-usbpd-notify driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Link: https://lore.kernel.org/r/20221117080823.77549-1-yuancan@huawei.com
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm-systimer.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_usbpd_notify.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
-index 2737407ff069..632523c1232f 100644
---- a/drivers/clocksource/timer-ti-dm-systimer.c
-+++ b/drivers/clocksource/timer-ti-dm-systimer.c
-@@ -345,8 +345,10 @@ static int __init dmtimer_systimer_init_clock(struct dmtimer_systimer *t,
- 		return error;
+diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
+index 4b5a81c9dc6d..10670b6588e3 100644
+--- a/drivers/platform/chrome/cros_usbpd_notify.c
++++ b/drivers/platform/chrome/cros_usbpd_notify.c
+@@ -239,7 +239,11 @@ static int __init cros_usbpd_notify_init(void)
+ 		return ret;
  
- 	r = clk_get_rate(clock);
--	if (!r)
-+	if (!r) {
-+		clk_disable_unprepare(clock);
- 		return -ENODEV;
+ #ifdef CONFIG_ACPI
+-	platform_driver_register(&cros_usbpd_notify_acpi_driver);
++	ret = platform_driver_register(&cros_usbpd_notify_acpi_driver);
++	if (ret) {
++		platform_driver_unregister(&cros_usbpd_notify_plat_driver);
++		return ret;
 +	}
- 
- 	if (is_ick)
- 		t->ick = clock;
+ #endif
+ 	return 0;
+ }
 -- 
 2.35.1
 
