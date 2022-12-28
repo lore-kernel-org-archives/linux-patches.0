@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3980A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0147C433D2;
-	Wed, 28 Dec 2022 15:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A621875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E4BC433D2;
+	Wed, 28 Dec 2022 15:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242713;
-	bh=cNy/qBhiLryIni7L98PP9GXkNFp0xRZoNh2nM6FRMT4=;
+	s=korg; t=1672242715;
+	bh=bfVACty6wrQMY9FGTLJ2CbgpKEkw+xMGqWk0IQOrlSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4grwl0RJpqkjpF9N6WViG3V6/uX86bOsL9Te8f2ocVxC1Krm+caCDwuz1CDLKddb
-	 RnExBFvl7BKK51J2dw1+P33c+Q0AHV4IqmCtuEYujr8eSocN+RYpy/70Q+xZgFJPLy
-	 p59CE9vPTpnqsSaLUmIpq5/3KoLMz/tBmaI8U0us=
+	b=Faa935DeRcVmMA7bhpQrfYQ8yeA97rigpGjFt6NkRCy1w4P8Sl3waMo68OssnOy3t
+	 eQb7lGSiUxWAL+Pqfy4ASvMN891uY5+1aIe4jz52BQKvGym9/mQcFRlMwH/Ma+/KmL
+	 RaSyTh7nG8UmcGboMT18gQY34KEK6MPD+3eqjuTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Juergen Gross <jgross@suse.com>,
-	Borislav Petkov <bp@suse.de>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0405/1146] x86/boot: Skip realmode init code when running as Xen PV guest
-Date: Wed, 28 Dec 2022 15:32:24 +0100
-Message-Id: <20221228144341.166263584@linuxfoundation.org>
+Subject: [PATCH 6.0 0443/1073] wifi: mt76: mt7915: rework eeprom tx paths and streams init
+Date: Wed, 28 Dec 2022 15:33:51 +0100
+Message-Id: <20221228144340.063511114@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,145 +35,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit f1e525009493cbd569e7c8dd7d58157855f8658d ]
+[ Upstream commit a7ec8bcf00034ce84d4c9a15dffd7577fbed4db2 ]
 
-When running as a Xen PV guest there is no need for setting up the
-realmode trampoline, as realmode isn't supported in this environment.
+Rework tx paths and streams init part to improve readability, and make
+sure that the available tx streams should be smaller than or equal to
+the available tx paths.
 
-Trying to setup the trampoline has been proven to be problematic in
-some cases, especially when trying to debug early boot problems with
-Xen requiring to keep the EFI boot-services memory mapped (some
-firmware variants seem to claim basically all memory below 1Mb for boot
-services).
-
-Introduce new x86_platform_ops operations for that purpose, which can
-be set to a NOP by the Xen PV specific kernel boot code.
-
-  [ bp: s/call_init_real_mode/do_init_real_mode/ ]
-
-Fixes: 084ee1c641a0 ("x86, realmode: Relocator for realmode code")
-Suggested-by: H. Peter Anvin <hpa@zytor.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20221123114523.3467-1-jgross@suse.com
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: de147cc28985 ("wifi: mt76: mt7915: Fix chainmask calculation on mt7915 DBDC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/realmode.h | 1 +
- arch/x86/include/asm/x86_init.h | 4 ++++
- arch/x86/kernel/setup.c         | 2 +-
- arch/x86/kernel/x86_init.c      | 3 +++
- arch/x86/realmode/init.c        | 8 ++++++--
- arch/x86/xen/enlighten_pv.c     | 2 ++
- 6 files changed, 17 insertions(+), 3 deletions(-)
+ .../wireless/mediatek/mt76/mt7915/eeprom.c    | 57 ++++++++-----------
+ .../wireless/mediatek/mt76/mt7915/eeprom.h    |  5 --
+ 2 files changed, 23 insertions(+), 39 deletions(-)
 
-diff --git a/arch/x86/include/asm/realmode.h b/arch/x86/include/asm/realmode.h
-index fd6f6e5b755a..a336feef0af1 100644
---- a/arch/x86/include/asm/realmode.h
-+++ b/arch/x86/include/asm/realmode.h
-@@ -91,6 +91,7 @@ static inline void set_real_mode_mem(phys_addr_t mem)
- 
- void reserve_real_mode(void);
- void load_trampoline_pgtable(void);
-+void init_real_mode(void);
- 
- #endif /* __ASSEMBLY__ */
- 
-diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
-index e9170457697e..c1c8c581759d 100644
---- a/arch/x86/include/asm/x86_init.h
-+++ b/arch/x86/include/asm/x86_init.h
-@@ -285,6 +285,8 @@ struct x86_hyper_runtime {
-  * 				possible in x86_early_init_platform_quirks() by
-  * 				only using the current x86_hardware_subarch
-  * 				semantics.
-+ * @realmode_reserve:		reserve memory for realmode trampoline
-+ * @realmode_init:		initialize realmode trampoline
-  * @hyper:			x86 hypervisor specific runtime callbacks
-  */
- struct x86_platform_ops {
-@@ -301,6 +303,8 @@ struct x86_platform_ops {
- 	void (*apic_post_init)(void);
- 	struct x86_legacy_features legacy;
- 	void (*set_legacy_features)(void);
-+	void (*realmode_reserve)(void);
-+	void (*realmode_init)(void);
- 	struct x86_hyper_runtime hyper;
- 	struct x86_guest guest;
- };
-diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 216fee7144ee..892609cde4a2 100644
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -1175,7 +1175,7 @@ void __init setup_arch(char **cmdline_p)
- 	 * Moreover, on machines with SandyBridge graphics or in setups that use
- 	 * crashkernel the entire 1M is reserved anyway.
- 	 */
--	reserve_real_mode();
-+	x86_platform.realmode_reserve();
- 
- 	init_mem_mapping();
- 
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index 57353519bc11..ef80d361b463 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -25,6 +25,7 @@
- #include <asm/iommu.h>
- #include <asm/mach_traps.h>
- #include <asm/irqdomain.h>
-+#include <asm/realmode.h>
- 
- void x86_init_noop(void) { }
- void __init x86_init_uint_noop(unsigned int unused) { }
-@@ -145,6 +146,8 @@ struct x86_platform_ops x86_platform __ro_after_init = {
- 	.get_nmi_reason			= default_get_nmi_reason,
- 	.save_sched_clock_state		= tsc_save_sched_clock_state,
- 	.restore_sched_clock_state	= tsc_restore_sched_clock_state,
-+	.realmode_reserve		= reserve_real_mode,
-+	.realmode_init			= init_real_mode,
- 	.hyper.pin_vcpu			= x86_op_int_noop,
- 
- 	.guest = {
-diff --git a/arch/x86/realmode/init.c b/arch/x86/realmode/init.c
-index 41d7669a97ad..af565816d2ba 100644
---- a/arch/x86/realmode/init.c
-+++ b/arch/x86/realmode/init.c
-@@ -200,14 +200,18 @@ static void __init set_real_mode_permissions(void)
- 	set_memory_x((unsigned long) text_start, text_size >> PAGE_SHIFT);
- }
- 
--static int __init init_real_mode(void)
-+void __init init_real_mode(void)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 4b1a9811646f..83bced0c0785 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -173,60 +173,49 @@ static void mt7915_eeprom_parse_band_config(struct mt7915_phy *phy)
+ void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev,
+ 				struct mt7915_phy *phy)
  {
- 	if (!real_mode_header)
- 		panic("Real mode trampoline was not allocated");
+-	u8 nss, nss_band, nss_band_max, *eeprom = dev->mt76.eeprom.data;
++	u8 path, nss, nss_max = 4, *eeprom = dev->mt76.eeprom.data;
+ 	struct mt76_phy *mphy = phy->mt76;
+-	bool ext_phy = phy != &dev->phy;
  
- 	setup_real_mode();
- 	set_real_mode_permissions();
-+}
+ 	mt7915_eeprom_parse_band_config(phy);
  
-+static int __init do_init_real_mode(void)
-+{
-+	x86_platform.realmode_init();
- 	return 0;
+-	/* read tx/rx mask from eeprom */
++	/* read tx/rx path from eeprom */
+ 	if (is_mt7915(&dev->mt76)) {
+-		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
+-				eeprom[MT_EE_WIFI_CONF]);
++		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
++				 eeprom[MT_EE_WIFI_CONF]);
+ 	} else {
+-		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
+-				eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
++		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
++				 eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
+ 	}
+ 
+-	if (!nss || nss > 4)
+-		nss = 4;
++	if (!path || path > 4)
++		path = 4;
+ 
+ 	/* read tx/rx stream */
+-	nss_band = nss;
+-
++	nss = path;
+ 	if (dev->dbdc_support) {
+ 		if (is_mt7915(&dev->mt76)) {
+-			nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
+-					     eeprom[MT_EE_WIFI_CONF + 3]);
++			nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
++					eeprom[MT_EE_WIFI_CONF + 3]);
+ 			if (phy->band_idx)
+-				nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
+-						     eeprom[MT_EE_WIFI_CONF + 3]);
++				nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
++						eeprom[MT_EE_WIFI_CONF + 3]);
+ 		} else {
+-			nss_band = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
+-					     eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
++			nss = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
++					eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
+ 		}
+ 
+-		nss_band_max = is_mt7986(&dev->mt76) ?
+-			       MT_EE_NSS_MAX_DBDC_MA7986 : MT_EE_NSS_MAX_DBDC_MA7915;
+-	} else {
+-		nss_band_max = is_mt7986(&dev->mt76) ?
+-			       MT_EE_NSS_MAX_MA7986 : MT_EE_NSS_MAX_MA7915;
++		if (!is_mt7986(&dev->mt76))
++			nss_max = 2;
+ 	}
+ 
+-	if (!nss_band || nss_band > nss_band_max)
+-		nss_band = nss_band_max;
+-
+-	if (nss_band > nss) {
+-		dev_warn(dev->mt76.dev,
+-			 "nss mismatch, nss(%d) nss_band(%d) band(%d) ext_phy(%d)\n",
+-			 nss, nss_band, phy->band_idx, ext_phy);
+-		nss = nss_band;
+-	}
++	if (!nss)
++		nss = nss_max;
++	nss = min_t(u8, min_t(u8, nss_max, nss), path);
+ 
+-	mphy->chainmask = BIT(nss) - 1;
+-	if (ext_phy)
++	mphy->chainmask = BIT(path) - 1;
++	if (phy->band_idx)
+ 		mphy->chainmask <<= dev->chainshift;
+-	mphy->antenna_mask = BIT(nss_band) - 1;
++	mphy->antenna_mask = BIT(nss) - 1;
+ 	dev->chainmask |= mphy->chainmask;
+ 	dev->chainshift = hweight8(dev->mphy.chainmask);
  }
--early_initcall(init_real_mode);
-+early_initcall(do_init_real_mode);
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index 038da45f057a..8944726255c9 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -1266,6 +1266,8 @@ asmlinkage __visible void __init xen_start_kernel(struct start_info *si)
- 	xen_vcpu_info_reset(0);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+index 7578ac6d0be6..f3e56817d36e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+@@ -58,11 +58,6 @@ enum mt7915_eeprom_field {
+ #define MT_EE_RATE_DELTA_SIGN			BIT(6)
+ #define MT_EE_RATE_DELTA_EN			BIT(7)
  
- 	x86_platform.get_nmi_reason = xen_get_nmi_reason;
-+	x86_platform.realmode_reserve = x86_init_noop;
-+	x86_platform.realmode_init = x86_init_noop;
- 
- 	x86_init.resources.memory_setup = xen_memory_setup;
- 	x86_init.irqs.intr_mode_select	= x86_init_noop;
+-#define MT_EE_NSS_MAX_MA7915			4
+-#define MT_EE_NSS_MAX_DBDC_MA7915		2
+-#define MT_EE_NSS_MAX_MA7986			4
+-#define MT_EE_NSS_MAX_DBDC_MA7986		4
+-
+ enum mt7915_adie_sku {
+ 	MT7976_ONE_ADIE_DBDC = 0x7,
+ 	MT7975_ONE_ADIE	= 0x8,
 -- 
 2.35.1
 
