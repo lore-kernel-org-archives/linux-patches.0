@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624161C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF6BC433F0;
-	Wed, 28 Dec 2022 16:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6711C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AE8C433EF;
+	Wed, 28 Dec 2022 16:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245268;
-	bh=xiA8YweXtP5y68sH9U3r4YWn0jZmWZyVPNXq1vaYWaU=;
+	s=korg; t=1672245270;
+	bh=2xR+FY0mU6dVHRrzKzpcEePeObLJ26zvawZlZvrFB5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnOSya9CVseweVAJA89Ea/KSD3TjZu1wHoyJOhNko2QeZiDaiWgfX7hZBpLVYlINx
-	 3nL7rtQx7x6GOYXCqIPHRrpFHTHUAOkDFazP9bZZRYIuaJEeQ1tahXAO19IA/Cdoos
-	 teTckKjj6Qxv0ujWIr95oDDykN7P0AChoKE6WkwE=
+	b=gNcGz4rlNgLes23A8iJ+z/LQAU+YfIXwU+UZX2aQqFA9SdKBnpAWIavZ91V8g/cBx
+	 Yntibw104mK+RXopg9wBD9TnuoSKFYcxXt/UpK5VT0Y32w4vd1sfVfilFo1+9/c8q5
+	 cstzXZs1/Kqbxrn5RI5D020QyzAS/sWy8HHKznes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Nirav N Shah <nirav.n.shah@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0821/1146] pwm: tegra: Improve required rate calculation
-Date: Wed, 28 Dec 2022 15:39:20 +0100
-Message-Id: <20221228144352.456705779@linuxfoundation.org>
+Subject: [PATCH 6.1 0830/1146] dmaengine: idxd: Fix crc_val field for completion record
+Date: Wed, 28 Dec 2022 15:39:29 +0100
+Message-Id: <20221228144352.703364238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,47 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-[ Upstream commit f271946117dde2ca8741b8138b347b2d68e6ad56 ]
+[ Upstream commit dc901d98b1fe6e52ab81cd3e0879379168e06daa ]
 
-For the case where dev_pm_opp_set_rate() is called to set the PWM clock
-rate, the requested rate is calculated as ...
+The crc_val in the completion record should be 64 bits and not 32 bits.
 
- required_clk_rate = (NSEC_PER_SEC / period_ns) << PWM_DUTY_WIDTH;
-
-The above calculation may lead to rounding errors because the
-NSEC_PER_SEC is divided by 'period_ns' before applying the
-PWM_DUTY_WIDTH multiplication factor. For example, if the period is
-45334ns, the above calculation yields a rate of 5646848Hz instead of
-5646976Hz. Fix this by applying the multiplication factor before
-dividing and using the DIV_ROUND_UP macro which yields the expected
-result of 5646976Hz.
-
-Fixes: 1d7796bdb63a ("pwm: tegra: Support dynamic clock frequency configuration")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 4ac823e9cd85 ("dmaengine: idxd: fix delta_rec and crc size field for completion record")
+Reported-by: Nirav N Shah <nirav.n.shah@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20221111012715.2031481-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tegra.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/idxd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-tegra.c b/drivers/pwm/pwm-tegra.c
-index dad9978c9186..b05ea2e8accc 100644
---- a/drivers/pwm/pwm-tegra.c
-+++ b/drivers/pwm/pwm-tegra.c
-@@ -145,8 +145,8 @@ static int tegra_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		 * source clock rate as required_clk_rate, PWM controller will
- 		 * be able to configure the requested period.
- 		 */
--		required_clk_rate =
--			(NSEC_PER_SEC / period_ns) << PWM_DUTY_WIDTH;
-+		required_clk_rate = DIV_ROUND_UP_ULL(NSEC_PER_SEC << PWM_DUTY_WIDTH,
-+						     period_ns);
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index 2b9e7feba3f3..1d553bedbdb5 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -295,7 +295,7 @@ struct dsa_completion_record {
+ 		};
  
- 		err = dev_pm_opp_set_rate(pc->dev, required_clk_rate);
- 		if (err < 0)
+ 		uint32_t	delta_rec_size;
+-		uint32_t	crc_val;
++		uint64_t	crc_val;
+ 
+ 		/* DIF check & strip */
+ 		struct {
 -- 
 2.35.1
 
