@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3481863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260F8C433EF;
-	Wed, 28 Dec 2022 15:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425B81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF89EC433EF;
+	Wed, 28 Dec 2022 15:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239809;
-	bh=CQKpZh96KJ/iON2QTN4/3/iYUmRNwQLrTn4JUlgSRqw=;
+	s=korg; t=1672239812;
+	bh=Vi7dUtHrEAaNYM9bMxRmH2PMGgJCsA4wijDta0PzS5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8QqVJP3sbXFNlt36CvCvdi+kY6PpoBZW33Y3P9R+BB35mNQreqgbyII30AmvtDDd
-	 4edCjydlg+6XzG9aT/QtbP5g3PN+iG3tzKkCZOcRTinl5I79BshcHPmf//i4+KCdTF
-	 kO+7fjBcMeqIFCuOCAUTAI9TWSrAwOHwthXs6Jcc=
+	b=Np9NEnLx9zGPX9Cm1xpYC0N0J8XxlSBNzNL3OphiQ2RWHZH7hZ0QOf6szk4Mbc6pn
+	 ft1mNKQyXsYBEiVAmg62Ci/6r6uultMK1h08KDFZ4ZCXEBDOc3UeZpgwaWYapa+wOW
+	 UgDg0iw0RwzLqXRR6DKD6/BbE1s4DmMHuYnmy/9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Hector Martin <marcan@marcan.st>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0081/1073] soc: apple: rtkit: Stop casting function pointer signatures
-Date: Wed, 28 Dec 2022 15:27:49 +0100
-Message-Id: <20221228144330.266066295@linuxfoundation.org>
+Subject: [PATCH 5.15 273/731] clk: qcom: clk-krait: fix wrong div2 functions
+Date: Wed, 28 Dec 2022 15:36:20 +0100
+Message-Id: <20221228144304.487706712@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 5acf07ff25f0c1c44105e6b8ebf88c55a0a04d2f ]
+[ Upstream commit d676d3a3717cf726d3affedbe5ba98fc4ccad7b3 ]
 
-Fixes: 9bd1d9a0d8bb ("soc: apple: Add RTKit IPC library")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
+Currently div2 value is applied to the wrong bits. This is caused by a
+bug in the code where the shift is done only for lpl, for anything
+else the mask is not shifted to the correct bits.
+
+Fix this by correctly shift if lpl is not supported.
+
+Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221108215625.30186-1-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/apple/rtkit.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/clk-krait.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/apple/rtkit.c b/drivers/soc/apple/rtkit.c
-index cf1129e9f76b..d9329b4d8e1b 100644
---- a/drivers/soc/apple/rtkit.c
-+++ b/drivers/soc/apple/rtkit.c
-@@ -920,8 +920,10 @@ int apple_rtkit_wake(struct apple_rtkit *rtk)
- }
- EXPORT_SYMBOL_GPL(apple_rtkit_wake);
+diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
+index 90046428693c..e74fc81a14d0 100644
+--- a/drivers/clk/qcom/clk-krait.c
++++ b/drivers/clk/qcom/clk-krait.c
+@@ -98,6 +98,8 @@ static int krait_div2_set_rate(struct clk_hw *hw, unsigned long rate,
  
--static void apple_rtkit_free(struct apple_rtkit *rtk)
-+static void apple_rtkit_free(void *data)
- {
-+	struct apple_rtkit *rtk = data;
-+
- 	mbox_free_channel(rtk->mbox_chan);
- 	destroy_workqueue(rtk->wq);
+ 	if (d->lpl)
+ 		mask = mask << (d->shift + LPL_SHIFT) | mask << d->shift;
++	else
++		mask <<= d->shift;
  
-@@ -944,8 +946,7 @@ struct apple_rtkit *devm_apple_rtkit_init(struct device *dev, void *cookie,
- 	if (IS_ERR(rtk))
- 		return rtk;
- 
--	ret = devm_add_action_or_reset(dev, (void (*)(void *))apple_rtkit_free,
--				       rtk);
-+	ret = devm_add_action_or_reset(dev, apple_rtkit_free, rtk);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
+ 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
+ 	val = krait_get_l2_indirect_reg(d->offset);
 -- 
 2.35.1
 
