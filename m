@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622131863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D29C433EF;
-	Wed, 28 Dec 2022 14:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A571863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE9EC433D2;
+	Wed, 28 Dec 2022 14:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239127;
-	bh=MRRDvQOL8lj3sucljXqlR9D/FN4CMn0v/x5HzQ03ZHg=;
+	s=korg; t=1672239129;
+	bh=hfqNsI/l11lvtkpQTyjbDWTHJ4CRCGx3+EPzQj6W0O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvR1hICJOrQ+U2Yomhzmpus8il//PtQDOEgzSzk7gpiaS5TSJBnIQ6PRorFh88DcB
-	 UW67l2LD3fik+S3S3Hmrrt8KJXI5sMmbs/Ul8WZqGhdf3OdRibdo2DKHuC0Rim6lVf
-	 sB2bB4nj7xazioa60FOfkTId0kytxYP3hTyD+C7Q=
+	b=kIFaMsvcWAxNIjcs8nnbnge02GnadUCONKjMhjyaFmsAt6/OeWwAz/Lz+AfwVzR9s
+	 DcUkhdpcmt9ZCh7Ho7cYrwEVQVN5T4nkvpsw3jUq8nHK1W2WuFf3uwUG7Bxqa/Kr8k
+	 sWhcSb/39VIUBScT1JefRFz5hv0ZImLKtFTIs810=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	John Thomson <git@johnthomson.fastmail.com.au>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/731] clocksource/drivers/sh_cmt: Access registers according to spec
-Date: Wed, 28 Dec 2022 15:33:39 +0100
-Message-Id: <20221228144259.797581406@linuxfoundation.org>
+Subject: [PATCH 5.15 113/731] mips: ralink: mt7621: define MT7621_SYSC_BASE with __iomem
+Date: Wed, 28 Dec 2022 15:33:40 +0100
+Message-Id: <20221228144259.826762937@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,193 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit 3f44f7156f59cae06e9160eafb5d8b2dfd09e639 ]
+[ Upstream commit a2cab953b4c077cc02878d424466d3a6eac32aaf ]
 
-Documentation for most CMTs say that it takes two input clocks before
-changes propagate to the timer. This is especially relevant when the timer
-is stopped to change further settings.
+So that MT7621_SYSC_BASE can be used later in multiple functions without
+needing to repeat this __iomem declaration each time
 
-Implement the delays according to the spec. To avoid unnecessary delays in
-atomic mode, also check if the to-be-written value actually differs.
-
-CMCNT is a bit special because testing showed that it requires 3 cycles to
-propagate, which affects all CMTs. Also, the WRFLAG needs to be checked
-before writing. This fixes "cannot clear CMCNT" messages which occur often
-on R-Car Gen4 SoCs, but only very rarely on older SoCs for some reason.
-
-Fixes: 81b3b2711072 ("clocksource: sh_cmt: Add support for multiple channels per device")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130210609.7718-1-wsa+renesas@sang-engineering.com
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/sh_cmt.c | 88 ++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 33 deletions(-)
+ arch/mips/include/asm/mach-ralink/mt7621.h | 4 +++-
+ arch/mips/ralink/mt7621.c                  | 7 +++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clocksource/sh_cmt.c b/drivers/clocksource/sh_cmt.c
-index dd0956ad969c..d35548aa026f 100644
---- a/drivers/clocksource/sh_cmt.c
-+++ b/drivers/clocksource/sh_cmt.c
-@@ -13,6 +13,7 @@
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/ioport.h>
- #include <linux/irq.h>
- #include <linux/module.h>
-@@ -116,6 +117,7 @@ struct sh_cmt_device {
- 	void __iomem *mapbase;
- 	struct clk *clk;
- 	unsigned long rate;
-+	unsigned int reg_delay;
+diff --git a/arch/mips/include/asm/mach-ralink/mt7621.h b/arch/mips/include/asm/mach-ralink/mt7621.h
+index 6bbf082dd149..79d5bb0e06d6 100644
+--- a/arch/mips/include/asm/mach-ralink/mt7621.h
++++ b/arch/mips/include/asm/mach-ralink/mt7621.h
+@@ -7,10 +7,12 @@
+ #ifndef _MT7621_REGS_H_
+ #define _MT7621_REGS_H_
  
- 	raw_spinlock_t lock; /* Protect the shared start/stop register */
- 
-@@ -247,10 +249,17 @@ static inline u32 sh_cmt_read_cmstr(struct sh_cmt_channel *ch)
- 
- static inline void sh_cmt_write_cmstr(struct sh_cmt_channel *ch, u32 value)
- {
--	if (ch->iostart)
--		ch->cmt->info->write_control(ch->iostart, 0, value);
--	else
--		ch->cmt->info->write_control(ch->cmt->mapbase, 0, value);
-+	u32 old_value = sh_cmt_read_cmstr(ch);
++#define IOMEM(x)			((void __iomem *)(KSEG1ADDR(x)))
 +
-+	if (value != old_value) {
-+		if (ch->iostart) {
-+			ch->cmt->info->write_control(ch->iostart, 0, value);
-+			udelay(ch->cmt->reg_delay);
-+		} else {
-+			ch->cmt->info->write_control(ch->cmt->mapbase, 0, value);
-+			udelay(ch->cmt->reg_delay);
-+		}
-+	}
- }
+ #define MT7621_PALMBUS_BASE		0x1C000000
+ #define MT7621_PALMBUS_SIZE		0x03FFFFFF
  
- static inline u32 sh_cmt_read_cmcsr(struct sh_cmt_channel *ch)
-@@ -260,7 +269,12 @@ static inline u32 sh_cmt_read_cmcsr(struct sh_cmt_channel *ch)
+-#define MT7621_SYSC_BASE		0x1E000000
++#define MT7621_SYSC_BASE		IOMEM(0x1E000000)
  
- static inline void sh_cmt_write_cmcsr(struct sh_cmt_channel *ch, u32 value)
+ #define SYSC_REG_CHIP_NAME0		0x00
+ #define SYSC_REG_CHIP_NAME1		0x04
+diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
+index 4c8378661219..af66886f1366 100644
+--- a/arch/mips/ralink/mt7621.c
++++ b/arch/mips/ralink/mt7621.c
+@@ -95,7 +95,6 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 
+ void __init prom_soc_init(struct ralink_soc_info *soc_info)
  {
--	ch->cmt->info->write_control(ch->ioctrl, CMCSR, value);
-+	u32 old_value = sh_cmt_read_cmcsr(ch);
-+
-+	if (value != old_value) {
-+		ch->cmt->info->write_control(ch->ioctrl, CMCSR, value);
-+		udelay(ch->cmt->reg_delay);
-+	}
- }
- 
- static inline u32 sh_cmt_read_cmcnt(struct sh_cmt_channel *ch)
-@@ -268,14 +282,33 @@ static inline u32 sh_cmt_read_cmcnt(struct sh_cmt_channel *ch)
- 	return ch->cmt->info->read_count(ch->ioctrl, CMCNT);
- }
- 
--static inline void sh_cmt_write_cmcnt(struct sh_cmt_channel *ch, u32 value)
-+static inline int sh_cmt_write_cmcnt(struct sh_cmt_channel *ch, u32 value)
- {
-+	/* Tests showed that we need to wait 3 clocks here */
-+	unsigned int cmcnt_delay = DIV_ROUND_UP(3 * ch->cmt->reg_delay, 2);
-+	u32 reg;
-+
-+	if (ch->cmt->info->model > SH_CMT_16BIT) {
-+		int ret = read_poll_timeout_atomic(sh_cmt_read_cmcsr, reg,
-+						   !(reg & SH_CMT32_CMCSR_WRFLG),
-+						   1, cmcnt_delay, false, ch);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	ch->cmt->info->write_count(ch->ioctrl, CMCNT, value);
-+	udelay(cmcnt_delay);
-+	return 0;
- }
- 
- static inline void sh_cmt_write_cmcor(struct sh_cmt_channel *ch, u32 value)
- {
--	ch->cmt->info->write_count(ch->ioctrl, CMCOR, value);
-+	u32 old_value = ch->cmt->info->read_count(ch->ioctrl, CMCOR);
-+
-+	if (value != old_value) {
-+		ch->cmt->info->write_count(ch->ioctrl, CMCOR, value);
-+		udelay(ch->cmt->reg_delay);
-+	}
- }
- 
- static u32 sh_cmt_get_counter(struct sh_cmt_channel *ch, u32 *has_wrapped)
-@@ -319,7 +352,7 @@ static void sh_cmt_start_stop_ch(struct sh_cmt_channel *ch, int start)
- 
- static int sh_cmt_enable(struct sh_cmt_channel *ch)
- {
--	int k, ret;
-+	int ret;
- 
- 	dev_pm_syscore_device(&ch->cmt->pdev->dev, true);
- 
-@@ -347,26 +380,9 @@ static int sh_cmt_enable(struct sh_cmt_channel *ch)
+-	void __iomem *sysc = (void __iomem *) KSEG1ADDR(MT7621_SYSC_BASE);
+ 	unsigned char *name = NULL;
+ 	u32 n0;
+ 	u32 n1;
+@@ -123,8 +122,8 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ 		__sync();
  	}
  
- 	sh_cmt_write_cmcor(ch, 0xffffffff);
--	sh_cmt_write_cmcnt(ch, 0);
--
--	/*
--	 * According to the sh73a0 user's manual, as CMCNT can be operated
--	 * only by the RCLK (Pseudo 32 kHz), there's one restriction on
--	 * modifying CMCNT register; two RCLK cycles are necessary before
--	 * this register is either read or any modification of the value
--	 * it holds is reflected in the LSI's actual operation.
--	 *
--	 * While at it, we're supposed to clear out the CMCNT as of this
--	 * moment, so make sure it's processed properly here.  This will
--	 * take RCLKx2 at maximum.
--	 */
--	for (k = 0; k < 100; k++) {
--		if (!sh_cmt_read_cmcnt(ch))
--			break;
--		udelay(1);
--	}
-+	ret = sh_cmt_write_cmcnt(ch, 0);
+-	n0 = __raw_readl(sysc + SYSC_REG_CHIP_NAME0);
+-	n1 = __raw_readl(sysc + SYSC_REG_CHIP_NAME1);
++	n0 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
++	n1 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
  
--	if (sh_cmt_read_cmcnt(ch)) {
-+	if (ret || sh_cmt_read_cmcnt(ch)) {
- 		dev_err(&ch->cmt->pdev->dev, "ch%u: cannot clear CMCNT\n",
- 			ch->index);
- 		ret = -ETIMEDOUT;
-@@ -987,8 +1003,8 @@ MODULE_DEVICE_TABLE(of, sh_cmt_of_table);
+ 	if (n0 == MT7621_CHIP_NAME0 && n1 == MT7621_CHIP_NAME1) {
+ 		name = "MT7621";
+@@ -133,7 +132,7 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ 		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n", n0, n1);
+ 	}
+ 	ralink_soc = MT762X_SOC_MT7621AT;
+-	rev = __raw_readl(sysc + SYSC_REG_CHIP_REV);
++	rev = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
  
- static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
- {
--	unsigned int mask;
--	unsigned int i;
-+	unsigned int mask, i;
-+	unsigned long rate;
- 	int ret;
- 
- 	cmt->pdev = pdev;
-@@ -1024,10 +1040,16 @@ static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_clk_unprepare;
- 
--	if (cmt->info->width == 16)
--		cmt->rate = clk_get_rate(cmt->clk) / 512;
--	else
--		cmt->rate = clk_get_rate(cmt->clk) / 8;
-+	rate = clk_get_rate(cmt->clk);
-+	if (!rate) {
-+		ret = -EINVAL;
-+		goto err_clk_disable;
-+	}
-+
-+	/* We shall wait 2 input clks after register writes */
-+	if (cmt->info->model >= SH_CMT_48BIT)
-+		cmt->reg_delay = DIV_ROUND_UP(2UL * USEC_PER_SEC, rate);
-+	cmt->rate = rate / (cmt->info->width == 16 ? 512 : 8);
- 
- 	/* Map the memory resource(s). */
- 	ret = sh_cmt_map_memory(cmt);
+ 	snprintf(soc_info->sys_type, RAMIPS_SYS_TYPE_LEN,
+ 		"MediaTek %s ver:%u eco:%u",
 -- 
 2.35.1
 
