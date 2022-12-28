@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446AD1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B62C433EF;
-	Wed, 28 Dec 2022 16:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF951C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B31C433F0;
+	Wed, 28 Dec 2022 16:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243595;
-	bh=dvs4yo52huo1GEvWFbkCdzuqxLylM5fB0TGesP/gAj0=;
+	s=korg; t=1672243597;
+	bh=e2aaQ2Y2YJbiLzEGOzXnq9KhHn6R4/v594YV73e4B6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTeI4U0raNL/P/GvvmxCbJyNK/aJ/iOZafWAe88UfOZkEHrJ+dguKrFGgKqjYa3AA
-	 DH6dV3T/JifXQ52pmn84HTUJThebb+SI1NuVZrEBE00BoNdDK/TkJx58w9ax8fGHaV
-	 jpsN1/AcHKQ2FaJd/OX5A5Avrzp1O0OM2TsvgoX4=
+	b=YIkAA7OQHoC2Q3C0Vg7kPBVp/xf85tzgn8kYtCktEA6mxhikSAU87dJTLkBlv7HL+
+	 Zm1kBkPOaZg7MyaGcfwQpdMkx9x9oQj2rKAZNDMU/sT+gkAcid9fpC3kwuglZ23Eue
+	 XGqnfSy0SG5cgyyNAn6sDubRhsQrD4t8D8atBu3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0518/1146] media: coda: Add check for kmalloc
-Date: Wed, 28 Dec 2022 15:34:17 +0100
-Message-Id: <20221228144344.245383425@linuxfoundation.org>
+Subject: [PATCH 6.0 0554/1073] apparmor: fix lockdep warning when removing a namespace
+Date: Wed, 28 Dec 2022 15:35:42 +0100
+Message-Id: <20221228144343.103081817@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 6e5e5defdb8b0186312c2f855ace175aee6daf9b ]
+[ Upstream commit 9c4557efc558a68e4cd973490fd936d6e3414db8 ]
 
-As the kmalloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+Fix the following lockdep warning
 
-Fixes: cb1d3a336371 ("[media] coda: add CODA7541 JPEG support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[ 1119.158984] ============================================
+[ 1119.158988] WARNING: possible recursive locking detected
+[ 1119.158996] 6.0.0-rc1+ #257 Tainted: G            E    N
+[ 1119.158999] --------------------------------------------
+[ 1119.159001] bash/80100 is trying to acquire lock:
+[ 1119.159007] ffff88803e79b4a0 (&ns->lock/1){+.+.}-{4:4}, at: destroy_ns.part.0+0x43/0x140
+[ 1119.159028]
+               but task is already holding lock:
+[ 1119.159030] ffff8881009764a0 (&ns->lock/1){+.+.}-{4:4}, at: aa_remove_profiles+0x3f0/0x640
+[ 1119.159040]
+               other info that might help us debug this:
+[ 1119.159042]  Possible unsafe locking scenario:
+
+[ 1119.159043]        CPU0
+[ 1119.159045]        ----
+[ 1119.159047]   lock(&ns->lock/1);
+[ 1119.159051]   lock(&ns->lock/1);
+[ 1119.159055]
+                *** DEADLOCK ***
+
+Which is caused by an incorrect lockdep nesting notation
+
+Fixes: feb3c766a3ab ("apparmor: fix possible recursive lock warning in __aa_create_ns")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/coda-bit.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ security/apparmor/policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/chips-media/coda-bit.c b/drivers/media/platform/chips-media/coda-bit.c
-index 6d816fd69a17..ed47d5bd8d61 100644
---- a/drivers/media/platform/chips-media/coda-bit.c
-+++ b/drivers/media/platform/chips-media/coda-bit.c
-@@ -1084,10 +1084,16 @@ static int coda_start_encoding(struct coda_ctx *ctx)
- 	}
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 499c0209b6a4..fbdfcef91c61 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1170,7 +1170,7 @@ ssize_t aa_remove_profiles(struct aa_ns *policy_ns, struct aa_label *subj,
  
- 	if (dst_fourcc == V4L2_PIX_FMT_JPEG) {
--		if (!ctx->params.jpeg_qmat_tab[0])
-+		if (!ctx->params.jpeg_qmat_tab[0]) {
- 			ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
--		if (!ctx->params.jpeg_qmat_tab[1])
-+			if (!ctx->params.jpeg_qmat_tab[0])
-+				return -ENOMEM;
-+		}
-+		if (!ctx->params.jpeg_qmat_tab[1]) {
- 			ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
-+			if (!ctx->params.jpeg_qmat_tab[1])
-+				return -ENOMEM;
-+		}
- 		coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
- 	}
- 
+ 	if (!name) {
+ 		/* remove namespace - can only happen if fqname[0] == ':' */
+-		mutex_lock_nested(&ns->parent->lock, ns->level);
++		mutex_lock_nested(&ns->parent->lock, ns->parent->level);
+ 		__aa_bump_ns_revision(ns);
+ 		__aa_remove_ns(ns);
+ 		mutex_unlock(&ns->parent->lock);
 -- 
 2.35.1
 
