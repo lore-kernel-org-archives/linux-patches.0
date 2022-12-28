@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25291863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37999C433D2;
-	Wed, 28 Dec 2022 15:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF571863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46E3C433EF;
+	Wed, 28 Dec 2022 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241546;
-	bh=e0iugbZSA8YJy0JzlOv12gzQwF4jKIBTfD34kkqZM+M=;
+	s=korg; t=1672241549;
+	bh=jhZpX19fBZ2alVq1ufkdqLv0Yzsjw9K51GnezOInTJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGIGXwmVmcCsV37Gi4m3Gj5brWyW5LLAiFusLGJdO/4/I2GuASeBvqxOIAOl6WdkT
-	 XTRlzITDP2Th9tpgw2IRsSjjsTaLIn91VwJXXK3Rx+M8OG1FmVzPpKs9a0Smf5xkOW
-	 u8z2kP8HKJgOoVzcQkZB0s/EyA/0lVJeXziR6u7w=
+	b=uPOJxGbD7ovTcMpafHvRQNnKjnoLFVfRuHbeJ+iO8AjMcySo4SO1eiPuufeRcBk3k
+	 u0lmv7ZnVHSyhPzyupiebcTCVDtLOxGRQG0P6xDaK5yUx4S+1tjrykL+WcpXrr0+Ik
+	 RvcTC+HMwvq3U+FOkxmMY4GZgB9AnQteKRv+4cE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zheyu Ma <zheyuma97@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0259/1146] dw9768: Enable low-power probe on ACPI
-Date: Wed, 28 Dec 2022 15:29:58 +0100
-Message-Id: <20221228144337.172368085@linuxfoundation.org>
+Subject: [PATCH 5.15 495/731] i2c: ismt: Fix an out-of-bounds bug in ismt_access()
+Date: Wed, 28 Dec 2022 15:40:02 +0100
+Message-Id: <20221228144310.895832502@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,103 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-[ Upstream commit 5f9a089b6de34655318afe8e544d9a9cc0fc1d29 ]
+[ Upstream commit 39244cc754829bf707dccd12e2ce37510f5b1f8d ]
 
-Add support for low-power probe to the driver. Also fix runtime PM API
-usage in the driver.
+When the driver does not check the data from the user, the variable
+'data->block[0]' may be very large to cause an out-of-bounds bug.
 
-Much of the hassle comes from different factors affecting device power
-states during probe for ACPI and DT.
+The following log can reveal it:
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Fixes: 859891228e56 ("media: i2c: dw9768: Add DW9768 VCM driver")
+[   33.995542] i2c i2c-1: ioctl, cmd=0x720, arg=0x7ffcb3dc3a20
+[   33.995978] ismt_smbus 0000:00:05.0: I2C_SMBUS_BLOCK_DATA:  WRITE
+[   33.996475] ==================================================================
+[   33.996995] BUG: KASAN: out-of-bounds in ismt_access.cold+0x374/0x214b
+[   33.997473] Read of size 18446744073709551615 at addr ffff88810efcfdb1 by task ismt_poc/485
+[   33.999450] Call Trace:
+[   34.001849]  memcpy+0x20/0x60
+[   34.002077]  ismt_access.cold+0x374/0x214b
+[   34.003382]  __i2c_smbus_xfer+0x44f/0xfb0
+[   34.004007]  i2c_smbus_xfer+0x10a/0x390
+[   34.004291]  i2cdev_ioctl_smbus+0x2c8/0x710
+[   34.005196]  i2cdev_ioctl+0x5ec/0x74c
+
+Fix this bug by checking the size of 'data->block[0]' first.
+
+Fixes: 13f35ac14cd0 ("i2c: Adding support for Intel iSMT SMBus 2.0 host controller")
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/dw9768.c | 33 +++++++++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ drivers/i2c/busses/i2c-ismt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/i2c/dw9768.c b/drivers/media/i2c/dw9768.c
-index 0f47ef015a1d..83a3ee275bbe 100644
---- a/drivers/media/i2c/dw9768.c
-+++ b/drivers/media/i2c/dw9768.c
-@@ -414,6 +414,7 @@ static int dw9768_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
- 	struct dw9768 *dw9768;
-+	bool full_power;
- 	unsigned int i;
- 	int ret;
- 
-@@ -469,13 +470,23 @@ static int dw9768_probe(struct i2c_client *client)
- 
- 	dw9768->sd.entity.function = MEDIA_ENT_F_LENS;
- 
-+	/*
-+	 * Figure out whether we're going to power up the device here. Generally
-+	 * this is done if CONFIG_PM is disabled in a DT system or the device is
-+	 * to be powered on in an ACPI system. Similarly for power off in
-+	 * remove.
-+	 */
- 	pm_runtime_enable(dev);
--	if (!pm_runtime_enabled(dev)) {
-+	full_power = (is_acpi_node(dev_fwnode(dev)) &&
-+		      acpi_dev_state_d0(dev)) ||
-+		     (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev));
-+	if (full_power) {
- 		ret = dw9768_runtime_resume(dev);
- 		if (ret < 0) {
- 			dev_err(dev, "failed to power on: %d\n", ret);
- 			goto err_clean_entity;
- 		}
-+		pm_runtime_set_active(dev);
- 	}
- 
- 	ret = v4l2_async_register_subdev(&dw9768->sd);
-@@ -484,14 +495,17 @@ static int dw9768_probe(struct i2c_client *client)
- 		goto err_power_off;
- 	}
- 
-+	pm_runtime_idle(dev);
+diff --git a/drivers/i2c/busses/i2c-ismt.c b/drivers/i2c/busses/i2c-ismt.c
+index 483428c5e30b..10cdd501d4c5 100644
+--- a/drivers/i2c/busses/i2c-ismt.c
++++ b/drivers/i2c/busses/i2c-ismt.c
+@@ -509,6 +509,9 @@ static int ismt_access(struct i2c_adapter *adap, u16 addr,
+ 		if (read_write == I2C_SMBUS_WRITE) {
+ 			/* Block Write */
+ 			dev_dbg(dev, "I2C_SMBUS_BLOCK_DATA:  WRITE\n");
++			if (data->block[0] < 1 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
++				return -EINVAL;
 +
- 	return 0;
- 
- err_power_off:
--	if (pm_runtime_enabled(dev))
--		pm_runtime_disable(dev);
--	else
-+	if (full_power) {
- 		dw9768_runtime_suspend(dev);
-+		pm_runtime_set_suspended(dev);
-+	}
- err_clean_entity:
-+	pm_runtime_disable(dev);
- 	media_entity_cleanup(&dw9768->sd.entity);
- err_free_handler:
- 	v4l2_ctrl_handler_free(&dw9768->ctrls);
-@@ -503,14 +517,17 @@ static void dw9768_remove(struct i2c_client *client)
- {
- 	struct v4l2_subdev *sd = i2c_get_clientdata(client);
- 	struct dw9768 *dw9768 = sd_to_dw9768(sd);
-+	struct device *dev = &client->dev;
- 
- 	v4l2_async_unregister_subdev(&dw9768->sd);
- 	v4l2_ctrl_handler_free(&dw9768->ctrls);
- 	media_entity_cleanup(&dw9768->sd.entity);
--	pm_runtime_disable(&client->dev);
--	if (!pm_runtime_status_suspended(&client->dev))
--		dw9768_runtime_suspend(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	if ((is_acpi_node(dev_fwnode(dev)) && acpi_dev_state_d0(dev)) ||
-+	    (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev))) {
-+		dw9768_runtime_suspend(dev);
-+		pm_runtime_set_suspended(dev);
-+	}
-+	pm_runtime_disable(dev);
- }
- 
- static const struct of_device_id dw9768_of_table[] = {
+ 			dma_size = data->block[0] + 1;
+ 			dma_direction = DMA_TO_DEVICE;
+ 			desc->wr_len_cmd = dma_size;
 -- 
 2.35.1
 
