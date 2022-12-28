@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7621C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E6AC433D2;
-	Wed, 28 Dec 2022 16:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98B21C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB11C433EF;
+	Wed, 28 Dec 2022 16:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245310;
-	bh=ZNqTtWOn2vMG1EH6bQnAzJfZfj7e79dr/PqWV1t5Vt4=;
+	s=korg; t=1672245313;
+	bh=fV2S7m2DkgZnUcY+0qINLx1GpD7RSwB2/GhMbwghPow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXSR82cCSJ0KCqS9LzkD6FscEjrGXO+HeKhuk/op3FCuj8Utso1/RPj/DvLFh8Y7U
-	 CzNjqoEWzZbCS4XUOP+wpZL85/6cqawmIBhBDteQvkapW34fZhRi6SpwD40AmHIobb
-	 IrhCbHoR+Soi4243d9fCoZvlSTludCfowuOh7oTo=
+	b=IwTuFnlMC0KMd7gad5P/6+4ck1yRuvqwtJPJmoPxaO/voPWUEwUYUOTmIRj+MbWXU
+	 NRSUjH1eKY7S66YZE6B0zC+C6E7EQJ/vIbIu4SMaY2HBwjZnUr1dSz0B+VOvIloRhx
+	 ZINLD7LWxkCgXrSXDFeTxk57gMOzPvd4sKTg9P84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Chun-Jie Chen <chun-jie.chen@mediatek.com>,
+	Allen-KH Cheng <allen-kh.cheng@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Miles Chen <miles.chen@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0837/1146] rtc: cmos: Rename ACPI-related functions
-Date: Wed, 28 Dec 2022 15:39:36 +0100
-Message-Id: <20221228144352.892158428@linuxfoundation.org>
+Subject: [PATCH 6.0 0871/1073] soc: mediatek: pm-domains: Fix the power glitch issue
+Date: Wed, 28 Dec 2022 15:40:59 +0100
+Message-Id: <20221228144351.680637262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,85 +39,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Chun-Jie Chen <chun-jie.chen@mediatek.com>
 
-[ Upstream commit d13e9ad9f5146f066a5c5a1cc993d09e4fb21ead ]
+[ Upstream commit dba8eb83af9dd757ef645b52200775e86883d858 ]
 
-The names of rtc_wake_setup() and cmos_wake_setup() don't indicate
-that these functions are ACPI-related, which is the case, and the
-former doesn't really reflect the role of the function.
+Power reset maybe generate unexpected signal. In order to avoid
+the glitch issue, we need to enable isolation first to guarantee the
+stable signal when power reset is triggered.
 
-Rename them to acpi_rtc_event_setup() and acpi_cmos_wake_setup(),
-respectively, to address this shortcoming.
-
-No intentional functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
+Signed-off-by: Chun-Jie Chen <chun-jie.chen@mediatek.com>
+Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Miles Chen <miles.chen@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221014102029.1162-1-allen-kh.cheng@mediatek.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/soc/mediatek/mtk-pm-domains.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 2a21d8281aa6..039486bfedf4 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -784,7 +784,7 @@ static u32 rtc_handler(void *context)
- 	return ACPI_INTERRUPT_HANDLED;
- }
+diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
+index 9734f1091c69..4b2046c37e6f 100644
+--- a/drivers/soc/mediatek/mtk-pm-domains.c
++++ b/drivers/soc/mediatek/mtk-pm-domains.c
+@@ -275,9 +275,9 @@ static int scpsys_power_off(struct generic_pm_domain *genpd)
+ 	clk_bulk_disable_unprepare(pd->num_subsys_clks, pd->subsys_clks);
  
--static void rtc_wake_setup(struct device *dev)
-+static void acpi_rtc_event_setup(struct device *dev)
- {
- 	if (acpi_disabled)
- 		return;
-@@ -828,7 +828,7 @@ static void use_acpi_alarm_quirks(void)
- static inline void use_acpi_alarm_quirks(void) { }
- #endif
+ 	/* subsys power off */
+-	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
+ 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_ISO_BIT);
+ 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_CLK_DIS_BIT);
++	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
+ 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_2ND_BIT);
+ 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_BIT);
  
--static void cmos_wake_setup(struct device *dev)
-+static void acpi_cmos_wake_setup(struct device *dev)
- {
- 	if (acpi_disabled)
- 		return;
-@@ -880,11 +880,11 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
- 
- #else /* !CONFIG_ACPI */
- 
--static inline void rtc_wake_setup(struct device *dev)
-+static inline void acpi_rtc_event_setup(struct device *dev)
- {
- }
- 
--static inline void cmos_wake_setup(struct device *dev)
-+static inline void acpi_cmos_wake_setup(struct device *dev)
- {
- }
- 
-@@ -986,7 +986,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 			cmos_rtc.wake_off = info->wake_off;
- 		}
- 	} else {
--		cmos_wake_setup(dev);
-+		acpi_cmos_wake_setup(dev);
- 	}
- 
- 	if (cmos_rtc.day_alrm >= 128)
-@@ -1091,7 +1091,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	 * the ACPI RTC fixed event.
- 	 */
- 	if (!info)
--		rtc_wake_setup(dev);
-+		acpi_rtc_event_setup(dev);
- 
- 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
- 		 !is_valid_irq(rtc_irq) ? "no alarms" :
 -- 
 2.35.1
 
