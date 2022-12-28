@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1611868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FC8C433EF;
-	Wed, 28 Dec 2022 15:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB801C433D2;
+	Wed, 28 Dec 2022 15:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241250;
-	bh=zCqZwWKjQD7OaoZ7o3KRQw7nyL+7AvFOi2sWVxg5MqI=;
+	s=korg; t=1672241248;
+	bh=2Xm07eXL0JB3MV9MymMDGxCYhaoEiXUc0TxK5crAAJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRkbRFuEWVA85nOLl9vYpnJrdf1ETgV/BdrMB9Hi4ytyHPyS1+QbZ9g7TRTMJ93qW
-	 bNv5+Tl3Aw+l3S90M89ZkF/owat3OFYkwQnJk9LizCKEOkSFfQrcLOuMHUnUtaKfNs
-	 Xcu6JFGFvZzNHcZ39elnzFDIzxwwsa+HYz2o+PS0=
+	b=JDkntrWsZB8ZzgXs3xhCTFvRi/ryOggv7Tnv9iPPoYU3HySbKYEUxNoPSQbjiDfO2
+	 gGnMC5y/u0WAf/0HHMueYhu4gLz1TGGty3JfJX7EG+B3ce+p/4xbEf/XWNGV/Li/E1
+	 j4BC86aD5NJyMElxc8/GWwWDQC5UOvGazqR6LLII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Martin Leung <Martin.Leung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Haiyi Zhou <Haiyi.Zhou@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Song Liu <song@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0258/1073] drm/amd/display: wait for vblank during pipe programming
-Date: Wed, 28 Dec 2022 15:30:46 +0100
-Message-Id: <20221228144335.026544289@linuxfoundation.org>
+Subject: [PATCH 6.1 0224/1146] samples/bpf: Fix map iteration in xdp1_user
+Date: Wed, 28 Dec 2022 15:29:23 +0100
+Message-Id: <20221228144336.227899276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,46 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haiyi Zhou <Haiyi.Zhou@amd.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 203ccaf586446b578909de1b763278033fb74b51 ]
+[ Upstream commit 05ee658c654bacda03f7fecef367e62aaf8e1cfe ]
 
-[WHY]
-Skipping vblank during global sync update request can result in
-underflow on certain displays.
+BPF map iteration in xdp1_user results in endless loop without any
+output, because the return value of bpf_map_get_next_key() is checked
+against the wrong value.
 
-[HOW]
-Roll back to the previous behavior where DC waits for vblank during pipe
-programming.
+Other call locations of bpf_map_get_next_key() check for equal 0 for
+continuing the iteration. xdp1_user checks against unequal -1. This is
+wrong for a function which can return arbitrary negative errno values,
+because a return value of e.g. -2 results in an endless loop.
 
-Fixes: 5d3e14421410 ("drm/amd/display: do not wait for vblank during pipe programming")
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Reviewed-by: Martin Leung <Martin.Leung@amd.com>
-Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Haiyi Zhou <Haiyi.Zhou@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+With this fix xdp1_user is printing statistics again:
+proto 0:          1 pkt/s
+proto 0:          1 pkt/s
+proto 17:     107383 pkt/s
+proto 17:     881655 pkt/s
+proto 17:     882083 pkt/s
+proto 17:     881758 pkt/s
+
+Fixes: bd054102a8c7 ("libbpf: enforce strict libbpf 1.0 behaviors")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20221013200922.17167-1-gerhard@engleder-embedded.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ samples/bpf/xdp1_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 0f30df523fdf..146189323dbe 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -1632,10 +1632,8 @@ static void dcn20_program_pipe(
- 				pipe_ctx->pipe_dlg_param.vupdate_width);
+diff --git a/samples/bpf/xdp1_user.c b/samples/bpf/xdp1_user.c
+index ac370e638fa3..281dc964de8d 100644
+--- a/samples/bpf/xdp1_user.c
++++ b/samples/bpf/xdp1_user.c
+@@ -51,7 +51,7 @@ static void poll_stats(int map_fd, int interval)
  
- 		if (pipe_ctx->stream->mall_stream_config.type != SUBVP_PHANTOM) {
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(
--				pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(
--				pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
- 		}
+ 		sleep(interval);
  
- 		pipe_ctx->stream_res.tg->funcs->set_vtg_params(
+-		while (bpf_map_get_next_key(map_fd, &key, &key) != -1) {
++		while (bpf_map_get_next_key(map_fd, &key, &key) == 0) {
+ 			__u64 sum = 0;
+ 
+ 			assert(bpf_map_lookup_elem(map_fd, &key, values) == 0);
 -- 
 2.35.1
 
