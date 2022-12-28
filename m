@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFCE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627B8C433D2;
-	Wed, 28 Dec 2022 15:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D081863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2C8C433D2;
+	Wed, 28 Dec 2022 15:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240377;
-	bh=Qnz2Q2W1D4s7Im2sMTjlrRPEJ7DyXob3fGrWZMetkvA=;
+	s=korg; t=1672240380;
+	bh=42Y8QxZyZzt8It3aAKopBhcGIJD49TelzXjP2Zcvcz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nfsdg2FrCRBoGxEkfo++OndEJsJI/f89/dKOyb/OXreoroXulxb5ZfxYMFl55tNBB
-	 YQTnBD9fOUy8etCSaIcwj6u//oxIhKfixV82yTP2UiHHkiw524lHK3on2Msuvfd+AU
-	 /oSACVKZ3DhstbMokvfUKajLET+SPHcwmPAk+Y20=
+	b=0wnMtVpkHen4afjOO3SMeBAsoQ/iwAIs4PGuvy+q/eFR6yTTVpoekelk0UXujib9a
+	 92U/5IC3N1RMXP8uj3+fX6Wfc2oehbzS/3TXJhRli1O6TUsPHSjaIA8JQ5QjAYWf/G
+	 /M6rd2pDQmWwW+EZrbSWI/GfsRCgvw+HLtuNH0hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Will Deacon <will@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0094/1146] drivers/perf: hisi: Fix some event id for hisi-pcie-pmu
-Date: Wed, 28 Dec 2022 15:27:13 +0100
-Message-Id: <20221228144332.696298975@linuxfoundation.org>
+Subject: [PATCH 6.1 0115/1146] alpha: fix syscall entry in !AUDUT_SYSCALL case
+Date: Wed, 28 Dec 2022 15:27:34 +0100
+Message-Id: <20221228144333.279953360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,41 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 6b4bb4f38dbfe85247f006f06135ba46450d5bf0 ]
+[ Upstream commit f7b2431a6d22f7a91c567708e071dfcd6d66db14 ]
 
-Some event id of hisi-pcie-pmu is incorrect, fix them.
+We only want to take the slow path if SYSCALL_TRACE or SYSCALL_AUDIT is
+set; on !AUDIT_SYSCALL configs the current tree hits it whenever _any_
+thread flag (including NEED_RESCHED, NOTIFY_SIGNAL, etc.) happens to
+be set.
 
-Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20221117084136.53572-2-yangyicong@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: a9302e843944 "alpha: Enable system-call auditing support"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hisi_pcie_pmu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/alpha/kernel/entry.S | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-index 21771708597d..071e63d9a9ac 100644
---- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-@@ -693,10 +693,10 @@ static struct attribute *hisi_pcie_pmu_events_attr[] = {
- 	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_cnt, 0x10210),
- 	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_latency, 0x0011),
- 	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_cnt, 0x10011),
--	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_flux, 0x1005),
--	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_time, 0x11005),
--	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_flux, 0x2004),
--	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_time, 0x12004),
-+	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_flux, 0x0804),
-+	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_time, 0x10804),
-+	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_flux, 0x0405),
-+	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_time, 0x10405),
- 	NULL
- };
- 
+diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
+index e227f3a29a43..c41a5a9c3b9f 100644
+--- a/arch/alpha/kernel/entry.S
++++ b/arch/alpha/kernel/entry.S
+@@ -469,8 +469,10 @@ entSys:
+ #ifdef CONFIG_AUDITSYSCALL
+ 	lda     $6, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
+ 	and     $3, $6, $3
+-#endif
+ 	bne     $3, strace
++#else
++	blbs    $3, strace		/* check for SYSCALL_TRACE in disguise */
++#endif
+ 	beq	$4, 1f
+ 	ldq	$27, 0($5)
+ 1:	jsr	$26, ($27), sys_ni_syscall
 -- 
 2.35.1
 
