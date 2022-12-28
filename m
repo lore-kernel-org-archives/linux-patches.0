@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3271C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953A9C433D2;
-	Wed, 28 Dec 2022 16:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFAE1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC53C433EF;
+	Wed, 28 Dec 2022 16:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246015;
-	bh=hbVt091vWRGVnI7WXqqR6j61ab9tdP0C8v5IAWhC4Mg=;
+	s=korg; t=1672246018;
+	bh=U4wrb/1sIcb+wSoSHj+3kJqTPWq/eVa4BTL9SqXFRIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0c4KxRdh/PYJ/jw+cMuHlCbNp50xDA3/WBV+0hb+w3P3ex0CAHuPxtA6Y8K+KUMCo
-	 1qvUnCOvBY9LCyd8LnTkg5acX2XSLFbQDeuqZBKBvfQdp/cY8w2sMazPrsSnaLvhIH
-	 yGFPoKHZMSDnAg2BV52Pyn8kptn9B6V9D99JrHW0=
+	b=VE4fQvN3w3TMUmmSyw7uR2K7gjcpXD4/oFRqrv9/xF9L9cVBtBz1GsiqnnrCv2eXJ
+	 y386opvs+8F9IzOCZLGRu7859HQCVDNA8teq2tG41LA8dO8WUz67kBxvV+i8nOGUtZ
+	 Q8OnycSrSW5wr8dcBF+adHN51gQoTTmN8Z7RF/7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Wright Feng <wright.feng@cypress.com>,
+	Chi-hsien Lin <chi-hsien.lin@cypress.com>,
+	Ian Lin <ian.lin@infineon.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0998/1073] ALSA: hda: add snd_hdac_stop_streams() helper
-Date: Wed, 28 Dec 2022 15:43:06 +0100
-Message-Id: <20221228144355.240325825@linuxfoundation.org>
+Subject: [PATCH 6.1 0967/1146] brcmfmac: return error when getting invalid max_flowrings from dongle
+Date: Wed, 28 Dec 2022 15:41:46 +0100
+Message-Id: <20221228144356.595020946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,90 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Wright Feng <wright.feng@cypress.com>
 
-[ Upstream commit 24ad3835a6db4f8857975effa6bf47730371a5ff ]
+[ Upstream commit 2aca4f3734bd717e04943ddf340d49ab62299a00 ]
 
-Minor code reuse, no functionality change.
+When firmware hit trap at initialization, host will read abnormal
+max_flowrings number from dongle, and it will cause kernel panic when
+doing iowrite to initialize dongle ring.
+To detect this error at early stage, we directly return error when getting
+invalid max_flowrings(>256).
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20220919121041.43463-6-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 171107237246 ("ASoC: Intel: Skylake: Fix driver hang during shutdown")
+Signed-off-by: Wright Feng <wright.feng@cypress.com>
+Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
+Signed-off-by: Ian Lin <ian.lin@infineon.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220929031001.9962-3-ian.lin@infineon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hdaudio.h        |  1 +
- sound/hda/hdac_stream.c        | 17 ++++++++++++++---
- sound/pci/hda/hda_controller.c |  4 +---
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
-index 797bf67a164d..ceaa7b7cfdc3 100644
---- a/include/sound/hdaudio.h
-+++ b/include/sound/hdaudio.h
-@@ -562,6 +562,7 @@ int snd_hdac_stream_set_params(struct hdac_stream *azx_dev,
- void snd_hdac_stream_start(struct hdac_stream *azx_dev, bool fresh_start);
- void snd_hdac_stream_clear(struct hdac_stream *azx_dev);
- void snd_hdac_stream_stop(struct hdac_stream *azx_dev);
-+void snd_hdac_stop_streams(struct hdac_bus *bus);
- void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus);
- void snd_hdac_stream_reset(struct hdac_stream *azx_dev);
- void snd_hdac_stream_sync_trigger(struct hdac_stream *azx_dev, bool set,
-diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
-index f3582012d22f..eea22cf72aef 100644
---- a/sound/hda/hdac_stream.c
-+++ b/sound/hda/hdac_stream.c
-@@ -142,17 +142,28 @@ void snd_hdac_stream_stop(struct hdac_stream *azx_dev)
- }
- EXPORT_SYMBOL_GPL(snd_hdac_stream_stop);
- 
-+/**
-+ * snd_hdac_stop_streams - stop all streams
-+ * @bus: HD-audio core bus
-+ */
-+void snd_hdac_stop_streams(struct hdac_bus *bus)
-+{
-+	struct hdac_stream *stream;
-+
-+	list_for_each_entry(stream, &bus->stream_list, list)
-+		snd_hdac_stream_stop(stream);
-+}
-+EXPORT_SYMBOL_GPL(snd_hdac_stop_streams);
-+
- /**
-  * snd_hdac_stop_streams_and_chip - stop all streams and chip if running
-  * @bus: HD-audio core bus
-  */
- void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus)
- {
--	struct hdac_stream *stream;
- 
- 	if (bus->chip_init) {
--		list_for_each_entry(stream, &bus->stream_list, list)
--			snd_hdac_stream_stop(stream);
-+		snd_hdac_stop_streams(bus);
- 		snd_hdac_bus_stop_chip(bus);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index aaf8e126478d..5630f6e718e1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1218,6 +1218,10 @@ static int brcmf_pcie_init_ringbuffers(struct brcmf_pciedev_info *devinfo)
+ 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
+ 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
  	}
- }
-diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
-index 75dcb14ff20a..0ff286b7b66b 100644
---- a/sound/pci/hda/hda_controller.c
-+++ b/sound/pci/hda/hda_controller.c
-@@ -1033,10 +1033,8 @@ EXPORT_SYMBOL_GPL(azx_init_chip);
- void azx_stop_all_streams(struct azx *chip)
- {
- 	struct hdac_bus *bus = azx_bus(chip);
--	struct hdac_stream *s;
++	if (max_flowrings > 256) {
++		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
++		return -EIO;
++	}
  
--	list_for_each_entry(s, &bus->stream_list, list)
--		snd_hdac_stream_stop(s);
-+	snd_hdac_stop_streams(bus);
- }
- EXPORT_SYMBOL_GPL(azx_stop_all_streams);
- 
+ 	if (devinfo->dma_idx_sz != 0) {
+ 		bufsz = (max_submissionrings + max_completionrings) *
 -- 
 2.35.1
 
