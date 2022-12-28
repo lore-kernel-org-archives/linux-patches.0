@@ -1,37 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0C21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC48EC433D2;
-	Wed, 28 Dec 2022 15:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446CD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1B6C433EF;
+	Wed, 28 Dec 2022 15:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240534;
-	bh=OsjOwwiAAiiP+K5pplyZAJlSsOT8FIVnT8KzjphlEXY=;
+	s=korg; t=1672240537;
+	bh=Mh7Iu9p6n+1zJIb6xZi19HETjBy9hXzuQapIFL17wgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrmEC3m05FO/uNGTL+Y1nq3y9OfniTcs1a6O4JnD+lvRrd6dia1jdiX2GnpCdojix
-	 g60N22QSGUlcGem0zWEswQ0Su4/LjyJcE4GrUfGu0thYyQpSl6XWzSf77VOyA99hZs
-	 FoDe3+Ftq9NYSfhHhDY1mnNZByBZue6sqHSKJRw4=
+	b=DNgoRoarLK3rBrBo0LquTk1vly18FGJGROB9uyhmbO+KWo3leGJ82hTeDOOtmr9IV
+	 1bb+SV2H2iXYGQb7rMi6km/pCyLUS/WbFxNsIgI5Jf0RC0zNNGEmLagDSy1CZYZn64
+	 HKrbrh2fuWbFjOv9uMdP45ftd+2ohhx2a3OT+Ab4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	John Garry <john.garry@huawei.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Victor Ding <victording@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 364/731] scsi: core: Fix a race between scsi_done() and scsi_timeout()
-Date: Wed, 28 Dec 2022 15:37:51 +0100
-Message-Id: <20221228144307.113752941@linuxfoundation.org>
+Subject: [PATCH 6.0 0172/1073] platform/chrome: cros_ec_typec: zero out stale pointers
+Date: Wed, 28 Dec 2022 15:29:20 +0100
+Message-Id: <20221228144332.685249709@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,62 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Victor Ding <victording@chromium.org>
 
-[ Upstream commit 978b7922d3dca672b41bb4b8ce6c06ab77112741 ]
+[ Upstream commit 9a8aadcf0b459c1257b9477fd6402e1d5952ae07 ]
 
-If there is a race between scsi_done() and scsi_timeout() and if
-scsi_timeout() loses the race, scsi_timeout() should not reset the request
-timer. Hence change the return value for this case from BLK_EH_RESET_TIMER
-into BLK_EH_DONE.
+`cros_typec_get_switch_handles` allocates four pointers when obtaining
+type-c switch handles. These pointers are all freed if failing to obtain
+any of them; therefore, pointers in `port` become stale. The stale
+pointers eventually cause use-after-free or double free in later code
+paths. Zeroing out all pointer fields after freeing to eliminate these
+stale pointers.
 
-Although the block layer holds a reference on a request (req->ref) while
-calling a timeout handler, restarting the timer (blk_add_timer()) while a
-request is being completed is racy.
-
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: John Garry <john.garry@huawei.com>
-Cc: Hannes Reinecke <hare@suse.de>
-Reported-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: 15f73f5b3e59 ("blk-mq: move failure injection out of blk_mq_complete_request")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221018202958.1902564-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f28adb41dab4 ("platform/chrome: cros_ec_typec: Register Type C switches")
+Fixes: 1a8912caba02 ("platform/chrome: cros_ec_typec: Get retimer handle")
+Signed-off-by: Victor Ding <victording@chromium.org>
+Acked-by: Prashant Malani <pmalani@chromium.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20221207093924.v2.1.I1864b6a7ee98824118b93677868d22d3750f439b@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/platform/chrome/cros_ec_typec.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index bb5a6e0fa49a..dd9f5778f687 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -343,19 +343,11 @@ enum blk_eh_timer_return scsi_times_out(struct request *req)
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 00208ffbe2e7..a54bf964521f 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -168,10 +168,13 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
  
- 	if (rtn == BLK_EH_DONE) {
- 		/*
--		 * Set the command to complete first in order to prevent a real
--		 * completion from releasing the command while error handling
--		 * is using it. If the command was already completed, then the
--		 * lower level driver beat the timeout handler, and it is safe
--		 * to return without escalating error recovery.
--		 *
--		 * If timeout handling lost the race to a real completion, the
--		 * block layer may ignore that due to a fake timeout injection,
--		 * so return RESET_TIMER to allow error handling another shot
--		 * at this command.
-+		 * If scsi_done() has already set SCMD_STATE_COMPLETE, do not
-+		 * modify *scmd.
- 		 */
- 		if (test_and_set_bit(SCMD_STATE_COMPLETE, &scmd->state))
--			return BLK_EH_RESET_TIMER;
-+			return BLK_EH_DONE;
- 		if (scsi_abort_command(scmd) != SUCCESS) {
- 			set_host_byte(scmd, DID_TIME_OUT);
- 			scsi_eh_scmd_add(scmd);
+ role_sw_err:
+ 	typec_switch_put(port->ori_sw);
++	port->ori_sw = NULL;
+ ori_sw_err:
+ 	typec_retimer_put(port->retimer);
++	port->retimer = NULL;
+ retimer_sw_err:
+ 	typec_mux_put(port->mux);
++	port->mux = NULL;
+ mux_err:
+ 	return -ENODEV;
+ }
 -- 
 2.35.1
 
