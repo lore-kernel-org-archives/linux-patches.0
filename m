@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AA51C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E727DC433D2;
-	Wed, 28 Dec 2022 16:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168EE1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3E8C433EF;
+	Wed, 28 Dec 2022 16:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245207;
-	bh=5Q6EOdHHdb7v57Kcm3OpxqH9JtcDWtT9XCaGiSmVKPY=;
+	s=korg; t=1672245209;
+	bh=rkLDDgAOGPJYP8K4DcvTlQlbi/zxL+lTGy/3tNRIcJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXrAlnRwk++jSNW5e/eKxq62RL0O5f3r4KzhFBgQLpVDdcNJlGASspVXr89QLpHZC
-	 R2i00eYoAJ0EV/AQPcumCk6mkQzZqCOciyhHXmi4Hx3QTx020sR/TBdeKGNL0qjyYf
-	 SLCRFVaCV9rEvlydUEOuYFoHXQZcHKrWr3WRLyVg=
+	b=fgY48zf1S0w+47jk4ZiNRCN6QXqhft2dAbFJ3GGjetrI5hmajCmwvJiyFgHWT32dk
+	 Fl9M+cbXlGcMzzUyZTXEdgqp1oJnhpXIzNK7Ek1r0LznjuvVlMICgOONbmxVKIC7Fq
+	 e8uwuFv+Z+U8C2nx41FIP5SnsM69AGPZIRD6+gdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <xiaochen.shen@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0815/1146] dmaengine: idxd: Make read buffer sysfs attributes invisible for Intel IAA
-Date: Wed, 28 Dec 2022 15:39:14 +0100
-Message-Id: <20221228144352.289479356@linuxfoundation.org>
+Subject: [PATCH 6.0 0851/1073] r6040: Fix kmemleak in probe and remove
+Date: Wed, 28 Dec 2022 15:40:39 +0100
+Message-Id: <20221228144351.133862503@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,160 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaochen Shen <xiaochen.shen@intel.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 9a8ddb35a9d5d3ad76784a012459b256a9d7de7e ]
+[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
 
-In current code, the following sysfs attributes are exposed to user to
-show or update the values:
-  max_read_buffers (max_tokens)
-  read_buffer_limit (token_limit)
-  group/read_buffers_allowed (group/tokens_allowed)
-  group/read_buffers_reserved (group/tokens_reserved)
-  group/use_read_buffer_limit (group/use_token_limit)
+There is a memory leaks reported by kmemleak:
 
->From Intel IAA spec [1], Intel IAA does not support Read Buffer
-allocation control. So these sysfs attributes should not be supported on
-IAA device.
+  unreferenced object 0xffff888116111000 (size 2048):
+    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
+    hex dump (first 32 bytes):
+      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
+      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
+      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
+      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
+      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
+      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
+      ...
 
-Fix this issue by making these sysfs attributes invisible through
-is_visible() filter when the device is IAA.
+The problem occurs in probe process as follows:
+  r6040_init_one:
+    mdiobus_register
+      mdiobus_scan    <- alloc and register phy_device,
+                         the reference count of phy_device is 3
+    r6040_mii_probe
+      phy_connect     <- connect to the first phy_device,
+                         so the reference count of the first
+                         phy_device is 4, others are 3
+    register_netdev   <- fault inject succeeded, goto error handling path
 
-Add description in the ABI documentation to mention that these
-attributes are not visible when the device does not support Read Buffer
-allocation control.
+    // error handling path
+    err_out_mdio_unregister:
+      mdiobus_unregister(lp->mii_bus);
+    err_out_mdio:
+      mdiobus_free(lp->mii_bus);    <- the reference count of the first
+                                       phy_device is 1, it is not released
+                                       and other phy_devices are released
+  // similarly, the remove process also has the same problem
 
-[1]: https://cdrdv2.intel.com/v1/dl/getContent/721858
+The root cause is traced to the phy_device is not disconnected when
+removes one r6040 device in r6040_remove_one() or on error handling path
+after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
+device is connected to the first PHY device of mii_bus, in order to
+notify the connected driver when the link status changes, which is the
+default behavior of the PHY infrastructure to handle everything.
+Therefore the phy_device should be disconnected when removes one r6040
+device or on error handling path.
 
-Fixes: fde212e44f45 ("dmaengine: idxd: deprecate token sysfs attributes for read buffers")
-Fixes: c52ca478233c ("dmaengine: idxd: add configuration component of driver")
-Signed-off-by: Xiaochen Shen <xiaochen.shen@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221022074949.11719-1-xiaochen.shen@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix it by adding phy_disconnect() when removes one r6040 device or on
+error handling path after r6040_mii probed successfully.
+
+Fixes: 3831861b4ad8 ("r6040: implement phylib")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/stable/sysfs-driver-dma-idxd          | 10 ++++++
- drivers/dma/idxd/sysfs.c                      | 36 +++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ drivers/net/ethernet/rdc/r6040.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-index 69e2d9155e0d..3becc9a82bdf 100644
---- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
-+++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
-@@ -50,6 +50,8 @@ Description:    The total number of read buffers supported by this device.
- 		The read buffers represent resources within the DSA
- 		implementation, and these resources are allocated by engines to
- 		support operations. See DSA spec v1.2 9.2.4 Total Read Buffers.
-+		It's not visible when the device does not support Read Buffer
-+		allocation control.
+diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
+index a6bf7d505178..322d4d72d2e0 100644
+--- a/drivers/net/ethernet/rdc/r6040.c
++++ b/drivers/net/ethernet/rdc/r6040.c
+@@ -1159,10 +1159,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	err = register_netdev(dev);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to register net device\n");
+-		goto err_out_mdio_unregister;
++		goto err_out_phy_disconnect;
+ 	}
+ 	return 0;
  
- What:           /sys/bus/dsa/devices/dsa<m>/max_transfer_size
- Date:           Oct 25, 2019
-@@ -123,6 +125,8 @@ Contact:        dmaengine@vger.kernel.org
- Description:    The maximum number of read buffers that may be in use at
- 		one time by operations that access low bandwidth memory in the
- 		device. See DSA spec v1.2 9.2.8 GENCFG on Global Read Buffer Limit.
-+		It's not visible when the device does not support Read Buffer
-+		allocation control.
++err_out_phy_disconnect:
++	phy_disconnect(dev->phydev);
+ err_out_mdio_unregister:
+ 	mdiobus_unregister(lp->mii_bus);
+ err_out_mdio:
+@@ -1186,6 +1188,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
+ 	struct r6040_private *lp = netdev_priv(dev);
  
- What:		/sys/bus/dsa/devices/dsa<m>/cmd_status
- Date:		Aug 28, 2020
-@@ -252,6 +256,8 @@ KernelVersion:	5.17.0
- Contact:	dmaengine@vger.kernel.org
- Description:	Enable the use of global read buffer limit for the group. See DSA
- 		spec v1.2 9.2.18 GRPCFG Use Global Read Buffer Limit.
-+		It's not visible when the device does not support Read Buffer
-+		allocation control.
- 
- What:		/sys/bus/dsa/devices/group<m>.<n>/read_buffers_allowed
- Date:		Dec 10, 2021
-@@ -260,6 +266,8 @@ Contact:	dmaengine@vger.kernel.org
- Description:	Indicates max number of read buffers that may be in use at one time
- 		by all engines in the group. See DSA spec v1.2 9.2.18 GRPCFG Read
- 		Buffers Allowed.
-+		It's not visible when the device does not support Read Buffer
-+		allocation control.
- 
- What:		/sys/bus/dsa/devices/group<m>.<n>/read_buffers_reserved
- Date:		Dec 10, 2021
-@@ -268,6 +276,8 @@ Contact:	dmaengine@vger.kernel.org
- Description:	Indicates the number of Read Buffers reserved for the use of
- 		engines in the group. See DSA spec v1.2 9.2.18 GRPCFG Read Buffers
- 		Reserved.
-+		It's not visible when the device does not support Read Buffer
-+		allocation control.
- 
- What:		/sys/bus/dsa/devices/group<m>.<n>/desc_progress_limit
- Date:		Sept 14, 2022
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 7909767e9836..3229dfc78650 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -528,6 +528,22 @@ static bool idxd_group_attr_progress_limit_invisible(struct attribute *attr,
- 		!idxd->hw.group_cap.progress_limit;
- }
- 
-+static bool idxd_group_attr_read_buffers_invisible(struct attribute *attr,
-+						   struct idxd_device *idxd)
-+{
-+	/*
-+	 * Intel IAA does not support Read Buffer allocation control,
-+	 * make these attributes invisible.
-+	 */
-+	return (attr == &dev_attr_group_use_token_limit.attr ||
-+		attr == &dev_attr_group_use_read_buffer_limit.attr ||
-+		attr == &dev_attr_group_tokens_allowed.attr ||
-+		attr == &dev_attr_group_read_buffers_allowed.attr ||
-+		attr == &dev_attr_group_tokens_reserved.attr ||
-+		attr == &dev_attr_group_read_buffers_reserved.attr) &&
-+		idxd->data->type == IDXD_TYPE_IAX;
-+}
-+
- static umode_t idxd_group_attr_visible(struct kobject *kobj,
- 				       struct attribute *attr, int n)
- {
-@@ -538,6 +554,9 @@ static umode_t idxd_group_attr_visible(struct kobject *kobj,
- 	if (idxd_group_attr_progress_limit_invisible(attr, idxd))
- 		return 0;
- 
-+	if (idxd_group_attr_read_buffers_invisible(attr, idxd))
-+		return 0;
-+
- 	return attr->mode;
- }
- 
-@@ -1552,6 +1571,20 @@ static bool idxd_device_attr_max_batch_size_invisible(struct attribute *attr,
- 	       idxd->data->type == IDXD_TYPE_IAX;
- }
- 
-+static bool idxd_device_attr_read_buffers_invisible(struct attribute *attr,
-+						    struct idxd_device *idxd)
-+{
-+	/*
-+	 * Intel IAA does not support Read Buffer allocation control,
-+	 * make these attributes invisible.
-+	 */
-+	return (attr == &dev_attr_max_tokens.attr ||
-+		attr == &dev_attr_max_read_buffers.attr ||
-+		attr == &dev_attr_token_limit.attr ||
-+		attr == &dev_attr_read_buffer_limit.attr) &&
-+		idxd->data->type == IDXD_TYPE_IAX;
-+}
-+
- static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 					struct attribute *attr, int n)
- {
-@@ -1561,6 +1594,9 @@ static umode_t idxd_device_attr_visible(struct kobject *kobj,
- 	if (idxd_device_attr_max_batch_size_invisible(attr, idxd))
- 		return 0;
- 
-+	if (idxd_device_attr_read_buffers_invisible(attr, idxd))
-+		return 0;
-+
- 	return attr->mode;
- }
- 
+ 	unregister_netdev(dev);
++	phy_disconnect(dev->phydev);
+ 	mdiobus_unregister(lp->mii_bus);
+ 	mdiobus_free(lp->mii_bus);
+ 	netif_napi_del(&lp->napi);
 -- 
 2.35.1
 
