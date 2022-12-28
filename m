@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBF31C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32695C433EF;
-	Wed, 28 Dec 2022 16:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7751C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9DDC433EF;
+	Wed, 28 Dec 2022 16:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244700;
-	bh=qNLVgOCpTLN32DhSLdvueH8qqG8sjzSc6ai5ptu6FbM=;
+	s=korg; t=1672244705;
+	bh=jaxetIDVs7UmDTcGPX9dQhrAn9Cpek00T92R7i8EuQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEMLE8KG2JM9nGOg/u30kuuDoDc3/KYxcKk3FWzJpq9lRs9k6rnArRkpwmv7lXcom
-	 WjpWZbEPby5IMB3xxtPQbbSSg7pfpNGvSpPUyprvM8UVVs1us85zogeGy8TJEFufwB
-	 BsxH9uq/ko5zYZf7SbeLfcguQusrOoJQjGNlwSwE=
+	b=ZYjwDAUwZZSzNPnWqHp0X2we9JxkhDtQIYtvvXNQhyj1VLM7jmV0uPiCayzT4JgMs
+	 1znEd4ByakBjTPNXhvrtwabDoSugZp5wYO/zdVv6DT6ACu0Y5Hac2kWlOATIrzlyZ/
+	 OsiSRHXi7RkmLukjDXY/J+uTyRMa5tQfS2iwSxs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0759/1073] RDMA/siw: Fix pointer cast warning
-Date: Wed, 28 Dec 2022 15:39:07 +0100
-Message-Id: <20221228144348.631979433@linuxfoundation.org>
+Subject: [PATCH 6.0 0751/1073] power: supply: bq25890: Factor out regulator registration code
+Date: Wed, 28 Dec 2022 15:38:59 +0100
+Message-Id: <20221228144348.418522011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,45 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
+[ Upstream commit 5f5c10ecaf3fdeba9b2b0af5301977420c2c4df0 ]
 
-The previous build fix left a remaining issue in configurations with
-64-bit dma_addr_t on 32-bit architectures:
+Pull the regulator registration code into separate function, so it can
+be extended to register more regulators later. Currently this is only
+moving ifdeffery into one place and other preparatory changes. The
+dev_err_probe() output string is changed to explicitly list vbus
+regulator failure, so that once more regulators are registered, it
+would be clear which one failed.
 
-drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
-drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-   32 |                 return virt_to_page((void *)paddr);
-      |                                     ^
-
-Use the same double cast here that the driver uses elsewhere to convert
-between dma_addr_t and void*.
-
-Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
-Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: a7aaa80098d5 ("power: supply: bq25890: Ensure pump_express_work is cancelled on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq25890_charger.c | 51 ++++++++++++++++++--------
+ 1 file changed, 35 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 7d47b521070b..05052b49107f 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
- 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
+diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
+index 852a6fec4339..86228753e804 100644
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1019,6 +1019,36 @@ static const struct regulator_desc bq25890_vbus_desc = {
+ 	.fixed_uV = 5000000,
+ 	.n_voltages = 1,
+ };
++
++static int bq25890_register_regulator(struct bq25890_device *bq)
++{
++	struct bq25890_platform_data *pdata = dev_get_platdata(bq->dev);
++	struct regulator_config cfg = {
++		.dev = bq->dev,
++		.driver_data = bq,
++	};
++	struct regulator_dev *reg;
++
++	if (!IS_ERR_OR_NULL(bq->usb_phy))
++		return 0;
++
++	if (pdata)
++		cfg.init_data = pdata->regulator_init_data;
++
++	reg = devm_regulator_register(bq->dev, &bq25890_vbus_desc, &cfg);
++	if (IS_ERR(reg)) {
++		return dev_err_probe(bq->dev, PTR_ERR(reg),
++				     "registering vbus regulator");
++	}
++
++	return 0;
++}
++#else
++static inline int
++bq25890_register_regulator(struct bq25890_device *bq)
++{
++	return 0;
++}
+ #endif
  
- 	if (paddr)
--		return virt_to_page((void *)paddr);
-+		return virt_to_page((void *)(uintptr_t)paddr);
+ static int bq25890_get_chip_version(struct bq25890_device *bq)
+@@ -1214,27 +1244,16 @@ static int bq25890_probe(struct i2c_client *client,
  
- 	return NULL;
- }
+ 	/* OTG reporting */
+ 	bq->usb_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
++
++	ret = bq25890_register_regulator(bq);
++	if (ret)
++		return ret;
++
+ 	if (!IS_ERR_OR_NULL(bq->usb_phy)) {
+ 		INIT_WORK(&bq->usb_work, bq25890_usb_work);
+ 		bq->usb_nb.notifier_call = bq25890_usb_notifier;
+ 		usb_register_notifier(bq->usb_phy, &bq->usb_nb);
+ 	}
+-#ifdef CONFIG_REGULATOR
+-	else {
+-		struct bq25890_platform_data *pdata = dev_get_platdata(dev);
+-		struct regulator_config cfg = { };
+-		struct regulator_dev *reg;
+-
+-		cfg.dev = dev;
+-		cfg.driver_data = bq;
+-		if (pdata)
+-			cfg.init_data = pdata->regulator_init_data;
+-
+-		reg = devm_regulator_register(dev, &bq25890_vbus_desc, &cfg);
+-		if (IS_ERR(reg))
+-			return dev_err_probe(dev, PTR_ERR(reg), "registering regulator");
+-	}
+-#endif
+ 
+ 	ret = bq25890_power_supply_init(bq);
+ 	if (ret < 0) {
 -- 
 2.35.1
 
