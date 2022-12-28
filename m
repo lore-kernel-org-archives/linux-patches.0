@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538D01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAADC433D2;
-	Wed, 28 Dec 2022 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0237F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC08C433D2;
+	Wed, 28 Dec 2022 15:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242673;
-	bh=i5o0O0w+IiaeCvWsDJUEXBmUaY0CSiK8cY0u6qqBa4U=;
+	s=korg; t=1672242675;
+	bh=c9y2eNvcFRZQVsVq3QfdkWZFT8u9ZLpmFmUm1PcpUaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emcCcZUR8vE1ko64qTIl3MIyHBn6bc2FdsFcBcuogOWxsTPTokwHrrH97IGw0DS5E
-	 HaM0BHizlyaLDsJvcPrPgQA00gYgnXQ9LigMMYWjaMtjuhSh1YnNAyF8YwZv0QcFlc
-	 TGkJDziDa4CdW2NTNdb/9FS7SWCrIDsCksvV7RYE=
+	b=xzV9E/+CkfxAF9dzJBGFSVR1PwAHwmQdsn5/vBY1kvPOapMqml5Avbl0/5uXKPf5U
+	 PJJUsRM+kKvWYCQ57NkLDDS69DuKIquDiEe1O30m/uW2MwApbWUlCVFG6QUS0ByBCH
+	 tEMVVkJdTIFZTfMv2+f1ecNnRAVPvpdFJ7vnx4Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0438/1073] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
-Date: Wed, 28 Dec 2022 15:33:46 +0100
-Message-Id: <20221228144339.923335190@linuxfoundation.org>
+Subject: [PATCH 5.15 632/731] wifi: ath9k: verify the expected usb_endpoints are present
+Date: Wed, 28 Dec 2022 15:42:19 +0100
+Message-Id: <20221228144314.842594537@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
+[ Upstream commit 16ef02bad239f11f322df8425d302be62f0443ce ]
 
-In regulatory_init_db(), when it's going to return a error, reg_pdev
-should be unregistered. When load_builtin_regdb_keys() fails it doesn't
-do it and makes cfg80211 can't be reload with report:
+The bug arises when a USB device claims to be an ATH9K but doesn't
+have the expected endpoints. (In this case there was an interrupt
+endpoint where the driver expected a bulk endpoint.) The kernel
+needs to be able to handle such devices without getting an internal error.
 
-sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
- ...
- <TASK>
- dump_stack_lvl+0x79/0x9b
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x22d/0x290
- kobject_add_internal+0x247/0x800
- kobject_add+0x135/0x1b0
- device_add+0x389/0x1be0
- platform_device_add+0x28f/0x790
- platform_device_register_full+0x376/0x4b0
- regulatory_init+0x9a/0x4b2 [cfg80211]
- cfg80211_init+0x84/0x113 [cfg80211]
- ...
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 3 PID: 500 at drivers/usb/core/urb.c:493 usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
+Modules linked in:
+CPU: 3 PID: 500 Comm: kworker/3:2 Not tainted 5.10.135-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+Workqueue: events request_firmware_work_func
+RIP: 0010:usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
+Call Trace:
+ ath9k_hif_usb_alloc_rx_urbs drivers/net/wireless/ath/ath9k/hif_usb.c:908 [inline]
+ ath9k_hif_usb_alloc_urbs+0x75e/0x1010 drivers/net/wireless/ath/ath9k/hif_usb.c:1019
+ ath9k_hif_usb_dev_init drivers/net/wireless/ath/ath9k/hif_usb.c:1109 [inline]
+ ath9k_hif_usb_firmware_cb+0x142/0x530 drivers/net/wireless/ath/ath9k/hif_usb.c:1242
+ request_firmware_work_func+0x12e/0x240 drivers/base/firmware_loader/main.c:1097
+ process_one_work+0x9af/0x1600 kernel/workqueue.c:2279
+ worker_thread+0x61d/0x12f0 kernel/workqueue.c:2425
+ kthread+0x3b4/0x4a0 kernel/kthread.c:313
+ ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:299
 
-Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221008211532.74583-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index c3d950d29432..4f3f31244e8b 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -4311,8 +4311,10 @@ static int __init regulatory_init_db(void)
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index e5d5b0761881..f938ac1a4abd 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1328,10 +1328,24 @@ static int send_eject_command(struct usb_interface *interface)
+ static int ath9k_hif_usb_probe(struct usb_interface *interface,
+ 			       const struct usb_device_id *id)
+ {
++	struct usb_endpoint_descriptor *bulk_in, *bulk_out, *int_in, *int_out;
+ 	struct usb_device *udev = interface_to_usbdev(interface);
++	struct usb_host_interface *alt;
+ 	struct hif_device_usb *hif_dev;
+ 	int ret = 0;
  
- 	err = load_builtin_regdb_keys();
--	if (err)
-+	if (err) {
-+		platform_device_unregister(reg_pdev);
- 		return err;
++	/* Verify the expected endpoints are present */
++	alt = interface->cur_altsetting;
++	if (usb_find_common_endpoints(alt, &bulk_in, &bulk_out, &int_in, &int_out) < 0 ||
++	    usb_endpoint_num(bulk_in) != USB_WLAN_RX_PIPE ||
++	    usb_endpoint_num(bulk_out) != USB_WLAN_TX_PIPE ||
++	    usb_endpoint_num(int_in) != USB_REG_IN_PIPE ||
++	    usb_endpoint_num(int_out) != USB_REG_OUT_PIPE) {
++		dev_err(&udev->dev,
++			"ath9k_htc: Device endpoint numbers are not the expected ones\n");
++		return -ENODEV;
 +	}
++
+ 	if (id->driver_info == STORAGE_DEVICE)
+ 		return send_eject_command(interface);
  
- 	/* We always try to get an update for the static regdomain */
- 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
 -- 
 2.35.1
 
