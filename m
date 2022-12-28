@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6641F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05A7C433D2;
-	Wed, 28 Dec 2022 15:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EE21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAA5C433D2;
+	Wed, 28 Dec 2022 15:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240676;
-	bh=Ep9axNm+95NhPhmqWzUR3+1g3g79x2VlYPQMtWm/ed4=;
+	s=korg; t=1672240678;
+	bh=81QAogFJBSJQ2+beLOlsgb7+J9qEp69BO+kv3XLG5EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+NyBt6VgAcIcrqpKe8DczTSu2N75VP3pKQHTEmM4MZwlvAvsK0h1UkXv3v6DZ3Sw
-	 rq/37vXlXh4AJobJAPDlT9CmtBGH1j+3q4IlF2avIdTw7BIlCo+l9b0T77qWihDBSd
-	 6wzK6kvXILkpvzpBWhtqghl/TPxm6RqavKIxNBGA=
+	b=HUAF3INH3pVlcW5cghMLDMAaR1xEyVfojw+XosnnKlmN9wtqrSz8a809ei5sPvo4M
+	 BMG56uiHetgBPFMYL5Tgnc+nN5pWX/mxDfHmTwMquONHdQt5pJ9MHxjK+mLt8FMSnp
+	 9YaifZpQVOewDlQAFjubD0N0xlo24FYz/6gvVp6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0154/1146] genirq/irqdesc: Dont try to remove non-existing sysfs files
-Date: Wed, 28 Dec 2022 15:28:13 +0100
-Message-Id: <20221228144334.341853605@linuxfoundation.org>
+Subject: [PATCH 6.0 0190/1073] wifi: mac80211: check link ID in auth/assoc continuation
+Date: Wed, 28 Dec 2022 15:29:38 +0100
+Message-Id: <20221228144333.173266392@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,112 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9049e1ca41983ab773d7ea244bee86d7835ec9f5 ]
+[ Upstream commit 85176a3fcd9748558cff72d4cdff5465b8732282 ]
 
-Fault injection tests trigger warnings like this:
+Ensure that the link ID matches in auth/assoc continuation,
+otherwise we need to reset all the data.
 
-  kernfs: can not remove 'chip_name', no directory
-  WARNING: CPU: 0 PID: 253 at fs/kernfs/dir.c:1616 kernfs_remove_by_name_ns+0xce/0xe0
-  RIP: 0010:kernfs_remove_by_name_ns+0xce/0xe0
-  Call Trace:
-   <TASK>
-   remove_files.isra.1+0x3f/0xb0
-   sysfs_remove_group+0x68/0xe0
-   sysfs_remove_groups+0x41/0x70
-   __kobject_del+0x45/0xc0
-   kobject_del+0x29/0x40
-   free_desc+0x42/0x70
-   irq_free_descs+0x5e/0x90
-
-The reason is that the interrupt descriptor sysfs handling does not roll
-back on a failing kobject_add() during allocation. If the descriptor is
-freed later on, kobject_del() is invoked with a not added kobject resulting
-in the above warnings.
-
-A proper rollback in case of a kobject_add() failure would be the straight
-forward solution. But this is not possible due to the way how interrupt
-descriptor sysfs handling works.
-
-Interrupt descriptors are allocated before sysfs becomes available. So the
-sysfs files for the early allocated descriptors are added later in the boot
-process. At this point there can be nothing useful done about a failing
-kobject_add(). For consistency the interrupt descriptor allocation always
-treats kobject_add() failures as non-critical and just emits a warning.
-
-To solve this problem, keep track in the interrupt descriptor whether
-kobject_add() was successful or not and make the invocation of
-kobject_del() conditional on that.
-
-[ tglx: Massage changelog, comments and use a state bit. ]
-
-Fixes: ecb3f394c5db ("genirq: Expose interrupt information through sysfs")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20221128151612.1786122-1-yangyingliang@huawei.com
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/internals.h |  2 ++
- kernel/irq/irqdesc.c   | 15 +++++++++------
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ net/mac80211/ieee80211_i.h | 1 +
+ net/mac80211/mlme.c        | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index f09c60393e55..5fdc0b557579 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -52,6 +52,7 @@ enum {
-  * IRQS_PENDING			- irq is pending and replayed later
-  * IRQS_SUSPENDED		- irq is suspended
-  * IRQS_NMI			- irq line is used to deliver NMIs
-+ * IRQS_SYSFS			- descriptor has been added to sysfs
-  */
- enum {
- 	IRQS_AUTODETECT		= 0x00000001,
-@@ -64,6 +65,7 @@ enum {
- 	IRQS_SUSPENDED		= 0x00000800,
- 	IRQS_TIMINGS		= 0x00001000,
- 	IRQS_NMI		= 0x00002000,
-+	IRQS_SYSFS		= 0x00004000,
- };
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 9583643b7033..c7dd1f49bb35 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -389,6 +389,7 @@ struct ieee80211_mgd_auth_data {
+ 	bool done, waiting;
+ 	bool peer_confirmed;
+ 	bool timeout_started;
++	int link_id;
  
- #include "debug.h"
-diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
-index a91f9001103c..fd0996274401 100644
---- a/kernel/irq/irqdesc.c
-+++ b/kernel/irq/irqdesc.c
-@@ -288,22 +288,25 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
- 	if (irq_kobj_base) {
- 		/*
- 		 * Continue even in case of failure as this is nothing
--		 * crucial.
-+		 * crucial and failures in the late irq_sysfs_init()
-+		 * cannot be rolled back.
- 		 */
- 		if (kobject_add(&desc->kobj, irq_kobj_base, "%d", irq))
- 			pr_warn("Failed to add kobject for irq %d\n", irq);
-+		else
-+			desc->istate |= IRQS_SYSFS;
- 	}
- }
+ 	u8 ap_addr[ETH_ALEN] __aligned(2);
  
- static void irq_sysfs_del(struct irq_desc *desc)
- {
- 	/*
--	 * If irq_sysfs_init() has not yet been invoked (early boot), then
--	 * irq_kobj_base is NULL and the descriptor was never added.
--	 * kobject_del() complains about a object with no parent, so make
--	 * it conditional.
-+	 * Only invoke kobject_del() when kobject_add() was successfully
-+	 * invoked for the descriptor. This covers both early boot, where
-+	 * sysfs is not initialized yet, and the case of a failed
-+	 * kobject_add() invocation.
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index a21571eb02ec..0a9710747b80 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6582,6 +6582,7 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
+ 	       req->ap_mld_addr ?: req->bss->bssid,
+ 	       ETH_ALEN);
+ 	auth_data->bss = req->bss;
++	auth_data->link_id = req->link_id;
+ 
+ 	if (req->auth_data_len >= 4) {
+ 		if (req->auth_type == NL80211_AUTHTYPE_SAE) {
+@@ -6600,7 +6601,8 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
+ 	 * removal and re-addition of the STA entry in
+ 	 * ieee80211_prep_connection().
  	 */
--	if (irq_kobj_base)
-+	if (desc->istate & IRQS_SYSFS)
- 		kobject_del(&desc->kobj);
- }
+-	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss;
++	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss &&
++		    ifmgd->auth_data->link_id == req->link_id;
+ 
+ 	if (req->ie && req->ie_len) {
+ 		memcpy(&auth_data->data[auth_data->data_len],
+@@ -6937,7 +6939,8 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
+ 
+ 		/* keep sta info, bssid if matching */
+ 		match = ether_addr_equal(ifmgd->auth_data->ap_addr,
+-					 assoc_data->ap_addr);
++					 assoc_data->ap_addr) &&
++			ifmgd->auth_data->link_id == req->link_id;
+ 		ieee80211_destroy_auth_data(sdata, match);
+ 	}
  
 -- 
 2.35.1
