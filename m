@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40C71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAFBC433D2;
-	Wed, 28 Dec 2022 15:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECC11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CFFC433EF;
+	Wed, 28 Dec 2022 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241082;
-	bh=TXJz3PRK6h7jXubjekPXE6EvGPO4NqLFfK6TRIFVvgU=;
+	s=korg; t=1672241085;
+	bh=LQip9IuzdIZujzue4gaF24pufQa/n5D0/CY2SBbqhKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dc7UEkdW59XS2rke5i8VS8BJ839koGKLBkcY70JrV/SK/X/ZkZNHIuMPmuFhN29i
-	 JIdio53Gz/ERKI9dSLAGR8ZbyjZm38AzOcJ0FRUvvb8ASk/LOq5+JhCbCW/9UqO669
-	 5bxzLKHMys8inNSTk6q7p7OI4yyrOoF9cLBr8EAc=
+	b=D4SWib7swCHy6soTsUeVLyw8p+IFODt2gLfxvvqXZwhwnqXO3aJfRQ2YbqGysCB+x
+	 YoaQL0djGXuo5Xw4xavrySos8fgMc2atqMbSCrMJ811vQnNXaCqjj6vpO8Ku9DSWFo
+	 AkG4crQRNHVfb9HE49tbppehG5Bod00XLjcu6hI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 435/731] hwrng: geode - Fix PCI device refcount leak
-Date: Wed, 28 Dec 2022 15:39:02 +0100
-Message-Id: <20221228144309.171292955@linuxfoundation.org>
+Subject: [PATCH 6.1 0203/1146] wifi: ath11k: fix firmware assert during bandwidth change for peer sta
+Date: Wed, 28 Dec 2022 15:29:02 +0100
+Message-Id: <20221228144335.662976759@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,113 +35,235 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit 9f6ec8dc574efb7f4f3d7ee9cd59ae307e78f445 ]
+[ Upstream commit 3ff51d7416ee1ea2d771051a0ffa1ec8be054768 ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+Currently, ath11k sends peer assoc command for each peer to
+firmware when bandwidth changes. Peer assoc command is a
+bulky command and if many clients are connected, this could
+lead to firmware buffer getting overflowed leading to a firmware
+assert.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. We add a new struct
-'amd_geode_priv' to record pointer of the pci_dev and membase, and then
-add missing pci_dev_put() for the normal and error path.
+However, during bandwidth change, only phymode and bandwidth
+also can be updated by WMI set peer param command. This makes
+the overall command light when compared to peer assoc and for
+multi-client cases, firmware buffer overflow also does not
+occur.
 
-Fixes: ef5d862734b8 ("[PATCH] Add Geode HW RNG driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Remove sending peer assoc command during sta bandwidth change
+and instead add sending WMI set peer param command for phymode
+and bandwidth.
+
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.5.0.1-01100-QCAHKSWPL_SILICONZ-1
+
+Fixes: f187fe8e3bc65 ("ath11k: fix firmware crash during channel switch")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221005095430.19890-1-quic_adisi@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 36 +++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.h |   2 +
+ drivers/net/wireless/ath/ath11k/mac.c  | 122 +++++++++++++++++--------
+ 2 files changed, 87 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 138ce434f86b..12fbe8091831 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -51,6 +51,10 @@ static const struct pci_device_id pci_tbl[] = {
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index cf2f52cc4e30..c20e84e031fa 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -505,6 +505,8 @@ struct ath11k_sta {
+ 	u64 ps_start_jiffies;
+ 	u64 ps_total_duration;
+ 	bool peer_current_ps_valid;
++
++	u32 bw_prev;
  };
- MODULE_DEVICE_TABLE(pci, pci_tbl);
  
-+struct amd_geode_priv {
-+	struct pci_dev *pcidev;
-+	void __iomem *membase;
-+};
+ #define ATH11K_MIN_5G_FREQ 4150
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 2d1e3fd9b526..ef7617802491 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -4215,10 +4215,11 @@ static void ath11k_sta_rc_update_wk(struct work_struct *wk)
+ 	const u8 *ht_mcs_mask;
+ 	const u16 *vht_mcs_mask;
+ 	const u16 *he_mcs_mask;
+-	u32 changed, bw, nss, smps;
++	u32 changed, bw, nss, smps, bw_prev;
+ 	int err, num_vht_rates, num_he_rates;
+ 	const struct cfg80211_bitrate_mask *mask;
+ 	struct peer_assoc_params peer_arg;
++	enum wmi_phy_mode peer_phymode;
  
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
-@@ -90,6 +94,7 @@ static int __init geode_rng_init(void)
- 	const struct pci_device_id *ent;
- 	void __iomem *mem;
- 	unsigned long rng_base;
-+	struct amd_geode_priv *priv;
+ 	arsta = container_of(wk, struct ath11k_sta, update_wk);
+ 	sta = container_of((void *)arsta, struct ieee80211_sta, drv_priv);
+@@ -4239,6 +4240,7 @@ static void ath11k_sta_rc_update_wk(struct work_struct *wk)
+ 	arsta->changed = 0;
  
- 	for_each_pci_dev(pdev) {
- 		ent = pci_match_id(pci_tbl, pdev);
-@@ -97,17 +102,26 @@ static int __init geode_rng_init(void)
- 			goto found;
+ 	bw = arsta->bw;
++	bw_prev = arsta->bw_prev;
+ 	nss = arsta->nss;
+ 	smps = arsta->smps;
+ 
+@@ -4252,26 +4254,57 @@ static void ath11k_sta_rc_update_wk(struct work_struct *wk)
+ 			   ath11k_mac_max_he_nss(he_mcs_mask)));
+ 
+ 	if (changed & IEEE80211_RC_BW_CHANGED) {
+-		/* Send peer assoc command before set peer bandwidth param to
+-		 * avoid the mismatch between the peer phymode and the peer
+-		 * bandwidth.
+-		 */
+-		ath11k_peer_assoc_prepare(ar, arvif->vif, sta, &peer_arg, true);
+-
+-		peer_arg.is_assoc = false;
+-		err = ath11k_wmi_send_peer_assoc_cmd(ar, &peer_arg);
+-		if (err) {
+-			ath11k_warn(ar->ab, "failed to send peer assoc for STA %pM vdev %i: %d\n",
+-				    sta->addr, arvif->vdev_id, err);
+-		} else if (wait_for_completion_timeout(&ar->peer_assoc_done, 1 * HZ)) {
++		/* Get the peer phymode */
++		ath11k_peer_assoc_h_phymode(ar, arvif->vif, sta, &peer_arg);
++		peer_phymode = peer_arg.peer_phymode;
++
++		ath11k_dbg(ar->ab, ATH11K_DBG_MAC, "mac update sta %pM peer bw %d phymode %d\n",
++			   sta->addr, bw, peer_phymode);
++
++		if (bw > bw_prev) {
++			/* BW is upgraded. In this case we send WMI_PEER_PHYMODE
++			 * followed by WMI_PEER_CHWIDTH
++			 */
++			ath11k_dbg(ar->ab, ATH11K_DBG_MAC, "mac BW upgrade for sta %pM new BW %d, old BW %d\n",
++				   sta->addr, bw, bw_prev);
++
++			err = ath11k_wmi_set_peer_param(ar, sta->addr, arvif->vdev_id,
++							WMI_PEER_PHYMODE, peer_phymode);
++
++			if (err) {
++				ath11k_warn(ar->ab, "failed to update STA %pM peer phymode %d: %d\n",
++					    sta->addr, peer_phymode, err);
++				goto err_rc_bw_changed;
++			}
++
+ 			err = ath11k_wmi_set_peer_param(ar, sta->addr, arvif->vdev_id,
+ 							WMI_PEER_CHWIDTH, bw);
++
+ 			if (err)
+ 				ath11k_warn(ar->ab, "failed to update STA %pM peer bw %d: %d\n",
+ 					    sta->addr, bw, err);
+ 		} else {
+-			ath11k_warn(ar->ab, "failed to get peer assoc conf event for %pM vdev %i\n",
+-				    sta->addr, arvif->vdev_id);
++			/* BW is downgraded. In this case we send WMI_PEER_CHWIDTH
++			 * followed by WMI_PEER_PHYMODE
++			 */
++			ath11k_dbg(ar->ab, ATH11K_DBG_MAC, "mac BW downgrade for sta %pM new BW %d,old BW %d\n",
++				   sta->addr, bw, bw_prev);
++
++			err = ath11k_wmi_set_peer_param(ar, sta->addr, arvif->vdev_id,
++							WMI_PEER_CHWIDTH, bw);
++
++			if (err) {
++				ath11k_warn(ar->ab, "failed to update STA %pM peer bw %d: %d\n",
++					    sta->addr, bw, err);
++				goto err_rc_bw_changed;
++			}
++
++			err = ath11k_wmi_set_peer_param(ar, sta->addr, arvif->vdev_id,
++							WMI_PEER_PHYMODE, peer_phymode);
++
++			if (err)
++				ath11k_warn(ar->ab, "failed to update STA %pM peer phymode %d: %d\n",
++					    sta->addr, peer_phymode, err);
+ 		}
  	}
- 	/* Device not found. */
--	goto out;
-+	return err;
  
- found:
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
+@@ -4352,6 +4385,7 @@ static void ath11k_sta_rc_update_wk(struct work_struct *wk)
+ 		}
+ 	}
+ 
++err_rc_bw_changed:
+ 	mutex_unlock(&ar->conf_mutex);
+ }
+ 
+@@ -4505,6 +4539,34 @@ static int ath11k_mac_station_add(struct ath11k *ar,
+ 	return ret;
+ }
+ 
++static u32 ath11k_mac_ieee80211_sta_bw_to_wmi(struct ath11k *ar,
++					      struct ieee80211_sta *sta)
++{
++	u32 bw = WMI_PEER_CHWIDTH_20MHZ;
++
++	switch (sta->deflink.bandwidth) {
++	case IEEE80211_STA_RX_BW_20:
++		bw = WMI_PEER_CHWIDTH_20MHZ;
++		break;
++	case IEEE80211_STA_RX_BW_40:
++		bw = WMI_PEER_CHWIDTH_40MHZ;
++		break;
++	case IEEE80211_STA_RX_BW_80:
++		bw = WMI_PEER_CHWIDTH_80MHZ;
++		break;
++	case IEEE80211_STA_RX_BW_160:
++		bw = WMI_PEER_CHWIDTH_160MHZ;
++		break;
++	default:
++		ath11k_warn(ar->ab, "Invalid bandwidth %d for %pM\n",
++			    sta->deflink.bandwidth, sta->addr);
++		bw = WMI_PEER_CHWIDTH_20MHZ;
++		break;
 +	}
 +
- 	rng_base = pci_resource_start(pdev, 0);
- 	if (rng_base == 0)
--		goto out;
-+		goto free_priv;
- 	err = -ENOMEM;
- 	mem = ioremap(rng_base, 0x58);
- 	if (!mem)
--		goto out;
--	geode_rng.priv = (unsigned long)mem;
-+		goto free_priv;
++	return bw;
++}
 +
-+	geode_rng.priv = (unsigned long)priv;
-+	priv->membase = mem;
-+	priv->pcidev = pdev;
+ static int ath11k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 				   struct ieee80211_vif *vif,
+ 				   struct ieee80211_sta *sta,
+@@ -4590,6 +4652,12 @@ static int ath11k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 		if (ret)
+ 			ath11k_warn(ar->ab, "Failed to associate station: %pM\n",
+ 				    sta->addr);
++
++		spin_lock_bh(&ar->data_lock);
++		/* Set arsta bw and prev bw */
++		arsta->bw = ath11k_mac_ieee80211_sta_bw_to_wmi(ar, sta);
++		arsta->bw_prev = arsta->bw;
++		spin_unlock_bh(&ar->data_lock);
+ 	} else if (old_state == IEEE80211_STA_ASSOC &&
+ 		   new_state == IEEE80211_STA_AUTHORIZED) {
+ 		spin_lock_bh(&ar->ab->base_lock);
+@@ -4713,28 +4781,8 @@ static void ath11k_mac_op_sta_rc_update(struct ieee80211_hw *hw,
+ 	spin_lock_bh(&ar->data_lock);
  
- 	pr_info("AMD Geode RNG detected\n");
- 	err = hwrng_register(&geode_rng);
-@@ -116,20 +130,26 @@ static int __init geode_rng_init(void)
- 		       err);
- 		goto err_unmap;
+ 	if (changed & IEEE80211_RC_BW_CHANGED) {
+-		bw = WMI_PEER_CHWIDTH_20MHZ;
+-
+-		switch (sta->deflink.bandwidth) {
+-		case IEEE80211_STA_RX_BW_20:
+-			bw = WMI_PEER_CHWIDTH_20MHZ;
+-			break;
+-		case IEEE80211_STA_RX_BW_40:
+-			bw = WMI_PEER_CHWIDTH_40MHZ;
+-			break;
+-		case IEEE80211_STA_RX_BW_80:
+-			bw = WMI_PEER_CHWIDTH_80MHZ;
+-			break;
+-		case IEEE80211_STA_RX_BW_160:
+-			bw = WMI_PEER_CHWIDTH_160MHZ;
+-			break;
+-		default:
+-			ath11k_warn(ar->ab, "Invalid bandwidth %d in rc update for %pM\n",
+-				    sta->deflink.bandwidth, sta->addr);
+-			bw = WMI_PEER_CHWIDTH_20MHZ;
+-			break;
+-		}
+-
++		bw = ath11k_mac_ieee80211_sta_bw_to_wmi(ar, sta);
++		arsta->bw_prev = arsta->bw;
+ 		arsta->bw = bw;
  	}
--out:
- 	return err;
  
- err_unmap:
- 	iounmap(mem);
--	goto out;
-+free_priv:
-+	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
-+	return err;
- }
- 
- static void __exit geode_rng_exit(void)
- {
--	void __iomem *mem = (void __iomem *)geode_rng.priv;
-+	struct amd_geode_priv *priv;
- 
-+	priv = (struct amd_geode_priv *)geode_rng.priv;
- 	hwrng_unregister(&geode_rng);
--	iounmap(mem);
-+	iounmap(priv->membase);
-+	pci_dev_put(priv->pcidev);
-+	kfree(priv);
- }
- 
- module_init(geode_rng_init);
 -- 
 2.35.1
 
