@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBF71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EEDC433EF;
-	Wed, 28 Dec 2022 15:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263D91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D424C433F0;
+	Wed, 28 Dec 2022 15:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241998;
-	bh=Fo44WJ7OXFGSEe/SuBPMouoCYCjUaUsBgm+pGQrkSEs=;
+	s=korg; t=1672242001;
+	bh=kfUomxZvx7aSsxWwEMkxxJREc8pJr2g6pqkpv1XtR/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lS9g5eBlj6ZOaNc4Scuc08GGjtcQcZktiWVLUCOzZPbwQsI3C89iR8okXalbhckar
-	 WP8zJqnuzG9P4oHfXv3MewUlTO4K+Zu6oCmsIHawKPeSixtF9m4rVpPwiu5s7uwRm5
-	 xR9c1Y4i8xLapRIApTS+5HoHogmAwaaYuh2nX3z8=
+	b=k56pSIKm982BRHHT164D/46RPCLz3mQrytK/kmHRfM9gZ9i7CuEk3adLZRMkHFiTP
+	 Qct87KFGlaE5koLtXIA42OiNzM5P6Y22lNGmQPTa+3TgiR74DUsDxBsozF2pzBrqdh
+	 dU+ThbrApyqAyW+Zp4tQNJ9NAlsOlbWqHJhEa6NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Khazhismel Kumykov <khazhy@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0296/1146] clk: qcom: dispcc-sm6350: Add CLK_OPS_PARENT_ENABLE to pixel&byte src
-Date: Wed, 28 Dec 2022 15:30:35 +0100
-Message-Id: <20221228144338.179036836@linuxfoundation.org>
+Subject: [PATCH 6.1 0314/1146] bfq: fix waker_bfqq inconsistency crash
+Date: Wed, 28 Dec 2022 15:30:53 +0100
+Message-Id: <20221228144338.683212839@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,44 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
+From: Khazhismel Kumykov <khazhy@chromium.org>
 
-[ Upstream commit 92039e8c080c63748f8e133e7cfad33a75daefb6 ]
+[ Upstream commit a1795c2ccb1e4c49220d2a0d381540024d71647c ]
 
-Add the CLK_OPS_PARENT_ENABLE flag to pixel and byte clk srcs to
-ensure set_rate can succeed.
+This fixes crashes in bfq_add_bfqq_busy due to waker_bfqq being NULL,
+but woken_list_node still being hashed. This would happen when
+bfq_init_rq() expects a brand new allocated queue to be returned from
+bfq_get_bfqq_handle_split() and unconditionally updates waker_bfqq
+without resetting woken_list_node. Since we can always return oom_bfqq
+when attempting to allocate, we cannot assume waker_bfqq starts as NULL.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Fixes: 837519775f1d ("clk: qcom: Add display clock controller driver for  SM6350")
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221010155546.73884-1-konrad.dybcio@somainline.org
+Avoid setting woken_bfqq for oom_bfqq entirely, as it's not useful.
+
+Crashes would have a stacktrace like:
+[160595.656560]  bfq_add_bfqq_busy+0x110/0x1ec
+[160595.661142]  bfq_add_request+0x6bc/0x980
+[160595.666602]  bfq_insert_request+0x8ec/0x1240
+[160595.671762]  bfq_insert_requests+0x58/0x9c
+[160595.676420]  blk_mq_sched_insert_request+0x11c/0x198
+[160595.682107]  blk_mq_submit_bio+0x270/0x62c
+[160595.686759]  __submit_bio_noacct_mq+0xec/0x178
+[160595.691926]  submit_bio+0x120/0x184
+[160595.695990]  ext4_mpage_readpages+0x77c/0x7c8
+[160595.701026]  ext4_readpage+0x60/0xb0
+[160595.705158]  filemap_read_page+0x54/0x114
+[160595.711961]  filemap_fault+0x228/0x5f4
+[160595.716272]  do_read_fault+0xe0/0x1f0
+[160595.720487]  do_fault+0x40/0x1c8
+
+Tested by injecting random failures into bfq_get_queue, crashes go away
+completely.
+
+Fixes: 8ef3fc3a043c ("block, bfq: make shared queues inherit wakers")
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221108181030.1611703-1-khazhy@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm6350.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/bfq-iosched.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
-index 0c3c2e26ede9..ea6f54ed846e 100644
---- a/drivers/clk/qcom/dispcc-sm6350.c
-+++ b/drivers/clk/qcom/dispcc-sm6350.c
-@@ -306,7 +306,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
--		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
-+		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -385,7 +385,7 @@ static struct clk_branch disp_cc_mdss_byte0_clk = {
- 				&disp_cc_mdss_byte0_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
-+			.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE | CLK_OPS_PARENT_ENABLE,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 7ea427817f7f..ca04ec868c40 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6784,6 +6784,12 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				bfqq = bfq_get_bfqq_handle_split(bfqd, bic, bio,
+ 								 true, is_sync,
+ 								 NULL);
++				if (unlikely(bfqq == &bfqd->oom_bfqq))
++					bfqq_already_existing = true;
++			} else
++				bfqq_already_existing = true;
++
++			if (!bfqq_already_existing) {
+ 				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
+ 				bfqq->tentative_waker_bfqq = NULL;
+ 
+@@ -6797,8 +6803,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 				if (bfqq->waker_bfqq)
+ 					hlist_add_head(&bfqq->woken_list_node,
+ 						       &bfqq->waker_bfqq->woken_list);
+-			} else
+-				bfqq_already_existing = true;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.35.1
 
