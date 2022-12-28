@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA891C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9B6C433D2;
-	Wed, 28 Dec 2022 16:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFDB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F9C433F0;
+	Wed, 28 Dec 2022 16:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244862;
-	bh=Jq4TugW0ehcG+e8BFXTH5sEl3zKGdIwI+FWeE6BJRys=;
+	s=korg; t=1672244865;
+	bh=9x8K+ZDgF+rIxwLRPezL21+j8zdaxC1xR6bRxeweS7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nn/FEkIx2kF/83ZQDtuznCowqaPDXCK/xyqAuHY9eynosyX6xdXa3XS/nFfzAcwnU
-	 UcaYinaHHXsshRny4ciAEoP/eZcCXFmaFjBqKWdGSV3KRy5yW/LkXiQQaRa3SiQopY
-	 axZZLofN1xNTkcSXYv5wBqY9EkbBqFzQKazv3lSA=
+	b=nzlwAho5HcDhxOJ80+UJBBAHxbNVDv/c+XiwKpC8j42961UiaCCYG8SIjs/YGqlSu
+	 gMPkfLJhytONNaD3KC2XqdNlqleisywh0vglTgwtmts6BWvFSPw22r/BvaRVvmabrO
+	 PfzPGmY0HwQtRYGj8ANLB2KLiYm2Ho19nlUqjpJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0712/1146] serial: sunsab: Fix error handling in sunsab_init()
-Date: Wed, 28 Dec 2022 15:37:31 +0100
-Message-Id: <20221228144349.484302601@linuxfoundation.org>
+Subject: [PATCH 6.0 0786/1073] rtc: cmos: Call rtc_wake_setup() from cmos_do_probe()
+Date: Wed, 28 Dec 2022 15:39:34 +0100
+Message-Id: <20221228144349.361492529@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,44 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 1a6ec673fb627c26e2267ca0a03849f91dbd9b40 ]
+[ Upstream commit 375bbba09692fe4c5218eddee8e312dd733fa846 ]
 
-The sunsab_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-allocated sunsab_ports is leaked.
-Fix by free sunsab_ports and set it to NULL when platform_driver_register()
-failed.
+To reduce code duplication, move the invocation of rtc_wake_setup()
+into cmos_do_probe() and simplify the callers of the latter.
 
-Fixes: c4d37215a824 ("[SERIAL] sunsab: Convert to of_driver framework.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221123061212.52593-1-yuancan@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/2143522.irdbgypaU6@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sunsab.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/tty/serial/sunsab.c b/drivers/tty/serial/sunsab.c
-index 99608b2a2b74..7ace3aa49840 100644
---- a/drivers/tty/serial/sunsab.c
-+++ b/drivers/tty/serial/sunsab.c
-@@ -1133,7 +1133,13 @@ static int __init sunsab_init(void)
- 		}
- 	}
- 
--	return platform_driver_register(&sab_driver);
-+	err = platform_driver_register(&sab_driver);
-+	if (err) {
-+		kfree(sunsab_ports);
-+		sunsab_ports = NULL;
-+	}
-+
-+	return err;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index a84262265d6d..583116994a37 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -744,6 +744,7 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
  }
  
- static void __exit sunsab_exit(void)
++static inline void rtc_wake_setup(struct device *dev);
+ static void cmos_wake_setup(struct device *dev);
+ 
+ #ifdef	CONFIG_PNP
+@@ -938,6 +939,13 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	nvmem_cfg.size = address_space - NVRAM_OFFSET;
+ 	devm_rtc_nvmem_register(cmos_rtc.rtc, &nvmem_cfg);
+ 
++	/*
++	 * Everything has gone well so far, so by default register a handler for
++	 * the ACPI RTC fixed event.
++	 */
++	if (!info)
++		rtc_wake_setup(dev);
++
+ 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
+ 		 !is_valid_irq(rtc_irq) ? "no alarms" :
+ 		 cmos_rtc.mon_alrm ? "alarms up to one year" :
+@@ -1357,7 +1365,7 @@ static void rtc_wake_setup(struct device *dev)
+ 
+ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+-	int irq, ret;
++	int irq;
+ 
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+@@ -1373,13 +1381,7 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ 		irq = pnp_irq(pnp, 0);
+ 	}
+ 
+-	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+-	if (ret)
+-		return ret;
+-
+-	rtc_wake_setup(&pnp->dev);
+-
+-	return 0;
++	return cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+ }
+ 
+ static void cmos_pnp_remove(struct pnp_dev *pnp)
+@@ -1463,7 +1465,7 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
+ static int __init cmos_platform_probe(struct platform_device *pdev)
+ {
+ 	struct resource *resource;
+-	int irq, ret;
++	int irq;
+ 
+ 	cmos_of_init(pdev);
+ 
+@@ -1475,13 +1477,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		irq = -1;
+ 
+-	ret = cmos_do_probe(&pdev->dev, resource, irq);
+-	if (ret)
+-		return ret;
+-
+-	rtc_wake_setup(&pdev->dev);
+-
+-	return 0;
++	return cmos_do_probe(&pdev->dev, resource, irq);
+ }
+ 
+ static int cmos_platform_remove(struct platform_device *pdev)
 -- 
 2.35.1
 
