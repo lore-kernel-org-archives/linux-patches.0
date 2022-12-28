@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CF11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A38C433EF;
-	Wed, 28 Dec 2022 15:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFC11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40100C433EF;
+	Wed, 28 Dec 2022 15:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239635;
-	bh=oGrzDRJuWJ7lCEy8LdesAxZsLWXXEUBvj1lGSG5grow=;
+	s=korg; t=1672239637;
+	bh=Lz+uvXZ196PWYHiwyolfteF20n0gHw9sQ1g3gEIDbAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1pXi3a3LLS/gUHLLki9cd5VGj39WWUlGvZ4XOvsgLmnv19aWTE8fxwbnWxOI30AH
-	 I4ZUE8vXJ82huDXA6ZBjTRQJiwgsWzLxnnkOzCTuOtLAB8Xi/MzHx/1xr38O0MkQjz
-	 9OUzgPKMCGActgw3gG4uZdf6DzI7iFWxPZYOoKdA=
+	b=zV6HYtL/iKiOgmx+OvA7aNKZgRPYElD1YmkzF3mbx5JvfyoTlAurJWLPjxF3wJtFP
+	 5PLXQc4mSVutdQVSJfcc+L1PF13F1YmY+jQNhTVniMFxUaSynUEBy8A6fm7dJ2w0XA
+	 KV+GbLSyg7jN5JZk8xkvtE8iDo5UTARcV6Lf7sBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keerthy <j-keerthy@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Vaishnav Achath <vaishnav.a@ti.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0058/1073] arm64: dts: ti: k3-j721s2: Fix the interrupt ranges property for main & wkup gpio intr
-Date: Wed, 28 Dec 2022 15:27:26 +0100
-Message-Id: <20221228144329.677138179@linuxfoundation.org>
+Subject: [PATCH 5.15 252/731] ASoC: mediatek: mt8173: Fix debugfs registration for components
+Date: Wed, 28 Dec 2022 15:35:59 +0100
+Message-Id: <20221228144303.867251756@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,58 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keerthy <j-keerthy@ti.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b8aa36c22da7d64c5a5d89ccb4a2abb9aeaab2e3 ]
+[ Upstream commit 8c32984bc7da29828260ac514d5d4967f7e8f62d ]
 
-The parent's input irq number is wrongly subtracted with 32 instead of
-using the exact numbers in:
+When registering the mt8173-afe-pcm driver, we are also adding two
+components: one is for the PCM DAIs and one is for the HDMI DAIs, but
+when debugfs is enabled, we're getting the following issue:
 
-https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j721s2/interrupt_cfg.html
+[   17.279176] debugfs: Directory '11220000.audio-controller' with parent 'mtk-rt5650' already present!
+[   17.288345] debugfs: Directory '11220000.audio-controller' with parent 'mtk-rt5650' already present!
 
-The GPIO interrupts are not working because of that. The toggling works
-fine but interrupts are not firing. Fix the parent's input irq that
-specifies the base for parent irq.
+To overcome to that without any potentially big rewrite of this driver,
+similarly to what was done in mt8195-afe-pcm, add a debugfs_prefix to
+the components before actually adding them.
 
-Tested for MAIN_GPIO0_6 interrupt on the j721s2 EVM.
-
-Fixes: b8545f9d3a54 ("arm64: dts: ti: Add initial support for J721S2 SoC")
-Signed-off-by: Keerthy <j-keerthy@ti.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Vaishnav Achath <vaishnav.a@ti.com>
-Link: https://lore.kernel.org/r/20220922072950.9157-1-j-keerthy@ti.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20211111161108.502344-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4cbb264d4e91 ("ASoC: mediatek: mt8173: Enable IRQ when pdata is ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi       | 2 +-
- arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8173/mt8173-afe-pcm.c | 51 ++++++++++++++++++----
+ 1 file changed, 43 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-index 34e7d577ae13..c89f28235812 100644
---- a/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721s2-main.dtsi
-@@ -60,7 +60,7 @@ main_gpio_intr: interrupt-controller@a00000 {
- 		#interrupt-cells = <1>;
- 		ti,sci = <&sms>;
- 		ti,sci-dev-id = <148>;
--		ti,interrupt-ranges = <8 360 56>;
-+		ti,interrupt-ranges = <8 392 56>;
- 	};
+diff --git a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+index 6350390414d4..31494930433f 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
++++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+@@ -1054,6 +1054,7 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	int irq_id;
+ 	struct mtk_base_afe *afe;
+ 	struct mt8173_afe_private *afe_priv;
++	struct snd_soc_component *comp_pcm, *comp_hdmi;
  
- 	main_pmx0: pinctrl@11c000 {
-diff --git a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-index 4d1bfabd1313..f0644851602c 100644
---- a/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721s2-mcu-wakeup.dtsi
-@@ -65,7 +65,7 @@ wkup_gpio_intr: interrupt-controller@42200000 {
- 		#interrupt-cells = <1>;
- 		ti,sci = <&sms>;
- 		ti,sci-dev-id = <125>;
--		ti,interrupt-ranges = <16 928 16>;
-+		ti,interrupt-ranges = <16 960 16>;
- 	};
+ 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(33));
+ 	if (ret)
+@@ -1142,23 +1143,55 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_pm_disable;
  
- 	mcu_conf: syscon@40f00000 {
+-	ret = devm_snd_soc_register_component(&pdev->dev,
+-					 &mt8173_afe_pcm_dai_component,
+-					 mt8173_afe_pcm_dais,
+-					 ARRAY_SIZE(mt8173_afe_pcm_dais));
++	comp_pcm = devm_kzalloc(&pdev->dev, sizeof(*comp_pcm), GFP_KERNEL);
++	if (!comp_pcm) {
++		ret = -ENOMEM;
++		goto err_pm_disable;
++	}
++
++	ret = snd_soc_component_initialize(comp_pcm,
++					   &mt8173_afe_pcm_dai_component,
++					   &pdev->dev);
+ 	if (ret)
+ 		goto err_pm_disable;
+ 
+-	ret = devm_snd_soc_register_component(&pdev->dev,
+-					 &mt8173_afe_hdmi_dai_component,
+-					 mt8173_afe_hdmi_dais,
+-					 ARRAY_SIZE(mt8173_afe_hdmi_dais));
++#ifdef CONFIG_DEBUG_FS
++	comp_pcm->debugfs_prefix = "pcm";
++#endif
++
++	ret = snd_soc_add_component(comp_pcm,
++				    mt8173_afe_pcm_dais,
++				    ARRAY_SIZE(mt8173_afe_pcm_dais));
++	if (ret)
++		goto err_pm_disable;
++
++	comp_hdmi = devm_kzalloc(&pdev->dev, sizeof(*comp_hdmi), GFP_KERNEL);
++	if (!comp_hdmi) {
++		ret = -ENOMEM;
++		goto err_pm_disable;
++	}
++
++	ret = snd_soc_component_initialize(comp_hdmi,
++					   &mt8173_afe_hdmi_dai_component,
++					   &pdev->dev);
+ 	if (ret)
+ 		goto err_pm_disable;
+ 
++#ifdef CONFIG_DEBUG_FS
++	comp_hdmi->debugfs_prefix = "hdmi";
++#endif
++
++	ret = snd_soc_add_component(comp_hdmi,
++				    mt8173_afe_hdmi_dais,
++				    ARRAY_SIZE(mt8173_afe_hdmi_dais));
++	if (ret)
++		goto err_cleanup_components;
++
+ 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
+ 	return 0;
+ 
++err_cleanup_components:
++	snd_soc_unregister_component(&pdev->dev);
+ err_pm_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	return ret;
+@@ -1166,6 +1199,8 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 
+ static int mt8173_afe_pcm_dev_remove(struct platform_device *pdev)
+ {
++	snd_soc_unregister_component(&pdev->dev);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mt8173_afe_runtime_suspend(&pdev->dev);
 -- 
 2.35.1
 
