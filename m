@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DCB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDC6C433D2;
-	Wed, 28 Dec 2022 16:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541631C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09E1C433D2;
+	Wed, 28 Dec 2022 16:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246320;
-	bh=Beho72zEVdcA+Q/Ms4VmRxqwz4TJRsRFyog/dttscfs=;
+	s=korg; t=1672246323;
+	bh=PQTkkO2TEez+Hevl8IFWz7Fj4RaHB0oBJSP09rZ7HLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jo2v4s5FKqdWQMr4fbS0JLbEwhhqYH56/hIkDyf40QL/bxJx1H8dx+ciFO5ZGi9tf
-	 F9YKivqQqfvs/h0Cefo+tQkLjM2P11iBa4cSpL9polQccYPKLYqCcVZxVD1ApS60rI
-	 YbZ2FLcHHQgNPjDJ3BEm2X6j29Iw5bQzsrVxRMqM=
+	b=YAsIN9iThNwJKaxkGFQpJV1pJ32H6v0ITqAmwmCTU9au1Gsw/viYgq3ezJncoW63v
+	 QOxw2lXJ8Mgke+s/0QrSzv89aCyPwk3EoarDK3854qtXNmyev4rjUo8U/IcLnj8YM+
+	 KiV+NFcH1pGObec4CdL363mEDOffDNUR+xefhu4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.0 1049/1073] iio: adc128s052: add proper .data members in adc128_of_match table
-Date: Wed, 28 Dec 2022 15:43:57 +0100
-Message-Id: <20221228144356.706129151@linuxfoundation.org>
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1021/1146] ethtool: avoiding integer overflow in ethtool_phys_id()
+Date: Wed, 28 Dec 2022 15:42:40 +0100
+Message-Id: <20221228144358.102950763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-commit e2af60f5900c6ade53477b494ffb54690eee11f5 upstream.
+[ Upstream commit 64a8f8f7127da228d59a39e2c5e75f86590f90b4 ]
 
-Prior to commit bd5d54e4d49d ("iio: adc128s052: add ACPI _HID
-AANT1280"), the driver unconditionally used spi_get_device_id() to get
-the index into the adc128_config array.
+The value of an arithmetic expression "n * id.data" is subject
+to possible overflow due to a failure to cast operands to a larger data
+type before performing arithmetic. Used macro for multiplication instead
+operator for avoiding overflow.
 
-However, with that commit, OF-based boards now incorrectly treat all
-supported sensors as if they are an adc128s052, because all the .data
-members of the adc128_of_match table are implicitly 0. Our board,
-which has an adc122s021, thus exposes 8 channels whereas it really
-only has two.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: bd5d54e4d49d ("iio: adc128s052: add ACPI _HID AANT1280")
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221115132324.1078169-1-linux@rasmusvillemoes.dk
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221122122901.22294-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti-adc128s052.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/ethtool/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-adc128s052.c
-+++ b/drivers/iio/adc/ti-adc128s052.c
-@@ -181,13 +181,13 @@ static int adc128_probe(struct spi_devic
- }
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 57e7238a4136..81fe2422fe58 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -2008,7 +2008,8 @@ static int ethtool_phys_id(struct net_device *dev, void __user *useraddr)
+ 	} else {
+ 		/* Driver expects to be called at twice the frequency in rc */
+ 		int n = rc * 2, interval = HZ / n;
+-		u64 count = n * id.data, i = 0;
++		u64 count = mul_u32_u32(n, id.data);
++		u64 i = 0;
  
- static const struct of_device_id adc128_of_match[] = {
--	{ .compatible = "ti,adc128s052", },
--	{ .compatible = "ti,adc122s021", },
--	{ .compatible = "ti,adc122s051", },
--	{ .compatible = "ti,adc122s101", },
--	{ .compatible = "ti,adc124s021", },
--	{ .compatible = "ti,adc124s051", },
--	{ .compatible = "ti,adc124s101", },
-+	{ .compatible = "ti,adc128s052", .data = (void*)0L, },
-+	{ .compatible = "ti,adc122s021", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s051", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s101", .data = (void*)1L, },
-+	{ .compatible = "ti,adc124s021", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s051", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s101", .data = (void*)2L, },
- 	{ /* sentinel */ },
- };
- MODULE_DEVICE_TABLE(of, adc128_of_match);
+ 		do {
+ 			rtnl_lock();
+-- 
+2.35.1
+
 
 
