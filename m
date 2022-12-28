@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941C31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB6DC433D2;
-	Wed, 28 Dec 2022 15:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB601863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A60C433D2;
+	Wed, 28 Dec 2022 15:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239957;
-	bh=vfGrz+FCW62brEmNCAg84GXIKRi4XfavBgspuACcLFY=;
+	s=korg; t=1672239960;
+	bh=f8Zu+p/3nMcnJD5egr3E6jd9v0jIwhe1mg1Gwj1GyBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nn2ZyKibA8BENu8R2oyDcCyxM2stGxTA7Dv2pF3JoIAJda/GNgoJ+DN988gRmxfSr
-	 JkKD6mqOedVswfjcN/U5dAgr0IeZevgqH6CRECReLF6oeQvbk0FV/lDZMOO+jEf8Bj
-	 53OAphcc/iLrjQPPnxHDnFzq9Mw0fSgun7OuxCzU=
+	b=dIrq2iE90f4TwIQYvEaViD1I45YweX5lpSCBDPZCHAynFSjE+yYqdMftL9w9wpH9R
+	 fBtB+xj9Z/cuPxNWK86eQE7JJCHIWG7BCryt8rfBQP6x1Iq7zco3i8ianHGX0yo2Cl
+	 2G8hR8N5wIw1Je9vN+OzEwjQDFsEau7h3WGYrcQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0098/1073] sched/core: Introduce sched_asym_cpucap_active()
-Date: Wed, 28 Dec 2022 15:28:06 +0100
-Message-Id: <20221228144330.711649007@linuxfoundation.org>
+Subject: [PATCH 5.15 290/731] riscv, bpf: Emit fixed-length instructions for BPF_PSEUDO_FUNC
+Date: Wed, 28 Dec 2022 15:36:37 +0100
+Message-Id: <20221228144304.976499783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 740cf8a760b73e8375bfb4bedcbe9746183350f9 ]
+[ Upstream commit b54b6003612a376e7be32cbc5c1af3754bbbbb3d ]
 
-Create an inline helper for conditional code to be only executed on
-asymmetric CPU capacity systems. This makes these (currently ~10 and
-future) conditions a lot more readable.
+For BPF_PSEUDO_FUNC instruction, verifier will refill imm with
+correct addresses of bpf_calls and then run last pass of JIT.
+Since the emit_imm of RV64 is variable-length, which will emit
+appropriate length instructions accorroding to the imm, it may
+broke ctx->offset, and lead to unpredictable problem, such as
+inaccurate jump. So let's fix it with fixed-length instructions.
 
-Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20220729111305.1275158-2-dietmar.eggemann@arm.com
-Stable-dep-of: a2e7f03ed28f ("sched/uclamp: Make asym_fits_capacity() use util_fits_cpu()")
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Suggested-by: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Acked-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/bpf/20221206091410.1584784-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cpudeadline.c | 2 +-
- kernel/sched/deadline.c    | 4 ++--
- kernel/sched/fair.c        | 8 ++++----
- kernel/sched/rt.c          | 4 ++--
- kernel/sched/sched.h       | 5 +++++
- 5 files changed, 14 insertions(+), 9 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
-index 02d970a879ed..57c92d751bcd 100644
---- a/kernel/sched/cpudeadline.c
-+++ b/kernel/sched/cpudeadline.c
-@@ -123,7 +123,7 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
- 		unsigned long cap, max_cap = 0;
- 		int cpu, max_cpu = -1;
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 3af4131c22c7..2e3f1a626a3a 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -120,6 +120,25 @@ static bool in_auipc_jalr_range(s64 val)
+ 		val < ((1L << 31) - (1L << 11));
+ }
  
--		if (!static_branch_unlikely(&sched_asym_cpucapacity))
-+		if (!sched_asym_cpucap_active())
- 			return 1;
- 
- 		/* Ensure the capacity of the CPUs fits the task. */
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0ab79d819a0d..8bebc36a1b71 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -144,7 +144,7 @@ static inline unsigned long __dl_bw_capacity(int i)
-  */
- static inline unsigned long dl_bw_capacity(int i)
- {
--	if (!static_branch_unlikely(&sched_asym_cpucapacity) &&
-+	if (!sched_asym_cpucap_active() &&
- 	    capacity_orig_of(i) == SCHED_CAPACITY_SCALE) {
- 		return dl_bw_cpus(i) << SCHED_CAPACITY_SHIFT;
- 	} else {
-@@ -1849,7 +1849,7 @@ select_task_rq_dl(struct task_struct *p, int cpu, int flags)
- 	 * Take the capacity of the CPU into account to
- 	 * ensure it fits the requirement of the task.
- 	 */
--	if (static_branch_unlikely(&sched_asym_cpucapacity))
-+	if (sched_asym_cpucap_active())
- 		select_rq |= !dl_task_fits_capacity(p, cpu);
- 
- 	if (select_rq) {
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 892ea83864a7..1fe3f3b96251 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4387,7 +4387,7 @@ static inline int task_fits_cpu(struct task_struct *p, int cpu)
- 
- static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
- {
--	if (!static_branch_unlikely(&sched_asym_cpucapacity))
-+	if (!sched_asym_cpucap_active())
- 		return;
- 
- 	if (!p || p->nr_cpus_allowed == 1) {
-@@ -6633,7 +6633,7 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- 
- static inline bool asym_fits_capacity(unsigned long task_util, int cpu)
- {
--	if (static_branch_unlikely(&sched_asym_cpucapacity))
-+	if (sched_asym_cpucap_active())
- 		return fits_capacity(task_util, capacity_of(cpu));
- 
- 	return true;
-@@ -6653,7 +6653,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	 * On asymmetric system, update task utilization because we will check
- 	 * that the task fits with cpu's capacity.
- 	 */
--	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
-+	if (sched_asym_cpucap_active()) {
- 		sync_entity_load_avg(&p->se);
- 		task_util = uclamp_task_util(p);
- 	}
-@@ -6707,7 +6707,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	 * For asymmetric CPU capacity systems, our domain of interest is
- 	 * sd_asym_cpucapacity rather than sd_llc.
- 	 */
--	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
-+	if (sched_asym_cpucap_active()) {
- 		sd = rcu_dereference(per_cpu(sd_asym_cpucapacity, target));
- 		/*
- 		 * On an asymmetric CPU capacity system where an exclusive
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 55f39c8f4203..054b6711e961 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -509,7 +509,7 @@ static inline bool rt_task_fits_capacity(struct task_struct *p, int cpu)
- 	unsigned int cpu_cap;
- 
- 	/* Only heterogeneous systems can benefit from this check */
--	if (!static_branch_unlikely(&sched_asym_cpucapacity))
-+	if (!sched_asym_cpucap_active())
- 		return true;
- 
- 	min_cap = uclamp_eff_value(p, UCLAMP_MIN);
-@@ -1897,7 +1897,7 @@ static int find_lowest_rq(struct task_struct *task)
- 	 * If we're on asym system ensure we consider the different capacities
- 	 * of the CPUs when searching for the lowest_mask.
- 	 */
--	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
-+	if (sched_asym_cpucap_active()) {
- 
- 		ret = cpupri_find_fitness(&task_rq(task)->rd->cpupri,
- 					  task, lowest_mask,
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 0dfcd12e184a..2fcb7eb56c01 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1815,6 +1815,11 @@ DECLARE_PER_CPU(struct sched_domain __rcu *, sd_asym_packing);
- DECLARE_PER_CPU(struct sched_domain __rcu *, sd_asym_cpucapacity);
- extern struct static_key_false sched_asym_cpucapacity;
- 
-+static __always_inline bool sched_asym_cpucap_active(void)
++/* Emit fixed-length instructions for address */
++static int emit_addr(u8 rd, u64 addr, bool extra_pass, struct rv_jit_context *ctx)
 +{
-+	return static_branch_unlikely(&sched_asym_cpucapacity);
++	u64 ip = (u64)(ctx->insns + ctx->ninsns);
++	s64 off = addr - ip;
++	s64 upper = (off + (1 << 11)) >> 12;
++	s64 lower = off & 0xfff;
++
++	if (extra_pass && !in_auipc_jalr_range(off)) {
++		pr_err("bpf-jit: target offset 0x%llx is out of range\n", off);
++		return -ERANGE;
++	}
++
++	emit(rv_auipc(rd, upper), ctx);
++	emit(rv_addi(rd, rd, lower), ctx);
++	return 0;
 +}
 +
- struct sched_group_capacity {
- 	atomic_t		ref;
- 	/*
++/* Emit variable-length instructions for 32-bit and 64-bit imm */
+ static void emit_imm(u8 rd, s64 val, struct rv_jit_context *ctx)
+ {
+ 	/* Note that the immediate from the add is sign-extended,
+@@ -887,7 +906,15 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 		u64 imm64;
+ 
+ 		imm64 = (u64)insn1.imm << 32 | (u32)imm;
+-		emit_imm(rd, imm64, ctx);
++		if (bpf_pseudo_func(insn)) {
++			/* fixed-length insns for extra jit pass */
++			ret = emit_addr(rd, imm64, extra_pass, ctx);
++			if (ret)
++				return ret;
++		} else {
++			emit_imm(rd, imm64, ctx);
++		}
++
+ 		return 1;
+ 	}
+ 
 -- 
 2.35.1
 
