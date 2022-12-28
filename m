@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693B81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05D1C433EF;
-	Wed, 28 Dec 2022 15:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9821863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFDBC433D2;
+	Wed, 28 Dec 2022 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241344;
-	bh=it1IqFbAMGrQR55YRJyMG3htlj7dBdDxPU83/mm0UFI=;
+	s=korg; t=1672241347;
+	bh=PILbjRp90qWjoTB2Lopo8KcaS9aNu38DFlN44/05uKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLUxPtND0hlRQyKTPf5r8v2LUr0QTs7CfBoWZWikeoEfsYIoUU8hz7Q5pfiaQmMUg
-	 iLYb1JKtv9Rf+2j9wnZtRBZg+ryXBYJWdG5CSLuYi+3BbZm9mDB0sAoMnP2r42kRW8
-	 NhbcCfdrcPK6nxqnr9gtGC18nYPOK4M4s1PRac2U=
+	b=JOSyQWF/jG+6H85iMgzhN7Xz7LU+04p1rmoqnyNuw/VS1mpcGGILXbHgM5D5lp+QG
+	 h7jnVQHoUJmzR2rJxnF+RW1bhuPGZoVQkiKjZ6ImrADsFCNdgOeH3X8l1R4ewIzRXf
+	 unF2/b1NiomOy6mVkGUfY908lLOY5Rnxy9PMrqTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0235/1146] media: mediatek: vcodec: fix h264 cavlc bitstream fail
-Date: Wed, 28 Dec 2022 15:29:34 +0100
-Message-Id: <20221228144336.521581223@linuxfoundation.org>
+Subject: [PATCH 6.0 0269/1073] bpf: Fix slot type check in check_stack_write_var_off
+Date: Wed, 28 Dec 2022 15:30:57 +0100
+Message-Id: <20221228144335.325344950@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,81 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d555409dd1b7cc9e7e5b9e2924c0ef4bf23f6c9b ]
+[ Upstream commit f5e477a861e4a20d8a1c5f7a245f3a3c3c376b03 ]
 
-Some cavlc bistream will decode fail when the frame size is less than
-20 bytes. Need to add pending data at the end of the bitstream.
+For the case where allow_ptr_leaks is false, code is checking whether
+slot type is STACK_INVALID and STACK_SPILL and rejecting other cases.
+This is a consequence of incorrectly checking for register type instead
+of the slot type (NOT_INIT and SCALAR_VALUE respectively). Fix the
+check.
 
-For the minimum size of mapped memory is 256 bytes(16x16), adding four
-bytes data won't lead to access unknown virtual memory.
-
-Fixes: 59fba9eed5a7 ("media: mediatek: vcodec: support stateless H.264 decoding for mt8192")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20221103191013.1236066-5-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vcodec/vdec/vdec_h264_req_multi_if.c      | 32 +++++++++++++++++--
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-index 4cc92700692b..18e048755d11 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-@@ -539,6 +539,29 @@ static int vdec_h264_slice_core_decode(struct vdec_lat_buf *lat_buf)
- 	return 0;
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 65c627571e33..95479562a64a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3169,14 +3169,17 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
+ 		stype = &state->stack[spi].slot_type[slot % BPF_REG_SIZE];
+ 		mark_stack_slot_scratched(env, spi);
  
-+static void vdec_h264_insert_startcode(struct mtk_vcodec_dev *vcodec_dev, unsigned char *buf,
-+				       size_t *bs_size, struct mtk_h264_pps_param *pps)
-+{
-+	struct device *dev = &vcodec_dev->plat_dev->dev;
-+
-+	/* Need to add pending data at the end of bitstream when bs_sz is small than
-+	 * 20 bytes for cavlc bitstream, or lat will decode fail. This pending data is
-+	 * useful for mt8192 and mt8195 platform.
-+	 *
-+	 * cavlc bitstream when entropy_coding_mode_flag is false.
-+	 */
-+	if (pps->entropy_coding_mode_flag || *bs_size > 20 ||
-+	    !(of_device_is_compatible(dev->of_node, "mediatek,mt8192-vcodec-dec") ||
-+	    of_device_is_compatible(dev->of_node, "mediatek,mt8195-vcodec-dec")))
-+		return;
-+
-+	buf[*bs_size] = 0;
-+	buf[*bs_size + 1] = 0;
-+	buf[*bs_size + 2] = 1;
-+	buf[*bs_size + 3] = 0xff;
-+	(*bs_size) += 4;
-+}
-+
- static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 				      struct vdec_fb *fb, bool *res_chg)
- {
-@@ -582,9 +605,6 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	}
- 
- 	inst->vsi->dec.nal_info = buf[nal_start_idx];
--	inst->vsi->dec.bs_buf_addr = (u64)bs->dma_addr;
--	inst->vsi->dec.bs_buf_size = bs->size;
--
- 	lat_buf->src_buf_req = src_buf_info->m2m_buf.vb.vb2_buf.req_obj.req;
- 	v4l2_m2m_buf_copy_metadata(&src_buf_info->m2m_buf.vb, &lat_buf->ts_info, true);
- 
-@@ -592,6 +612,12 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	if (err)
- 		goto err_free_fb_out;
- 
-+	vdec_h264_insert_startcode(inst->ctx->dev, buf, &bs->size,
-+				   &share_info->h264_slice_params.pps);
-+
-+	inst->vsi->dec.bs_buf_addr = (uint64_t)bs->dma_addr;
-+	inst->vsi->dec.bs_buf_size = bs->size;
-+
- 	*res_chg = inst->resolution_changed;
- 	if (inst->resolution_changed) {
- 		mtk_vcodec_debug(inst, "- resolution changed -");
+-		if (!env->allow_ptr_leaks
+-				&& *stype != NOT_INIT
+-				&& *stype != SCALAR_VALUE) {
+-			/* Reject the write if there's are spilled pointers in
+-			 * range. If we didn't reject here, the ptr status
+-			 * would be erased below (even though not all slots are
+-			 * actually overwritten), possibly opening the door to
+-			 * leaks.
++		if (!env->allow_ptr_leaks && *stype != STACK_MISC && *stype != STACK_ZERO) {
++			/* Reject the write if range we may write to has not
++			 * been initialized beforehand. If we didn't reject
++			 * here, the ptr status would be erased below (even
++			 * though not all slots are actually overwritten),
++			 * possibly opening the door to leaks.
++			 *
++			 * We do however catch STACK_INVALID case below, and
++			 * only allow reading possibly uninitialized memory
++			 * later for CAP_PERFMON, as the write may not happen to
++			 * that slot.
+ 			 */
+ 			verbose(env, "spilled ptr in range of var-offset stack write; insn %d, ptr off: %d",
+ 				insn_idx, i);
 -- 
 2.35.1
 
