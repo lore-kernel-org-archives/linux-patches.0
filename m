@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4151C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69CDC433D2;
-	Wed, 28 Dec 2022 16:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA1E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DF2C433EF;
+	Wed, 28 Dec 2022 16:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243831;
-	bh=bT5Fk04Bkb07fBBG+fbMfqZeGA2yX7czI1av1s6bY8s=;
+	s=korg; t=1672243833;
+	bh=oTgVX5QI6QmTMaNlU2Rhod3duPRSKyCResDUBIkwI5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv0XuBE6DMhvJt7jVjdbx4no5hAMmDm0DG8B68UeRjs21g+qWjGLntyJNWMl00+kn
-	 CqZRV9uoYEbzDqyWxY+IK0BXOeRsck7sTZ3CS5YVkl0UfH/np+lCc5Ri+OnQzVlw1+
-	 Vs40mMO3FyZW0823DHdoUZh2mu2ZzVjM+BQF58+I=
+	b=aI98ToN1+GbTPfN9fWdtKm4+WtZuL4XYE44KfHALjkd2o5VBsd7LwgunuRrJdEaAy
+	 B+LRxsQGTttYD11+176VQw8nfmrdO6sWDEBfbZQmnk4ixkFwNnKFoBCgLBaPuqqRxR
+	 0RTqegDvY6r8JneM/VDKymR9ew2oWwssgQ8xqipw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0563/1146] Bluetooth: hci_h5: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:02 +0100
-Message-Id: <20221228144345.460313388@linuxfoundation.org>
+Subject: [PATCH 6.0 0596/1073] RDMA/irdma: Do not request 2-level PBLEs for CQ alloc
+Date: Wed, 28 Dec 2022 15:36:24 +0100
+Message-Id: <20221228144344.235813586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit 383630cc6758d619874c2e8bb2f68a61f3f9ef6e ]
+[ Upstream commit 8f7e2daa6336f9f4b6f8a4715a809674606df16b ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+When allocating PBLE's for a large CQ, it is possible
+that a 2-level PBLE is returned which would cause the
+CQ allocation to fail since 1-level is assumed and checked for.
+Fix this by requesting a level one PBLE only.
 
-Fixes: 43eb12d78960 ("Bluetooth: Fix/implement Three-wire reliable packet sending")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20221115011701.1379-4-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_h5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
-index c5a0409ef84f..6455bc4fb5bb 100644
---- a/drivers/bluetooth/hci_h5.c
-+++ b/drivers/bluetooth/hci_h5.c
-@@ -313,7 +313,7 @@ static void h5_pkt_cull(struct h5 *h5)
- 			break;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 01d0dc4b5649..dc3f5f3fee90 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2329,9 +2329,10 @@ static bool irdma_check_mr_contiguous(struct irdma_pble_alloc *palloc,
+  * @rf: RDMA PCI function
+  * @iwmr: mr pointer for this memory registration
+  * @use_pbles: flag if to use pble's
++ * @lvl_1_only: request only level 1 pble if true
+  */
+ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+-			     bool use_pbles)
++			     bool use_pbles, bool lvl_1_only)
+ {
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+ 	struct irdma_pble_alloc *palloc = &iwpbl->pble_alloc;
+@@ -2342,7 +2343,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
  
- 		__skb_unlink(skb, &h5->unack);
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 	}
+ 	if (use_pbles) {
+ 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
+-					false);
++					lvl_1_only);
+ 		if (status)
+ 			return status;
  
- 	if (skb_queue_empty(&h5->unack))
+@@ -2385,16 +2386,10 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
+ 	bool ret = true;
+ 
+ 	pg_size = iwmr->page_size;
+-	err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles);
++	err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles, true);
+ 	if (err)
+ 		return err;
+ 
+-	if (use_pbles && palloc->level != PBLE_LEVEL_1) {
+-		irdma_free_pble(iwdev->rf->pble_rsrc, palloc);
+-		iwpbl->pbl_allocated = false;
+-		return -ENOMEM;
+-	}
+-
+ 	if (use_pbles)
+ 		arr = palloc->level1.addr;
+ 
+@@ -2870,7 +2865,7 @@ static struct ib_mr *irdma_reg_user_mr(struct ib_pd *pd, u64 start, u64 len,
+ 	case IRDMA_MEMREG_TYPE_MEM:
+ 		use_pbles = (iwmr->page_cnt != 1);
+ 
+-		err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles);
++		err = irdma_setup_pbles(iwdev->rf, iwmr, use_pbles, false);
+ 		if (err)
+ 			goto error;
+ 
 -- 
 2.35.1
 
