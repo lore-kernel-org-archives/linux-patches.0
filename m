@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DC41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15062C433EF;
-	Wed, 28 Dec 2022 15:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFE41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46B2C433EF;
+	Wed, 28 Dec 2022 15:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241199;
-	bh=K3Tx9dtdTTz4UNH41utkRBHMBa5qQJD4JlT8Zb95Bew=;
+	s=korg; t=1672241202;
+	bh=M0J41bSkeOAg4rSF4EUBRFXqZlA0dwIlo38DwpONPlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJx9y9cVwUrGQzuuPF0Op1EUGT3mVmCMm4tes5TEvmKGO1/b+1c+1VvjrSQf3sAND
-	 u+xIfwHwStTLpaR1gSy/kgRTmgXb5a99Sj3F/fNtu0+ne2Ko6bQHQtQrv4laTQP/h1
-	 tW0QJtIJv0MBkym48fee0eZh2YE/1+Zk0p+O+Z9g=
+	b=dmKMK8avoyDvxMPHwbjj0jn4PwIR6oqttFBsCnWcYGM403qM/ebADUNc81yykDAyD
+	 djd8v4Yftb+ZhRA3vaGajCP/rSifuToTafha+4sMF1k22rzXxJu41xwufDVcgSbdlX
+	 xtN1ANHdlhMsoMzrVmVMeTGUNLLuuqrqNC4XLBys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 452/731] extcon: usbc-tusb320: Add support for TUSB320L
-Date: Wed, 28 Dec 2022 15:39:19 +0100
-Message-Id: <20221228144309.656698419@linuxfoundation.org>
+Subject: [PATCH 5.15 443/731] uio: uio_dmem_genirq: Fix missing unlock in irq configuration
+Date: Wed, 28 Dec 2022 15:39:10 +0100
+Message-Id: <20221228144309.398717250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,183 +34,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit ce0320bd3872038569be360870e2d5251b975692 ]
+[ Upstream commit 9de255c461d1b3f0242b3ad1450c3323a3e00b34 ]
 
-TUSB320L is a newer chip with additional features, and it has additional steps
-in its mode changing sequence:
- - Disable CC state machine,
- - Write to mode register,
- - Wait for 5 ms,
- - Re-enable CC state machine.
-It also has an additional register that a revision number can be read from.
+Commit b74351287d4b ("uio: fix a sleep-in-atomic-context bug in
+uio_dmem_genirq_irqcontrol()") started calling disable_irq() without
+holding the spinlock because it can sleep. However, that fix introduced
+another bug: if interrupt is already disabled and a new disable request
+comes in, then the spinlock is not unlocked:
 
-Add support for the mode changing sequence, and read the revision number during
-probe and print it as info.
+root@localhost:~# printf '\x00\x00\x00\x00' > /dev/uio0
+root@localhost:~# printf '\x00\x00\x00\x00' > /dev/uio0
+root@localhost:~# [   14.851538] BUG: scheduling while atomic: bash/223/0x00000002
+[   14.851991] Modules linked in: uio_dmem_genirq uio myfpga(OE) bochs drm_vram_helper drm_ttm_helper ttm drm_kms_helper drm snd_pcm ppdev joydev psmouse snd_timer snd e1000fb_sys_fops syscopyarea parport sysfillrect soundcore sysimgblt input_leds pcspkr i2c_piix4 serio_raw floppy evbug qemu_fw_cfg mac_hid pata_acpi ip_tables x_tables autofs4 [last unloaded: parport_pc]
+[   14.854206] CPU: 0 PID: 223 Comm: bash Tainted: G           OE      6.0.0-rc7 #21
+[   14.854786] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[   14.855664] Call Trace:
+[   14.855861]  <TASK>
+[   14.856025]  dump_stack_lvl+0x4d/0x67
+[   14.856325]  dump_stack+0x14/0x1a
+[   14.856583]  __schedule_bug.cold+0x4b/0x5c
+[   14.856915]  __schedule+0xe81/0x13d0
+[   14.857199]  ? idr_find+0x13/0x20
+[   14.857456]  ? get_work_pool+0x2d/0x50
+[   14.857756]  ? __flush_work+0x233/0x280
+[   14.858068]  ? __schedule+0xa95/0x13d0
+[   14.858307]  ? idr_find+0x13/0x20
+[   14.858519]  ? get_work_pool+0x2d/0x50
+[   14.858798]  schedule+0x6c/0x100
+[   14.859009]  schedule_hrtimeout_range_clock+0xff/0x110
+[   14.859335]  ? tty_write_room+0x1f/0x30
+[   14.859598]  ? n_tty_poll+0x1ec/0x220
+[   14.859830]  ? tty_ldisc_deref+0x1a/0x20
+[   14.860090]  schedule_hrtimeout_range+0x17/0x20
+[   14.860373]  do_select+0x596/0x840
+[   14.860627]  ? __kernel_text_address+0x16/0x50
+[   14.860954]  ? poll_freewait+0xb0/0xb0
+[   14.861235]  ? poll_freewait+0xb0/0xb0
+[   14.861517]  ? rpm_resume+0x49d/0x780
+[   14.861798]  ? common_interrupt+0x59/0xa0
+[   14.862127]  ? asm_common_interrupt+0x2b/0x40
+[   14.862511]  ? __uart_start.isra.0+0x61/0x70
+[   14.862902]  ? __check_object_size+0x61/0x280
+[   14.863255]  core_sys_select+0x1c6/0x400
+[   14.863575]  ? vfs_write+0x1c9/0x3d0
+[   14.863853]  ? vfs_write+0x1c9/0x3d0
+[   14.864121]  ? _copy_from_user+0x45/0x70
+[   14.864526]  do_pselect.constprop.0+0xb3/0xf0
+[   14.864893]  ? do_syscall_64+0x6d/0x90
+[   14.865228]  ? do_syscall_64+0x6d/0x90
+[   14.865556]  __x64_sys_pselect6+0x76/0xa0
+[   14.865906]  do_syscall_64+0x60/0x90
+[   14.866214]  ? syscall_exit_to_user_mode+0x2a/0x50
+[   14.866640]  ? do_syscall_64+0x6d/0x90
+[   14.866972]  ? do_syscall_64+0x6d/0x90
+[   14.867286]  ? do_syscall_64+0x6d/0x90
+[   14.867626]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[...] stripped
+[   14.872959]  </TASK>
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
+('myfpga' is a simple 'uio_dmem_genirq' driver I wrote to test this)
+
+The implementation of "uio_dmem_genirq" was based on "uio_pdrv_genirq" and
+it is used in a similar manner to the "uio_pdrv_genirq" driver with respect
+to interrupt configuration and handling. At the time "uio_dmem_genirq" was
+introduced, both had the same implementation of the 'uio_info' handlers
+irqcontrol() and handler(). Then commit 34cb27528398 ("UIO: Fix concurrency
+issue"), which was only applied to "uio_pdrv_genirq", ended up making them
+a little different. That commit, among other things, changed disable_irq()
+to disable_irq_nosync() in the implementation of irqcontrol(). The
+motivation there was to avoid a deadlock between irqcontrol() and
+handler(), since it added a spinlock in the irq handler, and disable_irq()
+waits for the completion of the irq handler.
+
+By changing disable_irq() to disable_irq_nosync() in irqcontrol(), we also
+avoid the sleeping-while-atomic bug that commit b74351287d4b ("uio: fix a
+sleep-in-atomic-context bug in uio_dmem_genirq_irqcontrol()") was trying to
+fix. Thus, this fixes the missing unlock in irqcontrol() by importing the
+implementation of irqcontrol() handler from the "uio_pdrv_genirq" driver.
+In the end, it reverts commit b74351287d4b ("uio: fix a
+sleep-in-atomic-context bug in uio_dmem_genirq_irqcontrol()") and change
+disable_irq() to disable_irq_nosync().
+
+It is worth noting that this still does not address the concurrency issue
+fixed by commit 34cb27528398 ("UIO: Fix concurrency issue"). It will be
+addressed separately in the next commits.
+
+Split out from commit 34cb27528398 ("UIO: Fix concurrency issue").
+
+Fixes: b74351287d4b ("uio: fix a sleep-in-atomic-context bug in uio_dmem_genirq_irqcontrol()")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Link: https://lore.kernel.org/r/20220930224100.816175-2-rafaelmendsr@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-usbc-tusb320.c | 82 +++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 3 deletions(-)
+ drivers/uio/uio_dmem_genirq.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
-index 1ed1dfe54206..6ba3d89b106d 100644
---- a/drivers/extcon/extcon-usbc-tusb320.c
-+++ b/drivers/extcon/extcon-usbc-tusb320.c
-@@ -21,10 +21,13 @@
- #define TUSB320_REG9_INTERRUPT_STATUS		BIT(4)
- 
- #define TUSB320_REGA				0xa
-+#define TUSB320L_REGA_DISABLE_TERM		BIT(0)
- #define TUSB320_REGA_I2C_SOFT_RESET		BIT(3)
- #define TUSB320_REGA_MODE_SELECT_SHIFT		4
- #define TUSB320_REGA_MODE_SELECT_MASK		0x3
- 
-+#define TUSB320L_REGA0_REVISION			0xa0
-+
- enum tusb320_attached_state {
- 	TUSB320_ATTACHED_STATE_NONE,
- 	TUSB320_ATTACHED_STATE_DFP,
-@@ -39,11 +42,18 @@ enum tusb320_mode {
- 	TUSB320_MODE_DRP,
- };
- 
-+struct tusb320_priv;
-+
-+struct tusb320_ops {
-+	int (*set_mode)(struct tusb320_priv *priv, enum tusb320_mode mode);
-+	int (*get_revision)(struct tusb320_priv *priv, unsigned int *revision);
-+};
-+
- struct tusb320_priv {
- 	struct device *dev;
- 	struct regmap *regmap;
- 	struct extcon_dev *edev;
--
-+	struct tusb320_ops *ops;
- 	enum tusb320_attached_state state;
- };
- 
-@@ -99,12 +109,46 @@ static int tusb320_set_mode(struct tusb320_priv *priv, enum tusb320_mode mode)
- 	return 0;
- }
- 
-+static int tusb320l_set_mode(struct tusb320_priv *priv, enum tusb320_mode mode)
-+{
-+	int ret;
-+
-+	/* Disable CC state machine */
-+	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
-+		TUSB320L_REGA_DISABLE_TERM, 1);
-+	if (ret) {
-+		dev_err(priv->dev,
-+			"failed to disable CC state machine: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/* Write mode */
-+	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
-+		TUSB320_REGA_MODE_SELECT_MASK << TUSB320_REGA_MODE_SELECT_SHIFT,
-+		mode << TUSB320_REGA_MODE_SELECT_SHIFT);
-+	if (ret) {
-+		dev_err(priv->dev, "failed to write mode: %d\n", ret);
-+		goto err;
-+	}
-+
-+	msleep(5);
-+err:
-+	/* Re-enable CC state machine */
-+	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
-+		TUSB320L_REGA_DISABLE_TERM, 0);
-+	if (ret)
-+		dev_err(priv->dev,
-+			"failed to re-enable CC state machine: %d\n", ret);
-+
-+	return ret;
-+}
-+
- static int tusb320_reset(struct tusb320_priv *priv)
- {
- 	int ret;
- 
- 	/* Set mode to default (follow PORT pin) */
--	ret = tusb320_set_mode(priv, TUSB320_MODE_PORT);
-+	ret = priv->ops->set_mode(priv, TUSB320_MODE_PORT);
- 	if (ret && ret != -EBUSY) {
- 		dev_err(priv->dev,
- 			"failed to set mode to PORT: %d\n", ret);
-@@ -126,6 +170,20 @@ static int tusb320_reset(struct tusb320_priv *priv)
- 	return 0;
- }
- 
-+static int tusb320l_get_revision(struct tusb320_priv *priv, unsigned int *revision)
-+{
-+	return regmap_read(priv->regmap, TUSB320L_REGA0_REVISION, revision);
-+}
-+
-+static struct tusb320_ops tusb320_ops = {
-+	.set_mode = tusb320_set_mode,
-+};
-+
-+static struct tusb320_ops tusb320l_ops = {
-+	.set_mode = tusb320l_set_mode,
-+	.get_revision = tusb320l_get_revision,
-+};
-+
- static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- {
- 	struct tusb320_priv *priv = dev_id;
-@@ -176,6 +234,8 @@ static int tusb320_extcon_probe(struct i2c_client *client,
- 				const struct i2c_device_id *id)
- {
- 	struct tusb320_priv *priv;
-+	const void *match_data;
-+	unsigned int revision;
- 	int ret;
- 
- 	priv = devm_kzalloc(&client->dev, sizeof(*priv), GFP_KERNEL);
-@@ -191,12 +251,27 @@ static int tusb320_extcon_probe(struct i2c_client *client,
- 	if (ret)
- 		return ret;
- 
-+	match_data = device_get_match_data(&client->dev);
-+	if (!match_data)
-+		return -EINVAL;
-+
-+	priv->ops = (struct tusb320_ops*)match_data;
-+
- 	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
- 	if (IS_ERR(priv->edev)) {
- 		dev_err(priv->dev, "failed to allocate extcon device\n");
- 		return PTR_ERR(priv->edev);
+diff --git a/drivers/uio/uio_dmem_genirq.c b/drivers/uio/uio_dmem_genirq.c
+index 6b5cfa5b0673..bfaedc324104 100644
+--- a/drivers/uio/uio_dmem_genirq.c
++++ b/drivers/uio/uio_dmem_genirq.c
+@@ -132,13 +132,11 @@ static int uio_dmem_genirq_irqcontrol(struct uio_info *dev_info, s32 irq_on)
+ 	if (irq_on) {
+ 		if (test_and_clear_bit(0, &priv->flags))
+ 			enable_irq(dev_info->irq);
+-		spin_unlock_irqrestore(&priv->lock, flags);
+ 	} else {
+-		if (!test_and_set_bit(0, &priv->flags)) {
+-			spin_unlock_irqrestore(&priv->lock, flags);
+-			disable_irq(dev_info->irq);
+-		}
++		if (!test_and_set_bit(0, &priv->flags))
++			disable_irq_nosync(dev_info->irq);
  	}
++	spin_unlock_irqrestore(&priv->lock, flags);
  
-+	if (priv->ops->get_revision) {
-+		ret = priv->ops->get_revision(priv, &revision);
-+		if (ret)
-+			dev_warn(priv->dev,
-+				"failed to read revision register: %d\n", ret);
-+		else
-+			dev_info(priv->dev, "chip revision %d\n", revision);
-+	}
-+
- 	ret = devm_extcon_dev_register(priv->dev, priv->edev);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "failed to register extcon device\n");
-@@ -231,7 +306,8 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ 	return 0;
  }
- 
- static const struct of_device_id tusb320_extcon_dt_match[] = {
--	{ .compatible = "ti,tusb320", },
-+	{ .compatible = "ti,tusb320", .data = &tusb320_ops, },
-+	{ .compatible = "ti,tusb320l", .data = &tusb320l_ops, },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, tusb320_extcon_dt_match);
 -- 
 2.35.1
 
