@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3975A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252AC433D2;
-	Wed, 28 Dec 2022 15:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31711863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CE7C433D2;
+	Wed, 28 Dec 2022 15:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242286;
-	bh=/svUdjy+2Bu2DEreRcgZbU5kaBlZnKEoLdUFwLpB3b8=;
+	s=korg; t=1672242288;
+	bh=XLg79VMhhZqbJHjNnjLkcFP55YOPi1edZZ8B3rmu09A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkJ8KoorLcN5V6wVATMtvbX3bO6wVm/ltvBpT1YfEV7dvXCgEJaQVPsFiU/DBA6Rv
-	 WA0MTgacuGlpQ/Kx3NrmNaQLrbQ0zMgGOLJylyeR0cfleD/z9fNFdrE5oC1zOGGjqd
-	 /3TK4MO9KzrblrveKgQESbxqVKqa3GZMnKe3qaNs=
+	b=apb2U9XFvGvdNVe98kbcgS4ZKpL6NY+OrBVV7RzZX6IGE8Zt+qU8mBdHncPcEhkBB
+	 sE2aomHKofPVz6Qzq0ilJvZKnmemuihvq6iQ0tZNcrpVCNif+8EV+4mZ6QOnvxduLb
+	 0jVTbM0XGf4KGk5xbQitEgBtCyyoFa6LdRmRD4L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 584/731] mISDN: hfcsusb: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:41:31 +0100
-Message-Id: <20221228144313.476449820@linuxfoundation.org>
+Subject: [PATCH 6.0 0365/1073] regulator: core: use kfree_const() to free space conditionally
+Date: Wed, 28 Dec 2022 15:32:33 +0100
+Message-Id: <20221228144337.915987771@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,76 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit ddc9648db162eee556edd5222d2808fe33730203 ]
+[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+Use kfree_const() to free supply_name conditionally in create_regulator()
+as supply_name may be allocated from kmalloc() or directly from .rodata
+section.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
-
-skb_queue_purge() is called under spin_lock_irqsave() in hfcusb_l2l1D(),
-kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
-to move the dch->squeue to a free queue, also enqueue the tx_skb and
-rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
-
-In tx_iso_complete(), dev_kfree_skb() is called to consume the transmitted
-SKB, so replace it with dev_consume_skb_irq().
-
-Fixes: 69f52adb2d53 ("mISDN: Add HFC USB driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcsusb.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcsusb.c b/drivers/isdn/hardware/mISDN/hfcsusb.c
-index cd5642cef01f..e8b37bd5e34a 100644
---- a/drivers/isdn/hardware/mISDN/hfcsusb.c
-+++ b/drivers/isdn/hardware/mISDN/hfcsusb.c
-@@ -326,20 +326,24 @@ hfcusb_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
- 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index afd17b13de7c..b7e7eec1084e 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1795,7 +1795,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
  
- 		if (hw->protocol == ISDN_P_NT_S0) {
-+			struct sk_buff_head free_queue;
-+
-+			__skb_queue_head_init(&free_queue);
- 			hfcsusb_ph_command(hw, HFC_L1_DEACTIVATE_NT);
- 			spin_lock_irqsave(&hw->lock, flags);
--			skb_queue_purge(&dch->squeue);
-+			skb_queue_splice_init(&dch->squeue, &free_queue);
- 			if (dch->tx_skb) {
--				dev_kfree_skb(dch->tx_skb);
-+				__skb_queue_tail(&free_queue, dch->tx_skb);
- 				dch->tx_skb = NULL;
- 			}
- 			dch->tx_idx = 0;
- 			if (dch->rx_skb) {
--				dev_kfree_skb(dch->rx_skb);
-+				__skb_queue_tail(&free_queue, dch->rx_skb);
- 				dch->rx_skb = NULL;
- 			}
- 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
- 			spin_unlock_irqrestore(&hw->lock, flags);
-+			__skb_queue_purge(&free_queue);
- #ifdef FIXME
- 			if (test_and_clear_bit(FLG_L1_BUSY, &dch->Flags))
- 				dchannel_sched_event(&hc->dch, D_CLEARBUSY);
-@@ -1330,7 +1334,7 @@ tx_iso_complete(struct urb *urb)
- 					printk("\n");
- 				}
+ 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
+ 	if (regulator == NULL) {
+-		kfree(supply_name);
++		kfree_const(supply_name);
+ 		return NULL;
+ 	}
  
--				dev_kfree_skb(tx_skb);
-+				dev_consume_skb_irq(tx_skb);
- 				tx_skb = NULL;
- 				if (fifo->dch && get_next_dframe(fifo->dch))
- 					tx_skb = fifo->dch->tx_skb;
 -- 
 2.35.1
 
