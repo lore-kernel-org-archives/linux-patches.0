@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC341863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA224C433F2;
-	Wed, 28 Dec 2022 15:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5261863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F31C433D2;
+	Wed, 28 Dec 2022 15:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242544;
-	bh=i+rZrYsQF5L/j/g4JaaIbpwtUzmf4qv55bP3vVOFMHY=;
+	s=korg; t=1672242546;
+	bh=N5CI8jTzBIEOejPNB8urGoQ412XHK+6YJj8C6cwehy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AT7GtYF/BZMyFgIHKP1xtVWp9hWJppdc5MpwB28T67mo1j9mVynDXRe6VoEPshjGT
-	 WaE0nbUDaqgNo2gPaj2ICzvWfPGpgpynpnY3L9Jn2kqyKbfrcb+XYRNEQLdKFk3vmi
-	 QdmzPJV102W6tjUInNl4efiXzz0tK/8c+X0mtI2U=
+	b=HckayjqI61KLR4PZh5P9NfcKH1gQHeM2+B9+8KaSb4CJy0VknHityZTxLx0kTcmPR
+	 yV/gMXlMNYSbkjE+Wvfe5r7uh4aCiiYSznCAhcW7OvKBRV0pMRuQ1QC1mkJjo4KSZB
+	 TjMdIjD5xQ0ZqbdRutgYemsLbYHaPFOv1g+abV6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0422/1073] drm/radeon: Fix PCI device refcount leak in radeon_atrm_get_bios()
-Date: Wed, 28 Dec 2022 15:33:30 +0100
-Message-Id: <20221228144339.484974998@linuxfoundation.org>
+Subject: [PATCH 6.1 0356/1146] media: platform: exynos4-is: Fix error handling in fimc_md_init()
+Date: Wed, 28 Dec 2022 15:31:35 +0100
+Message-Id: <20221228144339.831570525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 725a521a18734f65de05b8d353b5bd0d3ca4c37a ]
+[ Upstream commit b434422c45282a0573d8123239abc41fa72665d4 ]
 
-As comment of pci_get_class() says, it returns a pci_device with its
-refcount increased and decreased the refcount for the input parameter
-@from if it is not NULL.
+A problem about modprobe s5p_fimc failed is triggered with the
+following log given:
 
-If we break the loop in radeon_atrm_get_bios() with 'pdev' not NULL, we
-need to call pci_dev_put() to decrease the refcount. Add the missing
-pci_dev_put() to avoid refcount leak.
+ [  272.075275] Error: Driver 'exynos4-fimc' is already registered, aborting...
+ modprobe: ERROR: could not insert 's5p_fimc': Device or resource busy
 
-Fixes: d8ade3526b2a ("drm/radeon: handle non-VGA class pci devices with ATRM")
-Fixes: c61e2775873f ("drm/radeon: split ATRM support out from the ATPX handler (v3)")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The reason is that fimc_md_init() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+failed, it returns without unregister fimc_driver, resulting the
+s5p_fimc can never be installed later.
+A simple call graph is shown as below:
+
+ fimc_md_init()
+   fimc_register_driver() # register fimc_driver
+   platform_driver_register()
+     platform_driver_register()
+       driver_register()
+         bus_add_driver()
+           dev = kzalloc(...) # OOM happened
+   # return without unregister fimc_driver
+
+Fix by unregister fimc_driver when platform_driver_register() returns
+error.
+
+Fixes: d3953223b090 ("[media] s5p-fimc: Add the media device driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/samsung/exynos4-is/fimc-core.c | 2 +-
+ drivers/media/platform/samsung/exynos4-is/media-dev.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
-index 1d99c9a2b56e..63bdc9f6fc24 100644
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -227,6 +227,7 @@ static bool radeon_atrm_get_bios(struct radeon_device *rdev)
+diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-core.c b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
+index 91cc8d58a663..1791100b6935 100644
+--- a/drivers/media/platform/samsung/exynos4-is/fimc-core.c
++++ b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
+@@ -1173,7 +1173,7 @@ int __init fimc_register_driver(void)
+ 	return platform_driver_register(&fimc_driver);
+ }
  
- 	if (!found)
- 		return false;
-+	pci_dev_put(pdev);
+-void __exit fimc_unregister_driver(void)
++void fimc_unregister_driver(void)
+ {
+ 	platform_driver_unregister(&fimc_driver);
+ }
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+index 383a1e0ab912..2f3071acb9c9 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1584,7 +1584,11 @@ static int __init fimc_md_init(void)
+ 	if (ret)
+ 		return ret;
  
- 	rdev->bios = kmalloc(size, GFP_KERNEL);
- 	if (!rdev->bios) {
+-	return platform_driver_register(&fimc_md_driver);
++	ret = platform_driver_register(&fimc_md_driver);
++	if (ret)
++		fimc_unregister_driver();
++
++	return ret;
+ }
+ 
+ static void __exit fimc_md_exit(void)
 -- 
 2.35.1
 
