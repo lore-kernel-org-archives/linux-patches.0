@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57791C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5FDC433D2;
-	Wed, 28 Dec 2022 16:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD4D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCFFC433EF;
+	Wed, 28 Dec 2022 16:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245278;
-	bh=xQMi28LGCJNTI83BvpgQkwHlz5aot2de7hmQTjlyeZw=;
+	s=korg; t=1672245281;
+	bh=PHGuHIM1Wlw3cFSP3Z0RTUG8LbXNJFIPI/SbgqvEhl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnFjbcwZP0gzDxpPA/MR8SlJEMKv0Ea9XZosEYfMnpws72Ip2XDcsH6lavPgu8cAs
-	 uxRKJLPlJ24Fl9uCSsjEgg19vFNMmt2kE6wi4/4lXuL3st4m6l8ikqoYAEADm9HbpV
-	 UHpupSdTl4TPAQdjwDSvkdPpXcq6dMyR/0652E/c=
+	b=t69Z0qhLVyX9PXrgzTjInUjWlgDE/DhbQhRXmBzr/Vezu0fv2W8jrxWZZmQwWPJ72
+	 dTwQ3S2WwAlLQhvZuA50eTUctxK9OfORD/qbU4QtWgwX7JKS7n1vf9hEF0AW0+aZcw
+	 u++x4eLMq4usd7Bq1PszZ8iSqyESKuuXu2bCQ+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0865/1073] igc: recalculate Qbv end_time by considering cycle time
-Date: Wed, 28 Dec 2022 15:40:53 +0100
-Message-Id: <20221228144351.515977021@linuxfoundation.org>
+Subject: [PATCH 6.1 0832/1146] rtc: class: Fix potential memleak in devm_rtc_allocate_device()
+Date: Wed, 28 Dec 2022 15:39:31 +0100
+Message-Id: <20221228144352.756596131@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,54 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 6d05251d537a4d3835959a8cdd8cbbbdcdc0c904 ]
+[ Upstream commit 60da73808298ff2cfa9f165d55eb3d7aa7078601 ]
 
-Qbv users can specify a cycle time that is not equal to the total GCL
-intervals. Hence, recalculation is necessary here to exclude the time
-interval that exceeds the cycle time. As those GCL which exceeds the
-cycle time will be truncated.
+devm_rtc_allocate_device() will alloc a rtc_device first, and then run
+dev_set_name(). If dev_set_name() failed, the rtc_device will memleak.
+Move devm_add_action_or_reset() in front of dev_set_name() to prevent
+memleak.
 
-According to IEEE Std. 802.1Q-2018 section 8.6.9.2, once the end of
-the list is reached, it will switch to the END_OF_CYCLE state and
-leave the gates in the same state until the next cycle is started.
+unreferenced object 0xffff888110a53000 (size 2048):
+  comm "python3", pid 470, jiffies 4296078308 (age 58.882s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 30 a5 10 81 88 ff ff  .........0......
+    08 30 a5 10 81 88 ff ff 00 00 00 00 00 00 00 00  .0..............
+  backtrace:
+    [<000000004aac0364>] kmalloc_trace+0x21/0x110
+    [<000000000ff02202>] devm_rtc_allocate_device+0xd4/0x400
+    [<000000001bdf5639>] devm_rtc_device_register+0x1a/0x80
+    [<00000000351bf81c>] rx4581_probe+0xdd/0x110 [rtc_rx4581]
+    [<00000000f0eba0ae>] spi_probe+0xde/0x130
+    [<00000000bff89ee8>] really_probe+0x175/0x3f0
+    [<00000000128e8d84>] __driver_probe_device+0xe6/0x170
+    [<00000000ee5bf913>] device_driver_attach+0x32/0x80
+    [<00000000f3f28f92>] bind_store+0x10b/0x1a0
+    [<000000009ff812d8>] drv_attr_store+0x49/0x70
+    [<000000008139c323>] sysfs_kf_write+0x8d/0xb0
+    [<00000000b6146e01>] kernfs_fop_write_iter+0x214/0x2d0
+    [<00000000ecbe3895>] vfs_write+0x61a/0x7d0
+    [<00000000aa2196ea>] ksys_write+0xc8/0x190
+    [<0000000046a600f5>] do_syscall_64+0x37/0x90
+    [<00000000541a336f>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 24d23181e43d ("rtc: class: check return value when calling dev_set_name()")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221110090810.11225-1-shangxiaojing@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/rtc/class.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 10690a0cfae1..207b4b5b2e5f 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6023,6 +6023,21 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+diff --git a/drivers/rtc/class.c b/drivers/rtc/class.c
+index e48223c00c67..e5b7b48cffac 100644
+--- a/drivers/rtc/class.c
++++ b/drivers/rtc/class.c
+@@ -374,11 +374,11 @@ struct rtc_device *devm_rtc_allocate_device(struct device *dev)
  
- 		end_time += e->interval;
+ 	rtc->id = id;
+ 	rtc->dev.parent = dev;
+-	err = dev_set_name(&rtc->dev, "rtc%d", id);
++	err = devm_add_action_or_reset(dev, devm_rtc_release_device, rtc);
+ 	if (err)
+ 		return ERR_PTR(err);
  
-+		/* If any of the conditions below are true, we need to manually
-+		 * control the end time of the cycle.
-+		 * 1. Qbv users can specify a cycle time that is not equal
-+		 * to the total GCL intervals. Hence, recalculation is
-+		 * necessary here to exclude the time interval that
-+		 * exceeds the cycle time.
-+		 * 2. According to IEEE Std. 802.1Q-2018 section 8.6.9.2,
-+		 * once the end of the list is reached, it will switch
-+		 * to the END_OF_CYCLE state and leave the gates in the
-+		 * same state until the next cycle is started.
-+		 */
-+		if (end_time > adapter->cycle_time ||
-+		    n + 1 == qopt->num_entries)
-+			end_time = adapter->cycle_time;
-+
- 		for (i = 0; i < adapter->num_tx_queues; i++) {
- 			struct igc_ring *ring = adapter->tx_ring[i];
+-	err = devm_add_action_or_reset(dev, devm_rtc_release_device, rtc);
++	err = dev_set_name(&rtc->dev, "rtc%d", id);
+ 	if (err)
+ 		return ERR_PTR(err);
  
 -- 
 2.35.1
