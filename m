@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04FF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5534CC433D2;
-	Wed, 28 Dec 2022 16:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA5F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8CFC433D2;
+	Wed, 28 Dec 2022 16:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245542;
-	bh=94mJ4ktmnNf7/RYeKm5j2AXaLYPBiO/CeY1y913/4sU=;
+	s=korg; t=1672245545;
+	bh=r7EkWu1yvEg1pUEtY80iiFmmdnuLDWiro0fsCcCQym4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSWxG0WF9tvcx9FH27WMKmrEPK3S2AINZ/iv07IqwkchDpV77VUhM8nc8JHfEUwB5
-	 2Qm2QZSBp7p1PtcCOqEDK7Y/bxO2CLiabpyQS6vSyVkAHfJxa/HoPVF516Ed6GrC88
-	 HoIlkY67K1+1cI4mr9K/PaIkEUTKCRtpv8TUN2bc=
+	b=fX3AEvFIQUCf4JdVZriVlS2gJmV+z1PojMJAMf4JeP2qtawDfq99TWMlF2OOMNcIx
+	 M8idlNKAg64JCKrSHwMBW7nwmSVJ3vOzs0p6A0rz3sw6/YSzeYJTh1phqGZ6bVgzyT
+	 4349Ce1mSwydHyUtNc6YQxtZxPkpTYICtWnMDK+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0912/1073] ASoC: Intel: avs: Add quirk for KBL-R RVP platform
-Date: Wed, 28 Dec 2022 15:41:40 +0100
-Message-Id: <20221228144352.800470472@linuxfoundation.org>
+Subject: [PATCH 6.1 0879/1146] mfd: bd957x: Fix Kconfig dependency on REGMAP_IRQ
+Date: Wed, 28 Dec 2022 15:40:18 +0100
+Message-Id: <20221228144354.037892138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,80 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 
-[ Upstream commit 9d0737fa0e7530313634c0ecd75f09a95ba8d44a ]
+[ Upstream commit 85842c46fd47fa6bd78681c154223bed27d5fd19 ]
 
-KBL-R RVPs contain built-in rt298 codec which requires different PLL
-clock and .dai_fmt configuration than seen on other boards.
+The BD957x driver uses REGMAP_IRQ but does not 'select' to depend on
+it. This can cause build failures.  Select REGMAP_IRQ for BD957X.
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-5-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0e9692607f94 ("mfd: bd9576: Add IRQ support")
+Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/Y3SdCWkRr1L64SWK@dc75zzyyyyyyyyyyyyydt-3.rev.dnainternet.fi
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/rt298.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/mfd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/avs/boards/rt298.c b/sound/soc/intel/avs/boards/rt298.c
-index b28d36872dcb..58c9d9edecf0 100644
---- a/sound/soc/intel/avs/boards/rt298.c
-+++ b/sound/soc/intel/avs/boards/rt298.c
-@@ -6,6 +6,7 @@
- //          Amadeusz Slawinski <amadeuszx.slawinski@linux.intel.com>
- //
- 
-+#include <linux/dmi.h>
- #include <linux/module.h>
- #include <sound/jack.h>
- #include <sound/pcm.h>
-@@ -14,6 +15,16 @@
- #include <sound/soc-acpi.h>
- #include "../../../codecs/rt298.h"
- 
-+static const struct dmi_system_id kblr_dmi_table[] = {
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Kabylake R DDR4 RVP"),
-+		},
-+	},
-+	{}
-+};
-+
- static const struct snd_kcontrol_new card_controls[] = {
- 	SOC_DAPM_PIN_SWITCH("Headphone Jack"),
- 	SOC_DAPM_PIN_SWITCH("Mic Jack"),
-@@ -96,9 +107,15 @@ avs_rt298_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_param
- {
- 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
- 	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	unsigned int clk_freq;
- 	int ret;
- 
--	ret = snd_soc_dai_set_sysclk(codec_dai, RT298_SCLK_S_PLL, 19200000, SND_SOC_CLOCK_IN);
-+	if (dmi_first_match(kblr_dmi_table))
-+		clk_freq = 24000000;
-+	else
-+		clk_freq = 19200000;
-+
-+	ret = snd_soc_dai_set_sysclk(codec_dai, RT298_SCLK_S_PLL, clk_freq, SND_SOC_CLOCK_IN);
- 	if (ret < 0)
- 		dev_err(rtd->dev, "Set codec sysclk failed: %d\n", ret);
- 
-@@ -139,7 +156,10 @@ static int avs_create_dai_link(struct device *dev, const char *platform_name, in
- 	dl->platforms = platform;
- 	dl->num_platforms = 1;
- 	dl->id = 0;
--	dl->dai_fmt = SND_SOC_DAIFMT_DSP_A | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
-+	if (dmi_first_match(kblr_dmi_table))
-+		dl->dai_fmt = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
-+	else
-+		dl->dai_fmt = SND_SOC_DAIFMT_DSP_A | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
- 	dl->init = avs_rt298_codec_init;
- 	dl->be_hw_params_fixup = avs_rt298_be_fixup;
- 	dl->ops = &avs_rt298_ops;
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 8b93856de432..9940e2724c05 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -2027,6 +2027,7 @@ config MFD_ROHM_BD957XMUF
+ 	depends on I2C=y
+ 	depends on OF
+ 	select REGMAP_I2C
++	select REGMAP_IRQ
+ 	select MFD_CORE
+ 	help
+ 	  Select this option to get support for the ROHM BD9576MUF and
 -- 
 2.35.1
 
