@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AE61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FF6C433D2;
-	Wed, 28 Dec 2022 16:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173601C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C114C433D2;
+	Wed, 28 Dec 2022 16:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245712;
-	bh=XLEiZvTkEEAwuhWrHpN9qyqocU/jogGxwcB92TCq5kI=;
+	s=korg; t=1672245714;
+	bh=QCaEffZw+OKfbpLHcxslteLVVuAHCTWPK4Gnh1qU9C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uwzHvcwpmmHUswurChv5TMP49jbLQhjjCk/ul15iABE/ekoemAI17L2WV86XAjOzI
-	 W5o0nCKB79rdvbo9vm4gN1hdK3jejc/DVQPrZ8L6/WxVme7KtEHnQH4UNzbUKgk5BV
-	 ju70dnSorcXSaoYXjRxiPeAEH4H4RxAsnAdKeVqc=
+	b=1CHpTeBUIVf0qK8mEySsHh8tzmNfX8+0fuwR9u8MJX4S/Y1eWV3xqvtQJ+3j6zM6K
+	 YN0yFkhjTBpr0UxDqU/Ojy8K8zWp5hRWZ8wdzklZZ9XIrchlhIM8FTF3H85LHA3qgO
+	 LxiyLnWIfeotJmLUbfKIfkPDTuGKOyw2UXOu8s1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Song Liu <song@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Malli C <mallikarjuna.chilakala@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0942/1073] md/raid0, raid10: Dont set discard sectors for request queue
-Date: Wed, 28 Dec 2022 15:42:10 +0100
-Message-Id: <20221228144353.623157054@linuxfoundation.org>
+Subject: [PATCH 6.1 0910/1146] igc: Enhance Qbv scheduling by using first flag bit
+Date: Wed, 28 Dec 2022 15:40:49 +0100
+Message-Id: <20221228144354.946562184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,80 +39,429 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiao Ni <xni@redhat.com>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit 8e1a2279ca2b0485cc379a153d02a9793f74a48f ]
+[ Upstream commit db0b124f02ba68de6517ac303d431af220ccfe9f ]
 
-It should use disk_stack_limits to get a proper max_discard_sectors
-rather than setting a value by stack drivers.
+The I225 hardware has a limitation that packets can only be scheduled
+in the [0, cycle-time] interval. So, scheduling a packet to the start
+of the next cycle doesn't usually work.
 
-And there is a bug. If all member disks are rotational devices,
-raid0/raid10 set max_discard_sectors. So the member devices are
-not ssd/nvme, but raid0/raid10 export the wrong value. It reports
-warning messages in function __blkdev_issue_discard when mkfs.xfs
-like this:
+To overcome this, we use the Transmit Descriptor first flag to indicates
+that a packet should be the first packet (from a queue) in a cycle
+according to the section 7.5.2.9.3.4 The First Packet on Each QBV Cycle
+in Intel Discrete I225/6 User Manual.
 
-[ 4616.022599] ------------[ cut here ]------------
-[ 4616.027779] WARNING: CPU: 4 PID: 99634 at block/blk-lib.c:50 __blkdev_issue_discard+0x16a/0x1a0
-[ 4616.140663] RIP: 0010:__blkdev_issue_discard+0x16a/0x1a0
-[ 4616.146601] Code: 24 4c 89 20 31 c0 e9 fe fe ff ff c1 e8 09 8d 48 ff 4c 89 f0 4c 09 e8 48 85 c1 0f 84 55 ff ff ff b8 ea ff ff ff e9 df fe ff ff <0f> 0b 48 8d 74 24 08 e8 ea d6 00 00 48 c7 c6 20 1e 89 ab 48 c7 c7
-[ 4616.167567] RSP: 0018:ffffaab88cbffca8 EFLAGS: 00010246
-[ 4616.173406] RAX: ffff9ba1f9e44678 RBX: 0000000000000000 RCX: ffff9ba1c9792080
-[ 4616.181376] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff9ba1c9792080
-[ 4616.189345] RBP: 0000000000000cc0 R08: ffffaab88cbffd10 R09: 0000000000000000
-[ 4616.197317] R10: 0000000000000012 R11: 0000000000000000 R12: 0000000000000000
-[ 4616.205288] R13: 0000000000400000 R14: 0000000000000cc0 R15: ffff9ba1c9792080
-[ 4616.213259] FS:  00007f9a5534e980(0000) GS:ffff9ba1b7c80000(0000) knlGS:0000000000000000
-[ 4616.222298] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 4616.228719] CR2: 000055a390a4c518 CR3: 0000000123e40006 CR4: 00000000001706e0
-[ 4616.236689] Call Trace:
-[ 4616.239428]  blkdev_issue_discard+0x52/0xb0
-[ 4616.244108]  blkdev_common_ioctl+0x43c/0xa00
-[ 4616.248883]  blkdev_ioctl+0x116/0x280
-[ 4616.252977]  __x64_sys_ioctl+0x8a/0xc0
-[ 4616.257163]  do_syscall_64+0x5c/0x90
-[ 4616.261164]  ? handle_mm_fault+0xc5/0x2a0
-[ 4616.265652]  ? do_user_addr_fault+0x1d8/0x690
-[ 4616.270527]  ? do_syscall_64+0x69/0x90
-[ 4616.274717]  ? exc_page_fault+0x62/0x150
-[ 4616.279097]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 4616.284748] RIP: 0033:0x7f9a55398c6b
+But this only works if there was any packet from that queue during the
+current cycle, to avoid this issue, we issue an empty packet if that's
+not the case. Also require one more descriptor to be available, to take
+into account the empty packet that might be issued.
 
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Song Liu <song@kernel.org>
+Test Setup:
+
+Talker: Use l2_tai to generate the launchtime into packet load.
+
+Listener: Use timedump.c to compute the delta between packet arrival
+and LaunchTime packet payload.
+
+Test Result:
+
+Before:
+
+1666000610127300000,1666000610127300096,96,621273
+1666000610127400000,1666000610127400192,192,621274
+1666000610127500000,1666000610127500032,32,621275
+1666000610127600000,1666000610127600128,128,621276
+1666000610127700000,1666000610127700224,224,621277
+1666000610127800000,1666000610127800064,64,621278
+1666000610127900000,1666000610127900160,160,621279
+1666000610128000000,1666000610128000000,0,621280
+1666000610128100000,1666000610128100096,96,621281
+1666000610128200000,1666000610128200192,192,621282
+1666000610128300000,1666000610128300032,32,621283
+1666000610128400000,1666000610128301056,-98944,621284
+1666000610128500000,1666000610128302080,-197920,621285
+1666000610128600000,1666000610128302848,-297152,621286
+1666000610128700000,1666000610128303872,-396128,621287
+1666000610128800000,1666000610128304896,-495104,621288
+1666000610128900000,1666000610128305664,-594336,621289
+1666000610129000000,1666000610128306688,-693312,621290
+1666000610129100000,1666000610128307712,-792288,621291
+1666000610129200000,1666000610128308480,-891520,621292
+1666000610129300000,1666000610128309504,-990496,621293
+1666000610129400000,1666000610128310528,-1089472,621294
+1666000610129500000,1666000610128311296,-1188704,621295
+1666000610129600000,1666000610128312320,-1287680,621296
+1666000610129700000,1666000610128313344,-1386656,621297
+1666000610129800000,1666000610128314112,-1485888,621298
+1666000610129900000,1666000610128315136,-1584864,621299
+1666000610130000000,1666000610128316160,-1683840,621300
+1666000610130100000,1666000610128316928,-1783072,621301
+1666000610130200000,1666000610128317952,-1882048,621302
+1666000610130300000,1666000610128318976,-1981024,621303
+1666000610130400000,1666000610128319744,-2080256,621304
+1666000610130500000,1666000610128320768,-2179232,621305
+1666000610130600000,1666000610128321792,-2278208,621306
+1666000610130700000,1666000610128322816,-2377184,621307
+1666000610130800000,1666000610128323584,-2476416,621308
+1666000610130900000,1666000610128324608,-2575392,621309
+1666000610131000000,1666000610128325632,-2674368,621310
+1666000610131100000,1666000610128326400,-2773600,621311
+1666000610131200000,1666000610128327424,-2872576,621312
+1666000610131300000,1666000610128328448,-2971552,621313
+1666000610131400000,1666000610128329216,-3070784,621314
+1666000610131500000,1666000610131500032,32,621315
+1666000610131600000,1666000610131600128,128,621316
+1666000610131700000,1666000610131700224,224,621317
+
+After:
+
+1666073510646200000,1666073510646200064,64,2676462
+1666073510646300000,1666073510646300160,160,2676463
+1666073510646400000,1666073510646400256,256,2676464
+1666073510646500000,1666073510646500096,96,2676465
+1666073510646600000,1666073510646600192,192,2676466
+1666073510646700000,1666073510646700032,32,2676467
+1666073510646800000,1666073510646800128,128,2676468
+1666073510646900000,1666073510646900224,224,2676469
+1666073510647000000,1666073510647000064,64,2676470
+1666073510647100000,1666073510647100160,160,2676471
+1666073510647200000,1666073510647200256,256,2676472
+1666073510647300000,1666073510647300096,96,2676473
+1666073510647400000,1666073510647400192,192,2676474
+1666073510647500000,1666073510647500032,32,2676475
+1666073510647600000,1666073510647600128,128,2676476
+1666073510647700000,1666073510647700224,224,2676477
+1666073510647800000,1666073510647800064,64,2676478
+1666073510647900000,1666073510647900160,160,2676479
+1666073510648000000,1666073510648000000,0,2676480
+1666073510648100000,1666073510648100096,96,2676481
+1666073510648200000,1666073510648200192,192,2676482
+1666073510648300000,1666073510648300032,32,2676483
+1666073510648400000,1666073510648400128,128,2676484
+1666073510648500000,1666073510648500224,224,2676485
+1666073510648600000,1666073510648600064,64,2676486
+1666073510648700000,1666073510648700160,160,2676487
+1666073510648800000,1666073510648800000,0,2676488
+1666073510648900000,1666073510648900096,96,2676489
+1666073510649000000,1666073510649000192,192,2676490
+1666073510649100000,1666073510649100032,32,2676491
+1666073510649200000,1666073510649200128,128,2676492
+1666073510649300000,1666073510649300224,224,2676493
+1666073510649400000,1666073510649400064,64,2676494
+1666073510649500000,1666073510649500160,160,2676495
+1666073510649600000,1666073510649600000,0,2676496
+1666073510649700000,1666073510649700096,96,2676497
+1666073510649800000,1666073510649800192,192,2676498
+1666073510649900000,1666073510649900032,32,2676499
+1666073510650000000,1666073510650000128,128,2676500
+
+Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Co-developed-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+Co-developed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Signed-off-by: Malli C <mallikarjuna.chilakala@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid0.c  | 1 -
- drivers/md/raid10.c | 2 --
- 2 files changed, 3 deletions(-)
+ drivers/net/ethernet/intel/igc/igc.h         |   2 +
+ drivers/net/ethernet/intel/igc/igc_defines.h |   2 +
+ drivers/net/ethernet/intel/igc/igc_main.c    | 176 ++++++++++++++++---
+ 3 files changed, 151 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index 857c49399c28..b536befd8898 100644
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -398,7 +398,6 @@ static int raid0_run(struct mddev *mddev)
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index 1e7e7071f64d..66a57636d329 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -94,6 +94,8 @@ struct igc_ring {
+ 	u8 queue_index;                 /* logical index of the ring*/
+ 	u8 reg_idx;                     /* physical index of the ring */
+ 	bool launchtime_enable;         /* true if LaunchTime is enabled */
++	ktime_t last_tx_cycle;          /* end of the cycle with a launchtime transmission */
++	ktime_t last_ff_cycle;          /* Last cycle with an active first flag */
  
- 		blk_queue_max_hw_sectors(mddev->queue, mddev->chunk_sectors);
- 		blk_queue_max_write_zeroes_sectors(mddev->queue, mddev->chunk_sectors);
--		blk_queue_max_discard_sectors(mddev->queue, UINT_MAX);
+ 	u32 start_time;
+ 	u32 end_time;
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index 4f9d7f013a95..4ad35fbdc02e 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -321,6 +321,8 @@
+ #define IGC_ADVTXD_L4LEN_SHIFT	8  /* Adv ctxt L4LEN shift */
+ #define IGC_ADVTXD_MSS_SHIFT	16 /* Adv ctxt MSS shift */
  
- 		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
- 		blk_queue_io_opt(mddev->queue,
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 64d6e4cd8a3a..b19c6ce89d5e 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4104,8 +4104,6 @@ static int raid10_run(struct mddev *mddev)
- 	conf->thread = NULL;
++#define IGC_ADVTXD_TSN_CNTX_FIRST	0x00000080
++
+ /* Transmit Control */
+ #define IGC_TCTL_EN		0x00000002 /* enable Tx */
+ #define IGC_TCTL_PSP		0x00000008 /* pad short packets */
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 34889be63e78..4bad986fb038 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -1000,25 +1000,118 @@ static int igc_write_mc_addr_list(struct net_device *netdev)
+ 	return netdev_mc_count(netdev);
+ }
  
- 	if (mddev->queue) {
--		blk_queue_max_discard_sectors(mddev->queue,
--					      UINT_MAX);
- 		blk_queue_max_write_zeroes_sectors(mddev->queue, 0);
- 		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
- 		raid10_set_io_opt(conf);
+-static __le32 igc_tx_launchtime(struct igc_adapter *adapter, ktime_t txtime)
++static __le32 igc_tx_launchtime(struct igc_ring *ring, ktime_t txtime,
++				bool *first_flag, bool *insert_empty)
+ {
++	struct igc_adapter *adapter = netdev_priv(ring->netdev);
+ 	ktime_t cycle_time = adapter->cycle_time;
+ 	ktime_t base_time = adapter->base_time;
++	ktime_t now = ktime_get_clocktai();
++	ktime_t baset_est, end_of_cycle;
+ 	u32 launchtime;
++	s64 n;
+ 
+-	/* FIXME: when using ETF together with taprio, we may have a
+-	 * case where 'delta' is larger than the cycle_time, this may
+-	 * cause problems if we don't read the current value of
+-	 * IGC_BASET, as the value writen into the launchtime
+-	 * descriptor field may be misinterpreted.
++	n = div64_s64(ktime_sub_ns(now, base_time), cycle_time);
++
++	baset_est = ktime_add_ns(base_time, cycle_time * (n));
++	end_of_cycle = ktime_add_ns(baset_est, cycle_time);
++
++	if (ktime_compare(txtime, end_of_cycle) >= 0) {
++		if (baset_est != ring->last_ff_cycle) {
++			*first_flag = true;
++			ring->last_ff_cycle = baset_est;
++
++			if (ktime_compare(txtime, ring->last_tx_cycle) > 0)
++				*insert_empty = true;
++		}
++	}
++
++	/* Introducing a window at end of cycle on which packets
++	 * potentially not honor launchtime. Window of 5us chosen
++	 * considering software update the tail pointer and packets
++	 * are dma'ed to packet buffer.
+ 	 */
+-	div_s64_rem(ktime_sub_ns(txtime, base_time), cycle_time, &launchtime);
++	if ((ktime_sub_ns(end_of_cycle, now) < 5 * NSEC_PER_USEC))
++		netdev_warn(ring->netdev, "Packet with txtime=%llu may not be honoured\n",
++			    txtime);
++
++	ring->last_tx_cycle = end_of_cycle;
++
++	launchtime = ktime_sub_ns(txtime, baset_est);
++	if (launchtime > 0)
++		div_s64_rem(launchtime, cycle_time, &launchtime);
++	else
++		launchtime = 0;
+ 
+ 	return cpu_to_le32(launchtime);
+ }
+ 
++static int igc_init_empty_frame(struct igc_ring *ring,
++				struct igc_tx_buffer *buffer,
++				struct sk_buff *skb)
++{
++	unsigned int size;
++	dma_addr_t dma;
++
++	size = skb_headlen(skb);
++
++	dma = dma_map_single(ring->dev, skb->data, size, DMA_TO_DEVICE);
++	if (dma_mapping_error(ring->dev, dma)) {
++		netdev_err_once(ring->netdev, "Failed to map DMA for TX\n");
++		return -ENOMEM;
++	}
++
++	buffer->skb = skb;
++	buffer->protocol = 0;
++	buffer->bytecount = skb->len;
++	buffer->gso_segs = 1;
++	buffer->time_stamp = jiffies;
++	dma_unmap_len_set(buffer, len, skb->len);
++	dma_unmap_addr_set(buffer, dma, dma);
++
++	return 0;
++}
++
++static int igc_init_tx_empty_descriptor(struct igc_ring *ring,
++					struct sk_buff *skb,
++					struct igc_tx_buffer *first)
++{
++	union igc_adv_tx_desc *desc;
++	u32 cmd_type, olinfo_status;
++	int err;
++
++	if (!igc_desc_unused(ring))
++		return -EBUSY;
++
++	err = igc_init_empty_frame(ring, first, skb);
++	if (err)
++		return err;
++
++	cmd_type = IGC_ADVTXD_DTYP_DATA | IGC_ADVTXD_DCMD_DEXT |
++		   IGC_ADVTXD_DCMD_IFCS | IGC_TXD_DCMD |
++		   first->bytecount;
++	olinfo_status = first->bytecount << IGC_ADVTXD_PAYLEN_SHIFT;
++
++	desc = IGC_TX_DESC(ring, ring->next_to_use);
++	desc->read.cmd_type_len = cpu_to_le32(cmd_type);
++	desc->read.olinfo_status = cpu_to_le32(olinfo_status);
++	desc->read.buffer_addr = cpu_to_le64(dma_unmap_addr(first, dma));
++
++	netdev_tx_sent_queue(txring_txq(ring), skb->len);
++
++	first->next_to_watch = desc;
++
++	ring->next_to_use++;
++	if (ring->next_to_use == ring->count)
++		ring->next_to_use = 0;
++
++	return 0;
++}
++
++#define IGC_EMPTY_FRAME_SIZE 60
++
+ static void igc_tx_ctxtdesc(struct igc_ring *tx_ring,
+-			    struct igc_tx_buffer *first,
++			    __le32 launch_time, bool first_flag,
+ 			    u32 vlan_macip_lens, u32 type_tucmd,
+ 			    u32 mss_l4len_idx)
+ {
+@@ -1037,26 +1130,17 @@ static void igc_tx_ctxtdesc(struct igc_ring *tx_ring,
+ 	if (test_bit(IGC_RING_FLAG_TX_CTX_IDX, &tx_ring->flags))
+ 		mss_l4len_idx |= tx_ring->reg_idx << 4;
+ 
++	if (first_flag)
++		mss_l4len_idx |= IGC_ADVTXD_TSN_CNTX_FIRST;
++
+ 	context_desc->vlan_macip_lens	= cpu_to_le32(vlan_macip_lens);
+ 	context_desc->type_tucmd_mlhl	= cpu_to_le32(type_tucmd);
+ 	context_desc->mss_l4len_idx	= cpu_to_le32(mss_l4len_idx);
+-
+-	/* We assume there is always a valid Tx time available. Invalid times
+-	 * should have been handled by the upper layers.
+-	 */
+-	if (tx_ring->launchtime_enable) {
+-		struct igc_adapter *adapter = netdev_priv(tx_ring->netdev);
+-		ktime_t txtime = first->skb->tstamp;
+-
+-		skb_txtime_consumed(first->skb);
+-		context_desc->launch_time = igc_tx_launchtime(adapter,
+-							      txtime);
+-	} else {
+-		context_desc->launch_time = 0;
+-	}
++	context_desc->launch_time	= launch_time;
+ }
+ 
+-static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first)
++static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first,
++			__le32 launch_time, bool first_flag)
+ {
+ 	struct sk_buff *skb = first->skb;
+ 	u32 vlan_macip_lens = 0;
+@@ -1096,7 +1180,8 @@ static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first)
+ 	vlan_macip_lens |= skb_network_offset(skb) << IGC_ADVTXD_MACLEN_SHIFT;
+ 	vlan_macip_lens |= first->tx_flags & IGC_TX_FLAGS_VLAN_MASK;
+ 
+-	igc_tx_ctxtdesc(tx_ring, first, vlan_macip_lens, type_tucmd, 0);
++	igc_tx_ctxtdesc(tx_ring, launch_time, first_flag,
++			vlan_macip_lens, type_tucmd, 0);
+ }
+ 
+ static int __igc_maybe_stop_tx(struct igc_ring *tx_ring, const u16 size)
+@@ -1320,6 +1405,7 @@ static int igc_tx_map(struct igc_ring *tx_ring,
+ 
+ static int igc_tso(struct igc_ring *tx_ring,
+ 		   struct igc_tx_buffer *first,
++		   __le32 launch_time, bool first_flag,
+ 		   u8 *hdr_len)
+ {
+ 	u32 vlan_macip_lens, type_tucmd, mss_l4len_idx;
+@@ -1406,8 +1492,8 @@ static int igc_tso(struct igc_ring *tx_ring,
+ 	vlan_macip_lens |= (ip.hdr - skb->data) << IGC_ADVTXD_MACLEN_SHIFT;
+ 	vlan_macip_lens |= first->tx_flags & IGC_TX_FLAGS_VLAN_MASK;
+ 
+-	igc_tx_ctxtdesc(tx_ring, first, vlan_macip_lens,
+-			type_tucmd, mss_l4len_idx);
++	igc_tx_ctxtdesc(tx_ring, launch_time, first_flag,
++			vlan_macip_lens, type_tucmd, mss_l4len_idx);
+ 
+ 	return 1;
+ }
+@@ -1415,11 +1501,14 @@ static int igc_tso(struct igc_ring *tx_ring,
+ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
+ 				       struct igc_ring *tx_ring)
+ {
++	bool first_flag = false, insert_empty = false;
+ 	u16 count = TXD_USE_COUNT(skb_headlen(skb));
+ 	__be16 protocol = vlan_get_protocol(skb);
+ 	struct igc_tx_buffer *first;
++	__le32 launch_time = 0;
+ 	u32 tx_flags = 0;
+ 	unsigned short f;
++	ktime_t txtime;
+ 	u8 hdr_len = 0;
+ 	int tso = 0;
+ 
+@@ -1433,11 +1522,40 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
+ 		count += TXD_USE_COUNT(skb_frag_size(
+ 						&skb_shinfo(skb)->frags[f]));
+ 
+-	if (igc_maybe_stop_tx(tx_ring, count + 3)) {
++	if (igc_maybe_stop_tx(tx_ring, count + 5)) {
+ 		/* this is a hard error */
+ 		return NETDEV_TX_BUSY;
+ 	}
+ 
++	if (!tx_ring->launchtime_enable)
++		goto done;
++
++	txtime = skb->tstamp;
++	skb->tstamp = ktime_set(0, 0);
++	launch_time = igc_tx_launchtime(tx_ring, txtime, &first_flag, &insert_empty);
++
++	if (insert_empty) {
++		struct igc_tx_buffer *empty_info;
++		struct sk_buff *empty;
++		void *data;
++
++		empty_info = &tx_ring->tx_buffer_info[tx_ring->next_to_use];
++		empty = alloc_skb(IGC_EMPTY_FRAME_SIZE, GFP_ATOMIC);
++		if (!empty)
++			goto done;
++
++		data = skb_put(empty, IGC_EMPTY_FRAME_SIZE);
++		memset(data, 0, IGC_EMPTY_FRAME_SIZE);
++
++		igc_tx_ctxtdesc(tx_ring, 0, false, 0, 0, 0);
++
++		if (igc_init_tx_empty_descriptor(tx_ring,
++						 empty,
++						 empty_info) < 0)
++			dev_kfree_skb_any(empty);
++	}
++
++done:
+ 	/* record the location of the first descriptor for this packet */
+ 	first = &tx_ring->tx_buffer_info[tx_ring->next_to_use];
+ 	first->type = IGC_TX_BUFFER_TYPE_SKB;
+@@ -1474,11 +1592,11 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
+ 	first->tx_flags = tx_flags;
+ 	first->protocol = protocol;
+ 
+-	tso = igc_tso(tx_ring, first, &hdr_len);
++	tso = igc_tso(tx_ring, first, launch_time, first_flag, &hdr_len);
+ 	if (tso < 0)
+ 		goto out_drop;
+ 	else if (!tso)
+-		igc_tx_csum(tx_ring, first);
++		igc_tx_csum(tx_ring, first, launch_time, first_flag);
+ 
+ 	igc_tx_map(tx_ring, first, hdr_len);
+ 
 -- 
 2.35.1
 
