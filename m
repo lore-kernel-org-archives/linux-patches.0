@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35841C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3913BC433D2;
-	Wed, 28 Dec 2022 16:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8424F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024D8C433D2;
+	Wed, 28 Dec 2022 16:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245838;
-	bh=X9QyHZW0/Q7y1ozPfSbuoElW40mP7FohwywJd74HR88=;
+	s=korg; t=1672245841;
+	bh=ymDt+OQ1d1l7JhA36+wNvf/5kqDthP0wuJ+WVC+JCpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGEJaMrFeyTCKxupYFqIdRmA8GVtCtW4K86c85eZegjHCZqw9JyJnyMAIz719FI4j
-	 f++wClKUAUzQeSfDG7hvuDqTFYDTr45i8RjVsSCLYT9WyhVNpe1+yEOTMmCOU155GD
-	 C/yLo+TvcUethhPF2cUY8tZSLj0z8Is1Uk0gjiiM=
+	b=QtZCN3uyuTzztUdzOvBc6/c+ZhooZ/o1eTxM35ItW8+mNPVCNL3lgEF7UcvHQXY8Y
+	 zbQWdDEhak+2DKUrLMtBTWGyMJJUYMRnJbWJzbxdTAaBJZqAAF3GHzyLmh9HFiDb2z
+	 iqDgxfATToIU/WaAIr9X17MNbj3XrhQNnLRzYlJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0967/1073] selftests/bpf: Fix conflicts with built-in functions in bpf_iter_ksym
-Date: Wed, 28 Dec 2022 15:42:35 +0100
-Message-Id: <20221228144354.319168408@linuxfoundation.org>
+Subject: [PATCH 6.1 0934/1146] mctp: Remove device type check at unregister
+Date: Wed, 28 Dec 2022 15:41:13 +0100
+Message-Id: <20221228144355.665791884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,76 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit ab0350c743d5c93fd88742f02b3dff12168ab435 ]
+[ Upstream commit b389a902dd5be4ece505a2e0463b9b034de04bf5 ]
 
-Both tolower and toupper are built in c functions, we should not
-redefine them as this can result in a build error.
+The unregister check could be incorrectly triggered if a netdev
+changes its type after register. That is possible for a tun device
+using TUNSETLINK ioctl, resulting in mctp unregister failing
+and the netdev unregister waiting forever.
 
-Fixes the following errors:
-progs/bpf_iter_ksym.c:10:20: error: conflicting types for built-in function 'tolower'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
-   10 | static inline char tolower(char c)
-      |                    ^~~~~~~
-progs/bpf_iter_ksym.c:5:1: note: 'tolower' is declared in header '<ctype.h>'
-    4 | #include <bpf/bpf_helpers.h>
-  +++ |+#include <ctype.h>
-    5 |
-progs/bpf_iter_ksym.c:17:20: error: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
-   17 | static inline char toupper(char c)
-      |                    ^~~~~~~
-progs/bpf_iter_ksym.c:17:20: note: 'toupper' is declared in header '<ctype.h>'
+This was encountered by https://github.com/openthread/openthread/issues/8523
 
-See background on this sort of issue:
-https://stackoverflow.com/a/20582607
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=12213
+Neither check at register or unregister is required. They were added in
+an attempt to track down mctp_ptr being set unexpectedly, which should
+not happen in normal operation.
 
-(C99, 7.1.3p1) "All identifiers with external linkage in any of the
-following subclauses (including the future library directions) are
-always reserved for use as identifiers with external linkage."
-
-This is documented behavior in GCC:
-https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-std-2
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221203010847.2191265-1-james.hilliard1@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7b1871af75f3 ("mctp: Warn if pointer is set for a wrong dev type")
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://lore.kernel.org/r/20221215054933.2403401-1-matt@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_iter_ksym.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mctp/device.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-index 285c008cbf9c..9ba14c37bbcc 100644
---- a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-+++ b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-@@ -7,14 +7,14 @@ char _license[] SEC("license") = "GPL";
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 99a3bda8852f..acb97b257428 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -429,12 +429,6 @@ static void mctp_unregister(struct net_device *dev)
+ 	struct mctp_dev *mdev;
  
- unsigned long last_sym_value = 0;
+ 	mdev = mctp_dev_get_rtnl(dev);
+-	if (mdev && !mctp_known(dev)) {
+-		// Sanity check, should match what was set in mctp_register
+-		netdev_warn(dev, "%s: BUG mctp_ptr set for unknown type %d",
+-			    __func__, dev->type);
+-		return;
+-	}
+ 	if (!mdev)
+ 		return;
  
--static inline char tolower(char c)
-+static inline char to_lower(char c)
- {
- 	if (c >= 'A' && c <= 'Z')
- 		c += ('a' - 'A');
- 	return c;
- }
+@@ -451,14 +445,8 @@ static int mctp_register(struct net_device *dev)
+ 	struct mctp_dev *mdev;
  
--static inline char toupper(char c)
-+static inline char to_upper(char c)
- {
- 	if (c >= 'a' && c <= 'z')
- 		c -= ('a' - 'A');
-@@ -54,7 +54,7 @@ int dump_ksym(struct bpf_iter__ksym *ctx)
- 	type = iter->type;
+ 	/* Already registered? */
+-	mdev = rtnl_dereference(dev->mctp_ptr);
+-
+-	if (mdev) {
+-		if (!mctp_known(dev))
+-			netdev_warn(dev, "%s: BUG mctp_ptr set for unknown type %d",
+-				    __func__, dev->type);
++	if (rtnl_dereference(dev->mctp_ptr))
+ 		return 0;
+-	}
  
- 	if (iter->module_name[0]) {
--		type = iter->exported ? toupper(type) : tolower(type);
-+		type = iter->exported ? to_upper(type) : to_lower(type);
- 		BPF_SEQ_PRINTF(seq, "0x%llx %c %s [ %s ] ",
- 			       value, type, iter->name, iter->module_name);
- 	} else {
+ 	/* only register specific types */
+ 	if (!mctp_known(dev))
 -- 
 2.35.1
 
