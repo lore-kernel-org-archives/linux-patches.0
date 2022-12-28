@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18B91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FFEC433EF;
-	Wed, 28 Dec 2022 15:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CFF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E106CC433D2;
+	Wed, 28 Dec 2022 15:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241748;
-	bh=qCQ80+QQo12orqyGZ6uPIYTEipujiuUJsbMwyPWVve8=;
+	s=korg; t=1672241751;
+	bh=j63kxRJw3hF1ULdmPYa1KQ/4pfa/wnh2PWXETgS8TdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+ZRg/icOxfcJexru0c/x2MDTk6+7OlLsg+FqYp7VrfsGTdNSQAx1BM09Db5t+bbi
-	 r4sCD9eSZkM9KycZ53M1KkaQDE2BD8va+XTrTWVK5CIkLsjzXtK6GrUweRVAB0O11u
-	 LtAfl1L4RB2MV392FH6/e1E+ljVQ7IJ0Pb77ljxw=
+	b=u7Tr5pe2x0pf53dQQbt57MrtPEWE0dA7muAM7KAheTWpUlhW5nrMQ70ZzwlLiFIV1
+	 RJjEQKK77DJf/+/N4tTZFB4du73mDymS0OxzmP0zD3IOlizF+vuh99D11cUxMCZHTU
+	 KRwH8HYZmKsC6zz10IIXKo0szoJKDe1QIEYlJ3tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 518/731] power: supply: z2_battery: Fix possible memleak in z2_batt_probe()
-Date: Wed, 28 Dec 2022 15:40:25 +0100
-Message-Id: <20221228144311.563637956@linuxfoundation.org>
+Subject: [PATCH 6.0 0323/1073] amdgpu/pm: prevent array underflow in vega20_odn_edit_dpm_table()
+Date: Wed, 28 Dec 2022 15:31:51 +0100
+Message-Id: <20221228144336.781205363@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 955bee204f3dd307642c101b75e370662987e735 ]
+[ Upstream commit d27252b5706e51188aed7647126e44dcf9e940c1 ]
 
-If devm_gpiod_get_optional() returns error, the charger should be
-freed before z2_batt_probe returns according to the context. We
-fix it by just gotoing to 'err' branch.
+In the PP_OD_EDIT_VDDC_CURVE case the "input_index" variable is capped at
+2 but not checked for negative values so it results in an out of bounds
+read.  This value comes from the user via sysfs.
 
-Fixes: a3b4388ea19b ("power: supply: z2_battery: Convert to GPIO descriptors")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: d5bf26539494 ("drm/amd/powerplay: added vega20 overdrive support V3")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/z2_battery.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/z2_battery.c b/drivers/power/supply/z2_battery.c
-index 7ed4e4bb26ec..fd33cdf9cf12 100644
---- a/drivers/power/supply/z2_battery.c
-+++ b/drivers/power/supply/z2_battery.c
-@@ -206,10 +206,12 @@ static int z2_batt_probe(struct i2c_client *client,
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+index 97b3ad369046..b30684c84e20 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+@@ -2961,7 +2961,8 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 			data->od8_settings.od8_settings_array;
+ 	OverDriveTable_t *od_table =
+ 			&(data->smc_state_table.overdrive_table);
+-	int32_t input_index, input_clk, input_vol, i;
++	int32_t input_clk, input_vol, i;
++	uint32_t input_index;
+ 	int od8_id;
+ 	int ret;
  
- 	charger->charge_gpiod = devm_gpiod_get_optional(&client->dev,
- 							NULL, GPIOD_IN);
--	if (IS_ERR(charger->charge_gpiod))
--		return dev_err_probe(&client->dev,
-+	if (IS_ERR(charger->charge_gpiod)) {
-+		ret = dev_err_probe(&client->dev,
- 				     PTR_ERR(charger->charge_gpiod),
- 				     "failed to get charge GPIO\n");
-+		goto err;
-+	}
- 
- 	if (charger->charge_gpiod) {
- 		gpiod_set_consumer_name(charger->charge_gpiod, "BATT CHRG");
 -- 
 2.35.1
 
