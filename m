@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DC01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFEDC433D2;
-	Wed, 28 Dec 2022 14:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC951863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1254EC433D2;
+	Wed, 28 Dec 2022 14:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239255;
-	bh=yyBeemMh7SHz2UU8auWCUtpr1CQoYBH0weA+nhdRoXU=;
+	s=korg; t=1672239258;
+	bh=a/wLJ97HZrYzmsj7pNmmK+UOr4Bw3OLWE45N67egTyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6NUk/z+KOmAgkm9ICWR/aZ7H2c1BiYZKBARJGTRHjk3anaDRPsSyq0NjC8J7wkpa
-	 Uw1RNAmhurQHl6Q+vbQLmVwkJG07+qe/NjPSa2ECA+CAPgVEhJ9aiiQhmjWBCcxnj/
-	 jQwu3fARIQ09AP49P5gGsZ6Mm81U2+ehHta9p5T8=
+	b=leMdRjjAVAUKwpY6g4ElYh4CsK36iewTJMlTK587T3WfTo2K9LyY7Unj3FKrMjG6i
+	 FVNPddPFHn9QiiRNwlPNlaDd1j23KzW8AYAZmtD+CvtQGiH6oaHmu6+xy3Dat1qVuW
+	 w+c49gQK9UK9ylYcTTKtdj0PGks5ogMjTfLPdF60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Marek Vasut <marex@denx.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/731] Input: joystick - fix Kconfig warning for JOYSTICK_ADC
-Date: Wed, 28 Dec 2022 15:34:54 +0100
-Message-Id: <20221228144301.980734260@linuxfoundation.org>
+Subject: [PATCH 5.15 188/731] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
+Date: Wed, 28 Dec 2022 15:34:55 +0100
+Message-Id: <20221228144302.009460362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,40 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 6100a19c4fcfe154dd32f8a8ef4e8c0b1f607c75 ]
+[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
 
-Fix a Kconfig warning for JOYSTICK_ADC by also selecting
-IIO_BUFFER.
+When using wpa_supplicant v2.10, this driver is no longer able to
+associate with any AP and fails in the EAPOL 4-way handshake while
+sending the 2/4 message to the AP. The problem is not present in
+wpa_supplicant v2.9 or older. The problem stems from HostAP commit
+144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
+which changes the way EAPOL frames are sent, from them being send
+at L2 frames to them being sent via nl80211 control port.
 
-WARNING: unmet direct dependencies detected for IIO_BUFFER_CB
-  Depends on [n]: IIO [=y] && IIO_BUFFER [=n]
-  Selected by [y]:
-  - JOYSTICK_ADC [=y] && INPUT [=y] && INPUT_JOYSTICK [=y] && IIO [=y]
+An EAPOL frame sent as L2 frame is passed to the WiFi driver with
+skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
+port has skb->protocol set to ETH_P_802_3 . The later happens in
+ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
+into 802.3 frame.
 
-Fixes: 2c2b364fddd5 ("Input: joystick - add ADC attached joystick driver.")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20221104201238.31628-1-rdunlap@infradead.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
+frames and sends them via highest-priority transmit queue, while
+the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
+handshake frames must be sent as highest-priority, otherwise the
+4-way handshake times out.
+
+Therefore, to fix this problem, inspect the skb control flags and
+if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
+an EAPOL frame and transmit the frame via high-priority queue just
+like other ETH_P_PAE frames.
+
+Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
+ drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/joystick/Kconfig b/drivers/input/joystick/Kconfig
-index 3b23078bc7b5..db4135bbd279 100644
---- a/drivers/input/joystick/Kconfig
-+++ b/drivers/input/joystick/Kconfig
-@@ -46,6 +46,7 @@ config JOYSTICK_A3D
- config JOYSTICK_ADC
- 	tristate "Simple joystick connected over ADC"
- 	depends on IIO
-+	select IIO_BUFFER
- 	select IIO_BUFFER_CB
- 	help
- 	  Say Y here if you have a simple joystick connected over ADC.
+diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
+index 6bfaab48b507..6b64a103f39f 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_core.c
++++ b/drivers/net/wireless/rsi/rsi_91x_core.c
+@@ -465,7 +465,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
+ 							      tid, 0);
+ 			}
+ 		}
+-		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++
++		if (IEEE80211_SKB_CB(skb)->control.flags &
++		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
+ 			q_num = MGMT_SOFT_Q;
+ 			skb->priority = q_num;
+ 		}
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index dca81a4bbdd7..30d2eccbcadd 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 	u8 header_size;
+ 	u8 vap_id = 0;
+ 	u8 dword_align_bytes;
++	bool tx_eapol;
+ 	u16 seq_num;
+ 
+ 	info = IEEE80211_SKB_CB(skb);
+ 	vif = info->control.vif;
+ 	tx_params = (struct skb_info *)info->driver_data;
+ 
++	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
++		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
++
+ 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
+ 	if (header_size > skb_headroom(skb)) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
+@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 		}
+ 	}
+ 
+-	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++	if (tx_eapol) {
+ 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
+ 
+ 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
 -- 
 2.35.1
 
