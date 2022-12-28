@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7827B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12D4C433D2;
-	Wed, 28 Dec 2022 15:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1868E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92904C433EF;
+	Wed, 28 Dec 2022 15:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241977;
-	bh=3HDWe89flz0DMmrZtFI4A9NZWaSAp+gsSQhoGexSq5g=;
+	s=korg; t=1672241979;
+	bh=WDK+wlZh5yvlGL7avl8hWdqP7Kjtv9sRLBNWiO5fNVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fe6rjvH4ryWJekbGAMG9rHk0+XCGEK8vvS3gZfAZv8PNnjY6EtKMe1vkXwVXCbf/Q
-	 6AGp1wyvbLbsLzJOqUMT9j8pf82WGA0pU76gQ4xUlEL8vzWYcEVKD57rhlgrEd0ZcZ
-	 DIkYfnMtfwDE8J7kxAbzQZIG7mfSuo6SDZINxs6Q=
+	b=wJH2Fy1r7ePaIPvipAYsQXmEtU6Z8JZ0bJI8BUfv+o4MgC5zLV2PazvURoW3j3uDk
+	 Jy909HXIsz3pEKGaS2uF1/Hb2qzURnDuF6MQOwUCwzisFUp+uWyn3G+VcyZQbvS+hm
+	 yB8RJXqb1fxfoTjFvcBcPyrnj5T06Ao/Eoo9Xkdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0350/1073] net: Return errno in sk->sk_prot->get_port().
-Date: Wed, 28 Dec 2022 15:32:18 +0100
-Message-Id: <20221228144337.512799851@linuxfoundation.org>
+Subject: [PATCH 5.15 549/731] iommu/amd: Fix pci device refcount leak in ppr_notifier()
+Date: Wed, 28 Dec 2022 15:40:56 +0100
+Message-Id: <20221228144312.454859250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,113 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7a7160edf1bfde25422262fb26851cef65f695d3 ]
+[ Upstream commit 6cf0981c2233f97d56938d9d61845383d6eb227c ]
 
-We assume the correct errno is -EADDRINUSE when sk->sk_prot->get_port()
-fails, so some ->get_port() functions return just 1 on failure and the
-callers return -EADDRINUSE instead.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put(). So call it before returning from ppr_notifier()
+to avoid refcount leak.
 
-However, mptcp_get_port() can return -EINVAL.  Let's not ignore the error.
-
-Note the only exception is inet_autobind(), all of whose callers return
--EAGAIN instead.
-
-Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: daae2d25a477 ("iommu/amd: Don't copy GCR3 table root pointer")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221118093604.216371-1-yangyingliang@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c              | 4 ++--
- net/ipv4/inet_connection_sock.c | 5 +++--
- net/ipv4/ping.c                 | 2 +-
- net/ipv4/udp.c                  | 2 +-
- net/ipv6/af_inet6.c             | 4 ++--
- 5 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/iommu/amd/iommu_v2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 7f6d7c355e38..4c8782df8eef 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -522,9 +522,9 @@ int __inet_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
- 	/* Make sure we are allowed to bind here. */
- 	if (snum || !(inet->bind_address_no_port ||
- 		      (flags & BIND_FORCE_ADDRESS_NO_PORT))) {
--		if (sk->sk_prot->get_port(sk, snum)) {
-+		err = sk->sk_prot->get_port(sk, snum);
-+		if (err) {
- 			inet->inet_saddr = inet->inet_rcv_saddr = 0;
--			err = -EADDRINUSE;
- 			goto out_release_sock;
- 		}
- 		if (!(flags & BIND_FROM_BPF)) {
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index eb31c7158b39..971969cc7e17 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1041,7 +1041,7 @@ int inet_csk_listen_start(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
--	int err = -EADDRINUSE;
-+	int err;
+diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
+index a45c5536d250..c96cf9b21719 100644
+--- a/drivers/iommu/amd/iommu_v2.c
++++ b/drivers/iommu/amd/iommu_v2.c
+@@ -588,6 +588,7 @@ static int ppr_notifier(struct notifier_block *nb, unsigned long e, void *data)
+ 	put_device_state(dev_state);
  
- 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
- 
-@@ -1057,7 +1057,8 @@ int inet_csk_listen_start(struct sock *sk)
- 	 * after validation is complete.
- 	 */
- 	inet_sk_state_store(sk, TCP_LISTEN);
--	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
-+	err = sk->sk_prot->get_port(sk, inet->inet_num);
-+	if (!err) {
- 		inet->inet_sport = htons(inet->inet_num);
- 
- 		sk_dst_reset(sk);
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index 3b2420829c23..948f4801f993 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -142,7 +142,7 @@ int ping_get_port(struct sock *sk, unsigned short ident)
- 
- fail:
- 	spin_unlock(&ping_table.lock);
--	return 1;
-+	return -EADDRINUSE;
+ out:
++	pci_dev_put(pdev);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(ping_get_port);
  
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index c04a26339bd1..7fe0ba3f0933 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -235,7 +235,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
- 	struct udp_table *udptable = sk->sk_prot->h.udp_table;
- 	struct udp_hslot *hslot, *hslot2;
- 	struct net *net = sock_net(sk);
--	int error = 1;
-+	int error = -EADDRINUSE;
- 
- 	if (!snum) {
- 		DECLARE_BITMAP(bitmap, PORTS_PER_CHAIN);
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index dbb1430d6cc2..cceda5c83302 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -403,10 +403,10 @@ static int __inet6_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
- 	/* Make sure we are allowed to bind here. */
- 	if (snum || !(inet->bind_address_no_port ||
- 		      (flags & BIND_FORCE_ADDRESS_NO_PORT))) {
--		if (sk->sk_prot->get_port(sk, snum)) {
-+		err = sk->sk_prot->get_port(sk, snum);
-+		if (err) {
- 			sk->sk_ipv6only = saved_ipv6only;
- 			inet_reset_saddr(sk);
--			err = -EADDRINUSE;
- 			goto out;
- 		}
- 		if (!(flags & BIND_FROM_BPF)) {
 -- 
 2.35.1
 
