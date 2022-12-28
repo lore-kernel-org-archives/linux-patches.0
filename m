@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0280F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EACC433D2;
-	Wed, 28 Dec 2022 15:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57851863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0B4C433D2;
+	Wed, 28 Dec 2022 15:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240337;
-	bh=WprUurxFYo57t/bA68yT8Rkc5W3dn4f10I5hL4GgaHw=;
+	s=korg; t=1672240340;
+	bh=Lez0XSHP/3AfL8wxzX79PzZk+p3Dw0gYxZGEGDraGYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTpn8TOxeUypJ55eXwUqZLAEqcX1OidtX94NK7Rfc8jdI6MMoxLwte3u6mvGfwDkb
-	 HT4KZUA0RZZcTtjJj+BXT9E26/TipI3ZA1cntTUIe7JwoOhQGuBCV04of8nvWPGagu
-	 /KI7XJ8ffyXv4s8j8wtTbBwNDu85oAKH4pYQGPJI=
+	b=yWqIAl8SIaJacC7ZKS4oS09u0+Nk6fbs9jEtV47yYzy6S+n4LQN4JqHAXjthBZxvU
+	 z8BQAdKKDgst1qS84liwzrCQoSeh67PV5JgH7PNBrd8ct1of3d2+BnbznxtM76y+TC
+	 jPxaPfulZpLDuAtNPT0Ib7pDdjufY2frrN9d4plg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/731] net: amd-xgbe: Fix logic around active and passive cables
-Date: Wed, 28 Dec 2022 15:37:25 +0100
-Message-Id: <20221228144306.365120861@linuxfoundation.org>
+Subject: [PATCH 6.0 0149/1073] rapidio: fix possible name leaks when rio_add_device() fails
+Date: Wed, 28 Dec 2022 15:28:57 +0100
+Message-Id: <20221228144332.070538076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,61 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4998006c73afe44e2f639d55bd331c6c26eb039f ]
+[ Upstream commit f9574cd48679926e2a569e1957a5a1bcc8a719ac ]
 
-SFP+ active and passive cables are copper cables with fixed SFP+ end
-connectors. Due to a misinterpretation of this, SFP+ active cables could
-end up not being recognized, causing the driver to fail to establish a
-connection.
+Patch series "rapidio: fix three possible memory leaks".
 
-Introduce a new enum in SFP+ cable types, XGBE_SFP_CABLE_FIBER, that is
-the default cable type, and handle active and passive cables when they are
-specifically detected.
+This patchset fixes three name leaks in error handling.
+ - patch #1 fixes two name leaks while rio_add_device() fails.
+ - patch #2 fixes a name leak while  rio_register_mport() fails.
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This patch (of 2):
+
+If rio_add_device() returns error, the name allocated by dev_set_name()
+need be freed.  It should use put_device() to give up the reference in the
+error path, so that the name can be freed in kobject_cleanup(), and the
+'rdev' can be freed in rio_release_dev().
+
+Link: https://lkml.kernel.org/r/20221114152636.2939035-1-yangyingliang@huawei.com
+Link: https://lkml.kernel.org/r/20221114152636.2939035-2-yangyingliang@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 7 +++++--
+ drivers/rapidio/rio-scan.c               | 8 ++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index a7166cd1179f..a9a734454973 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -189,6 +189,7 @@ enum xgbe_sfp_cable {
- 	XGBE_SFP_CABLE_UNKNOWN = 0,
- 	XGBE_SFP_CABLE_ACTIVE,
- 	XGBE_SFP_CABLE_PASSIVE,
-+	XGBE_SFP_CABLE_FIBER,
- };
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index 2cdc054e53a5..3cc83997a1f8 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1804,8 +1804,11 @@ static int rio_mport_add_riodev(struct mport_cdev_priv *priv,
+ 		rio_init_dbell_res(&rdev->riores[RIO_DOORBELL_RESOURCE],
+ 				   0, 0xffff);
+ 	err = rio_add_device(rdev);
+-	if (err)
+-		goto cleanup;
++	if (err) {
++		put_device(&rdev->dev);
++		return err;
++	}
++
+ 	rio_dev_get(rdev);
  
- enum xgbe_sfp_base {
-@@ -1149,16 +1150,18 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
- 	phy_data->sfp_tx_fault = xgbe_phy_check_sfp_tx_fault(phy_data);
- 	phy_data->sfp_rx_los = xgbe_phy_check_sfp_rx_los(phy_data);
+ 	return 0;
+diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
+index 19b0c33f4a62..fdcf742b2adb 100644
+--- a/drivers/rapidio/rio-scan.c
++++ b/drivers/rapidio/rio-scan.c
+@@ -454,8 +454,12 @@ static struct rio_dev *rio_setup_device(struct rio_net *net,
+ 				   0, 0xffff);
  
--	/* Assume ACTIVE cable unless told it is PASSIVE */
-+	/* Assume FIBER cable unless told otherwise */
- 	if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_PASSIVE) {
- 		phy_data->sfp_cable = XGBE_SFP_CABLE_PASSIVE;
- 		phy_data->sfp_cable_len = sfp_base[XGBE_SFP_BASE_CU_CABLE_LEN];
--	} else {
-+	} else if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_ACTIVE) {
- 		phy_data->sfp_cable = XGBE_SFP_CABLE_ACTIVE;
-+	} else {
-+		phy_data->sfp_cable = XGBE_SFP_CABLE_FIBER;
- 	}
+ 	ret = rio_add_device(rdev);
+-	if (ret)
+-		goto cleanup;
++	if (ret) {
++		if (rswitch)
++			kfree(rswitch->route_table);
++		put_device(&rdev->dev);
++		return NULL;
++	}
  
- 	/* Determine the type of SFP */
--	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
-+	if (phy_data->sfp_cable != XGBE_SFP_CABLE_FIBER &&
- 	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
- 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
+ 	rio_dev_get(rdev);
+ 
 -- 
 2.35.1
 
