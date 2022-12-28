@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437901863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99C7C433D2;
-	Wed, 28 Dec 2022 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F811863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5516EC433EF;
+	Wed, 28 Dec 2022 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239989;
-	bh=LN62Qwap7FxUixeVq+R4s4nnFyLMUv94FDJ3IEkQxr0=;
+	s=korg; t=1672239991;
+	bh=hyw9iTH/H0D6kJE+QzSnNUXjr2YuX9hc9tBhjqu3n0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mCFDCGJ08l3UwZcGGu4b+SPyE8caOeLAq1E2x2v8PmyxiQGskt4d4fO58MKFxwv6
-	 hl6Sbj+o5SQdUbzdQXwxaDEKHmcEORu0ZGubaBmbAcncSRuUqnkiuctQbzgoAOT4z7
-	 ooNn3dfebuBarv7+Xt+Kp647wrFZ0zAJit8bVEqc=
+	b=j9f0Y5MF5tWYUuawRyOjQX7RXFqgN202zn1jKqvy4AoO+tufr3wdW/G+B8m1BI/ZL
+	 hO9T33onJAdFh275K39wXIqPgnMOG3ddtUIAPFZiIVnz360MDdLUciHyYAs2Fu9qaF
+	 cmuO8JEqtU6pZ/ofbGwX2buZ7rLFXtKDAJ2zy5HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Joel Stanley <joel@jms.id.au>,
+	Hao Lee <haolee.swjtu@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0068/1146] ARM: dts: nuvoton: Remove bogus unit addresses from fixed-partition nodes
-Date: Wed, 28 Dec 2022 15:26:47 +0100
-Message-Id: <20221228144332.004987343@linuxfoundation.org>
+Subject: [PATCH 6.0 0105/1073] sched/psi: Fix possible missing or delayed pending event
+Date: Wed, 28 Dec 2022 15:28:13 +0100
+Message-Id: <20221228144330.897656160@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Hao Lee <haolee.swjtu@gmail.com>
 
-[ Upstream commit ea3ce4cf076ba11bb591c8013c5315136cae52c8 ]
+[ Upstream commit e38f89af6a13e895805febd3a329a13ab7e66fa4 ]
 
-The unit addresses do not correspond to the nodes' reg properties,
-because they don't have any.
+When a pending event exists and growth is less than the threshold, the
+current logic is to skip this trigger without generating event. However,
+from e6df4ead85d9 ("psi: fix possible trigger missing in the window"),
+our purpose is to generate event as long as pending event exists and the
+rate meets the limit, no matter what growth is.
+This patch handles this case properly.
 
-Fixes: e42b650f828d ("ARM: dts: nuvoton: Add new device nodes to NPCM750 EVB")
-Fixes: ee33e2fb3d70 ("ARM: dts: nuvoton: Add Quanta GBS BMC Device Tree")
-Fixes: 59f5abe09f0a ("ARM: dts: nuvoton: Add Quanta GSJ BMC")
-Fixes: 14579c76f5ca ("ARM: dts: nuvoton: Add Fii Kudo system")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20221031221553.163273-1-j.neuschaefer@gmx.net
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Fixes: e6df4ead85d9 ("psi: fix possible trigger missing in the window")
+Signed-off-by: Hao Lee <haolee.swjtu@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://lore.kernel.org/r/20220919072356.GA29069@haolee.io
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
- arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
- arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ kernel/sched/psi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-index d10669fcd527..9e9eba8bad5e 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-@@ -366,7 +366,7 @@ flash@0 {
- 		spi-max-frequency = <20000000>;
- 		spi-rx-bus-width = <2>;
- 		label = "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-index 491606c4f044..2a394cc15284 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-@@ -142,7 +142,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index ecb4b4ff4ce0..559416a27c0e 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -537,10 +537,12 @@ static u64 update_triggers(struct psi_group *group, u64 now)
  
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-index a0c2d7652625..f7b38bee039b 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-@@ -388,7 +388,7 @@ flash@0 {
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
- 		label = "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -422,7 +422,7 @@ flash@1 {
- 		reg = <1>;
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
--		partitions@88000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -447,7 +447,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-index 3dad32834e5e..f53d45fa1de8 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-@@ -74,7 +74,7 @@ flash@0 {
- 		spi-rx-bus-width = <2>;
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -135,7 +135,7 @@ flash@0 {
- 		spi-rx-bus-width = <2>;
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-index 132e702281fc..87359ab05db3 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-@@ -107,7 +107,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
+ 			/* Calculate growth since last update */
+ 			growth = window_update(&t->win, now, total[t->state]);
+-			if (growth < t->threshold)
+-				continue;
++			if (!t->pending_event) {
++				if (growth < t->threshold)
++					continue;
  
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -146,7 +146,7 @@ flash@1 {
- 		reg = <1>;
- 		npcm,fiu-rx-bus-width = <2>;
- 
--		partitions@88000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -173,7 +173,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
- 
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
+-			t->pending_event = true;
++				t->pending_event = true;
++			}
+ 		}
+ 		/* Limit event signaling to once per window */
+ 		if (now < t->last_event_time + t->win.size)
 -- 
 2.35.1
 
