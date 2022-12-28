@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50311863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B41C433D2;
-	Wed, 28 Dec 2022 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495281863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A32C433D2;
+	Wed, 28 Dec 2022 14:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238787;
-	bh=2KGlZJUfR3G6XbfvZYIweZFRS46cvv0PW9WCq3/6RVM=;
+	s=korg; t=1672238790;
+	bh=qHNKDTYQZ7r6fbuZ4CQddHe5QhJgh9PS3kiUugWEc5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcI2T3KOBWNGmqgU9wItBy7NZgAvhy0/qQCM2dX9twNSRs8eBGw7RRsEG4etp5Wg/
-	 K8buSQ0IJPvqWIj0aTu/fNtWiR0EHi6fLOqdgGuLtGq892C47AI3QVbUhbbhQazD02
-	 TxaQ95Qc9wtz8Ibk0U9LFEpx1hqvd/z8U2uQtTD8=
+	b=avSthovdE3o2npBc3jN4C2+HHWTmifHKdcZ8z2ekHocPymfla33M2hS7G/pJehcHx
+	 LyiHgMUXfqClrvJoVEQmRvXbTFsDrFDZR9TaOpO3M1T1c+Q5mUfBcydZlhWLcC6Oh6
+	 8QF8S7aPdK4eQV0PBR4mjymVxhAKbPC7lNIqOBUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/731] arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
-Date: Wed, 28 Dec 2022 15:31:51 +0100
-Message-Id: <20221228144256.665854938@linuxfoundation.org>
+Subject: [PATCH 5.15 013/731] ARM: dts: stm32: Drop stm32mp15xc.dtsi from Avenger96
+Date: Wed, 28 Dec 2022 15:32:00 +0100
+Message-Id: <20221228144256.923923342@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,34 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 7ff4a646fae3697b039c6b684786a1e309e8445c ]
+[ Upstream commit 3b835f1b8acef53c8882b25f40f48d7f5982c938 ]
 
-The property to disable bias is "bias-disable".
+The Avenger96 is populated with STM32MP157A DHCOR SoM, drop the
+stm32mp15xc.dtsi which should only be included in DTs of devices
+which are populated with STM32MP15xC/F SoC as the stm32mp15xc.dtsi
+enables CRYP block not present in the STM32MP15xA/D SoC .
 
-Fixes: e76c7e1f15fe ("arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220930192954.242546-3-krzysztof.kozlowski@linaro.org
+Fixes: 7e76f82acd9e1 ("ARM: dts: stm32: Split Avenger96 into DHCOR SoM and Avenger96 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index b15d085db05a..effbd6a9c989 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -591,7 +591,7 @@ ts_int_default: ts-int-default {
- 		pins = "gpio39";
- 		function = "gpio";
- 		drive-strength = <2>;
--		bias-disabled;
-+		bias-disable;
- 		input-enable;
- 	};
+diff --git a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+index 2e3c9fbb4eb3..275167f26fd9 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+@@ -13,7 +13,6 @@
+ /dts-v1/;
+ 
+ #include "stm32mp157.dtsi"
+-#include "stm32mp15xc.dtsi"
+ #include "stm32mp15xx-dhcor-som.dtsi"
+ #include "stm32mp15xx-dhcor-avenger96.dtsi"
  
 -- 
 2.35.1
