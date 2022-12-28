@@ -1,80 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9691A2103
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F6CC433D2;
-	Wed, 28 Dec 2022 16:57:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246626;
-	bh=DdwE8nGV7R2/8VF/7Z3y2CUgJ6sF/dlFB5LQu3rt0F0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJNby+5HZBg58n0UM8GYySxNQHoQRcS3MkS57SNjBXElE9o0m3AutnMBLu3JU13Dp
-	 WPwhw/xFWmL3Mn2zKZbnrjYZRpypNI9RvGx43VYgP24xc7xDcQjd6hPKodx1I+Qx75
-	 CLaaZIjFS2bGsPSdp4IznnbkYfFC+DLGjS0EKyOw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 1105/1146] arm64: dts: qcom: sm6350: fix USB-DP PHY registers
-Date: Wed, 28 Dec 2022 15:44:04 +0100
-Message-Id: <20221228144400.172648894@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C95620E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED1AC433F0;
+	Wed, 28 Dec 2022 16:57:04 +0000 (UTC)
+Message-ID: <c7446d24-746d-9271-3535-2fdd576b06f0@xs4all.nl>
+Date: Wed, 28 Dec 2022 17:57:02 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 6.0 0847/1073] media: v4l2-ctrls-api.c: add back dropped
+ ctrl->is_new = 1
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Alice Yuan <alice.yuan@nxp.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20221228144328.162723588@linuxfoundation.org>
+ <20221228144351.026655624@linuxfoundation.org>
+Content-Language: en-US
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20221228144351.026655624@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+On 28/12/2022 15:40, Greg Kroah-Hartman wrote:
+> From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+> 
+> [ Upstream commit 73278d483378cf850ade923a1107a70297b2602a ]
+> 
+> The patch adding support for dynamically allocated arrays accidentally
+> dropped the line setting ctrl->is_new to 1, thus new string values were
+> always ignored.
+> 
+> Fixes: fb582cba4492 ("media: v4l2-ctrls: add support for dynamically allocated arrays.")
+> Reported-by: Alice Yuan <alice.yuan@nxp.com>
+> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/media/v4l2-core/v4l2-ctrls-api.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-api.c b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> index 50d012ba3c02..7781ebd7ee95 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> @@ -155,6 +155,7 @@ static int user_to_new(struct v4l2_ext_control *c, struct v4l2_ctrl *ctrl)
+>  			 * then return an error.
+>  			 */
+>  			if (strlen(ctrl->p_new.p_char) == ctrl->maximum && last)
+> +			ctrl->is_new = 1;
+>  				return -ERANGE;
 
-commit 347b9491c595d5091bfabe65cad2fd6eee786153 upstream.
+This is obviously wrong.
 
-When adding support for the DisplayPort part of the QMP PHY the binding
-(and devicetree parser) for the (USB) child node was simply reused and
-this has lead to some confusion.
+Something got messed up in mainline where my original patch:
 
-The third DP register region is really the DP_PHY region, not "PCS" as
-the binding claims, and lie at offset 0x2a00 (not 0x2c00).
+https://git.linuxtv.org/hverkuil/media_tree.git/commit/?h=for-v6.1a&id=c33692033135acc96dfdd00dca6e8a392c545b0a
 
-Similarly, there likely are no "RX", "RX2" or "PCS_MISC" regions as
-there are for the USB part of the PHY (and in any case the Linux driver
-does not use them).
+got mangled to the version you have here.
 
-Note that the sixth "PCS_MISC" region is not even in the binding.
+I guess I'll have to post a new patch for mainline fixing the mangled fix.
 
-Fixes: 23737b9557fe ("arm64: dts: qcom: sm6350: Add USB1 nodes")
-Cc: stable@vger.kernel.org      # 5.16
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221111094729.11842-2-johan+linaro@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I only now noticed that you posted the backport patch for review on Dec 25th :-(
 
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1150,10 +1150,9 @@
- 			dp_phy: dp-phy@88ea200 {
- 				reg = <0 0x088ea200 0 0x200>,
- 				      <0 0x088ea400 0 0x200>,
--				      <0 0x088eac00 0 0x400>,
-+				      <0 0x088eaa00 0 0x200>,
- 				      <0 0x088ea600 0 0x200>,
--				      <0 0x088ea800 0 0x200>,
--				      <0 0x088eaa00 0 0x100>;
-+				      <0 0x088ea800 0 0x200>;
- 				#phy-cells = <0>;
- 				#clock-cells = <1>;
- 			};
+Oh well, string control support was broken, and is now even more broken.
 
+Regards,
+
+	Hans
+
+>  		}
+>  		return ret;
 
