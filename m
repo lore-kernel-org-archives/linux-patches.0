@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BB11C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397ECC433D2;
-	Wed, 28 Dec 2022 16:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6041A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA53CC433D2;
+	Wed, 28 Dec 2022 16:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246222;
-	bh=TS6A5ZOQGUXz9X3NHgMs6UdXwnt/OuPwzrlDqsHA4LM=;
+	s=korg; t=1672246225;
+	bh=RbUHbXr2zOkHNSqMvO3GxW0qUW9ezzq7ASTx6yz0MbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5viKh2FYlRgosVAjTyn4LHvG3HPL9OipLQ7FBmGtCjadvdeRX8MO5DjwYCDRzGf+
-	 odTnGxaWYPNSUpLaqsfbMh08K6052b2VdJnJjZK0XKNVrfw4gosvyUb07N8EgT5Qiy
-	 xtnWJ1GDN/iS/W+dIJ5daPo2G/lnMRi5zlYqjRT8=
+	b=Xm6pJAxrE6GWub3N8enM8oOYsmMDBs9Jc6D7LXawNxXlIGBEyoArB+0MjDt8DbDBN
+	 0P9DcOyyZKQ1lAuFNxovC9f1fjVORz0jXX8zRGyb5ZavZT3D+DeiEFt1oo1yPCm1v5
+	 OzHaOd8oQ9yNhqxL0pauDUvl916f8tG+U1lFsfWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1005/1146] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
-Date: Wed, 28 Dec 2022 15:42:24 +0100
-Message-Id: <20221228144357.669535676@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.0 1034/1073] arm64: dts: qcom: sm6350: fix USB-DP PHY registers
+Date: Wed, 28 Dec 2022 15:43:42 +0100
+Message-Id: <20221228144356.277765750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,59 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 890d637523eec9d730e3885532fa1228ba678880 ]
+commit 347b9491c595d5091bfabe65cad2fd6eee786153 upstream.
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+When adding support for the DisplayPort part of the QMP PHY the binding
+(and devicetree parser) for the (USB) child node was simply reused and
+this has lead to some confusion.
 
-  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = mtk_hdmi_bridge_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+The third DP register region is really the DP_PHY region, not "PCS" as
+the binding claims, and lie at offset 0x2a00 (not 0x2c00).
 
-->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
-'enum drm_mode_status', not 'int'. Adjust the return type of
-mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
-warning and CFI failure.
+Similarly, there likely are no "RX", "RX2" or "PCS_MISC" regions as
+there are for the USB part of the PHY (and in any case the Linux driver
+does not use them).
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that the sixth "PCS_MISC" region is not even in the binding.
+
+Fixes: 23737b9557fe ("arm64: dts: qcom: sm6350: Add USB1 nodes")
+Cc: stable@vger.kernel.org      # 5.16
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221111094729.11842-2-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-index 4c80b6896dc3..6e8f99554f54 100644
---- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-@@ -1202,9 +1202,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
- 	return mtk_hdmi_update_plugged_status(hdmi);
- }
- 
--static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
--				      const struct drm_display_info *info,
--				      const struct drm_display_mode *mode)
-+static enum drm_mode_status
-+mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
-+			   const struct drm_display_info *info,
-+			   const struct drm_display_mode *mode)
- {
- 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
- 	struct drm_bridge *next_bridge;
--- 
-2.35.1
-
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1007,10 +1007,9 @@
+ 			dp_phy: dp-phy@88ea200 {
+ 				reg = <0 0x088ea200 0 0x200>,
+ 				      <0 0x088ea400 0 0x200>,
+-				      <0 0x088eac00 0 0x400>,
++				      <0 0x088eaa00 0 0x200>,
+ 				      <0 0x088ea600 0 0x200>,
+-				      <0 0x088ea800 0 0x200>,
+-				      <0 0x088eaa00 0 0x100>;
++				      <0 0x088ea800 0 0x200>;
+ 				#phy-cells = <0>;
+ 				#clock-cells = <1>;
+ 			};
 
 
