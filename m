@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1C81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7782C433D2;
-	Wed, 28 Dec 2022 15:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9652FC433EF;
+	Wed, 28 Dec 2022 15:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240073;
-	bh=PTAYiipJXHA7YO07kU1dB70Dca/qVX/bqfcUIs4spdQ=;
+	s=korg; t=1672240076;
+	bh=B05NQTeZWLpbNoyEtzdqPyOngzkdrRu1o+cnFfd7SH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzIKdBtzg/HMhCCZGT407AyvjT32liX2C/RaIhD5uBDn+Cgj8KPMldPTz3nRDFOI6
-	 AHGi15fXdJeaO3bSaVQneQpq5lOZ+gFX50/fpZeclAyDB33hH8ZLn/OVZA+uXGlrMq
-	 NhChj3zNAySpaI6vm9RCR5mv5pDup3c42TcW/ttU=
+	b=sNyppJ5/syaTiu+XuVNbU2h32QSTHQ24KojA9/JzpIUBrHvdFkn3ckfbpLF+tRMTT
+	 36xuN4L6YjI5j6OnK6dqBsneHycdPrL960hQPtoaY53sg0WUVpMo4x2vS5js4k8enM
+	 Dqvop9vH67qiZqV/OOXEd9B+Pam8r7vslisDvgXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takeshi Saito <takeshi.saito.xv@renesas.com>,
-	Takeshi Kihara <takeshi.kihara.df@renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 306/731] mmc: renesas_sdhi: alway populate SCC pointer
-Date: Wed, 28 Dec 2022 15:36:53 +0100
-Message-Id: <20221228144305.444724059@linuxfoundation.org>
+Subject: [PATCH 6.0 0115/1073] platform/x86: huawei-wmi: fix return value calculation
+Date: Wed, 28 Dec 2022 15:28:23 +0100
+Message-Id: <20221228144331.162913855@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,57 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit 3d4f9898c1c74323dd61d6a8a0efca9401232ad4 ]
+[ Upstream commit 0b9a1dcdb6a2c841899389bf2dd7a3e0e2aa0e99 ]
 
-We need the SCC pointer to reset the device, so populate it even when we
-don't need it for tuning.
+Previously, `huawei_wmi_input_setup()` returned the result of
+logical or-ing the return values of two functions that return negative
+errno-style error codes and one that returns `acpi_status`. If this
+returned value was non-zero, then it was propagated from the platform
+driver's probe function. That function should return a negative
+errno-style error code, so the result of the logical or that
+`huawei_wmi_input_setup()` returned was not appropriate.
 
-Fixes: 45bffc371fef ("mmc: renesas_sdhi: only reset SCC when its pointer is populated")
-Signed-off-by: Takeshi Saito <takeshi.saito.xv@renesas.com>
-Signed-off-by: Takeshi Kihara <takeshi.kihara.df@renesas.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20221120113457.42010-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fix that by checking each function separately and returning the
+error code unmodified.
+
+Fixes: 1ac9abeb2e5b ("platform/x86: huawei-wmi: Move to platform driver")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Link: https://lore.kernel.org/r/20221005150032.173198-2-pobrn@protonmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/platform/x86/huawei-wmi.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
-index 387f2a4f693a..f443debbcb98 100644
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1037,11 +1037,14 @@ int renesas_sdhi_probe(struct platform_device *pdev,
- 	if (ver >= SDHI_VER_GEN3_SD)
- 		host->get_timeout_cycles = renesas_sdhi_gen3_get_cycles;
- 
-+	/* Check for SCC so we can reset it if needed */
-+	if (of_data && of_data->scc_offset && ver >= SDHI_VER_GEN2_SDR104)
-+		priv->scc_ctl = host->ctl + of_data->scc_offset;
+diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
+index eac3e6b4ea11..935562c870c3 100644
+--- a/drivers/platform/x86/huawei-wmi.c
++++ b/drivers/platform/x86/huawei-wmi.c
+@@ -760,6 +760,9 @@ static int huawei_wmi_input_setup(struct device *dev,
+ 		const char *guid,
+ 		struct input_dev **idev)
+ {
++	acpi_status status;
++	int err;
 +
- 	/* Enable tuning iff we have an SCC and a supported mode */
--	if (of_data && of_data->scc_offset &&
--	    (host->mmc->caps & MMC_CAP_UHS_SDR104 ||
--	     host->mmc->caps2 & (MMC_CAP2_HS200_1_8V_SDR |
--				 MMC_CAP2_HS400_1_8V))) {
-+	if (priv->scc_ctl && (host->mmc->caps & MMC_CAP_UHS_SDR104 ||
-+	    host->mmc->caps2 & (MMC_CAP2_HS200_1_8V_SDR |
-+				MMC_CAP2_HS400_1_8V))) {
- 		const struct renesas_sdhi_scc *taps = of_data->taps;
- 		bool use_4tap = priv->quirks && priv->quirks->hs400_4taps;
- 		bool hit = false;
-@@ -1061,7 +1064,6 @@ int renesas_sdhi_probe(struct platform_device *pdev,
- 		if (!hit)
- 			dev_warn(&host->pdev->dev, "Unknown clock rate for tuning\n");
+ 	*idev = devm_input_allocate_device(dev);
+ 	if (!*idev)
+ 		return -ENOMEM;
+@@ -769,10 +772,19 @@ static int huawei_wmi_input_setup(struct device *dev,
+ 	(*idev)->id.bustype = BUS_HOST;
+ 	(*idev)->dev.parent = dev;
  
--		priv->scc_ctl = host->ctl + of_data->scc_offset;
- 		host->check_retune = renesas_sdhi_check_scc_error;
- 		host->ops.execute_tuning = renesas_sdhi_execute_tuning;
- 		host->ops.prepare_hs400_tuning = renesas_sdhi_prepare_hs400_tuning;
+-	return sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL) ||
+-		input_register_device(*idev) ||
+-		wmi_install_notify_handler(guid, huawei_wmi_input_notify,
+-				*idev);
++	err = sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL);
++	if (err)
++		return err;
++
++	err = input_register_device(*idev);
++	if (err)
++		return err;
++
++	status = wmi_install_notify_handler(guid, huawei_wmi_input_notify, *idev);
++	if (ACPI_FAILURE(status))
++		return -EIO;
++
++	return 0;
+ }
+ 
+ static void huawei_wmi_input_exit(struct device *dev, const char *guid)
 -- 
 2.35.1
 
