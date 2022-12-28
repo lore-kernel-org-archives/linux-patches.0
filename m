@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3960A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D17C433D2;
-	Wed, 28 Dec 2022 14:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7161863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B830C433D2;
+	Wed, 28 Dec 2022 14:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239072;
-	bh=HUOb01HZODzZKq1CAHY2wWCbP1y0H1CFdVxyQysjJks=;
+	s=korg; t=1672239074;
+	bh=j+w0O5+YI3tnQphigPkckoG8VrZSFQEMfWCtFqNg0kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/XAi09jX8IRe3iWUppoJVJDO/aRDkBJmsye3uGjcoST1M8FCZdrHNjFue2O/43sB
-	 IFOhmvh7eWh54TJkulQ4LagSOh4s6ToC18n6JcDd1x+XtjRHVdNS65VEmI+HxcQeCX
-	 vz/YmXQnhxP8W/1Q7wRIfsoB0mvjfcQ/9vQSx++4=
+	b=SCtVgB/wAoL+nb+cSbX5hJF3c5pNcYJkWwXxzEXI32whWL92qqFXoSGgoHmQl7u4T
+	 j5qCHNK7HCPq59YHxfG8rEKNEEY1iGt/7t3zZY2PsfoFMa/Ce3eQywYyJ/xX2W5R8J
+	 nTi/A5vWQ8Nevuk5vUCGXyV+KwKSbAyF8LNpUsY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Auld <pauld@redhat.com>,
+	Derek Dolney <z23@posteo.net>,
+	Vincent Donnefort <vdonnefort@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/731] cpu/hotplug: Make target_store() a nop when target == state
-Date: Wed, 28 Dec 2022 15:33:45 +0100
-Message-Id: <20221228144259.973608902@linuxfoundation.org>
+Subject: [PATCH 5.15 119/731] cpu/hotplug: Do not bail-out in DYING/STARTING sections
+Date: Wed, 28 Dec 2022 15:33:46 +0100
+Message-Id: <20221228144300.003646834@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,58 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phil Auld <pauld@redhat.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 64ea6e44f85b9b75925ebe1ba0e6e8430cc4e06f ]
+[ Upstream commit 6f855b39e4602b6b42a8e5cbcfefb8a1b8b5f0be ]
 
-Writing the current state back in hotplug/target calls cpu_down()
-which will set cpu dying even when it isn't and then nothing will
-ever clear it. A stress test that reads values and writes them back
-for all cpu device files in sysfs will trigger the BUG() in
-select_fallback_rq once all cpus are marked as dying.
+The DYING/STARTING callbacks are not expected to fail. However, as reported
+by Derek, buggy drivers such as tboot are still free to return errors
+within those sections, which halts the hot(un)plug and leaves the CPU in an
+unrecoverable state.
 
-kernel/cpu.c::target_store()
-	...
-        if (st->state < target)
-                ret = cpu_up(dev->id, target);
-        else
-                ret = cpu_down(dev->id, target);
+As there is no rollback possible, only log the failures and proceed with
+the following steps.
 
-cpu_down() -> cpu_set_state()
-	 bool bringup = st->state < target;
-	 ...
-	 if (cpu_dying(cpu) != !bringup)
-		set_cpu_dying(cpu, !bringup);
+This restores the hotplug behaviour prior to commit 453e41085183
+("cpu/hotplug: Add cpuhp_invoke_callback_range()")
 
-Fix this by letting state==target fall through in the target_store()
-conditional. Also make sure st->target == target in that case.
-
-Fixes: 757c989b9994 ("cpu/hotplug: Make target state writeable")
-Signed-off-by: Phil Auld <pauld@redhat.com>
+Fixes: 453e41085183 ("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+Reported-by: Derek Dolney <z23@posteo.net>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Derek Dolney <z23@posteo.net>
 Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://lore.kernel.org/r/20221117162329.3164999-2-pauld@redhat.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215867
+Link: https://lore.kernel.org/r/20220927101259.1149636-1-vdonnefort@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/cpu.c | 56 +++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/cpu.c b/kernel/cpu.c
-index da871eb07566..e08d207011dd 100644
+index e08d207011dd..393114c10c28 100644
 --- a/kernel/cpu.c
 +++ b/kernel/cpu.c
-@@ -2315,8 +2315,10 @@ static ssize_t target_store(struct device *dev, struct device_attribute *attr,
+@@ -662,21 +662,51 @@ static bool cpuhp_next_state(bool bringup,
+ 	return true;
+ }
  
- 	if (st->state < target)
- 		ret = cpu_up(dev->id, target);
--	else
-+	else if (st->state > target)
- 		ret = cpu_down(dev->id, target);
-+	else if (WARN_ON(st->target != target))
-+		st->target = target;
- out:
- 	unlock_device_hotplug();
- 	return ret ? ret : count;
+-static int cpuhp_invoke_callback_range(bool bringup,
+-				       unsigned int cpu,
+-				       struct cpuhp_cpu_state *st,
+-				       enum cpuhp_state target)
++static int __cpuhp_invoke_callback_range(bool bringup,
++					 unsigned int cpu,
++					 struct cpuhp_cpu_state *st,
++					 enum cpuhp_state target,
++					 bool nofail)
+ {
+ 	enum cpuhp_state state;
+-	int err = 0;
++	int ret = 0;
+ 
+ 	while (cpuhp_next_state(bringup, &state, st, target)) {
++		int err;
++
+ 		err = cpuhp_invoke_callback(cpu, state, bringup, NULL, NULL);
+-		if (err)
++		if (!err)
++			continue;
++
++		if (nofail) {
++			pr_warn("CPU %u %s state %s (%d) failed (%d)\n",
++				cpu, bringup ? "UP" : "DOWN",
++				cpuhp_get_step(st->state)->name,
++				st->state, err);
++			ret = -1;
++		} else {
++			ret = err;
+ 			break;
++		}
+ 	}
+ 
+-	return err;
++	return ret;
++}
++
++static inline int cpuhp_invoke_callback_range(bool bringup,
++					      unsigned int cpu,
++					      struct cpuhp_cpu_state *st,
++					      enum cpuhp_state target)
++{
++	return __cpuhp_invoke_callback_range(bringup, cpu, st, target, false);
++}
++
++static inline void cpuhp_invoke_callback_range_nofail(bool bringup,
++						      unsigned int cpu,
++						      struct cpuhp_cpu_state *st,
++						      enum cpuhp_state target)
++{
++	__cpuhp_invoke_callback_range(bringup, cpu, st, target, true);
+ }
+ 
+ static inline bool can_rollback_cpu(struct cpuhp_cpu_state *st)
+@@ -994,7 +1024,6 @@ static int take_cpu_down(void *_param)
+ 	struct cpuhp_cpu_state *st = this_cpu_ptr(&cpuhp_state);
+ 	enum cpuhp_state target = max((int)st->target, CPUHP_AP_OFFLINE);
+ 	int err, cpu = smp_processor_id();
+-	int ret;
+ 
+ 	/* Ensure this CPU doesn't handle any more interrupts. */
+ 	err = __cpu_disable();
+@@ -1007,13 +1036,10 @@ static int take_cpu_down(void *_param)
+ 	 */
+ 	WARN_ON(st->state != (CPUHP_TEARDOWN_CPU - 1));
+ 
+-	/* Invoke the former CPU_DYING callbacks */
+-	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
+-
+ 	/*
+-	 * DYING must not fail!
++	 * Invoke the former CPU_DYING callbacks. DYING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(false, cpu, st, target);
+ 
+ 	/* Give up timekeeping duties */
+ 	tick_handover_do_timer();
+@@ -1285,16 +1311,14 @@ void notify_cpu_starting(unsigned int cpu)
+ {
+ 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, cpu);
+ 	enum cpuhp_state target = min((int)st->target, CPUHP_AP_ONLINE);
+-	int ret;
+ 
+ 	rcu_cpu_starting(cpu);	/* Enables RCU usage on this CPU. */
+ 	cpumask_set_cpu(cpu, &cpus_booted_once_mask);
+-	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
+ 
+ 	/*
+ 	 * STARTING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(true, cpu, st, target);
+ }
+ 
+ /*
 -- 
 2.35.1
 
