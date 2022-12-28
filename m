@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838BE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FF0C433D2;
-	Wed, 28 Dec 2022 15:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD721875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E4BC433D2;
+	Wed, 28 Dec 2022 15:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243190;
-	bh=/z8x4pS6M7ZxfvM80BmNyf2GC0jrCMhmsJJE+g//gIQ=;
+	s=korg; t=1672243193;
+	bh=Ke3jrv3VshKG1Ueay2AnjMG51GfPybS1JMpfxzJlg98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9Lou4ArT3IiV4PT8TFnvOlgP32rkQOCDJVaGMEhsx2Qqg9Iu8oNc/1+mNqjVVKPL
-	 fpOj8AvEVjXWKDinM5wDPUOj/Z5F/NGRBjEl73FeIZbnGxSVja3bhv1iEBcZ0kjDFd
-	 xplP7ndWufdCffoWtjB87tcQoOZuIBjaMf1JXeoM=
+	b=I8qJInQ3rKWqGSV7bgxRMqA/CIMJk9vlRZbCq9JX8a2gK4IG8Fz6T30ckiGBIYFY9
+	 TJHJBNnS1+/U+/ed2TYh0PeYu2vghgrXhPg2t67wzcn6y6wkdRwqyjobrjVsUkQN3S
+	 DnSG338XWFKMHgXm8NwxNZexrC+MQTY+ctWreQl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 693/731] ASoC: wm8994: Fix potential deadlock
-Date: Wed, 28 Dec 2022 15:43:20 +0100
-Message-Id: <20221228144316.550895792@linuxfoundation.org>
+Subject: [PATCH 6.1 0461/1146] wifi: mt76: fix coverity overrun-call in mt76_get_txpower()
+Date: Wed, 28 Dec 2022 15:33:20 +0100
+Message-Id: <20221228144342.703787164@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 9529dc167ffcdfd201b9f0eda71015f174095f7e ]
+[ Upstream commit 03dd0d49de7db680a856fa566963bb8421f46368 ]
 
-Fix this by dropping wm8994->accdet_lock while calling
-cancel_delayed_work_sync(&wm8994->mic_work) in wm1811_jackdet_irq().
+Make sure the nss is valid for nss_delta array. Return zero
+if the index is invalid.
 
-Fixes: c0cc3f166525 ("ASoC: wm8994: Allow a delay between jack insertion and microphone detect")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221209091657.1183-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Coverity message:
+Event overrun-call: Overrunning callee's array of size 4 by passing
+argument "n_chains" (which evaluates to 15) in call to
+"mt76_tx_power_nss_delta".
+int delta = mt76_tx_power_nss_delta(n_chains);
+
+Fixes: 07cda406308b ("mt76: fix rounding issues on converting per-chain and combined txpower")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt76.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index f117ec0c489f..6759db92f6c4 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -3853,7 +3853,12 @@ static irqreturn_t wm1811_jackdet_irq(int irq, void *data)
- 	} else {
- 		dev_dbg(component->dev, "Jack not detected\n");
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 87db9498dea4..7bcf7a6b67df 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1107,8 +1107,9 @@ static inline bool mt76_is_skb_pktid(u8 pktid)
+ static inline u8 mt76_tx_power_nss_delta(u8 nss)
+ {
+ 	static const u8 nss_delta[4] = { 0, 6, 9, 12 };
++	u8 idx = nss - 1;
  
-+		/* Release wm8994->accdet_lock to avoid deadlock:
-+		 * cancel_delayed_work_sync() takes wm8994->mic_work internal
-+		 * lock and wm1811_mic_work takes wm8994->accdet_lock */
-+		mutex_unlock(&wm8994->accdet_lock);
- 		cancel_delayed_work_sync(&wm8994->mic_work);
-+		mutex_lock(&wm8994->accdet_lock);
+-	return nss_delta[nss - 1];
++	return (idx < ARRAY_SIZE(nss_delta)) ? nss_delta[idx] : 0;
+ }
  
- 		snd_soc_component_update_bits(component, WM8958_MICBIAS2,
- 				    WM8958_MICB2_DISCH, WM8958_MICB2_DISCH);
+ static inline bool mt76_testmode_enabled(struct mt76_phy *phy)
 -- 
 2.35.1
 
