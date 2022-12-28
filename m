@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5511A1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA9EC433D2;
-	Wed, 28 Dec 2022 16:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AE61C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8626EC433D2;
+	Wed, 28 Dec 2022 16:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244759;
-	bh=JfW3wOTCX+swmeAf6RGK+HFaTDza7VvIR6GBU/NEFIE=;
+	s=korg; t=1672244761;
+	bh=+bIk7tjtpkCEUlTW6HpqU00Mn2Wm+piJqHLtGfLD+A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6qaLvL1b0DkHhpQUJvH4kCzhKr98yt1tnwlHArwAB2vNuOGw8SlcNSfdhcez5+Ah
-	 BTnZ+aDzKQLs7B1o3jSbjqb0iu90SXr+FBrw/VlBphev/q/E/wjEBoofSEoXn/Q9GL
-	 uCbsSrQYOVQ5m1MLg36dOHRrOVGFOkbvDmGE6IYw=
+	b=sbPRI024IsIcAACSSAAmM4/eKKKjukZfHbfBDm9d+WYZZk/ydIGABl7Ldkmr6swyB
+	 V8FUb3F97eT4y42ipWgLO9L9Z6bu23Z4diQuBSMKia7kesPfLJ4kV58L1vyptNknth
+	 v6iySnQGMVAPWE4F8sUWBlgDPa0JCGU88ZK3WFSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0769/1073] iommu/sun50i: Consider all fault sources for reset
-Date: Wed, 28 Dec 2022 15:39:17 +0100
-Message-Id: <20221228144348.900308369@linuxfoundation.org>
+Subject: [PATCH 6.1 0732/1146] drivers: mcb: fix resource leak in mcb_probe()
+Date: Wed, 28 Dec 2022 15:37:51 +0100
+Message-Id: <20221228144350.028876859@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,58 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit cef20703e2b2276aaa402ec5a65ec9a09963b83e ]
+[ Upstream commit d7237462561fcd224fa687c56ccb68629f50fc0d ]
 
-We have to reset masters for all faults - permissions, L1 fault or L2
-fault. Currently it's done only for permissions. If other type of fault
-happens, master is in locked up state. Fix that by really considering
-all fault sources.
+When probe hook function failed in mcb_probe(), it doesn't put the device.
+Compiled test only.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-3-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 7bc364097a89 ("mcb: Acquire reference to device in probe")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/9f87de36bfb85158b506cb78c6fc9db3f6a3bad1.1669624063.git.johannes.thumshirn@wdc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mcb/mcb-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index c777882d0ec2..38d1069cf383 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -869,8 +869,8 @@ static phys_addr_t sun50i_iommu_handle_perm_irq(struct sun50i_iommu *iommu)
+diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
+index 338fc889b357..b8ad4f16b4ac 100644
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -71,8 +71,10 @@ static int mcb_probe(struct device *dev)
  
- static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- {
-+	u32 status, l1_status, l2_status, resets;
- 	struct sun50i_iommu *iommu = dev_id;
--	u32 status;
+ 	get_device(dev);
+ 	ret = mdrv->probe(mdev, found_id);
+-	if (ret)
++	if (ret) {
+ 		module_put(carrier_mod);
++		put_device(dev);
++	}
  
- 	spin_lock(&iommu->iommu_lock);
- 
-@@ -880,6 +880,9 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 		return IRQ_NONE;
- 	}
- 
-+	l1_status = iommu_read(iommu, IOMMU_L1PG_INT_REG);
-+	l2_status = iommu_read(iommu, IOMMU_L2PG_INT_REG);
-+
- 	if (status & IOMMU_INT_INVALID_L2PG)
- 		sun50i_iommu_handle_pt_irq(iommu,
- 					    IOMMU_INT_ERR_ADDR_L2_REG,
-@@ -893,7 +896,8 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 
- 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
- 
--	iommu_write(iommu, IOMMU_RESET_REG, ~status);
-+	resets = (status | l1_status | l2_status) & IOMMU_INT_MASTER_MASK;
-+	iommu_write(iommu, IOMMU_RESET_REG, ~resets);
- 	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
- 
- 	spin_unlock(&iommu->iommu_lock);
+ 	return ret;
+ }
 -- 
 2.35.1
 
