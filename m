@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286181875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4CDC433D2;
-	Wed, 28 Dec 2022 15:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22A71875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574ADC433D2;
+	Wed, 28 Dec 2022 15:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243182;
-	bh=7MuFL4O8KP8oYqaGjW6bWPPRmqJvZHFqGFfzm8wktPs=;
+	s=korg; t=1672243184;
+	bh=oGeNAZgohyZQFne1ziJJO76MGyKtUscUNWfwi4Rdi7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyDouBnQNq2UkhR9WY2+Ls3/nJhlgTeAjxxMEDAUNBvlo8v4N/EwgRTR1D8SP8//r
-	 BBkHi2cD8O4xyiT8vgtcfpzCqJSFp3HF2HIe3VBUX3ZtsfstXMlyS4lkXm4yYu7+r8
-	 e5rUdMhniSUIQukHa4iNqCG/auT1wikg0U9CxDRs=
+	b=YoqvvkllTTtaZLyBgLtKtHq0nasugNeEI4USzLekLmJuwEc0HtbRUVfKKyZg8qciG
+	 gCDux9T3bvMTHCYCtH0aAOz8S2Hx91eRjwa3xcAoKDwiA8pAPFnbuqdB8qRPUtjPOS
+	 j+Zc15CBawi2coEOsr4ngMLoU2aRLFhPn5v4A3R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	YN Chen <YN.Chen@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 692/731] ASoC: mediatek: mt8183: fix refcount leak in mt8183_mt6358_ts3a227_max98357_dev_probe()
-Date: Wed, 28 Dec 2022 15:43:19 +0100
-Message-Id: <20221228144316.522834684@linuxfoundation.org>
+Subject: [PATCH 6.1 0460/1146] wifi: mt76: mt7921: fix wrong power after multiple SAR set
+Date: Wed, 28 Dec 2022 15:33:19 +0100
+Message-Id: <20221228144342.676856526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,70 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: YN Chen <YN.Chen@mediatek.com>
 
-[ Upstream commit 38eef3be38ab895959c442702864212cc3beb96c ]
+[ Upstream commit 7eefb93d4a6fbccd859e538d208c50fd10b44cb7 ]
 
-The node returned by of_parse_phandle() with refcount incremented,
-of_node_put() needs be called when finish using it. So add it in the
-error path in mt8183_mt6358_ts3a227_max98357_dev_probe().
+We should update CLC config before SAR set to synchronize all
+related settings.
 
-Fixes: 11c0269017b2 ("ASoC: Mediatek: MT8183: Add machine driver with TS3A227")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1670234188-23596-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
+Signed-off-by: YN Chen <YN.Chen@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mt8183/mt8183-mt6358-ts3a227-max98357.c        | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/init.c   | 1 +
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 6 ++++++
+ drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 2 ++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-index a56c1e87d564..4dab1ee69ec0 100644
---- a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-@@ -647,8 +647,10 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+index dcdb3cf04ac1..4ad66b344383 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+@@ -37,6 +37,7 @@ mt7921_regd_notifier(struct wiphy *wiphy,
  
- 	card = (struct snd_soc_card *)of_device_get_match_data(&pdev->dev);
--	if (!card)
-+	if (!card) {
-+		of_node_put(platform_node);
- 		return -EINVAL;
-+	}
- 	card->dev = &pdev->dev;
+ 	memcpy(dev->mt76.alpha2, request->alpha2, sizeof(dev->mt76.alpha2));
+ 	dev->mt76.region = request->dfs_region;
++	dev->country_ie_env = request->country_ie_env;
  
- 	ec_codec = of_parse_phandle(pdev->dev.of_node, "mediatek,ec-codec", 0);
-@@ -737,8 +739,10 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	}
+ 	mt7921_mutex_acquire(dev);
+ 	mt7921_mcu_set_clc(dev, request->alpha2, request->country_ie_env);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 7e409ac7d9a8..111d9221b94f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -1504,7 +1504,13 @@ static int mt7921_set_sar_specs(struct ieee80211_hw *hw,
+ 	int err;
  
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		ret = -ENOMEM;
+ 	mt7921_mutex_acquire(dev);
++	err = mt7921_mcu_set_clc(dev, dev->mt76.alpha2,
++				 dev->country_ie_env);
++	if (err < 0)
 +		goto out;
-+	}
- 
- 	snd_soc_card_set_drvdata(card, priv);
- 
-@@ -746,7 +750,8 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->pinctrl)) {
- 		dev_err(&pdev->dev, "%s devm_pinctrl_get failed\n",
- 			__func__);
--		return PTR_ERR(priv->pinctrl);
-+		ret = PTR_ERR(priv->pinctrl);
-+		goto out;
- 	}
- 
- 	for (i = 0; i < PIN_STATE_MAX; i++) {
-@@ -779,6 +784,7 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 
- 	ret = devm_snd_soc_register_card(&pdev->dev, card);
- 
++
+ 	err = mt7921_set_tx_sar_pwr(hw, sar);
 +out:
- 	of_node_put(platform_node);
- 	of_node_put(ec_codec);
- 	of_node_put(hdmi_codec);
+ 	mt7921_mutex_release(dev);
+ 
+ 	return err;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+index eaba114a9c7e..2babaeff72ba 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+@@ -244,6 +244,8 @@ struct mt7921_dev {
+ 	struct work_struct ipv6_ns_work;
+ 	/* IPv6 addresses for WoWLAN */
+ 	struct sk_buff_head ipv6_ns_list;
++
++	enum environment_cap country_ie_env;
+ };
+ 
+ enum {
 -- 
 2.35.1
 
