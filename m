@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159301863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90035C433EF;
-	Wed, 28 Dec 2022 14:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9361863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318E7C433EF;
+	Wed, 28 Dec 2022 14:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238971;
-	bh=GTyT3Gsdj3O9rooX4E5gnCkYl0Njd4C0l6NxWWZlrQE=;
+	s=korg; t=1672238974;
+	bh=mBI8U7ses56WMad4XOYAuWM/G0m/re3ssw+kaXgy4w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5eV+hBui6odKRY/Fmug45dnOdRlG2MM05o/3slvLFOArmcFsscaSWA57StfTJLxU
-	 yjmoLRnxlfdSfPv6fVAIuxR6mIETQMTEQG86OXXBDIsf++HsPxxr9gq212Ukcf23wX
-	 8QTLWw8YCi1/k2AlZcGG2DhIp1/IuuWFZjvybCDQ=
+	b=dY1tzaAONahs1K9pQaBGj5ue3kUrRWxm6nV6YEFEJs9E3lnJovHeytaCkJDM6xblL
+	 Q+pk7IWILcHLyn45qQKBnA7Y5UFFLusUbEcLN2mwijLZJbz39crMquzTQHhncD6454
+	 vjOmwjfVOZoYhrrFgSKYKLFY36t3G38ideXHd+f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiongxin <xiongxin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/731] PM: hibernate: Fix mistake in kerneldoc comment
-Date: Wed, 28 Dec 2022 15:33:05 +0100
-Message-Id: <20221228144258.813267138@linuxfoundation.org>
+Subject: [PATCH 5.15 052/731] ARM: dts: turris-omnia: Add ethernet aliases
+Date: Wed, 28 Dec 2022 15:32:39 +0100
+Message-Id: <20221228144258.063849476@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,43 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
+[ Upstream commit f1f3e530c59a7e8c5f06172f4c28b945a6b4bfb8 ]
 
-The actual maximum image size formula in hibernate_preallocate_memory()
-is as follows:
+This allows bootloader to correctly pass MAC addresses used by bootloader
+to individual interfaces into kernel device tree.
 
-max_size = (count - (size + PAGES_FOR_IO)) / 2
-	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
-
-but the one in the kerneldoc comment of the function is different and
-incorrect.
-
-Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-[ rjw: Subject and changelog rewrite ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Fixes: 26ca8b52d6e1 ("ARM: dts: add support for Turris Omnia")
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/snapshot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/armada-385-turris-omnia.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 330d49937692..475d630e650f 100644
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -1719,8 +1719,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
-  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
-  * total number of available page frames and allocate at least
-  *
-- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
-- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-+ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
-+ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-  *
-  * of them, which corresponds to the maximum size of a hibernation image.
-  *
+diff --git a/arch/arm/boot/dts/armada-385-turris-omnia.dts b/arch/arm/boot/dts/armada-385-turris-omnia.dts
+index 01b0dfd55d70..86e8a4680273 100644
+--- a/arch/arm/boot/dts/armada-385-turris-omnia.dts
++++ b/arch/arm/boot/dts/armada-385-turris-omnia.dts
+@@ -23,6 +23,12 @@ chosen {
+ 		stdout-path = &uart0;
+ 	};
+ 
++	aliases {
++		ethernet0 = &eth0;
++		ethernet1 = &eth1;
++		ethernet2 = &eth2;
++	};
++
+ 	memory {
+ 		device_type = "memory";
+ 		reg = <0x00000000 0x40000000>; /* 1024 MB */
 -- 
 2.35.1
 
