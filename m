@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1241B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2B9C433EF;
-	Wed, 28 Dec 2022 15:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99761863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2F4C433EF;
+	Wed, 28 Dec 2022 15:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242410;
-	bh=IZ0oxqCPr5IVYWaPNqkxfUteDuMJWHvQggc3Rfb76xo=;
+	s=korg; t=1672242413;
+	bh=O62DbBscuRieN2HTwu4+4z2wGQ/rMFZe4gk8Z8aF/Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGO1s41oUZAMOqbykQ3VM07fIhNeShzeoxJyweBTFE76x6YYT8xLg5WY5pHGiSrn5
-	 +VolRHdXk9PxjjggLDs+6ZvqOJeRCOnGI4J4bCWupNbTXg3BbydB214BRMbSwsYxti
-	 FNyTDZKVfa6baKMVgEd7e6U/iTqEfoHZ6deoiOo0=
+	b=sVi4Ky+iqIWZ8AC3BbQui2QtTQ4rpEY/Ae1aj3qOMFc0n/1yysbman1h0u4hkD/tK
+	 d4azcoPehvTcxrTB49bANVM/jTVoeOsQBJsCeLMrjlXqyOUsfvgGcHQ7CK4OAyzwxC
+	 F4zMJdqS3n/YVWL2eIGkHPD78bJCVWFgGxzl1sg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 600/731] igc: Set Qbv start_time and end_time to end_time if not being configured in GCL
-Date: Wed, 28 Dec 2022 15:41:47 +0100
-Message-Id: <20221228144313.929903337@linuxfoundation.org>
+Subject: [PATCH 6.0 0407/1073] NFSv4.2: Always decode the security label
+Date: Wed, 28 Dec 2022 15:33:15 +0100
+Message-Id: <20221228144339.074248426@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,67 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 72abeedd83982c1bc6023f631e412db78374d9b4 ]
+[ Upstream commit c8a62f440229ae7a10874776344dfcc17d860336 ]
 
-The default setting of end_time minus start_time is whole 1 second.
-Thus, if it's not being configured in any GCL entry then it will be
-staying at original 1 second.
+If the server returns a reply that includes a security label, then we
+must decode it whether or not we can store the results.
 
-This patch is changing the start_time and end_time to be end_time as
-if setting zero will be having weird HW behavior where the gate will
-not be fully closed.
-
-Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1e2f67da8931 ("NFS: Remove the nfs4_label argument from decode_getattr_*() functions")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4xdr.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 791f59d09d28..3726c8413c74 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5987,6 +5987,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
- 	u32 start_time = 0, end_time = 0;
- 	size_t n;
-+	int i;
+diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
+index 8c5298e37f0f..9103e022376a 100644
+--- a/fs/nfs/nfs4xdr.c
++++ b/fs/nfs/nfs4xdr.c
+@@ -4755,12 +4755,10 @@ static int decode_getfattr_attrs(struct xdr_stream *xdr, uint32_t *bitmap,
+ 	if (status < 0)
+ 		goto xdr_error;
  
- 	adapter->qbv_enable = qopt->enable;
+-	if (fattr->label) {
+-		status = decode_attr_security_label(xdr, bitmap, fattr->label);
+-		if (status < 0)
+-			goto xdr_error;
+-		fattr->valid |= status;
+-	}
++	status = decode_attr_security_label(xdr, bitmap, fattr->label);
++	if (status < 0)
++		goto xdr_error;
++	fattr->valid |= status;
  
-@@ -6007,7 +6008,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 
- 	for (n = 0; n < qopt->num_entries; n++) {
- 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
--		int i;
- 
- 		end_time += e->interval;
- 
-@@ -6046,6 +6046,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 		start_time += e->interval;
- 	}
- 
-+	/* Check whether a queue gets configured.
-+	 * If not, set the start and end time to be end time.
-+	 */
-+	for (i = 0; i < adapter->num_tx_queues; i++) {
-+		if (!queue_configured[i]) {
-+			struct igc_ring *ring = adapter->tx_ring[i];
-+
-+			ring->start_time = end_time;
-+			ring->end_time = end_time;
-+		}
-+	}
-+
- 	return 0;
- }
- 
+ xdr_error:
+ 	dprintk("%s: xdr returned %d\n", __func__, -status);
 -- 
 2.35.1
 
