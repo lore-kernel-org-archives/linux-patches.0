@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56E41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FBAC433D2;
-	Wed, 28 Dec 2022 15:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892EF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07709C433D2;
+	Wed, 28 Dec 2022 15:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240078;
-	bh=Oo5BUUtsAlGLp33s/yhgi2J2Q82PJAfUZQM+Kckc3eE=;
+	s=korg; t=1672240081;
+	bh=ukYNZBw1xN0wkq+ZdjV59v4CzgFnHjLv/DBZ72R39VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k0homfPcytiafvwL26/meSDTIRCQ8GHzFqE1mWjuxyB3Cmbl9cn/71CVH0LhnWItc
-	 nnz/qRZ3wTl+V/41vSBoG9NSGHKz3GYagVRWPWE7MzmhrHfDbjgbt93nvUtSA4r9le
-	 05UkoDz5k4ID8J7a1jH8rkGFhO5dVbxMdubwoP/0=
+	b=PQxsbguKuVsV5iRU3G/m/rQnB3HhFse6VD5a7Y0vGjaMlsY143Tvi7bKh9Y+E3389
+	 Na0BunodrYrxnwCwdNpuDdgHJSqe70e9FFXJJeaF0GpLTCt8j1PbZkFKhLN9YAlb/Y
+	 zlOWSWeHXcPbtcXEUXO81pS+7+a+U2Kj5qZpOiKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0078/1146] arm64: tegra: Fix Prefetchable aperture ranges of Tegra234 PCIe controllers
-Date: Wed, 28 Dec 2022 15:26:57 +0100
-Message-Id: <20221228144332.267690193@linuxfoundation.org>
+Subject: [PATCH 5.15 307/731] memstick: ms_block: Add error handling support for add_disk()
+Date: Wed, 28 Dec 2022 15:36:54 +0100
+Message-Id: <20221228144305.473211614@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-[ Upstream commit 248400656b1cd85de37f3742d065dc1826cdf589 ]
+[ Upstream commit 2304c55fd506fcd5e1a59ae21a306ee82507340b ]
 
-commit edf408b946d3 ("PCI: dwc: Validate iATU outbound mappings against
-hardware constraints") exposes an issue with the existing partitioning of
-the aperture space where the Prefetchable apertures of controllers
-C5, C7 and C9 in Tegra234 cross the 32GB boundary hardware constraint.
-This patch makes sure that the Prefetchable region doesn't spill over
-the 32GB boundary.
+We never checked for errors on add_disk() as this function returned void.
+Now that this is fixed, use the shiny new error handling.
 
-Fixes: ec142c44b026 ("arm64: tegra: Add P2U and PCIe controller nodes to Tegra234 DT")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Contrary to the typical removal which delays the put_disk() until later,
+since we are failing on a probe we immediately put the disk on failure from
+add_disk by using blk_cleanup_disk().
+
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20210902174105.2418771-3-mcgrof@kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 4f431a047a5c ("memstick/ms_block: Add check for alloc_ordered_workqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/memstick/core/ms_block.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 0170bfa8a467..9b43a0b0d775 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -1965,7 +1965,7 @@ pcie@140c0000 {
+diff --git a/drivers/memstick/core/ms_block.c b/drivers/memstick/core/ms_block.c
+index f854822f84d6..29a69243cbd0 100644
+--- a/drivers/memstick/core/ms_block.c
++++ b/drivers/memstick/core/ms_block.c
+@@ -2157,10 +2157,14 @@ static int msb_init_disk(struct memstick_dev *card)
+ 		set_disk_ro(msb->disk, 1);
  
- 		bus-range = <0x0 0xff>;
+ 	msb_start(card);
+-	device_add_disk(&card->dev, msb->disk, NULL);
++	rc = device_add_disk(&card->dev, msb->disk, NULL);
++	if (rc)
++		goto out_cleanup_disk;
+ 	dbg("Disk added");
+ 	return 0;
  
--		ranges = <0x43000000 0x35 0x40000000 0x35 0x40000000 0x2 0xe8000000>, /* prefetchable memory (11904 MB) */
-+		ranges = <0x43000000 0x35 0x40000000 0x35 0x40000000 0x2 0xc0000000>, /* prefetchable memory (11264 MB) */
- 			 <0x02000000 0x0  0x40000000 0x38 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
- 			 <0x01000000 0x0  0x2c100000 0x00 0x2c100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
- 
-@@ -2336,7 +2336,7 @@ pcie@141a0000 {
- 
- 		bus-range = <0x0 0xff>;
- 
--		ranges = <0x43000000 0x27 0x40000000 0x27 0x40000000 0x3 0xe8000000>, /* prefetchable memory (16000 MB) */
-+		ranges = <0x43000000 0x28 0x00000000 0x28 0x00000000 0x3 0x28000000>, /* prefetchable memory (12928 MB) */
- 			 <0x02000000 0x0  0x40000000 0x2b 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
- 			 <0x01000000 0x0  0x3a100000 0x00 0x3a100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
- 
-@@ -2442,7 +2442,7 @@ pcie@141e0000 {
- 
- 		bus-range = <0x0 0xff>;
- 
--		ranges = <0x43000000 0x2e 0x40000000 0x2e 0x40000000 0x3 0xe8000000>, /* prefetchable memory (16000 MB) */
-+		ranges = <0x43000000 0x30 0x00000000 0x30 0x00000000 0x2 0x28000000>, /* prefetchable memory (8832 MB) */
- 			 <0x02000000 0x0  0x40000000 0x32 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
- 			 <0x01000000 0x0  0x3e100000 0x00 0x3e100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
- 
++out_cleanup_disk:
++	blk_cleanup_disk(msb->disk);
+ out_free_tag_set:
+ 	blk_mq_free_tag_set(&msb->tag_set);
+ out_release_id:
 -- 
 2.35.1
 
