@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3D51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FAC433EF;
-	Wed, 28 Dec 2022 15:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF6D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59E0C433D2;
+	Wed, 28 Dec 2022 15:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240425;
-	bh=P2lpu2OpEi8iruibbunIjy84xM5ZdFStPfUBIyYLynk=;
+	s=korg; t=1672240428;
+	bh=1VRA98DtIypg+5pvhqP+KOO6DnS43DUQXm/uUmTP+Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3MeDbwrRvaFW54BObIrPT7sH/A+gnS6eSiIi5F0nd7d09BTyb+q9tprgjW5w/A1G
-	 xaupxhqgZUZp8rtKeXoP73CQRHXsEuX/yGMrKvb7pSQI5mrDNwxH24fBM+Oijru+1c
-	 k6f45FOGPRlrZOuc2DkW5mdyCpd9DpgpDwDarQhc=
+	b=SkRNzZ6nZRuaEUiW55DQZ2I31FI/qPyVvc6L4wnBlVkPk51IY1ntEZkyF1nI5ZPpv
+	 4OweuaTF3x1ZOqm+eZ96NFP71MEMj3f4v+J66RLWE0q3rkAT1bTVEW4wtr6pdszjo9
+	 l4SJCREqEOMTAUVAUFk7O/JR8GASKdE1KXpNeowk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 348/731] Bluetooth: btusb: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:37:35 +0100
-Message-Id: <20221228144306.652609094@linuxfoundation.org>
+Subject: [PATCH 6.0 0159/1073] clocksource/drivers/timer-ti-dm: Fix missing clk_disable_unprepare in dmtimer_systimer_init_clock()
+Date: Wed, 28 Dec 2022 15:29:07 +0100
+Message-Id: <20221228144332.338867750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,41 +38,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b15a6bd3c80c77faec8317319b97f976b1a08332 ]
+[ Upstream commit 180d35a7c05d520314a590c99ad8643d0213f28b ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+If clk_get_rate() fails which is called after clk_prepare_enable(),
+clk_disable_unprepare() need be called in error path to disable the
+clock in dmtimer_systimer_init_clock().
 
-Fixes: 803b58367ffb ("Bluetooth: btusb: Implement driver internal packet reassembly")
+Fixes: 52762fbd1c47 ("clocksource/drivers/timer-ti-dm: Add clockevent and clocksource support")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221029114427.946520-1-yangyingliang@huawei.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clocksource/timer-ti-dm-systimer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 69380cb03dd3..9c32263f872b 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -735,13 +735,13 @@ static inline void btusb_free_frags(struct btusb_data *data)
+diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
+index 2737407ff069..632523c1232f 100644
+--- a/drivers/clocksource/timer-ti-dm-systimer.c
++++ b/drivers/clocksource/timer-ti-dm-systimer.c
+@@ -345,8 +345,10 @@ static int __init dmtimer_systimer_init_clock(struct dmtimer_systimer *t,
+ 		return error;
  
- 	spin_lock_irqsave(&data->rxlock, flags);
+ 	r = clk_get_rate(clock);
+-	if (!r)
++	if (!r) {
++		clk_disable_unprepare(clock);
+ 		return -ENODEV;
++	}
  
--	kfree_skb(data->evt_skb);
-+	dev_kfree_skb_irq(data->evt_skb);
- 	data->evt_skb = NULL;
- 
--	kfree_skb(data->acl_skb);
-+	dev_kfree_skb_irq(data->acl_skb);
- 	data->acl_skb = NULL;
- 
--	kfree_skb(data->sco_skb);
-+	dev_kfree_skb_irq(data->sco_skb);
- 	data->sco_skb = NULL;
- 
- 	spin_unlock_irqrestore(&data->rxlock, flags);
+ 	if (is_ick)
+ 		t->ick = clock;
 -- 
 2.35.1
 
