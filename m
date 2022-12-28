@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7551C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC45CC433EF;
-	Wed, 28 Dec 2022 16:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F6F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B863C433D2;
+	Wed, 28 Dec 2022 16:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246088;
-	bh=o/RLTwYcn3FUB5QhdZ+EThc5jKECceOLlq/kNdEogCA=;
+	s=korg; t=1672246090;
+	bh=cKcs5UaNh9wdeK8ZKEnxZS5PGWlb87e1zZzIcQ7tstg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykz29P6RzGnfKSzu3mvklpPeQI0krmuV6jF9Ox3cgYQAOO/5CNh0f04W7MtFd5gxl
-	 RM3K0/kA+bjs+ZvZ0Zi+AG1/cXCuVTlXGEpZCtFAUqVW0UWj3aPp8Pzsmrwk0qy1o8
-	 oFOG2XV95As+3hDIF2HU1ax95XUXLmAFn6WhrVTk=
+	b=Liej2QjeJO2Dgqk8OaqKVx8ZP48oVIV6wSV1ChOwKI99dkDiTCID8M/n3L6XRCL7o
+	 uNGXhsQFi92cEh0X13gULbPWUsxehr1p4+LYJpjBYRaNFK9nWhYZYsskjXxx10HQUL
+	 rvABnnJ5SfijXiENjWz7XkPc3iDpXOQ7on804awc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1010/1073] ASoC: rt5670: Remove unbalanced pm_runtime_put()
-Date: Wed, 28 Dec 2022 15:43:18 +0100
-Message-Id: <20221228144355.596781059@linuxfoundation.org>
+Subject: [PATCH 6.1 0979/1146] Revert "drm/amd/display: Limit max DSC target bpp for specific monitors"
+Date: Wed, 28 Dec 2022 15:41:58 +0100
+Message-Id: <20221228144356.950891131@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit 6c900dcc3f7331a67ed29739d74524e428d137fb ]
+[ Upstream commit 6803dfd3a69ccb318772463a86e40929fd4fbac7 ]
 
-For some reason rt5670_i2c_probe() does a pm_runtime_put() at the end
-of a successful probe. But it has never done a pm_runtime_get() leading
-to the following error being logged into dmesg:
+This reverts commit 55eea8ef98641f6e1e1c202bd3a49a57c1dd4059.
 
- rt5670 i2c-10EC5640:00: Runtime PM usage count underflow!
+This quirk is now handled in the DRM core, so we can drop all of
+the internal code that was added to handle it.
 
-Fix this by removing the unnecessary pm_runtime_put().
-
-Fixes: 64e89e5f5548 ("ASoC: rt5670: Add runtime PM support")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221213123319.11285-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5670.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 35 -------------------
+ 1 file changed, 35 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5670.c b/sound/soc/codecs/rt5670.c
-index 60dbfa2a54f1..c75045e371b2 100644
---- a/sound/soc/codecs/rt5670.c
-+++ b/sound/soc/codecs/rt5670.c
-@@ -3311,8 +3311,6 @@ static int rt5670_i2c_probe(struct i2c_client *i2c)
- 	if (ret < 0)
- 		goto err;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index f0b01c8dc4a6..f72c013d3a5b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -42,39 +42,6 @@
+ #include "dm_helpers.h"
+ #include "ddc_service_types.h"
  
--	pm_runtime_put(&i2c->dev);
+-struct monitor_patch_info {
+-	unsigned int manufacturer_id;
+-	unsigned int product_id;
+-	void (*patch_func)(struct dc_edid_caps *edid_caps, unsigned int param);
+-	unsigned int patch_param;
+-};
+-static void set_max_dsc_bpp_limit(struct dc_edid_caps *edid_caps, unsigned int param);
 -
- 	return 0;
- err:
- 	pm_runtime_disable(&i2c->dev);
+-static const struct monitor_patch_info monitor_patch_table[] = {
+-{0x6D1E, 0x5BBF, set_max_dsc_bpp_limit, 15},
+-{0x6D1E, 0x5B9A, set_max_dsc_bpp_limit, 15},
+-};
+-
+-static void set_max_dsc_bpp_limit(struct dc_edid_caps *edid_caps, unsigned int param)
+-{
+-	if (edid_caps)
+-		edid_caps->panel_patch.max_dsc_target_bpp_limit = param;
+-}
+-
+-static int amdgpu_dm_patch_edid_caps(struct dc_edid_caps *edid_caps)
+-{
+-	int i, ret = 0;
+-
+-	for (i = 0; i < ARRAY_SIZE(monitor_patch_table); i++)
+-		if ((edid_caps->manufacturer_id == monitor_patch_table[i].manufacturer_id)
+-			&&  (edid_caps->product_id == monitor_patch_table[i].product_id)) {
+-			monitor_patch_table[i].patch_func(edid_caps, monitor_patch_table[i].patch_param);
+-			ret++;
+-		}
+-
+-	return ret;
+-}
+-
+ /* dm_helpers_parse_edid_caps
+  *
+  * Parse edid caps
+@@ -149,8 +116,6 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
+ 	kfree(sads);
+ 	kfree(sadb);
+ 
+-	amdgpu_dm_patch_edid_caps(edid_caps);
+-
+ 	return result;
+ }
+ 
 -- 
 2.35.1
 
