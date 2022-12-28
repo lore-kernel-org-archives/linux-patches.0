@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242A31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B350C433D2;
-	Wed, 28 Dec 2022 15:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B697B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAD1C433EF;
+	Wed, 28 Dec 2022 15:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240391;
-	bh=Q/rRuMYWOK/w/tLWxb9Ie3tw9DniL0DJikkmVHz0wYk=;
+	s=korg; t=1672240393;
+	bh=j76NZNX+VuyFiUsR6EsmZCpiE7DtsTkC7Vrl3ZjW4XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns7vEsfXFVZtbwWmM4MYb2/FuvULjknEWlaNL5cQSMdOp/310KWiqxXEYUG9UAR8l
-	 vdzHH5Mefl0bEuBfDcwL++v6u+Pd2FyE7R/PJqatSRxzUMxN1NtPBsB4IBWUpnoIgQ
-	 VDqHqHy2Zp4faUW2GH+a+YuSyKmZqlNS7EqpEwAU=
+	b=ZyzHo8H7r6yzoQC0CAiBhmvhFvpIOi/JlUgcGo4IPSi/HGoK+s+FkcX4jbDss6QfJ
+	 4Kw2op8U+lxWzQRH+jgTSOvT7QLzo98DoL5KOLwdaeJjNoo5BB8u1oh5uAoD+ai165
+	 J1eKiJxRQkGB/L3yxGUBuwR2jMYLKloaySr0NNu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Pilmore <epilmore@gigaio.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 344/731] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
-Date: Wed, 28 Dec 2022 15:37:31 +0100
-Message-Id: <20221228144306.537442100@linuxfoundation.org>
+Subject: [PATCH 6.0 0155/1073] futex: Resend potentially swallowed owner death notification
+Date: Wed, 28 Dec 2022 15:29:03 +0100
+Message-Id: <20221228144332.231482688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Pilmore <epilmore@gigaio.com>
+From: Alexey Izbyshev <izbyshev@ispras.ru>
 
-[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
+[ Upstream commit 90d758896787048fa3d4209309d4800f3920e66f ]
 
-TX/RX callback handlers (ntb_netdev_tx_handler(),
-ntb_netdev_rx_handler()) can be called in interrupt
-context via the DMA framework when the respective
-DMA operations have completed. As such, any calls
-by these routines to free skb's, should use the
-interrupt context safe dev_kfree_skb_any() function.
+Commit ca16d5bee598 ("futex: Prevent robust futex exit race") addressed
+two cases when tasks waiting on a robust non-PI futex remained blocked
+despite the futex not being owned anymore:
 
-Previously, these callback handlers would call the
-interrupt unsafe version of dev_kfree_skb(). This has
-not presented an issue on Intel IOAT DMA engines as
-that driver utilizes tasklets rather than a hard
-interrupt handler, like the AMD PTDMA DMA driver.
-On AMD systems, a kernel WARNING message is
-encountered, which is being issued from
-skb_release_head_state() due to in_hardirq()
-being true.
+* if the owner died after writing zero to the futex word, but before
+  waking up a waiter
 
-Besides the user visible WARNING from the kernel,
-the other symptom of this bug was that TCP/IP performance
-across the ntb_netdev interface was very poor, i.e.
-approximately an order of magnitude below what was
-expected. With the repair to use dev_kfree_skb_any(),
-kernel WARNINGs from skb_release_head_state() ceased
-and TCP/IP performance, as measured by iperf, was on
-par with expected results, approximately 20 Gb/s on
-AMD Milan based server. Note that this performance
-is comparable with Intel based servers.
+* if a task waiting on the futex was woken up, but died before updating
+  the futex word (effectively swallowing the notification without acting
+  on it)
 
-Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
-Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
-Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In the second case, the task could be woken up either by the previous
+owner (after the futex word was reset to zero) or by the kernel (after
+the OWNER_DIED bit was set and the TID part of the futex word was reset
+to zero) if the previous owner died without the resetting the futex.
+
+Because the referenced commit wakes up a potential waiter only if the
+whole futex word is zero, the latter subcase remains unaddressed.
+
+Fix this by looking only at the TID part of the futex when deciding
+whether a wake up is needed.
+
+Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
+Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221111215439.248185-1-izbyshev@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/futex/core.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index 1b7d588ff3c5..b701ee83e64a 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
- enqueue_again:
- 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
- 	if (rc) {
--		dev_kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		ndev->stats.rx_errors++;
- 		ndev->stats.rx_fifo_errors++;
- 	}
-@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
- 		ndev->stats.tx_aborted_errors++;
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index b22ef1efe751..514e4582b863 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -638,6 +638,7 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 			      bool pi, bool pending_op)
+ {
+ 	u32 uval, nval, mval;
++	pid_t owner;
+ 	int err;
+ 
+ 	/* Futex address must be 32bit aligned */
+@@ -659,6 +660,10 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 * 2. A woken up waiter is killed before it can acquire the
+ 	 *    futex in user space.
+ 	 *
++	 * In the second case, the wake up notification could be generated
++	 * by the unlock path in user space after setting the futex value
++	 * to zero or by the kernel after setting the OWNER_DIED bit below.
++	 *
+ 	 * In both cases the TID validation below prevents a wakeup of
+ 	 * potential waiters which can cause these waiters to block
+ 	 * forever.
+@@ -667,24 +672,27 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 *
+ 	 *	1) task->robust_list->list_op_pending != NULL
+ 	 *	   @pending_op == true
+-	 *	2) User space futex value == 0
++	 *	2) The owner part of user space futex value == 0
+ 	 *	3) Regular futex: @pi == false
+ 	 *
+ 	 * If these conditions are met, it is safe to attempt waking up a
+ 	 * potential waiter without touching the user space futex value and
+-	 * trying to set the OWNER_DIED bit. The user space futex value is
+-	 * uncontended and the rest of the user space mutex state is
+-	 * consistent, so a woken waiter will just take over the
+-	 * uncontended futex. Setting the OWNER_DIED bit would create
+-	 * inconsistent state and malfunction of the user space owner died
+-	 * handling.
++	 * trying to set the OWNER_DIED bit. If the futex value is zero,
++	 * the rest of the user space mutex state is consistent, so a woken
++	 * waiter will just take over the uncontended futex. Setting the
++	 * OWNER_DIED bit would create inconsistent state and malfunction
++	 * of the user space owner died handling. Otherwise, the OWNER_DIED
++	 * bit is already set, and the woken waiter is expected to deal with
++	 * this.
+ 	 */
+-	if (pending_op && !pi && !uval) {
++	owner = uval & FUTEX_TID_MASK;
++
++	if (pending_op && !pi && !owner) {
+ 		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
+ 		return 0;
  	}
  
--	dev_kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
+-	if ((uval & FUTEX_TID_MASK) != task_pid_vnr(curr))
++	if (owner != task_pid_vnr(curr))
+ 		return 0;
  
- 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
- 		/* Make sure anybody stopping the queue after this sees the new
+ 	/*
 -- 
 2.35.1
 
