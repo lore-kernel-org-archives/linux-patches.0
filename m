@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902F61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18485C433EF;
-	Wed, 28 Dec 2022 15:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380671863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF12C433EF;
+	Wed, 28 Dec 2022 15:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240919;
-	bh=QSM/P7uHKbIBIyOmWg1RBOnaRqFfbonn7XTW45BAUyc=;
+	s=korg; t=1672240922;
+	bh=xOSIsdrlsN8wvIdBL7ojX65T6doiYRzlcIhZ17Gdm40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EG46Ek08Vda8EzLq2NlQdIlDLT2gALYmEvWO45AD9iR17du/LQL66IYV3XEDfN7CU
-	 7zvMcI5u2gVfnqIT5BWmV7+m15lyMCfsSJaTw3vWZD/rt4Mg8aj8VEMc8gjRP+WqvL
-	 R8IKCj96AMBgUY740yziBhZEEKoLtjg1p2Nqr45k=
+	b=hnySp+Tn1TbzhRWlqnvrjEkILNjaaBPXElr4CvfJrvV1i8Swt7Dtitl0lACd7dSPs
+	 9u4o8w8hkX4YDd4qstWUyD+kook3LBuhlPSl/Ot87cQW+5ImOAKclagzQQOv4CVJcC
+	 QPgxoDItwS38ylniAahRp2X82z77mR0hv6SrYxf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Andy Gospodarek <gospo@broadcom.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Narsimhulu Musini <nmusini@cisco.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0219/1073] samples/bpf: Fix MAC address swapping in xdp2_kern
-Date: Wed, 28 Dec 2022 15:30:07 +0100
-Message-Id: <20221228144333.962932184@linuxfoundation.org>
+Subject: [PATCH 5.15 417/731] scsi: snic: Fix possible UAF in snic_tgt_create()
+Date: Wed, 28 Dec 2022 15:38:44 +0100
+Message-Id: <20221228144308.658771799@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7a698edf954cb3f8b6e8dacdb77615355170420c ]
+[ Upstream commit e118df492320176af94deec000ae034cc92be754 ]
 
-xdp2_kern rewrites and forwards packets out on the same interface.
-Forwarding still works but rewrite got broken when xdp multibuffer
-support has been added.
+Smatch reports a warning as follows:
 
-With xdp multibuffer a local copy of the packet has been introduced. The
-MAC address is now swapped in the local copy, but the local copy in not
-written back.
+drivers/scsi/snic/snic_disc.c:307 snic_tgt_create() warn:
+  '&tgt->list' not removed from list
 
-Fix MAC address swapping be adding write back of modified packet.
+If device_add() fails in snic_tgt_create(), tgt will be freed, but
+tgt->list will not be removed from snic->disc.tgt_list, then list traversal
+may cause UAF.
 
-Fixes: 772251742262 ("samples/bpf: fixup some tools to be able to support xdp multibuffer")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
-Link: https://lore.kernel.org/r/20221015213050.65222-1-gerhard@engleder-embedded.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Remove from snic->disc.tgt_list before free().
+
+Fixes: c8806b6c9e82 ("snic: driver for Cisco SCSI HBA")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221117035100.2944812-1-cuigaosheng1@huawei.com
+Acked-by: Narsimhulu Musini <nmusini@cisco.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp2_kern.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/snic/snic_disc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/samples/bpf/xdp2_kern.c b/samples/bpf/xdp2_kern.c
-index 3332ba6bb95f..67804ecf7ce3 100644
---- a/samples/bpf/xdp2_kern.c
-+++ b/samples/bpf/xdp2_kern.c
-@@ -112,6 +112,10 @@ int xdp_prog1(struct xdp_md *ctx)
+diff --git a/drivers/scsi/snic/snic_disc.c b/drivers/scsi/snic/snic_disc.c
+index e9ccfb97773f..7cf871323b2c 100644
+--- a/drivers/scsi/snic/snic_disc.c
++++ b/drivers/scsi/snic/snic_disc.c
+@@ -318,6 +318,9 @@ snic_tgt_create(struct snic *snic, struct snic_tgt_id *tgtid)
+ 			      ret);
  
- 	if (ipproto == IPPROTO_UDP) {
- 		swap_src_dst_mac(data);
-+
-+		if (bpf_xdp_store_bytes(ctx, 0, pkt, sizeof(pkt)))
-+			return rc;
-+
- 		rc = XDP_TX;
- 	}
+ 		put_device(&snic->shost->shost_gendev);
++		spin_lock_irqsave(snic->shost->host_lock, flags);
++		list_del(&tgt->list);
++		spin_unlock_irqrestore(snic->shost->host_lock, flags);
+ 		kfree(tgt);
+ 		tgt = NULL;
  
 -- 
 2.35.1
