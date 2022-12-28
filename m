@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B671863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E4C433D2;
-	Wed, 28 Dec 2022 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638361863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEE4C433D2;
+	Wed, 28 Dec 2022 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242445;
-	bh=Vs2THPZN1bFtpTqzRY0XrXk4Nj4RfuADrKV69XLaEak=;
+	s=korg; t=1672242448;
+	bh=FphEkFFeAHGR/8Nzfu3WYKTyl00C3ATiGiN/BUSk4A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGEVocwSuvs92p8jIV0vRyckMHYncjgBKM0AgCFgnzg3dJQTFiWZ4ZP22Gykslz+7
-	 G4kU95dxFZY1egPypIzToUHFRN5nwck1kozyx8Dp1rLO6Bvd2Ibxx4LV0oAeSLG6LB
-	 57Z/Y4Etol6U1pHTC+QFtlj2snd16Cg2R4YaFPaU=
+	b=sa0dmCY6FZACEbem5FdOV9RZAVyPaLVSLs2P79ROdE/uTuIxts82y0nWRsphDj+0z
+	 xxqehyO0/tzq6TVNr6qdmD/S0kIFQ0Blgf8pfRVd02PtgGNn+rho33DQWyAHp0YqbG
+	 zuXrvDrJ4CM829JNkkFhlTlG/Ro7bKXNH/tuUj5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chun-Jie Chen <chun-jie.chen@mediatek.com>,
-	Allen-KH Cheng <allen-kh.cheng@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Miles Chen <miles.chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 604/731] soc: mediatek: pm-domains: Fix the power glitch issue
-Date: Wed, 28 Dec 2022 15:41:51 +0100
-Message-Id: <20221228144314.044471070@linuxfoundation.org>
+Subject: [PATCH 6.0 0411/1073] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
+Date: Wed, 28 Dec 2022 15:33:19 +0100
+Message-Id: <20221228144339.183913058@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,42 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chun-Jie Chen <chun-jie.chen@mediatek.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit dba8eb83af9dd757ef645b52200775e86883d858 ]
+[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
 
-Power reset maybe generate unexpected signal. In order to avoid
-the glitch issue, we need to enable isolation first to guarantee the
-stable signal when power reset is triggered.
+If we're asked to recover open state while a delegation return is
+outstanding, then the state manager thread cannot use a cached open, so
+if the server returns a delegation, we can end up deadlocked behind the
+pending delegreturn.
+To avoid this problem, let's just ask the server not to give us a
+delegation unless we're explicitly reclaiming one.
 
-Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
-Signed-off-by: Chun-Jie Chen <chun-jie.chen@mediatek.com>
-Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Miles Chen <miles.chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221014102029.1162-1-allen-kh.cheng@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-pm-domains.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
-index afd2fd74802d..52ecde8e446c 100644
---- a/drivers/soc/mediatek/mtk-pm-domains.c
-+++ b/drivers/soc/mediatek/mtk-pm-domains.c
-@@ -272,9 +272,9 @@ static int scpsys_power_off(struct generic_pm_domain *genpd)
- 	clk_bulk_disable_unprepare(pd->num_subsys_clks, pd->subsys_clks);
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index f85559bbb422..6e247647a5fb 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -2130,18 +2130,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
+ }
  
- 	/* subsys power off */
--	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
- 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_ISO_BIT);
- 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_CLK_DIS_BIT);
-+	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
- 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_2ND_BIT);
- 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_BIT);
+ static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
+-		fmode_t fmode)
++				    fmode_t fmode)
+ {
+ 	struct nfs4_state *newstate;
++	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
++	int openflags = opendata->o_arg.open_flags;
+ 	int ret;
  
+ 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
+ 		return 0;
+-	opendata->o_arg.open_flags = 0;
+ 	opendata->o_arg.fmode = fmode;
+-	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
+-			NFS_SB(opendata->dentry->d_sb),
+-			fmode, 0);
++	opendata->o_arg.share_access =
++		nfs4_map_atomic_open_share(server, fmode, openflags);
+ 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
+ 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
+ 	nfs4_init_opendata_res(opendata);
+@@ -2723,10 +2723,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
+ 	struct nfs4_opendata *opendata;
+ 	int ret;
+ 
+-	opendata = nfs4_open_recoverdata_alloc(ctx, state,
+-			NFS4_OPEN_CLAIM_FH);
++	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
+ 	if (IS_ERR(opendata))
+ 		return PTR_ERR(opendata);
++	/*
++	 * We're not recovering a delegation, so ask for no delegation.
++	 * Otherwise the recovery thread could deadlock with an outstanding
++	 * delegation return.
++	 */
++	opendata->o_arg.open_flags = O_DIRECT;
+ 	ret = nfs4_open_recover(opendata, state);
+ 	if (ret == -ESTALE)
+ 		d_drop(ctx->dentry);
 -- 
 2.35.1
 
