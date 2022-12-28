@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F051C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8EFC433D2;
-	Wed, 28 Dec 2022 16:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38DE1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44745C433D2;
+	Wed, 28 Dec 2022 16:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243904;
-	bh=cX+wMTyhYScw4iy2M8vV03P9zVumoBhGCoBlIjXFqiw=;
+	s=korg; t=1672243906;
+	bh=5iqSBlOnwynat1aGwPMl3fxEZQdgGlLXUiz1C0BZWC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWxg5B/ODratJ6344vsaY1oZQ0moxd7I6bLZ2J7Ey/xGGkNZCQ4EP8viOG4WW0nxx
-	 flFNDlzFUPnvY+AJ8bS36Pnc+oEdFT8uMe7yEWVTwkJ2yRzWou+HDFFa1ggK+SYm+p
-	 581eMxp+DrabzNTWYS6TH65Z1GXRC88v/LZwELiw=
+	b=tJAAMXHeGenPpI6Vrk3YQztqXoKUJ0TfaW3IMIlyMi46+JONnajNVuHLaHITVH0i6
+	 h5Jd0lmfpiDeMZj2OMh8zJhZqOnqZutknl00zu+n66DBECzBuJ3vM431mpLdBVdqI0
+	 cn1snX/CoQ4w6p2eKdZnvsxf7l7LyG+31IqB88zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Richard Gobert <richardbgobert@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0544/1146] net: setsockopt: fix IPV6_UNICAST_IF option for connected sockets
-Date: Wed, 28 Dec 2022 15:34:43 +0100
-Message-Id: <20221228144344.949648745@linuxfoundation.org>
+Subject: [PATCH 6.1 0538/1146] net: apple: mace: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:34:37 +0100
+Message-Id: <20221228144344.786791794@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,69 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 526682b458b1b56d2e0db027df535cb5cdcfde59 ]
+[ Upstream commit 3dfe3486c1cd4f82b466b7d307f23777137b8acc ]
 
-Change the behaviour of ip6_datagram_connect to consider the interface
-set by the IPV6_UNICAST_IF socket option, similarly to udpv6_sendmsg.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-This change is the IPv6 counterpart of the fix for IP_UNICAST_IF.
-The tests introduced by that patch showed that the incorrect
-behavior is present in IPv6 as well.
-This patch fixes the broken test.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Link: https://lore.kernel.org/r/202210062117.c7eef1a3-oliver.sang@intel.com
-Fixes: 0e4d354762ce ("net-next: Fix IP_UNICAST_IF option behavior for connected sockets")
+In this case, dev_kfree_skb() is called in mace_tx_timeout() to drop
+the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
 
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/datagram.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/apple/mace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index 5ecb56522f9d..ba28aeb7cade 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -42,24 +42,29 @@ static void ip6_datagram_flow_key_init(struct flowi6 *fl6, struct sock *sk)
- {
- 	struct inet_sock *inet = inet_sk(sk);
- 	struct ipv6_pinfo *np = inet6_sk(sk);
-+	int oif = sk->sk_bound_dev_if;
- 
- 	memset(fl6, 0, sizeof(*fl6));
- 	fl6->flowi6_proto = sk->sk_protocol;
- 	fl6->daddr = sk->sk_v6_daddr;
- 	fl6->saddr = np->saddr;
--	fl6->flowi6_oif = sk->sk_bound_dev_if;
- 	fl6->flowi6_mark = sk->sk_mark;
- 	fl6->fl6_dport = inet->inet_dport;
- 	fl6->fl6_sport = inet->inet_sport;
- 	fl6->flowlabel = np->flow_label;
- 	fl6->flowi6_uid = sk->sk_uid;
- 
--	if (!fl6->flowi6_oif)
--		fl6->flowi6_oif = np->sticky_pktinfo.ipi6_ifindex;
-+	if (!oif)
-+		oif = np->sticky_pktinfo.ipi6_ifindex;
- 
--	if (!fl6->flowi6_oif && ipv6_addr_is_multicast(&fl6->daddr))
--		fl6->flowi6_oif = np->mcast_oif;
-+	if (!oif) {
-+		if (ipv6_addr_is_multicast(&fl6->daddr))
-+			oif = np->mcast_oif;
-+		else
-+			oif = np->ucast_oif;
-+	}
- 
-+	fl6->flowi6_oif = oif;
- 	security_sk_classify_flow(sk, flowi6_to_flowi_common(fl6));
- }
- 
+diff --git a/drivers/net/ethernet/apple/mace.c b/drivers/net/ethernet/apple/mace.c
+index d0a771b65e88..fd1b008b7208 100644
+--- a/drivers/net/ethernet/apple/mace.c
++++ b/drivers/net/ethernet/apple/mace.c
+@@ -846,7 +846,7 @@ static void mace_tx_timeout(struct timer_list *t)
+     if (mp->tx_bad_runt) {
+ 	mp->tx_bad_runt = 0;
+     } else if (i != mp->tx_fill) {
+-	dev_kfree_skb(mp->tx_bufs[i]);
++	dev_kfree_skb_irq(mp->tx_bufs[i]);
+ 	if (++i >= N_TX_RING)
+ 	    i = 0;
+ 	mp->tx_empty = i;
 -- 
 2.35.1
 
