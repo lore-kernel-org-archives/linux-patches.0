@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85A41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B8CC433EF;
-	Wed, 28 Dec 2022 15:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9285E1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F7C433D2;
+	Wed, 28 Dec 2022 15:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240622;
-	bh=E3DFW+lNHelMJDUaAEh6db0obghbC4BF8bq34TLnXiM=;
+	s=korg; t=1672240625;
+	bh=uhp8QcyG8Cu3yjOSy+2bjMgySNFqU1Xu8QtI5cx4k/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iw9dxIdt97oC6FMMnYvoV7t9BUagp0gikJvnRifRirSnF+mhZVKUT+h7PUVZSzHMU
-	 rhJHLQuEoojWi0MBfTtKKsr3xbudGMF1KSoDAH9WBWpTq/E2OaMxE+XkY3Z5SHhp2p
-	 0TokpBPvVljovWWhNSY3Ov7kFYuKKPYcm9p6jXPc=
+	b=VL+Ja8HBI3Die82//4faECPJwslwllOJ0CzaDQEL42BuR/CNOlW/Sm5qalIv0MNys
+	 n6bhw52jnl7OhwO/vV3qH/6uw5dg+3+eetKeqYGffZNOjWmaP0m4LMuEuW4NFqbtTl
+	 vSoxxVppLtYCOqLVJJ7JpWJNuV26elliHamtq4/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Dylan Yudaken <dylany@fb.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sha Zhengju <handai.szj@taobao.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 374/731] crypto: rockchip - better handle cipher key
-Date: Wed, 28 Dec 2022 15:38:01 +0100
-Message-Id: <20221228144307.400898380@linuxfoundation.org>
+Subject: [PATCH 6.0 0182/1073] eventfd: change int to __u64 in eventfd_signal() ifndef CONFIG_EVENTFD
+Date: Wed, 28 Dec 2022 15:29:30 +0100
+Message-Id: <20221228144332.957783586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,91 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit d6b23ccef82816050c2fd458c9dabfa0e0af09b9 ]
+[ Upstream commit fd4e60bf0ef8eb9edcfa12dda39e8b6ee9060492 ]
 
-The key should not be set in hardware too much in advance, this will
-fail it 2 TFM with different keys generate alternative requests.
-The key should be stored and used just before doing cipher operations.
+Commit ee62c6b2dc93 ("eventfd: change int to __u64 in eventfd_signal()")
+forgot to change int to __u64 in the CONFIG_EVENTFD=n stub function.
 
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lkml.kernel.org/r/20221124140154.104680-1-zhangqilong3@huawei.com
+Fixes: ee62c6b2dc93 ("eventfd: change int to __u64 in eventfd_signal()")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Cc: Dylan Yudaken <dylany@fb.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Sha Zhengju <handai.szj@taobao.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto.h          |  1 +
- drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 10 +++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ include/linux/eventfd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
-index dfff0e2a83e4..665cc0bb2264 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.h
-+++ b/drivers/crypto/rockchip/rk3288_crypto.h
-@@ -245,6 +245,7 @@ struct rk_ahash_rctx {
- struct rk_cipher_ctx {
- 	struct rk_crypto_info		*dev;
- 	unsigned int			keylen;
-+	u8				key[AES_MAX_KEY_SIZE];
- 	u8				iv[AES_BLOCK_SIZE];
- 	struct crypto_skcipher *fallback_tfm;
- };
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-index eac5bba66e25..1ef94f8db2c5 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-@@ -95,7 +95,7 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
- 	    keylen != AES_KEYSIZE_256)
- 		return -EINVAL;
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
- 
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -111,7 +111,7 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
- 
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -127,7 +127,8 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
-+
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+diff --git a/include/linux/eventfd.h b/include/linux/eventfd.h
+index 30eb30d6909b..3cd202d3eefb 100644
+--- a/include/linux/eventfd.h
++++ b/include/linux/eventfd.h
+@@ -61,7 +61,7 @@ static inline struct eventfd_ctx *eventfd_ctx_fdget(int fd)
+ 	return ERR_PTR(-ENOSYS);
  }
  
-@@ -283,6 +284,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			     RK_CRYPTO_TDES_BYTESWAP_IV;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, ctx->key, ctx->keylen);
- 		conf_reg = RK_CRYPTO_DESSEL;
- 	} else {
- 		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
-@@ -295,6 +297,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, ctx->key, ctx->keylen);
- 	}
- 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
- 		    RK_CRYPTO_BYTESWAP_BRFIFO;
-@@ -484,6 +487,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+-static inline int eventfd_signal(struct eventfd_ctx *ctx, int n)
++static inline int eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
  {
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
-+	memzero_explicit(ctx->key, ctx->keylen);
- 	free_page((unsigned long)ctx->dev->addr_vir);
- 	crypto_free_skcipher(ctx->fallback_tfm);
+ 	return -ENOSYS;
  }
 -- 
 2.35.1
