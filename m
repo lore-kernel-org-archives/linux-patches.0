@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3111C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C74CC433EF;
-	Wed, 28 Dec 2022 16:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A60EC433D2;
+	Wed, 28 Dec 2022 16:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244146;
-	bh=DAaGOI5j//tqpdGLaSmIh7me7A4cxD43sAiKX7MCgT0=;
+	s=korg; t=1672244149;
+	bh=UyN2zZFlGAz1ZGYHDjqce7MbOSq7bZuAzV5IrRy9LYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ibw+PugU6KNgCVSH8brDlmiXhbobvT9EViJDxSIrE3KUOIAh7qI0g6vPamNbFP/H6
-	 Lf7s+/19eb04C2oy9PJ65h6LmGJBPWTcyjk38aH4ijMkm9n5OZsftIo6a+OE+++7Vi
-	 482V55fmjDCV26/TFD6NjFW8R2nvFUZb85uGp1qQ=
+	b=orFdXQhIN8c/7HvFekkZkDUppKPCXXQsOHdx0IUybcf4yuRcPIZ7O5ZbHHKe6MeIR
+	 xUfM02pddkRQjzQsV4kHv636wLw/lLxN+amSozWRebH49cj2+v+4NCM9msJF48PEmp
+	 VRNz2/ZGpAPS59pOk0tLfxrFfPOm9tmc51rKK3C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0619/1146] RDMA/rxe: Fix mr->map double free
-Date: Wed, 28 Dec 2022 15:35:58 +0100
-Message-Id: <20221228144346.983328556@linuxfoundation.org>
+Subject: [PATCH 6.0 0659/1073] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
+Date: Wed, 28 Dec 2022 15:37:27 +0100
+Message-Id: <20221228144345.946032378@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,88 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 7d984dac8f6bf4ebd3398af82b357e1d181ecaac ]
+[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
 
-rxe_mr_cleanup() which tries to free mr->map again will be called when
-rxe_mr_init_user() fails:
+There are 2 ways to create IPoIB PKEY child interfaces:
+1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
+2) Using netlink with iproute.
 
-   CPU: 0 PID: 4917 Comm: rdma_flush_serv Kdump: loaded Not tainted 6.1.0-rc1-roce-flush+ #25
-   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-   Call Trace:
-    <TASK>
-    dump_stack_lvl+0x45/0x5d
-    panic+0x19e/0x349
-    end_report.part.0+0x54/0x7c
-    kasan_report.cold+0xa/0xf
-    rxe_mr_cleanup+0x9d/0xf0 [rdma_rxe]
-    __rxe_cleanup+0x10a/0x1e0 [rdma_rxe]
-    rxe_reg_user_mr+0xb7/0xd0 [rdma_rxe]
-    ib_uverbs_reg_mr+0x26a/0x480 [ib_uverbs]
-    ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x1a2/0x250 [ib_uverbs]
-    ib_uverbs_cmd_verbs+0x1397/0x15a0 [ib_uverbs]
+While with sysfs the child interface has the same number of tx and
+rx queues as the parent, with netlink there will always be 1 tx
+and 1 rx queue for the child interface. That's because the
+get_num_tx/rx_queues() netlink ops are missing and the default value
+of 1 is taken for the number of queues (in rtnl_create_link()).
 
-This issue was firstly exposed since commit b18c7da63fcb ("RDMA/rxe: Fix
-memory leak in error path code") and then we fixed it in commit
-8ff5f5d9d8cf ("RDMA/rxe: Prevent double freeing rxe_map_set()") but this
-fix was reverted together at last by commit 1e75550648da (Revert
-"RDMA/rxe: Create duplicate mapping tables for FMRs")
+This change adds the get_num_tx/rx_queues() ops which allows for
+interfaces with multiple queues to be created over netlink. This
+constant only represents the max number of tx and rx queues on that
+net device.
 
-Simply let rxe_mr_cleanup() always handle freeing the mr->map once it is
-successfully allocated.
-
-Fixes: 1e75550648da ("Revert "RDMA/rxe: Create duplicate mapping tables for FMRs"")
-Link: https://lore.kernel.org/r/1667099073-2-1-git-send-email-lizhijian@fujitsu.com
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 502e9ada99b3..80e2d631fdb2 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -99,6 +99,7 @@ static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
- 		kfree(mr->map[i]);
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
+index ea16ba5d8da6..9ad8d9856275 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
+@@ -41,6 +41,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
+ 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
+ };
  
- 	kfree(mr->map);
-+	mr->map = NULL;
- err1:
- 	return -ENOMEM;
- }
-@@ -122,7 +123,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
- 	int			num_buf;
- 	void			*vaddr;
- 	int err;
--	int i;
++static unsigned int ipoib_get_max_num_queues(void)
++{
++	return min_t(unsigned int, num_possible_cpus(), 128);
++}
++
+ static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ {
+ 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
+@@ -172,6 +177,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
+ 	.changelink	= ipoib_changelink,
+ 	.get_size	= ipoib_get_size,
+ 	.fill_info	= ipoib_fill_info,
++	.get_num_rx_queues = ipoib_get_max_num_queues,
++	.get_num_tx_queues = ipoib_get_max_num_queues,
+ };
  
- 	umem = ib_umem_get(&rxe->ib_dev, start, length, access);
- 	if (IS_ERR(umem)) {
-@@ -163,9 +163,8 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
- 				pr_warn("%s: Unable to get virtual address\n",
- 						__func__);
- 				err = -ENOMEM;
--				goto err_cleanup_map;
-+				goto err_release_umem;
- 			}
--
- 			buf->addr = (uintptr_t)vaddr;
- 			buf->size = PAGE_SIZE;
- 			num_buf++;
-@@ -182,10 +181,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
- 
- 	return 0;
- 
--err_cleanup_map:
--	for (i = 0; i < mr->num_map; i++)
--		kfree(mr->map[i]);
--	kfree(mr->map);
- err_release_umem:
- 	ib_umem_release(umem);
- err_out:
+ struct rtnl_link_ops *ipoib_get_link_ops(void)
 -- 
 2.35.1
 
