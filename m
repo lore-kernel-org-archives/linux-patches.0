@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A331863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E8FC433EF;
-	Wed, 28 Dec 2022 15:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B92F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841DCC433D2;
+	Wed, 28 Dec 2022 15:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241824;
-	bh=4h8fdag6PiD4pASxuEOiuNSqNb3x9Xu2YOvM4cTWoIQ=;
+	s=korg; t=1672241826;
+	bh=p+eY2TjcsOwquZj+ByI+oHfYOuhzPT2quqjoTKWHHBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmuTjzHqXVwz8kftzOVvLkVt5X8SvG+t9g3+AL1mKvfA0PeurSw8knU5yizUIVeLh
-	 s5khoqOmjMijc+nktfsN19C20q/tDI6HOMDFnCsHutaX/3cGVVwpiL+0DpLFexjjlc
-	 R05E2WW4B9C5eVSizEFV/3HdbR7q7s3eFm/Oa0+U=
+	b=ZNFYzPfSgaJdkGhj6XlkJHHTohKRsuXZrBfuI4WfKFYOWuzFA2M5Lc4YCnZaeHa43
+	 S5M9u8wi+NycgOjYqEyh2Z9MlmyxG9bXfXGu5HX0P4fbUaX4a/i0e+BJ3oEY9k8pGC
+	 mDuqE/912SopSgpWikjKvHhsCFwajKGF07mNRcQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0331/1073] dm: cleanup open_table_device
-Date: Wed, 28 Dec 2022 15:31:59 +0100
-Message-Id: <20221228144336.994508625@linuxfoundation.org>
+Subject: [PATCH 6.1 0293/1146] bpf: propagate precision in ALU/ALU64 operations
+Date: Wed, 28 Dec 2022 15:30:32 +0100
+Message-Id: <20221228144338.097958617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,117 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit b9a785d2dc6567b2fd9fc60057a6a945a276927a ]
+[ Upstream commit a3b666bfa9c9edc05bca62a87abafe0936bd7f97 ]
 
-Move all the logic for allocation the table_device and linking it into
-the list into the open_table_device.  This keeps the code tidy and
-ensures that the table_devices only exist in fully initialized state.
+When processing ALU/ALU64 operations (apart from BPF_MOV, which is
+handled correctly already; and BPF_NEG and BPF_END are special and don't
+have source register), if destination register is already marked
+precise, this causes problem with potentially missing precision tracking
+for the source register. E.g., when we have r1 >>= r5 and r1 is marked
+precise, but r5 isn't, this will lead to r5 staying as imprecise. This
+is due to the precision backtracking logic stopping early when it sees
+r1 is already marked precise. If r1 wasn't precise, we'd keep
+backtracking and would add r5 to the set of registers that need to be
+marked precise. So there is a discrepancy here which can lead to invalid
+and incompatible states matched due to lack of precision marking on r5.
+If r1 wasn't precise, precision backtracking would correctly mark both
+r1 and r5 as precise.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221115141054.1051801-4-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
+This is simple to fix, though. During the forward instruction simulation
+pass, for arithmetic operations of `scalar <op>= scalar` form (where
+<op> is ALU or ALU64 operations), if destination register is already
+precise, mark source register as precise. This applies only when both
+involved registers are SCALARs. `ptr += scalar` and `scalar += ptr`
+cases are already handled correctly.
+
+This does have (negative) effect on some selftest programs and few
+Cilium programs.  ~/baseline-tmp-results.csv are veristat results with
+this patch, while ~/baseline-results.csv is without it. See post
+scriptum for instructions on how to make Cilium programs testable with
+veristat. Correctness has a price.
+
+$ ./veristat -C -e file,prog,insns,states ~/baseline-results.csv ~/baseline-tmp-results.csv | grep -v '+0'
+File                     Program               Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_cubic.bpf.linked1.o  bpf_cubic_cong_avoid              997             1700      +703 (+70.51%)                62                90        +28 (+45.16%)
+test_l4lb.bpf.linked1.o  balancer_ingress                 4559             5469      +910 (+19.96%)               118               126          +8 (+6.78%)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+$ ./veristat -C -e file,prog,verdict,insns,states ~/baseline-results-cilium.csv ~/baseline-tmp-results-cilium.csv | grep -v '+0'
+File           Program                         Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_host.o     tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_host.o     tail_nodeport_nat_ipv6_egress              3396             3446        +50 (+1.47%)               201               203          +2 (+1.00%)
+bpf_lxc.o      tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_overlay.o  tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_xdp.o      tail_lb_ipv4                              71736            73442      +1706 (+2.38%)              4295              4370         +75 (+1.75%)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+P.S. To make Cilium ([0]) programs libbpf-compatible and thus
+veristat-loadable, apply changes from topmost commit in [1], which does
+minimal changes to Cilium source code, mostly around SEC() annotations
+and BPF map definitions.
+
+  [0] https://github.com/cilium/cilium/
+  [1] https://github.com/anakryiko/cilium/commits/libbpf-friendliness
+
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 56 ++++++++++++++++++++++++-------------------------
- 1 file changed, 27 insertions(+), 29 deletions(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index b4a2cb5333fc..1903afa4618a 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -732,28 +732,41 @@ static char *_dm_claim_ptr = "I belong to device-mapper";
- /*
-  * Open a table device so we can use it as a map destination.
-  */
--static int open_table_device(struct table_device *td, dev_t dev,
--			     struct mapped_device *md)
-+static struct table_device *open_table_device(struct mapped_device *md,
-+		dev_t dev, fmode_t mode)
- {
-+	struct table_device *td;
- 	struct block_device *bdev;
- 	u64 part_off;
- 	int r;
- 
--	BUG_ON(td->dm_dev.bdev);
-+	td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
-+	if (!td)
-+		return ERR_PTR(-ENOMEM);
-+	refcount_set(&td->count, 1);
- 
--	bdev = blkdev_get_by_dev(dev, td->dm_dev.mode | FMODE_EXCL, _dm_claim_ptr);
--	if (IS_ERR(bdev))
--		return PTR_ERR(bdev);
-+	bdev = blkdev_get_by_dev(dev, mode | FMODE_EXCL, _dm_claim_ptr);
-+	if (IS_ERR(bdev)) {
-+		r = PTR_ERR(bdev);
-+		goto out_free_td;
-+	}
- 
- 	r = bd_link_disk_holder(bdev, dm_disk(md));
--	if (r) {
--		blkdev_put(bdev, td->dm_dev.mode | FMODE_EXCL);
--		return r;
--	}
-+	if (r)
-+		goto out_blkdev_put;
- 
-+	td->dm_dev.mode = mode;
- 	td->dm_dev.bdev = bdev;
- 	td->dm_dev.dax_dev = fs_dax_get_by_bdev(bdev, &part_off, NULL, NULL);
--	return 0;
-+	format_dev_t(td->dm_dev.name, dev);
-+	list_add(&td->list, &md->table_devices);
-+	return td;
-+
-+out_blkdev_put:
-+	blkdev_put(bdev, mode | FMODE_EXCL);
-+out_free_td:
-+	kfree(td);
-+	return ERR_PTR(r);
- }
- 
- /*
-@@ -786,31 +799,16 @@ static struct table_device *find_table_device(struct list_head *l, dev_t dev,
- int dm_get_table_device(struct mapped_device *md, dev_t dev, fmode_t mode,
- 			struct dm_dev **result)
- {
--	int r;
- 	struct table_device *td;
- 
- 	mutex_lock(&md->table_devices_lock);
- 	td = find_table_device(&md->table_devices, dev, mode);
- 	if (!td) {
--		td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
--		if (!td) {
--			mutex_unlock(&md->table_devices_lock);
--			return -ENOMEM;
--		}
--
--		td->dm_dev.mode = mode;
--		td->dm_dev.bdev = NULL;
--
--		if ((r = open_table_device(td, dev, md))) {
-+		td = open_table_device(md, dev, mode);
-+		if (IS_ERR(td)) {
- 			mutex_unlock(&md->table_devices_lock);
--			kfree(td);
--			return r;
-+			return PTR_ERR(td);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index d533488b75c6..110d306df4ed 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9215,6 +9215,11 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				return err;
+ 			return adjust_ptr_min_max_vals(env, insn,
+ 						       dst_reg, src_reg);
++		} else if (dst_reg->precise) {
++			/* if dst_reg is precise, src_reg should be precise as well */
++			err = mark_chain_precision(env, insn->src_reg);
++			if (err)
++				return err;
  		}
--
--		format_dev_t(td->dm_dev.name, dev);
--
--		refcount_set(&td->count, 1);
--		list_add(&td->list, &md->table_devices);
  	} else {
- 		refcount_inc(&td->count);
- 	}
+ 		/* Pretend the src is a reg with a known value, since we only
 -- 
 2.35.1
 
