@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF9F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F4DC433F0;
-	Wed, 28 Dec 2022 15:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7821863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D54CC433F0;
+	Wed, 28 Dec 2022 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239613;
-	bh=jV+jo97mkdKvm8iSkp3Cpt/piH5zPWbhM9ZmxXg4gDA=;
+	s=korg; t=1672239616;
+	bh=D+Xh4vRdyFtG1X9i9w6s/aDVdyB3mHSfiNowK1cOJq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9XexnGcpaHMvbCvmz7OUap7oyUM4gGpyEe7thf6BRT0fmu1n7/mi1EuWwTJ0z5gz
-	 BiLXc5NIBRR2sytkRnf/Vq8AxXGZyOhMcXKhC4/UXl4L1CDpuap4qHCNlAVmiRzEvk
-	 EXpGhM+UrKzWCSqq7SROjhpY92feYzIEewuOnDHA=
+	b=RnWTzASTu6s9EEc8a7gOltP2aKUXJZXbWDGDIKhLyx/vJrKF1OP5RnnpewltbfjpT
+	 NRTyxbFZCQSbz7Q8tg4Cr08/h2qOIHBCJc2GDNkXGMEqdPXW6FFAeYkAggBMrZPRNK
+	 8fZKDYpRAqE+94591C8Tf8FNfnmC+CMvPf6Yrv8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0019/1146] ARM: dts: stm32: Fix AV96 WLAN regulator gpio property
-Date: Wed, 28 Dec 2022 15:25:58 +0100
-Message-Id: <20221228144330.694034563@linuxfoundation.org>
+Subject: [PATCH 6.0 0056/1073] arm64: dts: ti: k3-am65-main: Drop dma-coherent in crypto node
+Date: Wed, 28 Dec 2022 15:27:24 +0100
+Message-Id: <20221228144329.625086646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit d5d577e3d50713ad11d98dbdaa48bb494346c26d ]
+[ Upstream commit b86833ab3653dbb0dc453eec4eef8615e63de4e2 ]
 
-The WLAN regulator uses 'gpios' property instead of 'gpio' to specify
-regulator enable GPIO. While the former is also currently handled by
-the Linux kernel regulator-fixed driver, the later is the correct one
-per DT bindings. Update the DT to use the later.
+crypto driver itself is not dma-coherent. So drop it.
 
-Fixes: 7dd5cbba42c93 ("ARM: dts: stm32: Enable WiFi on AV96")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: b366b2409c97 ("arm64: dts: ti: k3-am6: Add crypto accelarator node")
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Link: https://lore.kernel.org/r/20221031152520.355653-2-j-choudhary@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am65-main.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-index 90933077d66d..b6957cbdeff5 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-@@ -100,7 +100,7 @@ wlan_pwr: regulator-wlan {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
+diff --git a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+index 8919fede3cd7..ef960386c62c 100644
+--- a/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am65-main.dtsi
+@@ -120,7 +120,6 @@ crypto: crypto@4e00000 {
+ 		dmas = <&main_udmap 0xc000>, <&main_udmap 0x4000>,
+ 				<&main_udmap 0x4001>;
+ 		dma-names = "tx", "rx1", "rx2";
+-		dma-coherent;
  
--		gpios = <&gpioz 3 GPIO_ACTIVE_HIGH>;
-+		gpio = <&gpioz 3 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 	};
- };
+ 		rng: rng@4e10000 {
+ 			compatible = "inside-secure,safexcel-eip76";
 -- 
 2.35.1
 
