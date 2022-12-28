@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD011863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DB9C433D2;
-	Wed, 28 Dec 2022 15:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB081863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE4C433D2;
+	Wed, 28 Dec 2022 15:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242320;
-	bh=KcnYeku5C3BrNcd6nl2rTnAy0lpy2etHaWln6/lEW2c=;
+	s=korg; t=1672242323;
+	bh=ZOE02vKDq6FNxiaeU+CC5JpGqnKB2F+100TdzBcV7NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy7w23M0yf7TOJp9aovcdwhfjsqkK3PvzVwSZyluSUOOQd6VeiJ/GNs+8/PUjOphb
-	 67K4eHEe1EpAj8mARksbsI4VLNO0APpzuOpSsiJgntfQVee21Z58CWF0pqy8D9u4y1
-	 2j8ooqa67CsMdpJAF7iwbrqU9JyxaxrNZfi9bRlA=
+	b=ibIZsCOKjdK0BMeRtAS+wAHMaq6c3R0cHQ4gN2T/CwOl/5le/0ftvphsCGfYr4tlI
+	 suMzb09YJ7vuSGcUB+FmgT8v+pIHmk72ifQYOWGJ947N2mSTznHEYhl7Kwg4JWD+an
+	 5pHuMU1vxP0XlfoBYdD497SwFvcNsBYQ0ALeUe/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0393/1073] media: sun8i-a83t-mipi-csi2: Register async subdev with no sensor attached
-Date: Wed, 28 Dec 2022 15:33:01 +0100
-Message-Id: <20221228144338.692998067@linuxfoundation.org>
+Subject: [PATCH 5.15 590/731] nfc: pn533: Clear nfc_target before being used
+Date: Wed, 28 Dec 2022 15:41:37 +0100
+Message-Id: <20221228144313.646703174@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit 614f6e35a9e214c80270ab942bf58d85066a3e34 ]
+[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
 
-This allows the device to probe and register its async subdev without
-a sensor attached.
+Fix a slab-out-of-bounds read that occurs in nla_put() called from
+nfc_genl_send_target() when target->sensb_res_len, which is duplicated
+from an nfc_target in pn533, is too large as the nfc_target is not
+properly initialized and retains garbage values. Clear nfc_targets with
+memset() before they are used.
 
-The rationale is that the parent driver might otherwise wait for the
-subdev to be registered when it should be available (from the fwnode
-graph endpoint perspective). This is generally not problematic when
-the MIPI CSI-2 bridge is the only device attached to the parent, but
-in the case of a CSI controller that can feed from both MIPI CSI-2
-and parallel, it would prevent using the parallel sensor due to the
-parent waiting for the MIPI CSI-2 subdev to register.
+Found by a modified version of syzkaller.
 
-Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+BUG: KASAN: slab-out-of-bounds in nla_put
+Call Trace:
+ memcpy
+ nla_put
+ nfc_genl_dump_targets
+ genl_lock_dumpit
+ netlink_dump
+ __netlink_dump_start
+ genl_family_rcv_msg_dumpit
+ genl_rcv_msg
+ netlink_rcv_skb
+ genl_rcv
+ netlink_unicast
+ netlink_sendmsg
+ sock_sendmsg
+ ____sys_sendmsg
+ ___sys_sendmsg
+ __sys_sendmsg
+ do_syscall_64
+
+Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
+Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/nfc/pn533/pn533.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-index 5e1c25db7bc4..d993c09a4820 100644
---- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-+++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-@@ -536,6 +536,7 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	struct v4l2_async_notifier *notifier = &bridge->notifier;
- 	struct media_pad *pads = bridge->pads;
- 	struct device *dev = csi2_dev->dev;
-+	bool notifier_registered = false;
- 	int ret;
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index 6dc0af63440f..939d27652a4c 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -1297,6 +1297,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
+ 	if (IS_ERR(resp))
+ 		return PTR_ERR(resp);
  
- 	mutex_init(&bridge->lock);
-@@ -573,12 +574,17 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	notifier->ops = &sun8i_a83t_mipi_csi2_notifier_ops;
- 
- 	ret = sun8i_a83t_mipi_csi2_bridge_source_setup(csi2_dev);
--	if (ret)
-+	if (ret && ret != -ENODEV)
- 		goto error_v4l2_notifier_cleanup;
- 
--	ret = v4l2_async_subdev_nf_register(subdev, notifier);
--	if (ret < 0)
--		goto error_v4l2_notifier_cleanup;
-+	/* Only register the notifier when a sensor is connected. */
-+	if (ret != -ENODEV) {
-+		ret = v4l2_async_subdev_nf_register(subdev, notifier);
-+		if (ret < 0)
-+			goto error_v4l2_notifier_cleanup;
++	memset(&nfc_target, 0, sizeof(struct nfc_target));
 +
-+		notifier_registered = true;
-+	}
+ 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
  
- 	/* V4L2 Subdev */
+ 	rc = rsp->status & PN533_CMD_RET_MASK;
+@@ -1928,6 +1930,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
  
-@@ -589,7 +595,8 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	return 0;
+ 		dev_dbg(dev->dev, "Creating new target\n");
  
- error_v4l2_notifier_unregister:
--	v4l2_async_nf_unregister(notifier);
-+	if (notifier_registered)
-+		v4l2_async_nf_unregister(notifier);
- 
- error_v4l2_notifier_cleanup:
- 	v4l2_async_nf_cleanup(notifier);
++		memset(&nfc_target, 0, sizeof(struct nfc_target));
++
+ 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
+ 		nfc_target.nfcid1_len = 10;
+ 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
 -- 
 2.35.1
 
