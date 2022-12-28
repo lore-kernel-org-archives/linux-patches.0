@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F31875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC93AC433D2;
-	Wed, 28 Dec 2022 15:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B3E1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7396BC433EF;
+	Wed, 28 Dec 2022 15:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242853;
-	bh=vpBh9Y7oyrWujPlWZ0plnz6n+mL1tLk3ObYK33kysdE=;
+	s=korg; t=1672242856;
+	bh=2/XxPrc0ldBqoobXD9Q2Rc7n1tQQKTCIQh7VaTHyEbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/cLSuGlrM0T1/S9cfaBKF5/8J5PuyLuJvMK29ljriZQegEIUw03rpSKYq++lEHAZ
-	 YZu6KuFcB1JFHjExwD+GozIJZiBxu11d0S8VTC6KY5icUus6DKLiUXhEVN1DtkN/Sd
-	 8FG/5M3lOpYrTAFtEfXCbQ6RIXs4k9yM5869uB4M=
+	b=cgUgyf7RV0wkbOQ8pXlz8Nw8RwD9HNjWcCQ6/RrUe6kYV+rljLlINTC4zNLyicAQW
+	 Rpm0vPVnBGLrSBHJ1ZCuWb/zTG+6JRzhfGeo90tTaVT4YLAP73/DbLHON7o4lfhNVZ
+	 09GXw5tXk4E3w7LMFOt5ZWqHUcxkD+VuJdVkwSNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jiang Li <jiang.li@ugreen.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0462/1073] regulator: core: fix resource leak in regulator_register()
-Date: Wed, 28 Dec 2022 15:34:10 +0100
-Message-Id: <20221228144340.585228551@linuxfoundation.org>
+Subject: [PATCH 5.15 654/731] md/raid1: stop mdx_raid1 thread when raid1 array run failed
+Date: Wed, 28 Dec 2022 15:42:41 +0100
+Message-Id: <20221228144315.457075526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jiang Li <jiang.li@ugreen.com>
 
-[ Upstream commit ba62319a42c50e6254e98b3f316464fac8e77968 ]
+[ Upstream commit b611ad14006e5be2170d9e8e611bf49dff288911 ]
 
-I got some resource leak reports while doing fault injection test:
+fail run raid1 array when we assemble array with the inactive disk only,
+but the mdx_raid1 thread were not stop, Even if the associated resources
+have been released. it will caused a NULL dereference when we do poweroff.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 100,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@64/regulators/buck1
+This causes the following Oops:
+    [  287.587787] BUG: kernel NULL pointer dereference, address: 0000000000000070
+    [  287.594762] #PF: supervisor read access in kernel mode
+    [  287.599912] #PF: error_code(0x0000) - not-present page
+    [  287.605061] PGD 0 P4D 0
+    [  287.607612] Oops: 0000 [#1] SMP NOPTI
+    [  287.611287] CPU: 3 PID: 5265 Comm: md0_raid1 Tainted: G     U            5.10.146 #0
+    [  287.619029] Hardware name: xxxxxxx/To be filled by O.E.M, BIOS 5.19 06/16/2022
+    [  287.626775] RIP: 0010:md_check_recovery+0x57/0x500 [md_mod]
+    [  287.632357] Code: fe 01 00 00 48 83 bb 10 03 00 00 00 74 08 48 89 ......
+    [  287.651118] RSP: 0018:ffffc90000433d78 EFLAGS: 00010202
+    [  287.656347] RAX: 0000000000000000 RBX: ffff888105986800 RCX: 0000000000000000
+    [  287.663491] RDX: ffffc90000433bb0 RSI: 00000000ffffefff RDI: ffff888105986800
+    [  287.670634] RBP: ffffc90000433da0 R08: 0000000000000000 R09: c0000000ffffefff
+    [  287.677771] R10: 0000000000000001 R11: ffffc90000433ba8 R12: ffff888105986800
+    [  287.684907] R13: 0000000000000000 R14: fffffffffffffe00 R15: ffff888100b6b500
+    [  287.692052] FS:  0000000000000000(0000) GS:ffff888277f80000(0000) knlGS:0000000000000000
+    [  287.700149] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [  287.705897] CR2: 0000000000000070 CR3: 000000000320a000 CR4: 0000000000350ee0
+    [  287.713033] Call Trace:
+    [  287.715498]  raid1d+0x6c/0xbbb [raid1]
+    [  287.719256]  ? __schedule+0x1ff/0x760
+    [  287.722930]  ? schedule+0x3b/0xb0
+    [  287.726260]  ? schedule_timeout+0x1ed/0x290
+    [  287.730456]  ? __switch_to+0x11f/0x400
+    [  287.734219]  md_thread+0xe9/0x140 [md_mod]
+    [  287.738328]  ? md_thread+0xe9/0x140 [md_mod]
+    [  287.742601]  ? wait_woken+0x80/0x80
+    [  287.746097]  ? md_register_thread+0xe0/0xe0 [md_mod]
+    [  287.751064]  kthread+0x11a/0x140
+    [  287.754300]  ? kthread_park+0x90/0x90
+    [  287.757974]  ret_from_fork+0x1f/0x30
 
-unreferenced object 0xffff88810deea000 (size 512):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859840 (age 5061.046s)
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff a0 1e 00 a1 ff ff ff ff  ................
-  backtrace:
-    [<00000000d78541e2>] kmalloc_trace+0x21/0x110
-    [<00000000b343d153>] device_private_init+0x32/0xd0
-    [<00000000be1f0c70>] device_add+0xb2d/0x1030
-    [<00000000e3e6344d>] regulator_register+0xaf2/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
+In fact, when raid1 array run fail, we need to do
+md_unregister_thread() before raid1_free().
 
-unreferenced object 0xffff88810b617b80 (size 32):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859904 (age 5060.983s)
-  hex dump (first 32 bytes):
-    72 65 67 75 6c 61 74 6f 72 2e 32 38 36 38 2d 53  regulator.2868-S
-    55 50 50 4c 59 00 ff ff 29 00 00 00 2b 00 00 00  UPPLY...)...+...
-  backtrace:
-    [<000000009da9280d>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<0000000025c6a4e5>] kstrdup+0x3a/0x70
-    [<00000000790efb69>] create_regulator+0xc0/0x4e0
-    [<0000000005ed203a>] regulator_resolve_supply+0x2d4/0x440
-    [<0000000045796214>] regulator_register+0x10b3/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
-
-After calling regulator_resolve_supply(), the 'rdev->supply' is set
-by set_supply(), after this set, in the error path, the resources
-need be released, so call regulator_put() to avoid the leaks.
-
-Fixes: aea6cb99703e ("regulator: resolve supply after creating regulator")
-Fixes: 8a866d527ac0 ("regulator: core: Resolve supply name earlier to prevent double-init")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202025111.496402-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jiang Li <jiang.li@ugreen.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
+ drivers/md/raid1.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 9b839dced470..4a93154bb574 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5615,6 +5615,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
- 	regulator_remove_coupling(rdev);
- 	mutex_unlock(&regulator_list_mutex);
- wash:
-+	regulator_put(rdev->supply);
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 9fa479493642..783763f6845f 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3141,6 +3141,7 @@ static int raid1_run(struct mddev *mddev)
+ 	 * RAID1 needs at least one disk in active
+ 	 */
+ 	if (conf->raid_disks - mddev->degraded < 1) {
++		md_unregister_thread(&conf->thread);
+ 		ret = -EINVAL;
+ 		goto abort;
+ 	}
 -- 
 2.35.1
 
