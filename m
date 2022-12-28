@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE101863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64EEC433EF;
-	Wed, 28 Dec 2022 15:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0600E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB21C433EF;
+	Wed, 28 Dec 2022 15:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240930;
-	bh=Z/toL6BcbxqcS1VXTJbOKRKvW8KybiSJWmyF8kXnYNM=;
+	s=korg; t=1672240932;
+	bh=+DYwgNKZyaPCUdVD2IEIt6RJcz7jns/DQexItOurSeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxZCNjwjGJGuqHH7625hhLj3baJgFI/XnaDRXa5wB3xFAoJV387qnhxaFCkHNRq2L
-	 hbPG93OESA5h6a7xwZ6yIbtjHO+a0y2x/AgavstSgW2a9Yyw48T82ZVjsw1OScB7CE
-	 EyC4rit8bpaplSfxZbrkzxixeb16n068r5XCTANc=
+	b=wnV72PY4G7WZ26UmcTOcAATfo7DU18r9OVGtwyiuiQ0tD9fz18IYFhqk+/7UKtA0R
+	 LdGPsTq64sPT+kJpbS8kJmzKoz2L2iBNYpARDl978K24BOxwHXbcNS9SiPmdpsZXdh
+	 DBA1KKvPVNIiMTMci5Dz6ajcUFcgIDGOm6t/Erew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 418/731] RDMA/nldev: Add checks for nla_nest_start() in fill_stat_counter_qps()
-Date: Wed, 28 Dec 2022 15:38:45 +0100
-Message-Id: <20221228144308.687995193@linuxfoundation.org>
+Subject: [PATCH 5.15 412/731] scsi: scsi_debug: Fix a warning in resp_report_zones()
+Date: Wed, 28 Dec 2022 15:38:39 +0100
+Message-Id: <20221228144308.515316588@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,35 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit ea5ef136e215fdef35f14010bc51fcd6686e6922 ]
+[ Upstream commit 07f2ca139d9a7a1ba71c4c03997c8de161db2346 ]
 
-As the nla_nest_start() may fail with NULL returned, the return value needs
-to be checked.
+As 'alloc_len' is user controlled data, if user tries to allocate memory
+larger than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack
+trace and messes up dmesg with a warning.
 
-Fixes: c4ffee7c9bdb ("RDMA/netlink: Implement counter dumpit calback")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221126043410.85632-1-yuancan@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
+detected by static analysis using smatch.
+
+Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221112070612.2121535-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/scsi_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 6f3799698634..cefe12964f3e 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -892,6 +892,8 @@ static int fill_stat_counter_qps(struct sk_buff *msg,
- 	int ret = 0;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 6ca3205a0bf5..5624bb6a64a3 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -4367,7 +4367,7 @@ static int resp_report_zones(struct scsi_cmnd *scp,
+ 	rep_max_zones = min((alloc_len - 64) >> ilog2(RZONES_DESC_HD),
+ 			    max_zones);
  
- 	table_attr = nla_nest_start(msg, RDMA_NLDEV_ATTR_RES_QP);
-+	if (!table_attr)
-+		return -EMSGSIZE;
- 
- 	rt = &counter->device->res[RDMA_RESTRACK_QP];
- 	xa_lock(&rt->xa);
+-	arr = kzalloc(alloc_len, GFP_ATOMIC);
++	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!arr) {
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
+ 				INSUFF_RES_ASCQ);
 -- 
 2.35.1
 
