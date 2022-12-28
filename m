@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F741863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D25EC433D2;
-	Wed, 28 Dec 2022 14:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FE81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1F8C433D2;
+	Wed, 28 Dec 2022 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238803;
-	bh=qY3awEG1aNTACb13FC0W+diU9Et+YRXyv5g6zLWNc0I=;
+	s=korg; t=1672238805;
+	bh=X6pIe/vcPlIeOVVKFsNobKb7x1C8QXWcFn0Z17KpYos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCY6NOFThc1/TNTortcvTLKpdWLvGRDpODfXuSzeM9INMtfLhI5v4hInCG7FbRcXH
-	 3XoeZ5KI2RV8nNlo0jwr1WtjGFQ1/hZ9LqC6b4Iih0o2VfXXXAx/JawTN4qXIZL7V5
-	 nThpAsUuDO8kzBG1j06lPEmVAvY6P+mK1OYPHEqI=
+	b=CafY/RU6wtfVlIuwbOZkaFP3WHuFmQ8PMznXLnuMysAmKsmx0N1J0r/YiTCU7Ka0J
+	 HOLzCDTcvRWAc1XhnZ7Sj/F4Llb2FBp/gs0KUQzDnNRJckT5mEYYTlGLT1S8Mt8TFH
+	 54Nv6ivX+9vyx+NfmotDSYPfCpN7RydslNSYt2k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/731] arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
-Date: Wed, 28 Dec 2022 15:32:03 +0100
-Message-Id: <20221228144257.009168411@linuxfoundation.org>
+Subject: [PATCH 5.15 017/731] arm64: dts: qcom: sm8250: correct LPASS pin pull down
+Date: Wed, 28 Dec 2022 15:32:04 +0100
+Message-Id: <20221228144257.037556023@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,37 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 02549ba5de0a09a27616496c3512db5af4ad7862 ]
+[ Upstream commit 195a0a11d66d6c696cbcf398d6bc3f3a3a462f7c ]
 
-The register address in the node name is shadowing vph_pwr@83, whereas
-the ADC5_VCOIN register resolves to 0x85.  Fix this copy-paste
-discrepancy.
+The pull-down property is actually bias-pull-down.
 
-Fixes: 4bf097540506 ("arm64: dts: qcom: pm660: Add VADC and temp alarm nodes")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Fixes: 3160c1b894d9 ("arm64: dts: qcom: sm8250: add lpass lpi pin controller node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220926190148.283805-3-marijn.suijten@somainline.org
+Link: https://lore.kernel.org/r/20220927153429.55365-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm660.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-index e847d7209afc..affc736d154a 100644
---- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-@@ -152,7 +152,7 @@ vadc_vph_pwr: vph_pwr@83 {
- 				qcom,pre-scaling = <1 3>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index b710bca45648..9a95c15c7e8b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1933,7 +1933,7 @@ data {
+ 					pins = "gpio7";
+ 					function = "dmic1_data";
+ 					drive-strength = <2>;
+-					pull-down;
++					bias-pull-down;
+ 					input-enable;
+ 				};
  			};
- 
--			vcoin: vcoin@83 {
-+			vcoin: vcoin@85 {
- 				reg = <ADC5_VCOIN>;
- 				qcom,decimation = <1024>;
- 				qcom,pre-scaling = <1 3>;
 -- 
 2.35.1
 
