@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A4B1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A755CC433D2;
-	Wed, 28 Dec 2022 15:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1331875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61DBC433F1;
+	Wed, 28 Dec 2022 15:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242979;
-	bh=jAGMBJQ8iKFm4a6UjusnlvElGzGbYmjlZEsQBr9PFdQ=;
+	s=korg; t=1672242982;
+	bh=BBm+FXZcXc0LQpf3qvLlhqJJqR0w8aXAsxBE3rCarZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhtwAehfsRiB6FoOnT6I4OnumSFvBRQXFrr+vyEvtvjVd8c9zEX1+AWsZxJiTHtv+
-	 RSuAtiTCIiSXtJJ4eqHlfXjoaZojKB4bxrp7REHulv4/G/bInHT4HWcrgnmIWwizez
-	 AbXqV4ZnqOclm3nyrM51HUpfa5s9kq9crNrTktXA=
+	b=tOAB3Pg9xISDJxokFbuR5U/x/gMZmIRMPuyA/ROWaN1j++c2rnm+tPFtqcO5EO7QE
+	 7H2zjqO10Ap3XE0hUkIyylfTJPorKIFC0uJqgLOP00wYsa6OBSG8k006V66wLrXugn
+	 4brGqXnhm6oowYM0l5g3VSLYZYPy4moWSfxP9Vlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 667/731] libbpf: Avoid enum forward-declarations in public API in C++ mode
-Date: Wed, 28 Dec 2022 15:42:54 +0100
-Message-Id: <20221228144315.825660727@linuxfoundation.org>
+Subject: [PATCH 6.0 0475/1073] NFSv4.x: Fail client initialisation if state manager thread cant run
+Date: Wed, 28 Dec 2022 15:34:23 +0100
+Message-Id: <20221228144340.939773150@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b42693415b86f608049cf1b4870adc1dc65e58b0 ]
+[ Upstream commit b4e4f66901658fae0614dea5bf91062a5387eda7 ]
 
-C++ enum forward declarations are fundamentally not compatible with pure
-C enum definitions, and so libbpf's use of `enum bpf_stats_type;`
-forward declaration in libbpf/bpf.h public API header is causing C++
-compilation issues.
+If the state manager thread fails to start, then we should just mark the
+client initialisation as failed so that other processes or threads don't
+get stuck in nfs_wait_client_init_complete().
 
-More details can be found in [0], but it comes down to C++ supporting
-enum forward declaration only with explicitly specified backing type:
-
-  enum bpf_stats_type: int;
-
-In C (and I believe it's a GCC extension also), such forward declaration
-is simply:
-
-  enum bpf_stats_type;
-
-Further, in Linux UAPI this enum is defined in pure C way:
-
-enum bpf_stats_type { BPF_STATS_RUN_TIME = 0; }
-
-And even though in both cases backing type is int, which can be
-confirmed by looking at DWARF information, for C++ compiler actual enum
-definition and forward declaration are incompatible.
-
-To eliminate this problem, for C++ mode define input argument as int,
-which makes enum unnecessary in libbpf public header. This solves the
-issue and as demonstrated by next patch doesn't cause any unwanted
-compiler warnings, at least with default warnings setting.
-
-  [0] https://stackoverflow.com/questions/42766839/c11-enum-forward-causes-underlying-type-mismatch
-  [1] Closes: https://github.com/libbpf/libbpf/issues/249
-
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221130200013.2997831-1-andrii@kernel.org
+Reported-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Fixes: 4697bd5e9419 ("NFSv4: Fix a race in the net namespace mount notification")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfs/nfs4state.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
-index 6fffb3cdf39b..49bd43b998c8 100644
---- a/tools/lib/bpf/bpf.h
-+++ b/tools/lib/bpf/bpf.h
-@@ -249,8 +249,15 @@ LIBBPF_API int bpf_task_fd_query(int pid, int fd, __u32 flags, char *buf,
- 				 __u32 *buf_len, __u32 *prog_id, __u32 *fd_type,
- 				 __u64 *probe_offset, __u64 *probe_addr);
- 
-+#ifdef __cplusplus
-+/* forward-declaring enums in C++ isn't compatible with pure C enums, so
-+ * instead define bpf_enable_stats() as accepting int as an input
-+ */
-+LIBBPF_API int bpf_enable_stats(int type);
-+#else
- enum bpf_stats_type; /* defined in up-to-date linux/bpf.h */
- LIBBPF_API int bpf_enable_stats(enum bpf_stats_type type);
-+#endif
- 
- struct bpf_prog_bind_opts {
- 	size_t sz; /* size of this struct for forward/backward compatibility */
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index a629d7db9420..0774355249c9 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -1232,6 +1232,8 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+ 	if (IS_ERR(task)) {
+ 		printk(KERN_ERR "%s: kthread_run: %ld\n",
+ 			__func__, PTR_ERR(task));
++		if (!nfs_client_init_is_complete(clp))
++			nfs_mark_client_ready(clp, PTR_ERR(task));
+ 		nfs4_clear_state_manager_bit(clp);
+ 		clear_bit(NFS4CLNT_MANAGER_AVAILABLE, &clp->cl_state);
+ 		nfs_put_client(clp);
 -- 
 2.35.1
 
