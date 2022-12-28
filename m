@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AAF23AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836C0C433EF;
-	Wed, 28 Dec 2022 16:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED69823AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F52C433EF;
+	Wed, 28 Dec 2022 16:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246643;
-	bh=eSsy+PB1DmhRyOHmasLjcN3vEdhJt20bN7ipN8qY9Jg=;
+	s=korg; t=1672246646;
+	bh=d5fnSVDgJngnhjxWWWq1gmIJVeBeItmoNzJotTT5wZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wiaD5r1U5G927hYyDt/6HqOkQDLWbCmbu+Xdlv/6KON4lpByd/5c0Z0hCbKVXVOGe
-	 4cBF7FFBvLSZDIsu7Heg/D/NsuYWY3+YhSExPd4TylvyA71/ADgNU/T2KFP7zS/BsB
-	 1G0PgaYOhqi7Sqv8iyDsTjyHfd7zvOj/X8B1JqAM=
+	b=ro+Mnq1aUw6SO1z7BZ4PMNwpSjOPG+3s5/vwxn6iQHas5o5YYdJZsMQWj2Rri/UaG
+	 +UYDhAL0GRT1Z40d+9uXRKjBmf+RvHymLvvG8ZlA0rHx1Aa/Qkn3G78qb39X+d4buc
+	 Zlbq5GjvPZ037Vjjd5ZxnREiEf0mfw4pfqb6rmIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Ferry Toth <ftoth@exalondelft.nl>
-Subject: [PATCH 6.1 1110/1146] usb: dwc3: core: defer probe on ulpi_read_id timeout
-Date: Wed, 28 Dec 2022 15:44:09 +0100
-Message-Id: <20221228144400.305553094@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>
+Subject: [PATCH 6.1 1111/1146] usb: dwc3: qcom: Fix memory leak in dwc3_qcom_interconnect_init
+Date: Wed, 28 Dec 2022 15:44:10 +0100
+Message-Id: <20221228144400.331126567@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -34,58 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 63130462c919ece0ad0d9bb5a1f795ef8d79687e upstream.
+commit 97a48da1619ba6bd42a0e5da0a03aa490a9496b1 upstream.
 
-Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
-if extcon is present"), Dual Role support on Intel Merrifield platform
-broke due to rearranging the call to dwc3_get_extcon().
+of_icc_get() alloc resources for path handle, we should release it when not
+need anymore. Like the release in dwc3_qcom_interconnect_exit() function.
+Add icc_put() in error handling to fix this.
 
-It appears to be caused by ulpi_read_id() masking the timeout on the first
-test write. In the past dwc3 probe continued by calling dwc3_core_soft_reset()
-followed by dwc3_get_extcon() which happend to return -EPROBE_DEFER.
-On deferred probe ulpi_read_id() finally succeeded. Due to above mentioned
-rearranging -EPROBE_DEFER is not returned and probe completes without phy.
-
-On Intel Merrifield the timeout on the first test write issue is reproducible
-but it is difficult to find the root cause. Using a mainline kernel and
-rootfs with buildroot ulpi_read_id() succeeds. As soon as adding
-ftrace / bootconfig to find out why, ulpi_read_id() fails and we can't
-analyze the flow. Using another rootfs ulpi_read_id() fails even without
-adding ftrace. We suspect the issue is some kind of timing / race, but
-merely retrying ulpi_read_id() does not resolve the issue.
-
-As we now changed ulpi_read_id() to return -ETIMEDOUT in this case, we
-need to handle the error by calling dwc3_core_soft_reset() and request
--EPROBE_DEFER. On deferred probe ulpi_read_id() is retried and succeeds.
-
-Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
-Cc: stable@vger.kernel.org
+Fixes: bea46b981515 ("usb: dwc3: qcom: Add interconnect support in dwc3 driver")
+Cc: stable <stable@kernel.org>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Link: https://lore.kernel.org/r/20221205201527.13525-3-ftoth@exalondelft.nl
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20221206081731.818107-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-qcom.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1100,8 +1100,13 @@ static int dwc3_core_init(struct dwc3 *d
- 
- 	if (!dwc->ulpi_ready) {
- 		ret = dwc3_core_ulpi_init(dwc);
--		if (ret)
-+		if (ret) {
-+			if (ret == -ETIMEDOUT) {
-+				dwc3_core_soft_reset(dwc);
-+				ret = -EPROBE_DEFER;
-+			}
- 			goto err0;
-+		}
- 		dwc->ulpi_ready = true;
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -261,7 +261,8 @@ static int dwc3_qcom_interconnect_init(s
+ 	if (IS_ERR(qcom->icc_path_apps)) {
+ 		dev_err(dev, "failed to get apps-usb path: %ld\n",
+ 				PTR_ERR(qcom->icc_path_apps));
+-		return PTR_ERR(qcom->icc_path_apps);
++		ret = PTR_ERR(qcom->icc_path_apps);
++		goto put_path_ddr;
  	}
  
+ 	max_speed = usb_get_maximum_speed(&qcom->dwc3->dev);
+@@ -274,16 +275,22 @@ static int dwc3_qcom_interconnect_init(s
+ 	}
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth for usb-ddr path: %d\n", ret);
+-		return ret;
++		goto put_path_apps;
+ 	}
+ 
+ 	ret = icc_set_bw(qcom->icc_path_apps, APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth for apps-usb path: %d\n", ret);
+-		return ret;
++		goto put_path_apps;
+ 	}
+ 
+ 	return 0;
++
++put_path_apps:
++	icc_put(qcom->icc_path_apps);
++put_path_ddr:
++	icc_put(qcom->icc_path_ddr);
++	return ret;
+ }
+ 
+ /**
 
 
