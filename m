@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BA01868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95EAC433F0;
-	Wed, 28 Dec 2022 15:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48221863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566D8C433EF;
+	Wed, 28 Dec 2022 15:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240898;
-	bh=cYR+rggBgN0oq+5BjbIsTLxj1sZVNyGAmi+2zaO9R0Q=;
+	s=korg; t=1672240900;
+	bh=uDniHmXSBUzrvnEKTj8QBlPmhwTGemgZlim2KMDpL9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jobR/6g9ODI5uwto6dDHECfDljMspoGL8GXqFLaAwxjI8AZcv1A1DeAoT/ok0EeYU
-	 mcj1Fm8a8n3E9fbg5cJSrjHx32Mqov6FUHrK0IFlEAK+XKCyweuO8FfqrqQEExWqSU
-	 l7RHyus3Yf+T+k2PsCrrPK+ZRanB0p38pRTI7F0s=
+	b=icrU65paPzlyUg2BTzjPgB8TXECqPYsPFbKZbIIcYGEnkoKxtmN8ya5d1/ZfKu8uz
+	 N5N2H4m6DOlWmmjv5o/selGj+tJ/gTbDqierglM+rFQXVaNgb+z4N7UDognw0NTUIR
+	 SSpH5M62ewt0M29RDggaANPoA74lNRV19gD9wmP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dongdong Zhang <zhangdongdong1@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0189/1073] wifi: mac80211: mlme: fix null-ptr deref on failed assoc
-Date: Wed, 28 Dec 2022 15:29:37 +0100
-Message-Id: <20221228144333.144403443@linuxfoundation.org>
+Subject: [PATCH 5.15 379/731] f2fs: fix normal discard process
+Date: Wed, 28 Dec 2022 15:38:06 +0100
+Message-Id: <20221228144307.547165034@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,59 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dongdong Zhang <zhangdongdong1@oppo.com>
 
-[ Upstream commit 78a6a43aaf87180ec7425a2a90468e1b4d09a1ec ]
+[ Upstream commit b5f1a218ae5e4339130d6e733f0e63d623e09a2c ]
 
-If association to an AP without a link 0 fails, then we crash in
-tracing because it assumes that either ap_mld_addr or link 0 BSS
-is valid, since we clear sdata->vif.valid_links and then don't
-add the ap_mld_addr to the struct.
+In the DPOLICY_BG mode, there is a conflict between
+the two conditions "i + 1 < dpolicy->granularity" and
+"i < DEFAULT_DISCARD_GRANULARITY". If i = 15, the first
+condition is false, it will enter the second condition
+and dispatch all small granularity discards in function
+ __issue_discard_cmd_orderly. The restrictive effect
+of the first condition to small discards will be
+invalidated. These two conditions should align.
 
-Since we clear also sdata->vif.cfg.ap_addr, keep a local copy of
-it and assign it earlier, before clearing valid_links, to fix
-this.
-
-Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 20ee4382322c ("f2fs: issue small discard by LBA order")
+Signed-off-by: Dongdong Zhang <zhangdongdong1@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 654414caeb71..a21571eb02ec 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4955,6 +4955,7 @@ static void ieee80211_rx_mgmt_assoc_resp(struct ieee80211_sub_if_data *sdata,
- 	struct cfg80211_rx_assoc_resp resp = {
- 		.uapsd_queues = -1,
- 	};
-+	u8 ap_mld_addr[ETH_ALEN] __aligned(2);
- 	unsigned int link_id;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 28939e3573ea..194c0811fbdf 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1551,7 +1551,7 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
+ 		if (i + 1 < dpolicy->granularity)
+ 			break;
  
- 	sdata_assert_lock(sdata);
-@@ -5119,6 +5120,11 @@ static void ieee80211_rx_mgmt_assoc_resp(struct ieee80211_sub_if_data *sdata,
- 				resp.uapsd_queues |= ieee80211_ac_to_qos_mask[ac];
- 	}
+-		if (i < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
++		if (i + 1 < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
+ 			return __issue_discard_cmd_orderly(sbi, dpolicy);
  
-+	if (sdata->vif.valid_links) {
-+		ether_addr_copy(ap_mld_addr, sdata->vif.cfg.ap_addr);
-+		resp.ap_mld_addr = ap_mld_addr;
-+	}
-+
- 	ieee80211_destroy_assoc_data(sdata,
- 				     status_code == WLAN_STATUS_SUCCESS ?
- 					ASSOC_SUCCESS :
-@@ -5128,8 +5134,6 @@ static void ieee80211_rx_mgmt_assoc_resp(struct ieee80211_sub_if_data *sdata,
- 	resp.len = len;
- 	resp.req_ies = ifmgd->assoc_req_ies;
- 	resp.req_ies_len = ifmgd->assoc_req_ies_len;
--	if (sdata->vif.valid_links)
--		resp.ap_mld_addr = sdata->vif.cfg.ap_addr;
- 	cfg80211_rx_assoc_resp(sdata->dev, &resp);
- notify_driver:
- 	drv_mgd_complete_tx(sdata->local, sdata, &info);
+ 		pend_list = &dcc->pend_list[i];
 -- 
 2.35.1
 
