@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4319F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93A6C433D2;
-	Wed, 28 Dec 2022 14:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0C71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6374DC433EF;
+	Wed, 28 Dec 2022 14:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239311;
-	bh=jHFYO3VF5b6e5umtpDBVraCHKQmKkXpILeP/hEO29RU=;
+	s=korg; t=1672239313;
+	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVZw4Wozwl89DFl0SO1X6fQhS80pHFEawNJgUVcUeLJ8OSySNTJSf/QzwEdUmapec
-	 Q0uls7nXv21rT/TUCwtDJQTNvRW8UjEGsshPMBVcyBovDzsn7Zg7Fl7GkgJu3RFSsW
-	 lerQc8ccgQQ9aIG+mCAAgPbuR6Sm7Amyw/BjFh60=
+	b=OtXC0PSaHYNFABYVONKk7/qvBoyTCVls2beE9LnSF5v69poO8GQjo77MOLl8RSgGZ
+	 tb5zc03+nG77hmcjRU+LKUf90iSmzBpun9Kox6HIUV3wGn5a+Hjo8VbEcisA6jVBmg
+	 wOxn4JXcgTxMMkpS23Ou0M4VJMxK6PfJanwfkRHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Siemsen <ralph.siemsen@linaro.org>,
-	Marek Vasut <marex@denx.de>,
-	Gareth Williams <gareth.williams.jx@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 173/731] clk: renesas: r9a06g032: Repair grave increment error
-Date: Wed, 28 Dec 2022 15:34:40 +0100
-Message-Id: <20221228144301.579567100@linuxfoundation.org>
+Subject: [PATCH 5.15 174/731] spi: Update reference to struct spi_controller
+Date: Wed, 28 Dec 2022 15:34:41 +0100
+Message-Id: <20221228144301.608283678@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,45 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit 02693e11611e082e3c4d8653e8af028e43d31164 ]
+[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
 
-If condition (clkspec.np != pd->dev.of_node) is true, then the driver
-ends up in an endless loop, forever, locking up the machine.
+struct spi_master has been renamed to struct spi_controller. Update the
+reference in spi.rst to make it clickable again.
 
-Fixes: aad03a66f902 ("clk: renesas: r9a06g032: Add clock domain support")
-Reviewed-by: Ralph Siemsen <ralph.siemsen@linaro.org>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Gareth Williams <gareth.williams.jx@renesas.com>
-Link: https://lore.kernel.org/r/20221028113834.7496-1-marex@denx.de
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a06g032-clocks.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/driver-api/spi.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
-index abc0891fd96d..3e43ae8480dd 100644
---- a/drivers/clk/renesas/r9a06g032-clocks.c
-+++ b/drivers/clk/renesas/r9a06g032-clocks.c
-@@ -386,7 +386,7 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
- 	int error;
- 	int index;
- 
--	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i,
-+	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i++,
- 					   &clkspec)) {
- 		if (clkspec.np != pd->dev.of_node)
- 			continue;
-@@ -399,7 +399,6 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
- 			if (error)
- 				return error;
- 		}
--		i++;
- 	}
- 
- 	return 0;
+diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
+index f64cb666498a..f28887045049 100644
+--- a/Documentation/driver-api/spi.rst
++++ b/Documentation/driver-api/spi.rst
+@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
+ a pair of FIFOs connected to dual DMA engines on the other side of the
+ SPI shift register (maximizing throughput). Such drivers bridge between
+ whatever bus they sit on (often the platform bus) and SPI, and expose
+-the SPI side of their device as a :c:type:`struct spi_master
+-<spi_master>`. SPI devices are children of that master,
++the SPI side of their device as a :c:type:`struct spi_controller
++<spi_controller>`. SPI devices are children of that master,
+ represented as a :c:type:`struct spi_device <spi_device>` and
+ manufactured from :c:type:`struct spi_board_info
+ <spi_board_info>` descriptors which are usually provided by
 -- 
 2.35.1
 
