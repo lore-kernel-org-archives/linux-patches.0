@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086601863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C94C433D2;
-	Wed, 28 Dec 2022 15:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90BC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BF0C433D2;
+	Wed, 28 Dec 2022 15:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242330;
-	bh=gaX2EA+0i5+uWOb8V/ekuvtOzAQeu4uTFtlGJmSCzm4=;
+	s=korg; t=1672242333;
+	bh=f5v4dRBPbTX41wrvjczmE97GmaFBbIs5KlTm4XalbDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYnSK/Ui4jTEDO4unGgB/HzY82LU1WmBF+CX56ALn2sENlnyllqyr3TUCVYv1Cvkn
-	 Dj2VuDYLIdbtI4MNvV8SlE0UtI1Qn6FugfhKEL01c4sjVwh1r8z3+ygYHYVUb+Isv1
-	 w5oo54NOX6ZleevufdS2fX8PmHG7BwxgcaijvRSI=
+	b=0wVvJRbN54ioYF7epF/wTgMpPjMLB/6gU5/PdnLsq0AKLvb0Fanx8RYJTJpGLhibE
+	 8N2vc/FpDC8d8GjYSivhs8/68QtHmS+jn2tJWQ9kfUvzDgTE++jC8Kr5VKWxY28RPm
+	 DSW4KPwoN+qhRTNk/uEvZURrZ65k0sWXT9fhnrXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kirill Tkhai <tkhai@ya.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 591/731] unix: Fix race in SOCK_SEQPACKETs unix_dgram_sendmsg()
-Date: Wed, 28 Dec 2022 15:41:38 +0100
-Message-Id: <20221228144313.674498074@linuxfoundation.org>
+Subject: [PATCH 6.0 0398/1073] media: mediatek: vcodec: Fix h264 set lat buffer error
+Date: Wed, 28 Dec 2022 15:33:06 +0100
+Message-Id: <20221228144338.828065873@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,84 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kirill Tkhai <tkhai@ya.ru>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 3ff8bff704f4de125dca2262e5b5b963a3da1d87 ]
+[ Upstream commit 23d677bd9cdd10323e6d290578bbb0a408f43499 ]
 
-There is a race resulting in alive SOCK_SEQPACKET socket
-may change its state from TCP_ESTABLISHED to TCP_CLOSE:
+Will set lat buffer to lat_list two times when lat decode timeout for
+inner racing mode.
 
-unix_release_sock(peer)                  unix_dgram_sendmsg(sk)
-  sock_orphan(peer)
-    sock_set_flag(peer, SOCK_DEAD)
-                                           sock_alloc_send_pskb()
-                                             if !(sk->sk_shutdown & SEND_SHUTDOWN)
-                                               OK
-                                           if sock_flag(peer, SOCK_DEAD)
-                                             sk->sk_state = TCP_CLOSE
-  sk->sk_shutdown = SHUTDOWN_MASK
+If core thread can't get frame buffer, need to return error value.
 
-After that socket sk remains almost normal: it is able to connect, listen, accept
-and recvmsg, while it can't sendmsg.
-
-Since this is the only possibility for alive SOCK_SEQPACKET to change
-the state in such way, we should better fix this strange and potentially
-danger corner case.
-
-Note, that we will return EPIPE here like this is normally done in sock_alloc_send_pskb().
-Originally used ECONNREFUSED looks strange, since it's strange to return
-a specific retval in dependence of race in kernel, when user can't affect on this.
-
-Also, move TCP_CLOSE assignment for SOCK_DGRAM sockets under state lock
-to fix race with unix_dgram_connect():
-
-unix_dgram_connect(other)            unix_dgram_sendmsg(sk)
-                                       unix_peer(sk) = NULL
-                                       unix_state_unlock(sk)
-  unix_state_double_lock(sk, other)
-  sk->sk_state  = TCP_ESTABLISHED
-  unix_peer(sk) = other
-  unix_state_double_unlock(sk, other)
-                                       sk->sk_state  = TCP_CLOSED
-
-This patch fixes both of these races.
-
-Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
-Signed-off-by: Kirill Tkhai <tkhai@ya.ru>
-Link: https://lore.kernel.org/r/135fda25-22d5-837a-782b-ceee50e19844@ya.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 59fba9eed5a7 ("media: mediatek: vcodec: support stateless H.264 decoding for mt8192")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../vcodec/vdec/vdec_h264_req_multi_if.c      | 28 +++++++++++--------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 545823c1d5ed..0a59a00cb581 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1865,13 +1865,20 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
- 			unix_state_lock(sk);
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+index 18e048755d11..955b2d0c8f53 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+@@ -471,14 +471,19 @@ static int vdec_h264_slice_core_decode(struct vdec_lat_buf *lat_buf)
+ 	       sizeof(share_info->h264_slice_params));
  
- 		err = 0;
--		if (unix_peer(sk) == other) {
-+		if (sk->sk_type == SOCK_SEQPACKET) {
-+			/* We are here only when racing with unix_release_sock()
-+			 * is clearing @other. Never change state to TCP_CLOSE
-+			 * unlike SOCK_DGRAM wants.
-+			 */
-+			unix_state_unlock(sk);
-+			err = -EPIPE;
-+		} else if (unix_peer(sk) == other) {
- 			unix_peer(sk) = NULL;
- 			unix_dgram_peer_wake_disconnect_wakeup(sk, other);
+ 	fb = ctx->dev->vdec_pdata->get_cap_buffer(ctx);
+-	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
+-	vdec_fb_va = (unsigned long)fb;
++	if (!fb) {
++		err = -EBUSY;
++		mtk_vcodec_err(inst, "fb buffer is NULL");
++		goto vdec_dec_end;
++	}
  
-+			sk->sk_state = TCP_CLOSE;
- 			unix_state_unlock(sk);
++	vdec_fb_va = (unsigned long)fb;
++	y_fb_dma = (u64)fb->base_y.dma_addr;
+ 	if (ctx->q_data[MTK_Q_DATA_DST].fmt->num_planes == 1)
+ 		c_fb_dma =
+ 			y_fb_dma + inst->ctx->picinfo.buf_w * inst->ctx->picinfo.buf_h;
+ 	else
+-		c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
++		c_fb_dma = (u64)fb->base_c.dma_addr;
  
--			sk->sk_state = TCP_CLOSE;
- 			unix_dgram_disconnected(sk, other);
- 			sock_put(other);
- 			err = -ECONNREFUSED;
+ 	mtk_vcodec_debug(inst, "[h264-core] y/c addr = 0x%llx 0x%llx", y_fb_dma,
+ 			 c_fb_dma);
+@@ -656,7 +661,7 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	err = vpu_dec_start(vpu, data, 2);
+ 	if (err) {
+ 		mtk_vcodec_debug(inst, "lat decode err: %d", err);
+-		goto err_scp_decode;
++		goto err_free_fb_out;
+ 	}
+ 
+ 	share_info->trans_end = inst->ctx->msg_queue.wdma_addr.dma_addr +
+@@ -673,12 +678,17 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	/* wait decoder done interrupt */
+ 	timeout = mtk_vcodec_wait_for_done_ctx(inst->ctx, MTK_INST_IRQ_RECEIVED,
+ 					       WAIT_INTR_TIMEOUT_MS, MTK_VDEC_LAT0);
++	if (timeout)
++		mtk_vcodec_err(inst, "lat decode timeout: pic_%d", inst->slice_dec_num);
+ 	inst->vsi->dec.timeout = !!timeout;
+ 
+ 	err = vpu_dec_end(vpu);
+-	if (err == SLICE_HEADER_FULL || timeout || err == TRANS_BUFFER_FULL) {
+-		err = -EINVAL;
+-		goto err_scp_decode;
++	if (err == SLICE_HEADER_FULL || err == TRANS_BUFFER_FULL) {
++		if (!IS_VDEC_INNER_RACING(inst->ctx->dev->dec_capability))
++			vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
++		inst->slice_dec_num++;
++		mtk_vcodec_err(inst, "lat dec fail: pic_%d err:%d", inst->slice_dec_num, err);
++		return -EINVAL;
+ 	}
+ 
+ 	share_info->trans_end = inst->ctx->msg_queue.wdma_addr.dma_addr +
+@@ -695,10 +705,6 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 
+ 	inst->slice_dec_num++;
+ 	return 0;
+-
+-err_scp_decode:
+-	if (!IS_VDEC_INNER_RACING(inst->ctx->dev->dec_capability))
+-		vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
+ err_free_fb_out:
+ 	vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
+ 	mtk_vcodec_err(inst, "slice dec number: %d err: %d", inst->slice_dec_num, err);
 -- 
 2.35.1
 
