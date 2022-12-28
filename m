@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE46E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EEBC433D2;
-	Wed, 28 Dec 2022 15:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A35D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAFEC433D2;
+	Wed, 28 Dec 2022 15:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239983;
-	bh=42Y8QxZyZzt8It3aAKopBhcGIJD49TelzXjP2Zcvcz8=;
+	s=korg; t=1672239986;
+	bh=zrLGZ7ro5zvgwPpc2dk8woCRO7b4s8v5+kXF4UJZj/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gu94kikGV/6ul4MiQfoDIORdp9FD+QZNIISAgvpOM5NE5MUHAhQlDcFxnHlQwh91G
-	 hfwnbFQwsOIXgIB3vUm6o3pzG1gUTvXmLylTbEhqS9uQAi/e5bK2W2DdNdUFo0I2Oj
-	 U+1edakuSoD+DWeVekjfkbaB1mfuz8p6N0YyTohE=
+	b=C+mqu6Z0x1nwL5UW7uHCUOaRziE1aTOKA6SyPEXNoFZZ6pKnpJ5tcRWcgFIoiv4YI
+	 5CzgkQFS2P3wNhdgomivjnRqIitksvDBJIv8skNURc9PPF97TUyBsA/oH+JLyhJQkE
+	 Dm4Fy4uf/7eeh6hJdKrQ+CmsH4GeQrmpj1wDuAMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0104/1073] alpha: fix syscall entry in !AUDUT_SYSCALL case
-Date: Wed, 28 Dec 2022 15:28:12 +0100
-Message-Id: <20221228144330.871316366@linuxfoundation.org>
+Subject: [PATCH 5.15 296/731] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:36:43 +0100
+Message-Id: <20221228144305.153776458@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,38 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f7b2431a6d22f7a91c567708e071dfcd6d66db14 ]
+[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
 
-We only want to take the slow path if SYSCALL_TRACE or SYSCALL_AUDIT is
-set; on !AUDIT_SYSCALL configs the current tree hits it whenever _any_
-thread flag (including NEED_RESCHED, NOTIFY_SIGNAL, etc.) happens to
-be set.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fixes: a9302e843944 "alpha: Enable system-call auditing support"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+So fix this by checking the return value and calling mmc_free_host() in the
+error path, besides, led_classdev_unregister() and pm_runtime_disable() also
+need be called.
+
+Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
-index e227f3a29a43..c41a5a9c3b9f 100644
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -469,8 +469,10 @@ entSys:
- #ifdef CONFIG_AUDITSYSCALL
- 	lda     $6, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
- 	and     $3, $6, $3
--#endif
- 	bne     $3, strace
-+#else
-+	blbs    $3, strace		/* check for SYSCALL_TRACE in disguise */
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index 5fe4528e296e..1be3a355f10d 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1332,6 +1332,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
+ #ifdef RTSX_USB_USE_LEDS_CLASS
+ 	int err;
+ #endif
++	int ret;
+ 
+ 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
+ 	if (!ucr)
+@@ -1368,7 +1369,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
+ 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
+ 
+ #endif
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++#ifdef RTSX_USB_USE_LEDS_CLASS
++		led_classdev_unregister(&host->led);
 +#endif
- 	beq	$4, 1f
- 	ldq	$27, 0($5)
- 1:	jsr	$26, ($27), sys_ni_syscall
++		mmc_free_host(mmc);
++		pm_runtime_disable(&pdev->dev);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
