@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF481863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C10C433D2;
-	Wed, 28 Dec 2022 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2711863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6542CC433D2;
+	Wed, 28 Dec 2022 15:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240306;
-	bh=7XxMPQN5hoHoK1uvhEmu6JdaCcUyFhT82ekpHnZOH6w=;
+	s=korg; t=1672240308;
+	bh=FzIu+QmG5f76vnsf4ty9BqwLXnUe/0HCE2h6SqmjvZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgtG5CkU/yrsKkjj40fooYvyYlxXxq+R9LcIzgouk2ss5uXJ7hN9OzOgPZ03oaJcj
-	 Wdu3QeRpFs+j4XSZ/nIIS6XYRCkyRngiDbWDoV48HWRxvg8jJ+FFFGM8NciHSzuBFu
-	 GrZ31Vlh9Lbw4oTxqvQtxrXfMnBlv9fQ5O26MS4A=
+	b=GU4h4D2loOOMQW1FLsIASkad4A5Cp8h5wkcG+BMdMbJb2Iap3y500jkoA338MKy96
+	 nIEyHPwQ9y9rRvxvF8NXW6AEMjvgZRQtCJOrgVXgVnhqh2o26iHKkO0j+SJXMT41E5
+	 7ZxW96pYq7omSpfovL5y705TNCRp5+KgChMQRB1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0145/1073] libfs: add DEFINE_SIMPLE_ATTRIBUTE_SIGNED for signed value
-Date: Wed, 28 Dec 2022 15:28:53 +0100
-Message-Id: <20221228144331.964435164@linuxfoundation.org>
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 6.1 0107/1146] sched/uclamp: Make task_fits_capacity() use util_fits_cpu()
+Date: Wed, 28 Dec 2022 15:27:26 +0100
+Message-Id: <20221228144333.054366154@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,137 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-[ Upstream commit 2e41f274f9aa71cdcc69dc1f26a3f9304a651804 ]
+[ Upstream commit b48e16a69792b5dc4a09d6807369d11b2970cc36 ]
 
-Patch series "fix error when writing negative value to simple attribute
-files".
+So that the new uclamp rules in regard to migration margin and capacity
+pressure are taken into account correctly.
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), but some attribute files want to accept a negative
-value.
-
-This patch (of 3):
-
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), so we have to use a 64-bit value to write a
-negative value.
-
-This adds DEFINE_SIMPLE_ATTRIBUTE_SIGNED for a signed value.
-
-Link: https://lkml.kernel.org/r/20220919172418.45257-1-akinobu.mita@gmail.com
-Link: https://lkml.kernel.org/r/20220919172418.45257-2-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a7008c07a568 ("sched/fair: Make task_fits_capacity() consider uclamp restrictions")
+Co-developed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-3-qais.yousef@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c         | 22 +++++++++++++++++++---
- include/linux/fs.h | 12 ++++++++++--
- 2 files changed, 29 insertions(+), 5 deletions(-)
+ kernel/sched/fair.c  | 26 ++++++++++++++++----------
+ kernel/sched/sched.h |  9 +++++++++
+ 2 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index 31b0ddf01c31..76fb29a103a2 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -994,8 +994,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- EXPORT_SYMBOL_GPL(simple_attr_read);
- 
- /* interpret the buffer as a number to call the set function with */
--ssize_t simple_attr_write(struct file *file, const char __user *buf,
--			  size_t len, loff_t *ppos)
-+static ssize_t simple_attr_write_xsigned(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos, bool is_signed)
- {
- 	struct simple_attr *attr;
- 	unsigned long long val;
-@@ -1016,7 +1016,10 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 		goto out;
- 
- 	attr->set_buf[size] = '\0';
--	ret = kstrtoull(attr->set_buf, 0, &val);
-+	if (is_signed)
-+		ret = kstrtoll(attr->set_buf, 0, &val);
-+	else
-+		ret = kstrtoull(attr->set_buf, 0, &val);
- 	if (ret)
- 		goto out;
- 	ret = attr->set(attr->data, val);
-@@ -1026,8 +1029,21 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 	mutex_unlock(&attr->mutex);
- 	return ret;
- }
-+
-+ssize_t simple_attr_write(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, false);
-+}
- EXPORT_SYMBOL_GPL(simple_attr_write);
- 
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, true);
-+}
-+EXPORT_SYMBOL_GPL(simple_attr_write_signed);
-+
- /**
-  * generic_fh_to_dentry - generic helper for the fh_to_dentry export operation
-  * @sb:		filesystem to do the file handle conversion on
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index be074b6895b9..8e79a761c56c 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3480,7 +3480,7 @@ void simple_transaction_set(struct file *file, size_t n);
-  * All attributes contain a text representation of a numeric value
-  * that are accessed with the get() and set() functions.
-  */
--#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+#define DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
- static int __fops ## _open(struct inode *inode, struct file *file)	\
- {									\
- 	__simple_attr_check_format(__fmt, 0ull);			\
-@@ -3491,10 +3491,16 @@ static const struct file_operations __fops = {				\
- 	.open	 = __fops ## _open,					\
- 	.release = simple_attr_release,					\
- 	.read	 = simple_attr_read,					\
--	.write	 = simple_attr_write,					\
-+	.write	 = (__is_signed) ? simple_attr_write_signed : simple_attr_write,	\
- 	.llseek	 = generic_file_llseek,					\
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 0d193ef03730..db6174b989ed 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4549,10 +4549,12 @@ static inline int util_fits_cpu(unsigned long util,
+ 	return fits;
  }
  
-+#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
-+
-+#define DEFINE_SIMPLE_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
-+
- static inline __printf(1, 2)
- void __simple_attr_check_format(const char *fmt, ...)
+-static inline int task_fits_capacity(struct task_struct *p,
+-				     unsigned long capacity)
++static inline int task_fits_cpu(struct task_struct *p, int cpu)
  {
-@@ -3509,6 +3515,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- 			 size_t len, loff_t *ppos);
- ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 			  size_t len, loff_t *ppos);
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+				 size_t len, loff_t *ppos);
+-	return fits_capacity(uclamp_task_util(p), capacity);
++	unsigned long uclamp_min = uclamp_eff_value(p, UCLAMP_MIN);
++	unsigned long uclamp_max = uclamp_eff_value(p, UCLAMP_MAX);
++	unsigned long util = task_util_est(p);
++	return util_fits_cpu(util, uclamp_min, uclamp_max, cpu);
+ }
  
- struct ctl_table;
- int __init list_bdev_fs_names(char *buf, size_t size);
+ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+@@ -4565,7 +4567,7 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+ 		return;
+ 	}
+ 
+-	if (task_fits_capacity(p, capacity_of(cpu_of(rq)))) {
++	if (task_fits_cpu(p, cpu_of(rq))) {
+ 		rq->misfit_task_load = 0;
+ 		return;
+ 	}
+@@ -8399,7 +8401,7 @@ static int detach_tasks(struct lb_env *env)
+ 
+ 		case migrate_misfit:
+ 			/* This is not a misfit task */
+-			if (task_fits_capacity(p, capacity_of(env->src_cpu)))
++			if (task_fits_cpu(p, env->src_cpu))
+ 				goto next;
+ 
+ 			env->imbalance = 0;
+@@ -9404,6 +9406,10 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+ 
+ 	memset(sgs, 0, sizeof(*sgs));
+ 
++	/* Assume that task can't fit any CPU of the group */
++	if (sd->flags & SD_ASYM_CPUCAPACITY)
++		sgs->group_misfit_task_load = 1;
++
+ 	for_each_cpu(i, sched_group_span(group)) {
+ 		struct rq *rq = cpu_rq(i);
+ 		unsigned int local;
+@@ -9423,12 +9429,12 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+ 		if (!nr_running && idle_cpu_without(i, p))
+ 			sgs->idle_cpus++;
+ 
+-	}
++		/* Check if task fits in the CPU */
++		if (sd->flags & SD_ASYM_CPUCAPACITY &&
++		    sgs->group_misfit_task_load &&
++		    task_fits_cpu(p, i))
++			sgs->group_misfit_task_load = 0;
+ 
+-	/* Check if task fits in the group */
+-	if (sd->flags & SD_ASYM_CPUCAPACITY &&
+-	    !task_fits_capacity(p, group->sgc->max_capacity)) {
+-		sgs->group_misfit_task_load = 1;
+ 	}
+ 
+ 	sgs->group_capacity = group->sgc->capacity;
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index a4a20046e586..0ab091b9d91b 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -3060,6 +3060,15 @@ static inline bool uclamp_is_used(void)
+ 	return static_branch_likely(&sched_uclamp_used);
+ }
+ #else /* CONFIG_UCLAMP_TASK */
++static inline unsigned long uclamp_eff_value(struct task_struct *p,
++					     enum uclamp_id clamp_id)
++{
++	if (clamp_id == UCLAMP_MIN)
++		return 0;
++
++	return SCHED_CAPACITY_SCALE;
++}
++
+ static inline
+ unsigned long uclamp_rq_util_with(struct rq *rq, unsigned long util,
+ 				  struct task_struct *p)
 -- 
 2.35.1
 
