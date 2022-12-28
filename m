@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6071C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E5DC433D2;
-	Wed, 28 Dec 2022 16:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4621C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43877C433F0;
+	Wed, 28 Dec 2022 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245550;
-	bh=6T7M2XZsBHJxqE+BPJdjck2Raz+eEUoyQrusY475dkg=;
+	s=korg; t=1672245553;
+	bh=cjIJxS9k4HTen9XfVR+HlMZWIPloiFETeSCexC526SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCn9Ag2/IRr6eaZdalngybetUPpfc8CvlejKMUjwhswjqX8DvBN8RtYU+l4h0CsFs
-	 JsH1ycgs3QaxtxsRGzyGXMHwlGVaDjlREZS/ucg5aUNd3W4ElnDlULpRxVKOsCBb5U
-	 +IwzH5FRgwB8Q33jERhS9Nd5W97EFF5Q65HeZds0=
+	b=rM5cRZMIfa68OS+7AozAxOtx1IhHHDbU9koqQtFEmpvSzIsPoMjxGp3qXlIEgPj81
+	 M9HpyJyuQTMy6QPEmfccoov3JkZDWWg7svjlwFN4QGgcRgeITak5OtobKSrBs/bDi/
+	 M03gDb0Bkrxy++JkBtbBCMjm2x1vKrqbfd388i90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0913/1073] ipmi: fix memleak when unload ipmi driver
-Date: Wed, 28 Dec 2022 15:41:41 +0100
-Message-Id: <20221228144352.827382257@linuxfoundation.org>
+Subject: [PATCH 6.1 0880/1146] mfd: qcom_rpm: Fix an error handling path in qcom_rpm_probe()
+Date: Wed, 28 Dec 2022 15:40:19 +0100
+Message-Id: <20221228144354.065503612@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
+[ Upstream commit 36579aca877a62f67ecd77eb3edefc4c86292406 ]
 
-After the IPMI disconnect problem, the memory kept rising and we tried
-to unload the driver to free the memory. However, only part of the
-free memory is recovered after the driver is uninstalled. Using
-ebpf to hook free functions, we find that neither ipmi_user nor
-ipmi_smi_msg is free, only ipmi_recv_msg is free.
+If an error occurs after the clk_prepare_enable() call, a corresponding
+clk_disable_unprepare() should be called.
 
-We find that the deliver_smi_err_response call in clean_smi_msgs does
-the destroy processing on each message from the xmit_msg queue without
-checking the return value and free ipmi_smi_msg.
+Simplify code and switch to devm_clk_get_enabled() to fix it.
 
-deliver_smi_err_response is called only at this location. Adding the
-free handling has no effect.
-
-To verify, try using ebpf to trace the free function.
-
-  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
-      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
-      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
-        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
-[Fixed the comment above handle_one_recv_msg().]
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 3526403353c2 ("mfd: qcom_rpm: Handle message RAM clock")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mfd/qcom_rpm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 703433493c85..c9e32d100b7e 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3710,12 +3710,16 @@ static void deliver_smi_err_response(struct ipmi_smi *intf,
- 				     struct ipmi_smi_msg *msg,
- 				     unsigned char err)
- {
-+	int rv;
- 	msg->rsp[0] = msg->data[0] | 4;
- 	msg->rsp[1] = msg->data[1];
- 	msg->rsp[2] = err;
- 	msg->rsp_size = 3;
--	/* It's an error, so it will never requeue, no need to check return. */
--	handle_one_recv_msg(intf, msg);
-+
-+	/* This will never requeue, but it may ask us to free the message. */
-+	rv = handle_one_recv_msg(intf, msg);
-+	if (rv == 0)
-+		ipmi_free_smi_msg(msg);
- }
+diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
+index 71bc34b74bc9..ea5eb94427c4 100644
+--- a/drivers/mfd/qcom_rpm.c
++++ b/drivers/mfd/qcom_rpm.c
+@@ -547,7 +547,7 @@ static int qcom_rpm_probe(struct platform_device *pdev)
+ 	init_completion(&rpm->ack);
  
- static void cleanup_smi_msgs(struct ipmi_smi *intf)
+ 	/* Enable message RAM clock */
+-	rpm->ramclk = devm_clk_get(&pdev->dev, "ram");
++	rpm->ramclk = devm_clk_get_enabled(&pdev->dev, "ram");
+ 	if (IS_ERR(rpm->ramclk)) {
+ 		ret = PTR_ERR(rpm->ramclk);
+ 		if (ret == -EPROBE_DEFER)
+@@ -558,7 +558,6 @@ static int qcom_rpm_probe(struct platform_device *pdev)
+ 		 */
+ 		rpm->ramclk = NULL;
+ 	}
+-	clk_prepare_enable(rpm->ramclk); /* Accepts NULL */
+ 
+ 	irq_ack = platform_get_irq_byname(pdev, "ack");
+ 	if (irq_ack < 0)
+@@ -681,7 +680,6 @@ static int qcom_rpm_remove(struct platform_device *pdev)
+ 	struct qcom_rpm *rpm = dev_get_drvdata(&pdev->dev);
+ 
+ 	of_platform_depopulate(&pdev->dev);
+-	clk_disable_unprepare(rpm->ramclk);
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
