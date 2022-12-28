@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2A51C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92F3C433EF;
-	Wed, 28 Dec 2022 16:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174C81C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908B0C433D2;
+	Wed, 28 Dec 2022 16:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246546;
-	bh=uj22mUhcH6EHQxN1duHv4R2nOMO60Y0X7tnPdS68OAI=;
+	s=korg; t=1672246548;
+	bh=wks1ap0L0Hh1oGAToVjd5pGJz4gg8sTFWm8Tit59i80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEXbc5iuohugFmr2FCMMctUIXf6Yv085dKhuqkIM10+BAKcJXeytcarfQZRRhzxq/
-	 WrokpV9G6f3Kry5Zkk0xW4oSXIshT22X/a1t/QrB3eX09iUJDtx9axW+4aQaADORh0
-	 y5zdrraxvyJrLrKPv2cj0ZAbmePkdD6U/hhRRGlM=
+	b=ehO/dxSDCSxqSqeVLMSla4gp8JpjdNmKFm9teaTSwVIoIKyvbHApiAZRiC85vgvOA
+	 dUHtUA/yijtfgCgzeCA2rUL/w+HjqYiGCLR3tJoRUN3IJyOODlJImUCY/pmbGr0MQv
+	 96NXQFPlMBBPhOIvELo5aFAxeIid4pwC7H6kPMy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Imre Deak <imre.deak@intel.com>,
+	Clint Taylor <clinton.a.taylor@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Khaled Almahallawy <khaled.almahallawy@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1077/1146] ASoC: rt5670: Remove unbalanced pm_runtime_put()
-Date: Wed, 28 Dec 2022 15:43:36 +0100
-Message-Id: <20221228144359.477410093@linuxfoundation.org>
+Subject: [PATCH 6.1 1078/1146] drm/i915/display: Dont disable DDI/Transcoder when setting phy test pattern
+Date: Wed, 28 Dec 2022 15:43:37 +0100
+Message-Id: <20221228144359.500751030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,40 +38,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Khaled Almahallawy <khaled.almahallawy@intel.com>
 
-[ Upstream commit 6c900dcc3f7331a67ed29739d74524e428d137fb ]
+[ Upstream commit 3153eebb7a76e663ac76d6670dc113296de96622 ]
 
-For some reason rt5670_i2c_probe() does a pm_runtime_put() at the end
-of a successful probe. But it has never done a pm_runtime_get() leading
-to the following error being logged into dmesg:
+Bspecs has updated recently to remove the restriction to disable
+DDI/Transcoder before setting PHY test pattern. This update is to
+address PHY compliance test failures observed on a port with LTTPR.
+The issue is that when Transc. is disabled, the main link signals fed
+to LTTPR will be dropped invalidating link training, which will affect
+the quality of the phy test pattern when the transcoder is enabled again.
 
- rt5670 i2c-10EC5640:00: Runtime PM usage count underflow!
+v2: Update commit message (Clint)
+v3: Add missing Signed-off in v2
+v4: Update Bspec and commit message for pre-gen12 (Jani)
 
-Fix this by removing the unnecessary pm_runtime_put().
-
-Fixes: 64e89e5f5548 ("ASoC: rt5670: Add runtime PM support")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221213123319.11285-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Bspec: 50482, 7555
+Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Clint Taylor <clinton.a.taylor@intel.com>
+CC: Jani Nikula <jani.nikula@intel.com>
+Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
+Reviewed-by: Clint Taylor <clinton.a.taylor@intel.com>
+Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221123220926.170034-1-khaled.almahallawy@intel.com
+(cherry picked from commit be4a847652056b067d6dc6fe0fc024a9e2e987ca)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5670.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 59 -------------------------
+ 1 file changed, 59 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5670.c b/sound/soc/codecs/rt5670.c
-index ebac6caeb40a..a230f441559a 100644
---- a/sound/soc/codecs/rt5670.c
-+++ b/sound/soc/codecs/rt5670.c
-@@ -3311,8 +3311,6 @@ static int rt5670_i2c_probe(struct i2c_client *i2c)
- 	if (ret < 0)
- 		goto err;
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 2b5bc95a8b0d..78b3427471bd 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -3675,61 +3675,6 @@ static void intel_dp_phy_pattern_update(struct intel_dp *intel_dp,
+ 	}
+ }
  
--	pm_runtime_put(&i2c->dev);
+-static void
+-intel_dp_autotest_phy_ddi_disable(struct intel_dp *intel_dp,
+-				  const struct intel_crtc_state *crtc_state)
+-{
+-	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
+-	struct drm_device *dev = dig_port->base.base.dev;
+-	struct drm_i915_private *dev_priv = to_i915(dev);
+-	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
+-	enum pipe pipe = crtc->pipe;
+-	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
 -
- 	return 0;
- err:
- 	pm_runtime_disable(&i2c->dev);
+-	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
+-						 TRANS_DDI_FUNC_CTL(pipe));
+-	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
+-	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
+-
+-	trans_ddi_func_ctl_value &= ~(TRANS_DDI_FUNC_ENABLE |
+-				      TGL_TRANS_DDI_PORT_MASK);
+-	trans_conf_value &= ~PIPECONF_ENABLE;
+-	dp_tp_ctl_value &= ~DP_TP_CTL_ENABLE;
+-
+-	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
+-	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
+-		       trans_ddi_func_ctl_value);
+-	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
+-}
+-
+-static void
+-intel_dp_autotest_phy_ddi_enable(struct intel_dp *intel_dp,
+-				 const struct intel_crtc_state *crtc_state)
+-{
+-	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
+-	struct drm_device *dev = dig_port->base.base.dev;
+-	struct drm_i915_private *dev_priv = to_i915(dev);
+-	enum port port = dig_port->base.port;
+-	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
+-	enum pipe pipe = crtc->pipe;
+-	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
+-
+-	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
+-						 TRANS_DDI_FUNC_CTL(pipe));
+-	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
+-	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
+-
+-	trans_ddi_func_ctl_value |= TRANS_DDI_FUNC_ENABLE |
+-				    TGL_TRANS_DDI_SELECT_PORT(port);
+-	trans_conf_value |= PIPECONF_ENABLE;
+-	dp_tp_ctl_value |= DP_TP_CTL_ENABLE;
+-
+-	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
+-	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
+-	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
+-		       trans_ddi_func_ctl_value);
+-}
+-
+ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
+ 					 const struct intel_crtc_state *crtc_state)
+ {
+@@ -3748,14 +3693,10 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
+ 	intel_dp_get_adjust_train(intel_dp, crtc_state, DP_PHY_DPRX,
+ 				  link_status);
+ 
+-	intel_dp_autotest_phy_ddi_disable(intel_dp, crtc_state);
+-
+ 	intel_dp_set_signal_levels(intel_dp, crtc_state, DP_PHY_DPRX);
+ 
+ 	intel_dp_phy_pattern_update(intel_dp, crtc_state);
+ 
+-	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
+-
+ 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
+ 			  intel_dp->train_set, crtc_state->lane_count);
+ 
 -- 
 2.35.1
 
