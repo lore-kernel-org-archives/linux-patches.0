@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B4D1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D2BC433EF;
-	Wed, 28 Dec 2022 16:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19E51875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE5CC433D2;
+	Wed, 28 Dec 2022 16:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243311;
-	bh=R4gQcd54zViSqX2zeZDQROWJxHqKtI64XzrtpnNjliw=;
+	s=korg; t=1672243313;
+	bh=zRmOWPRb49a4R/+sFUKzNRYqucu/8Fs+8TYCMg8/Wuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzzVcO3kt5yEkBrBBI9s7JrJLtTR+8YPLuQmbVv5iXUN4LHKZ/Y2NaBq1RUmQu8bW
-	 Imr9unuil7LzgMeZSyAiez8zkJscrXUbLGWJl4+Cb6qblTaFoyM548lpQcYOgD+0hv
-	 QZ0/+baYhU/7ClOMr4tzd/vpKD+45Gtz1MWWv3eY=
+	b=b4PGgA1RCGY0FGyMpAAoXIqu8EvAtoxvgswCLhMAeS8U4Ewc6l2q8FMAlKRGYOYIS
+	 05m2VxyYdHbvCgh8eOn+vIqZpSi1Dw9RA9O/Ocu4wX/lm9CSU+Ow1bvwf4uMjbuvuB
+	 TJvJcyxECY0gOB8DYIa8j0UcnWpUPDuRlD2QVBEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>
-Subject: [PATCH 5.15 707/731] usb: xhci-mtk: fix leakage of shared hcd when fail to set wakeup irq
-Date: Wed, 28 Dec 2022 15:43:34 +0100
-Message-Id: <20221228144316.948225991@linuxfoundation.org>
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0479/1146] bpf: Add dummy type reference to nf_conn___init to fix type deduplication
+Date: Wed, 28 Dec 2022 15:33:38 +0100
+Message-Id: <20221228144343.193341417@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,31 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit 03a88b0bafbe3f548729d970d8366f48718c9b19 upstream.
+[ Upstream commit 578ce69ffda49d6c1a252490553290d1f27199f0 ]
 
-Can not set the @shared_hcd to NULL before decrease the usage count
-by usb_put_hcd(), this will cause the shared hcd not released.
+The bpf_ct_set_nat_info() kfunc is defined in the nf_nat.ko module, and
+takes as a parameter the nf_conn___init struct, which is allocated through
+the bpf_xdp_ct_alloc() helper defined in the nf_conntrack.ko module.
+However, because kernel modules can't deduplicate BTF types between each
+other, and the nf_conn___init struct is not referenced anywhere in vmlinux
+BTF, this leads to two distinct BTF IDs for the same type (one in each
+module). This confuses the verifier, as described here:
 
-Fixes: 04284eb74e0c ("usb: xhci-mtk: add support runtime PM")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20221128063337.18124-1-chunfeng.yun@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+https://lore.kernel.org/all/87leoh372s.fsf@toke.dk/
+
+As a workaround, add an explicit BTF_TYPE_EMIT for the type in
+net/filter.c, so the type definition gets included in vmlinux BTF. This
+way, both modules can refer to the same type ID (as they both build on top
+of vmlinux BTF), and the verifier is no longer confused.
+
+v2:
+
+- Use BTF_TYPE_EMIT (which is a statement so it has to be inside a function
+  definition; use xdp_func_proto() for this, since this is mostly
+  xdp-related).
+
+Fixes: 820dc0523e05 ("net: netfilter: move bpf_ct_set_nat_info kfunc in nf_nat_bpf.c")
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20221201123939.696558-1-toke@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mtk.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/core/filter.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/usb/host/xhci-mtk.c
-+++ b/drivers/usb/host/xhci-mtk.c
-@@ -619,7 +619,6 @@ static int xhci_mtk_probe(struct platfor
+diff --git a/net/core/filter.c b/net/core/filter.c
+index b35f642d117f..9b2e18c0d299 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -80,6 +80,7 @@
+ #include <net/tls.h>
+ #include <net/xdp.h>
+ #include <net/mptcp.h>
++#include <net/netfilter/nf_conntrack_bpf.h>
  
- dealloc_usb3_hcd:
- 	usb_remove_hcd(xhci->shared_hcd);
--	xhci->shared_hcd = NULL;
+ static const struct bpf_func_proto *
+ bpf_sk_base_func_proto(enum bpf_func_id func_id);
+@@ -7988,6 +7989,19 @@ xdp_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
+ 	default:
+ 		return bpf_sk_base_func_proto(func_id);
+ 	}
++
++#if IS_MODULE(CONFIG_NF_CONNTRACK) && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)
++	/* The nf_conn___init type is used in the NF_CONNTRACK kfuncs. The
++	 * kfuncs are defined in two different modules, and we want to be able
++	 * to use them interchangably with the same BTF type ID. Because modules
++	 * can't de-duplicate BTF IDs between each other, we need the type to be
++	 * referenced in the vmlinux BTF or the verifier will get confused about
++	 * the different types. So we add this dummy type reference which will
++	 * be included in vmlinux BTF, allowing both modules to refer to the
++	 * same type ID.
++	 */
++	BTF_TYPE_EMIT(struct nf_conn___init);
++#endif
+ }
  
- dealloc_usb2_hcd:
- 	usb_remove_hcd(hcd);
+ const struct bpf_func_proto bpf_sock_map_update_proto __weak;
+-- 
+2.35.1
+
 
 
