@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3453C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69B1C433EF;
-	Wed, 28 Dec 2022 16:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C911C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170DBC43396;
+	Wed, 28 Dec 2022 16:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243804;
-	bh=Lk9hAWqGAbFsM9en/MEGrkO5NFSny7HCLiCf19h7yUY=;
+	s=korg; t=1672243809;
+	bh=jwPIyjNHTKjZ2lMcHq1sliOrJHhkkO5xlfe1cYPM95k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVvAMXYFAp3NIm9m6DEhSa9GO4uYh17wMwDkxZEmw/ypfrNjUQoTmm2HN/RDj483h
-	 sC48uHdUNO9ob9BfkGRFJXWnGz0reAbyZjRRH8PPuezRBbzUOs1EeJXmd4o0sh8hNL
-	 oqvpXVaTtzymGluwYulJPhEhNBJkjNkhSQcCJ6M8=
+	b=wxUqihN2NHiXMGVhFFZEehG1sCQNWCxinSbRw/amd/ywpS8Ymcodq+5NZUONHHO+c
+	 PcFZCF4jx375YflyvGwWiooSP3YzuBKt5UjIk3/LkOUoW/Kdae3msjtbdQn9/RuYxC
+	 pnQGmP7nwtzbKuq1J8Hh+V9YSHJ1mKtU/YMd0dMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0591/1073] RDMA/core: Make sure "ib_port" is valid when access sysfs node
-Date: Wed, 28 Dec 2022 15:36:19 +0100
-Message-Id: <20221228144344.099959911@linuxfoundation.org>
+Subject: [PATCH 6.0 0574/1073] crypto: rockchip - remove non-aligned handling
+Date: Wed, 28 Dec 2022 15:36:02 +0100
+Message-Id: <20221228144343.643302035@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,126 +36,276 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 5e15ff29b156bbbdeadae230c8ecd5ecd8ca2477 ]
+[ Upstream commit bb3c7b73363c9a149b12b74c44ae94b73a8fddf8 ]
 
-The "ib_port" structure must be set before adding the sysfs kobject,
-and reset after removing it, otherwise it may crash when accessing
-the sysfs node:
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000050
-  Mem abort info:
-    ESR = 0x96000006
-    Exception class = DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-  Data abort info:
-    ISV = 0, ISS = 0x00000006
-    CM = 0, WnR = 0
-  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000e85f5ba5
-  [0000000000000050] pgd=0000000848fd9003, pud=000000085b387003, pmd=0000000000000000
-  Internal error: Oops: 96000006 [#2] PREEMPT SMP
-  Modules linked in: ib_umad(O) mlx5_ib(O) nfnetlink_cttimeout(E) nfnetlink(E) act_gact(E) cls_flower(E) sch_ingress(E) openvswitch(E) nsh(E) nf_nat_ipv6(E) nf_nat_ipv4(E) nf_conncount(E) nf_nat(E) nf_conntrack(E) nf_defrag_ipv6(E) nf_defrag_ipv4(E) mst_pciconf(O) ipmi_devintf(E) ipmi_msghandler(E) ipmb_dev_int(OE) mlx5_core(O) mlxfw(O) mlxdevm(O) auxiliary(O) ib_uverbs(O) ib_core(O) mlx_compat(O) psample(E) sbsa_gwdt(E) uio_pdrv_genirq(E) uio(E) mlxbf_pmc(OE) mlxbf_gige(OE) mlxbf_tmfifo(OE) gpio_mlxbf2(OE) pwr_mlxbf(OE) mlx_trio(OE) i2c_mlxbf(OE) mlx_bootctl(OE) bluefield_edac(OE) knem(O) ip_tables(E) ipv6(E) crc_ccitt(E) [last unloaded: mst_pci]
-  Process grep (pid: 3372, stack limit = 0x0000000022055c92)
-  CPU: 5 PID: 3372 Comm: grep Tainted: G      D    OE     4.19.161-mlnx.47.gadcd9e3 #1
-  Hardware name: https://www.mellanox.com BlueField SoC/BlueField SoC, BIOS BlueField:3.9.2-15-ga2403ab Sep  8 2022
-  pstate: 40000005 (nZcv daif -PAN -UAO)
-  pc : hw_stat_port_show+0x4c/0x80 [ib_core]
-  lr : port_attr_show+0x40/0x58 [ib_core]
-  sp : ffff000029f43b50
-  x29: ffff000029f43b50 x28: 0000000019375000
-  x27: ffff8007b821a540 x26: ffff000029f43e30
-  x25: 0000000000008000 x24: ffff000000eaa958
-  x23: 0000000000001000 x22: ffff8007a4ce3000
-  x21: ffff8007baff8000 x20: ffff8007b9066ac0
-  x19: ffff8007bae97578 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000
-  x15: 0000000000000000 x14: 0000000000000000
-  x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000
-  x9 : 0000000000000000 x8 : ffff8007a4ce4000
-  x7 : 0000000000000000 x6 : 000000000000003f
-  x5 : ffff000000e6a280 x4 : ffff8007a4ce3000
-  x3 : 0000000000000000 x2 : aaaaaaaaaaaaaaab
-  x1 : ffff8007b9066a10 x0 : ffff8007baff8000
-  Call trace:
-   hw_stat_port_show+0x4c/0x80 [ib_core]
-   port_attr_show+0x40/0x58 [ib_core]
-   sysfs_kf_seq_show+0x8c/0x150
-   kernfs_seq_show+0x44/0x50
-   seq_read+0x1b4/0x45c
-   kernfs_fop_read+0x148/0x1d8
-   __vfs_read+0x58/0x180
-   vfs_read+0x94/0x154
-   ksys_read+0x68/0xd8
-   __arm64_sys_read+0x28/0x34
-   el0_svc_common+0x88/0x18c
-   el0_svc_handler+0x78/0x94
-   el0_svc+0x8/0xe8
-  Code: f2955562 aa1603e4 aa1503e0 f9405683 (f9402861)
+Now driver have fallback for un-aligned cases, remove all code handling
+those cases.
 
-Fixes: d8a5883814b9 ("RDMA/core: Replace the ib_port_data hw_stats pointers with a ib_port pointer")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/88867e705c42c1cd2011e45201c25eecdb9fef94.1667810736.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/sysfs.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/crypto/rockchip/rk3288_crypto.c       | 69 +++++--------------
+ drivers/crypto/rockchip/rk3288_crypto.h       |  4 --
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c | 22 ++----
+ .../crypto/rockchip/rk3288_crypto_skcipher.c  | 39 +++--------
+ 4 files changed, 31 insertions(+), 103 deletions(-)
 
-diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
-index 84c53bd2a52d..ee59d7391568 100644
---- a/drivers/infiniband/core/sysfs.c
-+++ b/drivers/infiniband/core/sysfs.c
-@@ -1213,6 +1213,9 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
- 	p->port_num = port_num;
- 	kobject_init(&p->kobj, &port_type);
- 
-+	if (device->port_data && is_full_dev)
-+		device->port_data[port_num].sysfs = p;
-+
- 	cur_group = p->groups_list;
- 	ret = alloc_port_table_group("gids", &p->groups[0], p->attrs_list,
- 				     attr->gid_tbl_len, show_port_gid);
-@@ -1258,9 +1261,6 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
- 	}
- 
- 	list_add_tail(&p->kobj.entry, &coredev->port_list);
--	if (device->port_data && is_full_dev)
--		device->port_data[port_num].sysfs = p;
--
- 	return p;
- 
- err_groups:
-@@ -1268,6 +1268,8 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
- err_del:
- 	kobject_del(&p->kobj);
- err_put:
-+	if (device->port_data && is_full_dev)
-+		device->port_data[port_num].sysfs = NULL;
- 	kobject_put(&p->kobj);
- 	return ERR_PTR(ret);
- }
-@@ -1276,14 +1278,17 @@ static void destroy_port(struct ib_core_device *coredev, struct ib_port *port)
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.c b/drivers/crypto/rockchip/rk3288_crypto.c
+index 5f8444b9633a..31453257ab11 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.c
++++ b/drivers/crypto/rockchip/rk3288_crypto.c
+@@ -88,63 +88,26 @@ static int rk_load_data(struct rk_crypto_info *dev,
  {
- 	bool is_full_dev = &port->ibdev->coredev == coredev;
+ 	unsigned int count;
  
--	if (port->ibdev->port_data &&
--	    port->ibdev->port_data[port->port_num].sysfs == port)
--		port->ibdev->port_data[port->port_num].sysfs = NULL;
- 	list_del(&port->kobj.entry);
- 	if (is_full_dev)
- 		sysfs_remove_groups(&port->kobj, port->ibdev->ops.port_groups);
+-	dev->aligned = dev->aligned ?
+-		check_alignment(sg_src, sg_dst, dev->align_size) :
+-		dev->aligned;
+-	if (dev->aligned) {
+-		count = min(dev->left_bytes, sg_src->length);
+-		dev->left_bytes -= count;
+-
+-		if (!dma_map_sg(dev->dev, sg_src, 1, DMA_TO_DEVICE)) {
+-			dev_err(dev->dev, "[%s:%d] dma_map_sg(src)  error\n",
++	count = min(dev->left_bytes, sg_src->length);
++	dev->left_bytes -= count;
 +
- 	sysfs_remove_groups(&port->kobj, port->groups_list);
- 	kobject_del(&port->kobj);
-+
-+	if (port->ibdev->port_data &&
-+	    port->ibdev->port_data[port->port_num].sysfs == port)
-+		port->ibdev->port_data[port->port_num].sysfs = NULL;
-+
- 	kobject_put(&port->kobj);
++	if (!dma_map_sg(dev->dev, sg_src, 1, DMA_TO_DEVICE)) {
++		dev_err(dev->dev, "[%s:%d] dma_map_sg(src)  error\n",
+ 				__func__, __LINE__);
+-			return -EINVAL;
+-		}
+-		dev->addr_in = sg_dma_address(sg_src);
++		return -EINVAL;
++	}
++	dev->addr_in = sg_dma_address(sg_src);
+ 
+-		if (sg_dst) {
+-			if (!dma_map_sg(dev->dev, sg_dst, 1, DMA_FROM_DEVICE)) {
+-				dev_err(dev->dev,
++	if (sg_dst) {
++		if (!dma_map_sg(dev->dev, sg_dst, 1, DMA_FROM_DEVICE)) {
++			dev_err(dev->dev,
+ 					"[%s:%d] dma_map_sg(dst)  error\n",
+ 					__func__, __LINE__);
+-				dma_unmap_sg(dev->dev, sg_src, 1,
+-					     DMA_TO_DEVICE);
+-				return -EINVAL;
+-			}
+-			dev->addr_out = sg_dma_address(sg_dst);
+-		}
+-	} else {
+-		count = (dev->left_bytes > PAGE_SIZE) ?
+-			PAGE_SIZE : dev->left_bytes;
+-
+-		if (!sg_pcopy_to_buffer(dev->first, dev->src_nents,
+-					dev->addr_vir, count,
+-					dev->total - dev->left_bytes)) {
+-			dev_err(dev->dev, "[%s:%d] pcopy err\n",
+-				__func__, __LINE__);
++			dma_unmap_sg(dev->dev, sg_src, 1,
++					DMA_TO_DEVICE);
+ 			return -EINVAL;
+ 		}
+-		dev->left_bytes -= count;
+-		sg_init_one(&dev->sg_tmp, dev->addr_vir, count);
+-		if (!dma_map_sg(dev->dev, &dev->sg_tmp, 1, DMA_TO_DEVICE)) {
+-			dev_err(dev->dev, "[%s:%d] dma_map_sg(sg_tmp)  error\n",
+-				__func__, __LINE__);
+-			return -ENOMEM;
+-		}
+-		dev->addr_in = sg_dma_address(&dev->sg_tmp);
+-
+-		if (sg_dst) {
+-			if (!dma_map_sg(dev->dev, &dev->sg_tmp, 1,
+-					DMA_FROM_DEVICE)) {
+-				dev_err(dev->dev,
+-					"[%s:%d] dma_map_sg(sg_tmp)  error\n",
+-					__func__, __LINE__);
+-				dma_unmap_sg(dev->dev, &dev->sg_tmp, 1,
+-					     DMA_TO_DEVICE);
+-				return -ENOMEM;
+-			}
+-			dev->addr_out = sg_dma_address(&dev->sg_tmp);
+-		}
++		dev->addr_out = sg_dma_address(sg_dst);
+ 	}
+ 	dev->count = count;
+ 	return 0;
+@@ -154,11 +117,11 @@ static void rk_unload_data(struct rk_crypto_info *dev)
+ {
+ 	struct scatterlist *sg_in, *sg_out;
+ 
+-	sg_in = dev->aligned ? dev->sg_src : &dev->sg_tmp;
++	sg_in = dev->sg_src;
+ 	dma_unmap_sg(dev->dev, sg_in, 1, DMA_TO_DEVICE);
+ 
+ 	if (dev->sg_dst) {
+-		sg_out = dev->aligned ? dev->sg_dst : &dev->sg_tmp;
++		sg_out = dev->sg_dst;
+ 		dma_unmap_sg(dev->dev, sg_out, 1, DMA_FROM_DEVICE);
+ 	}
+ }
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index 665cc0bb2264..df4db59fa13e 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -204,12 +204,8 @@ struct rk_crypto_info {
+ 	/* the public variable */
+ 	struct scatterlist		*sg_src;
+ 	struct scatterlist		*sg_dst;
+-	struct scatterlist		sg_tmp;
+ 	struct scatterlist		*first;
+ 	unsigned int			left_bytes;
+-	void				*addr_vir;
+-	int				aligned;
+-	int				align_size;
+ 	size_t				src_nents;
+ 	size_t				dst_nents;
+ 	unsigned int			total;
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index 16009bb0bf16..c762e462eb57 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -236,8 +236,6 @@ static int rk_ahash_start(struct rk_crypto_info *dev)
+ 
+ 	dev->total = req->nbytes;
+ 	dev->left_bytes = req->nbytes;
+-	dev->aligned = 0;
+-	dev->align_size = 4;
+ 	dev->sg_dst = NULL;
+ 	dev->sg_src = req->src;
+ 	dev->first = req->src;
+@@ -272,15 +270,13 @@ static int rk_ahash_crypto_rx(struct rk_crypto_info *dev)
+ 
+ 	dev->unload_data(dev);
+ 	if (dev->left_bytes) {
+-		if (dev->aligned) {
+-			if (sg_is_last(dev->sg_src)) {
+-				dev_warn(dev->dev, "[%s:%d], Lack of data\n",
+-					 __func__, __LINE__);
+-				err = -ENOMEM;
+-				goto out_rx;
+-			}
+-			dev->sg_src = sg_next(dev->sg_src);
++		if (sg_is_last(dev->sg_src)) {
++			dev_warn(dev->dev, "[%s:%d], Lack of data\n",
++					__func__, __LINE__);
++			err = -ENOMEM;
++			goto out_rx;
+ 		}
++		dev->sg_src = sg_next(dev->sg_src);
+ 		err = rk_ahash_set_data_start(dev);
+ 	} else {
+ 		/*
+@@ -318,11 +314,6 @@ static int rk_cra_hash_init(struct crypto_tfm *tfm)
+ 	algt = container_of(alg, struct rk_crypto_tmp, alg.hash);
+ 
+ 	tctx->dev = algt->dev;
+-	tctx->dev->addr_vir = (void *)__get_free_page(GFP_KERNEL);
+-	if (!tctx->dev->addr_vir) {
+-		dev_err(tctx->dev->dev, "failed to kmalloc for addr_vir\n");
+-		return -ENOMEM;
+-	}
+ 	tctx->dev->start = rk_ahash_start;
+ 	tctx->dev->update = rk_ahash_crypto_rx;
+ 	tctx->dev->complete = rk_ahash_crypto_complete;
+@@ -345,7 +336,6 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+ {
+ 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
+ 
+-	free_page((unsigned long)tctx->dev->addr_vir);
+ 	crypto_free_ahash(tctx->fallback_tfm);
+ }
+ 
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index 1ef94f8db2c5..d067b7f09165 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -356,7 +356,6 @@ static int rk_ablk_start(struct rk_crypto_info *dev)
+ 	dev->src_nents = sg_nents(req->src);
+ 	dev->sg_dst = req->dst;
+ 	dev->dst_nents = sg_nents(req->dst);
+-	dev->aligned = 1;
+ 
+ 	spin_lock_irqsave(&dev->lock, flags);
+ 	rk_ablk_hw_init(dev);
+@@ -376,13 +375,9 @@ static void rk_iv_copyback(struct rk_crypto_info *dev)
+ 
+ 	/* Update the IV buffer to contain the next IV for encryption mode. */
+ 	if (!(rctx->mode & RK_CRYPTO_DEC)) {
+-		if (dev->aligned) {
+-			memcpy(req->iv, sg_virt(dev->sg_dst) +
+-				dev->sg_dst->length - ivsize, ivsize);
+-		} else {
+-			memcpy(req->iv, dev->addr_vir +
+-				dev->count - ivsize, ivsize);
+-		}
++		memcpy(req->iv,
++		       sg_virt(dev->sg_dst) + dev->sg_dst->length - ivsize,
++		       ivsize);
+ 	}
+ }
+ 
+@@ -420,27 +415,16 @@ static int rk_ablk_rx(struct rk_crypto_info *dev)
+ 		skcipher_request_cast(dev->async_req);
+ 
+ 	dev->unload_data(dev);
+-	if (!dev->aligned) {
+-		if (!sg_pcopy_from_buffer(req->dst, dev->dst_nents,
+-					  dev->addr_vir, dev->count,
+-					  dev->total - dev->left_bytes -
+-					  dev->count)) {
+-			err = -EINVAL;
+-			goto out_rx;
+-		}
+-	}
+ 	if (dev->left_bytes) {
+ 		rk_update_iv(dev);
+-		if (dev->aligned) {
+-			if (sg_is_last(dev->sg_src)) {
+-				dev_err(dev->dev, "[%s:%d] Lack of data\n",
++		if (sg_is_last(dev->sg_src)) {
++			dev_err(dev->dev, "[%s:%d] Lack of data\n",
+ 					__func__, __LINE__);
+-				err = -ENOMEM;
+-				goto out_rx;
+-			}
+-			dev->sg_src = sg_next(dev->sg_src);
+-			dev->sg_dst = sg_next(dev->sg_dst);
++			err = -ENOMEM;
++			goto out_rx;
+ 		}
++		dev->sg_src = sg_next(dev->sg_src);
++		dev->sg_dst = sg_next(dev->sg_dst);
+ 		err = rk_set_data_start(dev);
+ 	} else {
+ 		rk_iv_copyback(dev);
+@@ -462,13 +446,9 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
+ 	algt = container_of(alg, struct rk_crypto_tmp, alg.skcipher);
+ 
+ 	ctx->dev = algt->dev;
+-	ctx->dev->align_size = crypto_tfm_alg_alignmask(crypto_skcipher_tfm(tfm)) + 1;
+ 	ctx->dev->start = rk_ablk_start;
+ 	ctx->dev->update = rk_ablk_rx;
+ 	ctx->dev->complete = rk_crypto_complete;
+-	ctx->dev->addr_vir = (char *)__get_free_page(GFP_KERNEL);
+-	if (!ctx->dev->addr_vir)
+-		return -ENOMEM;
+ 
+ 	ctx->fallback_tfm = crypto_alloc_skcipher(name, 0, CRYPTO_ALG_NEED_FALLBACK);
+ 	if (IS_ERR(ctx->fallback_tfm)) {
+@@ -488,7 +468,6 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
+ 	memzero_explicit(ctx->key, ctx->keylen);
+-	free_page((unsigned long)ctx->dev->addr_vir);
+ 	crypto_free_skcipher(ctx->fallback_tfm);
  }
  
 -- 
