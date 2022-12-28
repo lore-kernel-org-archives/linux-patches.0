@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1578AC433F0;
-	Wed, 28 Dec 2022 15:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB03AC433EF;
+	Wed, 28 Dec 2022 15:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240176;
-	bh=1dgAvwn1P/cNp3q8xu+IBu4pqFPpqjA+96QZODMhQuM=;
+	s=korg; t=1672240179;
+	bh=095ijK6dK7KGR4GzKlhZPUj70DOD/SG3NIiDCIcRLxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFNNzM0uYu2l5cfilgTVdA0cgS0ivxUNHPfD2qQ1MN0rSl4Zcz5OS/z/DxM6c9pf5
-	 OjVz5l3Vnm2GB0rHu11+g1Di29pej0iObguFCVZfO7KWXd6Vd1ugd47QUwbXWbD8nC
-	 +LLvRFpqV3dDvXIB+7giapWOpmN3cGMuM51VVCLQ=
+	b=RI2iibT1WciIPB+mlQd6ZviMXAXqow/Yr67oyWCMTYzTyY2xGUzF3ph7G8TTMArnO
+	 O2JAFNyk3TFzcq/oqPjxYU1cI886iUcvQyAoDfwLeHXJsTYIaEj/8iDOe4RhoEX0R5
+	 FVQ++tZy3h4Sjw4rXQH47nnSPaBL7K80R8BqSccY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0089/1146] ARM: dts: armada-38x: Fix compatible string for gpios
-Date: Wed, 28 Dec 2022 15:27:08 +0100
-Message-Id: <20221228144332.561705224@linuxfoundation.org>
+Subject: [PATCH 5.15 318/731] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
+Date: Wed, 28 Dec 2022 15:37:05 +0100
+Message-Id: <20221228144305.793892306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit c4de4667f15d04ef5920bacf41e514ec7d1ef03d ]
+[ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
 
-Armada 38x supports per CPU interrupts for gpios, like Armada XP. Pre-XP
-variants like Armada 370 do not support per CPU interrupts for gpios.
+Fix to return a negative error code instead of 0 when
+brcmf_chip_set_active() fails. In addition, change the return
+value for brcmf_pcie_exit_download_state() to keep consistent.
 
-So change compatible string for Armada 38x from "marvell,armada-370-gpio"
-which indicates pre-XP variant to "marvell,armadaxp-gpio" which indicates
-XP variant or new.
-
-Driver gpio-mvebu.c which handles both pre-XP and XP variants already
-provides support for per CPU interrupts on XP and newer variants.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Fixes: 7cb2acb3fbae ("ARM: dts: mvebu: Add PWM properties for armada-38x")
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-38x.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-38x.dtsi b/arch/arm/boot/dts/armada-38x.dtsi
-index 446861b6b17b..12933eff419f 100644
---- a/arch/arm/boot/dts/armada-38x.dtsi
-+++ b/arch/arm/boot/dts/armada-38x.dtsi
-@@ -304,7 +304,7 @@ spdif_pins: spdif-pins {
- 			};
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 3ff4997e1c97..358021a33b8a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -626,7 +626,7 @@ static int brcmf_pcie_exit_download_state(struct brcmf_pciedev_info *devinfo,
+ 	}
  
- 			gpio0: gpio@18100 {
--				compatible = "marvell,armada-370-gpio",
-+				compatible = "marvell,armadaxp-gpio",
- 					     "marvell,orion-gpio";
- 				reg = <0x18100 0x40>, <0x181c0 0x08>;
- 				reg-names = "gpio", "pwm";
-@@ -323,7 +323,7 @@ gpio0: gpio@18100 {
- 			};
+ 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
+-		return -EINVAL;
++		return -EIO;
+ 	return 0;
+ }
  
- 			gpio1: gpio@18140 {
--				compatible = "marvell,armada-370-gpio",
-+				compatible = "marvell,armadaxp-gpio",
- 					     "marvell,orion-gpio";
- 				reg = <0x18140 0x40>, <0x181c8 0x08>;
- 				reg-names = "gpio", "pwm";
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index f7961b22e051..5006aa831751 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -3411,6 +3411,7 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
+ 	/* Take arm out of reset */
+ 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
+ 		brcmf_err("error getting out of ARM core reset\n");
++		bcmerror = -EIO;
+ 		goto err;
+ 	}
+ 
 -- 
 2.35.1
 
