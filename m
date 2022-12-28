@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C361875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC42C433EF;
-	Wed, 28 Dec 2022 15:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1694C1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB77C433D2;
+	Wed, 28 Dec 2022 15:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242993;
-	bh=cwW1JDZkj7fyOCeQCCALGD2p2Gzu8nzCk1xuTf+vgxU=;
+	s=korg; t=1672242995;
+	bh=tH6ZpV0L4UGuIzGbBfIQemffggo8wHMlaWF05gu9Ygk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDR96CuY4Er8xpcKA/nTxN4Va540rVGWkV2lHwmpKHGLR9pouEbL6e3l0JD4H8E0g
-	 Pv7eok0/EOU2L0azkvRQY8a2sJR6XQ8sX6ViIA6lWvEHKzdCS5WF3CMk8zppshsy6A
-	 51CrfXhTYBzR9fWcvp1XmJb8cl/31lopODVUxmZ4=
+	b=v3WqPvQ8PzHR61/Jj7M1xnOHXAwNMGdJVog38STkW8nCdys4iQRLGhEisxNTOgVLZ
+	 O+NQ++5aIR8I1v2JXyQuvomSzwBDgCOXWJE0O+yskpxMu51k7daMBgeAaLG8WfsTut
+	 uofXaiHl6F2bLBPFzvtekDVpUcwXPU4jYfYG1u3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0438/1146] drm/amdgpu: Fix PCI device refcount leak in amdgpu_atrm_get_bios()
-Date: Wed, 28 Dec 2022 15:32:57 +0100
-Message-Id: <20221228144342.078126245@linuxfoundation.org>
+Subject: [PATCH 5.15 669/731] wifi: mt76: do not run mt76u_status_worker if the device is not running
+Date: Wed, 28 Dec 2022 15:42:56 +0100
+Message-Id: <20221228144315.879672214@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +37,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit ca54639c7752edf1304d92ff4d0c049d4efc9ba0 ]
+[ Upstream commit bd5dac7ced5a7c9faa4dc468ac9560c3256df845 ]
 
-As comment of pci_get_class() says, it returns a pci_device with its
-refcount increased and decreased the refcount for the input parameter
-@from if it is not NULL.
+Fix the following NULL pointer dereference avoiding to run
+mt76u_status_worker thread if the device is not running yet.
 
-If we break the loop in amdgpu_atrm_get_bios() with 'pdev' not NULL, we
-need to call pci_dev_put() to decrease the refcount. Add the missing
-pci_dev_put() to avoid refcount leak.
+KASAN: null-ptr-deref in range
+[0x0000000000000000-0x0000000000000007]
+CPU: 0 PID: 98 Comm: kworker/u2:2 Not tainted 5.14.0+ #78 Hardware
+name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: mt76 mt76u_tx_status_data
+RIP: 0010:mt76x02_mac_fill_tx_status.isra.0+0x82c/0x9e0
+Code: c5 48 b8 00 00 00 00 00 fc ff df 80 3c 02 00 0f 85 94 01 00 00
+48 b8 00 00 00 00 00 fc ff df 4d 8b 34 24 4c 89 f2 48 c1 ea 03 <0f>
+b6
+04 02 84 c0 74 08 3c 03 0f 8e 89 01 00 00 41 8b 16 41 0f b7
+RSP: 0018:ffffc900005af988 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffffc900005afae8 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff832fc661 RDI: ffffc900005afc2a
+RBP: ffffc900005afae0 R08: 0000000000000001 R09: fffff520000b5f3c
+R10: 0000000000000003 R11: fffff520000b5f3b R12: ffff88810b6132d8
+R13: 000000000000ffff R14: 0000000000000000 R15: ffffc900005afc28
+FS:  0000000000000000(0000) GS:ffff88811aa00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa0eda6a000 CR3: 0000000118f17000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ mt76x02_send_tx_status+0x1d2/0xeb0
+ mt76x02_tx_status_data+0x8e/0xd0
+ mt76u_tx_status_data+0xe1/0x240
+ process_one_work+0x92b/0x1460
+ worker_thread+0x95/0xe00
+ kthread+0x3a1/0x480
+ ret_from_fork+0x1f/0x30
+Modules linked in:
+--[ end trace 8df5d20fc5040f65 ]--
+RIP: 0010:mt76x02_mac_fill_tx_status.isra.0+0x82c/0x9e0
+Code: c5 48 b8 00 00 00 00 00 fc ff df 80 3c 02 00 0f 85 94 01 00 00
+48 b8 00 00 00 00 00 fc ff df 4d 8b 34 24 4c 89 f2 48 c1 ea 03 <0f>
+b6
+04 02 84 c0 74 08 3c 03 0f 8e 89 01 00 00 41 8b 16 41 0f b7
+RSP: 0018:ffffc900005af988 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: ffffc900005afae8 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: ffffffff832fc661 RDI: ffffc900005afc2a
+RBP: ffffc900005afae0 R08: 0000000000000001 R09: fffff520000b5f3c
+R10: 0000000000000003 R11: fffff520000b5f3b R12: ffff88810b6132d8
+R13: 000000000000ffff R14: 0000000000000000 R15: ffffc900005afc28
+FS:  0000000000000000(0000) GS:ffff88811aa00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa0eda6a000 CR3: 0000000118f17000 CR4: 0000000000750ef0
+PKRU: 55555554
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Moreover move stat_work schedule out of the for loop.
+
+Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
+Co-developed-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/usb.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-index e363f56c72af..30c28a69e847 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -317,6 +317,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index 1e9f60bb811a..b47343e321b8 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -814,6 +814,9 @@ static void mt76u_status_worker(struct mt76_worker *w)
+ 	struct mt76_queue *q;
+ 	int i;
  
- 	if (!found)
- 		return false;
-+	pci_dev_put(pdev);
++	if (!test_bit(MT76_STATE_RUNNING, &dev->phy.state))
++		return;
++
+ 	for (i = 0; i < IEEE80211_NUM_ACS; i++) {
+ 		q = dev->phy.q_tx[i];
+ 		if (!q)
+@@ -833,11 +836,11 @@ static void mt76u_status_worker(struct mt76_worker *w)
+ 			wake_up(&dev->tx_wait);
  
- 	adev->bios = kmalloc(size, GFP_KERNEL);
- 	if (!adev->bios) {
+ 		mt76_worker_schedule(&dev->tx_worker);
+-
+-		if (dev->drv->tx_status_data &&
+-		    !test_and_set_bit(MT76_READING_STATS, &dev->phy.state))
+-			queue_work(dev->wq, &dev->usb.stat_work);
+ 	}
++
++	if (dev->drv->tx_status_data &&
++	    !test_and_set_bit(MT76_READING_STATS, &dev->phy.state))
++		queue_work(dev->wq, &dev->usb.stat_work);
+ }
+ 
+ static void mt76u_tx_status_data(struct work_struct *work)
 -- 
 2.35.1
 
