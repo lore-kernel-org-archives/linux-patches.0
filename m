@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B99A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FF6C433D2;
-	Wed, 28 Dec 2022 15:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF451863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93ED7C43392;
+	Wed, 28 Dec 2022 15:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240863;
-	bh=SpplAcP5SsV8jObAZEOlluCC6KQaKtQuIXsUf0AWnBQ=;
+	s=korg; t=1672240865;
+	bh=JHzCgzUwCvXaMBV1VYxxeHav3suYjsRw21mC/+XbepA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PUa9FIeGY9wnpDiAVca1GCTLNcvqbmA9Lf86UKHgbyFyGG0B2TOFKRyyfsD9YMcN
-	 jl75aIMthV253fomg0yM5PdsLBQ0/YEj+E7rx+c9Htsys1s9+0s8jVnjG+GDHUyFfN
-	 ttxBW8VeGSy5U32qjk42Qk1v1rxqjwbemMoRMDhQ=
+	b=j8AR5V0iJOWCDyiySHUTMN//WWKIldmW5kwjbXbvy6M9YkOUWKcCGrLw+5duL7Hj2
+	 MvQuQ8BfB1/XXXGjOPz+GHi74fbzccDYdwlj6Xfgxqdl5MFhRunBSs0qUrq5PNmakg
+	 hkqQ7fcY3YX9umd8TltRg6Gszg1kl2Eqj103WE7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yue Hu <huyue2@coolpad.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 406/731] padata: Fix list iterator in padata_do_serial()
-Date: Wed, 28 Dec 2022 15:38:33 +0100
-Message-Id: <20221228144308.336193822@linuxfoundation.org>
+Subject: [PATCH 6.1 0176/1146] erofs: fix missing unmap if z_erofs_get_extent_compressedlen() fails
+Date: Wed, 28 Dec 2022 15:28:35 +0100
+Message-Id: <20221228144334.936474846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Jordan <daniel.m.jordan@oracle.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 57ddfecc72a6c9941d159543e1c0c0a74fe9afdd ]
+[ Upstream commit d5d188b8f8b38d3d71dd05993874b4fc9284ce95 ]
 
-list_for_each_entry_reverse() assumes that the iterated list is nonempty
-and that every list_head is embedded in the same type, but its use in
-padata_do_serial() breaks both rules.
+Otherwise, meta buffers could be leaked.
 
-This doesn't cause any issues now because padata_priv and padata_list
-happen to have their list fields at the same offset, but we really
-shouldn't be relying on that.
-
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: cec6e93beadf ("erofs: support parsing big pcluster compress indexes")
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20221205150050.47784-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/erofs/zmap.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 9395b77fabb1..c17f772cc315 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -390,13 +390,16 @@ void padata_do_serial(struct padata_priv *padata)
- 	int hashed_cpu = padata_cpu_hash(pd, padata->seq_nr);
- 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
- 	struct padata_priv *cur;
-+	struct list_head *pos;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 0bb66927e3d0..f49295b9f2e1 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -694,7 +694,7 @@ static int z_erofs_do_map_blocks(struct inode *inode,
+ 		map->m_pa = blknr_to_addr(m.pblk);
+ 		err = z_erofs_get_extent_compressedlen(&m, initial_lcn);
+ 		if (err)
+-			goto out;
++			goto unmap_out;
+ 	}
  
- 	spin_lock(&reorder->lock);
- 	/* Sort in ascending order of sequence number. */
--	list_for_each_entry_reverse(cur, &reorder->list, list)
-+	list_for_each_prev(pos, &reorder->list) {
-+		cur = list_entry(pos, struct padata_priv, list);
- 		if (cur->seq_nr < padata->seq_nr)
- 			break;
--	list_add(&padata->list, &cur->list);
-+	}
-+	list_add(&padata->list, pos);
- 	spin_unlock(&reorder->lock);
+ 	if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_PLAIN) {
+@@ -718,14 +718,12 @@ static int z_erofs_do_map_blocks(struct inode *inode,
+ 		if (!err)
+ 			map->m_flags |= EROFS_MAP_FULL_MAPPED;
+ 	}
++
+ unmap_out:
+ 	erofs_unmap_metabuf(&m.map->buf);
+-
+-out:
+ 	erofs_dbg("%s, m_la %llu m_pa %llu m_llen %llu m_plen %llu m_flags 0%o",
+ 		  __func__, map->m_la, map->m_pa,
+ 		  map->m_llen, map->m_plen, map->m_flags);
+-
+ 	return err;
+ }
  
- 	/*
 -- 
 2.35.1
 
