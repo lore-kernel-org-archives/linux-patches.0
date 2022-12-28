@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172111863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91404C433EF;
-	Wed, 28 Dec 2022 15:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21DF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37797C433D2;
+	Wed, 28 Dec 2022 15:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241177;
-	bh=85iggO+a2CPYpne1AVL9xl5N9qzRpTm+0xReCj2RV4c=;
+	s=korg; t=1672241180;
+	bh=NyCK2DCmunHbF2YtxfuT3EFR37RCzlhbdXdP+7WhXhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3zYJkVJ3zkeM/6ImYpe0OCvM2y+0CoTRAWSEE4KJqtQwToCCN3yxRYGhFyKPdK5T
-	 +zSyviUue8665uvasymOZT4IBjxZAsrXJCew/pDq5M8CXRq40QDhfSS83oZvwHbaPo
-	 6xDo/0uM6ld8k3NMZRs8jfWAT4BaiIhudAzcT9fU=
+	b=oHtORDSpBPVEKw45GIZG+C0XRFQyMOdxMKF1WuJDoM73nX4u7/ERkHV5Qwb11ojjx
+	 bbkbrS9B6/gKX1SjK1RAghqrPG6qgYDGXhMDNVe9BnY2eVg6tU1XT6vCmWORWFGVDt
+	 RtLQ8EPOljBpcUWHzNaOQDQgwen1diXKi2KaHxBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 449/731] usb: typec: tipd: Cleanup resources if devm_tps6598_psy_register fails
-Date: Wed, 28 Dec 2022 15:39:16 +0100
-Message-Id: <20221228144309.568846862@linuxfoundation.org>
+Subject: [PATCH 6.0 0250/1073] clk: renesas: r8a779a0: Fix SD0H clock name
+Date: Wed, 28 Dec 2022 15:30:38 +0100
+Message-Id: <20221228144334.811729046@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 19c220e9ab00f50edefb9667e3101e84a5112df2 ]
+[ Upstream commit db7076d5a7f0ca7dcf08f5095c74f86d4d0085ff ]
 
-We can't just return if devm_tps6598_psy_register fails since previous
-resources are not devres managed and have yet to be cleaned up.
+Correct the misspelled textual name of the SD0H clock.
 
-Fixes: 10eb0b6ac63a ("usb: typec: tps6598x: Export some power supply properties")
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221114174449.34634-1-sven@svenpeter.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 470e3f0d0b15 ("clk: renesas: rcar-gen4: Introduce R-Car Gen4 CPG driver")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221012184830.3199-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tipd/core.c | 2 +-
+ drivers/clk/renesas/r8a779a0-cpg-mssr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
-index 23a8b9b0b1fe..dd35b3ee2c5a 100644
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -684,7 +684,7 @@ static int tps6598x_probe(struct i2c_client *client)
+diff --git a/drivers/clk/renesas/r8a779a0-cpg-mssr.c b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
+index d74d46833012..e02542ca24a0 100644
+--- a/drivers/clk/renesas/r8a779a0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
+@@ -116,7 +116,7 @@ static const struct cpg_core_clk r8a779a0_core_clks[] __initconst = {
+ 	DEF_FIXED("cp",		R8A779A0_CLK_CP,	CLK_EXTAL,	2, 1),
+ 	DEF_FIXED("cl16mck",	R8A779A0_CLK_CL16MCK,	CLK_PLL1_DIV2,	64, 1),
  
- 	ret = devm_tps6598_psy_register(tps);
- 	if (ret)
--		return ret;
-+		goto err_role_put;
+-	DEF_GEN4_SDH("sdh0",	R8A779A0_CLK_SD0H,	CLK_SDSRC,	   0x870),
++	DEF_GEN4_SDH("sd0h",	R8A779A0_CLK_SD0H,	CLK_SDSRC,	   0x870),
+ 	DEF_GEN4_SD("sd0",	R8A779A0_CLK_SD0,	R8A779A0_CLK_SD0H, 0x870),
  
- 	tps->port = typec_register_port(&client->dev, &typec_cap);
- 	if (IS_ERR(tps->port)) {
+ 	DEF_BASE("rpc",		R8A779A0_CLK_RPC, CLK_TYPE_GEN4_RPC, CLK_RPCSRC),
 -- 
 2.35.1
 
