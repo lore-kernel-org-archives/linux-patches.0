@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EDF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41560C433D2;
-	Wed, 28 Dec 2022 15:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B0D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01FEC433EF;
+	Wed, 28 Dec 2022 15:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241237;
-	bh=ggYCZCSu+o++irCI2zbzpAGM7+IKkejY1SenxfhOwMU=;
+	s=korg; t=1672241240;
+	bh=+PCmEb79SDjjzISklcarpKZ+wzHHePAD6e0LLyP0dxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIGgNN5cKDP2aNF4ZzDUEGzgSyLAXk/+sAc+uexVpi3iWf4wvZcnyuBjgKkNRaF/6
-	 sy0H4Yo4RWfcS0eWkw5jCLThLhQfpCnouAn4uL43+s6o2laAV0R4p414evVfeVqD4x
-	 2HPglNO9vG8gH0s6ds3pkeiI2Hc+LU4ojMs1xTu8=
+	b=DCyc+JyUrwr4tfvrPUurmZdzkeSirSyyd12vWYfhvncoXojce64ApHogRX+03SCwX
+	 s3CHFKZR8VpzDJqKEOVcR6xUKbuS2WjgXrbkPkdGV7SffepbeH/KJt9eFFISsv/gis
+	 R9m+CCyFHsj+JgzA+ppBhwMRKzIWh2rfk6eT0djw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Alexandru Tachici <alexandru.tachici@analog.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 456/731] extcon: usbc-tusb320: Update state on probe even if no IRQ pending
-Date: Wed, 28 Dec 2022 15:39:23 +0100
-Message-Id: <20221228144309.770876879@linuxfoundation.org>
+Subject: [PATCH 6.1 0223/1146] net: ethernet: adi: adin1110: Fix SPI transfers
+Date: Wed, 28 Dec 2022 15:29:22 +0100
+Message-Id: <20221228144336.200559895@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,99 +35,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Alexandru Tachici <alexandru.tachici@analog.com>
 
-[ Upstream commit 581c848b610dbf3fe1ed4d85fd53d0743c61faba ]
+[ Upstream commit a526a3cc9c8d426713f8bebc18ebbe39a8495d82 ]
 
-Currently this driver triggers extcon and typec state update in its
-probe function, to read out current state reported by the chip and
-report the correct state to upper layers. This synchronization is
-performed correctly, but only in case the chip indicates a pending
-interrupt in reg09 register.
+No need to use more than one SPI transfer for reads.
+Use only one from now as ADIN1110/2111 does not tolerate
+CS changes during reads.
 
-This fails to cover the situation where all interrupts reported by
-the chip were already handled by Linux before reboot, then the system
-rebooted, and then Linux starts again. In this case, the TUSB320 no
-longer reports any interrupts in reg09, and the state update does not
-perform any update as it depends on that interrupt indication.
+The BCM2711/2708 SPI controllers worked fine, but the NXP
+IMX8MM could not keep CS lowered during SPI bursts.
 
-Fix this by turning tusb320_irq_handler() into a thin wrapper around
-tusb320_state_update_handler(), where the later now contains the bulk
-of the code of tusb320_irq_handler(), but adds new function parameter
-"force_update". The "force_update" parameter can be used by the probe
-function to assure that the state synchronization is always performed,
-independent of the interrupt indicated in reg09. The interrupt handler
-tusb320_irq_handler() callback uses force_update=false to avoid state
-updates on potential spurious interrupts and retain current behavior.
+This change aims to make the ADIN1110/2111 driver compatible
+with both SPI controllers, without any loss of bandwidth/other
+capabilities.
 
-Fixes: 06bc4ca115cdd ("extcon: Add driver for TI TUSB320")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221120141509.81012-1-marex@denx.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
+Signed-off-by: Alexandru Tachici <alexandru.tachici@analog.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-usbc-tusb320.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/adi/adin1110.c | 37 +++++++++++++----------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
-index edb8c3f997c9..b0f6e16ab0a9 100644
---- a/drivers/extcon/extcon-usbc-tusb320.c
-+++ b/drivers/extcon/extcon-usbc-tusb320.c
-@@ -313,9 +313,9 @@ static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
- 		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
- }
- 
--static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
-+static irqreturn_t tusb320_state_update_handler(struct tusb320_priv *priv,
-+						bool force_update)
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index 606c97610808..9d8dfe172994 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -196,7 +196,7 @@ static int adin1110_read_reg(struct adin1110_priv *priv, u16 reg, u32 *val)
  {
--	struct tusb320_priv *priv = dev_id;
- 	unsigned int reg;
+ 	u32 header_len = ADIN1110_RD_HEADER_LEN;
+ 	u32 read_len = ADIN1110_REG_LEN;
+-	struct spi_transfer t[2] = {0};
++	struct spi_transfer t = {0};
+ 	int ret;
  
- 	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
-@@ -323,7 +323,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
+ 	priv->data[0] = ADIN1110_CD | FIELD_GET(GENMASK(12, 8), reg);
+@@ -209,17 +209,15 @@ static int adin1110_read_reg(struct adin1110_priv *priv, u16 reg, u32 *val)
+ 		header_len++;
  	}
  
--	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
-+	if (!force_update && !(reg & TUSB320_REG9_INTERRUPT_STATUS))
- 		return IRQ_NONE;
+-	t[0].tx_buf = &priv->data[0];
+-	t[0].len = header_len;
+-
+ 	if (priv->append_crc)
+ 		read_len++;
  
- 	tusb320_extcon_irq_handler(priv, reg);
-@@ -334,6 +334,13 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
+ 	memset(&priv->data[header_len], 0, read_len);
+-	t[1].rx_buf = &priv->data[header_len];
+-	t[1].len = read_len;
++	t.tx_buf = &priv->data[0];
++	t.rx_buf = &priv->data[0];
++	t.len = read_len + header_len;
  
-+static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
-+{
-+	struct tusb320_priv *priv = dev_id;
-+
-+	return tusb320_state_update_handler(priv, false);
-+}
-+
- static const struct regmap_config tusb320_regmap_config = {
- 	.reg_bits = 8,
- 	.val_bits = 8,
-@@ -460,7 +467,7 @@ static int tusb320_probe(struct i2c_client *client,
+-	ret = spi_sync_transfer(priv->spidev, t, 2);
++	ret = spi_sync_transfer(priv->spidev, &t, 1);
+ 	if (ret)
  		return ret;
  
- 	/* update initial state */
--	tusb320_irq_handler(client->irq, priv);
-+	tusb320_state_update_handler(priv, true);
+@@ -296,7 +294,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ {
+ 	struct adin1110_priv *priv = port_priv->priv;
+ 	u32 header_len = ADIN1110_RD_HEADER_LEN;
+-	struct spi_transfer t[2] = {0};
++	struct spi_transfer t;
+ 	u32 frame_size_no_fcs;
+ 	struct sk_buff *rxb;
+ 	u32 frame_size;
+@@ -327,12 +325,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ 		return ret;
  
- 	/* Reset chip to its default state */
- 	ret = tusb320_reset(priv);
-@@ -471,7 +478,7 @@ static int tusb320_probe(struct i2c_client *client,
- 		 * State and polarity might change after a reset, so update
- 		 * them again and make sure the interrupt status bit is cleared.
- 		 */
--		tusb320_irq_handler(client->irq, priv);
-+		tusb320_state_update_handler(priv, true);
+ 	frame_size_no_fcs = frame_size - ADIN1110_FRAME_HEADER_LEN - ADIN1110_FEC_LEN;
+-
+-	rxb = netdev_alloc_skb(port_priv->netdev, round_len);
+-	if (!rxb)
+-		return -ENOMEM;
+-
+-	memset(priv->data, 0, round_len + ADIN1110_RD_HEADER_LEN);
++	memset(priv->data, 0, ADIN1110_RD_HEADER_LEN);
  
- 	ret = devm_request_threaded_irq(priv->dev, client->irq, NULL,
- 					tusb320_irq_handler,
+ 	priv->data[0] = ADIN1110_CD | FIELD_GET(GENMASK(12, 8), reg);
+ 	priv->data[1] = FIELD_GET(GENMASK(7, 0), reg);
+@@ -342,21 +335,23 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ 		header_len++;
+ 	}
+ 
+-	skb_put(rxb, frame_size_no_fcs + ADIN1110_FRAME_HEADER_LEN);
++	rxb = netdev_alloc_skb(port_priv->netdev, round_len + header_len);
++	if (!rxb)
++		return -ENOMEM;
+ 
+-	t[0].tx_buf = &priv->data[0];
+-	t[0].len = header_len;
++	skb_put(rxb, frame_size_no_fcs + header_len + ADIN1110_FRAME_HEADER_LEN);
+ 
+-	t[1].rx_buf = &rxb->data[0];
+-	t[1].len = round_len;
++	t.tx_buf = &priv->data[0];
++	t.rx_buf = &rxb->data[0];
++	t.len = header_len + round_len;
+ 
+-	ret = spi_sync_transfer(priv->spidev, t, 2);
++	ret = spi_sync_transfer(priv->spidev, &t, 1);
+ 	if (ret) {
+ 		kfree_skb(rxb);
+ 		return ret;
+ 	}
+ 
+-	skb_pull(rxb, ADIN1110_FRAME_HEADER_LEN);
++	skb_pull(rxb, header_len + ADIN1110_FRAME_HEADER_LEN);
+ 	rxb->protocol = eth_type_trans(rxb, port_priv->netdev);
+ 
+ 	if ((port_priv->flags & IFF_ALLMULTI && rxb->pkt_type == PACKET_MULTICAST) ||
 -- 
 2.35.1
 
