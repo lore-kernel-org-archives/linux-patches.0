@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F911C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A280C433D2;
-	Wed, 28 Dec 2022 16:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5801C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AEFC433D2;
+	Wed, 28 Dec 2022 16:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243720;
-	bh=Vg9m1UugLFgy1mxbnN2fHTmyqdAUjKmup5+MfJUsP94=;
+	s=korg; t=1672243723;
+	bh=KGOpQeadAjIJXwPDqtm5r3ZSwHPdj7oZFOW8drFnvzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOapJadkpU3Oq1iarqSxNsKWPDn7x9g9CmyTtIOWjiehxjtHEwiPS3FZJ/vMAPm8U
-	 aG9VBHMltE+00JRWa7eDkon02BJeUamVIu3OnlzjC4NyD2nrjSEG4anmlVhW6aegxs
-	 yhm/NjSURKuE/BTaxIRM8Agaqfj5IujrQvU5DcBo=
+	b=eaa3x7V2z5RC98/IP1A9cG8pIU8vFNK7o7r7l37ZeNitvk1qU/p7YOmrcrU4TzMr3
+	 cCQHQd+z8T5sdDslaQT64ttcEnt5TllcV3NYErE0687qM2wv/4wZG1gW/Xo3qKeIPi
+	 n3+YpfRCL+44h/CSUkRcAFK6MO+SKsMlGfGMAWqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	linux-hardening@vger.kernel.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0539/1146] net: apple: bmac: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:34:38 +0100
-Message-Id: <20221228144344.812989727@linuxfoundation.org>
+Subject: [PATCH 6.0 0577/1073] fortify: Use SIZE_MAX instead of (size_t)-1
+Date: Wed, 28 Dec 2022 15:36:05 +0100
+Message-Id: <20221228144343.723901257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +36,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 5fe02e046e6422c4adfdbc50206ec7186077da24 ]
+[ Upstream commit 311fb40aa0569abacc430b0d66ee41470803111f ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+Clean up uses of "(size_t)-1" in favor of SIZE_MAX.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
-
-In this case, dev_kfree_skb() is called in bmac_tx_timeout() to drop
-the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: linux-hardening@vger.kernel.org
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Stable-dep-of: e9a40e1585d7 ("fortify: Do not cast to "unsigned char"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/apple/bmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/fortify-string.h | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/apple/bmac.c b/drivers/net/ethernet/apple/bmac.c
-index 334de0d93c89..9e653e2925f7 100644
---- a/drivers/net/ethernet/apple/bmac.c
-+++ b/drivers/net/ethernet/apple/bmac.c
-@@ -1510,7 +1510,7 @@ static void bmac_tx_timeout(struct timer_list *t)
- 	i = bp->tx_empty;
- 	++dev->stats.tx_errors;
- 	if (i != bp->tx_fill) {
--		dev_kfree_skb(bp->tx_bufs[i]);
-+		dev_kfree_skb_irq(bp->tx_bufs[i]);
- 		bp->tx_bufs[i] = NULL;
- 		if (++i >= N_TX_RING) i = 0;
- 		bp->tx_empty = i;
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index fce2fb2fc962..ae076aae9e66 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -3,6 +3,7 @@
+ #define _LINUX_FORTIFY_STRING_H_
+ 
+ #include <linux/const.h>
++#include <linux/limits.h>
+ 
+ #define __FORTIFY_INLINE extern __always_inline __gnu_inline __overloadable
+ #define __RENAME(x) __asm__(#x)
+@@ -17,9 +18,9 @@ void __write_overflow_field(size_t avail, size_t wanted) __compiletime_warning("
+ #define __compiletime_strlen(p)					\
+ ({								\
+ 	unsigned char *__p = (unsigned char *)(p);		\
+-	size_t __ret = (size_t)-1;				\
++	size_t __ret = SIZE_MAX;				\
+ 	size_t __p_size = __builtin_object_size(p, 1);		\
+-	if (__p_size != (size_t)-1 &&				\
++	if (__p_size != SIZE_MAX &&				\
+ 	    __builtin_constant_p(*__p)) {			\
+ 		size_t __p_len = __p_size - 1;			\
+ 		if (__builtin_constant_p(__p[__p_len]) &&	\
+@@ -95,7 +96,7 @@ char *strcat(char * const POS p, const char *q)
+ {
+ 	size_t p_size = __builtin_object_size(p, 1);
+ 
+-	if (p_size == (size_t)-1)
++	if (p_size == SIZE_MAX)
+ 		return __underlying_strcat(p, q);
+ 	if (strlcat(p, q, p_size) >= p_size)
+ 		fortify_panic(__func__);
+@@ -110,7 +111,7 @@ __FORTIFY_INLINE __kernel_size_t strnlen(const char * const POS p, __kernel_size
+ 	size_t ret;
+ 
+ 	/* We can take compile-time actions when maxlen is const. */
+-	if (__builtin_constant_p(maxlen) && p_len != (size_t)-1) {
++	if (__builtin_constant_p(maxlen) && p_len != SIZE_MAX) {
+ 		/* If p is const, we can use its compile-time-known len. */
+ 		if (maxlen >= p_size)
+ 			return p_len;
+@@ -138,7 +139,7 @@ __kernel_size_t __fortify_strlen(const char * const POS p)
+ 	size_t p_size = __builtin_object_size(p, 1);
+ 
+ 	/* Give up if we don't know how large p is. */
+-	if (p_size == (size_t)-1)
++	if (p_size == SIZE_MAX)
+ 		return __underlying_strlen(p);
+ 	ret = strnlen(p, p_size);
+ 	if (p_size <= ret)
+@@ -155,7 +156,7 @@ __FORTIFY_INLINE size_t strlcpy(char * const POS p, const char * const POS q, si
+ 	size_t q_len;	/* Full count of source string length. */
+ 	size_t len;	/* Count of characters going into destination. */
+ 
+-	if (p_size == (size_t)-1 && q_size == (size_t)-1)
++	if (p_size == SIZE_MAX && q_size == SIZE_MAX)
+ 		return __real_strlcpy(p, q, size);
+ 	q_len = strlen(q);
+ 	len = (q_len >= size) ? size - 1 : q_len;
+@@ -183,7 +184,7 @@ __FORTIFY_INLINE ssize_t strscpy(char * const POS p, const char * const POS q, s
+ 	size_t q_size = __builtin_object_size(q, 1);
+ 
+ 	/* If we cannot get size of p and q default to call strscpy. */
+-	if (p_size == (size_t) -1 && q_size == (size_t) -1)
++	if (p_size == SIZE_MAX && q_size == SIZE_MAX)
+ 		return __real_strscpy(p, q, size);
+ 
+ 	/*
+@@ -228,7 +229,7 @@ char *strncat(char * const POS p, const char * const POS q, __kernel_size_t coun
+ 	size_t p_size = __builtin_object_size(p, 1);
+ 	size_t q_size = __builtin_object_size(q, 1);
+ 
+-	if (p_size == (size_t)-1 && q_size == (size_t)-1)
++	if (p_size == SIZE_MAX && q_size == SIZE_MAX)
+ 		return __underlying_strncat(p, q, count);
+ 	p_len = strlen(p);
+ 	copy_len = strnlen(q, count);
+@@ -269,10 +270,10 @@ __FORTIFY_INLINE void fortify_memset_chk(__kernel_size_t size,
+ 	/*
+ 	 * Always stop accesses beyond the struct that contains the
+ 	 * field, when the buffer's remaining size is known.
+-	 * (The -1 test is to optimize away checks where the buffer
++	 * (The SIZE_MAX test is to optimize away checks where the buffer
+ 	 * lengths are unknown.)
+ 	 */
+-	if (p_size != (size_t)(-1) && p_size < size)
++	if (p_size != SIZE_MAX && p_size < size)
+ 		fortify_panic("memset");
+ }
+ 
+@@ -363,11 +364,11 @@ __FORTIFY_INLINE void fortify_memcpy_chk(__kernel_size_t size,
+ 	/*
+ 	 * Always stop accesses beyond the struct that contains the
+ 	 * field, when the buffer's remaining size is known.
+-	 * (The -1 test is to optimize away checks where the buffer
++	 * (The SIZE_MAX test is to optimize away checks where the buffer
+ 	 * lengths are unknown.)
+ 	 */
+-	if ((p_size != (size_t)(-1) && p_size < size) ||
+-	    (q_size != (size_t)(-1) && q_size < size))
++	if ((p_size != SIZE_MAX && p_size < size) ||
++	    (q_size != SIZE_MAX && q_size < size))
+ 		fortify_panic(func);
+ }
+ 
+@@ -466,7 +467,7 @@ char *strcpy(char * const POS p, const char * const POS q)
+ 	size_t size;
+ 
+ 	/* If neither buffer size is known, immediately give up. */
+-	if (p_size == (size_t)-1 && q_size == (size_t)-1)
++	if (p_size == SIZE_MAX && q_size == SIZE_MAX)
+ 		return __underlying_strcpy(p, q);
+ 	size = strlen(q) + 1;
+ 	/* Compile-time check for const size overflow. */
 -- 
 2.35.1
 
