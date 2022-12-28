@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF521C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831C8C433EF;
-	Wed, 28 Dec 2022 16:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A151C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B63CC433D2;
+	Wed, 28 Dec 2022 16:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246265;
-	bh=bylQ92nndUsQDEdsR7BlnEBaPmFt2kKNmE0KssvA6Mg=;
+	s=korg; t=1672246268;
+	bh=hYgDXk2tdm/WzAOcZrxmB4hMIo6FCz3sTFFHAi/N1hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knajd+udH3/CrNJyaitNVE56ag1JXWjKHzJsuNibLd2e0dEvOU7W5rEP8Y8ain1fO
-	 /m2mX2QDQkCsU58r6y2z9hbE2edzwZPcz3cDFcl2tuTfKj3Be0XRY/5kX+GCfS6kbI
-	 K8iZmwjaZmiv2D90xx3BcPqVkjhGldHDNdHVd1Vo=
+	b=c+v5vJlN+u2X1N9pk7O7BdC7AvemyO5EUbtXAKbHfuQiam7nUc8MSmo2QBFm5jZ2q
+	 XKRHTAb8vjHDF9GU7TMI7q/lTpZlxvRHsY2CAyKL0xkNA5pIC1yAUo+Rs3ytbcW7NE
+	 5sRA3yrc6lAz25KTmsK6CfQdDJtFu4pRzXYLpcAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0999/1146] s390/lcs: Fix return type of lcs_start_xmit()
-Date: Wed, 28 Dec 2022 15:42:18 +0100
-Message-Id: <20221228144357.502541663@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.0 1041/1073] HID: wacom: Ensure bootloader PID is usable in hidraw mode
+Date: Wed, 28 Dec 2022 15:43:49 +0100
+Message-Id: <20221228144356.469591061@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,68 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jason Gerecke <killertofu@gmail.com>
 
-[ Upstream commit bb16db8393658e0978c3f0d30ae069e878264fa3 ]
+commit 1db1f392591aff13fd643f0ec7c1d5e27391d700 upstream.
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Some Wacom devices have a special "bootloader" mode that is used for
+firmware flashing. When operating in this mode, the device cannot be
+used for input, and the HID descriptor is not able to be processed by
+the driver. The driver generates an "Unknown device_type" warning and
+then returns an error code from wacom_probe(). This is a problem because
+userspace still needs to be able to interact with the device via hidraw
+to perform the firmware flash.
 
-  drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-  drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
+This commit adds a non-generic device definition for 056a:0094 which
+is used when devices are in "bootloader" mode. It marks the devices
+with a special BOOTLOADER type that is recognized by wacom_probe() and
+wacom_raw_event(). When we see this type we ensure a hidraw device is
+created and otherwise keep our hands off so that userspace is in full
+control.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Tested-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/net/lcs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/hid/wacom_sys.c |    8 ++++++++
+ drivers/hid/wacom_wac.c |    4 ++++
+ drivers/hid/wacom_wac.h |    1 +
+ 3 files changed, 13 insertions(+)
 
-diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
-index 84c8981317b4..38f312664ce7 100644
---- a/drivers/s390/net/lcs.c
-+++ b/drivers/s390/net/lcs.c
-@@ -1519,9 +1519,8 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
- /*
-  * Packet transmit function called by network stack
-  */
--static int
--__lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
--		 struct net_device *dev)
-+static netdev_tx_t __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
-+				    struct net_device *dev)
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -160,6 +160,9 @@ static int wacom_raw_event(struct hid_de
  {
- 	struct lcs_header *header;
- 	int rc = NETDEV_TX_OK;
-@@ -1582,8 +1581,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 	return rc;
- }
+ 	struct wacom *wacom = hid_get_drvdata(hdev);
  
--static int
--lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct lcs_card *card;
- 	int rc;
--- 
-2.35.1
-
++	if (wacom->wacom_wac.features.type == BOOTLOADER)
++		return 0;
++
+ 	if (size > WACOM_PKGLEN_MAX)
+ 		return 1;
+ 
+@@ -2790,6 +2793,11 @@ static int wacom_probe(struct hid_device
+ 		return error;
+ 	}
+ 
++	if (features->type == BOOTLOADER) {
++		hid_warn(hdev, "Using device in hidraw-only mode");
++		return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
++	}
++
+ 	error = wacom_parse_and_register(wacom, false);
+ 	if (error)
+ 		return error;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -4880,6 +4880,9 @@ static const struct wacom_features wacom
+ static const struct wacom_features wacom_features_HID_ANY_ID =
+ 	{ "Wacom HID", .type = HID_GENERIC, .oVid = HID_ANY_ID, .oPid = HID_ANY_ID };
+ 
++static const struct wacom_features wacom_features_0x94 =
++	{ "Wacom Bootloader", .type = BOOTLOADER };
++
+ #define USB_DEVICE_WACOM(prod)						\
+ 	HID_DEVICE(BUS_USB, HID_GROUP_WACOM, USB_VENDOR_ID_WACOM, prod),\
+ 	.driver_data = (kernel_ulong_t)&wacom_features_##prod
+@@ -4953,6 +4956,7 @@ const struct hid_device_id wacom_ids[] =
+ 	{ USB_DEVICE_WACOM(0x84) },
+ 	{ USB_DEVICE_WACOM(0x90) },
+ 	{ USB_DEVICE_WACOM(0x93) },
++	{ USB_DEVICE_WACOM(0x94) },
+ 	{ USB_DEVICE_WACOM(0x97) },
+ 	{ USB_DEVICE_WACOM(0x9A) },
+ 	{ USB_DEVICE_WACOM(0x9F) },
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -245,6 +245,7 @@ enum {
+ 	MTTPC,
+ 	MTTPC_B,
+ 	HID_GENERIC,
++	BOOTLOADER,
+ 	MAX_TYPE
+ };
+ 
 
 
