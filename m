@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15741C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137CEC433D2;
-	Wed, 28 Dec 2022 16:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB361C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39ECC433D2;
+	Wed, 28 Dec 2022 16:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244266;
-	bh=VCv7kPvmJsamiNAhbe+x+EvY9uTVZsC3fSoTJm3XvSg=;
+	s=korg; t=1672244269;
+	bh=JgxFYTenMO74yrkIpVwBc94p+F9fD0CyR7c+sK9K6XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMB7vm9oYolH9NtCsN3PwOdZrqfKkkJPDrqXnnK1C/MTeYEBQHWEgK3/yRdp2WS8k
-	 xgAhqVYJTcJHiNp2zH0FsvyPNR+LaacNHIz6qlDMWrSwT+tkMed4xr4MBMF/qY9a63
-	 XPxrG20sXbzKh2eSp5ml2/hHHpfggdRLmDy+89W8=
+	b=mBVXF1OQVqxiPNXf6J1d9ykwn1LIamg5W1N34+bc2LW8E566FxHr+3BG6XCkUagTi
+	 92cIj2rrnkA4tUGESyV24EDqFXPXCD6mIoHm4hDqcNAVC9WdaZHgiNmA0Az3zKBQwC
+	 ko/Pasu1hEGWAbeu7QPRh8wIRDztiJ2LwFfTg9Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Sicelo Mhlongo <absicsz@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0638/1146] crypto: x86/sha256 - fix possible crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:17 +0100
-Message-Id: <20221228144347.492670853@linuxfoundation.org>
+Subject: [PATCH 6.0 0679/1073] usb: musb: omap2430: Fix probe regression for missing resources
+Date: Wed, 28 Dec 2022 15:37:47 +0100
+Message-Id: <20221228144346.479634414@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,115 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 19940ebbb59c12146d05c5f8acd873197b290648 ]
+[ Upstream commit ffbe2feac59b37c8dc536727552b4f375e1b9aec ]
 
-sha256_transform_ssse3(), sha256_transform_avx(),
-sha256_transform_rorx(), and sha256_ni_transform() are called via
-indirect function calls.  Therefore they need to use
-SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause their type
-hashes to be emitted when the kernel is built with CONFIG_CFI_CLANG=y.
-Otherwise, the code crashes with a CFI failure (if the compiler didn't
-happen to optimize out the indirect calls).
+Probe for omap2430 glue layer is now broken for interrupt resources in
+all cases.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Commit  239071064732 ("partially Revert "usb: musb: Set the DT node on the
+child device"") broke probing for SoCs using ti-sysc interconnect target
+module as the dt node is not found.
+
+Commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from
+DT core") caused omap3 to fail with error "-ENXIO: IRQ mc not found" as
+the IRQ resources are no longer automatically populated from devicetree.
+
+Let's fix the issues by calling device_set_of_node_from_dev() only if the
+SoC has been updated to probe with ti-sysc. And for legacy SoCs, let's
+populate the resources manually as needed.
+
+Note that once we have updated the SoCs to probe with proper devicetree
+data in all cases, this is no longer needed. But doing that requires
+patching both devicetree and SoC code, so let's fix the probe issues first.
+
+Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
+Fixes: 239071064732 ("partially Revert "usb: musb: Set the DT node on the child device"")
+Cc: H. Nikolaus Schaller <hns@goldelico.com>
+Reported-by: Sicelo Mhlongo <absicsz@gmail.com>
+Tested-by: Sicelo Mhlongo <absicsz@gmail.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221118102532.34458-1-tony@atomide.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sha256-avx-asm.S   | 3 ++-
- arch/x86/crypto/sha256-avx2-asm.S  | 3 ++-
- arch/x86/crypto/sha256-ssse3-asm.S | 3 ++-
- arch/x86/crypto/sha256_ni_asm.S    | 3 ++-
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/usb/musb/omap2430.c | 54 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/arch/x86/crypto/sha256-avx-asm.S b/arch/x86/crypto/sha256-avx-asm.S
-index 3baa1ec39097..06ea30c20828 100644
---- a/arch/x86/crypto/sha256-avx-asm.S
-+++ b/arch/x86/crypto/sha256-avx-asm.S
-@@ -48,6 +48,7 @@
- ########################################################################
+diff --git a/drivers/usb/musb/omap2430.c b/drivers/usb/musb/omap2430.c
+index f571a65ae6ee..476f55d1fec3 100644
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -15,6 +15,7 @@
+ #include <linux/list.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
++#include <linux/of_irq.h>
+ #include <linux/platform_device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/pm_runtime.h>
+@@ -310,6 +311,7 @@ static int omap2430_probe(struct platform_device *pdev)
+ 	struct device_node		*control_node;
+ 	struct platform_device		*control_pdev;
+ 	int				ret = -ENOMEM, val;
++	bool				populate_irqs = false;
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
+ 	if (!np)
+ 		return -ENODEV;
+@@ -328,6 +330,18 @@ static int omap2430_probe(struct platform_device *pdev)
+ 	musb->dev.dma_mask		= &omap2430_dmamask;
+ 	musb->dev.coherent_dma_mask	= omap2430_dmamask;
  
- ## assume buffers not aligned
- #define    VMOVDQ vmovdqu
-@@ -346,7 +347,7 @@ a = TMP_
- ## arg 3 : Num blocks
- ########################################################################
- .text
--SYM_FUNC_START(sha256_transform_avx)
-+SYM_TYPED_FUNC_START(sha256_transform_avx)
- .align 32
- 	pushq   %rbx
- 	pushq   %r12
-diff --git a/arch/x86/crypto/sha256-avx2-asm.S b/arch/x86/crypto/sha256-avx2-asm.S
-index 9bcdbc47b8b4..2d2be531a11e 100644
---- a/arch/x86/crypto/sha256-avx2-asm.S
-+++ b/arch/x86/crypto/sha256-avx2-asm.S
-@@ -49,6 +49,7 @@
- ########################################################################
++	/*
++	 * Legacy SoCs using omap_device get confused if node is moved
++	 * because of interconnect properties mixed into the node.
++	 */
++	if (of_get_property(np, "ti,hwmods", NULL)) {
++		dev_warn(&pdev->dev, "please update to probe with ti-sysc\n");
++		populate_irqs = true;
++	} else {
++		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
++	}
++	of_node_put(np);
++
+ 	glue->dev			= &pdev->dev;
+ 	glue->musb			= musb;
+ 	glue->status			= MUSB_UNKNOWN;
+@@ -389,6 +403,46 @@ static int omap2430_probe(struct platform_device *pdev)
+ 		goto err2;
+ 	}
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- 
- ## assume buffers not aligned
- #define	VMOVDQ vmovdqu
-@@ -523,7 +524,7 @@ STACK_SIZE	= _CTX      + _CTX_SIZE
- ## arg 3 : Num blocks
- ########################################################################
- .text
--SYM_FUNC_START(sha256_transform_rorx)
-+SYM_TYPED_FUNC_START(sha256_transform_rorx)
- .align 32
- 	pushq	%rbx
- 	pushq	%r12
-diff --git a/arch/x86/crypto/sha256-ssse3-asm.S b/arch/x86/crypto/sha256-ssse3-asm.S
-index c4a5db612c32..7db28839108d 100644
---- a/arch/x86/crypto/sha256-ssse3-asm.S
-+++ b/arch/x86/crypto/sha256-ssse3-asm.S
-@@ -47,6 +47,7 @@
- ########################################################################
- 
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- 
- ## assume buffers not aligned
- #define    MOVDQ movdqu
-@@ -355,7 +356,7 @@ a = TMP_
- ## arg 3 : Num blocks
- ########################################################################
- .text
--SYM_FUNC_START(sha256_transform_ssse3)
-+SYM_TYPED_FUNC_START(sha256_transform_ssse3)
- .align 32
- 	pushq   %rbx
- 	pushq   %r12
-diff --git a/arch/x86/crypto/sha256_ni_asm.S b/arch/x86/crypto/sha256_ni_asm.S
-index 94d50dd27cb5..47f93937f798 100644
---- a/arch/x86/crypto/sha256_ni_asm.S
-+++ b/arch/x86/crypto/sha256_ni_asm.S
-@@ -54,6 +54,7 @@
-  */
- 
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- 
- #define DIGEST_PTR	%rdi	/* 1st arg */
- #define DATA_PTR	%rsi	/* 2nd arg */
-@@ -97,7 +98,7 @@
- 
- .text
- .align 32
--SYM_FUNC_START(sha256_ni_transform)
-+SYM_TYPED_FUNC_START(sha256_ni_transform)
- 
- 	shl		$6, NUM_BLKS		/*  convert to bytes */
- 	jz		.Ldone_hash
++	if (populate_irqs) {
++		struct resource musb_res[3];
++		struct resource *res;
++		int i = 0;
++
++		memset(musb_res, 0, sizeof(*musb_res) * ARRAY_SIZE(musb_res));
++
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++		if (!res)
++			goto err2;
++
++		musb_res[i].start = res->start;
++		musb_res[i].end = res->end;
++		musb_res[i].flags = res->flags;
++		musb_res[i].name = res->name;
++		i++;
++
++		ret = of_irq_get_byname(np, "mc");
++		if (ret > 0) {
++			musb_res[i].start = ret;
++			musb_res[i].flags = IORESOURCE_IRQ;
++			musb_res[i].name = "mc";
++			i++;
++		}
++
++		ret = of_irq_get_byname(np, "dma");
++		if (ret > 0) {
++			musb_res[i].start = ret;
++			musb_res[i].flags = IORESOURCE_IRQ;
++			musb_res[i].name = "dma";
++			i++;
++		}
++
++		ret = platform_device_add_resources(musb, musb_res, i);
++		if (ret) {
++			dev_err(&pdev->dev, "failed to add IRQ resources\n");
++			goto err2;
++		}
++	}
++
+ 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add platform_data\n");
 -- 
 2.35.1
 
