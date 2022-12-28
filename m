@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666591C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F9BC433D2;
-	Wed, 28 Dec 2022 16:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D561C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F66C433D2;
+	Wed, 28 Dec 2022 16:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245899;
-	bh=V1iZjnY+Fu3/ryfiijjX5kukUbPZuFNdU84KcYkm+K4=;
+	s=korg; t=1672245901;
+	bh=Tb7LrijgU4dstKVAnIW6zaqJrgtkhNneSzCOxpsYAHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/G9zy2Lo5ayum8U1bnySTAYV4O3Iq7a1K04if+wDtpirWyBWkcyXmIwc5nDCsoOE
-	 0YQXCsiQgvGvRQ3fVVhv0jyvkDyNYsX3MxjvbzO7blvovL/A5mbvxpKvszAdJhTzgO
-	 XcjOfBGA3WqxL0dRMV8w5Ebx9JxAj4lhkd7+uH0w=
+	b=RivxoTAPQ2Gh1ZZNOSNoDkr8P3RYjkOMx/+fsN7FLiwWA79CoXsnBNmrtINTdb3v9
+	 1X5P3ItiKD7KG3s/eGZsCCIsQWmi5oJR4LsG9Ox8MdKgokdGbZfPv3f746T0Mn4yqt
+	 PrGcAXAyXn4XdHpM8GfHGacsI64AAVqNkHLvZTdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0977/1073] Bluetooth: Add quirk to disable MWS Transport Configuration
-Date: Wed, 28 Dec 2022 15:42:45 +0100
-Message-Id: <20221228144354.611474083@linuxfoundation.org>
+Subject: [PATCH 6.1 0944/1146] arm64: dts: qcom: sm6350: Add apps_smmu with streamID to SDHCI 1/2 nodes
+Date: Wed, 28 Dec 2022 15:41:23 +0100
+Message-Id: <20221228144355.957397060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,87 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit ffcb0a445ec2d5753751437706aa0a7ea8351099 ]
+[ Upstream commit 7372b944a6ba5ac86628eaacc89ed4f103435cb9 ]
 
-Broadcom 4378/4387 controllers found in Apple Silicon Macs claim to
-support getting MWS Transport Layer Configuration,
+When enabling the APPS SMMU the mainline driver reconfigures the SMMU
+from its bootloader configuration, losing the stream mapping for (among
+which) the SDHCI hardware and breaking its ADMA feature.  This feature
+can be disabled with:
 
-< HCI Command: Read Local Supported... (0x04|0x0002) plen 0
-> HCI Event: Command Complete (0x0e) plen 68
-      Read Local Supported Commands (0x04|0x0002) ncmd 1
-        Status: Success (0x00)
-[...]
-          Get MWS Transport Layer Configuration (Octet 30 - Bit 3)]
-[...]
+    sdhci.debug_quirks=0x40
 
-, but then don't actually allow the required command:
+But it is of course desired to have this feature enabled and working
+through the SMMU.
 
-> HCI Event: Command Complete (0x0e) plen 15
-      Get MWS Transport Layer Configuration (0x05|0x000c) ncmd 1
-        Status: Command Disallowed (0x0c)
-        Number of transports: 0
-        Baud rate list: 0 entries
-        00 00 00 00 00 00 00 00 00 00
-
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221030073232.22726-11-marijn.suijten@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h      | 10 ++++++++++
- include/net/bluetooth/hci_core.h |  3 +++
- net/bluetooth/hci_sync.c         |  2 +-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 78c55b69919d..dd455ce06770 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -284,6 +284,16 @@ enum {
- 	 * during the hdev->setup vendor callback.
- 	 */
- 	HCI_QUIRK_BROKEN_EXT_SCAN,
-+
-+	/*
-+	 * When this quirk is set, the HCI_OP_GET_MWS_TRANSPORT_CONFIG command is
-+	 * disabled. This is required for some Broadcom controllers which
-+	 * erroneously claim to support MWS Transport Layer Configuration.
-+	 *
-+	 * This quirk can be set before hci_register_dev is called or
-+	 * during the hdev->setup vendor callback.
-+	 */
-+	HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG,
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 3a315280c34a..9d3da44758d9 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -485,6 +485,7 @@ sdhc_1: mmc@7c4000 {
+ 			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hc_irq", "pwr_irq";
++			iommus = <&apps_smmu 0x60 0x0>;
  
- /* HCI device flags */
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 29d1254f9856..6afb4771ce35 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1711,6 +1711,9 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
- 	((dev)->le_features[3] & HCI_LE_CIS_PERIPHERAL)
- #define bis_capable(dev) ((dev)->le_features[3] & HCI_LE_ISO_BROADCASTER)
+ 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+ 				 <&gcc GCC_SDCC1_APPS_CLK>,
+@@ -1063,6 +1064,7 @@ sdhc_2: mmc@8804000 {
+ 			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "hc_irq", "pwr_irq";
++			iommus = <&apps_smmu 0x560 0x0>;
  
-+#define mws_transport_config_capable(dev) (((dev)->commands[30] & 0x08) && \
-+	(!test_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &(dev)->quirks)))
-+
- /* ----- HCI protocols ----- */
- #define HCI_PROTO_DEFER             0x01
- 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a5e89e1b5452..117537f3e7ad 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3940,7 +3940,7 @@ static int hci_read_local_pairing_opts_sync(struct hci_dev *hdev)
- /* Get MWS transport configuration if the HCI command is supported */
- static int hci_get_mws_transport_config_sync(struct hci_dev *hdev)
- {
--	if (!(hdev->commands[30] & 0x08))
-+	if (!mws_transport_config_capable(hdev))
- 		return 0;
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_GET_MWS_TRANSPORT_CONFIG,
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+ 				 <&gcc GCC_SDCC2_APPS_CLK>,
 -- 
 2.35.1
 
