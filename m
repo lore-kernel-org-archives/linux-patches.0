@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D428F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53787C433F0;
-	Wed, 28 Dec 2022 16:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863E21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A184C433EF;
+	Wed, 28 Dec 2022 16:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244085;
-	bh=hAnQXHnsB5FABuRd+DVJNnaTy+h1U5fx1aL0xOiYnXg=;
+	s=korg; t=1672244088;
+	bh=i8cFz/NGR+W2QvY2ThVU4pXhFpj7i6kk3Z/AMLdP7Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCWh8CBE4iGkxBhnb6+olk4xa/+zVX+jASbvOVxwUph5yOeh1qvcfhB+Pe6MHz2wx
-	 f5VSi8Jf8s5fpTM8KxHsEQgCXz1gLuaYm18s0uG3OFeS3OWqmF0B3LMSZINt1vz7H/
-	 5K7kFRmrKG5I5cPmIm+O+U1v5zT0peU7q07qPjBU=
+	b=SbN7eVN/d4ok0juat544wNCVHCN5jVct2aLan9OrHP+JH0G3RRVTn1huxdC8eV5z9
+	 2SJAC5SZLiam0A0TYDdRms6tsF6Ry3XYMlcmu3KEnXISIsgB0tIrzdUS4KtoOWhKAs
+	 eKzjoDwbjMiJ1U9qCKQqksDnG644eAPzBGi+XgYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+40642be9b7e0bb28e0df@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0607/1146] f2fs: fix to avoid accessing uninitialized spinlock
-Date: Wed, 28 Dec 2022 15:35:46 +0100
-Message-Id: <20221228144346.659272243@linuxfoundation.org>
+Subject: [PATCH 6.1 0576/1146] crypto: hisilicon/qm - re-enable communicate interrupt before notifying PF
+Date: Wed, 28 Dec 2022 15:35:15 +0100
+Message-Id: <20221228144345.818470993@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,75 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit cc249e4cba9a6002c9d9e1438daf8440a160bc9e ]
+[ Upstream commit ee1537fe3dd89860d0336563891f6cac707d0cb5 ]
 
-syzbot reports a kernel bug:
+After the device is reset, the VF needs to re-enable communication
+interrupt before the VF sends restart complete message to the PF.
+If the interrupt is re-enabled after the VF notifies the PF, the PF
+may fail to send messages to the VF after receiving VF's restart
+complete message.
 
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e3/0x2cb lib/dump_stack.c:106
- assign_lock_key+0x22a/0x240 kernel/locking/lockdep.c:981
- register_lock_class+0x287/0x9b0 kernel/locking/lockdep.c:1294
- __lock_acquire+0xe4/0x1f60 kernel/locking/lockdep.c:4934
- lock_acquire+0x1a7/0x400 kernel/locking/lockdep.c:5668
- __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
- _raw_spin_lock+0x2a/0x40 kernel/locking/spinlock.c:154
- spin_lock include/linux/spinlock.h:350 [inline]
- f2fs_save_errors fs/f2fs/super.c:3868 [inline]
- f2fs_handle_error+0x29/0x230 fs/f2fs/super.c:3896
- f2fs_iget+0x215/0x4bb0 fs/f2fs/inode.c:516
- f2fs_fill_super+0x47d3/0x7b50 fs/f2fs/super.c:4222
- mount_bdev+0x26c/0x3a0 fs/super.c:1401
- legacy_get_tree+0xea/0x180 fs/fs_context.c:610
- vfs_get_tree+0x88/0x270 fs/super.c:1531
- do_new_mount+0x289/0xad0 fs/namespace.c:3040
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount+0x2e3/0x3d0 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-F2FS-fs (loop1): Failed to read F2FS meta data inode
-
-The root cause is if sbi->error_lock may be accessed before
-its initialization, fix it.
-
-Link: https://lore.kernel.org/linux-f2fs-devel/0000000000007edb6605ecbb6442@google.com/T/#u
-Reported-by: syzbot+40642be9b7e0bb28e0df@syzkaller.appspotmail.com
-Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 760fe22cf5e9 ("crypto: hisilicon/qm - update reset flow")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/hisilicon/qm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 696f094c4505..67d51f527606 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4188,6 +4188,9 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 	if (err)
- 		goto free_bio_info;
- 
-+	spin_lock_init(&sbi->error_lock);
-+	memcpy(sbi->errors, raw_super->s_errors, MAX_F2FS_ERRORS);
-+
- 	init_f2fs_rwsem(&sbi->cp_rwsem);
- 	init_f2fs_rwsem(&sbi->quota_sem);
- 	init_waitqueue_head(&sbi->cp_wait);
-@@ -4255,9 +4258,6 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 		goto free_devices;
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index c7e7fc49ec06..e5fefc466ac8 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -5725,6 +5725,7 @@ static void qm_pf_reset_vf_done(struct hisi_qm *qm)
+ 		cmd = QM_VF_START_FAIL;
  	}
  
--	spin_lock_init(&sbi->error_lock);
--	memcpy(sbi->errors, raw_super->s_errors, MAX_F2FS_ERRORS);
--
- 	sbi->total_valid_node_count =
- 				le32_to_cpu(sbi->ckpt->valid_node_count);
- 	percpu_counter_set(&sbi->total_valid_inode_count,
++	qm_cmd_init(qm);
+ 	ret = qm_ping_pf(qm, cmd);
+ 	if (ret)
+ 		dev_warn(&pdev->dev, "PF responds timeout in reset done!\n");
+@@ -5786,7 +5787,6 @@ static void qm_pf_reset_vf_process(struct hisi_qm *qm,
+ 		goto err_get_status;
+ 
+ 	qm_pf_reset_vf_done(qm);
+-	qm_cmd_init(qm);
+ 
+ 	dev_info(dev, "device reset done.\n");
+ 
 -- 
 2.35.1
 
