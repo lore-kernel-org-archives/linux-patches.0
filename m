@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F75F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9850C433EF;
-	Wed, 28 Dec 2022 16:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1D61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969C5C433D2;
+	Wed, 28 Dec 2022 16:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245284;
-	bh=6r83UmyEojnJe0KmDqlFBjWI5QaMWo7hSYxDTIb1vQw=;
+	s=korg; t=1672245286;
+	bh=0+toHmPPNYZQb2J6HMgYF0ISCazdIc2rtA3/MMKR5Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ab45G+esCbesv9DkbIzCJYbbFDO/NV2uRwCsdXJ9eI3AT8B7hQAI/PbQIdj3DuZA/
-	 69Pegu1IpdZNQsexX2h9aSCxfQ9SNbZTOXmfqPSkB3Hzh3g1kS9ZbboNY7xjK/2GhQ
-	 fbHF+KZyK4po9bhlkNShpIPAx/O7OJb95wq8JfI0=
+	b=QRyJXP6iVyOJjFrlYSdOtxYJz9t8Tykl8L7aB2Y89bly6bPGZpPf2mCCY7QPQuBIy
+	 9DUH/O3gOZ5n+oac4FPvN0U1lkDIc1k8WIv6C3fVyGgsaQwXBvMk3mnTJPzKwyqixp
+	 PZH7J61AgFeFzCAjICfIdo1qTB2kkzXuPGPo6W+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0866/1073] igc: Set Qbv start_time and end_time to end_time if not being configured in GCL
-Date: Wed, 28 Dec 2022 15:40:54 +0100
-Message-Id: <20221228144351.544154997@linuxfoundation.org>
+Subject: [PATCH 6.1 0833/1146] rtc: pcf2127: Convert to .probe_new()
+Date: Wed, 28 Dec 2022 15:39:32 +0100
+Message-Id: <20221228144352.783228795@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 72abeedd83982c1bc6023f631e412db78374d9b4 ]
+[ Upstream commit 5418e595f30bf4fde83ebb0121417c0c95cff98e ]
 
-The default setting of end_time minus start_time is whole 1 second.
-Thus, if it's not being configured in any GCL entry then it will be
-staying at original 1 second.
+.probe_new() doesn't get the i2c_device_id * parameter, so determine
+that explicitly in .probe(). The device_id array has to move up for that
+to work.
 
-This patch is changing the start_time and end_time to be end_time as
-if setting zero will be having weird HW behavior where the gate will
-not be fully closed.
-
-Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20221021130706.178687-7-u.kleine-koenig@pengutronix.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-pcf2127.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 207b4b5b2e5f..76f015196fbf 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5999,6 +5999,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
- 	u32 start_time = 0, end_time = 0;
- 	size_t n;
-+	int i;
+diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
+index 63b275b014bd..87f4fc9df68b 100644
+--- a/drivers/rtc/rtc-pcf2127.c
++++ b/drivers/rtc/rtc-pcf2127.c
+@@ -885,9 +885,17 @@ static const struct regmap_bus pcf2127_i2c_regmap = {
  
- 	adapter->qbv_enable = qopt->enable;
+ static struct i2c_driver pcf2127_i2c_driver;
  
-@@ -6019,7 +6020,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 
- 	for (n = 0; n < qopt->num_entries; n++) {
- 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
--		int i;
- 
- 		end_time += e->interval;
- 
-@@ -6058,6 +6058,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 		start_time += e->interval;
- 	}
- 
-+	/* Check whether a queue gets configured.
-+	 * If not, set the start and end time to be end time.
-+	 */
-+	for (i = 0; i < adapter->num_tx_queues; i++) {
-+		if (!queue_configured[i]) {
-+			struct igc_ring *ring = adapter->tx_ring[i];
+-static int pcf2127_i2c_probe(struct i2c_client *client,
+-				const struct i2c_device_id *id)
++static const struct i2c_device_id pcf2127_i2c_id[] = {
++	{ "pcf2127", 1 },
++	{ "pcf2129", 0 },
++	{ "pca2129", 0 },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, pcf2127_i2c_id);
 +
-+			ring->start_time = end_time;
-+			ring->end_time = end_time;
-+		}
-+	}
-+
- 	return 0;
++static int pcf2127_i2c_probe(struct i2c_client *client)
+ {
++	const struct i2c_device_id *id = i2c_match_id(pcf2127_i2c_id, client);
+ 	struct regmap *regmap;
+ 	static const struct regmap_config config = {
+ 		.reg_bits = 8,
+@@ -910,20 +918,12 @@ static int pcf2127_i2c_probe(struct i2c_client *client,
+ 			     pcf2127_i2c_driver.driver.name, id->driver_data);
  }
+ 
+-static const struct i2c_device_id pcf2127_i2c_id[] = {
+-	{ "pcf2127", 1 },
+-	{ "pcf2129", 0 },
+-	{ "pca2129", 0 },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(i2c, pcf2127_i2c_id);
+-
+ static struct i2c_driver pcf2127_i2c_driver = {
+ 	.driver		= {
+ 		.name	= "rtc-pcf2127-i2c",
+ 		.of_match_table = of_match_ptr(pcf2127_of_match),
+ 	},
+-	.probe		= pcf2127_i2c_probe,
++	.probe_new	= pcf2127_i2c_probe,
+ 	.id_table	= pcf2127_i2c_id,
+ };
  
 -- 
 2.35.1
