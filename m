@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D711863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374F5C433D2;
-	Wed, 28 Dec 2022 14:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589081863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B87C433EF;
+	Wed, 28 Dec 2022 14:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239532;
-	bh=3ZwUhQVVkfHkv3IqI1JcB4ce266Ty7SK39pQUTSEV0I=;
+	s=korg; t=1672239535;
+	bh=xBGGz7xQCydoAMkMhr0MZjjfNOa0L1obhG/G9+6689o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ZVXKpqkXkM6INaTZzaH0j4Kn3gghJLXjagRca9Qn7deFTcRxnA52EBq4A/b91QsX
-	 DitxE0/WY099gqgF32E+LSo/MbcoRrz82Bb/z878r1gQt++nM7xd5q9boYPiEckSLb
-	 +ylSLrLAKLxO7AYeDidl46X3fvr6mg94Nx4od4Hs=
+	b=tbEYtrVf28ETmOAxk+acRspnS3+PhjM/N64dBlm3QcCrSLv8LxYGhdCXluroJHzdo
+	 Stp7Ssjl0elOdhKDYeQaKuzheYPhdPsmgWOGn0fPEZf/xQyBufaXXHoZE8bFduvjFL
+	 1Lo+C/Yv1ay0kaU5n0lT+DZUDAePF2Sj9OKHaP0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Aakarsh Jain <aakarsh.jain@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/731] media: s5p-mfc: Add variant data for MFC v7 hardware for Exynos 3250 SoC
-Date: Wed, 28 Dec 2022 15:35:47 +0100
-Message-Id: <20221228144303.520070640@linuxfoundation.org>
+Subject: [PATCH 6.0 0047/1073] arm64: dts: mt7986: fix trng node name
+Date: Wed, 28 Dec 2022 15:27:15 +0100
+Message-Id: <20221228144329.396723276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aakarsh Jain <aakarsh.jain@samsung.com>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit f50ebe10f5d8092c37e2bd430c78e03bf38b1e20 ]
+[ Upstream commit 07ce611c705217507c2a036bba8695cbd82c9e36 ]
 
-Commit 5441e9dafdfc6dc40 ("[media] s5p-mfc: Core support for MFC v7")
-which adds mfc v7 support for Exynos3250 and use the same compatible
-string as used by Exynos5240 but both the IPs are a bit different in
-terms of IP clock.
-Add variant driver data based on the new compatible string
-"samsung,exynos3250-mfc" for Exynos3250 SoC.
+Binding requires node name to be rng not trng:
 
-Suggested-by: Alim Akhtar <alim.akhtar@samsung.com>
-Fixes: 5441e9dafdfc ("[media] s5p-mfc: Core support for MFC v7")
-Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+trng@1020f000: $nodename:0: 'trng@1020f000' does not match '^rng@[0-9a-f]+$'
+
+Fixes: 50137c150f5f ("arm64: dts: mediatek: add basic mt7986 support")
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221027151022.5541-1-linux@fw-web.de
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc.c b/drivers/media/platform/s5p-mfc/s5p_mfc.c
-index 4fc135d9f38b..4c511b026bd7 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc.c
-@@ -1583,8 +1583,18 @@ static struct s5p_mfc_variant mfc_drvdata_v7 = {
- 	.port_num	= MFC_NUM_PORTS_V7,
- 	.buf_size	= &buf_size_v7,
- 	.fw_name[0]     = "s5p-mfc-v7.fw",
--	.clk_names	= {"mfc", "sclk_mfc"},
--	.num_clocks	= 2,
-+	.clk_names	= {"mfc"},
-+	.num_clocks	= 1,
-+};
-+
-+static struct s5p_mfc_variant mfc_drvdata_v7_3250 = {
-+	.version        = MFC_VERSION_V7,
-+	.version_bit    = MFC_V7_BIT,
-+	.port_num       = MFC_NUM_PORTS_V7,
-+	.buf_size       = &buf_size_v7,
-+	.fw_name[0]     = "s5p-mfc-v7.fw",
-+	.clk_names      = {"mfc", "sclk_mfc"},
-+	.num_clocks     = 2,
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index e3a407d03551..12c259ec042e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -162,7 +162,7 @@ sgmiisys1: syscon@10070000 {
+ 			#clock-cells = <1>;
+ 		};
  
- static struct s5p_mfc_buf_size_v6 mfc_buf_size_v8 = {
-@@ -1654,6 +1664,9 @@ static const struct of_device_id exynos_mfc_match[] = {
- 	}, {
- 		.compatible = "samsung,mfc-v7",
- 		.data = &mfc_drvdata_v7,
-+	}, {
-+		.compatible = "samsung,exynos3250-mfc",
-+		.data = &mfc_drvdata_v7_3250,
- 	}, {
- 		.compatible = "samsung,mfc-v8",
- 		.data = &mfc_drvdata_v8,
+-		trng: trng@1020f000 {
++		trng: rng@1020f000 {
+ 			compatible = "mediatek,mt7986-rng",
+ 				     "mediatek,mt7623-rng";
+ 			reg = <0 0x1020f000 0 0x100>;
 -- 
 2.35.1
 
