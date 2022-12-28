@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2B61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9653DC433D2;
-	Wed, 28 Dec 2022 16:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CDA187A
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3901FC433D2;
+	Wed, 28 Dec 2022 16:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244245;
-	bh=8eDiZnpoVyGp1Wn/OiEOQMkqTSKufieerMiv1MdhCz0=;
+	s=korg; t=1672244247;
+	bh=5rnD5yeWpDjhs8Z2PDhHOhEXdpcJt60Y35HM0zPdHuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHexxYVyLsFsAgkgLf+hIu803biGlFErb3RBXpMya5qmlqKEhAP2WY8mGrczHWMLh
-	 pfkn22Exf3G7JCXTSZDfE16ghKfNVcavQIuvZK5yd8mRvMfiuVsZEMUN4JWksbnFVr
-	 hyGIuWPfrWMDqFD030NzLnbDsSOGFQ3cC9qupT4U=
+	b=B6wNfnANHeduQzM3ZlcN3dyqGrup6XmArNF+4zJTj/akK38Lpzg1NdHbsCjJ34cNI
+	 LoYGLpL8ujVbrNSdM3lzAWX+pFM9cWVVMmtvOqLiriNM9LrO5SMCiMS8y4vNJrAWZ4
+	 Wh6lfL6hp61DHaXAoGHpd8Khjg4J/O+ANLZTCH2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0635/1146] crypto: x86/aegis128 - fix possible crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:14 +0100
-Message-Id: <20221228144347.412551398@linuxfoundation.org>
+Subject: [PATCH 6.0 0675/1073] usb: typec: tcpci: fix of node refcount leak in tcpci_register_port()
+Date: Wed, 28 Dec 2022 15:37:43 +0100
+Message-Id: <20221228144346.372798281@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,76 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 8bd9974b6bfcd1e14a001deeca051aed7295559a ]
+[ Upstream commit 0384e87e3fec735e47f1c133c796f32ef7a72a9b ]
 
-crypto_aegis128_aesni_enc(), crypto_aegis128_aesni_enc_tail(),
-crypto_aegis128_aesni_dec(), and crypto_aegis128_aesni_dec_tail() are
-called via indirect function calls.  Therefore they need to use
-SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause their type
-hashes to be emitted when the kernel is built with CONFIG_CFI_CLANG=y.
-Otherwise, the code crashes with a CFI failure (if the compiler didn't
-happen to optimize out the indirect calls).
+I got the following report while doing device(mt6370-tcpc) load
+test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@34/tcpc/connector
+
+The 'fwnode' set in tcpci_parse_config() which is called
+in tcpci_register_port(), its node refcount is increased
+in device_get_named_child_node(). It needs be put while
+exiting, so call fwnode_handle_put() in the error path of
+tcpci_register_port() and in tcpci_unregister_port() to
+avoid leak.
+
+Fixes: 5e85a04c8c0d ("usb: typec: add fwnode to tcpc")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221121062416.1026192-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/aegis128-aesni-asm.S | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/typec/tcpm/tcpci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
-index b48ddebb4748..cdf3215ec272 100644
---- a/arch/x86/crypto/aegis128-aesni-asm.S
-+++ b/arch/x86/crypto/aegis128-aesni-asm.S
-@@ -7,6 +7,7 @@
-  */
+diff --git a/drivers/usb/typec/tcpm/tcpci.c b/drivers/usb/typec/tcpm/tcpci.c
+index 812784702d53..592bd4c85482 100644
+--- a/drivers/usb/typec/tcpm/tcpci.c
++++ b/drivers/usb/typec/tcpm/tcpci.c
+@@ -816,8 +816,10 @@ struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data)
+ 		return ERR_PTR(err);
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- #include <asm/frame.h>
+ 	tcpci->port = tcpm_register_port(tcpci->dev, &tcpci->tcpc);
+-	if (IS_ERR(tcpci->port))
++	if (IS_ERR(tcpci->port)) {
++		fwnode_handle_put(tcpci->tcpc.fwnode);
+ 		return ERR_CAST(tcpci->port);
++	}
  
- #define STATE0	%xmm0
-@@ -402,7 +403,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
-  * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
-  *                                const void *src, void *dst);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_enc)
-+SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc)
- 	FRAME_BEGIN
+ 	return tcpci;
+ }
+@@ -826,6 +828,7 @@ EXPORT_SYMBOL_GPL(tcpci_register_port);
+ void tcpci_unregister_port(struct tcpci *tcpci)
+ {
+ 	tcpm_unregister_port(tcpci->port);
++	fwnode_handle_put(tcpci->tcpc.fwnode);
+ }
+ EXPORT_SYMBOL_GPL(tcpci_unregister_port);
  
- 	cmp $0x10, LEN
-@@ -499,7 +500,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc)
-  * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
-  *                                     const void *src, void *dst);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
-+SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc_tail)
- 	FRAME_BEGIN
- 
- 	/* load the state: */
-@@ -556,7 +557,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
-  * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
-  *                                const void *src, void *dst);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_dec)
-+SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec)
- 	FRAME_BEGIN
- 
- 	cmp $0x10, LEN
-@@ -653,7 +654,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec)
-  * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
-  *                                     const void *src, void *dst);
-  */
--SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
-+SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec_tail)
- 	FRAME_BEGIN
- 
- 	/* load the state: */
 -- 
 2.35.1
 
