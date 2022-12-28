@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831DB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F82C433D2;
-	Wed, 28 Dec 2022 16:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B38C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B361EC433D2;
+	Wed, 28 Dec 2022 16:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245951;
-	bh=IbJt7hoDzTGeI/HrT8fi9aO+cZYR8AAZaGsSXvLuF9A=;
+	s=korg; t=1672245954;
+	bh=c4PJoMBpiZ6Sy9yEgOccbk7gFera47jXs90Lp50O1Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFdsGm8uR51eHdd370ind7JYdyqEBMxDLU3GlS+0xB0aCBdDuUwX6j/uMKb9wyHSx
-	 4SO9Xb7sYvgFJ40tFh3lv/SBGre7kP/+wsuk1qL4FqJ8vQEdl5fsEhFIn+5A+3pLjw
-	 SqZUYfd2tzGMtOSQC1pqZpDBdke5sWDtaav8w4hw=
+	b=ELyWOvCVj+Jk6immd+KOwzXp2XGV9Q5Yop+4jox4Xb8hyDytdsaeG9SFWhiBLAsmG
+	 WvaBUUiDLoJWuFZB0CmpFWJV8tTNCNFU64+REzY92Qdj4fp9mHUuqYcqhHNiu8U4PC
+	 fGmBcZIN6TXnsIJgtA0elIDHsAU/8VLqdFGGQ64g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Scott Benesh <scott.benesh@microchip.com>,
+	Scott Teel <scott.teel@microchip.com>,
+	Mike McGowen <mike.mcgowen@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0952/1146] thermal/core: Ensure that thermal device is registered in thermal_zone_get_temp
-Date: Wed, 28 Dec 2022 15:41:31 +0100
-Message-Id: <20221228144356.177248052@linuxfoundation.org>
+Subject: [PATCH 6.0 0986/1073] scsi: smartpqi: Add new controller PCI IDs
+Date: Wed, 28 Dec 2022 15:42:54 +0100
+Message-Id: <20221228144354.878715210@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,82 +38,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Mike McGowen <mike.mcgowen@microchip.com>
 
-[ Upstream commit 1c6b30060777352e7881383bab726046d8c3c610 ]
+[ Upstream commit 0b93cf2a9097b1c3d75642ef878ba87f15f03043 ]
 
-Calls to thermal_zone_get_temp() are not protected against thermal zone
-device removal. As result, it is possible that the thermal zone operations
-callbacks are no longer valid when thermal_zone_get_temp() is called.
-This may result in crashes such as
+All PCI ID entries in Hex.
+Add PCI IDs for ByteDance controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+    ByteHBA JGH43024-8                      9005 / 028f / 1e93 / 1000
+    ByteHBA JGH43034-8                      9005 / 028f / 1e93 / 1001
+    ByteHBA JGH44014-8                      9005 / 028f / 1e93 / 1002
 
-BUG: unable to handle page fault for address: ffffffffc04ef420
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
-PGD 5d60e067 P4D 5d60e067 PUD 5d610067 PMD 110197067 PTE 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 1 PID: 3209 Comm: cat Tainted: G        W         5.10.136-19389-g615abc6eb807 #1 02df41ac0b12f3a64f4b34245188d8875bb3bce1
-Hardware name: Google Coral/Coral, BIOS Google_Coral.10068.92.0 11/27/2018
-RIP: 0010:thermal_zone_get_temp+0x26/0x73
-Code: 89 c3 eb d3 0f 1f 44 00 00 55 48 89 e5 41 57 41 56 53 48 85 ff 74 50 48 89 fb 48 81 ff 00 f0 ff ff 77 44 48 8b 83 98 03 00 00 <48> 83 78 10 00 74 36 49 89 f6 4c 8d bb d8 03 00 00 4c 89 ff e8 9f
-RSP: 0018:ffffb3758138fd38 EFLAGS: 00010287
-RAX: ffffffffc04ef410 RBX: ffff98f14d7fb000 RCX: 0000000000000000
-RDX: ffff98f17cf90000 RSI: ffffb3758138fd64 RDI: ffff98f14d7fb000
-RBP: ffffb3758138fd50 R08: 0000000000001000 R09: ffff98f17cf90000
-R10: 0000000000000000 R11: ffffffff8dacad28 R12: 0000000000001000
-R13: ffff98f1793a7d80 R14: ffff98f143231708 R15: ffff98f14d7fb018
-FS:  00007ec166097800(0000) GS:ffff98f1bbd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffc04ef420 CR3: 000000010ee9a000 CR4: 00000000003506e0
-Call Trace:
- temp_show+0x31/0x68
- dev_attr_show+0x1d/0x4f
- sysfs_kf_seq_show+0x92/0x107
- seq_read_iter+0xf5/0x3f2
- vfs_read+0x205/0x379
- __x64_sys_read+0x7c/0xe2
- do_syscall_64+0x43/0x55
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Add PCI IDs for new Inspur controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+    INSPUR RT0800M7E                        9005 / 028f / 1bd4 / 0086
+    INSPUR RT0800M7H                        9005 / 028f / 1bd4 / 0087
+    INSPUR RT0804M7R                        9005 / 028f / 1bd4 / 0088
+    INSPUR RT0808M7R                        9005 / 028f / 1bd4 / 0089
 
-if a thermal device is removed while accesses to its device attributes
-are ongoing.
+Add PCI IDs for new FAB A controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+    Adaptec SmartRAID 3254-16e /e           9005 / 028f / 9005 / 1475
+    Adaptec HBA 1200-16e                    9005 / 028f / 9005 / 14c3
+    Adaptec HBA 1200-8e                     9005 / 028f / 9005 / 14c4
 
-The problem is exposed by code in iwl_op_mode_mvm_start(), which registers
-a thermal zone device only to unregister it shortly afterwards if an
-unrelated failure is encountered while accessing the hardware.
+Add H3C controller PCI IDs:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+    H3C H4508-Mf-8i                         9005 / 028f / 193d / 110b
 
-Check if the thermal zone device is registered after acquiring the
-thermal zone device mutex to ensure this does not happen.
-
-The code was tested by triggering the failure in iwl_op_mode_mvm_start()
-on purpose. Without this patch, the kernel crashes reliably. The crash
-is no longer observed after applying this and the preceding patches.
-
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
+Reviewed-by: Scott Teel <scott.teel@microchip.com>
+Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
+Signed-off-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/r/166793530327.322537.6056884426657539311.stgit@brunhilda
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_helpers.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 44 +++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/drivers/thermal/thermal_helpers.c b/drivers/thermal/thermal_helpers.c
-index c65cdce8f856..fca0b23570f9 100644
---- a/drivers/thermal/thermal_helpers.c
-+++ b/drivers/thermal/thermal_helpers.c
-@@ -115,7 +115,12 @@ int thermal_zone_get_temp(struct thermal_zone_device *tz, int *temp)
- 	int ret;
- 
- 	mutex_lock(&tz->lock);
--	ret = __thermal_zone_get_temp(tz, temp);
-+
-+	if (device_is_registered(&tz->device))
-+		ret = __thermal_zone_get_temp(tz, temp);
-+	else
-+		ret = -ENODEV;
-+
- 	mutex_unlock(&tz->lock);
- 
- 	return ret;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 7a8c2c75acba..898b0054cfa1 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -9302,6 +9302,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x193d, 0x1109)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x193d, 0x110b)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x193d, 0x8460)
+@@ -9402,6 +9406,22 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1bd4, 0x0072)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1bd4, 0x0086)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1bd4, 0x0087)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1bd4, 0x0088)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1bd4, 0x0089)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x19e5, 0xd227)
+@@ -9650,6 +9670,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADAPTEC2, 0x1474)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       PCI_VENDOR_ID_ADAPTEC2, 0x1475)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADAPTEC2, 0x1480)
+@@ -9706,6 +9730,14 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADAPTEC2, 0x14c2)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       PCI_VENDOR_ID_ADAPTEC2, 0x14c3)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       PCI_VENDOR_ID_ADAPTEC2, 0x14c4)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADAPTEC2, 0x14d0)
+@@ -9942,6 +9974,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_LENOVO, 0x0623)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++				0x1e93, 0x1000)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++				0x1e93, 0x1001)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++				0x1e93, 0x1002)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_ANY_ID, PCI_ANY_ID)
 -- 
 2.35.1
 
