@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7771863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52E2C433F0;
-	Wed, 28 Dec 2022 15:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B991863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5633DC433EF;
+	Wed, 28 Dec 2022 15:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241813;
-	bh=r5T/QLqhwEd5e6IvFyVfQ+TBmpksnfSfuadkJrqHTuM=;
+	s=korg; t=1672241815;
+	bh=G/PD4AGUbPR3bk8hGVzUX5sR/bCPF6IaOvTccxBu8Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvz0hJTGQppfKr7MHjQHXuDgOlRUJolJ5a552iXdPXT3khhObcJVLVsRqCiWoP7vE
-	 IHmKQE8tll+2Fqru92fL9qKhBgLj9io7aQznBTYvo9sPfWaFj7fNxPBZWKdMDVnkpN
-	 Fqxotfs+O3jvesnk21mqqiRdKJhlnl/BF0i5xbkw=
+	b=edVYMCcntldM2jtsKlLbvlLUmNa/e3SEcY8/YUxqU09KwlgaM9TmaBXOjG5HW9UkD
+	 2WBYddSKalfjuCDtJslt7BcWYnFKbTqoFVWAXlrLSze7istIuX2q7bc+p2EIEfzz+0
+	 /oV0EK8+OSXhEZcbI55Ja2Y+P42CJ6WZYRFacOS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0330/1073] block: clear ->slave_dir when dropping the main slave_dir reference
-Date: Wed, 28 Dec 2022 15:31:58 +0100
-Message-Id: <20221228144336.967360506@linuxfoundation.org>
+Subject: [PATCH 6.1 0292/1146] media: platform: exynos4-is: fix return value check in fimc_md_probe()
+Date: Wed, 28 Dec 2022 15:30:31 +0100
+Message-Id: <20221228144338.070706403@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,46 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d90db3b1c8676bc88b4309c5a571333de2263b8e ]
+[ Upstream commit e38e42c078da4af962d322b97e726dcb2f184e3f ]
 
-Zero out the pointer to ->slave_dir so that the holder code doesn't
-incorrectly treat the object as alive when add_disk failed or after
-del_gendisk was called.
+devm_pinctrl_get() may return ERR_PTR(-EPROBE_DEFER), add a minus sign
+to fix it.
 
-Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
-Reported-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221115141054.1051801-2-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4163851f7b99 ("[media] s5p-fimc: Use pinctrl API for camera ports configuration")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/samsung/exynos4-is/media-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 044ff97381e3..28654723bc2b 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -522,6 +522,7 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
- 	rq_qos_exit(disk->queue);
- out_put_slave_dir:
- 	kobject_put(disk->slave_dir);
-+	disk->slave_dir = NULL;
- out_put_holder_dir:
- 	kobject_put(disk->part0->bd_holder_dir);
- out_del_integrity:
-@@ -618,6 +619,7 @@ void del_gendisk(struct gendisk *disk)
- 
- 	kobject_put(disk->part0->bd_holder_dir);
- 	kobject_put(disk->slave_dir);
-+	disk->slave_dir = NULL;
- 
- 	part_stat_set_all(disk->part0, 0);
- 	disk->part0->bd_stamp = 0;
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+index 412213b0c384..383a1e0ab912 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1472,7 +1472,7 @@ static int fimc_md_probe(struct platform_device *pdev)
+ 	pinctrl = devm_pinctrl_get(dev);
+ 	if (IS_ERR(pinctrl)) {
+ 		ret = PTR_ERR(pinctrl);
+-		if (ret != EPROBE_DEFER)
++		if (ret != -EPROBE_DEFER)
+ 			dev_err(dev, "Failed to get pinctrl: %d\n", ret);
+ 		goto err_clk;
+ 	}
 -- 
 2.35.1
 
