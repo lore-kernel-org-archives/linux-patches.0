@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473D11C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63721C433D2;
-	Wed, 28 Dec 2022 16:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93BC1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FCEC433D2;
+	Wed, 28 Dec 2022 16:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243757;
-	bh=Fkz7Q0iI1fpNChVys6VarblsVHx3pMK++LBXfsGGo9Y=;
+	s=korg; t=1672243760;
+	bh=nwR9Ovz4JynGggE+sKXTNWZmXhBGq+cgUvUAiDiKd0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrPaI+GYTUZGJhYLA+i5i3KTSGT/j/tlMbquNGAnYJX2Xv+JANkLfD+kzYp+rLyMO
-	 E3GHrwFl1Gbjbyp5v8bG/M92lduFFofpP8gKkpHycUeCbLv1VXi0zlOHWQwH8evWQn
-	 oUkwQ2vsMdFDSDMbEf2xyp60MEdip/oOhiiVsTEA=
+	b=Y/i0dox4f29ZMklJ2+JiWy/wSuKT7eByUVq6VzVcdxAElUPj+URxsAUfEV+FggNgA
+	 ccysHHUtKhgTLj7dYpOAmyrDH0W+yAdbtS5iPvZQBeE5GAyMDI/lzos+24hnbh1A3D
+	 qc0tc70jrOAN6d2uP/W9veAEOHg9VuLgtyKFjPQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Saeed Mahameed <saeed@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0583/1073] f2fs: fix to destroy sbi->post_read_wq in error path of f2fs_fill_super()
-Date: Wed, 28 Dec 2022 15:36:11 +0100
-Message-Id: <20221228144343.883269215@linuxfoundation.org>
+Subject: [PATCH 6.1 0551/1146] net: ethernet: ti: am65-cpsw: Fix PM runtime leakage in am65_cpsw_nuss_ndo_slave_open()
+Date: Wed, 28 Dec 2022 15:34:50 +0100
+Message-Id: <20221228144345.136851892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 7b02b2201893a71b881026cf574902019ab00db5 ]
+[ Upstream commit 5821504f5073983733465b8bc430049c4343bbd7 ]
 
-In error path of f2fs_fill_super(), this patch fixes to call
-f2fs_destroy_post_read_wq() once if we fail in f2fs_start_ckpt_thread().
+Ensure pm_runtime_put() is issued in error path.
 
-Fixes: 261eeb9c1585 ("f2fs: introduce checkpoint_merge mount option")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Saeed Mahameed <saeed@kernel.org>
+Link: https://lore.kernel.org/r/20221208105534.63709-1-rogerq@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 5415c06d8246..1187f29dc8e0 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4460,9 +4460,9 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 	f2fs_destroy_node_manager(sbi);
- free_sm:
- 	f2fs_destroy_segment_manager(sbi);
--	f2fs_destroy_post_read_wq(sbi);
- stop_ckpt_thread:
- 	f2fs_stop_ckpt_thread(sbi);
-+	f2fs_destroy_post_read_wq(sbi);
- free_devices:
- 	destroy_device_list(sbi);
- 	kvfree(sbi->ckpt);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index b3b0ba842541..4ff1cfdb9730 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -564,13 +564,13 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
+ 	ret = netif_set_real_num_tx_queues(ndev, common->tx_ch_num);
+ 	if (ret) {
+ 		dev_err(common->dev, "cannot set real number of tx queues\n");
+-		return ret;
++		goto runtime_put;
+ 	}
+ 
+ 	ret = netif_set_real_num_rx_queues(ndev, AM65_CPSW_MAX_RX_QUEUES);
+ 	if (ret) {
+ 		dev_err(common->dev, "cannot set real number of rx queues\n");
+-		return ret;
++		goto runtime_put;
+ 	}
+ 
+ 	for (i = 0; i < common->tx_ch_num; i++)
+@@ -578,7 +578,7 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
+ 
+ 	ret = am65_cpsw_nuss_common_open(common);
+ 	if (ret)
+-		return ret;
++		goto runtime_put;
+ 
+ 	common->usage_count++;
+ 
+@@ -606,6 +606,10 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
+ error_cleanup:
+ 	am65_cpsw_nuss_ndo_slave_stop(ndev);
+ 	return ret;
++
++runtime_put:
++	pm_runtime_put(common->dev);
++	return ret;
+ }
+ 
+ static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma)
 -- 
 2.35.1
 
