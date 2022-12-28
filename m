@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2ED1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9532DC433D2;
-	Wed, 28 Dec 2022 15:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC931863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3230DC433F0;
+	Wed, 28 Dec 2022 15:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240004;
-	bh=aNoUJxHkrs5Gf/DNei8WBoulFD7PDdaQ3IBmis583kA=;
+	s=korg; t=1672240007;
+	bh=Nt2W1Bb9eNSNTdu6H9aoXChzhYFhLBLCJU/hO3SMFFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9F7+Pbc2JZBVMkSfR4cC8x2g4sXOf1AG5ADMZq2rH2TrOE66JPff7LZlOPlhy9uf
-	 Bu/ZmrDD+EXRzgg6VskUV0nv3XGoRPbyf63v7+f+1GYC+nj9qvyuJho4sXctQsi9r3
-	 Ud/ETAx5gAhUhIAJ6ZhbplMuvRDMIFrscR7L3ogA=
+	b=VNn/sTIOk3xqoJWm+/2cwP32vp/VkvSCdg/MqGVahbh4Q/RxycE3AKubZeJbBEV9J
+	 6bKex72ToescoNRi33m52Cub6lAWPTC9c+FZIVfVJqy/E1GGGNcwoqZ+ZJViKEWFHJ
+	 1PSPNLaYVLwkA+bsqMG2U69QQH85km5ER9VzDZTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/731] mmc: vub300: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:45 +0100
-Message-Id: <20221228144305.213962000@linuxfoundation.org>
+Subject: [PATCH 6.1 0070/1146] arm64: dts: mt7896a: Fix unit_address_vs_reg warning for oscillator
+Date: Wed, 28 Dec 2022 15:26:49 +0100
+Message-Id: <20221228144332.058186139@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,65 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 0613ad2401f88bdeae5594c30afe318e93b14676 ]
+[ Upstream commit 7898d047b1eb2bec2622668cd70181442a580c6d ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Rename the oscillator fixed-clock to oscillator-40m and remove
+the unit address to fix warnings.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, the timer added before mmc_add_host() needs be del.
+arch/arm64/boot/dts/mediatek/mt7986a.dtsi:17.23-22.4: Warning
+(unit_address_vs_reg): /oscillator@0: node has a unit name,
+but no reg or ranges property
 
-And this patch fixes another missing call mmc_free_host() if usb_control_msg()
-fails.
-
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-9-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 1f9986b258c2 ("arm64: dts: mediatek: add clock support for mt7986a")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-2-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/vub300.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
-index 97beece62fec..ab36ec479747 100644
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2299,14 +2299,14 @@ static int vub300_probe(struct usb_interface *interface,
- 				0x0000, 0x0000, &vub300->system_port_status,
- 				sizeof(vub300->system_port_status), 1000);
- 	if (retval < 0) {
--		goto error4;
-+		goto error5;
- 	} else if (sizeof(vub300->system_port_status) == retval) {
- 		vub300->card_present =
- 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
--		goto error4;
-+		goto error5;
- 	}
- 	usb_set_intfdata(interface, vub300);
- 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
-@@ -2329,8 +2329,13 @@ static int vub300_probe(struct usb_interface *interface,
- 			 "USB vub300 remote SDIO host controller[%d]"
- 			 "connected with no SD/SDIO card inserted\n",
- 			 interface_to_InterfaceNumber(interface));
--	mmc_add_host(mmc);
-+	retval = mmc_add_host(mmc);
-+	if (retval)
-+		goto error6;
-+
- 	return 0;
-+error6:
-+	del_timer_sync(&vub300->inactivity_timer);
- error5:
- 	mmc_free_host(mmc);
- 	/*
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index 226648f48df2..14c91ded29e6 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -14,7 +14,7 @@ / {
+ 	#address-cells = <2>;
+ 	#size-cells = <2>;
+ 
+-	clk40m: oscillator@0 {
++	clk40m: oscillator-40m {
+ 		compatible = "fixed-clock";
+ 		clock-frequency = <40000000>;
+ 		#clock-cells = <0>;
 -- 
 2.35.1
 
