@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC921863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24148C433D2;
-	Wed, 28 Dec 2022 14:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3906A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50EFC433D2;
+	Wed, 28 Dec 2022 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239216;
-	bh=UCqQleJr9Yf3gKRA5edFcRRz+XTKkU7AlxBWnvMsWGE=;
+	s=korg; t=1672239219;
+	bh=XFzw9d3opGIEk5q8nLsMdcWl1Q6pZHkzpEUBhS4nD5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehK7N8UgYZvDdRC3QZPpDNWdWfm3cIckCHCfDkoQDue0mWwFi6QOGQW60/nnCoIJp
-	 KdTJm0z90+FzQhF8ojjxohs4HLLArkm6mIiS3elDlP9Ghu7cIY0TeaVEnGBHhXpBks
-	 IW5s3llaDjS3Yb9Q3yD1sqHc4Bhmb3zDA42NNISI=
+	b=P6kVczTypmshU2Ru/HjPfyNvZANg9OjIiuUS/l3bNKmOPohxIve2y6tnJNFyIbfjA
+	 1UkFlhM65trkzLxo+yuH7djoqZgS9vvY1JCLApaH/JRA2nlBNxJb78G3mZDI6YqiMs
+	 VNUSxR+SIQpVFkF0MGn6XQ/PZ5GVg+pkVIJDySig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/731] libbpf: Fix use-after-free in btf_dump_name_dups
-Date: Wed, 28 Dec 2022 15:34:12 +0100
-Message-Id: <20221228144300.753565704@linuxfoundation.org>
+Subject: [PATCH 5.15 146/731] libbpf: Fix null-pointer dereference in find_prog_by_sec_insn()
+Date: Wed, 28 Dec 2022 15:34:13 +0100
+Message-Id: <20221228144300.787754453@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,139 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit 93c660ca40b5d2f7c1b1626e955a8e9fa30e0749 ]
+[ Upstream commit d0d382f95a9270dcf803539d6781d6bd67e3f5b2 ]
 
-ASAN reports an use-after-free in btf_dump_name_dups:
+When there are no program sections, obj->programs is left unallocated,
+and find_prog_by_sec_insn()'s search lands on &obj->programs[0] == NULL,
+and will cause null-pointer dereference in the following access to
+prog->sec_idx.
 
-ERROR: AddressSanitizer: heap-use-after-free on address 0xffff927006db at pc 0xaaaab5dfb618 bp 0xffffdd89b890 sp 0xffffdd89b928
-READ of size 2 at 0xffff927006db thread T0
-    #0 0xaaaab5dfb614 in __interceptor_strcmp.part.0 (test_progs+0x21b614)
-    #1 0xaaaab635f144 in str_equal_fn tools/lib/bpf/btf_dump.c:127
-    #2 0xaaaab635e3e0 in hashmap_find_entry tools/lib/bpf/hashmap.c:143
-    #3 0xaaaab635e72c in hashmap__find tools/lib/bpf/hashmap.c:212
-    #4 0xaaaab6362258 in btf_dump_name_dups tools/lib/bpf/btf_dump.c:1525
-    #5 0xaaaab636240c in btf_dump_resolve_name tools/lib/bpf/btf_dump.c:1552
-    #6 0xaaaab6362598 in btf_dump_type_name tools/lib/bpf/btf_dump.c:1567
-    #7 0xaaaab6360b48 in btf_dump_emit_struct_def tools/lib/bpf/btf_dump.c:912
-    #8 0xaaaab6360630 in btf_dump_emit_type tools/lib/bpf/btf_dump.c:798
-    #9 0xaaaab635f720 in btf_dump__dump_type tools/lib/bpf/btf_dump.c:282
-    #10 0xaaaab608523c in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:236
-    #11 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #12 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #13 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #14 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #15 0xaaaab5d65990  (test_progs+0x185990)
+Guard the search with obj->nr_programs similar to what's being done in
+__bpf_program__iter() to prevent null-pointer access from happening.
 
-0xffff927006db is located 11 bytes inside of 16-byte region [0xffff927006d0,0xffff927006e0)
-freed by thread T0 here:
-    #0 0xaaaab5e2c7c4 in realloc (test_progs+0x24c7c4)
-    #1 0xaaaab634f4a0 in libbpf_reallocarray tools/lib/bpf/libbpf_internal.h:191
-    #2 0xaaaab634f840 in libbpf_add_mem tools/lib/bpf/btf.c:163
-    #3 0xaaaab636643c in strset_add_str_mem tools/lib/bpf/strset.c:106
-    #4 0xaaaab6366560 in strset__add_str tools/lib/bpf/strset.c:157
-    #5 0xaaaab6352d70 in btf__add_str tools/lib/bpf/btf.c:1519
-    #6 0xaaaab6353e10 in btf__add_field tools/lib/bpf/btf.c:2032
-    #7 0xaaaab6084fcc in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:232
-    #8 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #9 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #10 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #11 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #12 0xaaaab5d65990  (test_progs+0x185990)
-
-previously allocated by thread T0 here:
-    #0 0xaaaab5e2c7c4 in realloc (test_progs+0x24c7c4)
-    #1 0xaaaab634f4a0 in libbpf_reallocarray tools/lib/bpf/libbpf_internal.h:191
-    #2 0xaaaab634f840 in libbpf_add_mem tools/lib/bpf/btf.c:163
-    #3 0xaaaab636643c in strset_add_str_mem tools/lib/bpf/strset.c:106
-    #4 0xaaaab6366560 in strset__add_str tools/lib/bpf/strset.c:157
-    #5 0xaaaab6352d70 in btf__add_str tools/lib/bpf/btf.c:1519
-    #6 0xaaaab6353ff0 in btf_add_enum_common tools/lib/bpf/btf.c:2070
-    #7 0xaaaab6354080 in btf__add_enum tools/lib/bpf/btf.c:2102
-    #8 0xaaaab6082f50 in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:162
-    #9 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #10 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #11 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #12 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #13 0xaaaab5d65990  (test_progs+0x185990)
-
-The reason is that the key stored in hash table name_map is a string
-address, and the string memory is allocated by realloc() function, when
-the memory is resized by realloc() later, the old memory may be freed,
-so the address stored in name_map references to a freed memory, causing
-use-after-free.
-
-Fix it by storing duplicated string address in name_map.
-
-Fixes: 919d2b1dbb07 ("libbpf: Allow modification of BTF and add btf__add_str API")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Fixes: db2b8b06423c ("libbpf: Support CO-RE relocations for multi-prog sections")
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-2-xukuohai@huaweicloud.com
+Link: https://lore.kernel.org/bpf/20221012022353.7350-4-shung-hsi.yu@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 841cc68e3f42..9bcd75dc12cc 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -215,6 +215,17 @@ static int btf_dump_resize(struct btf_dump *d)
- 	return 0;
- }
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 050622649797..f87a15bbf53b 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -3763,6 +3763,9 @@ static struct bpf_program *find_prog_by_sec_insn(const struct bpf_object *obj,
+ 	int l = 0, r = obj->nr_programs - 1, m;
+ 	struct bpf_program *prog;
  
-+static void btf_dump_free_names(struct hashmap *map)
-+{
-+	size_t bkt;
-+	struct hashmap_entry *cur;
++	if (!obj->nr_programs)
++		return NULL;
 +
-+	hashmap__for_each_entry(map, cur, bkt)
-+		free((void *)cur->key);
-+
-+	hashmap__free(map);
-+}
-+
- void btf_dump__free(struct btf_dump *d)
- {
- 	int i;
-@@ -233,8 +244,8 @@ void btf_dump__free(struct btf_dump *d)
- 	free(d->cached_names);
- 	free(d->emit_queue);
- 	free(d->decl_stack);
--	hashmap__free(d->type_names);
--	hashmap__free(d->ident_names);
-+	btf_dump_free_names(d->type_names);
-+	btf_dump_free_names(d->ident_names);
- 
- 	free(d);
- }
-@@ -1457,11 +1468,23 @@ static void btf_dump_emit_type_cast(struct btf_dump *d, __u32 id,
- static size_t btf_dump_name_dups(struct btf_dump *d, struct hashmap *name_map,
- 				 const char *orig_name)
- {
-+	char *old_name, *new_name;
- 	size_t dup_cnt = 0;
-+	int err;
-+
-+	new_name = strdup(orig_name);
-+	if (!new_name)
-+		return 1;
- 
- 	hashmap__find(name_map, orig_name, (void **)&dup_cnt);
- 	dup_cnt++;
--	hashmap__set(name_map, orig_name, (void *)dup_cnt, NULL, NULL);
-+
-+	err = hashmap__set(name_map, new_name, (void *)dup_cnt,
-+			   (const void **)&old_name, NULL);
-+	if (err)
-+		free(new_name);
-+
-+	free(old_name);
- 
- 	return dup_cnt;
- }
+ 	while (l < r) {
+ 		m = l + (r - l + 1) / 2;
+ 		prog = &obj->programs[m];
 -- 
 2.35.1
 
