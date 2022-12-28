@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E105B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637F6C433EF;
-	Wed, 28 Dec 2022 16:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F33B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F2AC433D2;
+	Wed, 28 Dec 2022 16:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244819;
-	bh=AneIGNGeTxm7Ds+h80KjUti9WNHwRciL5L8MSXaRuyI=;
+	s=korg; t=1672244822;
+	bh=2T2LJ59ayqgeEhm+nqeNL0q+bbd5bJDVPllt0w3at18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lu5FXwD59cKLie1UySfe9C7An343IzLVr9n65f4QFhbOvK7izBoD4u28GucEXQqaB
-	 POCQX9RygpVTI6HbiLNUj5YhAM03CMhu4zRuDD0nQALdSMRbjIS8ZFzezytb6OXJ9e
-	 OzGCDStTIp6lg1XxWSdphyC1/9hAJ88NvxWxSWWs=
+	b=jLslj6yKnhwQGM/CYnHsVuhKG2ToRV2G3K3uROnxRPDmNfyt03ZesWP3sT4NT3ETv
+	 TG2j6fE5NKo0ke9OS16/EW3rIVYoc4ZqUMxgIzP4+6lQzdST4C4zaqbIMAiPD46gdN
+	 8aue98htuofRvz2CMXy0HioJwjqBFM3ICwn++ezI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0742/1146] i2c: mux: reg: check return value after calling platform_get_resource()
-Date: Wed, 28 Dec 2022 15:38:01 +0100
-Message-Id: <20221228144350.303506238@linuxfoundation.org>
+Subject: [PATCH 6.0 0753/1073] power: supply: bq25890: Ensure pump_express_work is cancelled on remove
+Date: Wed, 28 Dec 2022 15:39:01 +0100
+Message-Id: <20221228144348.472698098@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 2d47b79d2bd39cc6369eccf94a06568d84c906ae ]
+[ Upstream commit a7aaa80098d5b7608b2dc1e883e3c3f929415243 ]
 
-It will cause null-ptr-deref in resource_size(), if platform_get_resource()
-returns NULL, move calling resource_size() after devm_ioremap_resource() that
-will check 'res' to avoid null-ptr-deref.
-And use devm_platform_get_and_ioremap_resource() to simplify code.
+The pump_express_work which gets queued from an external_power_changed
+callback might be pending / running on remove() (or on probe failure).
 
-Fixes: b3fdd32799d8 ("i2c: mux: Add register-based mux i2c-mux-reg")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Add a devm action cancelling the work, to ensure that it is cancelled.
+
+Note the devm action is added before devm_power_supply_register(), making
+it run after devm unregisters the power_supply, so that the work cannot
+be queued anymore (this is also why a devm action is used for this).
+
+Fixes: 48f45b094dbb ("power: supply: bq25890: Support higher charging voltages through Pump Express+ protocol")
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-reg.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/power/supply/bq25890_charger.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-reg.c b/drivers/i2c/muxes/i2c-mux-reg.c
-index 0e0679f65cf7..30a6de1694e0 100644
---- a/drivers/i2c/muxes/i2c-mux-reg.c
-+++ b/drivers/i2c/muxes/i2c-mux-reg.c
-@@ -183,13 +183,12 @@ static int i2c_mux_reg_probe(struct platform_device *pdev)
- 	if (!mux->data.reg) {
- 		dev_info(&pdev->dev,
- 			"Register not set, using platform resource\n");
--		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--		mux->data.reg_size = resource_size(res);
--		mux->data.reg = devm_ioremap_resource(&pdev->dev, res);
-+		mux->data.reg = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 		if (IS_ERR(mux->data.reg)) {
- 			ret = PTR_ERR(mux->data.reg);
- 			goto err_put_parent;
- 		}
-+		mux->data.reg_size = resource_size(res);
- 	}
+diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
+index b4c8481ea17b..92fab662a51d 100644
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1189,6 +1189,13 @@ static int bq25890_fw_probe(struct bq25890_device *bq)
+ 	return 0;
+ }
  
- 	if (mux->data.reg_size != 4 && mux->data.reg_size != 2 &&
++static void bq25890_non_devm_cleanup(void *data)
++{
++	struct bq25890_device *bq = data;
++
++	cancel_delayed_work_sync(&bq->pump_express_work);
++}
++
+ static int bq25890_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
+@@ -1244,6 +1251,14 @@ static int bq25890_probe(struct i2c_client *client)
+ 	/* OTG reporting */
+ 	bq->usb_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
+ 
++	/*
++	 * This must be before bq25890_power_supply_init(), so that it runs
++	 * after devm unregisters the power_supply.
++	 */
++	ret = devm_add_action_or_reset(dev, bq25890_non_devm_cleanup, bq);
++	if (ret)
++		return ret;
++
+ 	ret = bq25890_register_regulator(bq);
+ 	if (ret)
+ 		return ret;
 -- 
 2.35.1
 
