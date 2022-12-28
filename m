@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D220E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C7C433D2;
-	Wed, 28 Dec 2022 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA9720E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00DBC433D2;
+	Wed, 28 Dec 2022 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246605;
-	bh=bYTO8f79VhUFwCe0/0lc1FTUnlxGf6ZcfH1wWvAJPEk=;
+	s=korg; t=1672246608;
+	bh=7kbCR2crzDvx9icrq7XfxiKCXACYh1djJjgz3X3iK4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHFDfGaWa5cAOOPl4m0++idpcvgrif2A4Kb6lmFrvh9dm7w9oqi55H44A/RDQj4Tw
-	 wS4SuSCsCchu7AQSPahLmbmVp3PpzNbJdMoO0nUObRswElgAkbiPpOhTzpKvXhm7PQ
-	 fu/6EudfsfnKEmYoGMvkX+fAKgXkMHTAr9AHNae4=
+	b=vOWAraONufMgewa9egvqNuusaxeKJwjV9mjPCFOK0c3f16c13YhNvsRpZoUZYiHs7
+	 vbHK/7AK86uyBlQAyZyp1AxfxW5MgSXPOPCckEuu/jyUvfDyf1UxqcYtMnXRfoin9V
+	 VLkfjtRUuxrVvtGVDPK2ene+yJfBfxCsy8UkeoC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1060/1146] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
-Date: Wed, 28 Dec 2022 15:43:19 +0100
-Message-Id: <20221228144359.074739670@linuxfoundation.org>
+Subject: [PATCH 6.1 1091/1146] ima: Simplify ima_lsm_copy_rule
+Date: Wed, 28 Dec 2022 15:43:50 +0100
+Message-Id: <20221228144359.814401402@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,93 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit 0ad811cc08a937d875cbad0149c1bab17f84ba05 ]
+[ Upstream commit d57378d3aa4d864d9e590482602068af1b20c0c5 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Currently ima_lsm_copy_rule() set the arg_p field of the source rule to
+NULL, so that the source rule could be freed afterward. It does not make
+sense for this behavior to be inside a "copy" function. So move it
+outside and let the caller handle this field.
 
-  drivers/gpu/drm/sti/sti_hda.c:637:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = sti_hda_connector_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/gpu/drm/sti/sti_dvo.c:376:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = sti_dvo_connector_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/gpu/drm/sti/sti_hdmi.c:1035:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = sti_hdmi_connector_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ima_lsm_copy_rule() now produce a shallow copy of the original entry
+including args_p field. Meaning only the lsm.rule and the rule itself
+should be freed for the original rule. Thus, instead of calling
+ima_lsm_free_rule() which frees lsm.rule as well as args_p field, free
+the lsm.rule directly.
 
-->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
-type of 'enum drm_mode_status', not 'int'. Adjust the return type of
-sti_{dvo,hda,hdmi}_connector_mode_valid() to match the prototype's to
-resolve the warning and CFI failure.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102155623.3042869-1-nathan@kernel.org
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sti/sti_dvo.c  | 5 +++--
- drivers/gpu/drm/sti/sti_hda.c  | 5 +++--
- drivers/gpu/drm/sti/sti_hdmi.c | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ security/integrity/ima/ima_policy.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
-index f3a5616b7daf..577c477b5f46 100644
---- a/drivers/gpu/drm/sti/sti_dvo.c
-+++ b/drivers/gpu/drm/sti/sti_dvo.c
-@@ -346,8 +346,9 @@ static int sti_dvo_connector_get_modes(struct drm_connector *connector)
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index bb3707160b01..2edff7f58c25 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -398,12 +398,6 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
  
- #define CLK_TOLERANCE_HZ 50
+ 		nentry->lsm[i].type = entry->lsm[i].type;
+ 		nentry->lsm[i].args_p = entry->lsm[i].args_p;
+-		/*
+-		 * Remove the reference from entry so that the associated
+-		 * memory will not be freed during a later call to
+-		 * ima_lsm_free_rule(entry).
+-		 */
+-		entry->lsm[i].args_p = NULL;
  
--static int sti_dvo_connector_mode_valid(struct drm_connector *connector,
--					struct drm_display_mode *mode)
-+static enum drm_mode_status
-+sti_dvo_connector_mode_valid(struct drm_connector *connector,
-+			     struct drm_display_mode *mode)
+ 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
+ 				     nentry->lsm[i].args_p,
+@@ -417,6 +411,7 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
+ 
+ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
  {
- 	int target = mode->clock * 1000;
- 	int target_min = target - CLK_TOLERANCE_HZ;
-diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
-index ec6656b9ee7c..15097ac67931 100644
---- a/drivers/gpu/drm/sti/sti_hda.c
-+++ b/drivers/gpu/drm/sti/sti_hda.c
-@@ -601,8 +601,9 @@ static int sti_hda_connector_get_modes(struct drm_connector *connector)
++	int i;
+ 	struct ima_rule_entry *nentry;
  
- #define CLK_TOLERANCE_HZ 50
+ 	nentry = ima_lsm_copy_rule(entry);
+@@ -431,7 +426,8 @@ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ 	 * references and the entry itself. All other memory references will now
+ 	 * be owned by nentry.
+ 	 */
+-	ima_lsm_free_rule(entry);
++	for (i = 0; i < MAX_LSM_RULES; i++)
++		ima_filter_rule_free(entry->lsm[i].rule);
+ 	kfree(entry);
  
--static int sti_hda_connector_mode_valid(struct drm_connector *connector,
--					struct drm_display_mode *mode)
-+static enum drm_mode_status
-+sti_hda_connector_mode_valid(struct drm_connector *connector,
-+			     struct drm_display_mode *mode)
- {
- 	int target = mode->clock * 1000;
- 	int target_min = target - CLK_TOLERANCE_HZ;
-diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-index fcc2194869d6..8539fe1fedc4 100644
---- a/drivers/gpu/drm/sti/sti_hdmi.c
-+++ b/drivers/gpu/drm/sti/sti_hdmi.c
-@@ -1004,8 +1004,9 @@ static int sti_hdmi_connector_get_modes(struct drm_connector *connector)
- 
- #define CLK_TOLERANCE_HZ 50
- 
--static int sti_hdmi_connector_mode_valid(struct drm_connector *connector,
--					struct drm_display_mode *mode)
-+static enum drm_mode_status
-+sti_hdmi_connector_mode_valid(struct drm_connector *connector,
-+			      struct drm_display_mode *mode)
- {
- 	int target = mode->clock * 1000;
- 	int target_min = target - CLK_TOLERANCE_HZ;
+ 	return 0;
 -- 
 2.35.1
 
