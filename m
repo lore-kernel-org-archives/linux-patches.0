@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA12C433EF;
-	Wed, 28 Dec 2022 15:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3695A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951E4C433EF;
+	Wed, 28 Dec 2022 15:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241942;
-	bh=lxG/BseRpMSvx4WZ3vOTYKABrcCbTH0xZN/XOm6jfsQ=;
+	s=korg; t=1672241944;
+	bh=ZNqTtWOn2vMG1EH6bQnAzJfZfj7e79dr/PqWV1t5Vt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3Rm+EShKl3awZhacDhfn4W1uLVUGxlawMFqTWZkc70xvzqNn13w6V+c+LtIJOrq4
-	 3JAbqggjVHi+xOGhk/AYJw6nQ946gv9zm27Ol1w0opbqumoOooZ3uJd9+DJ+9FyfZc
-	 EH3Lj6tpGQaYgU88oWn55B/vf8h4T40c2QM9AFYE=
+	b=zteTMzhJ8tuuuZMBAduk7bMVcDEIvEiUtoR4kIpWnFoNfo8IDnT9OrqTsA0eKwSYF
+	 c1hYq3FR5BGnMwi2mGnPVKGe8saFy8jNFR1O63taht+gSoVj1ruwH7jL4y4ysaL3GF
+	 zToqFzkkjiQQsiAkAe5+IBVT8RZCbDEswsD4288s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	ming_qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0346/1073] media: amphion: Fix error handling in vpu_driver_init()
-Date: Wed, 28 Dec 2022 15:32:14 +0100
-Message-Id: <20221228144337.405047274@linuxfoundation.org>
+Subject: [PATCH 5.15 545/731] rtc: cmos: Rename ACPI-related functions
+Date: Wed, 28 Dec 2022 15:40:52 +0100
+Message-Id: <20221228144312.340766093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a95cc6d11aae16a7b2d043b073a40de81bbea689 ]
+[ Upstream commit d13e9ad9f5146f066a5c5a1cc993d09e4fb21ead ]
 
-A problem about modprobe amphion-vpu failed is triggered with the
-following log given:
+The names of rtc_wake_setup() and cmos_wake_setup() don't indicate
+that these functions are ACPI-related, which is the case, and the
+former doesn't really reflect the role of the function.
 
- [ 2208.634841] Error: Driver 'amphion-vpu' is already registered, aborting...
- modprobe: ERROR: could not insert 'amphion_vpu': Device or resource busy
+Rename them to acpi_rtc_event_setup() and acpi_cmos_wake_setup(),
+respectively, to address this shortcoming.
 
-The reason is that vpu_driver_init() returns vpu_core_driver_init()
-directly without checking its return value, if vpu_core_driver_init()
-failed, it returns without unregister amphion_vpu_driver, resulting the
-amphion-vpu can never be installed later.
-A simple call graph is shown as below:
+No intentional functional impact.
 
- vpu_driver_init()
-   platform_driver_register() # register amphion_vpu_driver
-   vpu_core_driver_init()
-     platform_driver_register()
-       driver_register()
-         bus_add_driver()
-           dev = kzalloc(...) # OOM happened
-   # return without unregister amphion_vpu_driver
-
-Fix by unregister amphion_vpu_driver when vpu_core_driver_init() returns
-error.
-
-Fixes: b50a64fc54af ("media: amphion: add amphion vpu device driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: ming_qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_drv.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
-index 9d5a5075343d..f01ce49d27e8 100644
---- a/drivers/media/platform/amphion/vpu_drv.c
-+++ b/drivers/media/platform/amphion/vpu_drv.c
-@@ -245,7 +245,11 @@ static int __init vpu_driver_init(void)
- 	if (ret)
- 		return ret;
- 
--	return vpu_core_driver_init();
-+	ret = vpu_core_driver_init();
-+	if (ret)
-+		platform_driver_unregister(&amphion_vpu_driver);
-+
-+	return ret;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 2a21d8281aa6..039486bfedf4 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -784,7 +784,7 @@ static u32 rtc_handler(void *context)
+ 	return ACPI_INTERRUPT_HANDLED;
  }
  
- static void __exit vpu_driver_exit(void)
+-static void rtc_wake_setup(struct device *dev)
++static void acpi_rtc_event_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -828,7 +828,7 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-static void cmos_wake_setup(struct device *dev)
++static void acpi_cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -880,11 +880,11 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ 
+ #else /* !CONFIG_ACPI */
+ 
+-static inline void rtc_wake_setup(struct device *dev)
++static inline void acpi_rtc_event_setup(struct device *dev)
+ {
+ }
+ 
+-static inline void cmos_wake_setup(struct device *dev)
++static inline void acpi_cmos_wake_setup(struct device *dev)
+ {
+ }
+ 
+@@ -986,7 +986,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
+ 	} else {
+-		cmos_wake_setup(dev);
++		acpi_cmos_wake_setup(dev);
+ 	}
+ 
+ 	if (cmos_rtc.day_alrm >= 128)
+@@ -1091,7 +1091,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	 * the ACPI RTC fixed event.
+ 	 */
+ 	if (!info)
+-		rtc_wake_setup(dev);
++		acpi_rtc_event_setup(dev);
+ 
+ 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
+ 		 !is_valid_irq(rtc_irq) ? "no alarms" :
 -- 
 2.35.1
 
