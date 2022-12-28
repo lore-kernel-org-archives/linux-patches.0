@@ -1,39 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61CD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0297DC433D2;
-	Wed, 28 Dec 2022 15:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576F11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AE1C433D2;
+	Wed, 28 Dec 2022 15:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240486;
-	bh=hvEaW+R/g4ESMPE5f6j9wm+HHJ34mDcZ+PHSC8ogkAc=;
+	s=korg; t=1672240489;
+	bh=E4lei+1C8TJdzdU6L6ZhYCyB0ufrywpb31IgqBawctE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9LzrolQTxJPa4EeqVAygqHXOXXoFymvCj4yEGdly3eHeQqmd8CYMaqydLYUPvuM+
-	 BMR+4mabZ07uOfPrAWw/3mD2FPe8uDOxdBa6sesRkV7c3QR/1P7/B+V+OoLXWUX67m
-	 S+JwD3LgmjuU2c3qMjlARschYH5fY7Gg+aUrh3HA=
+	b=ZqPi43NsknMAj6UJSLi6lj15qREpwsVLm7NlKDSLJso78I5rkhMuuISfu9O8FjI4H
+	 TePoZNxfEzB10CCbfyS6ulv3cWlDvz+M9pxAxpJpci2X+CcUMyorWIu6OF0d2L+0Pi
+	 bVB68EAA/3RzhZz1w3EpSXAMKN4EPec2brqgBUnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
-	David Rientjes <rientjes@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	zefan li <lizefan.x@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0131/1146] selftests: cgroup: fix unsigned comparison with less than zero
-Date: Wed, 28 Dec 2022 15:27:50 +0100
-Message-Id: <20221228144333.710437183@linuxfoundation.org>
+Subject: [PATCH 5.15 359/731] apparmor: fix lockdep warning when removing a namespace
+Date: Wed, 28 Dec 2022 15:37:46 +0100
+Message-Id: <20221228144306.967967423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,53 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 333d073dee3a6865171d43e3b0a9ff688bff5891 ]
+[ Upstream commit 9c4557efc558a68e4cd973490fd936d6e3414db8 ]
 
-'size' is unsigned, it never less than zero.
+Fix the following lockdep warning
 
-Link: https://lkml.kernel.org/r/20221105110611.28920-1-yuehaibing@huawei.com
-Fixes: 6c26df84e1f2 ("selftests: cgroup: return -errno from cg_read()/cg_write() on failure")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reviewed-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: zefan li <lizefan.x@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ 1119.158984] ============================================
+[ 1119.158988] WARNING: possible recursive locking detected
+[ 1119.158996] 6.0.0-rc1+ #257 Tainted: G            E    N
+[ 1119.158999] --------------------------------------------
+[ 1119.159001] bash/80100 is trying to acquire lock:
+[ 1119.159007] ffff88803e79b4a0 (&ns->lock/1){+.+.}-{4:4}, at: destroy_ns.part.0+0x43/0x140
+[ 1119.159028]
+               but task is already holding lock:
+[ 1119.159030] ffff8881009764a0 (&ns->lock/1){+.+.}-{4:4}, at: aa_remove_profiles+0x3f0/0x640
+[ 1119.159040]
+               other info that might help us debug this:
+[ 1119.159042]  Possible unsafe locking scenario:
+
+[ 1119.159043]        CPU0
+[ 1119.159045]        ----
+[ 1119.159047]   lock(&ns->lock/1);
+[ 1119.159051]   lock(&ns->lock/1);
+[ 1119.159055]
+                *** DEADLOCK ***
+
+Which is caused by an incorrect lockdep nesting notation
+
+Fixes: feb3c766a3ab ("apparmor: fix possible recursive lock warning in __aa_create_ns")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/cgroup_util.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/apparmor/policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/cgroup/cgroup_util.c b/tools/testing/selftests/cgroup/cgroup_util.c
-index 4c52cc6f2f9c..e8bbbdb77e0d 100644
---- a/tools/testing/selftests/cgroup/cgroup_util.c
-+++ b/tools/testing/selftests/cgroup/cgroup_util.c
-@@ -555,6 +555,7 @@ int proc_mount_contains(const char *option)
- ssize_t proc_read_text(int pid, bool thread, const char *item, char *buf, size_t size)
- {
- 	char path[PATH_MAX];
-+	ssize_t ret;
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 4c010c9a6af1..fcf22577f606 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1125,7 +1125,7 @@ ssize_t aa_remove_profiles(struct aa_ns *policy_ns, struct aa_label *subj,
  
- 	if (!pid)
- 		snprintf(path, sizeof(path), "/proc/%s/%s",
-@@ -562,8 +563,8 @@ ssize_t proc_read_text(int pid, bool thread, const char *item, char *buf, size_t
- 	else
- 		snprintf(path, sizeof(path), "/proc/%d/%s", pid, item);
- 
--	size = read_text(path, buf, size);
--	return size < 0 ? -1 : size;
-+	ret = read_text(path, buf, size);
-+	return ret < 0 ? -1 : ret;
- }
- 
- int proc_read_strstr(int pid, bool thread, const char *item, const char *needle)
+ 	if (!name) {
+ 		/* remove namespace - can only happen if fqname[0] == ':' */
+-		mutex_lock_nested(&ns->parent->lock, ns->level);
++		mutex_lock_nested(&ns->parent->lock, ns->parent->level);
+ 		__aa_bump_ns_revision(ns);
+ 		__aa_remove_ns(ns);
+ 		mutex_unlock(&ns->parent->lock);
 -- 
 2.35.1
 
