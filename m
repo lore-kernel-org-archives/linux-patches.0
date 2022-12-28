@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803D81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053BFC433EF;
-	Wed, 28 Dec 2022 15:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5040A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA72FC433F0;
+	Wed, 28 Dec 2022 15:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240566;
-	bh=4FC6jk3ntqI5H7ME6PgtFQUY/Yig9Gf7EsmELbq0Vfw=;
+	s=korg; t=1672240569;
+	bh=UJhwYti2ReR2+D0E9d97pY7m97WR85RhOj5MVYvjwHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVAgxbfWiSZuB/FV4/WpR1UI9vu5vzmZja3aKobAbp8Z9l6mu/FwMVBLcBQnd6DhW
-	 gv6cdfLBStRVDkqN7pGntuVvpRnd5S8mVxX8jdgBlGFa9nPBSs5BBN6bcJ6KeKEEZp
-	 7k/O/9XFPkO9XwK1BagiSPp+drxKRZatQ+LSqCKI=
+	b=yIsGcfsqQevnuOZbW8nWc7f6REuDDJ0ue26aq4YqXDTkkDuhMFtSXpuJYo1hprUPX
+	 7AKPoQOiXK84kN8haCeHsAQ9V30TlJIKGcWT2UeXSHBR/UHHRMc6hJUaMH6Tx6lhDF
+	 3W6OrRbws535a/OwHAMa0PaOROIr7XXsvIMryxHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Om Prakash Singh <omp@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0140/1146] perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()
-Date: Wed, 28 Dec 2022 15:27:59 +0100
-Message-Id: <20221228144333.949559299@linuxfoundation.org>
+Subject: [PATCH 5.15 368/731] PCI: pci-epf-test: Register notifier if only core_init_notifier is enabled
+Date: Wed, 28 Dec 2022 15:37:55 +0100
+Message-Id: <20221228144307.229677594@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit c508eb042d9739bf9473526f53303721b70e9100 ]
+[ Upstream commit 6acd25cc98ce0c9ee4fefdaf44fc8bca534b26e5 ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev, and also decrease the reference count for the input parameter
-*from* if it is not NULL.
+The pci_epf_test_notifier function should be installed also if only
+core_init_notifier is enabled. Fix the current logic.
 
-If we break the loop in sad_cfg_iio_topology() with 'dev' not NULL. We
-need to call pci_dev_put() to decrease the reference count. Since
-pci_dev_put() can handle the NULL input parameter, we can just add one
-pci_dev_put() right before 'return ret'.
-
-Fixes: c1777be3646b ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on SNR")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-2-wangxiongfeng2@huawei.com
+Link: https://lore.kernel.org/r/20220825090101.20474-1-hayashi.kunihiko@socionext.com
+Fixes: 5e50ee27d4a5 ("PCI: pci-epf-test: Add support to defer core initialization")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Acked-by: Om Prakash Singh <omp@nvidia.com>
+Acked-by: Kishon Vijay Abraham I <kishon@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index ed869443efb2..76fedc8e12dd 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -4492,6 +4492,8 @@ static int sad_cfg_iio_topology(struct intel_uncore_type *type, u8 *sad_pmon_map
- 		type->topology = NULL;
- 	}
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index a5ed779b0a51..45535d4ae644 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -883,7 +883,7 @@ static int pci_epf_test_bind(struct pci_epf *epf)
+ 	if (ret)
+ 		epf_test->dma_supported = false;
  
-+	pci_dev_put(dev);
-+
- 	return ret;
- }
- 
+-	if (linkup_notifier) {
++	if (linkup_notifier || core_init_notifier) {
+ 		epf->nb.notifier_call = pci_epf_test_notifier;
+ 		pci_epc_register_notifier(epc, &epf->nb);
+ 	} else {
 -- 
 2.35.1
 
