@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92021863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C999C433EF;
-	Wed, 28 Dec 2022 15:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649981863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8E5C433EF;
+	Wed, 28 Dec 2022 15:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240385;
-	bh=96MWyNga25IrG920LpRMj9as+9eo45SDQGxYN8wdJeE=;
+	s=korg; t=1672240388;
+	bh=udMDw423tMPoLJhSl+vO+UtqlbZFbxkuHR+1iAEP2tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INh+NFLtj3PpwJTUMAJ7oixBHaCigKIKgRZkhUKqMXDshqTJyIQExZbVCTSYo2yFH
-	 5wE6ibOwxIrMSvtN5saOOTspkGdswBa+tyHZU8q6yadaYwMhk2nmeZWEl4RIsa9Bqn
-	 YDA+Yt3J7DY9i7BQtWdjx0uhW4T/Rl1TOA2aXu0s=
+	b=DaUcrifuHWgWjlwriy9+LnO+oF9MSWzwhnUBvx+reTME/zc0ds6s1//XUhSzsS5ID
+	 kVC5pDm2Y4sgpdIpz4bSA9sqjDQ/qS7ATupPUiNhXYop27c+6uw2rGUgviLB1GapeW
+	 HRQSnAj3gJfZCBL6k9/8ZPyMFd17OhPiwzPiWTWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Thomson <git@johnthomson.fastmail.com.au>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Hao Lee <haolee.swjtu@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0154/1073] mips: ralink: mt7621: do not use kzalloc too early
-Date: Wed, 28 Dec 2022 15:29:02 +0100
-Message-Id: <20221228144332.204143602@linuxfoundation.org>
+Subject: [PATCH 6.1 0116/1146] sched/psi: Fix possible missing or delayed pending event
+Date: Wed, 28 Dec 2022 15:27:35 +0100
+Message-Id: <20221228144333.308334203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,136 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Thomson <git@johnthomson.fastmail.com.au>
+From: Hao Lee <haolee.swjtu@gmail.com>
 
-[ Upstream commit 7c18b64bba3bcad1be94b404f47b94a04b91ce79 ]
+[ Upstream commit e38f89af6a13e895805febd3a329a13ab7e66fa4 ]
 
-With CONFIG_SLUB=y, following commit 6edf2576a6cc ("mm/slub: enable
-debugging memory wasting of kmalloc") mt7621 failed to boot very early,
-without showing any console messages.
-This exposed the pre-existing bug of mt7621.c using kzalloc before normal
-memory management was available.
-Prior to this slub change, there existed the unintended protection against
-"kmem_cache *s" being NULL as slab_pre_alloc_hook() happened to
-return NULL and bailed out of slab_alloc_node().
-This allowed mt7621 prom_soc_init to fail in the soc_dev_init kzalloc,
-but continue booting without the SOC_BUS driver device registered.
+When a pending event exists and growth is less than the threshold, the
+current logic is to skip this trigger without generating event. However,
+from e6df4ead85d9 ("psi: fix possible trigger missing in the window"),
+our purpose is to generate event as long as pending event exists and the
+rate meets the limit, no matter what growth is.
+This patch handles this case properly.
 
-Console output from a DEBUG_ZBOOT vmlinuz kernel loading,
-with mm/slub modified to warn on kmem_cache zero or null:
-
-zimage at:     80B842A0 810B4BC0
-Uncompressing Linux at load address 80001000
-Copy device tree to address  80B80EE0
-Now, booting the kernel...
-
-[    0.000000] Linux version 6.1.0-rc3+ (john@john)
-(mipsel-buildroot-linux-gnu-gcc.br_real (Buildroot
-2021.11-4428-g6b6741b) 12.2.0, GNU ld (GNU Binutils) 2.39) #73 SMP Wed
-     Nov  2 05:10:01 AEST 2022
-[    0.000000] ------------[ cut here ]------------
-[    0.000000] WARNING: CPU: 0 PID: 0 at mm/slub.c:3416
-kmem_cache_alloc+0x5a4/0x5e8
-[    0.000000] Modules linked in:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.1.0-rc3+ #73
-[    0.000000] Stack : 810fff78 80084d98 00000000 00000004 00000000
-00000000 80889d04 80c90000
-[    0.000000]         80920000 807bd328 8089d368 80923bd3 00000000
-00000001 80889cb0 00000000
-[    0.000000]         00000000 00000000 807bd328 8084bcb1 00000002
-00000002 00000001 6d6f4320
-[    0.000000]         00000000 80c97d3d 80c97d68 fffffffc 807bd328
-00000000 00000000 00000000
-[    0.000000]         00000000 a0000000 80910000 8110a0b4 00000000
-00000020 80010000 80010000
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<80008260>] show_stack+0x28/0xf0
-[    0.000000] [<8070c958>] dump_stack_lvl+0x60/0x80
-[    0.000000] [<8002e184>] __warn+0xc4/0xf8
-[    0.000000] [<8002e210>] warn_slowpath_fmt+0x58/0xa4
-[    0.000000] [<801c0fac>] kmem_cache_alloc+0x5a4/0x5e8
-[    0.000000] [<8092856c>] prom_soc_init+0x1fc/0x2b4
-[    0.000000] [<80928060>] prom_init+0x44/0xf0
-[    0.000000] [<80929214>] setup_arch+0x4c/0x6a8
-[    0.000000] [<809257e0>] start_kernel+0x88/0x7c0
-[    0.000000]
-[    0.000000] ---[ end trace 0000000000000000 ]---
-[    0.000000] SoC Type: MediaTek MT7621 ver:1 eco:3
-[    0.000000] printk: bootconsole [early0] enabled
-
-Allowing soc_device_register to work exposed oops in the mt7621 phy pci,
-and pci controller drivers from soc_device_match_attr, due to missing
-sentinels in the quirks tables. These were fixed with:
-commit 819b885cd886 ("phy: ralink: mt7621-pci: add sentinel to quirks
-table")
-not yet applied ("PCI: mt7621: add sentinel to quirks table")
-
-Link: https://lore.kernel.org/linux-mm/becf2ac3-2a90-4f3a-96d9-a70f67c66e4a@app.fastmail.com/
-Fixes: 71b9b5e0130d ("MIPS: ralink: mt7621: introduce 'soc_device' initialization")
-Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: e6df4ead85d9 ("psi: fix possible trigger missing in the window")
+Signed-off-by: Hao Lee <haolee.swjtu@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://lore.kernel.org/r/20220919072356.GA29069@haolee.io
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ kernel/sched/psi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index 6e126f570f0c..bbf5811afbf2 100644
---- a/arch/mips/ralink/mt7621.c
-+++ b/arch/mips/ralink/mt7621.c
-@@ -25,6 +25,7 @@
- #define MT7621_MEM_TEST_PATTERN         0xaa5555aa
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index ee2ecc081422..7f40d87e8f50 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -539,10 +539,12 @@ static u64 update_triggers(struct psi_group *group, u64 now)
  
- static u32 detect_magic __initdata;
-+static struct ralink_soc_info *soc_info_ptr;
+ 			/* Calculate growth since last update */
+ 			growth = window_update(&t->win, now, total[t->state]);
+-			if (growth < t->threshold)
+-				continue;
++			if (!t->pending_event) {
++				if (growth < t->threshold)
++					continue;
  
- int pcibios_root_bridge_prepare(struct pci_host_bridge *bridge)
- {
-@@ -147,27 +148,30 @@ static const char __init *mt7621_get_soc_revision(void)
- 		return "E1";
- }
- 
--static void soc_dev_init(struct ralink_soc_info *soc_info)
-+static int __init mt7621_soc_dev_init(void)
- {
- 	struct soc_device *soc_dev;
- 	struct soc_device_attribute *soc_dev_attr;
- 
- 	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
- 	if (!soc_dev_attr)
--		return;
-+		return -ENOMEM;
- 
- 	soc_dev_attr->soc_id = "mt7621";
- 	soc_dev_attr->family = "Ralink";
- 	soc_dev_attr->revision = mt7621_get_soc_revision();
- 
--	soc_dev_attr->data = soc_info;
-+	soc_dev_attr->data = soc_info_ptr;
- 
- 	soc_dev = soc_device_register(soc_dev_attr);
- 	if (IS_ERR(soc_dev)) {
- 		kfree(soc_dev_attr);
--		return;
-+		return PTR_ERR(soc_dev);
- 	}
-+
-+	return 0;
- }
-+device_initcall(mt7621_soc_dev_init);
- 
- void __init prom_soc_init(struct ralink_soc_info *soc_info)
- {
-@@ -209,7 +213,7 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
- 
- 	soc_info->mem_detect = mt7621_memory_detect;
- 
--	soc_dev_init(soc_info);
-+	soc_info_ptr = soc_info;
- 
- 	if (!register_cps_smp_ops())
- 		return;
+-			t->pending_event = true;
++				t->pending_event = true;
++			}
+ 		}
+ 		/* Limit event signaling to once per window */
+ 		if (now < t->last_event_time + t->win.size)
 -- 
 2.35.1
 
