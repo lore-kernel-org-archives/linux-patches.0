@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA161863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88887C433D2;
-	Wed, 28 Dec 2022 15:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2171863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337ECC433D2;
+	Wed, 28 Dec 2022 15:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241282;
-	bh=A8WVT7WRXqXhvvoKfoq1Qi4nYTWg7ThAoNgd2nedtXE=;
+	s=korg; t=1672241285;
+	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdvegJgs0y479QSzTOvZzXtg1U2QN9JgZTRAt1tlIqbL960TSLOPggccLmsWdgwmx
-	 VfQkeZOci1LCrtZEU7UF+NKb0iYUu3dp8KwhfnQb5O4q+mWISZzQPzjerHFXidNLXw
-	 zezbINTNqHCAwh46HwRx7vlm6z08U9LtpDVfE9Qc=
+	b=0XMM8yE92A78DExSrDTeIFUCaiKS4qUCcYm4+3Yyu1kOeuFKg0dUHAKQZkLUukFfm
+	 lA6y93W8Ll2Sx1BHTFnlzC6Ff9ibyRENfN8e9Ee56TGvnci72iqfs2LXV79UNwkmLb
+	 +SzUV/kabkQAWViLkRpKUKIJS5BNu3Tr6VYRvMtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0228/1146] Input: iqs7222 - protect against undefined slider size
-Date: Wed, 28 Dec 2022 15:29:27 +0100
-Message-Id: <20221228144336.335003970@linuxfoundation.org>
+Subject: [PATCH 6.0 0262/1073] spi: Update reference to struct spi_controller
+Date: Wed, 28 Dec 2022 15:30:50 +0100
+Message-Id: <20221228144335.133041079@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit 2f6fd232978906f6fb054529210b9faec384bd45 ]
+[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
 
-Select variants of silicon do not define a default slider size, in
-which case the size must be specified in the device tree. If it is
-not, the axis's maximum value is reported as 65535 due to unsigned
-integer overflow.
+struct spi_master has been renamed to struct spi_controller. Update the
+reference in spi.rst to make it clickable again.
 
-To solve this problem, move the existing zero-check outside of the
-conditional block that checks whether the property is present.
-
-Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Link: https://lore.kernel.org/r/Y1SRXEi7XMlncDWk@nixie71
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/iqs7222.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ Documentation/driver-api/spi.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
-index ddb863bf63ee..32515946bbca 100644
---- a/drivers/input/misc/iqs7222.c
-+++ b/drivers/input/misc/iqs7222.c
-@@ -2066,7 +2066,7 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222, int sldr_index)
- 		sldr_setup[4 + reg_offset] -= 2;
- 
- 	if (!fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val)) {
--		if (!val || val > dev_desc->sldr_res) {
-+		if (val > dev_desc->sldr_res) {
- 			dev_err(&client->dev, "Invalid %s size: %u\n",
- 				fwnode_get_name(sldr_node), val);
- 			return -EINVAL;
-@@ -2081,6 +2081,13 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222, int sldr_index)
- 		}
- 	}
- 
-+	if (!(reg_offset ? sldr_setup[3]
-+			 : sldr_setup[2] & IQS7222_SLDR_SETUP_2_RES_MASK)) {
-+		dev_err(&client->dev, "Undefined %s size\n",
-+			fwnode_get_name(sldr_node));
-+		return -EINVAL;
-+	}
-+
- 	if (!fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val)) {
- 		if (val > (reg_offset ? U16_MAX : U8_MAX * 4)) {
- 			dev_err(&client->dev, "Invalid %s top speed: %u\n",
+diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
+index f64cb666498a..f28887045049 100644
+--- a/Documentation/driver-api/spi.rst
++++ b/Documentation/driver-api/spi.rst
+@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
+ a pair of FIFOs connected to dual DMA engines on the other side of the
+ SPI shift register (maximizing throughput). Such drivers bridge between
+ whatever bus they sit on (often the platform bus) and SPI, and expose
+-the SPI side of their device as a :c:type:`struct spi_master
+-<spi_master>`. SPI devices are children of that master,
++the SPI side of their device as a :c:type:`struct spi_controller
++<spi_controller>`. SPI devices are children of that master,
+ represented as a :c:type:`struct spi_device <spi_device>` and
+ manufactured from :c:type:`struct spi_board_info
+ <spi_board_info>` descriptors which are usually provided by
 -- 
 2.35.1
 
