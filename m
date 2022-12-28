@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDF41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C06C433D2;
-	Wed, 28 Dec 2022 15:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF461863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DABC433D2;
+	Wed, 28 Dec 2022 15:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241987;
-	bh=+2dJZuyYiHi5jVntV7hCl5NkvZc/l+kFFIZ04IK9BBs=;
+	s=korg; t=1672241990;
+	bh=xeHL+GUnhYwLz6unm2J4sEyw4CDuWIbUSG5lMXRq/dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaDf2QmVGDRKm6lkk1pHltXMgRXW/75yEwO8Xx9+7wyNtTDCmp62XwPAI9mCSDRmn
-	 Plt1YE6gKoGfOVpT6/XyJeRWAYmRb118vXfm/WCA/+MDMbmJvyErE9Y8pAxOrzRzxL
-	 ZUs8fBCtOoKkuLIwjEZGn8hzOB9iaQgZemu1vj6E=
+	b=lr5lDRRNwAhvNeg+XBnHTu26r2/Rj9Jjj8okAvelrK0SEFKXRKPiy6kOQeAokGsOl
+	 gD0qXRz4cwbZDV3Bi2HsJtY29ake3xZuWnh/xZ6KvPX5W2m+c1fkbGzjOUSJvKGYra
+	 uz6wC0VytQnq8nbp4J1yCgfKCzlqnCIUU9JskXkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Joel Colledge <joel.colledge@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 550/731] iommu/fsl_pamu: Fix resource leak in fsl_pamu_probe()
-Date: Wed, 28 Dec 2022 15:40:57 +0100
-Message-Id: <20221228144312.483452430@linuxfoundation.org>
+Subject: [PATCH 6.1 0313/1146] drbd: use blk_queue_max_discard_sectors helper
+Date: Wed, 28 Dec 2022 15:30:52 +0100
+Message-Id: <20221228144338.655197225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-[ Upstream commit 73f5fc5f884ad0c5f7d57f66303af64f9f002526 ]
+[ Upstream commit 258bea6388ac93f34561fd91064232d14e174bff ]
 
-The fsl_pamu_probe() returns directly when create_csd() failed, leaving
-irq and memories unreleased.
-Fix by jumping to error if create_csd() returns error.
+We currently only set q->limits.max_discard_sectors, but that is not
+enough. Another field, max_hw_discard_sectors, was introduced in
+commit 0034af036554 ("block: make /sys/block/<dev>/queue/discard_max_bytes
+writeable").
 
-Fixes: 695093e38c3e ("iommu/fsl: Freescale PAMU driver and iommu implementation.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221121082022.19091-1-yuancan@huawei.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+The difference is that max_discard_sectors can be changed from user
+space via sysfs, while max_hw_discard_sectors is the "hardware" upper
+limit.
+
+So use this helper, which sets both.
+
+This is also a fixup for commit 998e9cbcd615 ("drbd: cleanup
+decide_on_discard_support"): if discards are not supported, that does
+not necessarily mean we also want to disable write_zeroes.
+
+Fixes: 998e9cbcd615 ("drbd: cleanup decide_on_discard_support")
+Reviewed-by: Joel Colledge <joel.colledge@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/20221109133453.51652-2-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/fsl_pamu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_nl.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
-index fc38b1fba7cf..bb5d253188a1 100644
---- a/drivers/iommu/fsl_pamu.c
-+++ b/drivers/iommu/fsl_pamu.c
-@@ -865,7 +865,7 @@ static int fsl_pamu_probe(struct platform_device *pdev)
- 		ret = create_csd(ppaact_phys, mem_size, csd_port_id);
- 		if (ret) {
- 			dev_err(dev, "could not create coherence subdomain\n");
--			return ret;
-+			goto error;
- 		}
- 	}
+diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
+index 864c98e74875..249eba7d21c2 100644
+--- a/drivers/block/drbd/drbd_nl.c
++++ b/drivers/block/drbd/drbd_nl.c
+@@ -1210,6 +1210,7 @@ static void decide_on_discard_support(struct drbd_device *device,
+ 	struct drbd_connection *connection =
+ 		first_peer_device(device)->connection;
+ 	struct request_queue *q = device->rq_queue;
++	unsigned int max_discard_sectors;
  
+ 	if (bdev && !bdev_max_discard_sectors(bdev->backing_bdev))
+ 		goto not_supported;
+@@ -1230,15 +1231,14 @@ static void decide_on_discard_support(struct drbd_device *device,
+ 	 * topology on all peers.
+ 	 */
+ 	blk_queue_discard_granularity(q, 512);
+-	q->limits.max_discard_sectors = drbd_max_discard_sectors(connection);
+-	q->limits.max_write_zeroes_sectors =
+-		drbd_max_discard_sectors(connection);
++	max_discard_sectors = drbd_max_discard_sectors(connection);
++	blk_queue_max_discard_sectors(q, max_discard_sectors);
++	blk_queue_max_write_zeroes_sectors(q, max_discard_sectors);
+ 	return;
+ 
+ not_supported:
+ 	blk_queue_discard_granularity(q, 0);
+-	q->limits.max_discard_sectors = 0;
+-	q->limits.max_write_zeroes_sectors = 0;
++	blk_queue_max_discard_sectors(q, 0);
+ }
+ 
+ static void fixup_write_zeroes(struct drbd_device *device, struct request_queue *q)
 -- 
 2.35.1
 
