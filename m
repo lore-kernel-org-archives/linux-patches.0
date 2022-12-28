@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14921C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78687C433D2;
-	Wed, 28 Dec 2022 16:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A516C433D2;
+	Wed, 28 Dec 2022 16:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244223;
-	bh=RNcdozb89Wu/VFqzLu5hbplxrrqvkTwjb6AtRw7a/BM=;
+	s=korg; t=1672244226;
+	bh=tCKhIKES01vCm26ZLEvARUQHAFuL/43QG7Or5OiUYno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHf231O3GkDp29GrgS2DavRVyOgWjpxOGYPszTiPwD7cnLPm58Vxo01m+bpSqdKnl
-	 pp2LeNviA6XkD8h7B1KytqraZUZC27qWbjr3OFQyEdnHAQiN/QEptA0Uoj3cNTrbFl
-	 QSN+c5wxj+KvVw+2pTSTh0OaJ6thTs/6CtOw+YgI=
+	b=KQdkhikFL5EitRw9muuc1q7+5msfkib4vRm4T1QIqXatbe7W2W0T+sDX2X+p4zmp8
+	 U+zOM/9HxwiSUHtek4V5Qp/JW4mzsXQIo2qAc91ipFt64sRuYzqrq0lMjuK8SkLDnP
+	 Wfh7wr1LiYtMqlS5RpXNOONACCQOj937YYq28yL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0631/1146] scsi: hpsa: Fix possible memory leak in hpsa_init_one()
-Date: Wed, 28 Dec 2022 15:36:10 +0100
-Message-Id: <20221228144347.306938822@linuxfoundation.org>
+Subject: [PATCH 6.0 0671/1073] usb: fotg210-udc: Fix ages old endianness issues
+Date: Wed, 28 Dec 2022 15:37:39 +0100
+Message-Id: <20221228144346.265929133@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 9c9ff300e0de07475796495d86f449340d454a0c ]
+[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
 
-The hpda_alloc_ctlr_info() allocates h and its field reply_map. However, in
-hpsa_init_one(), if alloc_percpu() failed, the hpsa_init_one() jumps to
-clean1 directly, which frees h and leaks the h->reply_map.
+The code in the FOTG210 driver isn't entirely endianness-agnostic
+as reported by the kernel robot sparse testing. This came to
+the surface while moving the files around.
 
-Fix by calling hpda_free_ctlr_info() to release h->replay_map and h instead
-free h directly.
+The driver is only used on little-endian systems, so this causes
+no real-world regression, but it is nice to be strict and have
+some compile coverage also on big endian machines, so fix it
+up with the right LE accessors.
 
-Fixes: 8b834bff1b73 ("scsi: hpsa: fix selection of reply queue")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221122015751.87284-1-yuancan@huawei.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index f8e832b1bc46..e5cbc97a5ea4 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -8925,7 +8925,7 @@ static int hpsa_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		destroy_workqueue(h->monitor_ctlr_wq);
- 		h->monitor_ctlr_wq = NULL;
+diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
+index fdca28e72a3b..d0e051beb3af 100644
+--- a/drivers/usb/gadget/udc/fotg210-udc.c
++++ b/drivers/usb/gadget/udc/fotg210-udc.c
+@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
+ static void fotg210_set_address(struct fotg210_udc *fotg210,
+ 				struct usb_ctrlrequest *ctrl)
+ {
+-	if (ctrl->wValue >= 0x0100) {
++	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
+ 		fotg210_request_error(fotg210);
+ 	} else {
+-		fotg210_set_dev_addr(fotg210, ctrl->wValue);
++		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
+ 		fotg210_set_cxdone(fotg210);
  	}
--	kfree(h);
-+	hpda_free_ctlr_info(h);
- 	return rc;
  }
+@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
  
+ 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 	case USB_RECIP_DEVICE:
+-		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
++		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
+ 		break;
+ 	case USB_RECIP_INTERFACE:
+-		fotg210->ep0_data = 0;
++		fotg210->ep0_data = cpu_to_le16(0);
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+ 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
+ 		if (epnum)
+ 			fotg210->ep0_data =
+-				fotg210_is_epnstall(fotg210->ep[epnum])
+-				<< USB_ENDPOINT_HALT;
++				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
++					    << USB_ENDPOINT_HALT);
+ 		else
+ 			fotg210_request_error(fotg210);
+ 		break;
 -- 
 2.35.1
 
