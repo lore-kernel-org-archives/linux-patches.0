@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D84B1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CCCC433D2;
-	Wed, 28 Dec 2022 15:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67701875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4AEC433EF;
+	Wed, 28 Dec 2022 15:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243152;
-	bh=JYNMgYr1uiS2PGSjM4RIyuhqaeX8EwuHEPm5BgNNkrA=;
+	s=korg; t=1672243154;
+	bh=u6MaG4xWvQTER4Qs822buU63yqRgryUF+fmgpGr/K0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SA8IjWHwJyDklvlAjZ1QRkep9ARSJZQILvsaanrMZ33dg+oBFpQnBO7LcpnNWJpoH
-	 kHfzUlWm/fgNkneVLSBCfkutU5VzPJ9FIdV2aVe1mKwuK5RT6yibY+lPO1yO2gwiDE
-	 w5ivhuZ6bzjtE4zZ/LoCFhob0P4hUywNGmKtOdKc=
+	b=RAPmLkXtSgUFkXFvoi265lEvP8DqPIEB+tT9c2RgO8feK5NjCJ7HqewjLuHBNWCx7
+	 eBdDrdTt8fm6gwDEJz0A8k/XuWm+3Km7ewfIgeGkONhKb57jYvsGJVYaXBybYaNOFn
+	 4dY9UE/2KimMfQtnly7m+jm1Tdt+mBxE6/t+zdRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0495/1073] memstick/ms_block: Add check for alloc_ordered_workqueue
-Date: Wed, 28 Dec 2022 15:34:43 +0100
-Message-Id: <20221228144341.481819125@linuxfoundation.org>
+Subject: [PATCH 5.15 689/731] ASoC: mediatek: mt8173-rt5650-rt5514: fix refcount leak in mt8173_rt5650_rt5514_dev_probe()
+Date: Wed, 28 Dec 2022 15:43:16 +0100
+Message-Id: <20221228144316.437471899@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 4f431a047a5c8698ed4b67e2760cfbeb5fffb69d ]
+[ Upstream commit 3327d721114c109ba0575f86f8fda3b525404054 ]
 
-As the alloc_ordered_workqueue may return NULL pointer, it should be better
-to add check for the return value. Moreover, the msb->io_queue should be
-freed if error occurs later.
+The node returned by of_parse_phandle() with refcount incremented,
+of_node_put() needs be called when finish using it. So add it in the
+error path in mt8173_rt5650_rt5514_dev_probe().
 
-Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20221126012558.34374-1-jiasheng@iscas.ac.cn
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 0d1d7a664288 ("ASoC: mediatek: Refine mt8173 driver and change config option")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1670234664-24246-1-git-send-email-wangyufen@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memstick/core/ms_block.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/memstick/core/ms_block.c b/drivers/memstick/core/ms_block.c
-index ba8414519515..04115cd92433 100644
---- a/drivers/memstick/core/ms_block.c
-+++ b/drivers/memstick/core/ms_block.c
-@@ -2116,6 +2116,11 @@ static int msb_init_disk(struct memstick_dev *card)
- 	dbg("Set total disk size to %lu sectors", capacity);
+diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+index 390da5bf727e..9421b919d462 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
++++ b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+@@ -200,14 +200,16 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[0].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node =
+ 		of_parse_phandle(pdev->dev.of_node, "mediatek,audio-codec", 1);
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_codec_conf[0].dlc.of_node =
+ 		mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node;
+@@ -219,6 +221,7 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev, "%s snd_soc_register_card fail %d\n",
+ 			__func__, ret);
  
- 	msb->io_queue = alloc_ordered_workqueue("ms_block", WQ_MEM_RECLAIM);
-+	if (!msb->io_queue) {
-+		rc = -ENOMEM;
-+		goto out_cleanup_disk;
-+	}
-+
- 	INIT_WORK(&msb->io_work, msb_io_work);
- 	sg_init_table(msb->prealloc_sg, MS_BLOCK_MAX_SEGS+1);
- 
-@@ -2125,10 +2130,12 @@ static int msb_init_disk(struct memstick_dev *card)
- 	msb_start(card);
- 	rc = device_add_disk(&card->dev, msb->disk, NULL);
- 	if (rc)
--		goto out_cleanup_disk;
-+		goto out_destroy_workqueue;
- 	dbg("Disk added");
- 	return 0;
- 
-+out_destroy_workqueue:
-+	destroy_workqueue(msb->io_queue);
- out_cleanup_disk:
- 	put_disk(msb->disk);
- out_free_tag_set:
++out:
+ 	of_node_put(platform_node);
+ 	return ret;
+ }
 -- 
 2.35.1
 
