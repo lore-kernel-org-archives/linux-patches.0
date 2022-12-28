@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16A21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE0BC433D2;
-	Wed, 28 Dec 2022 16:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487F31C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D1BC433F0;
+	Wed, 28 Dec 2022 16:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245474;
-	bh=SwThl0N1pKRQexATFYYnMwhF7WjNhdvKxDOxdnQCq9Y=;
+	s=korg; t=1672245478;
+	bh=Mt3ekxmlDTqRJ1l1rjm3C8i3c0nhGxYJwi4DCc/D+TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nuyaQNHqystr3hqnaPm0wYahEbvsjUHK/DgDFoklDi9K5L9Thc8eLMKvHscceU3e
-	 hQZNiGdoL/OX2Ucva80n+TJ6h0e7ISh82uKqab2wip6PBbroqAshJxomOgFyhQmEdI
-	 tfwrgYkGVuVAXuCdQHrFgFfqnFGE+nIBHwCQq9/c=
+	b=xrAf3DHOzqC1f/uNtxskIK62CDZcc0kM/XfzXRe9UuCSDuBtPfxgFbie/De2VXqLa
+	 Iwb4A9sTWhVMFrq06A7PSRjqHX32f67cGEcopg/QwtBaN4ismUgEvMTkUC4YRwmZBm
+	 oZ5faZu+EUaCRawIjzJz+lJzJ/Yg47VmtJX8Lw/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	"Robert Elliott (Servers)" <elliott@hpe.com>,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0902/1073] x86/apic: Handle no CONFIG_X86_X2APIC on systems with x2APIC enabled by BIOS
-Date: Wed, 28 Dec 2022 15:41:30 +0100
-Message-Id: <20221228144352.532061645@linuxfoundation.org>
+Subject: [PATCH 6.1 0868/1146] pwm: mediatek: always use bus clock for PWM on MT7622
+Date: Wed, 28 Dec 2022 15:40:07 +0100
+Message-Id: <20221228144353.745685991@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,123 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit e3998434da4f5b1f57f8d6a8a9f8502ee3723bae ]
+[ Upstream commit aa3c668f2f98856af96e13f44da6ca4f26f0b98c ]
 
-A kernel that was compiled without CONFIG_X86_X2APIC was unable to boot on
-platforms that have x2APIC already enabled in the BIOS before starting the
-kernel.
+According to MT7622 Reference Manual for Development Board v1.0 the PWM
+unit found in the MT7622 SoC also comes with the PWM_CK_26M_SEL register
+at offset 0x210 just like other modern MediaTek ARM64 SoCs.
+And also MT7622 sets that register to 0x00000001 on reset which is
+described as 'Select 26M fix CLK as BCLK' in the datasheet.
+Hence set has_ck_26m_sel to true also for MT7622 which results in the
+driver writing 0 to the PWM_CK_26M_SEL register which is described as
+'Select bus CLK as BCLK'.
 
-The kernel was supposed to panic with an approprite error message in
-validate_x2apic() due to the missing X2APIC support.
-
-However, validate_x2apic() was run too late in the boot cycle, and the
-kernel tried to initialize the APIC nonetheless. This resulted in an
-earlier panic in setup_local_APIC() because the APIC was not registered.
-
-In my experiments, a panic message in setup_local_APIC() was not visible
-in the graphical console, which resulted in a hang with no indication
-what has gone wrong.
-
-Instead of calling panic(), disable the APIC, which results in a somewhat
-working system with the PIC only (and no SMP). This way the user is able to
-diagnose the problem more easily.
-
-Disabling X2APIC mode is not an option because it's impossible on systems
-with locked x2APIC.
-
-The proper place to disable the APIC in this case is in check_x2apic(),
-which is called early from setup_arch(). Doing this in
-__apic_intr_mode_select() is too late.
-
-Make check_x2apic() unconditionally available and remove the empty stub.
-
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reported-by: Robert Elliott (Servers) <elliott@hpe.com>
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/lkml/d573ba1c-0dc4-3016-712a-cc23a8a33d42@molgen.mpg.de
-Link: https://lore.kernel.org/lkml/20220911084711.13694-3-mat.jonczyk@o2.pl
-Link: https://lore.kernel.org/all/20221129215008.7247-1-mat.jonczyk@o2.pl
+Fixes: 0c0ead76235db0 ("pwm: mediatek: Always use bus clock")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/Y1iF2slvSblf6bYK@makrotopia.org
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig            |  4 ++--
- arch/x86/include/asm/apic.h |  3 +--
- arch/x86/kernel/apic/apic.c | 13 ++++++++-----
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/pwm/pwm-mediatek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 4728d3f5d5c4..3fec0e9d9241 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -450,8 +450,8 @@ config X86_X2APIC
+diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
+index 6901a44dc428..a337b47dc2f7 100644
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -296,7 +296,7 @@ static const struct pwm_mediatek_of_data mt6795_pwm_data = {
+ static const struct pwm_mediatek_of_data mt7622_pwm_data = {
+ 	.num_pwms = 6,
+ 	.pwm45_fixup = false,
+-	.has_ck_26m_sel = false,
++	.has_ck_26m_sel = true,
+ };
  
- 	  Some Intel systems circa 2022 and later are locked into x2APIC mode
- 	  and can not fall back to the legacy APIC modes if SGX or TDX are
--	  enabled in the BIOS.  They will be unable to boot without enabling
--	  this option.
-+	  enabled in the BIOS. They will boot with very reduced functionality
-+	  without enabling this option.
- 
- 	  If you don't know what to do here, say N.
- 
-diff --git a/arch/x86/include/asm/apic.h b/arch/x86/include/asm/apic.h
-index 3415321c8240..3216da7074ba 100644
---- a/arch/x86/include/asm/apic.h
-+++ b/arch/x86/include/asm/apic.h
-@@ -249,7 +249,6 @@ static inline u64 native_x2apic_icr_read(void)
- extern int x2apic_mode;
- extern int x2apic_phys;
- extern void __init x2apic_set_max_apicid(u32 apicid);
--extern void __init check_x2apic(void);
- extern void x2apic_setup(void);
- static inline int x2apic_enabled(void)
- {
-@@ -258,13 +257,13 @@ static inline int x2apic_enabled(void)
- 
- #define x2apic_supported()	(boot_cpu_has(X86_FEATURE_X2APIC))
- #else /* !CONFIG_X86_X2APIC */
--static inline void check_x2apic(void) { }
- static inline void x2apic_setup(void) { }
- static inline int x2apic_enabled(void) { return 0; }
- 
- #define x2apic_mode		(0)
- #define	x2apic_supported()	(0)
- #endif /* !CONFIG_X86_X2APIC */
-+extern void __init check_x2apic(void);
- 
- struct irq_data;
- 
-diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
-index c6876d3ea4b1..20d9a604da7c 100644
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1931,16 +1931,19 @@ void __init check_x2apic(void)
- 	}
- }
- #else /* CONFIG_X86_X2APIC */
--static int __init validate_x2apic(void)
-+void __init check_x2apic(void)
- {
- 	if (!apic_is_x2apic_enabled())
--		return 0;
-+		return;
- 	/*
--	 * Checkme: Can we simply turn off x2apic here instead of panic?
-+	 * Checkme: Can we simply turn off x2APIC here instead of disabling the APIC?
- 	 */
--	panic("BIOS has enabled x2apic but kernel doesn't support x2apic, please disable x2apic in BIOS.\n");
-+	pr_err("Kernel does not support x2APIC, please recompile with CONFIG_X86_X2APIC.\n");
-+	pr_err("Disabling APIC, expect reduced performance and functionality.\n");
-+
-+	disable_apic = 1;
-+	setup_clear_cpu_cap(X86_FEATURE_APIC);
- }
--early_initcall(validate_x2apic);
- 
- static inline void try_to_enable_x2apic(int remap_mode) { }
- static inline void __x2apic_enable(void) { }
+ static const struct pwm_mediatek_of_data mt7623_pwm_data = {
 -- 
 2.35.1
 
