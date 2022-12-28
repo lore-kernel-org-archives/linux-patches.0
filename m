@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5FB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C67C433D2;
-	Wed, 28 Dec 2022 16:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16B11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562C1C433D2;
+	Wed, 28 Dec 2022 16:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245910;
-	bh=AmB2MwSLienkqebbxknN/fIW6Ra4Dau+j0MHNDTFaX4=;
+	s=korg; t=1672245912;
+	bh=OXLQR3oUL2+bJbMRbQCO7qPURkGVv+Xfy9spuYgj9y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdanzyNkhqt3g0L5IQx+ye7XUysP1g2OWm8lyDviZN/1yKbeUAbYup4pzfz9VMOr3
-	 8ug4ByjokUiBG0qd4N6uoV+LBp9qV2NcaoWT8ob0L+5GRY+bjVRr8TFq6PNAIeJb/B
-	 Ufnse+MDbwue7ttr9rHtAVytdJF587NKTvGlQEp0=
+	b=2lmr6M58+teoRs1NlHG/+JmbOwvOYYdUKgDztd77VIF7qSk6BbSz+BFU1MTM7cwme
+	 JD+lyiBm79JOLGqxUperiD/+wt+brMSSni42okE6C7PJkACcUAy53petH8mDu054B2
+	 pWbN6whlF95t91xu04NUeKq9n6iKDavfOVRVhJlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Jasdeep Dhillon <jdhillon@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0961/1073] drm/amd/display: Fix DTBCLK disable requests and SRC_SEL programming
-Date: Wed, 28 Dec 2022 15:42:29 +0100
-Message-Id: <20221228144354.141832934@linuxfoundation.org>
+Subject: [PATCH 6.0 0979/1073] crypto: hisilicon/hpre - fix resource leak in remove process
+Date: Wed, 28 Dec 2022 15:42:47 +0100
+Message-Id: <20221228144354.668837169@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,61 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <Alvin.Lee2@amd.com>
+From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit f6015da7f2410109bd2ccd2e2828f26185aeb81d ]
+[ Upstream commit 45e6319bd5f2154d8b8c9f1eaa4ac030ba0d330c ]
 
-[Description]
-- When transitioning FRL / DP2 is not required, we will always request
-  DTBCLK = 0Mhz, but PMFW returns the min freq
-- This causes us to make DTBCLK requests every time we call optimize
-  after transitioning from FRL to non-FRL
-- If DTBCLK is not required, request the min instead (then we only need
-  to make 1 extra request at boot time)
-- Also when programming PIPE_DTO_SRC_SEL, don't programming for DP
-  first, just programming once for the required selection (programming
-  DP on an HDMI connection then switching back causes corruption)
+In hpre_remove(), when the disable operation of qm sriov failed,
+the following logic should continue to be executed to release the
+remaining resources that have been allocated, instead of returning
+directly, otherwise there will be resource leakage.
 
-Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
-Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
-Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c    | 2 +-
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c           | 6 +-----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_main.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-index e7f1d5f8166f..59a29c32f66a 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-@@ -436,7 +436,7 @@ static void dcn32_update_clocks(struct clk_mgr *clk_mgr_base,
- 	}
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
+index fd55c6ff13ba..7a50ca664ada 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_main.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
+@@ -1287,18 +1287,12 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ static void hpre_remove(struct pci_dev *pdev)
+ {
+ 	struct hisi_qm *qm = pci_get_drvdata(pdev);
+-	int ret;
  
- 	if (!new_clocks->dtbclk_en) {
--		new_clocks->ref_dtbclk_khz = 0;
-+		new_clocks->ref_dtbclk_khz = clk_mgr_base->bw_params->clk_table.entries[0].dtbclk_mhz * 1000;
- 	}
+ 	hisi_qm_pm_uninit(qm);
+ 	hisi_qm_wait_task_finish(qm, &hpre_devices);
+ 	hisi_qm_alg_unregister(qm, &hpre_devices);
+-	if (qm->fun_type == QM_HW_PF && qm->vfs_num) {
+-		ret = hisi_qm_sriov_disable(pdev, true);
+-		if (ret) {
+-			pci_err(pdev, "Disable SRIOV fail!\n");
+-			return;
+-		}
+-	}
++	if (qm->fun_type == QM_HW_PF && qm->vfs_num)
++		hisi_qm_sriov_disable(pdev, true);
  
- 	/* clock limits are received with MHz precision, divide by 1000 to prevent setting clocks at every call */
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-index 6dd8dadd68a5..6f160f65c8fa 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
-@@ -225,11 +225,7 @@ void dccg32_set_dtbclk_dto(
- 	} else {
- 		REG_UPDATE_2(OTG_PIXEL_RATE_CNTL[params->otg_inst],
- 				DTBCLK_DTO_ENABLE[params->otg_inst], 0,
--				PIPE_DTO_SRC_SEL[params->otg_inst], 1);
--		if (params->is_hdmi)
--			REG_UPDATE(OTG_PIXEL_RATE_CNTL[params->otg_inst],
--				PIPE_DTO_SRC_SEL[params->otg_inst], 0);
--
-+				PIPE_DTO_SRC_SEL[params->otg_inst], params->is_hdmi ? 0 : 1);
- 		REG_WRITE(DTBCLK_DTO_MODULO[params->otg_inst], 0);
- 		REG_WRITE(DTBCLK_DTO_PHASE[params->otg_inst], 0);
- 	}
+ 	hpre_debugfs_exit(qm);
+ 	hisi_qm_stop(qm, QM_NORMAL);
 -- 
 2.35.1
 
