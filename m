@@ -1,45 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D1B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19A8C433F0;
-	Wed, 28 Dec 2022 16:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9C91C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9BDC433F0;
+	Wed, 28 Dec 2022 16:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246123;
-	bh=77Ax692QPbClaw5Sew2l0xTyYFdYyuwdAt/P++1XU+I=;
+	s=korg; t=1672246126;
+	bh=AlYS/l6ElL7QqRBU9A8AzkmpdKoqNyTen6wL+yZBCuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6v3SJ7HI+MZ6u4n5BhWH6qxs350FYTqI/IzdMkKP6yMAk2CT6mCXWM0Hpy7X5cVk
-	 y2ApMT1V7mkXDj/1n3njYWqTl7Lp5k3KGi4ovU95e6Hsr/f2ZB7cOXZMCh/xtez9ZA
-	 FOkSvneSLv0CWGROrbu/YpCaiQR+t10Mfurn6Z2M=
+	b=g83vqsNs37a8E5lEO63v+OmVUIj7TVg+05nzPUWfwhIgj2kt5sKxbElsARq/1h2q7
+	 T6dMWubjxOY+dvlk0RQ96BVACB800o1dN8gOJfWbQ+XKbyZB2ENqpA2RQ074PV11Dd
+	 yBMNmQJ7GK2b1v/1vVR72KDE+QCv8Fas/oF0+dNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Carsten Haitzler <carsten.haitzler@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	martin.lau@kernel.org,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Martin Liska <mliska@suse.cz>,
+	Ariel Elior <aelior@marvell.com>,
+	Manish Chopra <manishc@marvell.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1016/1073] perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option()
-Date: Wed, 28 Dec 2022 15:43:24 +0100
-Message-Id: <20221228144355.774703174@linuxfoundation.org>
+Subject: [PATCH 6.1 0985/1146] qed (gcc13): use u16 for fid to be big enough
+Date: Wed, 28 Dec 2022 15:42:04 +0100
+Message-Id: <20221228144357.119910404@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,87 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 188ac720d364035008a54d249cf47b4cc100f819 ]
+[ Upstream commit 7d84118229bf7f7290438c85caa8e49de52d50c1 ]
 
-When perf uses quiet mode, perf_quiet_option() sets the 'debug_peo_args'
-variable to -1, and display_attr() incorrectly determines the value of
-'debug_peo_args'.  As a result, unexpected information is displayed.
+gcc 13 correctly reports overflow in qed_grc_dump_addr_range():
+In file included from drivers/net/ethernet/qlogic/qed/qed.h:23,
+                 from drivers/net/ethernet/qlogic/qed/qed_debug.c:10:
+drivers/net/ethernet/qlogic/qed/qed_debug.c: In function 'qed_grc_dump_addr_range':
+include/linux/qed/qed_if.h:1217:9: error: overflow in conversion from 'int' to 'u8' {aka 'unsigned char'} changes value from '(int)vf_id << 8 | 128' to '128' [-Werror=overflow]
 
-Before:
-
-  # perf record --quiet -- ls > /dev/null
-  ------------------------------------------------------------
-  perf_event_attr:
-    size                             128
-    { sample_period, sample_freq }   4000
-    sample_type                      IP|TID|TIME|PERIOD
-    read_format                      ID|LOST
-    disabled                         1
-    inherit                          1
-    mmap                             1
-    comm                             1
-    freq                             1
-    enable_on_exec                   1
-    task                             1
-    precise_ip                       3
-    sample_id_all                    1
-    exclude_guest                    1
-    mmap2                            1
-    comm_exec                        1
-    ksymbol                          1
-    bpf_event                        1
-  ------------------------------------------------------------
+We do:
+  u8 fid;
   ...
+  fid = vf_id << 8 | 128;
 
-After:
-  # perf record --quiet -- ls > /dev/null
-  #
+Since fid is 16bit (and the stored value above too), fid should be u16,
+not u8. Fix that.
 
-redirect_to_stderr is a similar problem.
-
-Fixes: f78eaef0e0493f60 ("perf tools: Allow to force redirect pr_debug to stderr.")
-Fixes: ccd26741f5e6bdf2 ("perf tool: Provide an option to print perf_event_open args and return value")
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Carsten Haitzler <carsten.haitzler@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: martin.lau@kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221220035702.188413-2-yangjihong1@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Ariel Elior <aelior@marvell.com>
+Cc: Manish Chopra <manishc@marvell.com>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221031114354.10398-1-jirislaby@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index 65e6c22f38e4..190e818a0717 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -241,6 +241,10 @@ int perf_quiet_option(void)
- 		opt++;
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index 5250d1d1e49c..86ecb080b153 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -1972,9 +1972,10 @@ static u32 qed_grc_dump_addr_range(struct qed_hwfn *p_hwfn,
+ 				   u8 split_id)
+ {
+ 	struct dbg_tools_data *dev_data = &p_hwfn->dbg_info;
+-	u8 port_id = 0, pf_id = 0, vf_id = 0, fid = 0;
++	u8 port_id = 0, pf_id = 0, vf_id = 0;
+ 	bool read_using_dmae = false;
+ 	u32 thresh;
++	u16 fid;
  
-+	/* For debug variables that are used as bool types, set to 0. */
-+	redirect_to_stderr = 0;
-+	debug_peo_args = 0;
-+
- 	return 0;
- }
- 
+ 	if (!dump)
+ 		return len;
 -- 
 2.35.1
 
