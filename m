@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901E71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1563FC433EF;
-	Wed, 28 Dec 2022 15:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3452A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED73C433D2;
+	Wed, 28 Dec 2022 15:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240023;
-	bh=Hse2NWEM6mKM2q3l/sDc6/hughAXgOdpaBVYBaCds5w=;
+	s=korg; t=1672240026;
+	bh=o1YzpXgQYj519sWD9kChGCNvfZ8/8vRFsOJSvwkpebg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyhXeqA52a2pVDyM/5Srvnc9ZFuUv1Ebk6EZzNDSooSfHQgcllDPWV0q8WSgr5suU
-	 xSJLHLN8w+t6rIzXYHMdNayTcDr/xHzL2cjWUuDoyQRlU+4LpnNHYVzdkekjoTX5Vo
-	 aCl7klD75PSFs0cOXKmLKWK95WcpATDiVaB/Q+aw=
+	b=K6BQW47lF5y7Tyb5fcAQxxOqnE9ElQ/8OK8QbZD0i2yNvDGdHfuHn6y+SM28KqyBD
+	 JB9NzHRmLsrRQva/sOg87SRaRuvovJe2dBBlHIbF94ky2M0iCHW/rflgCHAKXQvEVi
+	 AKJeI1wtUj8IfJE5j3oMj0xIhHq/Z0z4SUHAkwKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Chen Hui <judy.chenhui@huawei.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0072/1146] arm64: dts: mt2712e: Fix unit_address_vs_reg warning for oscillators
-Date: Wed, 28 Dec 2022 15:26:51 +0100
-Message-Id: <20221228144332.110736362@linuxfoundation.org>
+Subject: [PATCH 6.0 0109/1073] cpufreq: qcom-hw: Fix memory leak in qcom_cpufreq_hw_read_lut()
+Date: Wed, 28 Dec 2022 15:28:17 +0100
+Message-Id: <20221228144331.003044471@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,108 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Chen Hui <judy.chenhui@huawei.com>
 
-[ Upstream commit e4495a0a8b3d84816c9a46edf3ce060bbf267475 ]
+[ Upstream commit 9901c21bcaf2f01fe5078f750d624f4ddfa8f81b ]
 
-Rename the fixed-clock oscillators to remove the unit address.
+If "cpu_dev" fails to get opp table in qcom_cpufreq_hw_read_lut(),
+the program will return, resulting in "table" resource is not released.
 
-This solves unit_address_vs_reg warnings.
-
-Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-4-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 51c843cf77bb ("cpufreq: qcom: Update the bandwidth levels on frequency change")
+Signed-off-by: Chen Hui <judy.chenhui@huawei.com>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-index e6d7453e56e0..ff6b26cdda81 100644
---- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-@@ -160,70 +160,70 @@ sys_clk: dummyclk {
- 		#clock-cells = <0>;
- 	};
- 
--	clk26m: oscillator@0 {
-+	clk26m: oscillator-26m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
- 		clock-output-names = "clk26m";
- 	};
- 
--	clk32k: oscillator@1 {
-+	clk32k: oscillator-32k {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <32768>;
- 		clock-output-names = "clk32k";
- 	};
- 
--	clkfpc: oscillator@2 {
-+	clkfpc: oscillator-50m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <50000000>;
- 		clock-output-names = "clkfpc";
- 	};
- 
--	clkaud_ext_i_0: oscillator@3 {
-+	clkaud_ext_i_0: oscillator-aud0 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <6500000>;
- 		clock-output-names = "clkaud_ext_i_0";
- 	};
- 
--	clkaud_ext_i_1: oscillator@4 {
-+	clkaud_ext_i_1: oscillator-aud1 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <196608000>;
- 		clock-output-names = "clkaud_ext_i_1";
- 	};
- 
--	clkaud_ext_i_2: oscillator@5 {
-+	clkaud_ext_i_2: oscillator-aud2 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <180633600>;
- 		clock-output-names = "clkaud_ext_i_2";
- 	};
- 
--	clki2si0_mck_i: oscillator@6 {
-+	clki2si0_mck_i: oscillator-i2s0 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si0_mck_i";
- 	};
- 
--	clki2si1_mck_i: oscillator@7 {
-+	clki2si1_mck_i: oscillator-i2s1 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si1_mck_i";
- 	};
- 
--	clki2si2_mck_i: oscillator@8 {
-+	clki2si2_mck_i: oscillator-i2s2 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si2_mck_i";
- 	};
- 
--	clktdmin_mclk_i: oscillator@9 {
-+	clktdmin_mclk_i: oscillator-mclk {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index bb32659820ce..9221a416230a 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -190,6 +190,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+ 		}
+ 	} else if (ret != -ENODEV) {
+ 		dev_err(cpu_dev, "Invalid opp table in device tree\n");
++		kfree(table);
+ 		return ret;
+ 	} else {
+ 		policy->fast_switch_possible = true;
 -- 
 2.35.1
 
