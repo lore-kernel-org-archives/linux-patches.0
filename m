@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946C11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B63C433D2;
-	Wed, 28 Dec 2022 15:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F751863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBC7C433D2;
+	Wed, 28 Dec 2022 15:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240550;
-	bh=u3NVQJKNF+rnowNpShBaEAVRDQot1+kMKFAa4ZHhWoE=;
+	s=korg; t=1672240553;
+	bh=xwgzizAe8rFRYJSUGWAdCCq2EiW38QFMnXXHyionzw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iC1Zq/pxCOi5oYoUtdtSBtMcFvAMQI83MzxXT1KDBtVgfJ27UHR2fcwaVANQl3XK+
-	 QwzVxKV5Z0V20GAvQf2Qhvi54AzHozaD6OstXwa8mVuNm59S/gZ6Ja2gO6viGLVYlk
-	 Mj2zU+D3dXT06WmMR7QqAUaJfKTr6PF8lSEFxjtU=
+	b=iSMmWbsHosMgFvBi3GrYndZUWazxLgQAGGLE9pI2fHhjx6lC/nHICZO1PsCgo0eXR
+	 YOk2F+5P3AS1CX5Z/FqCmKTsOe06N5cKbfjeISoFom/DSFdpAYxngD4yhFxi21VpO/
+	 nX9UkUTC1gF/+9u4NmSAznlVGX7Ir7oyhlW/GMp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 366/731] PCI: dwc: Fix n_fts[] array overrun
-Date: Wed, 28 Dec 2022 15:37:53 +0100
-Message-Id: <20221228144307.170130048@linuxfoundation.org>
+Subject: [PATCH 5.15 351/731] Bluetooth: hci_h5: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:37:38 +0100
+Message-Id: <20221228144306.737909589@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,40 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 66110361281b2f7da0c8bd51eaf1f152f4236035 ]
+[ Upstream commit 383630cc6758d619874c2e8bb2f68a61f3f9ef6e ]
 
-commit aeaa0bfe89654 ("PCI: dwc: Move N_FTS setup to common setup")
-incorrectly uses pci->link_gen in deriving the index to the
-n_fts[] array also introducing the issue of accessing beyond the
-boundaries of array for greater than Gen-2 speeds. This change fixes
-that issue.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-Link: https://lore.kernel.org/r/20220926111923.22487-1-vidyas@nvidia.com
-Fixes: aeaa0bfe8965 ("PCI: dwc: Move N_FTS setup to common setup")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Jingoo Han <jingoohan1@gmail.com>
+Fixes: 43eb12d78960 ("Bluetooth: Fix/implement Three-wire reliable packet sending")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 2 +-
+ drivers/bluetooth/hci_h5.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index e408ebf5bd73..00972a7bc976 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -730,7 +730,7 @@ void dw_pcie_setup(struct dw_pcie *pci)
- 	if (pci->n_fts[1]) {
- 		val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
- 		val &= ~PORT_LOGIC_N_FTS_MASK;
--		val |= pci->n_fts[pci->link_gen - 1];
-+		val |= pci->n_fts[1];
- 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index e0ea9d25bb39..1363b21c81b7 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -313,7 +313,7 @@ static void h5_pkt_cull(struct h5 *h5)
+ 			break;
+ 
+ 		__skb_unlink(skb, &h5->unack);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
  	}
  
+ 	if (skb_queue_empty(&h5->unack))
 -- 
 2.35.1
 
