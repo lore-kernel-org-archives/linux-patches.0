@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C403D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C1BC433F0;
-	Wed, 28 Dec 2022 15:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E6F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD1EC433F0;
+	Wed, 28 Dec 2022 15:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239872;
-	bh=iyu9Upqa+B+/0iUubhYlutIvi5/UDytjojjYFweiQSw=;
+	s=korg; t=1672239875;
+	bh=zv2iTeoDC2wxSOAAe5JxO8Pa2mb8m0RXw9vuiXCvrbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbIttuM2m2VBXgxb1fHxXZk46/MwQoBebxxraTnF1GJQyFNeEuZ5G2I4pCHZ3Cjb9
-	 GJbllIvWA8DEi6rVYNbVJZH2wQvF4Wjd7LvrBIFS4OmBcX4/dhWHjEVdmQ7PX3mvS3
-	 zL1BT+tfIrTYsdhTZfe+yqmtGcwHIrPaD3+PiRFU=
+	b=AVgR7eNkhSNw6gB3gCopKDZv87QaOnbR/+Kn5yo+nJ2Ft3HOwth59NbReNNLnGFRP
+	 St5rK6ZvaHbrbC3SqkJkEUwdSiuUI9D66a4WEyayKjsaq/B1yJcPA496FKkPB+dRIb
+	 ngHjP7rIWERyY0hnjElmFn4UE2au3JeD7K6REC80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 280/731] regulator: core: fix resource leak in regulator_register()
-Date: Wed, 28 Dec 2022 15:36:27 +0100
-Message-Id: <20221228144304.689577366@linuxfoundation.org>
+Subject: [PATCH 6.1 0053/1146] arm64: dts: qcom: sc7280: Mark all Qualcomm reference boards as LTE
+Date: Wed, 28 Dec 2022 15:26:32 +0100
+Message-Id: <20221228144331.604048862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-[ Upstream commit ba62319a42c50e6254e98b3f316464fac8e77968 ]
+[ Upstream commit 3c800bcf07a5957da01593e8f83d797b285a37e0 ]
 
-I got some resource leak reports while doing fault injection test:
+When the modem node was re-located to a separate LTE source file
+"sc7280-herobrine-lte-sku.dtsi", some of the previous LTE users
+weren't marked appropriately. Fix this by marking all Qualcomm
+reference devices as LTE.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 100,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@64/regulators/buck1
-
-unreferenced object 0xffff88810deea000 (size 512):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859840 (age 5061.046s)
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff a0 1e 00 a1 ff ff ff ff  ................
-  backtrace:
-    [<00000000d78541e2>] kmalloc_trace+0x21/0x110
-    [<00000000b343d153>] device_private_init+0x32/0xd0
-    [<00000000be1f0c70>] device_add+0xb2d/0x1030
-    [<00000000e3e6344d>] regulator_register+0xaf2/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
-
-unreferenced object 0xffff88810b617b80 (size 32):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859904 (age 5060.983s)
-  hex dump (first 32 bytes):
-    72 65 67 75 6c 61 74 6f 72 2e 32 38 36 38 2d 53  regulator.2868-S
-    55 50 50 4c 59 00 ff ff 29 00 00 00 2b 00 00 00  UPPLY...)...+...
-  backtrace:
-    [<000000009da9280d>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<0000000025c6a4e5>] kstrdup+0x3a/0x70
-    [<00000000790efb69>] create_regulator+0xc0/0x4e0
-    [<0000000005ed203a>] regulator_resolve_supply+0x2d4/0x440
-    [<0000000045796214>] regulator_register+0x10b3/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
-
-After calling regulator_resolve_supply(), the 'rdev->supply' is set
-by set_supply(), after this set, in the error path, the resources
-need be released, so call regulator_put() to avoid the leaks.
-
-Fixes: aea6cb99703e ("regulator: resolve supply after creating regulator")
-Fixes: 8a866d527ac0 ("regulator: core: Resolve supply name earlier to prevent double-init")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202025111.496402-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Douglas Anderson <dianders@chromium.org>
+Fixes: d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs for sc7280-villager family")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221110070813.1777-1-quic_sibis@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts  | 1 -
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index ab93debb817c..1a5aeb4868aa 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5548,6 +5548,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
- 	regulator_remove_coupling(rdev);
- 	mutex_unlock(&regulator_list_mutex);
- wash:
-+	regulator_put(rdev->supply);
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 7559164cdda0..e2e37a0292ad 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -10,7 +10,6 @@
+ #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+ #include "sc7280-idp.dtsi"
+ #include "pmr735a.dtsi"
+-#include "sc7280-herobrine-lte-sku.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 7772dfba94ec..ca50f0ba9b81 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -13,6 +13,7 @@
+ #include "pmk8350.dtsi"
+ 
+ #include "sc7280-chrome-common.dtsi"
++#include "sc7280-herobrine-lte-sku.dtsi"
+ 
+ / {
+ 	aliases {
 -- 
 2.35.1
 
