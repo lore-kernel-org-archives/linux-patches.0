@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713E2C433EF;
-	Wed, 28 Dec 2022 16:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9512B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195EBC433D2;
+	Wed, 28 Dec 2022 16:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246336;
-	bh=Nwq5g1ESTYBgC8neDArqnPYL2KjnIiBaNb43AqgfEWs=;
+	s=korg; t=1672246339;
+	bh=dyDOPyg+jePFsFzNOFPEqmBLbY1R9nkzmMXaWUBtCLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5ouA/CaUMocURANq+CrrI3YwioCPsHbLzlKbuKF6Rt4TaK2cfjYmxAnfZTq7aJWc
-	 vI5cF3PAgpDQWue8X0BviJxQnGYrc5Ic6vz5iQXOY7l6xqB2c0XgYM7KEVNe3KIbHu
-	 /iRDe4Fh5It2I9HosVDVvNkt0vZYJs0QB6kcaKRk=
+	b=RtNlybXBIoI4RhBlJJ7DpHYYP68rMOxs6KWyTx9Q/ALCdLkp/M9UN9XeT5zhBzgVg
+	 2vT2VE3W2I/Rp+XyBmAGm7+I3XHTOpSgUewZ2VO9QkflgVr0mtCtjsBn6bQ+4czuLL
+	 /8QzNj/Bg74eTopr028OTWtrzLJZA1eE2bGh4NGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	kernel test robot <lkp@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1023/1146] media: dvbdev: adopts refcnt to avoid UAF
-Date: Wed, 28 Dec 2022 15:42:42 +0100
-Message-Id: <20221228144358.155650456@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Denis Efremov <efremov@linux.com>
+Subject: [PATCH 6.0 1052/1073] floppy: Fix memory leak in do_floppy_init()
+Date: Wed, 28 Dec 2022 15:44:00 +0100
+Message-Id: <20221228144356.795313888@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,210 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 0fc044b2b5e2d05a1fa1fb0d7f270367a7855d79 ]
+commit f8ace2e304c5dd8a7328db9cd2b8a4b1b98d83ec upstream.
 
-dvb_unregister_device() is known that prone to use-after-free.
-That is, the cleanup from dvb_unregister_device() releases the dvb_device
-even if there are pointers stored in file->private_data still refer to it.
+A memory leak was reported when floppy_alloc_disk() failed in
+do_floppy_init().
 
-This patch adds a reference counter into struct dvb_device and delays its
-deallocation until no pointer refers to the object.
+unreferenced object 0xffff888115ed25a0 (size 8):
+  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
+  hex dump (first 8 bytes):
+    00 ac 67 5b 81 88 ff ff                          ..g[....
+  backtrace:
+    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
+    [<00000000a87bfa9e>] blk_mq_realloc_tag_set_tags.part.0+0x6f/0x180
+    [<000000006f02e8b1>] blk_mq_alloc_tag_set+0x573/0x1130
+    [<0000000066007fd7>] 0xffffffffc06b8b08
+    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
+    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
+    [<000000001bb22407>] load_module+0x6249/0x7110
+    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
+    [<000000007bddca46>] do_syscall_64+0x35/0x80
+    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+unreferenced object 0xffff88810fc30540 (size 32):
+  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
+    [<000000006b91eab4>] blk_mq_alloc_tag_set+0x393/0x1130
+    [<0000000066007fd7>] 0xffffffffc06b8b08
+    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
+    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
+    [<000000001bb22407>] load_module+0x6249/0x7110
+    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
+    [<000000007bddca46>] do_syscall_64+0x35/0x80
+    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Link: https://lore.kernel.org/linux-media/20220807145952.10368-1-linma@zju.edu.cn
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the floppy_alloc_disk() failed, disks of current drive will not be set,
+thus the lastest allocated set->tag cannot be freed in the error handling
+path. A simple call graph shown as below:
+
+ floppy_module_init()
+   floppy_init()
+     do_floppy_init()
+       for (drive = 0; drive < N_DRIVE; drive++)
+         blk_mq_alloc_tag_set()
+           blk_mq_alloc_tag_set_tags()
+             blk_mq_realloc_tag_set_tags() # set->tag allocated
+         floppy_alloc_disk()
+           blk_mq_alloc_disk() # error occurred, disks failed to allocated
+
+       ->out_put_disk:
+       for (drive = 0; drive < N_DRIVE; drive++)
+         if (!disks[drive][0]) # the last disks is not set and loop break
+           break;
+         blk_mq_free_tag_set() # the latest allocated set->tag leaked
+
+Fix this problem by free the set->tag of current drive before jump to
+error handling path.
+
+Cc: stable@vger.kernel.org
+Fixes: 302cfee15029 ("floppy: use a separate gendisk for each media format")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+[efremov: added stable list, changed title]
+Signed-off-by: Denis Efremov <efremov@linux.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvb_ca_en50221.c |  2 +-
- drivers/media/dvb-core/dvb_frontend.c   |  2 +-
- drivers/media/dvb-core/dvbdev.c         | 32 +++++++++++++++++++------
- include/media/dvbdev.h                  | 31 +++++++++++++-----------
- 4 files changed, 44 insertions(+), 23 deletions(-)
+ drivers/block/floppy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
-index 15a08d8c69ef..c2d2792227f8 100644
---- a/drivers/media/dvb-core/dvb_ca_en50221.c
-+++ b/drivers/media/dvb-core/dvb_ca_en50221.c
-@@ -157,7 +157,7 @@ static void dvb_ca_private_free(struct dvb_ca_private *ca)
- {
- 	unsigned int i;
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -4593,8 +4593,10 @@ static int __init do_floppy_init(void)
+ 			goto out_put_disk;
  
--	dvb_free_device(ca->dvbdev);
-+	dvb_device_put(ca->dvbdev);
- 	for (i = 0; i < ca->slot_count; i++)
- 		vfree(ca->slot_info[i].rx_buffer.data);
+ 		err = floppy_alloc_disk(drive, 0);
+-		if (err)
++		if (err) {
++			blk_mq_free_tag_set(&tag_sets[drive]);
+ 			goto out_put_disk;
++		}
  
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index a7792ef4baf8..c41a7e5c2b92 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -136,7 +136,7 @@ static void __dvb_frontend_free(struct dvb_frontend *fe)
- 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
- 
- 	if (fepriv)
--		dvb_free_device(fepriv->dvbdev);
-+		dvb_device_put(fepriv->dvbdev);
- 
- 	dvb_frontend_invoke_release(fe, fe->ops.release);
- 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 675d877a67b2..14f0e140d541 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -97,7 +97,7 @@ static int dvb_device_open(struct inode *inode, struct file *file)
- 		new_fops = fops_get(dvbdev->fops);
- 		if (!new_fops)
- 			goto fail;
--		file->private_data = dvbdev;
-+		file->private_data = dvb_device_get(dvbdev);
- 		replace_fops(file, new_fops);
- 		if (file->f_op->open)
- 			err = file->f_op->open(inode, file);
-@@ -161,6 +161,9 @@ int dvb_generic_release(struct inode *inode, struct file *file)
+ 		timer_setup(&motor_off_timer[drive], motor_off_callback, 0);
  	}
- 
- 	dvbdev->users++;
-+
-+	dvb_device_put(dvbdev);
-+
- 	return 0;
- }
- EXPORT_SYMBOL(dvb_generic_release);
-@@ -477,6 +480,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 		return -ENOMEM;
- 	}
- 
-+	kref_init(&dvbdev->ref);
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
- 	dvbdev->type = type;
- 	dvbdev->id = id;
-@@ -508,7 +512,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- #endif
- 
- 	dvbdev->minor = minor;
--	dvb_minors[minor] = dvbdev;
-+	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
- 
- 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
-@@ -553,6 +557,7 @@ void dvb_remove_device(struct dvb_device *dvbdev)
- 
- 	down_write(&minor_rwsem);
- 	dvb_minors[dvbdev->minor] = NULL;
-+	dvb_device_put(dvbdev);
- 	up_write(&minor_rwsem);
- 
- 	dvb_media_device_free(dvbdev);
-@@ -564,21 +569,34 @@ void dvb_remove_device(struct dvb_device *dvbdev)
- EXPORT_SYMBOL(dvb_remove_device);
- 
- 
--void dvb_free_device(struct dvb_device *dvbdev)
-+static void dvb_free_device(struct kref *ref)
- {
--	if (!dvbdev)
--		return;
-+	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
- 
- 	kfree (dvbdev->fops);
- 	kfree (dvbdev);
- }
--EXPORT_SYMBOL(dvb_free_device);
-+
-+
-+struct dvb_device *dvb_device_get(struct dvb_device *dvbdev)
-+{
-+	kref_get(&dvbdev->ref);
-+	return dvbdev;
-+}
-+EXPORT_SYMBOL(dvb_device_get);
-+
-+
-+void dvb_device_put(struct dvb_device *dvbdev)
-+{
-+	if (dvbdev)
-+		kref_put(&dvbdev->ref, dvb_free_device);
-+}
- 
- 
- void dvb_unregister_device(struct dvb_device *dvbdev)
- {
- 	dvb_remove_device(dvbdev);
--	dvb_free_device(dvbdev);
-+	dvb_device_put(dvbdev);
- }
- EXPORT_SYMBOL(dvb_unregister_device);
- 
-diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
-index 2f6b0861322a..149b3d33c24b 100644
---- a/include/media/dvbdev.h
-+++ b/include/media/dvbdev.h
-@@ -156,6 +156,7 @@ struct dvb_adapter {
-  */
- struct dvb_device {
- 	struct list_head list_head;
-+	struct kref ref;
- 	const struct file_operations *fops;
- 	struct dvb_adapter *adapter;
- 	enum dvb_device_type type;
-@@ -187,6 +188,20 @@ struct dvb_device {
- 	void *priv;
- };
- 
-+/**
-+ * dvb_device_get - Increase dvb_device reference
-+ *
-+ * @dvbdev:	pointer to struct dvb_device
-+ */
-+struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
-+
-+/**
-+ * dvb_device_get - Decrease dvb_device reference
-+ *
-+ * @dvbdev:	pointer to struct dvb_device
-+ */
-+void dvb_device_put(struct dvb_device *dvbdev);
-+
- /**
-  * dvb_register_adapter - Registers a new DVB adapter
-  *
-@@ -231,29 +246,17 @@ int dvb_register_device(struct dvb_adapter *adap,
- /**
-  * dvb_remove_device - Remove a registered DVB device
-  *
-- * This does not free memory.  To do that, call dvb_free_device().
-+ * This does not free memory. dvb_free_device() will do that when
-+ * reference counter is empty
-  *
-  * @dvbdev:	pointer to struct dvb_device
-  */
- void dvb_remove_device(struct dvb_device *dvbdev);
- 
--/**
-- * dvb_free_device - Free memory occupied by a DVB device.
-- *
-- * Call dvb_unregister_device() before calling this function.
-- *
-- * @dvbdev:	pointer to struct dvb_device
-- */
--void dvb_free_device(struct dvb_device *dvbdev);
- 
- /**
-  * dvb_unregister_device - Unregisters a DVB device
-  *
-- * This is a combination of dvb_remove_device() and dvb_free_device().
-- * Using this function is usually a mistake, and is often an indicator
-- * for a use-after-free bug (when a userspace process keeps a file
-- * handle to a detached device).
-- *
-  * @dvbdev:	pointer to struct dvb_device
-  */
- void dvb_unregister_device(struct dvb_device *dvbdev);
--- 
-2.35.1
-
 
 
