@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E3E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A26AC433EF;
-	Wed, 28 Dec 2022 14:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E8F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A36DC433D2;
+	Wed, 28 Dec 2022 14:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239592;
-	bh=zPd9wA/Kfd+TTI/wzCKaqIq+arnjdtnw2EMi6MkCHdg=;
+	s=korg; t=1672239595;
+	bh=oQvsVna1y/xnbTGfs/quJeZI6PNmyp5Z8hnh91+wNLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0CKTVszR0zBBWJEjl5b48zvRUF9Lc5UMxyvoAPqgtsclhQGqt/M/RZuDcpSNVrbZL
-	 QothmCruF96Wmnh0ZtXAydbmcRSU6G9kO980k404Ns/+11YfEIrILxfSk/c6hdXjJb
-	 OIioYjq9uxrNFROd1pLGxfqqIyvEjPsWyVEEPHzI=
+	b=fdFGP4dWEHl/In/Zbs3h45HyIA8DHdfoHDKJb0C5V42k5O8WTph7RnW2xVJLZQK3G
+	 a+wYWOIX8wz04b8xPbCDxadbUJrsAvFWgeBr4Xj/v17kIuA7PZYmgOQuVD7BO/wrk0
+	 Hbax6ZnFzeg6ZO97PH7OIwo8Ysnv0TREsBrUEsJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/731] NFSv4: Fix a credential leak in _nfs4_discover_trunking()
-Date: Wed, 28 Dec 2022 15:35:54 +0100
-Message-Id: <20221228144303.722324146@linuxfoundation.org>
+Subject: [PATCH 6.0 0042/1073] arm64: dts: qcom: sm6125: fix SDHCI CQE reg names
+Date: Wed, 28 Dec 2022 15:27:10 +0100
+Message-Id: <20221228144329.269046269@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,39 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e83458fce080dc23c25353a1af90bfecf79c7369 ]
+[ Upstream commit 3de1172624b3c4ca65730bc34333ab493510b3e1 ]
 
-Fixes: 4f40a5b55446 ("NFSv4: Add an fattr allocation to _nfs4_discover_trunking()")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+SM6125 comes with SDCC (SDHCI controller) v5, so the second range of
+registers is cqhci, not core.
+
+Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # Sony Xperia 10 II
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221026163646.37433-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index dcc0677d1546..3c9ed63710a9 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3987,7 +3987,7 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 8c582a9e4ada..012722408682 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -458,7 +458,7 @@ rpm_msg_ram: sram@45f0000 {
+ 		sdhc_1: mmc@4744000 {
+ 			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0x04744000 0x1000>, <0x04745000 0x1000>;
+-			reg-names = "hc", "core";
++			reg-names = "hc", "cqhci";
  
- 	page = alloc_page(GFP_KERNEL);
- 	if (!page)
--		return -ENOMEM;
-+		goto out_put_cred;
- 	locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
- 	if (!locations)
- 		goto out_free;
-@@ -4003,6 +4003,8 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
- 	kfree(locations);
- out_free:
- 	__free_page(page);
-+out_put_cred:
-+	put_cred(cred);
- 	return status;
- }
- 
+ 			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.35.1
 
