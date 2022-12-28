@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1925720E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85318C433EF;
-	Wed, 28 Dec 2022 16:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0B220E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35568C433F0;
+	Wed, 28 Dec 2022 16:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246576;
-	bh=vWvS77y3aOqKyCHgi+CB3rdVEMh/eS0ZGnwOuYNBRR4=;
+	s=korg; t=1672246579;
+	bh=00NmHKHRLwzQLMEdhQ7IO6s1VJuatijNqi22o4B2TiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqUo9KCJn5B1clKHyYJ3ZlbFL231O6vPvRl+NdTb7djG3xcQRb3jVSsVQPEXy4UWr
-	 U0Arazxw7CM/ufj6jGwsNeZTIx31Z3vsIYjF4e3zfa1xqKh3QaQK7X8wtsGVWhQA8M
-	 +3yGFSaIjxehTbc+xHBImo56q6zWOvDaX10fJZ30=
+	b=of38uMQYJtYvrfjOUZC5ubexpD2aGL7Udw851XJnjpq2lSklzd8uJqrsvmz6xpngd
+	 FMEyGeOzALYpufMg8hJjHWbYINIgIPXYMgBFvLLISvKFY5GWbpVnFb78lctTImdbou
+	 SrbqkVacdHmM6bZsPmmfhacuAoaRmZzHKI0LMhno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Petlan <mpetlan@redhat.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nageswara R Sastry <rnsastry@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1087/1146] perf test: Fix "all PMU test" to skip parametrized events
-Date: Wed, 28 Dec 2022 15:43:46 +0100
-Message-Id: <20221228144359.718716577@linuxfoundation.org>
+Subject: [PATCH 6.1 1088/1146] afs: Fix lost servers_outstanding count
+Date: Wed, 28 Dec 2022 15:43:47 +0100
+Message-Id: <20221228144359.742298802@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -40,55 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Petlan <mpetlan@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b50d691e50e600fab82b423be871860537d75dc9 ]
+[ Upstream commit 36f82c93ee0bd88f1c95a52537906b8178b537f1 ]
 
-Parametrized events are not only a powerpc domain. They occur on other
-platforms too (e.g. aarch64). They should be ignored in this testcase,
-since proper setup of the parameters is out of scope of this script.
+The afs_fs_probe_dispatcher() work function is passed a count on
+net->servers_outstanding when it is scheduled (which may come via its
+timer).  This is passed back to the work_item, passed to the timer or
+dropped at the end of the dispatcher function.
 
-Let's not filter them out by PMU name, but rather based on the fact that
-they expect a parameter.
+But, at the top of the dispatcher function, there are two checks which
+skip the rest of the function: if the network namespace is being destroyed
+or if there are no fileservers to probe.  These two return paths, however,
+do not drop the count passed to the dispatcher, and so, sometimes, the
+destruction of a network namespace, such as induced by rmmod of the kafs
+module, may get stuck in afs_purge_servers(), waiting for
+net->servers_outstanding to become zero.
 
-Fixes: 451ed8058c69a3fe ("perf test: Fix "all PMU test" to skip hv_24x7/hv_gpci tests on powerpc")
-Signed-off-by: Michael Petlan <mpetlan@redhat.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nageswara R Sastry <rnsastry@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221219163008.9691-1-mpetlan@redhat.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fix this by adding the missing decrements in afs_fs_probe_dispatcher().
+
+Fixes: f6cbb368bcb0 ("afs: Actively poll fileservers to maintain NAT or firewall openings")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/167164544917.2072364.3759519569649459359.stgit@warthog.procyon.org.uk/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_all_pmu.sh | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ fs/afs/fs_probe.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/tests/shell/stat_all_pmu.sh b/tools/perf/tests/shell/stat_all_pmu.sh
-index 9c9ef33e0b3c..c77955419173 100755
---- a/tools/perf/tests/shell/stat_all_pmu.sh
-+++ b/tools/perf/tests/shell/stat_all_pmu.sh
-@@ -4,17 +4,8 @@
+diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
+index 3ac5fcf98d0d..daaf3810cc92 100644
+--- a/fs/afs/fs_probe.c
++++ b/fs/afs/fs_probe.c
+@@ -366,12 +366,15 @@ void afs_fs_probe_dispatcher(struct work_struct *work)
+ 	unsigned long nowj, timer_at, poll_at;
+ 	bool first_pass = true, set_timer = false;
  
- set -e
+-	if (!net->live)
++	if (!net->live) {
++		afs_dec_servers_outstanding(net);
+ 		return;
++	}
  
--for p in $(perf list --raw-dump pmu); do
--  # In powerpc, skip the events for hv_24x7 and hv_gpci.
--  # These events needs input values to be filled in for
--  # core, chip, partition id based on system.
--  # Example: hv_24x7/CPM_ADJUNCT_INST,domain=?,core=?/
--  # hv_gpci/event,partition_id=?/
--  # Hence skip these events for ppc.
--  if echo "$p" |grep -Eq 'hv_24x7|hv_gpci' ; then
--    echo "Skipping: Event '$p' in powerpc"
--    continue
--  fi
-+# Test all PMU events; however exclude parametrized ones (name contains '?')
-+for p in $(perf list --raw-dump pmu | sed 's/[[:graph:]]\+?[[:graph:]]\+[[:space:]]//g'); do
-   echo "Testing $p"
-   result=$(perf stat -e "$p" true 2>&1)
-   if ! echo "$result" | grep -q "$p" && ! echo "$result" | grep -q "<not supported>" ; then
+ 	_enter("");
+ 
+ 	if (list_empty(&net->fs_probe_fast) && list_empty(&net->fs_probe_slow)) {
++		afs_dec_servers_outstanding(net);
+ 		_leave(" [none]");
+ 		return;
+ 	}
 -- 
 2.35.1
 
