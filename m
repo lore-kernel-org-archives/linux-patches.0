@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC831863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F999C433D2;
-	Wed, 28 Dec 2022 15:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B82C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47FAC433F0;
+	Wed, 28 Dec 2022 15:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240184;
-	bh=P+OT3LYAnQdBBVs8i0SJtQUcn4ygZ0OcuKdOqFtSL6Y=;
+	s=korg; t=1672240187;
+	bh=0+NNa5fpyW3DCq73rttI0isSuvvtqapy9L9/HEa6Tz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ei2PXKs26gey7UqOdgGvDR0+QVk9rCgMcf2pJFC6JY03WvTm2NkXdAjHS6KDEk6N2
-	 66Gu5wi8oxO2LDjWCFOczGp0OVqJ+ctwbI2zEyY1ld2cLUHUOWD9/EliDG+eZ3Mo60
-	 WFb0VP1kJ2DFBCF0AK20r2JglrwP8WVC4D5IfIPw=
+	b=cgRkYW/fpBlj4vD1ecageq9Se7J1Mub+nAYQeXYaUQyuOvC9YwQViYHt3iOa5fwJp
+	 yFC++pKp8fUFxoerqV7pVZO+AAZRs/Ybe2Q6ovpvXV/BcGtBp4saHedpT2VWqotZkY
+	 YEBdaTi4yyYktqQAfx9Vwa2owURoxjPRGpywWAGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0090/1146] ARM: dts: armada-39x: Fix compatible string for gpios
-Date: Wed, 28 Dec 2022 15:27:09 +0100
-Message-Id: <20221228144332.588490251@linuxfoundation.org>
+Subject: [PATCH 5.15 319/731] blktrace: Fix output non-blktrace event when blk_classic option enabled
+Date: Wed, 28 Dec 2022 15:37:06 +0100
+Message-Id: <20221228144305.823198406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit d10886a4e6f85ee18d47a1066a52168461370ded ]
+[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
 
-Armada 39x supports per CPU interrupts for gpios, like Armada XP.
+When the blk_classic option is enabled, non-blktrace events must be
+filtered out. Otherwise, events of other types are output in the blktrace
+classic format, which is unexpected.
 
-So add compatible string "marvell,armadaxp-gpio" for Armada 39x GPIO nodes.
+The problem can be triggered in the following ways:
 
-Driver gpio-mvebu.c which handles both pre-XP and XP variants already
-provides support for per CPU interrupts on XP and newer variants.
+  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
+  # echo 1 > /sys/kernel/debug/tracing/events/enable
+  # echo blk > /sys/kernel/debug/tracing/current_tracer
+  # cat /sys/kernel/debug/tracing/trace_pipe
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Fixes: d81a914fc630 ("ARM: dts: mvebu: armada-39x: add missing nodes describing GPIO's")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: c71a89615411 ("blktrace: add ftrace plugin")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-39x.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/blktrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-39x.dtsi b/arch/arm/boot/dts/armada-39x.dtsi
-index 9d1cac49c022..1e05208d9f34 100644
---- a/arch/arm/boot/dts/armada-39x.dtsi
-+++ b/arch/arm/boot/dts/armada-39x.dtsi
-@@ -213,7 +213,7 @@ nand_pins: nand-pins {
- 			};
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index eaa98e2b468f..16b0d3fa56e0 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -1547,7 +1547,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
  
- 			gpio0: gpio@18100 {
--				compatible = "marvell,orion-gpio";
-+				compatible = "marvell,armadaxp-gpio", "marvell,orion-gpio";
- 				reg = <0x18100 0x40>;
- 				ngpios = <32>;
- 				gpio-controller;
-@@ -227,7 +227,7 @@ gpio0: gpio@18100 {
- 			};
+ static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
+ {
+-	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
++	if ((iter->ent->type != TRACE_BLK) ||
++	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
+ 		return TRACE_TYPE_UNHANDLED;
  
- 			gpio1: gpio@18140 {
--				compatible = "marvell,orion-gpio";
-+				compatible = "marvell,armadaxp-gpio", "marvell,orion-gpio";
- 				reg = <0x18140 0x40>;
- 				ngpios = <28>;
- 				gpio-controller;
+ 	return print_one_line(iter, true);
 -- 
 2.35.1
 
