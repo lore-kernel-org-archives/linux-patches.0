@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714BE1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:54:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE453C433D2;
-	Wed, 28 Dec 2022 16:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E322B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CBBC433EF;
+	Wed, 28 Dec 2022 16:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246476;
-	bh=ZkixGrRTxImmU34BC5VYjzY5BB/QJrVjCRSK6oVAM/w=;
+	s=korg; t=1672246478;
+	bh=JqIZPUJwMLo/J49EB/Pm0rWHwXZQypg3z7tfvaItLDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txe7qSmW3AQkQI8mbmJ+U/FwaZcvPxhXuORd6EN0rPiMe5xIwF3WlpuhZCQMIXvJ8
-	 fl5PSz3M5L1wwDfipCQN/RmnQw9g6JkBLr5cKHMheuX3IZb6ReNaxtZ/WMbtYMZCIH
-	 X0+fD9XsVVecPgo//+9bVeb9yJMkm45Fp+yH282U=
+	b=lT2rA5MjTA/yGvjw4x+OC3j4X1mNay014oRMjTmdBdg6G/5o5CVGHxgbiu6pZwrIA
+	 m9IsBKPBiDk7yQp0eCq/chXsUBBc+v6j7/4pymr/U4C3EUiWm43TvmR2iiIFoFFWLT
+	 QFnFQSaIlkWS/IJXG+exhFTh3hHf6gcAZyNgRjB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1050/1146] crypto: hisilicon/hpre - fix resource leak in remove process
-Date: Wed, 28 Dec 2022 15:43:09 +0100
-Message-Id: <20221228144358.834656531@linuxfoundation.org>
+Subject: [PATCH 6.1 1051/1146] scsi: lpfc: Fix hard lockup when reading the rx_monitor from debugfs
+Date: Wed, 28 Dec 2022 15:43:10 +0100
+Message-Id: <20221228144358.859084322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,47 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 45e6319bd5f2154d8b8c9f1eaa4ac030ba0d330c ]
+[ Upstream commit c44e50f4a0ec00c2298f31f91bc2c3e9bbd81c7e ]
 
-In hpre_remove(), when the disable operation of qm sriov failed,
-the following logic should continue to be executed to release the
-remaining resources that have been allocated, instead of returning
-directly, otherwise there will be resource leakage.
+During I/O and simultaneous cat of /sys/kernel/debug/lpfc/fnX/rx_monitor, a
+hard lockup similar to the call trace below may occur.
 
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The spin_lock_bh in lpfc_rx_monitor_report is not protecting from timer
+interrupts as expected, so change the strength of the spin lock to _irq.
+
+Kernel panic - not syncing: Hard LOCKUP
+CPU: 3 PID: 110402 Comm: cat Kdump: loaded
+
+exception RIP: native_queued_spin_lock_slowpath+91
+
+[IRQ stack]
+ native_queued_spin_lock_slowpath at ffffffffb814e30b
+ _raw_spin_lock at ffffffffb89a667a
+ lpfc_rx_monitor_record at ffffffffc0a73a36 [lpfc]
+ lpfc_cmf_timer at ffffffffc0abbc67 [lpfc]
+ __hrtimer_run_queues at ffffffffb8184250
+ hrtimer_interrupt at ffffffffb8184ab0
+ smp_apic_timer_interrupt at ffffffffb8a026ba
+ apic_timer_interrupt at ffffffffb8a01c4f
+[End of IRQ stack]
+
+ apic_timer_interrupt at ffffffffb8a01c4f
+ lpfc_rx_monitor_report at ffffffffc0a73c80 [lpfc]
+ lpfc_rx_monitor_read at ffffffffc0addde1 [lpfc]
+ full_proxy_read at ffffffffb83e7fc3
+ vfs_read at ffffffffb833fe71
+ ksys_read at ffffffffb83402af
+ do_syscall_64 at ffffffffb800430b
+ entry_SYSCALL_64_after_hwframe at ffffffffb8a000ad
+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20221017164323.14536-2-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/scsi/lpfc/lpfc_sli.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 471e5ca720f5..baf1faec7046 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -1437,18 +1437,12 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- static void hpre_remove(struct pci_dev *pdev)
- {
- 	struct hisi_qm *qm = pci_get_drvdata(pdev);
--	int ret;
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 99d06dc7ddf6..21c52154626f 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -8150,10 +8150,10 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
+ 					"IO_cnt", "Info", "BWutil(ms)");
+ 	}
  
- 	hisi_qm_pm_uninit(qm);
- 	hisi_qm_wait_task_finish(qm, &hpre_devices);
- 	hisi_qm_alg_unregister(qm, &hpre_devices);
--	if (qm->fun_type == QM_HW_PF && qm->vfs_num) {
--		ret = hisi_qm_sriov_disable(pdev, true);
--		if (ret) {
--			pci_err(pdev, "Disable SRIOV fail!\n");
--			return;
--		}
--	}
-+	if (qm->fun_type == QM_HW_PF && qm->vfs_num)
-+		hisi_qm_sriov_disable(pdev, true);
+-	/* Needs to be _bh because record is called from timer interrupt
++	/* Needs to be _irq because record is called from timer interrupt
+ 	 * context
+ 	 */
+-	spin_lock_bh(ring_lock);
++	spin_lock_irq(ring_lock);
+ 	while (*head_idx != *tail_idx) {
+ 		entry = &ring[*head_idx];
  
- 	hpre_debugfs_exit(qm);
- 	hisi_qm_stop(qm, QM_NORMAL);
+@@ -8197,7 +8197,7 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
+ 		if (cnt >= max_read_entries)
+ 			break;
+ 	}
+-	spin_unlock_bh(ring_lock);
++	spin_unlock_irq(ring_lock);
+ 
+ 	return cnt;
+ }
 -- 
 2.35.1
 
