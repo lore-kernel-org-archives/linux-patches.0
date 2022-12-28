@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE981C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCF3C433D2;
-	Wed, 28 Dec 2022 16:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F251F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F7CC433D2;
+	Wed, 28 Dec 2022 16:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245442;
-	bh=8PYbaGHGn2BoTknj0lteJ96f0x3lbuqYfESKBT6W+U4=;
+	s=korg; t=1672245444;
+	bh=dIguU8EAz5SPQFZusL+Z8bJhWfheX1iIw5bpo6Y0HAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8XFdvNO8LMQkxPEC5Sz8BKkUoaSnDhJ8PVKZ6M4ZVKSWW3Zjwvy8/od4vQokqKVN
-	 HboV37eILs4hsYnB7S0mnZriThbz6QeZyi+CogiPVgPxz8027D+N7T0baIVwcGRhG1
-	 ieVV3odhhNI/QtSjN6Bpoo/B/UEzuePOce72FUrI=
+	b=wDBbPGEtg8IOMke+hQpYSXjQjopCqn2vOon4dIJmKitWhAgR68g+pDY39x4OXF6Lh
+	 kXXP6sYTAWWiDP1WwJg4Avo1SAu1z1Z292cHYI3UwAiKyZ/9i5OVuDjDmGu/G2FoSh
+	 KjT+0NzldjlOhcExdx/sL1loybNC4IbL6hri8eQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Mia Kanashi <chad@redpilled.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0862/1146] iommu/mediatek: Use component_match_add
-Date: Wed, 28 Dec 2022 15:40:01 +0100
-Message-Id: <20221228144353.571871543@linuxfoundation.org>
+Subject: [PATCH 6.0 0897/1073] ACPI: EC: Add quirk for the HP Pavilion Gaming 15-cx0041ur
+Date: Wed, 28 Dec 2022 15:41:25 +0100
+Message-Id: <20221228144352.393556127@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,58 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yong Wu <yong.wu@mediatek.com>
+From: Mia Kanashi <chad@redpilled.dev>
 
-[ Upstream commit b5765a1b44bea9dfcae69c53ffeb4c689d0922a7 ]
+[ Upstream commit b423f240a66ad928c4cb5ec6055dfc90ce8d894e ]
 
-In order to simplify the error patch(avoid call of_node_put), Use
-component_match_add instead component_match_add_release since we are only
-interested in the "device" here. Then we could always call of_node_put in
-normal path.
+Added GPE quirk entry for the HP Pavilion Gaming 15-cx0041ur.
+There is a quirk entry for the 15-cx0xxx laptops, but this one has
+different DMI_PRODUCT_NAME.
 
-Strictly this is not a fixes patch, but it is a prepare for adding the
-error path, thus I add a Fixes tag too.
+Notably backlight keys and other ACPI events now function correctly.
 
-Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20221018024258.19073-3-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Mia Kanashi <chad@redpilled.dev>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/acpi/ec.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index febcca8fcbcf..ba5abfc2890c 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1069,19 +1069,17 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 			id = i;
- 
- 		plarbdev = of_find_device_by_node(larbnode);
--		if (!plarbdev) {
--			of_node_put(larbnode);
-+		of_node_put(larbnode);
-+		if (!plarbdev)
- 			return -ENODEV;
--		}
-+
- 		if (!plarbdev->dev.driver) {
--			of_node_put(larbnode);
- 			platform_device_put(plarbdev);
- 			return -EPROBE_DEFER;
- 		}
- 		data->larb_imu[id].dev = &plarbdev->dev;
- 
--		component_match_add_release(dev, match, component_release_of,
--					    component_compare_of, larbnode);
-+		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
- 		platform_device_put(plarbdev);
- 	}
- 
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index c95e535035a0..fdc760e1e09e 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1879,6 +1879,16 @@ static const struct dmi_system_id ec_dmi_table[] __initconst = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion Gaming Laptop 15-cx0xxx"),
+ 		},
+ 	},
++	{
++		/*
++		 * HP Pavilion Gaming Laptop 15-cx0041ur
++		 */
++		.callback = ec_honor_dsdt_gpe,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HP 15-cx0041ur"),
++		},
++	},
+ 	{
+ 		/*
+ 		 * Samsung hardware
 -- 
 2.35.1
 
