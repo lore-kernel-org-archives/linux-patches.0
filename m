@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA0E1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3202EC433D2;
-	Wed, 28 Dec 2022 16:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7515F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4FFC433D2;
+	Wed, 28 Dec 2022 16:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243885;
-	bh=e2aaQ2Y2YJbiLzEGOzXnq9KhHn6R4/v594YV73e4B6A=;
+	s=korg; t=1672243888;
+	bh=fE3QMOo2s3TQgHsLdMZsi7UgSOkYnFXOB8fBJmKgvsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h2bCmTCv5jJkYbz3VXPwupXadbk+QTSk4EYQIdK8315I1q/dhkimQzrD75zMPnaWN
-	 lrrv6TTt8LRr4ZXZ6Mbf8B6ddX93lE21qbF8HOW2dnbTNKe9hElmMlnaZCZ7Dm9lx1
-	 vSAGzGtJOKky2I2jZEcMFevRDtefUNcCa43H6R7I=
+	b=w0CDKpWotqh3cfxsDtLuD5Uk+TDKHHh848wq9u5tNYq+OClc6Fcdc6Nx6bl0MS+Ox
+	 kKYZDILe9kdiIbPgkBuILGas+pxHyYEXelCtCO5LBTporrNchQbRm29C1/yAR+9WVO
+	 JD+wnKJMYO4ZAHYkOUHiI9zd1H9gaZlIAVLYmPNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0572/1146] apparmor: fix lockdep warning when removing a namespace
-Date: Wed, 28 Dec 2022 15:35:11 +0100
-Message-Id: <20221228144345.709740307@linuxfoundation.org>
+Subject: [PATCH 6.0 0605/1073] PCI: Check for alloc failure in pci_request_irq()
+Date: Wed, 28 Dec 2022 15:36:33 +0100
+Message-Id: <20221228144344.479779542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,54 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Johansen <john.johansen@canonical.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 9c4557efc558a68e4cd973490fd936d6e3414db8 ]
+[ Upstream commit 2d9cd957d40c3ac491b358e7cff0515bb07a3a9c ]
 
-Fix the following lockdep warning
+When kvasprintf() fails to allocate memory, it returns a NULL pointer.
+Return error from pci_request_irq() so we don't dereference it.
 
-[ 1119.158984] ============================================
-[ 1119.158988] WARNING: possible recursive locking detected
-[ 1119.158996] 6.0.0-rc1+ #257 Tainted: G            E    N
-[ 1119.158999] --------------------------------------------
-[ 1119.159001] bash/80100 is trying to acquire lock:
-[ 1119.159007] ffff88803e79b4a0 (&ns->lock/1){+.+.}-{4:4}, at: destroy_ns.part.0+0x43/0x140
-[ 1119.159028]
-               but task is already holding lock:
-[ 1119.159030] ffff8881009764a0 (&ns->lock/1){+.+.}-{4:4}, at: aa_remove_profiles+0x3f0/0x640
-[ 1119.159040]
-               other info that might help us debug this:
-[ 1119.159042]  Possible unsafe locking scenario:
-
-[ 1119.159043]        CPU0
-[ 1119.159045]        ----
-[ 1119.159047]   lock(&ns->lock/1);
-[ 1119.159051]   lock(&ns->lock/1);
-[ 1119.159055]
-                *** DEADLOCK ***
-
-Which is caused by an incorrect lockdep nesting notation
-
-Fixes: feb3c766a3ab ("apparmor: fix possible recursive lock warning in __aa_create_ns")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+[bhelgaas: commit log]
+Fixes: 704e8953d3e9 ("PCI/irq: Add pci_request_irq() and pci_free_irq() helpers")
+Link: https://lore.kernel.org/r/20221121020029.3759444-1-zengheng4@huawei.com
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/irq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 499c0209b6a4..fbdfcef91c61 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1170,7 +1170,7 @@ ssize_t aa_remove_profiles(struct aa_ns *policy_ns, struct aa_label *subj,
+diff --git a/drivers/pci/irq.c b/drivers/pci/irq.c
+index 12ecd0aaa28d..0050e8f6814e 100644
+--- a/drivers/pci/irq.c
++++ b/drivers/pci/irq.c
+@@ -44,6 +44,8 @@ int pci_request_irq(struct pci_dev *dev, unsigned int nr, irq_handler_t handler,
+ 	va_start(ap, fmt);
+ 	devname = kvasprintf(GFP_KERNEL, fmt, ap);
+ 	va_end(ap);
++	if (!devname)
++		return -ENOMEM;
  
- 	if (!name) {
- 		/* remove namespace - can only happen if fqname[0] == ':' */
--		mutex_lock_nested(&ns->parent->lock, ns->level);
-+		mutex_lock_nested(&ns->parent->lock, ns->parent->level);
- 		__aa_bump_ns_revision(ns);
- 		__aa_remove_ns(ns);
- 		mutex_unlock(&ns->parent->lock);
+ 	ret = request_threaded_irq(pci_irq_vector(dev, nr), handler, thread_fn,
+ 				   irqflags, devname, dev_id);
 -- 
 2.35.1
 
