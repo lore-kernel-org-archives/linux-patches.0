@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B211C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3959AC433EF;
-	Wed, 28 Dec 2022 16:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693D81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEC3C433EF;
+	Wed, 28 Dec 2022 16:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244681;
-	bh=DpEWOXGe8u6GyeueTz3Kz+tVFiYJv7PlgMnJtiesAmQ=;
+	s=korg; t=1672244684;
+	bh=/a+SXPPtV/sZYt6jUgZnWoKDg+jEjL4j84pPZqvDavE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmdijJzL1DGxRQFiaJEc+voq1GVCMV4QACh+zcLfrHRd3bpkyuswpnfwSldSrBAkV
-	 WQzt9PUeoq5T1NqhSh+4Uif0z05XwkzYN91vvdMCEvuMLC2WVqoZ6h3B9meFDXyU8a
-	 2wdGIEb/tTE1G3pOUyRm8HA41WaT6jy1AEeyPJNs=
+	b=XTR7VBaMt9ufJ+yVwQPDZ4zjZcBsLTi/AfuxuQ3HqG7Kb3cQ+c+Eo4kSbVuMEC6H5
+	 QI2AGiN/QVSUJiwTkBr4Xrr/emGHxTQ+1/0rJ0IhbW7ZDcLaC763wN4lhrk4zGoPCm
+	 L90fJs6+9SrY7pxQUmWFzXY24qX0ut90Rk6tqU8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	bpf@vger.kernel.org,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0718/1146] misc: sgi-gru: fix use-after-free error in gru_set_context_option, gru_fault and gru_handle_user_call_os
-Date: Wed, 28 Dec 2022 15:37:37 +0100
-Message-Id: <20221228144349.646377899@linuxfoundation.org>
+Subject: [PATCH 6.0 0756/1073] perf off_cpu: Fix a typo in BTF tracepoint name, it should be btf_trace_sched_switch
+Date: Wed, 28 Dec 2022 15:39:04 +0100
+Message-Id: <20221228144348.551905899@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,137 +42,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 643a16a0eb1d6ac23744bb6e90a00fc21148a9dc ]
+[ Upstream commit 167b266bf66c5b93171011ef9d1f09b070c2c537 ]
 
-In some bad situation, the gts may be freed gru_check_chiplet_assignment.
-The call chain can be gru_unload_context->gru_free_gru_context->gts_drop
-and kfree finally. However, the caller didn't know if the gts is freed
-or not and use it afterwards. This will trigger a Use after Free bug.
+In BTF, tracepoint definitions have the "btf_trace_" prefix.  The
+off-cpu profiler needs to check the signature of the sched_switch event
+using that definition.  But there's a typo (s/bpf/btf/) so it failed
+always.
 
-Fix it by introducing a return value to see if it's in error path or not.
-Free the gts in caller if gru_check_chiplet_assignment check failed.
-
-Fixes: 55484c45dbec ("gru: allow users to specify gru chiplet 2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Acked-by: Dimitri Sivanich <sivanich@hpe.com>
-Link: https://lore.kernel.org/r/20221110035033.19498-1-zyytlz.wz@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b36888f71c8542cd ("perf record: Handle argument change in sched_switch")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20221208182636.524139-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grufault.c  | 13 +++++++++++--
- drivers/misc/sgi-gru/grumain.c   | 22 ++++++++++++++++++----
- drivers/misc/sgi-gru/grutables.h |  2 +-
- 3 files changed, 30 insertions(+), 7 deletions(-)
+ tools/perf/util/bpf_off_cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index d7ef61e602ed..b836936e9747 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -648,6 +648,7 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if ((cb & (GRU_HANDLE_STRIDE - 1)) || ucbnum >= GRU_NUM_CB)
- 		return -EINVAL;
+diff --git a/tools/perf/util/bpf_off_cpu.c b/tools/perf/util/bpf_off_cpu.c
+index c257813e674e..01f70b8e705a 100644
+--- a/tools/perf/util/bpf_off_cpu.c
++++ b/tools/perf/util/bpf_off_cpu.c
+@@ -102,7 +102,7 @@ static void check_sched_switch_args(void)
+ 	const struct btf_type *t1, *t2, *t3;
+ 	u32 type_id;
  
-+again:
- 	gts = gru_find_lock_gts(cb);
- 	if (!gts)
- 		return -EINVAL;
-@@ -656,7 +657,11 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if (ucbnum >= gts->ts_cbr_au_count * GRU_CBR_AU_SIZE)
- 		goto exit;
- 
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		gru_unlock_gts(gts);
-+		gru_unload_context(gts, 1);
-+		goto again;
-+	}
- 
- 	/*
- 	 * CCH may contain stale data if ts_force_cch_reload is set.
-@@ -874,7 +879,11 @@ int gru_set_context_option(unsigned long arg)
- 		} else {
- 			gts->ts_user_blade_id = req.val1;
- 			gts->ts_user_chiplet_id = req.val0;
--			gru_check_context_placement(gts);
-+			if (gru_check_context_placement(gts)) {
-+				gru_unlock_gts(gts);
-+				gru_unload_context(gts, 1);
-+				return ret;
-+			}
- 		}
- 		break;
- 	case sco_gseg_owner:
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index 6706ef3c5977..4eb4b9455139 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -716,9 +716,10 @@ static int gru_check_chiplet_assignment(struct gru_state *gru,
-  * chiplet. Misassignment can occur if the process migrates to a different
-  * blade or if the user changes the selected blade/chiplet.
-  */
--void gru_check_context_placement(struct gru_thread_state *gts)
-+int gru_check_context_placement(struct gru_thread_state *gts)
- {
- 	struct gru_state *gru;
-+	int ret = 0;
- 
- 	/*
- 	 * If the current task is the context owner, verify that the
-@@ -726,15 +727,23 @@ void gru_check_context_placement(struct gru_thread_state *gts)
- 	 * references. Pthread apps use non-owner references to the CBRs.
- 	 */
- 	gru = gts->ts_gru;
-+	/*
-+	 * If gru or gts->ts_tgid_owner isn't initialized properly, return
-+	 * success to indicate that the caller does not need to unload the
-+	 * gru context.The caller is responsible for their inspection and
-+	 * reinitialization if needed.
-+	 */
- 	if (!gru || gts->ts_tgid_owner != current->tgid)
--		return;
-+		return ret;
- 
- 	if (!gru_check_chiplet_assignment(gru, gts)) {
- 		STAT(check_context_unload);
--		gru_unload_context(gts, 1);
-+		ret = -EINVAL;
- 	} else if (gru_retarget_intr(gts)) {
- 		STAT(check_context_retarget_intr);
- 	}
-+
-+	return ret;
- }
- 
- 
-@@ -934,7 +943,12 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	mutex_lock(&gts->ts_ctxlock);
- 	preempt_disable();
- 
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		preempt_enable();
-+		mutex_unlock(&gts->ts_ctxlock);
-+		gru_unload_context(gts, 1);
-+		return VM_FAULT_NOPAGE;
-+	}
- 
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
-diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
-index 8c52776db234..640daf1994df 100644
---- a/drivers/misc/sgi-gru/grutables.h
-+++ b/drivers/misc/sgi-gru/grutables.h
-@@ -632,7 +632,7 @@ extern int gru_user_flush_tlb(unsigned long arg);
- extern int gru_user_unload_context(unsigned long arg);
- extern int gru_get_exception_detail(unsigned long arg);
- extern int gru_set_context_option(unsigned long address);
--extern void gru_check_context_placement(struct gru_thread_state *gts);
-+extern int gru_check_context_placement(struct gru_thread_state *gts);
- extern int gru_cpu_fault_map_id(void);
- extern struct vm_area_struct *gru_find_vma(unsigned long vaddr);
- extern void gru_flush_all_tlb(struct gru_state *gru);
+-	type_id = btf__find_by_name_kind(btf, "bpf_trace_sched_switch",
++	type_id = btf__find_by_name_kind(btf, "btf_trace_sched_switch",
+ 					 BTF_KIND_TYPEDEF);
+ 	if ((s32)type_id < 0)
+ 		return;
 -- 
 2.35.1
 
