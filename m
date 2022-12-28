@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D941C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBC1C433EF;
-	Wed, 28 Dec 2022 16:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E67C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA000C433D2;
+	Wed, 28 Dec 2022 16:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243456;
-	bh=rW9zrW0McxeYHmFpJKaG3JHIu4T7JOwZJ065y9vigwk=;
+	s=korg; t=1672243459;
+	bh=ChABwfarEnxpiZ8bKwylaKD1+QV4NBac45YFxo79hTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPjditK3XBX3qI7Ke0MPzUwv8/ihEkckyV7SLAVAfhiqxX0OX2jVLEkpBtwkyt2va
-	 Fzj3rM9dZaep/2u4yqSOVii12lqMIm+LMPAm8tDaESkPBPpVYJOe9WSX44CQk1rb7R
-	 5S6DeoKgsUe/q4A8nrWrt+2P1Tf3WVWLBPYY8YKs=
+	b=H6aruB1u6KL3Ebxu+uJcDzGo3w2bCL828f1kbWRezEeGQHCZPdifle5t4XfwYxC++
+	 kWGXDiN6l7rhdfHaCGbUr3rkf054oxQ0JFNiuNx9+zgBBcUjfh0s4QqmSAHO1SlEYx
+	 ncv4wTHSg3EZuh6Yr8lp/C14Uy/1pCQ3I8K2AQkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0531/1073] can: tcan4x5x: Remove invalid write in clear_interrupts
-Date: Wed, 28 Dec 2022 15:35:19 +0100
-Message-Id: <20221228144342.470120921@linuxfoundation.org>
+	Rickard x Andersson <rickaran@axis.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Martin Liska <mliska@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 723/731] gcov: add support for checksum field
+Date: Wed, 28 Dec 2022 15:43:50 +0100
+Message-Id: <20221228144317.404616527@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Rickard x Andersson <rickaran@axis.com>
 
-[ Upstream commit 40c9e4f676abbe194541d88e796341c92d5a13c0 ]
+commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
 
-Register 0x824 TCAN4X5X_MCAN_INT_REG is a read-only register. Any writes
-to this register do not have any effect.
+In GCC version 12.1 a checksum field was added.
 
-Remove this write. The m_can driver aldready clears the interrupts in
-m_can_isr() by writing to M_CAN_IR which is translated to register
-0x1050 which is a writable version of this register.
+This patch fixes a kernel crash occurring during boot when using
+gcov-kernel with GCC version 12.2.  The crash occurred on a system running
+on i.MX6SX.
 
-Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Link: https://lore.kernel.org/all/20221206115728.1056014-9-msp@baylibre.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
+Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
+Signed-off-by: Rickard x Andersson <rickaran@axis.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Martin Liska <mliska@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c | 5 -----
- 1 file changed, 5 deletions(-)
+ kernel/gcov/gcc_4_7.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index 41645a24384c..1fec394b3517 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -204,11 +204,6 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
--	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_MCAN_INT_REG,
--				      TCAN4X5X_ENABLE_MCAN_INT);
--	if (ret)
--		return ret;
--
- 	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
- 				      TCAN4X5X_CLEAR_ALL_INT);
- 	if (ret)
--- 
-2.35.1
-
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -82,6 +82,7 @@ struct gcov_fn_info {
+  * @version: gcov version magic indicating the gcc version used for compilation
+  * @next: list head for a singly-linked list
+  * @stamp: uniquifying time stamp
++ * @checksum: unique object checksum
+  * @filename: name of the associated gcov data file
+  * @merge: merge functions (null for unused counter type)
+  * @n_functions: number of instrumented functions
+@@ -94,6 +95,10 @@ struct gcov_info {
+ 	unsigned int version;
+ 	struct gcov_info *next;
+ 	unsigned int stamp;
++ /* Since GCC 12.1 a checksum field is added. */
++#if (__GNUC__ >= 12)
++	unsigned int checksum;
++#endif
+ 	const char *filename;
+ 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
+ 	unsigned int n_functions;
 
 
