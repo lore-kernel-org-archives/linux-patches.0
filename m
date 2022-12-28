@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1271C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E42BC433D2;
-	Wed, 28 Dec 2022 16:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C978A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47123C433EF;
+	Wed, 28 Dec 2022 16:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244099;
-	bh=rLgqm8AkjtP/pV7MG2SgnIVdxklTuEQ4QmDrLwU8k/Q=;
+	s=korg; t=1672244101;
+	bh=l9HWFXL6iqJaCWp0n0E1sik/5WoiJBg7NENzeQiWgc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cucAp0O3UJyKHI/gOZY+TxeptPc0gpdgnsNdz43X9+xOwCAFUXONsazO20YjVfPqk
-	 Vt3FeP6vZ6X7skPeTLrSOSZ0+GQH5fd2Al3eZCTOy/ValxwK06oKZc8rmXpUwLhiKb
-	 jdJdF492PTWhmvBvJYlF02G74Q3GmGv90piluACs=
+	b=XKfM7PJQMKi8jl/Zx6Y7SnfB1dvuEPtGHD+RGCxX2jCz/IIhEmpJX5vfH00KC8ZdN
+	 YHuSjWfBEx+veNoMz0AdgW3ETpR2Ajr+7TAh4d0YSUIjXf5dEuccXUj6pSoVhlz5gF
+	 oI3dImJbXJdp39UnY1Q1K78ssjpy0DiTTTUqJnFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0645/1073] orangefs: Fix sysfs not cleanup when dev init failed
-Date: Wed, 28 Dec 2022 15:37:13 +0100
-Message-Id: <20221228144345.563583060@linuxfoundation.org>
+Subject: [PATCH 6.1 0611/1146] RDMA/siw: Set defined status for work completion with undefined status
+Date: Wed, 28 Dec 2022 15:35:50 +0100
+Message-Id: <20221228144346.766092435@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,72 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Bernard Metzler <bmt@zurich.ibm.com>
 
-[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
+[ Upstream commit 60da2d11fcbc043304910e4d2ca82f9bab953e63 ]
 
-When the dev init failed, should cleanup the sysfs, otherwise, the
-module will never be loaded since can not create duplicate sysfs
-directory:
+A malicious user may write undefined values into memory mapped completion
+queue elements status or opcode. Undefined status or opcode values will
+result in out-of-bounds access to an array mapping siw internal
+representation of opcode and status to RDMA core representation when
+reaping CQ elements. While siw detects those undefined values, it did not
+correctly set completion status to a defined value, thus defeating the
+whole purpose of the check.
 
-  sysfs: cannot create duplicate filename '/fs/orangefs'
+This bug leads to the following Smatch static checker warning:
 
-  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   sysfs_warn_dup.cold+0x17/0x24
-   sysfs_create_dir_ns+0x16d/0x180
-   kobject_add_internal+0x156/0x3a0
-   kobject_init_and_add+0xcf/0x120
-   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
-   orangefs_init+0xfe/0x1000 [orangefs]
-   do_one_initcall+0x87/0x2a0
-   do_init_module+0xdf/0x320
-   load_module+0x2f98/0x3330
-   __do_sys_finit_module+0x113/0x1b0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+	drivers/infiniband/sw/siw/siw_cq.c:96 siw_reap_cqe()
+	error: buffer overflow 'map_cqe_status' 10 <= 21
 
-  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
-
-Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: bdf1da5df9da ("RDMA/siw: Fix immediate work request flush to completion queue")
+Link: https://lore.kernel.org/r/20221115170747.1263298-1-bmt@zurich.ibm.com
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-mod.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/sw/siw/siw_cq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
-index cd7297815f91..5ab741c60b7e 100644
---- a/fs/orangefs/orangefs-mod.c
-+++ b/fs/orangefs/orangefs-mod.c
-@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
- 		gossip_err("%s: could not initialize device subsystem %d!\n",
- 			   __func__,
- 			   ret);
--		goto cleanup_device;
-+		goto cleanup_sysfs;
- 	}
+diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
+index acc7bcd538b5..403029de6b92 100644
+--- a/drivers/infiniband/sw/siw/siw_cq.c
++++ b/drivers/infiniband/sw/siw/siw_cq.c
+@@ -88,9 +88,9 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
  
- 	ret = register_filesystem(&orangefs_fs_type);
-@@ -152,11 +152,11 @@ static int __init orangefs_init(void)
- 		goto out;
- 	}
- 
--	orangefs_sysfs_exit();
--
--cleanup_device:
- 	orangefs_dev_cleanup();
- 
-+cleanup_sysfs:
-+	orangefs_sysfs_exit();
-+
- sysfs_init_failed:
- 	orangefs_debugfs_cleanup();
- 
+ 			if (opcode >= SIW_NUM_OPCODES) {
+ 				opcode = 0;
+-				status = IB_WC_GENERAL_ERR;
++				status = SIW_WC_GENERAL_ERR;
+ 			} else if (status >= SIW_NUM_WC_STATUS) {
+-				status = IB_WC_GENERAL_ERR;
++				status = SIW_WC_GENERAL_ERR;
+ 			}
+ 			wc->opcode = map_wc_opcode[opcode];
+ 			wc->status = map_cqe_status[status].ib;
 -- 
 2.35.1
 
