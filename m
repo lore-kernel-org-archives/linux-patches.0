@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95771863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5CEC433D2;
-	Wed, 28 Dec 2022 15:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B58B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58F2C433D2;
+	Wed, 28 Dec 2022 15:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241886;
-	bh=WdydrDjmFfmFi2uwdAoP3asV+PVKKKriPAKw0MdvNAw=;
+	s=korg; t=1672241889;
+	bh=kfOOReeHPylVqvOvxlkDqxMX1wJw3onM4qmZ7+pQgGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdScqF2N2jTPT3pWJHxDU/LyeVPOnJJPvsDFG03rR0CiiTYFSLvBvJt/PGjmm6jAq
-	 9oLKV128YIl20W77KFvTWK+dZ+pgMOWcmq6hrETvZMcip4hKRQmgubZEuSiEkeGC5L
-	 SYFnh/TP7c5KFIwahFQ85ByNVww3Mb2cab2xVboY=
+	b=gJjwDkVhBqR0yt4F75uchW4KlAytwRiTcQXUeJVnq62cp7m0lcxTWGHNkREcZ3Jwn
+	 lyQRWn7bhtapOWbtQ9oXe1EnS4OABkUcGR+KqAZ/gMBtVBih36fJ5bXGit+Q6+wems
+	 tYoH3JoV66VT4lvbYj5tmfw/nfpYWLfwLAcg58Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0301/1146] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
-Date: Wed, 28 Dec 2022 15:30:40 +0100
-Message-Id: <20221228144338.316185921@linuxfoundation.org>
+Subject: [PATCH 6.0 0340/1073] net: ethernet: mtk_eth_soc: do not overwrite mtu configuration running reset routine
+Date: Wed, 28 Dec 2022 15:32:08 +0100
+Message-Id: <20221228144337.241421297@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,90 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
+[ Upstream commit b677d6c7a695dad1b02d2e0e428c39b3b344f270 ]
 
-When using wpa_supplicant v2.10, this driver is no longer able to
-associate with any AP and fails in the EAPOL 4-way handshake while
-sending the 2/4 message to the AP. The problem is not present in
-wpa_supplicant v2.9 or older. The problem stems from HostAP commit
-144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
-which changes the way EAPOL frames are sent, from them being send
-at L2 frames to them being sent via nl80211 control port.
+Restore user configured MTU running mtk_hw_init() during tx timeout routine
+since it will be overwritten after a hw reset.
 
-An EAPOL frame sent as L2 frame is passed to the WiFi driver with
-skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
-port has skb->protocol set to ETH_P_802_3 . The later happens in
-ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
-into 802.3 frame.
-
-The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
-frames and sends them via highest-priority transmit queue, while
-the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
-handshake frames must be sent as highest-priority, otherwise the
-4-way handshake times out.
-
-Therefore, to fix this problem, inspect the skb control flags and
-if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
-an EAPOL frame and transmit the frame via high-priority queue just
-like other ETH_P_PAE frames.
-
-Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
+Reported-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9ea4d311509f ("net: ethernet: mediatek: add the whole ethernet reset into the reset process")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
- drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 53 +++++++++++++--------
+ 1 file changed, 34 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
-index 0f3a80f66b61..ead4d4e04328 100644
---- a/drivers/net/wireless/rsi/rsi_91x_core.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_core.c
-@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
- 							      tid, 0);
- 			}
- 		}
--		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+
-+		if (IEEE80211_SKB_CB(skb)->control.flags &
-+		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
- 			q_num = MGMT_SOFT_Q;
- 			skb->priority = q_num;
- 		}
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index c61f83a7333b..c7460fbba014 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 	u8 header_size;
- 	u8 vap_id = 0;
- 	u8 dword_align_bytes;
-+	bool tx_eapol;
- 	u16 seq_num;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 5380caf0acc2..26e0a2af64cf 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3209,6 +3209,30 @@ static void mtk_dim_tx(struct work_struct *work)
+ 	dim->state = DIM_START_MEASURE;
+ }
  
- 	info = IEEE80211_SKB_CB(skb);
- 	vif = info->control.vif;
- 	tx_params = (struct skb_info *)info->driver_data;
- 
-+	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
-+		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
++static void mtk_set_mcr_max_rx(struct mtk_mac *mac, u32 val)
++{
++	struct mtk_eth *eth = mac->hw;
++	u32 mcr_cur, mcr_new;
 +
- 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
- 	if (header_size > skb_headroom(skb)) {
- 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
-@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 		}
++	if (MTK_HAS_CAPS(eth->soc->caps, MTK_SOC_MT7628))
++		return;
++
++	mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
++	mcr_new = mcr_cur & ~MAC_MCR_MAX_RX_MASK;
++
++	if (val <= 1518)
++		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1518);
++	else if (val <= 1536)
++		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1536);
++	else if (val <= 1552)
++		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1552);
++	else
++		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_2048);
++
++	if (mcr_new != mcr_cur)
++		mtk_w32(mac->hw, mcr_new, MTK_MAC_MCR(mac->id));
++}
++
+ static int mtk_hw_init(struct mtk_eth *eth)
+ {
+ 	u32 dma_mask = ETHSYS_DMA_AG_MAP_PDMA | ETHSYS_DMA_AG_MAP_QDMA |
+@@ -3283,8 +3307,16 @@ static int mtk_hw_init(struct mtk_eth *eth)
+ 	 * up with the more appropriate value when mtk_mac_config call is being
+ 	 * invoked.
+ 	 */
+-	for (i = 0; i < MTK_MAC_COUNT; i++)
++	for (i = 0; i < MTK_MAC_COUNT; i++) {
++		struct net_device *dev = eth->netdev[i];
++
+ 		mtk_w32(eth, MAC_MCR_FORCE_LINK_DOWN, MTK_MAC_MCR(i));
++		if (dev) {
++			struct mtk_mac *mac = netdev_priv(dev);
++
++			mtk_set_mcr_max_rx(mac, dev->mtu + MTK_RX_ETH_HLEN);
++		}
++	}
+ 
+ 	/* Indicates CDM to parse the MTK special tag from CPU
+ 	 * which also is working out for untag packets.
+@@ -3400,7 +3432,6 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
+ 	int length = new_mtu + MTK_RX_ETH_HLEN;
+ 	struct mtk_mac *mac = netdev_priv(dev);
+ 	struct mtk_eth *eth = mac->hw;
+-	u32 mcr_cur, mcr_new;
+ 
+ 	if (rcu_access_pointer(eth->prog) &&
+ 	    length > MTK_PP_MAX_BUF_SIZE) {
+@@ -3408,23 +3439,7 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
+ 		return -EINVAL;
  	}
  
--	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+	if (tx_eapol) {
- 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
+-	if (!MTK_HAS_CAPS(eth->soc->caps, MTK_SOC_MT7628)) {
+-		mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
+-		mcr_new = mcr_cur & ~MAC_MCR_MAX_RX_MASK;
+-
+-		if (length <= 1518)
+-			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1518);
+-		else if (length <= 1536)
+-			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1536);
+-		else if (length <= 1552)
+-			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1552);
+-		else
+-			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_2048);
+-
+-		if (mcr_new != mcr_cur)
+-			mtk_w32(mac->hw, mcr_new, MTK_MAC_MCR(mac->id));
+-	}
+-
++	mtk_set_mcr_max_rx(mac, length);
+ 	dev->mtu = new_mtu;
  
- 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
+ 	return 0;
 -- 
 2.35.1
 
