@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCF51C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B06C433EF;
-	Wed, 28 Dec 2022 16:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238FD1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5E0C433EF;
+	Wed, 28 Dec 2022 16:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246093;
-	bh=OLs8Pml3TqJ/V5Bzno44tCKPFZ5jtxt1IjbVGJRPehI=;
+	s=korg; t=1672246096;
+	bh=9dKbZvUDMKixS1oltFPcGWQS3eAbwlZIq8VkoEF3F68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1NseIquFLMo1z+sk9ie1+sDWDnQAP/Fo88e/+I3zCtaqzBy5tLvgJjOm663JciF6
-	 CM/TCo/6us3ts55r6XvFEbVieh65QG4kyt0TocNJwbNdjrqxLfkAi0TkWH2uAiczVk
-	 0pYHhxpGmS3qjSuxPgOcaKFzX5TunGtqmrpB6nEA=
+	b=eQZYeQr32Q0S2jGvNgMbVgx2rILrDtQX+8jIGNTMVS5vbA+Qf/Vrccfle3gsnA7SX
+	 BxZnV0BFszDqSGKWHXPDxpqCtq/tzR9J8oN/Q9XsCBLZYdBUvTtiTI4qxLn4WAVH0F
+	 CwVzCACu+RS9AlgVg133jW8rZ7OaL6rlcm9pq818=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Clint Taylor <clinton.a.taylor@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1011/1073] drm/i915/display: Dont disable DDI/Transcoder when setting phy test pattern
-Date: Wed, 28 Dec 2022 15:43:19 +0100
-Message-Id: <20221228144355.626134099@linuxfoundation.org>
+Subject: [PATCH 6.1 0980/1146] drm/rockchip: use pm_runtime_resume_and_get() instead of pm_runtime_get_sync()
+Date: Wed, 28 Dec 2022 15:41:59 +0100
+Message-Id: <20221228144356.980344134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,119 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khaled Almahallawy <khaled.almahallawy@intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 3153eebb7a76e663ac76d6670dc113296de96622 ]
+[ Upstream commit e3558747ebe15306e6d0b75bd6d211436be4a7d5 ]
 
-Bspecs has updated recently to remove the restriction to disable
-DDI/Transcoder before setting PHY test pattern. This update is to
-address PHY compliance test failures observed on a port with LTTPR.
-The issue is that when Transc. is disabled, the main link signals fed
-to LTTPR will be dropped invalidating link training, which will affect
-the quality of the phy test pattern when the transcoder is enabled again.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() to avoid
+device usage counter leak.
 
-v2: Update commit message (Clint)
-v3: Add missing Signed-off in v2
-v4: Update Bspec and commit message for pre-gen12 (Jani)
-
-Bspec: 50482, 7555
-Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Clint Taylor <clinton.a.taylor@intel.com>
-CC: Jani Nikula <jani.nikula@intel.com>
-Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Reviewed-by: Clint Taylor <clinton.a.taylor@intel.com>
-Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221123220926.170034-1-khaled.almahallawy@intel.com
-(cherry picked from commit be4a847652056b067d6dc6fe0fc024a9e2e987ca)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220615062644.96837-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 59 -------------------------
- 1 file changed, 59 deletions(-)
+ drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c | 2 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c     | 4 ++--
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c    | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 21ba510716b6..d852cfd1d6eb 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3641,61 +3641,6 @@ static void intel_dp_phy_pattern_update(struct intel_dp *intel_dp,
+diff --git a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+index f4df9820b295..912eb4e94c59 100644
+--- a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+@@ -1221,7 +1221,7 @@ static int dw_mipi_dsi_dphy_power_on(struct phy *phy)
+ 		return i;
  	}
- }
  
--static void
--intel_dp_autotest_phy_ddi_disable(struct intel_dp *intel_dp,
--				  const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value &= ~(TRANS_DDI_FUNC_ENABLE |
--				      TGL_TRANS_DDI_PORT_MASK);
--	trans_conf_value &= ~PIPECONF_ENABLE;
--	dp_tp_ctl_value &= ~DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--}
--
--static void
--intel_dp_autotest_phy_ddi_enable(struct intel_dp *intel_dp,
--				 const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	enum port port = dig_port->base.port;
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value |= TRANS_DDI_FUNC_ENABLE |
--				    TGL_TRANS_DDI_SELECT_PORT(port);
--	trans_conf_value |= PIPECONF_ENABLE;
--	dp_tp_ctl_value |= DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--}
--
- static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 					 const struct intel_crtc_state *crtc_state)
+-	ret = pm_runtime_get_sync(dsi->dev);
++	ret = pm_runtime_resume_and_get(dsi->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(dsi->dev, "failed to enable device: %d\n", ret);
+ 		return ret;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index c356de5dd220..fa1f4ee6d195 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -602,7 +602,7 @@ static int vop_enable(struct drm_crtc *crtc, struct drm_crtc_state *old_state)
+ 	struct vop *vop = to_vop(crtc);
+ 	int ret, i;
+ 
+-	ret = pm_runtime_get_sync(vop->dev);
++	ret = pm_runtime_resume_and_get(vop->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(vop->dev, "failed to get pm runtime: %d\n", ret);
+ 		return ret;
+@@ -1983,7 +1983,7 @@ static int vop_initial(struct vop *vop)
+ 		return PTR_ERR(vop->dclk);
+ 	}
+ 
+-	ret = pm_runtime_get_sync(vop->dev);
++	ret = pm_runtime_resume_and_get(vop->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(vop->dev, "failed to get pm runtime: %d\n", ret);
+ 		return ret;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 105a548d0abe..8cecf81a5ae0 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -822,7 +822,7 @@ static void vop2_enable(struct vop2 *vop2)
  {
-@@ -3714,14 +3659,10 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 	intel_dp_get_adjust_train(intel_dp, crtc_state, DP_PHY_DPRX,
- 				  link_status);
+ 	int ret;
  
--	intel_dp_autotest_phy_ddi_disable(intel_dp, crtc_state);
--
- 	intel_dp_set_signal_levels(intel_dp, crtc_state, DP_PHY_DPRX);
- 
- 	intel_dp_phy_pattern_update(intel_dp, crtc_state);
- 
--	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
--
- 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
- 			  intel_dp->train_set, crtc_state->lane_count);
- 
+-	ret = pm_runtime_get_sync(vop2->dev);
++	ret = pm_runtime_resume_and_get(vop2->dev);
+ 	if (ret < 0) {
+ 		drm_err(vop2->drm, "failed to get pm runtime: %d\n", ret);
+ 		return;
 -- 
 2.35.1
 
