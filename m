@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0237F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC08C433D2;
-	Wed, 28 Dec 2022 15:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF7D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FAFC433D2;
+	Wed, 28 Dec 2022 15:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242675;
-	bh=c9y2eNvcFRZQVsVq3QfdkWZFT8u9ZLpmFmUm1PcpUaM=;
+	s=korg; t=1672242678;
+	bh=JehI8lHjyA+rDPC7y/veHkX6Zg9KtWooSzccuAqeEWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzV9E/+CkfxAF9dzJBGFSVR1PwAHwmQdsn5/vBY1kvPOapMqml5Avbl0/5uXKPf5U
-	 PJJUsRM+kKvWYCQ57NkLDDS69DuKIquDiEe1O30m/uW2MwApbWUlCVFG6QUS0ByBCH
-	 tEMVVkJdTIFZTfMv2+f1ecNnRAVPvpdFJ7vnx4Qw=
+	b=zrEhqpsDYi8mSpMW9jtx0ROtQA5gqpqlJ2lFz4t2IxgSNOG5YYimTIwR2RC7t83Xu
+	 o30ljd6MK2rLWPF8iaOHX7lRxdnYxsOIKn8f78gl+4giQuZSYsINbsXSsVfSC8k7Yr
+	 qAGLZ7rYeOP02uuW+cOC9kPXXRX0TULSTAspTrLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 632/731] wifi: ath9k: verify the expected usb_endpoints are present
-Date: Wed, 28 Dec 2022 15:42:19 +0100
-Message-Id: <20221228144314.842594537@linuxfoundation.org>
+Subject: [PATCH 6.1 0401/1146] clk: imx8mn: fix imx8mn_enet_phy_sels clocks list
+Date: Wed, 28 Dec 2022 15:32:20 +0100
+Message-Id: <20221228144341.056325166@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,75 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 16ef02bad239f11f322df8425d302be62f0443ce ]
+[ Upstream commit 2626cf67f20b28446dfc3a5b9493dd535cdb747b ]
 
-The bug arises when a USB device claims to be an ATH9K but doesn't
-have the expected endpoints. (In this case there was an interrupt
-endpoint where the driver expected a bulk endpoint.) The kernel
-needs to be able to handle such devices without getting an internal error.
+According to the "Clock Root" table of the reference manual (document
+IMX8MNRM Rev 2, 07/2022):
 
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 3 PID: 500 at drivers/usb/core/urb.c:493 usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
-Modules linked in:
-CPU: 3 PID: 500 Comm: kworker/3:2 Not tainted 5.10.135-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-Workqueue: events request_firmware_work_func
-RIP: 0010:usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
-Call Trace:
- ath9k_hif_usb_alloc_rx_urbs drivers/net/wireless/ath/ath9k/hif_usb.c:908 [inline]
- ath9k_hif_usb_alloc_urbs+0x75e/0x1010 drivers/net/wireless/ath/ath9k/hif_usb.c:1019
- ath9k_hif_usb_dev_init drivers/net/wireless/ath/ath9k/hif_usb.c:1109 [inline]
- ath9k_hif_usb_firmware_cb+0x142/0x530 drivers/net/wireless/ath/ath9k/hif_usb.c:1242
- request_firmware_work_func+0x12e/0x240 drivers/base/firmware_loader/main.c:1097
- process_one_work+0x9af/0x1600 kernel/workqueue.c:2279
- worker_thread+0x61d/0x12f0 kernel/workqueue.c:2425
- kthread+0x3b4/0x4a0 kernel/kthread.c:313
- ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:299
+     Clock Root         offset     Source Select (CCM_TARGET_ROOTn[MUX])
+        ...              ...                    ...
+ ENET_PHY_REF_CLK_ROOT  0xAA80            000 - 24M_REF_CLK
+                                          001 - SYSTEM_PLL2_DIV20
+                                          010 - SYSTEM_PLL2_DIV8
+                                          011 - SYSTEM_PLL2_DIV5
+                                          100 - SYSTEM_PLL2_DIV2
+                                          101 - AUDIO_PLL1_CLK
+                                          110 - VIDEO_PLL_CLK
+                                          111 - AUDIO_PLL2_CLK
+        ...              ...                    ...
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+while the imx8mn_enet_phy_sels list didn't contained audio_pll1_out for
+source select bits 101b.
 
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221008211532.74583-1-pchelkin@ispras.ru
+Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Acked-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221117113637.1978703-6-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/clk/imx/clk-imx8mn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index e5d5b0761881..f938ac1a4abd 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1328,10 +1328,24 @@ static int send_eject_command(struct usb_interface *interface)
- static int ath9k_hif_usb_probe(struct usb_interface *interface,
- 			       const struct usb_device_id *id)
- {
-+	struct usb_endpoint_descriptor *bulk_in, *bulk_out, *int_in, *int_out;
- 	struct usb_device *udev = interface_to_usbdev(interface);
-+	struct usb_host_interface *alt;
- 	struct hif_device_usb *hif_dev;
- 	int ret = 0;
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index 37128c35198d..2afea905f7f3 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -140,8 +140,8 @@ static const char * const imx8mn_enet_timer_sels[] = {"osc_24m", "sys_pll2_100m"
+ 						      "clk_ext4", "video_pll_out", };
  
-+	/* Verify the expected endpoints are present */
-+	alt = interface->cur_altsetting;
-+	if (usb_find_common_endpoints(alt, &bulk_in, &bulk_out, &int_in, &int_out) < 0 ||
-+	    usb_endpoint_num(bulk_in) != USB_WLAN_RX_PIPE ||
-+	    usb_endpoint_num(bulk_out) != USB_WLAN_TX_PIPE ||
-+	    usb_endpoint_num(int_in) != USB_REG_IN_PIPE ||
-+	    usb_endpoint_num(int_out) != USB_REG_OUT_PIPE) {
-+		dev_err(&udev->dev,
-+			"ath9k_htc: Device endpoint numbers are not the expected ones\n");
-+		return -ENODEV;
-+	}
-+
- 	if (id->driver_info == STORAGE_DEVICE)
- 		return send_eject_command(interface);
+ static const char * const imx8mn_enet_phy_sels[] = {"osc_24m", "sys_pll2_50m", "sys_pll2_125m",
+-						    "sys_pll2_200m", "sys_pll2_500m", "video_pll_out",
+-						    "audio_pll2_out", };
++						    "sys_pll2_200m", "sys_pll2_500m", "audio_pll1_out",
++						    "video_pll_out", "audio_pll2_out", };
  
+ static const char * const imx8mn_nand_sels[] = {"osc_24m", "sys_pll2_500m", "audio_pll1_out",
+ 						"sys_pll1_400m", "audio_pll2_out", "sys_pll3_out",
 -- 
 2.35.1
 
