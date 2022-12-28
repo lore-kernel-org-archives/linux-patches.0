@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670241875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA8EC433D2;
-	Wed, 28 Dec 2022 15:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B5A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EABEC433EF;
+	Wed, 28 Dec 2022 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243053;
-	bh=URn9+hK/TYZ9Zq5m9sW01gGXoJoLjp84gOBJllEv81A=;
+	s=korg; t=1672243055;
+	bh=aNoUJxHkrs5Gf/DNei8WBoulFD7PDdaQ3IBmis583kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlKbWr68E9NryeEr2CUBoKc9YG/DWOYApZXm/IEUCthkunxcgD22V7VqxmxNf2LCx
-	 7NgvptaFSGUFSp0jk7SDWSPU5kUdzoWeMBj1eYz97wGjjQ/l7LbZ5HIUQpkzJPf0Jd
-	 s1gzdo/c2WP0scxcgA84nK5XzLeGPsvmWhzGs4X8=
+	b=LsBVPVKOkqfKSF8FPlmhxKIF9NNdsslGI/A3SRnFJD7hLGZd97LCukyu2HJP52/nP
+	 ehmR5lM7bfmGnk5PxYMO5U9jph7Uau8Aa8IuYRoYrpAGcgYiTTr94MZc+QIB+jrNNT
+	 DrXyxbXqolcQ2NknBvdFsCNZBmxNbgWdTR5WBqKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0446/1146] bpf, sockmap: Fix missing BPF_F_INGRESS flag when using apply_bytes
-Date: Wed, 28 Dec 2022 15:33:05 +0100
-Message-Id: <20221228144342.296010671@linuxfoundation.org>
+Subject: [PATCH 6.0 0485/1073] mmc: vub300: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:33 +0100
+Message-Id: <20221228144341.210751067@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,159 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a351d6087bf7d3d8440d58d3bf244ec64b89394a ]
+[ Upstream commit 0613ad2401f88bdeae5594c30afe318e93b14676 ]
 
-When redirecting, we use sk_msg_to_ingress() to get the BPF_F_INGRESS
-flag from the msg->flags. If apply_bytes is used and it is larger than
-the current data being processed, sk_psock_msg_verdict() will not be
-called when sendmsg() is called again. At this time, the msg->flags is 0,
-and we lost the BPF_F_INGRESS flag.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-So we need to save the BPF_F_INGRESS flag in sk_psock and use it when
-redirection.
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, the timer added before mmc_add_host() needs be del.
 
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-3-git-send-email-yangpc@wangsu.com
+And this patch fixes another missing call mmc_free_host() if usb_control_msg()
+fails.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-9-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h |  1 +
- include/net/tcp.h     |  4 ++--
- net/core/skmsg.c      |  9 ++++++---
- net/ipv4/tcp_bpf.c    | 11 ++++++-----
- net/tls/tls_sw.c      |  6 ++++--
- 5 files changed, 19 insertions(+), 12 deletions(-)
+ drivers/mmc/host/vub300.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index 70d6cb94e580..84f787416a54 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -82,6 +82,7 @@ struct sk_psock {
- 	u32				apply_bytes;
- 	u32				cork_bytes;
- 	u32				eval;
-+	bool				redir_ingress; /* undefined if sk_redir is null */
- 	struct sk_msg			*cork;
- 	struct sk_psock_progs		progs;
- #if IS_ENABLED(CONFIG_BPF_STREAM_PARSER)
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 14d45661a84d..5b70b241ce71 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -2291,8 +2291,8 @@ int tcp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore);
- void tcp_bpf_clone(const struct sock *sk, struct sock *newsk);
- #endif /* CONFIG_BPF_SYSCALL */
- 
--int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg, u32 bytes,
--			  int flags);
-+int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
-+			  struct sk_msg *msg, u32 bytes, int flags);
- #endif /* CONFIG_NET_SOCK_MSG */
- 
- #if !defined(CONFIG_BPF_SYSCALL) || !defined(CONFIG_NET_SOCK_MSG)
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index e6b9ced3eda8..53d0251788aa 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -886,13 +886,16 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
- 	ret = sk_psock_map_verd(ret, msg->sk_redir);
- 	psock->apply_bytes = msg->apply_bytes;
- 	if (ret == __SK_REDIRECT) {
--		if (psock->sk_redir)
-+		if (psock->sk_redir) {
- 			sock_put(psock->sk_redir);
--		psock->sk_redir = msg->sk_redir;
--		if (!psock->sk_redir) {
-+			psock->sk_redir = NULL;
-+		}
-+		if (!msg->sk_redir) {
- 			ret = __SK_DROP;
- 			goto out;
- 		}
-+		psock->redir_ingress = sk_msg_to_ingress(msg);
-+		psock->sk_redir = msg->sk_redir;
- 		sock_hold(psock->sk_redir);
+diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
+index 97beece62fec..ab36ec479747 100644
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2299,14 +2299,14 @@ static int vub300_probe(struct usb_interface *interface,
+ 				0x0000, 0x0000, &vub300->system_port_status,
+ 				sizeof(vub300->system_port_status), 1000);
+ 	if (retval < 0) {
+-		goto error4;
++		goto error5;
+ 	} else if (sizeof(vub300->system_port_status) == retval) {
+ 		vub300->card_present =
+ 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 		vub300->read_only =
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
+-		goto error4;
++		goto error5;
  	}
- out:
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index f3e868f4cd9e..275c5ca9e04d 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -131,10 +131,9 @@ static int tcp_bpf_push_locked(struct sock *sk, struct sk_msg *msg,
- 	return ret;
- }
- 
--int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg,
--			  u32 bytes, int flags)
-+int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
-+			  struct sk_msg *msg, u32 bytes, int flags)
- {
--	bool ingress = sk_msg_to_ingress(msg);
- 	struct sk_psock *psock = sk_psock_get(sk);
- 	int ret;
- 
-@@ -276,7 +275,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 				struct sk_msg *msg, int *copied, int flags)
- {
--	bool cork = false, enospc = sk_msg_full(msg);
-+	bool cork = false, enospc = sk_msg_full(msg), redir_ingress;
- 	struct sock *sk_redir;
- 	u32 tosend, origsize, sent, delta = 0;
- 	u32 eval;
-@@ -322,6 +321,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		sk_msg_apply_bytes(psock, tosend);
- 		break;
- 	case __SK_REDIRECT:
-+		redir_ingress = psock->redir_ingress;
- 		sk_redir = psock->sk_redir;
- 		sk_msg_apply_bytes(psock, tosend);
- 		if (!psock->apply_bytes) {
-@@ -338,7 +338,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		release_sock(sk);
- 
- 		origsize = msg->sg.size;
--		ret = tcp_bpf_sendmsg_redir(sk_redir, msg, tosend, flags);
-+		ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-+					    msg, tosend, flags);
- 		sent = origsize - msg->sg.size;
- 
- 		if (eval == __SK_REDIRECT)
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 264cf367e265..9ed978634125 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -792,7 +792,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 	struct sk_psock *psock;
- 	struct sock *sk_redir;
- 	struct tls_rec *rec;
--	bool enospc, policy;
-+	bool enospc, policy, redir_ingress;
- 	int err = 0, send;
- 	u32 delta = 0;
- 
-@@ -837,6 +837,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		}
- 		break;
- 	case __SK_REDIRECT:
-+		redir_ingress = psock->redir_ingress;
- 		sk_redir = psock->sk_redir;
- 		memcpy(&msg_redir, msg, sizeof(*msg));
- 		if (msg->apply_bytes < send)
-@@ -846,7 +847,8 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		sk_msg_return_zero(sk, msg, send);
- 		msg->sg.size -= send;
- 		release_sock(sk);
--		err = tcp_bpf_sendmsg_redir(sk_redir, &msg_redir, send, flags);
-+		err = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-+					    &msg_redir, send, flags);
- 		lock_sock(sk);
- 		if (err < 0) {
- 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 	usb_set_intfdata(interface, vub300);
+ 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
+@@ -2329,8 +2329,13 @@ static int vub300_probe(struct usb_interface *interface,
+ 			 "USB vub300 remote SDIO host controller[%d]"
+ 			 "connected with no SD/SDIO card inserted\n",
+ 			 interface_to_InterfaceNumber(interface));
+-	mmc_add_host(mmc);
++	retval = mmc_add_host(mmc);
++	if (retval)
++		goto error6;
++
+ 	return 0;
++error6:
++	del_timer_sync(&vub300->inactivity_timer);
+ error5:
+ 	mmc_free_host(mmc);
+ 	/*
 -- 
 2.35.1
 
