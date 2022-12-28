@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D4BC433D2;
-	Wed, 28 Dec 2022 15:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98671863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCEFC433D2;
+	Wed, 28 Dec 2022 15:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240419;
-	bh=qwrxr7RPGVR8p5Kz6WWEOmJBqTEzq4p/wuD9A2dHmOU=;
+	s=korg; t=1672240422;
+	bh=ouKUrH9Kd+dRkCHhXA0/K794UGMKPH7DKu7EXIUP04I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5deX6O/duClqwXHgL+GzaOZwoa6RFHQ7ISo6H64uZEWh1uNsW1+7ypN6JMqUxwnX
-	 uURDvhSOyLL3OweTn+EBdPM8jH6JLarn8mLC1/yw0JKUPgJeKYkjjXQBPbc2s0k0zx
-	 pssaOXM7yLct2Nsrk152Qs/kISXiLQBFW3VYlREY=
+	b=zx6zwfSzByrnzMMdnMKCuV7MTFaaP8f75stHNzhjVPLy2jAA53lYIUIwmaFAnPX+k
+	 VbzZLsyrtC0osp2TLTC/SWqGqRaJBVTL2vcqik4ukJV19xmfOkqHNzWG5Xwl6qYo1W
+	 HfZCCnXLiQeV8dCiwg9QCqg6slfc2MxIEP4aCBBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Chen Hui <judy.chenhui@huawei.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0158/1073] clocksource/drivers/timer-ti-dm: Fix warning for omap_timer_match
-Date: Wed, 28 Dec 2022 15:29:06 +0100
-Message-Id: <20221228144332.311634660@linuxfoundation.org>
+Subject: [PATCH 6.1 0120/1146] cpufreq: qcom-hw: Fix memory leak in qcom_cpufreq_hw_read_lut()
+Date: Wed, 28 Dec 2022 15:27:39 +0100
+Message-Id: <20221228144333.416385303@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Chen Hui <judy.chenhui@huawei.com>
 
-[ Upstream commit 9688498b1648aa98a3ee45d9f07763c099f6fb12 ]
+[ Upstream commit 9901c21bcaf2f01fe5078f750d624f4ddfa8f81b ]
 
-We can now get a warning for 'omap_timer_match' defined but not used.
-Let's fix this by dropping of_match_ptr for omap_timer_match.
+If "cpu_dev" fails to get opp table in qcom_cpufreq_hw_read_lut(),
+the program will return, resulting in "table" resource is not released.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Fixes: ab0bbef3ae0f ("clocksource/drivers/timer-ti-dm: Make timer selectable for ARCH_K3")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221028103526.40319-1-tony@atomide.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Fixes: 51c843cf77bb ("cpufreq: qcom: Update the bandwidth levels on frequency change")
+Signed-off-by: Chen Hui <judy.chenhui@huawei.com>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clocksource/timer-ti-dm.c b/drivers/clocksource/timer-ti-dm.c
-index 469f7c91564b..78c2c038d3ae 100644
---- a/drivers/clocksource/timer-ti-dm.c
-+++ b/drivers/clocksource/timer-ti-dm.c
-@@ -1081,7 +1081,7 @@ static struct platform_driver omap_dm_timer_driver = {
- 	.remove = omap_dm_timer_remove,
- 	.driver = {
- 		.name   = "omap_timer",
--		.of_match_table = of_match_ptr(omap_timer_match),
-+		.of_match_table = omap_timer_match,
- 		.pm = &omap_dm_timer_pm_ops,
- 	},
- };
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 833589bc95e4..d15097549e8c 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -193,6 +193,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
+ 		}
+ 	} else if (ret != -ENODEV) {
+ 		dev_err(cpu_dev, "Invalid opp table in device tree\n");
++		kfree(table);
+ 		return ret;
+ 	} else {
+ 		policy->fast_switch_possible = true;
 -- 
 2.35.1
 
