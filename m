@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0A61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8292C433EF;
-	Wed, 28 Dec 2022 16:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1031C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DCBC433D2;
+	Wed, 28 Dec 2022 16:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245794;
-	bh=ssvAmBToFhnY3Fp4689UByADaiotLtwYnpfZGQleYYo=;
+	s=korg; t=1672245797;
+	bh=Nwq5g1ESTYBgC8neDArqnPYL2KjnIiBaNb43AqgfEWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mo2rijri2YAD7wd/Z9g5Ibeocl7neCTAPKOcD6dTkxIrz4LtcVEnoL5jjzYEz/zWR
-	 fDSo7bIK8nYgM0EPwTAfgfukjJs1xlEsAO2/FUJ9LoyXgWAyPU/1QEFj/xE9shJg1c
-	 9t+dNBH2dseQyh2i1GlE13Je+IMX1T06wK26cN1c=
+	b=mlTysRXAwFz1AkQDIXfdkA0H5aoFGqXEzKTY1gCF02qErAv2F0GbUF//beT2Eq9or
+	 kxeMr/0n1v7fVrVi2z+i64fQvPW4+ZqWqk128x0+G0IavpWc3Mhb/qwCu3auvHfj48
+	 BlsjTH8nBnFs3MRFkGo9Xn0oD0wlmSMajve7YNjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Tranchetti <quic_stranche@quicinc.com>,
-	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	kernel test robot <lkp@intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0923/1146] skbuff: Account for tail adjustment during pull operations
-Date: Wed, 28 Dec 2022 15:41:02 +0100
-Message-Id: <20221228144355.339406419@linuxfoundation.org>
+Subject: [PATCH 6.0 0956/1073] media: dvbdev: adopts refcnt to avoid UAF
+Date: Wed, 28 Dec 2022 15:42:24 +0100
+Message-Id: <20221228144354.000397012@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,64 +36,208 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
+[ Upstream commit 0fc044b2b5e2d05a1fa1fb0d7f270367a7855d79 ]
 
-Extending the tail can have some unexpected side effects if a program uses
-a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
-head skb headlen when all the skbs in the gso frag_list are linear with no
-head_frag -
+dvb_unregister_device() is known that prone to use-after-free.
+That is, the cleanup from dvb_unregister_device() releases the dvb_device
+even if there are pointers stored in file->private_data still refer to it.
 
-  kernel BUG at net/core/skbuff.c:4219!
-  pc : skb_segment+0xcf4/0xd2c
-  lr : skb_segment+0x63c/0xd2c
-  Call trace:
-   skb_segment+0xcf4/0xd2c
-   __udp_gso_segment+0xa4/0x544
-   udp4_ufo_fragment+0x184/0x1c0
-   inet_gso_segment+0x16c/0x3a4
-   skb_mac_gso_segment+0xd4/0x1b0
-   __skb_gso_segment+0xcc/0x12c
-   udp_rcv_segment+0x54/0x16c
-   udp_queue_rcv_skb+0x78/0x144
-   udp_unicast_rcv_skb+0x8c/0xa4
-   __udp4_lib_rcv+0x490/0x68c
-   udp_rcv+0x20/0x30
-   ip_protocol_deliver_rcu+0x1b0/0x33c
-   ip_local_deliver+0xd8/0x1f0
-   ip_rcv+0x98/0x1a4
-   deliver_ptype_list_skb+0x98/0x1ec
-   __netif_receive_skb_core+0x978/0xc60
+This patch adds a reference counter into struct dvb_device and delays its
+deallocation until no pointer refers to the object.
 
-Fix this by marking these skbs as GSO_DODGY so segmentation can handle
-the tail updates accordingly.
-
-Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
-Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
-Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-media/20220807145952.10368-1-linma@zju.edu.cn
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/dvb-core/dvb_ca_en50221.c |  2 +-
+ drivers/media/dvb-core/dvb_frontend.c   |  2 +-
+ drivers/media/dvb-core/dvbdev.c         | 32 +++++++++++++++++++------
+ include/media/dvbdev.h                  | 31 +++++++++++++-----------
+ 4 files changed, 44 insertions(+), 23 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 88fa40571d0c..759bede0b3dd 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -2416,6 +2416,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
- 				insp = list;
- 			} else {
- 				/* Eaten partially. */
-+				if (skb_is_gso(skb) && !list->head_frag &&
-+				    skb_headlen(list))
-+					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index 15a08d8c69ef..c2d2792227f8 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -157,7 +157,7 @@ static void dvb_ca_private_free(struct dvb_ca_private *ca)
+ {
+ 	unsigned int i;
  
- 				if (skb_shared(list)) {
- 					/* Sucks! We need to fork list. :-( */
+-	dvb_free_device(ca->dvbdev);
++	dvb_device_put(ca->dvbdev);
+ 	for (i = 0; i < ca->slot_count; i++)
+ 		vfree(ca->slot_info[i].rx_buffer.data);
+ 
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index a7792ef4baf8..c41a7e5c2b92 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -136,7 +136,7 @@ static void __dvb_frontend_free(struct dvb_frontend *fe)
+ 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+ 
+ 	if (fepriv)
+-		dvb_free_device(fepriv->dvbdev);
++		dvb_device_put(fepriv->dvbdev);
+ 
+ 	dvb_frontend_invoke_release(fe, fe->ops.release);
+ 
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 675d877a67b2..14f0e140d541 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -97,7 +97,7 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 		new_fops = fops_get(dvbdev->fops);
+ 		if (!new_fops)
+ 			goto fail;
+-		file->private_data = dvbdev;
++		file->private_data = dvb_device_get(dvbdev);
+ 		replace_fops(file, new_fops);
+ 		if (file->f_op->open)
+ 			err = file->f_op->open(inode, file);
+@@ -161,6 +161,9 @@ int dvb_generic_release(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	dvbdev->users++;
++
++	dvb_device_put(dvbdev);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(dvb_generic_release);
+@@ -477,6 +480,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ 		return -ENOMEM;
+ 	}
+ 
++	kref_init(&dvbdev->ref);
+ 	memcpy(dvbdev, template, sizeof(struct dvb_device));
+ 	dvbdev->type = type;
+ 	dvbdev->id = id;
+@@ -508,7 +512,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ #endif
+ 
+ 	dvbdev->minor = minor;
+-	dvb_minors[minor] = dvbdev;
++	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
+@@ -553,6 +557,7 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ 
+ 	down_write(&minor_rwsem);
+ 	dvb_minors[dvbdev->minor] = NULL;
++	dvb_device_put(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	dvb_media_device_free(dvbdev);
+@@ -564,21 +569,34 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ EXPORT_SYMBOL(dvb_remove_device);
+ 
+ 
+-void dvb_free_device(struct dvb_device *dvbdev)
++static void dvb_free_device(struct kref *ref)
+ {
+-	if (!dvbdev)
+-		return;
++	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
+ 
+ 	kfree (dvbdev->fops);
+ 	kfree (dvbdev);
+ }
+-EXPORT_SYMBOL(dvb_free_device);
++
++
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev)
++{
++	kref_get(&dvbdev->ref);
++	return dvbdev;
++}
++EXPORT_SYMBOL(dvb_device_get);
++
++
++void dvb_device_put(struct dvb_device *dvbdev)
++{
++	if (dvbdev)
++		kref_put(&dvbdev->ref, dvb_free_device);
++}
+ 
+ 
+ void dvb_unregister_device(struct dvb_device *dvbdev)
+ {
+ 	dvb_remove_device(dvbdev);
+-	dvb_free_device(dvbdev);
++	dvb_device_put(dvbdev);
+ }
+ EXPORT_SYMBOL(dvb_unregister_device);
+ 
+diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
+index 2f6b0861322a..149b3d33c24b 100644
+--- a/include/media/dvbdev.h
++++ b/include/media/dvbdev.h
+@@ -156,6 +156,7 @@ struct dvb_adapter {
+  */
+ struct dvb_device {
+ 	struct list_head list_head;
++	struct kref ref;
+ 	const struct file_operations *fops;
+ 	struct dvb_adapter *adapter;
+ 	enum dvb_device_type type;
+@@ -187,6 +188,20 @@ struct dvb_device {
+ 	void *priv;
+ };
+ 
++/**
++ * dvb_device_get - Increase dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
++
++/**
++ * dvb_device_get - Decrease dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++void dvb_device_put(struct dvb_device *dvbdev);
++
+ /**
+  * dvb_register_adapter - Registers a new DVB adapter
+  *
+@@ -231,29 +246,17 @@ int dvb_register_device(struct dvb_adapter *adap,
+ /**
+  * dvb_remove_device - Remove a registered DVB device
+  *
+- * This does not free memory.  To do that, call dvb_free_device().
++ * This does not free memory. dvb_free_device() will do that when
++ * reference counter is empty
+  *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_remove_device(struct dvb_device *dvbdev);
+ 
+-/**
+- * dvb_free_device - Free memory occupied by a DVB device.
+- *
+- * Call dvb_unregister_device() before calling this function.
+- *
+- * @dvbdev:	pointer to struct dvb_device
+- */
+-void dvb_free_device(struct dvb_device *dvbdev);
+ 
+ /**
+  * dvb_unregister_device - Unregisters a DVB device
+  *
+- * This is a combination of dvb_remove_device() and dvb_free_device().
+- * Using this function is usually a mistake, and is often an indicator
+- * for a use-after-free bug (when a userspace process keeps a file
+- * handle to a detached device).
+- *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_unregister_device(struct dvb_device *dvbdev);
 -- 
 2.35.1
 
