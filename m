@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A60EC433D2;
-	Wed, 28 Dec 2022 16:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF1E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B299EC433D2;
+	Wed, 28 Dec 2022 16:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244149;
-	bh=UyN2zZFlGAz1ZGYHDjqce7MbOSq7bZuAzV5IrRy9LYc=;
+	s=korg; t=1672244152;
+	bh=Qf9EAbjoYGUrULph78Z+i9iGnVcnwrUZHRNUWc87l4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orFdXQhIN8c/7HvFekkZkDUppKPCXXQsOHdx0IUybcf4yuRcPIZ7O5ZbHHKe6MeIR
-	 xUfM02pddkRQjzQsV4kHv636wLw/lLxN+amSozWRebH49cj2+v+4NCM9msJF48PEmp
-	 VRNz2/ZGpAPS59pOk0tLfxrFfPOm9tmc51rKK3C4=
+	b=BM6rl4uo0Bi3rEpPpWhdpyk/j1gxjozzEhpS3p8RRAncWRHBbaFprobDpOZdylRNz
+	 95G632V+yZnhn6FlPPMZl8hoWUNkMYwEFXZBck5S6KtQj68tP2i6LaTBCLFxBMFAaZ
+	 UrmapeSkGgztcujfJr9TwrdASLv+ScwiLCk3RRno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Luoyouming <luoyouming@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0659/1073] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
-Date: Wed, 28 Dec 2022 15:37:27 +0100
-Message-Id: <20221228144345.946032378@linuxfoundation.org>
+Subject: [PATCH 6.1 0620/1146] RDMA/hns: Fix ext_sge num error when post send
+Date: Wed, 28 Dec 2022 15:35:59 +0100
+Message-Id: <20221228144347.010014362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Luoyouming <luoyouming@huawei.com>
 
-[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
+[ Upstream commit 8eaa6f7d569b4a22bfc1b0a3fdfeeb401feb65a4 ]
 
-There are 2 ways to create IPoIB PKEY child interfaces:
-1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
-2) Using netlink with iproute.
+In the HNS ROCE driver, The sge is divided into standard sge and extended
+sge.  There are 2 standard sge in RC/XRC, and the UD standard sge is 0.
+In the scenario of RC SQ inline, if the data does not exceed 32bytes, the
+standard sge will be used. If it exceeds, only the extended sge will be
+used to fill the data.
 
-While with sysfs the child interface has the same number of tx and
-rx queues as the parent, with netlink there will always be 1 tx
-and 1 rx queue for the child interface. That's because the
-get_num_tx/rx_queues() netlink ops are missing and the default value
-of 1 is taken for the number of queues (in rtnl_create_link()).
+Currently, when filling the extended sge, max_gs is directly used as the
+number of the extended sge, which did not subtract the number of standard
+sge.  There is a logical error. The new algorithm subtracts the number of
+standard sge from max_gs to get the actual number of extended sge.
 
-This change adds the get_num_tx/rx_queues() ops which allows for
-interfaces with multiple queues to be created over netlink. This
-constant only represents the max number of tx and rx queues on that
-net device.
-
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 30b707886aeb ("RDMA/hns: Support inline data in extented sge space for RC")
+Link: https://lore.kernel.org/r/20221108133847.2304539-2-xuhaoyue1@hisilicon.com
+Signed-off-by: Luoyouming <luoyouming@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-index ea16ba5d8da6..9ad8d9856275 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-@@ -41,6 +41,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
- 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
- };
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 1435fe2ea176..0937db738be7 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -187,20 +187,29 @@ static void set_atomic_seg(const struct ib_send_wr *wr,
+ 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_SGE_NUM, valid_num_sge);
+ }
  
-+static unsigned int ipoib_get_max_num_queues(void)
++static unsigned int get_std_sge_num(struct hns_roce_qp *qp)
 +{
-+	return min_t(unsigned int, num_possible_cpus(), 128);
++	if (qp->ibqp.qp_type == IB_QPT_GSI || qp->ibqp.qp_type == IB_QPT_UD)
++		return 0;
++
++	return HNS_ROCE_SGE_IN_WQE;
 +}
 +
- static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
+ 				 const struct ib_send_wr *wr,
+ 				 unsigned int *sge_idx, u32 msg_len)
  {
- 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
-@@ -172,6 +177,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
- 	.changelink	= ipoib_changelink,
- 	.get_size	= ipoib_get_size,
- 	.fill_info	= ipoib_fill_info,
-+	.get_num_rx_queues = ipoib_get_max_num_queues,
-+	.get_num_tx_queues = ipoib_get_max_num_queues,
- };
+ 	struct ib_device *ibdev = &(to_hr_dev(qp->ibqp.device))->ib_dev;
+-	unsigned int ext_sge_sz = qp->sq.max_gs * HNS_ROCE_SGE_SIZE;
+ 	unsigned int left_len_in_pg;
+ 	unsigned int idx = *sge_idx;
++	unsigned int std_sge_num;
+ 	unsigned int i = 0;
+ 	unsigned int len;
+ 	void *addr;
+ 	void *dseg;
  
- struct rtnl_link_ops *ipoib_get_link_ops(void)
+-	if (msg_len > ext_sge_sz) {
++	std_sge_num = get_std_sge_num(qp);
++	if (msg_len > (qp->sq.max_gs - std_sge_num) * HNS_ROCE_SGE_SIZE) {
+ 		ibdev_err(ibdev,
+ 			  "no enough extended sge space for inline data.\n");
+ 		return -EINVAL;
 -- 
 2.35.1
 
