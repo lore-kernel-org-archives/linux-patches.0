@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1D81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBDFC433D2;
-	Wed, 28 Dec 2022 15:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EFD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71B9C433D2;
+	Wed, 28 Dec 2022 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240364;
-	bh=4j8H0VEGe8dFvw+jGsodxBJGbFvHSYzj64b0IBIVgHo=;
+	s=korg; t=1672240367;
+	bh=vF7dIDsxRKUinwUzLAPAM/q2wFrKGIKprKCftQHse+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kx9j8IPY8UQZVlVyqUwF8bAYt9CyzZjNe2PPs73VKr/7vHyDGM48MmIDzq0CGSUOs
-	 8wkiy+YkHCDD9MdgYbkskSXKpGcsyTCikwnNsw2I+07LlfLbKDZ0aj83+r3z0skMYY
-	 +jBkDDMhZlNJ4sAABenGBlSQDnyhpdsoLSUganmQ=
+	b=S/FtbCc1oeKuLM/a3MJ4gkC7EJS1XuYU/QIPLDGe3X6haSdY3Wu1K8x0oBHnIavHJ
+	 eNFTi41HTezw2gsiKGC69Wyf2i3ir4PDxsvQj+lJ8pPi4k88+n0RnYTc8HmZUtk8Fo
+	 onfbSh1nANAmVHduhJ7MqpGm2LPFCbG0D+htYGVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Vivek Yadav <vivek.2311@samsung.com>,
+	John Thomson <git@johnthomson.fastmail.com.au>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 341/731] can: m_can: Call the RAM init directly from m_can_chip_config
-Date: Wed, 28 Dec 2022 15:37:28 +0100
-Message-Id: <20221228144306.451373259@linuxfoundation.org>
+Subject: [PATCH 6.0 0152/1073] mips: ralink: mt7621: define MT7621_SYSC_BASE with __iomem
+Date: Wed, 28 Dec 2022 15:29:00 +0100
+Message-Id: <20221228144332.150822676@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,139 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vivek Yadav <vivek.2311@samsung.com>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit eaacfeaca7ad0804b9a6eff7afeba93a87db7638 ]
+[ Upstream commit a2cab953b4c077cc02878d424466d3a6eac32aaf ]
 
-When we try to access the mcan message ram addresses during the probe,
-hclk is gated by any other drivers or disabled, because of that probe
-gets failed.
+So that MT7621_SYSC_BASE can be used later in multiple functions without
+needing to repeat this __iomem declaration each time
 
-Move the mram init functionality to mcan chip config called by
-m_can_start from mcan open function, by that time clocks are
-enabled.
-
-Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
-Link: https://lore.kernel.org/all/20221207100632.96200-2-vivek.2311@samsung.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 67727a17a6b3 ("can: tcan4x5x: Fix use of register error status mask")
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c          | 32 +++++++++++++++++++++-----
- drivers/net/can/m_can/m_can_platform.c |  4 ----
- drivers/net/can/m_can/tcan4x5x-core.c  |  5 ----
- 3 files changed, 26 insertions(+), 15 deletions(-)
+ arch/mips/include/asm/mach-ralink/mt7621.h | 4 +++-
+ arch/mips/ralink/mt7621.c                  | 7 +++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 46ab6155795c..e027229c1955 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1248,10 +1248,17 @@ static int m_can_set_bittiming(struct net_device *dev)
-  * - setup bittiming
-  * - configure timestamp generation
-  */
--static void m_can_chip_config(struct net_device *dev)
-+static int m_can_chip_config(struct net_device *dev)
+diff --git a/arch/mips/include/asm/mach-ralink/mt7621.h b/arch/mips/include/asm/mach-ralink/mt7621.h
+index 6bbf082dd149..79d5bb0e06d6 100644
+--- a/arch/mips/include/asm/mach-ralink/mt7621.h
++++ b/arch/mips/include/asm/mach-ralink/mt7621.h
+@@ -7,10 +7,12 @@
+ #ifndef _MT7621_REGS_H_
+ #define _MT7621_REGS_H_
+ 
++#define IOMEM(x)			((void __iomem *)(KSEG1ADDR(x)))
++
+ #define MT7621_PALMBUS_BASE		0x1C000000
+ #define MT7621_PALMBUS_SIZE		0x03FFFFFF
+ 
+-#define MT7621_SYSC_BASE		0x1E000000
++#define MT7621_SYSC_BASE		IOMEM(0x1E000000)
+ 
+ #define SYSC_REG_CHIP_NAME0		0x00
+ #define SYSC_REG_CHIP_NAME1		0x04
+diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
+index fb0565bc34fd..17dbf28897e0 100644
+--- a/arch/mips/ralink/mt7621.c
++++ b/arch/mips/ralink/mt7621.c
+@@ -126,7 +126,6 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 
+ void __init prom_soc_init(struct ralink_soc_info *soc_info)
  {
- 	struct m_can_classdev *cdev = netdev_priv(dev);
- 	u32 cccr, test;
-+	int err;
-+
-+	err = m_can_init_ram(cdev);
-+	if (err) {
-+		dev_err(cdev->dev, "Message RAM configuration failed\n");
-+		return err;
-+	}
- 
- 	m_can_config_endisable(cdev, true);
- 
-@@ -1375,18 +1382,25 @@ static void m_can_chip_config(struct net_device *dev)
- 
- 	if (cdev->ops->init)
- 		cdev->ops->init(cdev);
-+
-+	return 0;
- }
- 
--static void m_can_start(struct net_device *dev)
-+static int m_can_start(struct net_device *dev)
- {
- 	struct m_can_classdev *cdev = netdev_priv(dev);
-+	int ret;
- 
- 	/* basic m_can configuration */
--	m_can_chip_config(dev);
-+	ret = m_can_chip_config(dev);
-+	if (ret)
-+		return ret;
- 
- 	cdev->can.state = CAN_STATE_ERROR_ACTIVE;
- 
- 	m_can_enable_all_interrupts(cdev);
-+
-+	return 0;
- }
- 
- static int m_can_set_mode(struct net_device *dev, enum can_mode mode)
-@@ -1824,7 +1838,9 @@ static int m_can_open(struct net_device *dev)
+-	void __iomem *sysc = (void __iomem *) KSEG1ADDR(MT7621_SYSC_BASE);
+ 	unsigned char *name = NULL;
+ 	u32 n0;
+ 	u32 n1;
+@@ -154,8 +153,8 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ 		__sync();
  	}
  
- 	/* start the m_can controller */
--	m_can_start(dev);
-+	err = m_can_start(dev);
-+	if (err)
-+		goto exit_irq_fail;
+-	n0 = __raw_readl(sysc + SYSC_REG_CHIP_NAME0);
+-	n1 = __raw_readl(sysc + SYSC_REG_CHIP_NAME1);
++	n0 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
++	n1 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
  
- 	can_led_event(dev, CAN_LED_EVENT_OPEN);
- 
-@@ -2082,9 +2098,13 @@ int m_can_class_resume(struct device *dev)
- 		ret = m_can_clk_start(cdev);
- 		if (ret)
- 			return ret;
-+		ret  = m_can_start(ndev);
-+		if (ret) {
-+			m_can_clk_stop(cdev);
-+
-+			return ret;
-+		}
- 
--		m_can_init_ram(cdev);
--		m_can_start(ndev);
- 		netif_device_attach(ndev);
- 		netif_start_queue(ndev);
+ 	if (n0 == MT7621_CHIP_NAME0 && n1 == MT7621_CHIP_NAME1) {
+ 		name = "MT7621";
+@@ -164,7 +163,7 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ 		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n", n0, n1);
  	}
-diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
-index eee47bad0592..de6d8e01bf2e 100644
---- a/drivers/net/can/m_can/m_can_platform.c
-+++ b/drivers/net/can/m_can/m_can_platform.c
-@@ -140,10 +140,6 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 	ralink_soc = MT762X_SOC_MT7621AT;
+-	rev = __raw_readl(sysc + SYSC_REG_CHIP_REV);
++	rev = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
  
- 	platform_set_drvdata(pdev, mcan_class);
- 
--	ret = m_can_init_ram(mcan_class);
--	if (ret)
--		goto probe_fail;
--
- 	pm_runtime_enable(mcan_class->dev);
- 	ret = m_can_class_register(mcan_class);
- 	if (ret)
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index 9b735eccec8a..a0eee69e52ea 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -229,11 +229,6 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
--	/* Zero out the MCAN buffers */
--	ret = m_can_init_ram(cdev);
--	if (ret)
--		return ret;
--
- 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
- 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
- 	if (ret)
+ 	snprintf(soc_info->sys_type, RAMIPS_SYS_TYPE_LEN,
+ 		"MediaTek %s ver:%u eco:%u",
 -- 
 2.35.1
 
