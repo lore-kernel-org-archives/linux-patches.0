@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5261863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F31C433D2;
-	Wed, 28 Dec 2022 15:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCC31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10918C433D2;
+	Wed, 28 Dec 2022 15:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242546;
-	bh=N5CI8jTzBIEOejPNB8urGoQ412XHK+6YJj8C6cwehy0=;
+	s=korg; t=1672242549;
+	bh=xuLvn5VXetaoJQNLXRFKDPKG6AlhDaefnP0aYcDA9VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HckayjqI61KLR4PZh5P9NfcKH1gQHeM2+B9+8KaSb4CJy0VknHityZTxLx0kTcmPR
-	 yV/gMXlMNYSbkjE+Wvfe5r7uh4aCiiYSznCAhcW7OvKBRV0pMRuQ1QC1mkJjo4KSZB
-	 TjMdIjD5xQ0ZqbdRutgYemsLbYHaPFOv1g+abV6E=
+	b=NMkfDEjATH4xWXk6hd41wlRxxvBkMNte4+9dJtmrF+jTqCI7990VWnLIqi9DJe4+m
+	 hTEW//BG+NdQjALqwHsNM0sGggJI2uhb0AcT5WDFSBZMCXDXYeQ07beEjAakxaQ3Nf
+	 cToK+DIvs12jYeoeGc6xBrnKoBKuSdG+q9i2dN80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0356/1146] media: platform: exynos4-is: Fix error handling in fimc_md_init()
-Date: Wed, 28 Dec 2022 15:31:35 +0100
-Message-Id: <20221228144339.831570525@linuxfoundation.org>
+Subject: [PATCH 6.0 0392/1073] media: sun6i-mipi-csi2: Register async subdev with no sensor attached
+Date: Wed, 28 Dec 2022 15:33:00 +0100
+Message-Id: <20221228144338.665819682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-[ Upstream commit b434422c45282a0573d8123239abc41fa72665d4 ]
+[ Upstream commit 67182951f1dde5a88479cf8befee5f32ea014a49 ]
 
-A problem about modprobe s5p_fimc failed is triggered with the
-following log given:
+This allows the device to probe and register its async subdev without
+a sensor attached.
 
- [  272.075275] Error: Driver 'exynos4-fimc' is already registered, aborting...
- modprobe: ERROR: could not insert 's5p_fimc': Device or resource busy
+The rationale is that the parent driver might otherwise wait for the
+subdev to be registered when it should be available (from the fwnode
+graph endpoint perspective). This is generally not problematic when
+the MIPI CSI-2 bridge is the only device attached to the parent, but
+in the case of a CSI controller that can feed from both MIPI CSI-2
+and parallel, it would prevent using the parallel sensor due to the
+parent waiting for the MIPI CSI-2 subdev to register.
 
-The reason is that fimc_md_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without unregister fimc_driver, resulting the
-s5p_fimc can never be installed later.
-A simple call graph is shown as below:
-
- fimc_md_init()
-   fimc_register_driver() # register fimc_driver
-   platform_driver_register()
-     platform_driver_register()
-       driver_register()
-         bus_add_driver()
-           dev = kzalloc(...) # OOM happened
-   # return without unregister fimc_driver
-
-Fix by unregister fimc_driver when platform_driver_register() returns
-error.
-
-Fixes: d3953223b090 ("[media] s5p-fimc: Add the media device driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
+Fixes: af54b4f4c17f ("media: sunxi: Add support for the A31 MIPI CSI-2 controller")
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-core.c | 2 +-
- drivers/media/platform/samsung/exynos4-is/media-dev.c | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ .../sunxi/sun6i-mipi-csi2/sun6i_mipi_csi2.c     | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-core.c b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-index 91cc8d58a663..1791100b6935 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-@@ -1173,7 +1173,7 @@ int __init fimc_register_driver(void)
- 	return platform_driver_register(&fimc_driver);
- }
+diff --git a/drivers/media/platform/sunxi/sun6i-mipi-csi2/sun6i_mipi_csi2.c b/drivers/media/platform/sunxi/sun6i-mipi-csi2/sun6i_mipi_csi2.c
+index 340380a5f66f..484ac5f054d5 100644
+--- a/drivers/media/platform/sunxi/sun6i-mipi-csi2/sun6i_mipi_csi2.c
++++ b/drivers/media/platform/sunxi/sun6i-mipi-csi2/sun6i_mipi_csi2.c
+@@ -498,6 +498,7 @@ static int sun6i_mipi_csi2_bridge_setup(struct sun6i_mipi_csi2_device *csi2_dev)
+ 	struct v4l2_async_notifier *notifier = &bridge->notifier;
+ 	struct media_pad *pads = bridge->pads;
+ 	struct device *dev = csi2_dev->dev;
++	bool notifier_registered = false;
+ 	int ret;
  
--void __exit fimc_unregister_driver(void)
-+void fimc_unregister_driver(void)
- {
- 	platform_driver_unregister(&fimc_driver);
- }
-diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
-index 383a1e0ab912..2f3071acb9c9 100644
---- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
-+++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
-@@ -1584,7 +1584,11 @@ static int __init fimc_md_init(void)
- 	if (ret)
- 		return ret;
+ 	mutex_init(&bridge->lock);
+@@ -535,12 +536,17 @@ static int sun6i_mipi_csi2_bridge_setup(struct sun6i_mipi_csi2_device *csi2_dev)
+ 	notifier->ops = &sun6i_mipi_csi2_notifier_ops;
  
--	return platform_driver_register(&fimc_md_driver);
-+	ret = platform_driver_register(&fimc_md_driver);
-+	if (ret)
-+		fimc_unregister_driver();
+ 	ret = sun6i_mipi_csi2_bridge_source_setup(csi2_dev);
+-	if (ret)
++	if (ret && ret != -ENODEV)
+ 		goto error_v4l2_notifier_cleanup;
+ 
+-	ret = v4l2_async_subdev_nf_register(subdev, notifier);
+-	if (ret < 0)
+-		goto error_v4l2_notifier_cleanup;
++	/* Only register the notifier when a sensor is connected. */
++	if (ret != -ENODEV) {
++		ret = v4l2_async_subdev_nf_register(subdev, notifier);
++		if (ret < 0)
++			goto error_v4l2_notifier_cleanup;
 +
-+	return ret;
- }
++		notifier_registered = true;
++	}
  
- static void __exit fimc_md_exit(void)
+ 	/* V4L2 Subdev */
+ 
+@@ -551,7 +557,8 @@ static int sun6i_mipi_csi2_bridge_setup(struct sun6i_mipi_csi2_device *csi2_dev)
+ 	return 0;
+ 
+ error_v4l2_notifier_unregister:
+-	v4l2_async_nf_unregister(notifier);
++	if (notifier_registered)
++		v4l2_async_nf_unregister(notifier);
+ 
+ error_v4l2_notifier_cleanup:
+ 	v4l2_async_nf_cleanup(notifier);
 -- 
 2.35.1
 
