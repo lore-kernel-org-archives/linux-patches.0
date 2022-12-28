@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301AB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70A2C433EF;
-	Wed, 28 Dec 2022 16:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B5E1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E8BC433EF;
+	Wed, 28 Dec 2022 16:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245759;
-	bh=kFHEA2crW6pSZtpohiSQXfquf15wFYWTQdPHRp4KRq4=;
+	s=korg; t=1672245761;
+	bh=Ftmd9MOwYC0jJGKz6xA4bYBxWvR0KhrwihV0mKET/wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQ3OQkr6PIIdlvYxbBK3Vd8qN6KyhBKMx0WR60eXwwpPWkU3TKhBR93uty4I/pF3p
-	 SboI5iBDyjIsyXjZWCNDeEWZc6TaPUCHJ+u6+SrcVrQgBpgheX3w0eH6p9lenBtSlS
-	 JFT4avnrOVx3jL9Z68J5X/zys1/U6ITzlqcYXqTk=
+	b=01EhVTzhJ5oq9JBS01TsQOC3V/ANLCcu2vjT3l+ghJEzi7zkmXbFT3Q9I5ldX06JX
+	 3V5HILEzrUaQLb0EE6f7nmsv0jfCJiu+h/nOJv+DCz0/KRBIjg4X3GEM1xdN3z70z8
+	 ekzRgUZEj3JcJ92mZtFAm7EgJOBeNyn+xdMEWWPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Felix Fietkau <nbd@nbd.name>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0917/1146] devlink: hold region lock when flushing snapshots
-Date: Wed, 28 Dec 2022 15:40:56 +0100
-Message-Id: <20221228144355.154821488@linuxfoundation.org>
+Subject: [PATCH 6.0 0950/1073] net: ethernet: mtk_eth_soc: drop packets to WDMA if the ring is full
+Date: Wed, 28 Dec 2022 15:42:18 +0100
+Message-Id: <20221228144353.838800623@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit b4cafb3d2c740f8d1b1234b43ac4a60e5291c960 ]
+[ Upstream commit f4b2fa2c25e1ade78f766aa82e733a0b5198d484 ]
 
-Netdevsim triggers a splat on reload, when it destroys regions
-with snapshots pending:
+Improves handling of DMA ring overflow.
+Clarify other WDMA drop related comment.
 
-  WARNING: CPU: 1 PID: 787 at net/core/devlink.c:6291 devlink_region_snapshot_del+0x12e/0x140
-  CPU: 1 PID: 787 Comm: devlink Not tainted 6.1.0-07460-g7ae9888d6e1c #580
-  RIP: 0010:devlink_region_snapshot_del+0x12e/0x140
-  Call Trace:
-   <TASK>
-   devl_region_destroy+0x70/0x140
-   nsim_dev_reload_down+0x2f/0x60 [netdevsim]
-   devlink_reload+0x1f7/0x360
-   devlink_nl_cmd_reload+0x6ce/0x860
-   genl_family_rcv_msg_doit.isra.0+0x145/0x1c0
-
-This is the locking assert in devlink_region_snapshot_del(),
-we're supposed to be holding the region->snapshot_lock here.
-
-Fixes: 2dec18ad826f ("net: devlink: remove region snapshots list dependency on devlink->lock")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20221116080734.44013-3-nbd@nbd.name
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 5 ++++-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/devlink.c b/net/core/devlink.c
-index 89baa7c0938b..e8f1af4231db 100644
---- a/net/core/devlink.c
-+++ b/net/core/devlink.c
-@@ -11435,8 +11435,10 @@ void devl_region_destroy(struct devlink_region *region)
- 	devl_assert_locked(devlink);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 4c16f2df566f..559c7a42c1c9 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3344,9 +3344,12 @@ static int mtk_hw_init(struct mtk_eth *eth)
+ 	mtk_w32(eth, 0x21021000, MTK_FE_INT_GRP);
  
- 	/* Free all snapshots of region */
-+	mutex_lock(&region->snapshot_lock);
- 	list_for_each_entry_safe(snapshot, ts, &region->snapshot_list, list)
- 		devlink_region_snapshot_del(region, snapshot);
-+	mutex_unlock(&region->snapshot_lock);
+ 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
+-		/* PSE should not drop port8 and port9 packets */
++		/* PSE should not drop port8 and port9 packets from WDMA Tx */
+ 		mtk_w32(eth, 0x00000300, PSE_DROP_CFG);
  
- 	list_del(&region->list);
- 	mutex_destroy(&region->snapshot_lock);
++		/* PSE should drop packets to port 8/9 on WDMA Rx ring full */
++		mtk_w32(eth, 0x00000300, PSE_PPE0_DROP);
++
+ 		/* PSE Free Queue Flow Control  */
+ 		mtk_w32(eth, 0x01fa01f4, PSE_FQFC_CFG2);
+ 
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index da261dd49d6f..df8e6e95254e 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -121,6 +121,7 @@
+ #define PSE_FQFC_CFG1		0x100
+ #define PSE_FQFC_CFG2		0x104
+ #define PSE_DROP_CFG		0x108
++#define PSE_PPE0_DROP		0x110
+ 
+ /* PSE Input Queue Reservation Register*/
+ #define PSE_IQ_REV(x)		(0x140 + (((x) - 1) << 2))
 -- 
 2.35.1
 
