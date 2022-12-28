@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D5E1C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A12C433F0;
-	Wed, 28 Dec 2022 16:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC051C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77BAC433D2;
+	Wed, 28 Dec 2022 16:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245493;
-	bh=AJI6k/9Bs1e+aX6ppx/bBe1+BG7dZm6i6FA2mQ1gwcI=;
+	s=korg; t=1672245490;
+	bh=IYbKJGTY+0D09WGYZuSWxnuum7M0oPnE+h0/srHEp6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoN0uMdNP9xszvSEMScpBAvnE4es46RHcRzQRIkhd0Utwis5kYAiim5L1cLPG7dZJ
-	 E873LqsVUAT6Pln0hRlZZ7SWVx65OEdlx7eALWUc9KxVHI1lY6vEWcBrG5TjlBcOol
-	 hx8HOLIFbHe/26fh7j2TaatAyslgplwv5kI7KH+Y=
+	b=KrxLwiFMdtWRT6v9/SnTkPDQyzBXcp2Z5Yv+gNLlkwgzDFmJiYiftrepuIjSZPbOC
+	 c15rbBD3EX8tftn+P10KS522p/GCPCkATWNqlDD6hw1UR6GakvB4gRRSKj8nNCbalP
+	 bRuPp7QSBzTtpsDf3pbykiv8y+Fjk9fGgFuRd8CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0870/1146] remoteproc: sysmon: fix memory leak in qcom_add_sysmon_subdev()
-Date: Wed, 28 Dec 2022 15:40:09 +0100
-Message-Id: <20221228144353.799074997@linuxfoundation.org>
+Subject: [PATCH 6.0 0904/1073] ACPI: x86: Add skip i2c clients quirk for Medion Lifetab S10346
+Date: Wed, 28 Dec 2022 15:41:32 +0100
+Message-Id: <20221228144352.586516248@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e01ce676aaef3b13d02343d7e70f9637d93a3367 ]
+[ Upstream commit ecc6aaabcedc276128315f57755364106017c606 ]
 
-The kfree() should be called when of_irq_get_byname() fails or
-devm_request_threaded_irq() fails in qcom_add_sysmon_subdev(),
-otherwise there will be a memory leak, so add kfree() to fix it.
+The Medion Lifetab S10346 is a x86 tablet which ships with Android x86 as
+factory OS. The Android x86 kernel fork ignores I2C devices described in
+the DSDT, except for the PMIC and Audio codecs.
 
-Fixes: 027045a6e2b7 ("remoteproc: qcom: Add shutdown-ack irq")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221129105650.1539187-1-cuigaosheng1@huawei.com
+As usual the Medion Lifetab S10346's DSDT contains a bunch of extra I2C
+devices which are not actually there, causing various resource conflicts.
+Add an ACPI_QUIRK_SKIP_I2C_CLIENTS quirk for the Medion Lifetab S10346 to
+the acpi_quirk_skip_dmi_ids table to woraround this.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_sysmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/x86/utils.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index 57dde2a69b9d..15af52f8499e 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -652,7 +652,9 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 		if (sysmon->shutdown_irq != -ENODATA) {
- 			dev_err(sysmon->dev,
- 				"failed to retrieve shutdown-ack IRQ\n");
--			return ERR_PTR(sysmon->shutdown_irq);
-+			ret = sysmon->shutdown_irq;
-+			kfree(sysmon);
-+			return ERR_PTR(ret);
- 		}
- 	} else {
- 		ret = devm_request_threaded_irq(sysmon->dev,
-@@ -663,6 +665,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 		if (ret) {
- 			dev_err(sysmon->dev,
- 				"failed to acquire shutdown-ack IRQ\n");
-+			kfree(sysmon);
- 			return ERR_PTR(ret);
- 		}
- 	}
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index fb999597a3f0..ae60e4aae0ee 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -329,6 +329,17 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+ 					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
+ 	},
++	{
++		/* Medion Lifetab S10346 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
++			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
++			/* Way too generic, also match on BIOS data */
++			DMI_MATCH(DMI_BIOS_DATE, "10/22/2015"),
++		},
++		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++	},
+ 	{
+ 		/* Nextbook Ares 8 */
+ 		.matches = {
 -- 
 2.35.1
 
