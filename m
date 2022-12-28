@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80DA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C77EC433D2;
-	Wed, 28 Dec 2022 14:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536211863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA11FC433EF;
+	Wed, 28 Dec 2022 14:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239369;
-	bh=dkwj+6dc4AW/BlkokJ7uyTXVotXRzGd+90vyyE2mwcc=;
+	s=korg; t=1672239372;
+	bh=cozt9pH7kqTViyADS+AmpiaDIgxaRd9B4CstxTgTqpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1bppHslqA7o1R2W0GyfY0s+dqRm+IKb07nkx6wC1l5rYKkgtbB2xrAYqJDt1RtYJ
-	 Q7QCsr4OigAFXV4qlL5Lf7oULd1XNfbOB7f0p94ZjDEkkkDg+bDme9qhIvumINA0ib
-	 QS9TAxgpWpusZB4UIwcb5GDLEqq0ouRicsKkwxrI=
+	b=is1r3bSIeBcyJzzLPVEYmiokbNhjjD3o+yDM58N6wsQcd3AzOLjZAiP44iFlYkjdq
+	 WJBptrNMQiSwXjJVQnDeNla159MZh2hcvYtqL2p+eu9BLwqaeEJy5XB0SFkN0rO20Y
+	 QWJL90WIn5GfnHPXkixv+CDvtYDvcPoeXve16cwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 213/731] media: platform: exynos4-is: Fix error handling in fimc_md_init()
-Date: Wed, 28 Dec 2022 15:35:20 +0100
-Message-Id: <20221228144302.731522912@linuxfoundation.org>
+Subject: [PATCH 6.0 0018/1073] arm64: dts: qcom: msm8916: Drop MSS fallback compatible
+Date: Wed, 28 Dec 2022 15:26:46 +0100
+Message-Id: <20221228144328.652047360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit b434422c45282a0573d8123239abc41fa72665d4 ]
+[ Upstream commit ff02ac621634e82c0c34d02a79d402ae700cdfd0 ]
 
-A problem about modprobe s5p_fimc failed is triggered with the
-following log given:
+MSM8916 was originally using the "qcom,q6v5-pil" compatible for the
+MSS remoteproc. Later it was decided to use SoC-specific compatibles
+instead, so "qcom,msm8916-mss-pil" is now the preferred compatible.
 
- [  272.075275] Error: Driver 'exynos4-fimc' is already registered, aborting...
- modprobe: ERROR: could not insert 's5p_fimc': Device or resource busy
+Commit 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific
+compatibles to SCM/MSS") updated the MSM8916 device tree to make use of
+the new compatible but still kept the old "qcom,q6v5-pil" as fallback.
 
-The reason is that fimc_md_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without unregister fimc_driver, resulting the
-s5p_fimc can never be installed later.
-A simple call graph is shown as below:
+This is inconsistent with other SoCs and conflicts with the description
+in the binding documentation (which says that only one compatible should
+be present). Also, it has no functional advantage since older kernels
+could not handle this DT anyway (e.g. "power-domains" in the MSS node is
+only supported by kernels that also support "qcom,msm8916-mss-pil").
 
- fimc_md_init()
-   fimc_register_driver() # register fimc_driver
-   platform_driver_register()
-     platform_driver_register()
-       driver_register()
-         bus_add_driver()
-           dev = kzalloc(...) # OOM happened
-   # return without unregister fimc_driver
+Make this consistent with other SoCs by using only the
+"qcom,msm8916-mss-pil" compatible.
 
-Fix by unregister fimc_driver when platform_driver_register() returns
-error.
-
-Fixes: d3953223b090 ("[media] s5p-fimc: Add the media device driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific compatibles to SCM/MSS")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220718140344.1831731-2-stephan.gerhold@kernkonzept.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/fimc-core.c | 2 +-
- drivers/media/platform/exynos4-is/media-dev.c | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/exynos4-is/fimc-core.c b/drivers/media/platform/exynos4-is/fimc-core.c
-index bfdee771cef9..4afe0b9b1773 100644
---- a/drivers/media/platform/exynos4-is/fimc-core.c
-+++ b/drivers/media/platform/exynos4-is/fimc-core.c
-@@ -1174,7 +1174,7 @@ int __init fimc_register_driver(void)
- 	return platform_driver_register(&fimc_driver);
- }
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 48bc2e09128d..863a60b63641 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1331,7 +1331,7 @@ bam_dmux_dma: dma-controller@4044000 {
+ 		};
  
--void __exit fimc_unregister_driver(void)
-+void fimc_unregister_driver(void)
- {
- 	platform_driver_unregister(&fimc_driver);
- }
-diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
-index 00225e16dd49..b19d7c8ddc06 100644
---- a/drivers/media/platform/exynos4-is/media-dev.c
-+++ b/drivers/media/platform/exynos4-is/media-dev.c
-@@ -1584,7 +1584,11 @@ static int __init fimc_md_init(void)
- 	if (ret)
- 		return ret;
+ 		mpss: remoteproc@4080000 {
+-			compatible = "qcom,msm8916-mss-pil", "qcom,q6v5-pil";
++			compatible = "qcom,msm8916-mss-pil";
+ 			reg = <0x04080000 0x100>,
+ 			      <0x04020000 0x040>;
  
--	return platform_driver_register(&fimc_md_driver);
-+	ret = platform_driver_register(&fimc_md_driver);
-+	if (ret)
-+		fimc_unregister_driver();
-+
-+	return ret;
- }
- 
- static void __exit fimc_md_exit(void)
 -- 
 2.35.1
 
