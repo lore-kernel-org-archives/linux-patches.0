@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FBF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82131C433EF;
-	Wed, 28 Dec 2022 16:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC701C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42334C433EF;
+	Wed, 28 Dec 2022 16:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246211;
-	bh=nUSiROIuywcjFmshTbQQuHbfp+Kk9J/uXgecjOrgqXc=;
+	s=korg; t=1672246214;
+	bh=fCTy5XsnxXJd1DH8S1nEC1bP1x0RlusDZgk6MB26vuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haB4fgICIv4nIId+fDbtmXRrEqEK8W7kB7rTR3C5t/O3RN014ClIcilOpgaCzKGNm
-	 hDuN/zeUrRIoa0J/XtnFf3MXwJJ4xb06q0+NPEsGHwl5ypAGR7iVeeVasqsnJ4AiYs
-	 pYWYPgvMowfm7NBBIA2Z5ru7Dj+1pyVKknCGHIs8=
+	b=KKqUAwY/8wA6FIKdML7Qh846jZwD/eNGMIkl0e4FbqpKtnYTtPwDIVrYQb2cUzH++
+	 pEBuJK6Af1hw4cKquYyHHQmb4LwmAW2uvadva51I2vAWAI/rgOEuE/POb4IfgRtP+R
+	 R/2EOLLqzquTDpiZANijSvC/IIc9Hh2wU1yH8MAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Sandy Huang <hjc@rock-chips.com>,
-	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1003/1146] drm/rockchip: Use drm_mode_copy()
-Date: Wed, 28 Dec 2022 15:42:22 +0100
-Message-Id: <20221228144357.613090753@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 6.0 1032/1073] usb: cdnsp: fix lack of ZLP for ep0
+Date: Wed, 28 Dec 2022 15:43:40 +0100
+Message-Id: <20221228144356.224206172@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,121 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 2bfaa28000d2830d3209161a4541cce0660e1b84 ]
+commit ae423ef5d095e09970f52c08020fdbf7f9d87c22 upstream.
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+Patch implements the handling of ZLP for control transfer.
+To send the ZLP driver must prepare the extra TRB in TD with
+length set to zero and TRB type to TRB_NORMAL.
+The first TRB must have set TRB_CHAIN flag, TD_SIZE = 1
+and TRB type to TRB_DATA.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
-
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
-
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Sandy Huang <hjc@rock-chips.com>
-Cc: "Heiko Stübner" <heiko@sntech.de>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-rockchip@lists.infradead.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-7-ville.syrjala@linux.intel.com
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: <stable@vger.kernel.org>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/20221122085138.332434-1-pawell@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/cdn-dp-core.c | 2 +-
- drivers/gpu/drm/rockchip/inno_hdmi.c   | 2 +-
- drivers/gpu/drm/rockchip/rk3066_hdmi.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/cdnsp-ring.c |   42 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-index 518ee13b1d6f..8526dda91931 100644
---- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
-+++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-@@ -571,7 +571,7 @@ static void cdn_dp_encoder_mode_set(struct drm_encoder *encoder,
- 	video->v_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NVSYNC);
- 	video->h_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NHSYNC);
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -2006,10 +2006,11 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
  
--	memcpy(&dp->mode, adjusted, sizeof(*mode));
-+	drm_mode_copy(&dp->mode, adjusted);
- }
+ int cdnsp_queue_ctrl_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
+ {
+-	u32 field, length_field, remainder;
++	u32 field, length_field, zlp = 0;
+ 	struct cdnsp_ep *pep = preq->pep;
+ 	struct cdnsp_ring *ep_ring;
+ 	int num_trbs;
++	u32 maxp;
+ 	int ret;
  
- static bool cdn_dp_check_link_status(struct cdn_dp_device *dp)
-diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockchip/inno_hdmi.c
-index 87b2243ea23e..f51774866f41 100644
---- a/drivers/gpu/drm/rockchip/inno_hdmi.c
-+++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
-@@ -499,7 +499,7 @@ static void inno_hdmi_encoder_mode_set(struct drm_encoder *encoder,
- 	inno_hdmi_setup(hdmi, adj_mode);
+ 	ep_ring = cdnsp_request_to_transfer_ring(pdev, preq);
+@@ -2019,26 +2020,33 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
+ 	/* 1 TRB for data, 1 for status */
+ 	num_trbs = (pdev->three_stage_setup) ? 2 : 1;
  
- 	/* Store the display mode for plugin/DPMS poweron events */
--	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
-+	drm_mode_copy(&hdmi->previous_mode, adj_mode);
- }
++	maxp = usb_endpoint_maxp(pep->endpoint.desc);
++
++	if (preq->request.zero && preq->request.length &&
++	    (preq->request.length % maxp == 0)) {
++		num_trbs++;
++		zlp = 1;
++	}
++
+ 	ret = cdnsp_prepare_transfer(pdev, preq, num_trbs);
+ 	if (ret)
+ 		return ret;
  
- static void inno_hdmi_encoder_enable(struct drm_encoder *encoder)
-diff --git a/drivers/gpu/drm/rockchip/rk3066_hdmi.c b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
-index cf2cf51091a3..90145ad96984 100644
---- a/drivers/gpu/drm/rockchip/rk3066_hdmi.c
-+++ b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
-@@ -395,7 +395,7 @@ rk3066_hdmi_encoder_mode_set(struct drm_encoder *encoder,
- 	struct rk3066_hdmi *hdmi = encoder_to_rk3066_hdmi(encoder);
+ 	/* If there's data, queue data TRBs */
+-	if (pdev->ep0_expect_in)
+-		field = TRB_TYPE(TRB_DATA) | TRB_IOC;
+-	else
+-		field = TRB_ISP | TRB_TYPE(TRB_DATA) | TRB_IOC;
+-
+ 	if (preq->request.length > 0) {
+-		remainder = cdnsp_td_remainder(pdev, 0, preq->request.length,
+-					       preq->request.length, preq, 1, 0);
++		field = TRB_TYPE(TRB_DATA);
  
- 	/* Store the display mode for plugin/DPMS poweron events. */
--	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
-+	drm_mode_copy(&hdmi->previous_mode, adj_mode);
- }
+-		length_field = TRB_LEN(preq->request.length) |
+-				TRB_TD_SIZE(remainder) | TRB_INTR_TARGET(0);
++		if (zlp)
++			field |= TRB_CHAIN;
++		else
++			field |= TRB_IOC | (pdev->ep0_expect_in ? 0 : TRB_ISP);
  
- static void rk3066_hdmi_encoder_enable(struct drm_encoder *encoder)
--- 
-2.35.1
-
+ 		if (pdev->ep0_expect_in)
+ 			field |= TRB_DIR_IN;
+ 
++		length_field = TRB_LEN(preq->request.length) |
++			       TRB_TD_SIZE(zlp) | TRB_INTR_TARGET(0);
++
+ 		cdnsp_queue_trb(pdev, ep_ring, true,
+ 				lower_32_bits(preq->request.dma),
+ 				upper_32_bits(preq->request.dma), length_field,
+@@ -2046,6 +2054,20 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
+ 				TRB_SETUPID(pdev->setup_id) |
+ 				pdev->setup_speed);
+ 
++		if (zlp) {
++			field = TRB_TYPE(TRB_NORMAL) | TRB_IOC;
++
++			if (!pdev->ep0_expect_in)
++				field = TRB_ISP;
++
++			cdnsp_queue_trb(pdev, ep_ring, true,
++					lower_32_bits(preq->request.dma),
++					upper_32_bits(preq->request.dma), 0,
++					field | ep_ring->cycle_state |
++					TRB_SETUPID(pdev->setup_id) |
++					pdev->setup_speed);
++		}
++
+ 		pdev->ep0_stage = CDNSP_DATA_STAGE;
+ 	}
+ 
 
 
