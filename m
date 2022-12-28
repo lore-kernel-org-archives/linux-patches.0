@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2681C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECCEC433D2;
-	Wed, 28 Dec 2022 16:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ED2C433F0;
+	Wed, 28 Dec 2022 16:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243981;
-	bh=fwhFxxvXnqFyPT2/I2aY9/UYDUYC5DB50CIjnBxweYs=;
+	s=korg; t=1672243984;
+	bh=E3DFW+lNHelMJDUaAEh6db0obghbC4BF8bq34TLnXiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMuuizCfdpmHRBKel9XxtGQcOkGyIohw7Oj7gdHRLzgwkcfJFD1hSeTugIL+0qt7o
-	 NwCXpbMWN7TwNz6RVyX+Z/sDqjwxa9Y1rmsIEDXLXLxWitnCBCAHDW/tSAq0e14TwO
-	 XOqxJ/0itzOR/tdkEyQIv6VsubIkIOPZx4frCoLQ=
+	b=UYSJi/K9UqEQP7YTiaA0a4Wt1YIMRZHyi8gcHXcM8HnTgOJi6ZZvibuwHaaRb8bK/
+	 6G0P9cNjTqJ2VOFRKh8H2VMRp85s3K69BSymoifCBllo29gmWWGw60sXOzKixqlRnY
+	 aGl2Cu3Nv72tmCTR+KcvJQG6zam46P7N1jXyBOiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0626/1073] scsi: ipr: Fix WARNING in ipr_init()
-Date: Wed, 28 Dec 2022 15:36:54 +0100
-Message-Id: <20221228144345.046245797@linuxfoundation.org>
+Subject: [PATCH 6.1 0590/1146] crypto: rockchip - better handle cipher key
+Date: Wed, 28 Dec 2022 15:35:29 +0100
+Message-Id: <20221228144346.195863598@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,71 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit e6f108bffc3708ddcff72324f7d40dfcd0204894 ]
+[ Upstream commit d6b23ccef82816050c2fd458c9dabfa0e0af09b9 ]
 
-ipr_init() will not call unregister_reboot_notifier() when
-pci_register_driver() fails, which causes a WARNING. Call
-unregister_reboot_notifier() when pci_register_driver() fails.
+The key should not be set in hardware too much in advance, this will
+fail it 2 TFM with different keys generate alternative requests.
+The key should be stored and used just before doing cipher operations.
 
-notifier callback ipr_halt [ipr] already registered
-WARNING: CPU: 3 PID: 299 at kernel/notifier.c:29
-notifier_chain_register+0x16d/0x230
-Modules linked in: ipr(+) xhci_pci_renesas xhci_hcd ehci_hcd usbcore
-led_class gpu_sched drm_buddy video wmi drm_ttm_helper ttm
-drm_display_helper drm_kms_helper drm drm_panel_orientation_quirks
-agpgart cfbft
-CPU: 3 PID: 299 Comm: modprobe Tainted: G        W
-6.1.0-rc1-00190-g39508d23b672-dirty #332
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:notifier_chain_register+0x16d/0x230
-Call Trace:
- <TASK>
- __blocking_notifier_chain_register+0x73/0xb0
- ipr_init+0x30/0x1000 [ipr]
- do_one_initcall+0xdb/0x480
- do_init_module+0x1cf/0x680
- load_module+0x6a50/0x70a0
- __do_sys_finit_module+0x12f/0x1c0
- do_syscall_64+0x3f/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: f72919ec2bbb ("[SCSI] ipr: implement shutdown changes and remove obsolete write cache parameter")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Link: https://lore.kernel.org/r/20221113064513.14028-1-shangxiaojing@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/crypto/rockchip/rk3288_crypto.h          |  1 +
+ drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 10 +++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index 9d01a3e3c26a..2022ffb45041 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -10872,11 +10872,19 @@ static struct notifier_block ipr_notifier = {
-  **/
- static int __init ipr_init(void)
- {
-+	int rc;
-+
- 	ipr_info("IBM Power RAID SCSI Device Driver version: %s %s\n",
- 		 IPR_DRIVER_VERSION, IPR_DRIVER_DATE);
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index dfff0e2a83e4..665cc0bb2264 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -245,6 +245,7 @@ struct rk_ahash_rctx {
+ struct rk_cipher_ctx {
+ 	struct rk_crypto_info		*dev;
+ 	unsigned int			keylen;
++	u8				key[AES_MAX_KEY_SIZE];
+ 	u8				iv[AES_BLOCK_SIZE];
+ 	struct crypto_skcipher *fallback_tfm;
+ };
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index eac5bba66e25..1ef94f8db2c5 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -95,7 +95,7 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
+ 	    keylen != AES_KEYSIZE_256)
+ 		return -EINVAL;
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
  
- 	register_reboot_notifier(&ipr_notifier);
--	return pci_register_driver(&ipr_driver);
-+	rc = pci_register_driver(&ipr_driver);
-+	if (rc) {
-+		unregister_reboot_notifier(&ipr_notifier);
-+		return rc;
-+	}
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+@@ -111,7 +111,7 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
+ 		return err;
+ 
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
+ 
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+@@ -127,7 +127,8 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
+ 		return err;
+ 
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
 +
-+	return 0;
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
  }
  
- /**
+@@ -283,6 +284,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
+ 			     RK_CRYPTO_TDES_BYTESWAP_IV;
+ 		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
+ 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
++		memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, ctx->key, ctx->keylen);
+ 		conf_reg = RK_CRYPTO_DESSEL;
+ 	} else {
+ 		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
+@@ -295,6 +297,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
+ 			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
+ 		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
+ 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
++		memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, ctx->key, ctx->keylen);
+ 	}
+ 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
+ 		    RK_CRYPTO_BYTESWAP_BRFIFO;
+@@ -484,6 +487,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ {
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
++	memzero_explicit(ctx->key, ctx->keylen);
+ 	free_page((unsigned long)ctx->dev->addr_vir);
+ 	crypto_free_skcipher(ctx->fallback_tfm);
+ }
 -- 
 2.35.1
 
