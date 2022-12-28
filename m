@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FD51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB239C433EF;
-	Wed, 28 Dec 2022 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F221863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85763C433D2;
+	Wed, 28 Dec 2022 15:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241296;
-	bh=dFXC/ABF4qD/kQ/+FO+hc/5QahOtsfa6J+G1j6QWqek=;
+	s=korg; t=1672241298;
+	bh=TLzqQU6EPU+aJtQ1mQwvfFGxYgMU3QufR4hXfdO7F04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nN2SzzsA3uNvqqZ1mY2cmui/AAkeO/JPD1cPEypEyhkQj8DIQpinsTk7GjQ2XkMX4
-	 pTegyULBJDDGD4te63TvAbfnFsADn+lfdcmIr6NTMeH1rhgle037dfAZLoQ/mMZWIO
-	 HBIj+AOXVo6Rs1jxZjqbm7I0hlL6g04WEAfuxvC0=
+	b=EBe/KJuZ5Jyfii3NhMGLO00PwGANgiqloebfDJn0vS7GyNH2zMNCswRQ3y03Oqff+
+	 jqAf5URM9rja83k6+cUeAav4efM5XerXKzPIz9hwMXxlB+2VHNmGSrH7Ey5J5Ve4ao
+	 Ork3+EVVVE52ZxedsWhe/PPjcubaaZQ3lCxSKusE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Gabriel Somlo <gsomlo@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0263/1073] drm/panel/panel-sitronix-st7701: Remove panel on DSI attach failure
-Date: Wed, 28 Dec 2022 15:30:51 +0100
-Message-Id: <20221228144335.159051771@linuxfoundation.org>
+Subject: [PATCH 5.15 463/731] serial: altera_uart: fix locking in polling mode
+Date: Wed, 28 Dec 2022 15:39:30 +0100
+Message-Id: <20221228144309.970565586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Gabriel Somlo <gsomlo@gmail.com>
 
-[ Upstream commit c62102165dd79284d42383d2f7ed17301bd8e629 ]
+[ Upstream commit 1307c5d33cce8a41dd77c2571e4df65a5b627feb ]
 
-In case mipi_dsi_attach() fails, call drm_panel_remove() to
-avoid memory leak.
+Since altera_uart_interrupt() may also be called from
+a poll timer in "serving_softirq" context, use
+spin_[lock_irqsave|unlock_irqrestore] variants, which
+are appropriate for both softirq and hardware interrupt
+contexts.
 
-Fixes: 849b2e3ff969 ("drm/panel: Add Sitronix ST7701 panel driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221014231106.468063-1-marex@denx.de
+Fixes: 2f8b9c15cd88 ("altera_uart: Add support for polling mode (IRQ-less)")
+Signed-off-by: Gabriel Somlo <gsomlo@gmail.com>
+Link: https://lore.kernel.org/r/20221122200426.888349-1-gsomlo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sitronix-st7701.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/tty/serial/altera_uart.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7701.c b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-index 320a2a8fd459..098955526b68 100644
---- a/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-+++ b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-@@ -384,7 +384,15 @@ static int st7701_dsi_probe(struct mipi_dsi_device *dsi)
- 	st7701->dsi = dsi;
- 	st7701->desc = desc;
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 6e08fa11ceea..91799c420e25 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -278,16 +278,17 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ {
+ 	struct uart_port *port = data;
+ 	struct altera_uart *pp = container_of(port, struct altera_uart, port);
++	unsigned long flags;
+ 	unsigned int isr;
  
--	return mipi_dsi_attach(dsi);
-+	ret = mipi_dsi_attach(dsi);
-+	if (ret)
-+		goto err_attach;
-+
-+	return 0;
-+
-+err_attach:
-+	drm_panel_remove(&st7701->panel);
-+	return ret;
+ 	isr = altera_uart_readl(port, ALTERA_UART_STATUS_REG) & pp->imr;
+ 
+-	spin_lock(&port->lock);
++	spin_lock_irqsave(&port->lock, flags);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+ 		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+ 		altera_uart_tx_chars(port);
+-	spin_unlock(&port->lock);
++	spin_unlock_irqrestore(&port->lock, flags);
+ 
+ 	return IRQ_RETVAL(isr);
  }
- 
- static int st7701_dsi_remove(struct mipi_dsi_device *dsi)
 -- 
 2.35.1
 
