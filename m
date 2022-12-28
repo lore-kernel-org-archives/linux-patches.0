@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B6D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96372C433EF;
-	Wed, 28 Dec 2022 16:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76171C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E92C433D2;
+	Wed, 28 Dec 2022 16:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244783;
-	bh=bUSFX6aNpIerdUW+Rfm6TOuORBTijI25qcaWLsLR6Ro=;
+	s=korg; t=1672244785;
+	bh=2s8+8v+kwfXxbFXzf6BDPF3hKKV7A9BpshUDpveIOhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uEJw5Z3P7D/JNldAvo0b+kTk+GR8tPfzqmGNH7FnOeO35YI7ZqGNbFujM34KJs8r1
-	 jLN5nJmweKOO5zSpG+cy94Zm04lIU2lREA+3oil4ZcaELrNCUpU9DGgWKBPw97k6at
-	 U177LKWN83v8Hnn3NFzYHVQIgHpYzU32EB2AfnEY=
+	b=EpCSrM5SAqhbk+r1LtG2wDJpDKCkyjXAeIqBdDgpKRGGVz/+ntSI/386H6zEcOXlp
+	 BWwFdTtmXAewe+G7skL3puB/8MoFEifFjwVHsrvL2kzQiQYSTwnBRTnxPS+K8MeMO9
+	 Cpby2OQP1lGN+ggRG9nCkejEq17Dn/VnUl1tI8Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@wolfvision.net>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Joerg Roedel <jroedel@suse.de>,
+	Hui Tang <tanghui20@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0773/1073] iommu/rockchip: fix permission bits in page table entries v2
-Date: Wed, 28 Dec 2022 15:39:21 +0100
-Message-Id: <20221228144349.011074769@linuxfoundation.org>
+Subject: [PATCH 6.1 0736/1146] i2c: pxa-pci: fix missing pci_disable_device() on error in ce4100_i2c_probe
+Date: Wed, 28 Dec 2022 15:37:55 +0100
+Message-Id: <20221228144350.139836817@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Riesch <michael.riesch@wolfvision.net>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 7eb99841f340b80be0d0973b0deb592d75fb8928 ]
+[ Upstream commit d78a167332e1ca8113268ed922c1212fd71b73ad ]
 
-As pointed out in the corresponding downstream fix [0], the permission bits
-of the page table entries are compatible between v1 and v2 of the IOMMU.
-This is in contrast to the current mainline code that incorrectly assumes
-that the read and write permission bits are switched. Fix the permission
-bits by reusing the v1 bit defines.
+Using pcim_enable_device() to avoid missing pci_disable_device().
 
-[0] https://github.com/rockchip-linux/kernel/commit/e3bc123a2260145e34b57454da3db0edd117eb8e
-
-Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
-Signed-off-by: Michael Riesch <michael.riesch@wolfvision.net>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20221102063553.2464161-1-michael.riesch@wolfvision.net
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 7e94dd154e93 ("i2c-pxa2xx: Add PCI support for PXA I2C controller")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/i2c/busses/i2c-pxa-pci.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index ab57c4b8fade..a0652e9a7db3 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -280,19 +280,17 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
-  *  11:9 - Page address bit 34:32
-  *   8:4 - Page address bit 39:35
-  *     3 - Security
-- *     2 - Readable
-- *     1 - Writable
-+ *     2 - Writable
-+ *     1 - Readable
-  *     0 - 1 if Page @ Page address is valid
-  */
--#define RK_PTE_PAGE_READABLE_V2      BIT(2)
--#define RK_PTE_PAGE_WRITABLE_V2      BIT(1)
+diff --git a/drivers/i2c/busses/i2c-pxa-pci.c b/drivers/i2c/busses/i2c-pxa-pci.c
+index f614cade432b..30e38bc8b6db 100644
+--- a/drivers/i2c/busses/i2c-pxa-pci.c
++++ b/drivers/i2c/busses/i2c-pxa-pci.c
+@@ -105,7 +105,7 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 	int i;
+ 	struct ce4100_devices *sds;
  
- static u32 rk_mk_pte_v2(phys_addr_t page, int prot)
- {
- 	u32 flags = 0;
+-	ret = pci_enable_device_mem(dev);
++	ret = pcim_enable_device(dev);
+ 	if (ret)
+ 		return ret;
  
--	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE_V2 : 0;
--	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE_V2 : 0;
-+	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE : 0;
-+	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE : 0;
+@@ -114,10 +114,8 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 		return -EINVAL;
+ 	}
+ 	sds = kzalloc(sizeof(*sds), GFP_KERNEL);
+-	if (!sds) {
+-		ret = -ENOMEM;
+-		goto err_mem;
+-	}
++	if (!sds)
++		return -ENOMEM;
  
- 	return rk_mk_dte_v2(page) | flags;
+ 	for (i = 0; i < ARRAY_SIZE(sds->pdev); i++) {
+ 		sds->pdev[i] = add_i2c_device(dev, i);
+@@ -133,8 +131,6 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 
+ err_dev_add:
+ 	kfree(sds);
+-err_mem:
+-	pci_disable_device(dev);
+ 	return ret;
  }
+ 
 -- 
 2.35.1
 
