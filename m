@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856AEC433D2;
-	Wed, 28 Dec 2022 15:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25291863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37999C433D2;
+	Wed, 28 Dec 2022 15:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241543;
-	bh=vq/GNhPCQ1t1QBGROyBX1JQNozTtv/RuPQIlVEsUJWw=;
+	s=korg; t=1672241546;
+	bh=e0iugbZSA8YJy0JzlOv12gzQwF4jKIBTfD34kkqZM+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/3iOxAcP6vklwOrVCW9/fCHX0IrnKSl8KWgzbcaQ4Ln4n7eo7gUFHNi81BcxrDDQ
-	 yk2PcjXd9GRLbqMaGfrd7b+/5gNc43Dy/FkfuF5wvBxrCWjx+iBrvd/POwTVXrH6eS
-	 1nTywcWrkL+ogeoVjk5ELsiRkifAXfsinIo2nTwM=
+	b=RGIGXwmVmcCsV37Gi4m3Gj5brWyW5LLAiFusLGJdO/4/I2GuASeBvqxOIAOl6WdkT
+	 XTRlzITDP2Th9tpgw2IRsSjjsTaLIn91VwJXXK3Rx+M8OG1FmVzPpKs9a0Smf5xkOW
+	 u8z2kP8HKJgOoVzcQkZB0s/EyA/0lVJeXziR6u7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0296/1073] clk: renesas: r8a779f0: Fix HSCIF parent clocks
-Date: Wed, 28 Dec 2022 15:31:24 +0100
-Message-Id: <20221228144336.053780100@linuxfoundation.org>
+Subject: [PATCH 6.1 0259/1146] dw9768: Enable low-power probe on ACPI
+Date: Wed, 28 Dec 2022 15:29:58 +0100
+Message-Id: <20221228144337.172368085@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit c258e3ab639112d8f5ae9df9a873750ae2623ce2 ]
+[ Upstream commit 5f9a089b6de34655318afe8e544d9a9cc0fc1d29 ]
 
-As serial communication requires a clean clock signal, the High Speed
-Serial Communication Interfaces with FIFO (HSCIF) are clocked by a clock
-that is not affected by Spread Spectrum or Fractional Multiplication.
+Add support for low-power probe to the driver. Also fix runtime PM API
+usage in the driver.
 
-Hence change the parent clocks for the HSCIF modules from the S0D3_PER
-clock to the SASYNCPERD1 clock (which has the same clock rate), cfr.
-R-Car S4-8 Hardware User's Manual rev. 0.81.
+Much of the hassle comes from different factors affecting device power
+states during probe for ACPI and DT.
 
-Fixes: 080bcd8d5997 ("clk: renesas: r8a779f0: Add HSCIF clocks")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20221103143440.46449-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 859891228e56 ("media: i2c: dw9768: Add DW9768 VCM driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779f0-cpg-mssr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/dw9768.c | 33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779f0-cpg-mssr.c b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-index cd80b6084ece..90cac3f8b2ed 100644
---- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-@@ -120,10 +120,10 @@ static const struct cpg_core_clk r8a779f0_core_clks[] __initconst = {
- };
+diff --git a/drivers/media/i2c/dw9768.c b/drivers/media/i2c/dw9768.c
+index 0f47ef015a1d..83a3ee275bbe 100644
+--- a/drivers/media/i2c/dw9768.c
++++ b/drivers/media/i2c/dw9768.c
+@@ -414,6 +414,7 @@ static int dw9768_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
+ 	struct dw9768 *dw9768;
++	bool full_power;
+ 	unsigned int i;
+ 	int ret;
  
- static const struct mssr_mod_clk r8a779f0_mod_clks[] __initconst = {
--	DEF_MOD("hscif0",	514,	R8A779F0_CLK_S0D3),
--	DEF_MOD("hscif1",	515,	R8A779F0_CLK_S0D3),
--	DEF_MOD("hscif2",	516,	R8A779F0_CLK_S0D3),
--	DEF_MOD("hscif3",	517,	R8A779F0_CLK_S0D3),
-+	DEF_MOD("hscif0",	514,	R8A779F0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif1",	515,	R8A779F0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif2",	516,	R8A779F0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif3",	517,	R8A779F0_CLK_SASYNCPERD1),
- 	DEF_MOD("i2c0",		518,	R8A779F0_CLK_S0D6_PER),
- 	DEF_MOD("i2c1",		519,	R8A779F0_CLK_S0D6_PER),
- 	DEF_MOD("i2c2",		520,	R8A779F0_CLK_S0D6_PER),
+@@ -469,13 +470,23 @@ static int dw9768_probe(struct i2c_client *client)
+ 
+ 	dw9768->sd.entity.function = MEDIA_ENT_F_LENS;
+ 
++	/*
++	 * Figure out whether we're going to power up the device here. Generally
++	 * this is done if CONFIG_PM is disabled in a DT system or the device is
++	 * to be powered on in an ACPI system. Similarly for power off in
++	 * remove.
++	 */
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev)) {
++	full_power = (is_acpi_node(dev_fwnode(dev)) &&
++		      acpi_dev_state_d0(dev)) ||
++		     (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev));
++	if (full_power) {
+ 		ret = dw9768_runtime_resume(dev);
+ 		if (ret < 0) {
+ 			dev_err(dev, "failed to power on: %d\n", ret);
+ 			goto err_clean_entity;
+ 		}
++		pm_runtime_set_active(dev);
+ 	}
+ 
+ 	ret = v4l2_async_register_subdev(&dw9768->sd);
+@@ -484,14 +495,17 @@ static int dw9768_probe(struct i2c_client *client)
+ 		goto err_power_off;
+ 	}
+ 
++	pm_runtime_idle(dev);
++
+ 	return 0;
+ 
+ err_power_off:
+-	if (pm_runtime_enabled(dev))
+-		pm_runtime_disable(dev);
+-	else
++	if (full_power) {
+ 		dw9768_runtime_suspend(dev);
++		pm_runtime_set_suspended(dev);
++	}
+ err_clean_entity:
++	pm_runtime_disable(dev);
+ 	media_entity_cleanup(&dw9768->sd.entity);
+ err_free_handler:
+ 	v4l2_ctrl_handler_free(&dw9768->ctrls);
+@@ -503,14 +517,17 @@ static void dw9768_remove(struct i2c_client *client)
+ {
+ 	struct v4l2_subdev *sd = i2c_get_clientdata(client);
+ 	struct dw9768 *dw9768 = sd_to_dw9768(sd);
++	struct device *dev = &client->dev;
+ 
+ 	v4l2_async_unregister_subdev(&dw9768->sd);
+ 	v4l2_ctrl_handler_free(&dw9768->ctrls);
+ 	media_entity_cleanup(&dw9768->sd.entity);
+-	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
+-		dw9768_runtime_suspend(&client->dev);
+-	pm_runtime_set_suspended(&client->dev);
++	if ((is_acpi_node(dev_fwnode(dev)) && acpi_dev_state_d0(dev)) ||
++	    (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev))) {
++		dw9768_runtime_suspend(dev);
++		pm_runtime_set_suspended(dev);
++	}
++	pm_runtime_disable(dev);
+ }
+ 
+ static const struct of_device_id dw9768_of_table[] = {
 -- 
 2.35.1
 
