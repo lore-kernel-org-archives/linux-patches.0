@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641831C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C643AC433D2;
-	Wed, 28 Dec 2022 16:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1551C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78547C433EF;
+	Wed, 28 Dec 2022 16:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244652;
-	bh=LYR2MszpcfxALpm6QqqLQhYFaWt7DyQX8GcTxgD7xv4=;
+	s=korg; t=1672244654;
+	bh=FqPvJcPjRfo3gCAgiE5/6f6HdCf1P4W7UZQ7C0CT5BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fx5e9uizm12JqRK6XuDRRHZnrfDC9cFAPwaJjRrBQAqz6lUE0H19Fp+frSXe8hE0u
-	 /MKz9P2sVm350JSZN9p5r/ZV38VxtxCKEF2T4XTybSHoPW1w5WaIggBTj2VQDEbUpL
-	 jNxBYJ8SxyWebYLb2YFaFnLdi7JKZZbtPse9qeD4=
+	b=YpTchKwHkwBGA7OK9ik48JvRd5NZtlE/+PfYLR4KyHjzTssZAoTcy8iMewwrunWCC
+	 47J2P6iA10eCs2MLfVYPjXmsj1M/h6GGHJ2Oygngko7cNonbCoqtU1GYIdeQWiPMgl
+	 QajO9u3oS7fx7FKB8V7pxOy2lFNeeXE6TJ1Ng8VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0748/1073] power: supply: cw2015: Fix potential null-ptr-deref in cw_bat_probe()
-Date: Wed, 28 Dec 2022 15:38:56 +0100
-Message-Id: <20221228144348.338920745@linuxfoundation.org>
+Subject: [PATCH 6.1 0710/1146] serial: pch: Fix PCI device refcount leak in pch_request_dma()
+Date: Wed, 28 Dec 2022 15:37:29 +0100
+Message-Id: <20221228144349.430981965@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 97f2b4ddb0aa700d673691a7d5e44d226d22bab7 ]
+[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
 
-cw_bat_probe() calls create_singlethread_workqueue() and not checked the
-ret value, which may return NULL. And a null-ptr-deref may happen:
+As comment of pci_get_slot() says, it returns a pci_device with its
+refcount increased. The caller must decrement the reference count by
+calling pci_dev_put().
 
-cw_bat_probe()
-    create_singlethread_workqueue() # failed, cw_bat->wq is NULL
-    queue_delayed_work()
-        queue_delayed_work_on()
-            __queue_delayed_work()  # warning here, but continue
-                __queue_work()      # access wq->flags, null-ptr-deref
+Since 'dma_dev' is only used to filter the channel in filter(), we can
+call pci_dev_put() before exiting from pch_request_dma(). Add the
+missing pci_dev_put() for the normal and error path.
 
-Check the ret value and return -ENOMEM if it is NULL.
-
-Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cw2015_battery.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/pch_uart.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
-index 6d52641151d9..473522b4326a 100644
---- a/drivers/power/supply/cw2015_battery.c
-+++ b/drivers/power/supply/cw2015_battery.c
-@@ -699,6 +699,9 @@ static int cw_bat_probe(struct i2c_client *client)
+diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
+index c59ce7886579..b17788cf309b 100644
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -694,6 +694,7 @@ static void pch_request_dma(struct uart_port *port)
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
+ 			__func__);
++		pci_dev_put(dma_dev);
+ 		return;
+ 	}
+ 	priv->chan_tx = chan;
+@@ -710,6 +711,7 @@ static void pch_request_dma(struct uart_port *port)
+ 			__func__);
+ 		dma_release_channel(priv->chan_tx);
+ 		priv->chan_tx = NULL;
++		pci_dev_put(dma_dev);
+ 		return;
  	}
  
- 	cw_bat->battery_workqueue = create_singlethread_workqueue("rk_battery");
-+	if (!cw_bat->battery_workqueue)
-+		return -ENOMEM;
+@@ -717,6 +719,8 @@ static void pch_request_dma(struct uart_port *port)
+ 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
+ 				    &priv->rx_buf_dma, GFP_KERNEL);
+ 	priv->chan_rx = chan;
 +
- 	devm_delayed_work_autocancel(&client->dev,
- 							  &cw_bat->battery_delay_work, cw_bat_work);
- 	queue_delayed_work(cw_bat->battery_workqueue,
++	pci_dev_put(dma_dev);
+ }
+ 
+ static void pch_dma_rx_complete(void *arg)
 -- 
 2.35.1
 
