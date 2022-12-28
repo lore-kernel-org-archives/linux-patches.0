@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1E31875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CAEC433EF;
-	Wed, 28 Dec 2022 16:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF511875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1406EC433F2;
+	Wed, 28 Dec 2022 16:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243677;
-	bh=aVQDBF5UZRcD4LY+cDsLA6JkPaJ954vkwqWl5qyAyyU=;
+	s=korg; t=1672243680;
+	bh=w1YzaSJKNEboYHq6N38JaF45u1KLSiLX8cd9M9u/2OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpMA1KTjoEiRXoPi6LPnyOuHSnYqO8zxg8vKKt9HwEPDbFPTrOK/NJJdcnDjH8c7I
-	 QAi1IM6O8eiZSzm2lYb1PzYIAScZnPIZkUJ6la8bJ5qJiKh564elQvmamLof4hHNJR
-	 GU/M1Fby0xv0UADyaETTW6g9F+3+uMmB2uAuBGMY=
+	b=w2IcgCvi3UyryPvJtHbpJFISSj092A45eLgIqMfAaQ62BCq1vxNqRbG8sDpTJj0At
+	 gD2WHxvqjvCMM6HytxOishgpWA3t5+XZ+W0Qs1Ehl97+coXwuG9Hb/7d61qyB5QvKe
+	 ElRHo1szOZ2tICZWz3Dir+IwZQaIAhe8UjjMjLhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0568/1073] f2fs: Fix the race condition of resize flag between resizefs
-Date: Wed, 28 Dec 2022 15:35:56 +0100
-Message-Id: <20221228144343.483025561@linuxfoundation.org>
+Subject: [PATCH 6.1 0506/1146] mmc: omap_hsmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:05 +0100
+Message-Id: <20221228144343.920332269@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,72 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 28fc4e9077ce59ab28c89c20dc6be5154473218f ]
+[ Upstream commit a525cad241c339ca00bf7ebf03c5180f2a9b767c ]
 
-Because the set/clear SBI_IS_RESIZEFS flag not between any locks,
-In the following case:
-  thread1			thread2
-   ->ioctl(resizefs)
-    ->set RESIZEFS flag		 ->ioctl(resizefs)
-    ...                   	  ->set RESIZEFS flag
-    ->clear RESIZEFS flag
-    				  ->resizefs stream
-				    # No RESIZEFS flag in the stream
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-Also before freeze_super, the resizefs not started, we should not set
-the SBI_IS_RESIZEFS flag.
+Fix this by checking the return value and goto error path wihch
+will call mmc_free_host().
 
-So move the set/clear SBI_IS_RESIZEFS flag between the cp_mutex and
-gc_lock.
-
-Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: a45c6cb81647 ("[ARM] 5369/1: omap mmc: Add new omap hsmmc controller for 2430 and 34xx, v3")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221108121316.340354-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mmc/host/omap_hsmmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 73881314bdda..af915f801455 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2127,8 +2127,6 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		return err;
+diff --git a/drivers/mmc/host/omap_hsmmc.c b/drivers/mmc/host/omap_hsmmc.c
+index fca30add563e..4bd744755205 100644
+--- a/drivers/mmc/host/omap_hsmmc.c
++++ b/drivers/mmc/host/omap_hsmmc.c
+@@ -1946,7 +1946,9 @@ static int omap_hsmmc_probe(struct platform_device *pdev)
+ 	if (!ret)
+ 		mmc->caps |= MMC_CAP_SDIO_IRQ;
  
--	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
--
- 	freeze_super(sbi->sb);
- 	f2fs_down_write(&sbi->gc_lock);
- 	f2fs_down_write(&sbi->cp_global_sem);
-@@ -2144,6 +2142,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		goto out_err;
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto err_irq;
  
-+	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
- 		goto recover_out;
-@@ -2167,6 +2166,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
- 	}
- recover_out:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
-@@ -2179,6 +2179,5 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	f2fs_up_write(&sbi->cp_global_sem);
- 	f2fs_up_write(&sbi->gc_lock);
- 	thaw_super(sbi->sb);
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	return err;
- }
+ 	if (mmc_pdata(host)->name != NULL) {
+ 		ret = device_create_file(&mmc->class_dev, &dev_attr_slot_name);
 -- 
 2.35.1
 
