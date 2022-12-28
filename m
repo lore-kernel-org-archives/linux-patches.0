@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A91F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E0C433D2;
-	Wed, 28 Dec 2022 15:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B101863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FC8C433EF;
+	Wed, 28 Dec 2022 15:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242246;
-	bh=MDEkBS14t9zOKpOegTTLz/PJjOLWSO9yvycEsJs76RE=;
+	s=korg; t=1672242248;
+	bh=sppACabbvLVZMSWXDsVX8ygqNvPOOwa3+S49rvibeFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdT0443ielazQ8p0OwiEteQSJxo2h5LhRWXbXaB4bXrLQ/7ByOwXnt7/Wv8LysQvY
-	 530hvbinTspv5wxhIqrXKg8DYEfdP1EuPb0fhlZ+++S4iIF1S6jvnx0xAMUbDyl7TV
-	 WYnPzTTcUMQ+jop2f+EUBKt0Xh+Yt1GeAoi+xE+E=
+	b=Gy5kgVIo/qCbxSv6Cn6OrWsvmKUVdc0HpTXhqoNtq1iorTsellmvR1eiYlBJNNxcj
+	 9zN13xjcD4oD2uapKVprCyrgjw7R8PfY9Ouh26VQ4Rik588dcibu2yKXYTH40bbfV0
+	 l5nddX7wc1wmikHp34/6JCyq2VsqHHSyeCbr5TjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0384/1073] clk: imx8mn: fix imx8mn_sai2_sels clocks list
-Date: Wed, 28 Dec 2022 15:32:52 +0100
-Message-Id: <20221228144338.439180979@linuxfoundation.org>
+Subject: [PATCH 6.1 0346/1146] wifi: ath10k: Fix return value in ath10k_pci_init()
+Date: Wed, 28 Dec 2022 15:31:25 +0100
+Message-Id: <20221228144339.558771380@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 34d996747a74e3a86990f9f9c48de09159d78edb ]
+[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
 
-According to the "Clock Root" table of the reference manual (document
-IMX8MNRM Rev 2, 07/2022):
+This driver is attempting to register to support two different buses.
+if either of these is successful then ath10k_pci_init() should return 0
+so that hardware attached to the successful bus can be probed and
+supported. only if both of these are unsuccessful should ath10k_pci_init()
+return an errno.
 
-     Clock Root     offset     Source Select (CCM_TARGET_ROOTn[MUX])
-        ...          ...                    ...
-   SAI2_CLK_ROOT    0xA600            000 - 24M_REF_CLK
-                                      001 - AUDIO_PLL1_CLK
-                                      010 - AUDIO_PLL2_CLK
-                                      011 - VIDEO_PLL_CLK
-                                      100 - SYSTEM_PLL1_DIV6
-                                      110 - EXT_CLK_2
-                                      111 - EXT_CLK_3
-        ...          ...                    ...
-
-while the imx8mn_sai2_sels list contained clk_ext3 and clk_ext4 for
-source select bits 110b and 111b.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-5-dario.binacchi@amarulasolutions.com
+Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index b80af5d1ef46..37128c35198d 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -109,7 +109,7 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll_out"
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index e56c6a6b1379..728d607289c3 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -3792,18 +3792,22 @@ static struct pci_driver ath10k_pci_driver = {
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll_out", "sys_pll1_133m", "dummy",
--						"clk_ext3", "clk_ext4", };
-+						"clk_ext2", "clk_ext3", };
+ static int __init ath10k_pci_init(void)
+ {
+-	int ret;
++	int ret1, ret2;
  
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
- 						"video_pll_out", "sys_pll1_133m", "dummy",
+-	ret = pci_register_driver(&ath10k_pci_driver);
+-	if (ret)
++	ret1 = pci_register_driver(&ath10k_pci_driver);
++	if (ret1)
+ 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
+-		       ret);
++		       ret1);
+ 
+-	ret = ath10k_ahb_init();
+-	if (ret)
+-		printk(KERN_ERR "ahb init failed: %d\n", ret);
++	ret2 = ath10k_ahb_init();
++	if (ret2)
++		printk(KERN_ERR "ahb init failed: %d\n", ret2);
+ 
+-	return ret;
++	if (ret1 && ret2)
++		return ret1;
++
++	/* registered to at least one bus */
++	return 0;
+ }
+ module_init(ath10k_pci_init);
+ 
 -- 
 2.35.1
 
