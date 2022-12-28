@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CFE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670E1C433D2;
-	Wed, 28 Dec 2022 15:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD1C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126AFC433D2;
+	Wed, 28 Dec 2022 15:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242683;
-	bh=DamKgXosryxREHkAfv+j4U/MRQoJtVs+Akr1R/l0BzI=;
+	s=korg; t=1672242686;
+	bh=4D5mQ6goGwcec4+foq5xSItBup7/X+41QmEMPozvQdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5uFjMKMXTc21m5fPiiaVgv0liWQU/lH7NbMB5kBa2dwM35Jatb+qfR9brPD3E09f
-	 kGujGvj7kHqui41gFbYZCa8kqj4n0duEE+HjoUqatw6ho29n+C5FVPRzA9fX6zl9SY
-	 oRzJ+RIcaAfHdP2CWeEOFhs4Nu2UAzrPxOpzIGws=
+	b=nKMwOEh2a8H45J9HgISW/NQss0SEYZR/mbJ+1CjonpgmLCEOfUZIsA5ZvrXFsCF9H
+	 KbgeNPcZ1yqUAlQ+WLKHJr4BxaRQmRJGXj0j7CRjrYJRxg6A+Jg5c53QnsAnlFlVg5
+	 M/FbJik9FwE9gauzxcS+aqk25Uj3124okg8PEiKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+95001b1fd6dfcc716c29@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 633/731] wifi: ar5523: Fix use-after-free on ar5523_cmd() timed out
-Date: Wed, 28 Dec 2022 15:42:20 +0100
-Message-Id: <20221228144314.869720212@linuxfoundation.org>
+Subject: [PATCH 6.1 0402/1146] pinctrl: pinconf-generic: add missing of_node_put()
+Date: Wed, 28 Dec 2022 15:32:21 +0100
+Message-Id: <20221228144341.084264144@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,108 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit b6702a942a069c2a975478d719e98d83cdae1797 ]
+[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
 
-syzkaller reported use-after-free with the stack trace like below [1]:
+of_node_put() needs to be called when jumping out of the loop, since
+for_each_available_child_of_node() will increase the refcount of node.
 
-[   38.960489][    C3] ==================================================================
-[   38.963216][    C3] BUG: KASAN: use-after-free in ar5523_cmd_tx_cb+0x220/0x240
-[   38.964950][    C3] Read of size 8 at addr ffff888048e03450 by task swapper/3/0
-[   38.966363][    C3]
-[   38.967053][    C3] CPU: 3 PID: 0 Comm: swapper/3 Not tainted 6.0.0-09039-ga6afa4199d3d-dirty #18
-[   38.968464][    C3] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-1.fc36 04/01/2014
-[   38.969959][    C3] Call Trace:
-[   38.970841][    C3]  <IRQ>
-[   38.971663][    C3]  dump_stack_lvl+0xfc/0x174
-[   38.972620][    C3]  print_report.cold+0x2c3/0x752
-[   38.973626][    C3]  ? ar5523_cmd_tx_cb+0x220/0x240
-[   38.974644][    C3]  kasan_report+0xb1/0x1d0
-[   38.975720][    C3]  ? ar5523_cmd_tx_cb+0x220/0x240
-[   38.976831][    C3]  ar5523_cmd_tx_cb+0x220/0x240
-[   38.978412][    C3]  __usb_hcd_giveback_urb+0x353/0x5b0
-[   38.979755][    C3]  usb_hcd_giveback_urb+0x385/0x430
-[   38.981266][    C3]  dummy_timer+0x140c/0x34e0
-[   38.982925][    C3]  ? notifier_call_chain+0xb5/0x1e0
-[   38.984761][    C3]  ? rcu_read_lock_sched_held+0xb/0x60
-[   38.986242][    C3]  ? lock_release+0x51c/0x790
-[   38.987323][    C3]  ? _raw_read_unlock_irqrestore+0x37/0x70
-[   38.988483][    C3]  ? __wake_up_common_lock+0xde/0x130
-[   38.989621][    C3]  ? reacquire_held_locks+0x4a0/0x4a0
-[   38.990777][    C3]  ? lock_acquire+0x472/0x550
-[   38.991919][    C3]  ? rcu_read_lock_sched_held+0xb/0x60
-[   38.993138][    C3]  ? lock_acquire+0x472/0x550
-[   38.994890][    C3]  ? dummy_urb_enqueue+0x860/0x860
-[   38.996266][    C3]  ? do_raw_spin_unlock+0x16f/0x230
-[   38.997670][    C3]  ? dummy_urb_enqueue+0x860/0x860
-[   38.999116][    C3]  call_timer_fn+0x1a0/0x6a0
-[   39.000668][    C3]  ? add_timer_on+0x4a0/0x4a0
-[   39.002137][    C3]  ? reacquire_held_locks+0x4a0/0x4a0
-[   39.003809][    C3]  ? __next_timer_interrupt+0x226/0x2a0
-[   39.005509][    C3]  __run_timers.part.0+0x69a/0xac0
-[   39.007025][    C3]  ? dummy_urb_enqueue+0x860/0x860
-[   39.008716][    C3]  ? call_timer_fn+0x6a0/0x6a0
-[   39.010254][    C3]  ? cpuacct_percpu_seq_show+0x10/0x10
-[   39.011795][    C3]  ? kvm_sched_clock_read+0x14/0x40
-[   39.013277][    C3]  ? sched_clock_cpu+0x69/0x2b0
-[   39.014724][    C3]  run_timer_softirq+0xb6/0x1d0
-[   39.016196][    C3]  __do_softirq+0x1d2/0x9be
-[   39.017616][    C3]  __irq_exit_rcu+0xeb/0x190
-[   39.019004][    C3]  irq_exit_rcu+0x5/0x20
-[   39.020361][    C3]  sysvec_apic_timer_interrupt+0x8f/0xb0
-[   39.021965][    C3]  </IRQ>
-[   39.023237][    C3]  <TASK>
-
-In ar5523_probe(), ar5523_host_available() calls ar5523_cmd() as below
-(there are other functions which finally call ar5523_cmd()):
-
-ar5523_probe()
--> ar5523_host_available()
-   -> ar5523_cmd_read()
-      -> ar5523_cmd()
-
-If ar5523_cmd() timed out, then ar5523_host_available() failed and
-ar5523_probe() freed the device structure.  So, ar5523_cmd_tx_cb()
-might touch the freed structure.
-
-This patch fixes this issue by canceling in-flight tx cmd if submitted
-urb timed out.
-
-Link: https://syzkaller.appspot.com/bug?id=9e12b2d54300842b71bdd18b54971385ff0d0d3a [1]
-Reported-by: syzbot+95001b1fd6dfcc716c29@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221009183223.420015-1-syoshida@redhat.com
+Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ar5523/ar5523.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pinctrl/pinconf-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
-index 1baec4b412c8..efe38b2c1df7 100644
---- a/drivers/net/wireless/ath/ar5523/ar5523.c
-+++ b/drivers/net/wireless/ath/ar5523/ar5523.c
-@@ -241,6 +241,11 @@ static void ar5523_cmd_tx_cb(struct urb *urb)
+diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
+index 415d1df8f46a..365c4b0ca465 100644
+--- a/drivers/pinctrl/pinconf-generic.c
++++ b/drivers/pinctrl/pinconf-generic.c
+@@ -395,8 +395,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
+ 					&reserved_maps, num_maps, type);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto exit;
++		}
  	}
- }
+ 	return 0;
  
-+static void ar5523_cancel_tx_cmd(struct ar5523 *ar)
-+{
-+	usb_kill_urb(ar->tx_cmd.urb_tx);
-+}
-+
- static int ar5523_cmd(struct ar5523 *ar, u32 code, const void *idata,
- 		      int ilen, void *odata, int olen, int flags)
- {
-@@ -280,6 +285,7 @@ static int ar5523_cmd(struct ar5523 *ar, u32 code, const void *idata,
- 	}
- 
- 	if (!wait_for_completion_timeout(&cmd->done, 2 * HZ)) {
-+		ar5523_cancel_tx_cmd(ar);
- 		cmd->odata = NULL;
- 		ar5523_err(ar, "timeout waiting for command %02x reply\n",
- 			   code);
 -- 
 2.35.1
 
