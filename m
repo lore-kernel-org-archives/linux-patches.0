@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EA91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DD1C433EF;
-	Wed, 28 Dec 2022 15:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362A51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A876FC433EF;
+	Wed, 28 Dec 2022 15:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240057;
-	bh=MF55ZcE7fB8IvH7pTL91wQ/QUDYR/Lxe2PtXFo09WMk=;
+	s=korg; t=1672240060;
+	bh=m53zZttsu3phmq1V9Zogb3H9CAx2McgVM+yrynwYY6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wh1e5RJJXSUS15zihQZO5P7iMd5rgupvU4bQyiW2cpYQSnFq8whireT7kkRal5pW9
-	 0Xxp8GMhKdrD2yQ2lRKqxKiQQU4mvDDg+PPgKw4ZwWJzJQ3GOtejCz21szgIfohNk4
-	 LXxvQOB5RGjgqrDDbFDE84Atq0XBkszIC7+IUPFQ=
+	b=kOvmMTlqQdLdLWtDtXLN42ayDhxRXTXGAj3HVe+3mTkqI7jCo35WK+M8XEqPE998h
+	 xHumw1ACZZzti5zC1Kh+ytnTofVNGtxziZo/BhIzYcYOX8ctkWNwJPgNzZ8RvRaDH4
+	 bWLR2e0jvhIlNh8cHBfGW7vttRkDj80eL2XROSi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0064/1146] arm64: dts: ti: k3-j721e-main: Drop dma-coherent in crypto node
-Date: Wed, 28 Dec 2022 15:26:43 +0100
-Message-Id: <20221228144331.898885383@linuxfoundation.org>
+Subject: [PATCH 6.0 0113/1073] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Wed, 28 Dec 2022 15:28:21 +0100
+Message-Id: <20221228144331.109832666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,34 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 26c5012403f3f1fd3bf8f7d3389ee539ae5cc162 ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-crypto driver itself is not dma-coherent. So drop it.
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-Fixes: 8ebcaaae8017 ("arm64: dts: ti: k3-j721e-main: Add crypto accelerator node")
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
-Link: https://lore.kernel.org/r/20221031152520.355653-3-j-choudhary@ti.com
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
+
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-index 917c9dc99efa..603ddda5127f 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-@@ -337,7 +337,6 @@ main_crypto: crypto@4e00000 {
- 		dmas = <&main_udmap 0xc000>, <&main_udmap 0x4000>,
- 				<&main_udmap 0x4001>;
- 		dma-names = "tx", "rx1", "rx2";
--		dma-coherent;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 91473e9f88cd..a636fab5e381 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11136,13 +11136,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
- 		rng: rng@4e10000 {
- 			compatible = "inside-secure,safexcel-eip76";
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
+-	if (ret)
+-		goto free_dev;
+ 
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
++
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
+ 	if (ret)
+ 		goto free_dev;
 -- 
 2.35.1
 
