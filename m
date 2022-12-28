@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0C71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6374DC433EF;
-	Wed, 28 Dec 2022 14:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7644A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBB5C433D2;
+	Wed, 28 Dec 2022 14:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239313;
-	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
+	s=korg; t=1672239316;
+	bh=dFXC/ABF4qD/kQ/+FO+hc/5QahOtsfa6J+G1j6QWqek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtXC0PSaHYNFABYVONKk7/qvBoyTCVls2beE9LnSF5v69poO8GQjo77MOLl8RSgGZ
-	 tb5zc03+nG77hmcjRU+LKUf90iSmzBpun9Kox6HIUV3wGn5a+Hjo8VbEcisA6jVBmg
-	 wOxn4JXcgTxMMkpS23Ou0M4VJMxK6PfJanwfkRHA=
+	b=Kpry8aOsMCKlLLysY+tshHglGfr6ThYX1sitmWQzrUDq/PTSWtkHaPlPP+uNWoSf5
+	 sy1/y4aViAQmIhbJ5uv3C/3nPM2B/ssLyYMGeh9+3kuuXYM2mWuDRoUAWlqmILXNv8
+	 TXaAM9vxASfvIo1QV5gYx7+bHvA347JLUuPQ+K2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/731] spi: Update reference to struct spi_controller
-Date: Wed, 28 Dec 2022 15:34:41 +0100
-Message-Id: <20221228144301.608283678@linuxfoundation.org>
+Subject: [PATCH 5.15 175/731] drm/panel/panel-sitronix-st7701: Remove panel on DSI attach failure
+Date: Wed, 28 Dec 2022 15:34:42 +0100
+Message-Id: <20221228144301.636401197@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
+[ Upstream commit c62102165dd79284d42383d2f7ed17301bd8e629 ]
 
-struct spi_master has been renamed to struct spi_controller. Update the
-reference in spi.rst to make it clickable again.
+In case mipi_dsi_attach() fails, call drm_panel_remove() to
+avoid memory leak.
 
-Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 849b2e3ff969 ("drm/panel: Add Sitronix ST7701 panel driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221014231106.468063-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/spi.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-sitronix-st7701.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
-index f64cb666498a..f28887045049 100644
---- a/Documentation/driver-api/spi.rst
-+++ b/Documentation/driver-api/spi.rst
-@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
- a pair of FIFOs connected to dual DMA engines on the other side of the
- SPI shift register (maximizing throughput). Such drivers bridge between
- whatever bus they sit on (often the platform bus) and SPI, and expose
--the SPI side of their device as a :c:type:`struct spi_master
--<spi_master>`. SPI devices are children of that master,
-+the SPI side of their device as a :c:type:`struct spi_controller
-+<spi_controller>`. SPI devices are children of that master,
- represented as a :c:type:`struct spi_device <spi_device>` and
- manufactured from :c:type:`struct spi_board_info
- <spi_board_info>` descriptors which are usually provided by
+diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7701.c b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
+index 320a2a8fd459..098955526b68 100644
+--- a/drivers/gpu/drm/panel/panel-sitronix-st7701.c
++++ b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
+@@ -384,7 +384,15 @@ static int st7701_dsi_probe(struct mipi_dsi_device *dsi)
+ 	st7701->dsi = dsi;
+ 	st7701->desc = desc;
+ 
+-	return mipi_dsi_attach(dsi);
++	ret = mipi_dsi_attach(dsi);
++	if (ret)
++		goto err_attach;
++
++	return 0;
++
++err_attach:
++	drm_panel_remove(&st7701->panel);
++	return ret;
+ }
+ 
+ static int st7701_dsi_remove(struct mipi_dsi_device *dsi)
 -- 
 2.35.1
 
