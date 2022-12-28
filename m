@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDB91C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B998C433EF;
-	Wed, 28 Dec 2022 16:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5511A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA9EC433D2;
+	Wed, 28 Dec 2022 16:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244756;
-	bh=k4hU1/mZkG+kZTABAbAXY9jw9zBkfOiRU/c1YsitHUc=;
+	s=korg; t=1672244759;
+	bh=JfW3wOTCX+swmeAf6RGK+HFaTDza7VvIR6GBU/NEFIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjNMci1cHE+yLS3qMtrTJrSdORxC17Bnj5wduEguoWEJOuSq+iFKDBVI47BVqyGRt
-	 vQtRqj/LVFw1vmO9gNRrM51nEYzLgigzlkFHTHf6t2h/hWzJFA5EpJqY1sHwp2flyl
-	 MmVp39O73ecJNzeLp+8rFjKvwB1DIrzOC4EARl1A=
+	b=a6qaLvL1b0DkHhpQUJvH4kCzhKr98yt1tnwlHArwAB2vNuOGw8SlcNSfdhcez5+Ah
+	 BTnZ+aDzKQLs7B1o3jSbjqb0iu90SXr+FBrw/VlBphev/q/E/wjEBoofSEoXn/Q9GL
+	 uCbsSrQYOVQ5m1MLg36dOHRrOVGFOkbvDmGE6IYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	John Keeping <john@metanate.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0731/1146] usb: gadget: f_hid: fix refcount leak on error path
-Date: Wed, 28 Dec 2022 15:37:50 +0100
-Message-Id: <20221228144350.001459344@linuxfoundation.org>
+Subject: [PATCH 6.0 0769/1073] iommu/sun50i: Consider all fault sources for reset
+Date: Wed, 28 Dec 2022 15:39:17 +0100
+Message-Id: <20221228144348.900308369@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Keeping <john@metanate.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 70a3288a7586526315105c699b687d78cd32559a ]
+[ Upstream commit cef20703e2b2276aaa402ec5a65ec9a09963b83e ]
 
-When failing to allocate report_desc, opts->refcnt has already been
-incremented so it needs to be decremented to avoid leaving the options
-structure permanently locked.
+We have to reset masters for all faults - permissions, L1 fault or L2
+fault. Currently it's done only for permissions. If other type of fault
+happens, master is in locked up state. Fix that by really considering
+all fault sources.
 
-Fixes: 21a9476a7ba8 ("usb: gadget: hid: add configfs support")
-Tested-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20221122123523.3068034-3-john@metanate.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-3-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/sun50i-iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 8b8bbeaa27cb..6be6009f911e 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1292,6 +1292,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
- 						 GFP_KERNEL);
- 		if (!hidg->report_desc) {
- 			put_device(&hidg->dev);
-+			--opts->refcnt;
- 			mutex_unlock(&opts->lock);
- 			return ERR_PTR(-ENOMEM);
- 		}
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index c777882d0ec2..38d1069cf383 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -869,8 +869,8 @@ static phys_addr_t sun50i_iommu_handle_perm_irq(struct sun50i_iommu *iommu)
+ 
+ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ {
++	u32 status, l1_status, l2_status, resets;
+ 	struct sun50i_iommu *iommu = dev_id;
+-	u32 status;
+ 
+ 	spin_lock(&iommu->iommu_lock);
+ 
+@@ -880,6 +880,9 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 		return IRQ_NONE;
+ 	}
+ 
++	l1_status = iommu_read(iommu, IOMMU_L1PG_INT_REG);
++	l2_status = iommu_read(iommu, IOMMU_L2PG_INT_REG);
++
+ 	if (status & IOMMU_INT_INVALID_L2PG)
+ 		sun50i_iommu_handle_pt_irq(iommu,
+ 					    IOMMU_INT_ERR_ADDR_L2_REG,
+@@ -893,7 +896,8 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 
+ 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
+ 
+-	iommu_write(iommu, IOMMU_RESET_REG, ~status);
++	resets = (status | l1_status | l2_status) & IOMMU_INT_MASTER_MASK;
++	iommu_write(iommu, IOMMU_RESET_REG, ~resets);
+ 	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
+ 
+ 	spin_unlock(&iommu->iommu_lock);
 -- 
 2.35.1
 
