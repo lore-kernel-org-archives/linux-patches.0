@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5586B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC517C433F0;
-	Wed, 28 Dec 2022 16:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1ED1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764CEC433D2;
+	Wed, 28 Dec 2022 16:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245215;
-	bh=LyVP3Y98azTmWDuoPdwqUDaknN1faS2vSn3+8ydW5B0=;
+	s=korg; t=1672245217;
+	bh=vN7+nw468i9Uj88enQI+sxQT378K1ipRLkWW1xecTQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VD2t6q7vQUPrwzGSPwyjcLDGhxR9dYF2tBCIyquLkm4af1C5JcgUMcfeSZrCJOrXl
-	 Qrs6m7aIulUFCZpnmMNvxa2nUklQjy8X5ZI016EC/Y6gW5kDkKiLmHOZogXtUNJHLT
-	 s/4hqWF6a+I3Y4297J5ZU/MTFspT0ZS13bjVQEyU=
+	b=l6aGkDIH5zk249MDcRba4VzgimjrFub3Jn86dE4OBroayRtRT8opGCigsX9UuBaPn
+	 QxbHHXPDh4xGwQvXb4O5yZIzw+PnS6ZU4gkBamS+75JfaKaUpJzIcppVl8ffRZBf5G
+	 ZY+2uC9XqCjw6m0xNf475Z3o/6VycgEAqhxwjoSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andreas Herrmann <aherrmann@suse.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Al Cooper <alcooperx@gmail.com>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0852/1073] blk-iocost: simplify ioc_name
-Date: Wed, 28 Dec 2022 15:40:40 +0100
-Message-Id: <20221228144351.160644270@linuxfoundation.org>
+Subject: [PATCH 6.1 0817/1146] phy: usb: s2 WoL wakeup_count not incremented for USB->Eth devices
+Date: Wed, 28 Dec 2022 15:39:16 +0100
+Message-Id: <20221228144352.343745896@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,51 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Al Cooper <alcooperx@gmail.com>
 
-[ Upstream commit 9df3e65139b923dfe98f76b7057882c7afb2d3e4 ]
+[ Upstream commit f7fc5b7090372fc4dd7798c874635ca41b8ba733 ]
 
-Just directly dereference the disk name instead of going through multiple
-hoops to find the same value.
+The PHY's "wakeup_count" is not incrementing when waking from
+WoL. The wakeup count can be found in sysfs at:
+/sys/bus/platform/devices/rdb/*.usb-phy/power/wakeup_count.
+The problem is that the system wakup event handler was being passed
+the wrong "device" by the PHY driver.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20220921180501.1539876-10-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+Fixes: f1c0db40a3ad ("phy: usb: Add "wake on" functionality")
+Signed-off-by: Al Cooper <alcooperx@gmail.com>
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/1665005418-15807-3-git-send-email-justinpopo6@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 7936e5f5821c..cba9d3ad58e1 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -664,17 +664,13 @@ static struct ioc *q_to_ioc(struct request_queue *q)
- 	return rqos_to_ioc(rq_qos_id(q, RQ_QOS_COST));
- }
+diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
+index 2cb3779fcdf8..c0c3ab9b2a15 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -102,9 +102,9 @@ static int brcm_pm_notifier(struct notifier_block *notifier,
  
--static const char *q_name(struct request_queue *q)
--{
--	if (blk_queue_registered(q))
--		return kobject_name(q->kobj.parent);
--	else
--		return "<unknown>";
--}
--
- static const char __maybe_unused *ioc_name(struct ioc *ioc)
+ static irqreturn_t brcm_usb_phy_wake_isr(int irq, void *dev_id)
  {
--	return q_name(ioc->rqos.q);
-+	struct gendisk *disk = ioc->rqos.q->disk;
-+
-+	if (!disk)
-+		return "<unknown>";
-+	return disk->disk_name;
- }
+-	struct phy *gphy = dev_id;
++	struct device *dev = dev_id;
  
- static struct ioc_gq *pd_to_iocg(struct blkg_policy_data *pd)
+-	pm_wakeup_event(&gphy->dev, 0);
++	pm_wakeup_event(dev, 0);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -451,7 +451,7 @@ static int brcm_usb_phy_dvr_init(struct platform_device *pdev,
+ 	if (priv->wake_irq >= 0) {
+ 		err = devm_request_irq(dev, priv->wake_irq,
+ 				       brcm_usb_phy_wake_isr, 0,
+-				       dev_name(dev), gphy);
++				       dev_name(dev), dev);
+ 		if (err < 0)
+ 			return err;
+ 		device_set_wakeup_capable(dev, 1);
 -- 
 2.35.1
 
