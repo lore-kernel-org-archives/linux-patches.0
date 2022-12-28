@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4CC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F23C433D2;
-	Wed, 28 Dec 2022 16:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045001C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC45C433D2;
+	Wed, 28 Dec 2022 16:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244885;
-	bh=Jfg0tq6mbGDAWdu5E8np95iP2aEfSVmbal+y//5165Q=;
+	s=korg; t=1672244887;
+	bh=pYOCBZEZxuLMlyvo7qdVW2dCoVvGZHkYFlHDwKkmoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AER7G2Mecjh8LTKUdqjZhJR0QNnvGy6EFIUjgfZSt3dNtfWP2vRG1eoDAANYB7wOJ
-	 f6rFxMTDp6O43OQ4UScjYEXKjHkwJh/If1VvEkOLfLwlJqM76OBmYguvew79VdAyig
-	 cMQTk4WMZZ6CwYpraOYhzkYaOA0UGIuIb+Vo/RlU=
+	b=xZOYs0EtEyoQJXxOUhzHcAl4UDdSh7y64bQZ5iErnzpqSkPXj9m7aaAYPSW4GQp6r
+	 FgWxEYAYFWLY+0WK2uxQ+8c4ZXcSGD8QAf4W5fWeJD2av02LWWvwVoXdBw7WgcQKp1
+	 QM2GUxhaOD1afMZTU3WVKZcUfxIhIKLS8HcNY8Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0756/1146] fbdev: via: Fix error in via_core_init()
-Date: Wed, 28 Dec 2022 15:38:15 +0100
-Message-Id: <20221228144350.678363624@linuxfoundation.org>
+Subject: [PATCH 6.0 0794/1073] iommu/fsl_pamu: Fix resource leak in fsl_pamu_probe()
+Date: Wed, 28 Dec 2022 15:39:42 +0100
+Message-Id: <20221228144349.577341770@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 5886b130de953cfb8826f7771ec8640a79934a7f ]
+[ Upstream commit 73f5fc5f884ad0c5f7d57f66303af64f9f002526 ]
 
-via_core_init() won't exit the driver when pci_register_driver() failed.
-Exit the viafb-i2c and the viafb-gpio in failed path to prevent error.
+The fsl_pamu_probe() returns directly when create_csd() failed, leaving
+irq and memories unreleased.
+Fix by jumping to error if create_csd() returns error.
 
-VIA Graphics Integration Chipset framebuffer 2.4 initializing
-Error: Driver 'viafb-i2c' is already registered, aborting...
-Error: Driver 'viafb-gpio' is already registered, aborting...
-
-Fixes: 7582eb9be85f ("viafb: Turn GPIO and i2c into proper platform devices")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 695093e38c3e ("iommu/fsl: Freescale PAMU driver and iommu implementation.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221121082022.19091-1-yuancan@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/via/via-core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iommu/fsl_pamu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/via/via-core.c b/drivers/video/fbdev/via/via-core.c
-index 2ee8fcae08df..b8cd04defc5e 100644
---- a/drivers/video/fbdev/via/via-core.c
-+++ b/drivers/video/fbdev/via/via-core.c
-@@ -730,7 +730,14 @@ static int __init via_core_init(void)
- 		return ret;
- 	viafb_i2c_init();
- 	viafb_gpio_init();
--	return pci_register_driver(&via_driver);
-+	ret = pci_register_driver(&via_driver);
-+	if (ret) {
-+		viafb_gpio_exit();
-+		viafb_i2c_exit();
-+		return ret;
-+	}
-+
-+	return 0;
- }
+diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
+index 0d03f837a5d4..7a1a413f75ab 100644
+--- a/drivers/iommu/fsl_pamu.c
++++ b/drivers/iommu/fsl_pamu.c
+@@ -868,7 +868,7 @@ static int fsl_pamu_probe(struct platform_device *pdev)
+ 		ret = create_csd(ppaact_phys, mem_size, csd_port_id);
+ 		if (ret) {
+ 			dev_err(dev, "could not create coherence subdomain\n");
+-			return ret;
++			goto error;
+ 		}
+ 	}
  
- static void __exit via_core_exit(void)
 -- 
 2.35.1
 
