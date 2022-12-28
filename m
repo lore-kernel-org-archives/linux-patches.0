@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1451863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D49C433D2;
-	Wed, 28 Dec 2022 15:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7545C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF865C433D2;
+	Wed, 28 Dec 2022 15:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242227;
-	bh=ZXSA5oaRgfG2idKcke4QroHb3mxOgdIVEraQJ4fswjQ=;
+	s=korg; t=1672242230;
+	bh=sGVVIK4wuD62Nq6JWtIWKzv/fFl0Fx+0d8fHuDQ5Ed4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d259LSKnHsRutxA2qaHXayke4mj1m9f444Uml7hkeYaxCsl/qSXemYxo0sDs4oZKM
-	 0vFFuRjdf5QW2BsPQubQM2jVmRgFFAa4qR8WRWwEYk7lS6evynA7tC1zCgDq5KeUES
-	 sGmgIg+lCdiOcw71wvvH5VoLLc3PXg8ARdVQnte8=
+	b=okwCdg6rTz4qXXDbhbbW1KGuIroi3Cmrf61tf+5gKtNvN4lDKaBqN1tNgZOBYHXOD
+	 0ziDQfm/hdQUKAqCF76Z3ifNUxMKa7dhUrQWosjs0LYqxZ5LD9tDlQzPajaW2eHBSF
+	 gCp25hAgYzMg2iTKBzd1tK1BKUBa0Jsno+jrLcMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0382/1073] clk: imx: replace osc_hdmi with dummy
-Date: Wed, 28 Dec 2022 15:32:50 +0100
-Message-Id: <20221228144338.383985147@linuxfoundation.org>
+Subject: [PATCH 6.1 0326/1146] selftests/bpf: Fix xdp_synproxy compilation failure in 32-bit arch
+Date: Wed, 28 Dec 2022 15:31:05 +0100
+Message-Id: <20221228144339.013141406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,68 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit e7fa365ff66f16772dc06b480cd78f858d10856b ]
+[ Upstream commit e4c9cf0ce8c413c2030e8fb215551d7e0582ee7b ]
 
-There is no occurrence of the hdmi oscillator in the reference manual
-(document IMX8MNRM Rev 2, 07/2022). Further, if we consider the indexes
-76-81 and 134 of the "Clock Root" table of chapter 5 of the RM, there is
-no entry for the source select bits 101b, which is the setting referenced
-by "osc_hdmi".
-Fix by renaming "osc_hdmi" with "dummy", a clock which has already been
-used for missing source select bits.
+xdp_synproxy fails to be compiled in the 32-bit arch, log is as follows:
 
-Tested on the BSH SystemMaster (SMM) S2 board.
+  xdp_synproxy.c: In function 'parse_options':
+  xdp_synproxy.c:175:36: error: left shift count >= width of type [-Werror=shift-count-overflow]
+    175 |                 *tcpipopts = (mss6 << 32) | (ttl << 24) | (wscale << 16) | mss4;
+        |                                    ^~
+  xdp_synproxy.c: In function 'syncookie_open_bpf_maps':
+  xdp_synproxy.c:289:28: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+    289 |                 .map_ids = (__u64)map_ids,
+        |                            ^
 
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-3-dario.binacchi@amarulasolutions.com
+Fix it.
+
+Fixes: fb5cd0ce70d4 ("selftests/bpf: Add selftests for raw syncookie helpers")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221111030836.37632-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/xdp_synproxy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 72f9563a0ff6..0fae97e61e2c 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -108,27 +108,27 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll1_out
- 						      "sys_pll3_out", "clk_ext4", };
+diff --git a/tools/testing/selftests/bpf/xdp_synproxy.c b/tools/testing/selftests/bpf/xdp_synproxy.c
+index ff35320d2be9..410a1385a01d 100644
+--- a/tools/testing/selftests/bpf/xdp_synproxy.c
++++ b/tools/testing/selftests/bpf/xdp_synproxy.c
+@@ -104,7 +104,8 @@ static void parse_options(int argc, char *argv[], unsigned int *ifindex, __u32 *
+ 		{ "tc", no_argument, NULL, 'c' },
+ 		{ NULL, 0, NULL, 0 },
+ 	};
+-	unsigned long mss4, mss6, wscale, ttl;
++	unsigned long mss4, wscale, ttl;
++	unsigned long long mss6;
+ 	unsigned int tcpipopts_mask = 0;
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
+ 	if (argc < 2)
+@@ -286,7 +287,7 @@ static int syncookie_open_bpf_maps(__u32 prog_id, int *values_map_fd, int *ports
  
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
+ 	prog_info = (struct bpf_prog_info) {
+ 		.nr_map_ids = 8,
+-		.map_ids = (__u64)map_ids,
++		.map_ids = (__u64)(unsigned long)map_ids,
+ 	};
+ 	info_len = sizeof(prog_info);
  
- static const char * const imx8mn_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_sai6_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai7_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_spdif1_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						  "video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						  "video_pll1_out", "sys_pll1_133m", "dummy",
- 						  "clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_enet_ref_sels[] = {"osc_24m", "sys_pll2_125m", "sys_pll2_50m",
 -- 
 2.35.1
 
