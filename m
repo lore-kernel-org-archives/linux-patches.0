@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107971863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A696C433D2;
-	Wed, 28 Dec 2022 15:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37531863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3440AC43396;
+	Wed, 28 Dec 2022 15:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240033;
-	bh=QGYk+D4wuvX1B7UkW9l9yaaq4E8UKOGzz9KMPoN5dTg=;
+	s=korg; t=1672240036;
+	bh=+l30k4sPS/RTvIpYlmLvqieVws7K2sfM+5jDMPEwG/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zj68QS1z1VX5cE3/01nXi55sRFeLCJaCmLyWd7aBDTJLptjdschLz1MXYZSoQ1L2s
-	 82Tr9skkTIdqQJ3rM6kcM+XE/3/dGbM4KBiXCGNGF5ZiWcsgnuq0fWu2vZL0zb9bmf
-	 LzygxFDLax9Uqh3bJEfTewCEeTxQz2B+aVMysEmk=
+	b=lL9HIAehQJvaFaY/1Owc+gHindNREGFWbRRQkpA8ECfBy0I0QHtoODM2YIPvjuXW9
+	 deO2VK430Fenn4mgW+y2zMISZzUc8kIo5LQLHqgHTGQc+Wvs5mNzOb5UsM3XeQzeae
+	 FHdBgZi23IkH8IQ3/jHPa9H6ctT7ms7S80c2F2AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Andre Almeida <andrealmeid@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0073/1146] arm64: dts: mt2712e: Fix unit address for pinctrl node
-Date: Wed, 28 Dec 2022 15:26:52 +0100
-Message-Id: <20221228144332.137130351@linuxfoundation.org>
+Subject: [PATCH 6.0 0110/1073] x86/split_lock: Add sysctl to control the misery mode
+Date: Wed, 28 Dec 2022 15:28:18 +0100
+Message-Id: <20221228144331.030844945@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +38,196 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 1d4516f53a611b362db7ba7a8889923d469f57e1 ]
+[ Upstream commit 727209376f4998bc84db1d5d8af15afea846a92b ]
 
-The unit address for the pinctrl node is (0x)1000b000 and not
-(0x)10005000, which is the syscfg_pctl_a address instead.
+Commit b041b525dab9 ("x86/split_lock: Make life miserable for split lockers")
+changed the way the split lock detector works when in "warn" mode;
+basically, it not only shows the warn message, but also intentionally
+introduces a slowdown through sleeping plus serialization mechanism
+on such task. Based on discussions in [0], seems the warning alone
+wasn't enough motivation for userspace developers to fix their
+applications.
 
-This fixes the following warning:
-arch/arm64/boot/dts/mediatek/mt2712e.dtsi:264.40-267.4: Warning
-(unique_unit_address): /syscfg_pctl_a@10005000: duplicate
-unit-address (also used in node /pinctrl@10005000)
+This slowdown is enough to totally break some proprietary (aka.
+unfixable) userspace[1].
 
-Fixes: f0c64340b748 ("arm64: dts: mt2712: add pintcrl device node.")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-5-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Happens that originally the proposal in [0] was to add a new mode
+which would warns + slowdown the "split locking" task, keeping the
+old warn mode untouched. In the end, that idea was discarded and
+the regular/default "warn" mode now slows down the applications. This
+is quite aggressive with regards proprietary/legacy programs that
+basically are unable to properly run in kernel with this change.
+While it is understandable that a malicious application could DoS
+by split locking, it seems unacceptable to regress old/proprietary
+userspace programs through a default configuration that previously
+worked. An example of such breakage was reported in [1].
+
+Add a sysctl to allow controlling the "misery mode" behavior, as per
+Thomas suggestion on [2]. This way, users running legacy and/or
+proprietary software are allowed to still execute them with a decent
+performance while still observing the warning messages on kernel log.
+
+[0] https://lore.kernel.org/lkml/20220217012721.9694-1-tony.luck@intel.com/
+[1] https://github.com/doitsujin/dxvk/issues/2938
+[2] https://lore.kernel.org/lkml/87pmf4bter.ffs@tglx/
+
+[ dhansen: minor changelog tweaks, including clarifying the actual
+  	   problem ]
+
+Fixes: b041b525dab9 ("x86/split_lock: Make life miserable for split lockers")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Andre Almeida <andrealmeid@igalia.com>
+Link: https://lore.kernel.org/all/20221024200254.635256-1-gpiccoli%40igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/sysctl/kernel.rst | 23 ++++++++
+ arch/x86/kernel/cpu/intel.c                 | 63 +++++++++++++++++----
+ 2 files changed, 76 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-index ff6b26cdda81..1ac0b2cf3d40 100644
---- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-@@ -266,7 +266,7 @@ syscfg_pctl_a: syscfg_pctl_a@10005000 {
- 		reg = <0 0x10005000 0 0x1000>;
- 	};
+diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
+index ee6572b1edad..66d1b23ca64f 100644
+--- a/Documentation/admin-guide/sysctl/kernel.rst
++++ b/Documentation/admin-guide/sysctl/kernel.rst
+@@ -1298,6 +1298,29 @@ watchdog work to be queued by the watchdog timer function, otherwise the NMI
+ watchdog — if enabled — can detect a hard lockup condition.
  
--	pio: pinctrl@10005000 {
-+	pio: pinctrl@1000b000 {
- 		compatible = "mediatek,mt2712-pinctrl";
- 		reg = <0 0x1000b000 0 0x1000>;
- 		mediatek,pctl-regmap = <&syscfg_pctl_a>;
+ 
++split_lock_mitigate (x86 only)
++==============================
++
++On x86, each "split lock" imposes a system-wide performance penalty. On larger
++systems, large numbers of split locks from unprivileged users can result in
++denials of service to well-behaved and potentially more important users.
++
++The kernel mitigates these bad users by detecting split locks and imposing
++penalties: forcing them to wait and only allowing one core to execute split
++locks at a time.
++
++These mitigations can make those bad applications unbearably slow. Setting
++split_lock_mitigate=0 may restore some application performance, but will also
++increase system exposure to denial of service attacks from split lock users.
++
++= ===================================================================
++0 Disable the mitigation mode - just warns the split lock on kernel log
++  and exposes the system to denials of service from the split lockers.
++1 Enable the mitigation mode (this is the default) - penalizes the split
++  lockers with intentional performance degradation.
++= ===================================================================
++
++
+ stack_erasing
+ =============
+ 
+diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
+index 2d7ea5480ec3..427899650483 100644
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -1034,8 +1034,32 @@ static const struct {
+ 
+ static struct ratelimit_state bld_ratelimit;
+ 
++static unsigned int sysctl_sld_mitigate = 1;
+ static DEFINE_SEMAPHORE(buslock_sem);
+ 
++#ifdef CONFIG_PROC_SYSCTL
++static struct ctl_table sld_sysctls[] = {
++	{
++		.procname       = "split_lock_mitigate",
++		.data           = &sysctl_sld_mitigate,
++		.maxlen         = sizeof(unsigned int),
++		.mode           = 0644,
++		.proc_handler	= proc_douintvec_minmax,
++		.extra1         = SYSCTL_ZERO,
++		.extra2         = SYSCTL_ONE,
++	},
++	{}
++};
++
++static int __init sld_mitigate_sysctl_init(void)
++{
++	register_sysctl_init("kernel", sld_sysctls);
++	return 0;
++}
++
++late_initcall(sld_mitigate_sysctl_init);
++#endif
++
+ static inline bool match_option(const char *arg, int arglen, const char *opt)
+ {
+ 	int len = strlen(opt), ratelimit;
+@@ -1146,12 +1170,20 @@ static void split_lock_init(void)
+ 		split_lock_verify_msr(sld_state != sld_off);
+ }
+ 
+-static void __split_lock_reenable(struct work_struct *work)
++static void __split_lock_reenable_unlock(struct work_struct *work)
+ {
+ 	sld_update_msr(true);
+ 	up(&buslock_sem);
+ }
+ 
++static DECLARE_DELAYED_WORK(sl_reenable_unlock, __split_lock_reenable_unlock);
++
++static void __split_lock_reenable(struct work_struct *work)
++{
++	sld_update_msr(true);
++}
++static DECLARE_DELAYED_WORK(sl_reenable, __split_lock_reenable);
++
+ /*
+  * If a CPU goes offline with pending delayed work to re-enable split lock
+  * detection then the delayed work will be executed on some other CPU. That
+@@ -1169,10 +1201,9 @@ static int splitlock_cpu_offline(unsigned int cpu)
+ 	return 0;
+ }
+ 
+-static DECLARE_DELAYED_WORK(split_lock_reenable, __split_lock_reenable);
+-
+ static void split_lock_warn(unsigned long ip)
+ {
++	struct delayed_work *work;
+ 	int cpu;
+ 
+ 	if (!current->reported_split_lock)
+@@ -1180,14 +1211,26 @@ static void split_lock_warn(unsigned long ip)
+ 				    current->comm, current->pid, ip);
+ 	current->reported_split_lock = 1;
+ 
+-	/* misery factor #1, sleep 10ms before trying to execute split lock */
+-	if (msleep_interruptible(10) > 0)
+-		return;
+-	/* Misery factor #2, only allow one buslocked disabled core at a time */
+-	if (down_interruptible(&buslock_sem) == -EINTR)
+-		return;
++	if (sysctl_sld_mitigate) {
++		/*
++		 * misery factor #1:
++		 * sleep 10ms before trying to execute split lock.
++		 */
++		if (msleep_interruptible(10) > 0)
++			return;
++		/*
++		 * Misery factor #2:
++		 * only allow one buslocked disabled core at a time.
++		 */
++		if (down_interruptible(&buslock_sem) == -EINTR)
++			return;
++		work = &sl_reenable_unlock;
++	} else {
++		work = &sl_reenable;
++	}
++
+ 	cpu = get_cpu();
+-	schedule_delayed_work_on(cpu, &split_lock_reenable, 2);
++	schedule_delayed_work_on(cpu, work, 2);
+ 
+ 	/* Disable split lock detection on this CPU to make progress */
+ 	sld_update_msr(false);
 -- 
 2.35.1
 
