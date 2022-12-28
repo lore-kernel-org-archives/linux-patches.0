@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DE71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F91C433D2;
-	Wed, 28 Dec 2022 15:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3641863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82963C433EF;
+	Wed, 28 Dec 2022 15:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242600;
-	bh=t8zlbSGSsooAWtq4TLVBiXeczbyuDynXBmG8sjChtnU=;
+	s=korg; t=1672242602;
+	bh=9HvOEQbQmJQMCPPSxuy7oPpJ+xnXyQ9GRx5pwrDqMPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bN6mftvuglVE4qsA/1lXMzZinY6Q3/SB484eFxBmBJONXYYdV/evphGWMuzb9LlCW
-	 TooO7MAvmx21CqQ2Qw8zHkn4j/LxiXhp+lYkQtEcMtpvw2gWHrswvg5DoNWWippWs0
-	 BaaMq0wApyFkZXz2psLsud8hj82EV28THaJ6NBlw=
+	b=lD8+N4uiZb8NqkvuwKLj4aeq75687oiuYGqC1ej1ZkdW8LdXlL5tGnpS4kMxm07xc
+	 IdQsYRKomMkl35mpgSc0FF8lMpSA72AWZujhQj07K6aovkvk2hIbjzIUD9/kqb0efM
+	 HTU9Z6l1D5eBKBpb3I1wo+Gm3DjuBYDayKLrLx1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0430/1073] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
-Date: Wed, 28 Dec 2022 15:33:38 +0100
-Message-Id: <20221228144339.707234303@linuxfoundation.org>
+Subject: [PATCH 5.15 624/731] ACPICA: Fix error code path in acpi_ds_call_control_method()
+Date: Wed, 28 Dec 2022 15:42:11 +0100
+Message-Id: <20221228144314.619093268@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,78 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
+[ Upstream commit 404ec60438add1afadaffaed34bb5fe4ddcadd40 ]
 
-In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
-__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
-sock_put() will be called multiple times.
+A use-after-free in acpi_ps_parse_aml() after a failing invocaion of
+acpi_ds_call_control_method() is reported by KASAN [1] and code
+inspection reveals that next_walk_state pushed to the thread by
+acpi_ds_create_walk_state() is freed on errors, but it is not popped
+from the thread beforehand.  Thus acpi_ds_get_current_walk_state()
+called by acpi_ps_parse_aml() subsequently returns it as the new
+walk state which is incorrect.
 
-We should reset the eval variable to __SK_NONE every time more_data
-starts.
+To address this, make acpi_ds_call_control_method() call
+acpi_ds_pop_walk_state() to pop next_walk_state from the thread before
+returning an error.
 
-This causes:
-
-IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
-Modules linked in:
-CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
-Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
-Call Trace:
- <TASK>
- __tcp_transmit_skb+0xa1b/0xb90
- ? __alloc_skb+0x8c/0x1a0
- ? __kmalloc_node_track_caller+0x184/0x320
- tcp_write_xmit+0x22a/0x1110
- __tcp_push_pending_frames+0x32/0xf0
- do_tcp_sendpages+0x62d/0x640
- tcp_bpf_push+0xae/0x2c0
- tcp_bpf_sendmsg_redir+0x260/0x410
- ? preempt_count_add+0x70/0xa0
- tcp_bpf_send_verdict+0x386/0x4b0
- tcp_bpf_sendmsg+0x21b/0x3b0
- sock_sendmsg+0x58/0x70
- __sys_sendto+0xfa/0x170
- ? xfd_validate_state+0x1d/0x80
- ? switch_fpu_return+0x59/0xe0
- __x64_sys_sendto+0x24/0x30
- do_syscall_64+0x37/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
+Link: https://lore.kernel.org/linux-acpi/20221019073443.248215-1-chenzhongjin@huawei.com/ # [1]
+Reported-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Chen Zhongjin <chenzhongjin@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsmethod.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index cf9c3e8f7ccb..f3e868f4cd9e 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -279,7 +279,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 	bool cork = false, enospc = sk_msg_full(msg);
- 	struct sock *sk_redir;
- 	u32 tosend, origsize, sent, delta = 0;
--	u32 eval = __SK_NONE;
-+	u32 eval;
- 	int ret;
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 8e011e59b9b4..ee1832ba39a2 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -517,7 +517,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 	info = ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_evaluate_info));
+ 	if (!info) {
+ 		status = AE_NO_MEMORY;
+-		goto cleanup;
++		goto pop_walk_state;
+ 	}
  
- more_data:
-@@ -310,6 +310,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 	tosend = msg->sg.size;
- 	if (psock->apply_bytes && psock->apply_bytes < tosend)
- 		tosend = psock->apply_bytes;
-+	eval = __SK_NONE;
+ 	info->parameters = &this_walk_state->operands[0];
+@@ -529,7 +529,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
  
- 	switch (psock->eval) {
- 	case __SK_PASS:
+ 	ACPI_FREE(info);
+ 	if (ACPI_FAILURE(status)) {
+-		goto cleanup;
++		goto pop_walk_state;
+ 	}
+ 
+ 	next_walk_state->method_nesting_depth =
+@@ -575,6 +575,12 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 
+ 	return_ACPI_STATUS(status);
+ 
++pop_walk_state:
++
++	/* On error, pop the walk state to be deleted from thread */
++
++	acpi_ds_pop_walk_state(thread);
++
+ cleanup:
+ 
+ 	/* On error, we must terminate the method properly */
 -- 
 2.35.1
 
