@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1731C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B90C433D2;
-	Wed, 28 Dec 2022 16:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14641C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CCCC433D2;
+	Wed, 28 Dec 2022 16:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244484;
-	bh=b6cMTyxL8yPTnD+IVnIU9qNViYGhSw6mU/Ce4EgYQT0=;
+	s=korg; t=1672244486;
+	bh=xRj2zAE3lEOGlozonGI9PfAv12yBVV/t3FQ8OXG8rNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acXGLUnnRwcYF2vssL5IBbFJlemRrWpKC/6XYkx1d7u1OEtnzhpwYIeNfX9v6O721
-	 gYcDFLIBtXPh43//As3lJIxk4Afnqh2f0/rSJY/O2DzVlVA7yndMn/b9ofK7zcEoyg
-	 gzu50mzqOv8fbA773WMj0LoNy9S3TouPQgAn0tSY=
+	b=oproYsckLCW4+d+HgMTU0BX3kT39746WL3aPvysHgLFoyk6YFkyQAi0o9BEXnJjpb
+	 K09Oj0XVUdsRpYIcwvR4kDMEysxDR0WzVGfeocpfUbGKJchEsM+5S0LDgSQIZ7YBCW
+	 4nAa4kXARvwJ8qGlZaZHMYtyAj2xifqUjSaTzqhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Andrew Bresticker <abrestic@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0681/1073] extcon: usbc-tusb320: Add USB TYPE-C support
-Date: Wed, 28 Dec 2022 15:37:49 +0100
-Message-Id: <20221228144346.533606898@linuxfoundation.org>
+Subject: [PATCH 6.1 0677/1146] RISC-V: Fix unannoted hardirqs-on in return to userspace slow-path
+Date: Wed, 28 Dec 2022 15:36:56 +0100
+Message-Id: <20221228144348.535278250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,262 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit bf7571c00dca0a9c5af3f5125ef5a89a40b13cd5 ]
+[ Upstream commit b0f4c74eadbf69a3298f38566bfaa2e202541f2f ]
 
-The TI TUSB320 seems like a better fit for USB TYPE-C subsystem,
-which can expose details collected by the TUSB320 in a far more
-precise way than extcon. Since there are existing users in the
-kernel and in DT which depend on the extcon interface, keep it
-for now.
+The return to userspace path in entry.S may enable interrupts without the
+corresponding lockdep annotation, producing a splat[0] when DEBUG_LOCKDEP
+is enabled. Simply calling __trace_hardirqs_on() here gets a bit messy
+due to the use of RA to point back to ret_from_exception, so just move
+the whole slow-path loop into C. It's more readable and it lets us use
+local_irq_{enable,disable}(), avoiding the need for manual annotations
+altogether.
 
-Add TYPE-C interface and expose the supported supply current,
-direction and connector polarity via the TYPE-C interface.
+[0]:
+  ------------[ cut here ]------------
+  DEBUG_LOCKS_WARN_ON(!lockdep_hardirqs_enabled())
+  WARNING: CPU: 2 PID: 1 at kernel/locking/lockdep.c:5512 check_flags+0x10a/0x1e0
+  Modules linked in:
+  CPU: 2 PID: 1 Comm: init Not tainted 6.1.0-rc4-00160-gb56b6e2b4f31 #53
+  Hardware name: riscv-virtio,qemu (DT)
+  epc : check_flags+0x10a/0x1e0
+  ra : check_flags+0x10a/0x1e0
+  <snip>
+   status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
+  [<ffffffff808edb90>] lock_is_held_type+0x78/0x14e
+  [<ffffffff8003dae2>] __might_resched+0x26/0x22c
+  [<ffffffff8003dd24>] __might_sleep+0x3c/0x66
+  [<ffffffff80022c60>] get_signal+0x9e/0xa70
+  [<ffffffff800054a2>] do_notify_resume+0x6e/0x422
+  [<ffffffff80003c68>] ret_from_exception+0x0/0x10
+  irq event stamp: 44512
+  hardirqs last  enabled at (44511): [<ffffffff808f901c>] _raw_spin_unlock_irqrestore+0x54/0x62
+  hardirqs last disabled at (44512): [<ffffffff80008200>] __trace_hardirqs_off+0xc/0x14
+  softirqs last  enabled at (44472): [<ffffffff808f9fbe>] __do_softirq+0x3de/0x51e
+  softirqs last disabled at (44467): [<ffffffff80017760>] irq_exit+0xd6/0x104
+  ---[ end trace 0000000000000000 ]---
+  possible reason: unannotated irqs-on.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
+Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
+Fixes: 3c4697982982 ("riscv: Enable LOCKDEP_SUPPORT & fixup TRACE_IRQFLAGS_SUPPORT")
+Link: https://lore.kernel.org/r/20221111223108.1976562-1-abrestic@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/Kconfig               |   2 +-
- drivers/extcon/extcon-usbc-tusb320.c | 159 +++++++++++++++++++++++++++
- 2 files changed, 160 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/entry.S  | 18 +++++-------------
+ arch/riscv/kernel/signal.c | 34 +++++++++++++++++++++-------------
+ 2 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
-index dca7cecb37e3..290186e44e6b 100644
---- a/drivers/extcon/Kconfig
-+++ b/drivers/extcon/Kconfig
-@@ -183,7 +183,7 @@ config EXTCON_USBC_CROS_EC
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 186abd146eaf..3221a9e5f372 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -263,12 +263,11 @@ ret_from_exception:
+ #endif
+ 	bnez s0, resume_kernel
  
- config EXTCON_USBC_TUSB320
- 	tristate "TI TUSB320 USB-C extcon support"
--	depends on I2C
-+	depends on I2C && TYPEC
- 	select REGMAP_I2C
- 	help
- 	  Say Y here to enable support for USB Type C cable detection extcon
-diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
-index aced4bbb455d..edb8c3f997c9 100644
---- a/drivers/extcon/extcon-usbc-tusb320.c
-+++ b/drivers/extcon/extcon-usbc-tusb320.c
-@@ -6,6 +6,7 @@
-  * Author: Michael Auchter <michael.auchter@ni.com>
+-resume_userspace:
+ 	/* Interrupts must be disabled here so flags are checked atomically */
+ 	REG_L s0, TASK_TI_FLAGS(tp) /* current_thread_info->flags */
+ 	andi s1, s0, _TIF_WORK_MASK
+-	bnez s1, work_pending
+-
++	bnez s1, resume_userspace_slow
++resume_userspace:
+ #ifdef CONFIG_CONTEXT_TRACKING_USER
+ 	call user_enter_callable
+ #endif
+@@ -368,19 +367,12 @@ resume_kernel:
+ 	j restore_all
+ #endif
+ 
+-work_pending:
++resume_userspace_slow:
+ 	/* Enter slow path for supplementary processing */
+-	la ra, ret_from_exception
+-	andi s1, s0, _TIF_NEED_RESCHED
+-	bnez s1, work_resched
+-work_notifysig:
+-	/* Handle pending signals and notify-resume requests */
+-	csrs CSR_STATUS, SR_IE /* Enable interrupts for do_notify_resume() */
+ 	move a0, sp /* pt_regs */
+ 	move a1, s0 /* current_thread_info->flags */
+-	tail do_notify_resume
+-work_resched:
+-	tail schedule
++	call do_work_pending
++	j resume_userspace
+ 
+ /* Slow paths for ptrace. */
+ handle_syscall_trace_enter:
+diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
+index 5c591123c440..bfb2afa4135f 100644
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -313,19 +313,27 @@ static void do_signal(struct pt_regs *regs)
+ }
+ 
+ /*
+- * notification of userspace execution resumption
+- * - triggered by the _TIF_WORK_MASK flags
++ * Handle any pending work on the resume-to-userspace path, as indicated by
++ * _TIF_WORK_MASK. Entered from assembly with IRQs off.
   */
- 
-+#include <linux/bitfield.h>
- #include <linux/extcon-provider.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
-@@ -13,6 +14,24 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/regmap.h>
-+#include <linux/usb/typec.h>
-+
-+#define TUSB320_REG8				0x8
-+#define TUSB320_REG8_CURRENT_MODE_ADVERTISE	GENMASK(7, 6)
-+#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_USB	0x0
-+#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_15A	0x1
-+#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_30A	0x2
-+#define TUSB320_REG8_CURRENT_MODE_DETECT	GENMASK(5, 4)
-+#define TUSB320_REG8_CURRENT_MODE_DETECT_DEF	0x0
-+#define TUSB320_REG8_CURRENT_MODE_DETECT_MED	0x1
-+#define TUSB320_REG8_CURRENT_MODE_DETECT_ACC	0x2
-+#define TUSB320_REG8_CURRENT_MODE_DETECT_HI	0x3
-+#define TUSB320_REG8_ACCESSORY_CONNECTED	GENMASK(3, 2)
-+#define TUSB320_REG8_ACCESSORY_CONNECTED_NONE	0x0
-+#define TUSB320_REG8_ACCESSORY_CONNECTED_AUDIO	0x4
-+#define TUSB320_REG8_ACCESSORY_CONNECTED_ACC	0x5
-+#define TUSB320_REG8_ACCESSORY_CONNECTED_DEBUG	0x6
-+#define TUSB320_REG8_ACTIVE_CABLE_DETECTION	BIT(0)
- 
- #define TUSB320_REG9				0x9
- #define TUSB320_REG9_ATTACHED_STATE_SHIFT	6
-@@ -55,6 +74,10 @@ struct tusb320_priv {
- 	struct extcon_dev *edev;
- 	struct tusb320_ops *ops;
- 	enum tusb320_attached_state state;
-+	struct typec_port *port;
-+	struct typec_capability	cap;
-+	enum typec_port_type port_type;
-+	enum typec_pwr_opmode pwr_opmode;
- };
- 
- static const char * const tusb_attached_states[] = {
-@@ -184,6 +207,44 @@ static struct tusb320_ops tusb320l_ops = {
- 	.get_revision = tusb320l_get_revision,
- };
- 
-+static int tusb320_set_adv_pwr_mode(struct tusb320_priv *priv)
-+{
-+	u8 mode;
-+
-+	if (priv->pwr_opmode == TYPEC_PWR_MODE_USB)
-+		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_USB;
-+	else if (priv->pwr_opmode == TYPEC_PWR_MODE_1_5A)
-+		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_15A;
-+	else if (priv->pwr_opmode == TYPEC_PWR_MODE_3_0A)
-+		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_30A;
-+	else	/* No other mode is supported. */
-+		return -EINVAL;
-+
-+	return regmap_write_bits(priv->regmap, TUSB320_REG8,
-+				 TUSB320_REG8_CURRENT_MODE_ADVERTISE,
-+				 FIELD_PREP(TUSB320_REG8_CURRENT_MODE_ADVERTISE,
-+					    mode));
-+}
-+
-+static int tusb320_port_type_set(struct typec_port *port,
-+				 enum typec_port_type type)
-+{
-+	struct tusb320_priv *priv = typec_get_drvdata(port);
-+
-+	if (type == TYPEC_PORT_SRC)
-+		return priv->ops->set_mode(priv, TUSB320_MODE_DFP);
-+	else if (type == TYPEC_PORT_SNK)
-+		return priv->ops->set_mode(priv, TUSB320_MODE_UFP);
-+	else if (type == TYPEC_PORT_DRP)
-+		return priv->ops->set_mode(priv, TUSB320_MODE_DRP);
-+	else
-+		return priv->ops->set_mode(priv, TUSB320_MODE_PORT);
-+}
-+
-+static const struct typec_operations tusb320_typec_ops = {
-+	.port_type_set	= tusb320_port_type_set,
-+};
-+
- static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
+-asmlinkage __visible void do_notify_resume(struct pt_regs *regs,
+-					   unsigned long thread_info_flags)
++asmlinkage __visible void do_work_pending(struct pt_regs *regs,
++					  unsigned long thread_info_flags)
  {
- 	int state, polarity;
-@@ -211,6 +272,47 @@ static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
- 	priv->state = state;
+-	if (thread_info_flags & _TIF_UPROBE)
+-		uprobe_notify_resume(regs);
+-
+-	/* Handle pending signal delivery */
+-	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
+-		do_signal(regs);
+-
+-	if (thread_info_flags & _TIF_NOTIFY_RESUME)
+-		resume_user_mode_work(regs);
++	do {
++		if (thread_info_flags & _TIF_NEED_RESCHED) {
++			schedule();
++		} else {
++			local_irq_enable();
++			if (thread_info_flags & _TIF_UPROBE)
++				uprobe_notify_resume(regs);
++			/* Handle pending signal delivery */
++			if (thread_info_flags & (_TIF_SIGPENDING |
++						 _TIF_NOTIFY_SIGNAL))
++				do_signal(regs);
++			if (thread_info_flags & _TIF_NOTIFY_RESUME)
++				resume_user_mode_work(regs);
++		}
++		local_irq_disable();
++		thread_info_flags = read_thread_flags();
++	} while (thread_info_flags & _TIF_WORK_MASK);
  }
- 
-+static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
-+{
-+	struct typec_port *port = priv->port;
-+	struct device *dev = priv->dev;
-+	u8 mode, role, state;
-+	int ret, reg8;
-+	bool ori;
-+
-+	ori = reg9 & TUSB320_REG9_CABLE_DIRECTION;
-+	typec_set_orientation(port, ori ? TYPEC_ORIENTATION_REVERSE :
-+					  TYPEC_ORIENTATION_NORMAL);
-+
-+	state = (reg9 >> TUSB320_REG9_ATTACHED_STATE_SHIFT) &
-+		TUSB320_REG9_ATTACHED_STATE_MASK;
-+	if (state == TUSB320_ATTACHED_STATE_DFP)
-+		role = TYPEC_SOURCE;
-+	else
-+		role = TYPEC_SINK;
-+
-+	typec_set_vconn_role(port, role);
-+	typec_set_pwr_role(port, role);
-+	typec_set_data_role(port, role == TYPEC_SOURCE ?
-+				  TYPEC_HOST : TYPEC_DEVICE);
-+
-+	ret = regmap_read(priv->regmap, TUSB320_REG8, &reg8);
-+	if (ret) {
-+		dev_err(dev, "error during reg8 i2c read, ret=%d!\n", ret);
-+		return;
-+	}
-+
-+	mode = FIELD_GET(TUSB320_REG8_CURRENT_MODE_DETECT, reg8);
-+	if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_DEF)
-+		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
-+	else if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_MED)
-+		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_1_5A);
-+	else if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_HI)
-+		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_3_0A);
-+	else	/* Charge through accessory */
-+		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
-+}
-+
- static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- {
- 	struct tusb320_priv *priv = dev_id;
-@@ -225,6 +327,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
- 
- 	tusb320_extcon_irq_handler(priv, reg);
-+	tusb320_typec_irq_handler(priv, reg);
- 
- 	regmap_write(priv->regmap, TUSB320_REG9, reg);
- 
-@@ -260,6 +363,58 @@ static int tusb320_extcon_probe(struct tusb320_priv *priv)
- 	return 0;
- }
- 
-+static int tusb320_typec_probe(struct i2c_client *client,
-+			       struct tusb320_priv *priv)
-+{
-+	struct fwnode_handle *connector;
-+	const char *cap_str;
-+	int ret;
-+
-+	/* The Type-C connector is optional, for backward compatibility. */
-+	connector = device_get_named_child_node(&client->dev, "connector");
-+	if (!connector)
-+		return 0;
-+
-+	/* Type-C connector found. */
-+	ret = typec_get_fw_cap(&priv->cap, connector);
-+	if (ret)
-+		return ret;
-+
-+	priv->port_type = priv->cap.type;
-+
-+	/* This goes into register 0x8 field CURRENT_MODE_ADVERTISE */
-+	ret = fwnode_property_read_string(connector, "typec-power-opmode", &cap_str);
-+	if (ret)
-+		return ret;
-+
-+	ret = typec_find_pwr_opmode(cap_str);
-+	if (ret < 0)
-+		return ret;
-+	if (ret == TYPEC_PWR_MODE_PD)
-+		return -EINVAL;
-+
-+	priv->pwr_opmode = ret;
-+
-+	/* Initialize the hardware with the devicetree settings. */
-+	ret = tusb320_set_adv_pwr_mode(priv);
-+	if (ret)
-+		return ret;
-+
-+	priv->cap.revision		= USB_TYPEC_REV_1_1;
-+	priv->cap.accessory[0]		= TYPEC_ACCESSORY_AUDIO;
-+	priv->cap.accessory[1]		= TYPEC_ACCESSORY_DEBUG;
-+	priv->cap.orientation_aware	= true;
-+	priv->cap.driver_data		= priv;
-+	priv->cap.ops			= &tusb320_typec_ops;
-+	priv->cap.fwnode		= connector;
-+
-+	priv->port = typec_register_port(&client->dev, &priv->cap);
-+	if (IS_ERR(priv->port))
-+		return PTR_ERR(priv->port);
-+
-+	return 0;
-+}
-+
- static int tusb320_probe(struct i2c_client *client,
- 			 const struct i2c_device_id *id)
- {
-@@ -300,6 +455,10 @@ static int tusb320_probe(struct i2c_client *client,
- 	if (ret)
- 		return ret;
- 
-+	ret = tusb320_typec_probe(client, priv);
-+	if (ret)
-+		return ret;
-+
- 	/* update initial state */
- 	tusb320_irq_handler(client->irq, priv);
- 
 -- 
 2.35.1
 
