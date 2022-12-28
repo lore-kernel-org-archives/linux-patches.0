@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DDF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF38C433D2;
-	Wed, 28 Dec 2022 16:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85631C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3556EC433D2;
+	Wed, 28 Dec 2022 16:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246397;
-	bh=zd+4XcInxVMqeLCkW2Lh9Qq7tWs7IhVLFiv/rgH/KEU=;
+	s=korg; t=1672246400;
+	bh=4TVCKaRbeWhAEp0UoBc2bJjHD+aZbl8euEkU9XFh75U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4mHE7iMkUzrZqbFvdbSbz3eBo213uY7hwRnxcA1Ae5k5C547U8fwpM0Rt0+w5dd+
-	 qP85YOStbWhY8XGPx8eRktt39G3D1JEGyXTyMeDKEF/deVvEORG6Mp4hACtJYZ6zJG
-	 VjaAVz9Yx6qqu2zpxptOWgvbt490fpy5gspWhjEA=
+	b=JU2O9Fmrf+kX3FzFf23NMtfXyZtO1ewkBbDRfNrtFyFwTMrkGvLBnX1VRvzaVsEnL
+	 /PMld5TGifoikB3/vCwZz1rGi4wtsMC3itjUM5KDHPtyN9ZxbjCU/jibQKKMBqNOVy
+	 r7FZXfAr90LyXu9uTAoBsP8EWG0DN6+ZsY1qiJ70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1001/1146] drm/amd/display: Disable DRR actions during state commit
-Date: Wed, 28 Dec 2022 15:42:20 +0100
-Message-Id: <20221228144357.555562092@linuxfoundation.org>
+	Jiao Zhou <jiaozhou@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.0 1030/1073] ALSA: hda/hdmi: Add HP Device 0x8711 to force connect list
+Date: Wed, 28 Dec 2022 15:43:38 +0100
+Message-Id: <20221228144356.169891248@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,42 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Jiao Zhou <jiaozhou@google.com>
 
-[ Upstream commit de020e5fa9ebc6fc32e82ae6ccb0282451ed937c ]
+commit 31b573946ea55e1ea0e08ae8e83bcf879b30f83a upstream.
 
-[WHY]
-Committing a state while performing DRR actions can cause underflow.
+HDMI audio is not working on the HP EliteDesk 800 G6 because the pin is
+unconnected. This issue can be resolved by using the 'hdajackretask'
+tool to override the unconnected pin to force it to connect.
 
-[HOW]
-Disabled features performing DRR actions during state commit.
-Need to follow-up on why DRR actions affect state commit.
-
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jiao Zhou <jiaozhou@google.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221206185311.3669950-1-jiaozhou@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 3 ---
- 1 file changed, 3 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-index 8c5045711264..c20e9f76f021 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -992,8 +992,5 @@ void dcn30_prepare_bandwidth(struct dc *dc,
- 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
- 
- 	dcn20_prepare_bandwidth(dc, context);
--
--	dc_dmub_srv_p_state_delegate(dc,
--		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
- }
- 
--- 
-2.35.1
-
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1976,6 +1976,7 @@ static int hdmi_add_cvt(struct hda_codec
+ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
++	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
+ 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
+ 	{}
 
 
