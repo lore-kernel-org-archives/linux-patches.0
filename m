@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7751C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9DDC433EF;
-	Wed, 28 Dec 2022 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E24F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8269C433D2;
+	Wed, 28 Dec 2022 16:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244705;
-	bh=jaxetIDVs7UmDTcGPX9dQhrAn9Cpek00T92R7i8EuQg=;
+	s=korg; t=1672244703;
+	bh=39ZJy54SXPZo6RidoU+EedbdchID/mszeTbaHZm/bNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYjwDAUwZZSzNPnWqHp0X2we9JxkhDtQIYtvvXNQhyj1VLM7jmV0uPiCayzT4JgMs
-	 1znEd4ByakBjTPNXhvrtwabDoSugZp5wYO/zdVv6DT6ACu0Y5Hac2kWlOATIrzlyZ/
-	 OsiSRHXi7RkmLukjDXY/J+uTyRMa5tQfS2iwSxs0=
+	b=J9IlQhcj7CUqTPF7ketvo5AtoJNljNL18oA57pNNNxj71PKHH20ybK5O1nsWReNR3
+	 rTqleDV+/0KFBPSCVyopbhNb7GWefjHPViZZYEjVYeVDpGJ5C1TgGbMqr4PAtnpKeI
+	 PDiyq7VtYuQe05zEBI3UuLqYJwI9+mjIHji2Etww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Marek Vasut <marex@denx.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0751/1073] power: supply: bq25890: Factor out regulator registration code
-Date: Wed, 28 Dec 2022 15:38:59 +0100
-Message-Id: <20221228144348.418522011@linuxfoundation.org>
+Subject: [PATCH 6.1 0722/1146] iio: temperature: ltc2983: make bulk write buffer DMA-safe
+Date: Wed, 28 Dec 2022 15:37:41 +0100
+Message-Id: <20221228144349.756336995@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,100 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Cosmin Tanislav <cosmin.tanislav@analog.com>
 
-[ Upstream commit 5f5c10ecaf3fdeba9b2b0af5301977420c2c4df0 ]
+[ Upstream commit 5e0176213949724fbe9a8e4a39817edce337b8a0 ]
 
-Pull the regulator registration code into separate function, so it can
-be extended to register more regulators later. Currently this is only
-moving ifdeffery into one place and other preparatory changes. The
-dev_err_probe() output string is changed to explicitly list vbus
-regulator failure, so that once more regulators are registered, it
-would be clear which one failed.
+regmap_bulk_write() does not guarantee implicit DMA-safety,
+even though the current implementation duplicates the given
+buffer. Do not rely on it.
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: a7aaa80098d5 ("power: supply: bq25890: Ensure pump_express_work is cancelled on remove")
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
+Link: https://lore.kernel.org/r/20221103130041.2153295-2-demonsingur@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq25890_charger.c | 51 ++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 16 deletions(-)
+ drivers/iio/temperature/ltc2983.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
-index 852a6fec4339..86228753e804 100644
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -1019,6 +1019,36 @@ static const struct regulator_desc bq25890_vbus_desc = {
- 	.fixed_uV = 5000000,
- 	.n_voltages = 1,
+diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
+index a60ccf183687..1117991ca2ab 100644
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -209,6 +209,7 @@ struct ltc2983_data {
+ 	 * Holds the converted temperature
+ 	 */
+ 	__be32 temp __aligned(IIO_DMA_MINALIGN);
++	__be32 chan_val;
  };
-+
-+static int bq25890_register_regulator(struct bq25890_device *bq)
-+{
-+	struct bq25890_platform_data *pdata = dev_get_platdata(bq->dev);
-+	struct regulator_config cfg = {
-+		.dev = bq->dev,
-+		.driver_data = bq,
-+	};
-+	struct regulator_dev *reg;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb_phy))
-+		return 0;
-+
-+	if (pdata)
-+		cfg.init_data = pdata->regulator_init_data;
-+
-+	reg = devm_regulator_register(bq->dev, &bq25890_vbus_desc, &cfg);
-+	if (IS_ERR(reg)) {
-+		return dev_err_probe(bq->dev, PTR_ERR(reg),
-+				     "registering vbus regulator");
-+	}
-+
-+	return 0;
-+}
-+#else
-+static inline int
-+bq25890_register_regulator(struct bq25890_device *bq)
-+{
-+	return 0;
-+}
- #endif
  
- static int bq25890_get_chip_version(struct bq25890_device *bq)
-@@ -1214,27 +1244,16 @@ static int bq25890_probe(struct i2c_client *client,
+ struct ltc2983_sensor {
+@@ -313,19 +314,18 @@ static int __ltc2983_fault_handler(const struct ltc2983_data *st,
+ 	return 0;
+ }
  
- 	/* OTG reporting */
- 	bq->usb_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
-+
-+	ret = bq25890_register_regulator(bq);
-+	if (ret)
-+		return ret;
-+
- 	if (!IS_ERR_OR_NULL(bq->usb_phy)) {
- 		INIT_WORK(&bq->usb_work, bq25890_usb_work);
- 		bq->usb_nb.notifier_call = bq25890_usb_notifier;
- 		usb_register_notifier(bq->usb_phy, &bq->usb_nb);
- 	}
--#ifdef CONFIG_REGULATOR
--	else {
--		struct bq25890_platform_data *pdata = dev_get_platdata(dev);
--		struct regulator_config cfg = { };
--		struct regulator_dev *reg;
--
--		cfg.dev = dev;
--		cfg.driver_data = bq;
--		if (pdata)
--			cfg.init_data = pdata->regulator_init_data;
--
--		reg = devm_regulator_register(dev, &bq25890_vbus_desc, &cfg);
--		if (IS_ERR(reg))
--			return dev_err_probe(dev, PTR_ERR(reg), "registering regulator");
--	}
--#endif
+-static int __ltc2983_chan_assign_common(const struct ltc2983_data *st,
++static int __ltc2983_chan_assign_common(struct ltc2983_data *st,
+ 					const struct ltc2983_sensor *sensor,
+ 					u32 chan_val)
+ {
+ 	u32 reg = LTC2983_CHAN_START_ADDR(sensor->chan);
+-	__be32 __chan_val;
  
- 	ret = bq25890_power_supply_init(bq);
- 	if (ret < 0) {
+ 	chan_val |= LTC2983_CHAN_TYPE(sensor->type);
+ 	dev_dbg(&st->spi->dev, "Assign reg:0x%04X, val:0x%08X\n", reg,
+ 		chan_val);
+-	__chan_val = cpu_to_be32(chan_val);
+-	return regmap_bulk_write(st->regmap, reg, &__chan_val,
+-				 sizeof(__chan_val));
++	st->chan_val = cpu_to_be32(chan_val);
++	return regmap_bulk_write(st->regmap, reg, &st->chan_val,
++				 sizeof(st->chan_val));
+ }
+ 
+ static int __ltc2983_chan_custom_sensor_assign(struct ltc2983_data *st,
 -- 
 2.35.1
 
