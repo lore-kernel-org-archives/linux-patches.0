@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A57F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6894C433D2;
-	Wed, 28 Dec 2022 16:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3531C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F6DC433EF;
+	Wed, 28 Dec 2022 16:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244497;
-	bh=NmjV0E95oCV4E3g5lm5gTZp50u5GYHXobVmdFC/SW9k=;
+	s=korg; t=1672244500;
+	bh=47Y3qKzYRJ0T50+xPuYBHm9CLjHCJ3hCHFjrybI+lDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVkA5WesyJrPW976mT0bzuqdfHP4TY5Z8yyXfBxDuAlND/GBPJY4VhXAwE9fYenMx
-	 tAY8slCkR6L8sO5aMKdXAjCjoXMItLOyQ900VlA24Syp57UYEnri3qb1L2Kb4ggZ1d
-	 cumGv2xH8vtM/Q42GV8kBWS/TjY4b5//TKwg6/Gs=
+	b=A6lwrq2bcVZK84D/++wIy+1bmEPWRm3IQoFer2xblpZnykqdjqZayv7GZA1aQJ41M
+	 jj7VqMM+G5H7xCshL8fWgRHgSCxC+XnMS5GPu6mrJtQeJWQVdSySveBhYmcLKbyjtB
+	 F/TEYQusYAjMYKpDN7vOhjpuNdyBnWA1arlH+qEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0722/1073] tracing/hist: Fix issue of losting command info in error_log
-Date: Wed, 28 Dec 2022 15:38:30 +0100
-Message-Id: <20221228144347.636427597@linuxfoundation.org>
+Subject: [PATCH 6.1 0684/1146] RISC-V: Align the shadow stack
+Date: Wed, 28 Dec 2022 15:37:03 +0100
+Message-Id: <20221228144348.721955025@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,91 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-[ Upstream commit 608c6ed3337850c767ab0dd6c583477922233e29 ]
+[ Upstream commit b003b3b77d65133a0011ae3b7b255347438c12f6 ]
 
-When input some constructed invalid 'trigger' command, command info
-in 'error_log' are lost [1].
+The standard RISC-V ABIs all require 16-byte stack alignment.  We're
+only calling that one function on the shadow stack so I doubt it'd
+result in a real issue, but might as well keep this lined up.
 
-The root cause is that there is a path that event_hist_trigger_parse()
-is recursely called once and 'last_cmd' which save origin command is
-cleared, then later calling of hist_err() will no longer record origin
-command info:
-
-  event_hist_trigger_parse() {
-    last_cmd_set()  // <1> 'last_cmd' save origin command here at first
-    create_actions() {
-      onmatch_create() {
-        action_create() {
-          trace_action_create() {
-            trace_action_create_field_var() {
-              create_field_var_hist() {
-                event_hist_trigger_parse() {  // <2> recursely called once
-                  hist_err_clear()  // <3> 'last_cmd' is cleared here
-                }
-                hist_err()  // <4> No longer find origin command!!!
-
-Since 'glob' is empty string while running into the recurse call, we
-can trickly check it and bypass the call of hist_err_clear() to solve it.
-
-[1]
- # cd /sys/kernel/tracing
- # echo "my_synth_event int v1; int v2; int v3;" >> synthetic_events
- # echo 'hist:keys=pid' >> events/sched/sched_waking/trigger
- # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
-pid,pid1)" >> events/sched/sched_switch/trigger
- # cat error_log
-[  8.405018] hist:sched:sched_switch: error: Couldn't find synthetic event
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                                                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't find field
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't parse field variable
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't parse field variable
-  Command:
-           ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't create histogram for field
-  Command:
-           ^
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221207135326.3483216-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
-Fixes: f404da6e1d46 ("tracing: Add 'last error' error facility for hist triggers")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 31da94c25aea ("riscv: add VMAP_STACK overflow detection")
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://lore.kernel.org/r/20221130023515.20217-1-palmer@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
+ arch/riscv/kernel/traps.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 49243e861714..d8406f6f5d39 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6346,7 +6346,7 @@ static int event_hist_trigger_parse(struct event_command *cmd_ops,
- 	if (se)
- 		se->ref++;
-  out:
--	if (ret == 0)
-+	if (ret == 0 && glob[0])
- 		hist_err_clear();
- 
- 	return ret;
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 7abd8e4c4df6..f77cb8e42bd2 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -214,7 +214,7 @@ static DEFINE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)],
+  * shadow stack, handled_ kernel_ stack_ overflow(in kernel/entry.S) is used
+  * to get per-cpu overflow stack(get_overflow_stack).
+  */
+-long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE/sizeof(long)];
++long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE/sizeof(long)] __aligned(16);
+ asmlinkage unsigned long get_overflow_stack(void)
+ {
+ 	return (unsigned long)this_cpu_ptr(overflow_stack) +
 -- 
 2.35.1
 
