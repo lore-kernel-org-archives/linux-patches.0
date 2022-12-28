@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEB51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4794C433D2;
-	Wed, 28 Dec 2022 15:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6281863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EDEC433F2;
+	Wed, 28 Dec 2022 15:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239804;
-	bh=6SQ70RZccRw/EhbzPjDFSwlXxLAY5Ne+GUKkdIONBpY=;
+	s=korg; t=1672239806;
+	bh=B4JV8fVQxiavIExuYqt2xzmGg3Y49E6jSeTZ/F3C7UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFu1ZdVsyiFJG3oRRiPr6tA7MNeg/F6/QolQEQ+rHYwcO2FR3d+n/Mvrv2JNBCvHX
-	 G1LIqh3/bImFjm7d9Ai4rNmMEpPIl6JU2tLDluOGQS54yI7G0gcVzd+ZRFzMerP3JY
-	 YxRaSihgJXpChR+gaz5oAkPjvjA4bd+Js11TYpGI=
+	b=2R/0FTVLP9mtG518rldC59jhdMHikJroUTvg83/uFYKCBCfhBxJUAtqA2Tr7h21sl
+	 HQsvb/J4t6gFR/fI6ACDJ+BRcaaaS/pKX4rDHt671tk6ufTihQMXnc4NzgVLpIBpoo
+	 JBxhm2D0gRNnntG+HHAU5CnHahYTzAe87tqt6LUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/731] clk: qcom: lpass-sc7180: Fix pm_runtime usage
-Date: Wed, 28 Dec 2022 15:36:19 +0100
-Message-Id: <20221228144304.458439314@linuxfoundation.org>
+Subject: [PATCH 6.1 0045/1146] soc: sifive: ccache: fix missing iounmap() in error path in sifive_ccache_init()
+Date: Wed, 28 Dec 2022 15:26:24 +0100
+Message-Id: <20221228144331.389926412@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,133 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ff1ccf59eaffd192efe21f7de9fb0c130faf1b1b ]
+[ Upstream commit 73e770f085023da327dc9ffeb6cd96b0bb22d97e ]
 
-The sc7180 lpass clock controller's pm_runtime usage wasn't broken
-quite as spectacularly as the sc7280's pm_runtime usage, but it was
-still broken. Putting some printouts in at boot showed me this (with
-serial console enabled, which makes the prints slow and thus changes
-timing):
-  [    3.109951] DOUG: my_pm_clk_resume, usage=1
-  [    3.114767] DOUG: my_pm_clk_resume, usage=1
-  [    3.664443] DOUG: my_pm_clk_suspend, usage=0
-  [    3.897566] DOUG: my_pm_clk_suspend, usage=0
-  [    3.910137] DOUG: my_pm_clk_resume, usage=1
-  [    3.923217] DOUG: my_pm_clk_resume, usage=0
-  [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
-  [    4.444982] DOUG: my_pm_clk_suspend, usage=0
-  [   14.170501] DOUG: my_pm_clk_resume, usage=1
-  [   14.176245] DOUG: my_pm_clk_resume, usage=0
+Add missing iounmap() before return error from sifive_ccache_init().
 
-...or this w/out serial console:
-  [    0.556139] DOUG: my_pm_clk_resume, usage=1
-  [    0.556279] DOUG: my_pm_clk_resume, usage=1
-  [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.058464] DOUG: my_pm_clk_suspend, usage=0
-  [    1.186250] DOUG: my_pm_clk_resume, usage=1
-  [    1.186292] DOUG: my_pm_clk_resume, usage=0
-  [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.731557] DOUG: my_pm_clk_suspend, usage=0
-  [   10.288910] DOUG: my_pm_clk_resume, usage=1
-  [   10.289496] DOUG: my_pm_clk_resume, usage=0
-
-It seems to be doing roughly the right sequence of calls, but just
-like with sc7280 this is more by luck than anything. Having a usage of
--1 is just not OK.
-
-Let's fix this like we did with sc7280.
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid
+Fixes: a967a289f169 ("RISC-V: sifive_l2_cache: Add L2 cache controller driver for SiFive SoCs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpasscorecc-sc7180.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/soc/sifive/sifive_ccache.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index ac09b7b840ab..a5731994cbed 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -356,7 +356,7 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
- 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
- };
+diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
+index 1c171150e878..25019c16d8ae 100644
+--- a/drivers/soc/sifive/sifive_ccache.c
++++ b/drivers/soc/sifive/sifive_ccache.c
+@@ -222,13 +222,16 @@ static int __init sifive_ccache_init(void)
+ 	if (!ccache_base)
+ 		return -ENOMEM;
  
--static int lpass_create_pm_clks(struct platform_device *pdev)
-+static int lpass_setup_runtime_pm(struct platform_device *pdev)
- {
- 	int ret;
- 
-@@ -375,7 +375,7 @@ static int lpass_create_pm_clks(struct platform_device *pdev)
- 	if (ret < 0)
- 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
- 
--	return ret;
-+	return pm_runtime_resume_and_get(&pdev->dev);
- }
- 
- static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
-@@ -384,7 +384,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
-@@ -392,12 +392,14 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	desc = &lpass_audio_hm_sc7180_desc;
- 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
- 	if (ret)
--		return ret;
-+		goto exit;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_core_cc";
- 	regmap = qcom_cc_map(pdev, &lpass_core_cc_sc7180_desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (IS_ERR(regmap)) {
-+		ret = PTR_ERR(regmap);
-+		goto exit;
+-	if (of_property_read_u32(np, "cache-level", &level))
+-		return -ENOENT;
++	if (of_property_read_u32(np, "cache-level", &level)) {
++		rc = -ENOENT;
++		goto err_unmap;
 +	}
  
- 	/*
- 	 * Keep the CLK always-ON
-@@ -415,6 +417,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	ret = qcom_cc_really_probe(pdev, &lpass_core_cc_sc7180_desc, regmap);
+ 	intr_num = of_property_count_u32_elems(np, "interrupts");
+ 	if (!intr_num) {
+ 		pr_err("No interrupts property\n");
+-		return -ENODEV;
++		rc = -ENODEV;
++		goto err_unmap;
+ 	}
  
- 	pm_runtime_mark_last_busy(&pdev->dev);
-+exit:
- 	pm_runtime_put_autosuspend(&pdev->dev);
+ 	for (i = 0; i < intr_num; i++) {
+@@ -237,7 +240,7 @@ static int __init sifive_ccache_init(void)
+ 				 NULL);
+ 		if (rc) {
+ 			pr_err("Could not request IRQ %d\n", g_irq[i]);
+-			return rc;
++			goto err_unmap;
+ 		}
+ 	}
  
- 	return ret;
-@@ -425,14 +428,19 @@ static int lpass_hm_core_probe(struct platform_device *pdev)
- 	const struct qcom_cc_desc *desc;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
- 	desc = &lpass_core_hm_sc7180_desc;
- 
--	return qcom_cc_probe_by_index(pdev, 0, desc);
-+	ret = qcom_cc_probe_by_index(pdev, 0, desc);
+@@ -250,6 +253,10 @@ static int __init sifive_ccache_init(void)
+ 	setup_sifive_debug();
+ #endif
+ 	return 0;
 +
-+	pm_runtime_mark_last_busy(&pdev->dev);
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
-+	return ret;
++err_unmap:
++	iounmap(ccache_base);
++	return rc;
  }
  
- static const struct of_device_id lpass_hm_sc7180_match_table[] = {
+ device_initcall(sifive_ccache_init);
 -- 
 2.35.1
 
