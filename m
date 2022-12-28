@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4511C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643DFC433F0;
-	Wed, 28 Dec 2022 16:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D55F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0498EC433D2;
+	Wed, 28 Dec 2022 16:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245257;
-	bh=jbAmkThvRjm1w2h0KXIphIO+hT0ykaAk7IRmyQYz5sk=;
+	s=korg; t=1672245260;
+	bh=g5DWXgmezYnT/RO8YzVpE4jnKtnrAXeoJ9Yq5ZKvGXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF5PM9Z8Vg0QjZHxE28AGZe9jFaocC3Kv/1P13QHqfS8y3HDi4ZBJj9aXI8LDz+jf
-	 He/VpNDWHHAwSVfGr5yPdV/ugB2ezate3Eqj229beqE141y3YWceg7n51lrN9UPJAE
-	 uD0lnds03OqE5qNc4QV3rVnKLVzKLsJEou/CZ1+U=
+	b=B+BJR2qrta0lzPg8HPCvcmKjtKeBQSHYisCillINDzYSLcKBjuw3qRcktZUZqHibA
+	 ksY3gMnxbZ72R/46w09JSOqtQleMpnm3MxrHHA3NEDso4yqyiS2VmjejwXsBzznwEe
+	 2SrJ5+IGsm6TL0CJWiZKU4xejKF94R/WuCsfbhXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0828/1146] phy: qcom-qmp-pcie: Fix sm8450_qmp_gen4x2_pcie_pcs_tbl[] register names
-Date: Wed, 28 Dec 2022 15:39:27 +0100
-Message-Id: <20221228144352.649806286@linuxfoundation.org>
+Subject: [PATCH 6.0 0862/1073] igc: Use strict cycles for Qbv scheduling
+Date: Wed, 28 Dec 2022 15:40:50 +0100
+Message-Id: <20221228144351.433036076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,78 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-[ Upstream commit 883aebf6e1ea88145d64dcf940dbcb5181313338 ]
+[ Upstream commit d8f45be01dd9381065a3778a579385249ed011dc ]
 
-sm8450_qmp_gen4x2_pcie_pcs_tbl[] contains the init sequence for PCS
-registers of QMP PHY v5.20. So use the v5.20 specific register names.
-Only major change is the rename of PCS_EQ_CONFIG{2/3} registers to
-PCS_EQ_CONFIG{4/5}.
+Configuring strict cycle mode in the controller forces more well
+behaved transmissions when taprio is offloaded.
 
-Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20221102081835.41892-2-manivannan.sadhasivam@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+When set this strict_cycle and strict_end, transmission is not
+enabled if the whole packet cannot be completed before end of
+the Qbv cycle.
+
+Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |  8 ++++----
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h | 14 ++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |  1 +
- 3 files changed, 19 insertions(+), 4 deletions(-)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
+ drivers/net/ethernet/intel/igc/igc_tsn.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 5a17cda1a6b8..bb40172e23d4 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1292,10 +1292,10 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_rx_tbl[] = {
- };
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 0fce22de2ab8..4a019954cadb 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -110,15 +110,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 		wr32(IGC_STQT(i), ring->start_time);
+ 		wr32(IGC_ENDQT(i), ring->end_time);
  
- static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_tbl[] = {
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG2, 0x16),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG3, 0x22),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_G3S2_PRE_GAIN, 0x2e),
--	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x99),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG4, 0x16),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG5, 0x22),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_G3S2_PRE_GAIN, 0x2e),
-+	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_RX_SIGDET_LVL, 0x99),
- };
+-		if (adapter->base_time) {
+-			/* If we have a base_time we are in "taprio"
+-			 * mode and we need to be strict about the
+-			 * cycles: only transmit a packet if it can be
+-			 * completed during that cycle.
+-			 */
+-			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
+-				IGC_TXQCTL_STRICT_END;
+-		}
++		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
++			IGC_TXQCTL_STRICT_END;
  
- static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
-new file mode 100644
-index 000000000000..9a5a20daf62c
---- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2022, Linaro Ltd.
-+ */
-+
-+#ifndef QCOM_PHY_QMP_PCS_V5_20_H_
-+#define QCOM_PHY_QMP_PCS_V5_20_H_
-+
-+#define QPHY_V5_20_PCS_G3S2_PRE_GAIN			0x170
-+#define QPHY_V5_20_PCS_RX_SIGDET_LVL			0x188
-+#define QPHY_V5_20_PCS_EQ_CONFIG4			0x1e0
-+#define QPHY_V5_20_PCS_EQ_CONFIG5			0x1e4
-+
-+#endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index 26274e3c0cf9..29a48f0436d2 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -38,6 +38,7 @@
- #include "phy-qcom-qmp-pcs-pcie-v4_20.h"
- 
- #include "phy-qcom-qmp-pcs-v5.h"
-+#include "phy-qcom-qmp-pcs-v5_20.h"
- #include "phy-qcom-qmp-pcs-pcie-v5.h"
- #include "phy-qcom-qmp-pcs-usb-v5.h"
- #include "phy-qcom-qmp-pcs-ufs-v5.h"
+ 		if (ring->launchtime_enable)
+ 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
 -- 
 2.35.1
 
