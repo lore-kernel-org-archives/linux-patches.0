@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D701863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC2FC433D2;
-	Wed, 28 Dec 2022 15:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CADF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DA9C433EF;
+	Wed, 28 Dec 2022 15:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240793;
-	bh=FDnY9memHDK08dNNfY/561sVbx1C03QW5gMzHUsYe7w=;
+	s=korg; t=1672240796;
+	bh=QLtgT65ZnjMkRthxpmKOkw7FSPmIz6FHAdc0DP+xk14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/DhiccI2+dPI4EtjJk2Pk9GCR2rtP0j2riLyDNeCavPn18pqapsHeHM4wyBS4NPY
-	 AXDe2ha0kSwgSmhTh24v9RlvvBtubaFgQDZQGq/8EUPNC3aPiAaK9BzefQK/VwsCho
-	 ksxNg3qKAjp8b1YO0DsEQf3jFgDjIVIWUuMEva4k=
+	b=iMumOkDrp8P/vy9wzAUA5NJuRE8mBgjg5T4Mb4vxNRMYepGxV4jR1U5S7fzIqpRGi
+	 OLsW2rK97eryU2kDXuSHX9KueWyvekdD4lXzy9yi668fxPIs/2uWJ89vk5DWAqbRUi
+	 ybWtn5tyL6g1kUN0sJ4VYt43Xy2wt/eeHnsyGagQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Li Zetao <lizetao1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 398/731] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
-Date: Wed, 28 Dec 2022 15:38:25 +0100
-Message-Id: <20221228144308.101298543@linuxfoundation.org>
+Subject: [PATCH 6.1 0168/1146] ACPICA: Fix use-after-free in acpi_ut_copy_ipackage_to_ipackage()
+Date: Wed, 28 Dec 2022 15:28:27 +0100
+Message-Id: <20221228144334.723215235@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
+[ Upstream commit 470188b09e92d83c5a997f25f0e8fb8cd2bc3469 ]
 
-ccree_init() calls cc_debugfs_global_fini(), the former is an init
-function and the latter an exit function though.
+There is an use-after-free reported by KASAN:
 
-A modular build emits:
+  BUG: KASAN: use-after-free in acpi_ut_remove_reference+0x3b/0x82
+  Read of size 1 at addr ffff888112afc460 by task modprobe/2111
+  CPU: 0 PID: 2111 Comm: modprobe Not tainted 6.1.0-rc7-dirty
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+  Call Trace:
+   <TASK>
+   kasan_report+0xae/0xe0
+   acpi_ut_remove_reference+0x3b/0x82
+   acpi_ut_copy_iobject_to_iobject+0x3be/0x3d5
+   acpi_ds_store_object_to_local+0x15d/0x3a0
+   acpi_ex_store+0x78d/0x7fd
+   acpi_ex_opcode_1A_1T_1R+0xbe4/0xf9b
+   acpi_ps_parse_aml+0x217/0x8d5
+   ...
+   </TASK>
 
-	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
+The root cause of the problem is that the acpi_operand_object
+is freed when acpi_ut_walk_package_tree() fails in
+acpi_ut_copy_ipackage_to_ipackage(), lead to repeated release in
+acpi_ut_copy_iobject_to_iobject(). The problem was introduced
+by "8aa5e56eeb61" commit, this commit is to fix memory leak in
+acpi_ut_copy_iobject_to_iobject(), repeatedly adding remove
+operation, lead to "acpi_operand_object" used after free.
 
-(with CONFIG_DEBUG_SECTION_MISMATCH=y).
+Fix it by removing acpi_ut_remove_reference() in
+acpi_ut_copy_ipackage_to_ipackage(). acpi_ut_copy_ipackage_to_ipackage()
+is called to copy an internal package object into another internal
+package object, when it fails, the memory of acpi_operand_object
+should be freed by the caller.
 
-Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 8aa5e56eeb61 ("ACPICA: Utilities: Fix memory leak in acpi_ut_copy_iobject_to_iobject")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/utcopy.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
-index 7083767602fc..8f008f024f8f 100644
---- a/drivers/crypto/ccree/cc_debugfs.c
-+++ b/drivers/crypto/ccree/cc_debugfs.c
-@@ -55,7 +55,7 @@ void __init cc_debugfs_global_init(void)
- 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index 400b9e15a709..63c17f420fb8 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -916,13 +916,6 @@ acpi_ut_copy_ipackage_to_ipackage(union acpi_operand_object *source_obj,
+ 	status = acpi_ut_walk_package_tree(source_obj, dest_obj,
+ 					   acpi_ut_copy_ielement_to_ielement,
+ 					   walk_state);
+-	if (ACPI_FAILURE(status)) {
+-
+-		/* On failure, delete the destination package object */
+-
+-		acpi_ut_remove_reference(dest_obj);
+-	}
+-
+ 	return_ACPI_STATUS(status);
  }
  
--void __exit cc_debugfs_global_fini(void)
-+void cc_debugfs_global_fini(void)
- {
- 	debugfs_remove(cc_debugfs_dir);
- }
 -- 
 2.35.1
 
