@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F041863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3BFC433D2;
-	Wed, 28 Dec 2022 15:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B811863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1464C433EF;
+	Wed, 28 Dec 2022 15:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242405;
-	bh=IqF1bJoKPOlvUlEswp1uQYakd/NZzAqQPxOHZ4bB4bg=;
+	s=korg; t=1672242408;
+	bh=7azP4kBAynbiBDz9TJGBxgDgOXfj68K0OySkFAqgMp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzjnia/XHMvwDVqwk0EWINVGAYWOX0hve8qmsK6GiPsoGVoJkbQTbVKpwEmY54dKH
-	 aGlNvfWI+N5fssA5vrrtBk27af0wo04H3+z+CHvQC5UYs8sZEywH3mdk9tbH7vLpvY
-	 COvmWkVuEjM04lrNiJeOLSRa7a8pL96P29wCoYqU=
+	b=NERgQoW1CdU8pebXCx+61AlBmcJ6p4qKZk2dHAKfPEnHoplcBAaoDWTte7WKWKCMm
+	 RkYMa53VMAB6fl5X53YJcgIlTaj5lEwgmE3xCCSBLUvXva3tvLntBuKo4+ehjebzfd
+	 Xg90EwtfANAgNUa8lLSNpx1oSf5WEhJ4uuior790=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0366/1146] HID: i2c: let RMI devices decide what constitutes wakeup event
-Date: Wed, 28 Dec 2022 15:31:45 +0100
-Message-Id: <20221228144340.107934144@linuxfoundation.org>
+Subject: [PATCH 5.15 588/731] selftests/bpf: Add test for unstable CT lookup API
+Date: Wed, 28 Dec 2022 15:41:35 +0100
+Message-Id: <20221228144313.590805699@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,60 +35,207 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 9984fbf55b9bd998b4ff66395cbb118020c1effa ]
+[ Upstream commit 87091063df5d4845d1db0761a9ed5510c4756a96 ]
 
-HID-RMI is special in the sense that it does not carry HID events
-directly, but rather uses HID protocol as a wrapper/transport for RMI
-protocol.  Therefore we should not assume that all data coming from the
-device via interrupt is associated with user activity and report wakeup
-event indiscriminately, but rather let HID-RMI do that when appropriate.
+This tests that we return errors as documented, and also that the kfunc
+calls work from both XDP and TC hooks.
 
-HID-RMI devices tag responses to the commands issued by the host as
-RMI_READ_DATA_REPORT_ID whereas motion and other input events from the
-device are tagged as RMI_ATTN_REPORT_ID. Change hid-rmi to report wakeup
-events when receiving the latter packets. This allows ChromeOS to
-accurately identify wakeup source and make correct decision on the mode
-of the resume the system should take ("dark" where the display stays off
-vs normal one).
-
-Fixes: d951ae1ce803 ("HID: i2c-hid: Report wakeup events")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20220114163953.1455836-8-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: a8dfde09c901 ("selftests/bpf: Select CONFIG_FUNCTION_ERROR_INJECTION")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-rmi.c              | 2 ++
- drivers/hid/i2c-hid/i2c-hid-core.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/config            |   4 +
+ .../testing/selftests/bpf/prog_tests/bpf_nf.c |  48 ++++++++
+ .../testing/selftests/bpf/progs/test_bpf_nf.c | 109 ++++++++++++++++++
+ 3 files changed, 161 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+ create mode 100644 tools/testing/selftests/bpf/progs/test_bpf_nf.c
 
-diff --git a/drivers/hid/hid-rmi.c b/drivers/hid/hid-rmi.c
-index bb1f423f4ace..84e7ba5314d3 100644
---- a/drivers/hid/hid-rmi.c
-+++ b/drivers/hid/hid-rmi.c
-@@ -326,6 +326,8 @@ static int rmi_input_event(struct hid_device *hdev, u8 *data, int size)
- 	if (!(test_bit(RMI_STARTED, &hdata->flags)))
- 		return 0;
- 
-+	pm_wakeup_event(hdev->dev.parent, 0);
+diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
+index 5192305159ec..4a2a47fcd6ef 100644
+--- a/tools/testing/selftests/bpf/config
++++ b/tools/testing/selftests/bpf/config
+@@ -46,3 +46,7 @@ CONFIG_IMA_READ_POLICY=y
+ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_FUNCTION_TRACER=y
+ CONFIG_DYNAMIC_FTRACE=y
++CONFIG_NETFILTER=y
++CONFIG_NF_DEFRAG_IPV4=y
++CONFIG_NF_DEFRAG_IPV6=y
++CONFIG_NF_CONNTRACK=y
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+new file mode 100644
+index 000000000000..e3166a81e989
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
+@@ -0,0 +1,48 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <test_progs.h>
++#include <network_helpers.h>
++#include "test_bpf_nf.skel.h"
 +
- 	local_irq_save(flags);
- 
- 	rmi_set_attn_data(rmi_dev, data[1], &data[2], size - 2);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 0667b6022c3b..a9428b7f34a4 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -554,7 +554,8 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 	i2c_hid_dbg(ihid, "input: %*ph\n", ret_size, ihid->inbuf);
- 
- 	if (test_bit(I2C_HID_STARTED, &ihid->flags)) {
--		pm_wakeup_event(&ihid->client->dev, 0);
-+		if (ihid->hid->group != HID_GROUP_RMI)
-+			pm_wakeup_event(&ihid->client->dev, 0);
- 
- 		hid_input_report(ihid->hid, HID_INPUT_REPORT,
- 				ihid->inbuf + sizeof(__le16),
++enum {
++	TEST_XDP,
++	TEST_TC_BPF,
++};
++
++void test_bpf_nf_ct(int mode)
++{
++	struct test_bpf_nf *skel;
++	int prog_fd, err, retval;
++
++	skel = test_bpf_nf__open_and_load();
++	if (!ASSERT_OK_PTR(skel, "test_bpf_nf__open_and_load"))
++		return;
++
++	if (mode == TEST_XDP)
++		prog_fd = bpf_program__fd(skel->progs.nf_xdp_ct_test);
++	else
++		prog_fd = bpf_program__fd(skel->progs.nf_skb_ct_test);
++
++	err = bpf_prog_test_run(prog_fd, 1, &pkt_v4, sizeof(pkt_v4), NULL, NULL,
++				(__u32 *)&retval, NULL);
++	if (!ASSERT_OK(err, "bpf_prog_test_run"))
++		goto end;
++
++	ASSERT_EQ(skel->bss->test_einval_bpf_tuple, -EINVAL, "Test EINVAL for NULL bpf_tuple");
++	ASSERT_EQ(skel->bss->test_einval_reserved, -EINVAL, "Test EINVAL for reserved not set to 0");
++	ASSERT_EQ(skel->bss->test_einval_netns_id, -EINVAL, "Test EINVAL for netns_id < -1");
++	ASSERT_EQ(skel->bss->test_einval_len_opts, -EINVAL, "Test EINVAL for len__opts != NF_BPF_CT_OPTS_SZ");
++	ASSERT_EQ(skel->bss->test_eproto_l4proto, -EPROTO, "Test EPROTO for l4proto != TCP or UDP");
++	ASSERT_EQ(skel->bss->test_enonet_netns_id, -ENONET, "Test ENONET for bad but valid netns_id");
++	ASSERT_EQ(skel->bss->test_enoent_lookup, -ENOENT, "Test ENOENT for failed lookup");
++	ASSERT_EQ(skel->bss->test_eafnosupport, -EAFNOSUPPORT, "Test EAFNOSUPPORT for invalid len__tuple");
++end:
++	test_bpf_nf__destroy(skel);
++}
++
++void test_bpf_nf(void)
++{
++	if (test__start_subtest("xdp-ct"))
++		test_bpf_nf_ct(TEST_XDP);
++	if (test__start_subtest("tc-bpf-ct"))
++		test_bpf_nf_ct(TEST_TC_BPF);
++}
+diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+new file mode 100644
+index 000000000000..6f131c993c0b
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
+@@ -0,0 +1,109 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <vmlinux.h>
++#include <bpf/bpf_helpers.h>
++
++#define EAFNOSUPPORT 97
++#define EPROTO 71
++#define ENONET 64
++#define EINVAL 22
++#define ENOENT 2
++
++int test_einval_bpf_tuple = 0;
++int test_einval_reserved = 0;
++int test_einval_netns_id = 0;
++int test_einval_len_opts = 0;
++int test_eproto_l4proto = 0;
++int test_enonet_netns_id = 0;
++int test_enoent_lookup = 0;
++int test_eafnosupport = 0;
++
++struct nf_conn *bpf_xdp_ct_lookup(struct xdp_md *, struct bpf_sock_tuple *, u32,
++				  struct bpf_ct_opts *, u32) __ksym;
++struct nf_conn *bpf_skb_ct_lookup(struct __sk_buff *, struct bpf_sock_tuple *, u32,
++				  struct bpf_ct_opts *, u32) __ksym;
++void bpf_ct_release(struct nf_conn *) __ksym;
++
++static __always_inline void
++nf_ct_test(struct nf_conn *(*func)(void *, struct bpf_sock_tuple *, u32,
++				   struct bpf_ct_opts *, u32),
++	   void *ctx)
++{
++	struct bpf_ct_opts opts_def = { .l4proto = IPPROTO_TCP, .netns_id = -1 };
++	struct bpf_sock_tuple bpf_tuple;
++	struct nf_conn *ct;
++
++	__builtin_memset(&bpf_tuple, 0, sizeof(bpf_tuple.ipv4));
++
++	ct = func(ctx, NULL, 0, &opts_def, sizeof(opts_def));
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_einval_bpf_tuple = opts_def.error;
++
++	opts_def.reserved[0] = 1;
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
++	opts_def.reserved[0] = 0;
++	opts_def.l4proto = IPPROTO_TCP;
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_einval_reserved = opts_def.error;
++
++	opts_def.netns_id = -2;
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
++	opts_def.netns_id = -1;
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_einval_netns_id = opts_def.error;
++
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def) - 1);
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_einval_len_opts = opts_def.error;
++
++	opts_def.l4proto = IPPROTO_ICMP;
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
++	opts_def.l4proto = IPPROTO_TCP;
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_eproto_l4proto = opts_def.error;
++
++	opts_def.netns_id = 0xf00f;
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
++	opts_def.netns_id = -1;
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_enonet_netns_id = opts_def.error;
++
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def, sizeof(opts_def));
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_enoent_lookup = opts_def.error;
++
++	ct = func(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4) - 1, &opts_def, sizeof(opts_def));
++	if (ct)
++		bpf_ct_release(ct);
++	else
++		test_eafnosupport = opts_def.error;
++}
++
++SEC("xdp")
++int nf_xdp_ct_test(struct xdp_md *ctx)
++{
++	nf_ct_test((void *)bpf_xdp_ct_lookup, ctx);
++	return 0;
++}
++
++SEC("tc")
++int nf_skb_ct_test(struct __sk_buff *ctx)
++{
++	nf_ct_test((void *)bpf_skb_ct_lookup, ctx);
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
 -- 
 2.35.1
 
