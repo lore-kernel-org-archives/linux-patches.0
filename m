@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401E61C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA76C433EF;
-	Wed, 28 Dec 2022 16:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96A21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606DFC433D2;
+	Wed, 28 Dec 2022 16:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243528;
-	bh=qFeJzhelFoZRu3G35Ye3Hge5j+zY9uliNDb3ea8N4YY=;
+	s=korg; t=1672243530;
+	bh=EFWRYaa315ZcgWkEslmF75YPQc+EnqURzZtIM6eliqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5tZNIXhmiXW36PLxElFi+l64uuFHMFsxPlLIhuOVTHcHaSnoLg38yCUmUxkRuIOd
-	 JLoejm5HYJwTnfQKEIj1P+c5Tcez1jurb7tZkN0KM9KIuJk67GSFWCquhFLRVEaXxO
-	 scSRqDeZjk6hNr4Ta799BzNTfmnjUpbrUiLAGXb8=
+	b=k/vhhTSZwUllp7c51gWGq/DXRWtn5B9403o6DHVkpKsh66wxDfX0DgzXBTflc/epb
+	 /2gTP53N0t9fJMbOpJGm/36kJsaQ2GAptFz8cOcbNwoMZtxgCIYpfUm65ecdZuPtwu
+	 8fyLn4wYeH6SddMtU/butTKsE9sA0LEMdUCONnv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0476/1146] regulator: core: fix resource leak in regulator_register()
-Date: Wed, 28 Dec 2022 15:33:35 +0100
-Message-Id: <20221228144343.112800265@linuxfoundation.org>
+Subject: [PATCH 6.1 0471/1146] hsr: Avoid double remove of a node.
+Date: Wed, 28 Dec 2022 15:33:30 +0100
+Message-Id: <20221228144342.976664555@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,69 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit ba62319a42c50e6254e98b3f316464fac8e77968 ]
+[ Upstream commit 0c74d9f79ec4299365bbe803baa736ae0068179e ]
 
-I got some resource leak reports while doing fault injection test:
+Due to the hashed-MAC optimisation one problem become visible:
+hsr_handle_sup_frame() walks over the list of available nodes and merges
+two node entries into one if based on the information in the supervision
+both MAC addresses belong to one node. The list-walk happens on a RCU
+protected list and delete operation happens under a lock.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 100,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@64/regulators/buck1
+If the supervision arrives on both slave interfaces at the same time
+then this delete operation can occur simultaneously on two CPUs. The
+result is the first-CPU deletes the from the list and the second CPUs
+BUGs while attempting to dereference a poisoned list-entry. This happens
+more likely with the optimisation because a new node for the mac_B entry
+is created once a packet has been received and removed (merged) once the
+supervision frame has been received.
 
-unreferenced object 0xffff88810deea000 (size 512):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859840 (age 5061.046s)
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff a0 1e 00 a1 ff ff ff ff  ................
-  backtrace:
-    [<00000000d78541e2>] kmalloc_trace+0x21/0x110
-    [<00000000b343d153>] device_private_init+0x32/0xd0
-    [<00000000be1f0c70>] device_add+0xb2d/0x1030
-    [<00000000e3e6344d>] regulator_register+0xaf2/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
+Avoid removing/ cleaning up a hsr_node twice by adding a `removed' field
+which is set to true after the removal and checked before the removal.
 
-unreferenced object 0xffff88810b617b80 (size 32):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859904 (age 5060.983s)
-  hex dump (first 32 bytes):
-    72 65 67 75 6c 61 74 6f 72 2e 32 38 36 38 2d 53  regulator.2868-S
-    55 50 50 4c 59 00 ff ff 29 00 00 00 2b 00 00 00  UPPLY...)...+...
-  backtrace:
-    [<000000009da9280d>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<0000000025c6a4e5>] kstrdup+0x3a/0x70
-    [<00000000790efb69>] create_regulator+0xc0/0x4e0
-    [<0000000005ed203a>] regulator_resolve_supply+0x2d4/0x440
-    [<0000000045796214>] regulator_register+0x10b3/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
-
-After calling regulator_resolve_supply(), the 'rdev->supply' is set
-by set_supply(), after this set, in the error path, the resources
-need be released, so call regulator_put() to avoid the leaks.
-
-Fixes: aea6cb99703e ("regulator: resolve supply after creating regulator")
-Fixes: 8a866d527ac0 ("regulator: core: Resolve supply name earlier to prevent double-init")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202025111.496402-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/hsr/hsr_framereg.c | 16 +++++++++++-----
+ net/hsr/hsr_framereg.h |  1 +
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index bf418bc10146..d65721498349 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5643,6 +5643,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
- 	regulator_remove_coupling(rdev);
- 	mutex_unlock(&regulator_list_mutex);
- wash:
-+	regulator_put(rdev->supply);
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 9b8eaebce254..f2dd846ff903 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -366,9 +366,12 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 	node_real->addr_B_port = port_rcv->type;
+ 
+ 	spin_lock_bh(&hsr->list_lock);
+-	list_del_rcu(&node_curr->mac_list);
++	if (!node_curr->removed) {
++		list_del_rcu(&node_curr->mac_list);
++		node_curr->removed = true;
++		kfree_rcu(node_curr, rcu_head);
++	}
+ 	spin_unlock_bh(&hsr->list_lock);
+-	kfree_rcu(node_curr, rcu_head);
+ 
+ done:
+ 	/* Push back here */
+@@ -539,9 +542,12 @@ void hsr_prune_nodes(struct timer_list *t)
+ 		if (time_is_before_jiffies(timestamp +
+ 				msecs_to_jiffies(HSR_NODE_FORGET_TIME))) {
+ 			hsr_nl_nodedown(hsr, node->macaddress_A);
+-			list_del_rcu(&node->mac_list);
+-			/* Note that we need to free this entry later: */
+-			kfree_rcu(node, rcu_head);
++			if (!node->removed) {
++				list_del_rcu(&node->mac_list);
++				node->removed = true;
++				/* Note that we need to free this entry later: */
++				kfree_rcu(node, rcu_head);
++			}
+ 		}
+ 	}
+ 	spin_unlock_bh(&hsr->list_lock);
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index bdbb8c822ba1..b5f902397bf1 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -80,6 +80,7 @@ struct hsr_node {
+ 	bool			san_a;
+ 	bool			san_b;
+ 	u16			seq_out[HSR_PT_PORTS];
++	bool			removed;
+ 	struct rcu_head		rcu_head;
+ };
+ 
 -- 
 2.35.1
 
