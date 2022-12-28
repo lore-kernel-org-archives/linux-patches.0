@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957FD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21594C433EF;
-	Wed, 28 Dec 2022 15:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44B9C433EF;
+	Wed, 28 Dec 2022 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240470;
-	bh=HPmIDxaoMR6U9pgJ5s3dbnjhjWZLgiwkRCFGedtKinE=;
+	s=korg; t=1672240473;
+	bh=kCG9fCls8jr4Hb7unxqEYO0oNd/vWEIGSsP1KvQgQCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ss9jVUDIzATXOngtZuK7FfUxlO2+d5Mq3pM3c3JjO9JL/liciUQafxTtS1q9I0PHX
-	 lSjkPZSsfyzOGVmff5RqlYGx+8Lck5zK0ovSkz7IqNbcQCeH8JEmRGL2ep8VbuCrQ7
-	 b35q/IaPhIRxgjXbddbSHMniI+TCVYqHXJ2oAsF0=
+	b=2KBxj15GGoSuii/qLg5JKn96Iz1cOjvtMe/lpewzbD+oWZ2aTTVpAH9Xj/Yolvz+A
+	 bzv6X8+7EMcrd2zTGfyA+ZOV9HeUFcBWdZ6YUdhM1tQfbroAD9iDEdsrPo5piz5K6b
+	 MkGmLcFtN7Wdj/rD4SXUNFL+KvXHRvWoS+MZl6a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0129/1146] lib/fonts: fix undefined behavior in bit shift for get_default_font
-Date: Wed, 28 Dec 2022 15:27:48 +0100
-Message-Id: <20221228144333.656415973@linuxfoundation.org>
+Subject: [PATCH 5.15 357/731] net: dsa: tag_8021q: avoid leaking ctx on dsa_tag_8021q_register() error path
+Date: Wed, 28 Dec 2022 15:37:44 +0100
+Message-Id: <20221228144306.910308920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,77 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
+[ Upstream commit e095493091e850d5292ad01d8fbf5cde1d89ac53 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned.  The UBSAN warning calltrace like below:
+If dsa_tag_8021q_setup() fails, for example due to the inability of the
+device to install a VLAN, the tag_8021q context of the switch will leak.
+Make sure it is freed on the error path.
 
-UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
-left shift of 1 by 31 places cannot be represented in type 'int'
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- get_default_font+0x1c7/0x1f0
- fbcon_startup+0x347/0x3a0
- do_take_over_console+0xce/0x270
- do_fbcon_takeover+0xa1/0x170
- do_fb_registered+0x2a8/0x340
- fbcon_fb_registered+0x47/0xe0
- register_framebuffer+0x294/0x4a0
- __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
- drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
- drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
- drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
- bochs_pci_probe+0x6ca/0x772 [bochs]
- local_pci_probe+0x4d/0xb0
- pci_device_probe+0x119/0x320
- really_probe+0x181/0x550
- __driver_probe_device+0xc6/0x220
- driver_probe_device+0x32/0x100
- __driver_attach+0x195/0x200
- bus_for_each_dev+0xbb/0x120
- driver_attach+0x27/0x30
- bus_add_driver+0x22e/0x2f0
- driver_register+0xa9/0x190
- __pci_register_driver+0x90/0xa0
- bochs_pci_driver_init+0x52/0x1000 [bochs]
- do_one_initcall+0x76/0x430
- do_init_module+0x61/0x28a
- load_module+0x1f82/0x2e50
- __do_sys_finit_module+0xf8/0x190
- __x64_sys_finit_module+0x23/0x30
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
-
-Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
-Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 328621f6131f ("net: dsa: tag_8021q: absorb dsa_8021q_setup into dsa_tag_8021q_{,un}register")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20221209235242.480344-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/fonts/fonts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/dsa/tag_8021q.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
-index 5f4b07b56cd9..973866438608 100644
---- a/lib/fonts/fonts.c
-+++ b/lib/fonts/fonts.c
-@@ -135,8 +135,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
- 		if (res > 20)
- 			c += 20 - res;
+diff --git a/net/dsa/tag_8021q.c b/net/dsa/tag_8021q.c
+index f8f7b7c34e7d..e443088ab0f6 100644
+--- a/net/dsa/tag_8021q.c
++++ b/net/dsa/tag_8021q.c
+@@ -529,6 +529,7 @@ static void dsa_tag_8021q_teardown(struct dsa_switch *ds)
+ int dsa_tag_8021q_register(struct dsa_switch *ds, __be16 proto)
+ {
+ 	struct dsa_8021q_context *ctx;
++	int err;
  
--		if ((font_w & (1 << (f->width - 1))) &&
--		    (font_h & (1 << (f->height - 1))))
-+		if ((font_w & (1U << (f->width - 1))) &&
-+		    (font_h & (1U << (f->height - 1))))
- 			c += 1000;
+ 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+ 	if (!ctx)
+@@ -541,7 +542,15 @@ int dsa_tag_8021q_register(struct dsa_switch *ds, __be16 proto)
  
- 		if (c > cc) {
+ 	ds->tag_8021q_ctx = ctx;
+ 
+-	return dsa_tag_8021q_setup(ds);
++	err = dsa_tag_8021q_setup(ds);
++	if (err)
++		goto err_free;
++
++	return 0;
++
++err_free:
++	kfree(ctx);
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(dsa_tag_8021q_register);
+ 
 -- 
 2.35.1
 
