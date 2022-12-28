@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F0C1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63368C433D2;
-	Wed, 28 Dec 2022 16:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A55B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09381C433EF;
+	Wed, 28 Dec 2022 16:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246365;
-	bh=hT2opjcJ3EtQG+hfhaekVL/4QBKSyY0p5MkotzEjS/c=;
+	s=korg; t=1672246368;
+	bh=2cM9sHk61kwFfoiBAilDqzfeyk7NEDtVTKGidPdFxlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOSWm5d7jROfgS0tJsJEsrMcVnfrP1+k73eXmyT8SR1vBMvBBSi5oBy86CtQhOJkp
-	 Sfsn/bJgxIrgg0AnPRs7EKA7Qb/YA+BH4CGlJYyMWdMEirRCasOBvr+iFWmsLuFHHs
-	 b/aPKyNsUeC1mNLrfOxFKKg4mXzYCsn5h5lhjqi4=
+	b=ZOyLq+eZVudkDQrEwefXZW0p+QSDYMxrMDgsWFNsPrscPfFN2c5w/D6qj9Q3toyk6
+	 RtzItk/alSQ8xnf986tR3Li3RNhnm2fvbSxl3EimFlf10TjVIToAq0baHxMt5lXfje
+	 EFsJHlRdpoSMrtDXTYeuRYwamTfoR1nP4JzWwkC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1027/1146] ALSA: usb-audio: Add quirk for Tascam Model 12
-Date: Wed, 28 Dec 2022 15:42:46 +0100
-Message-Id: <20221228144358.257551065@linuxfoundation.org>
+	Edward Pacman <edward@edward-p.xyz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.0 1029/1073] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
+Date: Wed, 28 Dec 2022 15:43:37 +0100
+Message-Id: <20221228144356.143112429@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,104 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Keeping <john@metanate.com>
+From: Edward Pacman <edward@edward-p.xyz>
 
-[ Upstream commit 67df411db3f0209e4bb5227d4dd9d41b21368b9d ]
+commit 4bf5bf54476dffe60e6b6d8d539f67309ff599e2 upstream.
 
-Tascam's Model 12 is a mixer which can also operate as a USB audio
-interface.  The audio interface uses explicit feedback but it seems that
-it does not correctly handle missing isochronous frames.
+Lenovo TianYi510Pro-14IOB (17aa:3742)
+require quirk for enabling headset-mic
 
-When injecting an xrun (or doing anything else that pauses the playback
-stream) the feedback rate climbs (for example, at 44,100Hz nominal, I
-see a stable rate around 44,099 but xrun injection sees this peak at
-around 44,135 in most cases) and glitches are heard in the audio stream
-for several seconds - this is significantly worse than the single glitch
-expected for an underrun.
-
-While the stream does normally recover and the feedback rate returns to
-a stable value, I have seen some occurrences where this does not happen
-and the rate continues to increase while no audio is heard from the
-output.  I have not found a solid reproduction for this.
-
-This misbehaviour can be avoided by totally resetting the stream state
-by switching the interface to alt 0 and back before restarting the
-playback stream.
-
-Add a new quirk flag which forces the endpoint and interface to be
-reconfigured whenever the stream is stopped, and use this for the Tascam
-Model 12.
-
-Separate interfaces are used for the playback and capture endpoints, so
-resetting the playback interface here will not affect the capture stream
-if it is running.  While there are two endpoints on the interface,
-these are the OUT data endpoint and the IN explicit feedback endpoint
-corresponding to it and these are always stopped and started together.
-
-Signed-off-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20221129130100.1257904-1-john@metanate.com
+Signed-off-by: Edward Pacman <edward@edward-p.xyz>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216756
+Link: https://lore.kernel.org/r/20221207133218.18989-1-edward@edward-p.xyz
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c | 7 +++++++
- sound/usb/quirks.c   | 2 ++
- sound/usb/usbaudio.h | 4 ++++
- 3 files changed, 13 insertions(+)
+ sound/pci/hda/patch_realtek.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 310cd6fb0038..4aaf0784940b 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1673,6 +1673,13 @@ void snd_usb_endpoint_stop(struct snd_usb_endpoint *ep, bool keep_pending)
- 		stop_urbs(ep, false, keep_pending);
- 		if (ep->clock_ref)
- 			atomic_dec(&ep->clock_ref->locked);
-+
-+		if (ep->chip->quirk_flags & QUIRK_FLAG_FORCE_IFACE_RESET &&
-+		    usb_pipeout(ep->pipe)) {
-+			ep->need_prepare = true;
-+			if (ep->iface_ref)
-+				ep->iface_ref->need_setup = true;
-+		}
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10984,6 +10984,17 @@ static void alc897_fixup_lenovo_headset_
  	}
  }
  
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 0f4dd3503a6a..58b37bfc885c 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2044,6 +2044,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	DEVICE_FLG(0x0644, 0x804a, /* TEAC UD-301 */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
- 		   QUIRK_FLAG_IFACE_DELAY),
-+	DEVICE_FLG(0x0644, 0x805f, /* TEAC Model 12 */
-+		   QUIRK_FLAG_FORCE_IFACE_RESET),
- 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
-diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
-index e97141ef730a..2aba508a4831 100644
---- a/sound/usb/usbaudio.h
-+++ b/sound/usb/usbaudio.h
-@@ -172,6 +172,9 @@ extern bool snd_usb_skip_validation;
-  *  Don't apply implicit feedback sync mode
-  * QUIRK_FLAG_IFACE_SKIP_CLOSE
-  *  Don't closed interface during setting sample rate
-+ * QUIRK_FLAG_FORCE_IFACE_RESET
-+ *  Force an interface reset whenever stopping & restarting a stream
-+ *  (e.g. after xrun)
-  */
++static void alc897_fixup_lenovo_headset_mode(struct hda_codec *codec,
++				     const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
++		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
++	}
++}
++
+ static const struct coef_fw alc668_coefs[] = {
+ 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
+ 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
+@@ -11067,6 +11078,8 @@ enum {
+ 	ALC897_FIXUP_LENOVO_HEADSET_MIC,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN,
+ 	ALC897_FIXUP_HP_HSMIC_VERB,
++	ALC897_FIXUP_LENOVO_HEADSET_MODE,
++	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ };
  
- #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
-@@ -194,5 +197,6 @@ extern bool snd_usb_skip_validation;
- #define QUIRK_FLAG_GENERIC_IMPLICIT_FB	(1U << 17)
- #define QUIRK_FLAG_SKIP_IMPLICIT_FB	(1U << 18)
- #define QUIRK_FLAG_IFACE_SKIP_CLOSE	(1U << 19)
-+#define QUIRK_FLAG_FORCE_IFACE_RESET	(1U << 20)
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -11493,6 +11506,19 @@ static const struct hda_fixup alc662_fix
+ 			{ }
+ 		},
+ 	},
++	[ALC897_FIXUP_LENOVO_HEADSET_MODE] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc897_fixup_lenovo_headset_mode,
++	},
++	[ALC897_FIXUP_HEADSET_MIC_PIN2] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1a, 0x01a11140 }, /* use as headset mic, without its own jack detect */
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
++	},
+ };
  
- #endif /* __USBAUDIO_H */
--- 
-2.35.1
-
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+@@ -11545,6 +11571,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x1849, 0x5892, "ASRock B150M", ALC892_FIXUP_ASROCK_MOBO),
 
 
