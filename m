@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2211863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206B8C433EF;
-	Wed, 28 Dec 2022 15:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB39C433F0;
+	Wed, 28 Dec 2022 15:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241663;
-	bh=3SoTL61kE5Bpg9br4zxMudE56UITQE72/CZf9FpPBYY=;
+	s=korg; t=1672241666;
+	bh=SW5xKFSPrwYLrKP1omDMY+E/09Pr8z9WKCx+2TLz0uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DirpRTwKGSeM5YtSsnzSA8FL/RY55G3JZ3ja3hGHVxbIHjYcqF2KpNnjKnQosEmaZ
-	 urxVSYGdMD8Q6vfCIlL8qwDp+H2ijvhVyWiMz9gUdJ0YhzZRvAg5NdqeFvYOQRtND+
-	 rcjWfe5GXtYD4xcBb9kHjfX6fmxkO1MRkz6N1Y9o=
+	b=OBzdoWBmldAdErd0Fy0EavevjKR3oYDk9Osfrsx+2mqMqvwNMyPVQTyPILdscoUzh
+	 OYEbocwSzNlpCyNZblqST4NWX1X+VuRT5n5McCyU+p6BeHQAksn5tiT2ww/d5oJ1tp
+	 mQpBoS+HA/frZUH7ZCG0/VtQh1QM9VoyjkL66nkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
+	linux-um@lists.infradead.org,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Helge Deller <deller@gmx.de>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Michal Januszewski <spock@gentoo.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0313/1073] wifi: iwlwifi: mei: avoid blocking sap messages handling due to rtnl lock
-Date: Wed, 28 Dec 2022 15:31:41 +0100
-Message-Id: <20221228144336.509213862@linuxfoundation.org>
+Subject: [PATCH 5.15 509/731] fbdev: uvesafb: dont build on UML
+Date: Wed, 28 Dec 2022 15:40:16 +0100
+Message-Id: <20221228144311.300749846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,146 +42,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit d288067ede4b375e72daf7f9a98d937ede11a311 ]
+[ Upstream commit 35b4f4d4a725cf8f8c10649163cd12aed509b953 ]
 
-The AMT_STATE sap message handler tries to take the rtnl lock.
-This means that in case the rtnl lock is already taken, sap messages
-will not be processed.
-When an interface is brought up, the host requests ownership from
-csme. However, since the rtnl lock is already held, if there is a
-pending amt state message, the host will not be able to read the
-ownership confirm message because the amt state message handler
-is pending. As a result, the host fails to get ownership although
-csme granted it.
-Fix it by moving the part that needs the rtnl lock into a dedicated
-worker, so handling sap messages can continue.
+The uvesafb fbdev driver uses memory management information that is not
+available on ARCH=um, so don't allow this driver to be built on UML.
 
-Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20221030191011.8599f2b4e9dd.I518f79e9099bf815c5f8d90235b4ce3250f59970@changeid
+Prevents these build errors:
+
+../drivers/video/fbdev/uvesafb.c: In function ‘uvesafb_vbe_init’:
+../drivers/video/fbdev/uvesafb.c:807:21: error: ‘__supported_pte_mask’ undeclared (first use in this function)
+  807 |                 if (__supported_pte_mask & _PAGE_NX) {
+../drivers/video/fbdev/uvesafb.c:807:44: error: ‘_PAGE_NX’ undeclared (first use in this function)
+  807 |                 if (__supported_pte_mask & _PAGE_NX) {
+
+Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: linux-um@lists.infradead.org
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Helge Deller <deller@gmx.de>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: Michal Januszewski <spock@gentoo.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 57 ++++++++++++-------
- 1 file changed, 37 insertions(+), 20 deletions(-)
+ drivers/video/fbdev/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index 64a637ef199c..c0142093c768 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -152,6 +152,8 @@ struct iwl_mei_filters {
-  * @csa_throttle_end_wk: used when &csa_throttled is true
-  * @data_q_lock: protects the access to the data queues which are
-  *	accessed without the mutex.
-+ * @netdev_work: used to defer registering and unregistering of the netdev to
-+ *	avoid taking the rtnl lock in the SAP messages handlers.
-  * @sap_seq_no: the sequence number for the SAP messages
-  * @seq_no: the sequence number for the SAP messages
-  * @dbgfs_dir: the debugfs dir entry
-@@ -172,6 +174,7 @@ struct iwl_mei {
- 	bool device_down;
- 	struct delayed_work csa_throttle_end_wk;
- 	spinlock_t data_q_lock;
-+	struct work_struct netdev_work;
- 
- 	atomic_t sap_seq_no;
- 	atomic_t seq_no;
-@@ -591,6 +594,33 @@ static rx_handler_result_t iwl_mei_rx_handler(struct sk_buff **pskb)
- 	return res;
- }
- 
-+static void iwl_mei_netdev_work(struct work_struct *wk)
-+{
-+	struct iwl_mei *mei =
-+		container_of(wk, struct iwl_mei, netdev_work);
-+	struct net_device *netdev;
-+
-+	/*
-+	 * First take rtnl and only then the mutex to avoid an ABBA
-+	 * with iwl_mei_set_netdev()
-+	 */
-+	rtnl_lock();
-+	mutex_lock(&iwl_mei_mutex);
-+
-+	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
-+					   lockdep_is_held(&iwl_mei_mutex));
-+	if (netdev) {
-+		if (mei->amt_enabled)
-+			netdev_rx_handler_register(netdev, iwl_mei_rx_handler,
-+						   mei);
-+		else
-+			netdev_rx_handler_unregister(netdev);
-+	}
-+
-+	mutex_unlock(&iwl_mei_mutex);
-+	rtnl_unlock();
-+}
-+
- static void
- iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
- 			   const struct iwl_sap_me_msg_start_ok *rsp,
-@@ -743,38 +773,23 @@ static void iwl_mei_handle_amt_state(struct mei_cl_device *cldev,
- 				     const struct iwl_sap_msg_dw *dw)
- {
- 	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
--	struct net_device *netdev;
- 
--	/*
--	 * First take rtnl and only then the mutex to avoid an ABBA
--	 * with iwl_mei_set_netdev()
--	 */
--	rtnl_lock();
- 	mutex_lock(&iwl_mei_mutex);
- 
--	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
--					   lockdep_is_held(&iwl_mei_mutex));
--
- 	if (mei->amt_enabled == !!le32_to_cpu(dw->val))
- 		goto out;
- 
- 	mei->amt_enabled = dw->val;
- 
--	if (mei->amt_enabled) {
--		if (netdev)
--			netdev_rx_handler_register(netdev, iwl_mei_rx_handler, mei);
--
-+	if (mei->amt_enabled)
- 		iwl_mei_set_init_conf(mei);
--	} else {
--		if (iwl_mei_cache.ops)
--			iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false);
--		if (netdev)
--			netdev_rx_handler_unregister(netdev);
--	}
-+	else if (iwl_mei_cache.ops)
-+		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false, false);
-+
-+	schedule_work(&mei->netdev_work);
- 
- out:
- 	mutex_unlock(&iwl_mei_mutex);
--	rtnl_unlock();
- }
- 
- static void iwl_mei_handle_nic_owner(struct mei_cl_device *cldev,
-@@ -1827,6 +1842,7 @@ static int iwl_mei_probe(struct mei_cl_device *cldev,
- 			  iwl_mei_csa_throttle_end_wk);
- 	init_waitqueue_head(&mei->get_ownership_wq);
- 	spin_lock_init(&mei->data_q_lock);
-+	INIT_WORK(&mei->netdev_work, iwl_mei_netdev_work);
- 
- 	mei_cldev_set_drvdata(cldev, mei);
- 	mei->cldev = cldev;
-@@ -1989,6 +2005,7 @@ static void iwl_mei_remove(struct mei_cl_device *cldev)
- 	 */
- 	cancel_work_sync(&mei->send_csa_msg_wk);
- 	cancel_delayed_work_sync(&mei->csa_throttle_end_wk);
-+	cancel_work_sync(&mei->netdev_work);
- 
- 	/*
- 	 * If someone waits for the ownership, let him know that we are going
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index 5050a9f8e879..26531aa19428 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -606,6 +606,7 @@ config FB_TGA
+ config FB_UVESA
+ 	tristate "Userspace VESA VGA graphics support"
+ 	depends on FB && CONNECTOR
++	depends on !UML
+ 	select FB_CFB_FILLRECT
+ 	select FB_CFB_COPYAREA
+ 	select FB_CFB_IMAGEBLIT
 -- 
 2.35.1
 
