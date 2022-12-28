@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18511868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245F0C433EF;
-	Wed, 28 Dec 2022 15:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549981868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4CDC433F0;
+	Wed, 28 Dec 2022 15:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242058;
-	bh=iipozZfwKxuvFHMN2/LylZ200fRqCNZUPm8J4aIeik0=;
+	s=korg; t=1672242061;
+	bh=3SoTL61kE5Bpg9br4zxMudE56UITQE72/CZf9FpPBYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2j7hsPcB3DJOfSbDZhObpsTxyrqp4J5AhpTndkqeLYsG1S2QgjTzqfJjIrqWWpOL
-	 0U7CFutXgmXT4oEnO/2XqJz6HYC7mhaG6QVW0DweB5yh+LI05UIAaQdJjCzBlpAN0l
-	 teKXJvQ0q4kE5UokpBrdx5i4CLT4TOralkpjm0Yw=
+	b=EvjJjB1SlaKxReMZoRB5eakBGSpu45H0qy8+J2Ggk0Txo/A44atCj4TM3pQcVYMy0
+	 mcEy7jxteLNjvrmW7xmGkE35jJaV2mX9G5xO8aBKfAVLLbqHoxfGYkbzMNlh0mQ8ZK
+	 nof238Cc+iWuJnmwJGuMkzVQL1/vplrTurdSqxMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Redfearn <matt.redfearn@mips.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 534/731] include/uapi/linux/swab: Fix potentially missing __always_inline
-Date: Wed, 28 Dec 2022 15:40:41 +0100
-Message-Id: <20221228144312.022247946@linuxfoundation.org>
+Subject: [PATCH 6.1 0321/1146] wifi: iwlwifi: mei: avoid blocking sap messages handling due to rtnl lock
+Date: Wed, 28 Dec 2022 15:31:00 +0100
+Message-Id: <20221228144338.872726533@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,59 +35,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Redfearn <matt.redfearn@mips.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
+[ Upstream commit d288067ede4b375e72daf7f9a98d937ede11a311 ]
 
-Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
-of some byteswap operations") added __always_inline to swab functions
-and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
-userspace headers") added a definition of __always_inline for use in
-exported headers when the kernel's compiler.h is not available.
+The AMT_STATE sap message handler tries to take the rtnl lock.
+This means that in case the rtnl lock is already taken, sap messages
+will not be processed.
+When an interface is brought up, the host requests ownership from
+csme. However, since the rtnl lock is already held, if there is a
+pending amt state message, the host will not be able to read the
+ownership confirm message because the amt state message handler
+is pending. As a result, the host fails to get ownership although
+csme granted it.
+Fix it by moving the part that needs the rtnl lock into a dedicated
+worker, so handling sap messages can continue.
 
-However, since swab.h does not include stddef.h, if the header soup does
-not indirectly include it, the definition of __always_inline is missing,
-resulting in a compilation failure, which was observed compiling the
-perf tool using exported headers containing this commit:
-
-In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
-                 from /usr/include/asm/byteorder.h:14,
-                 from tools/include/uapi/linux/perf_event.h:20,
-                 from perf.h:8,
-                 from builtin-bench.c:18:
-/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
- static __always_inline __u16 __swab16p(const __u16 *p)
-
-Fix this by replacing the inclusion of linux/compiler.h with
-linux/stddef.h to ensure that we pick up that definition if required,
-without relying on it's indirect inclusion. compiler.h is then included
-indirectly, via stddef.h.
-
-Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
-Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.8599f2b4e9dd.I518f79e9099bf815c5f8d90235b4ce3250f59970@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/swab.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 57 ++++++++++++-------
+ 1 file changed, 37 insertions(+), 20 deletions(-)
 
-diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
-index 7272f85d6d6a..3736f2fe1541 100644
---- a/include/uapi/linux/swab.h
-+++ b/include/uapi/linux/swab.h
-@@ -3,7 +3,7 @@
- #define _UAPI_LINUX_SWAB_H
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index 64a637ef199c..c0142093c768 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -152,6 +152,8 @@ struct iwl_mei_filters {
+  * @csa_throttle_end_wk: used when &csa_throttled is true
+  * @data_q_lock: protects the access to the data queues which are
+  *	accessed without the mutex.
++ * @netdev_work: used to defer registering and unregistering of the netdev to
++ *	avoid taking the rtnl lock in the SAP messages handlers.
+  * @sap_seq_no: the sequence number for the SAP messages
+  * @seq_no: the sequence number for the SAP messages
+  * @dbgfs_dir: the debugfs dir entry
+@@ -172,6 +174,7 @@ struct iwl_mei {
+ 	bool device_down;
+ 	struct delayed_work csa_throttle_end_wk;
+ 	spinlock_t data_q_lock;
++	struct work_struct netdev_work;
  
- #include <linux/types.h>
--#include <linux/compiler.h>
-+#include <linux/stddef.h>
- #include <asm/bitsperlong.h>
- #include <asm/swab.h>
+ 	atomic_t sap_seq_no;
+ 	atomic_t seq_no;
+@@ -591,6 +594,33 @@ static rx_handler_result_t iwl_mei_rx_handler(struct sk_buff **pskb)
+ 	return res;
+ }
  
++static void iwl_mei_netdev_work(struct work_struct *wk)
++{
++	struct iwl_mei *mei =
++		container_of(wk, struct iwl_mei, netdev_work);
++	struct net_device *netdev;
++
++	/*
++	 * First take rtnl and only then the mutex to avoid an ABBA
++	 * with iwl_mei_set_netdev()
++	 */
++	rtnl_lock();
++	mutex_lock(&iwl_mei_mutex);
++
++	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
++					   lockdep_is_held(&iwl_mei_mutex));
++	if (netdev) {
++		if (mei->amt_enabled)
++			netdev_rx_handler_register(netdev, iwl_mei_rx_handler,
++						   mei);
++		else
++			netdev_rx_handler_unregister(netdev);
++	}
++
++	mutex_unlock(&iwl_mei_mutex);
++	rtnl_unlock();
++}
++
+ static void
+ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
+ 			   const struct iwl_sap_me_msg_start_ok *rsp,
+@@ -743,38 +773,23 @@ static void iwl_mei_handle_amt_state(struct mei_cl_device *cldev,
+ 				     const struct iwl_sap_msg_dw *dw)
+ {
+ 	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
+-	struct net_device *netdev;
+ 
+-	/*
+-	 * First take rtnl and only then the mutex to avoid an ABBA
+-	 * with iwl_mei_set_netdev()
+-	 */
+-	rtnl_lock();
+ 	mutex_lock(&iwl_mei_mutex);
+ 
+-	netdev = rcu_dereference_protected(iwl_mei_cache.netdev,
+-					   lockdep_is_held(&iwl_mei_mutex));
+-
+ 	if (mei->amt_enabled == !!le32_to_cpu(dw->val))
+ 		goto out;
+ 
+ 	mei->amt_enabled = dw->val;
+ 
+-	if (mei->amt_enabled) {
+-		if (netdev)
+-			netdev_rx_handler_register(netdev, iwl_mei_rx_handler, mei);
+-
++	if (mei->amt_enabled)
+ 		iwl_mei_set_init_conf(mei);
+-	} else {
+-		if (iwl_mei_cache.ops)
+-			iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false);
+-		if (netdev)
+-			netdev_rx_handler_unregister(netdev);
+-	}
++	else if (iwl_mei_cache.ops)
++		iwl_mei_cache.ops->rfkill(iwl_mei_cache.priv, false, false);
++
++	schedule_work(&mei->netdev_work);
+ 
+ out:
+ 	mutex_unlock(&iwl_mei_mutex);
+-	rtnl_unlock();
+ }
+ 
+ static void iwl_mei_handle_nic_owner(struct mei_cl_device *cldev,
+@@ -1827,6 +1842,7 @@ static int iwl_mei_probe(struct mei_cl_device *cldev,
+ 			  iwl_mei_csa_throttle_end_wk);
+ 	init_waitqueue_head(&mei->get_ownership_wq);
+ 	spin_lock_init(&mei->data_q_lock);
++	INIT_WORK(&mei->netdev_work, iwl_mei_netdev_work);
+ 
+ 	mei_cldev_set_drvdata(cldev, mei);
+ 	mei->cldev = cldev;
+@@ -1989,6 +2005,7 @@ static void iwl_mei_remove(struct mei_cl_device *cldev)
+ 	 */
+ 	cancel_work_sync(&mei->send_csa_msg_wk);
+ 	cancel_delayed_work_sync(&mei->csa_throttle_end_wk);
++	cancel_work_sync(&mei->netdev_work);
+ 
+ 	/*
+ 	 * If someone waits for the ownership, let him know that we are going
 -- 
 2.35.1
 
