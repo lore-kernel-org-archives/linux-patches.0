@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80DC23AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1ABC433F0;
-	Wed, 28 Dec 2022 16:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27E823AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C2C433D2;
+	Wed, 28 Dec 2022 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246654;
-	bh=BrglO72aGgIDUCnSTd7qS7EwqALWhU6mg7lEWRQ2jfo=;
+	s=korg; t=1672246657;
+	bh=kVrpkgJ8jEK4Nzl44Fbxx2v7MkW+pw/MyLbDCSS31LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZavCSwGiJ5W/g8bgngmTw+Ubjb2yrsn4o9E3OmOyVRb+OAHLHvhfctHO0VHzTtir
-	 eoMS/iLDVverQZk3hZ5zrYXYZ/Hhi3u+usIEOYe+l67nce21XY7CBB6iT6qpyssNR0
-	 kHSilbGLSiDRWexmPIXcWeP/Glj6MpTZzma3nRtc=
+	b=y0HlDSRVITHQRe+KuAdIU4a1gXSuk80kCvq0BygpBOeePGM/d6+gelNqhH+qDphZZ
+	 bmBlK0tecfVyG8YTQyZI1puPAMI0O0aB96tWGOSU31J0ttT7ORbfZN+bmH9pAw5Ujg
+	 hdlS69z2n3p13uphq1oE3f9+zJSEjLmPDGdFgfyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Sven=20Z=C3=BChlsdorf?= <sven.zuehlsdorf@vigem.de>,
-	Enrik Berkhan <Enrik.Berkhan@inka.de>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 6.1 1114/1146] HID: mcp2221: dont connect hidraw
-Date: Wed, 28 Dec 2022 15:44:13 +0100
-Message-Id: <20221228144400.409180355@linuxfoundation.org>
+	Ken Chen <kenchen@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 1115/1146] loop: Fix the max_loop commandline argument treatment when it is set to 0
+Date: Wed, 28 Dec 2022 15:44:14 +0100
+Message-Id: <20221228144400.434816459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,59 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrik Berkhan <Enrik.Berkhan@inka.de>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-commit 67c90d14018775556d5420382ace86521421f9ff upstream.
+commit 85c50197716c60fe57f411339c579462e563ac57 upstream.
 
-The MCP2221 driver should not connect to the hidraw userspace interface,
-as it needs exclusive access to the chip.
+Currently, the max_loop commandline argument can be used to specify how
+many loop block devices are created at init time. If it is not
+specified on the commandline, CONFIG_BLK_DEV_LOOP_MIN_COUNT loop block
+devices will be created.
 
-If you want to use /dev/hidrawX with the MCP2221, you need to avoid
-binding this driver to the device and use the hid generic driver instead
-(e.g. using udev rules).
+The max_loop commandline argument can be used to override the value of
+CONFIG_BLK_DEV_LOOP_MIN_COUNT. However, when max_loop is set to 0
+through the commandline, the current logic treats it as if it had not
+been set, and creates CONFIG_BLK_DEV_LOOP_MIN_COUNT devices anyway.
 
+Fix this by starting max_loop off as set to CONFIG_BLK_DEV_LOOP_MIN_COUNT.
+This preserves the intended behavior of creating
+CONFIG_BLK_DEV_LOOP_MIN_COUNT loop block devices if the max_loop
+commandline parameter is not specified, and allowing max_loop to
+be respected for all values, including 0.
+
+This allows environments that can create all of their required loop
+block devices on demand to not have to unnecessarily preallocate loop
+block devices.
+
+Fixes: 732850827450 ("remove artificial software max_loop limit")
 Cc: stable@vger.kernel.org
-Reported-by: Sven Zühlsdorf <sven.zuehlsdorf@vigem.de>
-Signed-off-by: Enrik Berkhan <Enrik.Berkhan@inka.de>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221103222714.21566-2-Enrik.Berkhan@inka.de
+Cc: Ken Chen <kenchen@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20221208212902.765781-1-isaacmanjarres@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/block/loop.c |   28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -840,12 +840,19 @@ static int mcp2221_probe(struct hid_devi
- 		return ret;
- 	}
- 
--	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	/*
-+	 * This driver uses the .raw_event callback and therefore does not need any
-+	 * HID_CONNECT_xxx flags.
-+	 */
-+	ret = hid_hw_start(hdev, 0);
- 	if (ret) {
- 		hid_err(hdev, "can't start hardware\n");
- 		return ret;
- 	}
- 
-+	hid_info(hdev, "USB HID v%x.%02x Device [%s] on %s\n", hdev->version >> 8,
-+			hdev->version & 0xff, hdev->name, hdev->phys);
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1773,7 +1773,16 @@ static const struct block_device_operati
+ /*
+  * And now the modules code and kernel interface.
+  */
+-static int max_loop;
 +
- 	ret = hid_hw_open(hdev);
- 	if (ret) {
- 		hid_err(hdev, "can't open device\n");
-@@ -870,8 +877,7 @@ static int mcp2221_probe(struct hid_devi
- 	mcp->adapter.retries = 1;
- 	mcp->adapter.dev.parent = &hdev->dev;
- 	snprintf(mcp->adapter.name, sizeof(mcp->adapter.name),
--			"MCP2221 usb-i2c bridge on hidraw%d",
--			((struct hidraw *)hdev->hidraw)->minor);
-+			"MCP2221 usb-i2c bridge");
++/*
++ * If max_loop is specified, create that many devices upfront.
++ * This also becomes a hard limit. If max_loop is not specified,
++ * create CONFIG_BLK_DEV_LOOP_MIN_COUNT loop devices at module
++ * init time. Loop devices can be requested on-demand with the
++ * /dev/loop-control interface, or be instantiated by accessing
++ * a 'dead' device node.
++ */
++static int max_loop = CONFIG_BLK_DEV_LOOP_MIN_COUNT;
+ module_param(max_loop, int, 0444);
+ MODULE_PARM_DESC(max_loop, "Maximum number of loop devices");
+ module_param(max_part, int, 0444);
+@@ -2181,7 +2190,7 @@ MODULE_ALIAS("devname:loop-control");
  
- 	ret = i2c_add_adapter(&mcp->adapter);
- 	if (ret) {
+ static int __init loop_init(void)
+ {
+-	int i, nr;
++	int i;
+ 	int err;
+ 
+ 	part_shift = 0;
+@@ -2209,19 +2218,6 @@ static int __init loop_init(void)
+ 		goto err_out;
+ 	}
+ 
+-	/*
+-	 * If max_loop is specified, create that many devices upfront.
+-	 * This also becomes a hard limit. If max_loop is not specified,
+-	 * create CONFIG_BLK_DEV_LOOP_MIN_COUNT loop devices at module
+-	 * init time. Loop devices can be requested on-demand with the
+-	 * /dev/loop-control interface, or be instantiated by accessing
+-	 * a 'dead' device node.
+-	 */
+-	if (max_loop)
+-		nr = max_loop;
+-	else
+-		nr = CONFIG_BLK_DEV_LOOP_MIN_COUNT;
+-
+ 	err = misc_register(&loop_misc);
+ 	if (err < 0)
+ 		goto err_out;
+@@ -2233,7 +2229,7 @@ static int __init loop_init(void)
+ 	}
+ 
+ 	/* pre-create number of devices given by config or max_loop */
+-	for (i = 0; i < nr; i++)
++	for (i = 0; i < max_loop; i++)
+ 		loop_add(i);
+ 
+ 	printk(KERN_INFO "loop: module loaded\n");
 
 
