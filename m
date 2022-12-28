@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44EC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374AEC433EF;
-	Wed, 28 Dec 2022 16:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0C51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57CCC433D2;
+	Wed, 28 Dec 2022 16:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243836;
-	bh=srj6Gp5QUbnHnyG7z5QFgJqp+ysqnVibefccxYqMc4A=;
+	s=korg; t=1672243839;
+	bh=PtDSLNanIfOzV4mA5u2ccUYXJx/xTNPRPfJhxviddWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zhp+sS7EpbacukgFkV2HbNvUkIeK+n45i1insrygBXVHFYU2MaRjeC2tRW//ov0i7
-	 WJGhCrPnZjzatYoBWdwrvjKtWtHJ0QhmkwX/KA4ovM+6oxiVzdWdq/hmLFIxwycuN1
-	 66D/OEVra4gkFvDTCpAE0FsIZ0fMnhBO3sJt3PTA=
+	b=icC/iCVP0q5AHlnfiUN6ihNF4AXVn6LzHAKDiE8y/TXyMilWfFJ5OsMzs3UcgWOED
+	 AwEkQlX3mmMW2u/spJsl3HP1wduJAM2f/rMsm+uH5tlPoBu79MWsHXqpN5GinG3jfA
+	 qiol4lNEQgs9gyM5owhVWOKjaNVHBvpLL4ZDVbwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0564/1146] Bluetooth: hci_bcsp: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:03 +0100
-Message-Id: <20221228144345.486950206@linuxfoundation.org>
+Subject: [PATCH 6.1 0542/1146] hamradio: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:34:41 +0100
+Message-Id: <20221228144344.895194276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,33 +37,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7b503e339c1a80bf0051ec2d19c3bc777014ac61 ]
+[ Upstream commit 3727f742915f04f6fc550b80cf406999bd4e90d0 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
+
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In scc_discard_buffers(), dev_kfree_skb() is called to discard the SKBs,
+so replace it with dev_kfree_skb_irq().
+
+In scc_net_tx(), dev_kfree_skb() is called to drop the SKB that exceed
+queue length, so replace it with dev_kfree_skb_irq().
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/hamradio/scc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index cf4a56095817..8055f63603f4 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -378,7 +378,7 @@ static void bcsp_pkt_cull(struct bcsp_struct *bcsp)
- 		i++;
- 
- 		__skb_unlink(skb, &bcsp->unack);
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
+diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
+index f90830d3dfa6..a9184a78650b 100644
+--- a/drivers/net/hamradio/scc.c
++++ b/drivers/net/hamradio/scc.c
+@@ -302,12 +302,12 @@ static inline void scc_discard_buffers(struct scc_channel *scc)
+ 	spin_lock_irqsave(&scc->lock, flags);	
+ 	if (scc->tx_buff != NULL)
+ 	{
+-		dev_kfree_skb(scc->tx_buff);
++		dev_kfree_skb_irq(scc->tx_buff);
+ 		scc->tx_buff = NULL;
  	}
+ 	
+ 	while (!skb_queue_empty(&scc->tx_queue))
+-		dev_kfree_skb(skb_dequeue(&scc->tx_queue));
++		dev_kfree_skb_irq(skb_dequeue(&scc->tx_queue));
  
- 	if (skb_queue_empty(&bcsp->unack))
+ 	spin_unlock_irqrestore(&scc->lock, flags);
+ }
+@@ -1668,7 +1668,7 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
+ 	if (skb_queue_len(&scc->tx_queue) > scc->dev->tx_queue_len) {
+ 		struct sk_buff *skb_del;
+ 		skb_del = skb_dequeue(&scc->tx_queue);
+-		dev_kfree_skb(skb_del);
++		dev_kfree_skb_irq(skb_del);
+ 	}
+ 	skb_queue_tail(&scc->tx_queue, skb);
+ 	netif_trans_update(dev);
 -- 
 2.35.1
 
