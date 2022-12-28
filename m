@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EA11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37D9C433EF;
-	Wed, 28 Dec 2022 15:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112CA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898ECC433D2;
+	Wed, 28 Dec 2022 15:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241796;
-	bh=XnTi9FcTf0AmtoOMr2gqYVbtxiOYs+MFc/cV4YioQHA=;
+	s=korg; t=1672241798;
+	bh=fU9NGN+IJAEiEuvOco0vIM5JZMuMZWYN7Rxz2xFWODs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKyM0/DZ+gOKYbXuUmvRRcibtt3Y+F6UoHi3yB5EXgstm8WHT5f5w7cLOSXa3wvwd
-	 t9bz6u0rgmSCijzy33WlJdySXxL3Ghn4lCelhMVRpNVHoKpY2GQ0sVLYcy/bY18Fax
-	 Z4+iQ3FsULSHA3dwSjMC4YvVDIvhv3ZiPTYdjKtA=
+	b=GQ8DWpEV9Jxguu9noGR02uhgiu4H4LKF2mxXOtMCQwiV2fjAOVeVhFTmwol7JlpJE
+	 spAJaYgzT5UW3UlIY281Oi776jDQzL6MxF29oOAAs26CImAgqgyhi6G9/86VW/m3Rn
+	 N7upb2hgVyO6dJmhXEApRaRfE/rWiemKXswYIClQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0328/1073] integrity: Fix memory leakage in keyring allocation error path
-Date: Wed, 28 Dec 2022 15:31:56 +0100
-Message-Id: <20221228144336.915303301@linuxfoundation.org>
+Subject: [PATCH 6.1 0290/1146] media: rkvdec: Add required padding
+Date: Wed, 28 Dec 2022 15:30:29 +0100
+Message-Id: <20221228144338.016931408@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 
-[ Upstream commit 39419ef7af0916cc3620ecf1ed42d29659109bf3 ]
+[ Upstream commit 00c47aa85bb26450edc6059c3d245de062e60b5d ]
 
-Key restriction is allocated in integrity_init_keyring(). However, if
-keyring allocation failed, it is not freed, causing memory leaks.
+The addresses of two elements of the segmap[][] member are passed to the
+hardware which expects 128-bit aligned addresses. However, without this
+patch offsetof(struct rkvdec_vp9_priv_tbl, segmap[0]) is an odd number
+(2421) but the hardware just ignores the 5 least significant bits of the
+address. As a result, the hardware writes the segmentation map to incorrect
+locations.
 
-Fixes: 2b6aa412ff23 ("KEYS: Use structure to capture key restriction function and data")
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Inserting 11 bytes of padding corrects this situation by making the said
+addresses divisible by 16 (i.e. aligned on a 128-bit boundary).
+
+Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Fixes: f25709c4ff15 ("media: rkvdec: Add the VP9 backend")
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/digsig.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/security/integrity/digsig.c b/security/integrity/digsig.c
-index 8a82a6c7f48a..f2193c531f4a 100644
---- a/security/integrity/digsig.c
-+++ b/security/integrity/digsig.c
-@@ -126,6 +126,7 @@ int __init integrity_init_keyring(const unsigned int id)
- {
- 	struct key_restriction *restriction;
- 	key_perm_t perm;
-+	int ret;
+diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+index d8c1c0db15c7..cfae99b40ccb 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
++++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+@@ -84,6 +84,8 @@ struct rkvdec_vp9_probs {
+ 		struct rkvdec_vp9_inter_frame_probs inter;
+ 		struct rkvdec_vp9_intra_only_frame_probs intra_only;
+ 	};
++	/* 128 bit alignment */
++	u8 padding1[11];
+ };
  
- 	perm = (KEY_POS_ALL & ~KEY_POS_SETATTR) | KEY_USR_VIEW
- 		| KEY_USR_READ | KEY_USR_SEARCH;
-@@ -154,7 +155,10 @@ int __init integrity_init_keyring(const unsigned int id)
- 		perm |= KEY_USR_WRITE;
+ /* Data structure describing auxiliary buffer format. */
+@@ -1006,6 +1008,7 @@ static int rkvdec_vp9_start(struct rkvdec_ctx *ctx)
  
- out:
--	return __integrity_init_keyring(id, perm, restriction);
-+	ret = __integrity_init_keyring(id, perm, restriction);
-+	if (ret)
-+		kfree(restriction);
-+	return ret;
- }
+ 	ctx->priv = vp9_ctx;
  
- static int __init integrity_add_key(const unsigned int id, const void *data,
++	BUILD_BUG_ON(sizeof(priv_tbl->probs) % 16); /* ensure probs size is 128-bit aligned */
+ 	priv_tbl = dma_alloc_coherent(rkvdec->dev, sizeof(*priv_tbl),
+ 				      &vp9_ctx->priv_tbl.dma, GFP_KERNEL);
+ 	if (!priv_tbl) {
 -- 
 2.35.1
 
