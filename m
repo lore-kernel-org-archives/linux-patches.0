@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B84D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9551CC433D2;
-	Wed, 28 Dec 2022 16:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28E51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4069AC433D2;
+	Wed, 28 Dec 2022 16:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243498;
-	bh=brn19ZLg/cpAoaQwT5sTcLIrLOZzT0hLAzJKqvAVzWs=;
+	s=korg; t=1672243501;
+	bh=g6jtjX431fWt9IYtX4bozjqu40lhjeCtf8PXI7fX460=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bV4D58Fpq/DqN809ENF6ExZuhWR7bwhHY02vQcvxgCkkQD0H6J+PN9BxpcXxCkEXc
-	 HfrHw91fGtGQ3ot7X+xlwwEXE/xXRnp/yc+pQZloMpLVOvND4HuxVqHCmVT+ZoLxUO
-	 CDC3mympKptCWltwA55IumjOH+xeqMcpX8R0woD0=
+	b=X2YCUdQoV1hASsYOqnQpiFkBYLGx2gtdxUWW12l3dMQIZCsrvn9yCJ64zTg7CTIEO
+	 +UHJtRNBPPSsAaDc+xRzQsf8HrtbiPsVC3MGKD78FpCD/tnUZ+fe/BOjudyNCw8PQm
+	 ntTTjW6MZNK1bkHYBL7I49whSfoJ5V2FR93aDOBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Pilmore <epilmore@gigaio.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0536/1073] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
-Date: Wed, 28 Dec 2022 15:35:24 +0100
-Message-Id: <20221228144342.612654375@linuxfoundation.org>
+	Edward Pacman <edward@edward-p.xyz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 704/731] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
+Date: Wed, 28 Dec 2022 15:43:31 +0100
+Message-Id: <20221228144316.866078891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,73 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Pilmore <epilmore@gigaio.com>
+From: Edward Pacman <edward@edward-p.xyz>
 
-[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
+commit 4bf5bf54476dffe60e6b6d8d539f67309ff599e2 upstream.
 
-TX/RX callback handlers (ntb_netdev_tx_handler(),
-ntb_netdev_rx_handler()) can be called in interrupt
-context via the DMA framework when the respective
-DMA operations have completed. As such, any calls
-by these routines to free skb's, should use the
-interrupt context safe dev_kfree_skb_any() function.
+Lenovo TianYi510Pro-14IOB (17aa:3742)
+require quirk for enabling headset-mic
 
-Previously, these callback handlers would call the
-interrupt unsafe version of dev_kfree_skb(). This has
-not presented an issue on Intel IOAT DMA engines as
-that driver utilizes tasklets rather than a hard
-interrupt handler, like the AMD PTDMA DMA driver.
-On AMD systems, a kernel WARNING message is
-encountered, which is being issued from
-skb_release_head_state() due to in_hardirq()
-being true.
-
-Besides the user visible WARNING from the kernel,
-the other symptom of this bug was that TCP/IP performance
-across the ntb_netdev interface was very poor, i.e.
-approximately an order of magnitude below what was
-expected. With the repair to use dev_kfree_skb_any(),
-kernel WARNINGs from skb_release_head_state() ceased
-and TCP/IP performance, as measured by iperf, was on
-par with expected results, approximately 20 Gb/s on
-AMD Milan based server. Note that this performance
-is comparable with Intel based servers.
-
-Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
-Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
-Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edward Pacman <edward@edward-p.xyz>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216756
+Link: https://lore.kernel.org/r/20221207133218.18989-1-edward@edward-p.xyz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index dd7e273c90cb..29b198472a2c 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
- enqueue_again:
- 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
- 	if (rc) {
--		dev_kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		ndev->stats.rx_errors++;
- 		ndev->stats.rx_fifo_errors++;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10593,6 +10593,17 @@ static void alc897_fixup_lenovo_headset_
  	}
-@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
- 		ndev->stats.tx_aborted_errors++;
- 	}
+ }
  
--	dev_kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
++static void alc897_fixup_lenovo_headset_mode(struct hda_codec *codec,
++				     const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
++		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
++	}
++}
++
+ static const struct coef_fw alc668_coefs[] = {
+ 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
+ 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
+@@ -10676,6 +10687,8 @@ enum {
+ 	ALC897_FIXUP_LENOVO_HEADSET_MIC,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN,
+ 	ALC897_FIXUP_HP_HSMIC_VERB,
++	ALC897_FIXUP_LENOVO_HEADSET_MODE,
++	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ };
  
- 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
- 		/* Make sure anybody stopping the queue after this sees the new
--- 
-2.35.1
-
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -11102,6 +11115,19 @@ static const struct hda_fixup alc662_fix
+ 			{ }
+ 		},
+ 	},
++	[ALC897_FIXUP_LENOVO_HEADSET_MODE] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc897_fixup_lenovo_headset_mode,
++	},
++	[ALC897_FIXUP_HEADSET_MIC_PIN2] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1a, 0x01a11140 }, /* use as headset mic, without its own jack detect */
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
++	},
+ };
+ 
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+@@ -11154,6 +11180,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x1849, 0x5892, "ASRock B150M", ALC892_FIXUP_ASROCK_MOBO),
 
 
