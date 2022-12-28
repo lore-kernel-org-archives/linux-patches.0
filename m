@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B521C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF578C433EF;
-	Wed, 28 Dec 2022 16:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCD0C433D2;
+	Wed, 28 Dec 2022 16:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244527;
-	bh=my7mB0AxbLAMydQyKfjQyENP7hxSdaQcHGnm0y/FDXY=;
+	s=korg; t=1672244530;
+	bh=A1GtZJCKxKpgLBUInMzrpXDXwlUYoF57zrm/Y0OgDw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NqIjf4j0kD0m6q1cr11F7WaeObddPnqCBEiq3J0kPbakEnF/6b4wyiAYrBlZlKH0z
-	 Tdcgo/t6D18xJS4bj7gUSRmgl3n3WSkFgsmVEXSMAWZ9aHRCLjoZSJdNWidGByA/Zd
-	 2BeTLo5T6Wsy+dgShwAtjXMsVXhSbcr3OVDxyHHk=
+	b=VHI7DI1rkcyfQUPCAT2CyRtqngUzQgVfZjxHe6nRlh3fjTLPRWCCKBM0PQ/cZOCqG
+	 9qByymRHyqmWuF7jQsVgidyViKhNGortgzyziU90sMNg9rKcT7MuIdD9wY1sCnFHtq
+	 CMfn6jvwNx+yeojFusCWczDV4VeN3LT1ZA1vTgWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Amit Kucheria <amitk@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0727/1073] thermal/drivers/qcom/temp-alarm: Fix inaccurate warning for gen2
-Date: Wed, 28 Dec 2022 15:38:35 +0100
-Message-Id: <20221228144347.771467314@linuxfoundation.org>
+Subject: [PATCH 6.1 0689/1146] serial: 8250_bcm7271: Fix error handling in brcmuart_init()
+Date: Wed, 28 Dec 2022 15:37:08 +0100
+Message-Id: <20221228144348.856161687@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 8763f8acbf8aef22a2321d4c978cd078aa3b8f64 ]
+[ Upstream commit 6a3ff858915fa8ca36c7eb02c87c9181ae2fc333 ]
 
-On gen2 chips the stage2 threshold is not 140 degC but 125 degC.
+A problem about 8250_bcm7271 create debugfs failed is triggered with the
+following log given:
 
-Make the warning message clearer by using this variable and also by
-including the temperature that was checked for.
+ [  324.516635] debugfs: Directory 'bcm7271-uart' with parent '/' already present!
 
-Fixes: aa92b3310c55 ("thermal/drivers/qcom-spmi-temp-alarm: Add support for GEN2 rev 1 PMIC peripherals")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Amit Kucheria <amitk@kernel.org>
-Link: https://lore.kernel.org/r/20221020145237.942146-1-luca.weiss@fairphone.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+The reason is that brcmuart_init() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+failed, it returns without destroy the newly created debugfs, resulting
+the debugfs of 8250_bcm7271 can never be created later.
+
+ brcmuart_init()
+   debugfs_create_dir() # create debugfs directory
+   platform_driver_register()
+     driver_register()
+       bus_add_driver()
+         priv = kzalloc(...) # OOM happened
+   # return without destroy debugfs directory
+
+Fix by removing debugfs when platform_driver_register() returns error.
+
+Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221109072110.117291-2-yuancan@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_bcm7271.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 770f82cc9bca..247b39d57fa7 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -252,7 +252,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 			disable_s2_shutdown = true;
- 		else
- 			dev_warn(chip->dev,
--				 "No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.\n");
-+				 "No ADC is configured and critical temperature %d mC is above the maximum stage 2 threshold of %ld mC! Configuring stage 2 shutdown at %ld mC.\n",
-+				 temp, stage2_threshold_max, stage2_threshold_max);
- 	}
+diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
+index fa8ccf204d86..89bfcefbea84 100644
+--- a/drivers/tty/serial/8250/8250_bcm7271.c
++++ b/drivers/tty/serial/8250/8250_bcm7271.c
+@@ -1212,9 +1212,17 @@ static struct platform_driver brcmuart_platform_driver = {
  
- skip:
+ static int __init brcmuart_init(void)
+ {
++	int ret;
++
+ 	brcmuart_debugfs_root = debugfs_create_dir(
+ 		brcmuart_platform_driver.driver.name, NULL);
+-	return platform_driver_register(&brcmuart_platform_driver);
++	ret = platform_driver_register(&brcmuart_platform_driver);
++	if (ret) {
++		debugfs_remove_recursive(brcmuart_debugfs_root);
++		return ret;
++	}
++
++	return 0;
+ }
+ module_init(brcmuart_init);
+ 
 -- 
 2.35.1
 
