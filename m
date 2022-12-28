@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7E21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5996C433D2;
-	Wed, 28 Dec 2022 15:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052541863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E70C433D2;
+	Wed, 28 Dec 2022 15:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242100;
-	bh=equXzBOScuNHFwsjvnhCbdOTD/DBMaXGysdemzxdUE8=;
+	s=korg; t=1672242102;
+	bh=8gypTo4tBvMCAZOXNMPC20/u583//DgZMWMdaTCx5xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSbil2crLIWQfE0iy93bMInakua6cBJeR4kFJF+TX47HqWylZqTKKptaZOnGIPc6r
-	 eCEpD996H9DuhxXBhvtahvbr6s0wNfST8sipozLOM9Nb0Tmay4+bRDRt+bMirnXwLm
-	 RaVGc3+rbngHBp4/h1qi3UhJ72mw/uY6F9xT0iE0=
+	b=Zk58csRRTrfAU2uZPnu+sHa5XZPShGS3NKUpt+Eq+kG3E84KVMVuqJLXCkp+myQQM
+	 5jaA8h7WE9FLM+xpB6tWFaNcRPxeaUUeFpctbEJvJWIdZIkWFJ/V1T63mR6lunWASy
+	 IEyEDK/e93amiPkrUfTrRm8mRjfBPSNyAVXc35BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0329/1146] ASoC: pxa: fix null-pointer dereference in filter()
-Date: Wed, 28 Dec 2022 15:31:08 +0100
-Message-Id: <20221228144339.095756985@linuxfoundation.org>
+Subject: [PATCH 5.15 563/731] pwm: sifive: Call pwm_sifive_update_clock() while mutex is held
+Date: Wed, 28 Dec 2022 15:41:10 +0100
+Message-Id: <20221228144312.882144587@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit ec7bf231aaa1bdbcb69d23bc50c753c80fb22429 ]
+[ Upstream commit 45558b3abb87eeb2cedb8a59cb2699c120b5102a ]
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-Need to check the return pointer before calling strcmp().
+As was documented in commit 0f02f491b786 ("pwm: sifive: Reduce time the
+controller lock is held") a caller of pwm_sifive_update_clock() must
+hold the mutex. So fix pwm_sifive_clock_notifier() to grab the lock.
 
-Fixes: 7a824e214e25 ("ASoC: mmp: add audio dma support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221114085629.1910435-1-zengheng4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+While this necessity was only documented later, the race exists since
+the driver was introduced.
+
+Fixes: 9e37a53eb051 ("pwm: sifive: Add a driver for SiFive SoC PWM")
+Reported-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Link: https://lore.kernel.org/r/20221018061656.1428111-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/mmp-pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-sifive.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/pxa/mmp-pcm.c b/sound/soc/pxa/mmp-pcm.c
-index 5d520e18e512..99b245e3079a 100644
---- a/sound/soc/pxa/mmp-pcm.c
-+++ b/sound/soc/pxa/mmp-pcm.c
-@@ -98,7 +98,7 @@ static bool filter(struct dma_chan *chan, void *param)
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index 58347fcd4812..07e9fc58354f 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -217,8 +217,11 @@ static int pwm_sifive_clock_notifier(struct notifier_block *nb,
+ 	struct pwm_sifive_ddata *ddata =
+ 		container_of(nb, struct pwm_sifive_ddata, notifier);
  
- 	devname = kasprintf(GFP_KERNEL, "%s.%d", dma_data->dma_res->name,
- 		dma_data->ssp_id);
--	if ((strcmp(dev_name(chan->device->dev), devname) == 0) &&
-+	if (devname && (strcmp(dev_name(chan->device->dev), devname) == 0) &&
- 		(chan->chan_id == dma_data->dma_res->start)) {
- 		found = true;
- 	}
+-	if (event == POST_RATE_CHANGE)
++	if (event == POST_RATE_CHANGE) {
++		mutex_lock(&ddata->lock);
+ 		pwm_sifive_update_clock(ddata, ndata->new_rate);
++		mutex_unlock(&ddata->lock);
++	}
+ 
+ 	return NOTIFY_OK;
+ }
 -- 
 2.35.1
 
