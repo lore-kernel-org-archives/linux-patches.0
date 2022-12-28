@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20981C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ED1C433D2;
-	Wed, 28 Dec 2022 16:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D8F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57CBC433D2;
+	Wed, 28 Dec 2022 16:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244255;
-	bh=c0wHV7iAOCGJO9PrE0TOS4SpgYhrfvRKC0MP2K00bWI=;
+	s=korg; t=1672244258;
+	bh=DptcddMtWuF4Jnw4rgtwhEVBSnTWB1EX1/FTGRdmbt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdy15XQVbuB1B7ihm7xi6Du2wymuzasZ2mGbsXrFEeAfwxo8wcEXF/5aWFWOy8cMF
-	 pnlwwloECe/9ZuO1zQkJge6gsK+sIRrFYzsnpVK6YW3pdwwTsRIHhkzxt7m+s6Y8Cd
-	 B4NHPh7fvivePSxzTUS503i/KubcRoFGpKx7kGhw=
+	b=KsBAiTYjLu4tIYM1+nQGdLEX+bmWZbyl9QUA2TOukzAoC6HEBHpUhWo3OxmvBc04W
+	 JRDxZTZLf0GT4ObYmDtxdq99bhqtMa8aIdZlv1rcI8ARdxP9Gu/LnwOZ42bCaYa400
+	 RSbcSKiNs5B5DBTNZbdB7ZW6XPvn4ruMUJB6CpGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0676/1073] usb: typec: tipd: Cleanup resources if devm_tps6598_psy_register fails
-Date: Wed, 28 Dec 2022 15:37:44 +0100
-Message-Id: <20221228144346.399782847@linuxfoundation.org>
+Subject: [PATCH 6.1 0637/1146] crypto: x86/sha1 - fix possible crash with CFI enabled
+Date: Wed, 28 Dec 2022 15:36:16 +0100
+Message-Id: <20221228144347.466091460@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 19c220e9ab00f50edefb9667e3101e84a5112df2 ]
+[ Upstream commit 32f34bf7e44eeaa241fb845d6f52af5104bc30fd ]
 
-We can't just return if devm_tps6598_psy_register fails since previous
-resources are not devres managed and have yet to be cleaned up.
+sha1_transform_ssse3(), sha1_transform_avx(), and sha1_ni_transform()
+(but not sha1_transform_avx2()) are called via indirect function calls.
+Therefore they need to use SYM_TYPED_FUNC_START instead of
+SYM_FUNC_START to cause their type hashes to be emitted when the kernel
+is built with CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a
+CFI failure (if the compiler didn't happen to optimize out the indirect
+calls).
 
-Fixes: 10eb0b6ac63a ("usb: typec: tps6598x: Export some power supply properties")
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221114174449.34634-1-sven@svenpeter.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tipd/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/crypto/sha1_ni_asm.S    | 3 ++-
+ arch/x86/crypto/sha1_ssse3_asm.S | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
-index 92e35e62e78c..28dd5c3b175b 100644
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -814,7 +814,7 @@ static int tps6598x_probe(struct i2c_client *client)
+diff --git a/arch/x86/crypto/sha1_ni_asm.S b/arch/x86/crypto/sha1_ni_asm.S
+index 2f94ec0e763b..3cae5a1bb3d6 100644
+--- a/arch/x86/crypto/sha1_ni_asm.S
++++ b/arch/x86/crypto/sha1_ni_asm.S
+@@ -54,6 +54,7 @@
+  */
  
- 	ret = devm_tps6598_psy_register(tps);
- 	if (ret)
--		return ret;
-+		goto err_role_put;
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
  
- 	tps->port = typec_register_port(&client->dev, &typec_cap);
- 	if (IS_ERR(tps->port)) {
+ #define DIGEST_PTR	%rdi	/* 1st arg */
+ #define DATA_PTR	%rsi	/* 2nd arg */
+@@ -93,7 +94,7 @@
+  */
+ .text
+ .align 32
+-SYM_FUNC_START(sha1_ni_transform)
++SYM_TYPED_FUNC_START(sha1_ni_transform)
+ 	push		%rbp
+ 	mov		%rsp, %rbp
+ 	sub		$FRAME_SIZE, %rsp
+diff --git a/arch/x86/crypto/sha1_ssse3_asm.S b/arch/x86/crypto/sha1_ssse3_asm.S
+index 263f916362e0..f54988c80eb4 100644
+--- a/arch/x86/crypto/sha1_ssse3_asm.S
++++ b/arch/x86/crypto/sha1_ssse3_asm.S
+@@ -25,6 +25,7 @@
+  */
+ 
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ 
+ #define CTX	%rdi	// arg1
+ #define BUF	%rsi	// arg2
+@@ -67,7 +68,7 @@
+  * param: function's name
+  */
+ .macro SHA1_VECTOR_ASM  name
+-	SYM_FUNC_START(\name)
++	SYM_TYPED_FUNC_START(\name)
+ 
+ 	push	%rbx
+ 	push	%r12
 -- 
 2.35.1
 
