@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC7E1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F74C433EF;
-	Wed, 28 Dec 2022 16:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5E81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1212FC433D2;
+	Wed, 28 Dec 2022 16:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243445;
-	bh=Mt7l8+L5QgrPjlxFpDR+rjN5Kt/xAd1P+D68Wtizxw0=;
+	s=korg; t=1672243448;
+	bh=BnzgfrcnUbhBoEyrfatcrzwFuxGQoSTQsF9opmIAp+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT7LZrfPHQhdV4PTgYN4oESKJFKzGtcQxc0jIdagSefZjTFIcqfXwLbcddaj4NlU4
-	 t1I7FRWyoSWF4y+bUBPqavYj4SPvTmgjuI6iNDUL1tSYZbfonkO1SX5Vk2lEWsFLqA
-	 Q5IW9k/vO+vkQC7bNsi+YKffCcyNiGtntIhHRN9k=
+	b=KjD6BKlqwvlTxi7EVpSx4fZKFnKl+7ykoVePKXNaTJQtH2YOh5nslGVq69IoXQlOD
+	 s4uyH4HVVZbCL4kElCBTjxtFF04Or/b0diQX8BaKootl79o+Lpe7fmSxPfQVSV1jqu
+	 Csl9OUKw0vl7vNz1xY3rWiahzlMX+EX3FP+aKBtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingjiang Qiao <nanpuyue@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0493/1146] hwmon: (emc2305) fix unable to probe emc2301/2/3
-Date: Wed, 28 Dec 2022 15:33:52 +0100
-Message-Id: <20221228144343.573518348@linuxfoundation.org>
+Subject: [PATCH 6.0 0530/1073] net: amd-xgbe: Check only the minimum speed for active/passive cables
+Date: Wed, 28 Dec 2022 15:35:18 +0100
+Message-Id: <20221228144342.441374088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xingjiang Qiao <nanpuyue@gmail.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit 4d50591ebf60ccf79380fff3a4c23659c61c482f ]
+[ Upstream commit f8ab263d4d48e6dab752029bf562f20a2ee630ed ]
 
-The definitions of 'EMC2305_REG_PRODUCT_ID' and 'EMC2305_REG_DEVICE' are
-both '0xfd', they actually return the same value, but the values returned
-by emc2301/2/3/5 are different, so probe emc2301/2/3 will fail, This patch
-fixes that.
+There are cables that exist that can support speeds in excess of 10GbE.
+The driver, however, restricts the EEPROM advertised nominal bitrate to
+a specific range, which can prevent usage of cables that can support,
+for example, up to 25GbE.
 
-Signed-off-by: Xingjiang Qiao <nanpuyue@gmail.com>
-Link: https://lore.kernel.org/r/20221206055331.170459-1-nanpuyue@gmail.com
-Fixes: 0d8400c5a2ce1 ("hwmon: (emc2305) add support for EMC2301/2/3/5 RPM-based PWM Fan Speed Controller.")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Rather than checking that an active or passive cable supports a specific
+range, only check for a minimum supported speed.
+
+Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc2305.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
-index aa1f25add0b6..9a78ca22541e 100644
---- a/drivers/hwmon/emc2305.c
-+++ b/drivers/hwmon/emc2305.c
-@@ -16,7 +16,6 @@ static const unsigned short
- emc2305_normal_i2c[] = { 0x27, 0x2c, 0x2d, 0x2e, 0x2f, 0x4c, 0x4d, I2C_CLIENT_END };
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index c7b0d69ee62f..1ef04326a572 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -237,10 +237,7 @@ enum xgbe_sfp_speed {
  
- #define EMC2305_REG_DRIVE_FAIL_STATUS	0x27
--#define EMC2305_REG_DEVICE		0xfd
- #define EMC2305_REG_VENDOR		0xfe
- #define EMC2305_FAN_MAX			0xff
- #define EMC2305_FAN_MIN			0x00
-@@ -524,7 +523,7 @@ static int emc2305_probe(struct i2c_client *client, const struct i2c_device_id *
- 	struct device *dev = &client->dev;
- 	struct emc2305_data *data;
- 	struct emc2305_platform_data *pdata;
--	int vendor, device;
-+	int vendor;
- 	int ret;
- 	int i;
+ #define XGBE_SFP_BASE_BR			12
+ #define XGBE_SFP_BASE_BR_1GBE_MIN		0x0a
+-#define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
+ #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
+-#define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
+-#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
  
-@@ -535,10 +534,6 @@ static int emc2305_probe(struct i2c_client *client, const struct i2c_device_id *
- 	if (vendor != EMC2305_VENDOR)
- 		return -ENODEV;
+ #define XGBE_SFP_BASE_CU_CABLE_LEN		18
  
--	device = i2c_smbus_read_byte_data(client, EMC2305_REG_DEVICE);
--	if (device != EMC2305_DEVICE)
--		return -ENODEV;
--
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
+@@ -827,29 +824,22 @@ static void xgbe_phy_sfp_phy_settings(struct xgbe_prv_data *pdata)
+ static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
+ 				  enum xgbe_sfp_speed sfp_speed)
+ {
+-	u8 *sfp_base, min, max;
++	u8 *sfp_base, min;
+ 
+ 	sfp_base = sfp_eeprom->base;
+ 
+ 	switch (sfp_speed) {
+ 	case XGBE_SFP_SPEED_1000:
+ 		min = XGBE_SFP_BASE_BR_1GBE_MIN;
+-		max = XGBE_SFP_BASE_BR_1GBE_MAX;
+ 		break;
+ 	case XGBE_SFP_SPEED_10000:
+ 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
+-		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
+-			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
+-			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
+-		else
+-			max = XGBE_SFP_BASE_BR_10GBE_MAX;
+ 		break;
+ 	default:
+ 		return false;
+ 	}
+ 
+-	return ((sfp_base[XGBE_SFP_BASE_BR] >= min) &&
+-		(sfp_base[XGBE_SFP_BASE_BR] <= max));
++	return sfp_base[XGBE_SFP_BASE_BR] >= min;
+ }
+ 
+ static void xgbe_phy_free_phy_device(struct xgbe_prv_data *pdata)
 -- 
 2.35.1
 
