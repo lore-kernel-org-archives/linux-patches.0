@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF021863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52C5C433D2;
-	Wed, 28 Dec 2022 15:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF51D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5446EC433D2;
+	Wed, 28 Dec 2022 15:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240465;
-	bh=NJFNp4F21/1fDeKzHeY4xY5wc0AAoHfUqzNFDzZmiX4=;
+	s=korg; t=1672240467;
+	bh=tm0898h3WOXG6oC8J3n1LMoBFSGJE7ZJ/sWPjZclCxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uP88o9d9ElOL55xsTZ8rzBGnPIt7ENgadaOj7/jJOAl4cv4oY25YAUt69n5xUBxVq
-	 HfK66A15ccnh+TSHubA2oxLJbgK6vIepbWnRpGlXWpc8G76BuM+ZFhqkOGB8SKa8jw
-	 o+4QFbaoPClVhML9fGUyMbWLdEE6KW45xYtjR5wM=
+	b=XIGqxiD4UxqJh4/6L0JlfZmzuf30n35scd3lXgbOmHLIJaVKrGBIiHoQ78HHhT6DT
+	 qz4YkpxYlvUad1khGkiXdR5GBkI4uzh47LTnV0RWBq4JwBy3TTKCmY3CllwXsSQNpd
+	 aamqdQyw1ue9gOOcn7nzGMKkAYWeM8qv2iao9tQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0122/1146] ACPI: irq: Fix some kernel-doc issues
-Date: Wed, 28 Dec 2022 15:27:41 +0100
-Message-Id: <20221228144333.470034820@linuxfoundation.org>
+Subject: [PATCH 6.0 0164/1073] xen/privcmd: Fix a possible warning in privcmd_ioctl_mmap_resource()
+Date: Wed, 28 Dec 2022 15:29:12 +0100
+Message-Id: <20221228144332.471103748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit ebb92d58b90753e658059f5d8590d9048395491a ]
+[ Upstream commit 8b997b2bb2c53b76a6db6c195930e9ab8e4b0c79 ]
 
-The following commit change the second parameter of acpi_set_irq_model()
-but forgot to update the function description. Let's fix it.
+As 'kdata.num' is user-controlled data, if user tries to allocate
+memory larger than(>=) MAX_ORDER, then kcalloc() will fail, it
+creates a stack trace and messes up dmesg with a warning.
 
-  commit 7327b16f5f56 ("APCI: irq: Add support for multiple GSI domains")
+Call trace:
+-> privcmd_ioctl
+--> privcmd_ioctl_mmap_resource
 
-Also add description of parameter 'gsi' for
-acpi_get_irq_source_fwhandle() to avoid the following build W=1 warning.
+Add __GFP_NOWARN in order to avoid too large allocation warning.
+This is detected by static analysis using smatch.
 
-  drivers/acpi/irq.c:108: warning: Function parameter or member 'gsi' not described in 'acpi_get_irq_source_fwhandle'
-
-Fixes: 7327b16f5f56 ("APCI: irq: Add support for multiple GSI domains")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3ad0876554ca ("xen/privcmd: add IOCTL_PRIVCMD_MMAP_RESOURCE")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221126050745.778967-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/irq.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/xen/privcmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/irq.c b/drivers/acpi/irq.c
-index 1cc4647f78b8..c2c786eb95ab 100644
---- a/drivers/acpi/irq.c
-+++ b/drivers/acpi/irq.c
-@@ -94,6 +94,7 @@ EXPORT_SYMBOL_GPL(acpi_unregister_gsi);
- /**
-  * acpi_get_irq_source_fwhandle() - Retrieve fwhandle from IRQ resource source.
-  * @source: acpi_resource_source to use for the lookup.
-+ * @gsi: GSI IRQ number
-  *
-  * Description:
-  * Retrieve the fwhandle of the device referenced by the given IRQ resource
-@@ -297,8 +298,8 @@ EXPORT_SYMBOL_GPL(acpi_irq_get);
- /**
-  * acpi_set_irq_model - Setup the GSI irqdomain information
-  * @model: the value assigned to acpi_irq_model
-- * @fwnode: the irq_domain identifier for mapping and looking up
-- *          GSI interrupts
-+ * @fn: a dispatcher function that will return the domain fwnode
-+ *	for a given GSI
-  */
- void __init acpi_set_irq_model(enum acpi_irq_model_id model,
- 			       struct fwnode_handle *(*fn)(u32))
+diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
+index e88e8f6f0a33..719c5d1dda27 100644
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -760,7 +760,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
+ 		goto out;
+ 	}
+ 
+-	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL);
++	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL | __GFP_NOWARN);
+ 	if (!pfns) {
+ 		rc = -ENOMEM;
+ 		goto out;
 -- 
 2.35.1
 
