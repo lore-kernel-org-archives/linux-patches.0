@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BC11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC97C433F0;
-	Wed, 28 Dec 2022 15:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1654B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEDFC433D2;
+	Wed, 28 Dec 2022 15:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240105;
-	bh=ND+BedeYHZbCMv73VCEgQu6HL1RjoTLG7dn1UPClbsY=;
+	s=korg; t=1672240107;
+	bh=W/Xnmc97F+AtLcG8E2pp6biNEpuKZmfhp14G8o0Nryc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRX3aPJ8SAHsXugAi7WXci81Opjzs3t5pkjo4pNO8sstNQFys5Wx06Pa1z+LRzIBH
-	 rIHWnC1lp9/taTKdVqBRmZIKujDoow7eXOYVoWQcDLYn8aXvd3dCpezId1lOYPraEP
-	 gmpZCFPW2yK2Fwq2vyk0521qDTUTKWyVTvc8rcrc=
+	b=A8X2Q2TqJa+KEs1Zg/y5O8RINkGtsRNp/EjT6nfhsbOuqnc6blHuqIHBG1tCk84dN
+	 T0SQhiImXGEK54oRdQr9DIBbMUiQkuI2bM+rhSZucpzyjkZW4Isan7KgP1ENYsPp2D
+	 Eqq0vZxabflvhjGiZXqKF36glvnsZrzVnNQKIHdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0081/1146] ARM: dts: dove: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:00 +0100
-Message-Id: <20221228144332.345995072@linuxfoundation.org>
+Subject: [PATCH 5.15 310/731] regulator: qcom-labibb: Fix missing of_node_put() in qcom_labibb_regulator_probe()
+Date: Wed, 28 Dec 2022 15:36:57 +0100
+Message-Id: <20221228144305.563372224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit dcc7d8c72b64a479b8017e4332d99179deb8802d ]
+[ Upstream commit cf34ac6aa2b12fb0c3aacfdcae8acd7904b949ec ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+The reg_node needs to be released through of_node_put() in the error
+handling path when of_irq_get_byname() failed.
 
-Fixes: 74ecaa403a74 ("ARM: dove: add PCIe controllers to SoC DT")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 390af53e0411 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221203062109.115043-1-yuancan@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/dove.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/qcom-labibb-regulator.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/dove.dtsi b/arch/arm/boot/dts/dove.dtsi
-index 00a36fba2fd2..9aee3cfd3e98 100644
---- a/arch/arm/boot/dts/dove.dtsi
-+++ b/arch/arm/boot/dts/dove.dtsi
-@@ -139,7 +139,7 @@ pcie0_intc: interrupt-controller {
- 			pcie1: pcie@2 {
- 				device_type = "pci";
- 				status = "disabled";
--				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x80000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				clocks = <&gate_clk 5>;
- 				marvell,pcie-port = <1>;
+diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
+index 639b71eb41ff..bcf7140f3bc9 100644
+--- a/drivers/regulator/qcom-labibb-regulator.c
++++ b/drivers/regulator/qcom-labibb-regulator.c
+@@ -822,6 +822,7 @@ static int qcom_labibb_regulator_probe(struct platform_device *pdev)
+ 			if (irq == 0)
+ 				irq = -EINVAL;
+ 
++			of_node_put(reg_node);
+ 			return dev_err_probe(vreg->dev, irq,
+ 					     "Short-circuit irq not found.\n");
+ 		}
 -- 
 2.35.1
 
