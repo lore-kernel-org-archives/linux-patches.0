@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC071C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821B7C433EF;
-	Wed, 28 Dec 2022 16:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D811C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369D4C433D2;
+	Wed, 28 Dec 2022 16:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246249;
-	bh=5p+95fZ9IYcnOhMVvQAQDW4VIVeBaxD3WCZlRV7jfjE=;
+	s=korg; t=1672246252;
+	bh=umouLSA0PCSKowQjJ7kX+BkOJw7cBp2o3XmBEK7W//o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qu41YScnHDq12kHUkdFwOAiYYgOuE16c+Kz0kjnIejtaR0gXDTuR4dLAqPZpvZNkL
-	 4YSaEgplAn9aXXL0b8ySRh0xawwm4B37hl823iZ4JGrrT3faAAOhR1Wsx4zRTrBKAl
-	 c38izhkVuQjVZXnqLVhxda46hZJcNa37VrP8G8yU=
+	b=gyZc7P5Td0sfSkRPW/VxWji84hMFYfbLC+q1Vvo84a2wbars1f3IbXDEvFdq7znLz
+	 I50GmTPesVssHswcIKogLtOhA4tJTA5a6e8+Jw5HwOkMHXMOVb1bTGSzY2TISKMwmQ
+	 7VUTFDx5LzHoFP1oPEIrv6hc1UT3aGUSLhyGy06Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sven Peter <sven@svenpeter.dev>
-Subject: [PATCH 6.0 1038/1073] usb: dwc3: Fix race between dwc3_set_mode and __dwc3_set_mode
-Date: Wed, 28 Dec 2022 15:43:46 +0100
-Message-Id: <20221228144356.387822508@linuxfoundation.org>
+	Martin Leung <Martin.Leung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1010/1146] drm/amd/display: fix array index out of bound error in bios parser
+Date: Wed, 28 Dec 2022 15:42:29 +0100
+Message-Id: <20221228144357.801296272@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,112 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit 62c73bfea048e66168df09da6d3e4510ecda40bb upstream.
+[ Upstream commit 4fc1ba4aa589ca267468ad23fedef37562227d32 ]
 
-dwc->desired_dr_role is changed by dwc3_set_mode inside a spinlock but
-then read by __dwc3_set_mode outside of that lock. This can lead to a
-race condition when very quick successive role switch events happen:
+[Why&How]
+Firmware headers dictate that gpio_pin array only has a size of 8. The
+count returned from vbios however is greater than 8.
 
-CPU A
-	dwc3_set_mode(DWC3_GCTL_PRTCAP_HOST) // first role switch event
-		spin_lock_irqsave(&dwc->lock, flags);
-		dwc->desired_dr_role = mode; // DWC3_GCTL_PRTCAP_HOST
-		spin_unlock_irqrestore(&dwc->lock, flags);
-		queue_work(system_freezable_wq, &dwc->drd_work);
+Fix this by not using array indexing but incrementing the pointer since
+gpio_pin definition in atomfirmware.h is hardcoded to size 8
 
-CPU B
-	__dwc3_set_mode
-		// ....
-		spin_lock_irqsave(&dwc->lock, flags);
-		// desired_dr_role is DWC3_GCTL_PRTCAP_HOST
-		dwc3_set_prtcap(dwc, dwc->desired_dr_role);
-		spin_unlock_irqrestore(&dwc->lock, flags);
-
-CPU A
-	dwc3_set_mode(DWC3_GCTL_PRTCAP_DEVICE) // second event
-		spin_lock_irqsave(&dwc->lock, flags);
-		dwc->desired_dr_role = mode; // DWC3_GCTL_PRTCAP_DEVICE
-		spin_unlock_irqrestore(&dwc->lock, flags);
-
-CPU B (continues running __dwc3_set_mode)
-	switch (dwc->desired_dr_role) { // DWC3_GCTL_PRTCAP_DEVICE
-	// ....
-	case DWC3_GCTL_PRTCAP_DEVICE:
-		// ....
-		ret = dwc3_gadget_init(dwc);
-
-We then have DWC3_GCTL.DWC3_GCTL_PRTCAPDIR = DWC3_GCTL_PRTCAP_HOST and
-dwc->current_dr_role = DWC3_GCTL_PRTCAP_HOST but initialized the
-controller in device mode. It's also possible to get into a state
-where both host and device are intialized at the same time.
-Fix this race by creating a local copy of desired_dr_role inside
-__dwc3_set_mode while holding dwc->lock.
-
-Fixes: 41ce1456e1db ("usb: dwc3: core: make dwc3_set_mode() work properly")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Link: https://lore.kernel.org/r/20221128161526.79730-1-sven@svenpeter.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Martin Leung <Martin.Leung@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ .../gpu/drm/amd/display/dc/bios/bios_parser2.c   | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -122,21 +122,25 @@ static void __dwc3_set_mode(struct work_
- 	unsigned long flags;
- 	int ret;
- 	u32 reg;
-+	u32 desired_dr_role;
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index e0c8d6f09bb4..074e70a5c458 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -462,6 +462,7 @@ static enum bp_result get_gpio_i2c_info(
+ 	uint32_t count = 0;
+ 	unsigned int table_index = 0;
+ 	bool find_valid = false;
++	struct atom_gpio_pin_assignment *pin;
  
- 	mutex_lock(&dwc->mutex);
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	desired_dr_role = dwc->desired_dr_role;
-+	spin_unlock_irqrestore(&dwc->lock, flags);
+ 	if (!info)
+ 		return BP_RESULT_BADINPUT;
+@@ -489,20 +490,17 @@ static enum bp_result get_gpio_i2c_info(
+ 			- sizeof(struct atom_common_table_header))
+ 				/ sizeof(struct atom_gpio_pin_assignment);
  
- 	pm_runtime_get_sync(dwc->dev);
++	pin = (struct atom_gpio_pin_assignment *) header->gpio_pin;
++
+ 	for (table_index = 0; table_index < count; table_index++) {
+-		if (((record->i2c_id & I2C_HW_CAP) == (
+-		header->gpio_pin[table_index].gpio_id &
+-						I2C_HW_CAP)) &&
+-		((record->i2c_id & I2C_HW_ENGINE_ID_MASK)  ==
+-		(header->gpio_pin[table_index].gpio_id &
+-					I2C_HW_ENGINE_ID_MASK)) &&
+-		((record->i2c_id & I2C_HW_LANE_MUX) ==
+-		(header->gpio_pin[table_index].gpio_id &
+-						I2C_HW_LANE_MUX))) {
++		if (((record->i2c_id & I2C_HW_CAP) 				== (pin->gpio_id & I2C_HW_CAP)) &&
++		    ((record->i2c_id & I2C_HW_ENGINE_ID_MASK)	== (pin->gpio_id & I2C_HW_ENGINE_ID_MASK)) &&
++		    ((record->i2c_id & I2C_HW_LANE_MUX) 		== (pin->gpio_id & I2C_HW_LANE_MUX))) {
+ 			/* still valid */
+ 			find_valid = true;
+ 			break;
+ 		}
++		pin = (struct atom_gpio_pin_assignment *)((uint8_t *)pin + sizeof(struct atom_gpio_pin_assignment));
+ 	}
  
- 	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_OTG)
- 		dwc3_otg_update(dwc, 0);
- 
--	if (!dwc->desired_dr_role)
-+	if (!desired_dr_role)
- 		goto out;
- 
--	if (dwc->desired_dr_role == dwc->current_dr_role)
-+	if (desired_dr_role == dwc->current_dr_role)
- 		goto out;
- 
--	if (dwc->desired_dr_role == DWC3_GCTL_PRTCAP_OTG && dwc->edev)
-+	if (desired_dr_role == DWC3_GCTL_PRTCAP_OTG && dwc->edev)
- 		goto out;
- 
- 	switch (dwc->current_dr_role) {
-@@ -164,7 +168,7 @@ static void __dwc3_set_mode(struct work_
- 	 */
- 	if (dwc->current_dr_role && ((DWC3_IP_IS(DWC3) ||
- 			DWC3_VER_IS_PRIOR(DWC31, 190A)) &&
--			dwc->desired_dr_role != DWC3_GCTL_PRTCAP_OTG)) {
-+			desired_dr_role != DWC3_GCTL_PRTCAP_OTG)) {
- 		reg = dwc3_readl(dwc->regs, DWC3_GCTL);
- 		reg |= DWC3_GCTL_CORESOFTRESET;
- 		dwc3_writel(dwc->regs, DWC3_GCTL, reg);
-@@ -184,11 +188,11 @@ static void __dwc3_set_mode(struct work_
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 
--	dwc3_set_prtcap(dwc, dwc->desired_dr_role);
-+	dwc3_set_prtcap(dwc, desired_dr_role);
- 
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
--	switch (dwc->desired_dr_role) {
-+	switch (desired_dr_role) {
- 	case DWC3_GCTL_PRTCAP_HOST:
- 		ret = dwc3_host_init(dwc);
- 		if (ret) {
+ 	/* If we don't find the entry that we are looking for then
+-- 
+2.35.1
+
 
 
