@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A302E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FE4C433D2;
-	Wed, 28 Dec 2022 15:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C80D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F42C433D2;
+	Wed, 28 Dec 2022 15:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240401;
-	bh=SBV3fhOxfYVj85du5pfVY+VQvTdVqOoix7ayqI5XTCQ=;
+	s=korg; t=1672240404;
+	bh=edwJE/5GKdEQLzVNsQcdR/Pm4OtdcjVi6HyhEOraRzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/zQ7qsXJDjCCJVkNXUfaOxrGiBlOIdRu4hRSG3wOUZQmppECUO7/r4B1zB8kiSp4
-	 3FvQCi9T4HoptTd2guPrrfXTgoPPcLB11TfUPtxIHhJymlqhb+Pv/LOb8s/XKJdyI0
-	 FFDKXBga8nropGaQ5W0A90DZhExs8l9Ws70iYYkk=
+	b=NkottGtAgNmG0bYKxsoRU0b3eVPzoov4TkC9ZcdsIPMJEFhwjVkIpjkXs9o/ou93g
+	 Tdbe+2fQFaNXAI871OP8+kQyCliBGxPYl/II/hNubByQKk+YZHP2uR3s7iwo1wBQHq
+	 ZRIUdZMO4GPWOrFIqXWiE6oIOT3D4B65I99Foe9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Auld <pauld@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Valentin Schneider <vschneid@redhat.com>,
+	xiongxin <xiongxin@kylinos.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0156/1073] cpu/hotplug: Make target_store() a nop when target == state
-Date: Wed, 28 Dec 2022 15:29:04 +0100
-Message-Id: <20221228144332.258162381@linuxfoundation.org>
+Subject: [PATCH 6.1 0118/1146] PM: hibernate: Fix mistake in kerneldoc comment
+Date: Wed, 28 Dec 2022 15:27:37 +0100
+Message-Id: <20221228144333.362964335@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,58 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phil Auld <pauld@redhat.com>
+From: xiongxin <xiongxin@kylinos.cn>
 
-[ Upstream commit 64ea6e44f85b9b75925ebe1ba0e6e8430cc4e06f ]
+[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
 
-Writing the current state back in hotplug/target calls cpu_down()
-which will set cpu dying even when it isn't and then nothing will
-ever clear it. A stress test that reads values and writes them back
-for all cpu device files in sysfs will trigger the BUG() in
-select_fallback_rq once all cpus are marked as dying.
+The actual maximum image size formula in hibernate_preallocate_memory()
+is as follows:
 
-kernel/cpu.c::target_store()
-	...
-        if (st->state < target)
-                ret = cpu_up(dev->id, target);
-        else
-                ret = cpu_down(dev->id, target);
+max_size = (count - (size + PAGES_FOR_IO)) / 2
+	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
 
-cpu_down() -> cpu_set_state()
-	 bool bringup = st->state < target;
-	 ...
-	 if (cpu_dying(cpu) != !bringup)
-		set_cpu_dying(cpu, !bringup);
+but the one in the kerneldoc comment of the function is different and
+incorrect.
 
-Fix this by letting state==target fall through in the target_store()
-conditional. Also make sure st->target == target in that case.
-
-Fixes: 757c989b9994 ("cpu/hotplug: Make target state writeable")
-Signed-off-by: Phil Auld <pauld@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://lore.kernel.org/r/20221117162329.3164999-2-pauld@redhat.com
+Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
+Signed-off-by: xiongxin <xiongxin@kylinos.cn>
+[ rjw: Subject and changelog rewrite ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/power/snapshot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index bbad5e375d3b..979de993f853 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2326,8 +2326,10 @@ static ssize_t target_store(struct device *dev, struct device_attribute *attr,
- 
- 	if (st->state < target)
- 		ret = cpu_up(dev->id, target);
--	else
-+	else if (st->state > target)
- 		ret = cpu_down(dev->id, target);
-+	else if (WARN_ON(st->target != target))
-+		st->target = target;
- out:
- 	unlock_device_hotplug();
- 	return ret ? ret : count;
+diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
+index 2a406753af90..c20ca5fb9adc 100644
+--- a/kernel/power/snapshot.c
++++ b/kernel/power/snapshot.c
+@@ -1723,8 +1723,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
+  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
+  * total number of available page frames and allocate at least
+  *
+- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
+- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
++ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
++ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
+  *
+  * of them, which corresponds to the maximum size of a hibernation image.
+  *
 -- 
 2.35.1
 
