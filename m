@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF351863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F17C433EF;
-	Wed, 28 Dec 2022 15:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C311863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E53C433D2;
+	Wed, 28 Dec 2022 15:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240258;
-	bh=4PNDDJZmArPkClOrlBSTTJGNXsNvzCzJ1ewJlq8/RAQ=;
+	s=korg; t=1672240261;
+	bh=3A+SBrRFxWKVJUUDtRJhCLdZyBljL+UkRhtIduD9JIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVzzNE/0bWeIuD4o3LYXGo9jPIp/yBwOyNWb+CBN+Qel4qNpnpecSqODB13z8Rw1W
-	 l6TZvzqwFtZrBcaDYKCLy/+PYJpGNI3KjrlNKHamyb+C8fIM6e1jvTe58Metb9KBJ3
-	 gBAKvO2WeMPg6DjCQXgoV09PE6AE2eySxT/XUzgQ=
+	b=tbGETk1yRb0No1OsdHFhy83zouSkXXXty2k4INUH8xBxGppmk4G0shsnhCrVZCvz4
+	 3/Iat5/ugXR4IZXraanSKgikfDO4WRnYwzDr+kJmOi+cLxE0o3BdTx/GPz2czaKR5S
+	 muTkI+6Z0iNPaXh2aRi1kuNZicw9WrpTkofFjr8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/731] net: farsync: Fix kmemleak when rmmods farsync
-Date: Wed, 28 Dec 2022 15:37:16 +0100
-Message-Id: <20221228144306.108498849@linuxfoundation.org>
+Subject: [PATCH 6.0 0131/1073] perf/x86/intel/uncore: Fix reference count leak in snr_uncore_mmio_map()
+Date: Wed, 28 Dec 2022 15:28:39 +0100
+Message-Id: <20221228144331.593208211@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,73 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
+[ Upstream commit 8ebd16c11c346751b3944d708e6c181ed4746c39 ]
 
-There are two memory leaks reported by kmemleak:
+pci_get_device() will increase the reference count for the returned
+pci_dev, so snr_uncore_get_mc_dev() will return a pci_dev with its
+reference count increased. We need to call pci_dev_put() to decrease the
+reference count. Let's add the missing pci_dev_put().
 
-  unreferenced object 0xffff888114b20200 (size 128):
-    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
-    hex dump (first 32 bytes):
-      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
-      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
-      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
-      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
-      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
-      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
-      ...
-
-  unreferenced object 0xffff88810b85b000 (size 1024):
-    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
-    hex dump (first 32 bytes):
-      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
-      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
-      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
-      ...
-
-The root cause is traced to the netdev and fst_card_info are not freed
-when removes one fst in fst_remove_one(), which may trigger oom if
-repeated insmod and rmmod module.
-
-Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
-the operations on the error handling path in fst_add_one().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ee49532b38dd ("perf/x86/intel/uncore: Add IMC uncore support for Snow Ridge")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-4-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/farsync.c | 2 ++
+ arch/x86/events/intel/uncore_snbep.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
-index 6a212c085435..5b01642ca44e 100644
---- a/drivers/net/wan/farsync.c
-+++ b/drivers/net/wan/farsync.c
-@@ -2545,6 +2545,7 @@ fst_remove_one(struct pci_dev *pdev)
- 		struct net_device *dev = port_to_dev(&card->ports[i]);
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index f5d89d06c66a..fcd95e93f479 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -4860,6 +4860,8 @@ static int snr_uncore_mmio_map(struct intel_uncore_box *box,
  
- 		unregister_hdlc_device(dev);
-+		free_netdev(dev);
- 	}
+ 	addr += box_ctl;
  
- 	fst_disable_intr(card);
-@@ -2564,6 +2565,7 @@ fst_remove_one(struct pci_dev *pdev)
- 				  card->tx_dma_handle_card);
- 	}
- 	fst_card_array[card->card_no] = NULL;
-+	kfree(card);
- }
- 
- static struct pci_driver fst_driver = {
++	pci_dev_put(pdev);
++
+ 	box->io_addr = ioremap(addr, type->mmio_map_size);
+ 	if (!box->io_addr) {
+ 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
 -- 
 2.35.1
 
