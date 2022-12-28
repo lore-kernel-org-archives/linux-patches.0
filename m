@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1F91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BE2C433D2;
-	Wed, 28 Dec 2022 15:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47831863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B559C433D2;
+	Wed, 28 Dec 2022 15:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240823;
-	bh=sjzpE6TxXOaGfUktNUd1mvH/NHxqVsA8dOzS25AlQig=;
+	s=korg; t=1672240825;
+	bh=jfjp/KrRJr+yQlwZ0vq7i1pSXYJXqrDmU6xt2zQDhL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWViMmjCToVUYnn0j+qezNy0VbsqwAfW0yG49F/DOv7V8qEV9zIzBOZ9fniqBngOB
-	 X90zCGAdzdbJtIBLuXuyfSqbzfKTKnHN6jvZWjBF1k/YLZieAT6ygm6aahnVWcHWOF
-	 VRO5i2zIn8ly8eFBEbZ5OqF5p/FrO16c5VZpxGS4=
+	b=dB0HZ/q4ANjmdAXAxmi9AF+ZLLF6LBw7qaVFnqOx9xSz9XYnavCjWCPz72D3QqD8E
+	 bI0rsiZaTAyrnZ46cfhrclE9l7ItGIEkYggb9BzFlwvl01KXVhHecfu0rwiPVcbHon
+	 gYABCa6QadoFOVrUsaydP88sG5Kh3P4q0vpfmrNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0171/1146] x86/xen: Fix memory leak in xen_init_lock_cpu()
-Date: Wed, 28 Dec 2022 15:28:30 +0100
-Message-Id: <20221228144334.803412167@linuxfoundation.org>
+Subject: [PATCH 6.0 0207/1073] libbpf: Use elf_getshdrnum() instead of e_shnum
+Date: Wed, 28 Dec 2022 15:29:55 +0100
+Message-Id: <20221228144333.642896355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit ca84ce153d887b1dc8b118029976cc9faf2a9b40 ]
+[ Upstream commit 51deedc9b8680953437dfe359e5268120de10e30 ]
 
-In xen_init_lock_cpu(), the @name has allocated new string by kasprintf(),
-if bind_ipi_to_irqhandler() fails, it should be freed, otherwise may lead
-to a memory leak issue, fix it.
+This commit replace e_shnum with the elf_getshdrnum() helper to fix two
+oss-fuzz-reported heap-buffer overflow in __bpf_object__open. Both
+reports are incorrectly marked as fixed and while still being
+reproducible in the latest libbpf.
 
-Fixes: 2d9e1e2f58b5 ("xen: implement Xen-specific spinlocks")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221123155858.11382-3-xiujianfeng@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+  # clusterfuzz-testcase-minimized-bpf-object-fuzzer-5747922482888704
+  libbpf: loading object 'fuzz-object' from buffer
+  libbpf: sec_cnt is 0
+  libbpf: elf: section(1) .data, size 0, link 538976288, flags 2020202020202020, type=2
+  libbpf: elf: section(2) .data, size 32, link 538976288, flags 202020202020ff20, type=1
+  =================================================================
+  ==13==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000c0 at pc 0x0000005a7b46 bp 0x7ffd12214af0 sp 0x7ffd12214ae8
+  WRITE of size 4 at 0x6020000000c0 thread T0
+  SCARINESS: 46 (4-byte-write-heap-buffer-overflow-far-from-bounds)
+      #0 0x5a7b45 in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3414:24
+      #1 0x5733c0 in bpf_object_open /src/libbpf/src/libbpf.c:7223:16
+      #2 0x5739fd in bpf_object__open_mem /src/libbpf/src/libbpf.c:7263:20
+      ...
+
+The issue lie in libbpf's direct use of e_shnum field in ELF header as
+the section header count. Where as libelf implemented an extra logic
+that, when e_shnum == 0 && e_shoff != 0, will use sh_size member of the
+initial section header as the real section header count (part of ELF
+spec to accommodate situation where section header counter is larger
+than SHN_LORESERVE).
+
+The above inconsistency lead to libbpf writing into a zero-entry calloc
+area. So intead of using e_shnum directly, use the elf_getshdrnum()
+helper provided by libelf to retrieve the section header counter into
+sec_cnt.
+
+Fixes: 0d6988e16a12 ("libbpf: Fix section counting logic")
+Fixes: 25bbbd7a444b ("libbpf: Remove assumptions about uniqueness of .rodata/.data/.bss maps")
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=40868
+Link: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=40957
+Link: https://lore.kernel.org/bpf/20221012022353.7350-2-shung-hsi.yu@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/spinlock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/xen/spinlock.c b/arch/x86/xen/spinlock.c
-index 043c73dfd2c9..5c6fc16e4b92 100644
---- a/arch/x86/xen/spinlock.c
-+++ b/arch/x86/xen/spinlock.c
-@@ -75,6 +75,7 @@ void xen_init_lock_cpu(int cpu)
- 	     cpu, per_cpu(lock_kicker_irq, cpu));
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 264790796001..7f3cec7e7349 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -590,7 +590,7 @@ struct elf_state {
+ 	size_t shstrndx; /* section index for section name strings */
+ 	size_t strtabidx;
+ 	struct elf_sec_desc *secs;
+-	int sec_cnt;
++	size_t sec_cnt;
+ 	int btf_maps_shndx;
+ 	__u32 btf_maps_sec_btf_id;
+ 	int text_shndx;
+@@ -3282,10 +3282,15 @@ static int bpf_object__elf_collect(struct bpf_object *obj)
+ 	Elf64_Shdr *sh;
  
- 	name = kasprintf(GFP_KERNEL, "spinlock%d", cpu);
-+	per_cpu(irq_name, cpu) = name;
- 	irq = bind_ipi_to_irqhandler(XEN_SPIN_UNLOCK_VECTOR,
- 				     cpu,
- 				     dummy_handler,
-@@ -85,7 +86,6 @@ void xen_init_lock_cpu(int cpu)
- 	if (irq >= 0) {
- 		disable_irq(irq); /* make sure it's never delivered */
- 		per_cpu(lock_kicker_irq, cpu) = irq;
--		per_cpu(irq_name, cpu) = name;
- 	}
- 
- 	printk("cpu %d spinlock event irq %d\n", cpu, irq);
-@@ -98,6 +98,8 @@ void xen_uninit_lock_cpu(int cpu)
- 	if (!xen_pvspin)
- 		return;
- 
-+	kfree(per_cpu(irq_name, cpu));
-+	per_cpu(irq_name, cpu) = NULL;
- 	/*
- 	 * When booting the kernel with 'mitigations=auto,nosmt', the secondary
- 	 * CPUs are not activated, and lock_kicker_irq is not initialized.
-@@ -108,8 +110,6 @@ void xen_uninit_lock_cpu(int cpu)
- 
- 	unbind_from_irqhandler(irq, NULL);
- 	per_cpu(lock_kicker_irq, cpu) = -1;
--	kfree(per_cpu(irq_name, cpu));
--	per_cpu(irq_name, cpu) = NULL;
- }
- 
- PV_CALLEE_SAVE_REGS_THUNK(xen_vcpu_stolen);
+ 	/* ELF section indices are 0-based, but sec #0 is special "invalid"
+-	 * section. e_shnum does include sec #0, so e_shnum is the necessary
+-	 * size of an array to keep all the sections.
++	 * section. Since section count retrieved by elf_getshdrnum() does
++	 * include sec #0, it is already the necessary size of an array to keep
++	 * all the sections.
+ 	 */
+-	obj->efile.sec_cnt = obj->efile.ehdr->e_shnum;
++	if (elf_getshdrnum(obj->efile.elf, &obj->efile.sec_cnt)) {
++		pr_warn("elf: failed to get the number of sections for %s: %s\n",
++			obj->path, elf_errmsg(-1));
++		return -LIBBPF_ERRNO__FORMAT;
++	}
+ 	obj->efile.secs = calloc(obj->efile.sec_cnt, sizeof(*obj->efile.secs));
+ 	if (!obj->efile.secs)
+ 		return -ENOMEM;
 -- 
 2.35.1
 
