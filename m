@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD661C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86307C433EF;
-	Wed, 28 Dec 2022 16:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F5A1C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35365C433F0;
+	Wed, 28 Dec 2022 16:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246150;
-	bh=jlpB92qp8qPbGD3eBHDDa59gnNq7MLHT6unlOv+GfzY=;
+	s=korg; t=1672246153;
+	bh=7kbCR2crzDvx9icrq7XfxiKCXACYh1djJjgz3X3iK4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSVeWPZmCelAMSM3lP4zJWPcKtcbgAi0Ca9j2dXq9UgE05oh7/hE56W3qfIzxRgQ6
-	 K65AYpcA36tF5mqpn6admHMunfenMqtgCenRzct5tTIywK92TvDSiKTETPoKui+fzf
-	 9vILStcngqd0Igbj4aHfAGdcd1iIsoZJ83qHLiKc=
+	b=AJJSar5/aDiqY+PfMJ0+uYnOHFF3VDb6zI0syk77/zCEfANHs6yRnScCthyRKam8i
+	 Szzj5z3LT4D6SBz530dgJ5o8gZiT+bQk2ozUpKuiAOSjrQ30KrmLZPDfrGPgcLRCiD
+	 4+nWvq93tS2cI5FbV30iqNItO7q6RptZKUk5xnR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0989/1146] hamradio: baycom_epp: Fix return type of baycom_send_packet()
-Date: Wed, 28 Dec 2022 15:42:08 +0100
-Message-Id: <20221228144357.227513619@linuxfoundation.org>
+Subject: [PATCH 6.0 1021/1073] ima: Simplify ima_lsm_copy_rule
+Date: Wed, 28 Dec 2022 15:43:29 +0100
+Message-Id: <20221228144355.921710026@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit c5733e5b15d91ab679646ec3149e192996a27d5d ]
+[ Upstream commit d57378d3aa4d864d9e590482602068af1b20c0c5 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Currently ima_lsm_copy_rule() set the arg_p field of the source rule to
+NULL, so that the source rule could be freed afterward. It does not make
+sense for this behavior to be inside a "copy" function. So move it
+outside and let the caller handle this field.
 
-  drivers/net/hamradio/baycom_epp.c:1119:25: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit      = baycom_send_packet,
-                                ^~~~~~~~~~~~~~~~~~
-  1 error generated.
+ima_lsm_copy_rule() now produce a shallow copy of the original entry
+including args_p field. Meaning only the lsm.rule and the rule itself
+should be freed for the original rule. Thus, instead of calling
+ima_lsm_free_rule() which frees lsm.rule as well as args_p field, free
+the lsm.rule directly.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of baycom_send_packet()
-to match the prototype's to resolve the warning and CFI failure.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102160610.1186145-1-nathan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/baycom_epp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/integrity/ima/ima_policy.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
-index 791b4a53d69f..bd3b0c2655a2 100644
---- a/drivers/net/hamradio/baycom_epp.c
-+++ b/drivers/net/hamradio/baycom_epp.c
-@@ -758,7 +758,7 @@ static void epp_bh(struct work_struct *work)
-  * ===================== network driver interface =========================
-  */
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index bb3707160b01..2edff7f58c25 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -398,12 +398,6 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
  
--static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 		nentry->lsm[i].type = entry->lsm[i].type;
+ 		nentry->lsm[i].args_p = entry->lsm[i].args_p;
+-		/*
+-		 * Remove the reference from entry so that the associated
+-		 * memory will not be freed during a later call to
+-		 * ima_lsm_free_rule(entry).
+-		 */
+-		entry->lsm[i].args_p = NULL;
+ 
+ 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
+ 				     nentry->lsm[i].args_p,
+@@ -417,6 +411,7 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
+ 
+ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
  {
- 	struct baycom_state *bc = netdev_priv(dev);
++	int i;
+ 	struct ima_rule_entry *nentry;
  
+ 	nentry = ima_lsm_copy_rule(entry);
+@@ -431,7 +426,8 @@ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ 	 * references and the entry itself. All other memory references will now
+ 	 * be owned by nentry.
+ 	 */
+-	ima_lsm_free_rule(entry);
++	for (i = 0; i < MAX_LSM_RULES; i++)
++		ima_filter_rule_free(entry->lsm[i].rule);
+ 	kfree(entry);
+ 
+ 	return 0;
 -- 
 2.35.1
 
