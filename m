@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17551863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B76EC433D2;
-	Wed, 28 Dec 2022 15:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7D01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C48C433D2;
+	Wed, 28 Dec 2022 15:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241724;
-	bh=equXzBOScuNHFwsjvnhCbdOTD/DBMaXGysdemzxdUE8=;
+	s=korg; t=1672241727;
+	bh=9KD5OCoC0YJkvftoA1jVJtMMDw0Lti+yrxap7kps9gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtpGH+IZRZcbF3RU96TG1zZLuH66qAkjIo1fyWOK2qzOik5LCaja1R3wjBOVtZVCp
-	 nLd+AnB+DgiNJ/I6fNqXpHtb/UpQZkngdmQoGgAQD/c6m3SuYrWC2tN95p8pfg0HtS
-	 r5ClpocR0JKvmhrvRmqqvDm7crpisXIMMOBu37LY=
+	b=pWwUbR+2ZspX922p0CY5EWvrqra+Ohn63K8rXf0bA7i2V3mzkEpxeDQUWGYwASXUJ
+	 WS3Of2RyJQ5w3VOesTq3DPghE7eeu5uOKRT6whqKB63mYRcGRpK2nms8CtHxrY5FfI
+	 hFDKmmnNTB0bjeYcUHu55tFJV6tjsiU+gtYkfzJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0320/1073] ASoC: pxa: fix null-pointer dereference in filter()
-Date: Wed, 28 Dec 2022 15:31:48 +0100
-Message-Id: <20221228144336.700205059@linuxfoundation.org>
+Subject: [PATCH 6.1 0282/1146] drm/msm/dsi: Appropriately set dsc->mux_word_size based on bpc
+Date: Wed, 28 Dec 2022 15:30:21 +0100
+Message-Id: <20221228144337.799585902@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit ec7bf231aaa1bdbcb69d23bc50c753c80fb22429 ]
+[ Upstream commit 0ca870ca304d3449b2ccdc3f0bad9843ff1519f0 ]
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-Need to check the return pointer before calling strcmp().
+This field is currently unread but will come into effect when duplicated
+code below is migrated to call drm_dsc_compute_rc_parameters(), which
+uses the bpc-dependent value of the local variable mux_words_size in
+much the same way.
 
-Fixes: 7a824e214e25 ("ASoC: mmp: add audio dma support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221114085629.1910435-1-zengheng4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The hardcoded constant seems to be a remnant from the `/* bpc 8 */`
+comment right above, indicating that this group of field assignments is
+applicable to bpc = 8 exclusively and should probably bail out on
+different bpc values, until constants for other bpc values are added (or
+the current ones are confirmed to be correct across multiple bpc's).
+
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508943/
+Link: https://lore.kernel.org/r/20221026182824.876933-6-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/mmp-pcm.c | 2 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/pxa/mmp-pcm.c b/sound/soc/pxa/mmp-pcm.c
-index 5d520e18e512..99b245e3079a 100644
---- a/sound/soc/pxa/mmp-pcm.c
-+++ b/sound/soc/pxa/mmp-pcm.c
-@@ -98,7 +98,7 @@ static bool filter(struct dma_chan *chan, void *param)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index c3156e9066f5..906ee38133c1 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1786,6 +1786,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	if (dsc->bits_per_component == 12)
+ 		mux_words_size = 64;
  
- 	devname = kasprintf(GFP_KERNEL, "%s.%d", dma_data->dma_res->name,
- 		dma_data->ssp_id);
--	if ((strcmp(dev_name(chan->device->dev), devname) == 0) &&
-+	if (devname && (strcmp(dev_name(chan->device->dev), devname) == 0) &&
- 		(chan->chan_id == dma_data->dma_res->start)) {
- 		found = true;
- 	}
++	dsc->mux_word_size = mux_words_size;
+ 	dsc->initial_xmit_delay = 512;
+ 	dsc->initial_scale_value = 32;
+ 	dsc->first_line_bpg_offset = 12;
+@@ -1796,7 +1797,6 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	dsc->flatness_max_qp = 12;
+ 	dsc->rc_quant_incr_limit0 = 11;
+ 	dsc->rc_quant_incr_limit1 = 11;
+-	dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+ 
+ 	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+ 	 * params are calculated
 -- 
 2.35.1
 
