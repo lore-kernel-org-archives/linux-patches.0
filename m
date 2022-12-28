@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20AB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0B9C433D2;
-	Wed, 28 Dec 2022 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFDD1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028E4C433EF;
+	Wed, 28 Dec 2022 16:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244005;
-	bh=/NlQ00/LR5XlA2MbDUa67/WFKNqh5ldcsIfdZ3E2JnI=;
+	s=korg; t=1672244008;
+	bh=DjK8F8iE3Z01tKYaGE96lJvosdA9ktOtD+1ozokc7oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuyZ/mK43l4B97PoR/NqJ8p+ygMIktC3gw18iEbSqo/wR3U7RYxkcoICMbniAPhNn
-	 HJsfsxK7e2juqOiIQosrJWdJTKxRU9KxPqpk8XLs4UQ6YEUV8NXQKIpOW9u7is8lDe
-	 f+wHmz2N2V8SGq1qXSuApzeAASrB4ATgLeBgQbXQ=
+	b=VUnKDKZMya5hDm5nSYJjBlPGcODC5Brf9sVeNiua3gQMag3aqq98/5ZmX7xlbJgE+
+	 Ekm8P3h+ETGukr4GuZS61pevm9xbuOBF7FVwDV40JzNGVzg4cbf7mgkl9MmgX91Ivg
+	 yybbG9pWyPc0k428A+CMmtcnqaOxYOwhhNhfwlk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-hardening@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0630/1073] scsi: hisi_sas: Fix SATA devices missing issue during I_T nexus reset
-Date: Wed, 28 Dec 2022 15:36:58 +0100
-Message-Id: <20221228144345.153489765@linuxfoundation.org>
+Subject: [PATCH 6.1 0594/1146] fortify: Do not cast to "unsigned char"
+Date: Wed, 28 Dec 2022 15:35:33 +0100
+Message-Id: <20221228144346.305005394@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,74 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Zhan <zhanjie9@hisilicon.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 3c2673a09cf1181318c07b7dbc1bc532ba3d33e3 ]
+[ Upstream commit e9a40e1585d792751d3a122392695e5a53032809 ]
 
-SATA devices on an expander may be removed and not be found again when I_T
-nexus reset and revalidation are processed simultaneously.
+Do not cast to "unsigned char", as this needlessly creates type problems
+when attempting builds without -Wno-pointer-sign[1]. The intent of the
+cast is to drop possible "const" types.
 
-The issue comes from:
+[1] https://lore.kernel.org/lkml/CAHk-=wgz3Uba8w7kdXhsqR1qvfemYL+OFQdefJnkeqXG8qZ_pA@mail.gmail.com/
 
- - Revalidation can remove SATA devices in link reset, e.g. in
-   hisi_sas_clear_nexus_ha().
-
- - However, hisi_sas_debug_I_T_nexus_reset() polls the state of a SATA
-   device on an expander after sending link_reset, where it calls:
-    hisi_sas_debug_I_T_nexus_reset
-     sas_ata_wait_after_reset
-      ata_wait_after_reset
-       ata_wait_ready
-        smp_ata_check_ready
-         sas_ex_phy_discover
-          sas_ex_phy_discover_helper
-           sas_set_ex_phy
-
-   The ex_phy's change count is updated in sas_set_ex_phy(), so SATA
-   devices after a link reset may not be found later through revalidation.
-
-A similar issue was reported in:
-commit 0f3fce5cc77e ("[SCSI] libsas: fix ata_eh clobbering ex_phys via
-smp_ata_check_ready")
-commit 87c8331fcf72 ("[SCSI] libsas: prevent domain rediscovery competing
-with ata error handling").
-
-To address this issue, in hisi_sas_debug_I_T_nexus_reset(), we now call
-smp_ata_check_ready_type() that only polls the device type while not
-updating the ex_phy's data of libsas.
-
-Fixes: 71453bd9d1bf ("scsi: hisi_sas: Use sas_ata_wait_after_reset() in IT nexus reset")
-Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
-Link: https://lore.kernel.org/r/20221118083714.4034612-5-zhanjie9@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 3009f891bb9f ("fortify: Allow strlen() and strnlen() to pass compile-time known lengths")
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/linux/fortify-string.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 33af5b8dede2..f4f9e5abee76 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1701,13 +1701,15 @@ static int hisi_sas_debug_I_T_nexus_reset(struct domain_device *device)
- 		return rc;
- 	}
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index 1067a8450826..5001a11258e4 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -18,7 +18,7 @@ void __write_overflow_field(size_t avail, size_t wanted) __compiletime_warning("
  
-+	/* Remote phy */
- 	if (rc)
- 		return rc;
- 
--	/* Remote phy */
- 	if (dev_is_sata(device)) {
--		rc = sas_ata_wait_after_reset(device,
--					HISI_SAS_WAIT_PHYUP_TIMEOUT);
-+		struct ata_link *link = &device->sata_dev.ap->link;
-+
-+		rc = ata_wait_after_reset(link, HISI_SAS_WAIT_PHYUP_TIMEOUT,
-+					  smp_ata_check_ready_type);
- 	} else {
- 		msleep(2000);
- 	}
+ #define __compiletime_strlen(p)					\
+ ({								\
+-	unsigned char *__p = (unsigned char *)(p);		\
++	char *__p = (char *)(p);				\
+ 	size_t __ret = SIZE_MAX;				\
+ 	size_t __p_size = __member_size(p);			\
+ 	if (__p_size != SIZE_MAX &&				\
 -- 
 2.35.1
 
