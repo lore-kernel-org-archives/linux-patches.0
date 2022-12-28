@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400C11C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E68C433EF;
-	Wed, 28 Dec 2022 16:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD791C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62842C433EF;
+	Wed, 28 Dec 2022 16:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244319;
-	bh=T+ryu8MnxTP6FHzZocOI//VvbmOWAWokcXt5BNRmk0k=;
+	s=korg; t=1672244321;
+	bh=ggYCZCSu+o++irCI2zbzpAGM7+IKkejY1SenxfhOwMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFtnPbJa9qlqP1FrwOWgygwE+1injLrcsH8CrULInczMIA+FVcHsypaNzzPyVbKCD
-	 KQ3ddLCyeDfgxdrI5RtLo8lI0ygHHfIx4RR+SAGmZw7X1DIDNO3E7ailhpDQL4RMDm
-	 jDG0vREtI6fUF5uB1qkEj2N6Bm38iOIKwaWCrLoc=
+	b=yUD2Jqt/pHBKpLMsfTJBAzsXRjHDsHQuHv2l4su5cqVx0XADftWrSH56BmNXe1s2/
+	 LaaCZfj1R+111XlXGntrqL3cgMiraV3F8biGPvf4HvPuBCc5vI/pvS/aIkpUDX0IqO
+	 qhdBN2eC+XzFbUoGq2gFyx4qucIJjWiuDCb+/ApY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marek Vasut <marex@denx.de>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0650/1146] scsi: scsi_debug: Fix a warning in resp_report_zones()
-Date: Wed, 28 Dec 2022 15:36:29 +0100
-Message-Id: <20221228144347.813195876@linuxfoundation.org>
+Subject: [PATCH 6.0 0682/1073] extcon: usbc-tusb320: Update state on probe even if no IRQ pending
+Date: Wed, 28 Dec 2022 15:37:50 +0100
+Message-Id: <20221228144346.560978139@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 07f2ca139d9a7a1ba71c4c03997c8de161db2346 ]
+[ Upstream commit 581c848b610dbf3fe1ed4d85fd53d0743c61faba ]
 
-As 'alloc_len' is user controlled data, if user tries to allocate memory
-larger than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack
-trace and messes up dmesg with a warning.
+Currently this driver triggers extcon and typec state update in its
+probe function, to read out current state reported by the chip and
+report the correct state to upper layers. This synchronization is
+performed correctly, but only in case the chip indicates a pending
+interrupt in reg09 register.
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
+This fails to cover the situation where all interrupts reported by
+the chip were already handled by Linux before reboot, then the system
+rebooted, and then Linux starts again. In this case, the TUSB320 no
+longer reports any interrupts in reg09, and the state update does not
+perform any update as it depends on that interrupt indication.
 
-Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221112070612.2121535-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix this by turning tusb320_irq_handler() into a thin wrapper around
+tusb320_state_update_handler(), where the later now contains the bulk
+of the code of tusb320_irq_handler(), but adds new function parameter
+"force_update". The "force_update" parameter can be used by the probe
+function to assure that the state synchronization is always performed,
+independent of the interrupt indicated in reg09. The interrupt handler
+tusb320_irq_handler() callback uses force_update=false to avoid state
+updates on potential spurious interrupts and retain current behavior.
+
+Fixes: 06bc4ca115cdd ("extcon: Add driver for TI TUSB320")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221120141509.81012-1-marex@denx.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/extcon/extcon-usbc-tusb320.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 78cfb706a4a7..20e64b7d3f7b 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4504,7 +4504,7 @@ static int resp_report_zones(struct scsi_cmnd *scp,
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index edb8c3f997c9..b0f6e16ab0a9 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -313,9 +313,9 @@ static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
+ 		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
+ }
  
- 	rep_max_zones = (alloc_len - 64) >> ilog2(RZONES_DESC_HD);
+-static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++static irqreturn_t tusb320_state_update_handler(struct tusb320_priv *priv,
++						bool force_update)
+ {
+-	struct tusb320_priv *priv = dev_id;
+ 	unsigned int reg;
  
--	arr = kzalloc(alloc_len, GFP_ATOMIC);
-+	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ 	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
+@@ -323,7 +323,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 		return IRQ_NONE;
+ 	}
+ 
+-	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
++	if (!force_update && !(reg & TUSB320_REG9_INTERRUPT_STATUS))
+ 		return IRQ_NONE;
+ 
+ 	tusb320_extcon_irq_handler(priv, reg);
+@@ -334,6 +334,13 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
++static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++{
++	struct tusb320_priv *priv = dev_id;
++
++	return tusb320_state_update_handler(priv, false);
++}
++
+ static const struct regmap_config tusb320_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+@@ -460,7 +467,7 @@ static int tusb320_probe(struct i2c_client *client,
+ 		return ret;
+ 
+ 	/* update initial state */
+-	tusb320_irq_handler(client->irq, priv);
++	tusb320_state_update_handler(priv, true);
+ 
+ 	/* Reset chip to its default state */
+ 	ret = tusb320_reset(priv);
+@@ -471,7 +478,7 @@ static int tusb320_probe(struct i2c_client *client,
+ 		 * State and polarity might change after a reset, so update
+ 		 * them again and make sure the interrupt status bit is cleared.
+ 		 */
+-		tusb320_irq_handler(client->irq, priv);
++		tusb320_state_update_handler(priv, true);
+ 
+ 	ret = devm_request_threaded_irq(priv->dev, client->irq, NULL,
+ 					tusb320_irq_handler,
 -- 
 2.35.1
 
