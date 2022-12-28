@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD791C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62842C433EF;
-	Wed, 28 Dec 2022 16:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E701C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F096BC433D2;
+	Wed, 28 Dec 2022 16:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244321;
-	bh=ggYCZCSu+o++irCI2zbzpAGM7+IKkejY1SenxfhOwMU=;
+	s=korg; t=1672244324;
+	bh=WYTj24gHWOgJnCuBWpN5rv/BxgI9Y51+WK1pKanmyzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUD2Jqt/pHBKpLMsfTJBAzsXRjHDsHQuHv2l4su5cqVx0XADftWrSH56BmNXe1s2/
-	 LaaCZfj1R+111XlXGntrqL3cgMiraV3F8biGPvf4HvPuBCc5vI/pvS/aIkpUDX0IqO
-	 qhdBN2eC+XzFbUoGq2gFyx4qucIJjWiuDCb+/ApY=
+	b=GPtIbhXcLB8dshxlf4BJwkjrC2AmB4EtsK8MtykwOvUFp/xib1lks+Yd8B4sa8O+6
+	 Z46Wc+bw045LoX3UlTUBJn7+eXaLH4SCsbWeP7KHgJ3exzCb+73vRF49ivhzfxuFgG
+	 3TNAIFT7zEB56CDJT2XOCtAlCsj1c/5qMJC6lMC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0682/1073] extcon: usbc-tusb320: Update state on probe even if no IRQ pending
-Date: Wed, 28 Dec 2022 15:37:50 +0100
-Message-Id: <20221228144346.560978139@linuxfoundation.org>
+Subject: [PATCH 6.0 0691/1073] serial: sunsab: Fix error handling in sunsab_init()
+Date: Wed, 28 Dec 2022 15:37:59 +0100
+Message-Id: <20221228144346.803065876@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,99 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 581c848b610dbf3fe1ed4d85fd53d0743c61faba ]
+[ Upstream commit 1a6ec673fb627c26e2267ca0a03849f91dbd9b40 ]
 
-Currently this driver triggers extcon and typec state update in its
-probe function, to read out current state reported by the chip and
-report the correct state to upper layers. This synchronization is
-performed correctly, but only in case the chip indicates a pending
-interrupt in reg09 register.
+The sunsab_init() returns the platform_driver_register() directly without
+checking its return value, if platform_driver_register() failed, the
+allocated sunsab_ports is leaked.
+Fix by free sunsab_ports and set it to NULL when platform_driver_register()
+failed.
 
-This fails to cover the situation where all interrupts reported by
-the chip were already handled by Linux before reboot, then the system
-rebooted, and then Linux starts again. In this case, the TUSB320 no
-longer reports any interrupts in reg09, and the state update does not
-perform any update as it depends on that interrupt indication.
-
-Fix this by turning tusb320_irq_handler() into a thin wrapper around
-tusb320_state_update_handler(), where the later now contains the bulk
-of the code of tusb320_irq_handler(), but adds new function parameter
-"force_update". The "force_update" parameter can be used by the probe
-function to assure that the state synchronization is always performed,
-independent of the interrupt indicated in reg09. The interrupt handler
-tusb320_irq_handler() callback uses force_update=false to avoid state
-updates on potential spurious interrupts and retain current behavior.
-
-Fixes: 06bc4ca115cdd ("extcon: Add driver for TI TUSB320")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221120141509.81012-1-marex@denx.de
+Fixes: c4d37215a824 ("[SERIAL] sunsab: Convert to of_driver framework.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221123061212.52593-1-yuancan@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-usbc-tusb320.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/tty/serial/sunsab.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
-index edb8c3f997c9..b0f6e16ab0a9 100644
---- a/drivers/extcon/extcon-usbc-tusb320.c
-+++ b/drivers/extcon/extcon-usbc-tusb320.c
-@@ -313,9 +313,9 @@ static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
- 		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
- }
- 
--static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
-+static irqreturn_t tusb320_state_update_handler(struct tusb320_priv *priv,
-+						bool force_update)
- {
--	struct tusb320_priv *priv = dev_id;
- 	unsigned int reg;
- 
- 	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
-@@ -323,7 +323,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
+diff --git a/drivers/tty/serial/sunsab.c b/drivers/tty/serial/sunsab.c
+index 6ea52293d9f3..7c10715dace8 100644
+--- a/drivers/tty/serial/sunsab.c
++++ b/drivers/tty/serial/sunsab.c
+@@ -1137,7 +1137,13 @@ static int __init sunsab_init(void)
+ 		}
  	}
  
--	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
-+	if (!force_update && !(reg & TUSB320_REG9_INTERRUPT_STATUS))
- 		return IRQ_NONE;
- 
- 	tusb320_extcon_irq_handler(priv, reg);
-@@ -334,6 +334,13 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
- 	return IRQ_HANDLED;
+-	return platform_driver_register(&sab_driver);
++	err = platform_driver_register(&sab_driver);
++	if (err) {
++		kfree(sunsab_ports);
++		sunsab_ports = NULL;
++	}
++
++	return err;
  }
  
-+static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
-+{
-+	struct tusb320_priv *priv = dev_id;
-+
-+	return tusb320_state_update_handler(priv, false);
-+}
-+
- static const struct regmap_config tusb320_regmap_config = {
- 	.reg_bits = 8,
- 	.val_bits = 8,
-@@ -460,7 +467,7 @@ static int tusb320_probe(struct i2c_client *client,
- 		return ret;
- 
- 	/* update initial state */
--	tusb320_irq_handler(client->irq, priv);
-+	tusb320_state_update_handler(priv, true);
- 
- 	/* Reset chip to its default state */
- 	ret = tusb320_reset(priv);
-@@ -471,7 +478,7 @@ static int tusb320_probe(struct i2c_client *client,
- 		 * State and polarity might change after a reset, so update
- 		 * them again and make sure the interrupt status bit is cleared.
- 		 */
--		tusb320_irq_handler(client->irq, priv);
-+		tusb320_state_update_handler(priv, true);
- 
- 	ret = devm_request_threaded_irq(priv->dev, client->irq, NULL,
- 					tusb320_irq_handler,
+ static void __exit sunsab_exit(void)
 -- 
 2.35.1
 
