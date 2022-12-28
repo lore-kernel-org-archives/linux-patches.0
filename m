@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC391C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D914CC433D2;
-	Wed, 28 Dec 2022 16:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134441C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B059C433D2;
+	Wed, 28 Dec 2022 16:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244308;
-	bh=HL9Z5az8kD/QzVD8Tl1m3WFfIGrwKpFflLCoa51sxNU=;
+	s=korg; t=1672244310;
+	bh=Dr+GMs5eYm71nhfoKWU52kmmQBaUJs9bzkkTg7LfDHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NFsDJ7LGbga9J2YQbzpC27nACJQZKbSKfLVe3Anavhi80K0z9ODE8WuWoM43fGtiB
-	 HbifwKDrHQamOjkPo7PINt3A/CuUJVJjA7qmIZEjv9+7RsRE6Gm/QGeLtX8bvdjccc
-	 p5ZqLYnA80bTjFoorEPa1DZ2/HpESIy6dKCZ+6Mc=
+	b=Ov6QSNvIL5B6TCjMsKikjJqi8w0t0i1KYHPgYUUkfPfW0F/dEzt3Bu8L4U4g+P30Y
+	 HLx8IyYzOPIamb4nqt5ehRFcl5YlUP5m2OU2xctDleVUwf2DTpQbUoxBcPO+5rli9r
+	 j9Hf0mKjSx4BXdZpxS+CXrycENiiWJ+N0pcPBADM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0648/1146] scsi: efct: Fix possible memleak in efct_device_init()
-Date: Wed, 28 Dec 2022 15:36:27 +0100
-Message-Id: <20221228144347.759736648@linuxfoundation.org>
+Subject: [PATCH 6.0 0689/1073] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
+Date: Wed, 28 Dec 2022 15:37:57 +0100
+Message-Id: <20221228144346.749458289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit bb0cd225dd37df1f4a22e36dad59ff33178ecdfc ]
+[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
 
-In efct_device_init(), when efct_scsi_reg_fc_transport() fails,
-efct_scsi_tgt_driver_exit() is not called to release memory for
-efct_scsi_tgt_driver_init() and causes memleak:
+Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
+pass the former from altera_uart_interrupt() directly.
 
-unreferenced object 0xffff8881020ce000 (size 2048):
-  comm "modprobe", pid 465, jiffies 4294928222 (age 55.872s)
-  backtrace:
-    [<0000000021a1ef1b>] kmalloc_trace+0x27/0x110
-    [<000000004c3ed51c>] target_register_template+0x4fd/0x7b0 [target_core_mod]
-    [<00000000f3393296>] efct_scsi_tgt_driver_init+0x18/0x50 [efct]
-    [<00000000115de533>] 0xffffffffc0d90011
-    [<00000000d608f646>] do_one_initcall+0xd0/0x4e0
-    [<0000000067828cf1>] do_init_module+0x1cc/0x6a0
-    ...
+Apart it maybe saves a dereference, this makes the transition of
+altera_uart_tx_chars() easier to follow in the next patch.
 
-Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221111074046.57061-1-chenzhongjin@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/efct/efct_driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/altera_uart.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
-index b08fc8839808..49fd2cfed70c 100644
---- a/drivers/scsi/elx/efct/efct_driver.c
-+++ b/drivers/scsi/elx/efct/efct_driver.c
-@@ -42,6 +42,7 @@ efct_device_init(void)
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 71478d098c13..ab08c4050a84 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
+ 	 */
+ }
  
- 	rc = efct_scsi_reg_fc_transport();
- 	if (rc) {
-+		efct_scsi_tgt_driver_exit();
- 		pr_err("failed to register to FC host\n");
- 		return rc;
- 	}
+-static void altera_uart_rx_chars(struct altera_uart *pp)
++static void altera_uart_rx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	unsigned char ch, flag;
+ 	unsigned short status;
+ 
+@@ -246,9 +245,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
+ 	tty_flip_buffer_push(&port->state->port);
+ }
+ 
+-static void altera_uart_tx_chars(struct altera_uart *pp)
++static void altera_uart_tx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 
+ 	if (port->x_char) {
+@@ -286,9 +284,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 
+ 	spin_lock(&port->lock);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+-		altera_uart_rx_chars(pp);
++		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+-		altera_uart_tx_chars(pp);
++		altera_uart_tx_chars(port);
+ 	spin_unlock(&port->lock);
+ 
+ 	return IRQ_RETVAL(isr);
 -- 
 2.35.1
 
