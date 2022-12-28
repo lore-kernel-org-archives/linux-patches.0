@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FB41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A07C433D2;
-	Wed, 28 Dec 2022 15:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3147F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FE2C433D2;
+	Wed, 28 Dec 2022 15:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241007;
-	bh=fL+zxk+dzBvZ4uBwm7Cwthu8ZL9ceMTRrexOpCMIE7k=;
+	s=korg; t=1672241010;
+	bh=vuLFL31CGgFpwrTJE2ZDeXdrPmuVfzUQ0rkFUZOnICE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ0NoZtFBekHCsiWRrG0n3FJbV2jqmR0ZepQGnm/MU2xXR6Mq0aXDSP3s79oFZGLB
-	 HTjnDQt3EnSm8h7FnpI2cbKJ5Ov3tKbD0nOGZ2InVP4KXQKtBvx5nVOTBEuK2q8h/9
-	 gV4nQgAwmNh2tQiMMehQMNex949GxP+2DDFiV2IA=
+	b=MMmUMm7ldOKnqLvu7+vuf2ZgRPXXugX78oC3w1Pa9niqwa9JxYN/cXwH/teBTIBJO
+	 VStLJad2Er+93SmwyxbX6frgvrYhJSct4eVEFitwEVI7JM7LcWjvXs3nZ4udf5jtoy
+	 2/4/ZwBPPcGuzPSe6qzGhcB9ewNUYvatiUJnwNXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	John Thomson <git@johnthomson.fastmail.com.au>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0229/1073] media: v4l2-ioctl.c: Unify YCbCr/YUV terms in format descriptions
-Date: Wed, 28 Dec 2022 15:30:17 +0100
-Message-Id: <20221228144334.246450947@linuxfoundation.org>
+Subject: [PATCH 5.15 427/731] PCI: mt7621: Add sentinel to quirks table
+Date: Wed, 28 Dec 2022 15:38:54 +0100
+Message-Id: <20221228144308.944618181@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,68 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit 6a394d563dffb60c150d87dc6678994ef8028c53 ]
+[ Upstream commit 19098934f910b4d47cb30251dd39ffa57bef9523 ]
 
-Format descriptions use YCbCr and YUV terms interchangeably. Let's unify
-them so they all use YUV. While YCbCr is actually correct term here, YUV
-is shorter and thus it also fixes too long description of P010 tiled
-format.
+Current driver is missing a sentinel in the struct soc_device_attribute
+array, which causes an oops when assessed by the
+soc_device_match(mt7621_pcie_quirks_match) call.
 
-Fixes: 3c8e19d3d3f9 ("media: Add P010 tiled format")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This was only exposed once the CONFIG_SOC_MT7621 mt7621 soc_dev_attr
+was fixed to register the SOC as a device, in:
+
+commit 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
+
+Fix it by adding the required sentinel.
+
+Link: https://lore.kernel.org/lkml/26ebbed1-0fe9-4af9-8466-65f841d0b382@app.fastmail.com
+Link: https://lore.kernel.org/r/20221205204645.301301-1-git@johnthomson.fastmail.com.au
+Fixes: b483b4e4d3f6 ("staging: mt7621-pci: add quirks for 'E2' revision using 'soc_device_attribute'")
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ioctl.c | 34 ++++++++++++++--------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ drivers/staging/mt7621-pci/pci-mt7621.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index e6fd355a2e92..de83714f0d40 100644
---- a/drivers/media/v4l2-core/v4l2-ioctl.c
-+++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -1347,23 +1347,23 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
- 	case V4L2_PIX_FMT_YUV420:	descr = "Planar YUV 4:2:0"; break;
- 	case V4L2_PIX_FMT_HI240:	descr = "8-bit Dithered RGB (BTTV)"; break;
- 	case V4L2_PIX_FMT_M420:		descr = "YUV 4:2:0 (M420)"; break;
--	case V4L2_PIX_FMT_NV12:		descr = "Y/CbCr 4:2:0"; break;
--	case V4L2_PIX_FMT_NV21:		descr = "Y/CrCb 4:2:0"; break;
--	case V4L2_PIX_FMT_NV16:		descr = "Y/CbCr 4:2:2"; break;
--	case V4L2_PIX_FMT_NV61:		descr = "Y/CrCb 4:2:2"; break;
--	case V4L2_PIX_FMT_NV24:		descr = "Y/CbCr 4:4:4"; break;
--	case V4L2_PIX_FMT_NV42:		descr = "Y/CrCb 4:4:4"; break;
--	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/CbCr 4:2:0"; break;
--	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/CbCr 4:2:0 (4x4 Linear)"; break;
--	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/CbCr 4:2:0 (16x16 Linear)"; break;
--	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/CbCr 4:2:0 (32x32 Linear)"; break;
--	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/CbCr 4:2:0 (4x4 Linear)"; break;
--	case V4L2_PIX_FMT_NV12M:	descr = "Y/CbCr 4:2:0 (N-C)"; break;
--	case V4L2_PIX_FMT_NV21M:	descr = "Y/CrCb 4:2:0 (N-C)"; break;
--	case V4L2_PIX_FMT_NV16M:	descr = "Y/CbCr 4:2:2 (N-C)"; break;
--	case V4L2_PIX_FMT_NV61M:	descr = "Y/CrCb 4:2:2 (N-C)"; break;
--	case V4L2_PIX_FMT_NV12MT:	descr = "Y/CbCr 4:2:0 (64x32 MB, N-C)"; break;
--	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/CbCr 4:2:0 (16x16 MB, N-C)"; break;
-+	case V4L2_PIX_FMT_NV12:		descr = "Y/UV 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV21:		descr = "Y/VU 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV16:		descr = "Y/UV 4:2:2"; break;
-+	case V4L2_PIX_FMT_NV61:		descr = "Y/VU 4:2:2"; break;
-+	case V4L2_PIX_FMT_NV24:		descr = "Y/UV 4:4:4"; break;
-+	case V4L2_PIX_FMT_NV42:		descr = "Y/VU 4:4:4"; break;
-+	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/UV 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/UV 4:2:0 (4x4 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/UV 4:2:0 (16x16 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/UV 4:2:0 (32x32 Linear)"; break;
-+	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/UV 4:2:0 (4x4 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12M:	descr = "Y/UV 4:2:0 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV21M:	descr = "Y/VU 4:2:0 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV16M:	descr = "Y/UV 4:2:2 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV61M:	descr = "Y/VU 4:2:2 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV12MT:	descr = "Y/UV 4:2:0 (64x32 MB, N-C)"; break;
-+	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/UV 4:2:0 (16x16 MB, N-C)"; break;
- 	case V4L2_PIX_FMT_YUV420M:	descr = "Planar YUV 4:2:0 (N-C)"; break;
- 	case V4L2_PIX_FMT_YVU420M:	descr = "Planar YVU 4:2:0 (N-C)"; break;
- 	case V4L2_PIX_FMT_YUV422M:	descr = "Planar YUV 4:2:2 (N-C)"; break;
+diff --git a/drivers/staging/mt7621-pci/pci-mt7621.c b/drivers/staging/mt7621-pci/pci-mt7621.c
+index c4f57bb63482..b520d1e0edd1 100644
+--- a/drivers/staging/mt7621-pci/pci-mt7621.c
++++ b/drivers/staging/mt7621-pci/pci-mt7621.c
+@@ -511,7 +511,8 @@ static int mt7621_pcie_register_host(struct pci_host_bridge *host)
+ }
+ 
+ static const struct soc_device_attribute mt7621_pcie_quirks_match[] = {
+-	{ .soc_id = "mt7621", .revision = "E2" }
++	{ .soc_id = "mt7621", .revision = "E2" },
++	{ /* sentinel */ }
+ };
+ 
+ static int mt7621_pcie_probe(struct platform_device *pdev)
 -- 
 2.35.1
 
