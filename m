@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466FC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AA4C433D2;
-	Wed, 28 Dec 2022 16:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344291875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B53C433F0;
+	Wed, 28 Dec 2022 16:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243346;
-	bh=1gcWucT5Vh7LGy2jKM3SozrcRdTed8rJdJ1qE5dYkjw=;
+	s=korg; t=1672243348;
+	bh=fjyU/jynuoEc0nSHUZBHIHL/cu0n2spRNE3nKiMcUQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXfgFmGclbr075MpZ/pHfxYHHeKUBe8pVD0dxkLU7hsfiXuBavS8HNSdZZ36e/Lcd
-	 ImE7kEnrr3VdrQOvJXyglJVtsV6BLneyRANo0JbodrnJMTjNmn6C/pCrtJK4quJTE6
-	 04mW0rhDpYYgdYESVC6UKtbVErHFmpAnrL9BuKX4=
+	b=kASmmmyDpESdapASvBDohQYyhtt3RiqGxiHidnmujvFWuSxIslqlj24Sd2Sx201y0
+	 bc5jZEIgGkEHDwVitcpX+0NBiDrovwesSVvkbwh8KRZKYGGLzU4UDa9PfiEGeMwVaK
+	 qghUMP//3kUGyvrew8SgDPjaHQmej/9NwhxMrLE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 711/731] xhci: Prevent infinite loop in transaction errors recovery for streams
-Date: Wed, 28 Dec 2022 15:43:38 +0100
-Message-Id: <20221228144317.057700246@linuxfoundation.org>
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Vishnu Dasa <vdasa@vmware.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 0510/1073] net: vmw_vsock: vmci: Check memcpy_from_msg()
+Date: Wed, 28 Dec 2022 15:34:58 +0100
+Message-Id: <20221228144341.898738647@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,83 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c upstream.
+[ Upstream commit 44aa5a6dba8283bfda28b1517af4de711c5652a4 ]
 
-Make sure to also limit the amount of soft reset retries for transaction
-errors on streams in cases where the transaction error event doesn't point
-to any specific TRB.
+vmci_transport_dgram_enqueue() does not check the return value
+of memcpy_from_msg().  If memcpy_from_msg() fails, it is possible that
+uninitialized memory contents are sent unintentionally instead of user's
+message in the datagram to the destination.  Return with an error if
+memcpy_from_msg() fails.
 
-In these cases we don't know the TRB or stream ring, but we do know which
-endpoint had the error.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-To keep error counting simple and functional, move the current err_count
-from ring structure to endpoint structure.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f7db23a07af ("vmci_transport: switch ->enqeue_dgram, ->enqueue_stream and ->dequeue_stream to msghdr")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |   14 ++++++++++----
- drivers/usb/host/xhci.h      |    2 +-
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ net/vmw_vsock/vmci_transport.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2524,7 +2524,7 @@ static int process_bulk_intr_td(struct x
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index b14f0ed7427b..a794e8b01136 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1711,7 +1711,11 @@ static int vmci_transport_dgram_enqueue(
+ 	if (!dg)
+ 		return -ENOMEM;
  
- 	switch (trb_comp_code) {
- 	case COMP_SUCCESS:
--		ep_ring->err_count = 0;
-+		ep->err_count = 0;
- 		/* handle success with untransferred data as short packet */
- 		if (ep_trb != td->last_trb || remaining) {
- 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
-@@ -2550,7 +2550,7 @@ static int process_bulk_intr_td(struct x
- 		break;
- 	case COMP_USB_TRANSACTION_ERROR:
- 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
--		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
-+		    (ep->err_count++ > MAX_SOFT_RETRY) ||
- 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
- 			break;
+-	memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	err = memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	if (err) {
++		kfree(dg);
++		return err;
++	}
  
-@@ -2631,8 +2631,14 @@ static int handle_tx_event(struct xhci_h
- 		case COMP_USB_TRANSACTION_ERROR:
- 		case COMP_INVALID_STREAM_TYPE_ERROR:
- 		case COMP_INVALID_STREAM_ID_ERROR:
--			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
--						    EP_SOFT_RESET);
-+			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
-+				 ep_index);
-+			if (ep->err_count++ > MAX_SOFT_RETRY)
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_HARD_RESET);
-+			else
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_SOFT_RESET);
- 			goto cleanup;
- 		case COMP_RING_UNDERRUN:
- 		case COMP_RING_OVERRUN:
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -933,6 +933,7 @@ struct xhci_virt_ep {
- 	 * have to restore the device state to the previous state
- 	 */
- 	struct xhci_ring		*new_ring;
-+	unsigned int			err_count;
- 	unsigned int			ep_state;
- #define SET_DEQ_PENDING		(1 << 0)
- #define EP_HALTED		(1 << 1)	/* For stall handling */
-@@ -1629,7 +1630,6 @@ struct xhci_ring {
- 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
- 	 */
- 	u32			cycle_state;
--	unsigned int            err_count;
- 	unsigned int		stream_id;
- 	unsigned int		num_segs;
- 	unsigned int		num_trbs_free;
+ 	dg->dst = vmci_make_handle(remote_addr->svm_cid,
+ 				   remote_addr->svm_port);
+-- 
+2.35.1
+
 
 
