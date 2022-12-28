@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E341C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A19C433D2;
-	Wed, 28 Dec 2022 16:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8461C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B795AC433D2;
+	Wed, 28 Dec 2022 16:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245993;
-	bh=GiT7CCcJHCT0wN/FYRSBDJwgEgqKON+84OSY5MfM6HA=;
+	s=korg; t=1672245996;
+	bh=xadfa5UUa/VvR7/Q+w8xXinb6FW7rp5NXKRfhIxiI8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nG+BeQ5AHyiUpcx+8JzDYocqT1fCAKQvxQeIhjyhMExCaTSHQ3VtVTjpa+9bFjOfr
-	 Ix3VlJLIuMee/7abgQd+E81XxIpZ+FaZeapzp4e9OMM56sBW46fp1/A+72de6dr8/b
-	 rAuBmK5LhjonQBtqOEyoy9eZ+fgVhihGdGnwt0XI=
+	b=hzsm3yNEANYapDh8ZagpyfBRf5oMQ08pLhQpn8J1WTMeFoN79fmoP9bfEKcaLBg/9
+	 XWjnreMjND0OIhAMjv9zI/V4b/NLuOBdCT113V0NuAEsJYO7dWRVqjUn6ZfTkthxe1
+	 SdZvCENSNKhOFOpeHaqW+S3KTtctqYovgq0BxmkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Zhang Jinhao <zhangjinhao2@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0959/1146] acct: fix potential integer overflow in encode_comp_t()
-Date: Wed, 28 Dec 2022 15:41:38 +0100
-Message-Id: <20221228144356.368997168@linuxfoundation.org>
+Subject: [PATCH 6.0 0993/1073] orangefs: Fix kmemleak in orangefs_{kernel,client}_debug_init()
+Date: Wed, 28 Dec 2022 15:43:01 +0100
+Message-Id: <20221228144355.087715934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,49 +35,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit c5f31c655bcc01b6da53b836ac951c1556245305 ]
+[ Upstream commit 31720a2b109b3080eb77e97b8f6f50a27b4ae599 ]
 
-The integer overflow is descripted with following codes:
-  > 317 static comp_t encode_comp_t(u64 value)
-  > 318 {
-  > 319         int exp, rnd;
-    ......
-  > 341         exp <<= MANTSIZE;
-  > 342         exp += value;
-  > 343         return exp;
-  > 344 }
+When insert and remove the orangefs module, there are memory leaked
+as below:
 
-Currently comp_t is defined as type of '__u16', but the variable 'exp' is
-type of 'int', so overflow would happen when variable 'exp' in line 343 is
-greater than 65535.
+unreferenced object 0xffff88816b0cc000 (size 2048):
+  comm "insmod", pid 783, jiffies 4294813439 (age 65.512s)
+  hex dump (first 32 bytes):
+    6e 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00  none............
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
+    [<000000005b405fee>] orangefs_debugfs_init.cold+0xaf/0x17f
+    [<00000000e5a0085b>] 0xffffffffa02780f9
+    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
+    [<0000000054f22384>] do_init_module+0xdf/0x320
+    [<000000003263bdea>] load_module+0x2f98/0x3330
+    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
+    [<00000000250ae02b>] do_syscall_64+0x35/0x80
+    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Link: https://lkml.kernel.org/r/20210515140631.369106-3-zhengyejian1@huawei.com
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Hanjun Guo <guohanjun@huawei.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Zhang Jinhao <zhangjinhao2@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Use the golbal variable as the buffer rather than dynamic allocate to
+slove the problem.
+
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/acct.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/orangefs/orangefs-debugfs.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/kernel/acct.c b/kernel/acct.c
-index 62200d799b9b..034a26daabb2 100644
---- a/kernel/acct.c
-+++ b/kernel/acct.c
-@@ -350,6 +350,8 @@ static comp_t encode_comp_t(unsigned long value)
- 		exp++;
- 	}
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index a848b6ef9599..1b508f543384 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -194,15 +194,10 @@ void orangefs_debugfs_init(int debug_mask)
+  */
+ static void orangefs_kernel_debug_init(void)
+ {
+-	int rc = -ENOMEM;
+-	char *k_buffer = NULL;
++	static char k_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
  
-+	if (exp > (((comp_t) ~0U) >> MANTSIZE))
-+		return (comp_t) ~0U;
- 	/*
- 	 * Clean it up and polish it off.
- 	 */
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ 
+-	k_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!k_buffer)
+-		goto out;
+-
+ 	if (strlen(kernel_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(k_buffer, kernel_debug_string);
+ 		strcat(k_buffer, "\n");
+@@ -213,9 +208,6 @@ static void orangefs_kernel_debug_init(void)
+ 
+ 	debugfs_create_file(ORANGEFS_KMOD_DEBUG_FILE, 0444, debug_dir, k_buffer,
+ 			    &kernel_debug_fops);
+-
+-out:
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+ }
+ 
+ 
+@@ -299,18 +291,13 @@ static int help_show(struct seq_file *m, void *v)
+ /*
+  * initialize the client-debug file.
+  */
+-static int orangefs_client_debug_init(void)
++static void orangefs_client_debug_init(void)
+ {
+ 
+-	int rc = -ENOMEM;
+-	char *c_buffer = NULL;
++	static char c_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
+ 
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ 
+-	c_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!c_buffer)
+-		goto out;
+-
+ 	if (strlen(client_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(c_buffer, client_debug_string);
+ 		strcat(c_buffer, "\n");
+@@ -324,13 +311,6 @@ static int orangefs_client_debug_init(void)
+ 						  debug_dir,
+ 						  c_buffer,
+ 						  &kernel_debug_fops);
+-
+-	rc = 0;
+-
+-out:
+-
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+-	return rc;
+ }
+ 
+ /* open ORANGEFS_KMOD_DEBUG_FILE or ORANGEFS_CLIENT_DEBUG_FILE.*/
 -- 
 2.35.1
 
