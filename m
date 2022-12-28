@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0A31C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1002C433D2;
-	Wed, 28 Dec 2022 16:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BE91C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B86FC433D2;
+	Wed, 28 Dec 2022 16:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246104;
-	bh=XYhhBFQ3h933BRDT9ElSaPmnMb3bxsOPM08S84+TfPw=;
+	s=korg; t=1672246106;
+	bh=KNuMHHjvWcTpwbCNWnMLoHadgrrCZZnrlhqt5jUTw98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0TSsTaaX43hMSn3LNC8OZGQv89vKXKbqJwmS4LsAZ1U00rr4+HH80f5i9ZRJWWRp
-	 JjJkgB3eZvLSBbFYUme2pr2kKLTTc4Mmf3Qt0g2NyJW31ZTORomvLkTiLGL1VXCGwV
-	 D0M60wsAyWXbSWiwTE1HHp+2JAeRMtYJNnUPVGMY=
+	b=bnMs1HFoDwLBDWrCDmPaHvyuegyrppxJNZvA3TYN58oo9Gtpr3NBWkTxtVNP5HZ2G
+	 3KPY6hFM6xpqQMTvbLemCr+8LnvUW5SDX/fpIpKUeUlM6EAf0HAiZzvSMqA+efjL+n
+	 A9xTfIEwexrSbVXRcK5okpXyXEIJUdJT3SJIiVig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	virtualization@lists.linux-foundation.org,
-	Bart Van Assche <bvanassche@acm.org>,
-	David Jeffery <djeffery@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>,
+	Kristina Martsenko <kristina.martsenko@arm.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0981/1146] blk-mq: avoid double ->queue_rq() because of early timeout
-Date: Wed, 28 Dec 2022 15:42:00 +0100
-Message-Id: <20221228144357.007832616@linuxfoundation.org>
+Subject: [PATCH 6.0 1013/1073] lkdtm: cfi: Make PAC test work with GCC 7 and 8
+Date: Wed, 28 Dec 2022 15:43:21 +0100
+Message-Id: <20221228144355.685667171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,146 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Jeffery <djeffery@redhat.com>
+From: Kristina Martsenko <kristina.martsenko@arm.com>
 
-[ Upstream commit 82c229476b8f6afd7e09bc4dc77d89dc19ff7688 ]
+[ Upstream commit f68022ae0aeb0803450e05abc0e984027c33ef1b ]
 
-David Jeffery found one double ->queue_rq() issue, so far it can
-be triggered in VM use case because of long vmexit latency or preempt
-latency of vCPU pthread or long page fault in vCPU pthread, then block
-IO req could be timed out before queuing the request to hardware but after
-calling blk_mq_start_request() during ->queue_rq(), then timeout handler
-may handle it by requeue, then double ->queue_rq() is caused, and kernel
-panic.
+The CFI test uses the branch-protection=none compiler attribute to
+disable PAC return address protection on a function. While newer GCC
+versions support this attribute, older versions (GCC 7 and 8) instead
+supported the sign-return-address=none attribute, leading to a build
+failure when the test is built with older compilers. Fix it by checking
+which attribute is supported and using the correct one.
 
-So far, it is driver's responsibility to cover the race between timeout
-and completion, so it seems supposed to be solved in driver in theory,
-given driver has enough knowledge.
-
-But it is really one common problem, lots of driver could have similar
-issue, and could be hard to fix all affected drivers, even it isn't easy
-for driver to handle the race. So David suggests this patch by draining
-in-progress ->queue_rq() for solving this issue.
-
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: virtualization@lists.linux-foundation.org
-Cc: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221026051957.358818-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2e53b877dc12 ("lkdtm: Add CFI_BACKWARD to test ROP mitigations")
+Reported-by: Daniel Díaz <daniel.diaz@linaro.org>
+Signed-off-by: Kristina Martsenko <kristina.martsenko@arm.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/all/CAEUSe78kDPxQmQqCWW-_9LCgJDFhAeMoVBFnX9QLx18Z4uT4VQ@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 56 +++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 44 insertions(+), 12 deletions(-)
+ drivers/misc/lkdtm/cfi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 4f1c259138e8..a23026099284 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1529,7 +1529,13 @@ static void blk_mq_rq_timed_out(struct request *req)
- 	blk_add_timer(req);
- }
- 
--static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
-+struct blk_expired_data {
-+	bool has_timedout_rq;
-+	unsigned long next;
-+	unsigned long timeout_start;
-+};
-+
-+static bool blk_mq_req_expired(struct request *rq, struct blk_expired_data *expired)
- {
- 	unsigned long deadline;
- 
-@@ -1539,13 +1545,13 @@ static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
- 		return false;
- 
- 	deadline = READ_ONCE(rq->deadline);
--	if (time_after_eq(jiffies, deadline))
-+	if (time_after_eq(expired->timeout_start, deadline))
- 		return true;
- 
--	if (*next == 0)
--		*next = deadline;
--	else if (time_after(*next, deadline))
--		*next = deadline;
-+	if (expired->next == 0)
-+		expired->next = deadline;
-+	else if (time_after(expired->next, deadline))
-+		expired->next = deadline;
- 	return false;
- }
- 
-@@ -1561,7 +1567,7 @@ void blk_mq_put_rq_ref(struct request *rq)
- 
- static bool blk_mq_check_expired(struct request *rq, void *priv)
- {
--	unsigned long *next = priv;
-+	struct blk_expired_data *expired = priv;
- 
- 	/*
- 	 * blk_mq_queue_tag_busy_iter() has locked the request, so it cannot
-@@ -1570,7 +1576,18 @@ static bool blk_mq_check_expired(struct request *rq, void *priv)
- 	 * it was completed and reallocated as a new request after returning
- 	 * from blk_mq_check_expired().
- 	 */
--	if (blk_mq_req_expired(rq, next))
-+	if (blk_mq_req_expired(rq, expired)) {
-+		expired->has_timedout_rq = true;
-+		return false;
-+	}
-+	return true;
-+}
-+
-+static bool blk_mq_handle_expired(struct request *rq, void *priv)
-+{
-+	struct blk_expired_data *expired = priv;
-+
-+	if (blk_mq_req_expired(rq, expired))
- 		blk_mq_rq_timed_out(rq);
- 	return true;
- }
-@@ -1579,7 +1596,9 @@ static void blk_mq_timeout_work(struct work_struct *work)
- {
- 	struct request_queue *q =
- 		container_of(work, struct request_queue, timeout_work);
--	unsigned long next = 0;
-+	struct blk_expired_data expired = {
-+		.timeout_start = jiffies,
-+	};
- 	struct blk_mq_hw_ctx *hctx;
- 	unsigned long i;
- 
-@@ -1599,10 +1618,23 @@ static void blk_mq_timeout_work(struct work_struct *work)
- 	if (!percpu_ref_tryget(&q->q_usage_counter))
- 		return;
- 
--	blk_mq_queue_tag_busy_iter(q, blk_mq_check_expired, &next);
-+	/* check if there is any timed-out request */
-+	blk_mq_queue_tag_busy_iter(q, blk_mq_check_expired, &expired);
-+	if (expired.has_timedout_rq) {
-+		/*
-+		 * Before walking tags, we must ensure any submit started
-+		 * before the current time has finished. Since the submit
-+		 * uses srcu or rcu, wait for a synchronization point to
-+		 * ensure all running submits have finished
-+		 */
-+		blk_mq_wait_quiesce_done(q);
-+
-+		expired.next = 0;
-+		blk_mq_queue_tag_busy_iter(q, blk_mq_handle_expired, &expired);
-+	}
- 
--	if (next != 0) {
--		mod_timer(&q->timeout, next);
-+	if (expired.next != 0) {
-+		mod_timer(&q->timeout, expired.next);
- 	} else {
- 		/*
- 		 * Request timeouts are handled as a forward rolling timer. If
+diff --git a/drivers/misc/lkdtm/cfi.c b/drivers/misc/lkdtm/cfi.c
+index 71483cb1e422..f4fd30f7a9a0 100644
+--- a/drivers/misc/lkdtm/cfi.c
++++ b/drivers/misc/lkdtm/cfi.c
+@@ -51,7 +51,11 @@ static void lkdtm_CFI_FORWARD_PROTO(void)
+ # ifdef CONFIG_ARM64_BTI_KERNEL
+ #  define __no_pac             "branch-protection=bti"
+ # else
+-#  define __no_pac             "branch-protection=none"
++#  ifdef CONFIG_CC_HAS_BRANCH_PROT_PAC_RET
++#   define __no_pac            "branch-protection=none"
++#  else
++#   define __no_pac            "sign-return-address=none"
++#  endif
+ # endif
+ # define __no_ret_protection   __noscs __attribute__((__target__(__no_pac)))
+ #else
 -- 
 2.35.1
 
