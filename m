@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6371863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B982DC433D2;
-	Wed, 28 Dec 2022 15:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35521863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D0C433D2;
+	Wed, 28 Dec 2022 15:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242625;
-	bh=RzFKg73NmVg4QrdkjnmU8dVPSIa3qh7CBkbkM4yKjO0=;
+	s=korg; t=1672242627;
+	bh=mjUNtm7t84gX4XohNUnjZN0aUL20Tpw4JWWEJTtiZ6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUO3nwQ8vkYjgIkftJVsbWqyy/hZzj+DRCQqIJmXtq4e5RQ6s+Z1IDSCAUMJKNMsT
-	 IJw8e73PXU6RdcZBhoWkmsiJ+BgR8varveD/2aK1o0xp1uz8Mr2fWu/NSpDPTDAxO/
-	 rki/lgSaZ2ztkKQ7IPNLzJYOu57o0u8hDwLTnuds=
+	b=s/iXY3J5YJ/aFXQLsu+krVDxpPGTkMkAZpKwCSTMEnE4CDf5asbP12pIXnWog6pkF
+	 e98JHFZqzSplyuxbJSIO2zTOb22EgHE4+px/sBekwL3UBv9YQm8QUKoJoJt+FsWtjE
+	 DIxj9/oWmLS4VtQQtqS1+A4qzFZY5bxk1u3Qz1gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0395/1146] media: imx: imx7-media-csi: Clear BIT_MIPI_DOUBLE_CMPNT for <16b formats
-Date: Wed, 28 Dec 2022 15:32:14 +0100
-Message-Id: <20221228144340.894146501@linuxfoundation.org>
+Subject: [PATCH 6.0 0433/1073] bonding: uninitialized variable in bond_miimon_inspect()
+Date: Wed, 28 Dec 2022 15:33:41 +0100
+Message-Id: <20221228144339.787173437@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit cccc08a95ca57624563daafd47df5691e8c38995 ]
+[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
 
-Commit 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for
-YUV 1X16") set BIT_MIPI_DOUBLE_CMPNT in the CR18 register for 16-bit YUV
-formats in imx7_csi_configure(). The CR18 register is always updated
-with read-modify-write cycles, so if a 16-bit YUV format is selected,
-the bit will stay set forever, even if the format is changed. Fix it by
-clearing the bit at the beginning of the imx7_csi_configure() function.
+The "ignore_updelay" variable needs to be initialized to false.
 
-While at it, swap two of the bits being cleared to match the MSB to LSB
-order. This doesn't cause any functional change.
-
-Fixes: 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for YUV 1X16")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/imx/imx7-media-csi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/imx/imx7-media-csi.c b/drivers/staging/media/imx/imx7-media-csi.c
-index e5b550ccfa22..c77401f184d7 100644
---- a/drivers/staging/media/imx/imx7-media-csi.c
-+++ b/drivers/staging/media/imx/imx7-media-csi.c
-@@ -521,9 +521,9 @@ static void imx7_csi_configure(struct imx7_csi *csi)
- 	cr18 = imx7_csi_reg_read(csi, CSI_CSICR18);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 2ad17c840a2a..445c23e424f7 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2531,10 +2531,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
+ /* called with rcu_read_lock() */
+ static int bond_miimon_inspect(struct bonding *bond)
+ {
++	bool ignore_updelay = false;
+ 	int link_state, commit = 0;
+ 	struct list_head *iter;
+ 	struct slave *slave;
+-	bool ignore_updelay;
  
- 	cr18 &= ~(BIT_CSI_HW_ENABLE | BIT_MIPI_DATA_FORMAT_MASK |
--		  BIT_DATA_FROM_MIPI | BIT_BASEADDR_CHG_ERR_EN |
--		  BIT_BASEADDR_SWITCH_EN | BIT_BASEADDR_SWITCH_SEL |
--		  BIT_DEINTERLACE_EN);
-+		  BIT_DATA_FROM_MIPI | BIT_MIPI_DOUBLE_CMPNT |
-+		  BIT_BASEADDR_CHG_ERR_EN | BIT_BASEADDR_SWITCH_SEL |
-+		  BIT_BASEADDR_SWITCH_EN | BIT_DEINTERLACE_EN);
- 
- 	if (out_pix->field == V4L2_FIELD_INTERLACED) {
- 		cr18 |= BIT_DEINTERLACE_EN;
+ 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
+ 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
 -- 
 2.35.1
 
