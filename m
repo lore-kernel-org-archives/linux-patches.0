@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B0D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01FEC433EF;
-	Wed, 28 Dec 2022 15:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201711863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C324C433EF;
+	Wed, 28 Dec 2022 15:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241240;
-	bh=+PCmEb79SDjjzISklcarpKZ+wzHHePAD6e0LLyP0dxI=;
+	s=korg; t=1672241243;
+	bh=r0oDJP/VvgWbOLRfHCpUr0l20Al1OnSvQYWkabodOYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCyc+JyUrwr4tfvrPUurmZdzkeSirSyyd12vWYfhvncoXojce64ApHogRX+03SCwX
-	 s3CHFKZR8VpzDJqKEOVcR6xUKbuS2WjgXrbkPkdGV7SffepbeH/KJt9eFFISsv/gis
-	 R9m+CCyFHsj+JgzA+ppBhwMRKzIWh2rfk6eT0djw=
+	b=IH9ae0RAbrtDs11FP1p0cIFpCS7eDqLHiLkh8lMZi1FBk+EGBqey8s5GY/+XmytCZ
+	 ZAABEYQ2IvFDddY8be8icVg5ng0iDcxy5XAlc4mC9S6rWDZsgksok2lSjfG3ceWiHD
+	 BrjfC0gcn2c0Z0GdYZHm4a/v7dTJpBPE4VC882T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Tachici <alexandru.tachici@analog.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0223/1146] net: ethernet: adi: adin1110: Fix SPI transfers
-Date: Wed, 28 Dec 2022 15:29:22 +0100
-Message-Id: <20221228144336.200559895@linuxfoundation.org>
+Subject: [PATCH 6.0 0257/1073] dw9768: Enable low-power probe on ACPI
+Date: Wed, 28 Dec 2022 15:30:45 +0100
+Message-Id: <20221228144334.999733671@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,118 +34,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandru Tachici <alexandru.tachici@analog.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit a526a3cc9c8d426713f8bebc18ebbe39a8495d82 ]
+[ Upstream commit 5f9a089b6de34655318afe8e544d9a9cc0fc1d29 ]
 
-No need to use more than one SPI transfer for reads.
-Use only one from now as ADIN1110/2111 does not tolerate
-CS changes during reads.
+Add support for low-power probe to the driver. Also fix runtime PM API
+usage in the driver.
 
-The BCM2711/2708 SPI controllers worked fine, but the NXP
-IMX8MM could not keep CS lowered during SPI bursts.
+Much of the hassle comes from different factors affecting device power
+states during probe for ACPI and DT.
 
-This change aims to make the ADIN1110/2111 driver compatible
-with both SPI controllers, without any loss of bandwidth/other
-capabilities.
-
-Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
-Signed-off-by: Alexandru Tachici <alexandru.tachici@analog.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 859891228e56 ("media: i2c: dw9768: Add DW9768 VCM driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/adi/adin1110.c | 37 +++++++++++++----------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ drivers/media/i2c/dw9768.c | 33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
-index 606c97610808..9d8dfe172994 100644
---- a/drivers/net/ethernet/adi/adin1110.c
-+++ b/drivers/net/ethernet/adi/adin1110.c
-@@ -196,7 +196,7 @@ static int adin1110_read_reg(struct adin1110_priv *priv, u16 reg, u32 *val)
+diff --git a/drivers/media/i2c/dw9768.c b/drivers/media/i2c/dw9768.c
+index c086580efac7..60ae0adf5174 100644
+--- a/drivers/media/i2c/dw9768.c
++++ b/drivers/media/i2c/dw9768.c
+@@ -414,6 +414,7 @@ static int dw9768_probe(struct i2c_client *client)
  {
- 	u32 header_len = ADIN1110_RD_HEADER_LEN;
- 	u32 read_len = ADIN1110_REG_LEN;
--	struct spi_transfer t[2] = {0};
-+	struct spi_transfer t = {0};
+ 	struct device *dev = &client->dev;
+ 	struct dw9768 *dw9768;
++	bool full_power;
+ 	unsigned int i;
  	int ret;
  
- 	priv->data[0] = ADIN1110_CD | FIELD_GET(GENMASK(12, 8), reg);
-@@ -209,17 +209,15 @@ static int adin1110_read_reg(struct adin1110_priv *priv, u16 reg, u32 *val)
- 		header_len++;
+@@ -469,13 +470,23 @@ static int dw9768_probe(struct i2c_client *client)
+ 
+ 	dw9768->sd.entity.function = MEDIA_ENT_F_LENS;
+ 
++	/*
++	 * Figure out whether we're going to power up the device here. Generally
++	 * this is done if CONFIG_PM is disabled in a DT system or the device is
++	 * to be powered on in an ACPI system. Similarly for power off in
++	 * remove.
++	 */
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev)) {
++	full_power = (is_acpi_node(dev_fwnode(dev)) &&
++		      acpi_dev_state_d0(dev)) ||
++		     (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev));
++	if (full_power) {
+ 		ret = dw9768_runtime_resume(dev);
+ 		if (ret < 0) {
+ 			dev_err(dev, "failed to power on: %d\n", ret);
+ 			goto err_clean_entity;
+ 		}
++		pm_runtime_set_active(dev);
  	}
  
--	t[0].tx_buf = &priv->data[0];
--	t[0].len = header_len;
--
- 	if (priv->append_crc)
- 		read_len++;
+ 	ret = v4l2_async_register_subdev(&dw9768->sd);
+@@ -484,14 +495,17 @@ static int dw9768_probe(struct i2c_client *client)
+ 		goto err_power_off;
+ 	}
  
- 	memset(&priv->data[header_len], 0, read_len);
--	t[1].rx_buf = &priv->data[header_len];
--	t[1].len = read_len;
-+	t.tx_buf = &priv->data[0];
-+	t.rx_buf = &priv->data[0];
-+	t.len = read_len + header_len;
++	pm_runtime_idle(dev);
++
+ 	return 0;
  
--	ret = spi_sync_transfer(priv->spidev, t, 2);
-+	ret = spi_sync_transfer(priv->spidev, &t, 1);
- 	if (ret)
- 		return ret;
- 
-@@ -296,7 +294,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
+ err_power_off:
+-	if (pm_runtime_enabled(dev))
+-		pm_runtime_disable(dev);
+-	else
++	if (full_power) {
+ 		dw9768_runtime_suspend(dev);
++		pm_runtime_set_suspended(dev);
++	}
+ err_clean_entity:
++	pm_runtime_disable(dev);
+ 	media_entity_cleanup(&dw9768->sd.entity);
+ err_free_handler:
+ 	v4l2_ctrl_handler_free(&dw9768->ctrls);
+@@ -503,14 +517,17 @@ static int dw9768_remove(struct i2c_client *client)
  {
- 	struct adin1110_priv *priv = port_priv->priv;
- 	u32 header_len = ADIN1110_RD_HEADER_LEN;
--	struct spi_transfer t[2] = {0};
-+	struct spi_transfer t;
- 	u32 frame_size_no_fcs;
- 	struct sk_buff *rxb;
- 	u32 frame_size;
-@@ -327,12 +325,7 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
- 		return ret;
+ 	struct v4l2_subdev *sd = i2c_get_clientdata(client);
+ 	struct dw9768 *dw9768 = sd_to_dw9768(sd);
++	struct device *dev = &client->dev;
  
- 	frame_size_no_fcs = frame_size - ADIN1110_FRAME_HEADER_LEN - ADIN1110_FEC_LEN;
--
--	rxb = netdev_alloc_skb(port_priv->netdev, round_len);
--	if (!rxb)
--		return -ENOMEM;
--
--	memset(priv->data, 0, round_len + ADIN1110_RD_HEADER_LEN);
-+	memset(priv->data, 0, ADIN1110_RD_HEADER_LEN);
+ 	v4l2_async_unregister_subdev(&dw9768->sd);
+ 	v4l2_ctrl_handler_free(&dw9768->ctrls);
+ 	media_entity_cleanup(&dw9768->sd.entity);
+-	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
+-		dw9768_runtime_suspend(&client->dev);
+-	pm_runtime_set_suspended(&client->dev);
++	if ((is_acpi_node(dev_fwnode(dev)) && acpi_dev_state_d0(dev)) ||
++	    (is_of_node(dev_fwnode(dev)) && !pm_runtime_enabled(dev))) {
++		dw9768_runtime_suspend(dev);
++		pm_runtime_set_suspended(dev);
++	}
++	pm_runtime_disable(dev);
  
- 	priv->data[0] = ADIN1110_CD | FIELD_GET(GENMASK(12, 8), reg);
- 	priv->data[1] = FIELD_GET(GENMASK(7, 0), reg);
-@@ -342,21 +335,23 @@ static int adin1110_read_fifo(struct adin1110_port_priv *port_priv)
- 		header_len++;
- 	}
- 
--	skb_put(rxb, frame_size_no_fcs + ADIN1110_FRAME_HEADER_LEN);
-+	rxb = netdev_alloc_skb(port_priv->netdev, round_len + header_len);
-+	if (!rxb)
-+		return -ENOMEM;
- 
--	t[0].tx_buf = &priv->data[0];
--	t[0].len = header_len;
-+	skb_put(rxb, frame_size_no_fcs + header_len + ADIN1110_FRAME_HEADER_LEN);
- 
--	t[1].rx_buf = &rxb->data[0];
--	t[1].len = round_len;
-+	t.tx_buf = &priv->data[0];
-+	t.rx_buf = &rxb->data[0];
-+	t.len = header_len + round_len;
- 
--	ret = spi_sync_transfer(priv->spidev, t, 2);
-+	ret = spi_sync_transfer(priv->spidev, &t, 1);
- 	if (ret) {
- 		kfree_skb(rxb);
- 		return ret;
- 	}
- 
--	skb_pull(rxb, ADIN1110_FRAME_HEADER_LEN);
-+	skb_pull(rxb, header_len + ADIN1110_FRAME_HEADER_LEN);
- 	rxb->protocol = eth_type_trans(rxb, port_priv->netdev);
- 
- 	if ((port_priv->flags & IFF_ALLMULTI && rxb->pkt_type == PACKET_MULTICAST) ||
+ 	return 0;
+ }
 -- 
 2.35.1
 
