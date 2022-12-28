@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727DC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE129C433F0;
-	Wed, 28 Dec 2022 15:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E79D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980AAC433D2;
+	Wed, 28 Dec 2022 15:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242440;
-	bh=6rLIY0V7F5b9HMN8VVnzlwTngztFCkHSMkiGH4bizuU=;
+	s=korg; t=1672242443;
+	bh=3zxdj9fRZxlIrvdw1ZwgYZhi4ueY1HbY+3DNRBCDTxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGCI0Zu74RcrjjPrtxJx98UFeuERf7QOevDDPqC9qQHC4Fw5G3K1DsMEJYn2lfh60
-	 kJuaAxK3ATSvNHG4/z68uzS9B4G70h+qjOVTr6McUbpwhkdFAXIB0XlvZcPveqqtBi
-	 X3cETv1rir0m78IPNAoojtMjlfziCwUltTb9MWu8=
+	b=tkzObxt8fsiAT2nnRCahC47YjjplWE0DfneXTntvux2SZXc8C0eExPe99CR6+cl1e
+	 w8WwdV5YOmAH1N6ps6pUTiDCgKOvsbxxhjx148PARcMmuj/AIDacHST7fYJRBuzx4c
+	 w1RvxR5iU5AXmbPQg4gwANDmLs01ShBLxQ0ptwC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0410/1073] NFSv4: Fix a credential leak in _nfs4_discover_trunking()
-Date: Wed, 28 Dec 2022 15:33:18 +0100
-Message-Id: <20221228144339.156876777@linuxfoundation.org>
+Subject: [PATCH 6.1 0370/1146] HID: hid-sensor-custom: set fixed size for custom attributes
+Date: Wed, 28 Dec 2022 15:31:49 +0100
+Message-Id: <20221228144340.214411116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,39 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit e83458fce080dc23c25353a1af90bfecf79c7369 ]
+[ Upstream commit 9d013910df22de91333a0acc81d1dbb115bd76f6 ]
 
-Fixes: 4f40a5b55446 ("NFSv4: Add an fattr allocation to _nfs4_discover_trunking()")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+This is no bugfix (so no Fixes: tag is necessary) as it is
+taken care of in hid_sensor_custom_add_attributes().
+
+The motivation for this patch is that:
+hid_sensor_custom_field.attr_name and
+hid_sensor_custom_field.attrs
+has the size of HID_CUSTOM_TOTAL_ATTRS and used in same context.
+
+We compare against HID_CUSTOM_TOTAL_ATTRS when
+looping through hid_custom_attrs.
+
+We will silent the smatch error:
+hid_sensor_custom_add_attributes() error: buffer overflow
+'hid_custom_attrs' 8 <= 10
+
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/hid-sensor-custom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 0500da4dab57..f85559bbb422 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4017,7 +4017,7 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
+diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-sensor-custom.c
+index 32c2306e240d..602465ad2745 100644
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -62,7 +62,7 @@ struct hid_sensor_sample {
+ 	u32 raw_len;
+ } __packed;
  
- 	page = alloc_page(GFP_KERNEL);
- 	if (!page)
--		return -ENOMEM;
-+		goto out_put_cred;
- 	locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
- 	if (!locations)
- 		goto out_free;
-@@ -4039,6 +4039,8 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
- 	kfree(locations);
- out_free:
- 	__free_page(page);
-+out_put_cred:
-+	put_cred(cred);
- 	return status;
- }
- 
+-static struct attribute hid_custom_attrs[] = {
++static struct attribute hid_custom_attrs[HID_CUSTOM_TOTAL_ATTRS] = {
+ 	{.name = "name", .mode = S_IRUGO},
+ 	{.name = "units", .mode = S_IRUGO},
+ 	{.name = "unit-expo", .mode = S_IRUGO},
 -- 
 2.35.1
 
