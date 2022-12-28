@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6796A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2677C433D2;
-	Wed, 28 Dec 2022 15:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0C91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88259C433D2;
+	Wed, 28 Dec 2022 15:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241562;
-	bh=jPTkkaYuH0DswnGejV9IOCH+RcQYHlma1W2FmPDhEKY=;
+	s=korg; t=1672241564;
+	bh=GGEAZCiZMUh8tECm3Q/1mQ8BDuVYn8aXuNNcpXiaEwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRQUjRo6n5PnHAeR0/SKM5+SAoNQdkEJvXjugXlsr2zaBA/eN4NTzNPcF9lCJtrke
-	 j1EfcYW33ncO08lL7Zed9y7ZfABtrezaVBZ6nbcAUACMJk1He7NkDbdNeovs4Ih7dE
-	 ooVuxI2B1KLfnoZ9XR2rE4sfNbPFH27vvbE9El2w=
+	b=CunkVF3E6x/opqGDkhzXOrg2wf6siX7eFWVOKTSRWIzUOU3nUjV/SBQAYLtR9jB6k
+	 jmEKGtuyAvxxLUB2BJrEpsnCMNCrZRt2RM6CPc2Hktrz9goMYVOr/b3/0zpeiDAdMZ
+	 twGUtS2nQN0nBEXUuNF+qMW808vAmRCjuORQkdXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cole Robinson <crobinso@redhat.com>,
-	Borislav Petkov <bp@suse.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0298/1073] virt/sev-guest: Add a MODULE_ALIAS
-Date: Wed, 28 Dec 2022 15:31:26 +0100
-Message-Id: <20221228144336.106513118@linuxfoundation.org>
+Subject: [PATCH 6.1 0261/1146] drm/rockchip: lvds: fix PM usage counter unbalance in poweron
+Date: Wed, 28 Dec 2022 15:30:00 +0100
+Message-Id: <20221228144337.227314931@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,34 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cole Robinson <crobinso@redhat.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 2874529b3513bdc90299c90f40713602da685e35 ]
+[ Upstream commit 4dba27f1a14592ac4cf71c3bc1cc1fd05dea8015 ]
 
-Autoload the driver when, for example, SNP init code creates the
-corresponding platform device.
+pm_runtime_get_sync will increment pm usage counter even it failed.
+Forgetting to putting operation will result in reference leak here.
+We fix it by replacing it with the newest pm_runtime_resume_and_get
+to keep usage counter balanced.
 
-  [ bp: Rewrite commit message. ]
-
-Fixes: fce96cf04430 ("virt: Add SEV-SNP guest driver")
-Signed-off-by: Cole Robinson <crobinso@redhat.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/ff480c5e688eb0a72a4db0a29c7b1bb54c45bfd4.1667594253.git.crobinso@redhat.com
+Fixes: 34cc0aa25456 ("drm/rockchip: Add support for Rockchip Soc LVDS")
+Fixes: cca1705c3d89 ("drm/rockchip: lvds: Add PX30 support")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220922132107.105419-3-zhangqilong3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/rockchip/rockchip_lvds.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
-index 1ea6d2e5b218..99d6062afe72 100644
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -800,3 +800,4 @@ MODULE_AUTHOR("Brijesh Singh <brijesh.singh@amd.com>");
- MODULE_LICENSE("GPL");
- MODULE_VERSION("1.0.0");
- MODULE_DESCRIPTION("AMD SEV Guest Driver");
-+MODULE_ALIAS("platform:sev-guest");
+diff --git a/drivers/gpu/drm/rockchip/rockchip_lvds.c b/drivers/gpu/drm/rockchip/rockchip_lvds.c
+index 5a284332ec49..68f6ebb33460 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_lvds.c
++++ b/drivers/gpu/drm/rockchip/rockchip_lvds.c
+@@ -152,7 +152,7 @@ static int rk3288_lvds_poweron(struct rockchip_lvds *lvds)
+ 		DRM_DEV_ERROR(lvds->dev, "failed to enable lvds pclk %d\n", ret);
+ 		return ret;
+ 	}
+-	ret = pm_runtime_get_sync(lvds->dev);
++	ret = pm_runtime_resume_and_get(lvds->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(lvds->dev, "failed to get pm runtime: %d\n", ret);
+ 		clk_disable(lvds->pclk);
+@@ -336,16 +336,20 @@ static int px30_lvds_poweron(struct rockchip_lvds *lvds)
+ {
+ 	int ret;
+ 
+-	ret = pm_runtime_get_sync(lvds->dev);
++	ret = pm_runtime_resume_and_get(lvds->dev);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(lvds->dev, "failed to get pm runtime: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+ 	/* Enable LVDS mode */
+-	return regmap_update_bits(lvds->grf, PX30_LVDS_GRF_PD_VO_CON1,
++	ret = regmap_update_bits(lvds->grf, PX30_LVDS_GRF_PD_VO_CON1,
+ 				  PX30_LVDS_MODE_EN(1) | PX30_LVDS_P2S_EN(1),
+ 				  PX30_LVDS_MODE_EN(1) | PX30_LVDS_P2S_EN(1));
++	if (ret)
++		pm_runtime_put(lvds->dev);
++
++	return ret;
+ }
+ 
+ static void px30_lvds_poweroff(struct rockchip_lvds *lvds)
 -- 
 2.35.1
 
