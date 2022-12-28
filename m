@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE7D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67E1C433EF;
-	Wed, 28 Dec 2022 15:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9C61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DD6C433EF;
+	Wed, 28 Dec 2022 15:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240171;
-	bh=VyQ60h/XVdiZReQrC+N2lMR+wQwdb++0zwe5sr0dOpE=;
+	s=korg; t=1672240173;
+	bh=qY16RBtuxcD3RstD6hVr5F6RiT/+hNpK2zQhV3Y6A1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3JYpFJEu/l5CO9l6tGvnnVqm9xfhew90aGJ8t8Sgv7T/sBnGSip1UlNYH5GvRZvk
-	 d1FNmUgFISW7g3ELdR/qeidbFqB980YNbWZiRHPb/i1zo6HdnVLuWG4Og3esi7zTPk
-	 jEbCzbsxh6XjMQlYcOKjezFr4tgYFEOxY+/Xqzr8=
+	b=C5rHa/Gfo1zTJlsngVmEfaInC1l3qNhsGChFOEQTkbi8P6PAt24DjlhZQYgEL1F03
+	 Gv/PoSReODG1rUpOGBYWSBwMkgxVSuT9HqxnJVL3AmWToLCsm9jg6c8NDB6xV1hmIF
+	 BsFl1TdOezvo9QMZaCPvNg6YQKiAeVZPWLQ8pK9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0126/1073] mailbox: pcc: Reset pcc_chan_count to zero in case of PCC probe failure
-Date: Wed, 28 Dec 2022 15:28:34 +0100
-Message-Id: <20221228144331.458281762@linuxfoundation.org>
+Subject: [PATCH 6.0 0102/1073] cpuidle: dt: Return the correct numbers of parsed idle states
+Date: Wed, 28 Dec 2022 15:28:10 +0100
+Message-Id: <20221228144330.817855877@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,40 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 6d7d3c287410c0ad499e478e2338dc3d7e3392b1 ]
+[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
 
-Currently, 'pcc_chan_count' is remains set to a non-zero value if PCC
-subspaces are parsed successfully but something else fail later during
-the initial PCC probing phase. This will result in pcc_mbox_request_channel
-trying to access the resources that are not initialised or allocated and
-may end up in a system crash.
+While we correctly skips to initialize an idle state from a disabled idle
+state node in DT, the returned value from dt_init_idle_driver() don't get
+adjusted accordingly. Instead the number of found idle state nodes are
+returned, while the callers are expecting the number of successfully
+initialized idle states from DT.
 
-Reset pcc_chan_count to 0 when the PCC probe fails in order to prevent
-the possible issue as described above.
+This leads to cpuidle drivers unnecessarily continues to initialize their
+idle state specific data. Moreover, in the case when all idle states have
+been disabled in DT, we would end up registering a cpuidle driver, rather
+than relying on the default arch specific idle call.
 
-Fixes: ce028702ddbc ("mailbox: pcc: Move bulk of PCCT parsing into pcc_mbox_probe")
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpuidle/dt_idle_states.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index ebfa33a40fce..5e232b3fb72a 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -743,6 +743,7 @@ static int __init pcc_init(void)
- 
- 	if (IS_ERR(pcc_pdev)) {
- 		pr_debug("Err creating PCC platform bundle\n");
-+		pcc_chan_count = 0;
- 		return PTR_ERR(pcc_pdev);
- 	}
- 
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index 252f2a9686a6..448bc796b0b4 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -223,6 +223,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	 * also be 0 on platforms with missing DT idle states or legacy DT
+ 	 * configuration predating the DT idle states bindings.
+ 	 */
+-	return i;
++	return state_idx - start_idx;
+ }
+ EXPORT_SYMBOL_GPL(dt_init_idle_driver);
 -- 
 2.35.1
 
