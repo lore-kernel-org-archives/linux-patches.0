@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C0B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B439C433D2;
-	Wed, 28 Dec 2022 16:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F0A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EBFC433D2;
+	Wed, 28 Dec 2022 16:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246260;
-	bh=vmx0QPj7LGc340EO84PPItZSxGvdh2PDT2pBaIiWUIc=;
+	s=korg; t=1672246263;
+	bh=4ApDoPI9KAIhJt3hsL8Qr9YaZAjXHD7zpXUw/doM6Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQ+Z9imW/ZBrdQm/9DUvbDdiy3fCZ8Ww0Tn9y6E/y9OkvNmrf4Ls7o1AM1WgwX1q4
-	 FmgXrrVj29jtvr4yVZIGr2HlAXAw7NSetb0B9BR1eWWcY1Gc/aGEVED85gEjDyntQW
-	 jWFP0G+8BL6tu6yRp3++yE21G+MtMrE/g/uID5lM=
+	b=Xqb7pn2+2QHzJ1VCMJYQGRcTAMhGDelHCEr8OEAm7N9CijfWVHwzM8P1QxgKUiqKW
+	 D0GGOYnfOMueGzY7mQDhDwOXYddXwHma77kHtPV287V9hZUqZI0uHtRqsxAP166jl7
+	 ba+rcTYYziOGYHBYIhw087lwNZiakZBZJbDupgO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.0 1040/1073] xhci: Prevent infinite loop in transaction errors recovery for streams
-Date: Wed, 28 Dec 2022 15:43:48 +0100
-Message-Id: <20221228144356.442568545@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1012/1146] net: add atomic_long_t to net_device_stats fields
+Date: Wed, 28 Dec 2022 15:42:31 +0100
+Message-Id: <20221228144357.854382376@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,83 +35,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c upstream.
+[ Upstream commit 6c1c5097781f563b70a81683ea6fdac21637573b ]
 
-Make sure to also limit the amount of soft reset retries for transaction
-errors on streams in cases where the transaction error event doesn't point
-to any specific TRB.
+Long standing KCSAN issues are caused by data-race around
+some dev->stats changes.
 
-In these cases we don't know the TRB or stream ring, but we do know which
-endpoint had the error.
+Most performance critical paths already use per-cpu
+variables, or per-queue ones.
 
-To keep error counting simple and functional, move the current err_count
-from ring structure to endpoint structure.
+It is reasonable (and more correct) to use atomic operations
+for the slow paths.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch adds an union for each field of net_device_stats,
+so that we can convert paths that are not yet protected
+by a spinlock or a mutex.
+
+netdev_stats_to_stats64() no longer has an #if BITS_PER_LONG==64
+
+Note that the memcpy() we were using on 64bit arches
+had no provision to avoid load-tearing,
+while atomic_long_read() is providing the needed protection
+at no cost.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |   14 ++++++++++----
- drivers/usb/host/xhci.h      |    2 +-
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ include/linux/netdevice.h | 58 +++++++++++++++++++++++----------------
+ include/net/dst.h         |  5 ++--
+ net/core/dev.c            | 14 ++--------
+ 3 files changed, 40 insertions(+), 37 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2458,7 +2458,7 @@ static int process_bulk_intr_td(struct x
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index eddf8ee270e7..ba2bd604359d 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -171,31 +171,38 @@ static inline bool dev_xmit_complete(int rc)
+  *	(unsigned long) so they can be read and written atomically.
+  */
  
- 	switch (trb_comp_code) {
- 	case COMP_SUCCESS:
--		ep_ring->err_count = 0;
-+		ep->err_count = 0;
- 		/* handle success with untransferred data as short packet */
- 		if (ep_trb != td->last_trb || remaining) {
- 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
-@@ -2484,7 +2484,7 @@ static int process_bulk_intr_td(struct x
- 		break;
- 	case COMP_USB_TRANSACTION_ERROR:
- 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
--		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
-+		    (ep->err_count++ > MAX_SOFT_RETRY) ||
- 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
- 			break;
++#define NET_DEV_STAT(FIELD)			\
++	union {					\
++		unsigned long FIELD;		\
++		atomic_long_t __##FIELD;	\
++	}
++
+ struct net_device_stats {
+-	unsigned long	rx_packets;
+-	unsigned long	tx_packets;
+-	unsigned long	rx_bytes;
+-	unsigned long	tx_bytes;
+-	unsigned long	rx_errors;
+-	unsigned long	tx_errors;
+-	unsigned long	rx_dropped;
+-	unsigned long	tx_dropped;
+-	unsigned long	multicast;
+-	unsigned long	collisions;
+-	unsigned long	rx_length_errors;
+-	unsigned long	rx_over_errors;
+-	unsigned long	rx_crc_errors;
+-	unsigned long	rx_frame_errors;
+-	unsigned long	rx_fifo_errors;
+-	unsigned long	rx_missed_errors;
+-	unsigned long	tx_aborted_errors;
+-	unsigned long	tx_carrier_errors;
+-	unsigned long	tx_fifo_errors;
+-	unsigned long	tx_heartbeat_errors;
+-	unsigned long	tx_window_errors;
+-	unsigned long	rx_compressed;
+-	unsigned long	tx_compressed;
++	NET_DEV_STAT(rx_packets);
++	NET_DEV_STAT(tx_packets);
++	NET_DEV_STAT(rx_bytes);
++	NET_DEV_STAT(tx_bytes);
++	NET_DEV_STAT(rx_errors);
++	NET_DEV_STAT(tx_errors);
++	NET_DEV_STAT(rx_dropped);
++	NET_DEV_STAT(tx_dropped);
++	NET_DEV_STAT(multicast);
++	NET_DEV_STAT(collisions);
++	NET_DEV_STAT(rx_length_errors);
++	NET_DEV_STAT(rx_over_errors);
++	NET_DEV_STAT(rx_crc_errors);
++	NET_DEV_STAT(rx_frame_errors);
++	NET_DEV_STAT(rx_fifo_errors);
++	NET_DEV_STAT(rx_missed_errors);
++	NET_DEV_STAT(tx_aborted_errors);
++	NET_DEV_STAT(tx_carrier_errors);
++	NET_DEV_STAT(tx_fifo_errors);
++	NET_DEV_STAT(tx_heartbeat_errors);
++	NET_DEV_STAT(tx_window_errors);
++	NET_DEV_STAT(rx_compressed);
++	NET_DEV_STAT(tx_compressed);
+ };
++#undef NET_DEV_STAT
  
-@@ -2565,8 +2565,14 @@ static int handle_tx_event(struct xhci_h
- 		case COMP_USB_TRANSACTION_ERROR:
- 		case COMP_INVALID_STREAM_TYPE_ERROR:
- 		case COMP_INVALID_STREAM_ID_ERROR:
--			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
--						    EP_SOFT_RESET);
-+			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
-+				 ep_index);
-+			if (ep->err_count++ > MAX_SOFT_RETRY)
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_HARD_RESET);
-+			else
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_SOFT_RESET);
- 			goto cleanup;
- 		case COMP_RING_UNDERRUN:
- 		case COMP_RING_OVERRUN:
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -933,6 +933,7 @@ struct xhci_virt_ep {
- 	 * have to restore the device state to the previous state
- 	 */
- 	struct xhci_ring		*new_ring;
-+	unsigned int			err_count;
- 	unsigned int			ep_state;
- #define SET_DEQ_PENDING		(1 << 0)
- #define EP_HALTED		(1 << 1)	/* For stall handling */
-@@ -1627,7 +1628,6 @@ struct xhci_ring {
- 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
- 	 */
- 	u32			cycle_state;
--	unsigned int            err_count;
- 	unsigned int		stream_id;
- 	unsigned int		num_segs;
- 	unsigned int		num_trbs_free;
+ /* per-cpu stats, allocated on demand.
+  * Try to fit them in a single cache line, for dev_get_stats() sake.
+@@ -5164,4 +5171,9 @@ extern struct list_head ptype_base[PTYPE_HASH_SIZE] __read_mostly;
+ 
+ extern struct net_device *blackhole_netdev;
+ 
++/* Note: Avoid these macros in fast path, prefer per-cpu or per-queue counters. */
++#define DEV_STATS_INC(DEV, FIELD) atomic_long_inc(&(DEV)->stats.__##FIELD)
++#define DEV_STATS_ADD(DEV, FIELD, VAL) 	\
++		atomic_long_add((VAL), &(DEV)->stats.__##FIELD)
++
+ #endif	/* _LINUX_NETDEVICE_H */
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 00b479ce6b99..d67fda89cd0f 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -356,9 +356,8 @@ static inline void __skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
+ static inline void skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
+ 				 struct net *net)
+ {
+-	/* TODO : stats should be SMP safe */
+-	dev->stats.rx_packets++;
+-	dev->stats.rx_bytes += skb->len;
++	DEV_STATS_INC(dev, rx_packets);
++	DEV_STATS_ADD(dev, rx_bytes, skb->len);
+ 	__skb_tunnel_rx(skb, dev, net);
+ }
+ 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 3be256051e99..70e06853ba25 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10379,24 +10379,16 @@ void netdev_run_todo(void)
+ void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
+ 			     const struct net_device_stats *netdev_stats)
+ {
+-#if BITS_PER_LONG == 64
+-	BUILD_BUG_ON(sizeof(*stats64) < sizeof(*netdev_stats));
+-	memcpy(stats64, netdev_stats, sizeof(*netdev_stats));
+-	/* zero out counters that only exist in rtnl_link_stats64 */
+-	memset((char *)stats64 + sizeof(*netdev_stats), 0,
+-	       sizeof(*stats64) - sizeof(*netdev_stats));
+-#else
+-	size_t i, n = sizeof(*netdev_stats) / sizeof(unsigned long);
+-	const unsigned long *src = (const unsigned long *)netdev_stats;
++	size_t i, n = sizeof(*netdev_stats) / sizeof(atomic_long_t);
++	const atomic_long_t *src = (atomic_long_t *)netdev_stats;
+ 	u64 *dst = (u64 *)stats64;
+ 
+ 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
+ 	for (i = 0; i < n; i++)
+-		dst[i] = src[i];
++		dst[i] = atomic_long_read(&src[i]);
+ 	/* zero out counters that only exist in rtnl_link_stats64 */
+ 	memset((char *)stats64 + n * sizeof(u64), 0,
+ 	       sizeof(*stats64) - n * sizeof(u64));
+-#endif
+ }
+ EXPORT_SYMBOL(netdev_stats_to_stats64);
+ 
+-- 
+2.35.1
+
 
 
