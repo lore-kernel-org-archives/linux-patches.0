@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB01875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C971DC433D2;
-	Wed, 28 Dec 2022 15:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4401875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12E8C433D2;
+	Wed, 28 Dec 2022 15:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243130;
-	bh=XwAYXGe/bC2YyjALyKx6/vUyKn+z8lMQGmhx+mvs23Q=;
+	s=korg; t=1672243133;
+	bh=VKQfryT/iuoKXEWGlNMPXyOdVpScYOSuy2mBU3Mz0TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVZjqYUwczvDZ2dbd4ZpzoQWTe5nWFXOMQyqh/HbYWBo6b6xtbETAf074RDmsteeI
-	 8qz1s3lk4js2HCqg+43biQzqbzIwGOBp2UwfmB/XBo2+Ly+X1v6RwbSa3y6RYDN3G+
-	 AvHDxwo0AEsZSXCxjUpIyb6RqvPWmewimP3XnS8I=
+	b=N/kQb1ZSKy3ynxPGigA1hi+BsLAjk0V5D4Sb+1FnkkPw2krJm5P9vJ2WkBq3Rnxeg
+	 IgpSUg9YEv9f8fOJBTvQJgaxrc/THbX5O7D6sa3zuv/rKIJNjb0iTlEmworLiOhIPp
+	 EFsVe2fuTMT62y+iAyN7o/+x6dfTz4/akNs/ERag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Granados <agranados@gmail.com>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0454/1146] wifi: mt76: mt7921: fix antenna signal are way off in monitor mode
-Date: Wed, 28 Dec 2022 15:33:13 +0100
-Message-Id: <20221228144342.513662738@linuxfoundation.org>
+Subject: [PATCH 6.0 0493/1073] mmc: mmci: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:41 +0100
+Message-Id: <20221228144341.424735892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,77 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c256ba6b1909f28b517274282b6845567e974143 ]
+[ Upstream commit b38a20f29a49ae04d23750d104b25400b792b98c ]
 
-Group 3 in RxD is disabled in monitor mode. We should use the group 5 in
-RxD instead to fix antenna signal way off issue, e.g we would see the
-incorrect antenna signal value in wireshark. On the other hand, Group 5
-wouldn't be used in STA or AP mode, so the patch shouldn't cause any
-harm to those modes.
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
-Reported-by: Adrian Granados <agranados@gmail.com>
-Co-developed-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+So fix this by checking the return value and goto error path which
+will call mmc_free_host().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109133539.3275664-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/mac.c   | 32 ++++++++++++-------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/mmc/host/mmci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-index 650ab97ae052..6860468ed191 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -396,6 +396,27 @@ mt7921_mac_fill_rx(struct mt7921_dev *dev, struct sk_buff *skb)
- 		if (v0 & MT_PRXV_HT_AD_CODE)
- 			status->enc_flags |= RX_ENC_FLAG_LDPC;
+diff --git a/drivers/mmc/host/mmci.c b/drivers/mmc/host/mmci.c
+index 012aa85489d8..b9e5dfe74e5c 100644
+--- a/drivers/mmc/host/mmci.c
++++ b/drivers/mmc/host/mmci.c
+@@ -2256,7 +2256,9 @@ static int mmci_probe(struct amba_device *dev,
+ 	pm_runtime_set_autosuspend_delay(&dev->dev, 50);
+ 	pm_runtime_use_autosuspend(&dev->dev);
  
-+		ret = mt76_connac2_mac_fill_rx_rate(&dev->mt76, status, sband,
-+						    rxv, &mode);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (rxd1 & MT_RXD1_NORMAL_GROUP_5) {
-+			rxd += 6;
-+			if ((u8 *)rxd - skb->data >= skb->len)
-+				return -EINVAL;
-+
-+			rxv = rxd;
-+			/* Monitor mode would use RCPI described in GROUP 5
-+			 * instead.
-+			 */
-+			v1 = le32_to_cpu(rxv[0]);
-+
-+			rxd += 12;
-+			if ((u8 *)rxd - skb->data >= skb->len)
-+				return -EINVAL;
-+		}
-+
- 		status->chains = mphy->antenna_mask;
- 		status->chain_signal[0] = to_rssi(MT_PRXV_RCPI0, v1);
- 		status->chain_signal[1] = to_rssi(MT_PRXV_RCPI1, v1);
-@@ -410,17 +431,6 @@ mt7921_mac_fill_rx(struct mt7921_dev *dev, struct sk_buff *skb)
- 			status->signal = max(status->signal,
- 					     status->chain_signal[i]);
- 		}
--
--		ret = mt76_connac2_mac_fill_rx_rate(&dev->mt76, status, sband,
--						    rxv, &mode);
--		if (ret < 0)
--			return ret;
--
--		if (rxd1 & MT_RXD1_NORMAL_GROUP_5) {
--			rxd += 18;
--			if ((u8 *)rxd - skb->data >= skb->len)
--				return -EINVAL;
--		}
- 	}
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto clk_disable;
  
- 	amsdu_info = FIELD_GET(MT_RXD4_NORMAL_PAYLOAD_FORMAT, rxd4);
+ 	pm_runtime_put(&dev->dev);
+ 	return 0;
 -- 
 2.35.1
 
