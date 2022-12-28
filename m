@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6701C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4CEC433EF;
-	Wed, 28 Dec 2022 16:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE121C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B987DC433D2;
+	Wed, 28 Dec 2022 16:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244689;
-	bh=ajrtAJSFoMvEYaYNkMRXxNrl6mUalFOqk28OHQmYJiA=;
+	s=korg; t=1672244692;
+	bh=pUmOk+/0Cxv748eGMVKBCkBuUc34CYUoMToL6P/7IVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSOaovTvu9ieOXRKnCRSseF6dX0h+TPJbMKXifuZiomzo/JUZJptSiAWJanndeKi4
-	 xxZ7mrcQUupWQ8XZaOt89PK3ijIVeL8sP8FVxXaWww6cN8Ps4gocb0XOLU9yAA38Z4
-	 s66dCfKAX3YJv4JuBJ797UoVpSz81lB6lc7ujpa0=
+	b=UfEQEm6Hh44SjIr4dfzwU5HfV7Df1RN4moU7f4w1WXTCabN7A/bxShkVr3mm/atFQ
+	 F49EnH5wFREvvHUvVIt2rZexpCHgz4RyB1v3hhnXcYmXZ8Qcq7HmANQYVOdejxKOtC
+	 rUdrTeoXOEPHTi1QdqYPLyDVwJgb8aaMi7Gmr3rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0757/1073] ftrace: Allow WITH_ARGS flavour of graph tracer with shadow call stack
-Date: Wed, 28 Dec 2022 15:39:05 +0100
-Message-Id: <20221228144348.579438826@linuxfoundation.org>
+Subject: [PATCH 6.1 0720/1146] cxl: fix possible null-ptr-deref in cxl_guest_init_afu|adapter()
+Date: Wed, 28 Dec 2022 15:37:39 +0100
+Message-Id: <20221228144349.702132198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,43 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 38792972de4294163f44d6360fd221e6f2c22a05 ]
+[ Upstream commit 61c80d1c3833e196256fb060382db94f24d3d9a7 ]
 
-The recent switch on arm64 from DYNAMIC_FTRACE_WITH_REGS to
-DYNAMIC_FTRACE_WITH_ARGS failed to take into account that we currently
-require the former in order to allow the function graph tracer to be
-enabled in combination with shadow call stacks. This means that this is
-no longer permitted at all, in spite of the fact that either flavour of
-ftrace works perfectly fine in this combination.
+If device_register() fails in cxl_register_afu|adapter(), the device
+is not added, device_unregister() can not be called in the error path,
+otherwise it will cause a null-ptr-deref because of removing not added
+device.
 
-So permit WITH_ARGS as well as WITH_REGS.
+As comment of device_register() says, it should use put_device() to give
+up the reference in the error path. So split device_unregister() into
+device_del() and put_device(), then goes to put dev when register fails.
 
-Fixes: ddc9863e9e90 ("scs: Disable when function graph tracing is enabled")
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20221213132407.1485025-1-ardb@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 14baf4d9c739 ("cxl: Add guest-specific code")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
+Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221111145440.2426970-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/cxl/guest.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/arch/Kconfig b/arch/Kconfig
-index 8b311e400ec1..732a4680e733 100644
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -629,7 +629,7 @@ config ARCH_SUPPORTS_SHADOW_CALL_STACK
- config SHADOW_CALL_STACK
- 	bool "Shadow Call Stack"
- 	depends on ARCH_SUPPORTS_SHADOW_CALL_STACK
--	depends on DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
-+	depends on DYNAMIC_FTRACE_WITH_ARGS || DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
- 	help
- 	  This option enables the compiler's Shadow Call Stack, which
- 	  uses a shadow stack to protect function return addresses from
+diff --git a/drivers/misc/cxl/guest.c b/drivers/misc/cxl/guest.c
+index 375f692ae9d6..fb95a2d5cef4 100644
+--- a/drivers/misc/cxl/guest.c
++++ b/drivers/misc/cxl/guest.c
+@@ -965,10 +965,10 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 	 * if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_afu(afu)))
+-		goto err_put1;
++		goto err_put_dev;
+ 
+ 	if ((rc = cxl_sysfs_afu_add(afu)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	/*
+ 	 * pHyp doesn't expose the programming models supported by the
+@@ -984,7 +984,7 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 		afu->modes_supported = CXL_MODE_DIRECTED;
+ 
+ 	if ((rc = cxl_afu_select_best_mode(afu)))
+-		goto err_put2;
++		goto err_remove_sysfs;
+ 
+ 	adapter->afu[afu->slice] = afu;
+ 
+@@ -1004,10 +1004,12 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 
+ 	return 0;
+ 
+-err_put2:
++err_remove_sysfs:
+ 	cxl_sysfs_afu_remove(afu);
+-err_put1:
+-	device_unregister(&afu->dev);
++err_del_dev:
++	device_del(&afu->dev);
++err_put_dev:
++	put_device(&afu->dev);
+ 	free = false;
+ 	guest_release_serr_irq(afu);
+ err2:
+@@ -1141,18 +1143,20 @@ struct cxl *cxl_guest_init_adapter(struct device_node *np, struct platform_devic
+ 	 * even if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_adapter(adapter)))
+-		goto err_put1;
++		goto err_put_dev;
+ 
+ 	if ((rc = cxl_sysfs_adapter_add(adapter)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	/* release the context lock as the adapter is configured */
+ 	cxl_adapter_context_unlock(adapter);
+ 
+ 	return adapter;
+ 
+-err_put1:
+-	device_unregister(&adapter->dev);
++err_del_dev:
++	device_del(&adapter->dev);
++err_put_dev:
++	put_device(&adapter->dev);
+ 	free = false;
+ 	cxl_guest_remove_chardev(adapter);
+ err1:
 -- 
 2.35.1
 
