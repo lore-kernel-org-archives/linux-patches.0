@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428141C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5739C433D2;
-	Wed, 28 Dec 2022 16:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473D11C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63721C433D2;
+	Wed, 28 Dec 2022 16:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243755;
-	bh=oG8p6uHzd9jeLxIpvjJPqGMurUe78KnMd7qmPO7t9wE=;
+	s=korg; t=1672243757;
+	bh=Fkz7Q0iI1fpNChVys6VarblsVHx3pMK++LBXfsGGo9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbNI7SoK9DjdkaPAZEGwigvImIqnfbzRjFC+HNeBxBn6N09aKaiphoDhhvr42Sdha
-	 BJDvmlYqaczBoVafDOBcQJCVNC6GLYFw7s0T7o92jsKRAf1sFhddB/kE9rcx/RtwTI
-	 EbA6Jw+bCRvjC7TejtkrRRgZXqemJG7LRs/qCPPs=
+	b=ZrPaI+GYTUZGJhYLA+i5i3KTSGT/j/tlMbquNGAnYJX2Xv+JANkLfD+kzYp+rLyMO
+	 E3GHrwFl1Gbjbyp5v8bG/M92lduFFofpP8gKkpHycUeCbLv1VXi0zlOHWQwH8evWQn
+	 oUkwQ2vsMdFDSDMbEf2xyp60MEdip/oOhiiVsTEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0550/1146] can: tcan4x5x: Fix use of register error status mask
-Date: Wed, 28 Dec 2022 15:34:49 +0100
-Message-Id: <20221228144345.109913681@linuxfoundation.org>
+Subject: [PATCH 6.0 0583/1073] f2fs: fix to destroy sbi->post_read_wq in error path of f2fs_fill_super()
+Date: Wed, 28 Dec 2022 15:36:11 +0100
+Message-Id: <20221228144343.883269215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,66 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 67727a17a6b375d68fe569b77e6516b034b834c0 ]
+[ Upstream commit 7b02b2201893a71b881026cf574902019ab00db5 ]
 
-TCAN4X5X_ERROR_STATUS is not a status register that needs clearing
-during interrupt handling. Instead this is a masking register that masks
-error interrupts. Writing TCAN4X5X_CLEAR_ALL_INT to this register
-effectively masks everything.
+In error path of f2fs_fill_super(), this patch fixes to call
+f2fs_destroy_post_read_wq() once if we fail in f2fs_start_ckpt_thread().
 
-Rename the register and mask all error interrupts only once by writing
-to the register in tcan4x5x_init.
-
-Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Link: https://lore.kernel.org/all/20221206115728.1056014-10-msp@baylibre.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 261eeb9c1585 ("f2fs: introduce checkpoint_merge mount option")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/f2fs/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index a77f4d4f6299..2342aa011647 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -10,7 +10,7 @@
- #define TCAN4X5X_DEV_ID1 0x04
- #define TCAN4X5X_REV 0x08
- #define TCAN4X5X_STATUS 0x0C
--#define TCAN4X5X_ERROR_STATUS 0x10
-+#define TCAN4X5X_ERROR_STATUS_MASK 0x10
- #define TCAN4X5X_CONTROL 0x14
- 
- #define TCAN4X5X_CONFIG 0x800
-@@ -204,12 +204,7 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
--	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
--				      TCAN4X5X_CLEAR_ALL_INT);
--	if (ret)
--		return ret;
--
--	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS,
-+	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
- 				       TCAN4X5X_CLEAR_ALL_INT);
- }
- 
-@@ -229,6 +224,11 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
-+	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS_MASK,
-+				      TCAN4X5X_CLEAR_ALL_INT);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
- 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
- 	if (ret)
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 5415c06d8246..1187f29dc8e0 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4460,9 +4460,9 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
+ 	f2fs_destroy_node_manager(sbi);
+ free_sm:
+ 	f2fs_destroy_segment_manager(sbi);
+-	f2fs_destroy_post_read_wq(sbi);
+ stop_ckpt_thread:
+ 	f2fs_stop_ckpt_thread(sbi);
++	f2fs_destroy_post_read_wq(sbi);
+ free_devices:
+ 	destroy_device_list(sbi);
+ 	kvfree(sbi->ckpt);
 -- 
 2.35.1
 
