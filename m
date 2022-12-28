@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14281863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7A4C433D2;
-	Wed, 28 Dec 2022 15:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510A41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18AEC433D2;
+	Wed, 28 Dec 2022 15:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241840;
-	bh=cK9HfdiMGS09SrHtmCcwlDg+UehRq+u3y9E3r8xx+oA=;
+	s=korg; t=1672241844;
+	bh=pflqptXIswItlr5+JwuUkH37rwc7vDGlWVLQV8q1BOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/spvdFLsWUffgIEpomzomDSPxI862RAfK6bWoHX3tzTdDv38cCrk4JwFSBoRlAMS
-	 zUwP0qeG22rjwDdExXJqxlpyKFGD1hg9ytgY/Ljrj9d/egT4afTXPDuDrTQQKbC6Vt
-	 04GRP0cNdJwrW0jgoJBWMbcIg5G60A0uIty7rpxU=
+	b=Wwj9SnCjXkKeEIhtg4qyYH+GcCStVrDRypu1baohSbbqQMWst98S0UeFf9efiCVA9
+	 0bNL6Z6wMVqB5CUV3wMEqvLRjOX5mwKDwp7J5oVNboUP4q5424d8JZRrVn01WMlYrh
+	 4KMqpwdOZsGW9e7V7RcaCaqV9pXbP2VVb73jFiVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0333/1073] dm: make sure create and remove dm device wont race with open and close table
-Date: Wed, 28 Dec 2022 15:32:01 +0100
-Message-Id: <20221228144337.048891917@linuxfoundation.org>
+Subject: [PATCH 6.1 0295/1146] clk: qcom: gcc-ipq806x: use parent_data for the last remaining entry
+Date: Wed, 28 Dec 2022 15:30:34 +0100
+Message-Id: <20221228144338.151943617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d563792c8933a810d28ce0f2831f0726c2b15a31 ]
+[ Upstream commit 55307e522cc7a4dddc3d231ca5cb7e68e9668f66 ]
 
-open_table_device() and close_table_device() is protected by
-table_devices_lock, hence use it to protect add_disk() and
-del_gendisk().
+Use parent_data for the last remaining entry (pll4). This clock is
+provided by the lcc device.
 
-Prepare to track per-add_disk holder relations in dm.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221115141054.1051801-6-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
+Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220927113826.246241-3-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 620abcef2df5..e7fc2a69633c 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1965,7 +1965,14 @@ static void cleanup_mapped_device(struct mapped_device *md)
- 		spin_unlock(&_minor_lock);
- 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
- 			dm_sysfs_exit(md);
-+
-+			/*
-+			 * Hold lock to make sure del_gendisk() won't concurrent
-+			 * with open/close_table_device().
-+			 */
-+			mutex_lock(&md->table_devices_lock);
- 			del_gendisk(md->disk);
-+			mutex_unlock(&md->table_devices_lock);
- 		}
- 		dm_queue_destroy_crypto_profile(md->queue);
- 		put_disk(md->disk);
-@@ -2325,15 +2332,24 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
- 	if (r)
- 		return r;
- 
-+	/*
-+	 * Hold lock to make sure add_disk() and del_gendisk() won't concurrent
-+	 * with open_table_device() and close_table_device().
-+	 */
-+	mutex_lock(&md->table_devices_lock);
- 	r = add_disk(md->disk);
-+	mutex_unlock(&md->table_devices_lock);
- 	if (r)
- 		return r;
- 
- 	r = dm_sysfs_init(md);
- 	if (r) {
-+		mutex_lock(&md->table_devices_lock);
- 		del_gendisk(md->disk);
-+		mutex_unlock(&md->table_devices_lock);
- 		return r;
- 	}
-+
- 	md->type = type;
- 	return 0;
- }
+diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+index 718de17a1e60..6447f3e81b55 100644
+--- a/drivers/clk/qcom/gcc-ipq806x.c
++++ b/drivers/clk/qcom/gcc-ipq806x.c
+@@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
+ 	.enable_mask = BIT(4),
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "pll4_vote",
+-		.parent_names = (const char *[]){ "pll4" },
++		.parent_data = &(const struct clk_parent_data){
++			.fw_name = "pll4", .name = "pll4",
++		},
+ 		.num_parents = 1,
+ 		.ops = &clk_pll_vote_ops,
+ 	},
 -- 
 2.35.1
 
