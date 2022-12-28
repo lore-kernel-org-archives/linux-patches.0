@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C981863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79007C433D2;
-	Wed, 28 Dec 2022 15:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D8C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26180C433D2;
+	Wed, 28 Dec 2022 15:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240202;
-	bh=35wUNQA3z0odziUalHmDpCk9+LKaQ4zeghy4IUYunuw=;
+	s=korg; t=1672240205;
+	bh=PEzqnv/g0IwVl556ORdc3h+lNfyt/OGUZ7XwCHfcnzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2zzYS4TnLMU8Q68dpdPvYV5Ffv/2h6yXawtshPKMZ+bWZ/zhKPzlkYaDeWvriemt
-	 3LtJ1CBkS52Ctb54gSjmV1wIyA/uksoPYBvzl/TJsjeh2sZaWZsMzBLav4o2qv4jOU
-	 PJzPwDvL8A11hvA0KEzDTKk7KHZjvi/rlww/hCiY=
+	b=PfCNkodw8BH1/fomRFGVUw8ALrPIRmOcNodPtOS4gwYDaTjvIHnRrlbVZNlK/M+a0
+	 +c3E5wDAbETnUkx7TfP5FKDatB8MSrkmR+zNzR3efgO/7QzpVaE/gyv/VvYSIEg5Oi
+	 VPH1TcEyqAlYMs4qPgrQdEzkPF6H+TApTXfgRMuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com,
+	Ayushman Dutta <ayudutta@amazon.com>,
+	Kees Cook <keescook@chromium.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0130/1073] perf/x86/intel/uncore: Fix reference count leak in hswep_has_limit_sbox()
-Date: Wed, 28 Dec 2022 15:28:38 +0100
-Message-Id: <20221228144331.566714702@linuxfoundation.org>
+Subject: [PATCH 6.1 0095/1146] seccomp: Move copy_seccomp() to no failure path.
+Date: Wed, 28 Dec 2022 15:27:14 +0100
+Message-Id: <20221228144332.722897904@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +38,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 1ff9dd6e7071a561f803135c1d684b13c7a7d01d ]
+[ Upstream commit a1140cb215fa13dcec06d12ba0c3ee105633b7c4 ]
 
-pci_get_device() will increase the reference count for the returned
-'dev'. We need to call pci_dev_put() to decrease the reference count.
-Since 'dev' is only used in pci_read_config_dword(), let's add
-pci_dev_put() right after it.
+Our syzbot instance reported memory leaks in do_seccomp() [0], similar
+to the report [1].  It shows that we miss freeing struct seccomp_filter
+and some objects included in it.
 
-Fixes: 9d480158ee86 ("perf/x86/intel/uncore: Remove uncore extra PCI dev HSWEP_PCI_PCU_3")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-3-wangxiongfeng2@huawei.com
+We can reproduce the issue with the program below [2] which calls one
+seccomp() and two clone() syscalls.
+
+The first clone()d child exits earlier than its parent and sends a
+signal to kill it during the second clone(), more precisely before the
+fatal_signal_pending() test in copy_process().  When the parent receives
+the signal, it has to destroy the embryonic process and return -EINTR to
+user space.  In the failure path, we have to call seccomp_filter_release()
+to decrement the filter's refcount.
+
+Initially, we called it in free_task() called from the failure path, but
+the commit 3a15fb6ed92c ("seccomp: release filter after task is fully
+dead") moved it to release_task() to notify user space as early as possible
+that the filter is no longer used.
+
+To keep the change and current seccomp refcount semantics, let's move
+copy_seccomp() just after the signal check and add a WARN_ON_ONCE() in
+free_task() for future debugging.
+
+[0]:
+unreferenced object 0xffff8880063add00 (size 256):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.914s)
+  hex dump (first 32 bytes):
+    01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
+    ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+  backtrace:
+    do_seccomp (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/seccomp.c:666 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffffc90000035000 (size 4096):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    __vmalloc_node_range (mm/vmalloc.c:3226)
+    __vmalloc_node (mm/vmalloc.c:3261 (discriminator 4))
+    bpf_prog_alloc_no_stats (kernel/bpf/core.c:91)
+    bpf_prog_alloc (kernel/bpf/core.c:129)
+    bpf_prog_create_from_user (net/core/filter.c:1414)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff888003fa1000 (size 1024):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    bpf_prog_alloc_no_stats (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/bpf/core.c:95)
+    bpf_prog_alloc (kernel/bpf/core.c:129)
+    bpf_prog_create_from_user (net/core/filter.c:1414)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff888006360240 (size 16):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 16 bytes):
+    01 00 37 00 76 65 72 6c e0 83 01 06 80 88 ff ff  ..7.verl........
+  backtrace:
+    bpf_prog_store_orig_filter (net/core/filter.c:1137)
+    bpf_prog_create_from_user (net/core/filter.c:1428)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff8880060183e0 (size 8):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 8 bytes):
+    06 00 00 00 00 00 ff 7f                          ........
+  backtrace:
+    kmemdup (mm/util.c:129)
+    bpf_prog_store_orig_filter (net/core/filter.c:1144)
+    bpf_prog_create_from_user (net/core/filter.c:1428)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+
+[1]: https://syzkaller.appspot.com/bug?id=2809bb0ac77ad9aa3f4afe42d6a610aba594a987
+
+[2]:
+#define _GNU_SOURCE
+#include <sched.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <linux/filter.h>
+#include <linux/seccomp.h>
+
+void main(void)
+{
+	struct sock_filter filter[] = {
+		BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+	};
+	struct sock_fprog fprog = {
+		.len = sizeof(filter) / sizeof(filter[0]),
+		.filter = filter,
+	};
+	long i, pid;
+
+	syscall(__NR_seccomp, SECCOMP_SET_MODE_FILTER, 0, &fprog);
+
+	for (i = 0; i < 2; i++) {
+		pid = syscall(__NR_clone, CLONE_NEWNET | SIGKILL, NULL, NULL, 0);
+		if (pid == 0)
+			return;
+	}
+}
+
+Fixes: 3a15fb6ed92c ("seccomp: release filter after task is fully dead")
+Reported-by: syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com
+Reported-by: Ayushman Dutta <ayudutta@amazon.com>
+Suggested-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20220823154532.82913-1-kuniyu@amazon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/fork.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index 76fedc8e12dd..f5d89d06c66a 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -2891,6 +2891,7 @@ static bool hswep_has_limit_sbox(unsigned int device)
- 		return false;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 08969f5aa38d..844dfdc8c639 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -535,6 +535,9 @@ void put_task_stack(struct task_struct *tsk)
  
- 	pci_read_config_dword(dev, HSWEP_PCU_CAPID4_OFFET, &capid4);
-+	pci_dev_put(dev);
- 	if (!hswep_get_chop(capid4))
- 		return true;
+ void free_task(struct task_struct *tsk)
+ {
++#ifdef CONFIG_SECCOMP
++	WARN_ON_ONCE(tsk->seccomp.filter);
++#endif
+ 	release_user_cpus_ptr(tsk);
+ 	scs_release(tsk);
  
+@@ -2406,12 +2409,6 @@ static __latent_entropy struct task_struct *copy_process(
+ 
+ 	spin_lock(&current->sighand->siglock);
+ 
+-	/*
+-	 * Copy seccomp details explicitly here, in case they were changed
+-	 * before holding sighand lock.
+-	 */
+-	copy_seccomp(p);
+-
+ 	rv_task_fork(p);
+ 
+ 	rseq_fork(p, clone_flags);
+@@ -2428,6 +2425,14 @@ static __latent_entropy struct task_struct *copy_process(
+ 		goto bad_fork_cancel_cgroup;
+ 	}
+ 
++	/* No more failure paths after this point. */
++
++	/*
++	 * Copy seccomp details explicitly here, in case they were changed
++	 * before holding sighand lock.
++	 */
++	copy_seccomp(p);
++
+ 	init_task_pid_links(p);
+ 	if (likely(p->pid)) {
+ 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
 -- 
 2.35.1
 
