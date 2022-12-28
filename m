@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5511863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D99C433D2;
-	Wed, 28 Dec 2022 14:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7251868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51527C433EF;
+	Wed, 28 Dec 2022 14:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239156;
-	bh=rlJmXHtFoiF2suLDD7Caa/PRzyNnvLL3wUmzfw+4j1Y=;
+	s=korg; t=1672239158;
+	bh=IQj4jAtdLDkSaRLYS/ofgyUfK/kIyBl2/qwFt4uRLCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agw+HFeQAvlsTFtUv1A1ejqu+XjHyouyDzzAL6pjbEJ0vK4Z3r+OpjiXso4NRznuj
-	 IltQicQAL7K0u6wwPbSOODbRlsUqhhgCEVsiIZYi7OZ0dCqK5JH+i2WIO5URD7zJmQ
-	 FzjzsgLRZi7g4hmf4jnTEiR+T/pFR0l0ftazFt7w=
+	b=DzAHdODOD3sJkeUY6ljsWMRpsezKILxj6VERGgjBW1FI3QYlKlRvDZQietWGMCUDA
+	 D+4rbahooE/np8bxIzT12k+O1pgRGqPpS8MmE4jAC9h+N4krL0N8l75wFutxENMgOD
+	 Z3vKxe5xQN4a48WzO8mp3L5m6OIycc/gN1IeDgCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Joel Stanley <joel@jms.id.au>,
-	Corey Minyard <cminyard@mvista.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/731] ipmi: kcs: Poll OBF briefly to reduce OBE latency
-Date: Wed, 28 Dec 2022 15:34:17 +0100
-Message-Id: <20221228144300.903077383@linuxfoundation.org>
+Subject: [PATCH 5.15 151/731] drm/amdgpu/powerplay/psm: Fix memory leak in power state init
+Date: Wed, 28 Dec 2022 15:34:18 +0100
+Message-Id: <20221228144300.932124306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,69 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Jeffery <andrew@aj.id.au>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit f90bc0f97f2b65af233a37b2e32fc81871a1e3cf ]
+[ Upstream commit 8f8033d5663b18e6efb33feb61f2287a04605ab5 ]
 
-The ASPEED KCS devices don't provide a BMC-side interrupt for the host
-reading the output data register (ODR). The act of the host reading ODR
-clears the output buffer full (OBF) flag in the status register (STR),
-informing the BMC it can transmit a subsequent byte.
+Commit 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power
+state init") made the power state init function return early in case of
+failure to get an entry from the powerplay table, but it missed to clean up
+the allocated memory for the current power state before returning.
 
-On the BMC side the KCS client must enable the OBE event *and* perform a
-subsequent read of STR anyway to avoid races - the polling provides a
-window for the host to read ODR if data was freshly written while
-minimising BMC-side latency.
-
-Fixes: 28651e6c4237 ("ipmi: kcs_bmc: Allow clients to control KCS IRQ state")
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Message-Id: <20220812144741.240315-1-andrew@aj.id.au>
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power state init")
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/kcs_bmc_aspeed.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index 92a37b33494c..f23c146bb740 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -404,13 +404,31 @@ static void aspeed_kcs_check_obe(struct timer_list *timer)
- static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
- {
- 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
-+	int rc;
-+	u8 str;
- 
- 	/* We don't have an OBE IRQ, emulate it */
- 	if (mask & KCS_BMC_EVENT_TYPE_OBE) {
--		if (KCS_BMC_EVENT_TYPE_OBE & state)
--			mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
--		else
-+		if (KCS_BMC_EVENT_TYPE_OBE & state) {
-+			/*
-+			 * Given we don't have an OBE IRQ, delay by polling briefly to see if we can
-+			 * observe such an event before returning to the caller. This is not
-+			 * incorrect because OBF may have already become clear before enabling the
-+			 * IRQ if we had one, under which circumstance no event will be propagated
-+			 * anyway.
-+			 *
-+			 * The onus is on the client to perform a race-free check that it hasn't
-+			 * missed the event.
-+			 */
-+			rc = read_poll_timeout_atomic(aspeed_kcs_inb, str,
-+						      !(str & KCS_BMC_STR_OBF), 1, 100, false,
-+						      &priv->kcs_bmc, priv->kcs_bmc.ioreg.str);
-+			/* Time for the slow path? */
-+			if (rc == -ETIMEDOUT)
-+				mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
-+		} else {
- 			del_timer(&priv->obe.timer);
-+		}
- 	}
- 
- 	if (mask & KCS_BMC_EVENT_TYPE_IBF) {
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+index 67d7da0b6fed..1d829402cd2e 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+@@ -75,8 +75,10 @@ int psm_init_power_state_table(struct pp_hwmgr *hwmgr)
+ 	for (i = 0; i < table_entries; i++) {
+ 		result = hwmgr->hwmgr_func->get_pp_table_entry(hwmgr, i, state);
+ 		if (result) {
++			kfree(hwmgr->current_ps);
+ 			kfree(hwmgr->request_ps);
+ 			kfree(hwmgr->ps);
++			hwmgr->current_ps = NULL;
+ 			hwmgr->request_ps = NULL;
+ 			hwmgr->ps = NULL;
+ 			return -EINVAL;
 -- 
 2.35.1
 
