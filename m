@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167311C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F52DC433D2;
-	Wed, 28 Dec 2022 16:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0681C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E2FC433D2;
+	Wed, 28 Dec 2022 16:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246311;
-	bh=RcIYVwf70pmzs7nidFY13OIN+AVbosDXuvB0Aa50h+o=;
+	s=korg; t=1672246315;
+	bh=PWAOx/uPdeAVFzHXjcr55cEGzHjdl+ffaSB39FB4smY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikAMD4j91fzuET8TOCf6QOxPs89hXFrZQQYP2bdL2VmuNJ5J2qahL3/FVzGDRY1oE
-	 wqx9LmXC0LcZoAHIfxVgeCx2CS1MG5BMFVPNuw8r+n7A9hoLb2tLPY+4W03IZyVFX2
-	 wr0fyOK6yV01+6xs2arcCzfIwhpsF4ng0MDHuMpw=
+	b=W5MmkFN0GuBSGl2hiOaZ9R2zZTB2SvQ9uIhliCqsnMqSoQpRw2k/KPhUKH+15/AWe
+	 dcg7p9PhSTqHGJTNRqNwj8Lx5aXmZAKmhZSAAUlyY9QJLvus6pYmvcnLymk67UruSg
+	 hGWMDiXMDcRkeoAB3jBokqRyR1C8gT9mFzU7MZJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1019/1146] bpf: Fix a BTF_ID_LIST bug with CONFIG_DEBUG_INFO_BTF not set
-Date: Wed, 28 Dec 2022 15:42:38 +0100
-Message-Id: <20221228144358.044387536@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Stable@vger.kernel.org
+Subject: [PATCH 6.0 1048/1073] iio: adc: ad_sigma_delta: do not use internal iio_dev lock
+Date: Wed, 28 Dec 2022 15:43:56 +0100
+Message-Id: <20221228144356.676136355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,61 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit beb3d47d1d3d7185bb401af628ad32ee204a9526 ]
+commit 20228a1d5a55e7db0c6720840f2c7d2b48c55f69 upstream.
 
-With CONFIG_DEBUG_INFO_BTF not set, we hit the following compilation error,
-  /.../kernel/bpf/verifier.c:8196:23: error: array index 6 is past the end of the array
-  (that has type 'u32[5]' (aka 'unsigned int[5]')) [-Werror,-Warray-bounds]
-        if (meta->func_id == special_kfunc_list[KF_bpf_cast_to_kern_ctx])
-                             ^                  ~~~~~~~~~~~~~~~~~~~~~~~
-  /.../kernel/bpf/verifier.c:8174:1: note: array 'special_kfunc_list' declared here
-  BTF_ID_LIST(special_kfunc_list)
-  ^
-  /.../include/linux/btf_ids.h:207:27: note: expanded from macro 'BTF_ID_LIST'
-  #define BTF_ID_LIST(name) static u32 __maybe_unused name[5];
-                            ^
-  /.../kernel/bpf/verifier.c:8443:19: error: array index 5 is past the end of the array
-  (that has type 'u32[5]' (aka 'unsigned int[5]')) [-Werror,-Warray-bounds]
-                 btf_id == special_kfunc_list[KF_bpf_list_pop_back];
-                           ^                  ~~~~~~~~~~~~~~~~~~~~
-  /.../kernel/bpf/verifier.c:8174:1: note: array 'special_kfunc_list' declared here
-  BTF_ID_LIST(special_kfunc_list)
-  ^
-  /.../include/linux/btf_ids.h:207:27: note: expanded from macro 'BTF_ID_LIST'
-  #define BTF_ID_LIST(name) static u32 __maybe_unused name[5];
-  ...
+Drop 'mlock' usage by making use of iio_device_claim_direct_mode().
+This change actually makes sure we cannot do a single conversion while
+buffering is enable. Note there was a potential race in the previous
+code since we were only acquiring the lock after checking if the bus is
+enabled.
 
-Fix the problem by increase the size of BTF_ID_LIST to 16 to avoid compilation error
-and also prevent potentially unintended issue due to out-of-bound access.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20221123155759.2669749-1-yhs@fb.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: <Stable@vger.kernel.org> #No rush as race is very old.
+Link: https://lore.kernel.org/r/20220920112821.975359-2-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/btf_ids.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ad_sigma_delta.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/btf_ids.h b/include/linux/btf_ids.h
-index 2aea877d644f..2b9872008428 100644
---- a/include/linux/btf_ids.h
-+++ b/include/linux/btf_ids.h
-@@ -204,7 +204,7 @@ extern struct btf_id_set8 name;
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -281,10 +281,10 @@ int ad_sigma_delta_single_conversion(str
+ 	unsigned int data_reg;
+ 	int ret = 0;
  
- #else
+-	if (iio_buffer_enabled(indio_dev))
+-		return -EBUSY;
++	ret = iio_device_claim_direct_mode(indio_dev);
++	if (ret)
++		return ret;
  
--#define BTF_ID_LIST(name) static u32 __maybe_unused name[5];
-+#define BTF_ID_LIST(name) static u32 __maybe_unused name[16];
- #define BTF_ID(prefix, name)
- #define BTF_ID_FLAGS(prefix, name, ...)
- #define BTF_ID_UNUSED
--- 
-2.35.1
-
+-	mutex_lock(&indio_dev->mlock);
+ 	ad_sigma_delta_set_channel(sigma_delta, chan->address);
+ 
+ 	spi_bus_lock(sigma_delta->spi->master);
+@@ -323,7 +323,7 @@ out:
+ 	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
+ 	sigma_delta->bus_locked = false;
+ 	spi_bus_unlock(sigma_delta->spi->master);
+-	mutex_unlock(&indio_dev->mlock);
++	iio_device_release_direct_mode(indio_dev);
+ 
+ 	if (ret)
+ 		return ret;
 
 
