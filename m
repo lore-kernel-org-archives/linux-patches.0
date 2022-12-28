@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0981863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A6FC433D2;
-	Wed, 28 Dec 2022 14:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8421863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:46:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40290C433EF;
+	Wed, 28 Dec 2022 14:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238813;
-	bh=5JZHmcmcfT7DwKMbrzGvZFxRQEpKQM7s9md3eNOtSYA=;
+	s=korg; t=1672238816;
+	bh=x3sQ+3q2JPAEbMpxy4MkTj6Cqs1ssCLLWqjN1gMsBCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNJSrM2mMPGa4SNKAbDEKRLXYkc6rwFCUg73WLiSz1AqA4wT494tBBDSA9c3/81Su
-	 ms4tjf0mdmGYDuAEEPmaEwvfXkpBzmBCURI8pt6BVl1ikf1SttAPZAW5E0IgrGk4OE
-	 ypfBEj13Mt2Dcck5Jm1bPFdwl/wyxGNWZ3+5gHKY=
+	b=pbFoTU5pxb5IN3eAkvyZiQBsOPVLNds3rX4CqXoYxx7fRNOhEoZDDgUNmX2b+VsFs
+	 BEpsgIEo/gU/fKH5i6y2Maot4XGqZgyp7ABOcynP1cjDYBT0T2DWxaNfnziQ3G7cdi
+	 iacANmn/VfoL6IrQfDPajThvvuoAgK93q8KX1GFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/731] arm64: dts: qcom: msm8996: fix GPU OPP table
-Date: Wed, 28 Dec 2022 15:31:54 +0100
-Message-Id: <20221228144256.752675111@linuxfoundation.org>
+Subject: [PATCH 5.15 008/731] ARM: dts: qcom: apq8064: fix coresight compatible
+Date: Wed, 28 Dec 2022 15:31:55 +0100
+Message-Id: <20221228144256.780803289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,50 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit 0d440d811e6e2f37093e54db55bc27fe66678170 ]
+[ Upstream commit a42b1ee868361f1cb0492f1bdaefb43e0751e468 ]
 
-Fix Adreno OPP table according to the msm-3.18. Enable 624 MHz for the
-speed bin 3 and 560 MHz for bins 2 and 3.
+There's a typo missing the arm, prefix of arm,coresight-etb10. Fix it to
+make devicetree validation happier.
 
-Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Fixes: 7a5c275fd821 ("ARM: dts: qcom: Add apq8064 CoreSight components")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220724140421.1933004-7-dmitry.baryshkov@linaro.org
+Link: https://lore.kernel.org/r/20221013190657.48499-3-luca@z3ntu.xyz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 032c6cd635e2..70187fd03a26 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -995,17 +995,17 @@ gpu_opp_table: opp-table {
- 				compatible  ="operating-points-v2";
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index d1c1c6aab2b8..0e830476fefd 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1571,7 +1571,7 @@ wifi {
+ 		};
  
- 				/*
--				 * 624Mhz and 560Mhz are only available on speed
--				 * bin (1 << 0). All the rest are available on
--				 * all bins of the hardware
-+				 * 624Mhz is only available on speed bins 0 and 3.
-+				 * 560Mhz is only available on speed bins 0, 2 and 3.
-+				 * All the rest are available on all bins of the hardware.
- 				 */
- 				opp-624000000 {
- 					opp-hz = /bits/ 64 <624000000>;
--					opp-supported-hw = <0x01>;
-+					opp-supported-hw = <0x09>;
- 				};
- 				opp-560000000 {
- 					opp-hz = /bits/ 64 <560000000>;
--					opp-supported-hw = <0x01>;
-+					opp-supported-hw = <0x0d>;
- 				};
- 				opp-510000000 {
- 					opp-hz = /bits/ 64 <510000000>;
+ 		etb@1a01000 {
+-			compatible = "coresight-etb10", "arm,primecell";
++			compatible = "arm,coresight-etb10", "arm,primecell";
+ 			reg = <0x1a01000 0x1000>;
+ 
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
 -- 
 2.35.1
 
