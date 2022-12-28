@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C541875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEDAC433D2;
-	Wed, 28 Dec 2022 16:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C657B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497C9C433D2;
+	Wed, 28 Dec 2022 16:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243630;
-	bh=PfYhpznSR6CUYvnu+6GYMzRu0nW4ua9DmHm5Jn2jZvQ=;
+	s=korg; t=1672243632;
+	bh=vLwJ5Wj8axCvIbC5oeOyFVII/YVfpRFUVLM/eSPuv6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcFgm01x63eA8Z4Pewa0CstWnUltPdcNxvix2aNs+xDHEajgG0crQ2MRMQaR5ploP
-	 MsQbiBJ9CtaOJBjA9yoSEKdaTrRSmg0dy+5rAdwNtt4SqzSH0fZHmEZTX8EN3Sy6b6
-	 bFw8UrvHDwxOvq94xROXxRizbEwXqYMsyGg6H6VA=
+	b=VjUtzfc/iGHUwTy1nUkedsG96p2Yb6zCm6JM6ItLebhESj7Zufv+z8UDlGYrjjlVm
+	 Yp7iAdz/ZiI2nklhfhA0SiGMC8r24kOJ7l1H0SRl4fQgYZal5BXQoUeKFtI0nQWKoa
+	 2GugUkrIPu2TIqiIAn+bx/JBtOMNOqqkuygnRods=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0524/1146] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
-Date: Wed, 28 Dec 2022 15:34:23 +0100
-Message-Id: <20221228144344.406498616@linuxfoundation.org>
+Subject: [PATCH 6.0 0560/1073] crypto: sun8i-ss - use dma_addr instead u32
+Date: Wed, 28 Dec 2022 15:35:48 +0100
+Message-Id: <20221228144343.265134900@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
+[ Upstream commit 839b8ae2fc10f205317bcc32c9de18456756e1f5 ]
 
-Fix to return a negative error code instead of 0 when
-brcmf_chip_set_active() fails. In addition, change the return
-value for brcmf_pcie_exit_download_state() to keep consistent.
+The DMA address need to be stored in a dma_addr_t
 
-Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
+Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 80083f9ea311..aaf8e126478d 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -726,7 +726,7 @@ static int brcmf_pcie_exit_download_state(struct brcmf_pciedev_info *devinfo,
- 	}
+diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+index 910d6751644c..902f6be057ec 100644
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+@@ -124,7 +124,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
+ 	unsigned int ivsize = crypto_skcipher_ivsize(tfm);
+ 	struct sun8i_ss_flow *sf = &ss->flows[rctx->flow];
+ 	int i = 0;
+-	u32 a;
++	dma_addr_t a;
+ 	int err;
  
- 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
--		return -EINVAL;
-+		return -EIO;
- 	return 0;
- }
- 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 465d95d83759..e265a2e411a0 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -3414,6 +3414,7 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
- 	/* Take arm out of reset */
- 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
- 		brcmf_err("error getting out of ARM core reset\n");
-+		bcmerror = -EIO;
- 		goto err;
- 	}
- 
+ 	rctx->ivlen = ivsize;
 -- 
 2.35.1
 
