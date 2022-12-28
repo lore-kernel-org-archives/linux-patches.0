@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52DF1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FB4C433D2;
-	Wed, 28 Dec 2022 16:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F481C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54D0C433EF;
+	Wed, 28 Dec 2022 16:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243965;
-	bh=q6CaSX0q6YIRG3fbZyJTkcHdjpUknIX4uFb+LE5f1QE=;
+	s=korg; t=1672243968;
+	bh=0Rg55PiCAd68EtVqrIcCWw+uLfOchtldwvyo6bQN5n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9FLbQXMLgutQvtRHR6jJ1lz3Jzlga5oXfWLxvm1ZeubRK7llvJoEDcrFNJ0PPHcG
-	 DHITT5NYWvMXYuvrcsLVgHuS9+UZZ0vGLsKX9GFHcDNJZLBt86DsrKuUQXV/b3zvOa
-	 piOcuj9IApT1ElDPh3Rp4qvuc6+akp+xRI+EBPvw=
+	b=zIHGApqPB3P1J98FXMiZ9RaEk1ilfRsbYEODTp59fLMhfxpS59w5dArJFpV5/KjZG
+	 StPc8ZK2sETSHPRn8feTTYaFtzua3gQSDLwGybGzDLo4ta1dE05bY/SUrzaXZSyZER
+	 AWHwIvKR0F3FTM98/Vop6agmuw5XVxx/o6S5aDZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0587/1146] crypto: rockchip - do not store mode globally
-Date: Wed, 28 Dec 2022 15:35:26 +0100
-Message-Id: <20221228144346.115580067@linuxfoundation.org>
+Subject: [PATCH 6.0 0610/1073] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
+Date: Wed, 28 Dec 2022 15:36:38 +0100
+Message-Id: <20221228144344.614379371@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,273 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 87e356c4966444866186f68f05832fdcc0f351a3 ]
+[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
 
-Storing the mode globally does not work if 2 requests are handled in the
-same time.
-We should store it in a request context.
+There is a null-ptr-deref when mount.cifs over rdma:
 
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
+
+  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xad/0x130
+   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+   execute_in_process_context+0x25/0x90
+   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
+   rxe_create_qp+0x16a/0x180 [rdma_rxe]
+   create_qp.part.0+0x27d/0x340
+   ib_create_qp_kernel+0x73/0x160
+   rdma_create_qp+0x100/0x230
+   _smbd_get_connection+0x752/0x20f0
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+The root cause of the issue is the socket create failed in
+rxe_qp_init_req().
+
+So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto.h       |  5 +-
- .../crypto/rockchip/rk3288_crypto_skcipher.c  | 58 ++++++++++++-------
- 2 files changed, 41 insertions(+), 22 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
-index 2fa7131e4060..3e60e3dca1b5 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.h
-+++ b/drivers/crypto/rockchip/rk3288_crypto.h
-@@ -245,10 +245,13 @@ struct rk_ahash_rctx {
- struct rk_cipher_ctx {
- 	struct rk_crypto_info		*dev;
- 	unsigned int			keylen;
--	u32				mode;
- 	u8				iv[AES_BLOCK_SIZE];
- };
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index d776dfda43b1..e9c573fe7155 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -830,12 +830,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
+ 	if (qp->resp.mr)
+ 		rxe_put(qp->resp.mr);
  
-+struct rk_cipher_rctx {
-+	u32				mode;
-+};
+-	if (qp_type(qp) == IB_QPT_RC)
+-		sk_dst_reset(qp->sk->sk);
+-
+ 	free_rd_atomic_resources(qp);
+ 
+ 	if (qp->sk) {
++		if (qp_type(qp) == IB_QPT_RC)
++			sk_dst_reset(qp->sk->sk);
 +
- enum alg_type {
- 	ALG_TYPE_HASH,
- 	ALG_TYPE_CIPHER,
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-index 8c44a19eab75..bbd0bf52bf07 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-@@ -76,9 +76,10 @@ static int rk_aes_ecb_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_AES_ECB_MODE;
-+	rctx->mode = RK_CRYPTO_AES_ECB_MODE;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -86,9 +87,10 @@ static int rk_aes_ecb_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_AES_ECB_MODE | RK_CRYPTO_DEC;
-+	rctx->mode = RK_CRYPTO_AES_ECB_MODE | RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -96,9 +98,10 @@ static int rk_aes_cbc_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_AES_CBC_MODE;
-+	rctx->mode = RK_CRYPTO_AES_CBC_MODE;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -106,9 +109,10 @@ static int rk_aes_cbc_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_AES_CBC_MODE | RK_CRYPTO_DEC;
-+	rctx->mode = RK_CRYPTO_AES_CBC_MODE | RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -116,9 +120,10 @@ static int rk_des_ecb_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = 0;
-+	rctx->mode = 0;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -126,9 +131,10 @@ static int rk_des_ecb_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_DEC;
-+	rctx->mode = RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -136,9 +142,10 @@ static int rk_des_cbc_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_CHAINMODE_CBC;
-+	rctx->mode = RK_CRYPTO_TDES_CHAINMODE_CBC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -146,9 +153,10 @@ static int rk_des_cbc_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_CHAINMODE_CBC | RK_CRYPTO_DEC;
-+	rctx->mode = RK_CRYPTO_TDES_CHAINMODE_CBC | RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -156,9 +164,10 @@ static int rk_des3_ede_ecb_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_SELECT;
-+	rctx->mode = RK_CRYPTO_TDES_SELECT;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -166,9 +175,10 @@ static int rk_des3_ede_ecb_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_DEC;
-+	rctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -176,9 +186,10 @@ static int rk_des3_ede_cbc_encrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_TDES_CHAINMODE_CBC;
-+	rctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_TDES_CHAINMODE_CBC;
- 	return rk_handle_req(dev, req);
- }
- 
-@@ -186,9 +197,10 @@ static int rk_des3_ede_cbc_decrypt(struct skcipher_request *req)
- {
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_crypto_info *dev = ctx->dev;
- 
--	ctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_TDES_CHAINMODE_CBC |
-+	rctx->mode = RK_CRYPTO_TDES_SELECT | RK_CRYPTO_TDES_CHAINMODE_CBC |
- 		    RK_CRYPTO_DEC;
- 	return rk_handle_req(dev, req);
- }
-@@ -199,6 +211,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 		skcipher_request_cast(dev->async_req);
- 	struct crypto_skcipher *cipher = crypto_skcipher_reqtfm(req);
- 	struct crypto_tfm *tfm = crypto_skcipher_tfm(cipher);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(cipher);
- 	u32 ivsize, block, conf_reg = 0;
- 
-@@ -206,22 +219,22 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 	ivsize = crypto_skcipher_ivsize(cipher);
- 
- 	if (block == DES_BLOCK_SIZE) {
--		ctx->mode |= RK_CRYPTO_TDES_FIFO_MODE |
-+		rctx->mode |= RK_CRYPTO_TDES_FIFO_MODE |
- 			     RK_CRYPTO_TDES_BYTESWAP_KEY |
- 			     RK_CRYPTO_TDES_BYTESWAP_IV;
--		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, ctx->mode);
-+		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
- 		conf_reg = RK_CRYPTO_DESSEL;
- 	} else {
--		ctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
-+		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
- 			     RK_CRYPTO_AES_KEY_CHANGE |
- 			     RK_CRYPTO_AES_BYTESWAP_KEY |
- 			     RK_CRYPTO_AES_BYTESWAP_IV;
- 		if (ctx->keylen == AES_KEYSIZE_192)
--			ctx->mode |= RK_CRYPTO_AES_192BIT_key;
-+			rctx->mode |= RK_CRYPTO_AES_192BIT_key;
- 		else if (ctx->keylen == AES_KEYSIZE_256)
--			ctx->mode |= RK_CRYPTO_AES_256BIT_key;
--		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, ctx->mode);
-+			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
-+		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
+ 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
+ 		sock_release(qp->sk);
  	}
- 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
-@@ -246,6 +259,7 @@ static int rk_set_data_start(struct rk_crypto_info *dev)
- 	struct skcipher_request *req =
- 		skcipher_request_cast(dev->async_req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 	u32 ivsize = crypto_skcipher_ivsize(tfm);
- 	u8 *src_last_blk = page_address(sg_page(dev->sg_src)) +
-@@ -254,7 +268,7 @@ static int rk_set_data_start(struct rk_crypto_info *dev)
- 	/* Store the iv that need to be updated in chain mode.
- 	 * And update the IV buffer to contain the next IV for decryption mode.
- 	 */
--	if (ctx->mode & RK_CRYPTO_DEC) {
-+	if (rctx->mode & RK_CRYPTO_DEC) {
- 		memcpy(ctx->iv, src_last_blk, ivsize);
- 		sg_pcopy_to_buffer(dev->first, dev->src_nents, req->iv,
- 				   ivsize, dev->total - ivsize);
-@@ -294,11 +308,12 @@ static void rk_iv_copyback(struct rk_crypto_info *dev)
- 	struct skcipher_request *req =
- 		skcipher_request_cast(dev->async_req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 	u32 ivsize = crypto_skcipher_ivsize(tfm);
- 
- 	/* Update the IV buffer to contain the next IV for encryption mode. */
--	if (!(ctx->mode & RK_CRYPTO_DEC)) {
-+	if (!(rctx->mode & RK_CRYPTO_DEC)) {
- 		if (dev->aligned) {
- 			memcpy(req->iv, sg_virt(dev->sg_dst) +
- 				dev->sg_dst->length - ivsize, ivsize);
-@@ -314,11 +329,12 @@ static void rk_update_iv(struct rk_crypto_info *dev)
- 	struct skcipher_request *req =
- 		skcipher_request_cast(dev->async_req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
-+	struct rk_cipher_rctx *rctx = skcipher_request_ctx(req);
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 	u32 ivsize = crypto_skcipher_ivsize(tfm);
- 	u8 *new_iv = NULL;
- 
--	if (ctx->mode & RK_CRYPTO_DEC) {
-+	if (rctx->mode & RK_CRYPTO_DEC) {
- 		new_iv = ctx->iv;
- 	} else {
- 		new_iv = page_address(sg_page(dev->sg_dst)) +
 -- 
 2.35.1
 
