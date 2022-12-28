@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6353F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC35C433D2;
-	Wed, 28 Dec 2022 15:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1703B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CABBC433EF;
+	Wed, 28 Dec 2022 15:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241703;
-	bh=O2UZt/D8iRl4mCvJNm26WOqTGnZ0ZCFMgQY6QpAQZPU=;
+	s=korg; t=1672241705;
+	bh=UG08ZJZ/SGMkz4T2u/XEXW+kYA5et+5MvE1A2TuVIUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tcJydUVC+TPLKipsRWhNC1KJdczueBueKrIKJUmgXZgxcBmI9Mu4XV/oKTZXkMLJ
-	 w1/YeENhD6IqxjyzJM8gzkLkaobFrfXmjnHw36KNo6I3Y5H54bz++nmS3Db1Gqmo4Q
-	 rs19rDXJ3W1JxrUkkueGO65AmmjD3/9+dNg0mWSw=
+	b=vr+xuFP2e1L3Shq6ER/LSsFPocGf5CQ9g/Yyy1FFP4Sn1WF511ZlfcwrbOj8IDCgI
+	 UVUFHqnlv2xMHAyVM8p4XDy9Z7c3XBojfNl55shii8rCtCN3kU3aCd2z0R7xM5soFF
+	 /ttP29quOuOO32uO0+VYitJH6XCjOsWDb7iLV3aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Marek Vasut <marex@denx.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0267/1146] drm: lcdif: change burst size to 256B
-Date: Wed, 28 Dec 2022 15:30:06 +0100
-Message-Id: <20221228144337.386885082@linuxfoundation.org>
+Subject: [PATCH 6.1 0279/1146] drm/msm/dsi: Remove repeated calculation of slice_per_intf
+Date: Wed, 28 Dec 2022 15:30:18 +0100
+Message-Id: <20221228144337.716331765@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,65 +39,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Felsch <m.felsch@pengutronix.de>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 2215cb3be5c28a1fd43036550c00c2371aeeba95 ]
+[ Upstream commit 170ffca836dd9f1a0219c4f67554d408fa2b5912 ]
 
-If a axi bus master with a higher priority do a lot of memory access
-FIFO underruns can be inspected. Increase the burst size to 256B to
-avoid such underruns and to improve the memory access efficiency.
+slice_per_intf is already computed for intf_width, which holds the same
+value as hdisplay.
 
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221101164615.778299-1-m.felsch@pengutronix.de
+Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508933/
+Link: https://lore.kernel.org/r/20221026182824.876933-3-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_kms.c  | 14 ++++++++++++--
- drivers/gpu/drm/mxsfb/lcdif_regs.h |  4 ++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-index 9f212e29059b..d594938a6c8d 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-@@ -148,8 +148,18 @@ static void lcdif_set_mode(struct lcdif_drm_private *lcdif, u32 bus_flags)
- 	       CTRLDESCL0_1_WIDTH(m->hdisplay),
- 	       lcdif->base + LCDC_V8_CTRLDESCL0_1);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 8026fe65bff6..d94832504d0f 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -842,7 +842,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
+ {
+ 	struct drm_dsc_config *dsc = msm_host->dsc;
+-	u32 reg, intf_width, reg_ctrl, reg_ctrl2;
++	u32 reg, reg_ctrl, reg_ctrl2;
+ 	u32 slice_per_intf, total_bytes_per_intf;
+ 	u32 pkt_per_line;
+ 	u32 bytes_in_slice;
+@@ -851,8 +851,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	/* first calculate dsc parameters and then program
+ 	 * compress mode registers
+ 	 */
+-	intf_width = hdisplay;
+-	slice_per_intf = DIV_ROUND_UP(intf_width, dsc->slice_width);
++	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
  
--	writel(CTRLDESCL0_3_PITCH(lcdif->crtc.primary->state->fb->pitches[0]),
--	       lcdif->base + LCDC_V8_CTRLDESCL0_3);
-+	/*
-+	 * Undocumented P_SIZE and T_SIZE register but those written in the
-+	 * downstream kernel those registers control the AXI burst size. As of
-+	 * now there are two known values:
-+	 *  1 - 128Byte
-+	 *  2 - 256Byte
-+	 * Downstream set it to 256B burst size to improve the memory
-+	 * efficiency so set it here too.
-+	 */
-+	ctrl = CTRLDESCL0_3_P_SIZE(2) | CTRLDESCL0_3_T_SIZE(2) |
-+	       CTRLDESCL0_3_PITCH(lcdif->crtc.primary->state->fb->pitches[0]);
-+	writel(ctrl, lcdif->base + LCDC_V8_CTRLDESCL0_3);
- }
+ 	/* If slice_per_pkt is greater than slice_per_intf
+ 	 * then default to 1. This can happen during partial
+@@ -861,7 +860,6 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	if (slice_per_intf > dsc->slice_count)
+ 		dsc->slice_count = 1;
  
- static void lcdif_enable_controller(struct lcdif_drm_private *lcdif)
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_regs.h b/drivers/gpu/drm/mxsfb/lcdif_regs.h
-index c70220651e3a..8e8bef175bf2 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_regs.h
-+++ b/drivers/gpu/drm/mxsfb/lcdif_regs.h
-@@ -190,6 +190,10 @@
- #define CTRLDESCL0_1_WIDTH(n)		((n) & 0xffff)
- #define CTRLDESCL0_1_WIDTH_MASK		GENMASK(15, 0)
+-	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+ 	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
  
-+#define CTRLDESCL0_3_P_SIZE(n)		(((n) << 20) & CTRLDESCL0_3_P_SIZE_MASK)
-+#define CTRLDESCL0_3_P_SIZE_MASK	GENMASK(22, 20)
-+#define CTRLDESCL0_3_T_SIZE(n)		(((n) << 16) & CTRLDESCL0_3_T_SIZE_MASK)
-+#define CTRLDESCL0_3_T_SIZE_MASK	GENMASK(17, 16)
- #define CTRLDESCL0_3_PITCH(n)		((n) & 0xffff)
- #define CTRLDESCL0_3_PITCH_MASK		GENMASK(15, 0)
- 
+ 	dsc->slice_chunk_size = bytes_in_slice;
 -- 
 2.35.1
 
