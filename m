@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D3E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE40C433EF;
-	Wed, 28 Dec 2022 15:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01071863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A7BC433D2;
+	Wed, 28 Dec 2022 15:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241642;
-	bh=EcXksoM8Re/d5aHV+QElhZ1StwOq+x6n/do5HXugy9s=;
+	s=korg; t=1672241644;
+	bh=PcBZnUMQZJfs9UCJITpCQuHInH6dyhAUB/PR4MiLLbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2qbCQojEf0JGPMqqf98r5CQActFNzhwjpqRmOu/9Pyxn0YoNg66tKN37ske0HzR8
-	 /AVGw5uEP3MLbk5KsZHdr0dGwjWsuZd6TTaa4zXn7aG/5oc4J120E9xYSNuuEvjViF
-	 Xh1TBo1HKylDCsEAKCYnHV31PTpV16pmSIbLAdWI=
+	b=sfZdhxn9emNpMgv3Ay0QES6wFP2SoNdi/Nj9igCZJC4ecc/1DFSfF55FQ23dAhDrW
+	 qu9Rno80x/2rHnVn72HSEB1Vwef5u6xywCkjahbqUCvNXoTBFTtB6FmMQFBaqpz0q4
+	 tz5hzVHfsOPwajj2C7k6g7dX864r3Fpg06n/XNwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Gareth Williams <gareth.williams.jx@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0272/1146] drm/msm/mdp5: stop overriding drvdata
-Date: Wed, 28 Dec 2022 15:30:11 +0100
-Message-Id: <20221228144337.523253791@linuxfoundation.org>
+Subject: [PATCH 6.1 0266/1146] clk: renesas: r9a06g032: Repair grave increment error
+Date: Wed, 28 Dec 2022 15:30:05 +0100
+Message-Id: <20221228144337.360617915@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,142 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit c6122688f2652d7f8a44000ce21e84e82bae2b5e ]
+[ Upstream commit 02693e11611e082e3c4d8653e8af028e43d31164 ]
 
-The rest of the code expects that master's device drvdata is the
-struct msm_drm_private instance. Do not override the mdp5's drvdata.
+If condition (clkspec.np != pd->dev.of_node) is true, then the driver
+ends up in an endless loop, forever, locking up the machine.
 
-Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/508334/
-Link: https://lore.kernel.org/r/20221024152642.3213488-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: aad03a66f902 ("clk: renesas: r9a06g032: Add clock domain support")
+Reviewed-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Gareth Williams <gareth.williams.jx@renesas.com>
+Link: https://lore.kernel.org/r/20221028113834.7496-1-marex@denx.de
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 32 +++++++++++++-----------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/clk/renesas/r9a06g032-clocks.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b0d21838a134..b46f983f2b46 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
- 							  slave_encoder);
- }
+diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
+index 1488c9d6e639..983faa5707b9 100644
+--- a/drivers/clk/renesas/r9a06g032-clocks.c
++++ b/drivers/clk/renesas/r9a06g032-clocks.c
+@@ -412,7 +412,7 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
+ 	int error;
+ 	int index;
  
--static void mdp5_destroy(struct platform_device *pdev);
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
- 
- static void mdp5_kms_destroy(struct msm_kms *kms)
- {
-@@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
+-	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i,
++	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i++,
+ 					   &clkspec)) {
+ 		if (clkspec.np != pd->dev.of_node)
+ 			continue;
+@@ -425,7 +425,6 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
+ 			if (error)
+ 				return error;
+ 		}
+-		i++;
  	}
  
- 	mdp_kms_destroy(&mdp5_kms->base);
--	mdp5_destroy(mdp5_kms->pdev);
-+	mdp5_destroy(mdp5_kms);
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -519,9 +519,10 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 	u32 version;
- 
--	pm_runtime_get_sync(dev);
-+	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
-+	mdp5_enable(mdp5_kms);
- 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
--	pm_runtime_put_sync(dev);
-+	mdp5_disable(mdp5_kms);
- 
- 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
- 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
-@@ -559,6 +560,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	int irq, i, ret;
- 
- 	ret = mdp5_init(to_platform_device(dev->dev), dev);
-+	if (ret)
-+		return ret;
- 
- 	/* priv->kms would have been populated by the MDP5 driver */
- 	kms = priv->kms;
-@@ -632,9 +635,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	return ret;
- }
- 
--static void mdp5_destroy(struct platform_device *pdev)
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
- {
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
- 	int i;
- 
- 	if (mdp5_kms->ctlm)
-@@ -648,7 +650,7 @@ static void mdp5_destroy(struct platform_device *pdev)
- 		kfree(mdp5_kms->intfs[i]);
- 
- 	if (mdp5_kms->rpm_enabled)
--		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_disable(&mdp5_kms->pdev->dev);
- 
- 	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
- 	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
-@@ -797,8 +799,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	platform_set_drvdata(pdev, mdp5_kms);
--
- 	spin_lock_init(&mdp5_kms->resource_lock);
- 
- 	mdp5_kms->dev = dev;
-@@ -839,9 +839,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
- 
--	pm_runtime_enable(&pdev->dev);
--	mdp5_kms->rpm_enabled = true;
--
- 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
- 
- 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
-@@ -893,10 +890,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	/* set uninit-ed kms */
- 	priv->kms = &mdp5_kms->base.base;
- 
-+	pm_runtime_enable(&pdev->dev);
-+	mdp5_kms->rpm_enabled = true;
-+
  	return 0;
- fail:
- 	if (mdp5_kms)
--		mdp5_destroy(pdev);
-+		mdp5_destroy(mdp5_kms);
- 	return ret;
- }
- 
-@@ -953,7 +953,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
- static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
-@@ -963,7 +964,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- static __maybe_unused int mdp5_runtime_resume(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
 -- 
 2.35.1
 
