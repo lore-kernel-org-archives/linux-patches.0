@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6671C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007A6C433EF;
-	Wed, 28 Dec 2022 16:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B6D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96372C433EF;
+	Wed, 28 Dec 2022 16:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244780;
-	bh=/pDDlATTEz2kV0cZYGFDWVoDagRz9bk136d7yrb2bR0=;
+	s=korg; t=1672244783;
+	bh=bUSFX6aNpIerdUW+Rfm6TOuORBTijI25qcaWLsLR6Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k1q8f+GIdLHic0Pj6e43E/U8pT/t9ZuI3aL9igwV9prJxPXL6ld8xrIUu0sbKRn/+
-	 M/8Um6LuKKwyRc2UGWVIZjmkvQhUU5DnvdS0QtiH+B+5POW9oG1jF7I6p/HmAgf6z5
-	 LRyBQMUFT+Pekf3jT8X5jD7yQQVkpI2w9QaPF7Os=
+	b=uEJw5Z3P7D/JNldAvo0b+kTk+GR8tPfzqmGNH7FnOeO35YI7ZqGNbFujM34KJs8r1
+	 jLN5nJmweKOO5zSpG+cy94Zm04lIU2lREA+3oil4ZcaELrNCUpU9DGgWKBPw97k6at
+	 U177LKWN83v8Hnn3NFzYHVQIgHpYzU32EB2AfnEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avihai Horon <avihaih@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Michael Riesch <michael.riesch@wolfvision.net>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0735/1146] vfio/iova_bitmap: refactor iova_bitmap_set() to better handle page boundaries
-Date: Wed, 28 Dec 2022 15:37:54 +0100
-Message-Id: <20221228144350.112889489@linuxfoundation.org>
+Subject: [PATCH 6.0 0773/1073] iommu/rockchip: fix permission bits in page table entries v2
+Date: Wed, 28 Dec 2022 15:39:21 +0100
+Message-Id: <20221228144349.011074769@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,97 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joao Martins <joao.m.martins@oracle.com>
+From: Michael Riesch <michael.riesch@wolfvision.net>
 
-[ Upstream commit b058ea3ab5afea873ab8d976277539ca9e43869a ]
+[ Upstream commit 7eb99841f340b80be0d0973b0deb592d75fb8928 ]
 
-Commit f38044e5ef58 ("vfio/iova_bitmap: Fix PAGE_SIZE unaligned bitmaps")
-had fixed the unaligned bitmaps by capping the remaining iterable set at
-the start of the bitmap. Although, that mistakenly worked around
-iova_bitmap_set() incorrectly setting bits across page boundary.
+As pointed out in the corresponding downstream fix [0], the permission bits
+of the page table entries are compatible between v1 and v2 of the IOMMU.
+This is in contrast to the current mainline code that incorrectly assumes
+that the read and write permission bits are switched. Fix the permission
+bits by reusing the v1 bit defines.
 
-Fix this by reworking the loop inside iova_bitmap_set() to iterate over a
-range of bits to set (cur_bit .. last_bit) which may span different pinned
-pages, thus updating @page_idx and @offset as it sets the bits. The
-previous cap to the first page is now adjusted to be always accounted
-rather than when there's only a non-zero pgoff.
+[0] https://github.com/rockchip-linux/kernel/commit/e3bc123a2260145e34b57454da3db0edd117eb8e
 
-While at it, make @page_idx , @offset and @nbits to be unsigned int given
-that it won't be more than 512 and 4096 respectively (even a bigger
-PAGE_SIZE or a smaller struct page size won't make this bigger than the
-above 32-bit max). Also, delete the stale kdoc on Return type.
-
-Cc: Avihai Horon <avihaih@nvidia.com>
-Fixes: f38044e5ef58 ("vfio/iova_bitmap: Fix PAGE_SIZE unaligned bitmaps")
-Co-developed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Avihai Horon <avihaih@nvidia.com>
-Link: https://lore.kernel.org/r/20221129131235.38880-1-joao.m.martins@oracle.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
+Signed-off-by: Michael Riesch <michael.riesch@wolfvision.net>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20221102063553.2464161-1-michael.riesch@wolfvision.net
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/iova_bitmap.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/iommu/rockchip-iommu.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
-index 2dd65f040127..0f19d502f351 100644
---- a/drivers/vfio/iova_bitmap.c
-+++ b/drivers/vfio/iova_bitmap.c
-@@ -297,9 +297,7 @@ static unsigned long iova_bitmap_mapped_remaining(struct iova_bitmap *bitmap)
- {
- 	unsigned long remaining, bytes;
- 
--	/* Cap to one page in the first iteration, if PAGE_SIZE unaligned. */
--	bytes = !bitmap->mapped.pgoff ? bitmap->mapped.npages << PAGE_SHIFT :
--					PAGE_SIZE - bitmap->mapped.pgoff;
-+	bytes = (bitmap->mapped.npages << PAGE_SHIFT) - bitmap->mapped.pgoff;
- 
- 	remaining = bitmap->mapped_total_index - bitmap->mapped_base_index;
- 	remaining = min_t(unsigned long, remaining,
-@@ -398,29 +396,27 @@ int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
-  * Set the bits corresponding to the range [iova .. iova+length-1] in
-  * the user bitmap.
-  *
-- * Return: The number of bits set.
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index ab57c4b8fade..a0652e9a7db3 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -280,19 +280,17 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
+  *  11:9 - Page address bit 34:32
+  *   8:4 - Page address bit 39:35
+  *     3 - Security
+- *     2 - Readable
+- *     1 - Writable
++ *     2 - Writable
++ *     1 - Readable
+  *     0 - 1 if Page @ Page address is valid
   */
- void iova_bitmap_set(struct iova_bitmap *bitmap,
- 		     unsigned long iova, size_t length)
+-#define RK_PTE_PAGE_READABLE_V2      BIT(2)
+-#define RK_PTE_PAGE_WRITABLE_V2      BIT(1)
+ 
+ static u32 rk_mk_pte_v2(phys_addr_t page, int prot)
  {
- 	struct iova_bitmap_map *mapped = &bitmap->mapped;
--	unsigned long offset = (iova - mapped->iova) >> mapped->pgshift;
--	unsigned long nbits = max_t(unsigned long, 1, length >> mapped->pgshift);
--	unsigned long page_idx = offset / BITS_PER_PAGE;
--	unsigned long page_offset = mapped->pgoff;
--	void *kaddr;
--
--	offset = offset % BITS_PER_PAGE;
-+	unsigned long cur_bit = ((iova - mapped->iova) >>
-+			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
-+	unsigned long last_bit = (((iova + length - 1) - mapped->iova) >>
-+			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
+ 	u32 flags = 0;
  
- 	do {
--		unsigned long size = min(BITS_PER_PAGE - offset, nbits);
-+		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
-+		unsigned int offset = cur_bit % BITS_PER_PAGE;
-+		unsigned int nbits = min(BITS_PER_PAGE - offset,
-+					 last_bit - cur_bit + 1);
-+		void *kaddr;
+-	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE_V2 : 0;
+-	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE_V2 : 0;
++	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE : 0;
++	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE : 0;
  
- 		kaddr = kmap_local_page(mapped->pages[page_idx]);
--		bitmap_set(kaddr + page_offset, offset, size);
-+		bitmap_set(kaddr, offset, nbits);
- 		kunmap_local(kaddr);
--		page_offset = offset = 0;
--		nbits -= size;
--		page_idx++;
--	} while (nbits > 0);
-+		cur_bit += nbits;
-+	} while (cur_bit <= last_bit);
+ 	return rk_mk_dte_v2(page) | flags;
  }
- EXPORT_SYMBOL_GPL(iova_bitmap_set);
 -- 
 2.35.1
 
