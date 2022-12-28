@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7161863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B830C433D2;
-	Wed, 28 Dec 2022 14:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D171863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFC0C433EF;
+	Wed, 28 Dec 2022 14:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239074;
-	bh=j+w0O5+YI3tnQphigPkckoG8VrZSFQEMfWCtFqNg0kM=;
+	s=korg; t=1672239077;
+	bh=1VRA98DtIypg+5pvhqP+KOO6DnS43DUQXm/uUmTP+Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SCtVgB/wAoL+nb+cSbX5hJF3c5pNcYJkWwXxzEXI32whWL92qqFXoSGgoHmQl7u4T
-	 j5qCHNK7HCPq59YHxfG8rEKNEEY1iGt/7t3zZY2PsfoFMa/Ce3eQywYyJ/xX2W5R8J
-	 nTi/A5vWQ8Nevuk5vUCGXyV+KwKSbAyF8LNpUsY0=
+	b=qcOKwG9aGEPZITtJyJmSZLz7R0X8nrLFOYCmvcXoDJe6X1DMkYZJ/S6epEDKfdpr/
+	 sgZ8BTxEwE+Un9VLxnNx9N+4rKK1VrCOe35812me275zqnyKHNotAzLX4vkxpsWshH
+	 /oh/6nlysHWyY8cy46NWsO+iJcIPurblLwQbGYWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Dolney <z23@posteo.net>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Valentin Schneider <vschneid@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/731] cpu/hotplug: Do not bail-out in DYING/STARTING sections
-Date: Wed, 28 Dec 2022 15:33:46 +0100
-Message-Id: <20221228144300.003646834@linuxfoundation.org>
+Subject: [PATCH 5.15 120/731] clocksource/drivers/timer-ti-dm: Fix missing clk_disable_unprepare in dmtimer_systimer_init_clock()
+Date: Wed, 28 Dec 2022 15:33:47 +0100
+Message-Id: <20221228144300.031137175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,139 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6f855b39e4602b6b42a8e5cbcfefb8a1b8b5f0be ]
+[ Upstream commit 180d35a7c05d520314a590c99ad8643d0213f28b ]
 
-The DYING/STARTING callbacks are not expected to fail. However, as reported
-by Derek, buggy drivers such as tboot are still free to return errors
-within those sections, which halts the hot(un)plug and leaves the CPU in an
-unrecoverable state.
+If clk_get_rate() fails which is called after clk_prepare_enable(),
+clk_disable_unprepare() need be called in error path to disable the
+clock in dmtimer_systimer_init_clock().
 
-As there is no rollback possible, only log the failures and proceed with
-the following steps.
-
-This restores the hotplug behaviour prior to commit 453e41085183
-("cpu/hotplug: Add cpuhp_invoke_callback_range()")
-
-Fixes: 453e41085183 ("cpu/hotplug: Add cpuhp_invoke_callback_range()")
-Reported-by: Derek Dolney <z23@posteo.net>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Derek Dolney <z23@posteo.net>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=215867
-Link: https://lore.kernel.org/r/20220927101259.1149636-1-vdonnefort@google.com
+Fixes: 52762fbd1c47 ("clocksource/drivers/timer-ti-dm: Add clockevent and clocksource support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221029114427.946520-1-yangyingliang@huawei.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 56 +++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ drivers/clocksource/timer-ti-dm-systimer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index e08d207011dd..393114c10c28 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -662,21 +662,51 @@ static bool cpuhp_next_state(bool bringup,
- 	return true;
- }
+diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
+index 2737407ff069..632523c1232f 100644
+--- a/drivers/clocksource/timer-ti-dm-systimer.c
++++ b/drivers/clocksource/timer-ti-dm-systimer.c
+@@ -345,8 +345,10 @@ static int __init dmtimer_systimer_init_clock(struct dmtimer_systimer *t,
+ 		return error;
  
--static int cpuhp_invoke_callback_range(bool bringup,
--				       unsigned int cpu,
--				       struct cpuhp_cpu_state *st,
--				       enum cpuhp_state target)
-+static int __cpuhp_invoke_callback_range(bool bringup,
-+					 unsigned int cpu,
-+					 struct cpuhp_cpu_state *st,
-+					 enum cpuhp_state target,
-+					 bool nofail)
- {
- 	enum cpuhp_state state;
--	int err = 0;
-+	int ret = 0;
+ 	r = clk_get_rate(clock);
+-	if (!r)
++	if (!r) {
++		clk_disable_unprepare(clock);
+ 		return -ENODEV;
++	}
  
- 	while (cpuhp_next_state(bringup, &state, st, target)) {
-+		int err;
-+
- 		err = cpuhp_invoke_callback(cpu, state, bringup, NULL, NULL);
--		if (err)
-+		if (!err)
-+			continue;
-+
-+		if (nofail) {
-+			pr_warn("CPU %u %s state %s (%d) failed (%d)\n",
-+				cpu, bringup ? "UP" : "DOWN",
-+				cpuhp_get_step(st->state)->name,
-+				st->state, err);
-+			ret = -1;
-+		} else {
-+			ret = err;
- 			break;
-+		}
- 	}
- 
--	return err;
-+	return ret;
-+}
-+
-+static inline int cpuhp_invoke_callback_range(bool bringup,
-+					      unsigned int cpu,
-+					      struct cpuhp_cpu_state *st,
-+					      enum cpuhp_state target)
-+{
-+	return __cpuhp_invoke_callback_range(bringup, cpu, st, target, false);
-+}
-+
-+static inline void cpuhp_invoke_callback_range_nofail(bool bringup,
-+						      unsigned int cpu,
-+						      struct cpuhp_cpu_state *st,
-+						      enum cpuhp_state target)
-+{
-+	__cpuhp_invoke_callback_range(bringup, cpu, st, target, true);
- }
- 
- static inline bool can_rollback_cpu(struct cpuhp_cpu_state *st)
-@@ -994,7 +1024,6 @@ static int take_cpu_down(void *_param)
- 	struct cpuhp_cpu_state *st = this_cpu_ptr(&cpuhp_state);
- 	enum cpuhp_state target = max((int)st->target, CPUHP_AP_OFFLINE);
- 	int err, cpu = smp_processor_id();
--	int ret;
- 
- 	/* Ensure this CPU doesn't handle any more interrupts. */
- 	err = __cpu_disable();
-@@ -1007,13 +1036,10 @@ static int take_cpu_down(void *_param)
- 	 */
- 	WARN_ON(st->state != (CPUHP_TEARDOWN_CPU - 1));
- 
--	/* Invoke the former CPU_DYING callbacks */
--	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
--
- 	/*
--	 * DYING must not fail!
-+	 * Invoke the former CPU_DYING callbacks. DYING must not fail!
- 	 */
--	WARN_ON_ONCE(ret);
-+	cpuhp_invoke_callback_range_nofail(false, cpu, st, target);
- 
- 	/* Give up timekeeping duties */
- 	tick_handover_do_timer();
-@@ -1285,16 +1311,14 @@ void notify_cpu_starting(unsigned int cpu)
- {
- 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, cpu);
- 	enum cpuhp_state target = min((int)st->target, CPUHP_AP_ONLINE);
--	int ret;
- 
- 	rcu_cpu_starting(cpu);	/* Enables RCU usage on this CPU. */
- 	cpumask_set_cpu(cpu, &cpus_booted_once_mask);
--	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
- 
- 	/*
- 	 * STARTING must not fail!
- 	 */
--	WARN_ON_ONCE(ret);
-+	cpuhp_invoke_callback_range_nofail(true, cpu, st, target);
- }
- 
- /*
+ 	if (is_ick)
+ 		t->ick = clock;
 -- 
 2.35.1
 
