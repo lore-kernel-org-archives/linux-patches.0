@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670CA1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBDDC433EF;
-	Wed, 28 Dec 2022 16:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0D01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A7AC433D2;
+	Wed, 28 Dec 2022 16:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246057;
-	bh=WeuD6eZ7Mp1ShsdYfaFc7Pentz89s4TFU41dw5g4hho=;
+	s=korg; t=1672246060;
+	bh=pypPerhJUgi/qZ7FyWevrIR26NY3KeAIW4GacpD/Flg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPM4TovAie3TwtjBPFfPRTvoJkO2tCX+9pF3tPTEhro+We6BiOOhTDf3OebvVJN0z
-	 vbmTsUCbApe8yx95k8dVnCrHfWCB+javBLK8zU6NAffpp1D8aQVeVzmHGuhiNUhwXk
-	 pZfyXlACHlyZzCLsDgr5JN46QG7r/Cq9A+4jsmc0=
+	b=O7ePIeM0IdRdJ2CiWINnNv+tqneTrLNUjJ9H31p+b5htc28JeFsrmy7mGcZ3CYWRk
+	 yqfbqj/kY/JlPbJcyKRCEb+sCUUU5YNk1TzeTlGLp7kZFfUgSNClPLLdwRulQ3bgXK
+	 20IWvjnLLg0heiBaMSvSY2QYMNGj+Hfe//dpDLWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pravin B Shelar <pshelar@ovn.org>,
+	dev@openvswitch.org,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1005/1073] ALSA: hda/hdmi: set default audio parameters for KAE silent-stream
-Date: Wed, 28 Dec 2022 15:43:13 +0100
-Message-Id: <20221228144355.445781312@linuxfoundation.org>
+Subject: [PATCH 6.1 0974/1146] openvswitch: Use kmalloc_size_roundup() to match ksize() usage
+Date: Wed, 28 Dec 2022 15:41:53 +0100
+Message-Id: <20221228144356.805852749@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,41 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit b17e7ea041d8b565063632501ca4597afd105102 ]
+[ Upstream commit ab3f7828c9793a5dfa99a54dc19ae3491c38bfa3 ]
 
-If the stream-id is zero, the keep-alive (KAE) will only ensure clock is
-generated, but no audio samples are sent over display link. This happens
-before first real audio stream is played out to a newly connected
-receiver.
+Round up allocations with kmalloc_size_roundup() so that openvswitch's
+use of ksize() is always accurate and no special handling of the memory
+is needed by KASAN, UBSAN_BOUNDS, nor FORTIFY_SOURCE.
 
-Reuse the code in silent_stream_enable() to set up stream parameters
-to sane defaults values, also when using the newer keep-alive flow.
-
-Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Tested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/20221209101822.3893675-3-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Pravin B Shelar <pshelar@ovn.org>
+Cc: dev@openvswitch.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221018090628.never.537-kees@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/openvswitch/flow_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 3655584fc37b..da5276e7eab1 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1788,6 +1788,7 @@ static void silent_stream_enable(struct hda_codec *codec,
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 4a07ab094a84..ead5418c126e 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2309,7 +2309,7 @@ static struct sw_flow_actions *nla_alloc_flow_actions(int size)
  
- 	switch (spec->silent_stream_type) {
- 	case SILENT_STREAM_KAE:
-+		silent_stream_enable_i915(codec, per_pin);
- 		silent_stream_set_kae(codec, per_pin, true);
- 		break;
- 	case SILENT_STREAM_I915:
+ 	WARN_ON_ONCE(size > MAX_ACTIONS_BUFSIZE);
+ 
+-	sfa = kmalloc(sizeof(*sfa) + size, GFP_KERNEL);
++	sfa = kmalloc(kmalloc_size_roundup(sizeof(*sfa) + size), GFP_KERNEL);
+ 	if (!sfa)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.35.1
 
