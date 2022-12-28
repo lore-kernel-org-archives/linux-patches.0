@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7779D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA34BC433EF;
-	Wed, 28 Dec 2022 16:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975581C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3953C433D2;
+	Wed, 28 Dec 2022 16:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244294;
-	bh=gMCIb3VUK28kJJbTXoC/j03I1n/nSjr3xW/J/A+J5bM=;
+	s=korg; t=1672244297;
+	bh=CCyMzeNvQEmyjDp9BHbCeuZ8tCrT9rq9mH26MS4hnJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWWGXOvKhFZWIiLZicuhrf2c+PnMOqqFHGUNHIXFAj39rezhdtHYOOFeRTwWg5s7K
-	 PpAWfCiecbryiay7jVkCtyGlsesQfn8WHopDaDwl3tiZsmA3CRdYtfAPnVBH9Eonze
-	 7g+LTNDthTPQ0DMAZPwjjjhKILQafrC2eEIH362I=
+	b=eZUtdkM0oiAoiSA3ZQtX1hNhQJjGbMV1TJy6t3gFC7UsOvduT1nRjTsSnh7gM3V4o
+	 G1gIEBgEPYXGACR4NVDZngPHlqY9rAky+gQF6eR9N+mwkpTs1OIcnAGbz7aQMvRdGW
+	 a6oRjbAp/D69vnIGaG+PaDT+WA1sYpoRjH+0vn6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Valentin Caron <valentin.caron@foss.st.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0686/1073] serial: stm32: move dma_request_chan() before clk_prepare_enable()
-Date: Wed, 28 Dec 2022 15:37:54 +0100
-Message-Id: <20221228144346.669480913@linuxfoundation.org>
+Subject: [PATCH 6.1 0646/1146] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
+Date: Wed, 28 Dec 2022 15:36:25 +0100
+Message-Id: <20221228144347.707457645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,112 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Valentin Caron <valentin.caron@foss.st.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0d114e9ff940ebad8e88267013bf96c605a6b336 ]
+[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
 
-If dma_request_chan() returns a PROBE_DEFER error, clk_disable_unprepare()
-will be called and USART clock will be disabled. But early console can be
-still active on the same USART.
+hpsa_sas_port_add_phy() does:
+  ...
+  sas_phy_add()  -> may return error here
+  sas_port_add_phy()
+  ...
 
-While moving dma_request_chan() before clk_prepare_enable(), the clock
-won't be taken in case of a DMA PROBE_DEFER error, and so it doesn't need
-to be disabled. Then USART is still clocked for early console.
+Whereas hpsa_free_sas_phy() does:
+  ...
+  sas_port_delete_phy()
+  sas_phy_delete()
+  ...
 
-Fixes: a7770a4bfcf4 ("serial: stm32: defer probe for dma devices")
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
-Link: https://lore.kernel.org/r/20221118170602.1057863-1-valentin.caron@foss.st.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
+called to free the memory because the port and the phy have not been added
+yet.
+
+Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
+crash in this case.
+
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/stm32-usart.c | 47 ++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ drivers/scsi/hpsa.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
-index 9a875558f5ef..1f8aad186908 100644
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -1681,22 +1681,10 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
- 	if (!stm32port->info)
- 		return -EINVAL;
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index e5cbc97a5ea4..6696967c5192 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9786,7 +9786,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
+ 	return 0;
  
--	ret = stm32_usart_init_port(stm32port, pdev);
--	if (ret)
--		return ret;
--
--	if (stm32port->wakeup_src) {
--		device_set_wakeup_capable(&pdev->dev, true);
--		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
--		if (ret)
--			goto err_deinit_port;
--	}
--
- 	stm32port->rx_ch = dma_request_chan(&pdev->dev, "rx");
--	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER) {
--		ret = -EPROBE_DEFER;
--		goto err_wakeirq;
--	}
-+	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER)
-+		return -EPROBE_DEFER;
-+
- 	/* Fall back in interrupt mode for any non-deferral error */
- 	if (IS_ERR(stm32port->rx_ch))
- 		stm32port->rx_ch = NULL;
-@@ -1710,6 +1698,17 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
- 	if (IS_ERR(stm32port->tx_ch))
- 		stm32port->tx_ch = NULL;
- 
-+	ret = stm32_usart_init_port(stm32port, pdev);
-+	if (ret)
-+		goto err_dma_tx;
-+
-+	if (stm32port->wakeup_src) {
-+		device_set_wakeup_capable(&pdev->dev, true);
-+		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
-+		if (ret)
-+			goto err_deinit_port;
-+	}
-+
- 	if (stm32port->rx_ch && stm32_usart_of_dma_rx_probe(stm32port, pdev)) {
- 		/* Fall back in interrupt mode */
- 		dma_release_channel(stm32port->rx_ch);
-@@ -1746,19 +1745,11 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- 
--	if (stm32port->tx_ch) {
-+	if (stm32port->tx_ch)
- 		stm32_usart_of_dma_tx_remove(stm32port, pdev);
--		dma_release_channel(stm32port->tx_ch);
--	}
--
- 	if (stm32port->rx_ch)
- 		stm32_usart_of_dma_rx_remove(stm32port, pdev);
- 
--err_dma_rx:
--	if (stm32port->rx_ch)
--		dma_release_channel(stm32port->rx_ch);
--
--err_wakeirq:
- 	if (stm32port->wakeup_src)
- 		dev_pm_clear_wake_irq(&pdev->dev);
- 
-@@ -1768,6 +1759,14 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
- 
- 	stm32_usart_deinit_port(stm32port);
- 
-+err_dma_tx:
-+	if (stm32port->tx_ch)
-+		dma_release_channel(stm32port->tx_ch);
-+
-+err_dma_rx:
-+	if (stm32port->rx_ch)
-+		dma_release_channel(stm32port->rx_ch);
-+
- 	return ret;
- }
- 
+ free_sas_phy:
+-	hpsa_free_sas_phy(hpsa_sas_phy);
++	sas_phy_free(hpsa_sas_phy->phy);
++	kfree(hpsa_sas_phy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ free_sas_node:
 -- 
 2.35.1
 
