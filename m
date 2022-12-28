@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1751C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA802C433F0;
-	Wed, 28 Dec 2022 16:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A46F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A8BC433EF;
+	Wed, 28 Dec 2022 16:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245292;
-	bh=srbhyofZhUa3gEkfsQwea/xtykDIeRGFFJLXt2xcoOo=;
+	s=korg; t=1672245294;
+	bh=xoRy9IjnKps7dsevsWvzEuaCv6ENyEGDIybZk6Q2iwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFjFFYmOztbj+YYYrI54Nxjtsr1anyPPLv8kjMjb6bD0P9zrkYY2qtlkVjCmoeXSB
-	 FCU3/nGSP6zKW4RZsohBimVIdbKFL9bytDQcqi8BlL9h+8FBejqKOLolDfwt+vW6Gi
-	 kSLFIdRykeQjHrr/CjzkAnQfxbx5MG43ypyzsgxk=
+	b=u+DREufi3JjyhC6EiGRdvnCa6owUfzLK9n+hsTnDhnpNHqaQ/VjSRTjl0SM+8OAQW
+	 pw07xMN0SfWk5YoLXTW+AXtAQ9ivgMfZ3O2XMWYOga19PQmcqphr9JSSaeYGvxb4bT
+	 fZT86DqE281nOnjqHdk2Ngv/tb+coW7Gb0qs3IAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0834/1146] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
-Date: Wed, 28 Dec 2022 15:39:33 +0100
-Message-Id: <20221228144352.810043144@linuxfoundation.org>
+Subject: [PATCH 6.0 0868/1073] devlink: hold region lock when flushing snapshots
+Date: Wed, 28 Dec 2022 15:40:56 +0100
+Message-Id: <20221228144351.598112408@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,145 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
+[ Upstream commit b4cafb3d2c740f8d1b1234b43ac4a60e5291c960 ]
 
-Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
-can operate on the cmos_rtc variable directly, so it need not set the
-platform_data pointer before cmos_do_probe() is called.  Instead, it
-can be called by cmos_do_probe() in the case when the platform_data
-pointer is not set to implement the default behavior (which is to use
-the FADT information as long as ACPI support is enabled).
+Netdevsim triggers a splat on reload, when it destroys regions
+with snapshots pending:
 
-Modify the code accordingly.
+  WARNING: CPU: 1 PID: 787 at net/core/devlink.c:6291 devlink_region_snapshot_del+0x12e/0x140
+  CPU: 1 PID: 787 Comm: devlink Not tainted 6.1.0-07460-g7ae9888d6e1c #580
+  RIP: 0010:devlink_region_snapshot_del+0x12e/0x140
+  Call Trace:
+   <TASK>
+   devl_region_destroy+0x70/0x140
+   nsim_dev_reload_down+0x2f/0x60 [netdevsim]
+   devlink_reload+0x1f7/0x360
+   devlink_nl_cmd_reload+0x6ce/0x860
+   genl_family_rcv_msg_doit.isra.0+0x145/0x1c0
 
-While at it, drop a comment that doesn't really match the code it is
-supposed to be describing.
+This is the locking assert in devlink_region_snapshot_del(),
+we're supposed to be holding the region->snapshot_lock here.
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 2dec18ad826f ("net: devlink: remove region snapshots list dependency on devlink->lock")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ net/core/devlink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 58cc2bae2f8a..a84262265d6d 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -744,6 +744,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
- 		return IRQ_NONE;
- }
+diff --git a/net/core/devlink.c b/net/core/devlink.c
+index cfa6a099457a..b3a869ccc8ed 100644
+--- a/net/core/devlink.c
++++ b/net/core/devlink.c
+@@ -11358,8 +11358,10 @@ void devl_region_destroy(struct devlink_region *region)
+ 	devl_assert_locked(devlink);
  
-+static void cmos_wake_setup(struct device *dev);
-+
- #ifdef	CONFIG_PNP
- #define	INITSECTION
+ 	/* Free all snapshots of region */
++	mutex_lock(&region->snapshot_lock);
+ 	list_for_each_entry_safe(snapshot, ts, &region->snapshot_list, list)
+ 		devlink_region_snapshot_del(region, snapshot);
++	mutex_unlock(&region->snapshot_lock);
  
-@@ -827,19 +829,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 		if (info->address_space)
- 			address_space = info->address_space;
- 
--		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
--			cmos_rtc.day_alrm = info->rtc_day_alarm;
--		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
--			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
--		if (info->rtc_century && info->rtc_century < 128)
--			cmos_rtc.century = info->rtc_century;
-+		cmos_rtc.day_alrm = info->rtc_day_alarm;
-+		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
-+		cmos_rtc.century = info->rtc_century;
- 
- 		if (info->wake_on && info->wake_off) {
- 			cmos_rtc.wake_on = info->wake_on;
- 			cmos_rtc.wake_off = info->wake_off;
- 		}
-+	} else {
-+		cmos_wake_setup(dev);
- 	}
- 
-+	if (cmos_rtc.day_alrm >= 128)
-+		cmos_rtc.day_alrm = 0;
-+
-+	if (cmos_rtc.mon_alrm >= 128)
-+		cmos_rtc.mon_alrm = 0;
-+
-+	if (cmos_rtc.century >= 128)
-+		cmos_rtc.century = 0;
-+
- 	cmos_rtc.dev = dev;
- 	dev_set_drvdata(dev, &cmos_rtc);
- 
-@@ -1275,13 +1285,6 @@ static void use_acpi_alarm_quirks(void)
- static inline void use_acpi_alarm_quirks(void) { }
- #endif
- 
--/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
-- * its device node and pass extra config data.  This helps its driver use
-- * capabilities that the now-obsolete mc146818 didn't have, and informs it
-- * that this board's RTC is wakeup-capable (per ACPI spec).
-- */
--static struct cmos_rtc_board_info acpi_rtc_info;
--
- static void cmos_wake_setup(struct device *dev)
- {
- 	if (acpi_disabled)
-@@ -1289,26 +1292,23 @@ static void cmos_wake_setup(struct device *dev)
- 
- 	use_acpi_alarm_quirks();
- 
--	acpi_rtc_info.wake_on = rtc_wake_on;
--	acpi_rtc_info.wake_off = rtc_wake_off;
-+	cmos_rtc.wake_on = rtc_wake_on;
-+	cmos_rtc.wake_off = rtc_wake_off;
- 
--	/* workaround bug in some ACPI tables */
-+	/* ACPI tables bug workaround. */
- 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
- 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
- 			acpi_gbl_FADT.month_alarm);
- 		acpi_gbl_FADT.month_alarm = 0;
- 	}
- 
--	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
--	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
--	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
-+	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
-+	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
-+	cmos_rtc.century = acpi_gbl_FADT.century;
- 
--	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
- 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
- 		dev_info(dev, "RTC can wake from S4\n");
- 
--	dev->platform_data = &acpi_rtc_info;
--
- 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
- 	device_init_wakeup(dev, 1);
- }
-@@ -1359,8 +1359,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
- 	int irq, ret;
- 
--	cmos_wake_setup(&pnp->dev);
--
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
- #ifdef CONFIG_X86
-@@ -1468,7 +1466,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	int irq, ret;
- 
- 	cmos_of_init(pdev);
--	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 	list_del(&region->list);
+ 	mutex_destroy(&region->snapshot_lock);
 -- 
 2.35.1
 
