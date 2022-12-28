@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D4C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1D3C433D2;
-	Wed, 28 Dec 2022 15:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59931863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5029DC433D2;
+	Wed, 28 Dec 2022 15:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241972;
-	bh=TTgh3nof+qRtikzAzm32Sm9gSnJCpYLiGe180JzSmu4=;
+	s=korg; t=1672241974;
+	bh=tEIvPMp4kMwLUPXD94BTnRMBf26PojhQFnfwSWUfszU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnQ5j0dUn9AmY3sL+xlhTyC8Fla7xB642D0qCVQw9JW8fIQXUFWgHcUeMIAna1jPV
-	 BKp+coSyuYgvdePQRHHmINT/oPq4U4+SiW4huXbJVNqSbljajdSDBT5Rb1jP8hfzBt
-	 G2XUOc6OwtfUQVpVe4fpoCNXb/TY9NAQY4V/uBvc=
+	b=oLr1WSXOP572CZxhctcxCf6cPg54/xBXOKF95Iyf2OOfIYMKuwW115q6TcdC41xOW
+	 ghMnPhzFCAqgDzrJzK9KjCn/ODNIFPX5jE2AxZnrMQvOQqzJYAUkjqgz0+UOzb+8EJ
+	 SJFVhIH/LnRzNsv9WMNZBPDWE5YAI9Vv1gCZeQzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 548/731] rtc: pcf85063: Fix reading alarm
-Date: Wed, 28 Dec 2022 15:40:55 +0100
-Message-Id: <20221228144312.425700375@linuxfoundation.org>
+Subject: [PATCH 6.1 0311/1146] drm: rcar-du: Drop leftovers dependencies from Kconfig
+Date: Wed, 28 Dec 2022 15:30:50 +0100
+Message-Id: <20221228144338.602451184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
+[ Upstream commit 1760eb547276299ab0c6a6cd3d29469e54ade615 ]
 
-If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
-registers. This is also interpreted in BCD number leading to this warning:
-rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
+Commit 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward
+compatibility") has removed device tree overlay sources used for
+backward compatibility with old bindings, but forgot to remove related
+dependencies from Kconfig. Fix it.
 
-Fix this by masking alarm enabling and reserved bits.
-
-Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward compatibility")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/rcar-du/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 14da4ab30104..3e2837722667 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -167,10 +167,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/rcar-du/Kconfig b/drivers/gpu/drm/rcar-du/Kconfig
+index fd2c2eaee26b..a5518e90d689 100644
+--- a/drivers/gpu/drm/rcar-du/Kconfig
++++ b/drivers/gpu/drm/rcar-du/Kconfig
+@@ -41,8 +41,6 @@ config DRM_RCAR_LVDS
+ 	depends on DRM_RCAR_USE_LVDS
+ 	select DRM_KMS_HELPER
+ 	select DRM_PANEL
+-	select OF_FLATTREE
+-	select OF_OVERLAY
  
--	alrm->time.tm_sec = bcd2bin(buf[0]);
--	alrm->time.tm_min = bcd2bin(buf[1]);
--	alrm->time.tm_hour = bcd2bin(buf[2]);
--	alrm->time.tm_mday = bcd2bin(buf[3]);
-+	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
-+	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
-+	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
-+	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
- 
- 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
- 	if (ret)
+ config DRM_RCAR_USE_MIPI_DSI
+ 	bool "R-Car DU MIPI DSI Encoder Support"
 -- 
 2.35.1
 
