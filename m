@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39541863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E39C433D2;
-	Wed, 28 Dec 2022 15:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4257B1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943D1C433EF;
+	Wed, 28 Dec 2022 15:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241591;
-	bh=pxAGDiYpL2hp0fC+5Hf54cAhYeLPcyTPqiYDp7wGPFE=;
+	s=korg; t=1672241597;
+	bh=jeOSHteDiIvJJeJcSRj4KpxFzP0oa5ghNss+BUgdy1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDkpCw1sAChbXXXyy2m/NaUvknc7gUwAKPXt4e0n/BCfmh7BQAHJZK3WHIEly51S1
-	 +rvqy+HG2d2ARZasCCQjURIaCiB1w5dRENV5LRRKzhEQNRKiyjEvNOQvyIQDCKzoTW
-	 1cKIS+wxDlVArrS9GLbGyHycQ9zbqPB8NF7xHxJg=
+	b=FRfIQywJfvQYxEE1e8NMPqS18uFScW0POnfyz79F1CpfTUFaKcwEyxgAt10YAYR2w
+	 WRuqCiUoGw/QGDHtg3ZTyrLjxh7zzveKuQSHnV2QPJ2qBvowhekl0YfE3aU1leRy+i
+	 nnbnWkbJ+QOSCPlTNkXpESFP/J82Mg7F5hEO3kSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0264/1146] drm/i915: Encapsulate lmem rpm stuff in intel_runtime_pm
-Date: Wed, 28 Dec 2022 15:30:03 +0100
-Message-Id: <20221228144337.307649284@linuxfoundation.org>
+Subject: [PATCH 6.0 0302/1073] wifi: rtw89: use u32_encode_bits() to fill MAC quota value
+Date: Wed, 28 Dec 2022 15:31:30 +0100
+Message-Id: <20221228144336.214693724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,229 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anshuman Gupta <anshuman.gupta@intel.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit e66c8dcf997ed54b62f754351e7129e1cc4e3cf9 ]
+[ Upstream commit 525c06c81d75690a9b795cc62a758838c1a6b6fe ]
 
-Runtime pm is not really per GT, therefore it make sense to
-move lmem_userfault_list, lmem_userfault_lock and
-userfault_wakeref from intel_gt to intel_runtime_pm structure,
-which is embedded to i915.
+Coverity reported shift 16 bits could cause sign extension and might get
+an unexpected value. Since the input values are predefined and no this
+kind of case, original code is safe so far. But, still changing them to
+use u32_encode_bits() will be more clear and prevent mistakes in the
+future.
 
-No functional change.
+The original message of Coverity is:
+  Suspicious implicit sign extension: "max_cfg->cma0_dma" with type "u16"
+  (16 bits, unsigned) is promoted in "max_cfg->cma0_dma << 16" to type
+  "int" (32 bits, signed), then sign-extended to type "unsigned long"
+  (64 bits, unsigned).  If "max_cfg->cma0_dma << 16" is greater than
+  0x7FFFFFFF, the upper bits of the result will all be 1."
 
-v2:
-- Fixes the code comment nit. [Matt Auld]
-
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221027092242.1476080-2-anshuman.gupta@intel.com
-Stable-dep-of: 1cacd6894d5f ("drm/i915/dgfx: Grab wakeref at i915_ttm_unmap_virtual")
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Addresses-Coverity-ID: 1527095 ("Integer handling issues")
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221108013858.10806-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c |  6 +++---
- drivers/gpu/drm/i915/gem/i915_gem_pm.c   |  2 +-
- drivers/gpu/drm/i915/gem/i915_gem_ttm.c  |  8 ++++----
- drivers/gpu/drm/i915/gt/intel_gt.c       |  3 ---
- drivers/gpu/drm/i915/gt/intel_gt_types.h | 17 -----------------
- drivers/gpu/drm/i915/i915_gem.c          |  4 +---
- drivers/gpu/drm/i915/intel_runtime_pm.c  |  5 +++++
- drivers/gpu/drm/i915/intel_runtime_pm.h  | 22 ++++++++++++++++++++++
- 8 files changed, 36 insertions(+), 31 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-index 73d9eda1d6b7..fd29a9053582 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -413,7 +413,7 @@ static vm_fault_t vm_fault_gtt(struct vm_fault *vmf)
- 	vma->mmo = mmo;
- 
- 	if (CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND)
--		intel_wakeref_auto(&to_gt(i915)->userfault_wakeref,
-+		intel_wakeref_auto(&i915->runtime_pm.userfault_wakeref,
- 				   msecs_to_jiffies_timeout(CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND));
- 
- 	if (write) {
-@@ -589,9 +589,9 @@ void i915_gem_object_release_mmap_offset(struct drm_i915_gem_object *obj)
- 	spin_unlock(&obj->mmo.lock);
- 
- 	if (obj->userfault_count) {
--		mutex_lock(&to_gt(to_i915(obj->base.dev))->lmem_userfault_lock);
-+		mutex_lock(&to_i915(obj->base.dev)->runtime_pm.lmem_userfault_lock);
- 		list_del(&obj->userfault_link);
--		mutex_unlock(&to_gt(to_i915(obj->base.dev))->lmem_userfault_lock);
-+		mutex_unlock(&to_i915(obj->base.dev)->runtime_pm.lmem_userfault_lock);
- 		obj->userfault_count = 0;
- 	}
- }
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_pm.c b/drivers/gpu/drm/i915/gem/i915_gem_pm.c
-index 3428f735e786..8d30db5e678c 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_pm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_pm.c
-@@ -24,7 +24,7 @@ void i915_gem_suspend(struct drm_i915_private *i915)
- {
- 	GEM_TRACE("%s\n", dev_name(i915->drm.dev));
- 
--	intel_wakeref_auto(&to_gt(i915)->userfault_wakeref, 0);
-+	intel_wakeref_auto(&i915->runtime_pm.userfault_wakeref, 0);
- 	flush_workqueue(i915->wq);
- 
- 	/*
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-index e08351081375..d6b447ae0a16 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-@@ -1059,13 +1059,13 @@ static vm_fault_t vm_fault_ttm(struct vm_fault *vmf)
- 	/* ttm_bo_vm_reserve() already has dma_resv_lock */
- 	if (ret == VM_FAULT_NOPAGE && wakeref && !obj->userfault_count) {
- 		obj->userfault_count = 1;
--		mutex_lock(&to_gt(to_i915(obj->base.dev))->lmem_userfault_lock);
--		list_add(&obj->userfault_link, &to_gt(to_i915(obj->base.dev))->lmem_userfault_list);
--		mutex_unlock(&to_gt(to_i915(obj->base.dev))->lmem_userfault_lock);
-+		mutex_lock(&to_i915(obj->base.dev)->runtime_pm.lmem_userfault_lock);
-+		list_add(&obj->userfault_link, &to_i915(obj->base.dev)->runtime_pm.lmem_userfault_list);
-+		mutex_unlock(&to_i915(obj->base.dev)->runtime_pm.lmem_userfault_lock);
- 	}
- 
- 	if (wakeref & CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND)
--		intel_wakeref_auto(&to_gt(to_i915(obj->base.dev))->userfault_wakeref,
-+		intel_wakeref_auto(&to_i915(obj->base.dev)->runtime_pm.userfault_wakeref,
- 				   msecs_to_jiffies_timeout(CONFIG_DRM_I915_USERFAULT_AUTOSUSPEND));
- 
- 	i915_ttm_adjust_lru(obj);
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
-index 7caa3412a244..c7db49749a63 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt.c
-@@ -40,8 +40,6 @@ void intel_gt_common_init_early(struct intel_gt *gt)
- {
- 	spin_lock_init(gt->irq_lock);
- 
--	INIT_LIST_HEAD(&gt->lmem_userfault_list);
--	mutex_init(&gt->lmem_userfault_lock);
- 	INIT_LIST_HEAD(&gt->closed_vma);
- 	spin_lock_init(&gt->closed_lock);
- 
-@@ -812,7 +810,6 @@ static int intel_gt_tile_setup(struct intel_gt *gt, phys_addr_t phys_addr)
- 	}
- 
- 	intel_uncore_init_early(gt->uncore, gt);
--	intel_wakeref_auto_init(&gt->userfault_wakeref, gt->uncore->rpm);
- 
- 	ret = intel_uncore_setup_mmio(gt->uncore, phys_addr);
- 	if (ret)
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_types.h b/drivers/gpu/drm/i915/gt/intel_gt_types.h
-index f19c2de77ff6..184ee9b11a4d 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_types.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_types.h
-@@ -141,20 +141,6 @@ struct intel_gt {
- 	struct intel_wakeref wakeref;
- 	atomic_t user_wakeref;
- 
--	/**
--	 *  Protects access to lmem usefault list.
--	 *  It is required, if we are outside of the runtime suspend path,
--	 *  access to @lmem_userfault_list requires always first grabbing the
--	 *  runtime pm, to ensure we can't race against runtime suspend.
--	 *  Once we have that we also need to grab @lmem_userfault_lock,
--	 *  at which point we have exclusive access.
--	 *  The runtime suspend path is special since it doesn't really hold any locks,
--	 *  but instead has exclusive access by virtue of all other accesses requiring
--	 *  holding the runtime pm wakeref.
--	 */
--	struct mutex lmem_userfault_lock;
--	struct list_head lmem_userfault_list;
--
- 	struct list_head closed_vma;
- 	spinlock_t closed_lock; /* guards the list of closed_vma */
- 
-@@ -170,9 +156,6 @@ struct intel_gt {
- 	 */
- 	intel_wakeref_t awake;
- 
--	/* Manual runtime pm autosuspend delay for user GGTT/lmem mmaps */
--	struct intel_wakeref_auto userfault_wakeref;
--
- 	u32 clock_frequency;
- 	u32 clock_period_ns;
- 
-diff --git a/drivers/gpu/drm/i915/i915_gem.c b/drivers/gpu/drm/i915/i915_gem.c
-index 88df9a35e0fe..38c26668b960 100644
---- a/drivers/gpu/drm/i915/i915_gem.c
-+++ b/drivers/gpu/drm/i915/i915_gem.c
-@@ -843,7 +843,7 @@ void i915_gem_runtime_suspend(struct drm_i915_private *i915)
- 		__i915_gem_object_release_mmap_gtt(obj);
- 
- 	list_for_each_entry_safe(obj, on,
--				 &to_gt(i915)->lmem_userfault_list, userfault_link)
-+				 &i915->runtime_pm.lmem_userfault_list, userfault_link)
- 		i915_gem_object_runtime_pm_release_mmap_offset(obj);
- 
- 	/*
-@@ -1227,8 +1227,6 @@ void i915_gem_driver_remove(struct drm_i915_private *dev_priv)
- 	struct intel_gt *gt;
- 	unsigned int i;
- 
--	intel_wakeref_auto_fini(&to_gt(dev_priv)->userfault_wakeref);
--
- 	i915_gem_suspend_late(dev_priv);
- 	for_each_gt(gt, dev_priv, i)
- 		intel_gt_driver_remove(gt);
-diff --git a/drivers/gpu/drm/i915/intel_runtime_pm.c b/drivers/gpu/drm/i915/intel_runtime_pm.c
-index 744cca507946..bb74d4975cc8 100644
---- a/drivers/gpu/drm/i915/intel_runtime_pm.c
-+++ b/drivers/gpu/drm/i915/intel_runtime_pm.c
-@@ -633,6 +633,8 @@ void intel_runtime_pm_driver_release(struct intel_runtime_pm *rpm)
- 						     runtime_pm);
- 	int count = atomic_read(&rpm->wakeref_count);
- 
-+	intel_wakeref_auto_fini(&rpm->userfault_wakeref);
-+
- 	drm_WARN(&i915->drm, count,
- 		 "i915 raw-wakerefs=%d wakelocks=%d on cleanup\n",
- 		 intel_rpm_raw_wakeref_count(count),
-@@ -652,4 +654,7 @@ void intel_runtime_pm_init_early(struct intel_runtime_pm *rpm)
- 	rpm->available = HAS_RUNTIME_PM(i915);
- 
- 	init_intel_runtime_pm_wakeref(rpm);
-+	INIT_LIST_HEAD(&rpm->lmem_userfault_list);
-+	mutex_init(&rpm->lmem_userfault_lock);
-+	intel_wakeref_auto_init(&rpm->userfault_wakeref, rpm);
- }
-diff --git a/drivers/gpu/drm/i915/intel_runtime_pm.h b/drivers/gpu/drm/i915/intel_runtime_pm.h
-index d9160e3ff4af..9f50f109aa11 100644
---- a/drivers/gpu/drm/i915/intel_runtime_pm.h
-+++ b/drivers/gpu/drm/i915/intel_runtime_pm.h
-@@ -53,6 +53,28 @@ struct intel_runtime_pm {
- 	bool irqs_enabled;
- 	bool no_wakeref_tracking;
- 
-+	/*
-+	 *  Protects access to lmem usefault list.
-+	 *  It is required, if we are outside of the runtime suspend path,
-+	 *  access to @lmem_userfault_list requires always first grabbing the
-+	 *  runtime pm, to ensure we can't race against runtime suspend.
-+	 *  Once we have that we also need to grab @lmem_userfault_lock,
-+	 *  at which point we have exclusive access.
-+	 *  The runtime suspend path is special since it doesn't really hold any locks,
-+	 *  but instead has exclusive access by virtue of all other accesses requiring
-+	 *  holding the runtime pm wakeref.
-+	 */
-+	struct mutex lmem_userfault_lock;
-+
-+	/*
-+	 *  Keep list of userfaulted gem obj, which require to release their
-+	 *  mmap mappings at runtime suspend path.
-+	 */
-+	struct list_head lmem_userfault_list;
-+
-+	/* Manual runtime pm autosuspend delay for user GGTT/lmem mmaps */
-+	struct intel_wakeref_auto userfault_wakeref;
-+
- #if IS_ENABLED(CONFIG_DRM_I915_DEBUG_RUNTIME_PM)
- 	/*
- 	 * To aide detection of wakeref leaks and general misuse, we
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 93124b815825..1afc14531194 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -1387,10 +1387,8 @@ static int dle_mix_cfg(struct rtw89_dev *rtwdev, const struct rtw89_dle_mem *cfg
+ #define INVALID_QT_WCPU U16_MAX
+ #define SET_QUOTA_VAL(_min_x, _max_x, _module, _idx)			\
+ 	do {								\
+-		val = ((_min_x) &					\
+-		       B_AX_ ## _module ## _MIN_SIZE_MASK) |		\
+-		      (((_max_x) << 16) &				\
+-		       B_AX_ ## _module ## _MAX_SIZE_MASK);		\
++		val = u32_encode_bits(_min_x, B_AX_ ## _module ## _MIN_SIZE_MASK) | \
++		      u32_encode_bits(_max_x, B_AX_ ## _module ## _MAX_SIZE_MASK);  \
+ 		rtw89_write32(rtwdev,					\
+ 			      R_AX_ ## _module ## _QTA ## _idx ## _CFG,	\
+ 			      val);					\
 -- 
 2.35.1
 
