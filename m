@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA9A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB579C433D2;
-	Wed, 28 Dec 2022 15:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F0A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5A8C433D2;
+	Wed, 28 Dec 2022 15:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240433;
-	bh=4FC6jk3ntqI5H7ME6PgtFQUY/Yig9Gf7EsmELbq0Vfw=;
+	s=korg; t=1672240436;
+	bh=5NqZffLIUOW5dEzCsJBGS4RHQK5Zx2H2zP0EDUqJKrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clv+HNnnYsvxMkmY4EiqeBb8trL/NcKebI/OunndYciv/thgMTZ/4wrKhzffnoTvi
-	 0HzdIp4gmtrqrlvFGoBOtBIajWf9Z2sCo6mIBZVXy5EXYbsLCHAEd2tekwTobWnGph
-	 SKKJ3H9HY54ulMTkPQ/iUi7Bdq89jUJEROQtVg84=
+	b=VQsJWKKXCtydn3uHFX/FObYpjMZISH0yPNqy1BEM9OH0KL7ls/2VN6vaXuAZsbDng
+	 mmi0LPcIQz/1BO494OEoLC/DXECky8xNjeERm5mhxz4RjbFFpMUaDaPj5uy2IrJuQK
+	 A7cZuC/mF3tUrVfEOR+1rlopWLlLecCzBB2DTBgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0129/1073] perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()
-Date: Wed, 28 Dec 2022 15:28:37 +0100
-Message-Id: <20221228144331.540116086@linuxfoundation.org>
+Subject: [PATCH 5.15 349/731] Bluetooth: hci_qca: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:37:36 +0100
+Message-Id: <20221228144306.680966552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c508eb042d9739bf9473526f53303721b70e9100 ]
+[ Upstream commit df4cfc91208e0a98f078223793f5871b1a82cc54 ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev, and also decrease the reference count for the input parameter
-*from* if it is not NULL.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-If we break the loop in sad_cfg_iio_topology() with 'dev' not NULL. We
-need to call pci_dev_put() to decrease the reference count. Since
-pci_dev_put() can handle the NULL input parameter, we can just add one
-pci_dev_put() right before 'return ret'.
-
-Fixes: c1777be3646b ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on SNR")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-2-wangxiongfeng2@huawei.com
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/hci_qca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index ed869443efb2..76fedc8e12dd 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -4492,6 +4492,8 @@ static int sad_cfg_iio_topology(struct intel_uncore_type *type, u8 *sad_pmon_map
- 		type->topology = NULL;
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index ed91af4319b5..5d0428fc854f 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -912,7 +912,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
+ 	default:
+ 		BT_ERR("Illegal tx state: %d (losing packet)",
+ 		       qca->tx_ibs_state);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
  	}
- 
-+	pci_dev_put(dev);
-+
- 	return ret;
- }
  
 -- 
 2.35.1
