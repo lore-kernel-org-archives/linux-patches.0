@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAFE1C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233D9C433EF;
-	Wed, 28 Dec 2022 16:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD931C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC1BC433F0;
+	Wed, 28 Dec 2022 16:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246528;
-	bh=/aTu4EQCaXzGOZAa37wxPdsgtwHVGV392F0gpVvHQGI=;
+	s=korg; t=1672246532;
+	bh=k65Lw1dlEMgyIO5u6EUCxQ76RJ6rWVglKWFnCFjG2Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XccfCe2XPZcrHenNl5V7WoB7GD0FKeRu4jIOGDkPKW+01uqiTZxdW2kkn2tZybezo
-	 m0zrSiyuy1bwI6HLDjCr0ktU09ZKgYP65EOX3OGNEAml0s/oSHM0PzbnVqhzBm7BV1
-	 N9MNsNw4jyWrbl/HRNjkoIN50wAt+GuPo9cSFO9A=
+	b=RcspWakCP2XCjpGV3LPJZLh4OxkYq0b5sVDA3g0Kgvb/Vib5hONHeksM3yOOsHcG0
+	 UigZHd6CavyBlSOj4tKkZL3USP/LSVZlfanC1pMaRSmh68NZ9TxT8aLieYRJ1XS9Qn
+	 97rxfKBRWzaWH6NZq+EowRWiMVHhXO8nfa8NwXdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1071/1146] ASoC: mediatek: mt8183: fix refcount leak in mt8183_mt6358_ts3a227_max98357_dev_probe()
-Date: Wed, 28 Dec 2022 15:43:30 +0100
-Message-Id: <20221228144359.337445221@linuxfoundation.org>
+Subject: [PATCH 6.1 1072/1146] ALSA: hda/hdmi: fix i915 silent stream programming flow
+Date: Wed, 28 Dec 2022 15:43:31 +0100
+Message-Id: <20221228144359.360726577@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,70 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 38eef3be38ab895959c442702864212cc3beb96c ]
+[ Upstream commit ada261b690ecd5c2f55f0c51bdf11d852a4561a6 ]
 
-The node returned by of_parse_phandle() with refcount incremented,
-of_node_put() needs be called when finish using it. So add it in the
-error path in mt8183_mt6358_ts3a227_max98357_dev_probe().
+The i915 display codec may not successfully transition to
+normal audio streaming mode, if the stream id is programmed
+while codec is actively transmitting data. This can happen
+when silent stream is enabled in KAE mode.
 
-Fixes: 11c0269017b2 ("ASoC: Mediatek: MT8183: Add machine driver with TS3A227")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1670234188-23596-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the issue by implementing a i915 specific programming
+flow, where the silent streaming is temporarily stopped,
+a small delay is applied to ensure display codec becomes
+idle, and then proceed with reprogramming the stream ID.
+
+Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/7353
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Tested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lore.kernel.org/r/20221209101822.3893675-2-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mt8183/mt8183-mt6358-ts3a227-max98357.c        | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_hdmi.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-index a86085223677..48c14be5e3db 100644
---- a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
-@@ -677,8 +677,10 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	}
- 
- 	card = (struct snd_soc_card *)of_device_get_match_data(&pdev->dev);
--	if (!card)
-+	if (!card) {
-+		of_node_put(platform_node);
- 		return -EINVAL;
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 21edf7a619f0..35bef8fcd240 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -2878,9 +2878,33 @@ static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+ 				 int format)
+ {
++	struct hdmi_spec *spec = codec->spec;
++	int pin_idx = pin_id_to_pin_index(codec, pin_nid, dev_id);
++	struct hdmi_spec_per_pin *per_pin;
++	int res;
++
++	if (pin_idx < 0)
++		per_pin = NULL;
++	else
++		per_pin = get_pin(spec, pin_idx);
++
+ 	haswell_verify_D0(codec, cvt_nid, pin_nid);
+-	return hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
+-				 stream_tag, format);
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
++		silent_stream_set_kae(codec, per_pin, false);
++		/* wait for pending transfers in codec to clear */
++		usleep_range(100, 200);
 +	}
- 	card->dev = &pdev->dev;
- 
- 	ec_codec = of_parse_phandle(pdev->dev.of_node, "mediatek,ec-codec", 0);
-@@ -767,8 +769,10 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	}
- 
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		ret = -ENOMEM;
-+		goto out;
++
++	res = hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
++				stream_tag, format);
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
++		usleep_range(100, 200);
++		silent_stream_set_kae(codec, per_pin, true);
 +	}
++
++	return res;
+ }
  
- 	snd_soc_card_set_drvdata(card, priv);
- 
-@@ -776,7 +780,8 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->pinctrl)) {
- 		dev_err(&pdev->dev, "%s devm_pinctrl_get failed\n",
- 			__func__);
--		return PTR_ERR(priv->pinctrl);
-+		ret = PTR_ERR(priv->pinctrl);
-+		goto out;
- 	}
- 
- 	for (i = 0; i < PIN_STATE_MAX; i++) {
-@@ -809,6 +814,7 @@ mt8183_mt6358_ts3a227_max98357_dev_probe(struct platform_device *pdev)
- 
- 	ret = devm_snd_soc_register_card(&pdev->dev, card);
- 
-+out:
- 	of_node_put(platform_node);
- 	of_node_put(ec_codec);
- 	of_node_put(hdmi_codec);
+ /* pin_cvt_fixup ops override for HSW+ and VLV+ */
 -- 
 2.35.1
 
