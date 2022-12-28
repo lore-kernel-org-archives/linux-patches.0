@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9921C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A22C433F0;
-	Wed, 28 Dec 2022 16:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43DA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3988DC433D2;
+	Wed, 28 Dec 2022 16:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245104;
-	bh=Q1LLrOSRXuviP1cfQ47Ot+sjOL7pSzi8I37COQZtzXI=;
+	s=korg; t=1672245106;
+	bh=vguymVk6W8AEmYcmqZEk9CMx6BepfOetrT5xctjC3zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KqXS/h7THMl7rnmfRbfW9BOoVMMpGuFnio9FzY+WufRYkv9YMSXK2ZOlP+fsf67ip
-	 6xYMhUBWGCpOU6hXPXbFJJ2PfgZWf8QwfElQV+K1tszNyTaBONAg7xtceqZg2Q/MuS
-	 AZS3bJL8VYe/2Dl9DWxMK+ir+jAvWkwD7q+ZFcXc=
+	b=1NYtnywmD9iC+JOxwIyDeUW9yYtBRzBTh+0jAgMf1OBN10YVhTJzptFTYtG5QpTfX
+	 jiBGKbnsITnOlfvv6FPi+pkq4BHmOsDsjeXajza2fz275q/z1Llh3aJn0k74wobK0P
+	 IGYvcHp5nQkWTfb5q+q7xdD/ohEtY3DA6OrSDBMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0797/1146] phy: qcom-qmp-pcie: drop power-down delay config
-Date: Wed, 28 Dec 2022 15:38:56 +0100
-Message-Id: <20221228144351.796911939@linuxfoundation.org>
+Subject: [PATCH 6.0 0834/1073] rtc: pic32: Move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+Date: Wed, 28 Dec 2022 15:40:22 +0100
+Message-Id: <20221228144350.670326060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,156 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit e71906144b432135b483e228d65be59fbb44c310 ]
+[ Upstream commit 90cd5c88830140c9fade92a8027e0fb2c6e4cc49 ]
 
-The power-down delay was included in the first version of the QMP driver
-as an optional delay after powering on the PHY (using
-POWER_DOWN_CONTROL) and just before starting it. Later changes modified
-this sequence by powering on before initialising the PHY, but the
-optional delay stayed where it was (i.e. before starting the PHY).
+The pic32_rtc_enable(pdata, 0) and clk_disable_unprepare(pdata->clk)
+should be called in the error handling of devm_rtc_allocate_device(),
+so we should move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+to fix it.
 
-The vendor driver does not use a delay before starting the PHY and this
-is likely not needed on any platform unless there is a corresponding
-delay in the vendor kernel init sequence tables (i.e. in devicetree).
-
-Let's keep the delay for now, but drop the redundant delay period
-configuration while increasing the unnecessarily low timer slack
-somewhat.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221012081241.18273-9-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 4a9eac5ae220 ("phy: qcom-qmp-pcie: fix sc8180x initialisation")
+Fixes: 6515e23b9fde ("rtc: pic32: convert to devm_rtc_allocate_device")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123015953.1998521-1-cuigaosheng1@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 27 +-----------------------
- 1 file changed, 1 insertion(+), 26 deletions(-)
+ drivers/rtc/rtc-pic32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 9c8c30ee7c71..c64026888e3a 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1346,9 +1346,6 @@ struct qmp_phy_cfg {
+diff --git a/drivers/rtc/rtc-pic32.c b/drivers/rtc/rtc-pic32.c
+index 7fb9145c43bd..fa351ac20158 100644
+--- a/drivers/rtc/rtc-pic32.c
++++ b/drivers/rtc/rtc-pic32.c
+@@ -324,16 +324,16 @@ static int pic32_rtc_probe(struct platform_device *pdev)
  
- 	/* true, if PHY needs delay after POWER_DOWN */
- 	bool has_pwrdn_delay;
--	/* power_down delay in usec */
--	int pwrdn_delay_min;
--	int pwrdn_delay_max;
+ 	spin_lock_init(&pdata->alarm_lock);
  
- 	/* QMP PHY pipe clock interface rate */
- 	unsigned long pipe_clock_rate;
-@@ -1480,8 +1477,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
++	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
++	if (IS_ERR(pdata->rtc))
++		return PTR_ERR(pdata->rtc);
++
+ 	clk_prepare_enable(pdata->clk);
  
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
+ 	pic32_rtc_enable(pdata, 1);
  
- static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
-@@ -1507,8 +1502,6 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+ 	device_init_wakeup(&pdev->dev, 1);
  
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- 
- 	.pipe_clock_rate	= 250000000,
- };
-@@ -1538,8 +1531,6 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
-@@ -1568,8 +1559,6 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
-@@ -1596,8 +1585,6 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
-@@ -1634,8 +1621,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
-@@ -1672,8 +1657,6 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
-@@ -1725,8 +1708,6 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
-@@ -1755,8 +1736,6 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS_4_20,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
-@@ -1785,8 +1764,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
-@@ -1815,8 +1792,6 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
- 	.phy_status		= PHYSTATUS_4_20,
- 
- 	.has_pwrdn_delay	= true,
--	.pwrdn_delay_min	= 995,		/* us */
--	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
- static void qmp_pcie_configure_lane(void __iomem *base,
-@@ -1976,7 +1951,7 @@ static int qmp_pcie_power_on(struct phy *phy)
- 	qmp_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec, cfg->pcs_misc_tbl_num_sec);
- 
- 	if (cfg->has_pwrdn_delay)
--		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
-+		usleep_range(1000, 1200);
- 
- 	/* Pull PHY out of reset state */
- 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+-	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
+-	if (IS_ERR(pdata->rtc))
+-		return PTR_ERR(pdata->rtc);
+-
+ 	pdata->rtc->ops = &pic32_rtcops;
+ 	pdata->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+ 	pdata->rtc->range_max = RTC_TIMESTAMP_END_2099;
 -- 
 2.35.1
 
