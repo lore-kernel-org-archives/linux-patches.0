@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73011863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8F3C433EF;
-	Wed, 28 Dec 2022 14:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC291863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C8FC433F0;
+	Wed, 28 Dec 2022 14:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239566;
-	bh=qOWIOEhmVK/i/VqEw80DTsTiRAy5CmRVGEA9eEFOezg=;
+	s=korg; t=1672239569;
+	bh=mZxfjgMbuKdGvct+30V9py4QHMbsZ7T5ri43MT4MQQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBvmjLNUOeS1Zmyqxxvh7SttLJWQtWugOJHjRODtvDTUDg2yJQD1FruXmpULQw/GI
-	 5vK9JLcV8sIvoxzyzbib7/JSJVSosY9RjlYOm6AsNDYZ37COpD6Ukr81IsRv+Rx3mN
-	 WKD8tZHHxYhgeV2+1pDm6MsnFCM8p0hbjgMkdA1g=
+	b=oOJ7VbfVsMgROWRAPBakoU6dtc/8ygBkTzKGPs37dFN3IRUDYWHz6BUg6bwOLFrnR
+	 7fARR+UyFs3k95zsVVYVi76fa8OB3JtkmN2Ee25ShAzYq05Xpsl/c13eSLOsLdy1tB
+	 qwz62VX8iozFZS48hXgeQsnYHmpjdwKElI8lh7fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0004/1146] arm64: dts: qcom: ipq6018-cp01-c1: use BLSPI1 pins
-Date: Wed, 28 Dec 2022 15:25:43 +0100
-Message-Id: <20221228144330.304652037@linuxfoundation.org>
+Subject: [PATCH 5.15 244/731] NFSv4.2: Clear FATTR4_WORD2_SECURITY_LABEL when done decoding
+Date: Wed, 28 Dec 2022 15:35:51 +0100
+Message-Id: <20221228144303.635722335@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 4871d3c38893c8a585e3e96364b7fb91cda8322e ]
+[ Upstream commit eef7314caf2d73a94b68ba293cd105154d3a664e ]
 
-When BLSPI1 (originally SPI0, later renamed in commit f82c48d46852
-("arm64: dts: qcom: ipq6018: correct QUP peripheral labels")) was added,
-the device node lacked respective pin configuration assignment.
+We need to clear the FATTR4_WORD2_SECURITY_LABEL bitmap flag
+irrespective of whether or not the label is too long.
 
-Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221006124659.217540-2-krzysztof.kozlowski@linaro.org
+Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfs/nfs4xdr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index 1ba2eca33c7b..6a716c83e5f1 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -37,6 +37,8 @@ &blsp1_i2c3 {
- 
- &blsp1_spi1 {
- 	cs-select = <0>;
-+	pinctrl-0 = <&spi_0_pins>;
-+	pinctrl-names = "default";
- 	status = "okay";
- 
- 	flash@0 {
+diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
+index 046788afb6d9..9d19b801cb39 100644
+--- a/fs/nfs/nfs4xdr.c
++++ b/fs/nfs/nfs4xdr.c
+@@ -4179,6 +4179,7 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
+ 		p = xdr_inline_decode(xdr, len);
+ 		if (unlikely(!p))
+ 			return -EIO;
++		bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
+ 		if (len < NFS4_MAXLABELLEN) {
+ 			if (label) {
+ 				if (label->len) {
+@@ -4191,7 +4192,6 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
+ 				label->lfs = lfs;
+ 				status = NFS_ATTR_FATTR_V4_SECURITY_LABEL;
+ 			}
+-			bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
+ 		} else
+ 			printk(KERN_WARNING "%s: label too long (%u)!\n",
+ 					__func__, len);
 -- 
 2.35.1
 
