@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158191C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD28C433EF;
-	Wed, 28 Dec 2022 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C273F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4798FC433EF;
+	Wed, 28 Dec 2022 16:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245603;
-	bh=oDORo2k92wxdXaMm6FSFsNgHkqkEuO+GDd9FWTrYO/I=;
+	s=korg; t=1672245606;
+	bh=IXzeQCXm8BAgFsTlT7kee4OYsEwHI8bN5Jhh+0BXAQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icodC0YA0NS5+5J2Wlb8KnaXDYxD+z0QXTBgQ0G2M50aadFWQbivKi9H+tv3bUxK+
-	 mu07SsrU9+Km6gzdmfGFYJOkJHZRKrz8IimN5aJLsa3ReTaXwt531q5UwsVomx/JQk
-	 UhluUy/9agVVLygnAxdDdg6J6nOnj+QZmASXneiI=
+	b=Kh5vQHfwSSsFUPKdyuYC8LK7sdo139SlZudfDUvNzpX2id/AfRK/VqOIUzeKqcVjy
+	 8CElzwXoNWnY1mBs3RHQs+chZLZkXoktVMUT4/X15WHYnWAqaHeF0Qni+H7ldgGS2m
+	 fX6TCgR4Lld/Nc0V84azR9CaYxF8Iahkce3cfj+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raed Salem <raeds@nvidia.com>,
-	Emeel Hakim <ehakim@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Bhattacharjee <quic_rbhattac@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0888/1146] net: macsec: fix net device access prior to holding a lock
-Date: Wed, 28 Dec 2022 15:40:27 +0100
-Message-Id: <20221228144354.299037535@linuxfoundation.org>
+Subject: [PATCH 6.0 0922/1073] wifi: ath11k: Fix qmi_msg_handler data structure initialization
+Date: Wed, 28 Dec 2022 15:41:50 +0100
+Message-Id: <20221228144353.070643203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,94 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emeel Hakim <ehakim@nvidia.com>
+From: Rahul Bhattacharjee <quic_rbhattac@quicinc.com>
 
-[ Upstream commit f3b4a00f0f62da252c598310698dfc82ef2f2e2e ]
+[ Upstream commit ed3725e15a154ebebf44e0c34806c57525483f92 ]
 
-Currently macsec offload selection update routine accesses
-the net device prior to holding the relevant lock.
-Fix by holding the lock prior to the device access.
+qmi_msg_handler is required to be null terminated by QMI module.
+There might be a case where a handler for a msg id is not present in the
+handlers array which can lead to infinite loop while searching the handler
+and therefore out of bound access in qmi_invoke_handler().
+Hence update the initialization in qmi_msg_handler data structure.
 
-Fixes: dcb780fb2795 ("net: macsec: add nla support for changing the offloading selection")
-Reviewed-by: Raed Salem <raeds@nvidia.com>
-Signed-off-by: Emeel Hakim <ehakim@nvidia.com>
-Link: https://lore.kernel.org/r/20221211075532.28099-1-ehakim@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.5.0.1-01100-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Rahul Bhattacharjee <quic_rbhattac@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221021090126.28626-1-quic_rbhattac@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 2fbac51b9b19..038a78794392 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -2593,7 +2593,7 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
- 	const struct macsec_ops *ops;
- 	struct macsec_context ctx;
- 	struct macsec_dev *macsec;
--	int ret;
-+	int ret = 0;
- 
- 	if (!attrs[MACSEC_ATTR_IFINDEX])
- 		return -EINVAL;
-@@ -2606,28 +2606,36 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
- 					macsec_genl_offload_policy, NULL))
- 		return -EINVAL;
- 
-+	rtnl_lock();
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index e6ced8597e1d..539134a6e9d9 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -3083,6 +3083,9 @@ static const struct qmi_msg_handler ath11k_qmi_msg_handlers[] = {
+ 			sizeof(struct qmi_wlfw_fw_init_done_ind_msg_v01),
+ 		.fn = ath11k_qmi_msg_fw_init_done_cb,
+ 	},
 +
- 	dev = get_dev_from_nl(genl_info_net(info), attrs);
--	if (IS_ERR(dev))
--		return PTR_ERR(dev);
-+	if (IS_ERR(dev)) {
-+		ret = PTR_ERR(dev);
-+		goto out;
-+	}
- 	macsec = macsec_priv(dev);
++	/* end of list */
++	{},
+ };
  
--	if (!tb_offload[MACSEC_OFFLOAD_ATTR_TYPE])
--		return -EINVAL;
-+	if (!tb_offload[MACSEC_OFFLOAD_ATTR_TYPE]) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	offload = nla_get_u8(tb_offload[MACSEC_OFFLOAD_ATTR_TYPE]);
- 	if (macsec->offload == offload)
--		return 0;
-+		goto out;
- 
- 	/* Check if the offloading mode is supported by the underlying layers */
- 	if (offload != MACSEC_OFFLOAD_OFF &&
--	    !macsec_check_offload(offload, macsec))
--		return -EOPNOTSUPP;
-+	    !macsec_check_offload(offload, macsec)) {
-+		ret = -EOPNOTSUPP;
-+		goto out;
-+	}
- 
- 	/* Check if the net device is busy. */
--	if (netif_running(dev))
--		return -EBUSY;
--
--	rtnl_lock();
-+	if (netif_running(dev)) {
-+		ret = -EBUSY;
-+		goto out;
-+	}
- 
- 	prev_offload = macsec->offload;
- 	macsec->offload = offload;
-@@ -2662,7 +2670,7 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
- 
- rollback:
- 	macsec->offload = prev_offload;
--
-+out:
- 	rtnl_unlock();
- 	return ret;
- }
+ static int ath11k_qmi_ops_new_server(struct qmi_handle *qmi_hdl,
 -- 
 2.35.1
 
