@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B06B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82619C433EF;
-	Wed, 28 Dec 2022 15:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A07A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FD4C433EF;
+	Wed, 28 Dec 2022 15:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240210;
-	bh=Owd/TYjA3DOn82cbenvxj7kGkvaKUSErgAJJAk1ZdWU=;
+	s=korg; t=1672240213;
+	bh=c4hsV7i8ymG8pi0rs0ItIYG7BfhreTpAMJMVsu1akkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f67hmINTB2+yN5GA0RsrNWBrd/SGl5YLYE30Gs2mIu2qymOHv74IAD2adjbYlzPpb
-	 ZyL16H4LCjHYJRRFH6Ecj9PnkgHbEhXo1Cjcw75bsQJXBQc62kEG5kdZbINs596Voy
-	 I32d6YTSf1RCwhMfARB1KmOQopZoYNvK+YzKokis=
+	b=SUxl1ZqjYdTkRx6VdbNqVlQNRYxaeHayjqWUqBJkqvnO9jK6luSlV3vz6l2/rn1hD
+	 sLrseiozxraFH4YY9LYjUeFZz57nW7f4aZbdZZNYKA43mu9+ex5lhsKt04OGY4QDfO
+	 zU3usKTOR86BnEPkN0OoT4vE3v7QskhGyUuWAOss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0134/1073] thermal: core: fix some possible name leaks in error paths
-Date: Wed, 28 Dec 2022 15:28:42 +0100
-Message-Id: <20221228144331.672440560@linuxfoundation.org>
+Subject: [PATCH 6.1 0096/1146] pstore/ram: Fix error return code in ramoops_probe()
+Date: Wed, 28 Dec 2022 15:27:15 +0100
+Message-Id: <20221228144332.749662451@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 4748f9687caaeefab8578285b97b2f30789fc4b4 ]
+[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
 
-In some error paths before device_register(), the names allocated
-by dev_set_name() are not freed. Move dev_set_name() front to
-device_register(), so the name can be freed while calling
-put_device().
+In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
+value of 0, so the error return code -EINVAL may be incorrectly set
+to 0. To fix set valid return code before calling to goto.
 
-Fixes: 1dd7128b839f ("thermal/core: Fix null pointer dereference in thermal_release()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ fs/pstore/ram.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 50d50cec7774..15fb5fa1b0f2 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -903,10 +903,6 @@ __thermal_cooling_device_register(struct device_node *np,
- 	cdev->id = ret;
- 	id = ret;
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index fefe3d391d3a..74e4d93f3e08 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -735,6 +735,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 	/* Make sure we didn't get bogus platform data pointer. */
+ 	if (!pdata) {
+ 		pr_err("NULL platform data\n");
++		err = -EINVAL;
+ 		goto fail_out;
+ 	}
  
--	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
--	if (ret)
--		goto out_ida_remove;
--
- 	cdev->type = kstrdup(type ? type : "", GFP_KERNEL);
- 	if (!cdev->type) {
- 		ret = -ENOMEM;
-@@ -921,6 +917,11 @@ __thermal_cooling_device_register(struct device_node *np,
- 	cdev->device.class = &thermal_class;
- 	cdev->devdata = devdata;
- 	thermal_cooling_device_setup_sysfs(cdev);
-+	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
-+	if (ret) {
-+		thermal_cooling_device_destroy_sysfs(cdev);
-+		goto out_kfree_type;
-+	}
- 	ret = device_register(&cdev->device);
- 	if (ret)
- 		goto out_kfree_type;
-@@ -1241,10 +1242,6 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
- 	tz->id = id;
- 	strlcpy(tz->type, type, sizeof(tz->type));
+@@ -742,6 +743,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 			!pdata->ftrace_size && !pdata->pmsg_size)) {
+ 		pr_err("The memory size and the record/console size must be "
+ 			"non-zero\n");
++		err = -EINVAL;
+ 		goto fail_out;
+ 	}
  
--	result = dev_set_name(&tz->device, "thermal_zone%d", tz->id);
--	if (result)
--		goto remove_id;
--
- 	if (!ops->critical)
- 		ops->critical = thermal_zone_device_critical;
- 
-@@ -1267,6 +1264,11 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
- 	/* A new thermal zone needs to be updated anyway. */
- 	atomic_set(&tz->need_update, 1);
- 
-+	result = dev_set_name(&tz->device, "thermal_zone%d", tz->id);
-+	if (result) {
-+		thermal_zone_destroy_device_groups(tz);
-+		goto remove_id;
-+	}
- 	result = device_register(&tz->device);
- 	if (result)
- 		goto release_device;
 -- 
 2.35.1
 
