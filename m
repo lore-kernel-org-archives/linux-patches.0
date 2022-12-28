@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1703B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CABBC433EF;
-	Wed, 28 Dec 2022 15:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C4E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4C2C433EF;
+	Wed, 28 Dec 2022 15:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241705;
-	bh=UG08ZJZ/SGMkz4T2u/XEXW+kYA5et+5MvE1A2TuVIUg=;
+	s=korg; t=1672241708;
+	bh=Z8IlqknPx/sa6wj/y1s6KEd1TUYEWPZi3PG+vRcPg/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr+xuFP2e1L3Shq6ER/LSsFPocGf5CQ9g/Yyy1FFP4Sn1WF511ZlfcwrbOj8IDCgI
-	 UVUFHqnlv2xMHAyVM8p4XDy9Z7c3XBojfNl55shii8rCtCN3kU3aCd2z0R7xM5soFF
-	 /ttP29quOuOO32uO0+VYitJH6XCjOsWDb7iLV3aQ=
+	b=gx4q4FQtj9jgIoERsJhPchOIYgBm2ctJ1Az9fxwE6tez8I2sgEwIFGCsPfFeYesf8
+	 Qule+Ls7oQxljIAAYFmVkOMk2jjsR7AA9kfJeVRv2LdvGMVk2qqRGLs0+5szfRs1j5
+	 j320bxFJjAuAN0rLmvB38y03BuRWGG+wdwJctWA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0279/1146] drm/msm/dsi: Remove repeated calculation of slice_per_intf
-Date: Wed, 28 Dec 2022 15:30:18 +0100
-Message-Id: <20221228144337.716331765@linuxfoundation.org>
+Subject: [PATCH 6.0 0318/1073] selftests/bpf: Fix xdp_synproxy compilation failure in 32-bit arch
+Date: Wed, 28 Dec 2022 15:31:46 +0100
+Message-Id: <20221228144336.646439338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,59 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 170ffca836dd9f1a0219c4f67554d408fa2b5912 ]
+[ Upstream commit e4c9cf0ce8c413c2030e8fb215551d7e0582ee7b ]
 
-slice_per_intf is already computed for intf_width, which holds the same
-value as hdisplay.
+xdp_synproxy fails to be compiled in the 32-bit arch, log is as follows:
 
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508933/
-Link: https://lore.kernel.org/r/20221026182824.876933-3-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+  xdp_synproxy.c: In function 'parse_options':
+  xdp_synproxy.c:175:36: error: left shift count >= width of type [-Werror=shift-count-overflow]
+    175 |                 *tcpipopts = (mss6 << 32) | (ttl << 24) | (wscale << 16) | mss4;
+        |                                    ^~
+  xdp_synproxy.c: In function 'syncookie_open_bpf_maps':
+  xdp_synproxy.c:289:28: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+    289 |                 .map_ids = (__u64)map_ids,
+        |                            ^
+
+Fix it.
+
+Fixes: fb5cd0ce70d4 ("selftests/bpf: Add selftests for raw syncookie helpers")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221111030836.37632-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tools/testing/selftests/bpf/xdp_synproxy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 8026fe65bff6..d94832504d0f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -842,7 +842,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
- {
- 	struct drm_dsc_config *dsc = msm_host->dsc;
--	u32 reg, intf_width, reg_ctrl, reg_ctrl2;
-+	u32 reg, reg_ctrl, reg_ctrl2;
- 	u32 slice_per_intf, total_bytes_per_intf;
- 	u32 pkt_per_line;
- 	u32 bytes_in_slice;
-@@ -851,8 +851,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	/* first calculate dsc parameters and then program
- 	 * compress mode registers
- 	 */
--	intf_width = hdisplay;
--	slice_per_intf = DIV_ROUND_UP(intf_width, dsc->slice_width);
-+	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+diff --git a/tools/testing/selftests/bpf/xdp_synproxy.c b/tools/testing/selftests/bpf/xdp_synproxy.c
+index d874ddfb39c4..8432836f3be2 100644
+--- a/tools/testing/selftests/bpf/xdp_synproxy.c
++++ b/tools/testing/selftests/bpf/xdp_synproxy.c
+@@ -104,7 +104,8 @@ static void parse_options(int argc, char *argv[], unsigned int *ifindex, __u32 *
+ 		{ "tc", no_argument, NULL, 'c' },
+ 		{ NULL, 0, NULL, 0 },
+ 	};
+-	unsigned long mss4, mss6, wscale, ttl;
++	unsigned long mss4, wscale, ttl;
++	unsigned long long mss6;
+ 	unsigned int tcpipopts_mask = 0;
  
- 	/* If slice_per_pkt is greater than slice_per_intf
- 	 * then default to 1. This can happen during partial
-@@ -861,7 +860,6 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	if (slice_per_intf > dsc->slice_count)
- 		dsc->slice_count = 1;
+ 	if (argc < 2)
+@@ -286,7 +287,7 @@ static int syncookie_open_bpf_maps(__u32 prog_id, int *values_map_fd, int *ports
  
--	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
- 	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
+ 	prog_info = (struct bpf_prog_info) {
+ 		.nr_map_ids = 8,
+-		.map_ids = (__u64)map_ids,
++		.map_ids = (__u64)(unsigned long)map_ids,
+ 	};
+ 	info_len = sizeof(prog_info);
  
- 	dsc->slice_chunk_size = bytes_in_slice;
 -- 
 2.35.1
 
