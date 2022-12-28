@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C4B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BCAC433D2;
-	Wed, 28 Dec 2022 15:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902F61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18485C433EF;
+	Wed, 28 Dec 2022 15:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240916;
-	bh=qEW4P3ShBw/O+nZDvlRl8XZKAB8zq7fIQbrLg6RyqFs=;
+	s=korg; t=1672240919;
+	bh=QSM/P7uHKbIBIyOmWg1RBOnaRqFfbonn7XTW45BAUyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rl1PXrd+Gg3j2dTKUc9IQLFpsJtygWTFFmNJLxZtUv4sKHrE0aUlvBXNs6VHKpt0P
-	 CfUIerTWFAjJNlssEjMDVW/sAYkK6TYsfxX9bEnyVzI3kSa2n39DcYr0PqKX/szKxD
-	 tNvtLHVA9qUdLcNrVFPwyVzlZDlZ7wQckBeUJSfA=
+	b=EG46Ek08Vda8EzLq2NlQdIlDLT2gALYmEvWO45AD9iR17du/LQL66IYV3XEDfN7CU
+	 7zvMcI5u2gVfnqIT5BWmV7+m15lyMCfsSJaTw3vWZD/rt4Mg8aj8VEMc8gjRP+WqvL
+	 R8IKCj96AMBgUY740yziBhZEEKoLtjg1p2Nqr45k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Brown <neilb@suse.de>,
-	Yongcheng Yang <yoyang@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0184/1146] nfsd: return error if nfs4_setacl fails
-Date: Wed, 28 Dec 2022 15:28:43 +0100
-Message-Id: <20221228144335.149523183@linuxfoundation.org>
+Subject: [PATCH 6.0 0219/1073] samples/bpf: Fix MAC address swapping in xdp2_kern
+Date: Wed, 28 Dec 2022 15:30:07 +0100
+Message-Id: <20221228144333.962932184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,37 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 01d53a88c08951f88f2a42f1f1e6568928e0590e ]
+[ Upstream commit 7a698edf954cb3f8b6e8dacdb77615355170420c ]
 
-With the addition of POSIX ACLs to struct nfsd_attrs, we no longer
-return an error if setting the ACL fails. Ensure we return the na_aclerr
-error on SETATTR if there is one.
+xdp2_kern rewrites and forwards packets out on the same interface.
+Forwarding still works but rewrite got broken when xdp multibuffer
+support has been added.
 
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
-Cc: Neil Brown <neilb@suse.de>
-Reported-by: Yongcheng Yang <yoyang@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+With xdp multibuffer a local copy of the packet has been introduced. The
+MAC address is now swapped in the local copy, but the local copy in not
+written back.
+
+Fix MAC address swapping be adding write back of modified packet.
+
+Fixes: 772251742262 ("samples/bpf: fixup some tools to be able to support xdp multibuffer")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
+Link: https://lore.kernel.org/r/20221015213050.65222-1-gerhard@engleder-embedded.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ samples/bpf/xdp2_kern.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 8beb2bc4c328..e91d0918592c 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1133,6 +1133,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				0, (time64_t)0);
- 	if (!status)
- 		status = nfserrno(attrs.na_labelerr);
-+	if (!status)
-+		status = nfserrno(attrs.na_aclerr);
- out:
- 	nfsd_attrs_free(&attrs);
- 	fh_drop_write(&cstate->current_fh);
+diff --git a/samples/bpf/xdp2_kern.c b/samples/bpf/xdp2_kern.c
+index 3332ba6bb95f..67804ecf7ce3 100644
+--- a/samples/bpf/xdp2_kern.c
++++ b/samples/bpf/xdp2_kern.c
+@@ -112,6 +112,10 @@ int xdp_prog1(struct xdp_md *ctx)
+ 
+ 	if (ipproto == IPPROTO_UDP) {
+ 		swap_src_dst_mac(data);
++
++		if (bpf_xdp_store_bytes(ctx, 0, pkt, sizeof(pkt)))
++			return rc;
++
+ 		rc = XDP_TX;
+ 	}
+ 
 -- 
 2.35.1
 
