@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D331875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6E6C433F0;
-	Wed, 28 Dec 2022 16:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5661875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FE8C433EF;
+	Wed, 28 Dec 2022 16:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243389;
-	bh=yoj//D37v82aTDnUCc2h2XHFMHJuk2hrvtsKDHa7EKM=;
+	s=korg; t=1672243391;
+	bh=wtlDx3YQ3kMb0vvLzeObvYVPVBe/GeH6Kux7qBDQtv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzEYSjsa0SVTK7MWEfzZhfnOmwde/fsX1iqJERLS4RrOJV9/wYw0q6+traDwVX+ku
-	 /2L8UqA5fLJyuT7JeLuvCWdRhL9WZxZbKA+YMLC+kqHyPgptyiB3s9555ZY0znWU8k
-	 Oa9lvYDRVxgOii0Fw+I+5yPCXAkVrqB5zoC46Jl0=
+	b=lkng7tIBWDgINBg0j10nq+KKQVVHKcUYpE08CprzRxNjDeaBnfYs1d+Fr05834suy
+	 ydi5vLCKYdyLJf4qF0KdUCKEUuaj0dVMtZdAhHqj63ngp0S1lXW/UEab9eewnDwhgG
+	 Bx5sGtuVgQKVatiy9vzTrLKbulh+pBAR++IXNDaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0524/1073] net: ethernet: dnet: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:12 +0100
-Message-Id: <20221228144342.277188811@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.15 716/731] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
+Date: Wed, 28 Dec 2022 15:43:43 +0100
+Message-Id: <20221228144317.197953909@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit f07fadcbee2a5e84caa67c7c445424200bffb60b ]
+commit d6a9fb87e9d18f3394a9845546bbe868efdccfd2 upstream.
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+A bad bug in clang's implementation of -fzero-call-used-regs can result
+in NULL pointer dereferences (see the links above the check for more
+information). Restrict CONFIG_CC_HAS_ZERO_CALL_USED_REGS to either a
+supported GCC version or a clang newer than 15.0.6, which will catch
+both a theoretical 15.0.7 and the upcoming 16.0.0, which will both have
+the bug fixed.
 
-In this case, the lock is used to protected 'bp', so we can move
-dev_kfree_skb() after the spin_unlock_irqrestore().
-
-Fixes: 4796417417a6 ("dnet: Dave DNET ethernet controller driver (updated)")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221214232602.4118147-1-nathan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/dnet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/Kconfig.hardening |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/dnet.c b/drivers/net/ethernet/dnet.c
-index 92462ed87bc4..d9f0c297ae2a 100644
---- a/drivers/net/ethernet/dnet.c
-+++ b/drivers/net/ethernet/dnet.c
-@@ -550,11 +550,11 @@ static netdev_tx_t dnet_start_xmit(struct sk_buff *skb, struct net_device *dev)
+--- a/security/Kconfig.hardening
++++ b/security/Kconfig.hardening
+@@ -240,6 +240,9 @@ config INIT_ON_FREE_DEFAULT_ON
  
- 	skb_tx_timestamp(skb);
+ config CC_HAS_ZERO_CALL_USED_REGS
+ 	def_bool $(cc-option,-fzero-call-used-regs=used-gpr)
++	# https://github.com/ClangBuiltLinux/linux/issues/1766
++	# https://github.com/llvm/llvm-project/issues/59242
++	depends on !CC_IS_CLANG || CLANG_VERSION > 150006
  
-+	spin_unlock_irqrestore(&bp->lock, flags);
-+
- 	/* free the buffer */
- 	dev_kfree_skb(skb);
- 
--	spin_unlock_irqrestore(&bp->lock, flags);
--
- 	return NETDEV_TX_OK;
- }
- 
--- 
-2.35.1
-
+ config ZERO_CALL_USED_REGS
+ 	bool "Enable register zeroing on function exit"
 
 
