@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2681863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63845C433D2;
-	Wed, 28 Dec 2022 15:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FB41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A07C433D2;
+	Wed, 28 Dec 2022 15:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241004;
-	bh=MgDrVh8TgP1lYs6ZUZmj1KacACULdMBbFc2oSgkD32A=;
+	s=korg; t=1672241007;
+	bh=fL+zxk+dzBvZ4uBwm7Cwthu8ZL9ceMTRrexOpCMIE7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjxI0fJj6iry/2rSFI3EMVsI6km4lQWwzHsvCYr4utZSFLOrWopRPxepfH8jLcu/t
-	 UlymqetoYBowXhEKke9U7uez8Aw4HRNtYbnPe7iyfufrvv9GHuM5nsc2ARkDtKtmKs
-	 LeawajycG2esa7oRfI9zQe0JnTC5H5QYUIfx9sOw=
+	b=NQ0NoZtFBekHCsiWRrG0n3FJbV2jqmR0ZepQGnm/MU2xXR6Mq0aXDSP3s79oFZGLB
+	 HTjnDQt3EnSm8h7FnpI2cbKJ5Ov3tKbD0nOGZ2InVP4KXQKtBvx5nVOTBEuK2q8h/9
+	 gV4nQgAwmNh2tQiMMehQMNex949GxP+2DDFiV2IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kui-Feng Lee <kuifeng@fb.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0194/1146] selftests/bpf: Add missing bpf_iter_vma_offset__destroy call
-Date: Wed, 28 Dec 2022 15:28:53 +0100
-Message-Id: <20221228144335.415930323@linuxfoundation.org>
+Subject: [PATCH 6.0 0229/1073] media: v4l2-ioctl.c: Unify YCbCr/YUV terms in format descriptions
+Date: Wed, 28 Dec 2022 15:30:17 +0100
+Message-Id: <20221228144334.246450947@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 1d2d941bc140b34587b4c889699fb0f89d29937f ]
+[ Upstream commit 6a394d563dffb60c150d87dc6678994ef8028c53 ]
 
-Adding missing bpf_iter_vma_offset__destroy call and using in-skeletin
-link pointer so we don't need extra bpf_link__destroy call.
+Format descriptions use YCbCr and YUV terms interchangeably. Let's unify
+them so they all use YUV. While YCbCr is actually correct term here, YUV
+is shorter and thus it also fixes too long description of P010 tiled
+format.
 
-Fixes: b3e1331eb925 ("selftests/bpf: Test parameterized task BPF iterators.")
-Cc: Kui-Feng Lee <kuifeng@fb.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20221006083106.117987-1-jolsa@kernel.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 3c8e19d3d3f9 ("media: Add P010 tiled format")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_iter.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/media/v4l2-core/v4l2-ioctl.c | 34 ++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_iter.c b/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-index 3369c5ec3a17..ecde236047fe 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-@@ -1498,7 +1498,6 @@ static noinline int trigger_func(int arg)
- static void test_task_vma_offset_common(struct bpf_iter_attach_opts *opts, bool one_proc)
- {
- 	struct bpf_iter_vma_offset *skel;
--	struct bpf_link *link;
- 	char buf[16] = {};
- 	int iter_fd, len;
- 	int pgsz, shift;
-@@ -1513,11 +1512,11 @@ static void test_task_vma_offset_common(struct bpf_iter_attach_opts *opts, bool
- 		;
- 	skel->bss->page_shift = shift;
- 
--	link = bpf_program__attach_iter(skel->progs.get_vma_offset, opts);
--	if (!ASSERT_OK_PTR(link, "attach_iter"))
--		return;
-+	skel->links.get_vma_offset = bpf_program__attach_iter(skel->progs.get_vma_offset, opts);
-+	if (!ASSERT_OK_PTR(skel->links.get_vma_offset, "attach_iter"))
-+		goto exit;
- 
--	iter_fd = bpf_iter_create(bpf_link__fd(link));
-+	iter_fd = bpf_iter_create(bpf_link__fd(skel->links.get_vma_offset));
- 	if (!ASSERT_GT(iter_fd, 0, "create_iter"))
- 		goto exit;
- 
-@@ -1535,7 +1534,7 @@ static void test_task_vma_offset_common(struct bpf_iter_attach_opts *opts, bool
- 	close(iter_fd);
- 
- exit:
--	bpf_link__destroy(link);
-+	bpf_iter_vma_offset__destroy(skel);
- }
- 
- static void test_task_vma_offset(void)
+diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+index e6fd355a2e92..de83714f0d40 100644
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -1347,23 +1347,23 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+ 	case V4L2_PIX_FMT_YUV420:	descr = "Planar YUV 4:2:0"; break;
+ 	case V4L2_PIX_FMT_HI240:	descr = "8-bit Dithered RGB (BTTV)"; break;
+ 	case V4L2_PIX_FMT_M420:		descr = "YUV 4:2:0 (M420)"; break;
+-	case V4L2_PIX_FMT_NV12:		descr = "Y/CbCr 4:2:0"; break;
+-	case V4L2_PIX_FMT_NV21:		descr = "Y/CrCb 4:2:0"; break;
+-	case V4L2_PIX_FMT_NV16:		descr = "Y/CbCr 4:2:2"; break;
+-	case V4L2_PIX_FMT_NV61:		descr = "Y/CrCb 4:2:2"; break;
+-	case V4L2_PIX_FMT_NV24:		descr = "Y/CbCr 4:4:4"; break;
+-	case V4L2_PIX_FMT_NV42:		descr = "Y/CrCb 4:4:4"; break;
+-	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/CbCr 4:2:0"; break;
+-	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/CbCr 4:2:0 (4x4 Linear)"; break;
+-	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/CbCr 4:2:0 (16x16 Linear)"; break;
+-	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/CbCr 4:2:0 (32x32 Linear)"; break;
+-	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/CbCr 4:2:0 (4x4 Linear)"; break;
+-	case V4L2_PIX_FMT_NV12M:	descr = "Y/CbCr 4:2:0 (N-C)"; break;
+-	case V4L2_PIX_FMT_NV21M:	descr = "Y/CrCb 4:2:0 (N-C)"; break;
+-	case V4L2_PIX_FMT_NV16M:	descr = "Y/CbCr 4:2:2 (N-C)"; break;
+-	case V4L2_PIX_FMT_NV61M:	descr = "Y/CrCb 4:2:2 (N-C)"; break;
+-	case V4L2_PIX_FMT_NV12MT:	descr = "Y/CbCr 4:2:0 (64x32 MB, N-C)"; break;
+-	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/CbCr 4:2:0 (16x16 MB, N-C)"; break;
++	case V4L2_PIX_FMT_NV12:		descr = "Y/UV 4:2:0"; break;
++	case V4L2_PIX_FMT_NV21:		descr = "Y/VU 4:2:0"; break;
++	case V4L2_PIX_FMT_NV16:		descr = "Y/UV 4:2:2"; break;
++	case V4L2_PIX_FMT_NV61:		descr = "Y/VU 4:2:2"; break;
++	case V4L2_PIX_FMT_NV24:		descr = "Y/UV 4:4:4"; break;
++	case V4L2_PIX_FMT_NV42:		descr = "Y/VU 4:4:4"; break;
++	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/UV 4:2:0"; break;
++	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/UV 4:2:0 (4x4 Linear)"; break;
++	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/UV 4:2:0 (16x16 Linear)"; break;
++	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/UV 4:2:0 (32x32 Linear)"; break;
++	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/UV 4:2:0 (4x4 Linear)"; break;
++	case V4L2_PIX_FMT_NV12M:	descr = "Y/UV 4:2:0 (N-C)"; break;
++	case V4L2_PIX_FMT_NV21M:	descr = "Y/VU 4:2:0 (N-C)"; break;
++	case V4L2_PIX_FMT_NV16M:	descr = "Y/UV 4:2:2 (N-C)"; break;
++	case V4L2_PIX_FMT_NV61M:	descr = "Y/VU 4:2:2 (N-C)"; break;
++	case V4L2_PIX_FMT_NV12MT:	descr = "Y/UV 4:2:0 (64x32 MB, N-C)"; break;
++	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/UV 4:2:0 (16x16 MB, N-C)"; break;
+ 	case V4L2_PIX_FMT_YUV420M:	descr = "Planar YUV 4:2:0 (N-C)"; break;
+ 	case V4L2_PIX_FMT_YVU420M:	descr = "Planar YVU 4:2:0 (N-C)"; break;
+ 	case V4L2_PIX_FMT_YUV422M:	descr = "Planar YUV 4:2:2 (N-C)"; break;
 -- 
 2.35.1
 
