@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83671863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC08C433D2;
-	Wed, 28 Dec 2022 15:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD011863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DB9C433D2;
+	Wed, 28 Dec 2022 15:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242317;
-	bh=grmuduIJoEobr0zOVIsI/nBmbnUiYZvuoaYcymVNqnk=;
+	s=korg; t=1672242320;
+	bh=KcnYeku5C3BrNcd6nl2rTnAy0lpy2etHaWln6/lEW2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqzVEMVfrBomAfPpT9WYnPy9IEpgERdmsShdUsNF5XEVvSOk9S16BcvJlqW6yUkQU
-	 M7OknvwsX0nmB1uzmfZVtr9F0VVeIjE+yh7MCliYwzudRBOLTbAJtYsZ57VqL3lCpv
-	 hDTI1WJfJRGSqcHrHH2R0utdoYbmdWLK5hLcWaUM=
+	b=yy7w23M0yf7TOJp9aovcdwhfjsqkK3PvzVwSZyluSUOOQd6VeiJ/GNs+8/PUjOphb
+	 67K4eHEe1EpAj8mARksbsI4VLNO0APpzuOpSsiJgntfQVee21Z58CWF0pqy8D9u4y1
+	 2j8ooqa67CsMdpJAF7iwbrqU9JyxaxrNZfi9bRlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0323/1146] module: Fix NULL vs IS_ERR checking for module_get_next_page
-Date: Wed, 28 Dec 2022 15:31:02 +0100
-Message-Id: <20221228144338.926514043@linuxfoundation.org>
+Subject: [PATCH 6.0 0393/1073] media: sun8i-a83t-mipi-csi2: Register async subdev with no sensor attached
+Date: Wed, 28 Dec 2022 15:33:01 +0100
+Message-Id: <20221228144338.692998067@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-[ Upstream commit 45af1d7aae7d5520d2858f8517a1342646f015db ]
+[ Upstream commit 614f6e35a9e214c80270ab942bf58d85066a3e34 ]
 
-The module_get_next_page() function return error pointers on error
-instead of NULL.
-Use IS_ERR() to check the return value to fix this.
+This allows the device to probe and register its async subdev without
+a sensor attached.
 
-Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+The rationale is that the parent driver might otherwise wait for the
+subdev to be registered when it should be available (from the fwnode
+graph endpoint perspective). This is generally not problematic when
+the MIPI CSI-2 bridge is the only device attached to the parent, but
+in the case of a CSI controller that can feed from both MIPI CSI-2
+and parallel, it would prevent using the parallel sensor due to the
+parent waiting for the MIPI CSI-2 subdev to register.
+
+Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/decompress.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
-index c033572d83f0..720e719253cd 100644
---- a/kernel/module/decompress.c
-+++ b/kernel/module/decompress.c
-@@ -114,8 +114,8 @@ static ssize_t module_gzip_decompress(struct load_info *info,
- 	do {
- 		struct page *page = module_get_next_page(info);
+diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+index 5e1c25db7bc4..d993c09a4820 100644
+--- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
++++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+@@ -536,6 +536,7 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
+ 	struct v4l2_async_notifier *notifier = &bridge->notifier;
+ 	struct media_pad *pads = bridge->pads;
+ 	struct device *dev = csi2_dev->dev;
++	bool notifier_registered = false;
+ 	int ret;
  
--		if (!page) {
--			retval = -ENOMEM;
-+		if (IS_ERR(page)) {
-+			retval = PTR_ERR(page);
- 			goto out_inflate_end;
- 		}
+ 	mutex_init(&bridge->lock);
+@@ -573,12 +574,17 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
+ 	notifier->ops = &sun8i_a83t_mipi_csi2_notifier_ops;
  
-@@ -173,8 +173,8 @@ static ssize_t module_xz_decompress(struct load_info *info,
- 	do {
- 		struct page *page = module_get_next_page(info);
+ 	ret = sun8i_a83t_mipi_csi2_bridge_source_setup(csi2_dev);
+-	if (ret)
++	if (ret && ret != -ENODEV)
+ 		goto error_v4l2_notifier_cleanup;
  
--		if (!page) {
--			retval = -ENOMEM;
-+		if (IS_ERR(page)) {
-+			retval = PTR_ERR(page);
- 			goto out;
- 		}
+-	ret = v4l2_async_subdev_nf_register(subdev, notifier);
+-	if (ret < 0)
+-		goto error_v4l2_notifier_cleanup;
++	/* Only register the notifier when a sensor is connected. */
++	if (ret != -ENODEV) {
++		ret = v4l2_async_subdev_nf_register(subdev, notifier);
++		if (ret < 0)
++			goto error_v4l2_notifier_cleanup;
++
++		notifier_registered = true;
++	}
  
+ 	/* V4L2 Subdev */
+ 
+@@ -589,7 +595,8 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
+ 	return 0;
+ 
+ error_v4l2_notifier_unregister:
+-	v4l2_async_nf_unregister(notifier);
++	if (notifier_registered)
++		v4l2_async_nf_unregister(notifier);
+ 
+ error_v4l2_notifier_cleanup:
+ 	v4l2_async_nf_cleanup(notifier);
 -- 
 2.35.1
 
