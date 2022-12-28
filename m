@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8424F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024D8C433D2;
-	Wed, 28 Dec 2022 16:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1861C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7725C433F0;
+	Wed, 28 Dec 2022 16:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245841;
-	bh=ymDt+OQ1d1l7JhA36+wNvf/5kqDthP0wuJ+WVC+JCpo=;
+	s=korg; t=1672245844;
+	bh=wS2CJozuBVaCyuHPiu85yFQAGc/LKO2AOVr+rCZej9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtZCN3uyuTzztUdzOvBc6/c+ZhooZ/o1eTxM35ItW8+mNPVCNL3lgEF7UcvHQXY8Y
-	 zbQWdDEhak+2DKUrLMtBTWGyMJJUYMRnJbWJzbxdTAaBJZqAAF3GHzyLmh9HFiDb2z
-	 iqDgxfATToIU/WaAIr9X17MNbj3XrhQNnLRzYlJw=
+	b=vSIElwH54hEWCFuHVqAw2zU/k4DPIxccRauWF5blPh6Xt4mYaiJpX2FMZcZGOl07w
+	 rwERZsH/3Be9g7oQzSIzghc8SzgLUD5fYrCrVaMTuQ5Ur0s+bBKwwmKLH8bU/jVsz/
+	 D7z9w4D56aTgrJBnT5PTYss9mO17wfBL6tifCfNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0934/1146] mctp: Remove device type check at unregister
-Date: Wed, 28 Dec 2022 15:41:13 +0100
-Message-Id: <20221228144355.665791884@linuxfoundation.org>
+Subject: [PATCH 6.0 0968/1073] nfs: fix possible null-ptr-deref when parsing param
+Date: Wed, 28 Dec 2022 15:42:36 +0100
+Message-Id: <20221228144354.349180464@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,63 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit b389a902dd5be4ece505a2e0463b9b034de04bf5 ]
+[ Upstream commit 5559405df652008e56eee88872126fe4c451da67 ]
 
-The unregister check could be incorrectly triggered if a netdev
-changes its type after register. That is possible for a tun device
-using TUNSETLINK ioctl, resulting in mctp unregister failing
-and the netdev unregister waiting forever.
+According to commit "vfs: parse: deal with zero length string value",
+kernel will set the param->string to null pointer in vfs_parse_fs_string()
+if fs string has zero length.
 
-This was encountered by https://github.com/openthread/openthread/issues/8523
+Yet the problem is that, nfs_fs_context_parse_param() will dereferences the
+param->string, without checking whether it is a null pointer, which may
+trigger a null-ptr-deref bug.
 
-Neither check at register or unregister is required. They were added in
-an attempt to track down mctp_ptr being set unexpectedly, which should
-not happen in normal operation.
+This patch solves it by adding sanity check on param->string
+in nfs_fs_context_parse_param().
 
-Fixes: 7b1871af75f3 ("mctp: Warn if pointer is set for a wrong dev type")
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://lore.kernel.org/r/20221215054933.2403401-1-matt@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/device.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ fs/nfs/fs_context.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 99a3bda8852f..acb97b257428 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -429,12 +429,6 @@ static void mctp_unregister(struct net_device *dev)
- 	struct mctp_dev *mdev;
+diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
+index 4da701fd1424..0c330bc13ef2 100644
+--- a/fs/nfs/fs_context.c
++++ b/fs/nfs/fs_context.c
+@@ -684,6 +684,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 			return ret;
+ 		break;
+ 	case Opt_vers:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		ret = nfs_parse_version_string(fc, param->string);
+ 		if (ret < 0)
+@@ -696,6 +698,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 		break;
  
- 	mdev = mctp_dev_get_rtnl(dev);
--	if (mdev && !mctp_known(dev)) {
--		// Sanity check, should match what was set in mctp_register
--		netdev_warn(dev, "%s: BUG mctp_ptr set for unknown type %d",
--			    __func__, dev->type);
--		return;
--	}
- 	if (!mdev)
- 		return;
+ 	case Opt_proto:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		protofamily = AF_INET;
+ 		switch (lookup_constant(nfs_xprt_protocol_tokens, param->string, -1)) {
+@@ -732,6 +736,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 		break;
  
-@@ -451,14 +445,8 @@ static int mctp_register(struct net_device *dev)
- 	struct mctp_dev *mdev;
- 
- 	/* Already registered? */
--	mdev = rtnl_dereference(dev->mctp_ptr);
--
--	if (mdev) {
--		if (!mctp_known(dev))
--			netdev_warn(dev, "%s: BUG mctp_ptr set for unknown type %d",
--				    __func__, dev->type);
-+	if (rtnl_dereference(dev->mctp_ptr))
- 		return 0;
--	}
- 
- 	/* only register specific types */
- 	if (!mctp_known(dev))
+ 	case Opt_mountproto:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		mountfamily = AF_INET;
+ 		switch (lookup_constant(nfs_xprt_protocol_tokens, param->string, -1)) {
 -- 
 2.35.1
 
