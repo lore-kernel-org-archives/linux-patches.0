@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5781C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88797C433F0;
-	Wed, 28 Dec 2022 16:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32841C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7C4C433D2;
+	Wed, 28 Dec 2022 16:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244993;
-	bh=0U853qzJ/DPe+ViHdeRKey9xUYRZw2Gn0TeYA3x0vI4=;
+	s=korg; t=1672244996;
+	bh=LYR2MszpcfxALpm6QqqLQhYFaWt7DyQX8GcTxgD7xv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+vQF9WfLUE8+5qH/MGRL9c/vqdREc0s5n1Ie3UoKbuUCEwLqv6cVdjpqDx6mbMiT
-	 VZfkddFI9yzIuvCjqKWVLWilo/ImZPW9EJcqAAw+yQTaQ1IyUzrefHp85IabDI7BFl
-	 r9i1h9hewld3wZDHanJJie4J7CyOlCD5RVRGKY/M=
+	b=1E3mwQfgszQ8f0RJdxrYtpy3Vmt2Bin52YpBQTSOzH4Q2MIFXwZTwl/SGLTXrvExs
+	 Wq3oDGEKzJLW52ANTeWvrlW1mndRG+YZ7Z5OPmrMrVGKMy6g3lfI4EW9W+OslhgJkC
+	 O+YWATQf96O9wLvZ579Up8ZBLxfX9evS8KXEkHzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0812/1073] iommu/mediatek: Use component_match_add
-Date: Wed, 28 Dec 2022 15:40:00 +0100
-Message-Id: <20221228144350.063012800@linuxfoundation.org>
+Subject: [PATCH 6.1 0775/1146] power: supply: cw2015: Fix potential null-ptr-deref in cw_bat_probe()
+Date: Wed, 28 Dec 2022 15:38:34 +0100
+Message-Id: <20221228144351.198770354@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,58 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yong Wu <yong.wu@mediatek.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit b5765a1b44bea9dfcae69c53ffeb4c689d0922a7 ]
+[ Upstream commit 97f2b4ddb0aa700d673691a7d5e44d226d22bab7 ]
 
-In order to simplify the error patch(avoid call of_node_put), Use
-component_match_add instead component_match_add_release since we are only
-interested in the "device" here. Then we could always call of_node_put in
-normal path.
+cw_bat_probe() calls create_singlethread_workqueue() and not checked the
+ret value, which may return NULL. And a null-ptr-deref may happen:
 
-Strictly this is not a fixes patch, but it is a prepare for adding the
-error path, thus I add a Fixes tag too.
+cw_bat_probe()
+    create_singlethread_workqueue() # failed, cw_bat->wq is NULL
+    queue_delayed_work()
+        queue_delayed_work_on()
+            __queue_delayed_work()  # warning here, but continue
+                __queue_work()      # access wq->flags, null-ptr-deref
 
-Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20221018024258.19073-3-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Check the ret value and return -ENOMEM if it is NULL.
+
+Fixes: b4c7715c10c1 ("power: supply: add CellWise cw2015 fuel gauge driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/power/supply/cw2015_battery.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 93005e63fc7f..ce9288695f9b 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1066,19 +1066,17 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 			id = i;
- 
- 		plarbdev = of_find_device_by_node(larbnode);
--		if (!plarbdev) {
--			of_node_put(larbnode);
-+		of_node_put(larbnode);
-+		if (!plarbdev)
- 			return -ENODEV;
--		}
-+
- 		if (!plarbdev->dev.driver) {
--			of_node_put(larbnode);
- 			platform_device_put(plarbdev);
- 			return -EPROBE_DEFER;
- 		}
- 		data->larb_imu[id].dev = &plarbdev->dev;
- 
--		component_match_add_release(dev, match, component_release_of,
--					    component_compare_of, larbnode);
-+		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
- 		platform_device_put(plarbdev);
+diff --git a/drivers/power/supply/cw2015_battery.c b/drivers/power/supply/cw2015_battery.c
+index 6d52641151d9..473522b4326a 100644
+--- a/drivers/power/supply/cw2015_battery.c
++++ b/drivers/power/supply/cw2015_battery.c
+@@ -699,6 +699,9 @@ static int cw_bat_probe(struct i2c_client *client)
  	}
  
+ 	cw_bat->battery_workqueue = create_singlethread_workqueue("rk_battery");
++	if (!cw_bat->battery_workqueue)
++		return -ENOMEM;
++
+ 	devm_delayed_work_autocancel(&client->dev,
+ 							  &cw_bat->battery_delay_work, cw_bat_work);
+ 	queue_delayed_work(cw_bat->battery_workqueue,
 -- 
 2.35.1
 
