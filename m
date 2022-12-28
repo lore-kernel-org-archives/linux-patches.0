@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6F21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9341C433D2;
-	Wed, 28 Dec 2022 16:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCF51C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9450EC433EF;
+	Wed, 28 Dec 2022 16:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246305;
-	bh=+wPILuLBCbghQ1iyYlen45uCRSTuLfYQ5KIGVelLKwk=;
+	s=korg; t=1672246309;
+	bh=d93DpPv2go7FgopcNy33Qrh+lFbxT7wWSPRDvxvRWiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k++NwVCjoeix3NGBjWdujgdlgXsRn5j/wyn3jqypR52uqdg6XyhPox5sxk7ZNlbda
-	 2ZIyWaMZ2JqDQCaFPhzuiuvyDNmv9JrA/KezrY1gkIQfcIXkTNzWkjVmBRQUT2Wnqi
-	 0nlrzt5zkB5Ri+xxOt9N3XLVrglwTZnDQuTU9QOA=
+	b=zhh14oPyl4UlncA9HcxT/KMIw1InhQ7D2tr6aVwAUoLdj0ERM30glRbHqgQu1hrtv
+	 MNimmggROMCfc6DBhO2hS9HfLWyDw4dnE0Al4d5YPdMN55g6CP2PWADTiWF/huytOf
+	 mVKrhClNfxynr3XStkALGDYuts0VAvzN0KhGmStk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Brian Chang <Brian.Chang@amd.com>,
-	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1018/1146] drm/amd/display: Fix display corruption w/ VSR enable
-Date: Wed, 28 Dec 2022 15:42:37 +0100
-Message-Id: <20221228144358.016911494@linuxfoundation.org>
+	Zeng Heng <zengheng4@huawei.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.0 1047/1073] iio: fix memory leak in iio_device_register_eventset()
+Date: Wed, 28 Dec 2022 15:43:55 +0100
+Message-Id: <20221228144356.642816504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,42 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit e643cd384270fd3a4b66f65f15dafc8db0607adc ]
+commit 86fdd15e10e404e70ecb2a3bff24d70356d42b36 upstream.
 
-[Why]
-Brief corruption is observed on hotplug/unplug with certain display
-configurations when VSR is enabled.
+When iio_device_register_sysfs_group() returns failed,
+iio_device_register_eventset() needs to free attrs array.
 
-[How]
-Work around the issue by avoiding 2to1 ODM when stream plane_count is 0.
+Otherwise, kmemleak would scan & report memory leak as below:
 
-Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
-Acked-by: Brian Chang <Brian.Chang@amd.com>
-Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+unreferenced object 0xffff88810a1cc3c0 (size 32):
+  comm "100-i2c-vcnl302", pid 728, jiffies 4295052307 (age 156.027s)
+  backtrace:
+    __kmalloc+0x46/0x1b0
+    iio_device_register_eventset at drivers/iio/industrialio-event.c:541
+    __iio_device_register at drivers/iio/industrialio-core.c:1959
+    __devm_iio_device_register at drivers/iio/industrialio-core.c:2040
+
+Fixes: 32f171724e5c ("iio: core: rework iio device group creation")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221115023712.3726854-1-zengheng4@huawei.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-event.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index d1598e3131f6..33ab6fdc3617 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -1901,7 +1901,7 @@ int dcn32_populate_dml_pipes_from_context(
+--- a/drivers/iio/industrialio-event.c
++++ b/drivers/iio/industrialio-event.c
+@@ -550,7 +550,7 @@ int iio_device_register_eventset(struct
  
- 		pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
- 		if (context->stream_count == 1 &&
--				context->stream_status[0].plane_count <= 1 &&
-+				context->stream_status[0].plane_count == 1 &&
- 				!dc_is_hdmi_signal(res_ctx->pipe_ctx[i].stream->signal) &&
- 				is_h_timing_divisible_by_2(res_ctx->pipe_ctx[i].stream) &&
- 				pipe->stream->timing.pix_clk_100hz * 100 > DCN3_2_VMIN_DISPCLK_HZ &&
--- 
-2.35.1
-
+ 	ret = iio_device_register_sysfs_group(indio_dev, &ev_int->group);
+ 	if (ret)
+-		goto error_free_setup_event_lines;
++		goto error_free_group_attrs;
+ 
+ 	ev_int->ioctl_handler.ioctl = iio_event_ioctl;
+ 	iio_device_ioctl_handler_register(&iio_dev_opaque->indio_dev,
+@@ -558,6 +558,8 @@ int iio_device_register_eventset(struct
+ 
+ 	return 0;
+ 
++error_free_group_attrs:
++	kfree(ev_int->group.attrs);
+ error_free_setup_event_lines:
+ 	iio_free_chan_devattr_list(&ev_int->dev_attr_list);
+ 	kfree(ev_int);
 
 
