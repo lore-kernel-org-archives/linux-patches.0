@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2601C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E4C433EF;
-	Wed, 28 Dec 2022 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58211C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485C7C433EF;
+	Wed, 28 Dec 2022 16:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244073;
-	bh=Jjc9H8ByxV5FEEeucXxpjQhNtP17Ff7Lp2ToEYiH7mE=;
+	s=korg; t=1672244075;
+	bh=qN+pIkosiu0vXs/dXaZ3bcBtyAZZfrQuzXOTWoOfGqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+4SvdbYksSWWxmujhJ6prPi50fwrg8SLJu7iufQ5oY8yBtX5yMJzqcIqYA+gTe6q
-	 t52N8LAFEtXtYzuoc+ionTSZxCp398QGx3kLAUERsspGT+uj4sJ1elpdNwYtpTVnVg
-	 6CL35eqE2/D1Ul3G21r5Gb8nldtSQ/PsTKnFva5E=
+	b=wtw78Tj1GXlhT9sRigaxyhwlfo+YYX0XEnYVwalOb7DxnGVBChdHASA0pwpeGV6sE
+	 tsPyaa1trulxAiNaQpM11RoRLnIR643cjQIDU+K68FwtiKM/cOmvwN2MfMntS9aZCh
+	 FqOd88kRUc7q8O5j8dqIImh9hxwpauw3KSIcPOzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0605/1146] PCI: vmd: Disable MSI remapping after suspend
-Date: Wed, 28 Dec 2022 15:35:44 +0100
-Message-Id: <20221228144346.605948535@linuxfoundation.org>
+Subject: [PATCH 6.0 0642/1073] RDMA/hfi1: Fix error return code in parse_platform_config()
+Date: Wed, 28 Dec 2022 15:37:10 +0100
+Message-Id: <20221228144345.478665007@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit d899aa668498c07ff217b666ae9712990306e682 ]
+[ Upstream commit 725349f8ba1e78a146c6ff8f3ee5e2712e517106 ]
 
-MSI remapping is disabled by VMD driver for Intel's Icelake and
-newer systems in order to improve performance by setting
-VMCONFIG_MSI_REMAP. By design VMCONFIG_MSI_REMAP register is cleared
-by firmware during boot. The same register gets cleared when system
-is put in S3 power state. VMD driver needs to set this register again
-in order to avoid interrupt issues with devices behind VMD if MSI
-remapping was disabled before.
+In the previous iteration of the while loop, the "ret" may have been
+assigned a value of 0, so the error return code -EINVAL may have been
+incorrectly set to 0. To fix set valid return code before calling to
+goto.
 
-Link: https://lore.kernel.org/r/20221109142652.450998-1-nirmal.patel@linux.intel.com
-Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
-Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
+Fixes: 97167e813415 ("staging/rdma/hfi1: Tune for unknown channel if configuration file is absent")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1669953638-11747-1-git-send-email-wangyufen@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/hw/hfi1/firmware.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index e06e9f4fc50f..98e0746e681c 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -980,6 +980,11 @@ static int vmd_resume(struct device *dev)
- 	struct vmd_dev *vmd = pci_get_drvdata(pdev);
- 	int err, i;
+diff --git a/drivers/infiniband/hw/hfi1/firmware.c b/drivers/infiniband/hw/hfi1/firmware.c
+index aa15a5cc7cf3..9705bd7ea064 100644
+--- a/drivers/infiniband/hw/hfi1/firmware.c
++++ b/drivers/infiniband/hw/hfi1/firmware.c
+@@ -1743,6 +1743,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
  
-+       if (vmd->irq_domain)
-+               vmd_set_msi_remapping(vmd, true);
-+       else
-+               vmd_set_msi_remapping(vmd, false);
-+
- 	for (i = 0; i < vmd->msix_count; i++) {
- 		err = devm_request_irq(dev, vmd->irqs[i].virq,
- 				       vmd_irq, IRQF_NO_THREAD,
+ 	if (!dd->platform_config.data) {
+ 		dd_dev_err(dd, "%s: Missing config file\n", __func__);
++		ret = -EINVAL;
+ 		goto bail;
+ 	}
+ 	ptr = (u32 *)dd->platform_config.data;
+@@ -1751,6 +1752,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
+ 	ptr++;
+ 	if (magic_num != PLATFORM_CONFIG_MAGIC_NUM) {
+ 		dd_dev_err(dd, "%s: Bad config file\n", __func__);
++		ret = -EINVAL;
+ 		goto bail;
+ 	}
+ 
+@@ -1774,6 +1776,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
+ 	if (file_length > dd->platform_config.size) {
+ 		dd_dev_info(dd, "%s:File claims to be larger than read size\n",
+ 			    __func__);
++		ret = -EINVAL;
+ 		goto bail;
+ 	} else if (file_length < dd->platform_config.size) {
+ 		dd_dev_info(dd,
+@@ -1794,6 +1797,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
+ 			dd_dev_err(dd, "%s: Failed validation at offset %ld\n",
+ 				   __func__, (ptr - (u32 *)
+ 					      dd->platform_config.data));
++			ret = -EINVAL;
+ 			goto bail;
+ 		}
+ 
+@@ -1837,6 +1841,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
+ 					   __func__, table_type,
+ 					   (ptr - (u32 *)
+ 					    dd->platform_config.data));
++				ret = -EINVAL;
+ 				goto bail; /* We don't trust this file now */
+ 			}
+ 			pcfgcache->config_tables[table_type].table = ptr;
+@@ -1856,6 +1861,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
+ 					   __func__, table_type,
+ 					   (ptr -
+ 					    (u32 *)dd->platform_config.data));
++				ret = -EINVAL;
+ 				goto bail; /* We don't trust this file now */
+ 			}
+ 			pcfgcache->config_tables[table_type].table_metadata =
 -- 
 2.35.1
 
