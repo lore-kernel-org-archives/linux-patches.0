@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32AA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A701C433D2;
-	Wed, 28 Dec 2022 15:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0065AC433EF;
+	Wed, 28 Dec 2022 15:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241405;
-	bh=B68q5T78n7dr+S61wMS3XTRFdpHHBm+HfEgSLaRmF0U=;
+	s=korg; t=1672241408;
+	bh=EpxBNJwcm9a8nfr5KG8vZQngwl1afZwch0/a3FladsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwyeygwWmzgXgDAiffxGyW8KSM/gJi6KUKc0IiS47cQIxlLtWd8KRHFFuellQ8Xx5
-	 XedPzUL9KwKa5bPsnuad4pxx1W+Cy6DG6goIevLOEwuXhfj0Ejh6maJanuCaJR8AXA
-	 U9G8fBydljDc8LoaDEcU+s3w0bhcnm1wfoW4jg+I=
+	b=OJW1bPz30XFzMDgL6n3EiWVwIHOjlxJWmw60OX/IDG/L3oNCjQ0SobcWUgLF7NSDF
+	 0sNmbMslKViudXNIBclz0aP4Y3YfIcFoT+BTrlU0alqEy1S9V6QXmV8bG9iaSgGCEJ
+	 ua1xtdwg0GszQygwT6ekgSE+eqqCprDRmi5xyTq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0280/1073] drm/msm/dsi: Disallow 8 BPC DSC configuration for alternative BPC values
-Date: Wed, 28 Dec 2022 15:31:08 +0100
-Message-Id: <20221228144335.626537455@linuxfoundation.org>
+Subject: [PATCH 5.15 472/731] cxl: fix possible null-ptr-deref in cxl_pci_init_afu|adapter()
+Date: Wed, 28 Dec 2022 15:39:39 +0100
+Message-Id: <20221228144310.233108783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d053fbc449c47517b1f6516dbce2f917f2a9f51d ]
+[ Upstream commit 02cd3032b154fa02fdf90e7467abaeed889330b2 ]
 
-According to the `/* bpc 8 */` comment below only values for a
-bits_per_component of 8 are currently hardcoded in place.  This is
-further confirmed by downstream sources [1] containing different
-constants for other BPC values (and different initial_offset too,
-with an extra dependency on bits_per_pixel).  Prevent future mishaps by
-explicitly disallowing any other bits_per_component value until the
-right parameters are put in place and tested.
+If device_register() fails in cxl_pci_afu|adapter(), the device
+is not added, device_unregister() can not be called in the error
+path, otherwise it will cause a null-ptr-deref because of removing
+not added device.
 
-[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/DISPLAY.LA.2.0.r1-08000-WAIPIO.0/msm/sde_dsc_helper.c#L110-139
+As comment of device_register() says, it should use put_device() to give
+up the reference in the error path. So split device_unregister() into
+device_del() and put_device(), then goes to put dev when register fails.
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508942/
-Link: https://lore.kernel.org/r/20221026182824.876933-9-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f204e0b8cedd ("cxl: Driver code for powernv PCIe based cards for userspace access")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221111145440.2426970-2-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/misc/cxl/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 27fef5169bed..c5805416854f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1848,6 +1848,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
- 		return -EINVAL;
- 	}
+diff --git a/drivers/misc/cxl/pci.c b/drivers/misc/cxl/pci.c
+index 2ba899f5659f..0ac3f4cb88ac 100644
+--- a/drivers/misc/cxl/pci.c
++++ b/drivers/misc/cxl/pci.c
+@@ -1164,10 +1164,10 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
+ 	 * if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_afu(afu)))
+-		goto err_put1;
++		goto err_put_dev;
  
-+	if (dsc->bits_per_component != 8) {
-+		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	dsc->rc_model_size = 8192;
- 	dsc->first_line_bpg_offset = 12;
- 	dsc->rc_edge_factor = 6;
+ 	if ((rc = cxl_sysfs_afu_add(afu)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	adapter->afu[afu->slice] = afu;
+ 
+@@ -1176,10 +1176,12 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
+ 
+ 	return 0;
+ 
+-err_put1:
++err_del_dev:
++	device_del(&afu->dev);
++err_put_dev:
+ 	pci_deconfigure_afu(afu);
+ 	cxl_debugfs_afu_remove(afu);
+-	device_unregister(&afu->dev);
++	put_device(&afu->dev);
+ 	return rc;
+ 
+ err_free_native:
+@@ -1667,23 +1669,25 @@ static struct cxl *cxl_pci_init_adapter(struct pci_dev *dev)
+ 	 * even if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_adapter(adapter)))
+-		goto err_put1;
++		goto err_put_dev;
+ 
+ 	if ((rc = cxl_sysfs_adapter_add(adapter)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	/* Release the context lock as adapter is configured */
+ 	cxl_adapter_context_unlock(adapter);
+ 
+ 	return adapter;
+ 
+-err_put1:
++err_del_dev:
++	device_del(&adapter->dev);
++err_put_dev:
+ 	/* This should mirror cxl_remove_adapter, except without the
+ 	 * sysfs parts
+ 	 */
+ 	cxl_debugfs_adapter_remove(adapter);
+ 	cxl_deconfigure_adapter(adapter);
+-	device_unregister(&adapter->dev);
++	put_device(&adapter->dev);
+ 	return ERR_PTR(rc);
+ 
+ err_release:
 -- 
 2.35.1
 
