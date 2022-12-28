@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74721868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31166C433EF;
-	Wed, 28 Dec 2022 15:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7941868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F72C433EF;
+	Wed, 28 Dec 2022 15:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242078;
-	bh=izaY5eQ0gyghSemOf/D2C1+We3uv9ADQVnBBGBnCXOU=;
+	s=korg; t=1672242081;
+	bh=MEQIhRd+Wm7s5XtCDdlJsziryjT0sD0O9V/QL5xggnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQgbVuJEKD4iaddehWYRs5g8LNvUrfKheBrgda80VQ3aK+k4kYRE0rCubZYuNiI4P
-	 H8Ts/QNrTShlmOsA2XssNIa8ULiAMGSzBTxkentiKOdZA1U5EzEvHFpeNNDIPa9J5U
-	 ox3OfjagNBYOGJF5LTU4rnpmgpuW8myFqAWTpzvo=
+	b=Bp4haWnw6TtaY01ym9pRgkqwsQVQHhkifoQ9Yja5VemInKsLNn+zsKWobl52/Y2q+
+	 pgxMbTIEFPQqX5Puy4PDt/kYt0sIx3lKnhNqDwsKJ5fVG9Ief0PuP6OWF3abq2k1DR
+	 CezHTdE9REbOLlePsjq8Bs6MSmZZhpCEEULwk1Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0297/1146] clk: qcom: gcc-sm8250: Use retention mode for USB GDSCs
-Date: Wed, 28 Dec 2022 15:30:36 +0100
-Message-Id: <20221228144338.205267431@linuxfoundation.org>
+Subject: [PATCH 5.15 529/731] iommu/sun50i: Consider all fault sources for reset
+Date: Wed, 28 Dec 2022 15:40:36 +0100
+Message-Id: <20221228144311.878229462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit ac1c5a03d3772b1db25e8092f771aa33f6ae2f7e ]
+[ Upstream commit cef20703e2b2276aaa402ec5a65ec9a09963b83e ]
 
-USB controllers on SM8250 doesn't work after coming back from suspend.
-This can be fixed by keeping the USB GDSCs in retention mode so that
-hardware can keep them ON and put into rentention mode once the parent
-domain goes to a low power state.
+We have to reset masters for all faults - permissions, L1 fault or L2
+fault. Currently it's done only for permissions. If other type of fault
+happens, master is in locked up state. Fix that by really considering
+all fault sources.
 
-Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221102091320.66007-1-manivannan.sadhasivam@linaro.org
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-3-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8250.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
-index 9755ef4888c1..a0ba37656b07 100644
---- a/drivers/clk/qcom/gcc-sm8250.c
-+++ b/drivers/clk/qcom/gcc-sm8250.c
-@@ -3267,7 +3267,7 @@ static struct gdsc usb30_prim_gdsc = {
- 	.pd = {
- 		.name = "usb30_prim_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 3fd1ee147953..5b87672c689f 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -870,8 +870,8 @@ static phys_addr_t sun50i_iommu_handle_perm_irq(struct sun50i_iommu *iommu)
  
- static struct gdsc usb30_sec_gdsc = {
-@@ -3275,7 +3275,7 @@ static struct gdsc usb30_sec_gdsc = {
- 	.pd = {
- 		.name = "usb30_sec_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
+ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ {
++	u32 status, l1_status, l2_status, resets;
+ 	struct sun50i_iommu *iommu = dev_id;
+-	u32 status;
  
- static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+ 	spin_lock(&iommu->iommu_lock);
+ 
+@@ -881,6 +881,9 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 		return IRQ_NONE;
+ 	}
+ 
++	l1_status = iommu_read(iommu, IOMMU_L1PG_INT_REG);
++	l2_status = iommu_read(iommu, IOMMU_L2PG_INT_REG);
++
+ 	if (status & IOMMU_INT_INVALID_L2PG)
+ 		sun50i_iommu_handle_pt_irq(iommu,
+ 					    IOMMU_INT_ERR_ADDR_L2_REG,
+@@ -894,7 +897,8 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 
+ 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
+ 
+-	iommu_write(iommu, IOMMU_RESET_REG, ~status);
++	resets = (status | l1_status | l2_status) & IOMMU_INT_MASTER_MASK;
++	iommu_write(iommu, IOMMU_RESET_REG, ~resets);
+ 	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
+ 
+ 	spin_unlock(&iommu->iommu_lock);
 -- 
 2.35.1
 
