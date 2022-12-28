@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CD31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E43C433EF;
-	Wed, 28 Dec 2022 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A871863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA528C433D2;
+	Wed, 28 Dec 2022 14:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239385;
-	bh=uZ6ZuLO19ugKrCxi/sMb0dv4W7Z0CJdCwCGGKbw4xW0=;
+	s=korg; t=1672239388;
+	bh=6mjoa0UUO+VjLIgUKRi7R2TLiowgOOeAG487pIy3nus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMVOmgbCpcPaozhmSzxcFhVbWqVgZ9NpcNzIJ0xrfxPurXZtIhdsJWKTqdlqEZlYF
-	 Dy1rQz0EVaYTvmpFK1NxYSX5f30TRQCX/884Nl02nP97I9PCMaaaj/BYuJaP7/Ih+L
-	 0wfDGoxzR58GAVTQAhzwABp6jo+J8NwWsdeD/yKU=
+	b=Wmxw2CQgbNtFMWMruO47BPbU+6TuZ35PAx6k8mG8hi+Lpkvy1vccaYarNteZm1Dbf
+	 8TRXWlyYr1qSbXDEeUAg56vi4PWKCHvZp/blAxxnHz3S4NZsbNV2b/jZBfjGaXIGOp
+	 YcdtPTyI+i/rURCC1hoIubaXyH8rTJZAo6nJLh4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Michael Walle <michael@walle.cc>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0020/1073] arm64: dts: fsd: fix drive strength values as per FSD HW UM
-Date: Wed, 28 Dec 2022 15:26:48 +0100
-Message-Id: <20221228144328.703187521@linuxfoundation.org>
+Subject: [PATCH 5.15 216/731] mtd: spi-nor: hide jedec_id sysfs attribute if not present
+Date: Wed, 28 Dec 2022 15:35:23 +0100
+Message-Id: <20221228144302.817710195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,132 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+From: Michael Walle <michael@walle.cc>
 
-[ Upstream commit 21f6546e8bf68a847601e2710378e2224bf49704 ]
+[ Upstream commit 7d388551b6888f3725e6c957f472526b35161a5b ]
 
-Drive strength values used for HSI2C, SPI and UART are not reflecting
-the default values recommended by FSD HW UM.
+Some non-jedec compliant flashes (like the Everspin flashes) don't have
+an ID at all. Hide the attribute in this case.
 
-Fixes: 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
-Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20221013104024.50179-3-p.rajanbabu@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 36ac02286265 ("mtd: spi-nor: add initial sysfs support")
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Reviewed-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Link: https://lore.kernel.org/r/20220810220654.1297699-2-michael@walle.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi | 26 +++++++++++-----------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ .../ABI/testing/sysfs-bus-spi-devices-spi-nor      |  3 +++
+ drivers/mtd/spi-nor/sysfs.c                        | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-index 4e151d419909..e3852c946352 100644
---- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-+++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-@@ -253,91 +253,91 @@ hs_i2c0_bus: hs-i2c0-bus-pins {
- 		samsung,pins = "gpb0-0", "gpb0-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
+diff --git a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
+index d76cd3946434..e9ef69aef20b 100644
+--- a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
++++ b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
+@@ -5,6 +5,9 @@ Contact:	linux-mtd@lists.infradead.org
+ Description:	(RO) The JEDEC ID of the SPI NOR flash as reported by the
+ 		flash device.
  
- 	hs_i2c1_bus: hs-i2c1-bus-pins {
- 		samsung,pins = "gpb0-2", "gpb0-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
++		The attribute is not present if the flash doesn't support
++		the "Read JEDEC ID" command (9Fh). This is the case for
++		non-JEDEC compliant flashes.
  
- 	hs_i2c2_bus: hs-i2c2-bus-pins {
- 		samsung,pins = "gpb0-4", "gpb0-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c3_bus: hs-i2c3-bus-pins {
- 		samsung,pins = "gpb0-6", "gpb0-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c4_bus: hs-i2c4-bus-pins {
- 		samsung,pins = "gpb1-0", "gpb1-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c5_bus: hs-i2c5-bus-pins {
- 		samsung,pins = "gpb1-2", "gpb1-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c6_bus: hs-i2c6-bus-pins {
- 		samsung,pins = "gpb1-4", "gpb1-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c7_bus: hs-i2c7-bus-pins {
- 		samsung,pins = "gpb1-6", "gpb1-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart0_data: uart0-data-pins {
- 		samsung,pins = "gpb7-0", "gpb7-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart1_data: uart1-data-pins {
- 		samsung,pins = "gpb7-4", "gpb7-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi0_bus: spi0-bus-pins {
- 		samsung,pins = "gpb4-0", "gpb4-2", "gpb4-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi1_bus: spi1-bus-pins {
- 		samsung,pins = "gpb4-4", "gpb4-6", "gpb4-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi2_bus: spi2-bus-pins {
- 		samsung,pins = "gpb5-0", "gpb5-2", "gpb5-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
+ What:		/sys/bus/spi/devices/.../spi-nor/manufacturer
+ Date:		April 2021
+diff --git a/drivers/mtd/spi-nor/sysfs.c b/drivers/mtd/spi-nor/sysfs.c
+index 9aec9d8a98ad..4c3b351aef24 100644
+--- a/drivers/mtd/spi-nor/sysfs.c
++++ b/drivers/mtd/spi-nor/sysfs.c
+@@ -67,6 +67,19 @@ static struct bin_attribute *spi_nor_sysfs_bin_entries[] = {
+ 	NULL
  };
  
++static umode_t spi_nor_sysfs_is_visible(struct kobject *kobj,
++					struct attribute *attr, int n)
++{
++	struct spi_device *spi = to_spi_device(kobj_to_dev(kobj));
++	struct spi_mem *spimem = spi_get_drvdata(spi);
++	struct spi_nor *nor = spi_mem_get_drvdata(spimem);
++
++	if (attr == &dev_attr_jedec_id.attr && !nor->info->id_len)
++		return 0;
++
++	return 0444;
++}
++
+ static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
+ 					    struct bin_attribute *attr, int n)
+ {
+@@ -82,6 +95,7 @@ static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
+ 
+ static const struct attribute_group spi_nor_sysfs_group = {
+ 	.name		= "spi-nor",
++	.is_visible	= spi_nor_sysfs_is_visible,
+ 	.is_bin_visible	= spi_nor_sysfs_is_bin_visible,
+ 	.attrs		= spi_nor_sysfs_entries,
+ 	.bin_attrs	= spi_nor_sysfs_bin_entries,
 -- 
 2.35.1
 
