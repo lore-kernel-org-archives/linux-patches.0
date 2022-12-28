@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26D01C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49925C433D2;
-	Wed, 28 Dec 2022 16:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D9D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9418C433D2;
+	Wed, 28 Dec 2022 16:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244380;
-	bh=5xChHFZqD6jafH1OxTDw6wWh52vgE++QSXQzEfMCeX0=;
+	s=korg; t=1672244383;
+	bh=ZDPtHCi+qzo0de6C5Ur2Nat4s2JnI3zoml3f1C3ca+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0o45W6Q82B+J8ArqfPqCmGA4UcUd+kxkdfz313bH8OSzXwH7jj+G2vsDGCCuy+bQK
-	 CPvCBxXRqwJk9kB/lGx91nnTK6KwgnNWPKRjwNooT0SqxAlJA33LHsxMTHLqTI3N4J
-	 ZPBdcIrcWO888Vt40+FzUDcjorXeWzcrCQwcNYxs=
+	b=pF1vwTjSupRYpFBDK4FZW3GljwGojUNoVlh0ySIRIldOdCfzn8sl9wIVHpW3NRjbC
+	 zyALxphgcDIohZZl8Kawkamz2QmMFJuKLPEN3731zqN74YccLHOIuVNE7SgO/t8Gwe
+	 MlQaH084PdCUvxGgrQ0LhBSK3L+qusTDNfllk030=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonggil Song <yonggil.song@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jiantao Zhang <water.zhangjiantao@huawei.com>,
+	TaoXue <xuetao09@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0660/1146] f2fs: avoid victim selection from previous victim section
-Date: Wed, 28 Dec 2022 15:36:39 +0100
-Message-Id: <20221228144348.082225663@linuxfoundation.org>
+Subject: [PATCH 6.0 0683/1073] USB: gadget: Fix use-after-free during usb config switch
+Date: Wed, 28 Dec 2022 15:37:51 +0100
+Message-Id: <20221228144346.588932101@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonggil Song <yonggil.song@samsung.com>
+From: Jiantao Zhang <water.zhangjiantao@huawei.com>
 
-[ Upstream commit e219aecfd4b766c4e878a3769057e9809f7fcadc ]
+[ Upstream commit afdc12887f2b2ecf20d065a7d81ad29824155083 ]
 
-When f2fs chooses GC victim in large section & LFS mode,
-next_victim_seg[gc_type] is referenced first. After segment is freed,
-next_victim_seg[gc_type] has the next segment number.
-However, next_victim_seg[gc_type] still has the last segment number
-even after the last segment of section is freed. In this case, when f2fs
-chooses a victim for the next GC round, the last segment of previous victim
-section is chosen as a victim.
+In the process of switching USB config from rndis to other config,
+if the hardware does not support the ->pullup callback, or the
+hardware encounters a low probability fault, both of them may cause
+the ->pullup callback to fail, which will then cause a system panic
+(use after free).
 
-Initialize next_victim_seg[gc_type] to NULL_SEGNO for the last segment in
-large section.
+The gadget drivers sometimes need to be unloaded regardless of the
+hardware's behavior.
 
-Fixes: e3080b0120a1 ("f2fs: support subsectional garbage collection")
-Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Analysis as follows:
+=======================================================================
+(1) write /config/usb_gadget/g1/UDC "none"
+
+gether_disconnect+0x2c/0x1f8
+rndis_disable+0x4c/0x74
+composite_disconnect+0x74/0xb0
+configfs_composite_disconnect+0x60/0x7c
+usb_gadget_disconnect+0x70/0x124
+usb_gadget_unregister_driver+0xc8/0x1d8
+gadget_dev_desc_UDC_store+0xec/0x1e4
+
+(2) rm /config/usb_gadget/g1/configs/b.1/f1
+
+rndis_deregister+0x28/0x54
+rndis_free+0x44/0x7c
+usb_put_function+0x14/0x1c
+config_usb_cfg_unlink+0xc4/0xe0
+configfs_unlink+0x124/0x1c8
+vfs_unlink+0x114/0x1dc
+
+(3) rmdir /config/usb_gadget/g1/functions/rndis.gs4
+
+panic+0x1fc/0x3d0
+do_page_fault+0xa8/0x46c
+do_mem_abort+0x3c/0xac
+el1_sync_handler+0x40/0x78
+0xffffff801138f880
+rndis_close+0x28/0x34
+eth_stop+0x74/0x110
+dev_close_many+0x48/0x194
+rollback_registered_many+0x118/0x814
+unregister_netdev+0x20/0x30
+gether_cleanup+0x1c/0x38
+rndis_attr_release+0xc/0x14
+kref_put+0x74/0xb8
+configfs_rmdir+0x314/0x374
+
+If gadget->ops->pullup() return an error, function rndis_close() will be
+called, then it will causes a use-after-free problem.
+=======================================================================
+
+Fixes: 0a55187a1ec8 ("USB: gadget core: Issue ->disconnect() callback from usb_gadget_disconnect()")
+Signed-off-by: Jiantao Zhang <water.zhangjiantao@huawei.com>
+Signed-off-by: TaoXue <xuetao09@huawei.com>
+Link: https://lore.kernel.org/r/20221121130805.10735-1-water.zhangjiantao@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index f46e4dcaa252..22c1f876e8c5 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1743,8 +1743,9 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 				get_valid_blocks(sbi, segno, false) == 0)
- 			seg_freed++;
- 
--		if (__is_large_section(sbi) && segno + 1 < end_segno)
--			sbi->next_victim_seg[gc_type] = segno + 1;
-+		if (__is_large_section(sbi))
-+			sbi->next_victim_seg[gc_type] =
-+				(segno + 1 < end_segno) ? segno + 1 : NULL_SEGNO;
- skip:
- 		f2fs_put_page(sum_page, 0);
+diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
+index c63c0c2cf649..bf9878e1a72a 100644
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -734,13 +734,13 @@ int usb_gadget_disconnect(struct usb_gadget *gadget)
  	}
+ 
+ 	ret = gadget->ops->pullup(gadget, 0);
+-	if (!ret) {
++	if (!ret)
+ 		gadget->connected = 0;
+-		mutex_lock(&udc_lock);
+-		if (gadget->udc->driver)
+-			gadget->udc->driver->disconnect(gadget);
+-		mutex_unlock(&udc_lock);
+-	}
++
++	mutex_lock(&udc_lock);
++	if (gadget->udc->driver)
++		gadget->udc->driver->disconnect(gadget);
++	mutex_unlock(&udc_lock);
+ 
+ out:
+ 	trace_usb_gadget_disconnect(gadget, ret);
 -- 
 2.35.1
 
