@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F3E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9757C433F0;
-	Wed, 28 Dec 2022 15:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6C5C433D2;
+	Wed, 28 Dec 2022 15:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239709;
-	bh=rebGsKThcM65bbJQYw+GC+qgRkRMhRy6T691hYgJaHU=;
+	s=korg; t=1672239711;
+	bh=tJ+fUq+Lv66D/5VBYqyCRszREjgHEW1O1QrF4kCzU6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2e3kEsM/m+RAFMhBqx8VYvNtB3mMGmSn0RczYzk+T66IGv0zDmnfQgSiOrWdQ7qSc
-	 idC0kF+TUOncky9C3kWaypngNpPYF3MXmqK+Wpo1T0IseTlM1l0S9QoFyNY1qamxbR
-	 3seC3x9NXWp+7LE9IPGbblC9TbTGMMa9EZNZWaOU=
+	b=uQHk62I76gxMNcDO2sPLEmkRElJ41T0QajfcbHgyvcSArRGfAidCtaulM4U/5Safc
+	 sYy6NQrIaY+C6Ew8SMdHApdUpn2bj6ayOZujh7vFj0yYkOuJKYzXQjXdyLlkPciVis
+	 TE2PUR+aPA56FJhU8R6OVlwEh7Yq7DcvArZ+GkiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Molly Sophia <mollysophia379@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0030/1146] arm64: dts: qcom: sm8450: fix UFS PHY registers
-Date: Wed, 28 Dec 2022 15:26:09 +0100
-Message-Id: <20221228144330.988168309@linuxfoundation.org>
+Subject: [PATCH 6.1 0006/1146] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec pin conf name
+Date: Wed, 28 Dec 2022 15:25:45 +0100
+Message-Id: <20221228144330.357072091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,46 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7af949211a0554bbc06163b081fc2cb516674880 ]
+[ Upstream commit 58c4a0b6f4bdf8c3c2b4aad7f980e4019cc0fc83 ]
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
+Fix typo in the codec's pin name to be configured.  Mismatched name
+caused the pin configuration to be ignored.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
-
-Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Molly Sophia <mollysophia379@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221024091507.20342-5-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20220930192039.240486-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index d32f08df743d..dfc799244180 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3161,11 +3161,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+index afc17e4d403f..f98259489679 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+@@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
+ 	};
  
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x188>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x188>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
+ 	wcd_intr_default: wcd-intr-default {
+-		pins = "goui54";
++		pins = "gpio54";
+ 		function = "gpio";
+ 		input-enable;
+ 		bias-pull-down;
 -- 
 2.35.1
 
