@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2451863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EA9C433D2;
-	Wed, 28 Dec 2022 15:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E011863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EC9C433F0;
+	Wed, 28 Dec 2022 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240047;
-	bh=W9wUOoN8RjUY0goWAA4qXdYTiG1MYt93A2fnmLO/5aI=;
+	s=korg; t=1672240049;
+	bh=4AjZPYIngutGlWr0f4CqedX5psR2DyI2/NdMi8XVdgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2k7DCgHwsIIRGUpSW2k3RcizaEHILXxc7A9P5VEm8GPsK3j/qSfF+3NOI5Oj1nZt/
-	 8BEDOjlkdcH6MIcMtL00RpaREuHAVseSsi8TII+lypGIxYbQFJzp9zVbbTvq8tqB36
-	 sF/QncMCg1cyWsDPCl7XtYMQHbPAy67cZOUXACys=
+	b=KnEK4SaxEuewzJMrUt+FqX1wg8xVQSeSHC56SiK2bv+rU0oy5npOmmdMnc9vTebG/
+	 FXKvzqhPok5X8wmGpI0m1FvtwKmNHZUkj1Y0T0Za2ZC9f4ssHVhxQZGCXXbeL6mdju
+	 ZnAANhqxvA8wjROb1RCx25Ud4bA1CNtbuX4Rn2NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 303/731] mmc: via-sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:50 +0100
-Message-Id: <20221228144305.359541028@linuxfoundation.org>
+Subject: [PATCH 6.0 0112/1073] selftests/ftrace: event_triggers: wait longer for test_event_enable
+Date: Wed, 28 Dec 2022 15:28:20 +0100
+Message-Id: <20221228144331.083695812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit e4e46fb61e3bb4628170810d3f2b996b709b90d9 ]
+[ Upstream commit a1d6cd88c8973cfb08ee85722488b1d6d5d16327 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+In some platform, the schedule event may came slowly, delay 100ms can't
+cover it.
 
-Fix this by checking the return value and goto error path which
-will call mmc_free_host().
+I was notice that on my board which running in low cpu_freq,and this
+selftests allways gose fail.
 
-Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221108130949.1067699-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+So maybe we can check more times here to wait longer.
+
+Fixes: 43bb45da82f9 ("selftests: ftrace: Add a selftest to test event enable/disable func trigger")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/via-sdmmc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../ftrace/test.d/ftrace/func_event_triggers.tc   | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
-index 88662a90ed96..a2b0d9461665 100644
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1151,7 +1151,9 @@ static int via_sd_probe(struct pci_dev *pcidev,
- 	    pcidev->subsystem_device == 0x3891)
- 		sdhost->quirks = VIA_CRDR_QUIRK_300MS_PWRDELAY;
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
+index 3145b0f1835c..27a68bbe778b 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
+@@ -38,11 +38,18 @@ cnt_trace() {
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto unmap;
+ test_event_enabled() {
+     val=$1
++    check_times=10		# wait for 10 * SLEEP_TIME at most
  
- 	return 0;
+-    e=`cat $EVENT_ENABLE`
+-    if [ "$e" != $val ]; then
+-	fail "Expected $val but found $e"
+-    fi
++    while [ $check_times -ne 0 ]; do
++	e=`cat $EVENT_ENABLE`
++	if [ "$e" == $val ]; then
++	    return 0
++	fi
++	sleep $SLEEP_TIME
++	check_times=$((check_times - 1))
++    done
++
++    fail "Expected $val but found $e"
+ }
  
+ run_enable_disable() {
 -- 
 2.35.1
 
