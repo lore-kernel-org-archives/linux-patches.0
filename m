@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A971C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F72DC433EF;
-	Wed, 28 Dec 2022 16:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2CA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF118C433D2;
+	Wed, 28 Dec 2022 16:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245175;
-	bh=AfvHtbMwYDOMVDXunr4Q9QQh8V5hKEEPkEHGOfW1KAA=;
+	s=korg; t=1672245178;
+	bh=4rtHy+9NF3MXkSg5qbyHLYp3vSra1gmtc/HlKypOjkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFpglaPalpngK9+++WdpH5v/nPyw5sdqqRK2ZXeTmbSqXQK+FhWPZDuY4HEE6HvY1
-	 msRUiWCieYzSCH0kpo70NNv5bcNVels3n1LQ/mw5XZC6xn+6PX9/cp5fOZc3/U8vS2
-	 ccM3ERs83loBXnFFqSYIhFOV0v16WIjgJzGSNjeA=
+	b=j1GeJXbMxFFnFrceY6lqC15Qxdx4QM/2YlcQrQk5X99xJOVL0wP0FFFAZeTj9m08q
+	 dc3OMcUVg8xqJK8TYyO+YWqyoi9oznjr4K9FvRvXBwxS+HPtnF1wNK/PwLXdWQITH7
+	 7b3XXvjeMh6w7MdwISh8X2Gh0DUqEHSee/vDvxh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
-	Song Liu <song@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0845/1073] selftests/bpf: Select CONFIG_FUNCTION_ERROR_INJECTION
-Date: Wed, 28 Dec 2022 15:40:33 +0100
-Message-Id: <20221228144350.973778252@linuxfoundation.org>
+Subject: [PATCH 6.1 0810/1146] iommu/sun50i: Consider all fault sources for reset
+Date: Wed, 28 Dec 2022 15:39:09 +0100
+Message-Id: <20221228144352.155030105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Liu <song@kernel.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit a8dfde09c90109e3a98af54847e91bde7dc2d5c2 ]
+[ Upstream commit cef20703e2b2276aaa402ec5a65ec9a09963b83e ]
 
-BPF selftests require CONFIG_FUNCTION_ERROR_INJECTION to work. However,
-CONFIG_FUNCTION_ERROR_INJECTION is no longer 'y' by default after recent
-changes. As a result, we are seeing errors like the following from BPF CI:
+We have to reset masters for all faults - permissions, L1 fault or L2
+fault. Currently it's done only for permissions. If other type of fault
+happens, master is in locked up state. Fix that by really considering
+all fault sources.
 
-   bpf_testmod_test_read() is not modifiable
-   __x64_sys_setdomainname is not sleepable
-   __x64_sys_getpgid is not sleepable
-
-Fix this by explicitly selecting CONFIG_FUNCTION_ERROR_INJECTION in the
-selftest config.
-
-Fixes: a4412fdd49dc ("error-injection: Add prompt for function error injection")
-Reported-by: Daniel Müller <deso@posteo.net>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Müller <deso@posteo.net>
-Link: https://lore.kernel.org/bpf/20221213220500.3427947-1-song@kernel.org
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-3-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/config | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/sun50i-iommu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
-index fabf0c014349..c5c5fc2a3ce7 100644
---- a/tools/testing/selftests/bpf/config
-+++ b/tools/testing/selftests/bpf/config
-@@ -13,6 +13,7 @@ CONFIG_CRYPTO_USER_API_HASH=m
- CONFIG_DYNAMIC_FTRACE=y
- CONFIG_FPROBE=y
- CONFIG_FTRACE_SYSCALLS=y
-+CONFIG_FUNCTION_ERROR_INJECTION=y
- CONFIG_FUNCTION_TRACER=y
- CONFIG_GENEVE=y
- CONFIG_IKCONFIG=y
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 270204a6ec4a..bbc269500800 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -869,8 +869,8 @@ static phys_addr_t sun50i_iommu_handle_perm_irq(struct sun50i_iommu *iommu)
+ 
+ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ {
++	u32 status, l1_status, l2_status, resets;
+ 	struct sun50i_iommu *iommu = dev_id;
+-	u32 status;
+ 
+ 	spin_lock(&iommu->iommu_lock);
+ 
+@@ -880,6 +880,9 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 		return IRQ_NONE;
+ 	}
+ 
++	l1_status = iommu_read(iommu, IOMMU_L1PG_INT_REG);
++	l2_status = iommu_read(iommu, IOMMU_L2PG_INT_REG);
++
+ 	if (status & IOMMU_INT_INVALID_L2PG)
+ 		sun50i_iommu_handle_pt_irq(iommu,
+ 					    IOMMU_INT_ERR_ADDR_L2_REG,
+@@ -893,7 +896,8 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 
+ 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
+ 
+-	iommu_write(iommu, IOMMU_RESET_REG, ~status);
++	resets = (status | l1_status | l2_status) & IOMMU_INT_MASTER_MASK;
++	iommu_write(iommu, IOMMU_RESET_REG, ~resets);
+ 	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
+ 
+ 	spin_unlock(&iommu->iommu_lock);
 -- 
 2.35.1
 
