@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5F81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E756C43396;
-	Wed, 28 Dec 2022 16:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4FB1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E0DC433EF;
+	Wed, 28 Dec 2022 16:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245877;
-	bh=QXFJjwL5QHZLB/hlgSMPbbYclmXMVAq2cPuMoGw/+WY=;
+	s=korg; t=1672245879;
+	bh=13a7YM9MqNunMOp1Rzij0Ac6TUJ8cIhNvHKEvxD+xXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HheHysnxy6tQYGLhkcYPUoxWlvBmrhrcQw2pctUIOkazDv5lUKvGNJYKZBN48MN94
-	 FNWqxSkJYIciVrvmeEQaYYWf4PZ+LlPqP8tOObsYpZ9N9mc8FoJ0mQ8gR81Y/KLX+p
-	 diYqtHE7sDY55l84n7gYT/lmTsjf3mzHUo6uWUbQ=
+	b=cp+VXg66ADQ20TZLqKLpTia3DWh+VXKkhqI4e9L5vGklms6katJNEVbVkIBjmEVFi
+	 sqXeGRvU2PbzvwqX4/rzM9eBOEG+bfOh5Gy+Qv0/Ab58Q8Ptm8bWxoQ6sSWr3xXnMg
+	 Wq8YVhD+UHQUN5LjcZVRAZga464HuftWZpWNC/WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Stephen Hemminger <sthemmin@microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Fabio A M Martins <fabiomirmar@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0940/1146] video: hyperv_fb: Avoid taking busy spinlock on panic path
-Date: Wed, 28 Dec 2022 15:41:19 +0100
-Message-Id: <20221228144355.843137160@linuxfoundation.org>
+	Jun Nie <jun.nie@linaro.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 0927/1146] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
+Date: Wed, 28 Dec 2022 15:41:06 +0100
+Message-Id: <20221228144355.456015348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -43,104 +39,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 1d044ca035dc22df0d3b39e56f2881071d9118bd ]
+[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
 
-The Hyper-V framebuffer code registers a panic notifier in order
-to try updating its fbdev if the kernel crashed. The notifier
-callback is straightforward, but it calls the vmbus_sendpacket()
-routine eventually, and such function takes a spinlock for the
-ring buffer operations.
+When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
+for ematch implementation:
 
-Panic path runs in atomic context, with local interrupts and
-preemption disabled, and all secondary CPUs shutdown. That said,
-taking a spinlock might cause a lockup if a secondary CPU was
-disabled with such lock taken. Fix it here by checking if the
-ring buffer spinlock is busy on Hyper-V framebuffer panic notifier;
-if so, bail-out avoiding the potential lockup scenario.
+https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
 
-Cc: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
-Cc: Dexuan Cui <decui@microsoft.com>
-Cc: Haiyang Zhang <haiyangz@microsoft.com>
-Cc: "K. Y. Srinivasan" <kys@microsoft.com>
-Cc: Michael Kelley <mikelley@microsoft.com>
-Cc: Stephen Hemminger <sthemmin@microsoft.com>
-Cc: Tianyu Lan <Tianyu.Lan@microsoft.com>
-Cc: Wei Liu <wei.liu@kernel.org>
-Tested-by: Fabio A M Martins <fabiomirmar@gmail.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20220819221731.480795-10-gpiccoli@igalia.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
+set will simply result in allocating & copy. It's an optimization,
+nothing more."
+
+So if an ematch module provides ops->datalen that means it wants a
+complex data structure (saved in its em->data) instead of a simple u32
+value. We should simply reject such a combination, otherwise this u32
+could be misinterpreted as a pointer.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/ring_buffer.c        | 13 +++++++++++++
- drivers/video/fbdev/hyperv_fb.c |  8 +++++++-
- include/linux/hyperv.h          |  2 ++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ net/sched/ematch.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hv/ring_buffer.c b/drivers/hv/ring_buffer.c
-index 59a4aa86d1f3..c6692fd5ab15 100644
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -280,6 +280,19 @@ void hv_ringbuffer_cleanup(struct hv_ring_buffer_info *ring_info)
- 	ring_info->pkt_buffer_size = 0;
- }
- 
-+/*
-+ * Check if the ring buffer spinlock is available to take or not; used on
-+ * atomic contexts, like panic path (see the Hyper-V framebuffer driver).
-+ */
-+
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel)
-+{
-+	struct hv_ring_buffer_info *rinfo = &channel->outbound;
-+
-+	return spin_is_locked(&rinfo->ring_lock);
-+}
-+EXPORT_SYMBOL_GPL(hv_ringbuffer_spinlock_busy);
-+
- /* Write to the ring buffer. */
- int hv_ringbuffer_write(struct vmbus_channel *channel,
- 			const struct kvec *kv_list, u32 kv_count,
-diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index 072ce07ba9e0..4ff25dfc865d 100644
---- a/drivers/video/fbdev/hyperv_fb.c
-+++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -780,12 +780,18 @@ static void hvfb_ondemand_refresh_throttle(struct hvfb_par *par,
- static int hvfb_on_panic(struct notifier_block *nb,
- 			 unsigned long e, void *p)
- {
-+	struct hv_device *hdev;
- 	struct hvfb_par *par;
- 	struct fb_info *info;
- 
- 	par = container_of(nb, struct hvfb_par, hvfb_panic_nb);
--	par->synchronous_fb = true;
- 	info = par->info;
-+	hdev = device_to_hv_device(info->device);
-+
-+	if (hv_ringbuffer_spinlock_busy(hdev->channel))
-+		return NOTIFY_DONE;
-+
-+	par->synchronous_fb = true;
- 	if (par->need_docopy)
- 		hvfb_docopy(par, 0, dio_fb_size);
- 	synthvid_update(info, 0, 0, INT_MAX, INT_MAX);
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 3b42264333ef..646f1da9f27e 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1341,6 +1341,8 @@ struct hv_ring_buffer_debug_info {
- int hv_ringbuffer_get_debuginfo(struct hv_ring_buffer_info *ring_info,
- 				struct hv_ring_buffer_debug_info *debug_info);
- 
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel);
-+
- /* Vmbus interface */
- #define vmbus_driver_register(driver)	\
- 	__vmbus_driver_register(driver, THIS_MODULE, KBUILD_MODNAME)
+diff --git a/net/sched/ematch.c b/net/sched/ematch.c
+index 4ce681361851..5c1235e6076a 100644
+--- a/net/sched/ematch.c
++++ b/net/sched/ematch.c
+@@ -255,6 +255,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
+ 			 * the value carried.
+ 			 */
+ 			if (em_hdr->flags & TCF_EM_SIMPLE) {
++				if (em->ops->datalen > 0)
++					goto errout;
+ 				if (data_len < sizeof(u32))
+ 					goto errout;
+ 				em->data = *(u32 *) data;
 -- 
 2.35.1
 
