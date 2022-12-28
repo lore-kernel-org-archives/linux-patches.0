@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58031C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8ACC433EF;
-	Wed, 28 Dec 2022 16:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC001C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB11C433EF;
+	Wed, 28 Dec 2022 16:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245374;
-	bh=G055uY/meV+DqhxG130QFU03OlY69H+Ho95cldxHKkg=;
+	s=korg; t=1672245377;
+	bh=yOqexlF7Pg6JfdPBE3az4NjdJGwGGeRXN3SazuVHnZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtGZdGCCeZL4YQYRvUpMH95/zQGjy04fGWpU7Xrt/1yFPIiZM6JJa6ukhzpdL3OSY
-	 GO1Q1B5C1hlz4xYEHwmTont+IeB8A9DETCwd/7WL+wjgJbS7+B8M4smD5nOHyeGMBf
-	 RWZqDMeR7rXXW2bzzyMFjLZ/x71nW7FHEXM/xTzE=
+	b=0HMKv/wfTTxwkMJe/3MQfjd/fI4p0kHStRv5tlBvVdbXehsLS4dArPncMCSJsGCkt
+	 XKEI8wL/4/Rg06HALmTipOH8tQ25BDhe4MA3e1aULMFIcVrMCi246zKe7P8eP5+q/9
+	 Ey0H/xrfoccqVhUzlEJfjmMDn5G9hPj/nHiBgQd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Harsh Tyagi <harshtya@google.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0848/1146] cxl: Fix refcount leak in cxl_calc_capp_routing
-Date: Wed, 28 Dec 2022 15:39:47 +0100
-Message-Id: <20221228144353.187376611@linuxfoundation.org>
+Subject: [PATCH 6.0 0882/1073] mctp: serial: Fix starting value for frame check sequence
+Date: Wed, 28 Dec 2022 15:41:10 +0100
+Message-Id: <20221228144351.981791021@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 1d09697ff22908ae487fc8c4fbde1811732be523 ]
+[ Upstream commit 2856a62762c8409e360d4fd452194c8e57ba1058 ]
 
-of_get_next_parent() returns a node pointer with refcount incremented,
-we should use of_node_put() on it when not need anymore.
-This function only calls of_node_put() in normal path,
-missing it in the error path.
-Add missing of_node_put() to avoid refcount leak.
+RFC1662 defines the start state for the crc16 FCS to be 0xffff, but
+we're currently starting at zero.
 
-Fixes: f24be42aab37 ("cxl: Add psl9 specific code")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20220605060038.62217-1-linmq006@gmail.com
+This change uses the correct start state. We're only early in the
+adoption for the serial binding, so there aren't yet any other users to
+interface to.
+
+Fixes: a0c2ccd9b5ad ("mctp: Add MCTP-over-serial transport binding")
+Reported-by: Harsh Tyagi <harshtya@google.com>
+Tested-by: Harsh Tyagi <harshtya@google.com>
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cxl/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/mctp/mctp-serial.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/cxl/pci.c b/drivers/misc/cxl/pci.c
-index 6d495d641c95..0ff944860dda 100644
---- a/drivers/misc/cxl/pci.c
-+++ b/drivers/misc/cxl/pci.c
-@@ -387,6 +387,7 @@ int cxl_calc_capp_routing(struct pci_dev *dev, u64 *chipid,
- 	rc = get_phb_index(np, phb_index);
- 	if (rc) {
- 		pr_err("cxl: invalid phb index\n");
-+		of_node_put(np);
- 		return rc;
- 	}
+diff --git a/drivers/net/mctp/mctp-serial.c b/drivers/net/mctp/mctp-serial.c
+index 7cd103fd34ef..9f9eaf896047 100644
+--- a/drivers/net/mctp/mctp-serial.c
++++ b/drivers/net/mctp/mctp-serial.c
+@@ -35,6 +35,8 @@
+ #define BYTE_FRAME		0x7e
+ #define BYTE_ESC		0x7d
  
++#define FCS_INIT		0xffff
++
+ static DEFINE_IDA(mctp_serial_ida);
+ 
+ enum mctp_serial_state {
+@@ -123,7 +125,7 @@ static void mctp_serial_tx_work(struct work_struct *work)
+ 		buf[2] = dev->txlen;
+ 
+ 		if (!dev->txpos)
+-			dev->txfcs = crc_ccitt(0, buf + 1, 2);
++			dev->txfcs = crc_ccitt(FCS_INIT, buf + 1, 2);
+ 
+ 		txlen = write_chunk(dev, buf + dev->txpos, 3 - dev->txpos);
+ 		if (txlen <= 0) {
+@@ -303,7 +305,7 @@ static void mctp_serial_push_header(struct mctp_serial *dev, unsigned char c)
+ 	case 1:
+ 		if (c == MCTP_SERIAL_VERSION) {
+ 			dev->rxpos++;
+-			dev->rxfcs = crc_ccitt_byte(0, c);
++			dev->rxfcs = crc_ccitt_byte(FCS_INIT, c);
+ 		} else {
+ 			dev->rxstate = STATE_ERR;
+ 		}
 -- 
 2.35.1
 
