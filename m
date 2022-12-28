@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A691C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4029C433D2;
-	Wed, 28 Dec 2022 16:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D16F1856
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67BBC433D2;
+	Wed, 28 Dec 2022 16:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245687;
-	bh=DNy84Pr1TmAmxVnIUwRbp4yDVEism59aH63QuDKbLtw=;
+	s=korg; t=1672245690;
+	bh=nUSiROIuywcjFmshTbQQuHbfp+Kk9J/uXgecjOrgqXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vh7X6FkgNfVvsw9qjUK9wRxs3Qu4+5tJyL23xd6D0LFl2Dx/62srb5NK77/us/4k/
-	 5Wx2YYRNY7wgXIncuxWQ6fji2WVYxjCADt7JB9nzCUE+CNi3uyEp4iVe8OTFtfnpf6
-	 4wRbZtufVJ+4LupgLN9fBjAtWYTQT+7jnPSC0tJs=
+	b=UfqkhmZXfl1J4ubGeyZqpal3NdE7UOmgWta0MYnzI0mDrVFeHvQBf2jPwLd7KLm9t
+	 naeHAoVwzWOWLAj87Qc1jYs7i9ltyz13F3uccl/Is4M7l0A4N+2K9GkSAnN1WoIzjg
+	 SUxXHT+AufxRIm/ceolSSUzkevDcFXebRIERWCaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0892/1146] mISDN: hfcpci: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:40:31 +0100
-Message-Id: <20221228144354.415267533@linuxfoundation.org>
+Subject: [PATCH 6.0 0938/1073] drm/rockchip: Use drm_mode_copy()
+Date: Wed, 28 Dec 2022 15:42:06 +0100
+Message-Id: <20221228144353.508088756@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,68 +39,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit f0f596bd75a9d573ca9b587abb39cee0b916bb82 ]
+[ Upstream commit 2bfaa28000d2830d3209161a4541cce0660e1b84 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-skb_queue_purge() is called under spin_lock_irqsave() in hfcpci_l2l1D(),
-kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
-to move the dch->squeue to a free queue, also enqueue the tx_skb and
-rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
 
-Fixes: 1700fe1a10dc ("Add mISDN HFC PCI driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-rockchip@lists.infradead.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-7-ville.syrjala@linux.intel.com
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcpci.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c | 2 +-
+ drivers/gpu/drm/rockchip/inno_hdmi.c   | 2 +-
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
-index e964a8dd8512..c0331b268010 100644
---- a/drivers/isdn/hardware/mISDN/hfcpci.c
-+++ b/drivers/isdn/hardware/mISDN/hfcpci.c
-@@ -1617,16 +1617,19 @@ hfcpci_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
- 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
- 		spin_lock_irqsave(&hc->lock, flags);
- 		if (hc->hw.protocol == ISDN_P_NT_S0) {
-+			struct sk_buff_head free_queue;
-+
-+			__skb_queue_head_init(&free_queue);
- 			/* prepare deactivation */
- 			Write_hfc(hc, HFCPCI_STATES, 0x40);
--			skb_queue_purge(&dch->squeue);
-+			skb_queue_splice_init(&dch->squeue, &free_queue);
- 			if (dch->tx_skb) {
--				dev_kfree_skb(dch->tx_skb);
-+				__skb_queue_tail(&free_queue, dch->tx_skb);
- 				dch->tx_skb = NULL;
- 			}
- 			dch->tx_idx = 0;
- 			if (dch->rx_skb) {
--				dev_kfree_skb(dch->rx_skb);
-+				__skb_queue_tail(&free_queue, dch->rx_skb);
- 				dch->rx_skb = NULL;
- 			}
- 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
-@@ -1639,10 +1642,12 @@ hfcpci_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
- 			hc->hw.mst_m &= ~HFCPCI_MASTER;
- 			Write_hfc(hc, HFCPCI_MST_MODE, hc->hw.mst_m);
- 			ret = 0;
-+			spin_unlock_irqrestore(&hc->lock, flags);
-+			__skb_queue_purge(&free_queue);
- 		} else {
- 			ret = l1_event(dch->l1, hh->prim);
-+			spin_unlock_irqrestore(&hc->lock, flags);
- 		}
--		spin_unlock_irqrestore(&hc->lock, flags);
- 		break;
- 	}
- 	if (!ret)
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+index 518ee13b1d6f..8526dda91931 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -571,7 +571,7 @@ static void cdn_dp_encoder_mode_set(struct drm_encoder *encoder,
+ 	video->v_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NVSYNC);
+ 	video->h_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NHSYNC);
+ 
+-	memcpy(&dp->mode, adjusted, sizeof(*mode));
++	drm_mode_copy(&dp->mode, adjusted);
+ }
+ 
+ static bool cdn_dp_check_link_status(struct cdn_dp_device *dp)
+diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockchip/inno_hdmi.c
+index 87b2243ea23e..f51774866f41 100644
+--- a/drivers/gpu/drm/rockchip/inno_hdmi.c
++++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
+@@ -499,7 +499,7 @@ static void inno_hdmi_encoder_mode_set(struct drm_encoder *encoder,
+ 	inno_hdmi_setup(hdmi, adj_mode);
+ 
+ 	/* Store the display mode for plugin/DPMS poweron events */
+-	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
++	drm_mode_copy(&hdmi->previous_mode, adj_mode);
+ }
+ 
+ static void inno_hdmi_encoder_enable(struct drm_encoder *encoder)
+diff --git a/drivers/gpu/drm/rockchip/rk3066_hdmi.c b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+index cf2cf51091a3..90145ad96984 100644
+--- a/drivers/gpu/drm/rockchip/rk3066_hdmi.c
++++ b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+@@ -395,7 +395,7 @@ rk3066_hdmi_encoder_mode_set(struct drm_encoder *encoder,
+ 	struct rk3066_hdmi *hdmi = encoder_to_rk3066_hdmi(encoder);
+ 
+ 	/* Store the display mode for plugin/DPMS poweron events. */
+-	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
++	drm_mode_copy(&hdmi->previous_mode, adj_mode);
+ }
+ 
+ static void rk3066_hdmi_encoder_enable(struct drm_encoder *encoder)
 -- 
 2.35.1
 
