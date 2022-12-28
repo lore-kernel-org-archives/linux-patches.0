@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140421C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8706EC433D2;
-	Wed, 28 Dec 2022 16:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B442D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B28C433EF;
+	Wed, 28 Dec 2022 16:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246227;
-	bh=1C/btrXoj9FohJvdTnZDUNcU45dnEn6H8iX9b6YHpx0=;
+	s=korg; t=1672246230;
+	bh=7ydo85t20dlqXKwd6CXYoLe4u7sYILi4h67tWJxGiRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qENeESOXBSi462vXEmDtMGrRFC2mgQ/Vf6jitXPa8hu/4VK+T/OVTb4r5/tE63zgL
-	 MB74EffdNWCaMnsrrUuhc+hw+rH1otzOWuVHzgSs6wLYcjkBrICy9lWwCUQCYqlYAm
-	 4al1m7sU3bqHq3KpImNqs5N0jPdfJaaqdMn9T3XY=
+	b=uFt2/RCsrtRd+FHijXd0hC176w9lzIqKl60/NLmK60NpHcD5t9G2HTHOT1hu8uO8E
+	 SzvlGfUAZXRN3tOQt9ScWJwt5nNQcE4s8aOYf5Ea45Q+C5nsgHlsEaOo9KUDYehQ1Z
+	 vaMfKKQq73rF0JQfWhJ0DFJLFjBoHbCE5BFzo/7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhong <floridsleeves@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1006/1146] drivers/md/md-bitmap: check the return value of md_bitmap_get_counter()
-Date: Wed, 28 Dec 2022 15:42:25 +0100
-Message-Id: <20221228144357.695918898@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.0 1035/1073] arm64: dts: qcom: sm8250: fix USB-DP PHY registers
+Date: Wed, 28 Dec 2022 15:43:43 +0100
+Message-Id: <20221228144356.305214653@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhong <floridsleeves@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3bd548e5b819b8c0f2c9085de775c5c7bff9052f ]
+commit f8d8840c72b3df61b5252052b79020dabec01ab5 upstream.
 
-Check the return value of md_bitmap_get_counter() in case it returns
-NULL pointer, which will result in a null pointer dereference.
+When adding support for the DisplayPort part of the QMP PHY the binding
+(and devicetree parser) for the (USB) child node was simply reused and
+this has lead to some confusion.
 
-v2: update the check to include other dereference
+The third DP register region is really the DP_PHY region, not "PCS" as
+the binding claims, and lie at offset 0x2a00 (not 0x2c00).
 
-Signed-off-by: Li Zhong <floridsleeves@gmail.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Similarly, there likely are no "RX", "RX2" or "PCS_MISC" regions as
+there are for the USB part of the PHY (and in any case the Linux driver
+does not use them).
+
+Note that the sixth "PCS_MISC" region is not even in the binding.
+
+Fixes: 5aa0d1becd5b ("arm64: dts: qcom: sm8250: switch usb1 qmp phy to USB3+DP mode")
+Cc: stable@vger.kernel.org      # 5.13
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221111094729.11842-3-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index bf6dffadbe6f..63ece30114e5 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2195,20 +2195,23 @@ int md_bitmap_resize(struct bitmap *bitmap, sector_t blocks,
- 
- 		if (set) {
- 			bmc_new = md_bitmap_get_counter(&bitmap->counts, block, &new_blocks, 1);
--			if (*bmc_new == 0) {
--				/* need to set on-disk bits too. */
--				sector_t end = block + new_blocks;
--				sector_t start = block >> chunkshift;
--				start <<= chunkshift;
--				while (start < end) {
--					md_bitmap_file_set_bit(bitmap, block);
--					start += 1 << chunkshift;
-+			if (bmc_new) {
-+				if (*bmc_new == 0) {
-+					/* need to set on-disk bits too. */
-+					sector_t end = block + new_blocks;
-+					sector_t start = block >> chunkshift;
-+
-+					start <<= chunkshift;
-+					while (start < end) {
-+						md_bitmap_file_set_bit(bitmap, block);
-+						start += 1 << chunkshift;
-+					}
-+					*bmc_new = 2;
-+					md_bitmap_count_page(&bitmap->counts, block, 1);
-+					md_bitmap_set_pending(&bitmap->counts, block);
- 				}
--				*bmc_new = 2;
--				md_bitmap_count_page(&bitmap->counts, block, 1);
--				md_bitmap_set_pending(&bitmap->counts, block);
-+				*bmc_new |= NEEDED_MASK;
- 			}
--			*bmc_new |= NEEDED_MASK;
- 			if (new_blocks < old_blocks)
- 				old_blocks = new_blocks;
- 		}
--- 
-2.35.1
-
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2884,10 +2884,9 @@
+ 			dp_phy: dp-phy@88ea200 {
+ 				reg = <0 0x088ea200 0 0x200>,
+ 				      <0 0x088ea400 0 0x200>,
+-				      <0 0x088eac00 0 0x400>,
++				      <0 0x088eaa00 0 0x200>,
+ 				      <0 0x088ea600 0 0x200>,
+-				      <0 0x088ea800 0 0x200>,
+-				      <0 0x088eaa00 0 0x100>;
++				      <0 0x088ea800 0 0x200>;
+ 				#phy-cells = <0>;
+ 				#clock-cells = <1>;
+ 			};
 
 
