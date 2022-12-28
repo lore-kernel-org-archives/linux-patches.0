@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADA11C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE2AC433D2;
-	Wed, 28 Dec 2022 16:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E105B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637F6C433EF;
+	Wed, 28 Dec 2022 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244817;
-	bh=ZOJDY+bFvZ1DNZuIJQdi9c3Fo1VNfbpy3RHy5PuQMWU=;
+	s=korg; t=1672244819;
+	bh=AneIGNGeTxm7Ds+h80KjUti9WNHwRciL5L8MSXaRuyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6VaBgjb6RPeewHMRLAVf3WdL5yN2amF/t97FUSOlAnI2GrI8Ze3rf4vu2LU6PC77
-	 KtuYxkmK4LEo/J/RMrdIiuB054lkbHtBs8O3c3WGbdzeyqhDVBNpgSCgeD+fsuV9u+
-	 OrqJ809Cdyyqud+iX8+wOMiEdU2QmVXDIrmD90TM=
+	b=Lu5FXwD59cKLie1UySfe9C7An343IzLVr9n65f4QFhbOvK7izBoD4u28GucEXQqaB
+	 POCQX9RygpVTI6HbiLNUj5YhAM03CMhu4zRuDD0nQALdSMRbjIS8ZFzezytb6OXJ9e
+	 OzGCDStTIp6lg1XxWSdphyC1/9hAJ88NvxWxSWWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0779/1073] pwm: tegra: Ensure the clock rate is not less than needed
-Date: Wed, 28 Dec 2022 15:39:27 +0100
-Message-Id: <20221228144349.170487805@linuxfoundation.org>
+Subject: [PATCH 6.1 0742/1146] i2c: mux: reg: check return value after calling platform_get_resource()
+Date: Wed, 28 Dec 2022 15:38:01 +0100
+Message-Id: <20221228144350.303506238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,52 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5eccd0d9fabc4d2ab8d2a0c056fb1d7e2ff892fc ]
+[ Upstream commit 2d47b79d2bd39cc6369eccf94a06568d84c906ae ]
 
-When dynamically scaling the PWM clock, the function
-dev_pm_opp_set_rate() may set the PWM clock to a rate that is lower than
-what is required. The clock rate requested when calling
-dev_pm_opp_set_rate() is the minimum clock rate that is needed to drive
-the PWM to achieve the required period. Hence, if the actual clock
-rate is less than the requested clock rate, then the required period
-cannot be achieved and configuring the PWM fails. Fix this by
-calling clk_round_rate() to check if the clock rate that will be provided
-is sufficient and if not, double the required clock rate to ensure the
-required period can be attained.
+It will cause null-ptr-deref in resource_size(), if platform_get_resource()
+returns NULL, move calling resource_size() after devm_ioremap_resource() that
+will check 'res' to avoid null-ptr-deref.
+And use devm_platform_get_and_ioremap_resource() to simplify code.
 
-Fixes: 8c193f4714df ("pwm: tegra: Optimize period calculation")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: b3fdd32799d8 ("i2c: mux: Add register-based mux i2c-mux-reg")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tegra.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/i2c/muxes/i2c-mux-reg.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tegra.c b/drivers/pwm/pwm-tegra.c
-index b05ea2e8accc..6fc4b69a3ba7 100644
---- a/drivers/pwm/pwm-tegra.c
-+++ b/drivers/pwm/pwm-tegra.c
-@@ -148,6 +148,17 @@ static int tegra_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		required_clk_rate = DIV_ROUND_UP_ULL(NSEC_PER_SEC << PWM_DUTY_WIDTH,
- 						     period_ns);
+diff --git a/drivers/i2c/muxes/i2c-mux-reg.c b/drivers/i2c/muxes/i2c-mux-reg.c
+index 0e0679f65cf7..30a6de1694e0 100644
+--- a/drivers/i2c/muxes/i2c-mux-reg.c
++++ b/drivers/i2c/muxes/i2c-mux-reg.c
+@@ -183,13 +183,12 @@ static int i2c_mux_reg_probe(struct platform_device *pdev)
+ 	if (!mux->data.reg) {
+ 		dev_info(&pdev->dev,
+ 			"Register not set, using platform resource\n");
+-		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-		mux->data.reg_size = resource_size(res);
+-		mux->data.reg = devm_ioremap_resource(&pdev->dev, res);
++		mux->data.reg = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 		if (IS_ERR(mux->data.reg)) {
+ 			ret = PTR_ERR(mux->data.reg);
+ 			goto err_put_parent;
+ 		}
++		mux->data.reg_size = resource_size(res);
+ 	}
  
-+		if (required_clk_rate > clk_round_rate(pc->clk, required_clk_rate))
-+			/*
-+			 * required_clk_rate is a lower bound for the input
-+			 * rate; for lower rates there is no value for PWM_SCALE
-+			 * that yields a period less than or equal to the
-+			 * requested period. Hence, for lower rates, double the
-+			 * required_clk_rate to get a clock rate that can meet
-+			 * the requested period.
-+			 */
-+			required_clk_rate *= 2;
-+
- 		err = dev_pm_opp_set_rate(pc->dev, required_clk_rate);
- 		if (err < 0)
- 			return -EINVAL;
+ 	if (mux->data.reg_size != 4 && mux->data.reg_size != 2 &&
 -- 
 2.35.1
 
