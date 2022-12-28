@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F6F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B863C433D2;
-	Wed, 28 Dec 2022 16:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCF51C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B06C433EF;
+	Wed, 28 Dec 2022 16:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246090;
-	bh=cKcs5UaNh9wdeK8ZKEnxZS5PGWlb87e1zZzIcQ7tstg=;
+	s=korg; t=1672246093;
+	bh=OLs8Pml3TqJ/V5Bzno44tCKPFZ5jtxt1IjbVGJRPehI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Liej2QjeJO2Dgqk8OaqKVx8ZP48oVIV6wSV1ChOwKI99dkDiTCID8M/n3L6XRCL7o
-	 uNGXhsQFi92cEh0X13gULbPWUsxehr1p4+LYJpjBYRaNFK9nWhYZYsskjXxx10HQUL
-	 rvABnnJ5SfijXiENjWz7XkPc3iDpXOQ7on804awc=
+	b=D1NseIquFLMo1z+sk9ie1+sDWDnQAP/Fo88e/+I3zCtaqzBy5tLvgJjOm663JciF6
+	 CM/TCo/6us3ts55r6XvFEbVieh65QG4kyt0TocNJwbNdjrqxLfkAi0TkWH2uAiczVk
+	 0pYHhxpGmS3qjSuxPgOcaKFzX5TunGtqmrpB6nEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Clint Taylor <clinton.a.taylor@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Khaled Almahallawy <khaled.almahallawy@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0979/1146] Revert "drm/amd/display: Limit max DSC target bpp for specific monitors"
-Date: Wed, 28 Dec 2022 15:41:58 +0100
-Message-Id: <20221228144356.950891131@linuxfoundation.org>
+Subject: [PATCH 6.0 1011/1073] drm/i915/display: Dont disable DDI/Transcoder when setting phy test pattern
+Date: Wed, 28 Dec 2022 15:43:19 +0100
+Message-Id: <20221228144355.626134099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +38,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Khaled Almahallawy <khaled.almahallawy@intel.com>
 
-[ Upstream commit 6803dfd3a69ccb318772463a86e40929fd4fbac7 ]
+[ Upstream commit 3153eebb7a76e663ac76d6670dc113296de96622 ]
 
-This reverts commit 55eea8ef98641f6e1e1c202bd3a49a57c1dd4059.
+Bspecs has updated recently to remove the restriction to disable
+DDI/Transcoder before setting PHY test pattern. This update is to
+address PHY compliance test failures observed on a port with LTTPR.
+The issue is that when Transc. is disabled, the main link signals fed
+to LTTPR will be dropped invalidating link training, which will affect
+the quality of the phy test pattern when the transcoder is enabled again.
 
-This quirk is now handled in the DRM core, so we can drop all of
-the internal code that was added to handle it.
+v2: Update commit message (Clint)
+v3: Add missing Signed-off in v2
+v4: Update Bspec and commit message for pre-gen12 (Jani)
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Bspec: 50482, 7555
+Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Clint Taylor <clinton.a.taylor@intel.com>
+CC: Jani Nikula <jani.nikula@intel.com>
+Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
+Reviewed-by: Clint Taylor <clinton.a.taylor@intel.com>
+Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221123220926.170034-1-khaled.almahallawy@intel.com
+(cherry picked from commit be4a847652056b067d6dc6fe0fc024a9e2e987ca)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 35 -------------------
- 1 file changed, 35 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 59 -------------------------
+ 1 file changed, 59 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index f0b01c8dc4a6..f72c013d3a5b 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -42,39 +42,6 @@
- #include "dm_helpers.h"
- #include "ddc_service_types.h"
- 
--struct monitor_patch_info {
--	unsigned int manufacturer_id;
--	unsigned int product_id;
--	void (*patch_func)(struct dc_edid_caps *edid_caps, unsigned int param);
--	unsigned int patch_param;
--};
--static void set_max_dsc_bpp_limit(struct dc_edid_caps *edid_caps, unsigned int param);
--
--static const struct monitor_patch_info monitor_patch_table[] = {
--{0x6D1E, 0x5BBF, set_max_dsc_bpp_limit, 15},
--{0x6D1E, 0x5B9A, set_max_dsc_bpp_limit, 15},
--};
--
--static void set_max_dsc_bpp_limit(struct dc_edid_caps *edid_caps, unsigned int param)
--{
--	if (edid_caps)
--		edid_caps->panel_patch.max_dsc_target_bpp_limit = param;
--}
--
--static int amdgpu_dm_patch_edid_caps(struct dc_edid_caps *edid_caps)
--{
--	int i, ret = 0;
--
--	for (i = 0; i < ARRAY_SIZE(monitor_patch_table); i++)
--		if ((edid_caps->manufacturer_id == monitor_patch_table[i].manufacturer_id)
--			&&  (edid_caps->product_id == monitor_patch_table[i].product_id)) {
--			monitor_patch_table[i].patch_func(edid_caps, monitor_patch_table[i].patch_param);
--			ret++;
--		}
--
--	return ret;
--}
--
- /* dm_helpers_parse_edid_caps
-  *
-  * Parse edid caps
-@@ -149,8 +116,6 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
- 	kfree(sads);
- 	kfree(sadb);
- 
--	amdgpu_dm_patch_edid_caps(edid_caps);
--
- 	return result;
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 21ba510716b6..d852cfd1d6eb 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -3641,61 +3641,6 @@ static void intel_dp_phy_pattern_update(struct intel_dp *intel_dp,
+ 	}
  }
+ 
+-static void
+-intel_dp_autotest_phy_ddi_disable(struct intel_dp *intel_dp,
+-				  const struct intel_crtc_state *crtc_state)
+-{
+-	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
+-	struct drm_device *dev = dig_port->base.base.dev;
+-	struct drm_i915_private *dev_priv = to_i915(dev);
+-	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
+-	enum pipe pipe = crtc->pipe;
+-	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
+-
+-	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
+-						 TRANS_DDI_FUNC_CTL(pipe));
+-	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
+-	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
+-
+-	trans_ddi_func_ctl_value &= ~(TRANS_DDI_FUNC_ENABLE |
+-				      TGL_TRANS_DDI_PORT_MASK);
+-	trans_conf_value &= ~PIPECONF_ENABLE;
+-	dp_tp_ctl_value &= ~DP_TP_CTL_ENABLE;
+-
+-	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
+-	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
+-		       trans_ddi_func_ctl_value);
+-	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
+-}
+-
+-static void
+-intel_dp_autotest_phy_ddi_enable(struct intel_dp *intel_dp,
+-				 const struct intel_crtc_state *crtc_state)
+-{
+-	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
+-	struct drm_device *dev = dig_port->base.base.dev;
+-	struct drm_i915_private *dev_priv = to_i915(dev);
+-	enum port port = dig_port->base.port;
+-	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
+-	enum pipe pipe = crtc->pipe;
+-	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
+-
+-	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
+-						 TRANS_DDI_FUNC_CTL(pipe));
+-	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
+-	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
+-
+-	trans_ddi_func_ctl_value |= TRANS_DDI_FUNC_ENABLE |
+-				    TGL_TRANS_DDI_SELECT_PORT(port);
+-	trans_conf_value |= PIPECONF_ENABLE;
+-	dp_tp_ctl_value |= DP_TP_CTL_ENABLE;
+-
+-	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
+-	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
+-	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
+-		       trans_ddi_func_ctl_value);
+-}
+-
+ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
+ 					 const struct intel_crtc_state *crtc_state)
+ {
+@@ -3714,14 +3659,10 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
+ 	intel_dp_get_adjust_train(intel_dp, crtc_state, DP_PHY_DPRX,
+ 				  link_status);
+ 
+-	intel_dp_autotest_phy_ddi_disable(intel_dp, crtc_state);
+-
+ 	intel_dp_set_signal_levels(intel_dp, crtc_state, DP_PHY_DPRX);
+ 
+ 	intel_dp_phy_pattern_update(intel_dp, crtc_state);
+ 
+-	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
+-
+ 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
+ 			  intel_dp->train_set, crtc_state->lane_count);
  
 -- 
 2.35.1
