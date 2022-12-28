@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944EF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12864C433EF;
-	Wed, 28 Dec 2022 15:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404881863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8509C433F0;
+	Wed, 28 Dec 2022 15:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240502;
-	bh=HQt/RaU67WmlK+obr6Pit5a+GbGA3NcCzXse/VFamyw=;
+	s=korg; t=1672240505;
+	bh=J7FwzpysjjsFN+SjVMjARPC9GfDv8COCLZ5rdinsQKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qchqZqrcG7nzCU6aXnH8fi39ILb/PZfnTyRmNhO3mWWFI7U36K6Jz8QojTBOGwBSl
-	 aetknrFugDrrk48Flfh5NVmjR6xqPMZ9HO+tFYyU99DuYHg1b5tetPLkz0wyxfwHOq
-	 /3OfxlOIhyceeF7uWeXe0hiJH+gm6JlJFU91qDnk=
+	b=QuK2JEDk8Iv41+wMmUoCG8tp+aWvgRtHmXfRlN5fUbWaoJpMouOM5XOtOQzqrUjIf
+	 yB58Mk/MfW3QcVrnfdijm1E3G/2d8GwfoIQmsGLcXCkU6SbzQfDvYnlUtVEeYC+cMk
+	 el/PuKCis2tdC2DbKntbkr7mhuUnJrSR30otBgM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0168/1073] erofs: support interlaced uncompressed data for compressed files
-Date: Wed, 28 Dec 2022 15:29:16 +0100
-Message-Id: <20221228144332.578613679@linuxfoundation.org>
+Subject: [PATCH 6.1 0133/1146] MIPS: vpe-mt: fix possible memory leak while module exiting
+Date: Wed, 28 Dec 2022 15:27:52 +0100
+Message-Id: <20221228144333.763933304@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,185 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yue Hu <huyue2@coolpad.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit fdffc091e6f94602558bba712b51bc16f79fd6d5 ]
+[ Upstream commit 5822e8cc84ee37338ab0bdc3124f6eec04dc232d ]
 
-Currently, uncompressed data is all handled in the shifted way, which
-means we have to shift the whole on-disk plain pcluster to get the
-logical data.   However, since we are also using in-place I/O for
-uncompressed data, data copy will be reduced a lot if pcluster is
-recorded in the interlaced way as illustrated below:
- _______________________________________________________________
-|               |    |               |_ tail part |_ head part _|
-|<-   blk0    ->| .. |<-   blkn-2  ->|<-         blkn-1       ->|
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+it need be freed when module exiting, call put_device() to give up
+reference, so that it can be freed in kobject_cleanup() when the
+refcount hit to 0. The vpe_device is static, so remove kfree() from
+vpe_device_release().
 
-The logical data then becomes:
- ________________________________________________________
-|_ head part _|_  blk0  _| .. |_  blkn-2  _|_ tail part _|
-
-In addition, non-4k plain pclusters are also survived by the
-interlaced way, which can be used for non-4k lclusters as well.
-
-However, it's almost impossible to de-duplicate uncompressed data
-in the interlaced way, therefore shifted uncompressed data is still
-useful.
-
-Signed-off-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/8369112678604fdf4ef796626d59b1fdd0745a53.1663898962.git.huyue2@coolpad.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: c505feba4c0d ("erofs: validate the extent length for uncompressed pclusters")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor.c | 47 ++++++++++++++++++++++++-----------------
- fs/erofs/erofs_fs.h     |  2 ++
- fs/erofs/internal.h     |  1 +
- fs/erofs/zmap.c         | 14 ++++++++----
- 4 files changed, 41 insertions(+), 23 deletions(-)
+ arch/mips/kernel/vpe-mt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
-index 2d55569f96ac..51b7ac7166d9 100644
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -317,52 +317,61 @@ static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq,
- 	return ret;
- }
+diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
+index bad6b0891b2b..84a82b551ec3 100644
+--- a/arch/mips/kernel/vpe-mt.c
++++ b/arch/mips/kernel/vpe-mt.c
+@@ -313,7 +313,6 @@ ATTRIBUTE_GROUPS(vpe);
  
--static int z_erofs_shifted_transform(struct z_erofs_decompress_req *rq,
--				     struct page **pagepool)
-+static int z_erofs_transform_plain(struct z_erofs_decompress_req *rq,
-+				   struct page **pagepool)
+ static void vpe_device_release(struct device *cd)
  {
--	const unsigned int nrpages_out =
-+	const unsigned int inpages = PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT;
-+	const unsigned int outpages =
- 		PAGE_ALIGN(rq->pageofs_out + rq->outputsize) >> PAGE_SHIFT;
- 	const unsigned int righthalf = min_t(unsigned int, rq->outputsize,
- 					     PAGE_SIZE - rq->pageofs_out);
- 	const unsigned int lefthalf = rq->outputsize - righthalf;
-+	const unsigned int interlaced_offset =
-+		rq->alg == Z_EROFS_COMPRESSION_SHIFTED ? 0 : rq->pageofs_out;
- 	unsigned char *src, *dst;
- 
--	if (nrpages_out > 2) {
-+	if (outpages > 2 && rq->alg == Z_EROFS_COMPRESSION_SHIFTED) {
- 		DBG_BUGON(1);
--		return -EIO;
-+		return -EFSCORRUPTED;
- 	}
- 
- 	if (rq->out[0] == *rq->in) {
--		DBG_BUGON(nrpages_out != 1);
-+		DBG_BUGON(rq->pageofs_out);
- 		return 0;
- 	}
- 
--	src = kmap_atomic(*rq->in) + rq->pageofs_in;
-+	src = kmap_local_page(rq->in[inpages - 1]) + rq->pageofs_in;
- 	if (rq->out[0]) {
--		dst = kmap_atomic(rq->out[0]);
--		memcpy(dst + rq->pageofs_out, src, righthalf);
--		kunmap_atomic(dst);
-+		dst = kmap_local_page(rq->out[0]);
-+		memcpy(dst + rq->pageofs_out, src + interlaced_offset,
-+		       righthalf);
-+		kunmap_local(dst);
- 	}
- 
--	if (nrpages_out == 2) {
--		DBG_BUGON(!rq->out[1]);
--		if (rq->out[1] == *rq->in) {
-+	if (outpages > inpages) {
-+		DBG_BUGON(!rq->out[outpages - 1]);
-+		if (rq->out[outpages - 1] != rq->in[inpages - 1]) {
-+			dst = kmap_local_page(rq->out[outpages - 1]);
-+			memcpy(dst, interlaced_offset ? src :
-+					(src + righthalf), lefthalf);
-+			kunmap_local(dst);
-+		} else if (!interlaced_offset) {
- 			memmove(src, src + righthalf, lefthalf);
--		} else {
--			dst = kmap_atomic(rq->out[1]);
--			memcpy(dst, src + righthalf, lefthalf);
--			kunmap_atomic(dst);
- 		}
- 	}
--	kunmap_atomic(src);
-+	kunmap_local(src);
- 	return 0;
+-	kfree(cd);
  }
  
- static struct z_erofs_decompressor decompressors[] = {
- 	[Z_EROFS_COMPRESSION_SHIFTED] = {
--		.decompress = z_erofs_shifted_transform,
-+		.decompress = z_erofs_transform_plain,
- 		.name = "shifted"
- 	},
-+	[Z_EROFS_COMPRESSION_INTERLACED] = {
-+		.decompress = z_erofs_transform_plain,
-+		.name = "interlaced"
-+	},
- 	[Z_EROFS_COMPRESSION_LZ4] = {
- 		.decompress = z_erofs_lz4_decompress,
- 		.name = "lz4"
-diff --git a/fs/erofs/erofs_fs.h b/fs/erofs/erofs_fs.h
-index 2b48373f690b..5c1de6d7ad71 100644
---- a/fs/erofs/erofs_fs.h
-+++ b/fs/erofs/erofs_fs.h
-@@ -295,11 +295,13 @@ struct z_erofs_lzma_cfgs {
-  * bit 1 : HEAD1 big pcluster (0 - off; 1 - on)
-  * bit 2 : HEAD2 big pcluster (0 - off; 1 - on)
-  * bit 3 : tailpacking inline pcluster (0 - off; 1 - on)
-+ * bit 4 : interlaced plain pcluster (0 - off; 1 - on)
-  */
- #define Z_EROFS_ADVISE_COMPACTED_2B		0x0001
- #define Z_EROFS_ADVISE_BIG_PCLUSTER_1		0x0002
- #define Z_EROFS_ADVISE_BIG_PCLUSTER_2		0x0004
- #define Z_EROFS_ADVISE_INLINE_PCLUSTER		0x0008
-+#define Z_EROFS_ADVISE_INTERLACED_PCLUSTER	0x0010
+ static struct class vpe_class = {
+@@ -497,6 +496,7 @@ int __init vpe_module_init(void)
+ 	device_del(&vpe_device);
  
- struct z_erofs_map_header {
- 	__le16	h_reserved1;
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index a01cc82795a2..12d075dfb964 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -407,6 +407,7 @@ struct erofs_map_blocks {
+ out_class:
++	put_device(&vpe_device);
+ 	class_unregister(&vpe_class);
  
- enum {
- 	Z_EROFS_COMPRESSION_SHIFTED = Z_EROFS_COMPRESSION_MAX,
-+	Z_EROFS_COMPRESSION_INTERLACED,
- 	Z_EROFS_COMPRESSION_RUNTIME_MAX
- };
+ out_chrdev:
+@@ -509,7 +509,7 @@ void __exit vpe_module_exit(void)
+ {
+ 	struct vpe *v, *n;
  
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index bcc39077e9ac..a2a44c11bb64 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -676,12 +676,18 @@ static int z_erofs_do_map_blocks(struct inode *inode,
- 			goto unmap_out;
- 	}
+-	device_del(&vpe_device);
++	device_unregister(&vpe_device);
+ 	class_unregister(&vpe_class);
+ 	unregister_chrdev(major, VPE_MODULE_NAME);
  
--	if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_PLAIN)
--		map->m_algorithmformat = Z_EROFS_COMPRESSION_SHIFTED;
--	else if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_HEAD2)
-+	if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_PLAIN) {
-+		if (vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER)
-+			map->m_algorithmformat =
-+				Z_EROFS_COMPRESSION_INTERLACED;
-+		else
-+			map->m_algorithmformat =
-+				Z_EROFS_COMPRESSION_SHIFTED;
-+	} else if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_HEAD2) {
- 		map->m_algorithmformat = vi->z_algorithmtype[1];
--	else
-+	} else {
- 		map->m_algorithmformat = vi->z_algorithmtype[0];
-+	}
- 
- 	if ((flags & EROFS_GET_BLOCKS_FIEMAP) ||
- 	    ((flags & EROFS_GET_BLOCKS_READMORE) &&
 -- 
 2.35.1
 
