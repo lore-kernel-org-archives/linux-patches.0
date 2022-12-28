@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD411C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E5FC433EF;
-	Wed, 28 Dec 2022 16:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C411C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F079C433D2;
+	Wed, 28 Dec 2022 16:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243773;
-	bh=63tR6qPp/UwI1Ikt7A38gIkXkKy9HK27cS4inHeaIo8=;
+	s=korg; t=1672243776;
+	bh=uASIUEgxAFYrKr97B58yUNGm0Q7XyTbyU3pgxmTCmA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01fSXEdfKfu6t+QZhEFxXB9G5h7+gh1OaNNYmmjwLNhOTD2iKlDJhmKiJXCWgsPFQ
-	 83lx6kRKSDotBCe4chYCIcZgrp9pVb1n+4dP/BmNXGXOQrkBvuWGv8wh4H8WBbpLI+
-	 y/0ZlTjf9IvV4EnEimXpjiO5f7zPWqo441kEjdGg=
+	b=dcau2Vd9XPOPN1wC9VishgCzkbaAoV4iTaQI5Jyt5Wp+4Ate0U3ZBCMZk2qYAcJ/i
+	 0hpr0sPmKEzMzAVVHuXbbYvvKoTO7JqvIBFx94NLsyEbK0PR5MFLvqm3+Ekg63LVT+
+	 0XXqPNRLm/aB7oR6rn9ifVJl0DCoKzVHYlvaHyB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Firo Yang <firo.yang@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0586/1073] RDMA/siw: Fix immediate work request flush to completion queue
-Date: Wed, 28 Dec 2022 15:36:14 +0100
-Message-Id: <20221228144343.964918571@linuxfoundation.org>
+Subject: [PATCH 6.1 0554/1146] sctp: sysctl: make extra pointers netns aware
+Date: Wed, 28 Dec 2022 15:34:53 +0100
+Message-Id: <20221228144345.217346637@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,135 +36,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Firo Yang <firo.yang@suse.com>
 
-[ Upstream commit bdf1da5df9da680589a7f74448dd0a94dd3e1446 ]
+[ Upstream commit da05cecc4939c0410d56c29e252998b192756318 ]
 
-Correctly set send queue element opcode during immediate work request
-flushing in post sendqueue operation, if the QP is in ERROR state.
-An undefined ocode value results in out-of-bounds access to an array
-for mapping the opcode between siw internal and RDMA core representation
-in work completion generation. It resulted in a KASAN BUG report
-of type 'global-out-of-bounds' during NFSoRDMA testing.
+Recently, a customer reported that from their container whose
+net namespace is different to the host's init_net, they can't set
+the container's net.sctp.rto_max to any value smaller than
+init_net.sctp.rto_min.
 
-This patch further fixes a potential case of a malicious user which may
-write undefined values for completion queue elements status or opcode,
-if the CQ is memory mapped to user land. It avoids the same out-of-bounds
-access to arrays for status and opcode mapping as described above.
+For instance,
+Host:
+sudo sysctl net.sctp.rto_min
+net.sctp.rto_min = 1000
 
-Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
-Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20221107145057.895747-1-bmt@zurich.ibm.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Container:
+echo 100 > /mnt/proc-net/sctp/rto_min
+echo 400 > /mnt/proc-net/sctp/rto_max
+echo: write error: Invalid argument
+
+This is caused by the check made from this'commit 4f3fdf3bc59c
+("sctp: add check rto_min and rto_max in sysctl")'
+When validating the input value, it's always referring the boundary
+value set for the init_net namespace.
+
+Having container's rto_max smaller than host's init_net.sctp.rto_min
+does make sense. Consider that the rto between two containers on the
+same host is very likely smaller than it for two hosts.
+
+So to fix this problem, as suggested by Marcelo, this patch makes the
+extra pointers of rto_min, rto_max, pf_retrans, and ps_retrans point
+to the corresponding variables from the newly created net namespace while
+the new net namespace is being registered in sctp_sysctl_net_register.
+
+Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Firo Yang <firo.yang@suse.com>
+Link: https://lore.kernel.org/r/20221209054854.23889-1-firo.yang@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cq.c    | 24 ++++++++++++++--
- drivers/infiniband/sw/siw/siw_verbs.c | 40 ++++++++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ net/sctp/sysctl.c | 73 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 44 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
-index d68e37859e73..acc7bcd538b5 100644
---- a/drivers/infiniband/sw/siw/siw_cq.c
-+++ b/drivers/infiniband/sw/siw/siw_cq.c
-@@ -56,8 +56,6 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 	if (READ_ONCE(cqe->flags) & SIW_WQE_VALID) {
- 		memset(wc, 0, sizeof(*wc));
- 		wc->wr_id = cqe->id;
--		wc->status = map_cqe_status[cqe->status].ib;
--		wc->opcode = map_wc_opcode[cqe->opcode];
- 		wc->byte_len = cqe->bytes;
+diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
+index b46a416787ec..43ebf090029d 100644
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -84,17 +84,18 @@ static struct ctl_table sctp_table[] = {
+ 	{ /* sentinel */ }
+ };
  
- 		/*
-@@ -71,10 +69,32 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 				wc->wc_flags = IB_WC_WITH_INVALIDATE;
- 			}
- 			wc->qp = cqe->base_qp;
-+			wc->opcode = map_wc_opcode[cqe->opcode];
-+			wc->status = map_cqe_status[cqe->status].ib;
- 			siw_dbg_cq(cq,
- 				   "idx %u, type %d, flags %2x, id 0x%pK\n",
- 				   cq->cq_get % cq->num_cqe, cqe->opcode,
- 				   cqe->flags, (void *)(uintptr_t)cqe->id);
-+		} else {
-+			/*
-+			 * A malicious user may set invalid opcode or
-+			 * status in the user mmapped CQE array.
-+			 * Sanity check and correct values in that case
-+			 * to avoid out-of-bounds access to global arrays
-+			 * for opcode and status mapping.
-+			 */
-+			u8 opcode = cqe->opcode;
-+			u16 status = cqe->status;
++/* The following index defines are used in sctp_sysctl_net_register().
++ * If you add new items to the sctp_net_table, please ensure that
++ * the index values of these defines hold the same meaning indicated by
++ * their macro names when they appear in sctp_net_table.
++ */
++#define SCTP_RTO_MIN_IDX       0
++#define SCTP_RTO_MAX_IDX       1
++#define SCTP_PF_RETRANS_IDX    2
++#define SCTP_PS_RETRANS_IDX    3
 +
-+			if (opcode >= SIW_NUM_OPCODES) {
-+				opcode = 0;
-+				status = IB_WC_GENERAL_ERR;
-+			} else if (status >= SIW_NUM_WC_STATUS) {
-+				status = IB_WC_GENERAL_ERR;
-+			}
-+			wc->opcode = map_wc_opcode[opcode];
-+			wc->status = map_cqe_status[status].ib;
-+
- 		}
- 		WRITE_ONCE(cqe->flags, 0);
- 		cq->cq_get++;
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 3e814cfb298c..906fde1a2a0d 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -676,13 +676,45 @@ static int siw_copy_inline_sgl(const struct ib_send_wr *core_wr,
- static int siw_sq_flush_wr(struct siw_qp *qp, const struct ib_send_wr *wr,
- 			   const struct ib_send_wr **bad_wr)
- {
--	struct siw_sqe sqe = {};
- 	int rv = 0;
+ static struct ctl_table sctp_net_table[] = {
+-	{
+-		.procname	= "rto_initial",
+-		.data		= &init_net.sctp.rto_initial,
+-		.maxlen		= sizeof(unsigned int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1         = SYSCTL_ONE,
+-		.extra2         = &timer_max
+-	},
+-	{
++	[SCTP_RTO_MIN_IDX] = {
+ 		.procname	= "rto_min",
+ 		.data		= &init_net.sctp.rto_min,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -103,7 +104,7 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = SYSCTL_ONE,
+ 		.extra2         = &init_net.sctp.rto_max
+ 	},
+-	{
++	[SCTP_RTO_MAX_IDX] =  {
+ 		.procname	= "rto_max",
+ 		.data		= &init_net.sctp.rto_max,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -112,6 +113,33 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = &init_net.sctp.rto_min,
+ 		.extra2         = &timer_max
+ 	},
++	[SCTP_PF_RETRANS_IDX] = {
++		.procname	= "pf_retrans",
++		.data		= &init_net.sctp.pf_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= &init_net.sctp.ps_retrans,
++	},
++	[SCTP_PS_RETRANS_IDX] = {
++		.procname	= "ps_retrans",
++		.data		= &init_net.sctp.ps_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= &init_net.sctp.pf_retrans,
++		.extra2		= &ps_retrans_max,
++	},
++	{
++		.procname	= "rto_initial",
++		.data		= &init_net.sctp.rto_initial,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1         = SYSCTL_ONE,
++		.extra2         = &timer_max
++	},
+ 	{
+ 		.procname	= "rto_alpha_exp_divisor",
+ 		.data		= &init_net.sctp.rto_alpha,
+@@ -207,24 +235,6 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1		= SYSCTL_ONE,
+ 		.extra2		= SYSCTL_INT_MAX,
+ 	},
+-	{
+-		.procname	= "pf_retrans",
+-		.data		= &init_net.sctp.pf_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= &init_net.sctp.ps_retrans,
+-	},
+-	{
+-		.procname	= "ps_retrans",
+-		.data		= &init_net.sctp.ps_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= &init_net.sctp.pf_retrans,
+-		.extra2		= &ps_retrans_max,
+-	},
+ 	{
+ 		.procname	= "sndbuf_policy",
+ 		.data		= &init_net.sctp.sndbuf_policy,
+@@ -586,6 +596,11 @@ int sctp_sysctl_net_register(struct net *net)
+ 	for (i = 0; table[i].data; i++)
+ 		table[i].data += (char *)(&net->sctp) - (char *)&init_net.sctp;
  
- 	while (wr) {
--		sqe.id = wr->wr_id;
--		sqe.opcode = wr->opcode;
--		rv = siw_sqe_complete(qp, &sqe, 0, SIW_WC_WR_FLUSH_ERR);
-+		struct siw_sqe sqe = {};
++	table[SCTP_RTO_MIN_IDX].extra2 = &net->sctp.rto_max;
++	table[SCTP_RTO_MAX_IDX].extra1 = &net->sctp.rto_min;
++	table[SCTP_PF_RETRANS_IDX].extra2 = &net->sctp.ps_retrans;
++	table[SCTP_PS_RETRANS_IDX].extra1 = &net->sctp.pf_retrans;
 +
-+		switch (wr->opcode) {
-+		case IB_WR_RDMA_WRITE:
-+			sqe.opcode = SIW_OP_WRITE;
-+			break;
-+		case IB_WR_RDMA_READ:
-+			sqe.opcode = SIW_OP_READ;
-+			break;
-+		case IB_WR_RDMA_READ_WITH_INV:
-+			sqe.opcode = SIW_OP_READ_LOCAL_INV;
-+			break;
-+		case IB_WR_SEND:
-+			sqe.opcode = SIW_OP_SEND;
-+			break;
-+		case IB_WR_SEND_WITH_IMM:
-+			sqe.opcode = SIW_OP_SEND_WITH_IMM;
-+			break;
-+		case IB_WR_SEND_WITH_INV:
-+			sqe.opcode = SIW_OP_SEND_REMOTE_INV;
-+			break;
-+		case IB_WR_LOCAL_INV:
-+			sqe.opcode = SIW_OP_INVAL_STAG;
-+			break;
-+		case IB_WR_REG_MR:
-+			sqe.opcode = SIW_OP_REG_MR;
-+			break;
-+		default:
-+			rv = -EINVAL;
-+			break;
-+		}
-+		if (!rv) {
-+			sqe.id = wr->wr_id;
-+			rv = siw_sqe_complete(qp, &sqe, 0,
-+					      SIW_WC_WR_FLUSH_ERR);
-+		}
- 		if (rv) {
- 			if (bad_wr)
- 				*bad_wr = wr;
+ 	net->sctp.sysctl_header = register_net_sysctl(net, "net/sctp", table);
+ 	if (net->sctp.sysctl_header == NULL) {
+ 		kfree(table);
 -- 
 2.35.1
 
