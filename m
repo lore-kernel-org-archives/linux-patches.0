@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1551C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78547C433EF;
-	Wed, 28 Dec 2022 16:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A399A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8EFC433D2;
+	Wed, 28 Dec 2022 16:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244654;
-	bh=FqPvJcPjRfo3gCAgiE5/6f6HdCf1P4W7UZQ7C0CT5BQ=;
+	s=korg; t=1672244657;
+	bh=Q3y9vALH9h1rU+RebOmrtFuTgf/yZ+V4xxFKJAIgKHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpTchKwHkwBGA7OK9ik48JvRd5NZtlE/+PfYLR4KyHjzTssZAoTcy8iMewwrunWCC
-	 47J2P6iA10eCs2MLfVYPjXmsj1M/h6GGHJ2Oygngko7cNonbCoqtU1GYIdeQWiPMgl
-	 QajO9u3oS7fx7FKB8V7pxOy2lFNeeXE6TJ1Ng8VQ=
+	b=DBc26ecEg6YrXDxESH+YwuC48u5CbvdGQgVVAg+1UIqrPp8moZ9R2PlAa2+oBnQoE
+	 fkd4JhCK9Kp1KwimLQw+z7VYM3r9+9TGIhiUTXwwf2HDJz6OmTDcvEx+MPMhhsWeER
+	 dAnsXNQbnnnWpFTM+ZiOigfDbq+QkqeruBVkONoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0710/1146] serial: pch: Fix PCI device refcount leak in pch_request_dma()
-Date: Wed, 28 Dec 2022 15:37:29 +0100
-Message-Id: <20221228144349.430981965@linuxfoundation.org>
+Subject: [PATCH 6.0 0749/1073] HSI: omap_ssi_core: Fix error handling in ssi_init()
+Date: Wed, 28 Dec 2022 15:38:57 +0100
+Message-Id: <20221228144348.365936215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,56 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
+[ Upstream commit 3ffa9f713c39a213a08d9ff13ab983a8aa5d8b5d ]
 
-As comment of pci_get_slot() says, it returns a pci_device with its
-refcount increased. The caller must decrement the reference count by
-calling pci_dev_put().
+The ssi_init() returns the platform_driver_register() directly without
+checking its return value, if platform_driver_register() failed, the
+ssi_pdriver is not unregistered.
+Fix by unregister ssi_pdriver when the last platform_driver_register()
+failed.
 
-Since 'dma_dev' is only used to filter the channel in filter(), we can
-call pci_dev_put() before exiting from pch_request_dma(). Add the
-missing pci_dev_put() for the normal and error path.
-
-Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0fae198988b8 ("HSI: omap_ssi: built omap_ssi and omap_ssi_port into one module")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hsi/controllers/omap_ssi_core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index c59ce7886579..b17788cf309b 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -694,6 +694,7 @@ static void pch_request_dma(struct uart_port *port)
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
- 			__func__);
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
- 	priv->chan_tx = chan;
-@@ -710,6 +711,7 @@ static void pch_request_dma(struct uart_port *port)
- 			__func__);
- 		dma_release_channel(priv->chan_tx);
- 		priv->chan_tx = NULL;
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index 052cf3e92dd6..26f2c3c01297 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -631,7 +631,13 @@ static int __init ssi_init(void) {
+ 	if (ret)
+ 		return ret;
  
-@@ -717,6 +719,8 @@ static void pch_request_dma(struct uart_port *port)
- 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
- 				    &priv->rx_buf_dma, GFP_KERNEL);
- 	priv->chan_rx = chan;
+-	return platform_driver_register(&ssi_port_pdriver);
++	ret = platform_driver_register(&ssi_port_pdriver);
++	if (ret) {
++		platform_driver_unregister(&ssi_pdriver);
++		return ret;
++	}
 +
-+	pci_dev_put(dma_dev);
++	return 0;
  }
+ module_init(ssi_init);
  
- static void pch_dma_rx_complete(void *arg)
 -- 
 2.35.1
 
