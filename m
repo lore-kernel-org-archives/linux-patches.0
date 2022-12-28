@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBEB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9F0C433D2;
-	Wed, 28 Dec 2022 15:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C862C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFC1C433EF;
+	Wed, 28 Dec 2022 15:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242435;
-	bh=X05hHJXyqY+n4R2ll0NBD+mFE/k09gI9iYjsIvAVQnk=;
+	s=korg; t=1672242437;
+	bh=Hthdvw14v9qSmVBBX3dDmP4uqAL9X1pCznsOzIT+F3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbcFb3lGYX7QP9wFzLDS7E4QV3MJtfUgGtCbm06oc7ETrWZQvDk+vNiFdp9Gd0LIF
-	 otOIzgzn0Ici+skr8Vn4y0b2WyWEcCp2roYfMz/uGBLY1+fD5JQPtMn+e47RIBcxmv
-	 mqMGiaUjkVPKgqaYxZPINSFFPqd6WvSZJwDf77ME=
+	b=0Q3Y0u/TdwzUPc7+eQoIQTWbZScbTRnjjE2DE1qsg+Aoj1EzjR4LOGiBqhAnqWmvF
+	 UkB7gXze6D6sz6m+DuPVJ3zVykeaLykD/kU2c+U3Q5a//m6U+ygcL8LpnnCJUqfGv8
+	 gmJBsViIJ8se7BYUD4JKE2BsuhsE7Tvfk7almuxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ming Qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 603/731] openvswitch: Fix flow lookup to use unmasked key
-Date: Wed, 28 Dec 2022 15:41:50 +0100
-Message-Id: <20221228144314.016839574@linuxfoundation.org>
+Subject: [PATCH 6.0 0395/1073] media: amphion: cancel vpu before release instance
+Date: Wed, 28 Dec 2022 15:33:03 +0100
+Message-Id: <20221228144338.746691753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,119 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
+[ Upstream commit b3dd974af9de342c733492565ad02d7e23372876 ]
 
-The commit mentioned below causes the ovs_flow_tbl_lookup() function
-to be called with the masked key. However, it's supposed to be called
-with the unmasked key. This due to the fact that the datapath supports
-installing wider flows, and OVS relies on this behavior. For example
-if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
-flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
-128.0.0.0) is allowed to be added.
+Revert "media: amphion: release m2m ctx when releasing vpu instance"
+This reverts commit d91d7bc85062309aae6d8064563ddf17947cb6bc.
 
-However, if we try to add a wildcard rule, the installation fails:
+Call v4l2_m2m_ctx_release() to cancel vpu,
+afterwards release the vpu instance.
 
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
-ovs-vswitchd: updating flow table (File exists)
-
-The reason is that the key used to determine if the flow is already
-present in the system uses the original key ANDed with the mask.
-This results in the IP address not being part of the (miniflow) key,
-i.e., being substituted with an all-zero value. When doing the actual
-lookup, this results in the key wrongfully matching the first flow,
-and therefore the flow does not get installed.
-
-This change reverses the commit below, but rather than having the key
-on the stack, it's allocated.
-
-Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
-
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d91d7bc85062 ("media: amphion: release m2m ctx when releasing vpu instance")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/media/platform/amphion/vpu_v4l2.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 94c48122fdc3..795a25ecb893 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -946,6 +946,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	struct sw_flow_mask mask;
- 	struct sk_buff *reply;
- 	struct datapath *dp;
-+	struct sw_flow_key *key;
- 	struct sw_flow_actions *acts;
- 	struct sw_flow_match match;
- 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
-@@ -973,24 +974,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
+index 4b714fab4c6b..a24e2d0e9542 100644
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -596,10 +596,6 @@ static int vpu_v4l2_release(struct vpu_inst *inst)
+ 		inst->workqueue = NULL;
  	}
  
- 	/* Extract key. */
--	ovs_match_init(&match, &new_flow->key, false, &mask);
-+	key = kzalloc(sizeof(*key), GFP_KERNEL);
-+	if (!key) {
-+		error = -ENOMEM;
-+		goto err_kfree_key;
+-	if (inst->fh.m2m_ctx) {
+-		v4l2_m2m_ctx_release(inst->fh.m2m_ctx);
+-		inst->fh.m2m_ctx = NULL;
+-	}
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+ 	mutex_destroy(&inst->lock);
+ 	v4l2_fh_del(&inst->fh);
+@@ -682,6 +678,13 @@ int vpu_v4l2_close(struct file *file)
+ 
+ 	vpu_trace(vpu->dev, "tgid = %d, pid = %d, inst = %p\n", inst->tgid, inst->pid, inst);
+ 
++	vpu_inst_lock(inst);
++	if (inst->fh.m2m_ctx) {
++		v4l2_m2m_ctx_release(inst->fh.m2m_ctx);
++		inst->fh.m2m_ctx = NULL;
 +	}
++	vpu_inst_unlock(inst);
 +
-+	ovs_match_init(&match, key, false, &mask);
- 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
- 				  a[OVS_FLOW_ATTR_MASK], log);
- 	if (error)
- 		goto err_kfree_flow;
- 
-+	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
-+
- 	/* Extract flow identifier. */
- 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
--				       &new_flow->key, log);
-+				       key, log);
- 	if (error)
- 		goto err_kfree_flow;
- 
--	/* unmasked key is needed to match when ufid is not used. */
--	if (ovs_identifier_is_key(&new_flow->id))
--		match.key = new_flow->id.unmasked_key;
--
--	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
--
- 	/* Validate actions. */
- 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
- 				     &new_flow->key, &acts, log);
-@@ -1017,7 +1020,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	if (ovs_identifier_is_ufid(&new_flow->id))
- 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
- 	if (!flow)
--		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
-+		flow = ovs_flow_tbl_lookup(&dp->table, key);
- 	if (likely(!flow)) {
- 		rcu_assign_pointer(new_flow->sf_acts, acts);
- 
-@@ -1087,6 +1090,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 
- 	if (reply)
- 		ovs_notify(&dp_flow_genl_family, reply, info);
-+
-+	kfree(key);
- 	return 0;
- 
- err_unlock_ovs:
-@@ -1096,6 +1101,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	ovs_nla_free_flow_actions(acts);
- err_kfree_flow:
- 	ovs_flow_free(new_flow, false);
-+err_kfree_key:
-+	kfree(key);
- error:
- 	return error;
- }
+ 	call_void_vop(inst, release);
+ 	vpu_inst_unregister(inst);
+ 	vpu_inst_put(inst);
 -- 
 2.35.1
 
