@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6742D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D62C43396;
-	Wed, 28 Dec 2022 15:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852C7C433EF;
+	Wed, 28 Dec 2022 15:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241586;
-	bh=HRL0szz7m3tX6TfUqS2i3vmZRRETeIWr52yGzkEUzXg=;
+	s=korg; t=1672241588;
+	bh=MDPtYajtsMpDG9DZRarNrfDfmSZtFlqNR+AYwqaQTUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWse75ZBKCSn9SNXwExjs2JvccBgz9NY/DS/hHkj58BX3OJpIQI/gnFr8XIb3Dxhm
-	 IWlWoYzhzMCWCVtVr+AfMI6F1G2I1c0zb0HM1OSrOoLP+AzmyrI9uRTU8L9laphaIv
-	 2q5UHGvQPKFGt6eZgQ6q22d01BlBGO54rtMOLGZw=
+	b=UzhxXI97gWYeQj1iKaawHn758u0nQj/kcfERNxDueklKXKxHfD1uH+VH6oJPinxEn
+	 RhZaYbqVvqZjesGTopepz7Bcmap5LY54wjB2Bdyg4Ke9OECA30Xp0Ca6L0GCngO4Yw
+	 Z3tWONF+efyPMM2OeTLInnRMrWM210Ufhds/Smqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Liu Ying <victor.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 499/731] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
-Date: Wed, 28 Dec 2022 15:40:06 +0100
-Message-Id: <20221228144311.012237551@linuxfoundation.org>
+Subject: [PATCH 6.0 0301/1073] drm: lcdif: Set and enable FIFO Panic threshold
+Date: Wed, 28 Dec 2022 15:31:29 +0100
+Message-Id: <20221228144336.187221698@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
+[ Upstream commit e3cac8f7749f78dacdf19c00ed5862a1db52239f ]
 
-Add missing pci_disable_device() in fail path of mdpy_fb_probe().
-Besides, fix missing release functions in mdpy_fb_remove().
+In case the LCDIFv3 is used to drive a 4k panel via i.MX8MP HDMI bridge,
+the LCDIFv3 becomes susceptible to FIFO underflows, these lead to nasty
+flicker of the image on the panel, or image being shifted by half frame
+horizontally every second frame. The flicker can be easily triggered by
+running 3D application on top of weston compositor, like neverball or
+chromium. Surprisingly glmark2-es2-wayland or glmark2-es2-drm does not
+trigger this effect so easily.
 
-Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Configure the FIFO Panic threshold register and enable the FIFO Panic
+mode, which internally boosts the NoC interconnect priority for LCDIFv3
+transactions in case of possible underflow. This mitigates the flicker
+effect on 4k panels as well.
+
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Liu Ying <victor.liu@nxp.com> # i.MX8mp EVK
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221101152629.21768-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mxsfb/lcdif_kms.c  | 16 ++++++++++++++++
+ drivers/gpu/drm/mxsfb/lcdif_regs.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
-index 9ec93d90e8a5..4eb7aa11cfbb 100644
---- a/samples/vfio-mdev/mdpy-fb.c
-+++ b/samples/vfio-mdev/mdpy-fb.c
-@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+index 713b0d756f2a..d419c61c3407 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+@@ -5,6 +5,7 @@
+  * This code is based on drivers/gpu/drm/mxsfb/mxsfb*
+  */
  
- 	ret = pci_request_regions(pdev, "mdpy-fb");
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_dev;
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+@@ -167,6 +168,18 @@ static void lcdif_enable_controller(struct lcdif_drm_private *lcdif)
+ {
+ 	u32 reg;
  
- 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
- 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
-@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
- err_release_regions:
- 	pci_release_regions(pdev);
- 
-+err_disable_dev:
-+	pci_disable_device(pdev);
++	/* Set FIFO Panic watermarks, low 1/3, high 2/3 . */
++	writel(FIELD_PREP(PANIC0_THRES_LOW_MASK, 1 * PANIC0_THRES_MAX / 3) |
++	       FIELD_PREP(PANIC0_THRES_HIGH_MASK, 2 * PANIC0_THRES_MAX / 3),
++	       lcdif->base + LCDC_V8_PANIC0_THRES);
 +
- 	return ret;
++	/*
++	 * Enable FIFO Panic, this does not generate interrupt, but
++	 * boosts NoC priority based on FIFO Panic watermarks.
++	 */
++	writel(INT_ENABLE_D1_PLANE_PANIC_EN,
++	       lcdif->base + LCDC_V8_INT_ENABLE_D1);
++
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg |= DISP_PARA_DISP_ON;
+ 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
+@@ -194,6 +207,9 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg &= ~DISP_PARA_DISP_ON;
+ 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
++
++	/* Disable FIFO Panic NoC priority booster. */
++	writel(0, lcdif->base + LCDC_V8_INT_ENABLE_D1);
  }
  
-@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
- 	struct fb_info *info = pci_get_drvdata(pdev);
+ static void lcdif_reset_block(struct lcdif_drm_private *lcdif)
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_regs.h b/drivers/gpu/drm/mxsfb/lcdif_regs.h
+index 8e8bef175bf2..37f0d9a06b10 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_regs.h
++++ b/drivers/gpu/drm/mxsfb/lcdif_regs.h
+@@ -252,6 +252,7 @@
  
- 	unregister_framebuffer(info);
-+	iounmap(info->screen_base);
- 	framebuffer_release(info);
-+	pci_release_regions(pdev);
-+	pci_disable_device(pdev);
- }
+ #define PANIC0_THRES_LOW_MASK		GENMASK(24, 16)
+ #define PANIC0_THRES_HIGH_MASK		GENMASK(8, 0)
++#define PANIC0_THRES_MAX		511
  
- static struct pci_device_id mdpy_fb_pci_table[] = {
+ #define LCDIF_MIN_XRES			120
+ #define LCDIF_MIN_YRES			120
 -- 
 2.35.1
 
