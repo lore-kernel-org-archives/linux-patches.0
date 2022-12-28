@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AE41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419CBC433EF;
-	Wed, 28 Dec 2022 16:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FD11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D449DC433EF;
+	Wed, 28 Dec 2022 16:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245783;
-	bh=nWQGjtcRJpzCAOUWFIicdAVyv2chz8qUewqqAgrq7wA=;
+	s=korg; t=1672245786;
+	bh=KwN2bMdPre7EeSZ84sX1w8C+zSF1PheaV2lQkhgNTPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwvt1UNApaFhTlSm43uV/IBYOzzxd+jzVWwtqhLlNrClVeHGjxxQbscL7Sr2K1rJQ
-	 2ckvB+edxYiJHGiyqGk+YMrZEkDMHglN2SprhQG+/tY15SPAV0PRhjhoktizdq87XK
-	 2godW4scrDrtl+G81D7uL1SxeijSnmPuZUPsDTqc=
+	b=NsRGFb0Y7IJmnWr0HoX9uFVLS2cs9tyPDMmD9ydi9iEgqQGwpjDbVnzOtHsDrqc1Y
+	 32K8rch4lnNYIj1AsWd0EDBgr/uEDhxwq3vcspXJoBp5bwQJDfVBDL+setSyf/qQgD
+	 qPSY/IgNtyP1vnAp/SkRTeUBaV0jR8cDI0I63sFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0921/1146] arm64: dts: mt8183: Fix Mali GPU clock
-Date: Wed, 28 Dec 2022 15:41:00 +0100
-Message-Id: <20221228144355.277748587@linuxfoundation.org>
+Subject: [PATCH 6.0 0954/1073] ethtool: avoiding integer overflow in ethtool_phys_id()
+Date: Wed, 28 Dec 2022 15:42:22 +0100
+Message-Id: <20221228144353.946021439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,42 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit ad2631b5645a1d0ca9bf6fecf71f77e3b0071ee5 ]
+[ Upstream commit 64a8f8f7127da228d59a39e2c5e75f86590f90b4 ]
 
-The actual clock feeding into the Mali GPU on the MT8183 is from the
-clock gate in the MFGCFG block, not CLK_TOP_MFGPLL_CK from the TOPCKGEN
-block, which itself is simply a pass-through placeholder for the MFGPLL
-in the APMIXEDSYS block.
+The value of an arithmetic expression "n * id.data" is subject
+to possible overflow due to a failure to cast operands to a larger data
+type before performing arithmetic. Used macro for multiplication instead
+operator for avoiding overflow.
 
-Fix the hardware description with the correct clock reference.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: a8168cebf1bc ("arm64: dts: mt8183: Add node for the Mali GPU")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20220927101128.44758-2-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221122122901.22294-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index a70b669c49ba..402136bfd535 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1678,7 +1678,7 @@ gpu: gpu@13040000 {
- 				<GIC_SPI 278 IRQ_TYPE_LEVEL_LOW>;
- 			interrupt-names = "job", "mmu", "gpu";
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 6a7308de192d..6b59e7a1c906 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -2007,7 +2007,8 @@ static int ethtool_phys_id(struct net_device *dev, void __user *useraddr)
+ 	} else {
+ 		/* Driver expects to be called at twice the frequency in rc */
+ 		int n = rc * 2, interval = HZ / n;
+-		u64 count = n * id.data, i = 0;
++		u64 count = mul_u32_u32(n, id.data);
++		u64 i = 0;
  
--			clocks = <&topckgen CLK_TOP_MFGPLL_CK>;
-+			clocks = <&mfgcfg CLK_MFG_BG3D>;
- 
- 			power-domains =
- 				<&spm MT8183_POWER_DOMAIN_MFG_CORE0>,
+ 		do {
+ 			rtnl_lock();
 -- 
 2.35.1
 
