@@ -1,32 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72471C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6E5C433D2;
-	Wed, 28 Dec 2022 16:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9D21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B052CC433F0;
+	Wed, 28 Dec 2022 16:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243922;
-	bh=WWPsSeepMj9dU7XEy/RR7i+5U38bMl9c8y4cnteUs9U=;
+	s=korg; t=1672243925;
+	bh=mZIWfc1chnC7TDaTounEGqghzCuSV1iXo+lK+0d1ylo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l40x8KCAvADSGbVniz/FvSKAZto2VHay5erCZLVct5NnP1I3DooJLEAZsLXPa+JOR
-	 CMGG7RTKEmPlWYTIyWMojqk4vpxS+LKOOvwSH+8CvDmO8pNWo0H8K72By8h6mAJV1U
-	 KmjO6uc9KWimz/4M7omtWx+epDomJ2s6ACoKzhQo=
+	b=EVvjF8GRmTJHK3+byQ0wl5HO7TeXVzX/KBon5eio5p+OQQlcrw9vJWmCY11PdLWVs
+	 nbROtk5CtYgUNDGZGPNPYXeJfVgNqPyg2ln4r0w9RSw+cyaZv/+VBwQ0+zbeG0Jz64
+	 gchN4vuLbb/kEirBVW7dTY8vPZQaJzuUjfC4eDqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mike Christie <michael.christie@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	John Garry <john.garry@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0616/1073] padata: Always leave BHs disabled when running ->parallel()
-Date: Wed, 28 Dec 2022 15:36:44 +0100
-Message-Id: <20221228144344.775069338@linuxfoundation.org>
+Subject: [PATCH 6.1 0580/1146] scsi: core: Fix a race between scsi_done() and scsi_timeout()
+Date: Wed, 28 Dec 2022 15:35:19 +0100
+Message-Id: <20221228144345.928741077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +42,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Jordan <daniel.m.jordan@oracle.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 34c3a47d20ae55b3600fed733bf96eafe9c500d5 ]
+[ Upstream commit 978b7922d3dca672b41bb4b8ce6c06ab77112741 ]
 
-A deadlock can happen when an overloaded system runs ->parallel() in the
-context of the current task:
+If there is a race between scsi_done() and scsi_timeout() and if
+scsi_timeout() loses the race, scsi_timeout() should not reset the request
+timer. Hence change the return value for this case from BLK_EH_RESET_TIMER
+into BLK_EH_DONE.
 
-    padata_do_parallel
-      ->parallel()
-        pcrypt_aead_enc/dec
-          padata_do_serial
-            spin_lock(&reorder->lock) // BHs still enabled
-              <interrupt>
-                ...
-                  __do_softirq
-                    ...
-                      padata_do_serial
-                        spin_lock(&reorder->lock)
+Although the block layer holds a reference on a request (req->ref) while
+calling a timeout handler, restarting the timer (blk_add_timer()) while a
+request is being completed is racy.
 
-It's a bug for BHs to be on in _do_serial as Steffen points out, so
-ensure they're off in the "current task" case like they are in
-padata_parallel_worker to avoid this situation.
-
-Reported-by: syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com
-Fixes: 4611ce224688 ("padata: allocate work structures for parallel jobs from a pool")
-Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Acked-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: John Garry <john.garry@huawei.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Reported-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 15f73f5b3e59 ("blk-mq: move failure injection out of blk_mq_complete_request")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221018202958.1902564-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_error.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index e5819bb8bd1d..97f51e0c1776 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -207,14 +207,16 @@ int padata_do_parallel(struct padata_shell *ps,
- 	pw = padata_work_alloc();
- 	spin_unlock(&padata_works_lock);
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 6995c8979230..02520f912306 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -343,19 +343,11 @@ enum blk_eh_timer_return scsi_timeout(struct request *req)
  
-+	if (!pw) {
-+		/* Maximum works limit exceeded, run in the current task. */
-+		padata->parallel(padata);
-+	}
-+
- 	rcu_read_unlock_bh();
- 
- 	if (pw) {
- 		padata_work_init(pw, padata_parallel_worker, padata, 0);
- 		queue_work(pinst->parallel_wq, &pw->pw_work);
--	} else {
--		/* Maximum works limit exceeded, run in the current task. */
--		padata->parallel(padata);
- 	}
- 
- 	return 0;
+ 	if (rtn == BLK_EH_DONE) {
+ 		/*
+-		 * Set the command to complete first in order to prevent a real
+-		 * completion from releasing the command while error handling
+-		 * is using it. If the command was already completed, then the
+-		 * lower level driver beat the timeout handler, and it is safe
+-		 * to return without escalating error recovery.
+-		 *
+-		 * If timeout handling lost the race to a real completion, the
+-		 * block layer may ignore that due to a fake timeout injection,
+-		 * so return RESET_TIMER to allow error handling another shot
+-		 * at this command.
++		 * If scsi_done() has already set SCMD_STATE_COMPLETE, do not
++		 * modify *scmd.
+ 		 */
+ 		if (test_and_set_bit(SCMD_STATE_COMPLETE, &scmd->state))
+-			return BLK_EH_RESET_TIMER;
++			return BLK_EH_DONE;
+ 		if (scsi_abort_command(scmd) != SUCCESS) {
+ 			set_host_byte(scmd, DID_TIME_OUT);
+ 			scsi_eh_scmd_add(scmd);
 -- 
 2.35.1
 
