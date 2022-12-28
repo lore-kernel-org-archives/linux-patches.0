@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D31C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87C5C433F0;
-	Wed, 28 Dec 2022 16:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D135A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B9DC433D2;
+	Wed, 28 Dec 2022 16:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245202;
-	bh=fw++7RX2Jh6jaWeiTi+IiOF0NuEYx/2Xj+uHqo9B5Xk=;
+	s=korg; t=1672245204;
+	bh=TUh3zcjqJXcPH8Ndvikh/WKp9PyCEtQbYfKbxmwZ1KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFNc3vZsrKTRqQuX44B07hesAR3u4vae9Re4cASxnJX4Zj2NPmstENnS+odyyn9J0
-	 1aU0qyvLCdRkPGXPmBnSw1mNm0YTB01XYiWO3lI87c4+wWvNZQioxiMv52SG78akck
-	 9BYghhcEEpdYXSkSFDAgH6IL+iv9EewCN562eNYQ=
+	b=EEmJABoRofEbP6JB+HdRyOjJ6qXPpO3XwO9UeYR03DUpqpheFFTm24Pd/qY7Lk0XH
+	 g06WTJ07HUmKC+JPztZaHFPGjToPIN7gicsh2c5HAZNASkuNDYPmiF70Hdwe/M8gyO
+	 5jmp4dBYWp9dSW37iyqj/r4Eq9nOFcvBkHQY0v4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@wolfvision.net>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Joerg Roedel <jroedel@suse.de>,
+	Kirill Tkhai <tkhai@ya.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0814/1146] iommu/rockchip: fix permission bits in page table entries v2
-Date: Wed, 28 Dec 2022 15:39:13 +0100
-Message-Id: <20221228144352.262573288@linuxfoundation.org>
+Subject: [PATCH 6.0 0850/1073] unix: Fix race in SOCK_SEQPACKETs unix_dgram_sendmsg()
+Date: Wed, 28 Dec 2022 15:40:38 +0100
+Message-Id: <20221228144351.107161324@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Riesch <michael.riesch@wolfvision.net>
+From: Kirill Tkhai <tkhai@ya.ru>
 
-[ Upstream commit 7eb99841f340b80be0d0973b0deb592d75fb8928 ]
+[ Upstream commit 3ff8bff704f4de125dca2262e5b5b963a3da1d87 ]
 
-As pointed out in the corresponding downstream fix [0], the permission bits
-of the page table entries are compatible between v1 and v2 of the IOMMU.
-This is in contrast to the current mainline code that incorrectly assumes
-that the read and write permission bits are switched. Fix the permission
-bits by reusing the v1 bit defines.
+There is a race resulting in alive SOCK_SEQPACKET socket
+may change its state from TCP_ESTABLISHED to TCP_CLOSE:
 
-[0] https://github.com/rockchip-linux/kernel/commit/e3bc123a2260145e34b57454da3db0edd117eb8e
+unix_release_sock(peer)                  unix_dgram_sendmsg(sk)
+  sock_orphan(peer)
+    sock_set_flag(peer, SOCK_DEAD)
+                                           sock_alloc_send_pskb()
+                                             if !(sk->sk_shutdown & SEND_SHUTDOWN)
+                                               OK
+                                           if sock_flag(peer, SOCK_DEAD)
+                                             sk->sk_state = TCP_CLOSE
+  sk->sk_shutdown = SHUTDOWN_MASK
 
-Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
-Signed-off-by: Michael Riesch <michael.riesch@wolfvision.net>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20221102063553.2464161-1-michael.riesch@wolfvision.net
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+After that socket sk remains almost normal: it is able to connect, listen, accept
+and recvmsg, while it can't sendmsg.
+
+Since this is the only possibility for alive SOCK_SEQPACKET to change
+the state in such way, we should better fix this strange and potentially
+danger corner case.
+
+Note, that we will return EPIPE here like this is normally done in sock_alloc_send_pskb().
+Originally used ECONNREFUSED looks strange, since it's strange to return
+a specific retval in dependence of race in kernel, when user can't affect on this.
+
+Also, move TCP_CLOSE assignment for SOCK_DGRAM sockets under state lock
+to fix race with unix_dgram_connect():
+
+unix_dgram_connect(other)            unix_dgram_sendmsg(sk)
+                                       unix_peer(sk) = NULL
+                                       unix_state_unlock(sk)
+  unix_state_double_lock(sk, other)
+  sk->sk_state  = TCP_ESTABLISHED
+  unix_peer(sk) = other
+  unix_state_double_unlock(sk, other)
+                                       sk->sk_state  = TCP_CLOSED
+
+This patch fixes both of these races.
+
+Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
+Signed-off-by: Kirill Tkhai <tkhai@ya.ru>
+Link: https://lore.kernel.org/r/135fda25-22d5-837a-782b-ceee50e19844@ya.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/unix/af_unix.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index a3fc59b814ab..a68eadd64f38 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -280,19 +280,17 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
-  *  11:9 - Page address bit 34:32
-  *   8:4 - Page address bit 39:35
-  *     3 - Security
-- *     2 - Readable
-- *     1 - Writable
-+ *     2 - Writable
-+ *     1 - Readable
-  *     0 - 1 if Page @ Page address is valid
-  */
--#define RK_PTE_PAGE_READABLE_V2      BIT(2)
--#define RK_PTE_PAGE_WRITABLE_V2      BIT(1)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 02fad8e8f4cd..48cc8223b06b 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1969,13 +1969,20 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			unix_state_lock(sk);
  
- static u32 rk_mk_pte_v2(phys_addr_t page, int prot)
- {
- 	u32 flags = 0;
+ 		err = 0;
+-		if (unix_peer(sk) == other) {
++		if (sk->sk_type == SOCK_SEQPACKET) {
++			/* We are here only when racing with unix_release_sock()
++			 * is clearing @other. Never change state to TCP_CLOSE
++			 * unlike SOCK_DGRAM wants.
++			 */
++			unix_state_unlock(sk);
++			err = -EPIPE;
++		} else if (unix_peer(sk) == other) {
+ 			unix_peer(sk) = NULL;
+ 			unix_dgram_peer_wake_disconnect_wakeup(sk, other);
  
--	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE_V2 : 0;
--	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE_V2 : 0;
-+	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE : 0;
-+	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE : 0;
++			sk->sk_state = TCP_CLOSE;
+ 			unix_state_unlock(sk);
  
- 	return rk_mk_dte_v2(page) | flags;
- }
+-			sk->sk_state = TCP_CLOSE;
+ 			unix_dgram_disconnected(sk, other);
+ 			sock_put(other);
+ 			err = -ECONNREFUSED;
 -- 
 2.35.1
 
