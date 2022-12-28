@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438431C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B799DC433F0;
-	Wed, 28 Dec 2022 16:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E132F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6828BC433F0;
+	Wed, 28 Dec 2022 16:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245348;
-	bh=YRc8YepZil4fRNkcQMEG8TU2mnvzDHG0bpISHrAty3o=;
+	s=korg; t=1672245350;
+	bh=pYOCBZEZxuLMlyvo7qdVW2dCoVvGZHkYFlHDwKkmoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VmVVmItRc/hUARatQdiq5DtHRRbv+LBAjGPCbk15Ez6nRvZhEpVwqZPz0UYvFHY+9
-	 8w06SW5ajtcNF2pQ8ymxMP+vU2XWOTKTW85vtpvO84mlBPPhNvfvRIr6F79FlFU4cE
-	 DpQ7ga7h4N9wpv+BOqUci2Q/hx4Ug2Z7OEQLe/w4=
+	b=ENU5FMa5npJdfenXJHtcsj5hoqKPTH15eB5tljlEbP0Bh0NN7YU1Qauy6fOsjJsWv
+	 D1Hpnh2vTRrw78UppVWGf4GgDVz/PhPebmt6dN/qBktNEaygaNgOZopeDGS87PvKAn
+	 o8o14+vjw6vRDZnCbH7F2rWvhEjhxK5z6suoefbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0877/1073] mailbox: zynq-ipi: fix error handling while device_register() fails
-Date: Wed, 28 Dec 2022 15:41:05 +0100
-Message-Id: <20221228144351.845567898@linuxfoundation.org>
+Subject: [PATCH 6.1 0844/1146] iommu/fsl_pamu: Fix resource leak in fsl_pamu_probe()
+Date: Wed, 28 Dec 2022 15:39:43 +0100
+Message-Id: <20221228144353.079979638@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit a6792a0cdef0b1c2d77920246283a72537e60e94 ]
+[ Upstream commit 73f5fc5f884ad0c5f7d57f66303af64f9f002526 ]
 
-If device_register() fails, it has two issues:
-1. The name allocated by dev_set_name() is leaked.
-2. The parent of device is not NULL, device_unregister() is called
-   in zynqmp_ipi_free_mboxes(), it will lead a kernel crash because
-   of removing not added device.
+The fsl_pamu_probe() returns directly when create_csd() failed, leaving
+irq and memories unreleased.
+Fix by jumping to error if create_csd() returns error.
 
-Call put_device() to give up the reference, so the name is freed in
-kobject_cleanup(). Add device registered check in zynqmp_ipi_free_mboxes()
-to avoid null-ptr-deref.
-
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Fixes: 695093e38c3e ("iommu/fsl: Freescale PAMU driver and iommu implementation.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221121082022.19091-1-yuancan@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/fsl_pamu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 31a0fa914274..12e004ff1a14 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -493,6 +493,7 @@ static int zynqmp_ipi_mbox_probe(struct zynqmp_ipi_mbox *ipi_mbox,
- 	ret = device_register(&ipi_mbox->dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register ipi mbox dev.\n");
-+		put_device(&ipi_mbox->dev);
- 		return ret;
- 	}
- 	mdev = &ipi_mbox->dev;
-@@ -619,7 +620,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
- 		ipi_mbox = &pdata->ipi_mboxes[i];
- 		if (ipi_mbox->dev.parent) {
- 			mbox_controller_unregister(&ipi_mbox->mbox);
--			device_unregister(&ipi_mbox->dev);
-+			if (device_is_registered(&ipi_mbox->dev))
-+				device_unregister(&ipi_mbox->dev);
+diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
+index 0d03f837a5d4..7a1a413f75ab 100644
+--- a/drivers/iommu/fsl_pamu.c
++++ b/drivers/iommu/fsl_pamu.c
+@@ -868,7 +868,7 @@ static int fsl_pamu_probe(struct platform_device *pdev)
+ 		ret = create_csd(ppaact_phys, mem_size, csd_port_id);
+ 		if (ret) {
+ 			dev_err(dev, "could not create coherence subdomain\n");
+-			return ret;
++			goto error;
  		}
  	}
- }
+ 
 -- 
 2.35.1
 
