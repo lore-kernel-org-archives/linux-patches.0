@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED69823AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F52C433EF;
-	Wed, 28 Dec 2022 16:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E6B23AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1977CC433D2;
+	Wed, 28 Dec 2022 16:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246646;
-	bh=d5fnSVDgJngnhjxWWWq1gmIJVeBeItmoNzJotTT5wZ4=;
+	s=korg; t=1672246649;
+	bh=vmx0QPj7LGc340EO84PPItZSxGvdh2PDT2pBaIiWUIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ro+Mnq1aUw6SO1z7BZ4PMNwpSjOPG+3s5/vwxn6iQHas5o5YYdJZsMQWj2Rri/UaG
-	 +UYDhAL0GRT1Z40d+9uXRKjBmf+RvHymLvvG8ZlA0rHx1Aa/Qkn3G78qb39X+d4buc
-	 Zlbq5GjvPZ037Vjjd5ZxnREiEf0mfw4pfqb6rmIY=
+	b=2YUWTze5ipWoCS/sLkkm9818w6NQH/j1AUM0u8hc0k7UZKUTd9pdGGntxilBlIgG2
+	 a6PiNE0id0arHOleusJ8CCpgjApU6biA2+dC+pwkJIF1Y9NEpfzwnxkIMr2Q1e/r2b
+	 Nt0aFa4z+/mpeL/DNUe7fnIOA4t/S2JUiTEk6EJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Miaoqian Lin <linmq006@gmail.com>
-Subject: [PATCH 6.1 1111/1146] usb: dwc3: qcom: Fix memory leak in dwc3_qcom_interconnect_init
-Date: Wed, 28 Dec 2022 15:44:10 +0100
-Message-Id: <20221228144400.331126567@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 1112/1146] xhci: Prevent infinite loop in transaction errors recovery for streams
+Date: Wed, 28 Dec 2022 15:44:11 +0100
+Message-Id: <20221228144400.357414173@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,60 +33,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 97a48da1619ba6bd42a0e5da0a03aa490a9496b1 upstream.
+commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c upstream.
 
-of_icc_get() alloc resources for path handle, we should release it when not
-need anymore. Like the release in dwc3_qcom_interconnect_exit() function.
-Add icc_put() in error handling to fix this.
+Make sure to also limit the amount of soft reset retries for transaction
+errors on streams in cases where the transaction error event doesn't point
+to any specific TRB.
 
-Fixes: bea46b981515 ("usb: dwc3: qcom: Add interconnect support in dwc3 driver")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20221206081731.818107-1-linmq006@gmail.com
+In these cases we don't know the TRB or stream ring, but we do know which
+endpoint had the error.
+
+To keep error counting simple and functional, move the current err_count
+from ring structure to endpoint structure.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c |   14 ++++++++++----
+ drivers/usb/host/xhci.h      |    2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -261,7 +261,8 @@ static int dwc3_qcom_interconnect_init(s
- 	if (IS_ERR(qcom->icc_path_apps)) {
- 		dev_err(dev, "failed to get apps-usb path: %ld\n",
- 				PTR_ERR(qcom->icc_path_apps));
--		return PTR_ERR(qcom->icc_path_apps);
-+		ret = PTR_ERR(qcom->icc_path_apps);
-+		goto put_path_ddr;
- 	}
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2458,7 +2458,7 @@ static int process_bulk_intr_td(struct x
  
- 	max_speed = usb_get_maximum_speed(&qcom->dwc3->dev);
-@@ -274,16 +275,22 @@ static int dwc3_qcom_interconnect_init(s
- 	}
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for usb-ddr path: %d\n", ret);
--		return ret;
-+		goto put_path_apps;
- 	}
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
+-		ep_ring->err_count = 0;
++		ep->err_count = 0;
+ 		/* handle success with untransferred data as short packet */
+ 		if (ep_trb != td->last_trb || remaining) {
+ 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
+@@ -2484,7 +2484,7 @@ static int process_bulk_intr_td(struct x
+ 		break;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
+-		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
++		    (ep->err_count++ > MAX_SOFT_RETRY) ||
+ 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
+ 			break;
  
- 	ret = icc_set_bw(qcom->icc_path_apps, APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for apps-usb path: %d\n", ret);
--		return ret;
-+		goto put_path_apps;
- 	}
- 
- 	return 0;
-+
-+put_path_apps:
-+	icc_put(qcom->icc_path_apps);
-+put_path_ddr:
-+	icc_put(qcom->icc_path_ddr);
-+	return ret;
- }
- 
- /**
+@@ -2565,8 +2565,14 @@ static int handle_tx_event(struct xhci_h
+ 		case COMP_USB_TRANSACTION_ERROR:
+ 		case COMP_INVALID_STREAM_TYPE_ERROR:
+ 		case COMP_INVALID_STREAM_ID_ERROR:
+-			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
+-						    EP_SOFT_RESET);
++			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
++				 ep_index);
++			if (ep->err_count++ > MAX_SOFT_RETRY)
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_HARD_RESET);
++			else
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_SOFT_RESET);
+ 			goto cleanup;
+ 		case COMP_RING_UNDERRUN:
+ 		case COMP_RING_OVERRUN:
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -933,6 +933,7 @@ struct xhci_virt_ep {
+ 	 * have to restore the device state to the previous state
+ 	 */
+ 	struct xhci_ring		*new_ring;
++	unsigned int			err_count;
+ 	unsigned int			ep_state;
+ #define SET_DEQ_PENDING		(1 << 0)
+ #define EP_HALTED		(1 << 1)	/* For stall handling */
+@@ -1627,7 +1628,6 @@ struct xhci_ring {
+ 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
+ 	 */
+ 	u32			cycle_state;
+-	unsigned int            err_count;
+ 	unsigned int		stream_id;
+ 	unsigned int		num_segs;
+ 	unsigned int		num_trbs_free;
 
 
