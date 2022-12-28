@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704311875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87AEC433D2;
-	Wed, 28 Dec 2022 15:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110E81875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E39EC433D2;
+	Wed, 28 Dec 2022 15:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242734;
-	bh=9isJzObK1fz5kLZly/vR8zYnFnKh9qDMeh0qxKWWqk8=;
+	s=korg; t=1672242736;
+	bh=H/M4qsebGuYaT2rYUvGFifO0bakMd4npGFt+eqqYzdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+WxZVDavFXyFXiLI4DmOJSMlBeHXYUQ44bMp3s8Uf3GCFCiFchzOqjdUZT4k8Nlj
-	 aG0SLO/+cHaoDNdVh3junJoGstO4u04IboAMT2lPjlcR7u4PGaIsd77s8AP19VRP0V
-	 QE0VdIjpNDoZ0lLm5ZIiAkkfoWvM5sPdPeUvRxjE=
+	b=APRD/eOAYYhEOd4HW6TYSFFHjGtrge99l9RCSHZzcymY8DNVuxjq6i99VjY7BV3QA
+	 0B8reX6AZ87S1U1vLlOkZV5kSMSKaszmRgXwf2mhovAW6m3Z9XcEPKmGDV7eawYYWn
+	 lzdDS/iaUs7UoyYqSIrOgpLsfIAIJK6vgqrmwvYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0445/1073] wifi: mt76: fix coverity overrun-call in mt76_get_txpower()
-Date: Wed, 28 Dec 2022 15:33:53 +0100
-Message-Id: <20221228144340.117563439@linuxfoundation.org>
+Subject: [PATCH 5.15 639/731] bpf: make sure skb->len != 0 when redirecting to a tunneling device
+Date: Wed, 28 Dec 2022 15:42:26 +0100
+Message-Id: <20221228144315.033614812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 03dd0d49de7db680a856fa566963bb8421f46368 ]
+[ Upstream commit 07ec7b502800ba9f7b8b15cb01dd6556bb41aaca ]
 
-Make sure the nss is valid for nss_delta array. Return zero
-if the index is invalid.
+syzkaller managed to trigger another case where skb->len == 0
+when we enter __dev_queue_xmit:
 
-Coverity message:
-Event overrun-call: Overrunning callee's array of size 4 by passing
-argument "n_chains" (which evaluates to 15) in call to
-"mt76_tx_power_nss_delta".
-int delta = mt76_tx_power_nss_delta(n_chains);
+WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 skb_assert_len include/linux/skbuff.h:2576 [inline]
+WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 __dev_queue_xmit+0x2069/0x35e0 net/core/dev.c:4295
 
-Fixes: 07cda406308b ("mt76: fix rounding issues on converting per-chain and combined txpower")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Call Trace:
+ dev_queue_xmit+0x17/0x20 net/core/dev.c:4406
+ __bpf_tx_skb net/core/filter.c:2115 [inline]
+ __bpf_redirect_no_mac net/core/filter.c:2140 [inline]
+ __bpf_redirect+0x5fb/0xda0 net/core/filter.c:2163
+ ____bpf_clone_redirect net/core/filter.c:2447 [inline]
+ bpf_clone_redirect+0x247/0x390 net/core/filter.c:2419
+ bpf_prog_48159a89cb4a9a16+0x59/0x5e
+ bpf_dispatcher_nop_func include/linux/bpf.h:897 [inline]
+ __bpf_prog_run include/linux/filter.h:596 [inline]
+ bpf_prog_run include/linux/filter.h:603 [inline]
+ bpf_test_run+0x46c/0x890 net/bpf/test_run.c:402
+ bpf_prog_test_run_skb+0xbdc/0x14c0 net/bpf/test_run.c:1170
+ bpf_prog_test_run+0x345/0x3c0 kernel/bpf/syscall.c:3648
+ __sys_bpf+0x43a/0x6c0 kernel/bpf/syscall.c:5005
+ __do_sys_bpf kernel/bpf/syscall.c:5091 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5089 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5089
+ do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
+
+The reproducer doesn't really reproduce outside of syzkaller
+environment, so I'm taking a guess here. It looks like we
+do generate correct ETH_HLEN-sized packet, but we redirect
+the packet to the tunneling device. Before we do so, we
+__skb_pull l2 header and arrive again at skb->len == 0.
+Doesn't seem like we can do anything better than having
+an explicit check after __skb_pull?
+
+Cc: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221027225537.353077-1-sdf@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/filter.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 4da77d47b0a6..1f8da524a305 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1101,8 +1101,9 @@ static inline bool mt76_is_skb_pktid(u8 pktid)
- static inline u8 mt76_tx_power_nss_delta(u8 nss)
- {
- 	static const u8 nss_delta[4] = { 0, 6, 9, 12 };
-+	u8 idx = nss - 1;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 68b1509e6188..2da05622afbe 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2130,6 +2130,10 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
  
--	return nss_delta[nss - 1];
-+	return (idx < ARRAY_SIZE(nss_delta)) ? nss_delta[idx] : 0;
- }
+ 	if (mlen) {
+ 		__skb_pull(skb, mlen);
++		if (unlikely(!skb->len)) {
++			kfree_skb(skb);
++			return -ERANGE;
++		}
  
- static inline bool mt76_testmode_enabled(struct mt76_phy *phy)
+ 		/* At ingress, the mac header has already been pulled once.
+ 		 * At egress, skb_pospull_rcsum has to be done in case that
 -- 
 2.35.1
 
