@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557ACC433D2;
-	Wed, 28 Dec 2022 15:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA9A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB579C433D2;
+	Wed, 28 Dec 2022 15:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240430;
-	bh=UVijFt/tOpGD2l3/z1ymEi5pmXo7aTOFsoByvTDKQXo=;
+	s=korg; t=1672240433;
+	bh=4FC6jk3ntqI5H7ME6PgtFQUY/Yig9Gf7EsmELbq0Vfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNTbKjRPM+ldufBoslGT3JFPzTfqpNxAHp89UEA7Pj0Aw002FYtKRvAGP8PH0UfUC
-	 P2BlOAghLLXXdMSIHFImfcgqso4F34HIMLsogjMJFfaiOs2Vzmmp98PfthDpvTigaO
-	 MSpPRWLBTNfis9+hXgARpY/EhnFdEnpqfOngQfsE=
+	b=clv+HNnnYsvxMkmY4EiqeBb8trL/NcKebI/OunndYciv/thgMTZ/4wrKhzffnoTvi
+	 0HzdIp4gmtrqrlvFGoBOtBIajWf9Z2sCo6mIBZVXy5EXYbsLCHAEd2tekwTobWnGph
+	 SKKJ3H9HY54ulMTkPQ/iUi7Bdq89jUJEROQtVg84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0133/1073] platform/chrome: cros_usbpd_notify: Fix error handling in cros_usbpd_notify_init()
-Date: Wed, 28 Dec 2022 15:28:41 +0100
-Message-Id: <20221228144331.645893524@linuxfoundation.org>
+Subject: [PATCH 6.0 0129/1073] perf/x86/intel/uncore: Fix reference count leak in sad_cfg_iio_topology()
+Date: Wed, 28 Dec 2022 15:28:37 +0100
+Message-Id: <20221228144331.540116086@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,64 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 5a2d96623670155d94aca72c320c0ac27bdc6bd2 ]
+[ Upstream commit c508eb042d9739bf9473526f53303721b70e9100 ]
 
-The following WARNING message was given when rmmod cros_usbpd_notify:
+pci_get_device() will increase the reference count for the returned
+pci_dev, and also decrease the reference count for the input parameter
+*from* if it is not NULL.
 
- Unexpected driver unregister!
- WARNING: CPU: 0 PID: 253 at drivers/base/driver.c:270 driver_unregister+0x8a/0xb0
- Modules linked in: cros_usbpd_notify(-)
- CPU: 0 PID: 253 Comm: rmmod Not tainted 6.1.0-rc3 #24
- ...
- Call Trace:
-  <TASK>
-  cros_usbpd_notify_exit+0x11/0x1e [cros_usbpd_notify]
-  __x64_sys_delete_module+0x3c7/0x570
-  ? __ia32_sys_delete_module+0x570/0x570
-  ? lock_is_held_type+0xe3/0x140
-  ? syscall_enter_from_user_mode+0x17/0x50
-  ? rcu_read_lock_sched_held+0xa0/0xd0
-  ? syscall_enter_from_user_mode+0x1c/0x50
-  do_syscall_64+0x37/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- RIP: 0033:0x7f333fe9b1b7
+If we break the loop in sad_cfg_iio_topology() with 'dev' not NULL. We
+need to call pci_dev_put() to decrease the reference count. Since
+pci_dev_put() can handle the NULL input parameter, we can just add one
+pci_dev_put() right before 'return ret'.
 
-The reason is that the cros_usbpd_notify_init() does not check the return
-value of platform_driver_register(), and the cros_usbpd_notify can
-install successfully even if platform_driver_register() failed.
-
-Fix by checking the return value of platform_driver_register() and
-unregister cros_usbpd_notify_plat_driver when it failed.
-
-Fixes: ec2daf6e33f9 ("platform: chrome: Add cros-usbpd-notify driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Link: https://lore.kernel.org/r/20221117080823.77549-1-yuancan@huawei.com
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
+Fixes: c1777be3646b ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on SNR")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-2-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_usbpd_notify.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/uncore_snbep.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
-index 4b5a81c9dc6d..10670b6588e3 100644
---- a/drivers/platform/chrome/cros_usbpd_notify.c
-+++ b/drivers/platform/chrome/cros_usbpd_notify.c
-@@ -239,7 +239,11 @@ static int __init cros_usbpd_notify_init(void)
- 		return ret;
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index ed869443efb2..76fedc8e12dd 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -4492,6 +4492,8 @@ static int sad_cfg_iio_topology(struct intel_uncore_type *type, u8 *sad_pmon_map
+ 		type->topology = NULL;
+ 	}
  
- #ifdef CONFIG_ACPI
--	platform_driver_register(&cros_usbpd_notify_acpi_driver);
-+	ret = platform_driver_register(&cros_usbpd_notify_acpi_driver);
-+	if (ret) {
-+		platform_driver_unregister(&cros_usbpd_notify_plat_driver);
-+		return ret;
-+	}
- #endif
- 	return 0;
++	pci_dev_put(dev);
++
+ 	return ret;
  }
+ 
 -- 
 2.35.1
 
