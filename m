@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5D3C433D2;
-	Wed, 28 Dec 2022 14:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71200C433EF;
+	Wed, 28 Dec 2022 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238998;
-	bh=lx1ls6BJYhsGptyycfrqrX5A8rYuX6cFVvKtRoB/R/M=;
+	s=korg; t=1672239000;
+	bh=NwpmSBB8E6VbdEyBKNLEtjrA8uAaF0ZUtLvneo0GimE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIPQPZyliwoaHbnL/kGMc25OSaIgyG873RYxHHK+uHXjPWfxePtNgcJYDSDrk/qBU
-	 6y/cnq0IdrQvHVxUje4VUSrf0sfmt0DLGm54OJNEBMGs7S8qYBvt2U6/T5omYxUB+Q
-	 N0MgRnKmmq7eKHgwwN/fDXfv59oa9hKIuZ96+7k8=
+	b=KzQ2wI0zGRV8/KEGR6XBlQCtCmz1PPu2bDyg0AIPLKiIm0kU6UeofKlMeJjUlVXHl
+	 P+EA5Lbt9mrBOEzsCR6WqyEN8pWFOnflOjysmXBDF4rZF/d2dtxb6mBtES+wvUa43X
+	 Ms/zODvT4BvUG1XUwuc0hoQjB5uEXti31+eAVVM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/731] MIPS: vpe-cmp: fix possible memory leak while module exiting
-Date: Wed, 28 Dec 2022 15:33:17 +0100
-Message-Id: <20221228144259.158848186@linuxfoundation.org>
+Subject: [PATCH 5.15 091/731] selftests/efivarfs: Add checking of the test return value
+Date: Wed, 28 Dec 2022 15:33:18 +0100
+Message-Id: <20221228144259.187475010@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,52 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhao Gongyi <zhaogongyi@huawei.com>
 
-[ Upstream commit c5ed1fe0801f0c66b0fbce2785239a5664629057 ]
+[ Upstream commit c93924267fe6f2b44af1849f714ae9cd8117a9cd ]
 
-dev_set_name() allocates memory for name, it need be freed
-when module exiting, call put_device() to give up reference,
-so that it can be freed in kobject_cleanup() when the refcount
-hit to 0. The vpe_device is static, so remove kfree() from
-vpe_device_release().
+Add checking of the test return value, otherwise it will report success
+forever for test_create_read().
 
-Fixes: 17a1d523aa58 ("MIPS: APRP: Add VPE loader support for CMP platforms.")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: dff6d2ae56d0 ("selftests/efivarfs: clean up test files from test_create*()")
+Signed-off-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/vpe-cmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/efivarfs/efivarfs.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/mips/kernel/vpe-cmp.c b/arch/mips/kernel/vpe-cmp.c
-index e673603e11e5..92140edb3ce3 100644
---- a/arch/mips/kernel/vpe-cmp.c
-+++ b/arch/mips/kernel/vpe-cmp.c
-@@ -75,7 +75,6 @@ ATTRIBUTE_GROUPS(vpe);
- 
- static void vpe_device_release(struct device *cd)
+diff --git a/tools/testing/selftests/efivarfs/efivarfs.sh b/tools/testing/selftests/efivarfs/efivarfs.sh
+index a90f394f9aa9..d374878cc0ba 100755
+--- a/tools/testing/selftests/efivarfs/efivarfs.sh
++++ b/tools/testing/selftests/efivarfs/efivarfs.sh
+@@ -87,6 +87,11 @@ test_create_read()
  {
--	kfree(cd);
+ 	local file=$efivarfs_mount/$FUNCNAME-$test_guid
+ 	./create-read $file
++	if [ $? -ne 0 ]; then
++		echo "create and read $file failed"
++		file_cleanup $file
++		exit 1
++	fi
+ 	file_cleanup $file
  }
- 
- static struct class vpe_class = {
-@@ -157,6 +156,7 @@ int __init vpe_module_init(void)
- 	device_del(&vpe_device);
- 
- out_class:
-+	put_device(&vpe_device);
- 	class_unregister(&vpe_class);
- 
- out_chrdev:
-@@ -169,7 +169,7 @@ void __exit vpe_module_exit(void)
- {
- 	struct vpe *v, *n;
- 
--	device_del(&vpe_device);
-+	device_unregister(&vpe_device);
- 	class_unregister(&vpe_class);
- 	unregister_chrdev(major, VPE_MODULE_NAME);
  
 -- 
 2.35.1
