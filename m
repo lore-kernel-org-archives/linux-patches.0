@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFFE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA949C433EF;
-	Wed, 28 Dec 2022 15:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE701875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2860C433D2;
+	Wed, 28 Dec 2022 15:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243001;
-	bh=bJJ6Zp2quwahM0XtjAChBt0n2I78Wy17pydxmk6KLDM=;
+	s=korg; t=1672243004;
+	bh=1fqa4hwTzUpUc3qjpVotRIMcelCiIEWnjYcZFbHL+44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NolR8u5+0JLRNkZ/RBHzZO0ocTUU+Oxz3qnFFVbPOsjQkPxpA6MRy2Fe0ADk6TVwZ
-	 eZTRDXWKTi58HOi78bkwMJ8MUWBypi8vS+oIGEPidSdxJ0z4XmWP0mqZk+ANKgKykj
-	 z0Nh+4MogNg0jWZQ0zM/cCQA2+CWJEpEqpLlxemE=
+	b=dWZBbMNxQLXVmAcHaDm2BOxpzDM/0gqY5il+ReOJz3dttvvpPgejYCbEqYjuOLb7Q
+	 W/H6biB2kCnu0kiIjlOZEfOBxKKusxd82cHCUmBOVS5kwHyXxsXEbcg4G1QgYuCJOG
+	 ZrW8wvfJCC9BSmzDRdeWpi7aYlG8sOlW6UdffxQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0439/1146] drm/amdkfd: Fix memory leakage
-Date: Wed, 28 Dec 2022 15:32:58 +0100
-Message-Id: <20221228144342.105325202@linuxfoundation.org>
+Subject: [PATCH 5.15 670/731] mmc: f-sdh30: Add quirks for broken timeout clock capability
+Date: Wed, 28 Dec 2022 15:42:57 +0100
+Message-Id: <20221228144315.907042465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit 75818afff631e1ea785a82c3e8bb82eb0dee539c ]
+[ Upstream commit aae9d3a440736691b3c1cb09ae2c32c4f1ee2e67 ]
 
-This patch fixes potential memory leakage and seg fault
-in  _gpuvm_import_dmabuf() function
+There is a case where the timeout clock is not supplied to the capability.
+Add a quirk for that.
 
-Fixes: d4ec4bdc0bd5 ("drm/amdkfd: Allow access for mmapping KFD BOs")
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
+Link: https://lore.kernel.org/r/20221111081033.3813-7-hayashi.kunihiko@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_f_sdh30.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 1f76e27f1a35..fe87b3402f06 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2256,7 +2256,7 @@ int amdgpu_amdkfd_gpuvm_import_dmabuf(struct amdgpu_device *adev,
+diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
+index 3f5977979cf2..6c4f43e11282 100644
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -168,6 +168,9 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ 	if (reg & SDHCI_CAN_DO_8BIT)
+ 		priv->vendor_hs200 = F_SDH30_EMMC_HS200;
  
- 	ret = drm_vma_node_allow(&obj->vma_node, drm_priv);
- 	if (ret) {
--		kfree(mem);
-+		kfree(*mem);
- 		return ret;
- 	}
- 
++	if (!(reg & SDHCI_TIMEOUT_CLK_MASK))
++		host->quirks |= SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK;
++
+ 	ret = sdhci_add_host(host);
+ 	if (ret)
+ 		goto err_add_host;
 -- 
 2.35.1
 
