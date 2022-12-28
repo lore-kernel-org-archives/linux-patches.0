@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA821863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1CBC433EF;
-	Wed, 28 Dec 2022 15:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D611863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C977C433D2;
+	Wed, 28 Dec 2022 15:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239651;
-	bh=zWGqAFrOQ3IA4mARuDue+Fdo6QtPIlFmigeR8E5lHtg=;
+	s=korg; t=1672239653;
+	bh=GhP9v5VqYMAKXSxuD2sUvd1aiHKyS/1RUvVoJhU0uoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SqNKnv9g4DIkLTMqmBuubdIlqAxkmOqV3LPzXfc0TZNy7UfI5k9s8/QZK4SEZdSX9
-	 03HdUDKA9NKTySsATY105llRx0BGLG6xVY6ihZTIJP/kSNyiG5v5Mn4NVTBMXK7bT5
-	 o6Jbeo3+w7zN2V+kpWgvfLIpI6IoJWggrydwG+J8=
+	b=kef8uGJj/W4+yXQXE2IQkjnC06tWzu7fYKVIH3SmnSuNhXRU7K25l0cGtT8uCbwex
+	 aXAdau8LtkpWWuJwFKfe7WrxjyhS2rhkbRtNaiYy/Mv6iSp8Yy8BWxM6RmT9wGW1j7
+	 yAGHx68TlJFlx/aYQXFBbtsWKRg0ZOLloZMoY+P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0060/1073] arm64: dts: mediatek: mt8195: Fix CPUs capacity-dmips-mhz
-Date: Wed, 28 Dec 2022 15:27:28 +0100
-Message-Id: <20221228144329.728876043@linuxfoundation.org>
+Subject: [PATCH 5.15 236/731] clk: imx8mn: fix imx8mn_enet_phy_sels clocks list
+Date: Wed, 28 Dec 2022 15:35:43 +0100
+Message-Id: <20221228144303.406253484@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,81 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 513c43328b189874fdfee3ae99cac81e5502e7f7 ]
+[ Upstream commit 2626cf67f20b28446dfc3a5b9493dd535cdb747b ]
 
-The capacity-dmips-mhz parameter was miscalculated: this SoC runs
-the first (Cortex-A55) cluster at a maximum of 2000MHz and the
-second (Cortex-A78) cluster at a maximum of 3000MHz.
+According to the "Clock Root" table of the reference manual (document
+IMX8MNRM Rev 2, 07/2022):
 
-In order to calculate the right capacity-dmips-mhz, the following
-test was performed:
-1. CPUFREQ governor was set to 'performance' on both clusters
-2. Ran dhrystone with 500000000 iterations for 10 times on each cluster
-3. Calculate the mean result for each cluster
-4. Calculate DMIPS/MHz: dmips_mhz = dmips_per_second / cpu_mhz
-5. Scale results to 1024:
-   result_c0 = (dmips_mhz_c0 - min_dmips_mhz(c0, c1)) /
-               (max_dmips_mhz(c0, c1) - min_dmips_mhz(c0, c1)) * 1024
+     Clock Root         offset     Source Select (CCM_TARGET_ROOTn[MUX])
+        ...              ...                    ...
+ ENET_PHY_REF_CLK_ROOT  0xAA80            000 - 24M_REF_CLK
+                                          001 - SYSTEM_PLL2_DIV20
+                                          010 - SYSTEM_PLL2_DIV8
+                                          011 - SYSTEM_PLL2_DIV5
+                                          100 - SYSTEM_PLL2_DIV2
+                                          101 - AUDIO_PLL1_CLK
+                                          110 - VIDEO_PLL_CLK
+                                          111 - AUDIO_PLL2_CLK
+        ...              ...                    ...
 
-The mean results for this SoC are:
-Cluster 0 (LITTLE): 11990400 Dhry/s
-Cluster 1 (BIG): 59809036 Dhry/s
+while the imx8mn_enet_phy_sels list didn't contained audio_pll1_out for
+source select bits 101b.
 
-The calculated scaled results are:
-Cluster 0: 307,934312801831 (rounded to 308)
-Cluster 1: 1024
-
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221005093404.33102-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Acked-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221117113637.1978703-6-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/imx/clk-imx8mn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 066c14989708..e694ddb74f7d 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -27,7 +27,7 @@ cpu0: cpu@0 {
- 			reg = <0x000>;
- 			enable-method = "psci";
- 			clock-frequency = <1701000000>;
--			capacity-dmips-mhz = <578>;
-+			capacity-dmips-mhz = <308>;
- 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
-@@ -39,7 +39,7 @@ cpu1: cpu@100 {
- 			reg = <0x100>;
- 			enable-method = "psci";
- 			clock-frequency = <1701000000>;
--			capacity-dmips-mhz = <578>;
-+			capacity-dmips-mhz = <308>;
- 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
-@@ -51,7 +51,7 @@ cpu2: cpu@200 {
- 			reg = <0x200>;
- 			enable-method = "psci";
- 			clock-frequency = <1701000000>;
--			capacity-dmips-mhz = <578>;
-+			capacity-dmips-mhz = <308>;
- 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
-@@ -63,7 +63,7 @@ cpu3: cpu@300 {
- 			reg = <0x300>;
- 			enable-method = "psci";
- 			clock-frequency = <1701000000>;
--			capacity-dmips-mhz = <578>;
-+			capacity-dmips-mhz = <308>;
- 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
- 			next-level-cache = <&l2_0>;
- 			#cooling-cells = <2>;
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index 4016fb124932..52903146fdba 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -140,8 +140,8 @@ static const char * const imx8mn_enet_timer_sels[] = {"osc_24m", "sys_pll2_100m"
+ 						      "clk_ext4", "video_pll1_out", };
+ 
+ static const char * const imx8mn_enet_phy_sels[] = {"osc_24m", "sys_pll2_50m", "sys_pll2_125m",
+-						    "sys_pll2_200m", "sys_pll2_500m", "video_pll1_out",
+-						    "audio_pll2_out", };
++						    "sys_pll2_200m", "sys_pll2_500m", "audio_pll1_out",
++						    "video_pll_out", "audio_pll2_out", };
+ 
+ static const char * const imx8mn_nand_sels[] = {"osc_24m", "sys_pll2_500m", "audio_pll1_out",
+ 						"sys_pll1_400m", "audio_pll2_out", "sys_pll3_out",
 -- 
 2.35.1
 
