@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DD91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21CCC433D2;
-	Wed, 28 Dec 2022 16:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F631C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70437C433EF;
+	Wed, 28 Dec 2022 16:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245236;
-	bh=N0wOss2sXsEJ1JrPeouKT2TQdEIfFK+X0WORntzDtfw=;
+	s=korg; t=1672245238;
+	bh=d7qnGsQb5nXdXTgUtUwCiB+xdXkn/m9UY8KHFauaA40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5Mc8O5rdXWZIIftZCkECJDyaQr4yWKOeF2zu0NEBh6zPKNVVTZzpHykemiPYxl33
-	 +FpNQSXZ44BG/Hl9nz4+zdxkC/WWhEeXTruNaMUafz/gEAOuenWMRe+Bp/3FKRQh93
-	 3WNxzdA5cM0vjab2tZxF3Z+QgwWOO9pEID+Zqcmg=
+	b=pGDQn2irboRuRx8U1E/SB7vwSCSFMQqZsM+se4nVQTpuYO9eydXVWnFTwZ0rKQxfr
+	 qRta9yL6syu2k6KKdyv5t+58lQIj2Hz9Rg7rs542xhLp0Q1QU810uCx4BKm4kAni4Q
+	 pNsXwoNpAlRs6VQpHGBeg2238YdM2rIgyDlSUnwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Matt Redfearn <matt.redfearn@mips.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0783/1146] power: supply: fix null pointer dereferencing in power_supply_get_battery_info
-Date: Wed, 28 Dec 2022 15:38:42 +0100
-Message-Id: <20221228144351.415611498@linuxfoundation.org>
+Subject: [PATCH 6.1 0820/1146] include/uapi/linux/swab: Fix potentially missing __always_inline
+Date: Wed, 28 Dec 2022 15:39:19 +0100
+Message-Id: <20221228144352.428605303@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,41 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Matt Redfearn <matt.redfearn@mips.com>
 
-[ Upstream commit 104bb8a663451404a26331263ce5b96c34504049 ]
+[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
 
-when kmalloc() fail to allocate memory in kasprintf(), propname
-will be NULL, strcmp() called by of_get_property() will cause
-null pointer dereference.
+Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
+of some byteswap operations") added __always_inline to swab functions
+and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
+userspace headers") added a definition of __always_inline for use in
+exported headers when the kernel's compiler.h is not available.
 
-So return ENOMEM if kasprintf() return NULL pointer.
+However, since swab.h does not include stddef.h, if the header soup does
+not indirectly include it, the definition of __always_inline is missing,
+resulting in a compilation failure, which was observed compiling the
+perf tool using exported headers containing this commit:
 
-Fixes: 3afb50d7125b ("power: supply: core: Add some helpers to use the battery OCV capacity table")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
+                 from /usr/include/asm/byteorder.h:14,
+                 from tools/include/uapi/linux/perf_event.h:20,
+                 from perf.h:8,
+                 from builtin-bench.c:18:
+/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
+ static __always_inline __u16 __swab16p(const __u16 *p)
+
+Fix this by replacing the inclusion of linux/compiler.h with
+linux/stddef.h to ensure that we pick up that definition if required,
+without relying on it's indirect inclusion. compiler.h is then included
+indirectly, via stddef.h.
+
+Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
+Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/swab.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 9bae94d2ea3a..01d1ac79d982 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -750,6 +750,11 @@ int power_supply_get_battery_info(struct power_supply *psy,
- 		int i, tab_len, size;
+diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
+index 0723a9cce747..01717181339e 100644
+--- a/include/uapi/linux/swab.h
++++ b/include/uapi/linux/swab.h
+@@ -3,7 +3,7 @@
+ #define _UAPI_LINUX_SWAB_H
  
- 		propname = kasprintf(GFP_KERNEL, "ocv-capacity-table-%d", index);
-+		if (!propname) {
-+			power_supply_put_battery_info(psy, info);
-+			err = -ENOMEM;
-+			goto out_put_node;
-+		}
- 		list = of_get_property(battery_np, propname, &size);
- 		if (!list || !size) {
- 			dev_err(&psy->dev, "failed to get %s\n", propname);
+ #include <linux/types.h>
+-#include <linux/compiler.h>
++#include <linux/stddef.h>
+ #include <asm/bitsperlong.h>
+ #include <asm/swab.h>
+ 
 -- 
 2.35.1
 
