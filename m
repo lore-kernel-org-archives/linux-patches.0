@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CAA1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC7CC433D2;
-	Wed, 28 Dec 2022 16:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DBD1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3773DC43392;
+	Wed, 28 Dec 2022 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244611;
-	bh=Da6gWwcZyOn9qM4GMEFzWvDv9vncCig2qTKEeta2DU4=;
+	s=korg; t=1672244614;
+	bh=Fzen1X2nxP3bIyKqMjdY6S9lKbA1bv5WP00OtNn+BYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyL3BA1JFqND0th0gUUQIbMFCvUUktLmboP7aZdVgYrsJ9sMlJoTtHm78eq+m4xrJ
-	 88HLzhY6+rPIxqFRXksfvSJzFwxLw52iQyRnluIVqf7NDDNTF0amNNIcNYl14jtASx
-	 kVAZiUvKb8Poz8IbgaJZ7dAhmi8FZjD+4SCawwCk=
+	b=eV+ZmdWeG1LRcgu8Sf9fHFmuh7kATjGGM0kryYfoELaZ2RhnT3mVxrVcUfuiFCMBd
+	 zmXxb1vouLI2esmGKppl3XVhahbpY9OkqOinSissi8QnHVSdZBNjseLsv6/k+4maAW
+	 KNugqx+XzzqJzS8RjO7uEYPZ2LY1y4BX/qXlkZas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Daniel=20P . =20Berrang=C3=A9?=" <berrange@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sven Peter <sven@svenpeter.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0741/1073] watchdog: iTCO_wdt: Set NO_REBOOT if the watchdog is not already running
-Date: Wed, 28 Dec 2022 15:38:49 +0100
-Message-Id: <20221228144348.150019032@linuxfoundation.org>
+Subject: [PATCH 6.1 0703/1146] usb: typec: tipd: Fix typec_unregister_port error paths
+Date: Wed, 28 Dec 2022 15:37:22 +0100
+Message-Id: <20221228144349.240705853@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit ef9b7bf52c2f47f0a9bf988543c577b92c92d15e ]
+[ Upstream commit 4c8f27ba9ede0118cac9d775204f9b0ecdb877b0 ]
 
-Daniel reported that the commit 1ae3e78c0820 ("watchdog: iTCO_wdt: No
-need to stop the timer in probe") makes QEMU implementation of the iTCO
-watchdog not to trigger reboot anymore when NO_REBOOT flag is initially
-cleared using this option (in QEMU command line):
+typec_unregister_port is only called for some error paths after
+typec_register_port was successful. Ensure it's called in all
+cases.
 
-  -global ICH9-LPC.noreboot=false
-
-The problem with the commit is that it left the unconditional setting of
-NO_REBOOT that is not cleared anymore when the kernel keeps pinging the
-watchdog (as opposed to the previous code that called iTCO_wdt_stop()
-that cleared it).
-
-Fix this so that we only set NO_REBOOT if the watchdog was not initially
-running.
-
-Fixes: 1ae3e78c0820 ("watchdog: iTCO_wdt: No need to stop the timer in probe")
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Tested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221028062750.45451-1-mika.westerberg@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 92440202a880 ("usb: typec: tipd: Only update power status on IRQ")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221114174449.34634-3-sven@svenpeter.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/usb/typec/tipd/core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 34693f11385f..e937b4dd28be 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -423,14 +423,18 @@ static unsigned int iTCO_wdt_get_timeleft(struct watchdog_device *wd_dev)
- 	return time_left;
- }
- 
--static void iTCO_wdt_set_running(struct iTCO_wdt_private *p)
-+/* Returns true if the watchdog was running */
-+static bool iTCO_wdt_set_running(struct iTCO_wdt_private *p)
- {
- 	u16 val;
- 
--	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is * enabled */
-+	/* Bit 11: TCO Timer Halt -> 0 = The TCO timer is enabled */
- 	val = inw(TCO1_CNT(p));
--	if (!(val & BIT(11)))
-+	if (!(val & BIT(11))) {
- 		set_bit(WDOG_HW_RUNNING, &p->wddev.status);
-+		return true;
-+	}
-+	return false;
- }
- 
- /*
-@@ -518,9 +522,6 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 		return -ENODEV;	/* Cannot reset NO_REBOOT bit */
+diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
+index 59059310ba74..195c9c16f817 100644
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -826,7 +826,7 @@ static int tps6598x_probe(struct i2c_client *client)
+ 		ret = tps6598x_read16(tps, TPS_REG_POWER_STATUS, &tps->pwr_status);
+ 		if (ret < 0) {
+ 			dev_err(tps->dev, "failed to read power status: %d\n", ret);
+-			goto err_role_put;
++			goto err_unregister_port;
+ 		}
+ 		ret = tps6598x_connect(tps, status);
+ 		if (ret)
+@@ -839,8 +839,7 @@ static int tps6598x_probe(struct i2c_client *client)
+ 					dev_name(&client->dev), tps);
+ 	if (ret) {
+ 		tps6598x_disconnect(tps, 0);
+-		typec_unregister_port(tps->port);
+-		goto err_role_put;
++		goto err_unregister_port;
  	}
  
--	/* Set the NO_REBOOT bit to prevent later reboots, just for sure */
--	p->update_no_reboot_bit(p->no_reboot_priv, true);
--
- 	if (turn_SMI_watchdog_clear_off >= p->iTCO_version) {
- 		/*
- 		 * Bit 13: TCO_EN -> 0
-@@ -572,7 +573,13 @@ static int iTCO_wdt_probe(struct platform_device *pdev)
- 	watchdog_set_drvdata(&p->wddev, p);
- 	platform_set_drvdata(pdev, p);
+ 	i2c_set_clientdata(client, tps);
+@@ -848,6 +847,8 @@ static int tps6598x_probe(struct i2c_client *client)
  
--	iTCO_wdt_set_running(p);
-+	if (!iTCO_wdt_set_running(p)) {
-+		/*
-+		 * If the watchdog was not running set NO_REBOOT now to
-+		 * prevent later reboots.
-+		 */
-+		p->update_no_reboot_bit(p->no_reboot_priv, true);
-+	}
+ 	return 0;
  
- 	/* Check that the heartbeat value is within it's range;
- 	   if not reset to the default */
++err_unregister_port:
++	typec_unregister_port(tps->port);
+ err_role_put:
+ 	usb_role_switch_put(tps->role_sw);
+ err_fwnode_put:
 -- 
 2.35.1
 
