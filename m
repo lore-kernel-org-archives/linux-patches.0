@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3261C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61949C433EF;
-	Wed, 28 Dec 2022 16:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6671C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007A6C433EF;
+	Wed, 28 Dec 2022 16:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244777;
-	bh=6xfCIgPcQgsbeOh9UalWO4mdWmzvSyxBOhIv/xCB7UM=;
+	s=korg; t=1672244780;
+	bh=/pDDlATTEz2kV0cZYGFDWVoDagRz9bk136d7yrb2bR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ut2YMUr2wyFjIqbgkgm9Zv/BkeFKQ5TiJ2rP7Hs7QmjILtQrn9xBi+dvPaJIuZ0HF
-	 6rr6qqcOVCxJnQvB1l3/uht5CmAgMVrR1mVoIPpX/oehvYpmjSewKQ58JKdBPA4nX3
-	 6Z8eNCZitPjC4yG1SZUSiR/zGqVte1kWgW1J90ps=
+	b=k1q8f+GIdLHic0Pj6e43E/U8pT/t9ZuI3aL9igwV9prJxPXL6ld8xrIUu0sbKRn/+
+	 M/8Um6LuKKwyRc2UGWVIZjmkvQhUU5DnvdS0QtiH+B+5POW9oG1jF7I6p/HmAgf6z5
+	 LRyBQMUFT+Pekf3jT8X5jD7yQQVkpI2w9QaPF7Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Avihai Horon <avihaih@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0772/1073] iommu/sun50i: Implement .iotlb_sync_map
-Date: Wed, 28 Dec 2022 15:39:20 +0100
-Message-Id: <20221228144348.982291413@linuxfoundation.org>
+Subject: [PATCH 6.1 0735/1146] vfio/iova_bitmap: refactor iova_bitmap_set() to better handle page boundaries
+Date: Wed, 28 Dec 2022 15:37:54 +0100
+Message-Id: <20221228144350.112889489@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,141 +37,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit e563cc0c787c85a4d9def0a77078dc5d3f445e3d ]
+[ Upstream commit b058ea3ab5afea873ab8d976277539ca9e43869a ]
 
-Allocated iova ranges need to be invalidated immediately or otherwise
-they might or might not work when used by master or CPU. This was
-discovered when running video decoder conformity test with Cedrus. Some
-videos were now and then decoded incorrectly and generated page faults.
+Commit f38044e5ef58 ("vfio/iova_bitmap: Fix PAGE_SIZE unaligned bitmaps")
+had fixed the unaligned bitmaps by capping the remaining iterable set at
+the start of the bitmap. Although, that mistakenly worked around
+iova_bitmap_set() incorrectly setting bits across page boundary.
 
-According to vendor driver, it's enough to invalidate just start and end
-TLB and PTW cache lines. Documentation says that neighbouring lines must
-be invalidated too. Finally, when page fault occurs, that iova must be
-invalidated the same way, according to documentation.
+Fix this by reworking the loop inside iova_bitmap_set() to iterate over a
+range of bits to set (cur_bit .. last_bit) which may span different pinned
+pages, thus updating @page_idx and @offset as it sets the bits. The
+previous cap to the first page is now adjusted to be always accounted
+rather than when there's only a non-zero pgoff.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-6-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+While at it, make @page_idx , @offset and @nbits to be unsigned int given
+that it won't be more than 512 and 4096 respectively (even a bigger
+PAGE_SIZE or a smaller struct page size won't make this bigger than the
+above 32-bit max). Also, delete the stale kdoc on Return type.
+
+Cc: Avihai Horon <avihaih@nvidia.com>
+Fixes: f38044e5ef58 ("vfio/iova_bitmap: Fix PAGE_SIZE unaligned bitmaps")
+Co-developed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Avihai Horon <avihaih@nvidia.com>
+Link: https://lore.kernel.org/r/20221129131235.38880-1-joao.m.martins@oracle.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 73 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ drivers/vfio/iova_bitmap.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 7c3b2ac552da..d7c5e9b1a087 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -93,6 +93,8 @@
- #define NUM_PT_ENTRIES			256
- #define PT_SIZE				(NUM_PT_ENTRIES * PT_ENTRY_SIZE)
- 
-+#define SPAGE_SIZE			4096
-+
- struct sun50i_iommu {
- 	struct iommu_device iommu;
- 
-@@ -295,6 +297,62 @@ static void sun50i_table_flush(struct sun50i_iommu_domain *sun50i_domain,
- 	dma_sync_single_for_device(iommu->dev, dma, size, DMA_TO_DEVICE);
- }
- 
-+static void sun50i_iommu_zap_iova(struct sun50i_iommu *iommu,
-+				  unsigned long iova)
-+{
-+	u32 reg;
-+	int ret;
-+
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_REG, iova);
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_MASK_REG, GENMASK(31, 12));
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ENABLE_REG,
-+		    IOMMU_TLB_IVLD_ENABLE_ENABLE);
-+
-+	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_TLB_IVLD_ENABLE_REG,
-+					reg, !reg, 1, 2000);
-+	if (ret)
-+		dev_warn(iommu->dev, "TLB invalidation timed out!\n");
-+}
-+
-+static void sun50i_iommu_zap_ptw_cache(struct sun50i_iommu *iommu,
-+				       unsigned long iova)
-+{
-+	u32 reg;
-+	int ret;
-+
-+	iommu_write(iommu, IOMMU_PC_IVLD_ADDR_REG, iova);
-+	iommu_write(iommu, IOMMU_PC_IVLD_ENABLE_REG,
-+		    IOMMU_PC_IVLD_ENABLE_ENABLE);
-+
-+	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_PC_IVLD_ENABLE_REG,
-+					reg, !reg, 1, 2000);
-+	if (ret)
-+		dev_warn(iommu->dev, "PTW cache invalidation timed out!\n");
-+}
-+
-+static void sun50i_iommu_zap_range(struct sun50i_iommu *iommu,
-+				   unsigned long iova, size_t size)
-+{
-+	assert_spin_locked(&iommu->iommu_lock);
-+
-+	iommu_write(iommu, IOMMU_AUTO_GATING_REG, 0);
-+
-+	sun50i_iommu_zap_iova(iommu, iova);
-+	sun50i_iommu_zap_iova(iommu, iova + SPAGE_SIZE);
-+	if (size > SPAGE_SIZE) {
-+		sun50i_iommu_zap_iova(iommu, iova + size);
-+		sun50i_iommu_zap_iova(iommu, iova + size + SPAGE_SIZE);
-+	}
-+	sun50i_iommu_zap_ptw_cache(iommu, iova);
-+	sun50i_iommu_zap_ptw_cache(iommu, iova + SZ_1M);
-+	if (size > SZ_1M) {
-+		sun50i_iommu_zap_ptw_cache(iommu, iova + size);
-+		sun50i_iommu_zap_ptw_cache(iommu, iova + size + SZ_1M);
-+	}
-+
-+	iommu_write(iommu, IOMMU_AUTO_GATING_REG, IOMMU_AUTO_GATING_ENABLE);
-+}
-+
- static int sun50i_iommu_flush_all_tlb(struct sun50i_iommu *iommu)
+diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
+index 2dd65f040127..0f19d502f351 100644
+--- a/drivers/vfio/iova_bitmap.c
++++ b/drivers/vfio/iova_bitmap.c
+@@ -297,9 +297,7 @@ static unsigned long iova_bitmap_mapped_remaining(struct iova_bitmap *bitmap)
  {
- 	u32 reg;
-@@ -344,6 +402,18 @@ static void sun50i_iommu_flush_iotlb_all(struct iommu_domain *domain)
- 	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
- }
+ 	unsigned long remaining, bytes;
  
-+static void sun50i_iommu_iotlb_sync_map(struct iommu_domain *domain,
-+					unsigned long iova, size_t size)
-+{
-+	struct sun50i_iommu_domain *sun50i_domain = to_sun50i_domain(domain);
-+	struct sun50i_iommu *iommu = sun50i_domain->iommu;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&iommu->iommu_lock, flags);
-+	sun50i_iommu_zap_range(iommu, iova, size);
-+	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
-+}
-+
- static void sun50i_iommu_iotlb_sync(struct iommu_domain *domain,
- 				    struct iommu_iotlb_gather *gather)
+-	/* Cap to one page in the first iteration, if PAGE_SIZE unaligned. */
+-	bytes = !bitmap->mapped.pgoff ? bitmap->mapped.npages << PAGE_SHIFT :
+-					PAGE_SIZE - bitmap->mapped.pgoff;
++	bytes = (bitmap->mapped.npages << PAGE_SHIFT) - bitmap->mapped.pgoff;
+ 
+ 	remaining = bitmap->mapped_total_index - bitmap->mapped_base_index;
+ 	remaining = min_t(unsigned long, remaining,
+@@ -398,29 +396,27 @@ int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
+  * Set the bits corresponding to the range [iova .. iova+length-1] in
+  * the user bitmap.
+  *
+- * Return: The number of bits set.
+  */
+ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 		     unsigned long iova, size_t length)
  {
-@@ -767,6 +837,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
- 		.attach_dev	= sun50i_iommu_attach_device,
- 		.detach_dev	= sun50i_iommu_detach_device,
- 		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
-+		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
- 		.iotlb_sync	= sun50i_iommu_iotlb_sync,
- 		.iova_to_phys	= sun50i_iommu_iova_to_phys,
- 		.map		= sun50i_iommu_map,
-@@ -786,6 +857,8 @@ static void sun50i_iommu_report_fault(struct sun50i_iommu *iommu,
- 		report_iommu_fault(iommu->domain, iommu->dev, iova, prot);
- 	else
- 		dev_err(iommu->dev, "Page fault while iommu not attached to any domain?\n");
-+
-+	sun50i_iommu_zap_range(iommu, iova, SPAGE_SIZE);
- }
+ 	struct iova_bitmap_map *mapped = &bitmap->mapped;
+-	unsigned long offset = (iova - mapped->iova) >> mapped->pgshift;
+-	unsigned long nbits = max_t(unsigned long, 1, length >> mapped->pgshift);
+-	unsigned long page_idx = offset / BITS_PER_PAGE;
+-	unsigned long page_offset = mapped->pgoff;
+-	void *kaddr;
+-
+-	offset = offset % BITS_PER_PAGE;
++	unsigned long cur_bit = ((iova - mapped->iova) >>
++			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
++	unsigned long last_bit = (((iova + length - 1) - mapped->iova) >>
++			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
  
- static phys_addr_t sun50i_iommu_handle_pt_irq(struct sun50i_iommu *iommu,
+ 	do {
+-		unsigned long size = min(BITS_PER_PAGE - offset, nbits);
++		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
++		unsigned int offset = cur_bit % BITS_PER_PAGE;
++		unsigned int nbits = min(BITS_PER_PAGE - offset,
++					 last_bit - cur_bit + 1);
++		void *kaddr;
+ 
+ 		kaddr = kmap_local_page(mapped->pages[page_idx]);
+-		bitmap_set(kaddr + page_offset, offset, size);
++		bitmap_set(kaddr, offset, nbits);
+ 		kunmap_local(kaddr);
+-		page_offset = offset = 0;
+-		nbits -= size;
+-		page_idx++;
+-	} while (nbits > 0);
++		cur_bit += nbits;
++	} while (cur_bit <= last_bit);
+ }
+ EXPORT_SYMBOL_GPL(iova_bitmap_set);
 -- 
 2.35.1
 
