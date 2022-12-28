@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8CF1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F8DC433D2;
-	Wed, 28 Dec 2022 16:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F091C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133B6C433D2;
+	Wed, 28 Dec 2022 16:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244427;
-	bh=k4hU1/mZkG+kZTABAbAXY9jw9zBkfOiRU/c1YsitHUc=;
+	s=korg; t=1672244430;
+	bh=3cZrr5+4uo2q8ckibh7QYhz9Znxvf2TKlxjxmqnpZbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O09hD3VzniUQLfUvc/2P2xaSKncODKp5k1eMpRwpdoVT1o0dDgwsMZBkbTtDzM5yX
-	 CDqcn7DqlXAICY5zsoBHKwP/a9VK/5tEGtgefcF7Hl/1I/GrkRkMioxCLmfYl7fSrG
-	 IJHsncC9QwN2OQZ6FrWgy01w3T8q0JE4Me+qncno=
+	b=J5LKYAPrw/BVj9HAyatHYC8YSAp8x0h8xs1deeGGXdVYHjqHm6dHFToQNECRtYRf6
+	 bhJrMq0IuhertKGCJcPxe7P3J28CVyddKr+REnHbayGYt1TR/myhfLnXgXK1222SSy
+	 S1rJ39uiDjsGj/8zORFg0cxlcFkuxFZrHY8Ks8RU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	John Keeping <john@metanate.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0708/1073] usb: gadget: f_hid: fix refcount leak on error path
-Date: Wed, 28 Dec 2022 15:38:16 +0100
-Message-Id: <20221228144347.263432552@linuxfoundation.org>
+Subject: [PATCH 6.1 0668/1146] RDMA/srp: Fix error return code in srp_parse_options()
+Date: Wed, 28 Dec 2022 15:36:47 +0100
+Message-Id: <20221228144348.294696410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,239 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Keeping <john@metanate.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 70a3288a7586526315105c699b687d78cd32559a ]
+[ Upstream commit ed461b30b22c8fa85c25189c14cb89f29595cd14 ]
 
-When failing to allocate report_desc, opts->refcnt has already been
-incremented so it needs to be decremented to avoid leaving the options
-structure permanently locked.
+In the previous iteration of the while loop, the "ret" may have been
+assigned a value of 0, so the error return code -EINVAL may have been
+incorrectly set to 0. To fix set valid return code before calling to
+goto. Also investigate each case separately as Andy suggessted.
 
-Fixes: 21a9476a7ba8 ("usb: gadget: hid: add configfs support")
-Tested-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20221122123523.3068034-3-john@metanate.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e711f968c49c ("IB/srp: replace custom implementation of hex2bin()")
+Fixes: 2a174df0c602 ("IB/srp: Use kstrtoull() instead of simple_strtoull()")
+Fixes: 19f313438c77 ("IB/srp: Add RDMA/CM support")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1669953638-11747-2-git-send-email-wangyufen@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/srp/ib_srp.c | 96 ++++++++++++++++++++++++-----
+ 1 file changed, 82 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 8b8bbeaa27cb..6be6009f911e 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1292,6 +1292,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
- 						 GFP_KERNEL);
- 		if (!hidg->report_desc) {
- 			put_device(&hidg->dev);
-+			--opts->refcnt;
- 			mutex_unlock(&opts->lock);
- 			return ERR_PTR(-ENOMEM);
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 1075c2ac8fe2..b4d6a4a5ae81 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3410,7 +3410,8 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_PKEY:
+-			if (match_hex(args, &token)) {
++			ret = match_hex(args, &token);
++			if (ret) {
+ 				pr_warn("bad P_Key parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3470,7 +3471,8 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_MAX_SECT:
+-			if (match_int(args, &token)) {
++			ret = match_int(args, &token);
++			if (ret) {
+ 				pr_warn("bad max sect parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3478,8 +3480,15 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_QUEUE_SIZE:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for queue_size parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad queue_size parameter '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->scsi_host->can_queue = token;
+@@ -3490,25 +3499,40 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_MAX_CMD_PER_LUN:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max cmd_per_lun parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad max cmd_per_lun parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->scsi_host->cmd_per_lun = token;
+ 			break;
+ 
+ 		case SRP_OPT_TARGET_CAN_QUEUE:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max target_can_queue parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad max target_can_queue parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->target_can_queue = token;
+ 			break;
+ 
+ 		case SRP_OPT_IO_CLASS:
+-			if (match_hex(args, &token)) {
++			ret = match_hex(args, &token);
++			if (ret) {
+ 				pr_warn("bad IO class parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3517,6 +3541,7 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 				pr_warn("unknown IO class parameter value %x specified (use %x or %x).\n",
+ 					token, SRP_REV10_IB_IO_CLASS,
+ 					SRP_REV16A_IB_IO_CLASS);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->io_class = token;
+@@ -3539,16 +3564,24 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_CMD_SG_ENTRIES:
+-			if (match_int(args, &token) || token < 1 || token > 255) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max cmd_sg_entries parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1 || token > 255) {
+ 				pr_warn("bad max cmd_sg_entries parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->cmd_sg_cnt = token;
+ 			break;
+ 
+ 		case SRP_OPT_ALLOW_EXT_SG:
+-			if (match_int(args, &token)) {
++			ret = match_int(args, &token);
++			if (ret) {
+ 				pr_warn("bad allow_ext_sg parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3556,43 +3589,77 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_SG_TABLESIZE:
+-			if (match_int(args, &token) || token < 1 ||
+-					token > SG_MAX_SEGMENTS) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max sg_tablesize parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1 || token > SG_MAX_SEGMENTS) {
+ 				pr_warn("bad max sg_tablesize parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->sg_tablesize = token;
+ 			break;
+ 
+ 		case SRP_OPT_COMP_VECTOR:
+-			if (match_int(args, &token) || token < 0) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for comp_vector parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 0) {
+ 				pr_warn("bad comp_vector parameter '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->comp_vector = token;
+ 			break;
+ 
+ 		case SRP_OPT_TL_RETRY_COUNT:
+-			if (match_int(args, &token) || token < 2 || token > 7) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for tl_retry_count parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 2 || token > 7) {
+ 				pr_warn("bad tl_retry_count parameter '%s' (must be a number between 2 and 7)\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->tl_retry_count = token;
+ 			break;
+ 
+ 		case SRP_OPT_MAX_IT_IU_SIZE:
+-			if (match_int(args, &token) || token < 0) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max it_iu_size parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 0) {
+ 				pr_warn("bad maximum initiator to target IU size '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->max_it_iu_size = token;
+ 			break;
+ 
+ 		case SRP_OPT_CH_COUNT:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for channel count parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad channel count %s\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->ch_count = token;
+@@ -3601,6 +3668,7 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 		default:
+ 			pr_warn("unknown parameter or missing value '%s' in target creation request\n",
+ 				p);
++			ret = -EINVAL;
+ 			goto out;
  		}
+ 	}
 -- 
 2.35.1
 
