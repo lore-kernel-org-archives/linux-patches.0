@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DD41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AABEC433EF;
-	Wed, 28 Dec 2022 16:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889591C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E62C433EF;
+	Wed, 28 Dec 2022 16:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246408;
-	bh=TqCvaUzX+8QhxVRnLVW99Tobk4bYdhv8ZJMVTg0nk1c=;
+	s=korg; t=1672246411;
+	bh=X9QyHZW0/Q7y1ozPfSbuoElW40mP7FohwywJd74HR88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=llpvfFUNI633bnpoguonf8wI7ZXuXslcDCn/DHA+/U6uAEi7VGG81q8V1FrJFpJsc
-	 l14u47ySu09ozvi0FBsSIYZ6N5ULXmL2VwiFuYRGA8W+dGx/kV3Q+ziPcMXyWKfivd
-	 ZSxRUhhvBfn1dMji/CltVdNkcvhcm5d2SUHB1AKo=
+	b=rtrzdd+A+KHpMWzIZ63mRRcurIhTk//ThdPntyPaeAYebsfawJWaS12mk+Uk5PVef
+	 ObVrVZop0pXeiLBU1TCLa3q0j/6qjp4WFf/NFt0gCsoBbN1yQb72iRO3iMZLNhrZJz
+	 lmYjtgDVV2l57+y7JxksAKK4x18hPyE+n/9v7ZPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 1062/1073] io_uring: protect cq_timeouts with timeout_lock
-Date: Wed, 28 Dec 2022 15:44:10 +0100
-Message-Id: <20221228144357.081068808@linuxfoundation.org>
+	James Hilliard <james.hilliard1@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1036/1146] selftests/bpf: Fix conflicts with built-in functions in bpf_iter_ksym
+Date: Wed, 28 Dec 2022 15:42:55 +0100
+Message-Id: <20221228144358.494529805@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,39 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-commit ea011ee10231f5fa6cbb415007048ca0bb948baf upstream.
+[ Upstream commit ab0350c743d5c93fd88742f02b3dff12168ab435 ]
 
-Read cq_timeouts in io_flush_timeouts() only after taking the
-timeout_lock, as it's protected by it. There are many places where we
-also grab ->completion_lock, but for instance io_timeout_fn() doesn't
-and still modifies cq_timeouts.
+Both tolower and toupper are built in c functions, we should not
+redefine them as this can result in a build error.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/9c79544dd6cf5c4018cb1bab99cf481a93ea46ef.1670002973.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes the following errors:
+progs/bpf_iter_ksym.c:10:20: error: conflicting types for built-in function 'tolower'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
+   10 | static inline char tolower(char c)
+      |                    ^~~~~~~
+progs/bpf_iter_ksym.c:5:1: note: 'tolower' is declared in header '<ctype.h>'
+    4 | #include <bpf/bpf_helpers.h>
+  +++ |+#include <ctype.h>
+    5 |
+progs/bpf_iter_ksym.c:17:20: error: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
+   17 | static inline char toupper(char c)
+      |                    ^~~~~~~
+progs/bpf_iter_ksym.c:17:20: note: 'toupper' is declared in header '<ctype.h>'
+
+See background on this sort of issue:
+https://stackoverflow.com/a/20582607
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=12213
+
+(C99, 7.1.3p1) "All identifiers with external linkage in any of the
+following subclauses (including the future library directions) are
+always reserved for use as identifiers with external linkage."
+
+This is documented behavior in GCC:
+https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-std-2
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221203010847.2191265-1-james.hilliard1@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/progs/bpf_iter_ksym.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -72,10 +72,12 @@ static bool io_kill_timeout(struct io_ki
- __cold void io_flush_timeouts(struct io_ring_ctx *ctx)
- 	__must_hold(&ctx->completion_lock)
- {
--	u32 seq = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
-+	u32 seq;
- 	struct io_timeout *timeout, *tmp;
+diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
+index 285c008cbf9c..9ba14c37bbcc 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
++++ b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
+@@ -7,14 +7,14 @@ char _license[] SEC("license") = "GPL";
  
- 	spin_lock_irq(&ctx->timeout_lock);
-+	seq = ctx->cached_cq_tail - atomic_read(&ctx->cq_timeouts);
-+
- 	list_for_each_entry_safe(timeout, tmp, &ctx->timeout_list, list) {
- 		struct io_kiocb *req = cmd_to_io_kiocb(timeout);
- 		u32 events_needed, events_got;
+ unsigned long last_sym_value = 0;
+ 
+-static inline char tolower(char c)
++static inline char to_lower(char c)
+ {
+ 	if (c >= 'A' && c <= 'Z')
+ 		c += ('a' - 'A');
+ 	return c;
+ }
+ 
+-static inline char toupper(char c)
++static inline char to_upper(char c)
+ {
+ 	if (c >= 'a' && c <= 'z')
+ 		c -= ('a' - 'A');
+@@ -54,7 +54,7 @@ int dump_ksym(struct bpf_iter__ksym *ctx)
+ 	type = iter->type;
+ 
+ 	if (iter->module_name[0]) {
+-		type = iter->exported ? toupper(type) : tolower(type);
++		type = iter->exported ? to_upper(type) : to_lower(type);
+ 		BPF_SEQ_PRINTF(seq, "0x%llx %c %s [ %s ] ",
+ 			       value, type, iter->name, iter->module_name);
+ 	} else {
+-- 
+2.35.1
+
 
 
