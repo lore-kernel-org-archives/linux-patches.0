@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F451868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B31C433D2;
-	Wed, 28 Dec 2022 15:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B271868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9158BC433D2;
+	Wed, 28 Dec 2022 15:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240954;
-	bh=ahkX3g/K1MMp0mk1+59PBxK05Pcv6gYp9EUN8D+oqiI=;
+	s=korg; t=1672240956;
+	bh=AwSq+tNbqhVUBJhHq2Il+ctNtr0VGa4hvH3SnZp8t+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6CXwLMqQuEtctBR5//SZ9kqFAzaQ+EGy7ILKsyOaPT+29Fvew53DA6Cjkg0bdUZs
-	 DJeHrrJIDf7A3dg1RaFcgzCplYccYMWYgNVODRMgLfPT7eT2D6TWs6yOERyo/GocTY
-	 0QUXB+G42yDPs77T7YEsj0lXVnIe0n127xKB0YlY=
+	b=ePAuHV8ahBS18vjL0ldMjGOIQlEULLHNoXaM6ng2SFmpZy+CMsfIHtcZEQk8ViduA
+	 ue+tn6JUe5qOMV/NeoMM0yRF/mM/3JATGogo1i43MvefxshMW9U+ipUSPmebob6io/
+	 Ij2d91yoCpYNixDQvx+aO/vTYKxhKarQhMooBI14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0223/1073] Input: iqs7222 - report malformed properties
-Date: Wed, 28 Dec 2022 15:30:11 +0100
-Message-Id: <20221228144334.075477010@linuxfoundation.org>
+Subject: [PATCH 5.15 421/731] crypto: amlogic - Remove kcalloc without check
+Date: Wed, 28 Dec 2022 15:38:48 +0100
+Message-Id: <20221228144308.774532774@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,137 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 404f3b48e65f058d94429e4a1ec16a1f82ff3b2f ]
+[ Upstream commit 3d780c8a9850ad60dee47a8d971ba7888f3d1bd3 ]
 
-Nonzero return values of several calls to fwnode_property_read_u32()
-are silently ignored, leaving no way to know the properties were not
-applied in the event of an error.
+There is no real point in allocating dedicated memory for the irqs array.
+MAXFLOW is only 2, so it is easier to allocated the needed space
+directly within the 'meson_dev' structure.
 
-Solve this problem by evaluating fwnode_property_read_u32()'s return
-value, and reporting an error for any nonzero return value not equal
-to -EINVAL which indicates the property was absent altogether.
+This saves some memory allocation and avoids an indirection when using the
+irqs array.
 
-Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Link: https://lore.kernel.org/r/Y1SRRrpQXvkETjfm@nixie71
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: 2f6fd2329789 ("Input: iqs7222 - protect against undefined slider size")
+Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator...")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/iqs7222.c | 44 +++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 8 deletions(-)
+ drivers/crypto/amlogic/amlogic-gxl-core.c | 1 -
+ drivers/crypto/amlogic/amlogic-gxl.h      | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
-index 3b6e84689879..350be4f23f50 100644
---- a/drivers/input/misc/iqs7222.c
-+++ b/drivers/input/misc/iqs7222.c
-@@ -1807,8 +1807,9 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 		chan_setup[0] |= IQS7222_CHAN_SETUP_0_REF_MODE_FOLLOW;
- 		chan_setup[4] = val * 42 + 1048;
- 
--		if (!fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
--					      &val)) {
-+		error = fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
-+						 &val);
-+		if (!error) {
- 			if (val > U16_MAX) {
- 				dev_err(&client->dev,
- 					"Invalid %s reference weight: %u\n",
-@@ -1817,6 +1818,11 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 			}
- 
- 			chan_setup[5] = val;
-+		} else if (error != -EINVAL) {
-+			dev_err(&client->dev,
-+				"Failed to read %s reference weight: %d\n",
-+				fwnode_get_name(chan_node), error);
-+			return error;
- 		}
- 
- 		/*
-@@ -1889,9 +1895,10 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 		if (!event_node)
- 			continue;
- 
--		if (!fwnode_property_read_u32(event_node,
--					      "azoteq,timeout-press-ms",
--					      &val)) {
-+		error = fwnode_property_read_u32(event_node,
-+						 "azoteq,timeout-press-ms",
-+						 &val);
-+		if (!error) {
- 			/*
- 			 * The IQS7222B employs a global pair of press timeout
- 			 * registers as opposed to channel-specific registers.
-@@ -1911,6 +1918,12 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 
- 			*setup &= ~(U8_MAX << i * 8);
- 			*setup |= (val / 500 << i * 8);
-+		} else if (error != -EINVAL) {
-+			dev_err(&client->dev,
-+				"Failed to read %s press timeout: %d\n",
-+				fwnode_get_name(event_node), error);
-+			fwnode_handle_put(event_node);
-+			return error;
- 		}
- 
- 		error = iqs7222_parse_event(iqs7222, event_node, chan_index,
-@@ -2009,7 +2022,8 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 	if (fwnode_property_present(sldr_node, "azoteq,use-prox"))
- 		sldr_setup[4 + reg_offset] -= 2;
- 
--	if (!fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val);
-+	if (!error) {
- 		if (!val || val > dev_desc->sldr_res) {
- 			dev_err(&client->dev, "Invalid %s size: %u\n",
- 				fwnode_get_name(sldr_node), val);
-@@ -2023,9 +2037,14 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 			sldr_setup[2] |= (val / 16 <<
- 					  IQS7222_SLDR_SETUP_2_RES_SHIFT);
- 		}
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s size: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
+diff --git a/drivers/crypto/amlogic/amlogic-gxl-core.c b/drivers/crypto/amlogic/amlogic-gxl-core.c
+index 6e7ae896717c..937187027ad5 100644
+--- a/drivers/crypto/amlogic/amlogic-gxl-core.c
++++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
+@@ -237,7 +237,6 @@ static int meson_crypto_probe(struct platform_device *pdev)
+ 		return err;
  	}
  
--	if (!fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val);
-+	if (!error) {
- 		if (val > (reg_offset ? U16_MAX : U8_MAX * 4)) {
- 			dev_err(&client->dev, "Invalid %s top speed: %u\n",
- 				fwnode_get_name(sldr_node), val);
-@@ -2038,9 +2057,14 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 			sldr_setup[2] &= ~IQS7222_SLDR_SETUP_2_TOP_SPEED_MASK;
- 			sldr_setup[2] |= (val / 4);
- 		}
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s top speed: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
- 	}
- 
--	if (!fwnode_property_read_u32(sldr_node, "linux,axis", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "linux,axis", &val);
-+	if (!error) {
- 		u16 sldr_max = sldr_setup[3] - 1;
- 
- 		if (!reg_offset) {
-@@ -2054,6 +2078,10 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 
- 		input_set_abs_params(iqs7222->keypad, val, 0, sldr_max, 0, 0);
- 		iqs7222->sl_axis[sldr_index] = val;
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s axis: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
- 	}
- 
- 	if (dev_desc->wheel_enable) {
+-	mc->irqs = devm_kcalloc(mc->dev, MAXFLOW, sizeof(int), GFP_KERNEL);
+ 	for (i = 0; i < MAXFLOW; i++) {
+ 		mc->irqs[i] = platform_get_irq(pdev, i);
+ 		if (mc->irqs[i] < 0)
+diff --git a/drivers/crypto/amlogic/amlogic-gxl.h b/drivers/crypto/amlogic/amlogic-gxl.h
+index dc0f142324a3..8c0746a1d6d4 100644
+--- a/drivers/crypto/amlogic/amlogic-gxl.h
++++ b/drivers/crypto/amlogic/amlogic-gxl.h
+@@ -95,7 +95,7 @@ struct meson_dev {
+ 	struct device *dev;
+ 	struct meson_flow *chanlist;
+ 	atomic_t flow;
+-	int *irqs;
++	int irqs[MAXFLOW];
+ #ifdef CONFIG_CRYPTO_DEV_AMLOGIC_GXL_DEBUG
+ 	struct dentry *dbgfs_dir;
+ #endif
 -- 
 2.35.1
 
