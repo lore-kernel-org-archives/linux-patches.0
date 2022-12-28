@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAAA1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4591DC433D2;
-	Wed, 28 Dec 2022 16:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BDA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF42C433EF;
+	Wed, 28 Dec 2022 16:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246109;
-	bh=8cNekZ4Ly99pLxeUE847IppAKRmEzQ5qOYdrADTmNG4=;
+	s=korg; t=1672246112;
+	bh=k58RRflD6JGFt7EF93aoHdhUah760czXjm3Zmz65dMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OBl9M1h7V9KVBCO+9QDcvMoqbCaoQi2dLASpLlxFToYZktEProa4otiOMB1ZOzdl+
-	 rATZsywhbkFyRKBj2Bw6o3JHwZGAdwFR+vCnuf8fHXd0OjzLHGYop3INMZ1DjC2SAe
-	 Zfpi5ERHxQSfpjtxzi1moNyS/C/OaqMMAim8yDYI=
+	b=kpPOaNnOBhLDc9gyA0DOpUrvs2D+j4zkl+DEshMdwBWem1dT0Qe+9/20/sr9hbS/h
+	 3kfTOX8g2buBLgbmVNFt5oOcnsVPhHvhmPVYUjAAC6dIUtOYLsrQA0yv4XpL9uSJPW
+	 NbSrLc0tMJvzjgOJC6xMGcr77mgbV//ugMu9HYVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kerem Karabay <kekrby@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0982/1146] HID: apple: fix key translations where multiple quirks attempt to translate the same key
-Date: Wed, 28 Dec 2022 15:42:01 +0100
-Message-Id: <20221228144357.037648075@linuxfoundation.org>
+Subject: [PATCH 6.0 1014/1073] pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion
+Date: Wed, 28 Dec 2022 15:43:22 +0100
+Message-Id: <20221228144355.715370434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,242 +42,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kerem Karabay <kekrby@gmail.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 5476fcf7f7b901db1cea92acb1abdd12609e30e1 ]
+[ Upstream commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721 ]
 
-The hid-apple driver does not support chaining translations or
-dependencies on other translations. This creates two problems:
+Wei Wang reported seeing priority inversion caused latencies
+caused by contention on pmsg_lock, and suggested it be switched
+to a rt_mutex.
 
-1 - In Non-English keyboards of Macs, KEY_102ND and KEY_GRAVE are
-swapped and the APPLE_ISO_TILDE_QUIRK is used to work around this
-problem. The quirk is not set for the Macs where these bugs happen yet
-(see the 2nd patch for that), but this can be forced by setting the
-iso_layout parameter. Unfortunately, this only partially works.
-KEY_102ND gets translated to KEY_GRAVE, but KEY_GRAVE does not get
-translated to KEY_102ND, so both of them end up functioning as
-KEY_GRAVE. This is because the driver translates the keys as if Fn was
-pressed and the original is sent if it is not pressed, without any
-further translations happening on the key[#463]. KEY_GRAVE is present at
-macbookpro_no_esc_fn_keys[#195], so this is what happens:
+I was initially hesitant this would help, as the tasks in that
+trace all seemed to be SCHED_NORMAL, so the benefit would be
+limited to only nice boosting.
 
-    - KEY_GRAVE -> KEY_ESC (as if Fn is pressed)
-    - KEY_GRAVE is returned (Fn isn't pressed, so translation is discarded)
-    - KEY_GRAVE -> KEY_102ND (this part is not reached!)
-    ...
+However, another similar issue was raised where the priority
+inversion was seen did involve a blocked RT task so it is clear
+this would be helpful in that case.
 
-2 - In case the touchbar does not work, the driver supports sending
-Escape when Fn+KEY_GRAVE is pressed. As mentioned previously, KEY_102ND
-is actually KEY_GRAVE and needs to be translated before this happens.
-
-Normally, these are the steps that should happen:
-
-    - KEY_102ND -> KEY_GRAVE
-    - KEY_GRAVE -> KEY_ESC (Fn is pressed)
-    - KEY_ESC is returned
-
-Though this is what happens instead, as dependencies on other
-translations are not supported:
-
-    - KEY_102ND -> KEY_ESC (Fn is pressed)
-    - KEY_ESC is returned
-
-This patch fixes both bugs by ordering the translations correctly and by
-making the translations continue and not return immediately after
-translating a key so that chained translations work and translations can
-depend on other ones.
-
-This patch also simplifies the implementation of the swap_fn_leftctrl
-option a little bit, as it makes it simply use a normal translation
-instead adding extra code to translate a key to KEY_FN[#381]. This change
-wasn't put in another patch as the code that translates the Fn key needs
-to be changed because of the changes in the patch, and those changes
-would be discarded with the next patch anyway (the part that originally
-translates KEY_FN to KEY_LEFTCTRL needs to be made an else-if branch of
-the part that transltes KEY_LEFTCTRL to KEY_FN).
-
-Note: Line numbers (#XYZ) are for drivers/hid/hid-apple.c at commit
-20afcc462579 ("HID: apple: Add "GANSS" to the non-Apple list").
-
-Note: These bugs are only present on Macs with a keyboard with no
-dedicated escape key and a non-English layout.
-
-Signed-off-by: Kerem Karabay <kekrby@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel-team@android.com
+Fixes: 9d5438f462ab ("pstore: Add pmsg - user-space accessible pstore object")
+Reported-by: Wei Wang <wvw@google.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221214231834.3711880-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 102 +++++++++++++++++-----------------------
- 1 file changed, 44 insertions(+), 58 deletions(-)
+ fs/pstore/pmsg.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 6970797cdc56..e86bbf85b87e 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -314,6 +314,7 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
+diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
+index d8542ec2f38c..18cf94b597e0 100644
+--- a/fs/pstore/pmsg.c
++++ b/fs/pstore/pmsg.c
+@@ -7,9 +7,10 @@
+ #include <linux/device.h>
+ #include <linux/fs.h>
+ #include <linux/uaccess.h>
++#include <linux/rtmutex.h>
+ #include "internal.h"
  
- static const struct apple_key_translation swapped_fn_leftctrl_keys[] = {
- 	{ KEY_FN, KEY_LEFTCTRL },
-+	{ KEY_LEFTCTRL, KEY_FN },
- 	{ }
- };
+-static DEFINE_MUTEX(pmsg_lock);
++static DEFINE_RT_MUTEX(pmsg_lock);
  
-@@ -375,24 +376,40 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
- 	struct apple_sc *asc = hid_get_drvdata(hid);
- 	const struct apple_key_translation *trans, *table;
- 	bool do_translate;
--	u16 code = 0;
-+	u16 code = usage->code;
- 	unsigned int real_fnmode;
+ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 			  size_t count, loff_t *ppos)
+@@ -28,9 +29,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 	if (!access_ok(buf, count))
+ 		return -EFAULT;
  
--	u16 fn_keycode = (swap_fn_leftctrl) ? (KEY_LEFTCTRL) : (KEY_FN);
--
--	if (usage->code == fn_keycode) {
--		asc->fn_on = !!value;
--		input_event_with_scancode(input, usage->type, KEY_FN,
--				usage->hid, value);
--		return 1;
--	}
--
- 	if (fnmode == 3) {
- 		real_fnmode = (asc->quirks & APPLE_IS_NON_APPLE) ? 2 : 1;
- 	} else {
- 		real_fnmode = fnmode;
- 	}
- 
-+	if (swap_fn_leftctrl) {
-+		trans = apple_find_translation(swapped_fn_leftctrl_keys, code);
-+
-+		if (trans)
-+			code = trans->to;
-+	}
-+
-+	if (iso_layout > 0 || (iso_layout < 0 && (asc->quirks & APPLE_ISO_TILDE_QUIRK) &&
-+			hid->country == HID_COUNTRY_INTERNATIONAL_ISO)) {
-+		trans = apple_find_translation(apple_iso_keyboard, code);
-+
-+		if (trans)
-+			code = trans->to;
-+	}
-+
-+	if (swap_opt_cmd) {
-+		trans = apple_find_translation(swapped_option_cmd_keys, code);
-+
-+		if (trans)
-+			code = trans->to;
-+	}
-+
-+	if (code == KEY_FN)
-+		asc->fn_on = !!value;
-+
- 	if (real_fnmode) {
- 		if (hid->product == USB_DEVICE_ID_APPLE_ALU_WIRELESS_ANSI ||
- 		    hid->product == USB_DEVICE_ID_APPLE_ALU_WIRELESS_ISO ||
-@@ -430,15 +447,18 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
- 		else
- 			table = apple_fn_keys;
- 
--		trans = apple_find_translation (table, usage->code);
-+		trans = apple_find_translation(table, code);
- 
- 		if (trans) {
--			if (test_bit(trans->from, input->key))
-+			bool from_is_set = test_bit(trans->from, input->key);
-+			bool to_is_set = test_bit(trans->to, input->key);
-+
-+			if (from_is_set)
- 				code = trans->from;
--			else if (test_bit(trans->to, input->key))
-+			else if (to_is_set)
- 				code = trans->to;
- 
--			if (!code) {
-+			if (!(from_is_set || to_is_set)) {
- 				if (trans->flags & APPLE_FLAG_FKEY) {
- 					switch (real_fnmode) {
- 					case 1:
-@@ -455,62 +475,31 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
- 					do_translate = asc->fn_on;
- 				}
- 
--				code = do_translate ? trans->to : trans->from;
-+				if (do_translate)
-+					code = trans->to;
- 			}
--
--			input_event_with_scancode(input, usage->type, code,
--					usage->hid, value);
--			return 1;
- 		}
- 
- 		if (asc->quirks & APPLE_NUMLOCK_EMULATION &&
--				(test_bit(usage->code, asc->pressed_numlock) ||
-+				(test_bit(code, asc->pressed_numlock) ||
- 				test_bit(LED_NUML, input->led))) {
--			trans = apple_find_translation(powerbook_numlock_keys,
--					usage->code);
-+			trans = apple_find_translation(powerbook_numlock_keys, code);
- 
- 			if (trans) {
- 				if (value)
--					set_bit(usage->code,
--							asc->pressed_numlock);
-+					set_bit(code, asc->pressed_numlock);
- 				else
--					clear_bit(usage->code,
--							asc->pressed_numlock);
-+					clear_bit(code, asc->pressed_numlock);
- 
--				input_event_with_scancode(input, usage->type,
--						trans->to, usage->hid, value);
-+				code = trans->to;
- 			}
--
--			return 1;
- 		}
- 	}
- 
--	if (iso_layout > 0 || (iso_layout < 0 && (asc->quirks & APPLE_ISO_TILDE_QUIRK) &&
--			hid->country == HID_COUNTRY_INTERNATIONAL_ISO)) {
--		trans = apple_find_translation(apple_iso_keyboard, usage->code);
--		if (trans) {
--			input_event_with_scancode(input, usage->type,
--					trans->to, usage->hid, value);
--			return 1;
--		}
--	}
-+	if (usage->code != code) {
-+		input_event_with_scancode(input, usage->type, code, usage->hid, value);
- 
--	if (swap_opt_cmd) {
--		trans = apple_find_translation(swapped_option_cmd_keys, usage->code);
--		if (trans) {
--			input_event_with_scancode(input, usage->type,
--					trans->to, usage->hid, value);
--			return 1;
--		}
--	}
--
--	if (swap_fn_leftctrl) {
--		trans = apple_find_translation(swapped_fn_leftctrl_keys, usage->code);
--		if (trans) {
--			input_event_with_scancode(input, usage->type,
--					trans->to, usage->hid, value);
--			return 1;
--		}
-+		return 1;
- 	}
- 
- 	return 0;
-@@ -640,9 +629,6 @@ static void apple_setup_input(struct input_dev *input)
- 	apple_setup_key_translation(input, apple2021_fn_keys);
- 	apple_setup_key_translation(input, macbookpro_no_esc_fn_keys);
- 	apple_setup_key_translation(input, macbookpro_dedicated_esc_fn_keys);
--
--	if (swap_fn_leftctrl)
--		apple_setup_key_translation(input, swapped_fn_leftctrl_keys);
+-	mutex_lock(&pmsg_lock);
++	rt_mutex_lock(&pmsg_lock);
+ 	ret = psinfo->write_user(&record, buf);
+-	mutex_unlock(&pmsg_lock);
++	rt_mutex_unlock(&pmsg_lock);
+ 	return ret ? ret : count;
  }
  
- static int apple_input_mapping(struct hid_device *hdev, struct hid_input *hi,
 -- 
 2.35.1
 
