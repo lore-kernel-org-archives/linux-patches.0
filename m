@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDA1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1CBC433D2;
-	Wed, 28 Dec 2022 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0437F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBCC433D2;
+	Wed, 28 Dec 2022 16:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244136;
-	bh=+4Zvaa0MdZ8E7XuqalKiyLuNju0/wJug6N0636E/LTI=;
+	s=korg; t=1672244138;
+	bh=aglx1usQfBM6l0KL+69bpy35bIYjRlMNolD+5Qwgf44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eb/ypVkMsBxFK4AMOyp22qxwRIdrOrxPhjevkgl+Lc5LaKD2uzLdHJcvz4Rkgqk5f
-	 xQQ9xwWOnBSWERZNOXps4shpTUsQFiOgdWcHJHcYMcshA6a4IEzQX4yyfgo5Tu3YOA
-	 H2T26JBP4YIIV7zG1iZyPUQvj/xmxqLOtUcB8r1U=
+	b=rx64sxCyopQIKC0V7sFPUUOiNQoy9FIqkJjFZR2HZaCvS/+qkRjyRd9VgPU8f1F3D
+	 wFBzzXCGYjLAPHi7qKZ4fvpYJW9nKIO22x7VuAx09/SdFDDZQfQ4Ukq4237K/JQx5O
+	 psz6U+B0NwvdPsad9htiTe4QrrCv+JWzrCSoyQP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0617/1146] crypto: cryptd - Use request context instead of stack for sub-request
-Date: Wed, 28 Dec 2022 15:35:56 +0100
-Message-Id: <20221228144346.928267123@linuxfoundation.org>
+Subject: [PATCH 6.0 0657/1073] hwrng: amd - Fix PCI device refcount leak
+Date: Wed, 28 Dec 2022 15:37:25 +0100
+Message-Id: <20221228144345.890523216@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,125 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 3a58c231172537f7b0e19d93ed33decd04f80eab ]
+[ Upstream commit ecadb5b0111ea19fc7c240bb25d424a94471eb7d ]
 
-cryptd is buggy as it tries to use sync_skcipher without going
-through the proper sync_skcipher interface.  In fact it doesn't
-even need sync_skcipher since it's already a proper skcipher and
-can easily access the request context instead of using something
-off the stack.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-Fixes: 36b3875a97b8 ("crypto: cryptd - Remove VLA usage of skcipher")
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. Add the missing
+pci_dev_put() for the normal and error path.
+
+Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/cryptd.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ drivers/char/hw_random/amd-rng.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/cryptd.c b/crypto/cryptd.c
-index 668095eca0fa..ca3a40fc7da9 100644
---- a/crypto/cryptd.c
-+++ b/crypto/cryptd.c
-@@ -68,11 +68,12 @@ struct aead_instance_ctx {
+diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
+index c22d4184bb61..0555e3838bce 100644
+--- a/drivers/char/hw_random/amd-rng.c
++++ b/drivers/char/hw_random/amd-rng.c
+@@ -143,15 +143,19 @@ static int __init amd_rng_mod_init(void)
+ found:
+ 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
+ 	if (err)
+-		return err;
++		goto put_dev;
  
- struct cryptd_skcipher_ctx {
- 	refcount_t refcnt;
--	struct crypto_sync_skcipher *child;
-+	struct crypto_skcipher *child;
- };
+ 	pmbase &= 0x0000FF00;
+-	if (pmbase == 0)
+-		return -EIO;
++	if (pmbase == 0) {
++		err = -EIO;
++		goto put_dev;
++	}
  
- struct cryptd_skcipher_request_ctx {
- 	crypto_completion_t complete;
-+	struct skcipher_request req;
- };
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+-	if (!priv)
+-		return -ENOMEM;
++	if (!priv) {
++		err = -ENOMEM;
++		goto put_dev;
++	}
  
- struct cryptd_hash_ctx {
-@@ -227,13 +228,13 @@ static int cryptd_skcipher_setkey(struct crypto_skcipher *parent,
- 				  const u8 *key, unsigned int keylen)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(parent);
--	struct crypto_sync_skcipher *child = ctx->child;
-+	struct crypto_skcipher *child = ctx->child;
- 
--	crypto_sync_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
--	crypto_sync_skcipher_set_flags(child,
--				       crypto_skcipher_get_flags(parent) &
--					 CRYPTO_TFM_REQ_MASK);
--	return crypto_sync_skcipher_setkey(child, key, keylen);
-+	crypto_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
-+	crypto_skcipher_set_flags(child,
-+				  crypto_skcipher_get_flags(parent) &
-+				  CRYPTO_TFM_REQ_MASK);
-+	return crypto_skcipher_setkey(child, key, keylen);
+ 	if (!request_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE, DRV_NAME)) {
+ 		dev_err(&pdev->dev, DRV_NAME " region 0x%x already in use!\n",
+@@ -185,6 +189,8 @@ static int __init amd_rng_mod_init(void)
+ 	release_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE);
+ out:
+ 	kfree(priv);
++put_dev:
++	pci_dev_put(pdev);
+ 	return err;
  }
  
- static void cryptd_skcipher_complete(struct skcipher_request *req, int err)
-@@ -258,13 +259,13 @@ static void cryptd_skcipher_encrypt(struct crypto_async_request *base,
- 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
--	struct crypto_sync_skcipher *child = ctx->child;
--	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
-+	struct skcipher_request *subreq = &rctx->req;
-+	struct crypto_skcipher *child = ctx->child;
+@@ -200,6 +206,8 @@ static void __exit amd_rng_mod_exit(void)
  
- 	if (unlikely(err == -EINPROGRESS))
- 		goto out;
+ 	release_region(priv->pmbase + PMBASE_OFFSET, PMBASE_SIZE);
  
--	skcipher_request_set_sync_tfm(subreq, child);
-+	skcipher_request_set_tfm(subreq, child);
- 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
- 				      NULL, NULL);
- 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
-@@ -286,13 +287,13 @@ static void cryptd_skcipher_decrypt(struct crypto_async_request *base,
- 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
--	struct crypto_sync_skcipher *child = ctx->child;
--	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
-+	struct skcipher_request *subreq = &rctx->req;
-+	struct crypto_skcipher *child = ctx->child;
- 
- 	if (unlikely(err == -EINPROGRESS))
- 		goto out;
- 
--	skcipher_request_set_sync_tfm(subreq, child);
-+	skcipher_request_set_tfm(subreq, child);
- 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
- 				      NULL, NULL);
- 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
-@@ -343,9 +344,10 @@ static int cryptd_skcipher_init_tfm(struct crypto_skcipher *tfm)
- 	if (IS_ERR(cipher))
- 		return PTR_ERR(cipher);
- 
--	ctx->child = (struct crypto_sync_skcipher *)cipher;
-+	ctx->child = cipher;
- 	crypto_skcipher_set_reqsize(
--		tfm, sizeof(struct cryptd_skcipher_request_ctx));
-+		tfm, sizeof(struct cryptd_skcipher_request_ctx) +
-+		     crypto_skcipher_reqsize(cipher));
- 	return 0;
++	pci_dev_put(priv->pcidev);
++
+ 	kfree(priv);
  }
- 
-@@ -353,7 +355,7 @@ static void cryptd_skcipher_exit_tfm(struct crypto_skcipher *tfm)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	crypto_free_sync_skcipher(ctx->child);
-+	crypto_free_skcipher(ctx->child);
- }
- 
- static void cryptd_skcipher_free(struct skcipher_instance *inst)
-@@ -931,7 +933,7 @@ struct crypto_skcipher *cryptd_skcipher_child(struct cryptd_skcipher *tfm)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(&tfm->base);
- 
--	return &ctx->child->base;
-+	return ctx->child;
- }
- EXPORT_SYMBOL_GPL(cryptd_skcipher_child);
  
 -- 
 2.35.1
