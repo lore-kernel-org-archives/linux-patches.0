@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D021C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BC7C433D2;
-	Wed, 28 Dec 2022 16:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722B91C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3E1C433EF;
+	Wed, 28 Dec 2022 16:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244980;
-	bh=eIyGQwYvZ3wNwvA2OOytTQrxnuJbIjeA7zqaBWARaxY=;
+	s=korg; t=1672244983;
+	bh=ZNqTtWOn2vMG1EH6bQnAzJfZfj7e79dr/PqWV1t5Vt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7SINqwtas4f/OsDmh1caaqMp5GFyxqjsgv2FBHhdOqMDckBEO0oEER3DI7nyclEf
-	 9c7V/DkkRUyEvHu7korh5NSHa+SBP63SRmVVf3Adxr6Z2CORy+ZLJS3qLiirhIvUql
-	 s8bxqrhNuq2zNnRUC3JvG0px9u3NfZQu/usgxsPc=
+	b=mou//w/pZpxn9McsmavPCGDRTmoQD1cYqT5kAYxftCdWLfk6Vk4fV86DcOr1ML3KK
+	 VjYz/HX0yE/f8m87PV8FFXZu1yuGJeRGU2degIOp4tsWRAGv2+im1jamlbxmHnGGk9
+	 kx6fBShr3yx1KEZ2Udk2chkHz+PXu0dB81GwqiIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0810/1073] selftests/powerpc: Fix resource leaks
-Date: Wed, 28 Dec 2022 15:39:58 +0100
-Message-Id: <20221228144350.009672258@linuxfoundation.org>
+Subject: [PATCH 6.0 0788/1073] rtc: cmos: Rename ACPI-related functions
+Date: Wed, 28 Dec 2022 15:39:36 +0100
+Message-Id: <20221228144349.415328879@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,49 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 8f4ab7da904ab7027ccd43ddb4f0094e932a5877 ]
+[ Upstream commit d13e9ad9f5146f066a5c5a1cc993d09e4fb21ead ]
 
-In check_all_cpu_dscr_defaults, opendir() opens the directory stream.
-Add missing closedir() in the error path to release it.
+The names of rtc_wake_setup() and cmos_wake_setup() don't indicate
+that these functions are ACPI-related, which is the case, and the
+former doesn't really reflect the role of the function.
 
-In check_cpu_dscr_default, open() creates an open file descriptor.
-Add missing close() in the error path to release it.
+Rename them to acpi_rtc_event_setup() and acpi_cmos_wake_setup(),
+respectively, to address this shortcoming.
 
-Fixes: ebd5858c904b ("selftests/powerpc: Add test for all DSCR sysfs interfaces")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221205084429.570654-1-linmq006@gmail.com
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-index fbbdffdb2e5d..f20d1c166d1e 100644
---- a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-+++ b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-@@ -24,6 +24,7 @@ static int check_cpu_dscr_default(char *file, unsigned long val)
- 	rc = read(fd, buf, sizeof(buf));
- 	if (rc == -1) {
- 		perror("read() failed");
-+		close(fd);
- 		return 1;
- 	}
- 	close(fd);
-@@ -65,8 +66,10 @@ static int check_all_cpu_dscr_defaults(unsigned long val)
- 		if (access(file, F_OK))
- 			continue;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 2a21d8281aa6..039486bfedf4 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -784,7 +784,7 @@ static u32 rtc_handler(void *context)
+ 	return ACPI_INTERRUPT_HANDLED;
+ }
  
--		if (check_cpu_dscr_default(file, val))
-+		if (check_cpu_dscr_default(file, val)) {
-+			closedir(sysfs);
- 			return 1;
-+		}
+-static void rtc_wake_setup(struct device *dev)
++static void acpi_rtc_event_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -828,7 +828,7 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-static void cmos_wake_setup(struct device *dev)
++static void acpi_cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -880,11 +880,11 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ 
+ #else /* !CONFIG_ACPI */
+ 
+-static inline void rtc_wake_setup(struct device *dev)
++static inline void acpi_rtc_event_setup(struct device *dev)
+ {
+ }
+ 
+-static inline void cmos_wake_setup(struct device *dev)
++static inline void acpi_cmos_wake_setup(struct device *dev)
+ {
+ }
+ 
+@@ -986,7 +986,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
+ 	} else {
+-		cmos_wake_setup(dev);
++		acpi_cmos_wake_setup(dev);
  	}
- 	closedir(sysfs);
- 	return 0;
+ 
+ 	if (cmos_rtc.day_alrm >= 128)
+@@ -1091,7 +1091,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	 * the ACPI RTC fixed event.
+ 	 */
+ 	if (!info)
+-		rtc_wake_setup(dev);
++		acpi_rtc_event_setup(dev);
+ 
+ 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
+ 		 !is_valid_irq(rtc_irq) ? "no alarms" :
 -- 
 2.35.1
 
