@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901FE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16681C433EF;
-	Wed, 28 Dec 2022 15:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D4F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B242AC433D2;
+	Wed, 28 Dec 2022 15:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242416;
-	bh=GiRr8oyJrcGZaaBn7R6VnIGDzjvuXcxVtuODgBd6lJo=;
+	s=korg; t=1672242419;
+	bh=eOD5xF4l3voCHKji6uotozJLhreiNAuDHg892/xOdLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2bW89q0r9ArHJEPKe5mZ7f+IO8C3eg7x44BYm/EnmGUX4fQzfaHdotsJDJsqr3E4/
-	 ks3w2bV+P2zIA6YEwIeCEQQXWQHWbqT/bHM9i1dSL8sMee184G0nWu0MythxunUyf6
-	 CJkZEys6uq0dL/XJu4GpSe8Nf6s04dI7eBflSyvo=
+	b=T2TjjCKJrQlJFpJL21xC9skepxPc1dYJOxXOeg7JXVx6uA2kFIjDBDHNXXPpaTzOp
+	 l3TMyPjyM3uMr67HuuijRWNyCtEsbwKrBqRC9W5wCc0jFrraiqLvx6KhMfzjxfgkfP
+	 pSMmV9FKdHANr5fcu4QtLFdAp2v0y5sudajFvAhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	GUO Zihua <guozihua@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0367/1146] clk: imx93: unmap anatop base in error handling path
-Date: Wed, 28 Dec 2022 15:31:46 +0100
-Message-Id: <20221228144340.134571411@linuxfoundation.org>
+Subject: [PATCH 5.15 601/731] rtc: mxc_v2: Add missing clk_disable_unprepare()
+Date: Wed, 28 Dec 2022 15:41:48 +0100
+Message-Id: <20221228144313.958342875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,72 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit bda7b7f396f94d8df89ecacc88f2826908e8762c ]
+[ Upstream commit 55d5a86618d3b1a768bce01882b74cbbd2651975 ]
 
-The anatop base is not unmapped during error handling path, fix it.
+The call to clk_disable_unprepare() is left out in the error handling of
+devm_rtc_allocate_device. Add it back.
 
-Fixes: 24defbe194b6 ("clk: imx: add i.MX93 clk")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221028095211.2598312-2-peng.fan@oss.nxp.com
+Fixes: 5490a1e018a4 ("rtc: mxc_v2: fix possible race condition")
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Link: https://lore.kernel.org/r/20221122085046.21689-1-guozihua@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/rtc/rtc-mxc_v2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index 40ecee3b5e78..6c39f3431c79 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -258,7 +258,7 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	const struct imx93_clk_root *root;
- 	const struct imx93_clk_ccgr *ccgr;
--	void __iomem *base = NULL;
-+	void __iomem *base, *anatop_base;
- 	int i, ret;
+diff --git a/drivers/rtc/rtc-mxc_v2.c b/drivers/rtc/rtc-mxc_v2.c
+index 5e0383401629..f6d2ad91ff7a 100644
+--- a/drivers/rtc/rtc-mxc_v2.c
++++ b/drivers/rtc/rtc-mxc_v2.c
+@@ -336,8 +336,10 @@ static int mxc_rtc_probe(struct platform_device *pdev)
+ 	}
  
- 	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
-@@ -285,20 +285,22 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 								    "sys_pll_pfd2", 1, 2);
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx93-anatop");
--	base = of_iomap(np, 0);
-+	anatop_base = of_iomap(np, 0);
- 	of_node_put(np);
--	if (WARN_ON(!base))
-+	if (WARN_ON(!anatop_base))
- 		return -ENOMEM;
- 
--	clks[IMX93_CLK_AUDIO_PLL] = imx_clk_fracn_gppll("audio_pll", "osc_24m", base + 0x1200,
-+	clks[IMX93_CLK_AUDIO_PLL] = imx_clk_fracn_gppll("audio_pll", "osc_24m", anatop_base + 0x1200,
- 							&imx_fracn_gppll);
--	clks[IMX93_CLK_VIDEO_PLL] = imx_clk_fracn_gppll("video_pll", "osc_24m", base + 0x1400,
-+	clks[IMX93_CLK_VIDEO_PLL] = imx_clk_fracn_gppll("video_pll", "osc_24m", anatop_base + 0x1400,
- 							&imx_fracn_gppll);
- 
- 	np = dev->of_node;
- 	base = devm_platform_ioremap_resource(pdev, 0);
--	if (WARN_ON(IS_ERR(base)))
-+	if (WARN_ON(IS_ERR(base))) {
-+		iounmap(anatop_base);
- 		return PTR_ERR(base);
+ 	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
+-	if (IS_ERR(pdata->rtc))
++	if (IS_ERR(pdata->rtc)) {
++		clk_disable_unprepare(pdata->clk);
+ 		return PTR_ERR(pdata->rtc);
 +	}
  
- 	for (i = 0; i < ARRAY_SIZE(root_array); i++) {
- 		root = &root_array[i];
-@@ -327,6 +329,7 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 
- unregister_hws:
- 	imx_unregister_hw_clocks(clks, IMX93_CLK_END);
-+	iounmap(anatop_base);
- 
- 	return ret;
- }
+ 	pdata->rtc->ops = &mxc_rtc_ops;
+ 	pdata->rtc->range_max = U32_MAX;
 -- 
 2.35.1
 
