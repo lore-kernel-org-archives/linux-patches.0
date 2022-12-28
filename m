@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4001863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52512C433EF;
-	Wed, 28 Dec 2022 15:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6FD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B4DC433EF;
+	Wed, 28 Dec 2022 15:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239885;
-	bh=3vwFcaieluRi6q0iYneGoYE0UQMjzAZ7MNAi9XLmY6U=;
+	s=korg; t=1672239888;
+	bh=n/C2t+sJi+BcjAa9Qf7vzV++y35dqIbsd7k4GwQBhUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRqcFf6xk++UoM7VLGEKflGeM/2eYIGa6yzAz9vb6lWXRfKxg/HlZzGNlhpURyQnt
-	 WketcbAyd3MXtiKXoP+WfSw/o3/gTf6X+NoMExvLj/pGaYED1Z2MJDGr4loUjnpjkM
-	 3ow/A4QAV41fOn2ETxkRex6x5/ImV6inUsO5PV3w=
+	b=G6JI0w1tMBeZH4Xf9hpxLmd5PJeeAoo8HepdJsssxMXeaz8MupwzEJnPs0CU2rH5G
+	 +thNEyF6fSwHKNterypc0qnoyJ+81iTcpnlC0bEwXJHPvBk0txs2RXh1Yq6eIxx851
+	 TRrsg/j663KfEJ0GddQ3IX8SL0u7xCoi4wjv08V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Maxim Uvarov <maxim.uvarov@linaro.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0072/1073] ARM: dts: armada-375: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:40 +0100
-Message-Id: <20221228144330.037022216@linuxfoundation.org>
+Subject: [PATCH 6.0 0090/1073] tpm/tpm_ftpm_tee: Fix error handling in ftpm_mod_init()
+Date: Wed, 28 Dec 2022 15:27:58 +0100
+Message-Id: <20221228144330.500514910@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,35 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 823956d2436f70ced74c0fe8ab99facd8abfc060 ]
+[ Upstream commit 2b7d07f7acaac2c7750e420dcf4414588ede6d03 ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+The ftpm_mod_init() returns the driver_register() directly without checking
+its return value, if driver_register() failed, the ftpm_tee_plat_driver is
+not unregistered.
 
-Fixes: 4de59085091f ("ARM: mvebu: add Device Tree description of the Armada 375 SoC")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fix by unregister ftpm_tee_plat_driver when driver_register() failed.
+
+Fixes: 9f1944c23c8c ("tpm_ftpm_tee: register driver on TEE bus")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Maxim Uvarov <maxim.uvarov@linaro.org>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-375.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm_ftpm_tee.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-375.dtsi b/arch/arm/boot/dts/armada-375.dtsi
-index 7f2f24a29e6c..352a2f7ba311 100644
---- a/arch/arm/boot/dts/armada-375.dtsi
-+++ b/arch/arm/boot/dts/armada-375.dtsi
-@@ -582,7 +582,7 @@ pcie0: pcie@1,0 {
+diff --git a/drivers/char/tpm/tpm_ftpm_tee.c b/drivers/char/tpm/tpm_ftpm_tee.c
+index 5c233423c56f..deff23bb54bf 100644
+--- a/drivers/char/tpm/tpm_ftpm_tee.c
++++ b/drivers/char/tpm/tpm_ftpm_tee.c
+@@ -397,7 +397,13 @@ static int __init ftpm_mod_init(void)
+ 	if (rc)
+ 		return rc;
  
- 			pcie1: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
+-	return driver_register(&ftpm_tee_driver.driver);
++	rc = driver_register(&ftpm_tee_driver.driver);
++	if (rc) {
++		platform_driver_unregister(&ftpm_tee_plat_driver);
++		return rc;
++	}
++
++	return 0;
+ }
+ 
+ static void __exit ftpm_mod_exit(void)
 -- 
 2.35.1
 
