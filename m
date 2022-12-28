@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B1F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD66DC433EF;
-	Wed, 28 Dec 2022 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03961863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F558C433D2;
+	Wed, 28 Dec 2022 15:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242044;
-	bh=PpfDcUChdczWqCkpHadSl7VJy3AjayjgqxcU11WcKCM=;
+	s=korg; t=1672242046;
+	bh=3zxdj9fRZxlIrvdw1ZwgYZhi4ueY1HbY+3DNRBCDTxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F76+rIEZL3Ruqky5fACEt4+Lw5vKyM3Guxjrwo35h7l48N1kQuQWb6TX6Mqd29Wbp
-	 VePckQy0FhrlRFqyLQPprVX/RPWuCapaLLuGhu7uEJ7Ea/WWOf8eNCSoPzXApO3jz/
-	 IBPrZXpTBelviD/+z/fawo5T9hoQC0SkjLlPWvSU=
+	b=0VyS5YXOTgJWbJRH9Azo8pp5xrzRhU7N++wl/oeMHus2Z4JVBIz/VBkM4JFft+jRO
+	 VM/sEMkDEC6N2QNLrNV11W5ss28ysL6kfZXkSZ+WP1Tmj0W3o/U4Y8rNtof4aKaBmH
+	 64mGHtPNSZe0avAbaI1lTUdY8rwF6/hqGl+jUghQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0319/1146] wifi: iwlwifi: mei: dont send SAP commands if AMT is disabled
-Date: Wed, 28 Dec 2022 15:30:58 +0100
-Message-Id: <20221228144338.818086540@linuxfoundation.org>
+Subject: [PATCH 6.0 0358/1073] HID: hid-sensor-custom: set fixed size for custom attributes
+Date: Wed, 28 Dec 2022 15:32:26 +0100
+Message-Id: <20221228144337.726787436@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,191 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 95170a46b7dddbc3ac31b20ef2e8fa9d556d783d ]
+[ Upstream commit 9d013910df22de91333a0acc81d1dbb115bd76f6 ]
 
-We should not send any SAP command to CSME if AMT is disabled.
+This is no bugfix (so no Fixes: tag is necessary) as it is
+taken care of in hid_sensor_custom_add_attributes().
 
-Reported-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20221030191011.ea222d41c781.Ifc90ddc3e35187683ff7f59371d792b61c8854c8@changeid
+The motivation for this patch is that:
+hid_sensor_custom_field.attr_name and
+hid_sensor_custom_field.attrs
+has the size of HID_CUSTOM_TOTAL_ATTRS and used in same context.
+
+We compare against HID_CUSTOM_TOTAL_ATTRS when
+looping through hid_custom_attrs.
+
+We will silent the smatch error:
+hid_sensor_custom_add_attributes() error: buffer overflow
+'hid_custom_attrs' 8 <= 10
+
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 85 ++++++++++---------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ drivers/hid/hid-sensor-custom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index 90646c54a3c5..64a637ef199c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -596,8 +596,6 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
- 			   const struct iwl_sap_me_msg_start_ok *rsp,
- 			   ssize_t len)
- {
--	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
--
- 	if (len != sizeof(*rsp)) {
- 		dev_err(&cldev->dev,
- 			"got invalid SAP_ME_MSG_START_OK from CSME firmware\n");
-@@ -616,13 +614,10 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
+diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-sensor-custom.c
+index 32c2306e240d..602465ad2745 100644
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -62,7 +62,7 @@ struct hid_sensor_sample {
+ 	u32 raw_len;
+ } __packed;
  
- 	mutex_lock(&iwl_mei_mutex);
- 	set_bit(IWL_MEI_STATUS_SAP_CONNECTED, &iwl_mei_status);
--	/* wifi driver has registered already */
--	if (iwl_mei_cache.ops) {
--		iwl_mei_send_sap_msg(mei->cldev,
--				     SAP_MSG_NOTIF_WIFIDR_UP);
--		iwl_mei_cache.ops->sap_connected(iwl_mei_cache.priv);
--	}
--
-+	/*
-+	 * We'll receive AMT_STATE SAP message in a bit and
-+	 * that will continue the flow
-+	 */
- 	mutex_unlock(&iwl_mei_mutex);
- }
- 
-@@ -715,6 +710,13 @@ static void iwl_mei_set_init_conf(struct iwl_mei *mei)
- 		.val = cpu_to_le32(iwl_mei_cache.rf_kill),
- 	};
- 
-+	/* wifi driver has registered already */
-+	if (iwl_mei_cache.ops) {
-+		iwl_mei_send_sap_msg(mei->cldev,
-+				     SAP_MSG_NOTIF_WIFIDR_UP);
-+		iwl_mei_cache.ops->sap_connected(iwl_mei_cache.priv);
-+	}
-+
- 	iwl_mei_send_sap_msg(mei->cldev, SAP_MSG_NOTIF_WHO_OWNS_NIC);
- 
- 	if (iwl_mei_cache.conn_info) {
-@@ -1420,10 +1422,7 @@ void iwl_mei_host_associated(const struct iwl_mei_conn_info *conn_info,
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
--		goto out;
--
--	if (!mei->amt_enabled)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1452,7 +1451,7 @@ void iwl_mei_host_disassociated(void)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1488,7 +1487,7 @@ void iwl_mei_set_rfkill_state(bool hw_rfkill, bool sw_rfkill)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1517,7 +1516,7 @@ void iwl_mei_set_nic_info(const u8 *mac_address, const u8 *nvm_address)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1545,7 +1544,7 @@ void iwl_mei_set_country_code(u16 mcc)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1571,7 +1570,7 @@ void iwl_mei_set_power_limit(const __le16 *power_limit)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei)
-+	if (!mei && !mei->amt_enabled)
- 		goto out;
- 
- 	memcpy(msg.sar_chain_info_table, power_limit, sizeof(msg.sar_chain_info_table));
-@@ -1678,9 +1677,10 @@ int iwl_mei_register(void *priv, const struct iwl_mei_ops *ops)
- 
- 		/* we have already a SAP connection */
- 		if (iwl_mei_is_connected()) {
--			iwl_mei_send_sap_msg(mei->cldev,
--					     SAP_MSG_NOTIF_WIFIDR_UP);
--			ops->rfkill(priv, mei->link_prot_state);
-+			if (mei->amt_enabled)
-+				iwl_mei_send_sap_msg(mei->cldev,
-+						     SAP_MSG_NOTIF_WIFIDR_UP);
-+			ops->rfkill(priv, mei->link_prot_state, false);
- 		}
- 	}
- 	ret = 0;
-@@ -1931,29 +1931,32 @@ static void iwl_mei_remove(struct mei_cl_device *cldev)
- 
- 	mutex_lock(&iwl_mei_mutex);
- 
--	/*
--	 * Tell CSME that we are going down so that it won't access the
--	 * memory anymore, make sure this message goes through immediately.
--	 */
--	mei->csa_throttled = false;
--	iwl_mei_send_sap_msg(mei->cldev,
--			     SAP_MSG_NOTIF_HOST_GOES_DOWN);
-+	if (mei->amt_enabled) {
-+		/*
-+		 * Tell CSME that we are going down so that it won't access the
-+		 * memory anymore, make sure this message goes through immediately.
-+		 */
-+		mei->csa_throttled = false;
-+		iwl_mei_send_sap_msg(mei->cldev,
-+				     SAP_MSG_NOTIF_HOST_GOES_DOWN);
- 
--	for (i = 0; i < SEND_SAP_MAX_WAIT_ITERATION; i++) {
--		if (!iwl_mei_host_to_me_data_pending(mei))
--			break;
-+		for (i = 0; i < SEND_SAP_MAX_WAIT_ITERATION; i++) {
-+			if (!iwl_mei_host_to_me_data_pending(mei))
-+				break;
- 
--		msleep(5);
--	}
-+			msleep(20);
-+		}
- 
--	/*
--	 * If we couldn't make sure that CSME saw the HOST_GOES_DOWN message,
--	 * it means that it will probably keep reading memory that we are going
--	 * to unmap and free, expect IOMMU error messages.
--	 */
--	if (i == SEND_SAP_MAX_WAIT_ITERATION)
--		dev_err(&mei->cldev->dev,
--			"Couldn't get ACK from CSME on HOST_GOES_DOWN message\n");
-+		/*
-+		 * If we couldn't make sure that CSME saw the HOST_GOES_DOWN
-+		 * message, it means that it will probably keep reading memory
-+		 * that we are going to unmap and free, expect IOMMU error
-+		 * messages.
-+		 */
-+		if (i == SEND_SAP_MAX_WAIT_ITERATION)
-+			dev_err(&mei->cldev->dev,
-+				"Couldn't get ACK from CSME on HOST_GOES_DOWN message\n");
-+	}
- 
- 	mutex_unlock(&iwl_mei_mutex);
- 
+-static struct attribute hid_custom_attrs[] = {
++static struct attribute hid_custom_attrs[HID_CUSTOM_TOTAL_ATTRS] = {
+ 	{.name = "name", .mode = S_IRUGO},
+ 	{.name = "units", .mode = S_IRUGO},
+ 	{.name = "unit-expo", .mode = S_IRUGO},
 -- 
 2.35.1
 
