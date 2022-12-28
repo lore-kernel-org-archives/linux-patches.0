@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5CB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43175C433D2;
-	Wed, 28 Dec 2022 15:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F63D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10F0C433D2;
+	Wed, 28 Dec 2022 15:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242573;
-	bh=8/sVOYx2bnqClV5wMIKys2+H3FCefamDGqS5rgWovWw=;
+	s=korg; t=1672242576;
+	bh=WBSylKWzXsCQ90vpG6DNlzMS6ha4uJBzIU7RLo3BUGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqP4txTZ1CGQwnVTn31DPDZUH5t8unxrwzexlhJusKmCHLEo1ZKgaKpahr/dKrUZ/
-	 BkSmOplVJAL/uClgieqtxofI7xAdYUq5Pk1crCZxkrQs+YOK1jutDT19BSrtslvWJp
-	 +I0gMGXUYBHpoarG5oaGDU4W0CMTkqrorDSfY+o0=
+	b=jLqF1p8zoK/21g/8b2HmlZNrmctUhM0yG6rwunCIzBckU5lZi1WQ104TwAnQNEBqJ
+	 o9sLAgRkS+pcNSsF8gJMojcu2VRnWlAjv4t9Pnq+kVb8ak5FNIL3SiTzOD4PdliAf/
+	 ou50xJ7MyU1GgZn6iC/e4KnMoNLqkt6+O8CQFWyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	Stephen Boyd <sboyd@kernel.org>,
+	syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0427/1073] clk: visconti: Fix memory leak in visconti_register_pll()
-Date: Wed, 28 Dec 2022 15:33:35 +0100
-Message-Id: <20221228144339.620969371@linuxfoundation.org>
+Subject: [PATCH 5.15 621/731] udf: Avoid double brelse() in udf_rename()
+Date: Wed, 28 Dec 2022 15:42:08 +0100
+Message-Id: <20221228144314.533920032@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit b55226f8553d255f5002c751c7c6ba9291f34bf2 ]
+[ Upstream commit c791730f2554a9ebb8f18df9368dc27d4ebc38c2 ]
 
-@pll->rate_table has allocated memory by kmemdup(), if clk_hw_register()
-fails, it should be freed, otherwise it will cause memory leak issue,
-this patch fixes it.
+syzbot reported a warning like below [1]:
 
-Fixes: b4cbe606dc36 ("clk: visconti: Add support common clock driver and reset driver")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221122152353.204132-1-xiujianfeng@huawei.com
-Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+VFS: brelse: Trying to free free buffer
+WARNING: CPU: 2 PID: 7301 at fs/buffer.c:1145 __brelse+0x67/0xa0
+...
+Call Trace:
+ <TASK>
+ invalidate_bh_lru+0x99/0x150
+ smp_call_function_many_cond+0xe2a/0x10c0
+ ? generic_remap_file_range_prep+0x50/0x50
+ ? __brelse+0xa0/0xa0
+ ? __mutex_lock+0x21c/0x12d0
+ ? smp_call_on_cpu+0x250/0x250
+ ? rcu_read_lock_sched_held+0xb/0x60
+ ? lock_release+0x587/0x810
+ ? __brelse+0xa0/0xa0
+ ? generic_remap_file_range_prep+0x50/0x50
+ on_each_cpu_cond_mask+0x3c/0x80
+ blkdev_flush_mapping+0x13a/0x2f0
+ blkdev_put_whole+0xd3/0xf0
+ blkdev_put+0x222/0x760
+ deactivate_locked_super+0x96/0x160
+ deactivate_super+0xda/0x100
+ cleanup_mnt+0x222/0x3d0
+ task_work_run+0x149/0x240
+ ? task_work_cancel+0x30/0x30
+ do_exit+0xb29/0x2a40
+ ? reacquire_held_locks+0x4a0/0x4a0
+ ? do_raw_spin_lock+0x12a/0x2b0
+ ? mm_update_next_owner+0x7c0/0x7c0
+ ? rwlock_bug.part.0+0x90/0x90
+ ? zap_other_threads+0x234/0x2d0
+ do_group_exit+0xd0/0x2a0
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0x34/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The cause of the issue is that brelse() is called on both ofibh.sbh
+and ofibh.ebh by udf_find_entry() when it returns NULL.  However,
+brelse() is called by udf_rename(), too.  So, b_count on buffer_head
+becomes unbalanced.
+
+This patch fixes the issue by not calling brelse() by udf_rename()
+when udf_find_entry() returns NULL.
+
+Link: https://syzkaller.appspot.com/bug?id=8297f45698159c6bca8a1f87dc983667c1a1c851 [1]
+Reported-by: syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221023095741.271430-1-syoshida@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/visconti/pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/udf/namei.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
-index a484cb945d67..1f3234f22667 100644
---- a/drivers/clk/visconti/pll.c
-+++ b/drivers/clk/visconti/pll.c
-@@ -277,6 +277,7 @@ static struct clk_hw *visconti_register_pll(struct visconti_pll_provider *ctx,
- 	ret = clk_hw_register(NULL, &pll->hw);
- 	if (ret) {
- 		pr_err("failed to register pll clock %s : %d\n", name, ret);
-+		kfree(pll->rate_table);
- 		kfree(pll);
- 		pll_hw_clk = ERR_PTR(ret);
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index 865e658535b1..0e30a50060d9 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -1091,8 +1091,9 @@ static int udf_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 		return -EINVAL;
+ 
+ 	ofi = udf_find_entry(old_dir, &old_dentry->d_name, &ofibh, &ocfi);
+-	if (IS_ERR(ofi)) {
+-		retval = PTR_ERR(ofi);
++	if (!ofi || IS_ERR(ofi)) {
++		if (IS_ERR(ofi))
++			retval = PTR_ERR(ofi);
+ 		goto end_rename;
  	}
+ 
+@@ -1101,8 +1102,7 @@ static int udf_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 
+ 	brelse(ofibh.sbh);
+ 	tloc = lelb_to_cpu(ocfi.icb.extLocation);
+-	if (!ofi || udf_get_lb_pblock(old_dir->i_sb, &tloc, 0)
+-	    != old_inode->i_ino)
++	if (udf_get_lb_pblock(old_dir->i_sb, &tloc, 0) != old_inode->i_ino)
+ 		goto end_rename;
+ 
+ 	nfi = udf_find_entry(new_dir, &new_dentry->d_name, &nfibh, &ncfi);
 -- 
 2.35.1
 
