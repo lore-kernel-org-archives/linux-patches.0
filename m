@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38DE1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44745C433D2;
-	Wed, 28 Dec 2022 16:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD5C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E370CC433D2;
+	Wed, 28 Dec 2022 16:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243906;
-	bh=5iqSBlOnwynat1aGwPMl3fxEZQdgGlLXUiz1C0BZWC4=;
+	s=korg; t=1672243909;
+	bh=sBVBxC3idSlA6Fa2PoZPiNDNc5jGQgjGW2Vq+uhcgFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJAAMXHeGenPpI6Vrk3YQztqXoKUJ0TfaW3IMIlyMi46+JONnajNVuHLaHITVH0i6
-	 h5Jd0lmfpiDeMZj2OMh8zJhZqOnqZutknl00zu+n66DBECzBuJ3vM431mpLdBVdqI0
-	 cn1snX/CoQ4w6p2eKdZnvsxf7l7LyG+31IqB88zg=
+	b=ZBej95hCHmKydWpR818iW2gt8nnvSQpIFg579/6kgK8nS6mYDqe4j6rr8WZqfZq0a
+	 lxOiMkv0Cg8fO3FE0rxhxNiE8WFSk/3htfESBnCE6KIKOpOkqpxPaqQ06qGkZ+Y7ko
+	 o5SpyAuBPkEgDe1CdQNvZXyui+BRMX1aV3+KIlZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0538/1146] net: apple: mace: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:34:37 +0100
-Message-Id: <20221228144344.786791794@linuxfoundation.org>
+Subject: [PATCH 6.0 0608/1073] RDMA/irdma: Initialize net_type before checking it
+Date: Wed, 28 Dec 2022 15:36:36 +0100
+Message-Id: <20221228144344.560420325@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit 3dfe3486c1cd4f82b466b7d307f23777137b8acc ]
+[ Upstream commit 9907526d25c4ad8a6e3006487a544140776ba005 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+The av->net_type is not initialized before it is checked in
+irdma_modify_qp_roce. This leads to an incorrect update to the ARP cache
+and QP context. RoCEv2 connections might fail as result.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+Set the net_type using rdma_gid_attr_network_type.
 
-In this case, dev_kfree_skb() is called in mace_tx_timeout() to drop
-the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 80005c43d4c8 ("RDMA/irdma: Use net_type to check network type")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20221122004410.1471-1-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/apple/mace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/apple/mace.c b/drivers/net/ethernet/apple/mace.c
-index d0a771b65e88..fd1b008b7208 100644
---- a/drivers/net/ethernet/apple/mace.c
-+++ b/drivers/net/ethernet/apple/mace.c
-@@ -846,7 +846,7 @@ static void mace_tx_timeout(struct timer_list *t)
-     if (mp->tx_bad_runt) {
- 	mp->tx_bad_runt = 0;
-     } else if (i != mp->tx_fill) {
--	dev_kfree_skb(mp->tx_bufs[i]);
-+	dev_kfree_skb_irq(mp->tx_bufs[i]);
- 	if (++i >= N_TX_RING)
- 	    i = 0;
- 	mp->tx_empty = i;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index dc3f5f3fee90..f6973ea55eda 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -1213,6 +1213,7 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		av->attrs = attr->ah_attr;
+ 		rdma_gid2ip((struct sockaddr *)&av->sgid_addr, &sgid_attr->gid);
+ 		rdma_gid2ip((struct sockaddr *)&av->dgid_addr, &attr->ah_attr.grh.dgid);
++		av->net_type = rdma_gid_attr_network_type(sgid_attr);
+ 		if (av->net_type == RDMA_NETWORK_IPV6) {
+ 			__be32 *daddr =
+ 				av->dgid_addr.saddr_in6.sin6_addr.in6_u.u6_addr32;
 -- 
 2.35.1
 
