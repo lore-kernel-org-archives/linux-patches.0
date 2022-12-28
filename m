@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFAE1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC53C433EF;
-	Wed, 28 Dec 2022 16:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660721C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FAEC433D2;
+	Wed, 28 Dec 2022 16:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246018;
-	bh=U4wrb/1sIcb+wSoSHj+3kJqTPWq/eVa4BTL9SqXFRIA=;
+	s=korg; t=1672246021;
+	bh=nm/Wbr7NOedjlZ8vmENF15cTaDCD/Qv+rae9dVuOmLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VE4fQvN3w3TMUmmSyw7uR2K7gjcpXD4/oFRqrv9/xF9L9cVBtBz1GsiqnnrCv2eXJ
-	 y386opvs+8F9IzOCZLGRu7859HQCVDNA8teq2tG41LA8dO8WUz67kBxvV+i8nOGUtZ
-	 Q8OnycSrSW5wr8dcBF+adHN51gQoTTmN8Z7RF/7o=
+	b=ONkPK+MpUVfdojofm/5ZJ9hnVbiWweoVy9ql2Zgz+IybBW/gqNPTl1q0oI5CUZQs5
+	 hfhy23xoHkgGZvdnDWT85Tz+0i+H0Y54kXxuGWmyDwdT5wM4cg/0ei+FU0uaH6FUWq
+	 WOixL2TX4Snxe8GXkbZH7ImDopSwFcpGeXTixMYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wright Feng <wright.feng@cypress.com>,
-	Chi-hsien Lin <chi-hsien.lin@cypress.com>,
-	Ian Lin <ian.lin@infineon.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Lukasz Majczak <lma@semihlaf.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0967/1146] brcmfmac: return error when getting invalid max_flowrings from dongle
-Date: Wed, 28 Dec 2022 15:41:46 +0100
-Message-Id: <20221228144356.595020946@linuxfoundation.org>
+Subject: [PATCH 6.0 0999/1073] ASoC: Intel: Skylake: Fix driver hang during shutdown
+Date: Wed, 28 Dec 2022 15:43:07 +0100
+Message-Id: <20221228144355.269890357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,41 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wright Feng <wright.feng@cypress.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 2aca4f3734bd717e04943ddf340d49ab62299a00 ]
+[ Upstream commit 171107237246d66bce04f3769d33648f896b4ce3 ]
 
-When firmware hit trap at initialization, host will read abnormal
-max_flowrings number from dongle, and it will cause kernel panic when
-doing iowrite to initialize dongle ring.
-To detect this error at early stage, we directly return error when getting
-invalid max_flowrings(>256).
+AudioDSP cores and HDAudio links need to be turned off on shutdown to
+ensure no communication or data transfer occurs during the procedure.
 
-Signed-off-by: Wright Feng <wright.feng@cypress.com>
-Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
-Signed-off-by: Ian Lin <ian.lin@infineon.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220929031001.9962-3-ian.lin@infineon.com
+Fixes: c5a76a246989 ("ASoC: Intel: Skylake: Add shutdown callback")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Tested-by: Lukasz Majczak <lma@semihlaf.com>
+Link: https://lore.kernel.org/r/20221205085330.857665-6-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/intel/skylake/skl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index aaf8e126478d..5630f6e718e1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -1218,6 +1218,10 @@ static int brcmf_pcie_init_ringbuffers(struct brcmf_pciedev_info *devinfo)
- 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
- 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
- 	}
-+	if (max_flowrings > 256) {
-+		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
-+		return -EIO;
-+	}
+diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
+index aeca58246fc7..77cd7d3e9409 100644
+--- a/sound/soc/intel/skylake/skl.c
++++ b/sound/soc/intel/skylake/skl.c
+@@ -1097,7 +1097,10 @@ static void skl_shutdown(struct pci_dev *pci)
+ 	if (!skl->init_done)
+ 		return;
  
- 	if (devinfo->dma_idx_sz != 0) {
- 		bufsz = (max_submissionrings + max_completionrings) *
+-	snd_hdac_stop_streams_and_chip(bus);
++	snd_hdac_stop_streams(bus);
++	snd_hdac_ext_bus_link_power_down_all(bus);
++	skl_dsp_sleep(skl->dsp);
++
+ 	list_for_each_entry(s, &bus->stream_list, list) {
+ 		stream = stream_to_hdac_ext_stream(s);
+ 		snd_hdac_ext_stream_decouple(bus, stream, false);
 -- 
 2.35.1
 
