@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625461C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE07FC433EF;
-	Wed, 28 Dec 2022 16:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388271C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19A8C433F0;
+	Wed, 28 Dec 2022 16:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244200;
-	bh=D2nGL7fs+XPP1YjAsf8TRYWowaxa1PIxTxY2oyNpFV0=;
+	s=korg; t=1672244203;
+	bh=NUaF6/Ic8zSpYed2waLkMzHSDkpF78etaq6nDNjK23o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KybA8c2wO8WRtpS/VW7ch5eHcUBbcXsXkVf2q3NvueHKwjYCl2hxSDyfYdiqcrg6h
-	 MbORm+Au4vEuSaW0A6vbnD4mlTIZVkXmCSllJP0dCEG3ivYNOxIejCLUV6I2iCvo+q
-	 iDzZ7u1YbZk/OlTIeghNHsQ4UEBxeBsa85GaIx/s=
+	b=WR/tZRuCZFLH7F+ea/wC9u0Z8yioLkQHuMNQwMAHOydB9es3p9qSaDA7z6PuKpNBJ
+	 0AZ18ee1jjalXkjcfEXM+BdF7PsLhwIiyNpDWeeVamue/dC//p+w0tCP96bjLR+Qui
+	 am+vjxArMR4ikGlEDVaTdVF/WR0tmfI5mUP2ZjVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0628/1146] dt-bindings: imx6q-pcie: Fix clock names for imx6sx and imx8mq
-Date: Wed, 28 Dec 2022 15:36:07 +0100
-Message-Id: <20221228144347.226913791@linuxfoundation.org>
+Subject: [PATCH 6.0 0668/1073] vfio: platform: Do not pass return buffer to ACPI _RST method
+Date: Wed, 28 Dec 2022 15:37:36 +0100
+Message-Id: <20221228144346.186014289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,100 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit b8a83e600bdde93e7da41ea3204b2b3832a3c99b ]
+[ Upstream commit e67e070632a665c932d534b8b800477bb3111449 ]
 
-Originally as it was defined the legacy bindings the pcie_inbound_axi and
-pcie_aux clock names were supposed to be used in the fsl,imx6sx-pcie and
-fsl,imx8mq-pcie devices respectively. But the bindings conversion has been
-incorrectly so now the fourth clock name is defined as "pcie_inbound_axi
-for imx6sx-pcie, pcie_aux for imx8mq-pcie", which is completely wrong.
-Let's fix that by conditionally apply the clock-names constraints based on
-the compatible string content.
+The ACPI _RST method has no return value, there's no need to pass a return
+buffer to acpi_evaluate_object().
 
-Link: https://lore.kernel.org/r/20221113191301.5526-2-Sergey.Semin@baikalelectronics.ru
-Fixes: 751ca492f131 ("dt-bindings: PCI: imx6: convert the imx pcie controller to dtschema")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: d30daa33ec1d ("vfio: platform: call _RST method when using ACPI")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20221018152825.891032-1-rafaelmendsr@gmail.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/pci/fsl,imx6q-pcie.yaml          | 46 +++++++++++++++++--
- 1 file changed, 42 insertions(+), 4 deletions(-)
+ drivers/vfio/platform/vfio_platform_common.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-index 376e739bcad4..49b4f7a32e71 100644
---- a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-@@ -14,9 +14,6 @@ description: |+
-   This PCIe host controller is based on the Synopsys DesignWare PCIe IP
-   and thus inherits all the common properties defined in snps,dw-pcie.yaml.
+diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
+index 256f55b84e70..a8d374205a0e 100644
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -72,12 +72,11 @@ static int vfio_platform_acpi_call_reset(struct vfio_platform_device *vdev,
+ 				  const char **extra_dbg)
+ {
+ #ifdef CONFIG_ACPI
+-	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct device *dev = vdev->device;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	acpi_status acpi_ret;
  
--allOf:
--  - $ref: /schemas/pci/snps,dw-pcie.yaml#
--
- properties:
-   compatible:
-     enum:
-@@ -61,7 +58,7 @@ properties:
-       - const: pcie
-       - const: pcie_bus
-       - const: pcie_phy
--      - const: pcie_inbound_axi for imx6sx-pcie, pcie_aux for imx8mq-pcie
-+      - enum: [ pcie_inbound_axi, pcie_aux ]
- 
-   num-lanes:
-     const: 1
-@@ -175,6 +172,47 @@ required:
-   - clocks
-   - clock-names
- 
-+allOf:
-+  - $ref: /schemas/pci/snps,dw-pcie.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: fsl,imx6sx-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - {}
-+            - {}
-+            - {}
-+            - const: pcie_inbound_axi
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: fsl,imx8mq-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - {}
-+            - {}
-+            - {}
-+            - const: pcie_aux
-+  - if:
-+      properties:
-+        compatible:
-+          not:
-+            contains:
-+              enum:
-+                - fsl,imx6sx-pcie
-+                - fsl,imx8mq-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          maxItems: 3
-+
- unevaluatedProperties: false
- 
- examples:
+-	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, &buffer);
++	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, NULL);
+ 	if (ACPI_FAILURE(acpi_ret)) {
+ 		if (extra_dbg)
+ 			*extra_dbg = acpi_format_exception(acpi_ret);
 -- 
 2.35.1
 
