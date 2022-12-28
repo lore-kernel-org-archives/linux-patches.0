@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDE41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2593EC433D2;
-	Wed, 28 Dec 2022 15:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4328B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE550C433EF;
+	Wed, 28 Dec 2022 15:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241261;
-	bh=sCGRu5Cad4QczP5ekOdefhRqhZN1nKtzMUlZUOYzmPk=;
+	s=korg; t=1672241264;
+	bh=L4HOynuojP2OpWV5mn8z5MgOqF0nYwEKQpFd26sPJ8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omHCxAgvvsobokD2U3cODWJiHE5Rqt6/1vRZAEQ3ya6QpQAcRDXgnAiHNKSmvy/iw
-	 qDH6r6Okf2iHFrJyCeiJoMM+umD+7YDHMIBO7qhsa58h0cDpnMZRAoiu6Ay6aB2go5
-	 MXD8FiREKcX0wsG83tq/6L/K8Q8qEofhi012rKU4=
+	b=Gobch21mmPKBNl7U2BNVKZbqhuDr0MJ0Di4vVf0u3NXdujdWQz35F9P158iCt/6ss
+	 9hPkWtMPX5+AOVODObffyZC07pmR00Oj6rdURvDZ5yc5BYX/W0Nzj2Yq3o4PqbOrG5
+	 tYCmwwJnXcUiHZEEIMXqj0y8bTgudSx7dkqedXG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Valentin Caron <valentin.caron@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0210/1146] selftest/bpf: Fix error usage of ASSERT_OK in xdp_adjust_tail.c
-Date: Wed, 28 Dec 2022 15:29:09 +0100
-Message-Id: <20221228144335.851847004@linuxfoundation.org>
+Subject: [PATCH 5.15 459/731] serial: stm32: move dma_request_chan() before clk_prepare_enable()
+Date: Wed, 28 Dec 2022 15:39:26 +0100
+Message-Id: <20221228144309.858081206@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,54 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Valentin Caron <valentin.caron@foss.st.com>
 
-[ Upstream commit cbc1c998da59687e8bbc4667154a72eead2daf2d ]
+[ Upstream commit 0d114e9ff940ebad8e88267013bf96c605a6b336 ]
 
-xdp_adjust_tail.c calls ASSERT_OK() to check the return value of
-bpf_prog_test_load(), but the condition is not correct. Fix it.
+If dma_request_chan() returns a PROBE_DEFER error, clk_disable_unprepare()
+will be called and USART clock will be disabled. But early console can be
+still active on the same USART.
 
-Fixes: 791cad025051 ("bpf: selftests: Get rid of CHECK macro in xdp_adjust_tail.c")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-7-xukuohai@huaweicloud.com
+While moving dma_request_chan() before clk_prepare_enable(), the clock
+won't be taken in case of a DMA PROBE_DEFER error, and so it doesn't need
+to be disabled. Then USART is still clocked for early console.
+
+Fixes: a7770a4bfcf4 ("serial: stm32: defer probe for dma devices")
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
+Link: https://lore.kernel.org/r/20221118170602.1057863-1-valentin.caron@foss.st.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 47 ++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-index 009ee37607df..39973ea1ce43 100644
---- a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-+++ b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-@@ -18,7 +18,7 @@ static void test_xdp_adjust_tail_shrink(void)
- 	);
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index ce7ff7a0207f..5c60960e185d 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -1363,22 +1363,10 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	if (!stm32port->info)
+ 		return -EINVAL;
  
- 	err = bpf_prog_test_load(file, BPF_PROG_TYPE_XDP, &obj, &prog_fd);
--	if (ASSERT_OK(err, "test_xdp_adjust_tail_shrink"))
-+	if (!ASSERT_OK(err, "test_xdp_adjust_tail_shrink"))
- 		return;
+-	ret = stm32_usart_init_port(stm32port, pdev);
+-	if (ret)
+-		return ret;
+-
+-	if (stm32port->wakeup_src) {
+-		device_set_wakeup_capable(&pdev->dev, true);
+-		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
+-		if (ret)
+-			goto err_deinit_port;
+-	}
+-
+ 	stm32port->rx_ch = dma_request_chan(&pdev->dev, "rx");
+-	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER) {
+-		ret = -EPROBE_DEFER;
+-		goto err_wakeirq;
+-	}
++	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER)
++		return -EPROBE_DEFER;
++
+ 	/* Fall back in interrupt mode for any non-deferral error */
+ 	if (IS_ERR(stm32port->rx_ch))
+ 		stm32port->rx_ch = NULL;
+@@ -1392,6 +1380,17 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	if (IS_ERR(stm32port->tx_ch))
+ 		stm32port->tx_ch = NULL;
  
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
-@@ -53,7 +53,7 @@ static void test_xdp_adjust_tail_grow(void)
- 	);
++	ret = stm32_usart_init_port(stm32port, pdev);
++	if (ret)
++		goto err_dma_tx;
++
++	if (stm32port->wakeup_src) {
++		device_set_wakeup_capable(&pdev->dev, true);
++		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
++		if (ret)
++			goto err_deinit_port;
++	}
++
+ 	if (stm32port->rx_ch && stm32_usart_of_dma_rx_probe(stm32port, pdev)) {
+ 		/* Fall back in interrupt mode */
+ 		dma_release_channel(stm32port->rx_ch);
+@@ -1428,19 +1427,11 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
  
- 	err = bpf_prog_test_load(file, BPF_PROG_TYPE_XDP, &obj, &prog_fd);
--	if (ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
-+	if (!ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
- 		return;
+-	if (stm32port->tx_ch) {
++	if (stm32port->tx_ch)
+ 		stm32_usart_of_dma_tx_remove(stm32port, pdev);
+-		dma_release_channel(stm32port->tx_ch);
+-	}
+-
+ 	if (stm32port->rx_ch)
+ 		stm32_usart_of_dma_rx_remove(stm32port, pdev);
  
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
-@@ -90,7 +90,7 @@ static void test_xdp_adjust_tail_grow2(void)
- 	);
+-err_dma_rx:
+-	if (stm32port->rx_ch)
+-		dma_release_channel(stm32port->rx_ch);
+-
+-err_wakeirq:
+ 	if (stm32port->wakeup_src)
+ 		dev_pm_clear_wake_irq(&pdev->dev);
  
- 	err = bpf_prog_test_load(file, BPF_PROG_TYPE_XDP, &obj, &prog_fd);
--	if (ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
-+	if (!ASSERT_OK(err, "test_xdp_adjust_tail_grow"))
- 		return;
+@@ -1450,6 +1441,14 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
  
- 	/* Test case-64 */
+ 	stm32_usart_deinit_port(stm32port);
+ 
++err_dma_tx:
++	if (stm32port->tx_ch)
++		dma_release_channel(stm32port->tx_ch);
++
++err_dma_rx:
++	if (stm32port->rx_ch)
++		dma_release_channel(stm32port->rx_ch);
++
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
