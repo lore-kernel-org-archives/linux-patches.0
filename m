@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985C21875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1875DC433EF;
-	Wed, 28 Dec 2022 16:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428931875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE7AC433D2;
+	Wed, 28 Dec 2022 16:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243664;
-	bh=Jjmn+cly577mIBtdrHbVjmakA1xfXxsj/1hf5RIR99I=;
+	s=korg; t=1672243667;
+	bh=ZE63KM8eZHI2fpqlluTeUIYCMZKQwL3KrBXj+DhsKhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1D4W3oRVSipmPZZEaECjhIi/RmqAxrxLjXKC00uhmwbp0Mo9j/CdL4EaAigSyDL5
-	 EWypu7isfaHUtxc2baFs0DsoNAYrkKy7YEnyxk0zVpID5HtbQqURnoGAmvaWmKYbJ3
-	 AdLp1lcsll/nX7YbdHMo4R3PcOJysOp3OJVGFLzY=
+	b=ovmifkzEVxBLuh2jytUrIImqgoOpviTCSPJGWvIVUdG6rqcZYOd+UR3Hs180ipuZO
+	 r/toNB9xQ3YmQhs8YEUY+gD4Her6qoMNFcy5K8APnTG1TNsr3njZuM+5/8cDX49ekN
+	 DlnzkqfGvG6VCkuzS+ViG7451TlfGJgVA+nxpTYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0530/1146] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
-Date: Wed, 28 Dec 2022 15:34:29 +0100
-Message-Id: <20221228144344.571802075@linuxfoundation.org>
+Subject: [PATCH 6.0 0566/1073] RDMA/core: Fix order of nldev_exit call
+Date: Wed, 28 Dec 2022 15:35:54 +0100
+Message-Id: <20221228144343.429555400@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
+[ Upstream commit 4508d32ccced24c972bc4592104513e1ff8439b5 ]
 
-The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
-some error handling case, which will lead to a memory leak. Fix this up
-by adding kfree_skb() to release skb.
+Create symmetrical exit flow by calling to nldev_exit() after
+call to rdma_nl_unregister(RDMA_NL_LS).
 
-Compile tested only.
-
-Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6c80b41abe22 ("RDMA/netlink: Add nldev initialization flows")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/64e676774a53a406f4cde265d5a4cfd6b8e97df9.1666683334.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 49af7e78b7f5..687f43cd466c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1654,12 +1654,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
- 	}
- 
- 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
--	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
- 
- 	ret = dev_set_promiscuity(priv->dev, 1);
--	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
- 
- 	ret = dev_direct_xmit(skb, 0);
- 	if (ret)
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 4053a09b8d33..267d6e7fb18e 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2851,8 +2851,8 @@ static int __init ib_core_init(void)
+ static void __exit ib_core_cleanup(void)
+ {
+ 	roce_gid_mgmt_cleanup();
+-	nldev_exit();
+ 	rdma_nl_unregister(RDMA_NL_LS);
++	nldev_exit();
+ 	unregister_pernet_device(&rdma_dev_net_ops);
+ 	unregister_blocking_lsm_notifier(&ibdev_lsm_nb);
+ 	ib_sa_cleanup();
 -- 
 2.35.1
 
