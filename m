@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8935C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E20C433D2;
-	Wed, 28 Dec 2022 16:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F9E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B800C433EF;
+	Wed, 28 Dec 2022 16:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243880;
-	bh=Fur5jFiopM4rsM8Gi92ftfD6oHd7siyojgCUBjlYClc=;
+	s=korg; t=1672243882;
+	bh=DdxPlXfUqGXzigCc+n1+/8gLfIlJrxmdbQBa7v3KO7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZ7XCRdh5x0VCQPYBxwgOlxV3KACls9ATazPilluTz3SQMGGvAQ2u4+yggDHWL7SS
-	 y6ElRtQUuQYqQ9UZJ65PLau8CnOhdEiwwxv9Jtr+bp/Oj2IlozshxJtE3Xg0+i+Iag
-	 53t4S71VndCDBwnGIZ8osIL9Y2kHgES1IYYv4uOI=
+	b=IpMB6+4++Og15BpvoEtPhGiQC4YmQxrj4FThuRddREIf6ZdqLcVn4IO/bWPT18NYz
+	 EK/4HaqOZuBC41bc2Bj7E2/HQb5H1GIpP2aWIn5ZaCMfJWJCIr3WWZJlsMPhihPpet
+	 O90sX4twQBSAC1fXKqQbfTfaOqECoFSoaW2VbuNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Luoyouming <luoyouming@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0571/1146] apparmor: fix a memleak in multi_transaction_new()
-Date: Wed, 28 Dec 2022 15:35:10 +0100
-Message-Id: <20221228144345.683383782@linuxfoundation.org>
+Subject: [PATCH 6.0 0604/1073] RDMA/hns: Fix incorrect sge nums calculation
+Date: Wed, 28 Dec 2022 15:36:32 +0100
+Message-Id: <20221228144344.452693366@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +36,342 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Luoyouming <luoyouming@huawei.com>
 
-[ Upstream commit c73275cf6834787ca090317f1d20dbfa3b7f05aa ]
+[ Upstream commit 0c5e259b06a8efc69f929ad777ea49281bb58e37 ]
 
-In multi_transaction_new(), the variable t is not freed or passed out
-on the failure of copy_from_user(t->data, buf, size), which could lead
-to a memleak.
+The user usually configures the number of sge through the max_send_sge
+parameter when creating qp, and configures the maximum size of inline data
+that can be sent through max_inline_data. Inline uses sge to fill data to
+send. Expect the following:
 
-Fix this bug by adding a put_multi_transaction(t) in the error path.
+1) When the sge space cannot hold inline data, the sge space needs to be
+   expanded to accommodate all inline data
 
-Fixes: 1dea3b41e84c5 ("apparmor: speed up transactional queries")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+2) When the sge space is enough to accommodate inline data, the upper
+   limit of inline data can be increased so that users can send larger
+   inline data
+
+Currently case one is not implemented. When the inline data is larger than
+the sge space, an error of insufficient sge space occurs.  This part of
+the code needs to be reimplemented according to the expected rules. The
+calculation method of sge num is modified to take the maximum value of
+max_send_sge and the sge for max_inline_data to solve this problem.
+
+Fixes: 05201e01be93 ("RDMA/hns: Refactor process of setting extended sge")
+Fixes: 30b707886aeb ("RDMA/hns: Support inline data in extented sge space for RC")
+Link: https://lore.kernel.org/r/20221108133847.2304539-3-xuhaoyue1@hisilicon.com
+Signed-off-by: Luoyouming <luoyouming@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |   3 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  |  12 +--
+ drivers/infiniband/hw/hns/hns_roce_main.c   |  18 +++-
+ drivers/infiniband/hw/hns/hns_roce_qp.c     | 107 ++++++++++++++++----
+ include/uapi/rdma/hns-abi.h                 |  15 +++
+ 5 files changed, 125 insertions(+), 30 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index d066ccc219e2..7160e7aa58b9 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -868,8 +868,10 @@ static struct multi_transaction *multi_transaction_new(struct file *file,
- 	if (!t)
- 		return ERR_PTR(-ENOMEM);
- 	kref_init(&t->count);
--	if (copy_from_user(t->data, buf, size))
-+	if (copy_from_user(t->data, buf, size)) {
-+		put_multi_transaction(t);
- 		return ERR_PTR(-EFAULT);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index d24996526c4d..4dc296d856d8 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -202,6 +202,7 @@ struct hns_roce_ucontext {
+ 	struct list_head	page_list;
+ 	struct mutex		page_mutex;
+ 	struct hns_user_mmap_entry *db_mmap_entry;
++	u32			config;
+ };
+ 
+ struct hns_roce_pd {
+@@ -335,6 +336,7 @@ struct hns_roce_wq {
+ 	u32		head;
+ 	u32		tail;
+ 	void __iomem	*db_reg;
++	u32		ext_sge_cnt;
+ };
+ 
+ struct hns_roce_sge {
+@@ -637,6 +639,7 @@ struct hns_roce_qp {
+ 	struct list_head	rq_node; /* all recv qps are on a list */
+ 	struct list_head	sq_node; /* all send qps are on a list */
+ 	struct hns_user_mmap_entry *dwqe_mmap_entry;
++	u32			config;
+ };
+ 
+ struct hns_roce_ib_iboe {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index ee05be2e3da6..7e9853c6d412 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -187,14 +187,6 @@ static void set_atomic_seg(const struct ib_send_wr *wr,
+ 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_SGE_NUM, valid_num_sge);
+ }
+ 
+-static unsigned int get_std_sge_num(struct hns_roce_qp *qp)
+-{
+-	if (qp->ibqp.qp_type == IB_QPT_GSI || qp->ibqp.qp_type == IB_QPT_UD)
+-		return 0;
+-
+-	return HNS_ROCE_SGE_IN_WQE;
+-}
+-
+ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
+ 				 const struct ib_send_wr *wr,
+ 				 unsigned int *sge_idx, u32 msg_len)
+@@ -202,14 +194,12 @@ static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
+ 	struct ib_device *ibdev = &(to_hr_dev(qp->ibqp.device))->ib_dev;
+ 	unsigned int left_len_in_pg;
+ 	unsigned int idx = *sge_idx;
+-	unsigned int std_sge_num;
+ 	unsigned int i = 0;
+ 	unsigned int len;
+ 	void *addr;
+ 	void *dseg;
+ 
+-	std_sge_num = get_std_sge_num(qp);
+-	if (msg_len > (qp->sq.max_gs - std_sge_num) * HNS_ROCE_SGE_SIZE) {
++	if (msg_len > qp->sq.ext_sge_cnt * HNS_ROCE_SGE_SIZE) {
+ 		ibdev_err(ibdev,
+ 			  "no enough extended sge space for inline data.\n");
+ 		return -EINVAL;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 4ccb217b2841..a4e7bb5bb194 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -354,10 +354,11 @@ static int hns_roce_alloc_uar_entry(struct ib_ucontext *uctx)
+ static int hns_roce_alloc_ucontext(struct ib_ucontext *uctx,
+ 				   struct ib_udata *udata)
+ {
+-	int ret;
+ 	struct hns_roce_ucontext *context = to_hr_ucontext(uctx);
+-	struct hns_roce_ib_alloc_ucontext_resp resp = {};
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(uctx->device);
++	struct hns_roce_ib_alloc_ucontext_resp resp = {};
++	struct hns_roce_ib_alloc_ucontext ucmd = {};
++	int ret;
+ 
+ 	if (!hr_dev->active)
+ 		return -EAGAIN;
+@@ -365,6 +366,19 @@ static int hns_roce_alloc_ucontext(struct ib_ucontext *uctx,
+ 	resp.qp_tab_size = hr_dev->caps.num_qps;
+ 	resp.srq_tab_size = hr_dev->caps.num_srqs;
+ 
++	ret = ib_copy_from_udata(&ucmd, udata,
++				 min(udata->inlen, sizeof(ucmd)));
++	if (ret)
++		return ret;
++
++	if (hr_dev->pci_dev->revision >= PCI_REVISION_ID_HIP09)
++		context->config = ucmd.config & HNS_ROCE_EXSGE_FLAGS;
++
++	if (context->config & HNS_ROCE_EXSGE_FLAGS) {
++		resp.config |= HNS_ROCE_RSP_EXSGE_FLAGS;
++		resp.max_inline_data = hr_dev->caps.max_sq_inline;
++	}
++
+ 	ret = hns_roce_uar_alloc(hr_dev, &context->uar);
+ 	if (ret)
+ 		goto error_fail_uar_alloc;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 7bee7f6c5e70..a0040096ddb1 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -479,38 +479,109 @@ static int set_rq_size(struct hns_roce_dev *hr_dev, struct ib_qp_cap *cap,
+ 	return 0;
+ }
+ 
+-static u32 get_wqe_ext_sge_cnt(struct hns_roce_qp *qp)
++static u32 get_max_inline_data(struct hns_roce_dev *hr_dev,
++			       struct ib_qp_cap *cap)
+ {
+-	/* GSI/UD QP only has extended sge */
+-	if (qp->ibqp.qp_type == IB_QPT_GSI || qp->ibqp.qp_type == IB_QPT_UD)
+-		return qp->sq.max_gs;
+-
+-	if (qp->sq.max_gs > HNS_ROCE_SGE_IN_WQE)
+-		return qp->sq.max_gs - HNS_ROCE_SGE_IN_WQE;
++	if (cap->max_inline_data) {
++		cap->max_inline_data = roundup_pow_of_two(cap->max_inline_data);
++		return min(cap->max_inline_data,
++			   hr_dev->caps.max_sq_inline);
 +	}
  
- 	return t;
+ 	return 0;
  }
+ 
++static void update_inline_data(struct hns_roce_qp *hr_qp,
++			       struct ib_qp_cap *cap)
++{
++	u32 sge_num = hr_qp->sq.ext_sge_cnt;
++
++	if (hr_qp->config & HNS_ROCE_EXSGE_FLAGS) {
++		if (!(hr_qp->ibqp.qp_type == IB_QPT_GSI ||
++		      hr_qp->ibqp.qp_type == IB_QPT_UD))
++			sge_num = max((u32)HNS_ROCE_SGE_IN_WQE, sge_num);
++
++		cap->max_inline_data = max(cap->max_inline_data,
++					   sge_num * HNS_ROCE_SGE_SIZE);
++	}
++
++	hr_qp->max_inline_data = cap->max_inline_data;
++}
++
++static u32 get_sge_num_from_max_send_sge(bool is_ud_or_gsi,
++					 u32 max_send_sge)
++{
++	unsigned int std_sge_num;
++	unsigned int min_sge;
++
++	std_sge_num = is_ud_or_gsi ? 0 : HNS_ROCE_SGE_IN_WQE;
++	min_sge = is_ud_or_gsi ? 1 : 0;
++	return max_send_sge > std_sge_num ? (max_send_sge - std_sge_num) :
++				min_sge;
++}
++
++static unsigned int get_sge_num_from_max_inl_data(bool is_ud_or_gsi,
++						  u32 max_inline_data)
++{
++	unsigned int inline_sge;
++
++	inline_sge = roundup_pow_of_two(max_inline_data) / HNS_ROCE_SGE_SIZE;
++
++	/*
++	 * if max_inline_data less than
++	 * HNS_ROCE_SGE_IN_WQE * HNS_ROCE_SGE_SIZE,
++	 * In addition to ud's mode, no need to extend sge.
++	 */
++	if (!is_ud_or_gsi && inline_sge <= HNS_ROCE_SGE_IN_WQE)
++		inline_sge = 0;
++
++	return inline_sge;
++}
++
+ static void set_ext_sge_param(struct hns_roce_dev *hr_dev, u32 sq_wqe_cnt,
+ 			      struct hns_roce_qp *hr_qp, struct ib_qp_cap *cap)
+ {
++	bool is_ud_or_gsi = (hr_qp->ibqp.qp_type == IB_QPT_GSI ||
++				hr_qp->ibqp.qp_type == IB_QPT_UD);
++	unsigned int std_sge_num;
++	u32 inline_ext_sge = 0;
++	u32 ext_wqe_sge_cnt;
+ 	u32 total_sge_cnt;
+-	u32 wqe_sge_cnt;
++
++	cap->max_inline_data = get_max_inline_data(hr_dev, cap);
+ 
+ 	hr_qp->sge.sge_shift = HNS_ROCE_SGE_SHIFT;
++	std_sge_num = is_ud_or_gsi ? 0 : HNS_ROCE_SGE_IN_WQE;
++	ext_wqe_sge_cnt = get_sge_num_from_max_send_sge(is_ud_or_gsi,
++							cap->max_send_sge);
+ 
+-	hr_qp->sq.max_gs = max(1U, cap->max_send_sge);
++	if (hr_qp->config & HNS_ROCE_EXSGE_FLAGS) {
++		inline_ext_sge = max(ext_wqe_sge_cnt,
++				     get_sge_num_from_max_inl_data(is_ud_or_gsi,
++							 cap->max_inline_data));
++		hr_qp->sq.ext_sge_cnt = inline_ext_sge ?
++					roundup_pow_of_two(inline_ext_sge) : 0;
+ 
+-	wqe_sge_cnt = get_wqe_ext_sge_cnt(hr_qp);
++		hr_qp->sq.max_gs = max(1U, (hr_qp->sq.ext_sge_cnt + std_sge_num));
++		hr_qp->sq.max_gs = min(hr_qp->sq.max_gs, hr_dev->caps.max_sq_sg);
++
++		ext_wqe_sge_cnt = hr_qp->sq.ext_sge_cnt;
++	} else {
++		hr_qp->sq.max_gs = max(1U, cap->max_send_sge);
++		hr_qp->sq.max_gs = min(hr_qp->sq.max_gs, hr_dev->caps.max_sq_sg);
++		hr_qp->sq.ext_sge_cnt = hr_qp->sq.max_gs;
++	}
+ 
+ 	/* If the number of extended sge is not zero, they MUST use the
+ 	 * space of HNS_HW_PAGE_SIZE at least.
+ 	 */
+-	if (wqe_sge_cnt) {
+-		total_sge_cnt = roundup_pow_of_two(sq_wqe_cnt * wqe_sge_cnt);
++	if (ext_wqe_sge_cnt) {
++		total_sge_cnt = roundup_pow_of_two(sq_wqe_cnt * ext_wqe_sge_cnt);
+ 		hr_qp->sge.sge_cnt = max(total_sge_cnt,
+ 				(u32)HNS_HW_PAGE_SIZE / HNS_ROCE_SGE_SIZE);
+ 	}
++
++	update_inline_data(hr_qp, cap);
+ }
+ 
+ static int check_sq_size_with_integrity(struct hns_roce_dev *hr_dev,
+@@ -559,6 +630,7 @@ static int set_user_sq_size(struct hns_roce_dev *hr_dev,
+ 
+ 	hr_qp->sq.wqe_shift = ucmd->log_sq_stride;
+ 	hr_qp->sq.wqe_cnt = cnt;
++	cap->max_send_sge = hr_qp->sq.max_gs;
+ 
+ 	return 0;
+ }
+@@ -989,13 +1061,9 @@ static int set_qp_param(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp,
+ 			struct hns_roce_ib_create_qp *ucmd)
+ {
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
++	struct hns_roce_ucontext *uctx;
+ 	int ret;
+ 
+-	if (init_attr->cap.max_inline_data > hr_dev->caps.max_sq_inline)
+-		init_attr->cap.max_inline_data = hr_dev->caps.max_sq_inline;
+-
+-	hr_qp->max_inline_data = init_attr->cap.max_inline_data;
+-
+ 	if (init_attr->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 		hr_qp->sq_signal_bits = IB_SIGNAL_ALL_WR;
+ 	else
+@@ -1018,12 +1086,17 @@ static int set_qp_param(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp,
+ 			return ret;
+ 		}
+ 
++		uctx = rdma_udata_to_drv_context(udata, struct hns_roce_ucontext,
++						 ibucontext);
++		hr_qp->config = uctx->config;
+ 		ret = set_user_sq_size(hr_dev, &init_attr->cap, hr_qp, ucmd);
+ 		if (ret)
+ 			ibdev_err(ibdev,
+ 				  "failed to set user SQ size, ret = %d.\n",
+ 				  ret);
+ 	} else {
++		if (hr_dev->pci_dev->revision >= PCI_REVISION_ID_HIP09)
++			hr_qp->config = HNS_ROCE_EXSGE_FLAGS;
+ 		ret = set_kernel_sq_size(hr_dev, &init_attr->cap, hr_qp);
+ 		if (ret)
+ 			ibdev_err(ibdev,
+diff --git a/include/uapi/rdma/hns-abi.h b/include/uapi/rdma/hns-abi.h
+index f6fde06db4b4..745790ce3c26 100644
+--- a/include/uapi/rdma/hns-abi.h
++++ b/include/uapi/rdma/hns-abi.h
+@@ -85,11 +85,26 @@ struct hns_roce_ib_create_qp_resp {
+ 	__aligned_u64 dwqe_mmap_key;
+ };
+ 
++enum {
++	HNS_ROCE_EXSGE_FLAGS = 1 << 0,
++};
++
++enum {
++	HNS_ROCE_RSP_EXSGE_FLAGS = 1 << 0,
++};
++
+ struct hns_roce_ib_alloc_ucontext_resp {
+ 	__u32	qp_tab_size;
+ 	__u32	cqe_size;
+ 	__u32	srq_tab_size;
+ 	__u32	reserved;
++	__u32	config;
++	__u32	max_inline_data;
++};
++
++struct hns_roce_ib_alloc_ucontext {
++	__u32 config;
++	__u32 reserved;
+ };
+ 
+ struct hns_roce_ib_alloc_pd_resp {
 -- 
 2.35.1
 
