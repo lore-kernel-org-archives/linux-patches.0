@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC701C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42334C433EF;
-	Wed, 28 Dec 2022 16:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621221C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABF4C433D2;
+	Wed, 28 Dec 2022 16:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246214;
-	bh=fCTy5XsnxXJd1DH8S1nEC1bP1x0RlusDZgk6MB26vuw=;
+	s=korg; t=1672246217;
+	bh=ai9Dl+ViSUHNRfzUgoHRUybCXR2fgv0q8wVs0578jWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKqUAwY/8wA6FIKdML7Qh846jZwD/eNGMIkl0e4FbqpKtnYTtPwDIVrYQb2cUzH++
-	 pEBuJK6Af1hw4cKquYyHHQmb4LwmAW2uvadva51I2vAWAI/rgOEuE/POb4IfgRtP+R
-	 R/2EOLLqzquTDpiZANijSvC/IIc9Hh2wU1yH8MAI=
+	b=S4vjkoZ/+dLNtawutxAp4s4PS48p6sECBVdx7iW7rRuqbX2topz2yso/b6hBFhNiW
+	 h4W82R6YpR5LqE02YUzJYKdGvX7js13En63DeYPpj/rXka8REcedXrHOK7u5RU8Sva
+	 +3Kr1uyvJPlIfNHQ0ulKv04876RsVFzUzCt9fLmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.0 1032/1073] usb: cdnsp: fix lack of ZLP for ep0
-Date: Wed, 28 Dec 2022 15:43:40 +0100
-Message-Id: <20221228144356.224206172@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1004/1146] drm/sti: Use drm_mode_copy()
+Date: Wed, 28 Dec 2022 15:42:23 +0100
+Message-Id: <20221228144357.640008159@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,104 +36,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit ae423ef5d095e09970f52c08020fdbf7f9d87c22 upstream.
+[ Upstream commit 442cf8e22ba25a77cb9092d78733fdbac9844e50 ]
 
-Patch implements the handling of ZLP for control transfer.
-To send the ZLP driver must prepare the extra TRB in TD with
-length set to zero and TRB type to TRB_NORMAL.
-The first TRB must have set TRB_CHAIN flag, TD_SIZE = 1
-and TRB type to TRB_DATA.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: <stable@vger.kernel.org>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20221122085138.332434-1-pawell@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
+
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Cc: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-8-ville.syrjala@linux.intel.com
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |   42 +++++++++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/sti/sti_dvo.c  | 2 +-
+ drivers/gpu/drm/sti/sti_hda.c  | 2 +-
+ drivers/gpu/drm/sti/sti_hdmi.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -2006,10 +2006,11 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
+diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
+index b6ee8a82e656..f3a5616b7daf 100644
+--- a/drivers/gpu/drm/sti/sti_dvo.c
++++ b/drivers/gpu/drm/sti/sti_dvo.c
+@@ -288,7 +288,7 @@ static void sti_dvo_set_mode(struct drm_bridge *bridge,
  
- int cdnsp_queue_ctrl_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
- {
--	u32 field, length_field, remainder;
-+	u32 field, length_field, zlp = 0;
- 	struct cdnsp_ep *pep = preq->pep;
- 	struct cdnsp_ring *ep_ring;
- 	int num_trbs;
-+	u32 maxp;
- 	int ret;
+ 	DRM_DEBUG_DRIVER("\n");
  
- 	ep_ring = cdnsp_request_to_transfer_ring(pdev, preq);
-@@ -2019,26 +2020,33 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
- 	/* 1 TRB for data, 1 for status */
- 	num_trbs = (pdev->three_stage_setup) ? 2 : 1;
+-	memcpy(&dvo->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&dvo->mode, mode);
  
-+	maxp = usb_endpoint_maxp(pep->endpoint.desc);
-+
-+	if (preq->request.zero && preq->request.length &&
-+	    (preq->request.length % maxp == 0)) {
-+		num_trbs++;
-+		zlp = 1;
-+	}
-+
- 	ret = cdnsp_prepare_transfer(pdev, preq, num_trbs);
- 	if (ret)
- 		return ret;
+ 	/* According to the path used (main or aux), the dvo clocks should
+ 	 * have a different parent clock. */
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index 03cc401ed593..ec6656b9ee7c 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -524,7 +524,7 @@ static void sti_hda_set_mode(struct drm_bridge *bridge,
  
- 	/* If there's data, queue data TRBs */
--	if (pdev->ep0_expect_in)
--		field = TRB_TYPE(TRB_DATA) | TRB_IOC;
--	else
--		field = TRB_ISP | TRB_TYPE(TRB_DATA) | TRB_IOC;
--
- 	if (preq->request.length > 0) {
--		remainder = cdnsp_td_remainder(pdev, 0, preq->request.length,
--					       preq->request.length, preq, 1, 0);
-+		field = TRB_TYPE(TRB_DATA);
+ 	DRM_DEBUG_DRIVER("\n");
  
--		length_field = TRB_LEN(preq->request.length) |
--				TRB_TD_SIZE(remainder) | TRB_INTR_TARGET(0);
-+		if (zlp)
-+			field |= TRB_CHAIN;
-+		else
-+			field |= TRB_IOC | (pdev->ep0_expect_in ? 0 : TRB_ISP);
+-	memcpy(&hda->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&hda->mode, mode);
  
- 		if (pdev->ep0_expect_in)
- 			field |= TRB_DIR_IN;
+ 	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
+ 		DRM_ERROR("Undefined mode\n");
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index cb82622877d2..fcc2194869d6 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -941,7 +941,7 @@ static void sti_hdmi_set_mode(struct drm_bridge *bridge,
+ 	DRM_DEBUG_DRIVER("\n");
  
-+		length_field = TRB_LEN(preq->request.length) |
-+			       TRB_TD_SIZE(zlp) | TRB_INTR_TARGET(0);
-+
- 		cdnsp_queue_trb(pdev, ep_ring, true,
- 				lower_32_bits(preq->request.dma),
- 				upper_32_bits(preq->request.dma), length_field,
-@@ -2046,6 +2054,20 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
- 				TRB_SETUPID(pdev->setup_id) |
- 				pdev->setup_speed);
+ 	/* Copy the drm display mode in the connector local structure */
+-	memcpy(&hdmi->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&hdmi->mode, mode);
  
-+		if (zlp) {
-+			field = TRB_TYPE(TRB_NORMAL) | TRB_IOC;
-+
-+			if (!pdev->ep0_expect_in)
-+				field = TRB_ISP;
-+
-+			cdnsp_queue_trb(pdev, ep_ring, true,
-+					lower_32_bits(preq->request.dma),
-+					upper_32_bits(preq->request.dma), 0,
-+					field | ep_ring->cycle_state |
-+					TRB_SETUPID(pdev->setup_id) |
-+					pdev->setup_speed);
-+		}
-+
- 		pdev->ep0_stage = CDNSP_DATA_STAGE;
- 	}
- 
+ 	/* Update clock framerate according to the selected mode */
+ 	ret = clk_set_rate(hdmi->clk_pix, mode->clock * 1000);
+-- 
+2.35.1
+
 
 
