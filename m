@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3DC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12ECBC433F0;
-	Wed, 28 Dec 2022 16:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CCF1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E85C433EF;
+	Wed, 28 Dec 2022 16:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243930;
-	bh=C82UUF1Cw3IQ37sjwiUZ3lmZr/zoi0iq5pfDLLko1dg=;
+	s=korg; t=1672243933;
+	bh=pvlQrj2X9CHWoDjKElzDkcTQ3pvjEyggMdRDMY+TNDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2sXQEXJaDjFHg+VWjhtxJ8s5dmpvFjzfvxyqvibvpnBnbJRVroeMOD0UGROQERVN
-	 ByhOgOGAuKYApKYi7rk0idhMCOsWTyCW71Ihr2Vj9fuMQvcL2S3bSZFVp2+iWFEmmz
-	 jViQB2YQiw93Dr1HaNzU/l6uD9o3dQbQYZcmiK/0=
+	b=QZQzFYYU6p5m4y5iD6lNNssLK8cwl/+LsbuzAOPdANfjT8ufTMrzKNv3LPDEES5Wi
+	 BRlznbMlV1mhHf+ki4WvQqk74TXUaN/mM70bixuiu/HPL2TmT3EsvUxHfFU2BBkVKH
+	 X00dxHQ3MJBIZWNZ/dSNq9X/y9tw6zkBJxk9ci20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0581/1146] apparmor: Use pointer to struct aa_label for lbs_cred
-Date: Wed, 28 Dec 2022 15:35:20 +0100
-Message-Id: <20221228144345.955831170@linuxfoundation.org>
+Subject: [PATCH 6.0 0618/1073] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
+Date: Wed, 28 Dec 2022 15:36:46 +0100
+Message-Id: <20221228144344.829117667@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 37923d4321b1e38170086da2c117f78f2b0f49c6 ]
+[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
 
-According to the implementations of cred_label() and set_cred_label(),
-we should use pointer to struct aa_label for lbs_cred instead of struct
-aa_task_ctx, this patch fixes it.
+In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
+sas_rphy_free() needs be called to free the resource allocated in
+sas_end_device_alloc(). Otherwise a kernel crash will happen:
 
-Fixes: bbd3662a8348 ("Infrastructure management of the cred security blob")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
+CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
+pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x54/0x3d0
+lr : device_del+0x37c/0x3d0
+Call trace:
+ device_del+0x54/0x3d0
+ attribute_container_class_device_del+0x28/0x38
+ transport_remove_classdev+0x6c/0x80
+ attribute_container_device_trigger+0x108/0x110
+ transport_remove_device+0x28/0x38
+ sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_remove_host+0x20/0x38 [scsi_transport_sas]
+ scsih_remove+0xd8/0x420 [mpt3sas]
+
+Because transport_add_device() is not called when sas_rphy_add() fails, the
+device is not added. When sas_rphy_remove() is subsequently called to
+remove the device in the remove() path, a NULL pointer dereference happens.
+
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lsm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index f56070270c69..1e2f40db15c5 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -1194,10 +1194,10 @@ static int apparmor_inet_conn_request(const struct sock *sk, struct sk_buff *skb
- #endif
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index 0681daee6c14..e5ecd6ada6cd 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -829,6 +829,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 	if ((sas_rphy_add(rphy))) {
+ 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
+ 			__FILE__, __LINE__, __func__);
++		sas_rphy_free(rphy);
++		rphy = NULL;
+ 	}
  
- /*
-- * The cred blob is a pointer to, not an instance of, an aa_task_ctx.
-+ * The cred blob is a pointer to, not an instance of, an aa_label.
-  */
- struct lsm_blob_sizes apparmor_blob_sizes __lsm_ro_after_init = {
--	.lbs_cred = sizeof(struct aa_task_ctx *),
-+	.lbs_cred = sizeof(struct aa_label *),
- 	.lbs_file = sizeof(struct aa_file_ctx),
- 	.lbs_task = sizeof(struct aa_task_ctx),
- };
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
 -- 
 2.35.1
 
