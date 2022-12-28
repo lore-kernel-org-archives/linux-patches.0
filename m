@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14641C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CCCC433D2;
-	Wed, 28 Dec 2022 16:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8591C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005D3C433D2;
+	Wed, 28 Dec 2022 16:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244486;
-	bh=xRj2zAE3lEOGlozonGI9PfAv12yBVV/t3FQ8OXG8rNw=;
+	s=korg; t=1672244489;
+	bh=TXJz3PRK6h7jXubjekPXE6EvGPO4NqLFfK6TRIFVvgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oproYsckLCW4+d+HgMTU0BX3kT39746WL3aPvysHgLFoyk6YFkyQAi0o9BEXnJjpb
-	 K09Oj0XVUdsRpYIcwvR4kDMEysxDR0WzVGfeocpfUbGKJchEsM+5S0LDgSQIZ7YBCW
-	 4nAa4kXARvwJ8qGlZaZHMYtyAj2xifqUjSaTzqhk=
+	b=CB8J8xJnlKhm+B9oBVLCrgN9rgi3PyxuYadYp8W1l167gMP0V/ncT4yDRPwLRyQEM
+	 WFU7Pg7/fhsp9Z4JSy/ea1WJ56MbT/J8SVEdWuTWOe+CorbzJmYiExx+E59F/iJqL7
+	 IyREX7qr7DPDB7+wrRLf84NCDMK3GJLFRZgheXZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Bresticker <abrestic@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0677/1146] RISC-V: Fix unannoted hardirqs-on in return to userspace slow-path
-Date: Wed, 28 Dec 2022 15:36:56 +0100
-Message-Id: <20221228144348.535278250@linuxfoundation.org>
+Subject: [PATCH 6.1 0682/1146] hwrng: geode - Fix PCI device refcount leak
+Date: Wed, 28 Dec 2022 15:37:01 +0100
+Message-Id: <20221228144348.668289690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,140 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Bresticker <abrestic@rivosinc.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit b0f4c74eadbf69a3298f38566bfaa2e202541f2f ]
+[ Upstream commit 9f6ec8dc574efb7f4f3d7ee9cd59ae307e78f445 ]
 
-The return to userspace path in entry.S may enable interrupts without the
-corresponding lockdep annotation, producing a splat[0] when DEBUG_LOCKDEP
-is enabled. Simply calling __trace_hardirqs_on() here gets a bit messy
-due to the use of RA to point back to ret_from_exception, so just move
-the whole slow-path loop into C. It's more readable and it lets us use
-local_irq_{enable,disable}(), avoiding the need for manual annotations
-altogether.
+for_each_pci_dev() is implemented by pci_get_device(). The comment of
+pci_get_device() says that it will increase the reference count for the
+returned pci_dev and also decrease the reference count for the input
+pci_dev @from if it is not NULL.
 
-[0]:
-  ------------[ cut here ]------------
-  DEBUG_LOCKS_WARN_ON(!lockdep_hardirqs_enabled())
-  WARNING: CPU: 2 PID: 1 at kernel/locking/lockdep.c:5512 check_flags+0x10a/0x1e0
-  Modules linked in:
-  CPU: 2 PID: 1 Comm: init Not tainted 6.1.0-rc4-00160-gb56b6e2b4f31 #53
-  Hardware name: riscv-virtio,qemu (DT)
-  epc : check_flags+0x10a/0x1e0
-  ra : check_flags+0x10a/0x1e0
-  <snip>
-   status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
-  [<ffffffff808edb90>] lock_is_held_type+0x78/0x14e
-  [<ffffffff8003dae2>] __might_resched+0x26/0x22c
-  [<ffffffff8003dd24>] __might_sleep+0x3c/0x66
-  [<ffffffff80022c60>] get_signal+0x9e/0xa70
-  [<ffffffff800054a2>] do_notify_resume+0x6e/0x422
-  [<ffffffff80003c68>] ret_from_exception+0x0/0x10
-  irq event stamp: 44512
-  hardirqs last  enabled at (44511): [<ffffffff808f901c>] _raw_spin_unlock_irqrestore+0x54/0x62
-  hardirqs last disabled at (44512): [<ffffffff80008200>] __trace_hardirqs_off+0xc/0x14
-  softirqs last  enabled at (44472): [<ffffffff808f9fbe>] __do_softirq+0x3de/0x51e
-  softirqs last disabled at (44467): [<ffffffff80017760>] irq_exit+0xd6/0x104
-  ---[ end trace 0000000000000000 ]---
-  possible reason: unannotated irqs-on.
+If we break for_each_pci_dev() loop with pdev not NULL, we need to call
+pci_dev_put() to decrease the reference count. We add a new struct
+'amd_geode_priv' to record pointer of the pci_dev and membase, and then
+add missing pci_dev_put() for the normal and error path.
 
-Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
-Fixes: 3c4697982982 ("riscv: Enable LOCKDEP_SUPPORT & fixup TRACE_IRQFLAGS_SUPPORT")
-Link: https://lore.kernel.org/r/20221111223108.1976562-1-abrestic@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: ef5d862734b8 ("[PATCH] Add Geode HW RNG driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/entry.S  | 18 +++++-------------
- arch/riscv/kernel/signal.c | 34 +++++++++++++++++++++-------------
- 2 files changed, 26 insertions(+), 26 deletions(-)
+ drivers/char/hw_random/geode-rng.c | 36 +++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index 186abd146eaf..3221a9e5f372 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -263,12 +263,11 @@ ret_from_exception:
- #endif
- 	bnez s0, resume_kernel
+diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
+index 138ce434f86b..12fbe8091831 100644
+--- a/drivers/char/hw_random/geode-rng.c
++++ b/drivers/char/hw_random/geode-rng.c
+@@ -51,6 +51,10 @@ static const struct pci_device_id pci_tbl[] = {
+ };
+ MODULE_DEVICE_TABLE(pci, pci_tbl);
  
--resume_userspace:
- 	/* Interrupts must be disabled here so flags are checked atomically */
- 	REG_L s0, TASK_TI_FLAGS(tp) /* current_thread_info->flags */
- 	andi s1, s0, _TIF_WORK_MASK
--	bnez s1, work_pending
--
-+	bnez s1, resume_userspace_slow
-+resume_userspace:
- #ifdef CONFIG_CONTEXT_TRACKING_USER
- 	call user_enter_callable
- #endif
-@@ -368,19 +367,12 @@ resume_kernel:
- 	j restore_all
- #endif
++struct amd_geode_priv {
++	struct pci_dev *pcidev;
++	void __iomem *membase;
++};
  
--work_pending:
-+resume_userspace_slow:
- 	/* Enter slow path for supplementary processing */
--	la ra, ret_from_exception
--	andi s1, s0, _TIF_NEED_RESCHED
--	bnez s1, work_resched
--work_notifysig:
--	/* Handle pending signals and notify-resume requests */
--	csrs CSR_STATUS, SR_IE /* Enable interrupts for do_notify_resume() */
- 	move a0, sp /* pt_regs */
- 	move a1, s0 /* current_thread_info->flags */
--	tail do_notify_resume
--work_resched:
--	tail schedule
-+	call do_work_pending
-+	j resume_userspace
- 
- /* Slow paths for ptrace. */
- handle_syscall_trace_enter:
-diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
-index 5c591123c440..bfb2afa4135f 100644
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -313,19 +313,27 @@ static void do_signal(struct pt_regs *regs)
- }
- 
- /*
-- * notification of userspace execution resumption
-- * - triggered by the _TIF_WORK_MASK flags
-+ * Handle any pending work on the resume-to-userspace path, as indicated by
-+ * _TIF_WORK_MASK. Entered from assembly with IRQs off.
-  */
--asmlinkage __visible void do_notify_resume(struct pt_regs *regs,
--					   unsigned long thread_info_flags)
-+asmlinkage __visible void do_work_pending(struct pt_regs *regs,
-+					  unsigned long thread_info_flags)
+ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
  {
--	if (thread_info_flags & _TIF_UPROBE)
--		uprobe_notify_resume(regs);
--
--	/* Handle pending signal delivery */
--	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
--		do_signal(regs);
--
--	if (thread_info_flags & _TIF_NOTIFY_RESUME)
--		resume_user_mode_work(regs);
-+	do {
-+		if (thread_info_flags & _TIF_NEED_RESCHED) {
-+			schedule();
-+		} else {
-+			local_irq_enable();
-+			if (thread_info_flags & _TIF_UPROBE)
-+				uprobe_notify_resume(regs);
-+			/* Handle pending signal delivery */
-+			if (thread_info_flags & (_TIF_SIGPENDING |
-+						 _TIF_NOTIFY_SIGNAL))
-+				do_signal(regs);
-+			if (thread_info_flags & _TIF_NOTIFY_RESUME)
-+				resume_user_mode_work(regs);
-+		}
-+		local_irq_disable();
-+		thread_info_flags = read_thread_flags();
-+	} while (thread_info_flags & _TIF_WORK_MASK);
+@@ -90,6 +94,7 @@ static int __init geode_rng_init(void)
+ 	const struct pci_device_id *ent;
+ 	void __iomem *mem;
+ 	unsigned long rng_base;
++	struct amd_geode_priv *priv;
+ 
+ 	for_each_pci_dev(pdev) {
+ 		ent = pci_match_id(pci_tbl, pdev);
+@@ -97,17 +102,26 @@ static int __init geode_rng_init(void)
+ 			goto found;
+ 	}
+ 	/* Device not found. */
+-	goto out;
++	return err;
+ 
+ found:
++	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	if (!priv) {
++		err = -ENOMEM;
++		goto put_dev;
++	}
++
+ 	rng_base = pci_resource_start(pdev, 0);
+ 	if (rng_base == 0)
+-		goto out;
++		goto free_priv;
+ 	err = -ENOMEM;
+ 	mem = ioremap(rng_base, 0x58);
+ 	if (!mem)
+-		goto out;
+-	geode_rng.priv = (unsigned long)mem;
++		goto free_priv;
++
++	geode_rng.priv = (unsigned long)priv;
++	priv->membase = mem;
++	priv->pcidev = pdev;
+ 
+ 	pr_info("AMD Geode RNG detected\n");
+ 	err = hwrng_register(&geode_rng);
+@@ -116,20 +130,26 @@ static int __init geode_rng_init(void)
+ 		       err);
+ 		goto err_unmap;
+ 	}
+-out:
+ 	return err;
+ 
+ err_unmap:
+ 	iounmap(mem);
+-	goto out;
++free_priv:
++	kfree(priv);
++put_dev:
++	pci_dev_put(pdev);
++	return err;
  }
+ 
+ static void __exit geode_rng_exit(void)
+ {
+-	void __iomem *mem = (void __iomem *)geode_rng.priv;
++	struct amd_geode_priv *priv;
+ 
++	priv = (struct amd_geode_priv *)geode_rng.priv;
+ 	hwrng_unregister(&geode_rng);
+-	iounmap(mem);
++	iounmap(priv->membase);
++	pci_dev_put(priv->pcidev);
++	kfree(priv);
+ }
+ 
+ module_init(geode_rng_init);
 -- 
 2.35.1
 
