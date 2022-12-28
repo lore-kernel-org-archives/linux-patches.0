@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903E51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11990C433EF;
-	Wed, 28 Dec 2022 14:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3992B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF065C433D2;
+	Wed, 28 Dec 2022 14:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239419;
-	bh=SW1YK86OFjuZtv+mCVN6Br7+c68iJykY64MAzTM/VA0=;
+	s=korg; t=1672239422;
+	bh=KHzEcZE2k1pRm8RztkLsclhbLBR1oLAIU4UFuSVxwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTfVyp+g3jDtYM86kby/+YA+JndLWqgJNFmWLCMdBDDUTtnKSBj1XZoDO4ZXpufZg
-	 84BVSdRiTDG7CabTEM/xWSaTs2nhFMbRRQLbA1bkMnHDLoTerEWdhqJ1QOc+X1fk7U
-	 xHM+uu7RyhCdglwFSReZ9CRFpB7+yDi83P3RCPGY=
+	b=U/cJ/TAGgW8vyDvVH+KdBKUkaE6coH8QmGZZibGLQLpCnJOoyjBsM816wsBqHGDQX
+	 pbT29GOmOC7Pqd26D5UBcr0v7aQYnEIkDldZuS+0CH51ulgE9M2HnXBisQNJuHl0l9
+	 Lk0B3/E09u6YdtqTWsOhhjxjHYrgaOKRS87SYVeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgi Vlaev <g-vlaev@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0026/1073] firmware: ti_sci: Fix polled mode during system suspend
-Date: Wed, 28 Dec 2022 15:26:54 +0100
-Message-Id: <20221228144328.858565434@linuxfoundation.org>
+Subject: [PATCH 5.15 222/731] ALSA: seq: fix undefined behavior in bit shift for SNDRV_SEQ_FILTER_USE_EVENT
+Date: Wed, 28 Dec 2022 15:35:29 +0100
+Message-Id: <20221228144302.999362675@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,58 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georgi Vlaev <g-vlaev@ti.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit b13b2c3e0e4d0854228b5217fa34e145f3ace8ac ]
+[ Upstream commit cf59e1e4c79bf741905484cdb13c130b53576a16 ]
 
-Commit b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled
-mode during system suspend") uses read_poll_timeout_atomic() macro
-in ti_sci_do_xfer() to wait for completion when the system is
-suspending. The break condition of the macro is set to "true" which
-will cause it break immediately when evaluated, likely before the
-TISCI xfer is completed, and always return 0. We want to poll here
-until "done_state == true".
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-1) Change the break condition of read_poll_timeout_atomic() to
-the bool variable "done_state".
+UBSAN: shift-out-of-bounds in sound/core/seq/seq_clientmgr.c:509:22
+left shift of 1 by 31 places cannot be represented in type 'int'
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8d/0xcf
+ ubsan_epilogue+0xa/0x44
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
+ snd_seq_deliver_single_event.constprop.21+0x191/0x2f0
+ snd_seq_deliver_event+0x1a2/0x350
+ snd_seq_kernel_client_dispatch+0x8b/0xb0
+ snd_seq_client_notify_subscription+0x72/0xa0
+ snd_seq_ioctl_subscribe_port+0x128/0x160
+ snd_seq_kernel_client_ctl+0xce/0xf0
+ snd_seq_oss_create_client+0x109/0x15b
+ alsa_seq_oss_init+0x11c/0x1aa
+ do_one_initcall+0x80/0x440
+ kernel_init_freeable+0x370/0x3c3
+ kernel_init+0x1b/0x190
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-2) The read_poll_timeout_atomic() returns 0 if the break condition
-is met or -ETIMEDOUT if not. Since our break condition has changed
-to "done_state", we also don't have to check for "!done_state" when
-evaluating the return value.
-
-Fixes: b9e8a7d950ff ("firmware: ti_sci: Switch transport to polled mode during system suspend")
-
-Signed-off-by: Georgi Vlaev <g-vlaev@ti.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20221021185704.181316-1-g-vlaev@ti.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20221121111630.3119259-1-zhongbaisong@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/uapi/sound/asequencer.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index ebc32bbd9b83..6281e7153b47 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -429,15 +429,14 @@ static inline int ti_sci_do_xfer(struct ti_sci_info *info,
- 		 * during noirq phase, so we must manually poll the completion.
- 		 */
- 		ret = read_poll_timeout_atomic(try_wait_for_completion, done_state,
--					       true, 1,
-+					       done_state, 1,
- 					       info->desc->max_rx_timeout_ms * 1000,
- 					       false, &xfer->done);
- 	}
+diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
+index a75e14edc957..dbd60f48b4b0 100644
+--- a/include/uapi/sound/asequencer.h
++++ b/include/uapi/sound/asequencer.h
+@@ -344,10 +344,10 @@ typedef int __bitwise snd_seq_client_type_t;
+ #define	KERNEL_CLIENT	((__force snd_seq_client_type_t) 2)
+                         
+ 	/* event filter flags */
+-#define SNDRV_SEQ_FILTER_BROADCAST	(1<<0)	/* accept broadcast messages */
+-#define SNDRV_SEQ_FILTER_MULTICAST	(1<<1)	/* accept multicast messages */
+-#define SNDRV_SEQ_FILTER_BOUNCE		(1<<2)	/* accept bounce event in error */
+-#define SNDRV_SEQ_FILTER_USE_EVENT	(1<<31)	/* use event filter */
++#define SNDRV_SEQ_FILTER_BROADCAST	(1U<<0)	/* accept broadcast messages */
++#define SNDRV_SEQ_FILTER_MULTICAST	(1U<<1)	/* accept multicast messages */
++#define SNDRV_SEQ_FILTER_BOUNCE		(1U<<2)	/* accept bounce event in error */
++#define SNDRV_SEQ_FILTER_USE_EVENT	(1U<<31)	/* use event filter */
  
--	if (ret == -ETIMEDOUT || !done_state) {
-+	if (ret == -ETIMEDOUT)
- 		dev_err(dev, "Mbox timedout in resp(caller: %pS)\n",
- 			(void *)_RET_IP_);
--	}
- 
- 	/*
- 	 * NOTE: we might prefer not to need the mailbox ticker to manage the
+ struct snd_seq_client_info {
+ 	int client;			/* client number to inquire */
 -- 
 2.35.1
 
