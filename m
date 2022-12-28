@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D881875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D475C433EF;
-	Wed, 28 Dec 2022 16:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931B81875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1476FC433D2;
+	Wed, 28 Dec 2022 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243340;
-	bh=sjpGpDgFcpBzwqJY7EG3TWAy2l4mnnD1NnfKFoA2x5U=;
+	s=korg; t=1672243343;
+	bh=4PNDDJZmArPkClOrlBSTTJGNXsNvzCzJ1ewJlq8/RAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHTJuOoNT5yE3VYp0lrgokrWEwvIQuH79RnX6wF/++yYBYecKJN17f5AAeXDxb0rm
-	 B6+5sCUCVCztMK8otPUOnnCJjNdPVJfNYHted51jK+T79i7T/MjQmGl2gPCEZegBR9
-	 Go8pNCzYUGwPfM61ejmzRP82UdjVj2aIAIg5YIxs=
+	b=UMu7OlmwqPc5j2ehF0IVgGXLaNLdPm/kogI6huRRKQXy2XUU00TuPwBD4dnpH+yj9
+	 E+UxFLaTL9fvTEfYKMb2bOx9EaamoIAntIUjXxhPH6Ph4HryZ5eM3GZSK1VRgGYP6d
+	 I/+xZM9K7ToMJkgQCbqUqWhDOeVyTGKwQNbDntUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0482/1146] media: saa7164: fix missing pci_disable_device()
-Date: Wed, 28 Dec 2022 15:33:41 +0100
-Message-Id: <20221228144343.275811957@linuxfoundation.org>
+Subject: [PATCH 6.0 0519/1073] net: farsync: Fix kmemleak when rmmods farsync
+Date: Wed, 28 Dec 2022 15:35:07 +0100
+Message-Id: <20221228144342.140018614@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 57fb35d7542384cac8f198cd1c927540ad38b61a ]
+[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
 
-Add missing pci_disable_device() in the error path in saa7164_initdev().
+There are two memory leaks reported by kmemleak:
 
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  unreferenced object 0xffff888114b20200 (size 128):
+    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
+    hex dump (first 32 bytes):
+      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
+      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
+      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
+      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
+      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
+      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
+      ...
+
+  unreferenced object 0xffff88810b85b000 (size 1024):
+    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
+    hex dump (first 32 bytes):
+      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
+      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
+      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
+      ...
+
+The root cause is traced to the netdev and fst_card_info are not freed
+when removes one fst in fst_remove_one(), which may trigger oom if
+repeated insmod and rmmod module.
+
+Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
+the operations on the error handling path in fst_add_one().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wan/farsync.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
-index d5f32e3ff544..754c8be1b6d8 100644
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -1259,7 +1259,7 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
+index 6a212c085435..5b01642ca44e 100644
+--- a/drivers/net/wan/farsync.c
++++ b/drivers/net/wan/farsync.c
+@@ -2545,6 +2545,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 		struct net_device *dev = port_to_dev(&card->ports[i]);
  
- 	if (saa7164_dev_setup(dev) < 0) {
- 		err = -EINVAL;
--		goto fail_free;
-+		goto fail_dev;
+ 		unregister_hdlc_device(dev);
++		free_netdev(dev);
  	}
  
- 	/* print pci info */
-@@ -1427,6 +1427,8 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+ 	fst_disable_intr(card);
+@@ -2564,6 +2565,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 				  card->tx_dma_handle_card);
+ 	}
+ 	fst_card_array[card->card_no] = NULL;
++	kfree(card);
+ }
  
- fail_irq:
- 	saa7164_dev_unregister(dev);
-+fail_dev:
-+	pci_disable_device(pci_dev);
- fail_free:
- 	v4l2_device_unregister(&dev->v4l2_dev);
- 	kfree(dev);
+ static struct pci_driver fst_driver = {
 -- 
 2.35.1
 
