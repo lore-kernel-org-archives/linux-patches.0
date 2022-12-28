@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D9D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9418C433D2;
-	Wed, 28 Dec 2022 16:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C131C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C134C433D2;
+	Wed, 28 Dec 2022 16:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244383;
-	bh=ZDPtHCi+qzo0de6C5Ur2Nat4s2JnI3zoml3f1C3ca+4=;
+	s=korg; t=1672244385;
+	bh=2t4VGP6/TwZJtk6iHWU/J1bzW291JIdvEI9vvwQXQBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pF1vwTjSupRYpFBDK4FZW3GljwGojUNoVlh0ySIRIldOdCfzn8sl9wIVHpW3NRjbC
-	 zyALxphgcDIohZZl8Kawkamz2QmMFJuKLPEN3731zqN74YccLHOIuVNE7SgO/t8Gwe
-	 MlQaH084PdCUvxGgrQ0LhBSK3L+qusTDNfllk030=
+	b=dGuhdUwddAWSHOEcRYTOv96+O/vo0aj0eUZdIDRrdG6Di2QR3mNngQvbx1p2kkXoC
+	 AZc85Yy9/Ff/l0br4ZXX0ibjj+30yt90CFWXf1oYOfoe2wmxmXN/fXZh2QG9Y7xs96
+	 w0n3F0PTLjuzQB8mzeXpe4tqaQQS7rY1QwP+YzrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiantao Zhang <water.zhangjiantao@huawei.com>,
-	TaoXue <xuetao09@huawei.com>,
+	Ramona Bolboaca <ramona.bolboaca@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0683/1073] USB: gadget: Fix use-after-free during usb config switch
-Date: Wed, 28 Dec 2022 15:37:51 +0100
-Message-Id: <20221228144346.588932101@linuxfoundation.org>
+Subject: [PATCH 6.0 0701/1073] iio: adis: add __adis_enable_irq() implementation
+Date: Wed, 28 Dec 2022 15:38:09 +0100
+Message-Id: <20221228144347.073433020@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,95 +36,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiantao Zhang <water.zhangjiantao@huawei.com>
+From: Ramona Bolboaca <ramona.bolboaca@analog.com>
 
-[ Upstream commit afdc12887f2b2ecf20d065a7d81ad29824155083 ]
+[ Upstream commit 99c05e4283a19a02a256f14100ca4ec3b2da3f62 ]
 
-In the process of switching USB config from rndis to other config,
-if the hardware does not support the ->pullup callback, or the
-hardware encounters a low probability fault, both of them may cause
-the ->pullup callback to fail, which will then cause a system panic
-(use after free).
+Add '__adis_enable_irq()' implementation which is the unlocked
+version of 'adis_enable_irq()'.
+Call '__adis_enable_irq()' instead of 'adis_enable_irq()' from
+'__adis_intial_startup()' to keep the expected unlocked functionality.
 
-The gadget drivers sometimes need to be unloaded regardless of the
-hardware's behavior.
+This fix is needed to remove a deadlock for all devices which are
+using 'adis_initial_startup()'. The deadlock occurs because the
+same mutex is acquired twice, without releasing it.
+The mutex is acquired once inside 'adis_initial_startup()', before
+calling '__adis_initial_startup()', and once inside
+'adis_enable_irq()', which is called by '__adis_initial_startup()'.
+The deadlock is removed by calling '__adis_enable_irq()', instead of
+'adis_enable_irq()' from within '__adis_initial_startup()'.
 
-Analysis as follows:
-=======================================================================
-(1) write /config/usb_gadget/g1/UDC "none"
-
-gether_disconnect+0x2c/0x1f8
-rndis_disable+0x4c/0x74
-composite_disconnect+0x74/0xb0
-configfs_composite_disconnect+0x60/0x7c
-usb_gadget_disconnect+0x70/0x124
-usb_gadget_unregister_driver+0xc8/0x1d8
-gadget_dev_desc_UDC_store+0xec/0x1e4
-
-(2) rm /config/usb_gadget/g1/configs/b.1/f1
-
-rndis_deregister+0x28/0x54
-rndis_free+0x44/0x7c
-usb_put_function+0x14/0x1c
-config_usb_cfg_unlink+0xc4/0xe0
-configfs_unlink+0x124/0x1c8
-vfs_unlink+0x114/0x1dc
-
-(3) rmdir /config/usb_gadget/g1/functions/rndis.gs4
-
-panic+0x1fc/0x3d0
-do_page_fault+0xa8/0x46c
-do_mem_abort+0x3c/0xac
-el1_sync_handler+0x40/0x78
-0xffffff801138f880
-rndis_close+0x28/0x34
-eth_stop+0x74/0x110
-dev_close_many+0x48/0x194
-rollback_registered_many+0x118/0x814
-unregister_netdev+0x20/0x30
-gether_cleanup+0x1c/0x38
-rndis_attr_release+0xc/0x14
-kref_put+0x74/0xb8
-configfs_rmdir+0x314/0x374
-
-If gadget->ops->pullup() return an error, function rndis_close() will be
-called, then it will causes a use-after-free problem.
-=======================================================================
-
-Fixes: 0a55187a1ec8 ("USB: gadget core: Issue ->disconnect() callback from usb_gadget_disconnect()")
-Signed-off-by: Jiantao Zhang <water.zhangjiantao@huawei.com>
-Signed-off-by: TaoXue <xuetao09@huawei.com>
-Link: https://lore.kernel.org/r/20221121130805.10735-1-water.zhangjiantao@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b600bd7eb3335 ("iio: adis: do not disabe IRQs in 'adis_init()'")
+Signed-off-by: Ramona Bolboaca <ramona.bolboaca@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20221122082757.449452-2-ramona.bolboaca@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/iio/imu/adis.c       | 28 ++++++++++------------------
+ include/linux/iio/imu/adis.h | 13 ++++++++++++-
+ 2 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index c63c0c2cf649..bf9878e1a72a 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -734,13 +734,13 @@ int usb_gadget_disconnect(struct usb_gadget *gadget)
+diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
+index f7fcfd04f659..bc40240b29e2 100644
+--- a/drivers/iio/imu/adis.c
++++ b/drivers/iio/imu/adis.c
+@@ -270,23 +270,19 @@ EXPORT_SYMBOL_NS(adis_debugfs_reg_access, IIO_ADISLIB);
+ #endif
+ 
+ /**
+- * adis_enable_irq() - Enable or disable data ready IRQ
++ * __adis_enable_irq() - Enable or disable data ready IRQ (unlocked)
+  * @adis: The adis device
+  * @enable: Whether to enable the IRQ
+  *
+  * Returns 0 on success, negative error code otherwise
+  */
+-int adis_enable_irq(struct adis *adis, bool enable)
++int __adis_enable_irq(struct adis *adis, bool enable)
+ {
+-	int ret = 0;
++	int ret;
+ 	u16 msc;
+ 
+-	mutex_lock(&adis->state_lock);
+-
+-	if (adis->data->enable_irq) {
+-		ret = adis->data->enable_irq(adis, enable);
+-		goto out_unlock;
+-	}
++	if (adis->data->enable_irq)
++		return adis->data->enable_irq(adis, enable);
+ 
+ 	if (adis->data->unmasked_drdy) {
+ 		if (enable)
+@@ -294,12 +290,12 @@ int adis_enable_irq(struct adis *adis, bool enable)
+ 		else
+ 			disable_irq(adis->spi->irq);
+ 
+-		goto out_unlock;
++		return 0;
  	}
  
- 	ret = gadget->ops->pullup(gadget, 0);
--	if (!ret) {
-+	if (!ret)
- 		gadget->connected = 0;
--		mutex_lock(&udc_lock);
--		if (gadget->udc->driver)
--			gadget->udc->driver->disconnect(gadget);
--		mutex_unlock(&udc_lock);
--	}
-+
-+	mutex_lock(&udc_lock);
-+	if (gadget->udc->driver)
-+		gadget->udc->driver->disconnect(gadget);
-+	mutex_unlock(&udc_lock);
+ 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
+ 	if (ret)
+-		goto out_unlock;
++		return ret;
  
- out:
- 	trace_usb_gadget_disconnect(gadget, ret);
+ 	msc |= ADIS_MSC_CTRL_DATA_RDY_POL_HIGH;
+ 	msc &= ~ADIS_MSC_CTRL_DATA_RDY_DIO2;
+@@ -308,13 +304,9 @@ int adis_enable_irq(struct adis *adis, bool enable)
+ 	else
+ 		msc &= ~ADIS_MSC_CTRL_DATA_RDY_EN;
+ 
+-	ret = __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
+-
+-out_unlock:
+-	mutex_unlock(&adis->state_lock);
+-	return ret;
++	return __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
+ }
+-EXPORT_SYMBOL_NS(adis_enable_irq, IIO_ADISLIB);
++EXPORT_SYMBOL_NS(__adis_enable_irq, IIO_ADISLIB);
+ 
+ /**
+  * __adis_check_status() - Check the device for error conditions (unlocked)
+@@ -445,7 +437,7 @@ int __adis_initial_startup(struct adis *adis)
+ 	 * with 'IRQF_NO_AUTOEN' anyways.
+ 	 */
+ 	if (!adis->data->unmasked_drdy)
+-		adis_enable_irq(adis, false);
++		__adis_enable_irq(adis, false);
+ 
+ 	if (!adis->data->prod_id_reg)
+ 		return 0;
+diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
+index 515ca09764fe..bcbefb757475 100644
+--- a/include/linux/iio/imu/adis.h
++++ b/include/linux/iio/imu/adis.h
+@@ -402,9 +402,20 @@ static inline int adis_update_bits_base(struct adis *adis, unsigned int reg,
+ 	__adis_update_bits_base(adis, reg, mask, val, sizeof(val));	\
+ })
+ 
+-int adis_enable_irq(struct adis *adis, bool enable);
+ int __adis_check_status(struct adis *adis);
+ int __adis_initial_startup(struct adis *adis);
++int __adis_enable_irq(struct adis *adis, bool enable);
++
++static inline int adis_enable_irq(struct adis *adis, bool enable)
++{
++	int ret;
++
++	mutex_lock(&adis->state_lock);
++	ret = __adis_enable_irq(adis, enable);
++	mutex_unlock(&adis->state_lock);
++
++	return ret;
++}
+ 
+ static inline int adis_check_status(struct adis *adis)
+ {
 -- 
 2.35.1
 
