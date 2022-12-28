@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB5C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491AFC433EF;
-	Wed, 28 Dec 2022 15:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBA21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5250C433D2;
+	Wed, 28 Dec 2022 15:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241716;
-	bh=0AJ3bRuOe9lV/NdPXU6yUmJFS36zDRDYDE9axOfTe34=;
+	s=korg; t=1672241719;
+	bh=qGdU3DEytzY1Hd1QqzYoHqygoTR3yuU/e6cUa74W2TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+1PtrEDW/ju0q8qZKgv5838RzjIFXOf1FMzW9ntwepBydRxZWxkRr1ZbBYA2rDF5
-	 pvqDYUtRhKuGzef8kg2idoeR/jvt1Rb7j7nBYiPC3ahlLPvlm2XDYcn/IwahIN+4qH
-	 TfzH+uXT32jqEKpEJbOSx1Ai2haIUO/43piD43tg=
+	b=sZh8WHGvpxsSPJOCVVt+dpfgaTb5b5BQCTDAzhb9EKWUQQQMjPXPACplEzklBd5mM
+	 MKywaR/uZGRMnFwdlJWtf9N6f3pwWmvqfA+CWGCQYIlAvaqksc4C48rdG7uFlZdCvO
+	 0K84aId6+4+wN/jfpd7VIumbTWCtxIskF5AsKdkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinlei Lee <xinlei.lee@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0319/1073] drm/mediatek: Modify dpi power on/off sequence.
-Date: Wed, 28 Dec 2022 15:31:47 +0100
-Message-Id: <20221228144336.673248652@linuxfoundation.org>
+Subject: [PATCH 6.1 0281/1146] drm/msm/dsi: Reuse earlier computed dsc->slice_chunk_size
+Date: Wed, 28 Dec 2022 15:30:20 +0100
+Message-Id: <20221228144337.771266159@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xinlei Lee <xinlei.lee@mediatek.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit ff446c0f6290185cefafe3b376bb86063a3a9f6a ]
+[ Upstream commit e443459e2e6b8e0d3187dd0d09ef7fcea87531d2 ]
 
-Modify dpi power on/off sequence so that the first gpio operation will
-take effect.
+dsi_populate_dsc_params() is called prior to dsi_update_dsc_timing() and
+already computes a value for slice_chunk_size, whose value doesn't need
+to be recomputed and re-set here.
 
-Fixes: 6bd4763fd532 ("drm/mediatek: set dpi pin mode to gpio low to avoid leakage current")
-Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508934/
+Link: https://lore.kernel.org/r/20221026182824.876933-5-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index 630a4e301ef6..b11b5a2c0663 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -462,9 +462,6 @@ static void mtk_dpi_power_off(struct mtk_dpi *dpi)
- 	if (--dpi->refcount != 0)
- 		return;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 88c8aa5c6b80..c3156e9066f5 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -845,7 +845,6 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	u32 reg, reg_ctrl, reg_ctrl2;
+ 	u32 slice_per_intf, total_bytes_per_intf;
+ 	u32 pkt_per_line;
+-	u32 bytes_in_slice;
+ 	u32 eol_byte_num;
  
--	if (dpi->pinctrl && dpi->pins_gpio)
--		pinctrl_select_state(dpi->pinctrl, dpi->pins_gpio);
+ 	/* first calculate dsc parameters and then program
+@@ -860,11 +859,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	if (slice_per_intf > dsc->slice_count)
+ 		dsc->slice_count = 1;
+ 
+-	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
 -
- 	mtk_dpi_disable(dpi);
- 	clk_disable_unprepare(dpi->pixel_clk);
- 	clk_disable_unprepare(dpi->engine_clk);
-@@ -489,9 +486,6 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 		goto err_pixel;
- 	}
- 
--	if (dpi->pinctrl && dpi->pins_dpi)
--		pinctrl_select_state(dpi->pinctrl, dpi->pins_dpi);
+-	dsc->slice_chunk_size = bytes_in_slice;
 -
- 	return 0;
+-	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
++	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
  
- err_pixel:
-@@ -722,12 +716,18 @@ static void mtk_dpi_bridge_disable(struct drm_bridge *bridge)
- 	struct mtk_dpi *dpi = bridge_to_dpi(bridge);
+ 	eol_byte_num = total_bytes_per_intf % 3;
+ 	pkt_per_line = slice_per_intf / dsc->slice_count;
+@@ -890,7 +885,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 		reg_ctrl |= reg;
  
- 	mtk_dpi_power_off(dpi);
-+
-+	if (dpi->pinctrl && dpi->pins_gpio)
-+		pinctrl_select_state(dpi->pinctrl, dpi->pins_gpio);
- }
+ 		reg_ctrl2 &= ~DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__MASK;
+-		reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
++		reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(dsc->slice_chunk_size);
  
- static void mtk_dpi_bridge_enable(struct drm_bridge *bridge)
- {
- 	struct mtk_dpi *dpi = bridge_to_dpi(bridge);
- 
-+	if (dpi->pinctrl && dpi->pins_dpi)
-+		pinctrl_select_state(dpi->pinctrl, dpi->pins_dpi);
-+
- 	mtk_dpi_power_on(dpi);
- 	mtk_dpi_set_display_mode(dpi, &dpi->mode);
- 	mtk_dpi_enable(dpi);
+ 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg_ctrl);
+ 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
 -- 
 2.35.1
 
