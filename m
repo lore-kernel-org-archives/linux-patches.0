@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF801863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00F7C433EF;
-	Wed, 28 Dec 2022 15:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFAE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9852DC433D2;
+	Wed, 28 Dec 2022 15:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242159;
-	bh=ssPWlDx4KT8OsUyHxJ8zJkILwGZmpHLVwGJDRafDgjI=;
+	s=korg; t=1672242162;
+	bh=HcOcEoQrt43u9EVILUPambw5Hrf0Rvg61n9AS5VmX88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9Zk4fNlGlKLSWpLNBkELjwumtHxSIcLzorZjZhGfmGQDaFlZhukP53ixNsqibmEY
-	 SfkfFxnYM1OS1VRv4+aThiaowTnjKs3e6qguEHd6xKrranwyK0PClNI6c8FTpVsGVO
-	 f0WlWpEJly4d/On0LprRsqZlk/+GNbM3b/oFsohQ=
+	b=Fxkb5REyImnJlPV89cwDVo9Fm+ESgJvvY3BMFXu3W4yy1RxXX+ocvSw4m+o+kDcYL
+	 U9+wC65CDG+iVi5MyLwAM4cZODnVUC/GxdWV1/33rFGe922A/CDE70Q3YRjqmRUNBk
+	 IYmcaDpRU72FOnMulB5BNKMbAjIUmQ4R717MzY40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	George Kennedy <george.kennedy@oracle.com>,
+	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
+	Brian Starkey <brian.starkey@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0374/1073] drbd: remove call to memset before free device/resource/connection
-Date: Wed, 28 Dec 2022 15:32:42 +0100
-Message-Id: <20221228144338.162481280@linuxfoundation.org>
+Subject: [PATCH 6.1 0336/1146] drm/fourcc: Fix vsub/hsub for Q410 and Q401
+Date: Wed, 28 Dec 2022 15:31:15 +0100
+Message-Id: <20221228144339.286311379@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Brian Starkey <brian.starkey@arm.com>
 
-[ Upstream commit 6e7b854e4c1b02dba00760dfa79d8dbf6cce561e ]
+[ Upstream commit b230555f3257f197dd98641ef6ebaf778b52dd51 ]
 
-This revert c2258ffc56f2 ("drbd: poison free'd device, resource and
-connection structs"), add memset is odd here for debugging, there are
-some methods to accurately show what happened, such as kdump.
+These formats are not subsampled, but that means hsub and vsub should be
+1, not 0.
 
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221124015817.2729789-2-bobo.shaobowang@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 8692814b77ca ("drbd: destroy workqueue when drbd device was freed")
+Fixes: 94b292b27734 ("drm: drm_fourcc: add NV15, Q410, Q401 YUV formats")
+Reported-by: George Kennedy <george.kennedy@oracle.com>
+Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Signed-off-by: Brian Starkey <brian.starkey@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220913144306.17279-1-brian.starkey@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/drm_fourcc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index 8532b839a343..78cae4e75af1 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2217,7 +2217,6 @@ void drbd_destroy_device(struct kref *kref)
- 		kref_put(&peer_device->connection->kref, drbd_destroy_connection);
- 		kfree(peer_device);
- 	}
--	memset(device, 0xfd, sizeof(*device));
- 	kfree(device);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
-@@ -2309,7 +2308,6 @@ void drbd_destroy_resource(struct kref *kref)
- 	idr_destroy(&resource->devices);
- 	free_cpumask_var(resource->cpu_mask);
- 	kfree(resource->name);
--	memset(resource, 0xf2, sizeof(*resource));
- 	kfree(resource);
- }
- 
-@@ -2650,7 +2648,6 @@ void drbd_destroy_connection(struct kref *kref)
- 	drbd_free_socket(&connection->data);
- 	kfree(connection->int_dig_in);
- 	kfree(connection->int_dig_vv);
--	memset(connection, 0xfc, sizeof(*connection));
- 	kfree(connection);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
+diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
+index e09331bb3bc7..6242dfbe9240 100644
+--- a/drivers/gpu/drm/drm_fourcc.c
++++ b/drivers/gpu/drm/drm_fourcc.c
+@@ -297,12 +297,12 @@ const struct drm_format_info *__drm_format_info(u32 format)
+ 		  .vsub = 2, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_Q410,		.depth = 0,
+ 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
+-		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
+-		  .vsub = 0, .is_yuv = true },
++		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
++		  .vsub = 1, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_Q401,		.depth = 0,
+ 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
+-		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
+-		  .vsub = 0, .is_yuv = true },
++		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
++		  .vsub = 1, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_P030,            .depth = 0,  .num_planes = 2,
+ 		  .char_per_block = { 4, 8, 0 }, .block_w = { 3, 3, 0 }, .block_h = { 1, 1, 0 },
+ 		  .hsub = 2, .vsub = 2, .is_yuv = true},
 -- 
 2.35.1
 
