@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96771C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A909C433D2;
-	Wed, 28 Dec 2022 16:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0A61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8292C433EF;
+	Wed, 28 Dec 2022 16:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245791;
-	bh=mvMMLmvxlfsWFgwEr+ZHtBmL6gLBDdJIqM9J7cHhbW0=;
+	s=korg; t=1672245794;
+	bh=ssvAmBToFhnY3Fp4689UByADaiotLtwYnpfZGQleYYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q84jZW66kuitgbU9KBuYi8OG8S3suqP4ufmCHCO6kZyk09BXN197jtztkNIV+VvAK
-	 iZK4roz/+P6vAXja5GPVox75tTG52UiG464es+t7KSkJNQdyNmt36Ga3tEBjin7Hew
-	 1G35PVxIU4CZPIDGg+p+3SRyGhoZnJfptgXWr6e0=
+	b=mo2rijri2YAD7wd/Z9g5Ibeocl7neCTAPKOcD6dTkxIrz4LtcVEnoL5jjzYEz/zWR
+	 fDSo7bIK8nYgM0EPwTAfgfukjJs1xlEsAO2/FUJ9LoyXgWAyPU/1QEFj/xE9shJg1c
+	 9t+dNBH2dseQyh2i1GlE13Je+IMX1T06wK26cN1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Lei <yan_lei@dahuatech.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0955/1073] media: dvb-frontends: fix leak of memory fw
-Date: Wed, 28 Dec 2022 15:42:23 +0100
-Message-Id: <20221228144353.973169909@linuxfoundation.org>
+Subject: [PATCH 6.1 0923/1146] skbuff: Account for tail adjustment during pull operations
+Date: Wed, 28 Dec 2022 15:41:02 +0100
+Message-Id: <20221228144355.339406419@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,30 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Lei <yan_lei@dahuatech.com>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit a15fe8d9f1bf460a804bcf18a890bfd2cf0d5caa ]
+[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
 
-Link: https://lore.kernel.org/linux-media/20220410061925.4107-1-chinayanlei2002@163.com
-Signed-off-by: Yan Lei <yan_lei@dahuatech.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Extending the tail can have some unexpected side effects if a program uses
+a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
+head skb headlen when all the skbs in the gso frag_list are linear with no
+head_frag -
+
+  kernel BUG at net/core/skbuff.c:4219!
+  pc : skb_segment+0xcf4/0xd2c
+  lr : skb_segment+0x63c/0xd2c
+  Call trace:
+   skb_segment+0xcf4/0xd2c
+   __udp_gso_segment+0xa4/0x544
+   udp4_ufo_fragment+0x184/0x1c0
+   inet_gso_segment+0x16c/0x3a4
+   skb_mac_gso_segment+0xd4/0x1b0
+   __skb_gso_segment+0xcc/0x12c
+   udp_rcv_segment+0x54/0x16c
+   udp_queue_rcv_skb+0x78/0x144
+   udp_unicast_rcv_skb+0x8c/0xa4
+   __udp4_lib_rcv+0x490/0x68c
+   udp_rcv+0x20/0x30
+   ip_protocol_deliver_rcu+0x1b0/0x33c
+   ip_local_deliver+0xd8/0x1f0
+   ip_rcv+0x98/0x1a4
+   deliver_ptype_list_skb+0x98/0x1ec
+   __netif_receive_skb_core+0x978/0xc60
+
+Fix this by marking these skbs as GSO_DODGY so segmentation can handle
+the tail updates accordingly.
+
+Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/bcm3510.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/skbuff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/dvb-frontends/bcm3510.c b/drivers/media/dvb-frontends/bcm3510.c
-index da0ff7b44da4..68b92b4419cf 100644
---- a/drivers/media/dvb-frontends/bcm3510.c
-+++ b/drivers/media/dvb-frontends/bcm3510.c
-@@ -649,6 +649,7 @@ static int bcm3510_download_firmware(struct dvb_frontend* fe)
- 		deb_info("firmware chunk, addr: 0x%04x, len: 0x%04x, total length: 0x%04zx\n",addr,len,fw->size);
- 		if ((ret = bcm3510_write_ram(st,addr,&b[i+4],len)) < 0) {
- 			err("firmware download failed: %d\n",ret);
-+			release_firmware(fw);
- 			return ret;
- 		}
- 		i += 4 + len;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 88fa40571d0c..759bede0b3dd 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -2416,6 +2416,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
+ 				insp = list;
+ 			} else {
+ 				/* Eaten partially. */
++				if (skb_is_gso(skb) && !list->head_frag &&
++				    skb_headlen(list))
++					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
+ 
+ 				if (skb_shared(list)) {
+ 					/* Sucks! We need to fork list. :-( */
 -- 
 2.35.1
 
