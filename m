@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E321D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67570C433D2;
-	Wed, 28 Dec 2022 16:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFB81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13361C433F2;
+	Wed, 28 Dec 2022 16:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244122;
-	bh=dJFf8z7ijYRFOOojNHb90RNr5SXBowBlkPaHJL7+e+c=;
+	s=korg; t=1672244125;
+	bh=BjqH3xmJbkBB968RtFhygLTCvU7XxDnjI0w1+HtpK2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9Do5ZhhX2i0OciI8iyR2diP+MRlzgfOM3ZbLNlueVFv/GYyIV2z/1UIQFnsHcIg2
-	 Ux+ilpeWDgSzdBOw5BNqxKctxfPz938LNb/PnObhEX/khuUN0kFFBImA0VWMaoJDWO
-	 Df0v6FwVThuvxO5c7EfTGGVIs+zJGS1GliL3U8Q0=
+	b=uRQ5Qnuq+HQn7Sjwn9/gpm1lzxGNWzZp6Qhkqo/BgFAbwE2kQeklJ4LPMrE3p1C80
+	 BUrsqWW4CBVSRzwLeXaERgQArFtkJKZTjUg+kna01P6ToRHC+OMOPSJGfaBaHFXbbO
+	 kzwPY3KFZWl07Vm/4aYTowy6QXOuIlgaPXTQu7bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Samuel Holland <samuel@sholland.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0615/1146] scsi: scsi_debug: Fix a warning in resp_write_scat()
-Date: Wed, 28 Dec 2022 15:35:54 +0100
-Message-Id: <20221228144346.874112009@linuxfoundation.org>
+Subject: [PATCH 6.0 0655/1073] riscv: Fix crash during early errata patching
+Date: Wed, 28 Dec 2022 15:37:23 +0100
+Message-Id: <20221228144345.836824674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
+[ Upstream commit 0c49688174f5347c3f8012e84c0ffa0d2b2890c8 ]
 
-As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
-MAX_ORDER then we hit a warning.
+The patch function for the T-Head PBMT errata calls __pa_symbol() before
+relocation. This crashes when CONFIG_DEBUG_VIRTUAL is enabled, because
+__pa_symbol() forwards to __phys_addr_symbol(), and __phys_addr_symbol()
+checks against the absolute kernel start/end address.
 
-Call trace:
+Fix this by checking against the kernel map instead of a symbol address.
 
-sg_ioctl
- sg_ioctl_common
-   scsi_ioctl
-    sg_scsi_ioctl
-     blk_execute_rq
-      blk_mq_sched_insert_request
-       blk_mq_run_hw_queue
-        __blk_mq_delay_run_hw_queue
-         __blk_mq_run_hw_queue
-          blk_mq_sched_dispatch_requests
-           __blk_mq_sched_dispatch_requests
-            blk_mq_dispatch_rq_list
-             scsi_queue_rq
-              scsi_dispatch_cmd
-               scsi_debug_queuecommand
-                schedule_resp
-                 resp_write_scat
-
-If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
-will definitely fail.  It creates a stack trace and messes up dmesg.  The
-user controls the size here so if they specify a too large size it will
-fail.
-
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
-
-Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/r/20221126060920.65009-1-samuel@sholland.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ arch/riscv/mm/physaddr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index bebda917b138..57b091f1767f 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3785,7 +3785,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
- 		return illegal_condition_result;
- 	}
--	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
-+	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
- 	if (lrdp == NULL)
- 		return SCSI_MLQUEUE_HOST_BUSY;
- 	if (sdebug_verbose)
+diff --git a/arch/riscv/mm/physaddr.c b/arch/riscv/mm/physaddr.c
+index 19cf25a74ee2..9b18bda74154 100644
+--- a/arch/riscv/mm/physaddr.c
++++ b/arch/riscv/mm/physaddr.c
+@@ -22,7 +22,7 @@ EXPORT_SYMBOL(__virt_to_phys);
+ phys_addr_t __phys_addr_symbol(unsigned long x)
+ {
+ 	unsigned long kernel_start = kernel_map.virt_addr;
+-	unsigned long kernel_end = (unsigned long)_end;
++	unsigned long kernel_end = kernel_start + kernel_map.size;
+ 
+ 	/*
+ 	 * Boundary checking aginst the kernel image mapping.
 -- 
 2.35.1
 
