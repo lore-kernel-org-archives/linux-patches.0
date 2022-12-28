@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702841863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93C4C433EF;
-	Wed, 28 Dec 2022 15:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B691863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88423C433EF;
+	Wed, 28 Dec 2022 15:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240441;
-	bh=gl5nlAu75CzZC/pEqUgjcTjAV8+/LRQ+Np8AdqWCzfU=;
+	s=korg; t=1672240443;
+	bh=6LBZ5kA6fHxCNKQauxBQkf5by0Hvah3oD/IiiCR3GUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0j20XyQGBKb+yjMQocl7RIhQy/g1kT+8yjNeaw3vLGGCQiklVNx4KBUtoO9pKTZMt
-	 PdMDMIb8TNHW535r6JLbOF0oVvQBFpWGBRU6j28JdQ1sAKm2e9KB1+S5pMXwsycZEu
-	 k1xTGVmTGTc3+73IvrsE+J122f1FM2c05ZaVguDY=
+	b=PiSk5nnaTIuZ/aipELEoSBhfkLBu5oZ9Yb9pS7iIcchjotzHmE8am9VXi9fPISOZ6
+	 lypmNZanLyqxo75lm4aJg49Y4l+0eqQptXSs9m09nn8w7V3JBwRzYP9zQQ5WgE77NF
+	 l+aFjy/o9RhWZwCZaidA18rtOUOxiKyJofTJiyqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	Denys Vlasenko <dvlasenk@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0161/1073] uprobes/x86: Allow to probe a NOP instruction with 0x66 prefix
-Date: Wed, 28 Dec 2022 15:29:09 +0100
-Message-Id: <20221228144332.392269957@linuxfoundation.org>
+Subject: [PATCH 6.1 0126/1146] platform/x86: huawei-wmi: fix return value calculation
+Date: Wed, 28 Dec 2022 15:27:45 +0100
+Message-Id: <20221228144333.576354298@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,51 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit cefa72129e45313655d53a065b8055aaeb01a0c9 ]
+[ Upstream commit 0b9a1dcdb6a2c841899389bf2dd7a3e0e2aa0e99 ]
 
-Intel ICC -hotpatch inserts 2-byte "0x66 0x90" NOP at the start of each
-function to reserve extra space for hot-patching, and currently it is not
-possible to probe these functions because branch_setup_xol_ops() wrongly
-rejects NOP with REP prefix as it treats them like word-sized branch
-instructions.
+Previously, `huawei_wmi_input_setup()` returned the result of
+logical or-ing the return values of two functions that return negative
+errno-style error codes and one that returns `acpi_status`. If this
+returned value was non-zero, then it was propagated from the platform
+driver's probe function. That function should return a negative
+errno-style error code, so the result of the logical or that
+`huawei_wmi_input_setup()` returned was not appropriate.
 
-Fixes: 250bbd12c2fe ("uprobes/x86: Refuse to attach uprobe to "word-sized" branch insns")
-Reported-by: Seiji Nishikawa <snishika@redhat.com>
-Suggested-by: Denys Vlasenko <dvlasenk@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20221204173933.GA31544@redhat.com
+Fix that by checking each function separately and returning the
+error code unmodified.
+
+Fixes: 1ac9abeb2e5b ("platform/x86: huawei-wmi: Move to platform driver")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Link: https://lore.kernel.org/r/20221005150032.173198-2-pobrn@protonmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/huawei-wmi.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index b63cf8f7745e..6c07f6daaa22 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -722,8 +722,9 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
- 	switch (opc1) {
- 	case 0xeb:	/* jmp 8 */
- 	case 0xe9:	/* jmp 32 */
--	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
- 		break;
-+	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
-+		goto setup;
+diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
+index 5873c2663a65..b85050e4a0d6 100644
+--- a/drivers/platform/x86/huawei-wmi.c
++++ b/drivers/platform/x86/huawei-wmi.c
+@@ -760,6 +760,9 @@ static int huawei_wmi_input_setup(struct device *dev,
+ 		const char *guid,
+ 		struct input_dev **idev)
+ {
++	acpi_status status;
++	int err;
++
+ 	*idev = devm_input_allocate_device(dev);
+ 	if (!*idev)
+ 		return -ENOMEM;
+@@ -769,10 +772,19 @@ static int huawei_wmi_input_setup(struct device *dev,
+ 	(*idev)->id.bustype = BUS_HOST;
+ 	(*idev)->dev.parent = dev;
  
- 	case 0xe8:	/* call relative */
- 		branch_clear_offset(auprobe, insn);
-@@ -753,6 +754,7 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
- 			return -ENOTSUPP;
- 	}
+-	return sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL) ||
+-		input_register_device(*idev) ||
+-		wmi_install_notify_handler(guid, huawei_wmi_input_notify,
+-				*idev);
++	err = sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL);
++	if (err)
++		return err;
++
++	err = input_register_device(*idev);
++	if (err)
++		return err;
++
++	status = wmi_install_notify_handler(guid, huawei_wmi_input_notify, *idev);
++	if (ACPI_FAILURE(status))
++		return -EIO;
++
++	return 0;
+ }
  
-+setup:
- 	auprobe->branch.opc1 = opc1;
- 	auprobe->branch.ilen = insn->length;
- 	auprobe->branch.offs = insn->immediate.value;
+ static void huawei_wmi_input_exit(struct device *dev, const char *guid)
 -- 
 2.35.1
 
