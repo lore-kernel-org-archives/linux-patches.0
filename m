@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7131C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867A5C433D2;
-	Wed, 28 Dec 2022 16:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B70C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B30C433D2;
+	Wed, 28 Dec 2022 16:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243784;
-	bh=o7AMaP2fMCGzbBE6JGcaXnh2AL9tSOHx8jT3Oh7ody0=;
+	s=korg; t=1672243787;
+	bh=Jjc9H8ByxV5FEEeucXxpjQhNtP17Ff7Lp2ToEYiH7mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7v5Qa+RPDBpoC5Xp9vCeW8V1OEaqbMxRPC8oNMBVgNuR1EimmKm7O4RrwwdbFeBf
-	 xTi7hNiYZ0Ak7Yo1ZQs0k2TkF7ygvXKqZkdRA6QVDlGIxE4lcwN+CBu0lgbMH1QP4e
-	 B+BQ3MIJJOVd6NCe6Xl4z3Yeusv8T/p5qVJYzKas=
+	b=b0J03gbc21X3m6YX5Gtk0YRdcz9GLF6G7SbE+Bsh+U93vzIX38Jjd6Stt4pX2CtUX
+	 M780WlUAeMk7JQ11Hq+VrBGUkr9ZPa/xFAba3NALQBFuwqUFayyEsXQ3Od4CM6E4a1
+	 xPdlpBfS9d0OgSYP2X6kz8j4b2kJuEFWSCC1HXVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0555/1146] Bluetooth: hci_core: fix error handling in hci_register_dev()
-Date: Wed, 28 Dec 2022 15:34:54 +0100
-Message-Id: <20221228144345.244292207@linuxfoundation.org>
+Subject: [PATCH 6.0 0588/1073] PCI: vmd: Disable MSI remapping after suspend
+Date: Wed, 28 Dec 2022 15:36:16 +0100
+Message-Id: <20221228144344.018276579@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nirmal Patel <nirmal.patel@linux.intel.com>
 
-[ Upstream commit 0d75da38e060d21f948b3df5f5e349c962cf1ed2 ]
+[ Upstream commit d899aa668498c07ff217b666ae9712990306e682 ]
 
-If hci_register_suspend_notifier() returns error, the hdev and rfkill
-are leaked. We could disregard the error and print a warning message
-instead to avoid leaks, as it just means we won't be handing suspend
-requests.
+MSI remapping is disabled by VMD driver for Intel's Icelake and
+newer systems in order to improve performance by setting
+VMCONFIG_MSI_REMAP. By design VMCONFIG_MSI_REMAP register is cleared
+by firmware during boot. The same register gets cleared when system
+is put in S3 power state. VMD driver needs to set this register again
+in order to avoid interrupt issues with devices behind VMD if MSI
+remapping was disabled before.
 
-Fixes: 9952d90ea288 ("Bluetooth: Handle PM_SUSPEND_PREPARE and PM_POST_SUSPEND")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/r/20221109142652.450998-1-nirmal.patel@linux.intel.com
+Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
+Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/vmd.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index d97fac4f7130..56f8569ace86 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2660,7 +2660,7 @@ int hci_register_dev(struct hci_dev *hdev)
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index e06e9f4fc50f..98e0746e681c 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -980,6 +980,11 @@ static int vmd_resume(struct device *dev)
+ 	struct vmd_dev *vmd = pci_get_drvdata(pdev);
+ 	int err, i;
  
- 	error = hci_register_suspend_notifier(hdev);
- 	if (error)
--		goto err_wqueue;
-+		BT_WARN("register suspend notifier failed error:%d\n", error);
- 
- 	queue_work(hdev->req_workqueue, &hdev->power_on);
- 
++       if (vmd->irq_domain)
++               vmd_set_msi_remapping(vmd, true);
++       else
++               vmd_set_msi_remapping(vmd, false);
++
+ 	for (i = 0; i < vmd->msix_count; i++) {
+ 		err = devm_request_irq(dev, vmd->irqs[i].virq,
+ 				       vmd_irq, IRQF_NO_THREAD,
 -- 
 2.35.1
 
