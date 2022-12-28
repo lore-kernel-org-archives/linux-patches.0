@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994981C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D313C433D2;
-	Wed, 28 Dec 2022 16:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B861C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B414AC433D2;
+	Wed, 28 Dec 2022 16:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244874;
-	bh=UGrJQkGLYnITeM1Zh1Zc8PyDtNFRBhOBeZLvoF7bcVk=;
+	s=korg; t=1672244877;
+	bh=oxZmb81wvZ5UFzg+zwWOs/hDFnklGRqG/BdZqsiI2HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvh0Q73fLazGXI3a7kYUZdqZLNpc2B9cIWszNepXXDLA65fCuz2dmk96HE2fRV1KL
-	 fpOLvzUd98qp275ixSJuTd0RUwIxFY1sB1ok6pPhWYPXS0NinTkVNP6mUUA/vBTBi9
-	 X3cy8kt81DxOMX6YpGyoXllm12XA9FyoL3/1EMbo=
+	b=vrnrVZfdrVZ8SxAMe/FaLUfgguD2sXba2uFkv/XqHzYFIzkNftnGK+k0c1/8lhnDv
+	 bSEJncnTszKdR99cqF8Mlo7YQqbz2THWFxLjxRR26k3YeSYVUwjMb+ncB10TcL0W6/
+	 j8za1CUpXCYnZPOa0S3ATumEPCARKKmPwLaWrwbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Helge Deller <deller@gmx.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0754/1146] fbdev: ssd1307fb: Drop optional dependency
-Date: Wed, 28 Dec 2022 15:38:13 +0100
-Message-Id: <20221228144350.624716474@linuxfoundation.org>
+Subject: [PATCH 6.0 0792/1073] iommu/mediatek: Check return value after calling platform_get_resource()
+Date: Wed, 28 Dec 2022 15:39:40 +0100
+Message-Id: <20221228144349.522893826@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
+[ Upstream commit 73b6924cdebc899de9b719e1319aa86c6bed4acf ]
 
-Only a single out of three devices need a PWM, so from driver it's
-optional. Moreover it's a single driver in the entire kernel that
-currently selects PWM. Unfortunately this selection is a root cause
-of the circular dependencies when we want to enable optional PWM
-for some other drivers that select GPIOLIB.
+platform_get_resource() may return NULL pointer, we need check its
+return value to avoid null-ptr-deref in resource_size().
 
-Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 42d57fc58aeb ("iommu/mediatek: Initialise/Remove for multi bank dev")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221029103550.3774365-1-yangyingliang@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/iommu/mtk_iommu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
-index cfc55273dc5d..9497fe929162 100644
---- a/drivers/video/fbdev/Kconfig
-+++ b/drivers/video/fbdev/Kconfig
-@@ -2217,7 +2217,6 @@ config FB_SSD1307
- 	select FB_SYS_COPYAREA
- 	select FB_SYS_IMAGEBLIT
- 	select FB_DEFERRED_IO
--	select PWM
- 	select FB_BACKLIGHT
- 	help
- 	  This driver implements support for the Solomon SSD1307
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 7e363b1f24df..0c1c0d8e4d06 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1170,6 +1170,8 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 
+ 	banks_num = data->plat_data->banks_num;
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!res)
++		return -EINVAL;
+ 	if (resource_size(res) < banks_num * MTK_IOMMU_BANK_SZ) {
+ 		dev_err(dev, "banknr %d. res %pR is not enough.\n", banks_num, res);
+ 		return -EINVAL;
 -- 
 2.35.1
 
