@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8471C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B22C433D2;
-	Wed, 28 Dec 2022 16:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777351C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB459C433D2;
+	Wed, 28 Dec 2022 16:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245620;
-	bh=WBSylKWzXsCQ90vpG6DNlzMS6ha4uJBzIU7RLo3BUGg=;
+	s=korg; t=1672245623;
+	bh=9oyafgAYJZt8m+g84Q0/Z/9EO3zaqoJGmm/f6hIgaCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtV/+JcNGDoPfWzI29kZjIBw99djjP9gndaLEKp7beNSXpKAsRPEOHjafNzWj5RBW
-	 iJUxReg3qf703Db7cHj9XkSx5bQghpCdCS5PFZvkAMy7Cr9nRCRxf9faP4FnukFlgw
-	 CJiP/WbGIOPE+IZ/+1nWnjjWf1TKXjeXi7+c7cpQ=
+	b=Sbz1xwm7rWKo//AkM5cMEjinCTjKJ6qNSDjuO+yEgBYNSfdfA+0WtxGi3SJPPtRhC
+	 X8Ze9BWYK4ojnD44yH4j5p5z048SOZgWGZsZAN0/LB/8UbfDkE1HNfT9aDU1GxVIzj
+	 1cubS3Sq5GI2wUs9ABsoKFygvu5YpBalG6Gosr+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jan Kara <jack@suse.cz>,
+	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Stephen Hemminger <sthemmin@microsoft.com>,
+	Tianyu Lan <Tianyu.Lan@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Fabio A M Martins <fabiomirmar@gmail.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0893/1073] udf: Avoid double brelse() in udf_rename()
-Date: Wed, 28 Dec 2022 15:41:21 +0100
-Message-Id: <20221228144352.285930984@linuxfoundation.org>
+Subject: [PATCH 6.0 0888/1073] video: hyperv_fb: Avoid taking busy spinlock on panic path
+Date: Wed, 28 Dec 2022 15:41:16 +0100
+Message-Id: <20221228144352.146910999@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,91 +43,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit c791730f2554a9ebb8f18df9368dc27d4ebc38c2 ]
+[ Upstream commit 1d044ca035dc22df0d3b39e56f2881071d9118bd ]
 
-syzbot reported a warning like below [1]:
+The Hyper-V framebuffer code registers a panic notifier in order
+to try updating its fbdev if the kernel crashed. The notifier
+callback is straightforward, but it calls the vmbus_sendpacket()
+routine eventually, and such function takes a spinlock for the
+ring buffer operations.
 
-VFS: brelse: Trying to free free buffer
-WARNING: CPU: 2 PID: 7301 at fs/buffer.c:1145 __brelse+0x67/0xa0
-...
-Call Trace:
- <TASK>
- invalidate_bh_lru+0x99/0x150
- smp_call_function_many_cond+0xe2a/0x10c0
- ? generic_remap_file_range_prep+0x50/0x50
- ? __brelse+0xa0/0xa0
- ? __mutex_lock+0x21c/0x12d0
- ? smp_call_on_cpu+0x250/0x250
- ? rcu_read_lock_sched_held+0xb/0x60
- ? lock_release+0x587/0x810
- ? __brelse+0xa0/0xa0
- ? generic_remap_file_range_prep+0x50/0x50
- on_each_cpu_cond_mask+0x3c/0x80
- blkdev_flush_mapping+0x13a/0x2f0
- blkdev_put_whole+0xd3/0xf0
- blkdev_put+0x222/0x760
- deactivate_locked_super+0x96/0x160
- deactivate_super+0xda/0x100
- cleanup_mnt+0x222/0x3d0
- task_work_run+0x149/0x240
- ? task_work_cancel+0x30/0x30
- do_exit+0xb29/0x2a40
- ? reacquire_held_locks+0x4a0/0x4a0
- ? do_raw_spin_lock+0x12a/0x2b0
- ? mm_update_next_owner+0x7c0/0x7c0
- ? rwlock_bug.part.0+0x90/0x90
- ? zap_other_threads+0x234/0x2d0
- do_group_exit+0xd0/0x2a0
- __x64_sys_exit_group+0x3a/0x50
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Panic path runs in atomic context, with local interrupts and
+preemption disabled, and all secondary CPUs shutdown. That said,
+taking a spinlock might cause a lockup if a secondary CPU was
+disabled with such lock taken. Fix it here by checking if the
+ring buffer spinlock is busy on Hyper-V framebuffer panic notifier;
+if so, bail-out avoiding the potential lockup scenario.
 
-The cause of the issue is that brelse() is called on both ofibh.sbh
-and ofibh.ebh by udf_find_entry() when it returns NULL.  However,
-brelse() is called by udf_rename(), too.  So, b_count on buffer_head
-becomes unbalanced.
-
-This patch fixes the issue by not calling brelse() by udf_rename()
-when udf_find_entry() returns NULL.
-
-Link: https://syzkaller.appspot.com/bug?id=8297f45698159c6bca8a1f87dc983667c1a1c851 [1]
-Reported-by: syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221023095741.271430-1-syoshida@redhat.com
+Cc: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
+Cc: Dexuan Cui <decui@microsoft.com>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: "K. Y. Srinivasan" <kys@microsoft.com>
+Cc: Michael Kelley <mikelley@microsoft.com>
+Cc: Stephen Hemminger <sthemmin@microsoft.com>
+Cc: Tianyu Lan <Tianyu.Lan@microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Tested-by: Fabio A M Martins <fabiomirmar@gmail.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20220819221731.480795-10-gpiccoli@igalia.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/namei.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hv/ring_buffer.c        | 13 +++++++++++++
+ drivers/video/fbdev/hyperv_fb.c |  8 +++++++-
+ include/linux/hyperv.h          |  2 ++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/namei.c b/fs/udf/namei.c
-index 865e658535b1..0e30a50060d9 100644
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -1091,8 +1091,9 @@ static int udf_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
- 		return -EINVAL;
+diff --git a/drivers/hv/ring_buffer.c b/drivers/hv/ring_buffer.c
+index 59a4aa86d1f3..c6692fd5ab15 100644
+--- a/drivers/hv/ring_buffer.c
++++ b/drivers/hv/ring_buffer.c
+@@ -280,6 +280,19 @@ void hv_ringbuffer_cleanup(struct hv_ring_buffer_info *ring_info)
+ 	ring_info->pkt_buffer_size = 0;
+ }
  
- 	ofi = udf_find_entry(old_dir, &old_dentry->d_name, &ofibh, &ocfi);
--	if (IS_ERR(ofi)) {
--		retval = PTR_ERR(ofi);
-+	if (!ofi || IS_ERR(ofi)) {
-+		if (IS_ERR(ofi))
-+			retval = PTR_ERR(ofi);
- 		goto end_rename;
- 	}
++/*
++ * Check if the ring buffer spinlock is available to take or not; used on
++ * atomic contexts, like panic path (see the Hyper-V framebuffer driver).
++ */
++
++bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel)
++{
++	struct hv_ring_buffer_info *rinfo = &channel->outbound;
++
++	return spin_is_locked(&rinfo->ring_lock);
++}
++EXPORT_SYMBOL_GPL(hv_ringbuffer_spinlock_busy);
++
+ /* Write to the ring buffer. */
+ int hv_ringbuffer_write(struct vmbus_channel *channel,
+ 			const struct kvec *kv_list, u32 kv_count,
+diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
+index b58b445bb529..0839ba7d3a34 100644
+--- a/drivers/video/fbdev/hyperv_fb.c
++++ b/drivers/video/fbdev/hyperv_fb.c
+@@ -779,12 +779,18 @@ static void hvfb_ondemand_refresh_throttle(struct hvfb_par *par,
+ static int hvfb_on_panic(struct notifier_block *nb,
+ 			 unsigned long e, void *p)
+ {
++	struct hv_device *hdev;
+ 	struct hvfb_par *par;
+ 	struct fb_info *info;
  
-@@ -1101,8 +1102,7 @@ static int udf_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 	par = container_of(nb, struct hvfb_par, hvfb_panic_nb);
+-	par->synchronous_fb = true;
+ 	info = par->info;
++	hdev = device_to_hv_device(info->device);
++
++	if (hv_ringbuffer_spinlock_busy(hdev->channel))
++		return NOTIFY_DONE;
++
++	par->synchronous_fb = true;
+ 	if (par->need_docopy)
+ 		hvfb_docopy(par, 0, dio_fb_size);
+ 	synthvid_update(info, 0, 0, INT_MAX, INT_MAX);
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index 3b42264333ef..646f1da9f27e 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -1341,6 +1341,8 @@ struct hv_ring_buffer_debug_info {
+ int hv_ringbuffer_get_debuginfo(struct hv_ring_buffer_info *ring_info,
+ 				struct hv_ring_buffer_debug_info *debug_info);
  
- 	brelse(ofibh.sbh);
- 	tloc = lelb_to_cpu(ocfi.icb.extLocation);
--	if (!ofi || udf_get_lb_pblock(old_dir->i_sb, &tloc, 0)
--	    != old_inode->i_ino)
-+	if (udf_get_lb_pblock(old_dir->i_sb, &tloc, 0) != old_inode->i_ino)
- 		goto end_rename;
- 
- 	nfi = udf_find_entry(new_dir, &new_dentry->d_name, &nfibh, &ncfi);
++bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel);
++
+ /* Vmbus interface */
+ #define vmbus_driver_register(driver)	\
+ 	__vmbus_driver_register(driver, THIS_MODULE, KBUILD_MODNAME)
 -- 
 2.35.1
 
