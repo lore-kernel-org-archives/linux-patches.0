@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A07A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FD4C433EF;
-	Wed, 28 Dec 2022 15:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482871863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C130DC433EF;
+	Wed, 28 Dec 2022 15:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240213;
-	bh=c4hsV7i8ymG8pi0rs0ItIYG7BfhreTpAMJMVsu1akkI=;
+	s=korg; t=1672240216;
+	bh=l9AOlS29MLEVOvw/Jr0qb7P4Cmzp6IpF/g+zdJHvoBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUxl1ZqjYdTkRx6VdbNqVlQNRYxaeHayjqWUqBJkqvnO9jK6luSlV3vz6l2/rn1hD
-	 sLrseiozxraFH4YY9LYjUeFZz57nW7f4aZbdZZNYKA43mu9+ex5lhsKt04OGY4QDfO
-	 zU3usKTOR86BnEPkN0OoT4vE3v7QskhGyUuWAOss=
+	b=eR4eVWxv7aHkziUp4gzMZ1lyZjwxF59DLUx5EVcVLnkZWot8wgyoSLCvM5IZ8Xh3z
+	 aY7UYrhyQSbSB1DrKLuw62Sro2A1SUc7KzmWNdwPCFB2yEDpbLSOQGVoy8a4qwa3AD
+	 PnMv4UzZwg7KIaorhvJA9Eu2qNNT2OEsc6x2gPzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0096/1146] pstore/ram: Fix error return code in ramoops_probe()
-Date: Wed, 28 Dec 2022 15:27:15 +0100
-Message-Id: <20221228144332.749662451@linuxfoundation.org>
+Subject: [PATCH 5.15 324/731] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
+Date: Wed, 28 Dec 2022 15:37:11 +0100
+Message-Id: <20221228144305.964885957@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
+[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
 
-In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
-value of 0, so the error return code -EINVAL may be incorrectly set
-to 0. To fix set valid return code before calling to goto.
+The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
+some error handling case, which will lead to a memory leak. Fix this up
+by adding kfree_skb() to release skb.
 
-Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
+Compile tested only.
+
+Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index fefe3d391d3a..74e4d93f3e08 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -735,6 +735,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 	/* Make sure we didn't get bogus platform data pointer. */
- 	if (!pdata) {
- 		pr_err("NULL platform data\n");
-+		err = -EINVAL;
- 		goto fail_out;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index dd5c4ef92ef3..ea7200b7b647 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1654,12 +1654,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
  	}
  
-@@ -742,6 +743,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 			!pdata->ftrace_size && !pdata->pmsg_size)) {
- 		pr_err("The memory size and the record/console size must be "
- 			"non-zero\n");
-+		err = -EINVAL;
- 		goto fail_out;
- 	}
+ 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
  
+ 	ret = dev_set_promiscuity(priv->dev, 1);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
+ 
+ 	ret = dev_direct_xmit(skb, 0);
+ 	if (ret)
 -- 
 2.35.1
 
