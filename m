@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0673A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8099EC433EF;
-	Wed, 28 Dec 2022 15:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6801863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3082CC433EF;
+	Wed, 28 Dec 2022 15:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240964;
-	bh=lP2hftc/IGXLm6OvTWqEEbJiePcYt5ggfTLyTNUPeQw=;
+	s=korg; t=1672240967;
+	bh=VsAfz6RwV2NWd5fjLXoz7wWwuvsmCnqCERCZA5jhWnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JReg1Tv9gUb6pcJsJnIn/xrZ57YjBGzZmXP5ok43XmttthH9RbLYfWjGqNEL3N0Nt
-	 LGNmjrUgUzIY8KKrSedPSrZ9/Aj/sqYSpb8twYQu2y7WZgJzkrHxHsg0w+XvekrlGO
-	 A5iGuHdaiQD3tzus1sCflPE/9p+MHtQb0mYy5MH8=
+	b=OJKpJKDGoyEzG1UgBPquNu4yKPcjBG/xFlVUFS37OMEuyUqcgaYoHm5HbWrJCvlCq
+	 W8bGFq35SkII+dB9tdX05TERgh2jM2YZsctc0H//50CCUmnay6KIxYoZikFN5L7vWb
+	 mWRzVy6MYMWoKtoEPpmBhRnMnb8OdeoQGmZwX3y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Mark Greer <mgreer@animalcreek.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0224/1073] Input: iqs7222 - protect against undefined slider size
-Date: Wed, 28 Dec 2022 15:30:12 +0100
-Message-Id: <20221228144334.104660573@linuxfoundation.org>
+Subject: [PATCH 5.15 422/731] crypto: omap-sham - Use pm_runtime_resume_and_get() in omap_sham_probe()
+Date: Wed, 28 Dec 2022 15:38:49 +0100
+Message-Id: <20221228144308.802772275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 2f6fd232978906f6fb054529210b9faec384bd45 ]
+[ Upstream commit 7bcceb4c9896b1b672b636ae70fe75110d6bf1ad ]
 
-Select variants of silicon do not define a default slider size, in
-which case the size must be specified in the device tree. If it is
-not, the axis's maximum value is reported as 65535 due to unsigned
-integer overflow.
+omap_sham_probe() calls pm_runtime_get_sync() and calls
+pm_runtime_put_sync() latter to put usage_counter. However,
+pm_runtime_get_sync() will increment usage_counter even it failed. Fix
+it by replacing it with pm_runtime_resume_and_get() to keep usage
+counter balanced.
 
-To solve this problem, move the existing zero-check outside of the
-conditional block that checks whether the property is present.
-
-Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Link: https://lore.kernel.org/r/Y1SRXEi7XMlncDWk@nixie71
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: b359f034c8bf ("crypto: omap-sham - Convert to use pm_runtime API")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Acked-by: Mark Greer <mgreer@animalcreek.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/iqs7222.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/crypto/omap-sham.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
-index 350be4f23f50..8fd665874a24 100644
---- a/drivers/input/misc/iqs7222.c
-+++ b/drivers/input/misc/iqs7222.c
-@@ -2024,7 +2024,7 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
+index f6bf53c00b61..4ec6949a7ca9 100644
+--- a/drivers/crypto/omap-sham.c
++++ b/drivers/crypto/omap-sham.c
+@@ -2114,7 +2114,7 @@ static int omap_sham_probe(struct platform_device *pdev)
  
- 	error = fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val);
- 	if (!error) {
--		if (!val || val > dev_desc->sldr_res) {
-+		if (val > dev_desc->sldr_res) {
- 			dev_err(&client->dev, "Invalid %s size: %u\n",
- 				fwnode_get_name(sldr_node), val);
- 			return -EINVAL;
-@@ -2043,6 +2043,13 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 		return error;
- 	}
+ 	pm_runtime_enable(dev);
  
-+	if (!(reg_offset ? sldr_setup[3]
-+			 : sldr_setup[2] & IQS7222_SLDR_SETUP_2_RES_MASK)) {
-+		dev_err(&client->dev, "Undefined %s size\n",
-+			fwnode_get_name(sldr_node));
-+		return -EINVAL;
-+	}
-+
- 	error = fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val);
- 	if (!error) {
- 		if (val > (reg_offset ? U16_MAX : U8_MAX * 4)) {
+-	err = pm_runtime_get_sync(dev);
++	err = pm_runtime_resume_and_get(dev);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to get sync: %d\n", err);
+ 		goto err_pm;
 -- 
 2.35.1
 
