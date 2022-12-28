@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4517D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08F2C433EF;
-	Wed, 28 Dec 2022 15:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056D91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E03C433EF;
+	Wed, 28 Dec 2022 15:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240767;
-	bh=NWsKFQuy+O3Gk9MuwuwP0V8CdgP4uEkBPe+U0Z11uTw=;
+	s=korg; t=1672240769;
+	bh=Vw7eGgi4X9x8X+5+bEB3oWCqSQzC5RkvsWNIiNf1iLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPqjkwEnJzb2oa2CR0naD/hCj18F8o9xI1BzW7VgdaA1viFN+OBPOUwNhAXr45cJe
-	 vcFwftoUDCAyUS9NOa4nUWln/UVj99MgB4IN5FyyVb1q713BWchv6t3rcSHr6vPGJQ
-	 14GB0SY+8vRnznILhIJkuTdOHMk/3dA9YWu/7p4o=
+	b=UEcBlhXMOgw/pECs/+rQZYW6Gusvhy5lH5isTFTiIYwU0KH5ZmgXR24pIAb/oTDb0
+	 ZQ2LRvUM60mRR/FpzMp6Curw4nPumjUQ7kVIcAhb1oKZsctskuKruzRTYZci/TJrZ2
+	 4cBZ1ggMQX+IShJmCZmSfYYUf054SQJ4EAuGH10k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luoyouming <luoyouming@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Derek Dolney <z23@posteo.net>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 395/731] RDMA/hns: Fix ext_sge num error when post send
-Date: Wed, 28 Dec 2022 15:38:22 +0100
-Message-Id: <20221228144308.009872480@linuxfoundation.org>
+Subject: [PATCH 6.1 0165/1146] cpu/hotplug: Do not bail-out in DYING/STARTING sections
+Date: Wed, 28 Dec 2022 15:28:24 +0100
+Message-Id: <20221228144334.643465080@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,67 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luoyouming <luoyouming@huawei.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 8eaa6f7d569b4a22bfc1b0a3fdfeeb401feb65a4 ]
+[ Upstream commit 6f855b39e4602b6b42a8e5cbcfefb8a1b8b5f0be ]
 
-In the HNS ROCE driver, The sge is divided into standard sge and extended
-sge.  There are 2 standard sge in RC/XRC, and the UD standard sge is 0.
-In the scenario of RC SQ inline, if the data does not exceed 32bytes, the
-standard sge will be used. If it exceeds, only the extended sge will be
-used to fill the data.
+The DYING/STARTING callbacks are not expected to fail. However, as reported
+by Derek, buggy drivers such as tboot are still free to return errors
+within those sections, which halts the hot(un)plug and leaves the CPU in an
+unrecoverable state.
 
-Currently, when filling the extended sge, max_gs is directly used as the
-number of the extended sge, which did not subtract the number of standard
-sge.  There is a logical error. The new algorithm subtracts the number of
-standard sge from max_gs to get the actual number of extended sge.
+As there is no rollback possible, only log the failures and proceed with
+the following steps.
 
-Fixes: 30b707886aeb ("RDMA/hns: Support inline data in extented sge space for RC")
-Link: https://lore.kernel.org/r/20221108133847.2304539-2-xuhaoyue1@hisilicon.com
-Signed-off-by: Luoyouming <luoyouming@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This restores the hotplug behaviour prior to commit 453e41085183
+("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+
+Fixes: 453e41085183 ("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+Reported-by: Derek Dolney <z23@posteo.net>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Derek Dolney <z23@posteo.net>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215867
+Link: https://lore.kernel.org/r/20220927101259.1149636-1-vdonnefort@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ kernel/cpu.c | 56 +++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 5875ccf86f66..94f3a0a87dfd 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -151,20 +151,29 @@ static void set_atomic_seg(const struct ib_send_wr *wr,
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_SGE_NUM, valid_num_sge);
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 979de993f853..98a7a7b1471b 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -663,21 +663,51 @@ static bool cpuhp_next_state(bool bringup,
+ 	return true;
  }
  
-+static unsigned int get_std_sge_num(struct hns_roce_qp *qp)
-+{
-+	if (qp->ibqp.qp_type == IB_QPT_GSI || qp->ibqp.qp_type == IB_QPT_UD)
-+		return 0;
+-static int cpuhp_invoke_callback_range(bool bringup,
+-				       unsigned int cpu,
+-				       struct cpuhp_cpu_state *st,
+-				       enum cpuhp_state target)
++static int __cpuhp_invoke_callback_range(bool bringup,
++					 unsigned int cpu,
++					 struct cpuhp_cpu_state *st,
++					 enum cpuhp_state target,
++					 bool nofail)
+ {
+ 	enum cpuhp_state state;
+-	int err = 0;
++	int ret = 0;
+ 
+ 	while (cpuhp_next_state(bringup, &state, st, target)) {
++		int err;
 +
-+	return HNS_ROCE_SGE_IN_WQE;
+ 		err = cpuhp_invoke_callback(cpu, state, bringup, NULL, NULL);
+-		if (err)
++		if (!err)
++			continue;
++
++		if (nofail) {
++			pr_warn("CPU %u %s state %s (%d) failed (%d)\n",
++				cpu, bringup ? "UP" : "DOWN",
++				cpuhp_get_step(st->state)->name,
++				st->state, err);
++			ret = -1;
++		} else {
++			ret = err;
+ 			break;
++		}
+ 	}
+ 
+-	return err;
++	return ret;
 +}
 +
- static int fill_ext_sge_inl_data(struct hns_roce_qp *qp,
- 				 const struct ib_send_wr *wr,
- 				 unsigned int *sge_idx, u32 msg_len)
- {
- 	struct ib_device *ibdev = &(to_hr_dev(qp->ibqp.device))->ib_dev;
--	unsigned int ext_sge_sz = qp->sq.max_gs * HNS_ROCE_SGE_SIZE;
- 	unsigned int left_len_in_pg;
- 	unsigned int idx = *sge_idx;
-+	unsigned int std_sge_num;
- 	unsigned int i = 0;
- 	unsigned int len;
- 	void *addr;
- 	void *dseg;
++static inline int cpuhp_invoke_callback_range(bool bringup,
++					      unsigned int cpu,
++					      struct cpuhp_cpu_state *st,
++					      enum cpuhp_state target)
++{
++	return __cpuhp_invoke_callback_range(bringup, cpu, st, target, false);
++}
++
++static inline void cpuhp_invoke_callback_range_nofail(bool bringup,
++						      unsigned int cpu,
++						      struct cpuhp_cpu_state *st,
++						      enum cpuhp_state target)
++{
++	__cpuhp_invoke_callback_range(bringup, cpu, st, target, true);
+ }
  
--	if (msg_len > ext_sge_sz) {
-+	std_sge_num = get_std_sge_num(qp);
-+	if (msg_len > (qp->sq.max_gs - std_sge_num) * HNS_ROCE_SGE_SIZE) {
- 		ibdev_err(ibdev,
- 			  "no enough extended sge space for inline data.\n");
- 		return -EINVAL;
+ static inline bool can_rollback_cpu(struct cpuhp_cpu_state *st)
+@@ -999,7 +1029,6 @@ static int take_cpu_down(void *_param)
+ 	struct cpuhp_cpu_state *st = this_cpu_ptr(&cpuhp_state);
+ 	enum cpuhp_state target = max((int)st->target, CPUHP_AP_OFFLINE);
+ 	int err, cpu = smp_processor_id();
+-	int ret;
+ 
+ 	/* Ensure this CPU doesn't handle any more interrupts. */
+ 	err = __cpu_disable();
+@@ -1012,13 +1041,10 @@ static int take_cpu_down(void *_param)
+ 	 */
+ 	WARN_ON(st->state != (CPUHP_TEARDOWN_CPU - 1));
+ 
+-	/* Invoke the former CPU_DYING callbacks */
+-	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
+-
+ 	/*
+-	 * DYING must not fail!
++	 * Invoke the former CPU_DYING callbacks. DYING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(false, cpu, st, target);
+ 
+ 	/* Give up timekeeping duties */
+ 	tick_handover_do_timer();
+@@ -1296,16 +1322,14 @@ void notify_cpu_starting(unsigned int cpu)
+ {
+ 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, cpu);
+ 	enum cpuhp_state target = min((int)st->target, CPUHP_AP_ONLINE);
+-	int ret;
+ 
+ 	rcu_cpu_starting(cpu);	/* Enables RCU usage on this CPU. */
+ 	cpumask_set_cpu(cpu, &cpus_booted_once_mask);
+-	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
+ 
+ 	/*
+ 	 * STARTING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(true, cpu, st, target);
+ }
+ 
+ /*
 -- 
 2.35.1
 
