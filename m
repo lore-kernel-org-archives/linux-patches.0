@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CBD1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD86C433EF;
-	Wed, 28 Dec 2022 16:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2121C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F5EC433D2;
+	Wed, 28 Dec 2022 16:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245361;
-	bh=Z2ckRWTzViCVmEP3HHe6noxfScnOfOBfJzVUa+ToXeU=;
+	s=korg; t=1672245364;
+	bh=X0hgkm9GaYB7WJBQeBOv0mpFuJQF232PPMR9F5CfBkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7Ry8DNCMfK2mH+IqSFnTteVSvlT3wJPDrwGJu92H0/hx4JVcdKSKWcKAkDz7+kD1
-	 BEj23RDY2ZK1zl667lQO3NKCbcRgwgMET+N98odout7OvFkLUf0Mxu1wBSUluPZmGX
-	 ds4siqNQPf7kO0cP+FaT9sTV4kOZubwT9e11aGIM=
+	b=WHa9gLZljBHG1MfcDTUxXJV+U36y+iy1eI4hHu1dwIHQceOdqwpIYPN/XMVvTCJ4j
+	 /g7le5aEb+lFYyXkIaMS5nZRBarTaLiHwpuV6278kNDU9+C8Su/vwHz75OipQ5wpf8
+	 G49N/Lnl5AP1KoZD2vd+DF1+4psdyo4hoY0Toju8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"David S. Miller" <davem@davemloft.net>,
+	Hacash Robot <hacashRobot@santino.com>,
+	Xie Shaowen <studentxswpy@163.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0879/1073] rxrpc: Fix missing unlock in rxrpc_do_sendmsg()
-Date: Wed, 28 Dec 2022 15:41:07 +0100
-Message-Id: <20221228144351.900325561@linuxfoundation.org>
+Subject: [PATCH 6.1 0846/1146] macintosh/macio-adb: check the return value of ioremap()
+Date: Wed, 28 Dec 2022 15:39:45 +0100
+Message-Id: <20221228144353.133162442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Xie Shaowen <studentxswpy@163.com>
 
-[ Upstream commit 4feb2c44629e6f9b459b41a5a60491069d346a95 ]
+[ Upstream commit dbaa3105736d4d73063ea0a3b01cd7fafce924e6 ]
 
-One of the error paths in rxrpc_do_sendmsg() doesn't unlock the call mutex
-before returning.  Fix it to do this.
+The function ioremap() in macio_init() can fail, so its return value
+should be checked.
 
-Note that this still doesn't get rid of the checker warning:
-
-   ../net/rxrpc/sendmsg.c:617:5: warning: context imbalance in 'rxrpc_do_sendmsg' - wrong count at exit
-
-I think the interplay between the socket lock and the call's user_mutex may
-be too complicated for checker to analyse, especially as
-rxrpc_new_client_call_for_sendmsg(), which it calls, returns with the
-call's user_mutex if successful but unconditionally drops the socket lock.
-
-Fixes: e754eba685aa ("rxrpc: Provide a cmsg to specify the amount of Tx data for a call")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 36874579dbf4c ("[PATCH] powerpc: macio-adb build fix")
+Reported-by: Hacash Robot <hacashRobot@santino.com>
+Signed-off-by: Xie Shaowen <studentxswpy@163.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20220802074148.3213659-1-studentxswpy@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/macintosh/macio-adb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index 3c3a626459de..d4e4e94f4f98 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -716,7 +716,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 			if (call->tx_total_len != -1 ||
- 			    call->tx_pending ||
- 			    call->tx_top != 0)
--				goto error_put;
-+				goto out_put_unlock;
- 			call->tx_total_len = p.call.tx_total_len;
- 		}
+diff --git a/drivers/macintosh/macio-adb.c b/drivers/macintosh/macio-adb.c
+index 9b63bd2551c6..cd4e34d15c26 100644
+--- a/drivers/macintosh/macio-adb.c
++++ b/drivers/macintosh/macio-adb.c
+@@ -108,6 +108,10 @@ int macio_init(void)
+ 		return -ENXIO;
  	}
+ 	adb = ioremap(r.start, sizeof(struct adb_regs));
++	if (!adb) {
++		of_node_put(adbs);
++		return -ENOMEM;
++	}
+ 
+ 	out_8(&adb->ctrl.r, 0);
+ 	out_8(&adb->intr.r, 0);
 -- 
 2.35.1
 
