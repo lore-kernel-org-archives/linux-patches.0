@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E331875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56332C433F0;
-	Wed, 28 Dec 2022 15:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58311875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FECC433EF;
+	Wed, 28 Dec 2022 15:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242757;
-	bh=wqHBlWwDhEXSeeSSCMDc2kQD+kY2BGT9fPT2b3UzNNQ=;
+	s=korg; t=1672242760;
+	bh=XruVT1UqczvTAAGUhyeAJkYGhX4i3qwN58gMXcrfFPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4SXvQX4khJeJqq84cXQn1V+9/4XF8/D2dTnAfehngpj5KS3W0DA9j1YFCOWW+7KW
-	 2NXa1x6jpqwgMwMN1Xi803R9cCOTsiziDpucNzz5b3j7OkzjwYhcF60zndesa+GCa1
-	 aTa4IWtqUSMrT/cknigTtR8/Ih0BQfed3ta0XynY=
+	b=IDyv2jgwMZ8dlGwHpYUVWds+nBSVfZoiZO8aficxS+e6h6Wm15TwjXgXZNlSeTjIY
+	 YBlDGNk+EtbCqwS+k3+0HEm38F70dnhLVxc1Oc+1mhgu4JPNGj0DsXzH3d4QCn1Dl9
+	 3QK6TGGTb3KQjGHyXo8gaXTk1LQTeg6jUkc7wjIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0410/1146] media: amphion: try to wakeup vpu core to avoid failure
-Date: Wed, 28 Dec 2022 15:32:29 +0100
-Message-Id: <20221228144341.304181116@linuxfoundation.org>
+Subject: [PATCH 6.0 0424/1073] drm/amdkfd: Fix memory leakage
+Date: Wed, 28 Dec 2022 15:33:32 +0100
+Message-Id: <20221228144339.539176749@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,137 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 082744433f7b96db7214a98202ed96f367684693 ]
+[ Upstream commit 75818afff631e1ea785a82c3e8bb82eb0dee539c ]
 
-firmware should be waked up by start or configure command,
-but there is a very small chance that firmware failed to wakeup.
-in such case, try to wakeup firmware again by sending a noop command
+This patch fixes potential memory leakage and seg fault
+in  _gpuvm_import_dmabuf() function
 
-Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: d4ec4bdc0bd5 ("drm/amdkfd: Allow access for mmapping KFD BOs")
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu.h         |  1 +
- drivers/media/platform/amphion/vpu_cmds.c    | 39 ++++++++++++++++++--
- drivers/media/platform/amphion/vpu_malone.c  |  1 +
- drivers/media/platform/amphion/vpu_windsor.c |  1 +
- 4 files changed, 38 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vpu.h b/drivers/media/platform/amphion/vpu.h
-index beac0309ca8d..048c23c2bf4d 100644
---- a/drivers/media/platform/amphion/vpu.h
-+++ b/drivers/media/platform/amphion/vpu.h
-@@ -13,6 +13,7 @@
- #include <linux/mailbox_controller.h>
- #include <linux/kfifo.h>
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 5e184952ec98..6659630303a3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2253,7 +2253,7 @@ int amdgpu_amdkfd_gpuvm_import_dmabuf(struct amdgpu_device *adev,
  
-+#define VPU_TIMEOUT_WAKEUP	msecs_to_jiffies(200)
- #define VPU_TIMEOUT		msecs_to_jiffies(1000)
- #define VPU_INST_NULL_ID	(-1L)
- #define VPU_MSG_BUFFER_SIZE	(8192)
-diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
-index f4d7ca78a621..fa581ba6bab2 100644
---- a/drivers/media/platform/amphion/vpu_cmds.c
-+++ b/drivers/media/platform/amphion/vpu_cmds.c
-@@ -269,7 +269,7 @@ static bool check_is_responsed(struct vpu_inst *inst, unsigned long key)
- 	return flag;
- }
+ 	ret = drm_vma_node_allow(&obj->vma_node, drm_priv);
+ 	if (ret) {
+-		kfree(mem);
++		kfree(*mem);
+ 		return ret;
+ 	}
  
--static int sync_session_response(struct vpu_inst *inst, unsigned long key)
-+static int sync_session_response(struct vpu_inst *inst, unsigned long key, long timeout, int try)
- {
- 	struct vpu_core *core;
- 
-@@ -279,10 +279,12 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
- 	core = inst->core;
- 
- 	call_void_vop(inst, wait_prepare);
--	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), VPU_TIMEOUT);
-+	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), timeout);
- 	call_void_vop(inst, wait_finish);
- 
- 	if (!check_is_responsed(inst, key)) {
-+		if (try)
-+			return -EINVAL;
- 		dev_err(inst->dev, "[%d] sync session timeout\n", inst->id);
- 		set_bit(inst->id, &core->hang_mask);
- 		mutex_lock(&inst->core->cmd_lock);
-@@ -294,6 +296,19 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
- 	return 0;
- }
- 
-+static void vpu_core_keep_active(struct vpu_core *core)
-+{
-+	struct vpu_rpc_event pkt;
-+
-+	memset(&pkt, 0, sizeof(pkt));
-+	vpu_iface_pack_cmd(core, &pkt, 0, VPU_CMD_ID_NOOP, NULL);
-+
-+	dev_dbg(core->dev, "try to wake up\n");
-+	mutex_lock(&core->cmd_lock);
-+	vpu_cmd_send(core, &pkt);
-+	mutex_unlock(&core->cmd_lock);
-+}
-+
- static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
- {
- 	unsigned long key;
-@@ -304,9 +319,25 @@ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
- 		return -EINVAL;
- 
- 	ret = vpu_request_cmd(inst, id, data, &key, &sync);
--	if (!ret && sync)
--		ret = sync_session_response(inst, key);
-+	if (ret)
-+		goto exit;
-+
-+	/* workaround for a firmware issue,
-+	 * firmware should be waked up by start or configure command,
-+	 * but there is a very small change that firmware failed to wakeup.
-+	 * in such case, try to wakeup firmware again by sending a noop command
-+	 */
-+	if (sync && (id == VPU_CMD_ID_CONFIGURE_CODEC || id == VPU_CMD_ID_START)) {
-+		if (sync_session_response(inst, key, VPU_TIMEOUT_WAKEUP, 1))
-+			vpu_core_keep_active(inst->core);
-+		else
-+			goto exit;
-+	}
-+
-+	if (sync)
-+		ret = sync_session_response(inst, key, VPU_TIMEOUT, 0);
- 
-+exit:
- 	if (ret)
- 		dev_err(inst->dev, "[%d] send cmd(0x%x) fail\n", inst->id, id);
- 
-diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
-index 51e0702f9ae1..9f2890730fd7 100644
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -692,6 +692,7 @@ int vpu_malone_set_decode_params(struct vpu_shared_addr *shared,
- }
- 
- static struct vpu_pair malone_cmds[] = {
-+	{VPU_CMD_ID_NOOP, VID_API_CMD_NULL},
- 	{VPU_CMD_ID_START, VID_API_CMD_START},
- 	{VPU_CMD_ID_STOP, VID_API_CMD_STOP},
- 	{VPU_CMD_ID_ABORT, VID_API_CMD_ABORT},
-diff --git a/drivers/media/platform/amphion/vpu_windsor.c b/drivers/media/platform/amphion/vpu_windsor.c
-index 1526af2ef9da..b93c8cfdee7f 100644
---- a/drivers/media/platform/amphion/vpu_windsor.c
-+++ b/drivers/media/platform/amphion/vpu_windsor.c
-@@ -658,6 +658,7 @@ int vpu_windsor_get_stream_buffer_size(struct vpu_shared_addr *shared)
- }
- 
- static struct vpu_pair windsor_cmds[] = {
-+	{VPU_CMD_ID_NOOP, GTB_ENC_CMD_NOOP},
- 	{VPU_CMD_ID_CONFIGURE_CODEC, GTB_ENC_CMD_CONFIGURE_CODEC},
- 	{VPU_CMD_ID_START, GTB_ENC_CMD_STREAM_START},
- 	{VPU_CMD_ID_STOP, GTB_ENC_CMD_STREAM_STOP},
 -- 
 2.35.1
 
