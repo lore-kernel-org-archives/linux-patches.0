@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A5E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5A2C433D2;
-	Wed, 28 Dec 2022 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE64A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294ACC433EF;
+	Wed, 28 Dec 2022 15:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239946;
-	bh=xLMSABwJiBXNgc997gcjKHd9GNASxvEMxkI0yI52mec=;
+	s=korg; t=1672239949;
+	bh=HL6mQPUmwJreVaGCN4UDXMfax8DjgiESGDxwshEOVag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqJrYa4aLHid90HzD9lyrUPkE09sLzx+oqYjqMaRaYm1j/4tDPRWrrmbx9Qbrp42C
-	 6258XHwR0Bz+7lsFQMu5Hmt0QCTveYWbdmaTf5Q5blWdiNf05XQseZLJ6Q54eTyH6r
-	 MqL01t/KQYgAQLCPnT3vRvkIh4B2HMIddgH/d4sE=
+	b=KxKxF/wfFKnN5X6ifwGtYQ0jZkqnf1bfWcRGy/D+z+jehkJVAO75+yPu3s8tDw2Fy
+	 UKmHCo7sduaJcW8+Prf4eBCn7IFA2STUfTqtRulNICocV53Jn0W8H2uwA+2xJBFYp5
+	 b8QtkTYlchl5M1cimszhZ6ORe0xPNIZjfaabAzTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Punit Agrawal <punit.agrawal@bytedance.com>,
-	Will Deacon <will@kernel.org>,
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0061/1146] perf/arm_dmc620: Fix hotplug callback leak in dmc620_pmu_init()
-Date: Wed, 28 Dec 2022 15:26:40 +0100
-Message-Id: <20221228144331.815290519@linuxfoundation.org>
+Subject: [PATCH 6.0 0097/1073] sched/uclamp: Make select_idle_capacity() use util_fits_cpu()
+Date: Wed, 28 Dec 2022 15:28:05 +0100
+Message-Id: <20221228144330.684412056@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-[ Upstream commit d9f564c966e63925aac4ba273a9319d7fb6f4b4e ]
+[ Upstream commit b759caa1d9f667b94727b2ad12589cbc4ce13a82 ]
 
-dmc620_pmu_init() won't remove the callback added by
-cpuhp_setup_state_multi() when platform_driver_register() failed. Remove
-the callback by cpuhp_remove_multi_state() in fail path.
+Use the new util_fits_cpu() to ensure migration margin and capacity
+pressure are taken into account correctly when uclamp is being used
+otherwise we will fail to consider CPUs as fitting in scenarios where
+they should.
 
-Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
-arm-ccn: Prevent hotplug callback leak")
-
-Fixes: 53c218da220c ("driver/perf: Add PMU driver for the ARM DMC-620 memory controller")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Punit Agrawal <punit.agrawal@bytedance.com>
-Link: https://lore.kernel.org/r/20221115115540.6245-2-shangxiaojing@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-5-qais.yousef@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_dmc620_pmu.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
-index 280a6ae3e27c..54aa4658fb36 100644
---- a/drivers/perf/arm_dmc620_pmu.c
-+++ b/drivers/perf/arm_dmc620_pmu.c
-@@ -725,6 +725,8 @@ static struct platform_driver dmc620_pmu_driver = {
- 
- static int __init dmc620_pmu_init(void)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index abe0e6baaa2e..892ea83864a7 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6603,21 +6603,23 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
+ static int
+ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
  {
-+	int ret;
-+
- 	cpuhp_state_num = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN,
- 				      DMC620_DRVNAME,
- 				      NULL,
-@@ -732,7 +734,11 @@ static int __init dmc620_pmu_init(void)
- 	if (cpuhp_state_num < 0)
- 		return cpuhp_state_num;
+-	unsigned long task_util, best_cap = 0;
++	unsigned long task_util, util_min, util_max, best_cap = 0;
+ 	int cpu, best_cpu = -1;
+ 	struct cpumask *cpus;
  
--	return platform_driver_register(&dmc620_pmu_driver);
-+	ret = platform_driver_register(&dmc620_pmu_driver);
-+	if (ret)
-+		cpuhp_remove_multi_state(cpuhp_state_num);
-+
-+	return ret;
- }
+ 	cpus = this_cpu_cpumask_var_ptr(select_rq_mask);
+ 	cpumask_and(cpus, sched_domain_span(sd), p->cpus_ptr);
  
- static void __exit dmc620_pmu_exit(void)
+-	task_util = uclamp_task_util(p);
++	task_util = task_util_est(p);
++	util_min = uclamp_eff_value(p, UCLAMP_MIN);
++	util_max = uclamp_eff_value(p, UCLAMP_MAX);
+ 
+ 	for_each_cpu_wrap(cpu, cpus, target) {
+ 		unsigned long cpu_cap = capacity_of(cpu);
+ 
+ 		if (!available_idle_cpu(cpu) && !sched_idle_cpu(cpu))
+ 			continue;
+-		if (fits_capacity(task_util, cpu_cap))
++		if (util_fits_cpu(task_util, util_min, util_max, cpu))
+ 			return cpu;
+ 
+ 		if (cpu_cap > best_cap) {
 -- 
 2.35.1
 
