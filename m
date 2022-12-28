@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27DE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40295C433D2;
-	Wed, 28 Dec 2022 15:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221A3187A
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9FAC433F0;
+	Wed, 28 Dec 2022 15:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242951;
-	bh=8Fc6RDSpapJ/s2i9J8N0VINQXQmmwz3N6WlEk63rlFc=;
+	s=korg; t=1672242957;
+	bh=yNKJ/JeG4BRvN8dpUNfGYLvAJuWcMDBqAXq8Tf3Wt2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoEpGwVpIdf1mb7BGxb1sAbjA6MhOXhKlQBYsiG5OJY3esk/6UQb9w8yrci7JAPFY
-	 qeFxbTTFySRePO/qhyomDYyqa27JiPfH9IKb6HeWNN6LXXhwxnI4pIqm6dANJiWE0j
-	 QqXrlkv4AAlh7E2vL3i/NoR14gY4tUBZQwk+lQAA=
+	b=vEDvYPN35aGBz9n86BVJY5GrcDyTPW+s6BON9Kdzoz1xZ/2KIoQ9K3cBTSc1gslG6
+	 LBDAm3BobnijglM+KU4sJ0XGjb9MZPo1kqfyKhFjTYra2ZzY9YZUU6MFl5eMQXZOHQ
+	 pMcnBGAlrRQvaYnpY70MfKhakFQtr9h3psff5IUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0472/1073] SUNRPC: Fix missing release socket in rpc_sockname()
-Date: Wed, 28 Dec 2022 15:34:20 +0100
-Message-Id: <20221228144340.856249288@linuxfoundation.org>
+Subject: [PATCH 6.1 0434/1146] clk: mediatek: fix dependency of MT7986 ADC clocks
+Date: Wed, 28 Dec 2022 15:32:53 +0100
+Message-Id: <20221228144341.969581118@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 50fa355bc0d75911fe9d5072a5ba52cdb803aff7 ]
+[ Upstream commit a46315295489933209e902638cd287aeb5f982ab ]
 
-socket dynamically created is not released when getting an unintended
-address family type in rpc_sockname(), direct to out_release for calling
-sock_release().
+It seems like CLK_INFRA_ADC_FRC_CK always need to be enabled for
+CLK_INFRA_ADC_26M_CK to work. Instead of adding this dependency to the
+mtk-thermal and mt6577_auxadc drivers, add dependency to the clock
+driver clk-mt7986-infracfg.c.
 
-Fixes: 2e738fdce22f ("SUNRPC: Add API to acquire source address")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: ec97d23c8e22 ("clk: mediatek: add mt7986 clock support")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/5e55012567da74870e1fb2edc2dc513b5821e523.1666801017.git.daniel@makrotopia.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 +-
+ drivers/clk/mediatek/clk-mt7986-infracfg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index c284efa3d1ef..0918fa4cc933 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1391,7 +1391,7 @@ static int rpc_sockname(struct net *net, struct sockaddr *sap, size_t salen,
- 		break;
- 	default:
- 		err = -EAFNOSUPPORT;
--		goto out;
-+		goto out_release;
- 	}
- 	if (err < 0) {
- 		dprintk("RPC:       can't bind UDP socket (%d)\n", err);
+diff --git a/drivers/clk/mediatek/clk-mt7986-infracfg.c b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+index d90727a53283..49666047bf0e 100644
+--- a/drivers/clk/mediatek/clk-mt7986-infracfg.c
++++ b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+@@ -153,7 +153,7 @@ static const struct mtk_gate infra_clks[] = {
+ 		    18),
+ 	GATE_INFRA1(CLK_INFRA_MSDC_66M_CK, "infra_msdc_66m", "infra_sysaxi_d2",
+ 		    19),
+-	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "csw_f26m_sel", 20),
++	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "infra_adc_frc", 20),
+ 	GATE_INFRA1(CLK_INFRA_ADC_FRC_CK, "infra_adc_frc", "csw_f26m_sel", 21),
+ 	GATE_INFRA1(CLK_INFRA_FBIST2FPC_CK, "infra_fbist2fpc", "nfi1x_sel", 23),
+ 	/* INFRA2 */
 -- 
 2.35.1
 
