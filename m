@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569FD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC60C433D2;
-	Wed, 28 Dec 2022 14:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4E91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82891C433EF;
+	Wed, 28 Dec 2022 14:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239056;
-	bh=yQi0KKFy++VnQxeN1EaZEtnH9V/nrQBt/zrBPeiXXF4=;
+	s=korg; t=1672239058;
+	bh=l4mdijT3DXLoB3FEQAQQT3XWHgMtUjdefbiHKLqvrG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgYvw+idLLym4GmW4R6VBNc7dP5IMnfdAOnrNHfU+XmLLtP3WrNi3hmliSuOw3xXb
-	 Oz0HG3szrMLI4L9Yd7rF6K4joBKhXgajIbQNPx7b+nwkuu/Dx3Nof28EyZv/DmCbL3
-	 f6EZIC8YrZgyvSVsAIg2azXOr+wV5mIlLeeLzdhg=
+	b=ZRhfdB0WRpvenxzwSXjJ2ar8mfBk24YGkx3OYPnFOMGmJ0faMDNxNfgZ5rvDbYQ6/
+	 9kXaHrgc03b4yBwdX91JRQcSEza/4Kd/08K2xyZKzWruF0tWu+ttbSXHldeuS+PoXO
+	 sm1wZRZmSAQmkBvI1Y+wzXYoUaJQly/wTuPxHpjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/731] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
-Date: Wed, 28 Dec 2022 15:33:12 +0100
-Message-Id: <20221228144259.016984483@linuxfoundation.org>
+Subject: [PATCH 5.15 086/731] proc: fixup uptime selftest
+Date: Wed, 28 Dec 2022 15:33:13 +0100
+Message-Id: <20221228144259.045056394@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,39 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Pőcze <pobrn@protonmail.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
+[ Upstream commit 5cc81d5c81af0dee54da9a67a3ebe4be076a13db ]
 
-When `timerqueue_getnext()` is called on an empty timer queue, it will
-use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
-`rb_entry_safe()` which handles NULL pointers.
+syscall(3) returns -1 and sets errno on error, unlike "syscall"
+instruction.
 
-This has not caused any issues so far because the offset of the `rb_node`
-member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
+Systems which have <= 32/64 CPUs are unaffected. Test won't bounce
+to all CPUs before completing if there are more of them.
 
-Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
-Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
+Link: https://lkml.kernel.org/r/Y1bUiT7VRXlXPQa1@p183
+Fixes: 1f5bd0547654 ("proc: selftests: test /proc/uptime")
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/timerqueue.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/proc/proc-uptime-002.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
-index 93884086f392..adc80e29168e 100644
---- a/include/linux/timerqueue.h
-+++ b/include/linux/timerqueue.h
-@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
- {
- 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
+diff --git a/tools/testing/selftests/proc/proc-uptime-002.c b/tools/testing/selftests/proc/proc-uptime-002.c
+index e7ceabed7f51..7d0aa22bdc12 100644
+--- a/tools/testing/selftests/proc/proc-uptime-002.c
++++ b/tools/testing/selftests/proc/proc-uptime-002.c
+@@ -17,6 +17,7 @@
+ // while shifting across CPUs.
+ #undef NDEBUG
+ #include <assert.h>
++#include <errno.h>
+ #include <unistd.h>
+ #include <sys/syscall.h>
+ #include <stdlib.h>
+@@ -54,7 +55,7 @@ int main(void)
+ 		len += sizeof(unsigned long);
+ 		free(m);
+ 		m = malloc(len);
+-	} while (sys_sched_getaffinity(0, len, m) == -EINVAL);
++	} while (sys_sched_getaffinity(0, len, m) == -1 && errno == EINVAL);
  
--	return rb_entry(leftmost, struct timerqueue_node, node);
-+	return rb_entry_safe(leftmost, struct timerqueue_node, node);
- }
- 
- static inline void timerqueue_init(struct timerqueue_node *node)
+ 	fd = open("/proc/uptime", O_RDONLY);
+ 	assert(fd >= 0);
 -- 
 2.35.1
 
