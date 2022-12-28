@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04681C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2744AC433EF;
-	Wed, 28 Dec 2022 16:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668511C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8C4C433D2;
+	Wed, 28 Dec 2022 16:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245329;
-	bh=rmVJhHKZMH1FTxKYZ4Mv4xjq0qkgcS+ycGLygZcWE9Y=;
+	s=korg; t=1672245332;
+	bh=Jt5Ea69AIQHM2qs8qjbq1WgYze72TcqUpD5pY72gEvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4Y9X+WD2vPzWVZ+FOrcwz4jJGCh+MkT4v5LLR+hXXhUBpzUzv8Mi80vHMIuEX++z
-	 psy/j2MBVGIRNsla/jOnZgrbaizXPCR+Ha6lD1aK3dulLGIWm+iNYUJZ2rzT+LdPur
-	 TvqK/ocVUt8Q6gMv+CXqNMxCAJDMZxzWFUMWXbkg=
+	b=WBXGTuQTUe2VstWUgbYnn6oN1xIEqypmpbg+DFnQvTSIpAshCY+3ph5B2uArft+Jn
+	 bcfjzifpIdVKtsEy66S4Yz1+dlVNyxfG2FpTCrWv23CyyqhLbYpQiaL0myuFriB06R
+	 8KTRW7lYBy70aLmad9bwwVjqdgZmFFO2JMoLs5C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0840/1146] rtc: pcf85063: Fix reading alarm
-Date: Wed, 28 Dec 2022 15:39:39 +0100
-Message-Id: <20221228144352.973090481@linuxfoundation.org>
+Subject: [PATCH 6.0 0874/1073] skbuff: Account for tail adjustment during pull operations
+Date: Wed, 28 Dec 2022 15:41:02 +0100
+Message-Id: <20221228144351.763736176@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
+[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
 
-If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
-registers. This is also interpreted in BCD number leading to this warning:
-rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
+Extending the tail can have some unexpected side effects if a program uses
+a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
+head skb headlen when all the skbs in the gso frag_list are linear with no
+head_frag -
 
-Fix this by masking alarm enabling and reserved bits.
+  kernel BUG at net/core/skbuff.c:4219!
+  pc : skb_segment+0xcf4/0xd2c
+  lr : skb_segment+0x63c/0xd2c
+  Call trace:
+   skb_segment+0xcf4/0xd2c
+   __udp_gso_segment+0xa4/0x544
+   udp4_ufo_fragment+0x184/0x1c0
+   inet_gso_segment+0x16c/0x3a4
+   skb_mac_gso_segment+0xd4/0x1b0
+   __skb_gso_segment+0xcc/0x12c
+   udp_rcv_segment+0x54/0x16c
+   udp_queue_rcv_skb+0x78/0x144
+   udp_unicast_rcv_skb+0x8c/0xa4
+   __udp4_lib_rcv+0x490/0x68c
+   udp_rcv+0x20/0x30
+   ip_protocol_deliver_rcu+0x1b0/0x33c
+   ip_local_deliver+0xd8/0x1f0
+   ip_rcv+0x98/0x1a4
+   deliver_ptype_list_skb+0x98/0x1ec
+   __netif_receive_skb_core+0x978/0xc60
 
-Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix this by marking these skbs as GSO_DODGY so segmentation can handle
+the tail updates accordingly.
+
+Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/skbuff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 095891999da1..99f9cc57c7b3 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -169,10 +169,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index d9c19ae05fe6..9460998ac6d1 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -2313,6 +2313,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
+ 				insp = list;
+ 			} else {
+ 				/* Eaten partially. */
++				if (skb_is_gso(skb) && !list->head_frag &&
++				    skb_headlen(list))
++					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
  
--	alrm->time.tm_sec = bcd2bin(buf[0]);
--	alrm->time.tm_min = bcd2bin(buf[1]);
--	alrm->time.tm_hour = bcd2bin(buf[2]);
--	alrm->time.tm_mday = bcd2bin(buf[3]);
-+	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
-+	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
-+	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
-+	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
- 
- 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
- 	if (ret)
+ 				if (skb_shared(list)) {
+ 					/* Sucks! We need to fork list. :-( */
 -- 
 2.35.1
 
