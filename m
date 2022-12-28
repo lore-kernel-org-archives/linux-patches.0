@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2F91875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62B4C433EF;
-	Wed, 28 Dec 2022 15:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203AF1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934E1C433EF;
+	Wed, 28 Dec 2022 15:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242985;
-	bh=i+rZrYsQF5L/j/g4JaaIbpwtUzmf4qv55bP3vVOFMHY=;
+	s=korg; t=1672242988;
+	bh=D058oxPQ51un2OnUbpf454pNPcNdKXmynhBE0t71zlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2zxqRjg8R583JHN1NOlGLbGGQMLMrFUg2oKCGcpPFEpWPruh2wiWkiTL1c6JTL/r
-	 wBU11/EY8o/1tYN5Zrb4V62fLjpdpalRch7KGEhjjuYbBNIXpO7AfrZwJNMPrPlGL7
-	 VMKMZhgXo+rij1Pr7iVMslLcGDslPyvWCPhPlmlY=
+	b=bnQxWIqgmYZ0JdoO7/fPTLDR2gauL1SLAJwEqExUwiYBa5E5TAB8AQlcPpqfjX3g1
+	 6vN+L2VOQHIhQc79HMo3CU94TxFlJBzkKgX8spnGC6ZKANYhU8GqW+MLplFiFwJv65
+	 OTPx0kbn066z1hUP1d58gibvT2UzzgjqXZ/HKvRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rui Zhang <zr.zhang@vivo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0437/1146] drm/radeon: Fix PCI device refcount leak in radeon_atrm_get_bios()
-Date: Wed, 28 Dec 2022 15:32:56 +0100
-Message-Id: <20221228144342.051418526@linuxfoundation.org>
+Subject: [PATCH 5.15 668/731] regulator: core: fix use_count leakage when handling boot-on
+Date: Wed, 28 Dec 2022 15:42:55 +0100
+Message-Id: <20221228144315.852806292@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Rui Zhang <zr.zhang@vivo.com>
 
-[ Upstream commit 725a521a18734f65de05b8d353b5bd0d3ca4c37a ]
+[ Upstream commit 0591b14ce0398125439c759f889647369aa616a0 ]
 
-As comment of pci_get_class() says, it returns a pci_device with its
-refcount increased and decreased the refcount for the input parameter
-@from if it is not NULL.
+I found a use_count leakage towards supply regulator of rdev with
+boot-on option.
 
-If we break the loop in radeon_atrm_get_bios() with 'pdev' not NULL, we
-need to call pci_dev_put() to decrease the refcount. Add the missing
-pci_dev_put() to avoid refcount leak.
+┌───────────────────┐           ┌───────────────────┐
+│  regulator_dev A  │           │  regulator_dev B  │
+│     (boot-on)     │           │     (boot-on)     │
+│    use_count=0    │◀──supply──│    use_count=1    │
+│                   │           │                   │
+└───────────────────┘           └───────────────────┘
 
-Fixes: d8ade3526b2a ("drm/radeon: handle non-VGA class pci devices with ATRM")
-Fixes: c61e2775873f ("drm/radeon: split ATRM support out from the ATPX handler (v3)")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In case of rdev(A) configured with `regulator-boot-on', the use_count
+of supplying regulator(B) will increment inside
+regulator_enable(rdev->supply).
+
+Thus, B will acts like always-on, and further balanced
+regulator_enable/disable cannot actually disable it anymore.
+
+However, B was also configured with `regulator-boot-on', we wish it
+could be disabled afterwards.
+
+Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
+Link: https://lore.kernel.org/r/20221201033806.2567812-1-zr.zhang@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
-index 1d99c9a2b56e..63bdc9f6fc24 100644
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -227,6 +227,7 @@ static bool radeon_atrm_get_bios(struct radeon_device *rdev)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 1a5aeb4868aa..eababed938a0 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1531,7 +1531,13 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 		if (rdev->supply_name && !rdev->supply)
+ 			return -EPROBE_DEFER;
  
- 	if (!found)
- 		return false;
-+	pci_dev_put(pdev);
- 
- 	rdev->bios = kmalloc(size, GFP_KERNEL);
- 	if (!rdev->bios) {
+-		if (rdev->supply) {
++		/* If supplying regulator has already been enabled,
++		 * it's not intended to have use_count increment
++		 * when rdev is only boot-on.
++		 */
++		if (rdev->supply &&
++		    (rdev->constraints->always_on ||
++		     !regulator_is_enabled(rdev->supply))) {
+ 			ret = regulator_enable(rdev->supply);
+ 			if (ret < 0) {
+ 				_regulator_put(rdev->supply);
 -- 
 2.35.1
 
