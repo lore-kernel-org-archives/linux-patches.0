@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2321863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97493C433D2;
-	Wed, 28 Dec 2022 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF68E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34ED9C433D2;
+	Wed, 28 Dec 2022 14:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239508;
-	bh=fJQBA2PhKWCNuDr5SbO5zZeucaLd51vjwmvwW9ZSsEc=;
+	s=korg; t=1672239511;
+	bh=uDdfqx5O5Q5TfBacudoEGk/8mff/sFtmbsh8WePEOic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYQP2eIg62CWSRe019XjWDOoaf2YLXSMl/IYIEvQxB4ty7zO2h6EO2smTWYK43dgE
-	 2Wc63Xy3ksZtWn10VXywzKet9NTjGutFBrm2paPCMDeZYbFtcFmvPuvmyfIXbVY6/F
-	 ECmNv5Y6aEwF6R7pp9K9Z4mAmvYhxHb2IyIst4E4=
+	b=KoMnNO75SKT78zKnxVV92EFSLiV4Ov6S7oiMPuwBNdtNcyDb15Ut1V6ZS1G/uQ+O6
+	 M0GyK6UC4hbk3a2p8X1cOzCIkabfSj9Yg+/mk5MMQrTC6T06XVGbAI1WPy2uf287mD
+	 GP47GwRMA7u+kbJ3GMdXGbBKV7HDbjksnx2nL9vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,12 +19,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0003/1146] arm64: dts: renesas: r8a779g0: Fix HSCIF0 "brg_int" clock
-Date: Wed, 28 Dec 2022 15:25:42 +0100
-Message-Id: <20221228144330.279045066@linuxfoundation.org>
+Subject: [PATCH 6.0 0044/1073] arm64: dts: renesas: r8a779f0: Fix SCIF "brg_int" clock
+Date: Wed, 28 Dec 2022 15:27:12 +0100
+Message-Id: <20221228144329.320903346@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit a4290d407aa9fd174d8053878783d466d3124e38 ]
+[ Upstream commit 64416ef0b0c4d73349035d1b3206eed3d2047ee0 ]
 
-As serial communication requires a clock signal, the High Speed Serial
-Communication Interfaces with FIFO (HSCIF) are clocked by a clock that
-is not affected by Spread Spectrum or Fractional Multiplication.
+As serial communication requires a clean clock signal, the Serial
+Communication Interfaces with FIFO (SCIF) are clocked by a clock that is
+not affected by Spread Spectrum or Fractional Multiplication.
 
-Hence change the clock input for the HSCIF0 Baud Rate Generator internal
+Hence change the clock input for the SCIF Baud Rate Generator internal
 clock from the S0D3_PER clock to the SASYNCPERD1 clock (which has the
-same clock rate), cfr. R-Car V4H Hardware User's Manual rev. 0.54.
+same clock rate), cfr. R-Car S4-8 Hardware User's Manual rev. 0.81.
 
-Fixes: 987da486d84a5643 ("arm64: dts: renesas: Add Renesas R8A779G0 SoC support")
+Fixes: c62331e8222f ("arm64: dts: renesas: Add Renesas R8A779F0 SoC support")
+Fixes: 40753144256b ("arm64: dts: renesas: r8a779f0: Add SCIF nodes")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221103143440.46449-5-wsa+renesas@sang-engineering.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/a5bd4148f92806f7c8e577d383370f810315f586.1665155947.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-index d70f0600ae5a..d58b18802cb0 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-@@ -326,7 +326,7 @@ hscif0: serial@e6540000 {
- 			reg = <0 0xe6540000 0 96>;
- 			interrupts = <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 514>,
--				 <&cpg CPG_CORE R8A779G0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779G0_CLK_SASYNCPERD1>,
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+index 6ee5f0a54b13..d4f3ebfe841a 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+@@ -522,7 +522,7 @@ scif0: serial@e6e60000 {
+ 			reg = <0 0xe6e60000 0 64>;
+ 			interrupts = <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 702>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
  				 <&scif_clk>;
  			clock-names = "fck", "brg_int", "scif_clk";
- 			power-domains = <&sysc R8A779G0_PD_ALWAYS_ON>;
+ 			dmas = <&dmac0 0x51>, <&dmac0 0x50>,
+@@ -539,7 +539,7 @@ scif1: serial@e6e68000 {
+ 			reg = <0 0xe6e68000 0 64>;
+ 			interrupts = <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 703>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x53>, <&dmac0 0x52>,
+@@ -556,7 +556,7 @@ scif3: serial@e6c50000 {
+ 			reg = <0 0xe6c50000 0 64>;
+ 			interrupts = <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 704>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x57>, <&dmac0 0x56>,
+@@ -573,7 +573,7 @@ scif4: serial@e6c40000 {
+ 			reg = <0 0xe6c40000 0 64>;
+ 			interrupts = <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 705>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x59>, <&dmac0 0x58>,
 -- 
 2.35.1
 
