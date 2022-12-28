@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0065AC433EF;
-	Wed, 28 Dec 2022 15:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210571863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E76C433EF;
+	Wed, 28 Dec 2022 15:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241408;
-	bh=EpxBNJwcm9a8nfr5KG8vZQngwl1afZwch0/a3FladsU=;
+	s=korg; t=1672241411;
+	bh=6tXN9D0Ut7L6MH44vvbnziWvUY6QYflUHRZzoTAXn20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJW1bPz30XFzMDgL6n3EiWVwIHOjlxJWmw60OX/IDG/L3oNCjQ0SobcWUgLF7NSDF
-	 0sNmbMslKViudXNIBclz0aP4Y3YfIcFoT+BTrlU0alqEy1S9V6QXmV8bG9iaSgGCEJ
-	 ua1xtdwg0GszQygwT6ekgSE+eqqCprDRmi5xyTq0=
+	b=xEp4zuGUJEzWXteisDI6vblWxaGK8tCWJFfAKue5IfqupIlba8Os+E+I8nKmuQOLM
+	 qxuoFl7DI1k5+2U3uSl4swn0W1eqK2ARBREc6hhGvSIBU+/G39FoyCVK5MBj2S5ELR
+	 yii9D8VJBYhY16BSP23HeVofgWtiWb7b9yGT0sE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 472/731] cxl: fix possible null-ptr-deref in cxl_pci_init_afu|adapter()
-Date: Wed, 28 Dec 2022 15:39:39 +0100
-Message-Id: <20221228144310.233108783@linuxfoundation.org>
+Subject: [PATCH 6.1 0243/1146] media: exynos4-is: dont rely on the v4l2_async_subdev internals
+Date: Wed, 28 Dec 2022 15:29:42 +0100
+Message-Id: <20221228144336.736280883@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 02cd3032b154fa02fdf90e7467abaeed889330b2 ]
+[ Upstream commit f98a5c2e1c4396488c27274ba82afc11725a4bcc ]
 
-If device_register() fails in cxl_pci_afu|adapter(), the device
-is not added, device_unregister() can not be called in the error
-path, otherwise it will cause a null-ptr-deref because of removing
-not added device.
+Commit 1f391df44607 ("media: v4l2-async: Use endpoints in
+__v4l2_async_nf_add_fwnode_remote()") changed the data that is stored in
+the v4l2_async_subdev internals from the fwnode pointer to the parent
+device to the fwnode pointer to the matched endpoint. This broke the
+sensor matching code, which relied on the particular fwnode data in the
+v4l2_async_subdev internals. Fix this by simply matching the
+v4l2_async_subdev pointer, which is already available there.
 
-As comment of device_register() says, it should use put_device() to give
-up the reference in the error path. So split device_unregister() into
-device_del() and put_device(), then goes to put dev when register fails.
-
-Fixes: f204e0b8cedd ("cxl: Driver code for powernv PCIe based cards for userspace access")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221111145440.2426970-2-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Daniel Scally <djrscally@gmail.com>
+Fixes: fa91f1056f17 ("[media] exynos4-is: Add support for asynchronous subdevices registration")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Daniel Scally <djrscally@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cxl/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/media/platform/samsung/exynos4-is/media-dev.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/misc/cxl/pci.c b/drivers/misc/cxl/pci.c
-index 2ba899f5659f..0ac3f4cb88ac 100644
---- a/drivers/misc/cxl/pci.c
-+++ b/drivers/misc/cxl/pci.c
-@@ -1164,10 +1164,10 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
- 	 * if it returns an error!
- 	 */
- 	if ((rc = cxl_register_afu(afu)))
--		goto err_put1;
-+		goto err_put_dev;
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+index 52b43ea04030..412213b0c384 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1380,9 +1380,7 @@ static int subdev_notifier_bound(struct v4l2_async_notifier *notifier,
  
- 	if ((rc = cxl_sysfs_afu_add(afu)))
--		goto err_put1;
-+		goto err_del_dev;
+ 	/* Find platform data for this sensor subdev */
+ 	for (i = 0; i < ARRAY_SIZE(fmd->sensor); i++)
+-		if (fmd->sensor[i].asd &&
+-		    fmd->sensor[i].asd->match.fwnode ==
+-		    of_fwnode_handle(subdev->dev->of_node))
++		if (fmd->sensor[i].asd == asd)
+ 			si = &fmd->sensor[i];
  
- 	adapter->afu[afu->slice] = afu;
- 
-@@ -1176,10 +1176,12 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
- 
- 	return 0;
- 
--err_put1:
-+err_del_dev:
-+	device_del(&afu->dev);
-+err_put_dev:
- 	pci_deconfigure_afu(afu);
- 	cxl_debugfs_afu_remove(afu);
--	device_unregister(&afu->dev);
-+	put_device(&afu->dev);
- 	return rc;
- 
- err_free_native:
-@@ -1667,23 +1669,25 @@ static struct cxl *cxl_pci_init_adapter(struct pci_dev *dev)
- 	 * even if it returns an error!
- 	 */
- 	if ((rc = cxl_register_adapter(adapter)))
--		goto err_put1;
-+		goto err_put_dev;
- 
- 	if ((rc = cxl_sysfs_adapter_add(adapter)))
--		goto err_put1;
-+		goto err_del_dev;
- 
- 	/* Release the context lock as adapter is configured */
- 	cxl_adapter_context_unlock(adapter);
- 
- 	return adapter;
- 
--err_put1:
-+err_del_dev:
-+	device_del(&adapter->dev);
-+err_put_dev:
- 	/* This should mirror cxl_remove_adapter, except without the
- 	 * sysfs parts
- 	 */
- 	cxl_debugfs_adapter_remove(adapter);
- 	cxl_deconfigure_adapter(adapter);
--	device_unregister(&adapter->dev);
-+	put_device(&adapter->dev);
- 	return ERR_PTR(rc);
- 
- err_release:
+ 	if (si == NULL)
 -- 
 2.35.1
 
