@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7712C1869
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0DBC433F0;
-	Wed, 28 Dec 2022 14:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431641868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEDDC433D2;
+	Wed, 28 Dec 2022 14:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239498;
-	bh=UdG7QiJygTiMMda7IGG6h6/bVahLIEclrvlPsHKeqKM=;
+	s=korg; t=1672239501;
+	bh=qOWIOEhmVK/i/VqEw80DTsTiRAy5CmRVGEA9eEFOezg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIGr5IPN7Vf8FkIpBIMDjrYw1mOTvY6Q+QmVBe4FJdCrRmxOsu1La5qrrUnblSKsy
-	 sC8slipPq+4kgCC/Q/zfG1Y8DVCpZ/HpCAn8dL1XyGHYz4jx8bL70DetaTNxJLQErK
-	 KcEMAoTClYGxXTAayU39pY4PRAnBI4vmyhI+JVWc=
+	b=GQFn96oPtsUduxgDRVuOEte3ww8NgyFVY1Wxm9AMmQtNkMrAHAgXiLh0F/RAQuNu5
+	 +Rpfit3IqQ5H3JRwmUoz0WnF6ohScJamh5DlwfAnZjuQwhRqvfVfk5Q9hOVEwLss5+
+	 2azo8bevBLWvQeAxTVAiD7edVVvUm+VblMG3pyx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/731] integrity: Fix memory leakage in keyring allocation error path
-Date: Wed, 28 Dec 2022 15:35:11 +0100
-Message-Id: <20221228144302.473554173@linuxfoundation.org>
+Subject: [PATCH 6.0 0009/1073] arm64: dts: qcom: ipq6018-cp01-c1: use BLSPI1 pins
+Date: Wed, 28 Dec 2022 15:26:37 +0100
+Message-Id: <20221228144328.420529608@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 39419ef7af0916cc3620ecf1ed42d29659109bf3 ]
+[ Upstream commit 4871d3c38893c8a585e3e96364b7fb91cda8322e ]
 
-Key restriction is allocated in integrity_init_keyring(). However, if
-keyring allocation failed, it is not freed, causing memory leaks.
+When BLSPI1 (originally SPI0, later renamed in commit f82c48d46852
+("arm64: dts: qcom: ipq6018: correct QUP peripheral labels")) was added,
+the device node lacked respective pin configuration assignment.
 
-Fixes: 2b6aa412ff23 ("KEYS: Use structure to capture key restriction function and data")
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221006124659.217540-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/digsig.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/integrity/digsig.c b/security/integrity/digsig.c
-index 3b06a01bd0fd..aa93b750a9f3 100644
---- a/security/integrity/digsig.c
-+++ b/security/integrity/digsig.c
-@@ -122,6 +122,7 @@ int __init integrity_init_keyring(const unsigned int id)
- {
- 	struct key_restriction *restriction;
- 	key_perm_t perm;
-+	int ret;
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+index 1ba2eca33c7b..6a716c83e5f1 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
++++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+@@ -37,6 +37,8 @@ &blsp1_i2c3 {
  
- 	perm = (KEY_POS_ALL & ~KEY_POS_SETATTR) | KEY_USR_VIEW
- 		| KEY_USR_READ | KEY_USR_SEARCH;
-@@ -142,7 +143,10 @@ int __init integrity_init_keyring(const unsigned int id)
- 	perm |= KEY_USR_WRITE;
+ &blsp1_spi1 {
+ 	cs-select = <0>;
++	pinctrl-0 = <&spi_0_pins>;
++	pinctrl-names = "default";
+ 	status = "okay";
  
- out:
--	return __integrity_init_keyring(id, perm, restriction);
-+	ret = __integrity_init_keyring(id, perm, restriction);
-+	if (ret)
-+		kfree(restriction);
-+	return ret;
- }
- 
- static int __init integrity_add_key(const unsigned int id, const void *data,
+ 	flash@0 {
 -- 
 2.35.1
 
