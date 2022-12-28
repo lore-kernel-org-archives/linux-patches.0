@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450611C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA4CC433EF;
-	Wed, 28 Dec 2022 16:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17211C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67906C433F0;
+	Wed, 28 Dec 2022 16:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246538;
-	bh=/y+Vk7v087Ni+nwJ0BauzIaL2SzeYzkZfsMrXZsqV5c=;
+	s=korg; t=1672246540;
+	bh=p7M17QtkOfpTjx07OtOQxCfBZ+sTL5g2qbbgrrpU2RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7/uiOSUL2qT1iIkRWhDbI2tbAXXBIk7SEVP2tl5i7vsAR+Gijcey6/7hIszCAvgN
-	 HmH0NdhJnupfEy+LsOBuv2CmrEwarpHRsRCAxvRxaLz+ykMwmcYvnVVv9+BlE6drPg
-	 AxpAUa0xUmbHOvIMOCLXi55hM8I0LNqpElNORlwI=
+	b=PXfY98ZDIeNQ/GQkXwjs1fzUkIBvc5nz4KbpcSnJb4BoNF+ScCAbA3kJAoGLv+loI
+	 FRNn77DDTd5PBfnTMwTH1jwd/pYPrUEUSO+4mZSE8OyLYGkXsumCk6JtEAFbj4Tvnv
+	 cDUgjRNVT2uMty2W1OGQaux1EuaE24m1fqOYSR/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1074/1146] ALSA: hda/hdmi: fix stream-id config keep-alive for rt suspend
-Date: Wed, 28 Dec 2022 15:43:33 +0100
-Message-Id: <20221228144359.407547773@linuxfoundation.org>
+Subject: [PATCH 6.1 1075/1146] ASoC: wm8994: Fix potential deadlock
+Date: Wed, 28 Dec 2022 15:43:34 +0100
+Message-Id: <20221228144359.430818324@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,174 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit ee0b089d660021792e4ab4dda191b097ce1e964f ]
+[ Upstream commit 9529dc167ffcdfd201b9f0eda71015f174095f7e ]
 
-When the new style KAE keep-alive implementation is used on compatible
-Intel hardware, the clocks are maintained when codec is in D3. The
-generic code in hda_cleanup_all_streams() can however interfere with
-generation of audio samples in this mode, by setting the stream and
-channel ids to zero.
+Fix this by dropping wm8994->accdet_lock while calling
+cancel_delayed_work_sync(&wm8994->mic_work) in wm1811_jackdet_irq().
 
-To get full benefit of the keepalive, set the new
-no_stream_clean_at_suspend quirk bit on affected Intel hardware. When
-this bit is set, stream cleanup is skipped in hda_call_codec_suspend().
-
-Special handling is needed for the case when system goes to suspend. The
-stream id programming can be lost in this case. This will also cause
-codec->cvt_setups to be out of sync. Handle this by implementing custom
-suspend/resume handlers. If keep-alive is active for any converter, set
-the quirk flags no_stream_clean_at_suspend and forced_resume. Upon
-resume, keepalive programming is restored if needed.
-
-Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20221209101822.3893675-4-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c0cc3f166525 ("ASoC: wm8994: Allow a delay between jack insertion and microphone detect")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221209091657.1183-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hda_codec.h  |  1 +
- sound/pci/hda/hda_codec.c  |  3 +-
- sound/pci/hda/patch_hdmi.c | 90 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 92 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8994.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
-index 25ec8c181688..eba23daf2c29 100644
---- a/include/sound/hda_codec.h
-+++ b/include/sound/hda_codec.h
-@@ -258,6 +258,7 @@ struct hda_codec {
- 	unsigned int link_down_at_suspend:1; /* link down at runtime suspend */
- 	unsigned int relaxed_resume:1;	/* don't resume forcibly for jack */
- 	unsigned int forced_resume:1; /* forced resume for jack */
-+	unsigned int no_stream_clean_at_suspend:1; /* do not clean streams at suspend */
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index d3cfd3788f2a..8fe9a75d1235 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -3853,7 +3853,12 @@ static irqreturn_t wm1811_jackdet_irq(int irq, void *data)
+ 	} else {
+ 		dev_dbg(component->dev, "Jack not detected\n");
  
- #ifdef CONFIG_PM
- 	unsigned long power_on_acct;
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index b4d1e658c556..edd653ece70d 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -2886,7 +2886,8 @@ static unsigned int hda_call_codec_suspend(struct hda_codec *codec)
- 	snd_hdac_enter_pm(&codec->core);
- 	if (codec->patch_ops.suspend)
- 		codec->patch_ops.suspend(codec);
--	hda_cleanup_all_streams(codec);
-+	if (!codec->no_stream_clean_at_suspend)
-+		hda_cleanup_all_streams(codec);
- 	state = hda_set_power_state(codec, AC_PWRST_D3);
- 	update_power_acct(codec, true);
- 	snd_hdac_leave_pm(&codec->core);
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 3ebe8260485b..4f2e26e67b07 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -2925,6 +2925,88 @@ static void i915_pin_cvt_fixup(struct hda_codec *codec,
- 	}
- }
++		/* Release wm8994->accdet_lock to avoid deadlock:
++		 * cancel_delayed_work_sync() takes wm8994->mic_work internal
++		 * lock and wm1811_mic_work takes wm8994->accdet_lock */
++		mutex_unlock(&wm8994->accdet_lock);
+ 		cancel_delayed_work_sync(&wm8994->mic_work);
++		mutex_lock(&wm8994->accdet_lock);
  
-+#ifdef CONFIG_PM
-+static int i915_adlp_hdmi_suspend(struct hda_codec *codec)
-+{
-+	struct hdmi_spec *spec = codec->spec;
-+	bool silent_streams = false;
-+	int pin_idx, res;
-+
-+	res = generic_hdmi_suspend(codec);
-+
-+	for (pin_idx = 0; pin_idx < spec->num_pins; pin_idx++) {
-+		struct hdmi_spec_per_pin *per_pin = get_pin(spec, pin_idx);
-+
-+		if (per_pin->silent_stream) {
-+			silent_streams = true;
-+			break;
-+		}
-+	}
-+
-+	if (silent_streams && spec->silent_stream_type == SILENT_STREAM_KAE) {
-+		/*
-+		 * stream-id should remain programmed when codec goes
-+		 * to runtime suspend
-+		 */
-+		codec->no_stream_clean_at_suspend = 1;
-+
-+		/*
-+		 * the system might go to S3, in which case keep-alive
-+		 * must be reprogrammed upon resume
-+		 */
-+		codec->forced_resume = 1;
-+
-+		codec_dbg(codec, "HDMI: KAE active at suspend\n");
-+	} else {
-+		codec->no_stream_clean_at_suspend = 0;
-+		codec->forced_resume = 0;
-+	}
-+
-+	return res;
-+}
-+
-+static int i915_adlp_hdmi_resume(struct hda_codec *codec)
-+{
-+	struct hdmi_spec *spec = codec->spec;
-+	int pin_idx, res;
-+
-+	res = generic_hdmi_resume(codec);
-+
-+	/* KAE not programmed at suspend, nothing to do here */
-+	if (!codec->no_stream_clean_at_suspend)
-+		return res;
-+
-+	for (pin_idx = 0; pin_idx < spec->num_pins; pin_idx++) {
-+		struct hdmi_spec_per_pin *per_pin = get_pin(spec, pin_idx);
-+
-+		/*
-+		 * If system was in suspend with monitor connected,
-+		 * the codec setting may have been lost. Re-enable
-+		 * keep-alive.
-+		 */
-+		if (per_pin->silent_stream) {
-+			unsigned int param;
-+
-+			param = snd_hda_codec_read(codec, per_pin->cvt_nid, 0,
-+						   AC_VERB_GET_CONV, 0);
-+			if (!param) {
-+				codec_dbg(codec, "HDMI: KAE: restore stream id\n");
-+				silent_stream_enable_i915(codec, per_pin);
-+			}
-+
-+			param = snd_hda_codec_read(codec, per_pin->cvt_nid, 0,
-+						   AC_VERB_GET_DIGI_CONVERT_1, 0);
-+			if (!(param & (AC_DIG3_KAE << 16))) {
-+				codec_dbg(codec, "HDMI: KAE: restore DIG3_KAE\n");
-+				silent_stream_set_kae(codec, per_pin, true);
-+			}
-+		}
-+	}
-+
-+	return res;
-+}
-+#endif
-+
- /* precondition and allocation for Intel codecs */
- static int alloc_intel_hdmi(struct hda_codec *codec)
- {
-@@ -3055,8 +3137,14 @@ static int patch_i915_adlp_hdmi(struct hda_codec *codec)
- 	if (!res) {
- 		spec = codec->spec;
- 
--		if (spec->silent_stream_type)
-+		if (spec->silent_stream_type) {
- 			spec->silent_stream_type = SILENT_STREAM_KAE;
-+
-+#ifdef CONFIG_PM
-+			codec->patch_ops.resume = i915_adlp_hdmi_resume;
-+			codec->patch_ops.suspend = i915_adlp_hdmi_suspend;
-+#endif
-+		}
- 	}
- 
- 	return res;
+ 		snd_soc_component_update_bits(component, WM8958_MICBIAS2,
+ 				    WM8958_MICB2_DISCH, WM8958_MICB2_DISCH);
 -- 
 2.35.1
 
