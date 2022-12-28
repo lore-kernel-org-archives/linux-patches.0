@@ -1,85 +1,81 @@
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8BA23AE
-	for <patches@lists.linux.dev>; Thu, 22 Dec 2022 08:07:25 +0000 (UTC)
-Received: from [2a02:8108:963f:de38:eca4:7d19:f9a2:22c5]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1p8Gbq-0005kI-JY; Thu, 22 Dec 2022 09:07:22 +0100
-Message-ID: <918e41dd-e5ea-9dc5-e6d4-5d524f317d18@leemhuis.info>
-Date: Thu, 22 Dec 2022 09:07:21 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871071863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D712CC433D2;
+	Wed, 28 Dec 2022 14:44:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1672238652;
+	bh=RuPFItVFrA3lFN2h8va0QCL6GH4BnmYHIGbLTxukDyY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aaRkCf6tMM3JfFmudHG84Ci7rpFcUxRB7Ch+XG0yuL0fuJm2igPJxXqUtYajvPdUX
+	 xW6mJqdjhEjdP2UwK9o/NssXUUbGmCn77SgjNR5CrpNHyBFSttXdUFYqt7T8feI+8p
+	 z105W0sPJIOVyAjze6ybNG3mzkAsZPChrCSmyfX4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 002/731] usb: musb: remove extra check in musb_gadget_vbus_draw
+Date: Wed, 28 Dec 2022 15:31:49 +0100
+Message-Id: <20221228144256.609772709@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
-Content-Language: en-US, de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- akpm@linux-foundation.org, Vlastimil Babka <vbabka@suse.cz>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org,
- pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- Jiri Slaby <jirislaby@kernel.org>, Guenter Roeck <linux@roeck-us.net>
-References: <20221219182943.395169070@linuxfoundation.org>
- <20221220150049.GE3748047@roeck-us.net> <Y6HQfwEnw75iajYr@kroah.com>
- <20221220161135.GA1983195@roeck-us.net>
- <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
-From: Thorsten Leemhuis <regressions@leemhuis.info>
-In-Reply-To: <e3b06c93-1985-a958-871a-bfd73646c38a@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1671696445;fb6d1a39;
-X-HE-SMSGID: 1p8Gbq-0005kI-JY
+Content-Transfer-Encoding: 8bit
 
-On 21.12.22 07:34, Jiri Slaby wrote:
-> On 20. 12. 22, 17:11, Guenter Roeck wrote:
->> You probably didn't see any reports on mainline because I didn't report
->> the issue there yet. There are so many failures in mainline that it is
->> a bit difficult to keep up.
-> 
-> Just heads up, these are breakages in 6.1 known to me:
-> 
-> an io_uring 32bit test crashes the kernel:
-> https://lore.kernel.org/all/c80c1e3f-800b-dc49-f2f5-acc8ceb34d51@gmail.com/
-> 
-> Fixed in io_uring tree.
+From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 
-Just BTW: afaics the fix is now in mainline as 990a4de57e44
+[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
 
-> bind() of previously bound port no longer fails:
-> https://lore.kernel.org/all/6b971a4e-c7d8-411e-1f92-fda29b5b2fb9@kernel.org/
-> 
-> No fix available and revert close to impossible.
+The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
+usb_phy_set_power(), so there is no need of them. Moreover, not calling
+usb_phy_set_power() results in usb_phy_set_charger_current() not being
+called, so current USB config max current is not propagated through USB
+charger framework and charger drivers may try to draw more current than
+allowed or possible.
 
-Also just BTW: fix posted yesterday.
+Fix that by removing those extra checks and calling usb_phy_set_power()
+directly.
 
-> And most important, mremap() is broken in 6.1, so mostly everything
-> fails in some random way:
-> https://lore.kernel.org/all/20221216163227.24648-1-vbabka@suse.cz/T/#u
-> 
-> Fixed in -mm.
+Tested on Motorola Droid4 and Nokia N900
 
-That one seems to fix an annoying issue many people might run into (at
-least it looks like it to my untrained eyes), which is the reason why I
-write this mail.
+Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/usb/musb/musb_gadget.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Andrew moved that fix from mm-hotfixes-unstable to mm-hotfixes-stable
-yesterday and I assume he'll send it to Linus pretty soon now to ensure
-it makes it into -rc1, so that the stable team can pick it up. It might
-be a bad season to ask this, but that made me wonder:
+diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
+index dc67fff8e941..22c3df49ba8a 100644
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1628,8 +1628,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
+ {
+ 	struct musb	*musb = gadget_to_musb(gadget);
+ 
+-	if (!musb->xceiv->set_power)
+-		return -EOPNOTSUPP;
+ 	return usb_phy_set_power(musb->xceiv, mA);
+ }
+ 
+-- 
+2.35.1
 
-Should that patch have progressed quicker? And if so: how to make that
-happen when a similar situation arises in the future? Should somebody
-(the developer of the patch? me?) kindly ask the maintainer in question
-to sent the fix straight to Linus once it spend 1 or 2 days in next?
 
-It's not the first time that I see something like this, that's why I'm
-wondering if I should do something in such situations.
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
