@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04F11C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC32C433D2;
-	Wed, 28 Dec 2022 16:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5EF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA7DC433EF;
+	Wed, 28 Dec 2022 16:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245582;
-	bh=H5nfNj6i2aBjx1sIE6dF/39prsVVVi+kb+2ZnFvZ8IU=;
+	s=korg; t=1672245579;
+	bh=vguymVk6W8AEmYcmqZEk9CMx6BepfOetrT5xctjC3zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4PEMujYIzMVo/qju4qHxaesLSsCE//Vr/E3WWZXTObVBCSHF8pbjfrRF18cXnNo9
-	 qbiVQlal2RU3n4QKJXTUH70wDyxCJN08JO9d+uKiltVgMKyuZ45QBNfreRep8jYg9J
-	 QpUJE6tisX+/bMZbuYZTOJk8tEXvbg34i+GtHxTQ=
+	b=sPPny3vagAflIzHr3WiQKlLmvRsEzKPpPrl65U37tUG1k264CKQDe/oIIG+26zK3s
+	 UOMCtn5sgGUkXdr96O6MSUExHYf2KoLLBs8muKVdATcuq+5dQL5ZUmlNfjrpRliukv
+	 CK7JcTd5vqRS+MvHK5PDYvfUj5N60VQspNYj7Hdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0857/1146] powerpc/perf: callchain validate kernel stack pointer bounds
-Date: Wed, 28 Dec 2022 15:39:56 +0100
-Message-Id: <20221228144353.433111218@linuxfoundation.org>
+Subject: [PATCH 6.1 0884/1146] rtc: pic32: Move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+Date: Wed, 28 Dec 2022 15:40:23 +0100
+Message-Id: <20221228144354.178313141@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,44 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 32c5209214bd8d4f8c4e9d9b630ef4c671f58e79 ]
+[ Upstream commit 90cd5c88830140c9fade92a8027e0fb2c6e4cc49 ]
 
-The interrupt frame detection and loads from the hypothetical pt_regs
-are not bounds-checked. The next-frame validation only bounds-checks
-STACK_FRAME_OVERHEAD, which does not include the pt_regs. Add another
-test for this.
+The pic32_rtc_enable(pdata, 0) and clk_disable_unprepare(pdata->clk)
+should be called in the error handling of devm_rtc_allocate_device(),
+so we should move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+to fix it.
 
-The user could set r1 to be equal to the address matching the first
-interrupt frame - STACK_INT_FRAME_SIZE, which is in the previous page
-due to the kernel redzone, and induce the kernel to load the marker from
-there. Possibly this could cause a crash at least. If the user could
-induce the previous page to contain a valid marker, then it might be
-able to direct perf to read specific memory addresses in a way that
-could be transmitted back to the user in the perf data.
-
-Fixes: 20002ded4d93 ("perf_counter: powerpc: Add callchain support")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221127124942.1665522-4-npiggin@gmail.com
+Fixes: 6515e23b9fde ("rtc: pic32: convert to devm_rtc_allocate_device")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123015953.1998521-1-cuigaosheng1@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/callchain.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-pic32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/perf/callchain.c b/arch/powerpc/perf/callchain.c
-index 082f6d0308a4..8718289c051d 100644
---- a/arch/powerpc/perf/callchain.c
-+++ b/arch/powerpc/perf/callchain.c
-@@ -61,6 +61,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
- 		next_sp = fp[0];
+diff --git a/drivers/rtc/rtc-pic32.c b/drivers/rtc/rtc-pic32.c
+index 7fb9145c43bd..fa351ac20158 100644
+--- a/drivers/rtc/rtc-pic32.c
++++ b/drivers/rtc/rtc-pic32.c
+@@ -324,16 +324,16 @@ static int pic32_rtc_probe(struct platform_device *pdev)
  
- 		if (next_sp == sp + STACK_INT_FRAME_SIZE &&
-+		    validate_sp(sp, current, STACK_INT_FRAME_SIZE) &&
- 		    fp[STACK_FRAME_MARKER] == STACK_FRAME_REGS_MARKER) {
- 			/*
- 			 * This looks like an interrupt frame for an
+ 	spin_lock_init(&pdata->alarm_lock);
+ 
++	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
++	if (IS_ERR(pdata->rtc))
++		return PTR_ERR(pdata->rtc);
++
+ 	clk_prepare_enable(pdata->clk);
+ 
+ 	pic32_rtc_enable(pdata, 1);
+ 
+ 	device_init_wakeup(&pdev->dev, 1);
+ 
+-	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
+-	if (IS_ERR(pdata->rtc))
+-		return PTR_ERR(pdata->rtc);
+-
+ 	pdata->rtc->ops = &pic32_rtcops;
+ 	pdata->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+ 	pdata->rtc->range_max = RTC_TIMESTAMP_END_2099;
 -- 
 2.35.1
 
