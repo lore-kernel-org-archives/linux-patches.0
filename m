@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2F41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4860C433EF;
-	Wed, 28 Dec 2022 16:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4E41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8F4C433D2;
+	Wed, 28 Dec 2022 16:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246279;
-	bh=kVrpkgJ8jEK4Nzl44Fbxx2v7MkW+pw/MyLbDCSS31LA=;
+	s=korg; t=1672246281;
+	bh=wOFtaFfbin/F9piaUo/SC8mmvkBuDNV3uovhAfMsm1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFBTgDgvgcAhoJhxFohNZ5iaGutdGDtmICGaesQtgGKLt1fyQYk4PNBEgLmQ/FINW
-	 NeY9e0FqTlFg6WrRAvAn8tLEVJpFyNXNi4KEjB3TGDppUJQTE1uOzd29QuBlT27VOr
-	 gn609DKyFSZmyK6qiVZnc/z50xlZPPI9aiPOs7rM=
+	b=Dqmd7+8Tav0uQYXhvGKvgtDwiVrdn4p1th7g0l9fwds8euqjgZVq5gAk9fhNmUd2q
+	 1i1oeeq1/xktUa9ZjLS8aKpwf2bZBlWMCFHv30vG0DhegVjGa0rPVWyMLfH/xlgJZP
+	 40WAoi4aJQU7lqo/cpndx9RHlFUbD4VPSpGbmy4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Chen <kenchen@google.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 1043/1073] loop: Fix the max_loop commandline argument treatment when it is set to 0
-Date: Wed, 28 Dec 2022 15:43:51 +0100
-Message-Id: <20221228144356.525825953@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1015/1146] net: ethernet: mtk_eth_soc: drop packets to WDMA if the ring is full
+Date: Wed, 28 Dec 2022 15:42:34 +0100
+Message-Id: <20221228144357.935876412@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,98 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 85c50197716c60fe57f411339c579462e563ac57 upstream.
+[ Upstream commit f4b2fa2c25e1ade78f766aa82e733a0b5198d484 ]
 
-Currently, the max_loop commandline argument can be used to specify how
-many loop block devices are created at init time. If it is not
-specified on the commandline, CONFIG_BLK_DEV_LOOP_MIN_COUNT loop block
-devices will be created.
+Improves handling of DMA ring overflow.
+Clarify other WDMA drop related comment.
 
-The max_loop commandline argument can be used to override the value of
-CONFIG_BLK_DEV_LOOP_MIN_COUNT. However, when max_loop is set to 0
-through the commandline, the current logic treats it as if it had not
-been set, and creates CONFIG_BLK_DEV_LOOP_MIN_COUNT devices anyway.
-
-Fix this by starting max_loop off as set to CONFIG_BLK_DEV_LOOP_MIN_COUNT.
-This preserves the intended behavior of creating
-CONFIG_BLK_DEV_LOOP_MIN_COUNT loop block devices if the max_loop
-commandline parameter is not specified, and allowing max_loop to
-be respected for all values, including 0.
-
-This allows environments that can create all of their required loop
-block devices on demand to not have to unnecessarily preallocate loop
-block devices.
-
-Fixes: 732850827450 ("remove artificial software max_loop limit")
-Cc: stable@vger.kernel.org
-Cc: Ken Chen <kenchen@google.com>
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20221208212902.765781-1-isaacmanjarres@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20221116080734.44013-3-nbd@nbd.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |   28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 5 ++++-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1773,7 +1773,16 @@ static const struct block_device_operati
- /*
-  * And now the modules code and kernel interface.
-  */
--static int max_loop;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 864452e4426b..9aa1892a609c 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3364,9 +3364,12 @@ static int mtk_hw_init(struct mtk_eth *eth)
+ 	mtk_w32(eth, 0x21021000, MTK_FE_INT_GRP);
+ 
+ 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
+-		/* PSE should not drop port8 and port9 packets */
++		/* PSE should not drop port8 and port9 packets from WDMA Tx */
+ 		mtk_w32(eth, 0x00000300, PSE_DROP_CFG);
+ 
++		/* PSE should drop packets to port 8/9 on WDMA Rx ring full */
++		mtk_w32(eth, 0x00000300, PSE_PPE0_DROP);
 +
-+/*
-+ * If max_loop is specified, create that many devices upfront.
-+ * This also becomes a hard limit. If max_loop is not specified,
-+ * create CONFIG_BLK_DEV_LOOP_MIN_COUNT loop devices at module
-+ * init time. Loop devices can be requested on-demand with the
-+ * /dev/loop-control interface, or be instantiated by accessing
-+ * a 'dead' device node.
-+ */
-+static int max_loop = CONFIG_BLK_DEV_LOOP_MIN_COUNT;
- module_param(max_loop, int, 0444);
- MODULE_PARM_DESC(max_loop, "Maximum number of loop devices");
- module_param(max_part, int, 0444);
-@@ -2181,7 +2190,7 @@ MODULE_ALIAS("devname:loop-control");
+ 		/* PSE Free Queue Flow Control  */
+ 		mtk_w32(eth, 0x01fa01f4, PSE_FQFC_CFG2);
  
- static int __init loop_init(void)
- {
--	int i, nr;
-+	int i;
- 	int err;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index 9eaca55a106e..306fdc2c608a 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -120,6 +120,7 @@
+ #define PSE_FQFC_CFG1		0x100
+ #define PSE_FQFC_CFG2		0x104
+ #define PSE_DROP_CFG		0x108
++#define PSE_PPE0_DROP		0x110
  
- 	part_shift = 0;
-@@ -2209,19 +2218,6 @@ static int __init loop_init(void)
- 		goto err_out;
- 	}
- 
--	/*
--	 * If max_loop is specified, create that many devices upfront.
--	 * This also becomes a hard limit. If max_loop is not specified,
--	 * create CONFIG_BLK_DEV_LOOP_MIN_COUNT loop devices at module
--	 * init time. Loop devices can be requested on-demand with the
--	 * /dev/loop-control interface, or be instantiated by accessing
--	 * a 'dead' device node.
--	 */
--	if (max_loop)
--		nr = max_loop;
--	else
--		nr = CONFIG_BLK_DEV_LOOP_MIN_COUNT;
--
- 	err = misc_register(&loop_misc);
- 	if (err < 0)
- 		goto err_out;
-@@ -2233,7 +2229,7 @@ static int __init loop_init(void)
- 	}
- 
- 	/* pre-create number of devices given by config or max_loop */
--	for (i = 0; i < nr; i++)
-+	for (i = 0; i < max_loop; i++)
- 		loop_add(i);
- 
- 	printk(KERN_INFO "loop: module loaded\n");
+ /* PSE Input Queue Reservation Register*/
+ #define PSE_IQ_REV(x)		(0x140 + (((x) - 1) << 2))
+-- 
+2.35.1
+
 
 
