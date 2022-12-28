@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90BC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BF0C433D2;
-	Wed, 28 Dec 2022 15:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462D31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C062BC433EF;
+	Wed, 28 Dec 2022 15:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242333;
-	bh=f5v4dRBPbTX41wrvjczmE97GmaFBbIs5KlTm4XalbDw=;
+	s=korg; t=1672242336;
+	bh=d3qJe/k0GOSsbjQ7kRv8Gec6oJ6gw1cdFtLiMadFhJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wVvJRbN54ioYF7epF/wTgMpPjMLB/6gU5/PdnLsq0AKLvb0Fanx8RYJTJpGLhibE
-	 8N2vc/FpDC8d8GjYSivhs8/68QtHmS+jn2tJWQ9kfUvzDgTE++jC8Kr5VKWxY28RPm
-	 DSW4KPwoN+qhRTNk/uEvZURrZ65k0sWXT9fhnrXQ=
+	b=iSjBnS663IOYOKV7kS5mK/QJMsCTGWwkjL/b4ymJEHTXMQx5HSZRzrrH/Tvj1gEYS
+	 INSFgXYueUvo1dcLyCffFnuQWZixcsxhLVXzEyHysWiSB0p08xkelHSt2pvJvhvrTT
+	 mmzIKAF48I55dxV8zb7eC2kGnpjJfEssl1NYpfh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0398/1073] media: mediatek: vcodec: Fix h264 set lat buffer error
-Date: Wed, 28 Dec 2022 15:33:06 +0100
-Message-Id: <20221228144338.828065873@linuxfoundation.org>
+Subject: [PATCH 6.1 0358/1146] media: videobuf-dma-contig: use dma_mmap_coherent
+Date: Wed, 28 Dec 2022 15:31:37 +0100
+Message-Id: <20221228144339.885203981@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,93 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 23d677bd9cdd10323e6d290578bbb0a408f43499 ]
+[ Upstream commit b3dc3f8e49577840dc8ac8a365c5b3da4edb10b8 ]
 
-Will set lat buffer to lat_list two times when lat decode timeout for
-inner racing mode.
+dma_alloc_coherent does not return a physical address, but a DMA address,
+which might be remapped or have an offset.  Passing the DMA address to
+vm_iomap_memory is thus broken.
 
-If core thread can't get frame buffer, need to return error value.
+Use the proper dma_mmap_coherent helper instead, and stop passing
+__GFP_COMP to dma_alloc_coherent, as the memory management inside the
+DMA allocator is hidden from the callers and does not require it.
 
-Fixes: 59fba9eed5a7 ("media: mediatek: vcodec: support stateless H.264 decoding for mt8192")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+With this the gfp_t argument to __videobuf_dc_alloc can be removed and
+hard coded to GFP_KERNEL.
+
+Fixes: a8f3c203e19b ("[media] videobuf-dma-contig: add cache support")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vcodec/vdec/vdec_h264_req_multi_if.c      | 28 +++++++++++--------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/media/v4l2-core/videobuf-dma-contig.c | 22 +++++++------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-index 18e048755d11..955b2d0c8f53 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-@@ -471,14 +471,19 @@ static int vdec_h264_slice_core_decode(struct vdec_lat_buf *lat_buf)
- 	       sizeof(share_info->h264_slice_params));
+diff --git a/drivers/media/v4l2-core/videobuf-dma-contig.c b/drivers/media/v4l2-core/videobuf-dma-contig.c
+index 52312ce2ba05..f2c439359557 100644
+--- a/drivers/media/v4l2-core/videobuf-dma-contig.c
++++ b/drivers/media/v4l2-core/videobuf-dma-contig.c
+@@ -36,12 +36,11 @@ struct videobuf_dma_contig_memory {
  
- 	fb = ctx->dev->vdec_pdata->get_cap_buffer(ctx);
--	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
--	vdec_fb_va = (unsigned long)fb;
-+	if (!fb) {
-+		err = -EBUSY;
-+		mtk_vcodec_err(inst, "fb buffer is NULL");
-+		goto vdec_dec_end;
-+	}
- 
-+	vdec_fb_va = (unsigned long)fb;
-+	y_fb_dma = (u64)fb->base_y.dma_addr;
- 	if (ctx->q_data[MTK_Q_DATA_DST].fmt->num_planes == 1)
- 		c_fb_dma =
- 			y_fb_dma + inst->ctx->picinfo.buf_w * inst->ctx->picinfo.buf_h;
- 	else
--		c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
-+		c_fb_dma = (u64)fb->base_c.dma_addr;
- 
- 	mtk_vcodec_debug(inst, "[h264-core] y/c addr = 0x%llx 0x%llx", y_fb_dma,
- 			 c_fb_dma);
-@@ -656,7 +661,7 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	err = vpu_dec_start(vpu, data, 2);
- 	if (err) {
- 		mtk_vcodec_debug(inst, "lat decode err: %d", err);
--		goto err_scp_decode;
-+		goto err_free_fb_out;
- 	}
- 
- 	share_info->trans_end = inst->ctx->msg_queue.wdma_addr.dma_addr +
-@@ -673,12 +678,17 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	/* wait decoder done interrupt */
- 	timeout = mtk_vcodec_wait_for_done_ctx(inst->ctx, MTK_INST_IRQ_RECEIVED,
- 					       WAIT_INTR_TIMEOUT_MS, MTK_VDEC_LAT0);
-+	if (timeout)
-+		mtk_vcodec_err(inst, "lat decode timeout: pic_%d", inst->slice_dec_num);
- 	inst->vsi->dec.timeout = !!timeout;
- 
- 	err = vpu_dec_end(vpu);
--	if (err == SLICE_HEADER_FULL || timeout || err == TRANS_BUFFER_FULL) {
--		err = -EINVAL;
--		goto err_scp_decode;
-+	if (err == SLICE_HEADER_FULL || err == TRANS_BUFFER_FULL) {
-+		if (!IS_VDEC_INNER_RACING(inst->ctx->dev->dec_capability))
-+			vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
-+		inst->slice_dec_num++;
-+		mtk_vcodec_err(inst, "lat dec fail: pic_%d err:%d", inst->slice_dec_num, err);
-+		return -EINVAL;
- 	}
- 
- 	share_info->trans_end = inst->ctx->msg_queue.wdma_addr.dma_addr +
-@@ -695,10 +705,6 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 
- 	inst->slice_dec_num++;
- 	return 0;
+ static int __videobuf_dc_alloc(struct device *dev,
+ 			       struct videobuf_dma_contig_memory *mem,
+-			       unsigned long size, gfp_t flags)
++			       unsigned long size)
+ {
+ 	mem->size = size;
+-	mem->vaddr = dma_alloc_coherent(dev, mem->size,
+-					&mem->dma_handle, flags);
 -
--err_scp_decode:
--	if (!IS_VDEC_INNER_RACING(inst->ctx->dev->dec_capability))
--		vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
- err_free_fb_out:
- 	vdec_msg_queue_qbuf(&inst->ctx->msg_queue.lat_ctx, lat_buf);
- 	mtk_vcodec_err(inst, "slice dec number: %d err: %d", inst->slice_dec_num, err);
++	mem->vaddr = dma_alloc_coherent(dev, mem->size, &mem->dma_handle,
++					GFP_KERNEL);
+ 	if (!mem->vaddr) {
+ 		dev_err(dev, "memory alloc size %ld failed\n", mem->size);
+ 		return -ENOMEM;
+@@ -258,8 +257,7 @@ static int __videobuf_iolock(struct videobuf_queue *q,
+ 			return videobuf_dma_contig_user_get(mem, vb);
+ 
+ 		/* allocate memory for the read() method */
+-		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size),
+-					GFP_KERNEL))
++		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size)))
+ 			return -ENOMEM;
+ 		break;
+ 	case V4L2_MEMORY_OVERLAY:
+@@ -295,22 +293,18 @@ static int __videobuf_mmap_mapper(struct videobuf_queue *q,
+ 	BUG_ON(!mem);
+ 	MAGIC_CHECK(mem->magic, MAGIC_DC_MEM);
+ 
+-	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize),
+-				GFP_KERNEL | __GFP_COMP))
++	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize)))
+ 		goto error;
+ 
+-	/* Try to remap memory */
+-	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-
+ 	/* the "vm_pgoff" is just used in v4l2 to find the
+ 	 * corresponding buffer data structure which is allocated
+ 	 * earlier and it does not mean the offset from the physical
+ 	 * buffer start address as usual. So set it to 0 to pass
+-	 * the sanity check in vm_iomap_memory().
++	 * the sanity check in dma_mmap_coherent().
+ 	 */
+ 	vma->vm_pgoff = 0;
+-
+-	retval = vm_iomap_memory(vma, mem->dma_handle, mem->size);
++	retval = dma_mmap_coherent(q->dev, vma, mem->vaddr, mem->dma_handle,
++				   mem->size);
+ 	if (retval) {
+ 		dev_err(q->dev, "mmap: remap failed with error %d. ",
+ 			retval);
 -- 
 2.35.1
 
