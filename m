@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B851863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06ADFC433EF;
-	Wed, 28 Dec 2022 14:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205631863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0AFC433EF;
+	Wed, 28 Dec 2022 14:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239132;
-	bh=XeAp9TEdnP6tQoBJs/3ny64rb6tsYa+aXZzc+UqTKrk=;
+	s=korg; t=1672239135;
+	bh=nF/XfGomR10ZfWb1mzdu4ixPZPLKGnGcNCgCTPCvxUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dcQn4EEmMq4U2+T2z3vOyjmuH5KhQCpUKDjsh7Pbuz6W83mpriXIs4gf/5ch1eC7
-	 YNtsDHJeoUMWz1D1GE+OHc0bO4IRaJ9pYdPH/EN1wHua2OviXWTsqWXw0WB3uMpx+L
-	 L2gEB1Jtkl9jDyJLNTLQoqX6E+sQy4z/4zSS3h1Q=
+	b=B0a13cDEtSLBIfSvbBnpCrWZfaUmxixSf85nLXWxrW8Emgd3TW7Z4JhSD5UqHP1ya
+	 1bMEkhbht6xyz78PYpddyYKCO/PkYAKkRmGC52QzYZ6E1V61EmVz6UeDwgN6Pk8OJL
+	 QEUnVTF1Bsbg79xMH7kg8s/8m8wsLoW+UPaF6MjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Thomson <git@johnthomson.fastmail.com.au>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/731] mips: ralink: mt7621: soc queries and tests as functions
-Date: Wed, 28 Dec 2022 15:33:41 +0100
-Message-Id: <20221228144259.854193032@linuxfoundation.org>
+Subject: [PATCH 5.15 115/731] mips: ralink: mt7621: do not use kzalloc too early
+Date: Wed, 28 Dec 2022 15:33:42 +0100
+Message-Id: <20221228144259.886857387@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,143 +37,131 @@ Content-Transfer-Encoding: 8bit
 
 From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit b4767d4c072583dec987225b6fe3f5524a735f42 ]
+[ Upstream commit 7c18b64bba3bcad1be94b404f47b94a04b91ce79 ]
 
-Move the SoC register value queries and tests to specific functions,
-to remove repetition of logic
-No functional changes intended
+With CONFIG_SLUB=y, following commit 6edf2576a6cc ("mm/slub: enable
+debugging memory wasting of kmalloc") mt7621 failed to boot very early,
+without showing any console messages.
+This exposed the pre-existing bug of mt7621.c using kzalloc before normal
+memory management was available.
+Prior to this slub change, there existed the unintended protection against
+"kmem_cache *s" being NULL as slab_pre_alloc_hook() happened to
+return NULL and bailed out of slab_alloc_node().
+This allowed mt7621 prom_soc_init to fail in the soc_dev_init kzalloc,
+but continue booting without the SOC_BUS driver device registered.
 
+Console output from a DEBUG_ZBOOT vmlinuz kernel loading,
+with mm/slub modified to warn on kmem_cache zero or null:
+
+zimage at:     80B842A0 810B4BC0
+Uncompressing Linux at load address 80001000
+Copy device tree to address  80B80EE0
+Now, booting the kernel...
+
+[    0.000000] Linux version 6.1.0-rc3+ (john@john)
+(mipsel-buildroot-linux-gnu-gcc.br_real (Buildroot
+2021.11-4428-g6b6741b) 12.2.0, GNU ld (GNU Binutils) 2.39) #73 SMP Wed
+     Nov  2 05:10:01 AEST 2022
+[    0.000000] ------------[ cut here ]------------
+[    0.000000] WARNING: CPU: 0 PID: 0 at mm/slub.c:3416
+kmem_cache_alloc+0x5a4/0x5e8
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.1.0-rc3+ #73
+[    0.000000] Stack : 810fff78 80084d98 00000000 00000004 00000000
+00000000 80889d04 80c90000
+[    0.000000]         80920000 807bd328 8089d368 80923bd3 00000000
+00000001 80889cb0 00000000
+[    0.000000]         00000000 00000000 807bd328 8084bcb1 00000002
+00000002 00000001 6d6f4320
+[    0.000000]         00000000 80c97d3d 80c97d68 fffffffc 807bd328
+00000000 00000000 00000000
+[    0.000000]         00000000 a0000000 80910000 8110a0b4 00000000
+00000020 80010000 80010000
+[    0.000000]         ...
+[    0.000000] Call Trace:
+[    0.000000] [<80008260>] show_stack+0x28/0xf0
+[    0.000000] [<8070c958>] dump_stack_lvl+0x60/0x80
+[    0.000000] [<8002e184>] __warn+0xc4/0xf8
+[    0.000000] [<8002e210>] warn_slowpath_fmt+0x58/0xa4
+[    0.000000] [<801c0fac>] kmem_cache_alloc+0x5a4/0x5e8
+[    0.000000] [<8092856c>] prom_soc_init+0x1fc/0x2b4
+[    0.000000] [<80928060>] prom_init+0x44/0xf0
+[    0.000000] [<80929214>] setup_arch+0x4c/0x6a8
+[    0.000000] [<809257e0>] start_kernel+0x88/0x7c0
+[    0.000000]
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] SoC Type: MediaTek MT7621 ver:1 eco:3
+[    0.000000] printk: bootconsole [early0] enabled
+
+Allowing soc_device_register to work exposed oops in the mt7621 phy pci,
+and pci controller drivers from soc_device_match_attr, due to missing
+sentinels in the quirks tables. These were fixed with:
+commit 819b885cd886 ("phy: ralink: mt7621-pci: add sentinel to quirks
+table")
+not yet applied ("PCI: mt7621: add sentinel to quirks table")
+
+Link: https://lore.kernel.org/linux-mm/becf2ac3-2a90-4f3a-96d9-a70f67c66e4a@app.fastmail.com/
+Fixes: 71b9b5e0130d ("MIPS: ralink: mt7621: introduce 'soc_device' initialization")
 Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 86 +++++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 25 deletions(-)
+ arch/mips/ralink/mt7621.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index af66886f1366..6b4c291d6d1b 100644
+index 6b4c291d6d1b..0db23bcf2a97 100644
 --- a/arch/mips/ralink/mt7621.c
 +++ b/arch/mips/ralink/mt7621.c
-@@ -66,7 +66,57 @@ void __init ralink_of_remap(void)
- 		panic("Failed to remap core resources");
+@@ -23,6 +23,7 @@
+ #define MT7621_MEM_TEST_PATTERN         0xaa5555aa
+ 
+ static u32 detect_magic __initdata;
++static struct ralink_soc_info *soc_info_ptr;
+ 
+ phys_addr_t mips_cpc_default_phys_base(void)
+ {
+@@ -116,27 +117,30 @@ static const char __init *mt7621_get_soc_revision(void)
+ 		return "E1";
  }
  
--static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
-+static unsigned int __init mt7621_get_soc_name0(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
-+}
-+
-+static unsigned int __init mt7621_get_soc_name1(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
-+}
-+
-+static bool __init mt7621_soc_valid(void)
-+{
-+	if (mt7621_get_soc_name0() == MT7621_CHIP_NAME0 &&
-+			mt7621_get_soc_name1() == MT7621_CHIP_NAME1)
-+		return true;
-+	else
-+		return false;
-+}
-+
-+static const char __init *mt7621_get_soc_id(void)
-+{
-+	if (mt7621_soc_valid())
-+		return "MT7621";
-+	else
-+		return "invalid";
-+}
-+
-+static unsigned int __init mt7621_get_soc_rev(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
-+}
-+
-+static unsigned int __init mt7621_get_soc_ver(void)
-+{
-+	return (mt7621_get_soc_rev() >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK;
-+}
-+
-+static unsigned int __init mt7621_get_soc_eco(void)
-+{
-+	return (mt7621_get_soc_rev() & CHIP_REV_ECO_MASK);
-+}
-+
-+static const char __init *mt7621_get_soc_revision(void)
-+{
-+	if (mt7621_get_soc_rev() == 1 && mt7621_get_soc_eco() == 1)
-+		return "E2";
-+	else
-+		return "E1";
-+}
-+
-+static void soc_dev_init(struct ralink_soc_info *soc_info)
+-static void soc_dev_init(struct ralink_soc_info *soc_info)
++static int __init mt7621_soc_dev_init(void)
  {
  	struct soc_device *soc_dev;
  	struct soc_device_attribute *soc_dev_attr;
-@@ -77,12 +127,7 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 
+ 	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+-		return;
++		return -ENOMEM;
  
  	soc_dev_attr->soc_id = "mt7621";
  	soc_dev_attr->family = "Ralink";
--
--	if (((rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK) == 1 &&
--	    (rev & CHIP_REV_ECO_MASK) == 1)
--		soc_dev_attr->revision = "E2";
--	else
--		soc_dev_attr->revision = "E1";
-+	soc_dev_attr->revision = mt7621_get_soc_revision();
+ 	soc_dev_attr->revision = mt7621_get_soc_revision();
  
- 	soc_dev_attr->data = soc_info;
+-	soc_dev_attr->data = soc_info;
++	soc_dev_attr->data = soc_info_ptr;
  
-@@ -95,11 +140,6 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 	soc_dev = soc_device_register(soc_dev_attr);
+ 	if (IS_ERR(soc_dev)) {
+ 		kfree(soc_dev_attr);
+-		return;
++		return PTR_ERR(soc_dev);
+ 	}
++
++	return 0;
+ }
++device_initcall(mt7621_soc_dev_init);
  
  void __init prom_soc_init(struct ralink_soc_info *soc_info)
  {
--	unsigned char *name = NULL;
--	u32 n0;
--	u32 n1;
--	u32 rev;
--
- 	/* Early detection of CMP support */
- 	mips_cm_probe();
- 	mips_cpc_probe();
-@@ -122,27 +162,23 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
- 		__sync();
- 	}
- 
--	n0 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
--	n1 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
--
--	if (n0 == MT7621_CHIP_NAME0 && n1 == MT7621_CHIP_NAME1) {
--		name = "MT7621";
-+	if (mt7621_soc_valid())
- 		soc_info->compatible = "mediatek,mt7621-soc";
--	} else {
--		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n", n0, n1);
--	}
-+	else
-+		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n",
-+				mt7621_get_soc_name0(),
-+				mt7621_get_soc_name1());
- 	ralink_soc = MT762X_SOC_MT7621AT;
--	rev = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
- 
- 	snprintf(soc_info->sys_type, RAMIPS_SYS_TYPE_LEN,
- 		"MediaTek %s ver:%u eco:%u",
--		name,
--		(rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK,
--		(rev & CHIP_REV_ECO_MASK));
-+		mt7621_get_soc_id(),
-+		mt7621_get_soc_ver(),
-+		mt7621_get_soc_eco());
+@@ -178,7 +182,7 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
  
  	soc_info->mem_detect = mt7621_memory_detect;
  
--	soc_dev_init(soc_info, rev);
-+	soc_dev_init(soc_info);
+-	soc_dev_init(soc_info);
++	soc_info_ptr = soc_info;
  
  	if (!register_cps_smp_ops())
  		return;
