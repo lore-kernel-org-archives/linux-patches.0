@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9886F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210D0C433D2;
-	Wed, 28 Dec 2022 15:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AE61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDA2C433D2;
+	Wed, 28 Dec 2022 15:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240991;
-	bh=OoW6+A9KlidEaPg6LYF0DzCw0G9ropuf4+xsU6mgME4=;
+	s=korg; t=1672240994;
+	bh=MGeFGa+t+de0D4N0m5cs3jCD0iHHSXGXUzRPsSh/mYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6n4pcB4iuD4L27/oWrbtiWMySw25ZJuonuC6/eqisLLlqlrlg5nmd3r3ugt/Se9m
-	 qtTTpszYQmiexZtvQecRqQdOKl6FGN9WrZkRnWYe+zHxXOn+fchubrqV1S8UmE910R
-	 k5CL+4cauCLbIfrTCipThe1rNF+2zBOi8fIzYvKg=
+	b=gCdfU6ERDxzJx7SOGTLw3PYUjpio7Q6nsujMeT+Dd9h1REHcpgo/LGyNcZA5bcLKM
+	 DRkS2NdnlbWpxgXhVcQLv0f3M5l4UFCtxszFfoCuPlh0/Z/eGWjl6ekgr7qR9hvCsz
+	 heMdl2jbFZV6sN+pf2Eb1nNefXMBWJQgXX4ZIxR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 413/731] scsi: fcoe: Fix possible name leak when device_register() fails
-Date: Wed, 28 Dec 2022 15:38:40 +0100
-Message-Id: <20221228144308.545596015@linuxfoundation.org>
+Subject: [PATCH 5.15 425/731] RDMA/srp: Fix error return code in srp_parse_options()
+Date: Wed, 28 Dec 2022 15:38:52 +0100
+Message-Id: <20221228144308.886921594@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,76 +36,239 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
+[ Upstream commit ed461b30b22c8fa85c25189c14cb89f29595cd14 ]
 
-If device_register() returns an error, the name allocated by dev_set_name()
-needs to be freed. As the comment of device_register() says, one should use
-put_device() to give up the reference in the error path. Fix this by
-calling put_device(), then the name can be freed in kobject_cleanup().
+In the previous iteration of the while loop, the "ret" may have been
+assigned a value of 0, so the error return code -EINVAL may have been
+incorrectly set to 0. To fix set valid return code before calling to
+goto. Also investigate each case separately as Andy suggessted.
 
-The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
-error path can be removed.
-
-The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
-label, just return NULL after calling put_device().
-
-Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e711f968c49c ("IB/srp: replace custom implementation of hex2bin()")
+Fixes: 2a174df0c602 ("IB/srp: Use kstrtoull() instead of simple_strtoull()")
+Fixes: 19f313438c77 ("IB/srp: Add RDMA/CM support")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1669953638-11747-2-git-send-email-wangyufen@huawei.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 96 ++++++++++++++++++++++++-----
+ 1 file changed, 82 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
-index af658aa38fed..6260aa5ea6af 100644
---- a/drivers/scsi/fcoe/fcoe_sysfs.c
-+++ b/drivers/scsi/fcoe/fcoe_sysfs.c
-@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 2f4991cea98c..a6117a7d0ab1 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3397,7 +3397,8 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
  
- 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
- 	error = device_register(&ctlr->dev);
--	if (error)
--		goto out_del_q2;
-+	if (error) {
-+		destroy_workqueue(ctlr->devloss_work_q);
-+		destroy_workqueue(ctlr->work_q);
-+		put_device(&ctlr->dev);
-+		return NULL;
-+	}
+ 		case SRP_OPT_PKEY:
+-			if (match_hex(args, &token)) {
++			ret = match_hex(args, &token);
++			if (ret) {
+ 				pr_warn("bad P_Key parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3457,7 +3458,8 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
  
- 	return ctlr;
+ 		case SRP_OPT_MAX_SECT:
+-			if (match_int(args, &token)) {
++			ret = match_int(args, &token);
++			if (ret) {
+ 				pr_warn("bad max sect parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3465,8 +3467,15 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
  
--out_del_q2:
--	destroy_workqueue(ctlr->devloss_work_q);
--	ctlr->devloss_work_q = NULL;
- out_del_q:
- 	destroy_workqueue(ctlr->work_q);
- 	ctlr->work_q = NULL;
-@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
- 	fcf->selected = new_fcf->selected;
+ 		case SRP_OPT_QUEUE_SIZE:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for queue_size parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad queue_size parameter '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->scsi_host->can_queue = token;
+@@ -3477,25 +3486,40 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
  
- 	error = device_register(&fcf->dev);
--	if (error)
--		goto out_del;
-+	if (error) {
-+		put_device(&fcf->dev);
-+		goto out;
-+	}
+ 		case SRP_OPT_MAX_CMD_PER_LUN:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max cmd_per_lun parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad max cmd_per_lun parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->scsi_host->cmd_per_lun = token;
+ 			break;
  
- 	fcf->state = FCOE_FCF_STATE_CONNECTED;
- 	list_add_tail(&fcf->peers, &ctlr->fcfs);
+ 		case SRP_OPT_TARGET_CAN_QUEUE:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max target_can_queue parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad max target_can_queue parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->target_can_queue = token;
+ 			break;
  
- 	return fcf;
+ 		case SRP_OPT_IO_CLASS:
+-			if (match_hex(args, &token)) {
++			ret = match_hex(args, &token);
++			if (ret) {
+ 				pr_warn("bad IO class parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3504,6 +3528,7 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 				pr_warn("unknown IO class parameter value %x specified (use %x or %x).\n",
+ 					token, SRP_REV10_IB_IO_CLASS,
+ 					SRP_REV16A_IB_IO_CLASS);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->io_class = token;
+@@ -3526,16 +3551,24 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
  
--out_del:
--	kfree(fcf);
- out:
- 	return NULL;
- }
+ 		case SRP_OPT_CMD_SG_ENTRIES:
+-			if (match_int(args, &token) || token < 1 || token > 255) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max cmd_sg_entries parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1 || token > 255) {
+ 				pr_warn("bad max cmd_sg_entries parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->cmd_sg_cnt = token;
+ 			break;
+ 
+ 		case SRP_OPT_ALLOW_EXT_SG:
+-			if (match_int(args, &token)) {
++			ret = match_int(args, &token);
++			if (ret) {
+ 				pr_warn("bad allow_ext_sg parameter '%s'\n", p);
+ 				goto out;
+ 			}
+@@ -3543,43 +3576,77 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 			break;
+ 
+ 		case SRP_OPT_SG_TABLESIZE:
+-			if (match_int(args, &token) || token < 1 ||
+-					token > SG_MAX_SEGMENTS) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max sg_tablesize parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1 || token > SG_MAX_SEGMENTS) {
+ 				pr_warn("bad max sg_tablesize parameter '%s'\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->sg_tablesize = token;
+ 			break;
+ 
+ 		case SRP_OPT_COMP_VECTOR:
+-			if (match_int(args, &token) || token < 0) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for comp_vector parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 0) {
+ 				pr_warn("bad comp_vector parameter '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->comp_vector = token;
+ 			break;
+ 
+ 		case SRP_OPT_TL_RETRY_COUNT:
+-			if (match_int(args, &token) || token < 2 || token > 7) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for tl_retry_count parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 2 || token > 7) {
+ 				pr_warn("bad tl_retry_count parameter '%s' (must be a number between 2 and 7)\n",
+ 					p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->tl_retry_count = token;
+ 			break;
+ 
+ 		case SRP_OPT_MAX_IT_IU_SIZE:
+-			if (match_int(args, &token) || token < 0) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for max it_iu_size parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 0) {
+ 				pr_warn("bad maximum initiator to target IU size '%s'\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->max_it_iu_size = token;
+ 			break;
+ 
+ 		case SRP_OPT_CH_COUNT:
+-			if (match_int(args, &token) || token < 1) {
++			ret = match_int(args, &token);
++			if (ret) {
++				pr_warn("match_int() failed for channel count parameter '%s', Error %d\n",
++					p, ret);
++				goto out;
++			}
++			if (token < 1) {
+ 				pr_warn("bad channel count %s\n", p);
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			target->ch_count = token;
+@@ -3588,6 +3655,7 @@ static int srp_parse_options(struct net *net, const char *buf,
+ 		default:
+ 			pr_warn("unknown parameter or missing value '%s' in target creation request\n",
+ 				p);
++			ret = -EINVAL;
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.35.1
 
