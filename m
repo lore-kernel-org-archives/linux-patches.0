@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5E11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3135C433EF;
-	Wed, 28 Dec 2022 15:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5DB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7196EC433EF;
+	Wed, 28 Dec 2022 15:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240248;
-	bh=NRPKHk3u4TgHIlrVRVUc/Qx93ttIyR+OcxlN2OrSFD0=;
+	s=korg; t=1672240250;
+	bh=Smnvc3+A9GBLdoOg465hbI9+TXWvWssM+2RsHP3q2tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Opp/3HuPcZvUrs2NY1XxCxp6dQu6fAaHZTUHxjMg8DCfsxS9mhwk/TQwLYKNhq1mx
-	 a9CtKqk3gLb7zBK6DnDBLT8eJ38EpGlzEltxnRj8oBGAMBHHta8NL1bm2XFDk3RxaD
-	 19+/e04rm9o6AZmfg35gm6Lc0yD8vcInST+fzTs8=
+	b=EB/1imnivPUC0nQEhtUlU3XVQhXMoMKDunND2mGi2XvhT+Hn+RFRgAuvydXC1i5Zo
+	 Ab2BoUlvbLmWQF/MKYPNt2LaYZl+q81CTghaJ65eKCE67BmKErDeeYZEOqf5Dpt1QH
+	 j/J6IQQU0+PSnpCQ7MB7Vuf091xDdpEw2GRQi7AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Joel Stanley <joel@jms.id.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0100/1146] tpm: tis_i2c: Fix sanity check interrupt enable mask
-Date: Wed, 28 Dec 2022 15:27:19 +0100
-Message-Id: <20221228144332.859637635@linuxfoundation.org>
+Subject: [PATCH 5.15 328/731] ethernet: s2io: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:37:15 +0100
+Message-Id: <20221228144306.079995851@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 561d6ef75628db9cce433e573aa3cdb6b3bba903 ]
+[ Upstream commit 6cee96e09df54ae17784c0f38a49e0ed8229b825 ]
 
-The sanity check mask for TPM_INT_ENABLE register was off by 8 bits,
-resulting in failure to probe if the TPM_INT_ENABLE register was a
-valid value.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In this case, dev_kfree_skb() is called in free_tx_buffers() to drop
+the SKBs in tx buffers, when the card is down, so replace it with
+dev_kfree_skb_irq() here.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_i2c.c | 2 +-
+ drivers/net/ethernet/neterion/s2io.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
-index 0692510dfcab..635a69dfcbbd 100644
---- a/drivers/char/tpm/tpm_tis_i2c.c
-+++ b/drivers/char/tpm/tpm_tis_i2c.c
-@@ -49,7 +49,7 @@
- 
- /* Masks with bits that must be read zero */
- #define TPM_ACCESS_READ_ZERO 0x48
--#define TPM_INT_ENABLE_ZERO 0x7FFFFF6
-+#define TPM_INT_ENABLE_ZERO 0x7FFFFF60
- #define TPM_STS_READ_ZERO 0x23
- #define TPM_INTF_CAPABILITY_ZERO 0x0FFFF000
- #define TPM_I2C_INTERFACE_CAPABILITY_ZERO 0x80000000
+diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
+index f4703f53bcdc..65ccdbe665e5 100644
+--- a/drivers/net/ethernet/neterion/s2io.c
++++ b/drivers/net/ethernet/neterion/s2io.c
+@@ -2386,7 +2386,7 @@ static void free_tx_buffers(struct s2io_nic *nic)
+ 			skb = s2io_txdl_getskb(&mac_control->fifos[i], txdp, j);
+ 			if (skb) {
+ 				swstats->mem_freed += skb->truesize;
+-				dev_kfree_skb(skb);
++				dev_kfree_skb_irq(skb);
+ 				cnt++;
+ 			}
+ 		}
 -- 
 2.35.1
 
