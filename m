@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8641863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F3CC433EF;
-	Wed, 28 Dec 2022 15:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789361863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00432C433EF;
+	Wed, 28 Dec 2022 15:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241437;
-	bh=3oVPIiQdyLeTm+s9ltRA9dB94nBAb11n5VE1ZMmCUsM=;
+	s=korg; t=1672241440;
+	bh=k4hU1/mZkG+kZTABAbAXY9jw9zBkfOiRU/c1YsitHUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TMA2EGr8AOISfWZdQPZPXg9N3g+gJftYYRytPIHmMIr+Pn+Hl6PfGncb63DWBbtPr
-	 VFrlW6HCoZPL+ZkWRuzOJKFk0CBf7LMDKiO+2OQkLt/Q2xFPxadD4e7IRL/CwREtVz
-	 VolfOS4VKWcocYDQqpsZR3M3G0s2y2qbbt8yWOj4=
+	b=WZn5yHjTUQC3Os+Nrs6kgWqRrrBkriXqGKpFM2TauavP/xFySCMvMCrnG6Ogtg8np
+	 UebIHt9wLb+B280nLZN4VSP+r6shL2BgBfmByIrzyodg811TPqvSuRUqVbZBcN4yf5
+	 akBv3Xx3JjP+6THpFPMtSyh0viRywHhujCzWbuQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Lee Jones <lee@kernel.org>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0274/1073] drm/msm/dsi: Remove repeated calculation of slice_per_intf
-Date: Wed, 28 Dec 2022 15:31:02 +0100
-Message-Id: <20221228144335.459585012@linuxfoundation.org>
+Subject: [PATCH 5.15 482/731] usb: gadget: f_hid: fix refcount leak on error path
+Date: Wed, 28 Dec 2022 15:39:49 +0100
+Message-Id: <20221228144310.521881432@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,59 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit 170ffca836dd9f1a0219c4f67554d408fa2b5912 ]
+[ Upstream commit 70a3288a7586526315105c699b687d78cd32559a ]
 
-slice_per_intf is already computed for intf_width, which holds the same
-value as hdisplay.
+When failing to allocate report_desc, opts->refcnt has already been
+incremented so it needs to be decremented to avoid leaving the options
+structure permanently locked.
 
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508933/
-Link: https://lore.kernel.org/r/20221026182824.876933-3-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 21a9476a7ba8 ("usb: gadget: hid: add configfs support")
+Tested-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20221122123523.3068034-3-john@metanate.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 843521c9cdcf..1bce664a4eed 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -917,7 +917,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
- {
- 	struct drm_dsc_config *dsc = msm_host->dsc;
--	u32 reg, intf_width, reg_ctrl, reg_ctrl2;
-+	u32 reg, reg_ctrl, reg_ctrl2;
- 	u32 slice_per_intf, total_bytes_per_intf;
- 	u32 pkt_per_line;
- 	u32 bytes_in_slice;
-@@ -926,8 +926,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	/* first calculate dsc parameters and then program
- 	 * compress mode registers
- 	 */
--	intf_width = hdisplay;
--	slice_per_intf = DIV_ROUND_UP(intf_width, dsc->slice_width);
-+	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
- 
- 	/* If slice_per_pkt is greater than slice_per_intf
- 	 * then default to 1. This can happen during partial
-@@ -936,7 +935,6 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	if (slice_per_intf > dsc->slice_count)
- 		dsc->slice_count = 1;
- 
--	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
- 	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
- 
- 	dsc->slice_chunk_size = bytes_in_slice;
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 8b8bbeaa27cb..6be6009f911e 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1292,6 +1292,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
+ 						 GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+ 			put_device(&hidg->dev);
++			--opts->refcnt;
+ 			mutex_unlock(&opts->lock);
+ 			return ERR_PTR(-ENOMEM);
+ 		}
 -- 
 2.35.1
 
