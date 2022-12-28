@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90A21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3DBC433D2;
-	Wed, 28 Dec 2022 16:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FAA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9679C433EF;
+	Wed, 28 Dec 2022 16:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245830;
-	bh=jhGHPPiCg8PuuPbx27YsQpFMkeaCpoT/eez0u9GB/Jc=;
+	s=korg; t=1672245833;
+	bh=ipKdulpmmSmjZ0WXk55vOzU802/+Oml+uBFJbdoVsIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEVBdLXd2A+c/damo+LlzdqOXrbDz0Mu64+grs2VwspFZRqbYbAvOOPBC5CnzzFpH
-	 CgN9Nfjtm8WMyUHbqgNL8Bzw6RzadHHkc6VLpaGkETLUsbOEdJhaf45UGJwGucXrva
-	 1H/7HkakhykXU27oIFUJ78aRVGZ15kIi+1qvA2ew=
+	b=tEyQnU7H4p0nAZL7v1HLVRUFsMKxW0r6FfGmdqYDo5WHEcmjDVQkSQXqMDGiM+XxZ
+	 FuOB0WIes0MqOHR8dx/LxDhuqBs0tuGAugteEtOnkwQ0mr0fKD2nDxg//WO4BN0TEW
+	 dpBW302Gh3POAHr9iowImq6hdl6mA2yvB0HGPADM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Denis Pauk <pauk.denis@gmail.com>,
+	yutesdb <mundanedefoliation@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0932/1146] cifs: dont leak -ENOMEM in smb2_open_file()
-Date: Wed, 28 Dec 2022 15:41:11 +0100
-Message-Id: <20221228144355.604194751@linuxfoundation.org>
+Subject: [PATCH 6.0 0966/1073] hwmon: (nct6775) add ASUS CROSSHAIR VIII/TUF/ProArt B550M
+Date: Wed, 28 Dec 2022 15:42:34 +0100
+Message-Id: <20221228144354.290178409@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Denis Pauk <pauk.denis@gmail.com>
 
-[ Upstream commit f60ffa662d1427cfd31fe9d895c3566ac50bfe52 ]
+[ Upstream commit 1864069c695d475e0ce98a335c62274b81be57b4 ]
 
-A NULL error response might be a valid case where smb2_reconnect()
-failed to reconnect the session and tcon due to a disconnected server
-prior to issuing the I/O operation, so don't leak -ENOMEM to userspace
-on such occasions.
+Boards such as
+* ProArt B550-CREATOR
+* ProArt Z490-CREATOR 10G
+* ROG CROSSHAIR VIII EXTREME
+* ROG CROSSHAIR VIII HERO (WI-FI)
+* TUF GAMING B550M-E
+* TUF GAMING B550M-E (WI-FI)
+* TUF GAMING B550M-PLUS WIFI II
+have got a nct6775 chip, but by default there's no use of it
+because of resource conflict with WMI method.
 
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This commit adds such boards to the WMI monitoring list.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
+Reported-by: yutesdb <mundanedefoliation@gmail.com>
+Tested-by: yutesdb <mundanedefoliation@gmail.com>
+Link: https://lore.kernel.org/r/20221114214456.3891-1-pauk.denis@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/nct6775-platform.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/cifs/smb2file.c b/fs/cifs/smb2file.c
-index ffbd9a99fc12..ba6cc50af390 100644
---- a/fs/cifs/smb2file.c
-+++ b/fs/cifs/smb2file.c
-@@ -122,8 +122,8 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 		struct smb2_hdr *hdr = err_iov.iov_base;
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index 41c97cfacfb8..50fe9533cf43 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -1043,7 +1043,9 @@ static struct platform_device *pdev[2];
  
- 		if (unlikely(!err_iov.iov_base || err_buftype == CIFS_NO_BUFFER))
--			rc = -ENOMEM;
--		else if (hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
-+			goto out;
-+		if (hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
- 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
- 							 &data->symlink_target);
- 			if (!rc) {
+ static const char * const asus_wmi_boards[] = {
+ 	"PRO H410T",
++	"ProArt B550-CREATOR",
+ 	"ProArt X570-CREATOR WIFI",
++	"ProArt Z490-CREATOR 10G",
+ 	"Pro B550M-C",
+ 	"Pro WS X570-ACE",
+ 	"PRIME B360-PLUS",
+@@ -1055,8 +1057,10 @@ static const char * const asus_wmi_boards[] = {
+ 	"PRIME X570-P",
+ 	"PRIME X570-PRO",
+ 	"ROG CROSSHAIR VIII DARK HERO",
++	"ROG CROSSHAIR VIII EXTREME",
+ 	"ROG CROSSHAIR VIII FORMULA",
+ 	"ROG CROSSHAIR VIII HERO",
++	"ROG CROSSHAIR VIII HERO (WI-FI)",
+ 	"ROG CROSSHAIR VIII IMPACT",
+ 	"ROG STRIX B550-A GAMING",
+ 	"ROG STRIX B550-E GAMING",
+@@ -1080,8 +1084,11 @@ static const char * const asus_wmi_boards[] = {
+ 	"ROG STRIX Z490-G GAMING (WI-FI)",
+ 	"ROG STRIX Z490-H GAMING",
+ 	"ROG STRIX Z490-I GAMING",
++	"TUF GAMING B550M-E",
++	"TUF GAMING B550M-E (WI-FI)",
+ 	"TUF GAMING B550M-PLUS",
+ 	"TUF GAMING B550M-PLUS (WI-FI)",
++	"TUF GAMING B550M-PLUS WIFI II",
+ 	"TUF GAMING B550-PLUS",
+ 	"TUF GAMING B550-PLUS WIFI II",
+ 	"TUF GAMING B550-PRO",
 -- 
 2.35.1
 
