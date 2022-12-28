@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FCF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FEBC433D2;
-	Wed, 28 Dec 2022 15:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF06D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D244C433EF;
+	Wed, 28 Dec 2022 15:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242498;
-	bh=13a7YM9MqNunMOp1Rzij0Ac6TUJ8cIhNvHKEvxD+xXg=;
+	s=korg; t=1672242501;
+	bh=aY37VRJGVWapcHGzUuJcRsc53vUmD/yFtF5zhR7ZWiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c36F8vxrki1ZJF9IKe4A3OQSVrjrJgfriNbJzc2c8btePlzitIosl1iMG0LMAQrkH
-	 3AuGXGx8y/7P/s1NPcLXD11viHkA6uzQjc0x2O7Z1BxTC0Dtmojqbni3/XSIaJW2Fw
-	 Ae0mPJGXQBecbXkFQIPokbjJ2Aq69PGgDBPGoKMM=
+	b=m9bVXKSgXTe5/99sPLR5zxGduJJUbwd88jngsAear6cA5hg10Ratl3B0GXQqaQeQI
+	 gpVE0kSvm97H1A3iKMzYR2tAJWDJk6E+bac1LDDXnWatFHs+KPAeQ3XPMrRtOPXpwG
+	 wvkigfkGJRye3+bDrXPxcW67/HmG5Q/+gaeJnQQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Nie <jun.nie@linaro.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 610/731] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
-Date: Wed, 28 Dec 2022 15:41:57 +0100
-Message-Id: <20221228144314.219834988@linuxfoundation.org>
+	"zhichao.liu" <zhichao.liu@mediatek.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 0417/1073] spi: mt65xx: Add dma max segment size declaration
+Date: Wed, 28 Dec 2022 15:33:25 +0100
+Message-Id: <20221228144339.349078816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,50 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: zhichao.liu <zhichao.liu@mediatek.com>
 
-[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
+[ Upstream commit 309e98548c2b144512d0a212f2d786ae9694f5e4 ]
 
-When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
-for ematch implementation:
+Add spi dma max segment size declaration according to spi
+hardware capability, instead of 64KB by system default
+setting, to improve bus bandwidth for mass data transmission.
 
-https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
-
-"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
-set will simply result in allocating & copy. It's an optimization,
-nothing more."
-
-So if an ematch module provides ops->datalen that means it wants a
-complex data structure (saved in its em->data) instead of a simple u32
-value. We should simply reject such a combination, otherwise this u32
-could be misinterpreted as a pointer.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: zhichao.liu <zhichao.liu@mediatek.com>
+Link: https://lore.kernel.org/r/20220927083248.25404-1-zhichao.liu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: c6f7874687f7 ("spi: mediatek: Enable irq when pdata is ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/ematch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-mt65xx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sched/ematch.c b/net/sched/ematch.c
-index 4ce681361851..5c1235e6076a 100644
---- a/net/sched/ematch.c
-+++ b/net/sched/ematch.c
-@@ -255,6 +255,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
- 			 * the value carried.
- 			 */
- 			if (em_hdr->flags & TCF_EM_SIMPLE) {
-+				if (em->ops->datalen > 0)
-+					goto errout;
- 				if (data_len < sizeof(u32))
- 					goto errout;
- 				em->data = *(u32 *) data;
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index a7cc96aeb590..d6aff909fc36 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1187,6 +1187,11 @@ static int mtk_spi_probe(struct platform_device *pdev)
+ 	if (!dev->dma_mask)
+ 		dev->dma_mask = &dev->coherent_dma_mask;
+ 
++	if (mdata->dev_comp->ipm_design)
++		dma_set_max_seg_size(dev, SZ_16M);
++	else
++		dma_set_max_seg_size(dev, SZ_256K);
++
+ 	ret = devm_request_irq(dev, irq, mtk_spi_interrupt,
+ 			       IRQF_TRIGGER_NONE, dev_name(dev), master);
+ 	if (ret)
 -- 
 2.35.1
 
