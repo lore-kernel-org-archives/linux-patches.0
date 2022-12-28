@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37431C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49192C433D2;
-	Wed, 28 Dec 2022 16:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C321C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8698C433D2;
+	Wed, 28 Dec 2022 16:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243493;
-	bh=VJogmBw8B5TDJSm1Dx40EjiDykgr1JCGBYsI90FICZY=;
+	s=korg; t=1672243496;
+	bh=9AtMiHKpoUlY9QO0Us6J1m6vzVBDH68xDzgmgBMi2Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtTLsq+LoHAJacG0z3v7dCIscMCf8q+zTNvmIyM5n02Sj+EcXbKD885NKE/0f4Ihn
-	 iC/6JahxTP2PVZML4fuQAZKUdw/CTnI8JYrkvkbyTEhA8aeAknnlEquU2EcAxf1T32
-	 VhohvMng+Rvn8bz+3JqRzGZGa2QBpTkzQxmLAE5c=
+	b=n5jxfsMUgDvETo4GTyUYEZQKiW/t3gn2i9RkbnlZwdVEQwfK//nu37uvs2EzYd30r
+	 Aj+OHncfptvV6XbkRgG/XpF9nGuPt1BpCkKHSrgdBIW40ykIyiuXvEIqmDASpHcCLy
+	 32LRnpKPC1EuQytCUohZyW+kXgwlU6hV0ZJ5s2AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Patalano <mpatalan@redhat.com>,
-	Arun Easi <aeasi@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 727/731] scsi: qla2xxx: Fix crash when I/O abort times out
-Date: Wed, 28 Dec 2022 15:43:54 +0100
-Message-Id: <20221228144317.516204159@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0499/1146] mmc: rtsx_pci: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:33:58 +0100
+Message-Id: <20221228144343.733451083@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,94 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 68ad83188d782b2ecef2e41ac245d27e0710fe8e upstream.
+[ Upstream commit 0c87db77423a282b3b38b8a6daf057b822680516 ]
 
-While performing CPU hotplug, a crash with the following stack was seen:
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Call Trace:
-     qla24xx_process_response_queue+0x42a/0x970 [qla2xxx]
-     qla2x00_start_nvme_mq+0x3a2/0x4b0 [qla2xxx]
-     qla_nvme_post_cmd+0x166/0x240 [qla2xxx]
-     nvme_fc_start_fcp_op.part.0+0x119/0x2e0 [nvme_fc]
-     blk_mq_dispatch_rq_list+0x17b/0x610
-     __blk_mq_sched_dispatch_requests+0xb0/0x140
-     blk_mq_sched_dispatch_requests+0x30/0x60
-     __blk_mq_run_hw_queue+0x35/0x90
-     __blk_mq_delay_run_hw_queue+0x161/0x180
-     blk_execute_rq+0xbe/0x160
-     __nvme_submit_sync_cmd+0x16f/0x220 [nvme_core]
-     nvmf_connect_admin_queue+0x11a/0x170 [nvme_fabrics]
-     nvme_fc_create_association.cold+0x50/0x3dc [nvme_fc]
-     nvme_fc_connect_ctrl_work+0x19/0x30 [nvme_fc]
-     process_one_work+0x1e8/0x3c0
+So fix this by checking the return value and calling mmc_free_host() in the
+error path, beside, runtime PM also needs be disabled.
 
-On abort timeout, completion was called without checking if the I/O was
-already completed.
-
-Verify that I/O and abort request are indeed outstanding before attempting
-completion.
-
-Fixes: 71c80b75ce8f ("scsi: qla2xxx: Do command completion on abort timeout")
-Reported-by: Marco Patalano <mpatalan@redhat.com>
-Tested-by: Marco Patalano <mpatalan@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Arun Easi <aeasi@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20221129092634.15347-1-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-6-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/mmc/host/rtsx_pci_sdmmc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -110,6 +110,7 @@ static void qla24xx_abort_iocb_timeout(v
- 	struct qla_qpair *qpair = sp->qpair;
- 	u32 handle;
- 	unsigned long flags;
-+	int sp_found = 0, cmdsp_found = 0;
+diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
+index e1580f78c6b2..8098726dcc0b 100644
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -1474,6 +1474,7 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	struct realtek_pci_sdmmc *host;
+ 	struct rtsx_pcr *pcr;
+ 	struct pcr_handle *handle = pdev->dev.platform_data;
++	int ret;
  
- 	if (sp->cmd_sp)
- 		ql_dbg(ql_dbg_async, sp->vha, 0x507c,
-@@ -124,18 +125,21 @@ static void qla24xx_abort_iocb_timeout(v
- 	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
- 	for (handle = 1; handle < qpair->req->num_outstanding_cmds; handle++) {
- 		if (sp->cmd_sp && (qpair->req->outstanding_cmds[handle] ==
--		    sp->cmd_sp))
-+		    sp->cmd_sp)) {
- 			qpair->req->outstanding_cmds[handle] = NULL;
-+			cmdsp_found = 1;
-+		}
+ 	if (!handle)
+ 		return -ENXIO;
+@@ -1511,7 +1512,13 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	pm_runtime_mark_last_busy(&pdev->dev);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
  
- 		/* removing the abort */
- 		if (qpair->req->outstanding_cmds[handle] == sp) {
- 			qpair->req->outstanding_cmds[handle] = NULL;
-+			sp_found = 1;
- 			break;
- 		}
- 	}
- 	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
- 
--	if (sp->cmd_sp) {
-+	if (cmdsp_found && sp->cmd_sp) {
- 		/*
- 		 * This done function should take care of
- 		 * original command ref: INIT
-@@ -143,8 +147,10 @@ static void qla24xx_abort_iocb_timeout(v
- 		sp->cmd_sp->done(sp->cmd_sp, QLA_OS_TIMER_EXPIRED);
- 	}
- 
--	abt->u.abt.comp_status = cpu_to_le16(CS_TIMEOUT);
--	sp->done(sp, QLA_OS_TIMER_EXPIRED);
-+	if (sp_found) {
-+		abt->u.abt.comp_status = cpu_to_le16(CS_TIMEOUT);
-+		sp->done(sp, QLA_OS_TIMER_EXPIRED);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++		pm_runtime_dont_use_autosuspend(&pdev->dev);
++		pm_runtime_disable(&pdev->dev);
++		mmc_free_host(mmc);
++		return ret;
 +	}
- }
  
- static void qla24xx_abort_sp_done(srb_t *sp, int res)
+ 	return 0;
+ }
+-- 
+2.35.1
+
 
 
