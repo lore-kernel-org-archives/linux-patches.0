@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970651863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA5FC433D2;
-	Wed, 28 Dec 2022 15:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF3D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5873C433EF;
+	Wed, 28 Dec 2022 15:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241756;
-	bh=Q3y9vALH9h1rU+RebOmrtFuTgf/yZ+V4xxFKJAIgKHc=;
+	s=korg; t=1672241759;
+	bh=x2g7E9UlzWKTY/F+tg+QfBMpwABdRey45PH/f6TAnQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9CUCPJWtEnloA+kunGmFMBddnq/Py1LfUsZJRPKOLS1GozQDogTGpqVgoyGrMDTy
-	 75/JOy73bQUzOBa6ZWiUMRPipoY4LMTNJp2f7Ok97Ru3s/udrmqKYdlw81ngvNVDyy
-	 y6o4WM8jF175SvcD2BvdpweqWTEEayEU1ihN0PQ0=
+	b=1YNFQa/JNfCHjCFVe8E88YNlPdiEljG9TMrXkbdtEKSi2BZEUNuB6oXdv50UCZhoh
+	 vPU5aI6buUx37LP2/FdHz+kojH8FbKm+TiiqGZxihIRv0BnbKoyWatNUhEH4+7M5Vd
+	 t3hSe5msAg7jNYYWHlKq8pvBgoOH1+A96CuIKI1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Joel Granados <j.granados@samsung.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 519/731] HSI: omap_ssi_core: Fix error handling in ssi_init()
-Date: Wed, 28 Dec 2022 15:40:26 +0100
-Message-Id: <20221228144311.591550917@linuxfoundation.org>
+Subject: [PATCH 6.0 0324/1073] nvme: return err on nvme_init_non_mdts_limits fail
+Date: Wed, 28 Dec 2022 15:31:52 +0100
+Message-Id: <20221228144336.808631742@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Joel Granados <j.granados@samsung.com>
 
-[ Upstream commit 3ffa9f713c39a213a08d9ff13ab983a8aa5d8b5d ]
+[ Upstream commit bcaf434b8f04e1ee82a8b1e1bce0de99fbff67fa ]
 
-The ssi_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-ssi_pdriver is not unregistered.
-Fix by unregister ssi_pdriver when the last platform_driver_register()
-failed.
+In nvme_init_non_mdts_limits function we were returning 0 when kzalloc
+failed; it now returns -ENOMEM.
 
-Fixes: 0fae198988b8 ("HSI: omap_ssi: built omap_ssi and omap_ssi_port into one module")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 5befc7c26e5a ("nvme: implement non-mdts command limits")
+Signed-off-by: Joel Granados <j.granados@samsung.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index 052cf3e92dd6..26f2c3c01297 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -631,7 +631,13 @@ static int __init ssi_init(void) {
- 	if (ret)
- 		return ret;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index aca50bb93750..cd2e2bfeae82 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3043,7 +3043,7 @@ static int nvme_init_non_mdts_limits(struct nvme_ctrl *ctrl)
  
--	return platform_driver_register(&ssi_port_pdriver);
-+	ret = platform_driver_register(&ssi_port_pdriver);
-+	if (ret) {
-+		platform_driver_unregister(&ssi_pdriver);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(ssi_init);
+ 	id = kzalloc(sizeof(*id), GFP_KERNEL);
+ 	if (!id)
+-		return 0;
++		return -ENOMEM;
  
+ 	c.identify.opcode = nvme_admin_identify;
+ 	c.identify.cns = NVME_ID_CNS_CS_CTRL;
 -- 
 2.35.1
 
