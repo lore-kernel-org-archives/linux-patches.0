@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDA91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53710C433D2;
-	Wed, 28 Dec 2022 15:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E5E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0C6C433D2;
+	Wed, 28 Dec 2022 15:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240579;
-	bh=Jd8K+jkkZkbgbn3LMA0FQ8m7KSnhp/xrdIKxgjwQKow=;
+	s=korg; t=1672240582;
+	bh=VqUMyxZ6aF5Kj87coAEkjmt6FTofv5DsLfdmR4BkRy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RagC89GbmmpxhYat1jht22WDDc4WHL7gUhyVKPotTRcgyCsRiCoVZF8ArkFIQ0ZNY
-	 vtCvztfl7vt6tcUh3n99iDlConyxHBKYnBYXx5EFAeuahixnI6LrE4hsFVE1HkWEYT
-	 cN+yydIe9y3za7bn5qy4MvHe3K9AI2zLp6w/dGB4=
+	b=s2Rr5L07uo6JMIyiXaPMqYIZ1vmmBxb88WAZ7LXTZGR7Q6F9p9AVTkCxlZYSbusmK
+	 xR39vRwRM9sXwMaCiGnmMcwgOMH6Q5Tz1ILihIkMwB98tnSI7lgR3XDM7b1q4wVRCq
+	 OT+aoowIvJmiQgMUnobe7Mk/ps5h+DkEHdEl8WnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0177/1073] lockd: set other missing fields when unlocking files
-Date: Wed, 28 Dec 2022 15:29:25 +0100
-Message-Id: <20221228144332.817979687@linuxfoundation.org>
+Subject: [PATCH 6.1 0124/1146] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Wed, 28 Dec 2022 15:27:43 +0100
+Message-Id: <20221228144333.522935940@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,67 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 18ebd35b61b4693a0ddc270b6d4f18def232e770 ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-vfs_lock_file() expects the struct file_lock to be fully initialised by
-the caller. Re-exported NFSv3 has been seen to Oops if the fl_file field
-is NULL.
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-Fixes: aec158242b87 ("lockd: set fl_owner when unlocking files")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216582
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
+
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svcsubs.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
-index e1c4617de771..3515f17eaf3f 100644
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -176,7 +176,7 @@ nlm_delete_file(struct nlm_file *file)
- 	}
- }
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 7f04f995c975..732b392fc5c6 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11193,13 +11193,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
--static int nlm_unlock_files(struct nlm_file *file, fl_owner_t owner)
-+static int nlm_unlock_files(struct nlm_file *file, const struct file_lock *fl)
- {
- 	struct file_lock lock;
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
+-	if (ret)
+-		goto free_dev;
  
-@@ -184,12 +184,15 @@ static int nlm_unlock_files(struct nlm_file *file, fl_owner_t owner)
- 	lock.fl_type  = F_UNLCK;
- 	lock.fl_start = 0;
- 	lock.fl_end   = OFFSET_MAX;
--	lock.fl_owner = owner;
--	if (file->f_file[O_RDONLY] &&
--	    vfs_lock_file(file->f_file[O_RDONLY], F_SETLK, &lock, NULL))
-+	lock.fl_owner = fl->fl_owner;
-+	lock.fl_pid   = fl->fl_pid;
-+	lock.fl_flags = FL_POSIX;
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
 +
-+	lock.fl_file = file->f_file[O_RDONLY];
-+	if (lock.fl_file && vfs_lock_file(lock.fl_file, F_SETLK, &lock, NULL))
- 		goto out_err;
--	if (file->f_file[O_WRONLY] &&
--	    vfs_lock_file(file->f_file[O_WRONLY], F_SETLK, &lock, NULL))
-+	lock.fl_file = file->f_file[O_WRONLY];
-+	if (lock.fl_file && vfs_lock_file(lock.fl_file, F_SETLK, &lock, NULL))
- 		goto out_err;
- 	return 0;
- out_err:
-@@ -226,7 +229,7 @@ nlm_traverse_locks(struct nlm_host *host, struct nlm_file *file,
- 		if (match(lockhost, host)) {
- 
- 			spin_unlock(&flctx->flc_lock);
--			if (nlm_unlock_files(file, fl->fl_owner))
-+			if (nlm_unlock_files(file, fl))
- 				return 1;
- 			goto again;
- 		}
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
+ 	if (ret)
+ 		goto free_dev;
 -- 
 2.35.1
 
