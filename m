@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CBD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1365C433D2;
-	Wed, 28 Dec 2022 15:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179171863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F972C433EF;
+	Wed, 28 Dec 2022 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240359;
-	bh=WWXPe6OSHavPDXoVgv4cyCejTfMR4/H9rhyeXOWx0so=;
+	s=korg; t=1672240361;
+	bh=qY16RBtuxcD3RstD6hVr5F6RiT/+hNpK2zQhV3Y6A1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKCbeKC9zMf0NCdcyPXmrCDrLb07wdEFDsm9nIqOzfMqQaQi4JyfLYRGfH0wjzHGw
-	 Xt9QAwbL7hBBKnwfOSS4oPmR/fWWKp6GQXMie1dilF6wAq6pzPfEi5XhvxMaCmKMnH
-	 dWkBb+TezgfDrXt4VSdrdRdEV0Vcy0aSiiU49zBo=
+	b=gnydmrogOT9MWU82VKOhsNDS/do511JZWxqR9xqG1+YPfe7fzAqefBLgqBoBR//ly
+	 CnL78Eu70KgIa/Suom7W4IM0hdzJJe4MLY/eys0F45QFfhEI8E+mPVwHnFRaCbicL+
+	 P+BXRejr89mHEIGZrpnmh8p6rarEo8n48Lfy5648=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0151/1073] clocksource/drivers/sh_cmt: Access registers according to spec
-Date: Wed, 28 Dec 2022 15:28:59 +0100
-Message-Id: <20221228144332.124461510@linuxfoundation.org>
+Subject: [PATCH 6.1 0113/1146] cpuidle: dt: Return the correct numbers of parsed idle states
+Date: Wed, 28 Dec 2022 15:27:32 +0100
+Message-Id: <20221228144333.223947542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,193 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 3f44f7156f59cae06e9160eafb5d8b2dfd09e639 ]
+[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
 
-Documentation for most CMTs say that it takes two input clocks before
-changes propagate to the timer. This is especially relevant when the timer
-is stopped to change further settings.
+While we correctly skips to initialize an idle state from a disabled idle
+state node in DT, the returned value from dt_init_idle_driver() don't get
+adjusted accordingly. Instead the number of found idle state nodes are
+returned, while the callers are expecting the number of successfully
+initialized idle states from DT.
 
-Implement the delays according to the spec. To avoid unnecessary delays in
-atomic mode, also check if the to-be-written value actually differs.
+This leads to cpuidle drivers unnecessarily continues to initialize their
+idle state specific data. Moreover, in the case when all idle states have
+been disabled in DT, we would end up registering a cpuidle driver, rather
+than relying on the default arch specific idle call.
 
-CMCNT is a bit special because testing showed that it requires 3 cycles to
-propagate, which affects all CMTs. Also, the WRFLAG needs to be checked
-before writing. This fixes "cannot clear CMCNT" messages which occur often
-on R-Car Gen4 SoCs, but only very rarely on older SoCs for some reason.
-
-Fixes: 81b3b2711072 ("clocksource: sh_cmt: Add support for multiple channels per device")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221130210609.7718-1-wsa+renesas@sang-engineering.com
+Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/sh_cmt.c | 88 ++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 33 deletions(-)
+ drivers/cpuidle/dt_idle_states.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/sh_cmt.c b/drivers/clocksource/sh_cmt.c
-index 64dcb082d4cf..7b952aa52c0b 100644
---- a/drivers/clocksource/sh_cmt.c
-+++ b/drivers/clocksource/sh_cmt.c
-@@ -13,6 +13,7 @@
- #include <linux/init.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/ioport.h>
- #include <linux/irq.h>
- #include <linux/module.h>
-@@ -116,6 +117,7 @@ struct sh_cmt_device {
- 	void __iomem *mapbase;
- 	struct clk *clk;
- 	unsigned long rate;
-+	unsigned int reg_delay;
- 
- 	raw_spinlock_t lock; /* Protect the shared start/stop register */
- 
-@@ -247,10 +249,17 @@ static inline u32 sh_cmt_read_cmstr(struct sh_cmt_channel *ch)
- 
- static inline void sh_cmt_write_cmstr(struct sh_cmt_channel *ch, u32 value)
- {
--	if (ch->iostart)
--		ch->cmt->info->write_control(ch->iostart, 0, value);
--	else
--		ch->cmt->info->write_control(ch->cmt->mapbase, 0, value);
-+	u32 old_value = sh_cmt_read_cmstr(ch);
-+
-+	if (value != old_value) {
-+		if (ch->iostart) {
-+			ch->cmt->info->write_control(ch->iostart, 0, value);
-+			udelay(ch->cmt->reg_delay);
-+		} else {
-+			ch->cmt->info->write_control(ch->cmt->mapbase, 0, value);
-+			udelay(ch->cmt->reg_delay);
-+		}
-+	}
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index 252f2a9686a6..448bc796b0b4 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -223,6 +223,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	 * also be 0 on platforms with missing DT idle states or legacy DT
+ 	 * configuration predating the DT idle states bindings.
+ 	 */
+-	return i;
++	return state_idx - start_idx;
  }
- 
- static inline u32 sh_cmt_read_cmcsr(struct sh_cmt_channel *ch)
-@@ -260,7 +269,12 @@ static inline u32 sh_cmt_read_cmcsr(struct sh_cmt_channel *ch)
- 
- static inline void sh_cmt_write_cmcsr(struct sh_cmt_channel *ch, u32 value)
- {
--	ch->cmt->info->write_control(ch->ioctrl, CMCSR, value);
-+	u32 old_value = sh_cmt_read_cmcsr(ch);
-+
-+	if (value != old_value) {
-+		ch->cmt->info->write_control(ch->ioctrl, CMCSR, value);
-+		udelay(ch->cmt->reg_delay);
-+	}
- }
- 
- static inline u32 sh_cmt_read_cmcnt(struct sh_cmt_channel *ch)
-@@ -268,14 +282,33 @@ static inline u32 sh_cmt_read_cmcnt(struct sh_cmt_channel *ch)
- 	return ch->cmt->info->read_count(ch->ioctrl, CMCNT);
- }
- 
--static inline void sh_cmt_write_cmcnt(struct sh_cmt_channel *ch, u32 value)
-+static inline int sh_cmt_write_cmcnt(struct sh_cmt_channel *ch, u32 value)
- {
-+	/* Tests showed that we need to wait 3 clocks here */
-+	unsigned int cmcnt_delay = DIV_ROUND_UP(3 * ch->cmt->reg_delay, 2);
-+	u32 reg;
-+
-+	if (ch->cmt->info->model > SH_CMT_16BIT) {
-+		int ret = read_poll_timeout_atomic(sh_cmt_read_cmcsr, reg,
-+						   !(reg & SH_CMT32_CMCSR_WRFLG),
-+						   1, cmcnt_delay, false, ch);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	ch->cmt->info->write_count(ch->ioctrl, CMCNT, value);
-+	udelay(cmcnt_delay);
-+	return 0;
- }
- 
- static inline void sh_cmt_write_cmcor(struct sh_cmt_channel *ch, u32 value)
- {
--	ch->cmt->info->write_count(ch->ioctrl, CMCOR, value);
-+	u32 old_value = ch->cmt->info->read_count(ch->ioctrl, CMCOR);
-+
-+	if (value != old_value) {
-+		ch->cmt->info->write_count(ch->ioctrl, CMCOR, value);
-+		udelay(ch->cmt->reg_delay);
-+	}
- }
- 
- static u32 sh_cmt_get_counter(struct sh_cmt_channel *ch, u32 *has_wrapped)
-@@ -319,7 +352,7 @@ static void sh_cmt_start_stop_ch(struct sh_cmt_channel *ch, int start)
- 
- static int sh_cmt_enable(struct sh_cmt_channel *ch)
- {
--	int k, ret;
-+	int ret;
- 
- 	dev_pm_syscore_device(&ch->cmt->pdev->dev, true);
- 
-@@ -347,26 +380,9 @@ static int sh_cmt_enable(struct sh_cmt_channel *ch)
- 	}
- 
- 	sh_cmt_write_cmcor(ch, 0xffffffff);
--	sh_cmt_write_cmcnt(ch, 0);
--
--	/*
--	 * According to the sh73a0 user's manual, as CMCNT can be operated
--	 * only by the RCLK (Pseudo 32 kHz), there's one restriction on
--	 * modifying CMCNT register; two RCLK cycles are necessary before
--	 * this register is either read or any modification of the value
--	 * it holds is reflected in the LSI's actual operation.
--	 *
--	 * While at it, we're supposed to clear out the CMCNT as of this
--	 * moment, so make sure it's processed properly here.  This will
--	 * take RCLKx2 at maximum.
--	 */
--	for (k = 0; k < 100; k++) {
--		if (!sh_cmt_read_cmcnt(ch))
--			break;
--		udelay(1);
--	}
-+	ret = sh_cmt_write_cmcnt(ch, 0);
- 
--	if (sh_cmt_read_cmcnt(ch)) {
-+	if (ret || sh_cmt_read_cmcnt(ch)) {
- 		dev_err(&ch->cmt->pdev->dev, "ch%u: cannot clear CMCNT\n",
- 			ch->index);
- 		ret = -ETIMEDOUT;
-@@ -995,8 +1011,8 @@ MODULE_DEVICE_TABLE(of, sh_cmt_of_table);
- 
- static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
- {
--	unsigned int mask;
--	unsigned int i;
-+	unsigned int mask, i;
-+	unsigned long rate;
- 	int ret;
- 
- 	cmt->pdev = pdev;
-@@ -1032,10 +1048,16 @@ static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_clk_unprepare;
- 
--	if (cmt->info->width == 16)
--		cmt->rate = clk_get_rate(cmt->clk) / 512;
--	else
--		cmt->rate = clk_get_rate(cmt->clk) / 8;
-+	rate = clk_get_rate(cmt->clk);
-+	if (!rate) {
-+		ret = -EINVAL;
-+		goto err_clk_disable;
-+	}
-+
-+	/* We shall wait 2 input clks after register writes */
-+	if (cmt->info->model >= SH_CMT_48BIT)
-+		cmt->reg_delay = DIV_ROUND_UP(2UL * USEC_PER_SEC, rate);
-+	cmt->rate = rate / (cmt->info->width == 16 ? 512 : 8);
- 
- 	/* Map the memory resource(s). */
- 	ret = sh_cmt_map_memory(cmt);
+ EXPORT_SYMBOL_GPL(dt_init_idle_driver);
 -- 
 2.35.1
 
