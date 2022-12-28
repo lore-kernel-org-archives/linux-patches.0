@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8E11C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BCEC433EF;
-	Wed, 28 Dec 2022 16:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA4E1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62ADC433EF;
+	Wed, 28 Dec 2022 16:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245127;
-	bh=c1p2GGnfiBQv48CjHps/2/8lXoGXcBXw1/YdZC0f7IU=;
+	s=korg; t=1672245130;
+	bh=2hKfTpwMET//hXAeJ998tRqo39vr+r2RF5Xdeg9ZQQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiOmhBRUHnBvtqn/vQen01a4tftkKlFLJzsWqdSdu3rGUaYjgPCL45JnLICWCZQ01
-	 SZ7Rygtb/mFARLoTPxkNatvq5iCMW4vC7Jzr4D6d3kmbwY4Qu/WLfGDZuutkfZYag9
-	 A/jF2/jO8Wj8XeogsESwILV9pdmav0lafVs7XIBk=
+	b=gtdIFyVMJQpCP7cICsZYFz/2Oj/H/Ia9upCSvxwG6HIYyOGx/FNxDolQQhu4jlPUb
+	 ZODkBxF1rCEZXyrUW0RA+eWk6rQQl1AHCzViLcet3lfbVBV2YxfWXFAWqLM5QSU3Gz
+	 Zu1A2bfWn8K+Bs+esXNCv5ngUWUF/czYyHSbN1Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Raed Salem <raeds@nvidia.com>,
+	Emeel Hakim <ehakim@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0801/1146] phy: qcom-qmp-pcie: fix ipq6018 initialisation
-Date: Wed, 28 Dec 2022 15:39:00 +0100
-Message-Id: <20221228144351.906623950@linuxfoundation.org>
+Subject: [PATCH 6.0 0838/1073] net: macsec: fix net device access prior to holding a lock
+Date: Wed, 28 Dec 2022 15:40:26 +0100
+Message-Id: <20221228144350.782167327@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Emeel Hakim <ehakim@nvidia.com>
 
-[ Upstream commit 30518b19895789aa9101474af2ee0f62cd882d5e ]
+[ Upstream commit f3b4a00f0f62da252c598310698dfc82ef2f2e2e ]
 
-The phy_status mask was never set for IPQ6018 which meant that the
-driver would not wait for the PHY to be initialised during power-on and
-would never detect PHY initialisation timeouts.
+Currently macsec offload selection update routine accesses
+the net device prior to holding the relevant lock.
+Fix by holding the lock prior to the device access.
 
-Fixes: 520264db3bf9 ("phy: qcom-qmp: add QMP V2 PCIe PHY support for ipq60xx")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20221012085002.24099-3-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: dcb780fb2795 ("net: macsec: add nla support for changing the offloading selection")
+Reviewed-by: Raed Salem <raeds@nvidia.com>
+Signed-off-by: Emeel Hakim <ehakim@nvidia.com>
+Link: https://lore.kernel.org/r/20221211075532.28099-1-ehakim@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/macsec.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 842ddc3e0a1c..6c6c4b7b6b25 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1525,6 +1525,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 8dafc814282c..022b2daabd74 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -2621,7 +2621,7 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
+ 	const struct macsec_ops *ops;
+ 	struct macsec_context ctx;
+ 	struct macsec_dev *macsec;
+-	int ret;
++	int ret = 0;
  
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
- };
+ 	if (!attrs[MACSEC_ATTR_IFINDEX])
+ 		return -EINVAL;
+@@ -2634,28 +2634,36 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
+ 					macsec_genl_offload_policy, NULL))
+ 		return -EINVAL;
  
- static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
++	rtnl_lock();
++
+ 	dev = get_dev_from_nl(genl_info_net(info), attrs);
+-	if (IS_ERR(dev))
+-		return PTR_ERR(dev);
++	if (IS_ERR(dev)) {
++		ret = PTR_ERR(dev);
++		goto out;
++	}
+ 	macsec = macsec_priv(dev);
+ 
+-	if (!tb_offload[MACSEC_OFFLOAD_ATTR_TYPE])
+-		return -EINVAL;
++	if (!tb_offload[MACSEC_OFFLOAD_ATTR_TYPE]) {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
+ 	offload = nla_get_u8(tb_offload[MACSEC_OFFLOAD_ATTR_TYPE]);
+ 	if (macsec->offload == offload)
+-		return 0;
++		goto out;
+ 
+ 	/* Check if the offloading mode is supported by the underlying layers */
+ 	if (offload != MACSEC_OFFLOAD_OFF &&
+-	    !macsec_check_offload(offload, macsec))
+-		return -EOPNOTSUPP;
++	    !macsec_check_offload(offload, macsec)) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
+ 
+ 	/* Check if the net device is busy. */
+-	if (netif_running(dev))
+-		return -EBUSY;
+-
+-	rtnl_lock();
++	if (netif_running(dev)) {
++		ret = -EBUSY;
++		goto out;
++	}
+ 
+ 	prev_offload = macsec->offload;
+ 	macsec->offload = offload;
+@@ -2690,7 +2698,7 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
+ 
+ rollback:
+ 	macsec->offload = prev_offload;
+-
++out:
+ 	rtnl_unlock();
+ 	return ret;
+ }
 -- 
 2.35.1
 
