@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803A51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B2C433D2;
-	Wed, 28 Dec 2022 15:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C9B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC90C433EF;
+	Wed, 28 Dec 2022 15:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241333;
-	bh=41plOrEQaanX3DeAZoPV8kY/RXcc+grIgxlQxmVwa24=;
+	s=korg; t=1672241336;
+	bh=0nZct2RXErNm/Q/ixo2Jfi/Xhjlv4X0yHsElhUs+mls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWQ4D+PHwHewUMK/8oekTpTgOxo5LAFw9Bg1m7KIQZL7O/tyOF3OoV1n/QwuL1xs/
-	 SjaHL2mHnuGCHQXKm/msNf7/b7feuCPnjwc65WXYLFoEOMLymQzlh09Z2KDpKXqXWt
-	 8aJSv37JKTslQLjPpow0mCqHLn2ImWD3hM9z8xSY=
+	b=KrDN2gX79SoGNnkr1PG7Hk4jZqq0pU+JytMhyt5mYiRmNXnwW8LHPfmj4E2dO5oQb
+	 ZfJ9RCwcJnfUPziK76ldCNMmdazBTUuYXg97MDCH09Ag+EnxQgeJCXy/PuWC/pLxQC
+	 0VMbX2WM5Re3uxl+vOV5voVbnYwWihb3dVJ+aG9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 467/731] ocxl: fix pci device refcount leak when calling get_function_0()
-Date: Wed, 28 Dec 2022 15:39:34 +0100
-Message-Id: <20221228144310.085312191@linuxfoundation.org>
+Subject: [PATCH 6.1 0234/1146] media: cedrus: hevc: Fix offset adjustments
+Date: Wed, 28 Dec 2022 15:29:33 +0100
+Message-Id: <20221228144336.494727249@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,85 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 27158c72678b39ee01cc01de1aba6b51c71abe2f ]
+[ Upstream commit e9120e76a6f7e19a8d26c03f2964937e4ce69784 ]
 
-get_function_0() calls pci_get_domain_bus_and_slot(), as comment
-says, it returns a pci device with refcount increment, so after
-using it, pci_dev_put() needs be called.
+As it turns out, current padding size check works fine in theory but it
+doesn't in practice. Most probable reason are caching issues.
 
-Get the device reference when get_function_0() is not called, so
-pci_dev_put() can be called in the error path and callers
-unconditionally. And add comment above get_dvsec_vendor0() to tell
-callers to call pci_dev_put().
+Let's rework reading data from bitstream using Cedrus engine instead of
+CPU. That way we avoid all cache issues and make sure that we're reading
+same data as Cedrus.
 
-Fixes: 87db7579ebd5 ("ocxl: control via sysfs whether the FPGA is reloaded on a link reset")
-Suggested-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221121154339.4088935-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e7060d9a78c2 ("media: uapi: Change data_bit_offset definition")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ocxl/config.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ .../staging/media/sunxi/cedrus/cedrus_h265.c  | 25 ++++++++++++++-----
+ .../staging/media/sunxi/cedrus/cedrus_regs.h  |  2 ++
+ 2 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/misc/ocxl/config.c b/drivers/misc/ocxl/config.c
-index a68738f38252..f1f669efe050 100644
---- a/drivers/misc/ocxl/config.c
-+++ b/drivers/misc/ocxl/config.c
-@@ -204,6 +204,18 @@ static int read_dvsec_vendor(struct pci_dev *dev)
- 	return 0;
- }
- 
-+/**
-+ * get_dvsec_vendor0() - Find a related PCI device (function 0)
-+ * @dev: PCI device to match
-+ * @dev0: The PCI device (function 0) found
-+ * @out_pos: The position of PCI device (function 0)
-+ *
-+ * Returns 0 on success, negative on failure.
-+ *
-+ * NOTE: If it's successful, the reference of dev0 is increased,
-+ * so after using it, the callers must call pci_dev_put() to give
-+ * up the reference.
-+ */
- static int get_dvsec_vendor0(struct pci_dev *dev, struct pci_dev **dev0,
- 			     int *out_pos)
- {
-@@ -213,10 +225,14 @@ static int get_dvsec_vendor0(struct pci_dev *dev, struct pci_dev **dev0,
- 		dev = get_function_0(dev);
- 		if (!dev)
- 			return -1;
-+	} else {
-+		dev = pci_dev_get(dev);
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+index 4952fc17f3e6..625f77a8c5bd 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+@@ -242,6 +242,18 @@ static void cedrus_h265_skip_bits(struct cedrus_dev *dev, int num)
  	}
- 	pos = find_dvsec(dev, OCXL_DVSEC_VENDOR_ID);
--	if (!pos)
-+	if (!pos) {
-+		pci_dev_put(dev);
- 		return -1;
-+	}
- 	*dev0 = dev;
- 	*out_pos = pos;
- 	return 0;
-@@ -233,6 +249,7 @@ int ocxl_config_get_reset_reload(struct pci_dev *dev, int *val)
- 
- 	pci_read_config_dword(dev0, pos + OCXL_DVSEC_VENDOR_RESET_RELOAD,
- 			      &reset_reload);
-+	pci_dev_put(dev0);
- 	*val = !!(reset_reload & BIT(0));
- 	return 0;
- }
-@@ -254,6 +271,7 @@ int ocxl_config_set_reset_reload(struct pci_dev *dev, int val)
- 		reset_reload &= ~BIT(0);
- 	pci_write_config_dword(dev0, pos + OCXL_DVSEC_VENDOR_RESET_RELOAD,
- 			       reset_reload);
-+	pci_dev_put(dev0);
- 	return 0;
  }
  
++static u32 cedrus_h265_show_bits(struct cedrus_dev *dev, int num)
++{
++	cedrus_write(dev, VE_DEC_H265_TRIGGER,
++		     VE_DEC_H265_TRIGGER_SHOW_BITS |
++		     VE_DEC_H265_TRIGGER_TYPE_N_BITS(num));
++
++	cedrus_wait_for(dev, VE_DEC_H265_STATUS,
++			VE_DEC_H265_STATUS_VLD_BUSY);
++
++	return cedrus_read(dev, VE_DEC_H265_BITS_READ);
++}
++
+ static void cedrus_h265_write_scaling_list(struct cedrus_ctx *ctx,
+ 					   struct cedrus_run *run)
+ {
+@@ -406,7 +418,7 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
+ 	u32 num_entry_point_offsets;
+ 	u32 output_pic_list_index;
+ 	u32 pic_order_cnt[2];
+-	u8 *padding;
++	u8 padding;
+ 	int count;
+ 	u32 reg;
+ 
+@@ -520,21 +532,22 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
+ 	if (slice_params->data_byte_offset == 0)
+ 		return -EOPNOTSUPP;
+ 
+-	padding = (u8 *)vb2_plane_vaddr(&run->src->vb2_buf, 0) +
+-		slice_params->data_byte_offset - 1;
++	cedrus_h265_skip_bits(dev, (slice_params->data_byte_offset - 1) * 8);
++
++	padding = cedrus_h265_show_bits(dev, 8);
+ 
+ 	/* at least one bit must be set in that byte */
+-	if (*padding == 0)
++	if (padding == 0)
+ 		return -EINVAL;
+ 
+ 	for (count = 0; count < 8; count++)
+-		if (*padding & (1 << count))
++		if (padding & (1 << count))
+ 			break;
+ 
+ 	/* Include the one bit. */
+ 	count++;
+ 
+-	cedrus_h265_skip_bits(dev, slice_params->data_byte_offset * 8 - count);
++	cedrus_h265_skip_bits(dev, 8 - count);
+ 
+ 	/* Bitstream parameters. */
+ 
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
+index d81f7513ade0..655c05b389cf 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
+@@ -505,6 +505,8 @@
+ #define VE_DEC_H265_LOW_ADDR_ENTRY_POINTS_BUF(a) \
+ 	SHIFT_AND_MASK_BITS(a, 7, 0)
+ 
++#define VE_DEC_H265_BITS_READ			(VE_ENGINE_DEC_H265 + 0xdc)
++
+ #define VE_DEC_H265_SRAM_OFFSET			(VE_ENGINE_DEC_H265 + 0xe0)
+ 
+ #define VE_DEC_H265_SRAM_OFFSET_PRED_WEIGHT_LUMA_L0	0x00
 -- 
 2.35.1
 
