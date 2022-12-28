@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E20F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1727C433EF;
-	Wed, 28 Dec 2022 15:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7771863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52E2C433F0;
+	Wed, 28 Dec 2022 15:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241810;
-	bh=341Irjy7OAyENGO9M+wnz4E3V61UtC3nXWZORmmWKjc=;
+	s=korg; t=1672241813;
+	bh=r5T/QLqhwEd5e6IvFyVfQ+TBmpksnfSfuadkJrqHTuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jDrk3vV5EmMnuArafZchs0kd87h9jyCZzIqRXAhV5UBsX3m84loQGh1wmW4RfkO16
-	 0Qqw1QbPtXXv4RS9U0lxiE9OL+p6ZoRr6NoCnSoqmSyGNrZhDpixwmI0heZSq0oDq0
-	 DJ5uKeaSObCTo27DzGm7chO86TScVh8VyGXmkZqU=
+	b=rvz0hJTGQppfKr7MHjQHXuDgOlRUJolJ5a552iXdPXT3khhObcJVLVsRqCiWoP7vE
+	 IHmKQE8tll+2Fqru92fL9qKhBgLj9io7aQznBTYvo9sPfWaFj7fNxPBZWKdMDVnkpN
+	 Fqxotfs+O3jvesnk21mqqiRdKJhlnl/BF0i5xbkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Author: Randy Dunlap" <rdunlap@infradead.org>,
-	syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 525/731] fs/ntfs3: Avoid UBSAN error on true_sectors_per_clst()
-Date: Wed, 28 Dec 2022 15:40:32 +0100
-Message-Id: <20221228144311.764599251@linuxfoundation.org>
+Subject: [PATCH 6.0 0330/1073] block: clear ->slave_dir when dropping the main slave_dir reference
+Date: Wed, 28 Dec 2022 15:31:58 +0100
+Message-Id: <20221228144336.967360506@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,42 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit caad9dd8792a2622737b7273cb34835fd9536cd2 ]
+[ Upstream commit d90db3b1c8676bc88b4309c5a571333de2263b8e ]
 
-syzbot reported UBSAN error as below:
+Zero out the pointer to ->slave_dir so that the holder code doesn't
+incorrectly treat the object as alive when add_disk failed or after
+del_gendisk was called.
 
-[   76.901829][ T6677] ================================================================================
-[   76.903908][ T6677] UBSAN: shift-out-of-bounds in fs/ntfs3/super.c:675:13
-[   76.905363][ T6677] shift exponent -247 is negative
-
-This patch avoid this error.
-
-Link: https://syzkaller.appspot.com/bug?id=b0299c09a14aababf0f1c862dd4ebc8ab9eb0179
-Fixes: a3b774342fa7 (fs/ntfs3: validate BOOT sectors_per_clusters)
-Cc: Author: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/genhd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index f3b88c7e35f7..39b09f32f4db 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -672,7 +672,7 @@ static u32 true_sectors_per_clst(const struct NTFS_BOOT *boot)
- 	if (boot->sectors_per_clusters <= 0x80)
- 		return boot->sectors_per_clusters;
- 	if (boot->sectors_per_clusters >= 0xf4) /* limit shift to 2MB max */
--		return 1U << (0 - boot->sectors_per_clusters);
-+		return 1U << -(s8)boot->sectors_per_clusters;
- 	return -EINVAL;
- }
+diff --git a/block/genhd.c b/block/genhd.c
+index 044ff97381e3..28654723bc2b 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -522,6 +522,7 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
+ 	rq_qos_exit(disk->queue);
+ out_put_slave_dir:
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
+ out_put_holder_dir:
+ 	kobject_put(disk->part0->bd_holder_dir);
+ out_del_integrity:
+@@ -618,6 +619,7 @@ void del_gendisk(struct gendisk *disk)
  
+ 	kobject_put(disk->part0->bd_holder_dir);
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
+ 
+ 	part_stat_set_all(disk->part0, 0);
+ 	disk->part0->bd_stamp = 0;
 -- 
 2.35.1
 
