@@ -1,35 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC941C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22530C43396;
-	Wed, 28 Dec 2022 16:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6F41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BA8C433EF;
+	Wed, 28 Dec 2022 16:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245455;
-	bh=XaMmYE28cw6KO7oP3jZT8Dmiaw8VJ3ASpLNnG1IIEmk=;
+	s=korg; t=1672245458;
+	bh=3UcKbcofwLkR8kAs0YAUDXkw+/DMlnfihZ75Bgz68dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTgGTTp6C2jdW8wRYnNkwEssrudIJiIv12XGK6dcJ8lNDs6TusisoYssYOSuHN0KA
-	 /CN5Ml46T+OQE1dWd9AtrL1qyE1eg3F3TPzYkrgJkH5oCJtY551+/EOGVrbGLlL8dd
-	 pHBRnCu4NYHaFLkHi+bzrjcogixymIZRBiIC3EYc=
+	b=kmiKV4oRq8AOKWuQI7rfvZQLXbP8HZeLC5zGIjju82CLvdwzyqSo+wZCc2HXhoc2G
+	 T16dAco5RxFNrtsHUhkN/Dzxl60dgJxc8TIX4LvDPQuGCnTtJPGe7BH6NdE4TMX9vZ
+	 o5UOi28yvycBQYLsPsQd1rp6dEH3bI25Qg2IU8Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Guenter Roeck <groeck@chromium.org>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0864/1146] iommu/mediatek: Validate number of phandles associated with "mediatek,larbs"
-Date: Wed, 28 Dec 2022 15:40:03 +0100
-Message-Id: <20221228144353.630717301@linuxfoundation.org>
+Subject: [PATCH 6.0 0899/1073] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
+Date: Wed, 28 Dec 2022 15:41:27 +0100
+Message-Id: <20221228144352.447847168@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,74 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <groeck@chromium.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit ef693a8440926884bfd9cc3d6d36f65719513350 ]
+[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
 
-Fix the smatch warnings:
-drivers/iommu/mtk_iommu.c:878 mtk_iommu_mm_dts_parse() error: uninitialized
-symbol 'larbnode'.
+Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
+time".
 
-If someone abuse the dtsi node(Don't follow the definition of dt-binding),
-for example "mediatek,larbs" is provided as boolean property, "larb_nr"
-will be zero and cause abnormal.
+The first patch fixes a bug reported by syzbot, and the second one fixes
+the remaining bug of the same kind.  Although they are triggered by the
+same super block data anomaly, I divided it into the above two because the
+details of the issues and how to fix it are different.
 
-To fix this problem and improve the code safety, add some checking
-for the invalid input from dtsi, e.g. checking the larb_nr/larbid valid
-range, and avoid "mediatek,larb-id" property conflicts in the smi-larb
-nodes.
+Both are required to eliminate the shift-out-of-bounds issues at mount
+time.
 
-Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20221018024258.19073-5-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+This patch (of 2):
+
+If the block size exponent information written in an on-disk superblock is
+corrupted, nilfs_sb2_bad_offset helper function can trigger
+shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
+is set):
+
+ shift exponent 38983 is too large for 64-bit type 'unsigned long long'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+  ubsan_epilogue lib/ubsan.c:151 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
+  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
+  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
+  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
+  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
+  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
+  ...
+
+In addition, since nilfs_sb2_bad_offset() performs multiplication without
+considering the upper bound, the computation may overflow if the disk
+layout parameters are not normal.
+
+This fixes these issues by inserting preliminary sanity checks for those
+parameters and by converting the comparison from one involving
+multiplication and left bit-shifting to one using division and right
+bit-shifting.
+
+Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index f4a315da4535..f1547199026c 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1051,6 +1051,8 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 	larb_nr = of_count_phandle_with_args(dev->of_node, "mediatek,larbs", NULL);
- 	if (larb_nr < 0)
- 		return larb_nr;
-+	if (larb_nr == 0 || larb_nr > MTK_LARB_NR_MAX)
-+		return -EINVAL;
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index c8b89b4f94e0..a7c829a7d4f1 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -13,6 +13,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/backing-dev.h>
+ #include <linux/random.h>
++#include <linux/log2.h>
+ #include <linux/crc32.h>
+ #include "nilfs.h"
+ #include "segment.h"
+@@ -443,11 +444,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+ 	return crc == le32_to_cpu(sbp->s_sum);
+ }
  
- 	for (i = 0; i < larb_nr; i++) {
- 		u32 id;
-@@ -1069,6 +1071,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 		ret = of_property_read_u32(larbnode, "mediatek,larb-id", &id);
- 		if (ret)/* The id is consecutive if there is no this property */
- 			id = i;
-+		if (id >= MTK_LARB_NR_MAX) {
-+			of_node_put(larbnode);
-+			ret = -EINVAL;
-+			goto err_larbdev_put;
-+		}
+-static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
++/**
++ * nilfs_sb2_bad_offset - check the location of the second superblock
++ * @sbp: superblock raw data buffer
++ * @offset: byte offset of second superblock calculated from device size
++ *
++ * nilfs_sb2_bad_offset() checks if the position on the second
++ * superblock is valid or not based on the filesystem parameters
++ * stored in @sbp.  If @offset points to a location within the segment
++ * area, or if the parameters themselves are not normal, it is
++ * determined to be invalid.
++ *
++ * Return Value: true if invalid, false if valid.
++ */
++static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
+ {
+-	return offset < ((le64_to_cpu(sbp->s_nsegments) *
+-			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
+-			 (le32_to_cpu(sbp->s_log_block_size) + 10));
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
++	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
++	u64 index;
++
++	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
++	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
++		return true;
++
++	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
++	do_div(index, blocks_per_segment);
++	return index < nsegments;
+ }
  
- 		plarbdev = of_find_device_by_node(larbnode);
- 		of_node_put(larbnode);
-@@ -1076,6 +1083,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 			ret = -ENODEV;
- 			goto err_larbdev_put;
- 		}
-+		if (data->larb_imu[id].dev) {
-+			platform_device_put(plarbdev);
-+			ret = -EEXIST;
-+			goto err_larbdev_put;
-+		}
- 		data->larb_imu[id].dev = &plarbdev->dev;
- 
- 		if (!plarbdev->dev.driver) {
+ static void nilfs_release_super_block(struct the_nilfs *nilfs)
 -- 
 2.35.1
 
