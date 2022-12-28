@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBB11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253AC433D2;
-	Wed, 28 Dec 2022 15:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492071863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2138C433D2;
+	Wed, 28 Dec 2022 15:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240372;
-	bh=aHWKULzj3U3S4emToSKQRDMI+L6IMqOnnpO6EOPGC1A=;
+	s=korg; t=1672240375;
+	bh=UHBlDUhsez1dcACx8Ck0SuPtBxLNYo6KvdxCrrVZH9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwTN70ZirJXN7wyNQWZm21syN6vOdMN1FqDP09XJr0+JSb0jRp0ODKJCb7HFmWBeF
-	 igkNqqfgOOvmV5XHbr8FNziXuGG9Me21rE6L5lKXTXQRtQ2zRQ6F/o969BcX3WtFPn
-	 oieUBNKFr0ad4X2pnfHWRQsQtBlOwiKKMG6BX/V4=
+	b=DSek/YUmSjXXF1+Ig5ILb3WF7pjqGTZo+4ah6kDPcB9x/7OOHuvYDN5JGdX3Bhduh
+	 tq6AIWag1mZ0gouQnUzxhm29RTaXzs4Iwi4vo345hg1nOb2uEbR0Ben0uklkeP8xsN
+	 KhL947DlG5pksos2wX4SqgOccEH3el8GPoHRVJ/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	John Thomson <git@johnthomson.fastmail.com.au>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 342/731] can: tcan4x5x: Fix use of register error status mask
-Date: Wed, 28 Dec 2022 15:37:29 +0100
-Message-Id: <20221228144306.480225943@linuxfoundation.org>
+Subject: [PATCH 6.0 0153/1073] mips: ralink: mt7621: soc queries and tests as functions
+Date: Wed, 28 Dec 2022 15:29:01 +0100
+Message-Id: <20221228144332.177500316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,66 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: John Thomson <git@johnthomson.fastmail.com.au>
 
-[ Upstream commit 67727a17a6b375d68fe569b77e6516b034b834c0 ]
+[ Upstream commit b4767d4c072583dec987225b6fe3f5524a735f42 ]
 
-TCAN4X5X_ERROR_STATUS is not a status register that needs clearing
-during interrupt handling. Instead this is a masking register that masks
-error interrupts. Writing TCAN4X5X_CLEAR_ALL_INT to this register
-effectively masks everything.
+Move the SoC register value queries and tests to specific functions,
+to remove repetition of logic
+No functional changes intended
 
-Rename the register and mask all error interrupts only once by writing
-to the register in tcan4x5x_init.
-
-Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Link: https://lore.kernel.org/all/20221206115728.1056014-10-msp@baylibre.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/mips/ralink/mt7621.c | 86 +++++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index a0eee69e52ea..c83b347be1cf 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -10,7 +10,7 @@
- #define TCAN4X5X_DEV_ID1 0x04
- #define TCAN4X5X_REV 0x08
- #define TCAN4X5X_STATUS 0x0C
--#define TCAN4X5X_ERROR_STATUS 0x10
-+#define TCAN4X5X_ERROR_STATUS_MASK 0x10
- #define TCAN4X5X_CONTROL 0x14
- 
- #define TCAN4X5X_CONFIG 0x800
-@@ -204,12 +204,7 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
--	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
--				      TCAN4X5X_CLEAR_ALL_INT);
--	if (ret)
--		return ret;
--
--	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS,
-+	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
- 				       TCAN4X5X_CLEAR_ALL_INT);
+diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
+index 17dbf28897e0..6e126f570f0c 100644
+--- a/arch/mips/ralink/mt7621.c
++++ b/arch/mips/ralink/mt7621.c
+@@ -97,7 +97,57 @@ void __init ralink_of_remap(void)
+ 		panic("Failed to remap core resources");
  }
  
-@@ -229,6 +224,11 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
-+	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS_MASK,
-+				      TCAN4X5X_CLEAR_ALL_INT);
-+	if (ret)
-+		return ret;
+-static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
++static unsigned int __init mt7621_get_soc_name0(void)
++{
++	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
++}
 +
- 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
- 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
- 	if (ret)
++static unsigned int __init mt7621_get_soc_name1(void)
++{
++	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
++}
++
++static bool __init mt7621_soc_valid(void)
++{
++	if (mt7621_get_soc_name0() == MT7621_CHIP_NAME0 &&
++			mt7621_get_soc_name1() == MT7621_CHIP_NAME1)
++		return true;
++	else
++		return false;
++}
++
++static const char __init *mt7621_get_soc_id(void)
++{
++	if (mt7621_soc_valid())
++		return "MT7621";
++	else
++		return "invalid";
++}
++
++static unsigned int __init mt7621_get_soc_rev(void)
++{
++	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
++}
++
++static unsigned int __init mt7621_get_soc_ver(void)
++{
++	return (mt7621_get_soc_rev() >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK;
++}
++
++static unsigned int __init mt7621_get_soc_eco(void)
++{
++	return (mt7621_get_soc_rev() & CHIP_REV_ECO_MASK);
++}
++
++static const char __init *mt7621_get_soc_revision(void)
++{
++	if (mt7621_get_soc_rev() == 1 && mt7621_get_soc_eco() == 1)
++		return "E2";
++	else
++		return "E1";
++}
++
++static void soc_dev_init(struct ralink_soc_info *soc_info)
+ {
+ 	struct soc_device *soc_dev;
+ 	struct soc_device_attribute *soc_dev_attr;
+@@ -108,12 +158,7 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 
+ 	soc_dev_attr->soc_id = "mt7621";
+ 	soc_dev_attr->family = "Ralink";
+-
+-	if (((rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK) == 1 &&
+-	    (rev & CHIP_REV_ECO_MASK) == 1)
+-		soc_dev_attr->revision = "E2";
+-	else
+-		soc_dev_attr->revision = "E1";
++	soc_dev_attr->revision = mt7621_get_soc_revision();
+ 
+ 	soc_dev_attr->data = soc_info;
+ 
+@@ -126,11 +171,6 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
+ 
+ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ {
+-	unsigned char *name = NULL;
+-	u32 n0;
+-	u32 n1;
+-	u32 rev;
+-
+ 	/* Early detection of CMP support */
+ 	mips_cm_probe();
+ 	mips_cpc_probe();
+@@ -153,27 +193,23 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
+ 		__sync();
+ 	}
+ 
+-	n0 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
+-	n1 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
+-
+-	if (n0 == MT7621_CHIP_NAME0 && n1 == MT7621_CHIP_NAME1) {
+-		name = "MT7621";
++	if (mt7621_soc_valid())
+ 		soc_info->compatible = "mediatek,mt7621-soc";
+-	} else {
+-		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n", n0, n1);
+-	}
++	else
++		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n",
++				mt7621_get_soc_name0(),
++				mt7621_get_soc_name1());
+ 	ralink_soc = MT762X_SOC_MT7621AT;
+-	rev = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
+ 
+ 	snprintf(soc_info->sys_type, RAMIPS_SYS_TYPE_LEN,
+ 		"MediaTek %s ver:%u eco:%u",
+-		name,
+-		(rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK,
+-		(rev & CHIP_REV_ECO_MASK));
++		mt7621_get_soc_id(),
++		mt7621_get_soc_ver(),
++		mt7621_get_soc_eco());
+ 
+ 	soc_info->mem_detect = mt7621_memory_detect;
+ 
+-	soc_dev_init(soc_info, rev);
++	soc_dev_init(soc_info);
+ 
+ 	if (!register_cps_smp_ops())
+ 		return;
 -- 
 2.35.1
 
