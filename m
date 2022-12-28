@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5191C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E76C433D2;
-	Wed, 28 Dec 2022 16:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513FC1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA811C433EF;
+	Wed, 28 Dec 2022 16:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244641;
-	bh=qCQ80+QQo12orqyGZ6uPIYTEipujiuUJsbMwyPWVve8=;
+	s=korg; t=1672244644;
+	bh=/aq0/3NlELX1EOBgLCk2ewkK7u7kDPb9AGNi1zYitLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ooNOA05d4TAPzXcZabP7sKmPiJrf6lHQcWx66/MV8QpqwyJQ9ylk9ED3C1Yn4ox5i
-	 q1cRRLRQQA62KCruBcCwkUm7fHvZ9VjH427DlQoXDm7fmtdJ8fKPpva4/Hp63K+Ff7
-	 RFvznDG7nml4qwDDK0k382cp08ayoVUlWEHtKTnw=
+	b=weYDUaK2OyHzMyWCDZpRD61W39am3VZfkzyUXvW7z6Sf5GLft/b8UAS+R/6ZW/Zci
+	 zJkNnEoF7OGBRahE2NenjiKVZduskx0QkN88DjIZVsqGBMrBHJkbc3YZv5ypbCtvzj
+	 Z1VP2JXTNEGxP8ffMrBd8MZjW1Igz7RA5hGKX2NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	delisun <delisun@pateo.com.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0746/1073] power: supply: z2_battery: Fix possible memleak in z2_batt_probe()
-Date: Wed, 28 Dec 2022 15:38:54 +0100
-Message-Id: <20221228144348.286080052@linuxfoundation.org>
+Subject: [PATCH 6.1 0708/1146] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
+Date: Wed, 28 Dec 2022 15:37:27 +0100
+Message-Id: <20221228144349.377600936@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: delisun <delisun@pateo.com.cn>
 
-[ Upstream commit 955bee204f3dd307642c101b75e370662987e735 ]
+[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
 
-If devm_gpiod_get_optional() returns error, the charger should be
-freed before z2_batt_probe returns according to the context. We
-fix it by just gotoing to 'err' branch.
+Clearing the RX FIFO will cause data loss.
+Copy the pl011_enabl_interrupts implementation, and remove the clear
+interrupt and FIFO part of the code.
 
-Fixes: a3b4388ea19b ("power: supply: z2_battery: Convert to GPIO descriptors")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Signed-off-by: delisun <delisun@pateo.com.cn>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/z2_battery.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/z2_battery.c b/drivers/power/supply/z2_battery.c
-index 7ed4e4bb26ec..fd33cdf9cf12 100644
---- a/drivers/power/supply/z2_battery.c
-+++ b/drivers/power/supply/z2_battery.c
-@@ -206,10 +206,12 @@ static int z2_batt_probe(struct i2c_client *client,
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 5b97645be667..aa0bbb7abeac 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1831,8 +1831,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ static void pl011_unthrottle_rx(struct uart_port *port)
+ {
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
++	unsigned long flags;
  
- 	charger->charge_gpiod = devm_gpiod_get_optional(&client->dev,
- 							NULL, GPIOD_IN);
--	if (IS_ERR(charger->charge_gpiod))
--		return dev_err_probe(&client->dev,
-+	if (IS_ERR(charger->charge_gpiod)) {
-+		ret = dev_err_probe(&client->dev,
- 				     PTR_ERR(charger->charge_gpiod),
- 				     "failed to get charge GPIO\n");
-+		goto err;
-+	}
+-	pl011_enable_interrupts(uap);
++	spin_lock_irqsave(&uap->port.lock, flags);
++
++	uap->im = UART011_RTIM;
++	if (!pl011_dma_rx_running(uap))
++		uap->im |= UART011_RXIM;
++
++	pl011_write(uap->im, uap, REG_IMSC);
++
++	spin_unlock_irqrestore(&uap->port.lock, flags);
+ }
  
- 	if (charger->charge_gpiod) {
- 		gpiod_set_consumer_name(charger->charge_gpiod, "BATT CHRG");
+ static int pl011_startup(struct uart_port *port)
 -- 
 2.35.1
 
