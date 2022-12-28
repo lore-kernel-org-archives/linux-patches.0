@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEDE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721F0C433D2;
-	Wed, 28 Dec 2022 14:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECBD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1598BC433D2;
+	Wed, 28 Dec 2022 14:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239284;
-	bh=uYkr0ptwyMdaC2srWYnTT1MLtk7AGAAzURmQUDOvkHc=;
+	s=korg; t=1672239287;
+	bh=1bTQlCowzIbz6sSX1fGKwlqMPW5qpHYyPsR9Ib0WUNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhv/pECdCSY9TabLDKNEC2v9fB7igqJHgCgcaYaBbFoYr8JpHgbvvclJlCLoqCOIw
-	 CvegIsSOEySOopR7fmMEo9zyND1SYuWSWVlptu4wAKlqtReRlVUsL9nFp1ul+reNr0
-	 +z0f7b/85O9m/A9nOSkPax4PIryQ/GmpOqA2s57o=
+	b=Y1z5ovEpvtcnLvajGDxdMj8sV7tLOAsOSzMBiDDs8ETDldT5kKuH4CLnKXcCtIAZN
+	 gc604fYADBC/g2YRBvFAkhBFKbYiHoStmdOnbeNCiwtuVeHHorX/9c1/O4zIsqE4eP
+	 k5GxS5S5nY2Uv4YgwINdjEvmtsZP8mrc1ZVR6s4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/731] nvmet: only allocate a single slab for bvecs
-Date: Wed, 28 Dec 2022 15:35:04 +0100
-Message-Id: <20221228144302.269902737@linuxfoundation.org>
+	Michael Straube <straube.linux@gmail.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Sasha Levin <sashal@kernel.org>,
+	Philipp Hortmann <philipp.g.hortmann@gmail.com>
+Subject: [PATCH 6.0 0003/1073] staging: r8188eu: fix led register settings
+Date: Wed, 28 Dec 2022 15:26:31 +0100
+Message-Id: <20221228144328.262411769@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,164 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit fa8f9ac42350edd3ce82d0d148a60f0fa088f995 ]
+[ Upstream commit 12c6223fc1804fd9295dc50d358294539b4a4184 ]
 
-There is no need to have a separate slab cache for each namespace,
-and having separate ones creates duplicate debugs file names as well.
+Using an InterTech DMG-02 dongle, the led remains on when the system goes
+into standby mode. After wakeup, it's no longer possible to control the
+led.
 
-Fixes: d5eff33ee6f8 ("nvmet: add simple file backed ns support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+It turned out that the register settings to enable or disable the led were
+not correct. They worked for some dongles like the Edimax V2 but not for
+others like the InterTech DMG-02.
+
+This patch fixes the register settings. Bit 3 in the led_cfg2 register
+controls the led status, bit 5 must always be set to be able to control
+the led, bit 6 has no influence on the led. Setting the mac_pinmux_cfg
+register is not necessary.
+
+These settings were tested with Edimax V2 and InterTech DMG-02.
+
+Cc: stable@vger.kernel.org
+Fixes: 8cd574e6af54 ("staging: r8188eu: introduce new hal dir for RTL8188eu driver")
+Suggested-by: Michael Straube <straube.linux@gmail.com>
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Tested-by: Michael Straube <straube.linux@gmail.com> # InterTech DMG-02,
+Tested-by: Philipp Hortmann <philipp.g.hortmann@gmail.com> # Edimax N150
+Link: https://lore.kernel.org/r/20221015151115.232095-2-martin@kaiser.cx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c        | 22 ++++++++++++++--------
- drivers/nvme/target/io-cmd-file.c | 16 +++-------------
- drivers/nvme/target/nvmet.h       |  3 ++-
- 3 files changed, 19 insertions(+), 22 deletions(-)
+ drivers/staging/r8188eu/core/rtw_led.c | 25 ++-----------------------
+ 1 file changed, 2 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 87a347248c38..cfd038551156 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -15,6 +15,7 @@
+diff --git a/drivers/staging/r8188eu/core/rtw_led.c b/drivers/staging/r8188eu/core/rtw_led.c
+index 42e35953fd7b..1993c3993b3d 100644
+--- a/drivers/staging/r8188eu/core/rtw_led.c
++++ b/drivers/staging/r8188eu/core/rtw_led.c
+@@ -34,40 +34,19 @@ static void ResetLedStatus(struct led_priv *pLed)
  
- #include "nvmet.h"
- 
-+struct kmem_cache *nvmet_bvec_cache;
- struct workqueue_struct *buffered_io_wq;
- struct workqueue_struct *zbd_wq;
- static const struct nvmet_fabrics_ops *nvmet_transports[NVMF_TRTYPE_MAX];
-@@ -1607,26 +1608,28 @@ void nvmet_subsys_put(struct nvmet_subsys *subsys)
- 
- static int __init nvmet_init(void)
+ static void SwLedOn(struct adapter *padapter, struct led_priv *pLed)
  {
--	int error;
-+	int error = -ENOMEM;
- 
- 	nvmet_ana_group_enabled[NVMET_DEFAULT_ANA_GRPID] = 1;
- 
-+	nvmet_bvec_cache = kmem_cache_create("nvmet-bvec",
-+			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec), 0,
-+			SLAB_HWCACHE_ALIGN, NULL);
-+	if (!nvmet_bvec_cache)
-+		return -ENOMEM;
-+
- 	zbd_wq = alloc_workqueue("nvmet-zbd-wq", WQ_MEM_RECLAIM, 0);
- 	if (!zbd_wq)
--		return -ENOMEM;
-+		goto out_destroy_bvec_cache;
- 
- 	buffered_io_wq = alloc_workqueue("nvmet-buffered-io-wq",
- 			WQ_MEM_RECLAIM, 0);
--	if (!buffered_io_wq) {
--		error = -ENOMEM;
-+	if (!buffered_io_wq)
- 		goto out_free_zbd_work_queue;
--	}
- 
- 	nvmet_wq = alloc_workqueue("nvmet-wq", WQ_MEM_RECLAIM, 0);
--	if (!nvmet_wq) {
--		error = -ENOMEM;
-+	if (!nvmet_wq)
- 		goto out_free_buffered_work_queue;
--	}
- 
- 	error = nvmet_init_discovery();
- 	if (error)
-@@ -1645,6 +1648,8 @@ static int __init nvmet_init(void)
- 	destroy_workqueue(buffered_io_wq);
- out_free_zbd_work_queue:
- 	destroy_workqueue(zbd_wq);
-+out_destroy_bvec_cache:
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 	return error;
- }
- 
-@@ -1656,6 +1661,7 @@ static void __exit nvmet_exit(void)
- 	destroy_workqueue(nvmet_wq);
- 	destroy_workqueue(buffered_io_wq);
- 	destroy_workqueue(zbd_wq);
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_entry) != 1024);
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_hdr) != 1024);
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index 228871d48106..eadba13b276d 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -11,7 +11,6 @@
- #include <linux/fs.h>
- #include "nvmet.h"
- 
--#define NVMET_MAX_MPOOL_BVEC		16
- #define NVMET_MIN_MPOOL_OBJ		16
- 
- int nvmet_file_ns_revalidate(struct nvmet_ns *ns)
-@@ -33,8 +32,6 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
- 			flush_workqueue(buffered_io_wq);
- 		mempool_destroy(ns->bvec_pool);
- 		ns->bvec_pool = NULL;
--		kmem_cache_destroy(ns->bvec_cache);
--		ns->bvec_cache = NULL;
- 		fput(ns->file);
- 		ns->file = NULL;
- 	}
-@@ -68,16 +65,8 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 	ns->blksize_shift = min_t(u8,
- 			file_inode(ns->file)->i_blkbits, 12);
- 
--	ns->bvec_cache = kmem_cache_create("nvmet-bvec",
--			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec),
--			0, SLAB_HWCACHE_ALIGN, NULL);
--	if (!ns->bvec_cache) {
--		ret = -ENOMEM;
--		goto err;
--	}
+-	u8	LedCfg;
+-	int res;
 -
- 	ns->bvec_pool = mempool_create(NVMET_MIN_MPOOL_OBJ, mempool_alloc_slab,
--			mempool_free_slab, ns->bvec_cache);
-+			mempool_free_slab, nvmet_bvec_cache);
+ 	if (padapter->bDriverStopped)
+ 		return;
  
- 	if (!ns->bvec_pool) {
- 		ret = -ENOMEM;
-@@ -86,9 +75,10 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 
- 	return ret;
- err:
-+	fput(ns->file);
-+	ns->file = NULL;
- 	ns->size = 0;
- 	ns->blksize_shift = 0;
--	nvmet_file_ns_disable(ns);
- 	return ret;
+-	res = rtw_read8(padapter, REG_LEDCFG2, &LedCfg);
+-	if (res)
+-		return;
+-
+-	rtw_write8(padapter, REG_LEDCFG2, (LedCfg & 0xf0) | BIT(5) | BIT(6)); /*  SW control led0 on. */
++	rtw_write8(padapter, REG_LEDCFG2, BIT(5)); /*  SW control led0 on. */
+ 	pLed->bLedOn = true;
  }
  
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index dbeb0b8c1194..fdb06a9d430d 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -77,7 +77,6 @@ struct nvmet_ns {
+ static void SwLedOff(struct adapter *padapter, struct led_priv *pLed)
+ {
+-	u8	LedCfg;
+-	int res;
+-
+ 	if (padapter->bDriverStopped)
+ 		goto exit;
  
- 	struct completion	disable_done;
- 	mempool_t		*bvec_pool;
--	struct kmem_cache	*bvec_cache;
- 
- 	int			use_p2pmem;
- 	struct pci_dev		*p2p_dev;
-@@ -363,6 +362,8 @@ struct nvmet_req {
- 	u64			error_slba;
- };
- 
-+#define NVMET_MAX_MPOOL_BVEC		16
-+extern struct kmem_cache *nvmet_bvec_cache;
- extern struct workqueue_struct *buffered_io_wq;
- extern struct workqueue_struct *zbd_wq;
- extern struct workqueue_struct *nvmet_wq;
+-	res = rtw_read8(padapter, REG_LEDCFG2, &LedCfg);/* 0x4E */
+-	if (res)
+-		goto exit;
+-
+-	LedCfg &= 0x90; /*  Set to software control. */
+-	rtw_write8(padapter, REG_LEDCFG2, (LedCfg | BIT(3)));
+-	res = rtw_read8(padapter, REG_MAC_PINMUX_CFG, &LedCfg);
+-	if (res)
+-		goto exit;
+-
+-	LedCfg &= 0xFE;
+-	rtw_write8(padapter, REG_MAC_PINMUX_CFG, LedCfg);
++	rtw_write8(padapter, REG_LEDCFG2, BIT(5) | BIT(3));
+ exit:
+ 	pLed->bLedOn = false;
+ }
 -- 
 2.35.1
 
