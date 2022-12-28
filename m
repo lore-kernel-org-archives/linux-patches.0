@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5405C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDF3C433D2;
-	Wed, 28 Dec 2022 16:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE131C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8108AC433D2;
+	Wed, 28 Dec 2022 16:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244465;
-	bh=FgHMjHJUjyT44N2gi/ODXxTj6153Z5JtXkpro7j2C+o=;
+	s=korg; t=1672244467;
+	bh=O9NNWypXwAwRRicH9itlr12SJUVpM2EnKCDFM+2Xq5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0MC6Jx4uvgGlbl4EBhtlnlF/9mjYeWH0z4jcMZjXQREjD+CK96tRQAQLRGeJxvSA
-	 TFxrjagXEaB7FDJIddq18Mgv7+2mYbqoZufhTrnysKFTJ5/gfDEW0i6jS/VSmL7ofw
-	 P2EufEtXtvYowvl35Vl4AKOq4QthROYLJoBSHCyc=
+	b=AQh3CRBO+35GsFBEWr8qX4cCqy5LBpVgwQ0UwyiVHxb+XzBs7yymg9+kG6rUH2eL4
+	 fqu4eJOFFHpWlUJ6oiuRAc/Ix/DM9tA1UC6ZyPZSkNjHo21kOJJ6POn96y4/8o7X7O
+	 GFEmRjiOGrOIcgJ/GyFq65Q1o/LG2hD7xI9BJtUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0674/1146] RDMA/hns: Fix page size cap from firmware
-Date: Wed, 28 Dec 2022 15:36:53 +0100
-Message-Id: <20221228144348.454147347@linuxfoundation.org>
+Subject: [PATCH 6.0 0715/1073] vme: Fix error not catched in fake_init()
+Date: Wed, 28 Dec 2022 15:38:23 +0100
+Message-Id: <20221228144347.449244274@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 99dc5a0712883d5d13b620d25b3759d429577bc8 ]
+[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
 
-Add verification to make sure the roce page size cap is supported by the
-system page size.
+In fake_init(), __root_device_register() is possible to fail but it's
+ignored, which can cause unregistering vme_root fail when exit.
 
-Fixes: ba6bb7e97421 ("RDMA/hns: Add interfaces to get pf capabilities from firmware")
-Link: https://lore.kernel.org/r/20221126102911.2921820-5-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+ general protection fault,
+ probably for non-canonical address 0xdffffc000000008c
+ KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
+ RIP: 0010:root_device_unregister+0x26/0x60
+ Call Trace:
+  <TASK>
+  __x64_sys_delete_module+0x34f/0x540
+  do_syscall_64+0x38/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Return error when __root_device_register() fails.
+
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/vme_user/vme_fake.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 747ce3ac72f1..fbdaf95fd82b 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -2341,6 +2341,9 @@ static int hns_roce_query_pf_caps(struct hns_roce_dev *hr_dev)
- 	caps->wqe_sge_hop_num = hr_reg_read(resp_d, PF_CAPS_D_EX_SGE_HOP_NUM);
- 	caps->wqe_rq_hop_num = hr_reg_read(resp_d, PF_CAPS_D_RQWQE_HOP_NUM);
+diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
+index dd646b0c531d..1ee432c223e2 100644
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1073,6 +1073,8 @@ static int __init fake_init(void)
  
-+	if (!(caps->page_size_cap & PAGE_SIZE))
-+		caps->page_size_cap = HNS_ROCE_V2_PAGE_SIZE_SUPPORTED;
-+
- 	return 0;
- }
+ 	/* We need a fake parent device */
+ 	vme_root = __root_device_register("vme", THIS_MODULE);
++	if (IS_ERR(vme_root))
++		return PTR_ERR(vme_root);
  
+ 	/* If we want to support more than one bridge at some point, we need to
+ 	 * dynamically allocate this so we get one per device.
 -- 
 2.35.1
 
