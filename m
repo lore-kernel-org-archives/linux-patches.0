@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0894E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A044C433D2;
-	Wed, 28 Dec 2022 15:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6E81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31136C433EF;
+	Wed, 28 Dec 2022 15:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242608;
-	bh=ukl/UUUyQv5isEgSUCnKLX5i9xKeHluyYZsSNRReM1Y=;
+	s=korg; t=1672242611;
+	bh=xHjXY4bMW1rOeIrD/J7KzUvpFtFrI1zkacv8I5eMCh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o95tn7wVbOfKvePE/1hAN3MhvwNtlkpx7AkE6tQ2wnbwZd+I1aaKlWhKrWi5RCAhZ
-	 r2gdiBk8YGk08DuV1Y4wdP9cKVle+hy9tFTH8cku5t5rik5ns95qiwG6CjgLYRAYCG
-	 NfDnbNvJgrTK/dNVFfZglrUxiHcLSFF5W9dbfHZ0=
+	b=zL36D+Yzo72B500xw1RLAo7N7+8TPuNswrObynNFjhDWdHXZEUnxn5ezMKlz4/q/j
+	 7jQLIadCwCXUDdFUyGsKmxEgE2atTkPNdWNSdK5R+Kymo9RxsODG7TovTCy6sfwi0s
+	 AvfXH3utXLIcrcx9Z4FyqzCVduxJyyyrQXEoLiY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0431/1073] bpf, sockmap: Fix missing BPF_F_INGRESS flag when using apply_bytes
-Date: Wed, 28 Dec 2022 15:33:39 +0100
-Message-Id: <20221228144339.733742976@linuxfoundation.org>
+Subject: [PATCH 5.15 616/731] arm64: make is_ttbrX_addr() noinstr-safe
+Date: Wed, 28 Dec 2022 15:42:03 +0100
+Message-Id: <20221228144314.388868406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,159 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit a351d6087bf7d3d8440d58d3bf244ec64b89394a ]
+[ Upstream commit d8c1d798a2e5091128c391c6dadcc9be334af3f5 ]
 
-When redirecting, we use sk_msg_to_ingress() to get the BPF_F_INGRESS
-flag from the msg->flags. If apply_bytes is used and it is larger than
-the current data being processed, sk_psock_msg_verdict() will not be
-called when sendmsg() is called again. At this time, the msg->flags is 0,
-and we lost the BPF_F_INGRESS flag.
+We use is_ttbr0_addr() in noinstr code, but as it's only marked as
+inline, it's theoretically possible for the compiler to place it
+out-of-line and instrument it, which would be problematic.
 
-So we need to save the BPF_F_INGRESS flag in sk_psock and use it when
-redirection.
+Mark is_ttbr0_addr() as __always_inline such that that can safely be
+used from noinstr code. For consistency, do the same to is_ttbr1_addr().
+Note that while is_ttbr1_addr() calls arch_kasan_reset_tag(), this is a
+macro (and its callees are either macros or __always_inline), so there
+is not a risk of transient instrumentation.
 
-Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-3-git-send-email-yangpc@wangsu.com
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114144042.3001140-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h |  1 +
- include/net/tcp.h     |  4 ++--
- net/core/skmsg.c      |  9 ++++++---
- net/ipv4/tcp_bpf.c    | 11 ++++++-----
- net/tls/tls_sw.c      |  6 ++++--
- 5 files changed, 19 insertions(+), 12 deletions(-)
+ arch/arm64/include/asm/processor.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index 70d6cb94e580..84f787416a54 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -82,6 +82,7 @@ struct sk_psock {
- 	u32				apply_bytes;
- 	u32				cork_bytes;
- 	u32				eval;
-+	bool				redir_ingress; /* undefined if sk_redir is null */
- 	struct sk_msg			*cork;
- 	struct sk_psock_progs		progs;
- #if IS_ENABLED(CONFIG_BPF_STREAM_PARSER)
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 95c1d51393ac..3cde7b4a401f 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -2284,8 +2284,8 @@ int tcp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore);
- void tcp_bpf_clone(const struct sock *sk, struct sock *newsk);
- #endif /* CONFIG_BPF_SYSCALL */
+diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
+index d9bf3d12a2b8..7364530de0a7 100644
+--- a/arch/arm64/include/asm/processor.h
++++ b/arch/arm64/include/asm/processor.h
+@@ -240,13 +240,13 @@ static inline void compat_start_thread(struct pt_regs *regs, unsigned long pc,
+ }
+ #endif
  
--int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg, u32 bytes,
--			  int flags);
-+int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
-+			  struct sk_msg *msg, u32 bytes, int flags);
- #endif /* CONFIG_NET_SOCK_MSG */
- 
- #if !defined(CONFIG_BPF_SYSCALL) || !defined(CONFIG_NET_SOCK_MSG)
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index e6b9ced3eda8..53d0251788aa 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -886,13 +886,16 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
- 	ret = sk_psock_map_verd(ret, msg->sk_redir);
- 	psock->apply_bytes = msg->apply_bytes;
- 	if (ret == __SK_REDIRECT) {
--		if (psock->sk_redir)
-+		if (psock->sk_redir) {
- 			sock_put(psock->sk_redir);
--		psock->sk_redir = msg->sk_redir;
--		if (!psock->sk_redir) {
-+			psock->sk_redir = NULL;
-+		}
-+		if (!msg->sk_redir) {
- 			ret = __SK_DROP;
- 			goto out;
- 		}
-+		psock->redir_ingress = sk_msg_to_ingress(msg);
-+		psock->sk_redir = msg->sk_redir;
- 		sock_hold(psock->sk_redir);
- 	}
- out:
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index f3e868f4cd9e..275c5ca9e04d 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -131,10 +131,9 @@ static int tcp_bpf_push_locked(struct sock *sk, struct sk_msg *msg,
- 	return ret;
+-static inline bool is_ttbr0_addr(unsigned long addr)
++static __always_inline bool is_ttbr0_addr(unsigned long addr)
+ {
+ 	/* entry assembly clears tags for TTBR0 addrs */
+ 	return addr < TASK_SIZE;
  }
  
--int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg,
--			  u32 bytes, int flags)
-+int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
-+			  struct sk_msg *msg, u32 bytes, int flags)
+-static inline bool is_ttbr1_addr(unsigned long addr)
++static __always_inline bool is_ttbr1_addr(unsigned long addr)
  {
--	bool ingress = sk_msg_to_ingress(msg);
- 	struct sk_psock *psock = sk_psock_get(sk);
- 	int ret;
- 
-@@ -276,7 +275,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 				struct sk_msg *msg, int *copied, int flags)
- {
--	bool cork = false, enospc = sk_msg_full(msg);
-+	bool cork = false, enospc = sk_msg_full(msg), redir_ingress;
- 	struct sock *sk_redir;
- 	u32 tosend, origsize, sent, delta = 0;
- 	u32 eval;
-@@ -322,6 +321,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		sk_msg_apply_bytes(psock, tosend);
- 		break;
- 	case __SK_REDIRECT:
-+		redir_ingress = psock->redir_ingress;
- 		sk_redir = psock->sk_redir;
- 		sk_msg_apply_bytes(psock, tosend);
- 		if (!psock->apply_bytes) {
-@@ -338,7 +338,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		release_sock(sk);
- 
- 		origsize = msg->sg.size;
--		ret = tcp_bpf_sendmsg_redir(sk_redir, msg, tosend, flags);
-+		ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-+					    msg, tosend, flags);
- 		sent = origsize - msg->sg.size;
- 
- 		if (eval == __SK_REDIRECT)
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index fe27241cd13f..0ee1df154fee 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -792,7 +792,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 	struct sk_psock *psock;
- 	struct sock *sk_redir;
- 	struct tls_rec *rec;
--	bool enospc, policy;
-+	bool enospc, policy, redir_ingress;
- 	int err = 0, send;
- 	u32 delta = 0;
- 
-@@ -837,6 +837,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		}
- 		break;
- 	case __SK_REDIRECT:
-+		redir_ingress = psock->redir_ingress;
- 		sk_redir = psock->sk_redir;
- 		memcpy(&msg_redir, msg, sizeof(*msg));
- 		if (msg->apply_bytes < send)
-@@ -846,7 +847,8 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		sk_msg_return_zero(sk, msg, send);
- 		msg->sg.size -= send;
- 		release_sock(sk);
--		err = tcp_bpf_sendmsg_redir(sk_redir, &msg_redir, send, flags);
-+		err = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
-+					    &msg_redir, send, flags);
- 		lock_sock(sk);
- 		if (err < 0) {
- 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
+ 	/* TTBR1 addresses may have a tag if KASAN_SW_TAGS is in use */
+ 	return arch_kasan_reset_tag(addr) >= PAGE_OFFSET;
 -- 
 2.35.1
 
