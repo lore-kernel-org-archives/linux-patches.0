@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DD01C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF6EC433EF;
-	Wed, 28 Dec 2022 16:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5AB1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E0AC433EF;
+	Wed, 28 Dec 2022 16:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245562;
-	bh=mjBAZQAoIFRCA8kFTE+Z9mTUJWFLiwAtDPkEr+hzzTc=;
+	s=korg; t=1672245566;
+	bh=mt5AZ1mURiWfYgcw7WIIujrgKsaHmkt9OYdGE26JT7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDLRzUFF6JrPkvpC0Qylb3qsPbsvTgoApzGhzf6rn8M0YELrCBHPXjAEU1u7H8Ko3
-	 DhCPwUwV7QK/esbdvcKggKvoptdLQbga1sMT6gP1lUGy8m6yAr+pQENgmeHe0ATLLc
-	 w4yP+kq8VbeQUkSfdZWJpweLrtow56h+q8JKmWOQ=
+	b=1xosab6tQ3ij1x+EvfKc7oK57HZKR76IF4dHUGUAFH1uXedPUTND9D1uM3NhsX4Sx
+	 KY35qUi49rGroIX3+xAnS+tlRHluKy8mgJsjiENR2PBk3a7fz817acWTohuuryG0Sp
+	 vRrcTKwTc3YNxbypvPHNvXYo2SP1XywLuKIEe9JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	gehao <gehao@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Qingfang DENG <dqfext@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0915/1073] drm/amd/display: prevent memory leak
-Date: Wed, 28 Dec 2022 15:41:43 +0100
-Message-Id: <20221228144352.881939831@linuxfoundation.org>
+Subject: [PATCH 6.1 0882/1146] netfilter: flowtable: really fix NAT IPv6 offload
+Date: Wed, 28 Dec 2022 15:40:21 +0100
+Message-Id: <20221228144354.121652129@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gehao <gehao@kylinos.cn>
+From: Qingfang DENG <dqfext@gmail.com>
 
-[ Upstream commit d232afb1f3417ae8194ccf19ad3a8360e70e104e ]
+[ Upstream commit 5fb45f95eec682621748b7cb012c6a8f0f981e6a ]
 
-In dce6(0,1,4)_create_resource_pool and dce80_create_resource_pool
-the allocated memory should be released if construct pool fails.
+The for-loop was broken from the start. It translates to:
 
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: gehao <gehao@kylinos.cn>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+	for (i = 0; i < 4; i += 4)
+
+which means the loop statement is run only once, so only the highest
+32-bit of the IPv6 address gets mangled.
+
+Fix the loop increment.
+
+Fixes: 0e07e25b481a ("netfilter: flowtable: fix NAT IPv6 offload mangling")
+Fixes: 5c27d8d76ce8 ("netfilter: nf_flow_table_offload: add IPv6 support")
+Signed-off-by: Qingfang DENG <dqfext@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 3 +++
- drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c | 2 ++
- 2 files changed, 5 insertions(+)
+ net/netfilter/nf_flow_table_offload.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-index fc6aa098bda0..8db9f7514466 100644
---- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-@@ -1128,6 +1128,7 @@ struct resource_pool *dce60_create_resource_pool(
- 	if (dce60_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 0fdcdb2c9ae4..4d9b99abe37d 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -383,12 +383,12 @@ static void flow_offload_ipv6_mangle(struct nf_flow_rule *flow_rule,
+ 				     const __be32 *addr, const __be32 *mask)
+ {
+ 	struct flow_action_entry *entry;
+-	int i, j;
++	int i;
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
+-	for (i = 0, j = 0; i < sizeof(struct in6_addr) / sizeof(u32); i += sizeof(u32), j++) {
++	for (i = 0; i < sizeof(struct in6_addr) / sizeof(u32); i++) {
+ 		entry = flow_action_entry_next(flow_rule);
+ 		flow_offload_mangle(entry, FLOW_ACT_MANGLE_HDR_TYPE_IP6,
+-				    offset + i, &addr[j], mask);
++				    offset + i * sizeof(u32), &addr[i], mask);
+ 	}
  }
-@@ -1325,6 +1326,7 @@ struct resource_pool *dce61_create_resource_pool(
- 	if (dce61_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-@@ -1518,6 +1520,7 @@ struct resource_pool *dce64_create_resource_pool(
- 	if (dce64_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
- 
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-index b28025960050..5825e6f412bd 100644
---- a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-@@ -1137,6 +1137,7 @@ struct resource_pool *dce80_create_resource_pool(
- 	if (dce80_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
- 
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-@@ -1336,6 +1337,7 @@ struct resource_pool *dce81_create_resource_pool(
- 	if (dce81_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
- 
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
 -- 
 2.35.1
 
