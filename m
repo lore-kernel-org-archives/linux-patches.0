@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A72C433EF;
-	Wed, 28 Dec 2022 14:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7B01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A52C433D2;
+	Wed, 28 Dec 2022 14:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239469;
-	bh=zdjZSvUlQos4Eexk/hd0ENgOFCCKp8WpgkAhKYnYH8w=;
+	s=korg; t=1672239472;
+	bh=UXU4IV6IRj8BIE2RBX0qICfYUSO2iLSH4xpToNNqxS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvQpdRqUZiqVapHWpweRN+HoEUDOrBFDHJH97PLTVTvgxuzBl/IXLOUBHRkGFY4+q
-	 0WTH4vNve25wii3QI0WxbdvKvYQzB0p4qbto8PaRTLdUGRIxV3WpmX4eWCz9x/eSRV
-	 ehVW0ONWZIy6CzVjdw4z14yfLQLKKBVsYlfRe0hA=
+	b=ylmradfxmkNqqA/Wb3CrbcHmRe3q9arhtMIA1xBeNpAJGys31DXYaXmhVXjv10iQ+
+	 ZgJIePL45rAuaTx6Bsq6dm29D1blJkoyDVW5yQpryZAJn3eZ3/vCO0/gh2hXcVrsYX
+	 OWmO89KB90To/xPrLNBZi+UTvKzoPUqn0/2plb7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0008/1073] arm64: dts: renesas: r8a779g0: Fix HSCIF0 "brg_int" clock
-Date: Wed, 28 Dec 2022 15:26:36 +0100
-Message-Id: <20221228144328.394527728@linuxfoundation.org>
+Subject: [PATCH 6.0 0035/1073] arm64: dts: qcom: use GPIO flags for tlmm
+Date: Wed, 28 Dec 2022 15:27:03 +0100
+Message-Id: <20221228144329.088629045@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,40 +36,196 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a4290d407aa9fd174d8053878783d466d3124e38 ]
+[ Upstream commit 36c9d012f193747d42af80b634217addd974c522 ]
 
-As serial communication requires a clock signal, the High Speed Serial
-Communication Interfaces with FIFO (HSCIF) are clocked by a clock that
-is not affected by Spread Spectrum or Fractional Multiplication.
+Use respective GPIO_ACTIVE_LOW/HIGH flags for tlmm GPIOs.  Include
+gpio.h header if this is first usage of that flag.
 
-Hence change the clock input for the HSCIF0 Baud Rate Generator internal
-clock from the S0D3_PER clock to the SASYNCPERD1 clock (which has the
-same clock rate), cfr. R-Car V4H Hardware User's Manual rev. 0.54.
-
-Fixes: 987da486d84a5643 ("arm64: dts: renesas: Add Renesas R8A779G0 SoC support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/a5bd4148f92806f7c8e577d383370f810315f586.1665155947.git.geert+renesas@glider.be
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220802153947.44457-4-krzysztof.kozlowski@linaro.org
+Stable-dep-of: 76d21ffc5d42 ("arm64: dts: qcom: msm8996: fix sound card reset line polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts               | 2 +-
+ arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi                      | 3 ++-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi                      | 3 ++-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts                 | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts       | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts         | 4 ++--
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts       | 2 +-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts           | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts                    | 2 +-
+ 10 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-index 1c15726cff8b..4bd3cb107b38 100644
---- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
-@@ -87,7 +87,7 @@ hscif0: serial@e6540000 {
- 			reg = <0 0xe6540000 0 96>;
- 			interrupts = <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 514>,
--				 <&cpg CPG_CORE R8A779G0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779G0_CLK_SASYNCPERD1>,
- 				 <&scif_clk>;
- 			clock-names = "fck", "brg_int", "scif_clk";
- 			power-domains = <&sysc R8A779G0_PD_ALWAYS_ON>;
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
+index 567b33106556..92f264891d84 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
+@@ -368,7 +368,7 @@ &sdhc2 {
+ 
+ 	bus-width = <4>;
+ 
+-	cd-gpios = <&tlmm 38 0x1>;
++	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+ 
+ 	vmmc-supply = <&vreg_l21a_2p95>;
+ 	vqmmc-supply = <&vreg_l13a_2p95>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+index f430d797196f..ff60b7004d26 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+@@ -471,7 +471,7 @@ &sdhc1 {
+ &sdhc2 {
+ 	status = "okay";
+ 
+-	cd-gpios = <&tlmm 100 0>;
++	cd-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+ 	vmmc-supply = <&pm8994_l21>;
+ 	vqmmc-supply = <&pm8994_l13>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index 8bc6c070e306..86ef0091caff 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -6,6 +6,7 @@
+ #include <dt-bindings/clock/qcom,gcc-msm8994.h>
+ #include <dt-bindings/clock/qcom,mmcc-msm8994.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
++#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ 
+ / {
+@@ -502,7 +503,7 @@ sdhc2: mmc@f98a4900 {
+ 			pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
+ 			pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
+ 
+-			cd-gpios = <&tlmm 100 0>;
++			cd-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+ 			bus-width = <4>;
+ 			status = "disabled";
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index c8b9d7d60774..d3cf0677ea28 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -7,6 +7,7 @@
+ #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/interconnect/qcom,msm8996.h>
++#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/thermal/thermal.h>
+@@ -3357,7 +3358,7 @@ wcd9335: codec@1{
+ 					interrupt-names = "intr1", "intr2";
+ 					interrupt-controller;
+ 					#interrupt-cells = <1>;
+-					reset-gpios = <&tlmm 64 0>;
++					reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 
+ 					slim-ifc-dev = <&tasha_ifd>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index c6e2c571b452..b2eddcd87506 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1081,7 +1081,7 @@ &wcd9340{
+ 	pinctrl-names = "default";
+ 	clock-names = "extclk";
+ 	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-	reset-gpios = <&tlmm 64 0>;
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 	vdd-buck-supply = <&vreg_s4a_1p8>;
+ 	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+ 	vdd-tx-supply = <&vreg_s4a_1p8>;
+@@ -1255,7 +1255,7 @@ camera@60 {
+ 		reg = <0x60>;
+ 
+ 		// CAM3_RST_N
+-		enable-gpios = <&tlmm 21 0>;
++		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&cam3_default>;
+ 		gpios = <&tlmm 16 0>,
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index 82c27f90d300..0f470cf1ed1c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -546,7 +546,7 @@ &wcd9340{
+ 	pinctrl-names = "default";
+ 	clock-names = "extclk";
+ 	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-	reset-gpios = <&tlmm 64 0>;
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 	vdd-buck-supply = <&vreg_s4a_1p8>;
+ 	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+ 	vdd-tx-supply = <&vreg_s4a_1p8>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+index 2611a5c40ba3..1cc477c30945 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+@@ -126,7 +126,7 @@ vreg_tp_vddio: vreg-tp-vddio {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <1800000>;
+ 
+-		gpio = <&tlmm 23 0>;
++		gpio = <&tlmm 23 GPIO_ACTIVE_HIGH>;
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 		enable-active-high;
+@@ -712,7 +712,7 @@ &wcd9340 {
+ 	pinctrl-names = "default";
+ 	clock-names = "extclk";
+ 	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-	reset-gpios = <&tlmm 64 0>;
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+ 	vdd-buck-supply = <&vreg_s4a_1p8>;
+ 	vdd-tx-supply = <&vreg_s4a_1p8>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index a7af1bed4312..be59a8ba9c1f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -772,7 +772,7 @@ &wcd9340{
+ 	pinctrl-names = "default";
+ 	clock-names = "extclk";
+ 	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-	reset-gpios = <&tlmm 64 0>;
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 	vdd-buck-supply = <&vreg_s4a_1p8>;
+ 	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+ 	vdd-tx-supply = <&vreg_s4a_1p8>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index b0315eeb1320..f954fe5cb61a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -704,7 +704,7 @@ &wcd9340{
+ 	pinctrl-names = "default";
+ 	clock-names = "extclk";
+ 	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+-	reset-gpios = <&tlmm 64 0>;
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
+ 	vdd-buck-supply = <&vreg_s4a_1p8>;
+ 	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+ 	vdd-tx-supply = <&vreg_s4a_1p8>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+index 7ab3627cc347..a102aa5efa32 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+@@ -635,7 +635,7 @@ &soc {
+ 	wcd938x: codec {
+ 		compatible = "qcom,wcd9380-codec";
+ 		#sound-dai-cells = <1>;
+-		reset-gpios = <&tlmm 32 0>;
++		reset-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+ 		vdd-buck-supply = <&vreg_s4a_1p8>;
+ 		vdd-rxtx-supply = <&vreg_s4a_1p8>;
+ 		vdd-io-supply = <&vreg_s4a_1p8>;
 -- 
 2.35.1
 
