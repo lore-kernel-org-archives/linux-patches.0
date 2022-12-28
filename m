@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C139BC433EF;
-	Wed, 28 Dec 2022 15:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71801863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413B3C433D2;
+	Wed, 28 Dec 2022 15:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241045;
-	bh=QcAXhnMJf0HaZcf+CL/5/q5zJxDCYkltjS2Y+Pa3fFw=;
+	s=korg; t=1672241047;
+	bh=WTyC2F+TPJdveuxaEoXurTTAYTlK6obQLK+bnmZwq64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlRK81hEFLsMungo0yjCnIwsqGKB4xktHiUK5NfYvTBDAZSrJy0oECX+JMLz/uud1
-	 Cnj6CwpUXJuRPbiyFAUg/A33Wgkt8o5bTKamVRrp4rEAG3Bkwb032ONuWDh8FxGNyK
-	 lxz+OuOXpAfwFds/liYcVs6V2lP4uD7Fq7U+6TB4=
+	b=CrDiknMCFw4Rg9KfKtlhlYhK0giNgkxtUzJHWGNydGz+L8Hgr6mvzUfpQzUlOoVHm
+	 dQ81O5Wpn7zaSNAV/9UgM+sf6DoB40jlqoO0v4THjBdGBt9D2KNfXXVHaRl00i11+C
+	 O1GFq7fOzF71oAvL8jW71zsyI0TEpBc+Gs1isvA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 431/731] RDMA/hns: Fix page size cap from firmware
-Date: Wed, 28 Dec 2022 15:38:58 +0100
-Message-Id: <20221228144309.057282846@linuxfoundation.org>
+Subject: [PATCH 6.1 0199/1146] drm/atomic-helper: Dont allocate new plane state in CRTC check
+Date: Wed, 28 Dec 2022 15:28:58 +0100
+Message-Id: <20221228144335.549602274@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +41,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 99dc5a0712883d5d13b620d25b3759d429577bc8 ]
+[ Upstream commit dbbf933d365da1a76a540211bee3d57bde520194 ]
 
-Add verification to make sure the roce page size cap is supported by the
-system page size.
+In drm_atomic_helper_check_crtc_state(), do not add a new plane state
+to the global state if it does not exist already. Adding a new plane
+state will result in overhead for the plane during the atomic-commit
+step.
 
-Fixes: ba6bb7e97421 ("RDMA/hns: Add interfaces to get pf capabilities from firmware")
-Link: https://lore.kernel.org/r/20221126102911.2921820-5-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+For the test in drm_atomic_helper_check_crtc_state() to succeed, it
+is important that the CRTC has an enabled primary plane after the
+commit. Simply testing the CRTC state's plane_mask for a primary plane
+is sufficient.
+
+Note that the helper still only tests for an attached primary plane.
+Drivers have to ensure that the plane contains valid pixel information.
+
+v5:
+	* fix commit description (Javier)
+v3:
+	* test for a primary plane in plane_mask (Ville)
+v2:
+	* remove unnecessary test for plane->crtc (Ville)
+	* inline drm_atomic_get_next_plane_state() (Ville)
+	* acquire plane lock before accessing plane->state (Ville)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: d6b9af1097fe ("drm/atomic-helper: Add helper drm_atomic_helper_check_crtc_state()")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20221007124338.24152-2-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/drm_atomic_helper.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index b9557be812b7..16f39321b319 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -2371,6 +2371,9 @@ static int hns_roce_query_pf_caps(struct hns_roce_dev *hr_dev)
- 					  V2_QUERY_PF_CAPS_D_RQWQE_HOP_NUM_M,
- 					  V2_QUERY_PF_CAPS_D_RQWQE_HOP_NUM_S);
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 98cc3137c062..02b4a7dc92f5 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -945,7 +945,6 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
+ 				       bool can_disable_primary_planes)
+ {
+ 	struct drm_device *dev = crtc_state->crtc->dev;
+-	struct drm_atomic_state *state = crtc_state->state;
  
-+	if (!(caps->page_size_cap & PAGE_SIZE))
-+		caps->page_size_cap = HNS_ROCE_V2_PAGE_SIZE_SUPPORTED;
-+
- 	return 0;
- }
+ 	if (!crtc_state->enable)
+ 		return 0;
+@@ -956,14 +955,7 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
+ 		struct drm_plane *plane;
  
+ 		drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
+-			struct drm_plane_state *plane_state;
+-
+-			if (plane->type != DRM_PLANE_TYPE_PRIMARY)
+-				continue;
+-			plane_state = drm_atomic_get_plane_state(state, plane);
+-			if (IS_ERR(plane_state))
+-				return PTR_ERR(plane_state);
+-			if (plane_state->fb && plane_state->crtc) {
++			if (plane->type == DRM_PLANE_TYPE_PRIMARY) {
+ 				has_primary_plane = true;
+ 				break;
+ 			}
 -- 
 2.35.1
 
