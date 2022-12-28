@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC411863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09988C433D2;
-	Wed, 28 Dec 2022 15:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C41B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9DEC433D2;
+	Wed, 28 Dec 2022 15:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240692;
-	bh=YRdLjIImL7S+0lcMdJuLRcDFoHF30qLFsLRhvErWjYE=;
+	s=korg; t=1672240695;
+	bh=xnncnqnNxEXQ71qlNDAGrOqAbIWOZBwesnFOzhzptFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVn+E/0SS2atDIsloM0Wafrf0T1KxRDHB1wiQjGrEpypkw9T3IFj311MD8vHd/sY5
-	 JdrB8Yxeyuc4ai3dYTSLKKHucgszaVJILSRw7jfCKANjjKJ3hAjMAAsTu0MzWsh5rT
-	 NJ4Abb/cdVhknX6azwMhfr1x/99agxZvvsUlyF+g=
+	b=wJ3k0Assu2Ll9cdQ0deZdujb40b7fTD+4T3kTlPW3n7iRCmpozv6j9uVWJsCKKtjH
+	 lgV3krSZ63Ps7VQxXE99WpWH8bB3d8Qk9ejHs09fwmW9ZXph16XFPYdAIRbWJK4lCG
+	 RGLfEUx7M5MyQEJfSsKBAR0ib1cIN/7mh+iJ3sCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0156/1146] libfs: add DEFINE_SIMPLE_ATTRIBUTE_SIGNED for signed value
-Date: Wed, 28 Dec 2022 15:28:15 +0100
-Message-Id: <20221228144334.394516453@linuxfoundation.org>
+Subject: [PATCH 6.0 0192/1073] drm/atomic-helper: Dont allocate new plane state in CRTC check
+Date: Wed, 28 Dec 2022 15:29:40 +0100
+Message-Id: <20221228144333.228471808@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,137 +41,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 2e41f274f9aa71cdcc69dc1f26a3f9304a651804 ]
+[ Upstream commit dbbf933d365da1a76a540211bee3d57bde520194 ]
 
-Patch series "fix error when writing negative value to simple attribute
-files".
+In drm_atomic_helper_check_crtc_state(), do not add a new plane state
+to the global state if it does not exist already. Adding a new plane
+state will result in overhead for the plane during the atomic-commit
+step.
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), but some attribute files want to accept a negative
-value.
+For the test in drm_atomic_helper_check_crtc_state() to succeed, it
+is important that the CRTC has an enabled primary plane after the
+commit. Simply testing the CRTC state's plane_mask for a primary plane
+is sufficient.
 
-This patch (of 3):
+Note that the helper still only tests for an attached primary plane.
+Drivers have to ensure that the plane contains valid pixel information.
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), so we have to use a 64-bit value to write a
-negative value.
+v5:
+	* fix commit description (Javier)
+v3:
+	* test for a primary plane in plane_mask (Ville)
+v2:
+	* remove unnecessary test for plane->crtc (Ville)
+	* inline drm_atomic_get_next_plane_state() (Ville)
+	* acquire plane lock before accessing plane->state (Ville)
 
-This adds DEFINE_SIMPLE_ATTRIBUTE_SIGNED for a signed value.
-
-Link: https://lkml.kernel.org/r/20220919172418.45257-1-akinobu.mita@gmail.com
-Link: https://lkml.kernel.org/r/20220919172418.45257-2-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: d6b9af1097fe ("drm/atomic-helper: Add helper drm_atomic_helper_check_crtc_state()")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20221007124338.24152-2-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c         | 22 +++++++++++++++++++---
- include/linux/fs.h | 12 ++++++++++--
- 2 files changed, 29 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_atomic_helper.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index 682d56345a1c..aada4e7c8713 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -995,8 +995,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- EXPORT_SYMBOL_GPL(simple_attr_read);
- 
- /* interpret the buffer as a number to call the set function with */
--ssize_t simple_attr_write(struct file *file, const char __user *buf,
--			  size_t len, loff_t *ppos)
-+static ssize_t simple_attr_write_xsigned(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos, bool is_signed)
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 8bf41aa24068..6526d6ade04b 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -899,7 +899,6 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
+ 				       bool can_disable_primary_planes)
  {
- 	struct simple_attr *attr;
- 	unsigned long long val;
-@@ -1017,7 +1017,10 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 		goto out;
+ 	struct drm_device *dev = crtc_state->crtc->dev;
+-	struct drm_atomic_state *state = crtc_state->state;
  
- 	attr->set_buf[size] = '\0';
--	ret = kstrtoull(attr->set_buf, 0, &val);
-+	if (is_signed)
-+		ret = kstrtoll(attr->set_buf, 0, &val);
-+	else
-+		ret = kstrtoull(attr->set_buf, 0, &val);
- 	if (ret)
- 		goto out;
- 	ret = attr->set(attr->data, val);
-@@ -1027,8 +1030,21 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 	mutex_unlock(&attr->mutex);
- 	return ret;
- }
-+
-+ssize_t simple_attr_write(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, false);
-+}
- EXPORT_SYMBOL_GPL(simple_attr_write);
+ 	if (!crtc_state->enable)
+ 		return 0;
+@@ -910,14 +909,7 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
+ 		struct drm_plane *plane;
  
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, true);
-+}
-+EXPORT_SYMBOL_GPL(simple_attr_write_signed);
-+
- /**
-  * generic_fh_to_dentry - generic helper for the fh_to_dentry export operation
-  * @sb:		filesystem to do the file handle conversion on
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 59ae95ddb679..6b115bce14b9 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3493,7 +3493,7 @@ void simple_transaction_set(struct file *file, size_t n);
-  * All attributes contain a text representation of a numeric value
-  * that are accessed with the get() and set() functions.
-  */
--#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+#define DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
- static int __fops ## _open(struct inode *inode, struct file *file)	\
- {									\
- 	__simple_attr_check_format(__fmt, 0ull);			\
-@@ -3504,10 +3504,16 @@ static const struct file_operations __fops = {				\
- 	.open	 = __fops ## _open,					\
- 	.release = simple_attr_release,					\
- 	.read	 = simple_attr_read,					\
--	.write	 = simple_attr_write,					\
-+	.write	 = (__is_signed) ? simple_attr_write_signed : simple_attr_write,	\
- 	.llseek	 = generic_file_llseek,					\
- }
- 
-+#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
-+
-+#define DEFINE_SIMPLE_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
-+
- static inline __printf(1, 2)
- void __simple_attr_check_format(const char *fmt, ...)
- {
-@@ -3522,6 +3528,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- 			 size_t len, loff_t *ppos);
- ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 			  size_t len, loff_t *ppos);
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+				 size_t len, loff_t *ppos);
- 
- struct ctl_table;
- int __init list_bdev_fs_names(char *buf, size_t size);
+ 		drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
+-			struct drm_plane_state *plane_state;
+-
+-			if (plane->type != DRM_PLANE_TYPE_PRIMARY)
+-				continue;
+-			plane_state = drm_atomic_get_plane_state(state, plane);
+-			if (IS_ERR(plane_state))
+-				return PTR_ERR(plane_state);
+-			if (plane_state->fb && plane_state->crtc) {
++			if (plane->type == DRM_PLANE_TYPE_PRIMARY) {
+ 				has_primary_plane = true;
+ 				break;
+ 			}
 -- 
 2.35.1
 
