@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02D61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A80C433D2;
-	Wed, 28 Dec 2022 15:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4612D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08D3C433D2;
+	Wed, 28 Dec 2022 15:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242365;
-	bh=g5DWXgmezYnT/RO8YzVpE4jnKtnrAXeoJ9Yq5ZKvGXo=;
+	s=korg; t=1672242368;
+	bh=7/D71mGepCsYopMer7zty4PBra/vMej3/vTzEjnwTNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssrdxW/JVadSy0DLC86NwVphoOUBv63mf1q5VQLSigsJBxlE+4kcHhFn/4QS3jurw
-	 3SAU03B7+2M30AOF6mZ+k5BudDFVvqN95Gce9/XLB27d86tsizN78iOzWjfko6lond
-	 G1DTUxMLBaiqA/DMk0zQvRdCR5Z3RpKrfZVuQMMY=
+	b=SK0Ht2cEfs3p3uD9g79HbvOGJBwNNbxwJVRHVCsxJ7CDL4HDTvcLQI/QNfJigsOsc
+	 tSEZ+ohD7yUbuZYVVvx3rqymYpteDnRq26Pu9TsKic1HDWC4pfBBDUPGpjn+wkTKDl
+	 Lr1srKf9KipE+IFfPo3L2krp96RgwIG7Hje7UR4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 595/731] igc: Use strict cycles for Qbv scheduling
-Date: Wed, 28 Dec 2022 15:41:42 +0100
-Message-Id: <20221228144313.789872614@linuxfoundation.org>
+Subject: [PATCH 6.0 0402/1073] drm/tegra: Add missing clk_disable_unprepare() in tegra_dc_probe()
+Date: Wed, 28 Dec 2022 15:33:10 +0100
+Message-Id: <20221228144338.936633418@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,50 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit d8f45be01dd9381065a3778a579385249ed011dc ]
+[ Upstream commit 7ad4384d53c67672a8720cdc2ef638d7d1710ab8 ]
 
-Configuring strict cycle mode in the controller forces more well
-behaved transmissions when taprio is offloaded.
+Add the missing clk_disable_unprepare() before return from
+tegra_dc_probe() in the error handling path.
 
-When set this strict_cycle and strict_end, transmission is not
-enabled if the whole packet cannot be completed before end of
-the Qbv cycle.
-
-Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: f68ba6912bd2 ("drm/tegra: dc: Link DC1 to DC0 on Tegra20")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/tegra/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 0fce22de2ab8..4a019954cadb 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -110,15 +110,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 		wr32(IGC_STQT(i), ring->start_time);
- 		wr32(IGC_ENDQT(i), ring->end_time);
+diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
+index 747abafb6a5c..b8035b3be3d3 100644
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -3206,8 +3206,10 @@ static int tegra_dc_probe(struct platform_device *pdev)
+ 	usleep_range(2000, 4000);
  
--		if (adapter->base_time) {
--			/* If we have a base_time we are in "taprio"
--			 * mode and we need to be strict about the
--			 * cycles: only transmit a packet if it can be
--			 * completed during that cycle.
--			 */
--			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
--				IGC_TXQCTL_STRICT_END;
--		}
-+		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
-+			IGC_TXQCTL_STRICT_END;
+ 	err = reset_control_assert(dc->rst);
+-	if (err < 0)
++	if (err < 0) {
++		clk_disable_unprepare(dc->clk);
+ 		return err;
++	}
  
- 		if (ring->launchtime_enable)
- 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
+ 	usleep_range(2000, 4000);
+ 
 -- 
 2.35.1
 
