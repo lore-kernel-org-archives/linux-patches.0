@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112CA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898ECC433D2;
-	Wed, 28 Dec 2022 15:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844F51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0227BC433EF;
+	Wed, 28 Dec 2022 15:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241798;
-	bh=fU9NGN+IJAEiEuvOco0vIM5JZMuMZWYN7Rxz2xFWODs=;
+	s=korg; t=1672241802;
+	bh=qNLVgOCpTLN32DhSLdvueH8qqG8sjzSc6ai5ptu6FbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ8DWpEV9Jxguu9noGR02uhgiu4H4LKF2mxXOtMCQwiV2fjAOVeVhFTmwol7JlpJE
-	 spAJaYgzT5UW3UlIY281Oi776jDQzL6MxF29oOAAs26CImAgqgyhi6G9/86VW/m3Rn
-	 N7upb2hgVyO6dJmhXEApRaRfE/rWiemKXswYIClQ=
+	b=pUpICTZx+9WYxovBgh9naWUD/+fKLrXSCGlvDlZvAd/VLdJCOvcnHcSlXbnIWaqfG
+	 yWSXu3nPu/D1gfbdlu4pNM7EWrd0Hp9WOzRUQnLQMr0fwo6vNCtYiXfP/jYUnCyQHV
+	 e7wdHFc5+VZulbptArd6iyJjF6bTDmf0MnkA/EIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0290/1146] media: rkvdec: Add required padding
-Date: Wed, 28 Dec 2022 15:30:29 +0100
-Message-Id: <20221228144338.016931408@linuxfoundation.org>
+Subject: [PATCH 5.15 524/731] RDMA/siw: Fix pointer cast warning
+Date: Wed, 28 Dec 2022 15:40:31 +0100
+Message-Id: <20221228144311.736217560@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 00c47aa85bb26450edc6059c3d245de062e60b5d ]
+[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
 
-The addresses of two elements of the segmap[][] member are passed to the
-hardware which expects 128-bit aligned addresses. However, without this
-patch offsetof(struct rkvdec_vp9_priv_tbl, segmap[0]) is an odd number
-(2421) but the hardware just ignores the 5 least significant bits of the
-address. As a result, the hardware writes the segmentation map to incorrect
-locations.
+The previous build fix left a remaining issue in configurations with
+64-bit dma_addr_t on 32-bit architectures:
 
-Inserting 11 bytes of padding corrects this situation by making the said
-addresses divisible by 16 (i.e. aligned on a 128-bit boundary).
+drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
+drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+   32 |                 return virt_to_page((void *)paddr);
+      |                                     ^
 
-Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Fixes: f25709c4ff15 ("media: rkvdec: Add the VP9 backend")
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Use the same double cast here that the driver uses elsewhere to convert
+between dma_addr_t and void*.
+
+Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
+Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-index d8c1c0db15c7..cfae99b40ccb 100644
---- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
-+++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-@@ -84,6 +84,8 @@ struct rkvdec_vp9_probs {
- 		struct rkvdec_vp9_inter_frame_probs inter;
- 		struct rkvdec_vp9_intra_only_frame_probs intra_only;
- 	};
-+	/* 128 bit alignment */
-+	u8 padding1[11];
- };
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 7d47b521070b..05052b49107f 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
+ 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
  
- /* Data structure describing auxiliary buffer format. */
-@@ -1006,6 +1008,7 @@ static int rkvdec_vp9_start(struct rkvdec_ctx *ctx)
+ 	if (paddr)
+-		return virt_to_page((void *)paddr);
++		return virt_to_page((void *)(uintptr_t)paddr);
  
- 	ctx->priv = vp9_ctx;
- 
-+	BUILD_BUG_ON(sizeof(priv_tbl->probs) % 16); /* ensure probs size is 128-bit aligned */
- 	priv_tbl = dma_alloc_coherent(rkvdec->dev, sizeof(*priv_tbl),
- 				      &vp9_ctx->priv_tbl.dma, GFP_KERNEL);
- 	if (!priv_tbl) {
+ 	return NULL;
+ }
 -- 
 2.35.1
 
