@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6E91C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C406EC4339E;
-	Wed, 28 Dec 2022 16:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66311C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C598C433EF;
+	Wed, 28 Dec 2022 16:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243702;
-	bh=ekM7PxMiAF1QhFuSLHpNpPze+NPIKVh0kSGq6/Xp3+I=;
+	s=korg; t=1672243704;
+	bh=+dv6U6k+zo3I9RkD4oOmNd5x+Mt5n9OGC27boDoICd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctuRXvFM89vS6OR6ADZ/A+syZBbg7nwqsFQzU9C3HTs1DzJOWzYfzBhS2mY6NvTHn
-	 A+jGfh5Qa/FuZG5LFK/g8hUy5SWqM2g38aIdDQYwQkLBDChMqSHGj4U3HXsg1TtSoM
-	 f7qpYoKqC+Y0QE/vlGE6cCKf3+LKi3ExOr2HPfSM=
+	b=JaTrvmtz6AZuAhuTUq0I1sJIo9IOwKQlpQWVP8izKGwSj0MI9+yI4f9JLxe0IP75i
+	 Zs9IWnVd0GP9OwXPC7lGP4WmGQIhboP7aiNAQA3g9X0A4CH3GAD7giFeR0Re3Bdxqt
+	 6jGbYPUjnCmYLB8epC6LqwAaITca6FfaKBjNBYBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jianlin Shi <jishi@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0572/1073] crypto: rockchip - add fallback for ahash
-Date: Wed, 28 Dec 2022 15:36:00 +0100
-Message-Id: <20221228144343.590341092@linuxfoundation.org>
+Subject: [PATCH 6.1 0537/1146] net/tunnel: wait until all sk_user_data reader finish before releasing the sock
+Date: Wed, 28 Dec 2022 15:34:36 +0100
+Message-Id: <20221228144344.760088034@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,84 +38,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 816600485cb597b3ff7d6806a95a78512839f775 ]
+[ Upstream commit 3cf7203ca620682165706f70a1b12b5194607dce ]
 
-Adds a fallback for all case hardware cannot handle.
+There is a race condition in vxlan that when deleting a vxlan device
+during receiving packets, there is a possibility that the sock is
+released after getting vxlan_sock vs from sk_user_data. Then in
+later vxlan_ecn_decapsulate(), vxlan_get_sk_family() we will got
+NULL pointer dereference. e.g.
 
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+   #0 [ffffa25ec6978a38] machine_kexec at ffffffff8c669757
+   #1 [ffffa25ec6978a90] __crash_kexec at ffffffff8c7c0a4d
+   #2 [ffffa25ec6978b58] crash_kexec at ffffffff8c7c1c48
+   #3 [ffffa25ec6978b60] oops_end at ffffffff8c627f2b
+   #4 [ffffa25ec6978b80] page_fault_oops at ffffffff8c678fcb
+   #5 [ffffa25ec6978bd8] exc_page_fault at ffffffff8d109542
+   #6 [ffffa25ec6978c00] asm_exc_page_fault at ffffffff8d200b62
+      [exception RIP: vxlan_ecn_decapsulate+0x3b]
+      RIP: ffffffffc1014e7b  RSP: ffffa25ec6978cb0  RFLAGS: 00010246
+      RAX: 0000000000000008  RBX: ffff8aa000888000  RCX: 0000000000000000
+      RDX: 000000000000000e  RSI: ffff8a9fc7ab803e  RDI: ffff8a9fd1168700
+      RBP: ffff8a9fc7ab803e   R8: 0000000000700000   R9: 00000000000010ae
+      R10: ffff8a9fcb748980  R11: 0000000000000000  R12: ffff8a9fd1168700
+      R13: ffff8aa000888000  R14: 00000000002a0000  R15: 00000000000010ae
+      ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+   #7 [ffffa25ec6978ce8] vxlan_rcv at ffffffffc10189cd [vxlan]
+   #8 [ffffa25ec6978d90] udp_queue_rcv_one_skb at ffffffff8cfb6507
+   #9 [ffffa25ec6978dc0] udp_unicast_rcv_skb at ffffffff8cfb6e45
+  #10 [ffffa25ec6978dc8] __udp4_lib_rcv at ffffffff8cfb8807
+  #11 [ffffa25ec6978e20] ip_protocol_deliver_rcu at ffffffff8cf76951
+  #12 [ffffa25ec6978e48] ip_local_deliver at ffffffff8cf76bde
+  #13 [ffffa25ec6978ea0] __netif_receive_skb_one_core at ffffffff8cecde9b
+  #14 [ffffa25ec6978ec8] process_backlog at ffffffff8cece139
+  #15 [ffffa25ec6978f00] __napi_poll at ffffffff8ceced1a
+  #16 [ffffa25ec6978f28] net_rx_action at ffffffff8cecf1f3
+  #17 [ffffa25ec6978fa0] __softirqentry_text_start at ffffffff8d4000ca
+  #18 [ffffa25ec6978ff0] do_softirq at ffffffff8c6fbdc3
+
+Reproducer: https://github.com/Mellanox/ovs-tests/blob/master/test-ovs-vxlan-remove-tunnel-during-traffic.sh
+
+Fix this by waiting for all sk_user_data reader to finish before
+releasing the sock.
+
+Reported-by: Jianlin Shi <jishi@redhat.com>
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Fixes: 6a93cc905274 ("udp-tunnel: Add a few more UDP tunnel APIs")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto_ahash.c | 38 +++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ net/ipv4/udp_tunnel_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-index 49017d1fb510..16009bb0bf16 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-@@ -16,6 +16,40 @@
-  * so we put the fixed hash out when met zero message.
-  */
- 
-+static bool rk_ahash_need_fallback(struct ahash_request *req)
-+{
-+	struct scatterlist *sg;
-+
-+	sg = req->src;
-+	while (sg) {
-+		if (!IS_ALIGNED(sg->offset, sizeof(u32))) {
-+			return true;
-+		}
-+		if (sg->length % 4) {
-+			return true;
-+		}
-+		sg = sg_next(sg);
-+	}
-+	return false;
-+}
-+
-+static int rk_ahash_digest_fb(struct ahash_request *areq)
-+{
-+	struct rk_ahash_rctx *rctx = ahash_request_ctx(areq);
-+	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
-+	struct rk_ahash_ctx *tfmctx = crypto_ahash_ctx(tfm);
-+
-+	ahash_request_set_tfm(&rctx->fallback_req, tfmctx->fallback_tfm);
-+	rctx->fallback_req.base.flags = areq->base.flags &
-+					CRYPTO_TFM_REQ_MAY_SLEEP;
-+
-+	rctx->fallback_req.nbytes = areq->nbytes;
-+	rctx->fallback_req.src = areq->src;
-+	rctx->fallback_req.result = areq->result;
-+
-+	return crypto_ahash_digest(&rctx->fallback_req);
-+}
-+
- static int zero_message_process(struct ahash_request *req)
+diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
+index 8242c8947340..5f8104cf082d 100644
+--- a/net/ipv4/udp_tunnel_core.c
++++ b/net/ipv4/udp_tunnel_core.c
+@@ -176,6 +176,7 @@ EXPORT_SYMBOL_GPL(udp_tunnel_xmit_skb);
+ void udp_tunnel_sock_release(struct socket *sock)
  {
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
-@@ -167,6 +201,9 @@ static int rk_ahash_digest(struct ahash_request *req)
- 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(req->base.tfm);
- 	struct rk_crypto_info *dev = tctx->dev;
- 
-+	if (rk_ahash_need_fallback(req))
-+		return rk_ahash_digest_fb(req);
-+
- 	if (!req->nbytes)
- 		return zero_message_process(req);
- 	else
-@@ -309,6 +346,7 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
- 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
- 
- 	free_page((unsigned long)tctx->dev->addr_vir);
-+	crypto_free_ahash(tctx->fallback_tfm);
+ 	rcu_assign_sk_user_data(sock->sk, NULL);
++	synchronize_rcu();
+ 	kernel_sock_shutdown(sock, SHUT_RDWR);
+ 	sock_release(sock);
  }
- 
- struct rk_crypto_tmp rk_ahash_sha1 = {
 -- 
 2.35.1
 
