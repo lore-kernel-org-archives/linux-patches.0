@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C977A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CF3C433D2;
-	Wed, 28 Dec 2022 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D861863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E028AC433D2;
+	Wed, 28 Dec 2022 15:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239624;
-	bh=LePJ2vt1YjtHwGGSiscpXiJIZjF6rgIfetJV+DGwa8c=;
+	s=korg; t=1672239627;
+	bh=t5XbNXoBRtACAGbTM7G0lQ2RsEBtPRX7fKBOxZnFWc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hc8ch8w0c+4bYaAbHwxiXNiz1n7VgMdhnEsyVdBW1HQ/r0zxQ12Hp9rrCxKyzr6na
-	 CNzepL6pe4J8DFM9nFgFEycXIrH3cSBdzHZbvokZQQebw+A3teZdwgbeDZ+ne++z9A
-	 XcwwvWdiaiNxWNtuXYvoMYoPKfXiwpgtZfn8Oi2w=
+	b=06scAMSmKdJ3dd0baVl2sh6yCx1xsgJdsWfbi7RAnbclh9HkE8R+Heeww3/B5ajQ4
+	 a1682IHF1r26b767Z11Q7LT65LwX+QZDkBezBfgNBSNjntyBSAON+twr2mjbE+c0D/
+	 etdS/iIWLASt/ArRcqC4eL+jxcbzy7cA8+uH+kWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0005/1146] arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
-Date: Wed, 28 Dec 2022 15:25:44 +0100
-Message-Id: <20221228144330.330850958@linuxfoundation.org>
+Subject: [PATCH 6.0 0057/1073] arm64: dts: ti: k3-j721e-main: Drop dma-coherent in crypto node
+Date: Wed, 28 Dec 2022 15:27:25 +0100
+Message-Id: <20221228144329.651228411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 7ff4a646fae3697b039c6b684786a1e309e8445c ]
+[ Upstream commit 26c5012403f3f1fd3bf8f7d3389ee539ae5cc162 ]
 
-The property to disable bias is "bias-disable".
+crypto driver itself is not dma-coherent. So drop it.
 
-Fixes: e76c7e1f15fe ("arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220930192954.242546-3-krzysztof.kozlowski@linaro.org
+Fixes: 8ebcaaae8017 ("arm64: dts: ti: k3-j721e-main: Add crypto accelerator node")
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Link: https://lore.kernel.org/r/20221031152520.355653-3-j-choudhary@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 5428aab3058d..e4769dcfaad7 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -619,7 +619,7 @@ ts_int_default: ts-int-default {
- 		pins = "gpio39";
- 		function = "gpio";
- 		drive-strength = <2>;
--		bias-disabled;
-+		bias-disable;
- 		input-enable;
- 	};
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+index 43b6cf5791ee..75789c0f82bd 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+@@ -337,7 +337,6 @@ main_crypto: crypto@4e00000 {
+ 		dmas = <&main_udmap 0xc000>, <&main_udmap 0x4000>,
+ 				<&main_udmap 0x4001>;
+ 		dma-names = "tx", "rx1", "rx2";
+-		dma-coherent;
  
+ 		rng: rng@4e10000 {
+ 			compatible = "inside-secure,safexcel-eip76";
 -- 
 2.35.1
 
