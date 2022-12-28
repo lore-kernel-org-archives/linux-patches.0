@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22381863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AD0C433F0;
-	Wed, 28 Dec 2022 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB0E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1338BC433D2;
+	Wed, 28 Dec 2022 15:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240086;
-	bh=/c9C9mJ9CKkjQftVYdYFu9De2QD1xum/wepONp3i3Po=;
+	s=korg; t=1672240089;
+	bh=FaigX0HZ09zXLHGtzIBqIElmfxYBY6s1G2aHDcufQ90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQrlvTJMDKUwIgk+sn/TqJkfxdb0TFW1dQw4ww6Jj19mspNQ2qf2wtdumG2rRdFk9
-	 i9zShMreZiQuD3i1oOwxPDPGXu03ff07krWY/fhiJoOeHXpef4Rry741d7voSfG8vT
-	 9MUThVQL2Nrz44LIKWuh80LpcdO9iTCW8IP6e1lA=
+	b=WKwutfP4cLpaKl8BKYdUKZb6g/hYfHYtQLCSCGpo/wzLU55Eo8KO3FFoV+GZ3rIfB
+	 hJbZLkYiBJsjCq9aAqoy/R2muXhuvUVQErWw5VM1pw7lEI3cAD4vsE7SSSuafomN4B
+	 Lra1tDWI+gTCjmb/Mc3/KJa3Tt9rFRuryZey3tyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0101/1073] sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()s early exit condition
-Date: Wed, 28 Dec 2022 15:28:09 +0100
-Message-Id: <20221228144330.791861087@linuxfoundation.org>
+Subject: [PATCH 6.1 0079/1146] arm64: tegra: Fix non-prefetchable aperture of PCIe C3 controller
+Date: Wed, 28 Dec 2022 15:26:58 +0100
+Message-Id: <20221228144332.293355064@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit d81304bc6193554014d4372a01debdf65e1e9a4d ]
+[ Upstream commit 47a2f35d9ea76d92aa2385671f527b75aa9dfe45 ]
 
-If the utilization of the woken up task is 0, we skip the energy
-calculation because it has no impact.
+Fix the starting address of the non-prefetchable aperture of PCIe C3
+controller.
 
-But if the task is boosted (uclamp_min != 0) will have an impact on task
-placement and frequency selection. Only skip if the util is truly
-0 after applying uclamp values.
-
-Change uclamp_task_cpu() signature to avoid unnecessary additional calls
-to uclamp_eff_get(). feec() is the only user now.
-
-Fixes: 732cd75b8c920 ("sched/fair: Select an energy-efficient CPU on task wake-up")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-8-qais.yousef@arm.com
+Fixes: ec142c44b026 ("arm64: tegra: Add P2U and PCIe controller nodes to Tegra234 DT")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2e782d79e80f..532e6cdf706d 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4108,14 +4108,16 @@ static inline unsigned long task_util_est(struct task_struct *p)
- }
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 9b43a0b0d775..dfe2cf2f4b21 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -2178,7 +2178,7 @@ pcie@14140000 {
+ 		bus-range = <0x0 0xff>;
  
- #ifdef CONFIG_UCLAMP_TASK
--static inline unsigned long uclamp_task_util(struct task_struct *p)
-+static inline unsigned long uclamp_task_util(struct task_struct *p,
-+					     unsigned long uclamp_min,
-+					     unsigned long uclamp_max)
- {
--	return clamp(task_util_est(p),
--		     uclamp_eff_value(p, UCLAMP_MIN),
--		     uclamp_eff_value(p, UCLAMP_MAX));
-+	return clamp(task_util_est(p), uclamp_min, uclamp_max);
- }
- #else
--static inline unsigned long uclamp_task_util(struct task_struct *p)
-+static inline unsigned long uclamp_task_util(struct task_struct *p,
-+					     unsigned long uclamp_min,
-+					     unsigned long uclamp_max)
- {
- 	return task_util_est(p);
- }
-@@ -7029,7 +7031,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 	target = prev_cpu;
+ 		ranges = <0x43000000 0x21 0x00000000 0x21 0x00000000 0x0 0x28000000>, /* prefetchable memory (640 MB) */
+-			 <0x02000000 0x0  0x40000000 0x21 0xe8000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
++			 <0x02000000 0x0  0x40000000 0x21 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
+ 			 <0x01000000 0x0  0x34100000 0x00 0x34100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
  
- 	sync_entity_load_avg(&p->se);
--	if (!task_util_est(p))
-+	if (!uclamp_task_util(p, p_util_min, p_util_max))
- 		goto unlock;
- 
- 	eenv_task_busy_time(&eenv, p, prev_cpu);
+ 		interconnects = <&mc TEGRA234_MEMORY_CLIENT_PCIE3R &emc>,
 -- 
 2.35.1
 
