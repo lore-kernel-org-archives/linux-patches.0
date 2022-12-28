@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF861863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6245DC433D2;
-	Wed, 28 Dec 2022 14:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF4B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10840C433D2;
+	Wed, 28 Dec 2022 14:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239292;
-	bh=piILM7sVfGfMJfU/egBmMvperD0OKi+BxmloSjLTPos=;
+	s=korg; t=1672239295;
+	bh=3y4iQoXRH8v3UkWob2qZig+KyZBNl65cZ5Zd1ZhNBVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zs+Xt8kIJncwfy8PSx0cE1sABbpbPv2MOTReL0vHbtezkc660cvLn0aIJmcN2k77n
-	 47mEIM6eAlk8LfAxPyxHS2vVqsSy0VViqWuK1Yi2T5TsHLV2ybBYnCAcZYVN7RJ1bM
-	 k2ER0vBLFyUooscazPbegvU37a0ZVn8SuD1TUNro=
+	b=v5/+6KA3dtNmCT2cgEDfF5tthVJYiNCIJ3FBLd4JhtsBtOc6B4uB2i28rZpVIji0B
+	 BF6BHSolReq8PVK74/9hmPsim+YrqrF94ukRdsGuJCo+K8X7KKWAlQlyfNfwT0fO09
+	 f4n6LM9CX64Ffi7lEzBg17ORB4NfADop09SoX3T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0004/1073] usb: musb: remove extra check in musb_gadget_vbus_draw
-Date: Wed, 28 Dec 2022 15:26:32 +0100
-Message-Id: <20221228144328.289244830@linuxfoundation.org>
+Subject: [PATCH 5.15 199/731] amdgpu/pm: prevent array underflow in vega20_odn_edit_dpm_table()
+Date: Wed, 28 Dec 2022 15:35:06 +0100
+Message-Id: <20221228144302.333001666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
+[ Upstream commit d27252b5706e51188aed7647126e44dcf9e940c1 ]
 
-The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
-usb_phy_set_power(), so there is no need of them. Moreover, not calling
-usb_phy_set_power() results in usb_phy_set_charger_current() not being
-called, so current USB config max current is not propagated through USB
-charger framework and charger drivers may try to draw more current than
-allowed or possible.
+In the PP_OD_EDIT_VDDC_CURVE case the "input_index" variable is capped at
+2 but not checked for negative values so it results in an out of bounds
+read.  This value comes from the user via sysfs.
 
-Fix that by removing those extra checks and calling usb_phy_set_power()
-directly.
-
-Tested on Motorola Droid4 and Nokia N900
-
-Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5bf26539494 ("drm/amd/powerplay: added vega20 overdrive support V3")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_gadget.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
-index 6704a62a1665..ba20272d2221 100644
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1628,8 +1628,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
- {
- 	struct musb	*musb = gadget_to_musb(gadget);
- 
--	if (!musb->xceiv->set_power)
--		return -EOPNOTSUPP;
- 	return usb_phy_set_power(musb->xceiv, mA);
- }
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+index 85d55ab4e369..299b5c838bf7 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
+@@ -2961,7 +2961,8 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 			data->od8_settings.od8_settings_array;
+ 	OverDriveTable_t *od_table =
+ 			&(data->smc_state_table.overdrive_table);
+-	int32_t input_index, input_clk, input_vol, i;
++	int32_t input_clk, input_vol, i;
++	uint32_t input_index;
+ 	int od8_id;
+ 	int ret;
  
 -- 
 2.35.1
