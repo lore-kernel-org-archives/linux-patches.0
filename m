@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED32C433F0;
-	Wed, 28 Dec 2022 15:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467851863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B962BC433F0;
+	Wed, 28 Dec 2022 15:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240812;
-	bh=IfPflDG+ZaVaSOscySthoebKOop/xJfzVWLKsJqdltw=;
+	s=korg; t=1672240815;
+	bh=fUIOlDH+3ab+iowmfyZM1jUBNP8GmpyhD9ZcT8xthr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xl057t9YxziUaWa7/C3lhh6uyJjnwtWuhcTD/0m1tP2IghFTW9XwC8v3eOfDOfO/q
-	 9bUk/hwFVz9g11Haqoc4LhxtbAIjkahb9EerMk/CH66ERDWwYnnpaiVKabRqer69JG
-	 zWXTc3KYLWs0If4gF3AyInmWqiP4+nIGn9YnzzA8=
+	b=iPFOKdjDd0tYmi1gDpl+vEx/5CykqWar3ZDPBtRt+6p/9MVkZRzEwS7aiPFmxKTO+
+	 L+E5ySFVgolUV5r7KoM/MSzZcV2od0EzdCzhf1vgUNwbYwbO40ETyH8uJ7rotu9GLT
+	 polJwd0bwLLlVOFhiFJ3CakKbp0hLnLt6sAvoGp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0170/1146] x86/xen: Fix memory leak in xen_smp_intr_init{_pv}()
-Date: Wed, 28 Dec 2022 15:28:29 +0100
-Message-Id: <20221228144334.776972688@linuxfoundation.org>
+Subject: [PATCH 6.0 0206/1073] libbpf: Reject legacy maps ELF section
+Date: Wed, 28 Dec 2022 15:29:54 +0100
+Message-Id: <20221228144333.614392419@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,176 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 69143f60868b3939ddc89289b29db593b647295e ]
+[ Upstream commit e19db6762c18ab1ddf7a3ef4d0023780c24dc1e8 ]
 
-These local variables @{resched|pmu|callfunc...}_name saves the new
-string allocated by kasprintf(), and when bind_{v}ipi_to_irqhandler()
-fails, it goes to the @fail tag, and calls xen_smp_intr_free{_pv}() to
-free resource, however the new string is not saved, which cause a memory
-leak issue. fix it.
+Add explicit error message if BPF object file is still using legacy BPF
+map definitions in SEC("maps"). Before this change, if BPF object file
+is still using legacy map definition user will see a bit confusing:
 
-Fixes: 9702785a747a ("i386: move xen")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221123155858.11382-2-xiujianfeng@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+  libbpf: elf: skipping unrecognized data section(4) maps
+  libbpf: prog 'handler': bad map relo against 'server_map' in section 'maps'
+
+Now libbpf will be explicit about rejecting "maps" ELF section:
+
+  libbpf: elf: legacy map definitions in 'maps' section are not supported by libbpf v1.0+
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20220803214202.23750-1-andrii@kernel.org
+Stable-dep-of: 51deedc9b868 ("libbpf: Use elf_getshdrnum() instead of e_shnum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/smp.c    | 24 ++++++++++++------------
- arch/x86/xen/smp_pv.c | 12 ++++++------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ tools/lib/bpf/libbpf.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/xen/smp.c b/arch/x86/xen/smp.c
-index c3e1f9a7d43a..4b0d6fff88de 100644
---- a/arch/x86/xen/smp.c
-+++ b/arch/x86/xen/smp.c
-@@ -32,30 +32,30 @@ static irqreturn_t xen_reschedule_interrupt(int irq, void *dev_id)
- 
- void xen_smp_intr_free(unsigned int cpu)
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 79ea83be21ce..264790796001 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -591,7 +591,6 @@ struct elf_state {
+ 	size_t strtabidx;
+ 	struct elf_sec_desc *secs;
+ 	int sec_cnt;
+-	int maps_shndx;
+ 	int btf_maps_shndx;
+ 	__u32 btf_maps_sec_btf_id;
+ 	int text_shndx;
+@@ -1272,7 +1271,6 @@ static struct bpf_object *bpf_object__new(const char *path,
+ 	 */
+ 	obj->efile.obj_buf = obj_buf;
+ 	obj->efile.obj_buf_sz = obj_buf_sz;
+-	obj->efile.maps_shndx = -1;
+ 	obj->efile.btf_maps_shndx = -1;
+ 	obj->efile.st_ops_shndx = -1;
+ 	obj->kconfig_map_idx = -1;
+@@ -3359,7 +3357,8 @@ static int bpf_object__elf_collect(struct bpf_object *obj)
+ 			if (err)
+ 				return err;
+ 		} else if (strcmp(name, "maps") == 0) {
+-			obj->efile.maps_shndx = idx;
++			pr_warn("elf: legacy map definitions in 'maps' section are not supported by libbpf v1.0+\n");
++			return -ENOTSUP;
+ 		} else if (strcmp(name, MAPS_ELF_SEC) == 0) {
+ 			obj->efile.btf_maps_shndx = idx;
+ 		} else if (strcmp(name, BTF_ELF_SEC) == 0) {
+@@ -3891,8 +3890,7 @@ static bool bpf_object__shndx_is_data(const struct bpf_object *obj,
+ static bool bpf_object__shndx_is_maps(const struct bpf_object *obj,
+ 				      int shndx)
  {
-+	kfree(per_cpu(xen_resched_irq, cpu).name);
-+	per_cpu(xen_resched_irq, cpu).name = NULL;
- 	if (per_cpu(xen_resched_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_resched_irq, cpu).irq, NULL);
- 		per_cpu(xen_resched_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_resched_irq, cpu).name);
--		per_cpu(xen_resched_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfunc_irq, cpu).name);
-+	per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfunc_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfunc_irq, cpu).irq, NULL);
- 		per_cpu(xen_callfunc_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfunc_irq, cpu).name);
--		per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_debug_irq, cpu).name);
-+	per_cpu(xen_debug_irq, cpu).name = NULL;
- 	if (per_cpu(xen_debug_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_debug_irq, cpu).irq, NULL);
- 		per_cpu(xen_debug_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_debug_irq, cpu).name);
--		per_cpu(xen_debug_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfuncsingle_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfuncsingle_irq, cpu).irq,
- 				       NULL);
- 		per_cpu(xen_callfuncsingle_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
--		per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	}
+-	return shndx == obj->efile.maps_shndx ||
+-	       shndx == obj->efile.btf_maps_shndx;
++	return shndx == obj->efile.btf_maps_shndx;
  }
  
-@@ -65,6 +65,7 @@ int xen_smp_intr_init(unsigned int cpu)
- 	char *resched_name, *callfunc_name, *debug_name;
- 
- 	resched_name = kasprintf(GFP_KERNEL, "resched%d", cpu);
-+	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 	rc = bind_ipi_to_irqhandler(XEN_RESCHEDULE_VECTOR,
- 				    cpu,
- 				    xen_reschedule_interrupt,
-@@ -74,9 +75,9 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_resched_irq, cpu).irq = rc;
--	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfunc%d", cpu);
-+	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_VECTOR,
- 				    cpu,
- 				    xen_call_function_interrupt,
-@@ -86,10 +87,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfunc_irq, cpu).irq = rc;
--	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 
- 	if (!xen_fifo_events) {
- 		debug_name = kasprintf(GFP_KERNEL, "debug%d", cpu);
-+		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_DEBUG, cpu,
- 					     xen_debug_interrupt,
- 					     IRQF_PERCPU | IRQF_NOBALANCING,
-@@ -97,10 +98,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_debug_irq, cpu).irq = rc;
--		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 	}
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfuncsingle%d", cpu);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_SINGLE_VECTOR,
- 				    cpu,
- 				    xen_call_function_single_interrupt,
-@@ -110,7 +111,6 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfuncsingle_irq, cpu).irq = rc;
--	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 
- 	return 0;
- 
-diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
-index 480be82e9b7b..6175f2c5c822 100644
---- a/arch/x86/xen/smp_pv.c
-+++ b/arch/x86/xen/smp_pv.c
-@@ -97,18 +97,18 @@ asmlinkage __visible void cpu_bringup_and_idle(void)
- 
- void xen_smp_intr_free_pv(unsigned int cpu)
- {
-+	kfree(per_cpu(xen_irq_work, cpu).name);
-+	per_cpu(xen_irq_work, cpu).name = NULL;
- 	if (per_cpu(xen_irq_work, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_irq_work, cpu).irq, NULL);
- 		per_cpu(xen_irq_work, cpu).irq = -1;
--		kfree(per_cpu(xen_irq_work, cpu).name);
--		per_cpu(xen_irq_work, cpu).name = NULL;
- 	}
- 
-+	kfree(per_cpu(xen_pmu_irq, cpu).name);
-+	per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	if (per_cpu(xen_pmu_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_pmu_irq, cpu).irq, NULL);
- 		per_cpu(xen_pmu_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_pmu_irq, cpu).name);
--		per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	}
- }
- 
-@@ -118,6 +118,7 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	char *callfunc_name, *pmu_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "irqwork%d", cpu);
-+	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_IRQ_WORK_VECTOR,
- 				    cpu,
- 				    xen_irq_work_interrupt,
-@@ -127,10 +128,10 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_irq_work, cpu).irq = rc;
--	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 
- 	if (is_xen_pmu) {
- 		pmu_name = kasprintf(GFP_KERNEL, "pmu%d", cpu);
-+		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_XENPMU, cpu,
- 					     xen_pmu_irq_handler,
- 					     IRQF_PERCPU|IRQF_NOBALANCING,
-@@ -138,7 +139,6 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_pmu_irq, cpu).irq = rc;
--		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 	}
- 
- 	return 0;
+ static enum libbpf_map_type
 -- 
 2.35.1
 
