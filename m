@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2197AC433D2;
-	Wed, 28 Dec 2022 16:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC391C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D914CC433D2;
+	Wed, 28 Dec 2022 16:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244305;
-	bh=6ynvoNBcRHIY+07gQO1b3IQel7Zzspk4k35kfzE0AZE=;
+	s=korg; t=1672244308;
+	bh=HL9Z5az8kD/QzVD8Tl1m3WFfIGrwKpFflLCoa51sxNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LX8ojNuJLqGb1Q4j8fciOu4PjYPFRpMcGMBrwLHkcFYMoGpxV6lgygQoaKYjCOGNe
-	 MrwhUL38sC5lO0LMdw4R4fGbX2ZJfgRkCmFJXuWR/GXAhMK6urSe8vZylEfCejyQGI
-	 ucr+5OL3PHwttH5M3CHYwXRS0MLXicQqczb1Bqzs=
+	b=NFsDJ7LGbga9J2YQbzpC27nACJQZKbSKfLVe3Anavhi80K0z9ODE8WuWoM43fGtiB
+	 HbifwKDrHQamOjkPo7PINt3A/CuUJVJjA7qmIZEjv9+7RsRE6Gm/QGeLtX8bvdjccc
+	 p5ZqLYnA80bTjFoorEPa1DZ2/HpESIy6dKCZ+6Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Klauser <tklauser@distanz.ch>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jiri Slaby <jslaby@suse.cz>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0688/1073] tty: serial: clean up stop-tx part in altera_uart_tx_chars()
-Date: Wed, 28 Dec 2022 15:37:56 +0100
-Message-Id: <20221228144346.722832827@linuxfoundation.org>
+Subject: [PATCH 6.1 0648/1146] scsi: efct: Fix possible memleak in efct_device_init()
+Date: Wed, 28 Dec 2022 15:36:27 +0100
+Message-Id: <20221228144347.759736648@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit d9c128117da41cf4cb0e80ae565b5d3ac79dffac ]
+[ Upstream commit bb0cd225dd37df1f4a22e36dad59ff33178ecdfc ]
 
-The "stop TX" path in altera_uart_tx_chars() is open-coded, so:
-* use uart_circ_empty() to check if the buffer is empty, and
-* when true, call altera_uart_stop_tx().
+In efct_device_init(), when efct_scsi_reg_fc_transport() fails,
+efct_scsi_tgt_driver_exit() is not called to release memory for
+efct_scsi_tgt_driver_init() and causes memleak:
 
-Cc: Tobias Klauser <tklauser@distanz.ch>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Tobias Klauser <tklauser@distanz.ch>
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20220920052049.20507-3-jslaby@suse.cz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
+unreferenced object 0xffff8881020ce000 (size 2048):
+  comm "modprobe", pid 465, jiffies 4294928222 (age 55.872s)
+  backtrace:
+    [<0000000021a1ef1b>] kmalloc_trace+0x27/0x110
+    [<000000004c3ed51c>] target_register_template+0x4fd/0x7b0 [target_core_mod]
+    [<00000000f3393296>] efct_scsi_tgt_driver_init+0x18/0x50 [efct]
+    [<00000000115de533>] 0xffffffffc0d90011
+    [<00000000d608f646>] do_one_initcall+0xd0/0x4e0
+    [<0000000067828cf1>] do_init_module+0x1cc/0x6a0
+    ...
+
+Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221111074046.57061-1-chenzhongjin@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/altera_uart.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/scsi/elx/efct/efct_driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
-index 8b749ed557c6..71478d098c13 100644
---- a/drivers/tty/serial/altera_uart.c
-+++ b/drivers/tty/serial/altera_uart.c
-@@ -272,10 +272,8 @@ static void altera_uart_tx_chars(struct altera_uart *pp)
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
+diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
+index b08fc8839808..49fd2cfed70c 100644
+--- a/drivers/scsi/elx/efct/efct_driver.c
++++ b/drivers/scsi/elx/efct/efct_driver.c
+@@ -42,6 +42,7 @@ efct_device_init(void)
  
--	if (xmit->head == xmit->tail) {
--		pp->imr &= ~ALTERA_UART_CONTROL_TRDY_MSK;
--		altera_uart_update_ctrl_reg(pp);
--	}
-+	if (uart_circ_empty(xmit))
-+		altera_uart_stop_tx(port);
- }
- 
- static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 	rc = efct_scsi_reg_fc_transport();
+ 	if (rc) {
++		efct_scsi_tgt_driver_exit();
+ 		pr_err("failed to register to FC host\n");
+ 		return rc;
+ 	}
 -- 
 2.35.1
 
