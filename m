@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81501C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E22BC433EF;
-	Wed, 28 Dec 2022 16:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADBA1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C55C433EF;
+	Wed, 28 Dec 2022 16:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244563;
-	bh=MtJxME0daBU8mxhlgoTcfsB+TZFPAlcvqI2POhUuFIA=;
+	s=korg; t=1672244566;
+	bh=WKZsGlJcj7T6Sy565WhJHuPvhBlrMw/lCS7NDMncPNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1ycGRBcV4xzHK1ZZSQwxb0CxtoJMTp00mUDfltTOpQk6NhMpId+uBJT00NlUcwy2
-	 gi9ORv5oSc9FPwlVEzvUkEYqATRAiRFlvhasyHrJFAxT3BkzvEECtnjwdGvUwmvZae
-	 Y/Vek+axAXaLYQp0QMLiuK6PoE13I4bkD2JELNFA=
+	b=sRp1oqeRoN+Pv7jKVhYj/CSTLrlP/zN1ZEXSBLQyS3eXZgFgK7Ce0EljuIGyfdTgJ
+	 0GAgAS65eTME4kUzp1YG1CZ9K7XdUr/MvM5MZahf+VP+7NmHIFAliF3UCp5MlOX1aG
+	 ULoGsTyI5pzONs0S/aRVe85GR8SYzwSj0oNX6lwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0733/1073] fbdev: ep93xx-fb: Add missing clk_disable_unprepare in ep93xxfb_probe()
-Date: Wed, 28 Dec 2022 15:38:41 +0100
-Message-Id: <20221228144347.932449040@linuxfoundation.org>
+Subject: [PATCH 6.1 0695/1146] uio: uio_dmem_genirq: Fix deadlock between irq config and handling
+Date: Wed, 28 Dec 2022 15:37:14 +0100
+Message-Id: <20221228144349.021897342@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit c84bf485a5aaf9aa0764a58832b7ef4375c29f03 ]
+[ Upstream commit 118b918018175d9fcd8db667f905012e986cc2c9 ]
 
-The clk_disable_unprepare() should be called in the error handling
-of register_framebuffer(), fix it.
+This fixes a concurrency issue addressed in commit 34cb27528398 ("UIO: Fix
+concurrency issue"):
 
-Fixes: 0937a7b3625d ("video: ep93xx: Prepare clock before using it")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+  "In a SMP case there was a race condition issue between
+  Uio_pdrv_genirq_irqcontrol() running on one CPU and irq handler on
+  another CPU. Fix it by spin_locking shared resources access inside irq
+  handler."
+
+The implementation of "uio_dmem_genirq" was based on "uio_pdrv_genirq" and
+it is used in a similar manner to the "uio_pdrv_genirq" driver with respect
+to interrupt configuration and handling. At the time "uio_dmem_genirq" was
+merged, both had the same implementation of the 'uio_info' handlers
+irqcontrol() and handler(), thus, both had the same concurrency issue
+mentioned by the above commit. However, the above patch was only applied to
+the "uio_pdrv_genirq" driver.
+
+Split out from commit 34cb27528398 ("UIO: Fix concurrency issue").
+
+Fixes: 0a0c3b5a24bd ("Add new uio device for dynamic memory allocation")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Link: https://lore.kernel.org/r/20220930224100.816175-3-rafaelmendsr@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ep93xx-fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/uio/uio_dmem_genirq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/ep93xx-fb.c b/drivers/video/fbdev/ep93xx-fb.c
-index 2398b3d48fed..305f1587bd89 100644
---- a/drivers/video/fbdev/ep93xx-fb.c
-+++ b/drivers/video/fbdev/ep93xx-fb.c
-@@ -552,12 +552,14 @@ static int ep93xxfb_probe(struct platform_device *pdev)
+diff --git a/drivers/uio/uio_dmem_genirq.c b/drivers/uio/uio_dmem_genirq.c
+index cb283ee36eaa..792c3e9c9ce5 100644
+--- a/drivers/uio/uio_dmem_genirq.c
++++ b/drivers/uio/uio_dmem_genirq.c
+@@ -110,8 +110,10 @@ static irqreturn_t uio_dmem_genirq_handler(int irq, struct uio_info *dev_info)
+ 	 * remember the state so we can allow user space to enable it later.
+ 	 */
  
- 	err = register_framebuffer(info);
- 	if (err)
--		goto failed_check;
-+		goto failed_framebuffer;
++	spin_lock(&priv->lock);
+ 	if (!test_and_set_bit(0, &priv->flags))
+ 		disable_irq_nosync(irq);
++	spin_unlock(&priv->lock);
  
- 	dev_info(info->dev, "registered. Mode = %dx%d-%d\n",
- 		 info->var.xres, info->var.yres, info->var.bits_per_pixel);
- 	return 0;
+ 	return IRQ_HANDLED;
+ }
+@@ -125,7 +127,8 @@ static int uio_dmem_genirq_irqcontrol(struct uio_info *dev_info, s32 irq_on)
+ 	 * in the interrupt controller, but keep track of the
+ 	 * state to prevent per-irq depth damage.
+ 	 *
+-	 * Serialize this operation to support multiple tasks.
++	 * Serialize this operation to support multiple tasks and concurrency
++	 * with irq handler on SMP systems.
+ 	 */
  
-+failed_framebuffer:
-+	clk_disable_unprepare(fbi->clk);
- failed_check:
- 	if (fbi->mach_info->teardown)
- 		fbi->mach_info->teardown(pdev);
+ 	spin_lock_irqsave(&priv->lock, flags);
 -- 
 2.35.1
 
