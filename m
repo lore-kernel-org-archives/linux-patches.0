@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C17F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D9DC433F0;
-	Wed, 28 Dec 2022 16:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67901C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684E8C433D2;
+	Wed, 28 Dec 2022 16:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245891;
-	bh=EG+e9gZtWBtSxd40PAuJyMF+fz0eBwH1KLEtrXDgJ8E=;
+	s=korg; t=1672245893;
+	bh=MsKCMRgsRiM3cHpDyWcl/k/gwLX4zmA6DMHBQa4n8gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvmxNxzFGoAosFP4HcOgv9w+oEAfo5fUqyj8ZP1YbXD4mEyDaQ6ZLrAOIXpCU/e2W
-	 CkcmUVgakdxziOXOvWzKle2pcMIhTAGVCCUDCKpM0t4TSvEXGRSQ05g1SsUoL7TALV
-	 BUUFGh9h109zM3Mf3227smtOLoDmf69cnWgjhp9E=
+	b=Znp9UK3wJjgKR6ed+V8zyMsDK1d4JlZtVKqnrWqQau2xUpSaC0cTGUYMD410JkjnF
+	 LpH1jBtkM53rOWYyetjM4qqWG2YyBV0q38D0loekdDcpQGzUlKRlAMk9TJvv35CMUd
+	 9bZxU2dG2McxPImsiR9y5dQce1aCJHzhudEUrvuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Sven Peter <sven@svenpeter.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0942/1146] binfmt_misc: fix shift-out-of-bounds in check_special_flags
-Date: Wed, 28 Dec 2022 15:41:21 +0100
-Message-Id: <20221228144355.901342888@linuxfoundation.org>
+Subject: [PATCH 6.0 0976/1073] Bluetooth: Add quirk to disable extended scanning
+Date: Wed, 28 Dec 2022 15:42:44 +0100
+Message-Id: <20221228144354.583097441@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
+[ Upstream commit 392fca352c7a95e2828d49e7500e26d0c87ca265 ]
 
-UBSAN reported a shift-out-of-bounds warning:
+Broadcom 4377 controllers found in Apple x86 Macs with the T2 chip
+claim to support extended scanning when querying supported states,
 
- left shift of 1 by 31 places cannot be represented in type 'int'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
-  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
-  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
-  check_special_flags fs/binfmt_misc.c:241 [inline]
-  create_entry fs/binfmt_misc.c:456 [inline]
-  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
-  vfs_write+0x11e/0x580 fs/read_write.c:582
-  ksys_write+0xcf/0x120 fs/read_write.c:637
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- RIP: 0033:0x4194e1
+< HCI Command: LE Read Supported St.. (0x08|0x001c) plen 0
+> HCI Event: Command Complete (0x0e) plen 12
+      LE Read Supported States (0x08|0x001c) ncmd 1
+        Status: Success (0x00)
+        States: 0x000003ffffffffff
+[...]
+          LE Set Extended Scan Parameters (Octet 37 - Bit 5)
+          LE Set Extended Scan Enable (Octet 37 - Bit 6)
+[...]
 
-Since the type of Node's flags is unsigned long, we should define these
-macros with same type too.
+, but then fail to actually implement the extended scanning:
 
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
+< HCI Command: LE Set Extended Sca.. (0x08|0x0041) plen 8
+        Own address type: Random (0x01)
+        Filter policy: Accept all advertisement (0x00)
+        PHYs: 0x01
+        Entry 0: LE 1M
+          Type: Active (0x01)
+          Interval: 11.250 msec (0x0012)
+          Window: 11.250 msec (0x0012)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Extended Scan Parameters (0x08|0x0041) ncmd 1
+        Status: Unknown HCI Command (0x01)
+
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_misc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/bluetooth/hci.h      | 10 ++++++++++
+ include/net/bluetooth/hci_core.h |  4 +++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
-index e1eae7ea823a..bb202ad369d5 100644
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
- static int enabled = 1;
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 4518c63e9d17..78c55b69919d 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -274,6 +274,16 @@ enum {
+ 	 * during the hdev->setup vendor callback.
+ 	 */
+ 	HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
++
++	/*
++	 * When this quirk is set, the HCI_OP_LE_SET_EXT_SCAN_ENABLE command is
++	 * disabled. This is required for some Broadcom controllers which
++	 * erroneously claim to support extended scanning.
++	 *
++	 * This quirk can be set before hci_register_dev is called or
++	 * during the hdev->setup vendor callback.
++	 */
++	HCI_QUIRK_BROKEN_EXT_SCAN,
+ };
  
- enum {Enabled, Magic};
--#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
--#define MISC_FMT_OPEN_BINARY (1 << 30)
--#define MISC_FMT_CREDENTIALS (1 << 29)
--#define MISC_FMT_OPEN_FILE (1 << 28)
-+#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
-+#define MISC_FMT_OPEN_BINARY (1UL << 30)
-+#define MISC_FMT_CREDENTIALS (1UL << 29)
-+#define MISC_FMT_OPEN_FILE (1UL << 28)
+ /* HCI device flags */
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index e7862903187d..29d1254f9856 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1681,7 +1681,9 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
  
- typedef struct {
- 	struct list_head list;
+ /* Use ext scanning if set ext scan param and ext scan enable is supported */
+ #define use_ext_scan(dev) (((dev)->commands[37] & 0x20) && \
+-			   ((dev)->commands[37] & 0x40))
++			   ((dev)->commands[37] & 0x40) && \
++			   !test_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &(dev)->quirks))
++
+ /* Use ext create connection if command is supported */
+ #define use_ext_conn(dev) ((dev)->commands[37] & 0x80)
+ 
 -- 
 2.35.1
 
