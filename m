@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FAE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC020C433B0;
-	Wed, 28 Dec 2022 14:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87651863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70066C433F0;
+	Wed, 28 Dec 2022 14:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239443;
-	bh=zGFTahzfv6jCrRSQCQKjPKoHgE3IqNayX45XGFJE6Ik=;
+	s=korg; t=1672239445;
+	bh=qd9gRWds5YnWnAS9h8v/neaOVhSFbYmkeCfObYcoaz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8qu37i9sKM/ianPn89V2e67FWhJ8+INjVQYM+I1k0B5ewRZKras/8Ltwtj7fMBW0
-	 EarPD1zHg2zT4koyeo4DI3h7P6LWRJROlF5mq3YPqxaNakBsGFQQ8hlpiisqoUA6C2
-	 oHB4pAbZerlcKVZhkvFnZ+k/QEjrTgjdpJ/chmF0=
+	b=s4tdvkNuDEIqbCXZ4jMdhxKs190Bu3z6CkHMorXYmqU6lzT6vRzLwYownWvbIbdif
+	 5zJqRO4mDqxkPGzacBAI0WawTzaBP2eBw8HaRhU7EQGX/LsH0YUKeACXZi9g5uwSu/
+	 Tc8I7dFptXVBqN7ttnJtVLAa9Up11Ar8v6ag9yYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jonathan Toppins <jtoppins@redhat.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0030/1073] soc: qcom: llcc: make irq truly optional
-Date: Wed, 28 Dec 2022 15:26:58 +0100
-Message-Id: <20221228144328.961944658@linuxfoundation.org>
+Subject: [PATCH 5.15 226/731] bonding: fix link recovery in mode 2 when updelay is nonzero
+Date: Wed, 28 Dec 2022 15:35:33 +0100
+Message-Id: <20221228144303.112281212@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Jonathan Toppins <jtoppins@redhat.com>
 
-[ Upstream commit c882c899ead3545102a4d71b5fbe73b9e4bc2657 ]
+[ Upstream commit f8a65ab2f3ff7410921ebbf0dc55453102c33c56 ]
 
-The function platform_get_irq prints an error message into the kernel
-log when the irq isn't found.
+Before this change when a bond in mode 2 lost link, all of its slaves
+lost link, the bonding device would never recover even after the
+expiration of updelay. This change removes the updelay when the bond
+currently has no usable links. Conforming to bonding.txt section 13.1
+paragraph 4.
 
-Since the interrupt is actually optional and not provided by some SoCs,
-use platform_get_irq_optional which does not print an error message.
-
-Fixes: c081f3060fab ("soc: qcom: Add support to register LLCC EDAC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104153041.412020-1-luca.weiss@fairphone.com
+Fixes: 41f891004063 ("bonding: ignore updelay param when there is no active slave")
+Signed-off-by: Jonathan Toppins <jtoppins@redhat.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 38d7296315a2..5942417c7c20 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -781,7 +781,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 402dffc508ef..6dca5bfe8247 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2504,7 +2504,16 @@ static int bond_miimon_inspect(struct bonding *bond)
+ 	struct slave *slave;
+ 	bool ignore_updelay;
  
--	drv_data->ecc_irq = platform_get_irq(pdev, 0);
-+	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
- 	if (drv_data->ecc_irq >= 0) {
- 		llcc_edac = platform_device_register_data(&pdev->dev,
- 						"qcom_llcc_edac", -1, drv_data,
+-	ignore_updelay = !rcu_dereference(bond->curr_active_slave);
++	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
++		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
++	} else {
++		struct bond_up_slave *usable_slaves;
++
++		usable_slaves = rcu_dereference(bond->usable_slaves);
++
++		if (usable_slaves && usable_slaves->count == 0)
++			ignore_updelay = true;
++	}
+ 
+ 	bond_for_each_slave_rcu(bond, slave, iter) {
+ 		bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
 -- 
 2.35.1
 
