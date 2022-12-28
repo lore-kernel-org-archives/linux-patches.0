@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1BC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641DAC433F0;
-	Wed, 28 Dec 2022 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A3C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAE1C433EF;
+	Wed, 28 Dec 2022 15:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241846;
-	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
+	s=korg; t=1672241849;
+	bh=SxhX8RRTugluLrIwxcNtKr6LnnBhcPBA0pudhYJip5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7nC41eAA4iFqvwyoyFNCGToYq5RJbkzQsbtq0h8kBKiuZWC3iZ3raeGzxg8NAKeS
-	 dpuZm/ZKEPZrqSmtE21rXIeykZVc5vP+Fj1UDn3mmP8vhOpv/i1xKg8wjrdixR5DJY
-	 /hSglr6YknU56eNp4UT8q85cnw3jSG3Udh8ku3+Q=
+	b=M+tZzE4l/fXFl5eg72oQDqD1ZkLUvIOm7IW7q3kcnSITmzB2hLusZzRy5oVr/RBFp
+	 Z/5zYWlftwRcRwsus8sAHFNPAvgi1nNp7px6t+d1nuBW2sgj8szfgUsSYzjh8czr/h
+	 6xyvczaX1BTOoeECIJ5nnu4dIr52P09I4A8XmiR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0269/1146] spi: Update reference to struct spi_controller
-Date: Wed, 28 Dec 2022 15:30:08 +0100
-Message-Id: <20221228144337.443536409@linuxfoundation.org>
+Subject: [PATCH 6.0 0303/1073] drm: rcar-du: Drop leftovers dependencies from Kconfig
+Date: Wed, 28 Dec 2022 15:31:31 +0100
+Message-Id: <20221228144336.241661335@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
+[ Upstream commit 1760eb547276299ab0c6a6cd3d29469e54ade615 ]
 
-struct spi_master has been renamed to struct spi_controller. Update the
-reference in spi.rst to make it clickable again.
+Commit 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward
+compatibility") has removed device tree overlay sources used for
+backward compatibility with old bindings, but forgot to remove related
+dependencies from Kconfig. Fix it.
 
-Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward compatibility")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/spi.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rcar-du/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
-index f64cb666498a..f28887045049 100644
---- a/Documentation/driver-api/spi.rst
-+++ b/Documentation/driver-api/spi.rst
-@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
- a pair of FIFOs connected to dual DMA engines on the other side of the
- SPI shift register (maximizing throughput). Such drivers bridge between
- whatever bus they sit on (often the platform bus) and SPI, and expose
--the SPI side of their device as a :c:type:`struct spi_master
--<spi_master>`. SPI devices are children of that master,
-+the SPI side of their device as a :c:type:`struct spi_controller
-+<spi_controller>`. SPI devices are children of that master,
- represented as a :c:type:`struct spi_device <spi_device>` and
- manufactured from :c:type:`struct spi_board_info
- <spi_board_info>` descriptors which are usually provided by
+diff --git a/drivers/gpu/drm/rcar-du/Kconfig b/drivers/gpu/drm/rcar-du/Kconfig
+index f6e6a6d5d987..b3c29ca7726e 100644
+--- a/drivers/gpu/drm/rcar-du/Kconfig
++++ b/drivers/gpu/drm/rcar-du/Kconfig
+@@ -41,8 +41,6 @@ config DRM_RCAR_LVDS
+ 	depends on DRM_RCAR_USE_LVDS
+ 	select DRM_KMS_HELPER
+ 	select DRM_PANEL
+-	select OF_FLATTREE
+-	select OF_OVERLAY
+ 
+ config DRM_RCAR_MIPI_DSI
+ 	tristate "R-Car DU MIPI DSI Encoder Support"
 -- 
 2.35.1
 
