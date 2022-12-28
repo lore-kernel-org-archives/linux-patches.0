@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC351C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4056CC433D2;
-	Wed, 28 Dec 2022 16:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E9E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF027C433D2;
+	Wed, 28 Dec 2022 16:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244329;
-	bh=PsdoUCgKGoT+qjsLcICgMpI7tNh7jj7sNMm4wCZduN8=;
+	s=korg; t=1672244332;
+	bh=qtRNaFWP/S9246Vt70Ya97ShjkPQZHDyDmVB5FtagRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiuMrtNBm8VNbw+T+aTg2KNPiDXLuuFhZ9tpWAkr91zc0gGBR+ZdZkypo2hjeR0Rw
-	 7GMockJ/l0PjM50f0FPQ/xJKwqDGByRdxwN0A0GeAmai2Yj/lgAzch30p8U3q3TUUY
-	 V2cfTmOInNY4fg7DM+mGDhHiLPSM6a70hO0l6B0o=
+	b=TV8B0Omea9IsuzLKdN8LjrJbR8Ir4gC+Gcoxp47hvUd1M7+5rqY1XFFUh5Xn3j2oG
+	 l2P4+N87iz469azOZfi2u96YThmtZ528xyF7j6jFCYS9+XPe/xDR8oekIkIhNirhhe
+	 bONHBMHuLHeyNUknDMq97u71rURRzve3GzMr7VIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0692/1073] test_firmware: fix memory leak in test_firmware_init()
-Date: Wed, 28 Dec 2022 15:38:00 +0100
-Message-Id: <20221228144346.829738056@linuxfoundation.org>
+Subject: [PATCH 6.1 0652/1146] scsi: scsi_debug: Fix possible name leak in sdebug_add_host_helper()
+Date: Wed, 28 Dec 2022 15:36:31 +0100
+Message-Id: <20221228144347.868450863@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
+[ Upstream commit e6d773f93a49e0eda88a903a2a6542ca83380eb1 ]
 
-When misc_register() failed in test_firmware_init(), the memory pointed
-by test_fw_config->name is not released. The memory leak information is
-as follows:
-unreferenced object 0xffff88810a34cb00 (size 32):
-  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
-  hex dump (first 32 bytes):
-    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
-    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
-  backtrace:
-    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
-    [<ffffffff81affb96>] kstrndup+0x46/0xc0
-    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
-    [<ffffffffa040f068>] 0xffffffffa040f068
-    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
-    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
-    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
-    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
-    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
-    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id
+string array"), the name of device is allocated dynamically, it needs be
+freed when device_register() returns error.
 
-Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As comment of device_register() says, one should use put_device() to give
+up the reference in the error path. Fix this by calling put_device(), then
+the name can be freed in kobject_cleanup(), and sdbg_host is freed in
+sdebug_release_adapter().
+
+When the device release is not set, it means the device is not initialized.
+We can not call put_device() in this case. Use kfree() to free memory.
+
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112131010.3757845-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_debug.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index c82b65947ce6..1c5a2adb16ef 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -1491,6 +1491,7 @@ static int __init test_firmware_init(void)
- 
- 	rc = misc_register(&test_fw_misc_device);
- 	if (rc) {
-+		__test_firmware_config_free();
- 		kfree(test_fw_config);
- 		pr_err("could not register misc device: %d\n", rc);
- 		return rc;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 20e64b7d3f7b..b77035ddc944 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -7340,7 +7340,10 @@ static int sdebug_add_host_helper(int per_host_idx)
+ 		kfree(sdbg_devinfo->zstate);
+ 		kfree(sdbg_devinfo);
+ 	}
+-	kfree(sdbg_host);
++	if (sdbg_host->dev.release)
++		put_device(&sdbg_host->dev);
++	else
++		kfree(sdbg_host);
+ 	pr_warn("%s: failed, errno=%d\n", __func__, -error);
+ 	return error;
+ }
 -- 
 2.35.1
 
