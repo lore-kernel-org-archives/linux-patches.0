@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD1C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126AFC433D2;
-	Wed, 28 Dec 2022 15:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9571875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94DFC433D2;
+	Wed, 28 Dec 2022 15:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242686;
-	bh=4D5mQ6goGwcec4+foq5xSItBup7/X+41QmEMPozvQdU=;
+	s=korg; t=1672242689;
+	bh=Mu9PiKrStsCHimDyzBVAY48ByRF4CSmzDMSPGqPB6Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKMwOEh2a8H45J9HgISW/NQss0SEYZR/mbJ+1CjonpgmLCEOfUZIsA5ZvrXFsCF9H
-	 KbgeNPcZ1yqUAlQ+WLKHJr4BxaRQmRJGXj0j7CRjrYJRxg6A+Jg5c53QnsAnlFlVg5
-	 M/FbJik9FwE9gauzxcS+aqk25Uj3124okg8PEiKI=
+	b=sAxLFbyQ4hMBWhoaBohMRoCUrcFeYvC2KH+adlybuK06Q9i4HsFQj8iEqS1YEXJ1x
+	 fdFlJYvBhWE0dSDaxS1Imoi9F/s6D+N8Les51I/dN3FBBIa5teWE6eClygHqD6xrJX
+	 U+V56LCdPLFcnY/f+rmaYOl0I4o3BV/mUYHuEYHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Carson Vandegriffe <carson.vandegriffe@candelatech.com>,
+	Chad Monroe <chad.monroe@smartrg.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0402/1146] pinctrl: pinconf-generic: add missing of_node_put()
-Date: Wed, 28 Dec 2022 15:32:21 +0100
-Message-Id: <20221228144341.084264144@linuxfoundation.org>
+Subject: [PATCH 6.0 0440/1073] wifi: mt76: mt7915: fix mt7915_mac_set_timing()
+Date: Wed, 28 Dec 2022 15:33:48 +0100
+Message-Id: <20221228144339.979023251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
+[ Upstream commit 0c881dc08fd71ca2673f31a64989fbb28eac26f4 ]
 
-of_node_put() needs to be called when jumping out of the loop, since
-for_each_available_child_of_node() will increase the refcount of node.
+Correct mac timiing settings for different hardware generations.
+This improves 40-60Mbps performance.
 
-Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 9aac2969fe5f ("mt76: mt7915: update mac timing settings")
+Reported-By: Carson Vandegriffe <carson.vandegriffe@candelatech.com>
+Tested-by: Chad Monroe <chad.monroe@smartrg.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinconf-generic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7915/mac.c   | 21 +++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
-index 415d1df8f46a..365c4b0ca465 100644
---- a/drivers/pinctrl/pinconf-generic.c
-+++ b/drivers/pinctrl/pinconf-generic.c
-@@ -395,8 +395,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	for_each_available_child_of_node(np_config, np) {
- 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
- 					&reserved_maps, num_maps, type);
--		if (ret < 0)
-+		if (ret < 0) {
-+			of_node_put(np);
- 			goto exit;
-+		}
- 	}
- 	return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 49aa5c056063..68e1cf5a1044 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1146,7 +1146,7 @@ void mt7915_mac_set_timing(struct mt7915_phy *phy)
+ 		  FIELD_PREP(MT_TIMEOUT_VAL_CCA, 48);
+ 	u32 ofdm = FIELD_PREP(MT_TIMEOUT_VAL_PLCP, 60) |
+ 		   FIELD_PREP(MT_TIMEOUT_VAL_CCA, 28);
+-	int offset;
++	int eifs_ofdm = 360, sifs = 10, offset;
+ 	bool a_band = !(phy->mt76->chandef.chan->band == NL80211_BAND_2GHZ);
  
+ 	if (!test_bit(MT76_STATE_RUNNING, &phy->mt76->state))
+@@ -1164,17 +1164,26 @@ void mt7915_mac_set_timing(struct mt7915_phy *phy)
+ 	reg_offset = FIELD_PREP(MT_TIMEOUT_VAL_PLCP, offset) |
+ 		     FIELD_PREP(MT_TIMEOUT_VAL_CCA, offset);
+ 
++	if (!is_mt7915(&dev->mt76)) {
++		if (!a_band) {
++			mt76_wr(dev, MT_TMAC_ICR1(phy->band_idx),
++				FIELD_PREP(MT_IFS_EIFS_CCK, 314));
++			eifs_ofdm = 78;
++		} else {
++			eifs_ofdm = 84;
++		}
++	} else if (a_band) {
++		sifs = 16;
++	}
++
+ 	mt76_wr(dev, MT_TMAC_CDTR(phy->band_idx), cck + reg_offset);
+ 	mt76_wr(dev, MT_TMAC_ODTR(phy->band_idx), ofdm + reg_offset);
+ 	mt76_wr(dev, MT_TMAC_ICR0(phy->band_idx),
+-		FIELD_PREP(MT_IFS_EIFS_OFDM, a_band ? 84 : 78) |
++		FIELD_PREP(MT_IFS_EIFS_OFDM, eifs_ofdm) |
+ 		FIELD_PREP(MT_IFS_RIFS, 2) |
+-		FIELD_PREP(MT_IFS_SIFS, 10) |
++		FIELD_PREP(MT_IFS_SIFS, sifs) |
+ 		FIELD_PREP(MT_IFS_SLOT, phy->slottime));
+ 
+-	mt76_wr(dev, MT_TMAC_ICR1(phy->band_idx),
+-		FIELD_PREP(MT_IFS_EIFS_CCK, 314));
+-
+ 	if (phy->slottime < 20 || a_band)
+ 		val = MT7915_CFEND_RATE_DEFAULT;
+ 	else
 -- 
 2.35.1
 
