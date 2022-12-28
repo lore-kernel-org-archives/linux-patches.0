@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4842C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03B5C433A4;
-	Wed, 28 Dec 2022 16:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF2C433EF;
+	Wed, 28 Dec 2022 16:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244796;
-	bh=QxSUR4nYeki/U9OxdIBOBvWP0VUu4Wb6oL8wXCjPKmQ=;
+	s=korg; t=1672244798;
+	bh=drdpszKaXyRcyESU1j0tSxktDbSa/tboU9PSkZ/kxxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/m3FfjRE2DE7VToH6Kz0fMIXmBDAhH72UQ4aM8RMEnpDjCtFF0CYBX8KCASJMiFg
-	 umsxrVLjxmMNV/IFmD/Y7frdlhuV8ZozqoiKxg1Sr5TqnaBVJwW1AKr1pokVoDlxH+
-	 CI5NM4Vr1a9KKntZgo8xUJcc6ShCN1O8PHejv7+g=
+	b=ZLxGVgnDk7i9AL2Phg29k9t2Vrgd+CwuwHxzypULf26DNDf1Ylj72Ik2JDxYl1aM+
+	 hb9pFI7ZXpWEoBrbpgESwxW3GA2FxTDncDE/rnrGihk9Lkao8Hr0eMoi3tku1Sjyxg
+	 BCtyreMuSUeaSm1uqLe2/iaNzuudCmRVVI+KyDpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	YueHaibing <yuehaibing@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0775/1073] phy: usb: Use slow clock for wake enabled suspend
-Date: Wed, 28 Dec 2022 15:39:23 +0100
-Message-Id: <20221228144349.063603444@linuxfoundation.org>
+Subject: [PATCH 6.1 0738/1146] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
+Date: Wed, 28 Dec 2022 15:37:57 +0100
+Message-Id: <20221228144350.193286491@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 700c44b508020a3ea29d297c677f8d4ab14b7e6a ]
+[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
 
-The logic was incorrect when switching to slow clock. We want the slow
-clock if wake_enabled is set.
+The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
+after calling this, dereferencing skb may trigger use-after-free.
+Found by Smatch.
 
-Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-6-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-index d2524b70ea16..b3386e458dd4 100644
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -331,13 +331,12 @@ static void usb_uninit_common_7216(struct brcm_usb_init_params *params)
- 
- 	pr_debug("%s\n", __func__);
- 
--	if (!params->wake_enabled) {
--		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
--
-+	if (params->wake_enabled) {
- 		/* Switch to using slower clock during suspend to save power */
- 		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
--	} else {
- 		usb_wake_enable_7216(params, true);
-+	} else {
-+		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
+diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
+index 46d75e925ee9..f710eb2a95f3 100644
+--- a/drivers/staging/rtl8192e/rtllib_rx.c
++++ b/drivers/staging/rtl8192e/rtllib_rx.c
+@@ -1489,9 +1489,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
+ 		hdrlen += 4;
  	}
- }
  
+-	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 	ieee->stats.rx_packets++;
+ 	ieee->stats.rx_bytes += skb->len;
++	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 
+ 	return 1;
+ }
 -- 
 2.35.1
 
