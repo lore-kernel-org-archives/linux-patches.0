@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AE61C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8626EC433D2;
-	Wed, 28 Dec 2022 16:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12B71C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370AFC433EF;
+	Wed, 28 Dec 2022 16:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244761;
-	bh=+bIk7tjtpkCEUlTW6HpqU00Mn2Wm+piJqHLtGfLD+A8=;
+	s=korg; t=1672244764;
+	bh=xJmIZES7AHgJ86zvjlr3EmsXBGWYcZ8YuKr18CqoSxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbPRI024IsIcAACSSAAmM4/eKKKjukZfHbfBDm9d+WYZZk/ydIGABl7Ldkmr6swyB
-	 V8FUb3F97eT4y42ipWgLO9L9Z6bu23Z4diQuBSMKia7kesPfLJ4kV58L1vyptNknth
-	 v6iySnQGMVAPWE4F8sUWBlgDPa0JCGU88ZK3WFSs=
+	b=mk5VjORCHtwGvMBNvXXjPSOoq4hmYJkumhCqgZwbcL+QCalJbd97U/scpLhYMy7Ft
+	 1l0oKSA5hT4MdG2F6iwathHsm+G39JLkM96HR+b8fnr1X6uniHP3d2Bro3PY1vCsXe
+	 JRgvjycNmly3tGcJfNjUIXbXCWMjvsexbObC5Pvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0732/1146] drivers: mcb: fix resource leak in mcb_probe()
-Date: Wed, 28 Dec 2022 15:37:51 +0100
-Message-Id: <20221228144350.028876859@linuxfoundation.org>
+Subject: [PATCH 6.0 0752/1073] power: supply: bq25890: Convert to i2cs .probe_new()
+Date: Wed, 28 Dec 2022 15:39:00 +0100
+Message-Id: <20221228144348.445653495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit d7237462561fcd224fa687c56ccb68629f50fc0d ]
+[ Upstream commit c5cddca2351b291c8787b45cd046b1dfeb86979f ]
 
-When probe hook function failed in mcb_probe(), it doesn't put the device.
-Compiled test only.
+The probe function doesn't make use of the i2c_device_id * parameter so it
+can be trivially converted.
 
-Fixes: 7bc364097a89 ("mcb: Acquire reference to device in probe")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/9f87de36bfb85158b506cb78c6fc9db3f6a3bad1.1669624063.git.johannes.thumshirn@wdc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: a7aaa80098d5 ("power: supply: bq25890: Ensure pump_express_work is cancelled on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq25890_charger.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
-index 338fc889b357..b8ad4f16b4ac 100644
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -71,8 +71,10 @@ static int mcb_probe(struct device *dev)
- 
- 	get_device(dev);
- 	ret = mdrv->probe(mdev, found_id);
--	if (ret)
-+	if (ret) {
- 		module_put(carrier_mod);
-+		put_device(dev);
-+	}
- 
- 	return ret;
+diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
+index 86228753e804..b4c8481ea17b 100644
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1189,8 +1189,7 @@ static int bq25890_fw_probe(struct bq25890_device *bq)
+ 	return 0;
  }
+ 
+-static int bq25890_probe(struct i2c_client *client,
+-			 const struct i2c_device_id *id)
++static int bq25890_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
+ 	struct bq25890_device *bq;
+@@ -1391,7 +1390,7 @@ static struct i2c_driver bq25890_driver = {
+ 		.acpi_match_table = ACPI_PTR(bq25890_acpi_match),
+ 		.pm = &bq25890_pm,
+ 	},
+-	.probe = bq25890_probe,
++	.probe_new = bq25890_probe,
+ 	.remove = bq25890_remove,
+ 	.shutdown = bq25890_shutdown,
+ 	.id_table = bq25890_i2c_ids,
 -- 
 2.35.1
 
