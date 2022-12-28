@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1267C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B682C433EF;
-	Wed, 28 Dec 2022 14:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68CE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D287C433EF;
+	Wed, 28 Dec 2022 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239358;
-	bh=kl9t3VKFk9KL5Sokgh4hA/Dvd50iPx2j8/AN9euXYsY=;
+	s=korg; t=1672239361;
+	bh=j6yiISYLHn5zMVQ07eX9Agdjit7ayMym+p7aP10Xw5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyNqRx5LxUy7QreuiM1hoAtIGCPvsceLfrsPRbTQcEbCF5T+eVnWJofYCQfk46sMO
-	 wQDgp7IM5+c4CiGAmibshQHS+t3BltPzaZ7QvdC9EqDbGTBTV73p7tc56qsaOvviHZ
-	 OU/TZSKLnns8JeUSv8S5U+mmEbflNTWF1NHgFsH8=
+	b=0c8cre62OdhwVUFsFGUqI2lvpJe1gj5BeZ2ZbnZg/vpOfj2+wdgPbjlmVoQbka5tA
+	 R8Xmkanfq8l8fMjDx1km4Tjo8PnD45i7F04tYx3wvI+TdvZPdueBoYMjxEm0MtKlni
+	 UbiMyxWMaEChWVwZ3SC8cUW45ve0GClZgHK0MlNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 211/731] media: vidtv: Fix use-after-free in vidtv_bridge_dvb_init()
-Date: Wed, 28 Dec 2022 15:35:18 +0100
-Message-Id: <20221228144302.673762635@linuxfoundation.org>
+Subject: [PATCH 6.0 0016/1073] arm64: dts: qcom: sdm630: fix UART1 pin bias
+Date: Wed, 28 Dec 2022 15:26:44 +0100
+Message-Id: <20221228144328.600792431@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,88 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ba8d9405935097e296bcf7a942c3a01df0edb865 ]
+[ Upstream commit 780f836fe071a9e8703fe6a05ae00129acf83391 ]
 
-KASAN reports a use-after-free:
-BUG: KASAN: use-after-free in dvb_dmxdev_release+0x4d5/0x5d0 [dvb_core]
-Call Trace:
- ...
- dvb_dmxdev_release+0x4d5/0x5d0 [dvb_core]
- vidtv_bridge_probe+0x7bf/0xa40 [dvb_vidtv_bridge]
- platform_probe+0xb6/0x170
- ...
-Allocated by task 1238:
- ...
- dvb_register_device+0x1a7/0xa70 [dvb_core]
- dvb_dmxdev_init+0x2af/0x4a0 [dvb_core]
- vidtv_bridge_probe+0x766/0xa40 [dvb_vidtv_bridge]
- ...
-Freed by task 1238:
- dvb_register_device+0x6d2/0xa70 [dvb_core]
- dvb_dmxdev_init+0x2af/0x4a0 [dvb_core]
- vidtv_bridge_probe+0x766/0xa40 [dvb_vidtv_bridge]
- ...
+There is no "bias-no-pull" property.  Assume intentions were disabling
+bias.
 
-It is because the error handling in vidtv_bridge_dvb_init() is wrong.
-
-First, vidtv_bridge_dmx(dev)_init() will clean themselves when fail, but
-goto fail_dmx(_dev): calls release functions again, which causes
-use-after-free.
-
-Also, in fail_fe, fail_tuner_probe and fail_demod_probe, j = i will cause
-out-of-bound when i finished its loop (i == NUM_FE). And the loop
-releasing is wrong, although now NUM_FE is 1 so it won't cause problem.
-
-Fix this by correctly releasing everything.
-
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221010114417.29859-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/test-drivers/vidtv/vidtv_bridge.c   | 22 +++++++------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-index 82620613d56b..dff7265a42ca 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -459,26 +459,20 @@ static int vidtv_bridge_dvb_init(struct vidtv_dvb *dvb)
- 	for (j = j - 1; j >= 0; --j)
- 		dvb->demux.dmx.remove_frontend(&dvb->demux.dmx,
- 					       &dvb->dmx_fe[j]);
--fail_dmx_dev:
- 	dvb_dmxdev_release(&dvb->dmx_dev);
--fail_dmx:
-+fail_dmx_dev:
- 	dvb_dmx_release(&dvb->demux);
-+fail_dmx:
-+fail_demod_probe:
-+	for (i = i - 1; i >= 0; --i) {
-+		dvb_unregister_frontend(dvb->fe[i]);
- fail_fe:
--	for (j = i; j >= 0; --j)
--		dvb_unregister_frontend(dvb->fe[j]);
-+		dvb_module_release(dvb->i2c_client_tuner[i]);
- fail_tuner_probe:
--	for (j = i; j >= 0; --j)
--		if (dvb->i2c_client_tuner[j])
--			dvb_module_release(dvb->i2c_client_tuner[j]);
--
--fail_demod_probe:
--	for (j = i; j >= 0; --j)
--		if (dvb->i2c_client_demod[j])
--			dvb_module_release(dvb->i2c_client_demod[j]);
--
-+		dvb_module_release(dvb->i2c_client_demod[i]);
-+	}
- fail_adapter:
- 	dvb_unregister_adapter(&dvb->adapter);
--
- fail_i2c:
- 	i2c_del_adapter(&dvb->i2c_adapter);
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 1bc9091cad2a..12f01815230b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -773,7 +773,7 @@ rx-cts-rts {
+ 					pins = "gpio17", "gpio18", "gpio19";
+ 					function = "gpio";
+ 					drive-strength = <2>;
+-					bias-no-pull;
++					bias-disable;
+ 				};
+ 			};
  
 -- 
 2.35.1
