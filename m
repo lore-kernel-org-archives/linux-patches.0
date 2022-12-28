@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B82C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47FAC433F0;
-	Wed, 28 Dec 2022 15:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD03A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5426BC433D2;
+	Wed, 28 Dec 2022 15:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240187;
-	bh=0+NNa5fpyW3DCq73rttI0isSuvvtqapy9L9/HEa6Tz0=;
+	s=korg; t=1672240189;
+	bh=IqJZ+mc+y1zrA9Wz06cUVtD47RJVvdK8LZZdWL57Zj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgRkYW/fpBlj4vD1ecageq9Se7J1Mub+nAYQeXYaUQyuOvC9YwQViYHt3iOa5fwJp
-	 yFC++pKp8fUFxoerqV7pVZO+AAZRs/Ybe2Q6ovpvXV/BcGtBp4saHedpT2VWqotZkY
-	 YEBdaTi4yyYktqQAfx9Vwa2owURoxjPRGpywWAGI=
+	b=d21jlaoSOs712G7u23uP7RC0alaRBALZHrgaXgg3i1NbOVRAoMl5ONpXVVu17MZPm
+	 LLK991YT6ycELiOjrAD/9Gubq0QsxGUtRtQcsIFPLSq6ij/kzJoI+HCBkMKGBfo/Uh
+	 epcVAhKmEFbqNTtVXjedd6IURu1+NcflMr0B7fgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 319/731] blktrace: Fix output non-blktrace event when blk_classic option enabled
-Date: Wed, 28 Dec 2022 15:37:06 +0100
-Message-Id: <20221228144305.823198406@linuxfoundation.org>
+Subject: [PATCH 6.0 0128/1073] ACPI: pfr_update: use ACPI_FREE() to free acpi_object
+Date: Wed, 28 Dec 2022 15:28:36 +0100
+Message-Id: <20221228144331.512758976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
+[ Upstream commit e335beed78ec82656dcb554f9fe560709f0dc408 ]
 
-When the blk_classic option is enabled, non-blktrace events must be
-filtered out. Otherwise, events of other types are output in the blktrace
-classic format, which is unexpected.
+acpi_evaluate_dsm_typed()/acpi_evaluate_dsm() should be coupled with
+ACPI_FREE() to free the ACPI memory, because we need to track the
+allocation of acpi_object when ACPI_DBG_TRACK_ALLOCATIONS enabled,
+so use ACPI_FREE() instead of kfree().
 
-The problem can be triggered in the following ways:
-
-  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
-  # echo 1 > /sys/kernel/debug/tracing/events/enable
-  # echo blk > /sys/kernel/debug/tracing/current_tracer
-  # cat /sys/kernel/debug/tracing/trace_pipe
-
-Fixes: c71a89615411 ("blktrace: add ftrace plugin")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/blktrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/pfr_update.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
-index eaa98e2b468f..16b0d3fa56e0 100644
---- a/kernel/trace/blktrace.c
-+++ b/kernel/trace/blktrace.c
-@@ -1547,7 +1547,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
+diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
+index 6bb0b778b5da..9d2bdc13253a 100644
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -178,7 +178,7 @@ static int query_capability(struct pfru_update_cap_info *cap_hdr,
+ 	ret = 0;
  
- static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
- {
--	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
-+	if ((iter->ent->type != TRACE_BLK) ||
-+	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
- 		return TRACE_TYPE_UNHANDLED;
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
  
- 	return print_one_line(iter, true);
+ 	return ret;
+ }
+@@ -224,7 +224,7 @@ static int query_buffer(struct pfru_com_buf_info *info,
+ 	ret = 0;
+ 
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
+@@ -385,7 +385,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
+ 	ret = 0;
+ 
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
 -- 
 2.35.1
 
