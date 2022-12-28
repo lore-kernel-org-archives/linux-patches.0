@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA96C433D2;
-	Wed, 28 Dec 2022 15:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DE71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F91C433D2;
+	Wed, 28 Dec 2022 15:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242597;
-	bh=PBBpVCg0l7zWlUPjh9wrXLw6LnhsziQPkz7+SKKEros=;
+	s=korg; t=1672242600;
+	bh=t8zlbSGSsooAWtq4TLVBiXeczbyuDynXBmG8sjChtnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRjsIZL/vohUkCWpe3cRQkbsmuqHj/2E6PKwzxvfqDRKFYuoovzCh8piCiti8FROf
-	 8qa+2gRa2l4ZPN7/TLmihryyYztRBqby848g6Cqx4QU7APIg0GEcIg6qhQwotH6MSs
-	 M3oyMaftxf439SsaVCh44G+/xgzf9W/hqpBCjJrI=
+	b=bN6mftvuglVE4qsA/1lXMzZinY6Q3/SB484eFxBmBJONXYYdV/evphGWMuzb9LlCW
+	 TooO7MAvmx21CqQ2Qw8zHkn4j/LxiXhp+lYkQtEcMtpvw2gWHrswvg5DoNWWippWs0
+	 BaaMq0wApyFkZXz2psLsud8hj82EV28THaJ6NBlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxin Yu <jiaxin.yu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0392/1146] ASoC: mediatek: mt8186: Correct I2S shared clocks
-Date: Wed, 28 Dec 2022 15:32:11 +0100
-Message-Id: <20221228144340.812658596@linuxfoundation.org>
+Subject: [PATCH 6.0 0430/1073] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
+Date: Wed, 28 Dec 2022 15:33:38 +0100
+Message-Id: <20221228144339.707234303@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiaxin Yu <jiaxin.yu@mediatek.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 248579fc9a4f3bf36e7cfe9f6a354cee0f9848dc ]
+[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
 
-In mt8186 platform, I2S2 should be the main I2S port that provide
-the clock, on the contrary I2S3 should be the second I2S port that
-use this clock.
+In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
+__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
+sock_put() will be called multiple times.
 
-Fixes: 9986bdaee477 ("ASoC: mediatek: mt8186: Configure shared clocks")
-Signed-off-by: Jiaxin Yu <jiaxin.yu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221124023050.4470-1-jiaxin.yu@mediatek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+We should reset the eval variable to __SK_NONE every time more_data
+starts.
+
+This causes:
+
+IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
+Modules linked in:
+CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
+Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
+Call Trace:
+ <TASK>
+ __tcp_transmit_skb+0xa1b/0xb90
+ ? __alloc_skb+0x8c/0x1a0
+ ? __kmalloc_node_track_caller+0x184/0x320
+ tcp_write_xmit+0x22a/0x1110
+ __tcp_push_pending_frames+0x32/0xf0
+ do_tcp_sendpages+0x62d/0x640
+ tcp_bpf_push+0xae/0x2c0
+ tcp_bpf_sendmsg_redir+0x260/0x410
+ ? preempt_count_add+0x70/0xa0
+ tcp_bpf_send_verdict+0x386/0x4b0
+ tcp_bpf_sendmsg+0x21b/0x3b0
+ sock_sendmsg+0x58/0x70
+ __sys_sendto+0xfa/0x170
+ ? xfd_validate_state+0x1d/0x80
+ ? switch_fpu_return+0x59/0xe0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8186/mt8186-mt6366-da7219-max98357.c | 2 +-
- sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366-da7219-max98357.c b/sound/soc/mediatek/mt8186/mt8186-mt6366-da7219-max98357.c
-index cfca6bdee834..90ec0d0a8392 100644
---- a/sound/soc/mediatek/mt8186/mt8186-mt6366-da7219-max98357.c
-+++ b/sound/soc/mediatek/mt8186/mt8186-mt6366-da7219-max98357.c
-@@ -192,7 +192,7 @@ static int mt8186_mt6366_da7219_max98357_hdmi_init(struct snd_soc_pcm_runtime *r
- 	struct mt8186_mt6366_da7219_max98357_priv *priv = soc_card_data->mach_priv;
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index cf9c3e8f7ccb..f3e868f4cd9e 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -279,7 +279,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	bool cork = false, enospc = sk_msg_full(msg);
+ 	struct sock *sk_redir;
+ 	u32 tosend, origsize, sent, delta = 0;
+-	u32 eval = __SK_NONE;
++	u32 eval;
  	int ret;
  
--	ret = mt8186_dai_i2s_set_share(afe, "I2S3", "I2S2");
-+	ret = mt8186_dai_i2s_set_share(afe, "I2S2", "I2S3");
- 	if (ret) {
- 		dev_err(rtd->dev, "Failed to set up shared clocks\n");
- 		return ret;
-diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-index 2414c5b77233..60fa55d0c91f 100644
---- a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-+++ b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-@@ -168,7 +168,7 @@ static int mt8186_mt6366_rt1019_rt5682s_hdmi_init(struct snd_soc_pcm_runtime *rt
- 	struct mt8186_mt6366_rt1019_rt5682s_priv *priv = soc_card_data->mach_priv;
- 	int ret;
+ more_data:
+@@ -310,6 +310,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	tosend = msg->sg.size;
+ 	if (psock->apply_bytes && psock->apply_bytes < tosend)
+ 		tosend = psock->apply_bytes;
++	eval = __SK_NONE;
  
--	ret = mt8186_dai_i2s_set_share(afe, "I2S3", "I2S2");
-+	ret = mt8186_dai_i2s_set_share(afe, "I2S2", "I2S3");
- 	if (ret) {
- 		dev_err(rtd->dev, "Failed to set up shared clocks\n");
- 		return ret;
+ 	switch (psock->eval) {
+ 	case __SK_PASS:
 -- 
 2.35.1
 
