@@ -1,40 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2101C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D23DC433D2;
-	Wed, 28 Dec 2022 16:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B692C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9ADC433D2;
+	Wed, 28 Dec 2022 16:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244985;
-	bh=5YTnHYb44Tvh0ZcmQw5FvxR0neV5vVJwQSLYSKZWTEA=;
+	s=korg; t=1672244988;
+	bh=IgZisa5GL0eYFnxwusv9DY6yBcbCKGNvmTzykICDHeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jerZaLN50QUZkyP6LpIqDcXK4WMfxNpNIeX0Y1ktZczlY0McS9nW8YqHSOCmHf/Y
-	 5TnE9As+bbQcFD1O+bGIpaoY8wzwkz9hazvW6E90NMX2iyhZnaVzfMPbzSlIUg4Rb8
-	 Y1szS1MD6tt6b6XxmMXVB0eY7vz0334qHG95bWss=
+	b=Y8IiD1XztWPv36G78OQ9wv5072Nit1An+zvT0sI/VCGAul+A+f3ETwzvoPDq9bQrC
+	 eH7hCXyAKRRcXoL4AJM54EnxQnfdNPyRQUJwCfvfDWFLtb/DqlQ5VNyw39JE34xZaX
+	 aRPUs/2TGDUcfG93elxsAiXvq3xYVNm2AYvT221s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kaher <akaher@vmware.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Makhalov <amakhalov@vmware.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0773/1146] perf symbol: correction while adjusting symbol
-Date: Wed, 28 Dec 2022 15:38:32 +0100
-Message-Id: <20221228144351.145469659@linuxfoundation.org>
+Subject: [PATCH 6.0 0811/1073] iommu/mediatek: Add platform_device_put for recovering the device refcnt
+Date: Wed, 28 Dec 2022 15:39:59 +0100
+Message-Id: <20221228144350.036541100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,74 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ajay Kaher <akaher@vmware.com>
+From: Yong Wu <yong.wu@mediatek.com>
 
-[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
+[ Upstream commit dcb40e9fcce9bd251eaff19f3724131db522846c ]
 
-perf doesn't provide proper symbol information for specially crafted
-.debug files.
+Add platform_device_put to match with of_find_device_by_node.
 
-Sometimes .debug file may not have similar program header as runtime
-ELF file. For example if we generate .debug file using objcopy
---only-keep-debug resulting file will not contain .text, .data and
-other runtime sections. That means corresponding program headers will
-have zero FileSiz and modified Offset.
+Meanwhile, I add a new variable "pcommdev" which is for smi common device.
+Otherwise, "platform_device_put(plarbdev)" for smi-common dev may be not
+readable. And add a checking for whether pcommdev is NULL.
 
-Example: program header of text section of libxxx.so:
-
-Type           Offset             VirtAddr           PhysAddr
-               FileSiz            MemSiz              Flags  Align
-LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
-            0x000000000055ae80 0x000000000055ae80  R E    0x1000
-
-Same program header after executing:
-objcopy --only-keep-debug libxxx.so libxxx.so.debug
-
-LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
-            0x0000000000000000 0x000000000055ae80  R E    0x1000
-
-Offset and FileSiz have been changed.
-
-Following formula will not provide correct value, if program header
-taken from .debug file (syms_ss):
-
-    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
-
-Correct program header information is located inside runtime ELF
-file (runtime_ss).
-
-Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Makhalov <amakhalov@vmware.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
-Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221018024258.19073-2-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 647b7dff8ef3..80345695b136 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1303,7 +1303,7 @@ dso__load_sym_internal(struct dso *dso, struct map *map, struct symsrc *syms_ss,
- 			   (!used_opd && syms_ss->adjust_symbols)) {
- 			GElf_Phdr phdr;
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 0c1c0d8e4d06..93005e63fc7f 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1041,7 +1041,7 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 				  struct mtk_iommu_data *data)
+ {
+ 	struct device_node *larbnode, *smicomm_node, *smi_subcomm_node;
+-	struct platform_device *plarbdev;
++	struct platform_device *plarbdev, *pcommdev;
+ 	struct device_link *link;
+ 	int i, larb_nr, ret;
  
--			if (elf_read_program_header(syms_ss->elf,
-+			if (elf_read_program_header(runtime_ss->elf,
- 						    (u64)sym.st_value, &phdr)) {
- 				pr_debug4("%s: failed to find program header for "
- 					   "symbol: %s st_value: %#" PRIx64 "\n",
+@@ -1072,12 +1072,14 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 		}
+ 		if (!plarbdev->dev.driver) {
+ 			of_node_put(larbnode);
++			platform_device_put(plarbdev);
+ 			return -EPROBE_DEFER;
+ 		}
+ 		data->larb_imu[id].dev = &plarbdev->dev;
+ 
+ 		component_match_add_release(dev, match, component_release_of,
+ 					    component_compare_of, larbnode);
++		platform_device_put(plarbdev);
+ 	}
+ 
+ 	/* Get smi-(sub)-common dev from the last larb. */
+@@ -1095,12 +1097,15 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 	else
+ 		smicomm_node = smi_subcomm_node;
+ 
+-	plarbdev = of_find_device_by_node(smicomm_node);
++	pcommdev = of_find_device_by_node(smicomm_node);
+ 	of_node_put(smicomm_node);
+-	data->smicomm_dev = &plarbdev->dev;
++	if (!pcommdev)
++		return -ENODEV;
++	data->smicomm_dev = &pcommdev->dev;
+ 
+ 	link = device_link_add(data->smicomm_dev, dev,
+ 			       DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME);
++	platform_device_put(pcommdev);
+ 	if (!link) {
+ 		dev_err(dev, "Unable to link %s.\n", dev_name(data->smicomm_dev));
+ 		return -EINVAL;
 -- 
 2.35.1
 
