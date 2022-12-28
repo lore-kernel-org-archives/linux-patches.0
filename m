@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4991863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D6EC433D2;
-	Wed, 28 Dec 2022 15:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB741863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67A5C433D2;
+	Wed, 28 Dec 2022 15:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241785;
-	bh=q5Unulp3RyZcpHG3bqUImIUa5sTn63t1D6i0ndSQZ/8=;
+	s=korg; t=1672241788;
+	bh=a+A0/hU1/71tOtzTGsNnSczq7KsazouMZgYqwLVWedI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFOXkUoT9w9LGjUUkLNimnajs+/kIcHe8MKPiOtn8s19f/ouzetw35Y1Lu/Gl9gN+
-	 vn5R+/9MrimDbkxPyT4C84MnG2CsbjX0d/tB37SJRdPevxNdqDdE98t6YX1wqad3Ly
-	 rPk5tb8s8XhCh+hV9yzTuudatSzfOWkc8ttlWtJg=
+	b=gAxMACaDvJrvffnfJtpTK+4rYcJgofFUKOwSIWT4cfI2jnYM/GmJ+r0199NejZws5
+	 j5vGpZ5NuS9G+IKeGhYdy+HmDLXcq0eRe5NyeKjl/04wRS9K9g/WQzQkVZA7aejoVh
+	 T9Y8coW6mlS64BHsteEcemfrOh5x0KULAAc0HYpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Kennedy <george.kennedy@oracle.com>,
-	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
-	Brian Starkey <brian.starkey@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Moudy Ho <moudy.ho@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0327/1073] drm/fourcc: Fix vsub/hsub for Q410 and Q401
-Date: Wed, 28 Dec 2022 15:31:55 +0100
-Message-Id: <20221228144336.888627671@linuxfoundation.org>
+Subject: [PATCH 6.1 0289/1146] media: platform: mtk-mdp3: fix error handling in mdp_probe()
+Date: Wed, 28 Dec 2022 15:30:28 +0100
+Message-Id: <20221228144337.989758953@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,46 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Starkey <brian.starkey@arm.com>
+From: Moudy Ho <moudy.ho@mediatek.com>
 
-[ Upstream commit b230555f3257f197dd98641ef6ebaf778b52dd51 ]
+[ Upstream commit 82b7d4b5d393d6654148e885efca0a3df63806f6 ]
 
-These formats are not subsampled, but that means hsub and vsub should be
-1, not 0.
+Adjust label "err_return" order to avoid double freeing, and
+add two labels for easy traceability.
 
-Fixes: 94b292b27734 ("drm: drm_fourcc: add NV15, Q410, Q401 YUV formats")
-Reported-by: George Kennedy <george.kennedy@oracle.com>
-Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Signed-off-by: Brian Starkey <brian.starkey@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220913144306.17279-1-brian.starkey@arm.com
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fourcc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../media/platform/mediatek/mdp3/mtk-mdp3-core.c  | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
-index 07741b678798..6768b7d18b6f 100644
---- a/drivers/gpu/drm/drm_fourcc.c
-+++ b/drivers/gpu/drm/drm_fourcc.c
-@@ -263,12 +263,12 @@ const struct drm_format_info *__drm_format_info(u32 format)
- 		  .vsub = 2, .is_yuv = true },
- 		{ .format = DRM_FORMAT_Q410,		.depth = 0,
- 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
--		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
--		  .vsub = 0, .is_yuv = true },
-+		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
-+		  .vsub = 1, .is_yuv = true },
- 		{ .format = DRM_FORMAT_Q401,		.depth = 0,
- 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
--		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
--		  .vsub = 0, .is_yuv = true },
-+		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
-+		  .vsub = 1, .is_yuv = true },
- 		{ .format = DRM_FORMAT_P030,            .depth = 0,  .num_planes = 2,
- 		  .char_per_block = { 4, 8, 0 }, .block_w = { 3, 3, 0 }, .block_h = { 1, 1, 0 },
- 		  .hsub = 2, .vsub = 2, .is_yuv = true},
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+index c413e59d4286..2d1f6ae9f080 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-core.c
+@@ -196,27 +196,27 @@ static int mdp_probe(struct platform_device *pdev)
+ 	mm_pdev = __get_pdev_by_id(pdev, MDP_INFRA_MMSYS);
+ 	if (!mm_pdev) {
+ 		ret = -ENODEV;
+-		goto err_return;
++		goto err_destroy_device;
+ 	}
+ 	mdp->mdp_mmsys = &mm_pdev->dev;
+ 
+ 	mm_pdev = __get_pdev_by_id(pdev, MDP_INFRA_MUTEX);
+ 	if (WARN_ON(!mm_pdev)) {
+ 		ret = -ENODEV;
+-		goto err_return;
++		goto err_destroy_device;
+ 	}
+ 	for (i = 0; i < MDP_PIPE_MAX; i++) {
+ 		mdp->mdp_mutex[i] = mtk_mutex_get(&mm_pdev->dev);
+ 		if (!mdp->mdp_mutex[i]) {
+ 			ret = -ENODEV;
+-			goto err_return;
++			goto err_free_mutex;
+ 		}
+ 	}
+ 
+ 	ret = mdp_comp_config(mdp);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to config mdp components\n");
+-		goto err_return;
++		goto err_free_mutex;
+ 	}
+ 
+ 	mdp->job_wq = alloc_workqueue(MDP_MODULE_NAME, WQ_FREEZABLE, 0);
+@@ -287,11 +287,12 @@ static int mdp_probe(struct platform_device *pdev)
+ 	destroy_workqueue(mdp->job_wq);
+ err_deinit_comp:
+ 	mdp_comp_destroy(mdp);
+-err_return:
++err_free_mutex:
+ 	for (i = 0; i < MDP_PIPE_MAX; i++)
+-		if (mdp)
+-			mtk_mutex_put(mdp->mdp_mutex[i]);
++		mtk_mutex_put(mdp->mdp_mutex[i]);
++err_destroy_device:
+ 	kfree(mdp);
++err_return:
+ 	dev_dbg(dev, "Errno %d\n", ret);
+ 	return ret;
+ }
 -- 
 2.35.1
 
