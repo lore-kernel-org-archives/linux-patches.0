@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2651C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64BDC433D2;
-	Wed, 28 Dec 2022 16:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01151C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550C1C433EF;
+	Wed, 28 Dec 2022 16:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244011;
-	bh=Rqj/a2ICEmz+v5M+FMzlp9ojwTJkXcBQSB4AMqRxBfM=;
+	s=korg; t=1672244013;
+	bh=7kazqvFCVqQzdRC/lN1d7cHC8UUGT86XNZHb2Ah8ox8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8UbJozyvHhDgPnhQSGzF7xQS8BJF69xSOhxqBo0ekMI7OMOJGT+YQQAy9xyK7i8x
-	 3njNEgYeksHZ8mQuU/KyCoTxy0E26m3BVbmS1Bo41Sr2orunpvyRhAxqL1l6T3m6os
-	 pY4zn6e2NwGVZ9Q84MN7XnJmjsI57rOyTvzpcmqw=
+	b=cCWQ089ulcrd62RwjAItuGiXJeWIUb6yrUKQS7aE+Q6TZzQZh63X0ZFpWxaKpQKlD
+	 UwH8H0u11hhoxt9Xirv34fWqSCVtx9zlPCoNQypVLrbC+69utjXyAPS0VFFWPqL8M6
+	 sGbx2E8zqthTD6LbOt2/UlgrWGYCxdbSgBFH7KSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com,
+	syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0631/1073] scsi: ufs: core: Fix the polling implementation
-Date: Wed, 28 Dec 2022 15:36:59 +0100
-Message-Id: <20221228144345.180445294@linuxfoundation.org>
+Subject: [PATCH 6.1 0595/1146] f2fs: fix to invalidate dcc->f2fs_issue_discard in error path
+Date: Wed, 28 Dec 2022 15:35:34 +0100
+Message-Id: <20221228144346.331287518@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,89 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit ee8c88cab4afbd5ee10a127d6cbecd6b200185a5 ]
+[ Upstream commit 91586ce0d39a05f88795aa8814fb99b1387236b3 ]
 
-Fix the following issues in ufshcd_poll():
+Syzbot reports a NULL pointer dereference issue as below:
 
- - If polling succeeds, return a positive value.
+ __refcount_add include/linux/refcount.h:193 [inline]
+ __refcount_inc include/linux/refcount.h:250 [inline]
+ refcount_inc include/linux/refcount.h:267 [inline]
+ get_task_struct include/linux/sched/task.h:110 [inline]
+ kthread_stop+0x34/0x1c0 kernel/kthread.c:703
+ f2fs_stop_discard_thread+0x3c/0x5c fs/f2fs/segment.c:1638
+ kill_f2fs_super+0x5c/0x194 fs/f2fs/super.c:4522
+ deactivate_locked_super+0x70/0xe8 fs/super.c:332
+ deactivate_super+0xd0/0xd4 fs/super.c:363
+ cleanup_mnt+0x1f8/0x234 fs/namespace.c:1186
+ __cleanup_mnt+0x20/0x30 fs/namespace.c:1193
+ task_work_run+0xc4/0x14c kernel/task_work.c:177
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x26c/0xbe0 kernel/exit.c:795
+ do_group_exit+0x60/0xe8 kernel/exit.c:925
+ __do_sys_exit_group kernel/exit.c:936 [inline]
+ __se_sys_exit_group kernel/exit.c:934 [inline]
+ __wake_up_parent+0x0/0x40 kernel/exit.c:934
+ __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+ invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
+ el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
+ do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
+ el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
+ el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
+ el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
 
- - Do not complete polling requests from interrupt context because the
-   block layer expects these requests to be completed from thread
-   context. From block/bio.c:
+The root cause of this issue is in error path of f2fs_start_discard_thread(),
+it missed to invalidate dcc->f2fs_issue_discard, later kthread_stop() may
+access invalid pointer.
 
-     If REQ_ALLOC_CACHE is set, the final put of the bio MUST be done from
-     process context, not hard/soft IRQ.
-
-Fixes: eaab9b573054 ("scsi: ufs: Implement polling support")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221118233717.441298-1-bvanassche@acm.org
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 4d67490498ac ("f2fs: Don't create discard thread when device doesn't support realtime discard")
+Reported-by: syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com
+Reported-by: syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ fs/f2fs/segment.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index a202d7d5240d..9a7eae79d32d 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5378,6 +5378,26 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
- 	}
- }
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index acf3d3fa4363..7a4f7c88b8b9 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2025,8 +2025,10 @@ int f2fs_start_discard_thread(struct f2fs_sb_info *sbi)
  
-+/* Any value that is not an existing queue number is fine for this constant. */
-+enum {
-+	UFSHCD_POLL_FROM_INTERRUPT_CONTEXT = -1
-+};
-+
-+static void ufshcd_clear_polled(struct ufs_hba *hba,
-+				unsigned long *completed_reqs)
-+{
-+	int tag;
-+
-+	for_each_set_bit(tag, completed_reqs, hba->nutrs) {
-+		struct scsi_cmnd *cmd = hba->lrb[tag].cmd;
-+
-+		if (!cmd)
-+			continue;
-+		if (scsi_cmd_to_rq(cmd)->cmd_flags & REQ_POLLED)
-+			__clear_bit(tag, completed_reqs);
+ 	dcc->f2fs_issue_discard = kthread_run(issue_discard_thread, sbi,
+ 				"f2fs_discard-%u:%u", MAJOR(dev), MINOR(dev));
+-	if (IS_ERR(dcc->f2fs_issue_discard))
++	if (IS_ERR(dcc->f2fs_issue_discard)) {
+ 		err = PTR_ERR(dcc->f2fs_issue_discard);
++		dcc->f2fs_issue_discard = NULL;
 +	}
-+}
-+
- /*
-  * Returns > 0 if one or more commands have been completed or 0 if no
-  * requests have been completed.
-@@ -5394,13 +5414,17 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
- 	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
- 		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
- 		  hba->outstanding_reqs);
-+	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
-+		/* Do not complete polled requests from interrupt context. */
-+		ufshcd_clear_polled(hba, &completed_reqs);
-+	}
- 	hba->outstanding_reqs &= ~completed_reqs;
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
  
- 	if (completed_reqs)
- 		__ufshcd_transfer_req_compl(hba, completed_reqs);
- 
--	return completed_reqs;
-+	return completed_reqs != 0;
- }
- 
- /**
-@@ -5431,7 +5455,7 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
- 	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED since we
- 	 * do not want polling to trigger spurious interrupt complaints.
- 	 */
--	ufshcd_poll(hba->host, 0);
-+	ufshcd_poll(hba->host, UFSHCD_POLL_FROM_INTERRUPT_CONTEXT);
- 
- 	return IRQ_HANDLED;
+ 	return err;
  }
 -- 
 2.35.1
