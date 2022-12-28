@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0F81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415B6C433D2;
-	Wed, 28 Dec 2022 15:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E20F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1727C433EF;
+	Wed, 28 Dec 2022 15:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241807;
-	bh=A0GLa7IYOgKrsrsaqYWQiahu5kUHQPMYK+uaOGENjMs=;
+	s=korg; t=1672241810;
+	bh=341Irjy7OAyENGO9M+wnz4E3V61UtC3nXWZORmmWKjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPFjGJSNcDe3zka0Zzqy0vNRDTlrhGhGfDzl5D/Vh2nYniv3nmot9gC+IjissAMvJ
-	 SI0Wr+AXQ4XmIVl3QGszaoZmGN3HGOo39SY2Y0aM0jInZcMH9wDNwSdoxx6HvKhJvd
-	 IcJXaMGTJ04B79GeDOc/DcwN0rbQE7Z3vrQfgncw=
+	b=jDrk3vV5EmMnuArafZchs0kd87h9jyCZzIqRXAhV5UBsX3m84loQGh1wmW4RfkO16
+	 0Qqw1QbPtXXv4RS9U0lxiE9OL+p6ZoRr6NoCnSoqmSyGNrZhDpixwmI0heZSq0oDq0
+	 DJ5uKeaSObCTo27DzGm7chO86TScVh8VyGXmkZqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Author: Randy Dunlap" <rdunlap@infradead.org>,
+	syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0291/1146] media: vivid: fix compose size exceed boundary
-Date: Wed, 28 Dec 2022 15:30:30 +0100
-Message-Id: <20221228144338.043903404@linuxfoundation.org>
+Subject: [PATCH 5.15 525/731] fs/ntfs3: Avoid UBSAN error on true_sectors_per_clst()
+Date: Wed, 28 Dec 2022 15:40:32 +0100
+Message-Id: <20221228144311.764599251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
+[ Upstream commit caad9dd8792a2622737b7273cb34835fd9536cd2 ]
 
-syzkaller found a bug:
+syzbot reported UBSAN error as below:
 
- BUG: unable to handle page fault for address: ffffc9000a3b1000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:memcpy_erms+0x6/0x10
-[...]
- Call Trace:
-  <TASK>
-  ? tpg_fill_plane_buffer+0x856/0x15b0
-  vivid_fillbuff+0x8ac/0x1110
-  vivid_thread_vid_cap_tick+0x361/0xc90
-  vivid_thread_vid_cap+0x21a/0x3a0
-  kthread+0x143/0x180
-  ret_from_fork+0x1f/0x30
-  </TASK>
+[   76.901829][ T6677] ================================================================================
+[   76.903908][ T6677] UBSAN: shift-out-of-bounds in fs/ntfs3/super.c:675:13
+[   76.905363][ T6677] shift exponent -247 is negative
 
-This is because we forget to check boundary after adjust compose->height
-int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
-for this case.
+This patch avoid this error.
 
-Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Link: https://syzkaller.appspot.com/bug?id=b0299c09a14aababf0f1c862dd4ebc8ab9eb0179
+Fixes: a3b774342fa7 (fs/ntfs3: validate BOOT sectors_per_clusters)
+Cc: Author: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index 11620eaf941e..c0999581c599 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -973,6 +973,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
-+				v4l2_rect_map_inside(compose, &fmt);
- 			}
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index f3b88c7e35f7..39b09f32f4db 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -672,7 +672,7 @@ static u32 true_sectors_per_clst(const struct NTFS_BOOT *boot)
+ 	if (boot->sectors_per_clusters <= 0x80)
+ 		return boot->sectors_per_clusters;
+ 	if (boot->sectors_per_clusters >= 0xf4) /* limit shift to 2MB max */
+-		return 1U << (0 - boot->sectors_per_clusters);
++		return 1U << -(s8)boot->sectors_per_clusters;
+ 	return -EINVAL;
+ }
+ 
 -- 
 2.35.1
 
