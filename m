@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C321C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8698C433D2;
-	Wed, 28 Dec 2022 16:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B84D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9551CC433D2;
+	Wed, 28 Dec 2022 16:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243496;
-	bh=9AtMiHKpoUlY9QO0Us6J1m6vzVBDH68xDzgmgBMi2Qw=;
+	s=korg; t=1672243498;
+	bh=brn19ZLg/cpAoaQwT5sTcLIrLOZzT0hLAzJKqvAVzWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5jxfsMUgDvETo4GTyUYEZQKiW/t3gn2i9RkbnlZwdVEQwfK//nu37uvs2EzYd30r
-	 Aj+OHncfptvV6XbkRgG/XpF9nGuPt1BpCkKHSrgdBIW40ykIyiuXvEIqmDASpHcCLy
-	 32LRnpKPC1EuQytCUohZyW+kXgwlU6hV0ZJ5s2AA=
+	b=bV4D58Fpq/DqN809ENF6ExZuhWR7bwhHY02vQcvxgCkkQD0H6J+PN9BxpcXxCkEXc
+	 HfrHw91fGtGQ3ot7X+xlwwEXE/xXRnp/yc+pQZloMpLVOvND4HuxVqHCmVT+ZoLxUO
+	 CDC3mympKptCWltwA55IumjOH+xeqMcpX8R0woD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Eric Pilmore <epilmore@gigaio.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0499/1146] mmc: rtsx_pci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:33:58 +0100
-Message-Id: <20221228144343.733451083@linuxfoundation.org>
+Subject: [PATCH 6.0 0536/1073] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
+Date: Wed, 28 Dec 2022 15:35:24 +0100
+Message-Id: <20221228144342.612654375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Pilmore <epilmore@gigaio.com>
 
-[ Upstream commit 0c87db77423a282b3b38b8a6daf057b822680516 ]
+[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+TX/RX callback handlers (ntb_netdev_tx_handler(),
+ntb_netdev_rx_handler()) can be called in interrupt
+context via the DMA framework when the respective
+DMA operations have completed. As such, any calls
+by these routines to free skb's, should use the
+interrupt context safe dev_kfree_skb_any() function.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, beside, runtime PM also needs be disabled.
+Previously, these callback handlers would call the
+interrupt unsafe version of dev_kfree_skb(). This has
+not presented an issue on Intel IOAT DMA engines as
+that driver utilizes tasklets rather than a hard
+interrupt handler, like the AMD PTDMA DMA driver.
+On AMD systems, a kernel WARNING message is
+encountered, which is being issued from
+skb_release_head_state() due to in_hardirq()
+being true.
 
-Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-6-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Besides the user visible WARNING from the kernel,
+the other symptom of this bug was that TCP/IP performance
+across the ntb_netdev interface was very poor, i.e.
+approximately an order of magnitude below what was
+expected. With the repair to use dev_kfree_skb_any(),
+kernel WARNINGs from skb_release_head_state() ceased
+and TCP/IP performance, as measured by iperf, was on
+par with expected results, approximately 20 Gb/s on
+AMD Milan based server. Note that this performance
+is comparable with Intel based servers.
+
+Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
+Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
+Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index e1580f78c6b2..8098726dcc0b 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1474,6 +1474,7 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	struct realtek_pci_sdmmc *host;
- 	struct rtsx_pcr *pcr;
- 	struct pcr_handle *handle = pdev->dev.platform_data;
-+	int ret;
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index dd7e273c90cb..29b198472a2c 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
+ 	if (rc) {
+-		dev_kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		ndev->stats.rx_errors++;
+ 		ndev->stats.rx_fifo_errors++;
+ 	}
+@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ 		ndev->stats.tx_aborted_errors++;
+ 	}
  
- 	if (!handle)
- 		return -ENXIO;
-@@ -1511,7 +1512,13 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
+-	dev_kfree_skb(skb);
++	dev_kfree_skb_any(skb);
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		pm_runtime_dont_use_autosuspend(&pdev->dev);
-+		pm_runtime_disable(&pdev->dev);
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
- 
- 	return 0;
- }
+ 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
+ 		/* Make sure anybody stopping the queue after this sees the new
 -- 
 2.35.1
 
