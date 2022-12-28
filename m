@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FC91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2F1C433EF;
-	Wed, 28 Dec 2022 16:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A641C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D1FC433D2;
+	Wed, 28 Dec 2022 16:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245860;
-	bh=FtAeghpOcG2WZJsrWRmoGbAgKj+g/KOYm0uLL2+J9z0=;
+	s=korg; t=1672245863;
+	bh=zitYujnXYzfo8JhZmUa2BzM6dDoIe9uWx+pHaggZLJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APPPUzJNeOPDWo/uR3596bmlHQd34uzUGBUYJDFNPoWdEHPJwScB7KfagMBcJwpZq
-	 CCNcPCTt6I7/YAxE/koCCDIf1MydqkzZUD0mDnE0N7DwvIdRQ9RDpX1Z+sIzvLMrNY
-	 F2DFPkjFr0hSmDO1x963cwo8vXBaZ5d/fs2Lj670=
+	b=1wFyr3IUypUj6dIIH4LJCqvKbt8Xk8PyRH+bDWP/t8kdak71pztX2BhGD0mEHrWDO
+	 1RZ6nGu8NfMSVLiUn564WITwCN/HWt6BaNqwB2kxS8dlEqXnA1oCvSEEdSLwCbDxAu
+	 m6Wsd0Lb0ZuZAtfpgiZMbGOKH3/mazRFtd0+lZn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang1.zhang@intel.com>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0937/1146] rcu: Fix __this_cpu_read() lockdep warning in rcu_force_quiescent_state()
-Date: Wed, 28 Dec 2022 15:41:16 +0100
-Message-Id: <20221228144355.754580940@linuxfoundation.org>
+Subject: [PATCH 6.0 0971/1073] mmc: renesas_sdhi: better reset from HS400 mode
+Date: Wed, 28 Dec 2022 15:42:39 +0100
+Message-Id: <20221228144354.437278364@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,57 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zqiang <qiang1.zhang@intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit ceb1c8c9b8aa9199da46a0f29d2d5f08d9b44c15 ]
+[ Upstream commit 0da69dd2155019ed4c444ede0e79ce7a4a6af627 ]
 
-Running rcutorture with non-zero fqs_duration module parameter in a
-kernel built with CONFIG_PREEMPTION=y results in the following splat:
+Up to now, HS400 adjustment mode was only disabled on soft reset when a
+calibration table was in use. It is safer, though, to disable it as soon
+as the instance has an adjustment related quirk set, i.e. bad taps or a
+calibration table.
 
-BUG: using __this_cpu_read() in preemptible [00000000]
-code: rcu_torture_fqs/398
-caller is __this_cpu_preempt_check+0x13/0x20
-CPU: 3 PID: 398 Comm: rcu_torture_fqs Not tainted 6.0.0-rc1-yoctodev-standard+
-Call Trace:
-<TASK>
-dump_stack_lvl+0x5b/0x86
-dump_stack+0x10/0x16
-check_preemption_disabled+0xe5/0xf0
-__this_cpu_preempt_check+0x13/0x20
-rcu_force_quiescent_state.part.0+0x1c/0x170
-rcu_force_quiescent_state+0x1e/0x30
-rcu_torture_fqs+0xca/0x160
-? rcu_torture_boost+0x430/0x430
-kthread+0x192/0x1d0
-? kthread_complete_and_exit+0x30/0x30
-ret_from_fork+0x22/0x30
-</TASK>
-
-The problem is that rcu_force_quiescent_state() uses __this_cpu_read()
-in preemptible code instead of the proper raw_cpu_read().  This commit
-therefore changes __this_cpu_read() to raw_cpu_read().
-
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20221120113457.42010-3-wsa+renesas@sang-engineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 2 +-
+ drivers/mmc/host/renesas_sdhi_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 93416afebd59..14d9384fba05 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -2418,7 +2418,7 @@ void rcu_force_quiescent_state(void)
- 	struct rcu_node *rnp_old = NULL;
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index 22ccef7085f7..e38d0e8b8e0e 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -546,7 +546,7 @@ static void renesas_sdhi_reset_hs400_mode(struct tmio_mmc_host *host,
+ 			 SH_MOBILE_SDHI_SCC_TMPPORT2_HS400OSEL) &
+ 			sd_scc_read32(host, priv, SH_MOBILE_SDHI_SCC_TMPPORT2));
  
- 	/* Funnel through hierarchy to reduce memory contention. */
--	rnp = __this_cpu_read(rcu_data.mynode);
-+	rnp = raw_cpu_read(rcu_data.mynode);
- 	for (; rnp != NULL; rnp = rnp->parent) {
- 		ret = (READ_ONCE(rcu_state.gp_flags) & RCU_GP_FLAG_FQS) ||
- 		       !raw_spin_trylock(&rnp->fqslock);
+-	if (priv->adjust_hs400_calib_table)
++	if (priv->quirks && (priv->quirks->hs400_calib_table || priv->quirks->hs400_bad_taps))
+ 		renesas_sdhi_adjust_hs400_mode_disable(host);
+ 
+ 	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, CLK_CTL_SCLKEN |
 -- 
 2.35.1
 
