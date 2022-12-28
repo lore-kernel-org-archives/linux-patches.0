@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCA71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046AAC433F0;
-	Wed, 28 Dec 2022 15:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EE71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB79C433D2;
+	Wed, 28 Dec 2022 15:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240139;
-	bh=2zKy84RmyRpjwSVC1XTMAYPM9Q+32qlA7CIizcGBS10=;
+	s=korg; t=1672240142;
+	bh=PuDAklRmi/NF7zOK5vz/Tf1o6kBLQnq7PkHBlGB3xzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAp67xkAFs50H7xBkakBowtmyaylk7uAzMfPeXpkK8TxWvKAyeQhrzPjjWYQSkHe5
-	 +8ygwX+0y9gBLgqpnfqNrAh9MANQ2qOwO4FH+hxHcyGG4zR0MWAnkOfOMlMrg8SjbX
-	 +ZzKo8dANPC5XPrCdwgImTgbNeLdzA/Uoo784twU=
+	b=HYieBLqeDSUR2RE86pUed8qjCon9i0OuFbp6JEnVc9YBAKb8kIl8pfspd4hQ1gz12
+	 RjOglRLjokFJlOHdZeh+a5U6di+wn/jhcJ8xZW7kQBTH4p+KlTW8ndyrc20gVCxy5w
+	 i9XKsp58kUF/8pGuuDxzBL4P3uGZSQ6VdVcywnsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0085/1146] ARM: dts: armada-38x: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:04 +0100
-Message-Id: <20221228144332.455668694@linuxfoundation.org>
+Subject: [PATCH 5.15 314/731] clk: samsung: Fix memory leak in _samsung_clk_register_pll()
+Date: Wed, 28 Dec 2022 15:37:01 +0100
+Message-Id: <20221228144305.679030004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,76 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 44f47b7a8fa4678ce4c38ea74837e4996b9df6d6 ]
+[ Upstream commit 5174e5b0d1b669a489524192b6adcbb3c54ebc72 ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-Fixes: 0d3d96ab0059 ("ARM: mvebu: add Device Tree description of the Armada 380/385 SoCs")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 3ff6e0d8d64d ("clk: samsung: Add support to register rate_table for samsung plls")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221123032015.63980-1-xiujianfeng@huawei.com
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-380.dtsi | 4 ++--
- arch/arm/boot/dts/armada-385.dtsi | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/clk/samsung/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/armada-380.dtsi b/arch/arm/boot/dts/armada-380.dtsi
-index ce1dddb2269b..e94f22b0e9b5 100644
---- a/arch/arm/boot/dts/armada-380.dtsi
-+++ b/arch/arm/boot/dts/armada-380.dtsi
-@@ -89,7 +89,7 @@ pcie1_intc: interrupt-controller {
- 			/* x1 port */
- 			pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -118,7 +118,7 @@ pcie2_intc: interrupt-controller {
- 			/* x1 port */
- 			pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-diff --git a/arch/arm/boot/dts/armada-385.dtsi b/arch/arm/boot/dts/armada-385.dtsi
-index 83392b92dae2..be8d607c59b2 100644
---- a/arch/arm/boot/dts/armada-385.dtsi
-+++ b/arch/arm/boot/dts/armada-385.dtsi
-@@ -93,7 +93,7 @@ pcie1_intc: interrupt-controller {
- 			/* x1 port */
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -121,7 +121,7 @@ pcie2_intc: interrupt-controller {
- 			/* x1 port */
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -152,7 +152,7 @@ pcie3_intc: interrupt-controller {
- 			 */
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
+diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
+index 5873a9354b50..4909e940f0ab 100644
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -1385,6 +1385,7 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 	if (ret) {
+ 		pr_err("%s: failed to register pll clock %s : %d\n",
+ 			__func__, pll_clk->name, ret);
++		kfree(pll->rate_table);
+ 		kfree(pll);
+ 		return;
+ 	}
 -- 
 2.35.1
 
