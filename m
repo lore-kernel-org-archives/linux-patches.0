@@ -1,39 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4201863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63036C433EF;
-	Wed, 28 Dec 2022 15:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4991863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D6EC433D2;
+	Wed, 28 Dec 2022 15:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241782;
-	bh=mseXsLiypA6NQg/vgIDljnyc6z7ai/3VdKb/O1Cc4WQ=;
+	s=korg; t=1672241785;
+	bh=q5Unulp3RyZcpHG3bqUImIUa5sTn63t1D6i0ndSQZ/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn0kJpOTIqqTIL4ISpx4aZyHDOqHfk3fXckBGsHDrlruNxxyZkZS/5pPtJrHXEytq
-	 TS1Dg8e4yp9NRRKIfEkpcrbhuGQ3Jbxsc3ymRmAtv6AcR15KKKTXUjpfLWNvWsBxS9
-	 T9gKRTidfbwGO5cAvV2qqQS5dB4Odwf4aqkMcfP4=
+	b=KFOXkUoT9w9LGjUUkLNimnajs+/kIcHe8MKPiOtn8s19f/ouzetw35Y1Lu/Gl9gN+
+	 vn5R+/9MrimDbkxPyT4C84MnG2CsbjX0d/tB37SJRdPevxNdqDdE98t6YX1wqad3Ly
+	 rPk5tb8s8XhCh+hV9yzTuudatSzfOWkc8ttlWtJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	=?UTF-8?q?Adri=C3=A1n=20Herrera=20Arcila?= <adrian.herrera@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <songliubraving@fb.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
+	Brian Starkey <brian.starkey@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 522/731] perf stat: Refactor __run_perf_stat() common code
-Date: Wed, 28 Dec 2022 15:40:29 +0100
-Message-Id: <20221228144311.677454714@linuxfoundation.org>
+Subject: [PATCH 6.0 0327/1073] drm/fourcc: Fix vsub/hsub for Q410 and Q401
+Date: Wed, 28 Dec 2022 15:31:55 +0100
+Message-Id: <20221228144336.888627671@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,81 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrián Herrera Arcila <adrian.herrera@arm.com>
+From: Brian Starkey <brian.starkey@arm.com>
 
-[ Upstream commit bb8bc52e75785af94b9ba079277547d50d018a52 ]
+[ Upstream commit b230555f3257f197dd98641ef6ebaf778b52dd51 ]
 
-This extracts common code from the branches of the forks if-then-else.
+These formats are not subsampled, but that means hsub and vsub should be
+1, not 0.
 
-enable_counters(), which was at the beginning of both branches of the
-conditional, is now unconditional; evlist__start_workload() is extracted
-to a different if, which enables making the common clocking code
-unconditional.
-
-Reviewed-by: Leo Yan <leo.yan@linaro.org>
-Signed-off-by: Adrián Herrera Arcila <adrian.herrera@arm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <songliubraving@fb.com>
-Link: https://lore.kernel.org/r/20220729161244.10522-1-adrian.herrera@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: c587e77e100f ("perf stat: Do not delay the workload with --delay")
+Fixes: 94b292b27734 ("drm: drm_fourcc: add NV15, Q410, Q401 YUV formats")
+Reported-by: George Kennedy <george.kennedy@oracle.com>
+Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Signed-off-by: Brian Starkey <brian.starkey@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220913144306.17279-1-brian.starkey@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/drm_fourcc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index abf88a1ad455..2602c750779d 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -953,18 +953,18 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 			return err;
- 	}
- 
--	/*
--	 * Enable counters and exec the command:
--	 */
--	if (forks) {
--		err = enable_counters();
--		if (err)
--			return -1;
-+	err = enable_counters();
-+	if (err)
-+		return -1;
-+
-+	/* Exec the command, if any */
-+	if (forks)
- 		evlist__start_workload(evsel_list);
- 
--		t0 = rdclock();
--		clock_gettime(CLOCK_MONOTONIC, &ref_time);
-+	t0 = rdclock();
-+	clock_gettime(CLOCK_MONOTONIC, &ref_time);
- 
-+	if (forks) {
- 		if (interval || timeout || evlist__ctlfd_initialized(evsel_list))
- 			status = dispatch_events(forks, timeout, interval, &times);
- 		if (child_pid != -1) {
-@@ -982,13 +982,6 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 		if (WIFSIGNALED(status))
- 			psignal(WTERMSIG(status), argv[0]);
- 	} else {
--		err = enable_counters();
--		if (err)
--			return -1;
--
--		t0 = rdclock();
--		clock_gettime(CLOCK_MONOTONIC, &ref_time);
--
- 		status = dispatch_events(forks, timeout, interval, &times);
- 	}
- 
+diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
+index 07741b678798..6768b7d18b6f 100644
+--- a/drivers/gpu/drm/drm_fourcc.c
++++ b/drivers/gpu/drm/drm_fourcc.c
+@@ -263,12 +263,12 @@ const struct drm_format_info *__drm_format_info(u32 format)
+ 		  .vsub = 2, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_Q410,		.depth = 0,
+ 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
+-		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
+-		  .vsub = 0, .is_yuv = true },
++		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
++		  .vsub = 1, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_Q401,		.depth = 0,
+ 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
+-		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
+-		  .vsub = 0, .is_yuv = true },
++		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 1,
++		  .vsub = 1, .is_yuv = true },
+ 		{ .format = DRM_FORMAT_P030,            .depth = 0,  .num_planes = 2,
+ 		  .char_per_block = { 4, 8, 0 }, .block_w = { 3, 3, 0 }, .block_h = { 1, 1, 0 },
+ 		  .hsub = 2, .vsub = 2, .is_yuv = true},
 -- 
 2.35.1
 
