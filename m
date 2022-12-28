@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28E51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4069AC433D2;
-	Wed, 28 Dec 2022 16:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C011C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE7CC433D2;
+	Wed, 28 Dec 2022 16:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243501;
-	bh=g6jtjX431fWt9IYtX4bozjqu40lhjeCtf8PXI7fX460=;
+	s=korg; t=1672243504;
+	bh=CrhYTI12EfCuNJIiCDZ0o4WMBOwdSivhCuvyUCKXg8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2YCUdQoV1hASsYOqnQpiFkBYLGx2gtdxUWW12l3dMQIZCsrvn9yCJ64zTg7CTIEO
-	 +UHJtRNBPPSsAaDc+xRzQsf8HrtbiPsVC3MGKD78FpCD/tnUZ+fe/BOjudyNCw8PQm
-	 ntTTjW6MZNK1bkHYBL7I49whSfoJ5V2FR93aDOBQ=
+	b=xh9x6FlXBzaNsqsj1W0BUBPUe/vtRDrP+XPpSz8FpLqh4kNCaUZHblAXbNc6POJ0m
+	 SGn04Mf0LZ9mdaXb/Wot+V54kD3iQAx6aLnNj8Caw2qTFPBVnAwRV8UY34kJLHdwK5
+	 4ZTQzMmIyg+afJshFZkz1104uxVJI9Top1HM9voo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Pacman <edward@edward-p.xyz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 704/731] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
-Date: Wed, 28 Dec 2022 15:43:31 +0100
-Message-Id: <20221228144316.866078891@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 728/731] net: stmmac: fix errno when create_singlethread_workqueue() fails
+Date: Wed, 28 Dec 2022 15:43:55 +0100
+Message-Id: <20221228144317.543382738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -34,79 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Pacman <edward@edward-p.xyz>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 4bf5bf54476dffe60e6b6d8d539f67309ff599e2 upstream.
+commit 2cb815cfc78b137ee38bcd65e7c955d6cc2cc250 upstream.
 
-Lenovo TianYi510Pro-14IOB (17aa:3742)
-require quirk for enabling headset-mic
+We should set the return value to -ENOMEM explicitly when
+create_singlethread_workqueue() fails in stmmac_dvr_probe(),
+otherwise we'll lose the error value.
 
-Signed-off-by: Edward Pacman <edward@edward-p.xyz>
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216756
-Link: https://lore.kernel.org/r/20221207133218.18989-1-edward@edward-p.xyz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a137f3f27f92 ("net: stmmac: fix possible memory leak in stmmac_dvr_probe()")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221214080117.3514615-1-cuigaosheng1@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10593,6 +10593,17 @@ static void alc897_fixup_lenovo_headset_
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7046,6 +7046,7 @@ int stmmac_dvr_probe(struct device *devi
+ 	priv->wq = create_singlethread_workqueue("stmmac_wq");
+ 	if (!priv->wq) {
+ 		dev_err(priv->device, "failed to create workqueue\n");
++		ret = -ENOMEM;
+ 		goto error_wq_init;
  	}
- }
  
-+static void alc897_fixup_lenovo_headset_mode(struct hda_codec *codec,
-+				     const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
-+		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
-+		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
-+	}
-+}
-+
- static const struct coef_fw alc668_coefs[] = {
- 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
- 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
-@@ -10676,6 +10687,8 @@ enum {
- 	ALC897_FIXUP_LENOVO_HEADSET_MIC,
- 	ALC897_FIXUP_HEADSET_MIC_PIN,
- 	ALC897_FIXUP_HP_HSMIC_VERB,
-+	ALC897_FIXUP_LENOVO_HEADSET_MODE,
-+	ALC897_FIXUP_HEADSET_MIC_PIN2,
- };
- 
- static const struct hda_fixup alc662_fixups[] = {
-@@ -11102,6 +11115,19 @@ static const struct hda_fixup alc662_fix
- 			{ }
- 		},
- 	},
-+	[ALC897_FIXUP_LENOVO_HEADSET_MODE] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc897_fixup_lenovo_headset_mode,
-+	},
-+	[ALC897_FIXUP_HEADSET_MIC_PIN2] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1a, 0x01a11140 }, /* use as headset mic, without its own jack detect */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
-+	},
- };
- 
- static const struct snd_pci_quirk alc662_fixup_tbl[] = {
-@@ -11154,6 +11180,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x1849, 0x5892, "ASRock B150M", ALC892_FIXUP_ASROCK_MOBO),
 
 
