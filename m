@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0C01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E5C433EF;
-	Wed, 28 Dec 2022 15:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA781863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6414EC433F0;
+	Wed, 28 Dec 2022 15:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239783;
-	bh=R7eEvx7+R5QLJO+xBoq0aYJw0hQrhodQIEGIk3zghV4=;
+	s=korg; t=1672239785;
+	bh=feCoPiwVGAW26qPJMlAHdPzkug8f7qfVwP9ARc1bwTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vb88QNY/fcpftFN0bPo1+pw+U0520A6p7pi3BAoVIOME7gJFhz7deAHIsI55vH5K/
-	 Rc7qbISoasFDcbbm71ey/psT7PuMjBbgLOWOfGu4DfsFyDTZv9/qL8tNtkro87TnA7
-	 r8OPZ0zkRRoWWidc9k8KtFUTnlpaGZchJvRmECJk=
+	b=T2t0Y7bSBvZiMiSVOw0sCSLj2SOmIw7SxB01tEunAi1hXe84K7kkop7cRW0hiaMqp
+	 t+AbufpQBLhOEh5bB83BUKYDlsGQzqB4yYVSOhGJaMEIxtX3/Bk94S3YXsdoF9Grzl
+	 cj+Mzod6i9rx7/uLix5GCccuJl2QBpiL4Ad/I84I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0078/1073] ARM: dts: armada-39x: Fix compatible string for gpios
-Date: Wed, 28 Dec 2022 15:27:46 +0100
-Message-Id: <20221228144330.189148748@linuxfoundation.org>
+Subject: [PATCH 5.15 270/731] wifi: mt76: fix coverity overrun-call in mt76_get_txpower()
+Date: Wed, 28 Dec 2022 15:36:17 +0100
+Message-Id: <20221228144304.400896309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit d10886a4e6f85ee18d47a1066a52168461370ded ]
+[ Upstream commit 03dd0d49de7db680a856fa566963bb8421f46368 ]
 
-Armada 39x supports per CPU interrupts for gpios, like Armada XP.
+Make sure the nss is valid for nss_delta array. Return zero
+if the index is invalid.
 
-So add compatible string "marvell,armadaxp-gpio" for Armada 39x GPIO nodes.
+Coverity message:
+Event overrun-call: Overrunning callee's array of size 4 by passing
+argument "n_chains" (which evaluates to 15) in call to
+"mt76_tx_power_nss_delta".
+int delta = mt76_tx_power_nss_delta(n_chains);
 
-Driver gpio-mvebu.c which handles both pre-XP and XP variants already
-provides support for per CPU interrupts on XP and newer variants.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Fixes: d81a914fc630 ("ARM: dts: mvebu: armada-39x: add missing nodes describing GPIO's")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 07cda406308b ("mt76: fix rounding issues on converting per-chain and combined txpower")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-39x.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-39x.dtsi b/arch/arm/boot/dts/armada-39x.dtsi
-index 9525e7b7f436..9aad10fd3823 100644
---- a/arch/arm/boot/dts/armada-39x.dtsi
-+++ b/arch/arm/boot/dts/armada-39x.dtsi
-@@ -213,7 +213,7 @@ nand_pins: nand-pins {
- 			};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index d1f00706d41e..4e4af6e17b50 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1021,8 +1021,9 @@ static inline bool mt76_is_skb_pktid(u8 pktid)
+ static inline u8 mt76_tx_power_nss_delta(u8 nss)
+ {
+ 	static const u8 nss_delta[4] = { 0, 6, 9, 12 };
++	u8 idx = nss - 1;
  
- 			gpio0: gpio@18100 {
--				compatible = "marvell,orion-gpio";
-+				compatible = "marvell,armadaxp-gpio", "marvell,orion-gpio";
- 				reg = <0x18100 0x40>;
- 				ngpios = <32>;
- 				gpio-controller;
-@@ -227,7 +227,7 @@ gpio0: gpio@18100 {
- 			};
+-	return nss_delta[nss - 1];
++	return (idx < ARRAY_SIZE(nss_delta)) ? nss_delta[idx] : 0;
+ }
  
- 			gpio1: gpio@18140 {
--				compatible = "marvell,orion-gpio";
-+				compatible = "marvell,armadaxp-gpio", "marvell,orion-gpio";
- 				reg = <0x18140 0x40>;
- 				ngpios = <28>;
- 				gpio-controller;
+ static inline bool mt76_testmode_enabled(struct mt76_phy *phy)
 -- 
 2.35.1
 
