@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FB61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A387C433D2;
-	Wed, 28 Dec 2022 15:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34FA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A4EC433D2;
+	Wed, 28 Dec 2022 15:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239819;
-	bh=VDAPmCMjNCjArT8vN+NL3HvTe6znw5OGqw7YeJ6+ZLc=;
+	s=korg; t=1672239822;
+	bh=FE9dy1DW0bEQcMS57LbslmTvcsyOn09tVaedG5uizkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bU9pwgLJHpL6o3dIlQ/3sk4DdQ7Fa7YE3tDrARmrb58DR7VLWScVAJMz4Z5xVsH6f
-	 A3Qe/Kh5fpwj7bmbZU6QCgev/d+fkjaddqFXeAw+dGMnxDuCPfzM8j9//1qIy3RQN2
-	 49RVmMRbc2VrsA7M+tTZnmel3UfOoPFwOXkx2Uqc=
+	b=jQH/6GZpcEB3Mc1EGL6jPTFFjjZ6nkRIU3NntjTxemXRS2e3kCFUw9rsCjLhVFTnQ
+	 TLFNUNUbQKXu18DN/gCby7uoyN7ltprmt1FBLdEPmVvLnp7dc/BaxFIjMeWhBimCbl
+	 pDq1KNbT/OeNsQKeHWsYEugnI9gRTSR0QuXlmjs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/731] hsr: Add a rcu-read lock to hsr_forward_skb().
-Date: Wed, 28 Dec 2022 15:36:21 +0100
-Message-Id: <20221228144304.516959903@linuxfoundation.org>
+Subject: [PATCH 6.1 0047/1146] soc: sifive: ccache: fix missing of_node_put() in sifive_ccache_init()
+Date: Wed, 28 Dec 2022 15:26:26 +0100
+Message-Id: <20221228144331.443328398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5aa2820177af650293b2f9f1873c1f6f8e4ad7a4 ]
+[ Upstream commit 8fbf94fea0b4e187ca9100936c5429f96b8a4e44 ]
 
-hsr_forward_skb() a skb and keeps information in an on-stack
-hsr_frame_info. hsr_get_node() assigns hsr_frame_info::node_src which is
-from a RCU list. This pointer is used later in hsr_forward_do().
-I don't see a reason why this pointer can't vanish midway since there is
-no guarantee that hsr_forward_skb() is invoked from an RCU read section.
+The device_node pointer returned by of_find_matching_node() with
+refcount incremented, when finish using it, the refcount need be
+decreased.
 
-Use rcu_read_lock() to protect hsr_frame_info::node_src from its
-assignment until it is no longer used.
-
-Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a967a289f169 ("RISC-V: sifive_l2_cache: Add L2 cache controller driver for SiFive SoCs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/sifive/sifive_ccache.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 07892c4b6d0c..daf6abbadeb9 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -572,11 +572,13 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
- {
- 	struct hsr_frame_info frame;
+diff --git a/drivers/soc/sifive/sifive_ccache.c b/drivers/soc/sifive/sifive_ccache.c
+index 98269d056728..3684f5b40a80 100644
+--- a/drivers/soc/sifive/sifive_ccache.c
++++ b/drivers/soc/sifive/sifive_ccache.c
+@@ -215,12 +215,16 @@ static int __init sifive_ccache_init(void)
+ 	if (!np)
+ 		return -ENODEV;
  
-+	rcu_read_lock();
- 	if (fill_frame_info(&frame, skb, port) < 0)
- 		goto out_drop;
+-	if (of_address_to_resource(np, 0, &res))
+-		return -ENODEV;
++	if (of_address_to_resource(np, 0, &res)) {
++		rc = -ENODEV;
++		goto err_node_put;
++	}
  
- 	hsr_register_frame_in(frame.node_src, port, frame.sequence_nr);
- 	hsr_forward_do(&frame);
-+	rcu_read_unlock();
- 	/* Gets called for ingress frames as well as egress from master port.
- 	 * So check and increment stats for master port only here.
- 	 */
-@@ -591,6 +593,7 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
- 	return;
+ 	ccache_base = ioremap(res.start, resource_size(&res));
+-	if (!ccache_base)
+-		return -ENOMEM;
++	if (!ccache_base) {
++		rc = -ENOMEM;
++		goto err_node_put;
++	}
  
- out_drop:
-+	rcu_read_unlock();
- 	port->dev->stats.tx_dropped++;
- 	kfree_skb(skb);
+ 	if (of_property_read_u32(np, "cache-level", &level)) {
+ 		rc = -ENOENT;
+@@ -243,6 +247,7 @@ static int __init sifive_ccache_init(void)
+ 			goto err_free_irq;
+ 		}
+ 	}
++	of_node_put(np);
+ 
+ 	ccache_config_read();
+ 
+@@ -259,6 +264,8 @@ static int __init sifive_ccache_init(void)
+ 		free_irq(g_irq[i], NULL);
+ err_unmap:
+ 	iounmap(ccache_base);
++err_node_put:
++	of_node_put(np);
+ 	return rc;
  }
+ 
 -- 
 2.35.1
 
