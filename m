@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8F01C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41C2C433D2;
-	Wed, 28 Dec 2022 16:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83001C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C03CC433EF;
+	Wed, 28 Dec 2022 16:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244433;
-	bh=+bIk7tjtpkCEUlTW6HpqU00Mn2Wm+piJqHLtGfLD+A8=;
+	s=korg; t=1672244435;
+	bh=O4cQUMK7hWJ+FXEHEO6/mZRPa3tQuqcXw+rM/CzyI4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLEarbVaqqLC6yj0camWivh8BpOyXmdQqHjNKMChbjJqKeEZ+IMREwwaKK58ANsuA
-	 K5oYLHOZ4am2Vl0C2SjPL6LmXLXBYDm8IQ9q04kQjCZA4+abAZgZ62vsBSHx2G7itH
-	 z7qGeSCrJxM1YghtWtXqndNbwSUeo1OI1/qCq8hw=
+	b=xUZm0hyh7XwHKRmX+DFpL9iPlwULu0XPLKOrTuZaIMgZMFfVcEJpzcUd0M44v1rlR
+	 EZS+Xb433ZMWh46sB+lnZDlwqYVqdhIlnY/GclXrl4Z5g0YlzN4aOnD8PMiaF+W7hb
+	 UN+f5+1FYgOBi9eW6cY2OrSiofIgkrJ/JaUuPSFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0709/1073] drivers: mcb: fix resource leak in mcb_probe()
-Date: Wed, 28 Dec 2022 15:38:17 +0100
-Message-Id: <20221228144347.290189372@linuxfoundation.org>
+Subject: [PATCH 6.1 0669/1146] PCI: vmd: Fix secondary bus reset for Intel bridges
+Date: Wed, 28 Dec 2022 15:36:48 +0100
+Message-Id: <20221228144348.322067537@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
 
-[ Upstream commit d7237462561fcd224fa687c56ccb68629f50fc0d ]
+[ Upstream commit 0a584655ef89541dae4d48d2c523b1480ae80284 ]
 
-When probe hook function failed in mcb_probe(), it doesn't put the device.
-Compiled test only.
+The reset was never applied in the current implementation because Intel
+Bridges owned by VMD are parentless. Internally, pci_reset_bus() applies
+a reset to the parent of the PCI device supplied as argument, but in this
+case it failed because there wasn't a parent.
 
-Fixes: 7bc364097a89 ("mcb: Acquire reference to device in probe")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/9f87de36bfb85158b506cb78c6fc9db3f6a3bad1.1669624063.git.johannes.thumshirn@wdc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In more detail, this change allows the VMD driver to enumerate NVMe devices
+in pass-through configurations when guest reboots are performed. There was
+an attempted to fix this, but later we discovered that the code inside
+pci_reset_bus() wasn’t triggering secondary bus resets. Therefore, we
+updated the parameters passed to it, and now NVMe SSDs attached to VMD
+bridges are properly enumerated in VT-d pass-through scenarios.
+
+Link: https://lore.kernel.org/r/20221206001637.4744-1-francisco.munoz.ruiz@linux.intel.com
+Fixes: 6aab5622296b ("PCI: vmd: Clean up domain before enumeration")
+Signed-off-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Reviewed-by: Jonathan Derrick <jonathan.derrick@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/controller/vmd.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
-index 338fc889b357..b8ad4f16b4ac 100644
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -71,8 +71,10 @@ static int mcb_probe(struct device *dev)
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 98e0746e681c..769eedeb8802 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -719,6 +719,7 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
+ 	resource_size_t offset[2] = {0};
+ 	resource_size_t membar2_offset = 0x2000;
+ 	struct pci_bus *child;
++	struct pci_dev *dev;
+ 	int ret;
  
- 	get_device(dev);
- 	ret = mdrv->probe(mdev, found_id);
--	if (ret)
-+	if (ret) {
- 		module_put(carrier_mod);
-+		put_device(dev);
+ 	/*
+@@ -859,8 +860,25 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
+ 
+ 	pci_scan_child_bus(vmd->bus);
+ 	vmd_domain_reset(vmd);
+-	list_for_each_entry(child, &vmd->bus->children, node)
+-		pci_reset_bus(child->self);
++
++	/* When Intel VMD is enabled, the OS does not discover the Root Ports
++	 * owned by Intel VMD within the MMCFG space. pci_reset_bus() applies
++	 * a reset to the parent of the PCI device supplied as argument. This
++	 * is why we pass a child device, so the reset can be triggered at
++	 * the Intel bridge level and propagated to all the children in the
++	 * hierarchy.
++	 */
++	list_for_each_entry(child, &vmd->bus->children, node) {
++		if (!list_empty(&child->devices)) {
++			dev = list_first_entry(&child->devices,
++					       struct pci_dev, bus_list);
++			if (pci_reset_bus(dev))
++				pci_warn(dev, "can't reset device: %d\n", ret);
++
++			break;
++		}
 +	}
++
+ 	pci_assign_unassigned_bus_resources(vmd->bus);
  
- 	return ret;
- }
+ 	/*
 -- 
 2.35.1
 
