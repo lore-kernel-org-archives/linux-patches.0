@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C015F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464C1C433EF;
-	Wed, 28 Dec 2022 15:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFF31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9450C433D2;
+	Wed, 28 Dec 2022 15:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242517;
-	bh=yNKJ/JeG4BRvN8dpUNfGYLvAJuWcMDBqAXq8Tf3Wt2U=;
+	s=korg; t=1672242520;
+	bh=EyQ++/BKTEpOyoxOhcI6CKqke6ZcQmhSGSi5ClADbY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5/CNyBaYmb23d0nl0PGx5GyIMaDWHkD5fzvp6Sv1vuhr8cy4dSjUpz8ytGZQqsY6
-	 H6aGY8da+Onq+fOd/TrJ2U7ZzpMI0XMcBsBVMWMxPTq/PxO/d9yphGEDMsHA9kSKvW
-	 sKxL/ZpHXImJXe33F3h0nVFydZDUHI9SR9Bg50FI=
+	b=BeFUNwB2HuJeT8P34w37EVI2UGduZPncosX/htL77sZ1sp5fm10cIdu5qT6tZteHx
+	 R7y3/YhE52gc2xBXGvKqvO29w5CHCF241db/qCDLfDrikUL2dR9DwTuTbI7W44edR2
+	 4ZFDjI5+ip21sn+D3Glcg/9OjBf6QOjKcw4XhKVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0419/1073] clk: mediatek: fix dependency of MT7986 ADC clocks
-Date: Wed, 28 Dec 2022 15:33:27 +0100
-Message-Id: <20221228144339.402151299@linuxfoundation.org>
+Subject: [PATCH 6.1 0379/1146] clk: rockchip: Fix memory leak in rockchip_clk_register_pll()
+Date: Wed, 28 Dec 2022 15:31:58 +0100
+Message-Id: <20221228144340.460430848@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit a46315295489933209e902638cd287aeb5f982ab ]
+[ Upstream commit 739a6a6bbdb793bd57938cb24aa5a6df89983546 ]
 
-It seems like CLK_INFRA_ADC_FRC_CK always need to be enabled for
-CLK_INFRA_ADC_26M_CK to work. Instead of adding this dependency to the
-mtk-thermal and mt6577_auxadc drivers, add dependency to the clock
-driver clk-mt7986-infracfg.c.
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-Fixes: ec97d23c8e22 ("clk: mediatek: add mt7986 clock support")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/5e55012567da74870e1fb2edc2dc513b5821e523.1666801017.git.daniel@makrotopia.org
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Fixes: 90c590254051 ("clk: rockchip: add clock type for pll clocks and pll used on rk3066")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221123091201.199819-1-xiujianfeng@huawei.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt7986-infracfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/rockchip/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt7986-infracfg.c b/drivers/clk/mediatek/clk-mt7986-infracfg.c
-index d90727a53283..49666047bf0e 100644
---- a/drivers/clk/mediatek/clk-mt7986-infracfg.c
-+++ b/drivers/clk/mediatek/clk-mt7986-infracfg.c
-@@ -153,7 +153,7 @@ static const struct mtk_gate infra_clks[] = {
- 		    18),
- 	GATE_INFRA1(CLK_INFRA_MSDC_66M_CK, "infra_msdc_66m", "infra_sysaxi_d2",
- 		    19),
--	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "csw_f26m_sel", 20),
-+	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "infra_adc_frc", 20),
- 	GATE_INFRA1(CLK_INFRA_ADC_FRC_CK, "infra_adc_frc", "csw_f26m_sel", 21),
- 	GATE_INFRA1(CLK_INFRA_FBIST2FPC_CK, "infra_fbist2fpc", "nfi1x_sel", 23),
- 	/* INFRA2 */
+diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
+index f7827b3b7fc1..6e5e502be44a 100644
+--- a/drivers/clk/rockchip/clk-pll.c
++++ b/drivers/clk/rockchip/clk-pll.c
+@@ -981,6 +981,7 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
+ 	return mux_clk;
+ 
+ err_pll:
++	kfree(pll->rate_table);
+ 	clk_unregister(mux_clk);
+ 	mux_clk = pll_clk;
+ err_mux:
 -- 
 2.35.1
 
