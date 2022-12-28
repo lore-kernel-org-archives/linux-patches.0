@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624D91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D2CC433EF;
-	Wed, 28 Dec 2022 15:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7828BC433D2;
+	Wed, 28 Dec 2022 15:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240010;
-	bh=edwJE/5GKdEQLzVNsQcdR/Pm4OtdcjVi6HyhEOraRzQ=;
+	s=korg; t=1672240012;
+	bh=mGI0MQc9FfHFClE/U9xBR8eDBfcP0c3KSZPzSgISeWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sWeP2vvXyoayA+/UQU5qbIyN02rDhpWES1pu1LweOno4kaMRUDoQZMoIXUHdmZaf
-	 XdhrlAnIUTra3/eCH/2EM2dbQdrw2Ddaz/UOaU4yDt8daWB52nYpaHjYdZdwZsr4tl
-	 PVuDlyGi47U2Hge2AQXxxC1150XIgsdh95QgRNBE=
+	b=qs2zuuEmBKneiHX144ygpNmxbGf6XgV93yHX/Z21sW08QsGmk8QQUMoCVZvuxpj1S
+	 7154x1WAyNQjHQ8blbIWIhBdKwtoldD6fxCTxWYp0iVME5kQhliInqvaXMje3TJnzn
+	 M6hrphYseLjtB5SwHY753OJal42txguEckIo+6o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiongxin <xiongxin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0107/1073] PM: hibernate: Fix mistake in kerneldoc comment
-Date: Wed, 28 Dec 2022 15:28:15 +0100
-Message-Id: <20221228144330.949932280@linuxfoundation.org>
+Subject: [PATCH 5.15 299/731] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:36:46 +0100
+Message-Id: <20221228144305.243137032@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
+[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
 
-The actual maximum image size formula in hibernate_preallocate_memory()
-is as follows:
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-max_size = (count - (size + PAGES_FOR_IO)) / 2
-	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
 
-but the one in the kerneldoc comment of the function is different and
-incorrect.
-
-Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-[ rjw: Subject and changelog rewrite ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/snapshot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 2a406753af90..c20ca5fb9adc 100644
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -1723,8 +1723,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
-  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
-  * total number of available page frames and allocate at least
-  *
-- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
-- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-+ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
-+ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-  *
-  * of them, which corresponds to the maximum size of a hibernation image.
-  *
+diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
+index 8df722ec57ed..393319548857 100644
+--- a/drivers/mmc/host/wmt-sdmmc.c
++++ b/drivers/mmc/host/wmt-sdmmc.c
+@@ -859,11 +859,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
+ 	/* configure the controller to a known 'ready' state */
+ 	wmt_reset_hardware(mmc);
+ 
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto fail7;
+ 
+ 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
+ 
+ 	return 0;
++fail7:
++	clk_disable_unprepare(priv->clk_sdmmc);
+ fail6:
+ 	clk_put(priv->clk_sdmmc);
+ fail5_and_a_half:
 -- 
 2.35.1
 
