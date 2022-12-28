@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C611863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB0FC433D2;
-	Wed, 28 Dec 2022 15:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3511863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132B3C433D2;
+	Wed, 28 Dec 2022 15:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241055;
-	bh=cQTVHcqTfT/6Ds8nYR0bBv5qmdbUggzbQyTrhA1xnyc=;
+	s=korg; t=1672241058;
+	bh=uKzi9ejkKO/63JDSZ9uQu2gtGHfmFFhrjJt9doR9STo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgGSnFX5XIBvWdi/I1shCDH6O5Xv8kKjpPNB38bES6QcEZ2MawyhrBkDp8AVjr9kD
-	 Fbws9o4SQ25/Z9daZSmcUuGMVxMYzblwWcqCniXuOUzBuqijt6GP+GNck2DgS6GCet
-	 br8x3YtotPRdeP61K/5Z/78V3hb2lE2X/ypG8+GU=
+	b=cmhqYoFoS/jozSX9wU4QQwSE37ZM/FZ4ZBxo2+MeeoTHbTyJc0ckOby8fCBhj1jqK
+	 9/4ibXkb2CZxSJ8CpD8HIpCGKgY/xnYlh1bnHgynk7smsZq8GkCptEYMKUrUFhqIkB
+	 bEitmeeedx1syGECIIHoXePFNlGvRWcBmJR02RiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 432/731] RDMA/hns: Fix error code of CMD
-Date: Wed, 28 Dec 2022 15:38:59 +0100
-Message-Id: <20221228144309.085857836@linuxfoundation.org>
+Subject: [PATCH 6.1 0200/1146] wifi: ath9k: hif_usb: fix memory leak of urbs in ath9k_hif_usb_dealloc_tx_urbs()
+Date: Wed, 28 Dec 2022 15:28:59 +0100
+Message-Id: <20221228144335.576935149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,84 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 667d6164b84884c64de3fc18670cd5a98b0b10cf ]
+[ Upstream commit c2a94de38c74e86f49124ac14f093d6a5c377a90 ]
 
-The error code is fixed to EIO when CMD fails to excute. This patch
-converts the error status reported by firmware to linux errno.
+Syzkaller reports a long-known leak of urbs in
+ath9k_hif_usb_dealloc_tx_urbs().
 
-Fixes: a04ff739f2a9 ("RDMA/hns: Add command queue support for hip08 RoCE driver")
-Link: https://lore.kernel.org/r/20221126102911.2921820-6-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The cause of the leak is that usb_get_urb() is called but usb_free_urb()
+(or usb_put_urb()) is not called inside usb_kill_urb() as urb->dev or
+urb->ep fields have not been initialized and usb_kill_urb() returns
+immediately.
+
+The patch removes trying to kill urbs located in hif_dev->tx.tx_buf
+because hif_dev->tx.tx_buf is not supposed to contain urbs which are in
+pending state (the pending urbs are stored in hif_dev->tx.tx_pending).
+The tx.tx_lock is acquired so there should not be any changes in the list.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 03fb92a432ea ("ath9k: hif_usb: fix race condition between usb_get_urb() and usb_kill_anchored_urbs()")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20220725151359.283704-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 26 +++++++++++++++++++++-
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  5 +++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 16f39321b319..79d92b789984 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -1257,6 +1257,30 @@ static void update_cmdq_status(struct hns_roce_dev *hr_dev)
- 		hr_dev->cmd.state = HNS_ROCE_CMDQ_STATE_FATAL_ERR;
- }
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 4d9002a9d082..b6b5ce9b9b68 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -780,14 +780,10 @@ static void ath9k_hif_usb_dealloc_tx_urbs(struct hif_device_usb *hif_dev)
+ 	spin_lock_irqsave(&hif_dev->tx.tx_lock, flags);
+ 	list_for_each_entry_safe(tx_buf, tx_buf_tmp,
+ 				 &hif_dev->tx.tx_buf, list) {
+-		usb_get_urb(tx_buf->urb);
+-		spin_unlock_irqrestore(&hif_dev->tx.tx_lock, flags);
+-		usb_kill_urb(tx_buf->urb);
+ 		list_del(&tx_buf->list);
+ 		usb_free_urb(tx_buf->urb);
+ 		kfree(tx_buf->buf);
+ 		kfree(tx_buf);
+-		spin_lock_irqsave(&hif_dev->tx.tx_lock, flags);
+ 	}
+ 	spin_unlock_irqrestore(&hif_dev->tx.tx_lock, flags);
  
-+static int hns_roce_cmd_err_convert_errno(u16 desc_ret)
-+{
-+	struct hns_roce_cmd_errcode errcode_table[] = {
-+		{CMD_EXEC_SUCCESS, 0},
-+		{CMD_NO_AUTH, -EPERM},
-+		{CMD_NOT_EXIST, -EOPNOTSUPP},
-+		{CMD_CRQ_FULL, -EXFULL},
-+		{CMD_NEXT_ERR, -ENOSR},
-+		{CMD_NOT_EXEC, -ENOTBLK},
-+		{CMD_PARA_ERR, -EINVAL},
-+		{CMD_RESULT_ERR, -ERANGE},
-+		{CMD_TIMEOUT, -ETIME},
-+		{CMD_HILINK_ERR, -ENOLINK},
-+		{CMD_INFO_ILLEGAL, -ENXIO},
-+		{CMD_INVALID, -EBADR},
-+	};
-+	u16 i;
-+
-+	for (i = 0; i < ARRAY_SIZE(errcode_table); i++)
-+		if (desc_ret == errcode_table[i].return_status)
-+			return errcode_table[i].errno;
-+	return -EIO;
-+}
-+
- static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			       struct hns_roce_cmq_desc *desc, int num)
- {
-@@ -1301,7 +1325,7 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			dev_err_ratelimited(hr_dev->dev,
- 					    "Cmdq IO error, opcode = %x, return = %x\n",
- 					    desc->opcode, desc_ret);
--			ret = -EIO;
-+			ret = hns_roce_cmd_err_convert_errno(desc_ret);
- 		}
- 	} else {
- 		/* FW/HW reset or incorrect number of desc */
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index 2f4a0019a716..67f5b6fcfa1b 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -276,6 +276,11 @@ enum hns_roce_cmd_return_status {
- 	CMD_OTHER_ERR = 0xff
- };
- 
-+struct hns_roce_cmd_errcode {
-+	enum hns_roce_cmd_return_status return_status;
-+	int errno;
-+};
-+
- enum hns_roce_sgid_type {
- 	GID_TYPE_FLAG_ROCE_V1 = 0,
- 	GID_TYPE_FLAG_ROCE_V2_IPV4,
 -- 
 2.35.1
 
