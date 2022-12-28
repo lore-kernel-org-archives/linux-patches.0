@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D492E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FD2C433F0;
-	Wed, 28 Dec 2022 15:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805E91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012FFC433F0;
+	Wed, 28 Dec 2022 15:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241421;
-	bh=inN9e4ytR+NXrAHnhQ1/s4gFHfne7lWj4TQ3jrvLG2c=;
+	s=korg; t=1672241424;
+	bh=fU9NGN+IJAEiEuvOco0vIM5JZMuMZWYN7Rxz2xFWODs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1PcDbddBif2sOaK8bLkgRZsOkHmODgeguDp4Yrzndn1veffJamDbsbA/UoNKPNW5
-	 cGMkdHfvFw6iiFlgvIA2HhgKX63cNquwQd83HWMbzX8fkFbId43aP75K4OefsZmnIi
-	 jXaGqAgva/gj01E2KBeQifFF4z0Dld6JtZgtz714=
+	b=ClIv2vM5bMJnqtx0DlqxcqMqgxu+NSTT5Ic6Pb+dGB3FTd4E8AQw25a6HCRfd/cUV
+	 8ledZDl5yIdI5fwPIgLl6AgWBqtYB4kSZszLjUGfzwE7A4n7LEm92jJN5CZHO16W4S
+	 CR3VkIKR+ZaUAmKnekG+m3+hjioBYPkzgKcE86gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 480/731] usb: roles: fix of node refcount leak in usb_role_switch_is_parent()
-Date: Wed, 28 Dec 2022 15:39:47 +0100
-Message-Id: <20221228144310.465359082@linuxfoundation.org>
+Subject: [PATCH 6.0 0282/1073] media: rkvdec: Add required padding
+Date: Wed, 28 Dec 2022 15:31:10 +0100
+Message-Id: <20221228144335.680276358@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 
-[ Upstream commit 1ab30c610630da5391a373cddb8a065bf4c4bc01 ]
+[ Upstream commit 00c47aa85bb26450edc6059c3d245de062e60b5d ]
 
-I got the following report while doing device(mt6370-tcpc) load
-test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
+The addresses of two elements of the segmap[][] member are passed to the
+hardware which expects 128-bit aligned addresses. However, without this
+patch offsetof(struct rkvdec_vp9_priv_tbl, segmap[0]) is an odd number
+(2421) but the hardware just ignores the 5 least significant bits of the
+address. As a result, the hardware writes the segmentation map to incorrect
+locations.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@34
+Inserting 11 bytes of padding corrects this situation by making the said
+addresses divisible by 16 (i.e. aligned on a 128-bit boundary).
 
-The 'parent' returned by fwnode_get_parent() with refcount incremented.
-it needs be put after using.
-
-Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221122111226.251588-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Fixes: f25709c4ff15 ("media: rkvdec: Add the VP9 backend")
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/roles/class.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
-index dfaed7eee94f..32e6d19f7011 100644
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -106,10 +106,13 @@ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
- 	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
- 	struct device *dev;
+diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+index d8c1c0db15c7..cfae99b40ccb 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
++++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+@@ -84,6 +84,8 @@ struct rkvdec_vp9_probs {
+ 		struct rkvdec_vp9_inter_frame_probs inter;
+ 		struct rkvdec_vp9_intra_only_frame_probs intra_only;
+ 	};
++	/* 128 bit alignment */
++	u8 padding1[11];
+ };
  
--	if (!parent || !fwnode_property_present(parent, "usb-role-switch"))
-+	if (!fwnode_property_present(parent, "usb-role-switch")) {
-+		fwnode_handle_put(parent);
- 		return NULL;
-+	}
+ /* Data structure describing auxiliary buffer format. */
+@@ -1006,6 +1008,7 @@ static int rkvdec_vp9_start(struct rkvdec_ctx *ctx)
  
- 	dev = class_find_device_by_fwnode(role_class, parent);
-+	fwnode_handle_put(parent);
- 	return dev ? to_role_switch(dev) : ERR_PTR(-EPROBE_DEFER);
- }
+ 	ctx->priv = vp9_ctx;
  
++	BUILD_BUG_ON(sizeof(priv_tbl->probs) % 16); /* ensure probs size is 128-bit aligned */
+ 	priv_tbl = dma_alloc_coherent(rkvdec->dev, sizeof(*priv_tbl),
+ 				      &vp9_ctx->priv_tbl.dma, GFP_KERNEL);
+ 	if (!priv_tbl) {
 -- 
 2.35.1
 
