@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F61A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB59FC433EF;
-	Wed, 28 Dec 2022 14:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF451863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC6CC433EF;
+	Wed, 28 Dec 2022 14:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239522;
-	bh=y8bmNZP1v1LIBAKCzIrbu+60g3SGdFjRORkJgh5IiDs=;
+	s=korg; t=1672239524;
+	bh=qkI7DmXkaE99OO2+MK3ZWxqp3rSuk4puBRTsDLOe0sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9kaAnkOwEn3I+CQiIWTF36TrLvdwMRDhBFP+TFuqwBMuH2LOaGkyo+S7CSw2oDRf
-	 KLLy9MF19QEUkckzmgRtdebZPHAnWms4AjUbxzroCYGC9zGPzNn0xKKbWBYXA5zkeC
-	 VJXKIAU3HOczOq9ciWDUYx5GeOkuE+DP1N9H5iQ8=
+	b=K1jZvPoHt2wuAGg8p3Ipbpyy6ngd9wXWVGv5b2aB2uUsHsJnu7byTHvHx722XvTPu
+	 8mP39/MEnc/PHND+TN1mINa+mLsAX/DQ6JT3gG2xowmi1r8o6hcq2sI0oiKCld4gZH
+	 gCcg8zMQJrr8+kOh9YdGeZtwADFPGeK7CdDb4kpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0008/1146] arm64: dts: qcom: msm8996: fix supported-hw in cpufreq OPP tables
-Date: Wed, 28 Dec 2022 15:25:47 +0100
-Message-Id: <20221228144330.408727274@linuxfoundation.org>
+Subject: [PATCH 5.15 239/731] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
+Date: Wed, 28 Dec 2022 15:35:46 +0100
+Message-Id: <20221228144303.491324183@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,111 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 0154caaa2b748e7414a4ec3c6ee60e8f483b2d4f ]
+[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
 
-Adjust MSM8996 cpufreq tables according to tables in msm-3.18. Some of
-the frequencies are not supported on speed bins other than 0. Also other
-speed bins support intermediate topmost frequencies, not supported on
-speed bin 0. Implement all these differencies.
+Wei Chen reports a kernel bug as blew:
 
-Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220724140421.1933004-5-dmitry.baryshkov@linaro.org
+general protection fault, probably for non-canonical address
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+...
+Call Trace:
+<TASK>
+__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
+i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
+i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
+i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:870 [inline]
+__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fd834a8bded
+
+In az6027_i2c_xfer(), if msg[i].addr is 0x99,
+a null-ptr-deref will caused when accessing msg[i].buf.
+For msg[i].len is 0 and msg[i].buf is null.
+
+Fix this by checking msg[i].len in az6027_i2c_xfer().
+
+Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
+
+Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
+Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 38 ++++++++++++++++++++-------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ drivers/media/usb/dvb-usb/az6027.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 069b5c494e2e..7cc93329b93c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -204,22 +204,32 @@ opp-1228800000 {
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x5>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1363200000 {
-+			opp-hz = /bits/ 64 <1363200000>;
-+			opp-supported-hw = <0x2>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x5>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1497600000 {
-+			opp-hz = /bits/ 64 <1497600000>;
-+			opp-supported-hw = <0x04>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1593600000 {
- 			opp-hz = /bits/ 64 <1593600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
-@@ -330,29 +340,39 @@ opp-1785600000 {
- 			opp-supported-hw = <0x7>;
- 			clock-latency-ns = <200000>;
- 		};
-+		opp-1804800000 {
-+			opp-hz = /bits/ 64 <1804800000>;
-+			opp-supported-hw = <0x6>;
-+			clock-latency-ns = <200000>;
-+		};
- 		opp-1824000000 {
- 			opp-hz = /bits/ 64 <1824000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1900800000 {
-+			opp-hz = /bits/ 64 <1900800000>;
-+			opp-supported-hw = <0x4>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1920000000 {
- 			opp-hz = /bits/ 64 <1920000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1996800000 {
- 			opp-hz = /bits/ 64 <1996800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-2073600000 {
- 			opp-hz = /bits/ 64 <2073600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-2150400000 {
- 			opp-hz = /bits/ 64 <2150400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
+diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
+index 86788771175b..32b4ee65c280 100644
+--- a/drivers/media/usb/dvb-usb/az6027.c
++++ b/drivers/media/usb/dvb-usb/az6027.c
+@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
+ 		if (msg[i].addr == 0x99) {
+ 			req = 0xBE;
+ 			index = 0;
++			if (msg[i].len < 1) {
++				i = -EOPNOTSUPP;
++				break;
++			}
+ 			value = msg[i].buf[0] & 0x00ff;
+ 			length = 1;
+ 			az6027_usb_out_op(d, req, value, index, data, length);
 -- 
 2.35.1
 
