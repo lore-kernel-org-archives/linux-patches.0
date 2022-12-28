@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B631863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFE6C433EF;
-	Wed, 28 Dec 2022 15:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F721863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD2C433EF;
+	Wed, 28 Dec 2022 15:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241527;
-	bh=BQWSJMaFs16rR7Ilkp05C2wjq0DCrvV9O7/ifdmsllM=;
+	s=korg; t=1672241530;
+	bh=TmDprlz8pw12EbcWV2h+ILlDD4lsz3LaTqcq3yRx4/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCqq6VRc7rrm5/KQqxKe+lDjhoIfjE58wi//hhlHXRjMtfaUhmj1zWckNVChhBEX6
-	 3dLBXsMtslQLZjFyVpC81IIV/cM6OumUl2wdzcnd+KO7/lf94ODicEaYduWRTMxWlV
-	 JZQ9PiMedxkwWnBatw5OAIKJMwjFITWsYLXHSB1c=
+	b=uUOFc2hTxa21Gj6u1j5BLQb09jE005DvLUUAOKDQMq40pMZ2uivAEC5dVJt9Sx3Gp
+	 X622/i1jb8By0uvYg33jNSLvxLrO6E7g7Q4VKRUOcE5T+ZkIkWheowciZ0QQfDZpn6
+	 I/s5oOc0TGX3kbLAPprpJE15wBAM6XA3+0PTymAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0294/1073] media: camss: Clean up received buffers on failed start of streaming
-Date: Wed, 28 Dec 2022 15:31:22 +0100
-Message-Id: <20221228144336.000132194@linuxfoundation.org>
+Subject: [PATCH 6.1 0257/1146] drm/i915/guc: Add error-capture init warnings when needed
+Date: Wed, 28 Dec 2022 15:29:56 +0100
+Message-Id: <20221228144337.118323814@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,60 +35,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Alan Previn <alan.previn.teres.alexis@intel.com>
 
-[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
+[ Upstream commit a894077890ad118de88c97c03f67a611ca60882a ]
 
-It is required to return the received buffers, if streaming can not be
-started. For instance media_pipeline_start() may fail with EPIPE, if
-a link validation between entities is not passed, and in such a case
-a user gets a kernel warning:
+If GuC is being used and we initialized GuC-error-capture,
+we need to be warning if we don't provide an error-capture
+register list in the firmware ADS, for valid GT engines.
+A warning makes sense as this would impact debugability
+without realizing why a reglist wasn't retrieved and reported
+by GuC.
 
-  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
-  <snip>
-  Call trace:
-   vb2_start_streaming+0xec/0x160
-   vb2_core_streamon+0x9c/0x1a0
-   vb2_ioctl_streamon+0x68/0xbc
-   v4l_streamon+0x30/0x3c
-   __video_do_ioctl+0x184/0x3e0
-   video_usercopy+0x37c/0x7b0
-   video_ioctl2+0x24/0x40
-   v4l2_ioctl+0x4c/0x70
+However, depending on the platform, we might have certain
+engines that have a register list for engine instance error state
+but not for engine class. Thus, add a check only to warn if the
+register list was non existent vs an empty list (use the
+empty lists to skip the warning).
 
-The fix is to correct the error path in video_start_streaming() of camss.
+NOTE: if a future platform were to introduce new registers
+in place of what was an empty list on existing / legacy hardware
+engines no warning is provided as the empty list is meant
+to be used intentionally. As an example, if a future hardware
+were to add blitter engine-class-registers (new) on top
+of the legacy blitter engine-instance-register (HEAD, TAIL, etc.),
+no warning is generated.
 
-Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221019072930.17755-2-alan.previn.teres.alexis@intel.com
+Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/i915/gt/uc/intel_guc_capture.c    | 78 ++++++++++++++++---
+ 1 file changed, 69 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 290df04c4d02..a25fffb0b8ec 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+index 8f1165146013..006bb17140d4 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+@@ -419,6 +419,44 @@ guc_capture_get_device_reglist(struct intel_guc *guc)
+ 	return default_lists;
+ }
  
- 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
- 	if (ret < 0)
--		return ret;
-+		goto flush_buffers;
++static const char *
++__stringify_type(u32 type)
++{
++	switch (type) {
++	case GUC_CAPTURE_LIST_TYPE_GLOBAL:
++		return "Global";
++	case GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS:
++		return "Class";
++	case GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE:
++		return "Instance";
++	default:
++		break;
++	}
++
++	return "unknown";
++}
++
++static const char *
++__stringify_engclass(u32 class)
++{
++	switch (class) {
++	case GUC_RENDER_CLASS:
++		return "Render";
++	case GUC_VIDEO_CLASS:
++		return "Video";
++	case GUC_VIDEOENHANCE_CLASS:
++		return "VideoEnhance";
++	case GUC_BLITTER_CLASS:
++		return "Blitter";
++	case GUC_COMPUTE_CLASS:
++		return "Compute";
++	default:
++		break;
++	}
++
++	return "unknown";
++}
++
+ static int
+ guc_capture_list_init(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
+ 		      struct guc_mmio_reg *ptr, u16 num_entries)
+@@ -482,23 +520,38 @@ guc_cap_list_num_regs(struct intel_guc_state_capture *gc, u32 owner, u32 type, u
+ 	return num_regs;
+ }
  
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- error:
- 	media_pipeline_stop(&vdev->entity);
+-int
+-intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
+-			      size_t *size)
++static int
++guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
++			size_t *size, bool is_purpose_est)
+ {
+ 	struct intel_guc_state_capture *gc = guc->capture;
++	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
+ 	struct __guc_capture_ads_cache *cache = &gc->ads_cache[owner][type][classid];
+ 	int num_regs;
  
-+flush_buffers:
- 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
+-	if (!gc->reglists)
++	if (!gc->reglists) {
++		drm_warn(&i915->drm, "GuC-capture: No reglist on this device\n");
+ 		return -ENODEV;
++	}
  
- 	return ret;
+ 	if (cache->is_valid) {
+ 		*size = cache->size;
+ 		return cache->status;
+ 	}
+ 
++	if (!is_purpose_est && owner == GUC_CAPTURE_LIST_INDEX_PF &&
++	    !guc_capture_get_one_list(gc->reglists, owner, type, classid)) {
++		if (type == GUC_CAPTURE_LIST_TYPE_GLOBAL)
++			drm_warn(&i915->drm, "Missing GuC-Err-Cap reglist Global!\n");
++		else
++			drm_warn(&i915->drm, "Missing GuC-Err-Cap reglist %s(%u):%s(%u)!\n",
++				 __stringify_type(type), type,
++				 __stringify_engclass(classid), classid);
++		return -ENODATA;
++	}
++
+ 	num_regs = guc_cap_list_num_regs(gc, owner, type, classid);
++	/* intentional empty lists can exist depending on hw config */
+ 	if (!num_regs)
+ 		return -ENODATA;
+ 
+@@ -508,6 +561,13 @@ intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 cl
+ 	return 0;
+ }
+ 
++int
++intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
++			      size_t *size)
++{
++	return guc_capture_getlistsize(guc, owner, type, classid, size, false);
++}
++
+ static void guc_capture_create_prealloc_nodes(struct intel_guc *guc);
+ 
+ int
+@@ -627,15 +687,15 @@ guc_capture_output_min_size_est(struct intel_guc *guc)
+ 		worst_min_size += sizeof(struct guc_state_capture_group_header_t) +
+ 					 (3 * sizeof(struct guc_state_capture_header_t));
+ 
+-		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_GLOBAL, 0, &tmp))
++		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_GLOBAL, 0, &tmp, true))
+ 			num_regs += tmp;
+ 
+-		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS,
+-						   engine->class, &tmp)) {
++		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS,
++					     engine->class, &tmp, true)) {
+ 			num_regs += tmp;
+ 		}
+-		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE,
+-						   engine->class, &tmp)) {
++		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE,
++					     engine->class, &tmp, true)) {
+ 			num_regs += tmp;
+ 		}
+ 	}
 -- 
 2.35.1
 
