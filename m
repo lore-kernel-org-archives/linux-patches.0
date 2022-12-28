@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5EE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B53C433EF;
-	Wed, 28 Dec 2022 15:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49911863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F68C433D2;
+	Wed, 28 Dec 2022 15:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241012;
-	bh=oDdBjHRqDV6DkjrLZrQCVMNACC27WqlqIX2ZOprd9AQ=;
+	s=korg; t=1672241015;
+	bh=S7o5T/QOFbnrqB/QRxQKCXJ2XlTwZ99O41lblVkNgzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxyr8f4J7UZcrjYuMVvBXjptwpsHYe9jb1q5zA8GbNXmdWg0N3KwLxb2RpLg3OQEc
-	 Pn3eG+V9HLrMgNc1wgQh5/zcoPhkqxghFzGaQNPt/VxDkrpkwp3a05mllI6vPSJXUH
-	 yygn7PlYBGoWbZG6VAWfJCiVJGcY28KxJvm+ui+4=
+	b=xtvkJliOBvDdJ2SARgQ7kPbXv9CvtzxLjZnGe/nek0LcFeVOh1nUV3NTib+DmD/ye
+	 9IlP9vqN39XBTcbFmFlQvzxYJCRIcOp1nJ3ptuhclvImlMW/5AXZyfWbpSijLOA4EL
+	 4U+YR9YUb41KfmmOd25+wN4ty9sl1qBvCycgo6bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0195/1146] wifi: fix multi-link element subelement iteration
-Date: Wed, 28 Dec 2022 15:28:54 +0100
-Message-Id: <20221228144335.442737586@linuxfoundation.org>
+Subject: [PATCH 6.0 0230/1073] media: cedrus: hevc: Fix offset adjustments
+Date: Wed, 28 Dec 2022 15:30:18 +0100
+Message-Id: <20221228144334.274409637@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,36 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 1177aaa7fe9373c762cd5bf5f5de8517bac989d5 ]
+[ Upstream commit e9120e76a6f7e19a8d26c03f2964937e4ce69784 ]
 
-The subelements obviously start after the common data, including
-the common multi-link element structure definition itself. This
-bug was possibly just hidden by the higher bits of the control
-being set to 0, so the iteration just found one bogus element
-and most of the code could continue anyway.
+As it turns out, current padding size check works fine in theory but it
+doesn't in practice. Most probable reason are caching issues.
 
-Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Let's rework reading data from bitstream using Cedrus engine instead of
+CPU. That way we avoid all cache issues and make sure that we're reading
+same data as Cedrus.
+
+Fixes: e7060d9a78c2 ("media: uapi: Change data_bit_offset definition")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../staging/media/sunxi/cedrus/cedrus_h265.c  | 25 ++++++++++++++-----
+ .../staging/media/sunxi/cedrus/cedrus_regs.h  |  2 ++
+ 2 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index 79690938d9a2..d3088666f3f4 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -4594,7 +4594,7 @@ static inline u8 ieee80211_mle_common_size(const u8 *data)
- 		return 0;
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+index 095b8464f37a..a07fd28e1fcf 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+@@ -242,6 +242,18 @@ static void cedrus_h265_skip_bits(struct cedrus_dev *dev, int num)
  	}
- 
--	return common + mle->variable[0];
-+	return sizeof(*mle) + common + mle->variable[0];
  }
  
- /**
++static u32 cedrus_h265_show_bits(struct cedrus_dev *dev, int num)
++{
++	cedrus_write(dev, VE_DEC_H265_TRIGGER,
++		     VE_DEC_H265_TRIGGER_SHOW_BITS |
++		     VE_DEC_H265_TRIGGER_TYPE_N_BITS(num));
++
++	cedrus_wait_for(dev, VE_DEC_H265_STATUS,
++			VE_DEC_H265_STATUS_VLD_BUSY);
++
++	return cedrus_read(dev, VE_DEC_H265_BITS_READ);
++}
++
+ static void cedrus_h265_write_scaling_list(struct cedrus_ctx *ctx,
+ 					   struct cedrus_run *run)
+ {
+@@ -406,7 +418,7 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
+ 	u32 num_entry_point_offsets;
+ 	u32 output_pic_list_index;
+ 	u32 pic_order_cnt[2];
+-	u8 *padding;
++	u8 padding;
+ 	int count;
+ 	u32 reg;
+ 
+@@ -520,21 +532,22 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
+ 	if (slice_params->data_byte_offset == 0)
+ 		return -EOPNOTSUPP;
+ 
+-	padding = (u8 *)vb2_plane_vaddr(&run->src->vb2_buf, 0) +
+-		slice_params->data_byte_offset - 1;
++	cedrus_h265_skip_bits(dev, (slice_params->data_byte_offset - 1) * 8);
++
++	padding = cedrus_h265_show_bits(dev, 8);
+ 
+ 	/* at least one bit must be set in that byte */
+-	if (*padding == 0)
++	if (padding == 0)
+ 		return -EINVAL;
+ 
+ 	for (count = 0; count < 8; count++)
+-		if (*padding & (1 << count))
++		if (padding & (1 << count))
+ 			break;
+ 
+ 	/* Include the one bit. */
+ 	count++;
+ 
+-	cedrus_h265_skip_bits(dev, slice_params->data_byte_offset * 8 - count);
++	cedrus_h265_skip_bits(dev, 8 - count);
+ 
+ 	/* Bitstream parameters. */
+ 
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
+index d81f7513ade0..655c05b389cf 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
+@@ -505,6 +505,8 @@
+ #define VE_DEC_H265_LOW_ADDR_ENTRY_POINTS_BUF(a) \
+ 	SHIFT_AND_MASK_BITS(a, 7, 0)
+ 
++#define VE_DEC_H265_BITS_READ			(VE_ENGINE_DEC_H265 + 0xdc)
++
+ #define VE_DEC_H265_SRAM_OFFSET			(VE_ENGINE_DEC_H265 + 0xe0)
+ 
+ #define VE_DEC_H265_SRAM_OFFSET_PRED_WEIGHT_LUMA_L0	0x00
 -- 
 2.35.1
 
